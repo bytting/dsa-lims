@@ -26,20 +26,22 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using log4net;
 
 namespace DSA_lims
 {
     public partial class FormEnergyLine : Form
     {
+        private ILog mLog = null;
         EnergyLineType EnergyLine = new EnergyLineType();        
 
-        public FormEnergyLine(Guid nid, string nname)
+        public FormEnergyLine(ILog log, Guid nid, string nname)
         {            
             InitializeComponent();
 
             // Creating a new line     
+            mLog = log;
             EnergyLine.NuclideId = nid;
             EnergyLine.Id = Guid.Empty;
 
@@ -48,11 +50,12 @@ namespace DSA_lims
             cbInUse.Checked = true;
         }
 
-        public FormEnergyLine(Guid nid, Guid eid, string nname)
+        public FormEnergyLine(ILog log, Guid nid, Guid eid, string nname)
         {            
             InitializeComponent();
 
             // Update existing line            
+            mLog = log;
             EnergyLine.NuclideId = nid;
             EnergyLine.Id = eid;
 
@@ -134,9 +137,15 @@ namespace DSA_lims
 
         private void InsertEnergyLine()
         {
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection connection = null;
+            SqlTransaction transaction = null;
+
+            try
             {
-                SqlCommand cmd = new SqlCommand("csp_insert_energy_line", conn);
+                connection = DB.OpenConnection();
+                transaction = connection.BeginTransaction();
+
+                SqlCommand cmd = new SqlCommand("csp_insert_energy_line", connection, transaction);
                 cmd.CommandType = CommandType.StoredProcedure;
                 EnergyLine.Id = Guid.NewGuid();
                 cmd.Parameters.AddWithValue("@id", EnergyLine.Id);
@@ -159,15 +168,32 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@updated_by", EnergyLine.UpdatedBy);
                 cmd.ExecuteNonQuery();
 
-                DB.AddAuditMessage(conn, "nuclide_transmission", EnergyLine.Id, AuditOperation.Insert, JsonConvert.SerializeObject(EnergyLine));
+                DB.AddAuditMessage(connection, transaction, "nuclide_transmission", EnergyLine.Id, AuditOperation.Insert, JsonConvert.SerializeObject(EnergyLine));
+
+                transaction.Commit();
+            }
+            catch(Exception ex)
+            {
+                transaction?.Rollback();
+                mLog.Error(ex);
+            }
+            finally
+            {
+                connection?.Close();
             }
         }
 
         private void UpdateEnergyLine()
         {
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection connection = null;
+            SqlTransaction transaction = null;
+
+            try
             {
-                SqlCommand cmd = new SqlCommand("csp_update_energy_line", conn);
+                connection = DB.OpenConnection();            
+                transaction = connection.BeginTransaction();
+
+                SqlCommand cmd = new SqlCommand("csp_update_energy_line", connection, transaction);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@id", EnergyLine.Id);
                 cmd.Parameters.AddWithValue("@transmission_from", EnergyLine.TransmissionFrom);
@@ -186,7 +212,18 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@updated_by", EnergyLine.UpdatedBy);
                 cmd.ExecuteNonQuery();
 
-                DB.AddAuditMessage(conn, "nuclide_transmission", EnergyLine.Id, AuditOperation.Update, JsonConvert.SerializeObject(EnergyLine));
+                DB.AddAuditMessage(connection, transaction, "nuclide_transmission", EnergyLine.Id, AuditOperation.Update, JsonConvert.SerializeObject(EnergyLine));
+
+                transaction.Commit();
+            }
+            catch(Exception ex)
+            {
+                transaction?.Rollback();
+                mLog.Error(ex);
+            }
+            finally
+            {
+                connection?.Close();
             }
         }
     }

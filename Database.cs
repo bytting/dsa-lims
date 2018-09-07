@@ -61,9 +61,9 @@ namespace DSA_lims
             return cmd.ExecuteScalar();
         }
 
-        public static void AddAuditMessage(SqlConnection conn, string tbl, Guid id, AuditOperation op, string msg)
+        public static void AddAuditMessage(SqlConnection conn, SqlTransaction trans, string tbl, Guid id, AuditOperation op, string msg)
         {
-            SqlCommand cmd = new SqlCommand("csp_insert_audit_message", conn);
+            SqlCommand cmd = new SqlCommand("csp_insert_audit_message", conn, trans);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@id", Guid.NewGuid());
             cmd.Parameters.AddWithValue("@source_table", tbl);

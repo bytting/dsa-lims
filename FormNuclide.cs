@@ -27,29 +27,33 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using log4net;
 using Newtonsoft.Json;
 
 namespace DSA_lims
 {
     public partial class FormNuclide : Form
     {
+        private ILog mLog = null;
         public NuclideType Nuclide = new NuclideType();
 
-        public FormNuclide(List<DecayType> dt)
+        public FormNuclide(ILog log, List<DecayType> dt)
         {
-            InitializeComponent();            
+            InitializeComponent();
 
             // Create new nuclide
+            mLog = log;
             PopulateDecayTypes(dt);        
             Text = "New nuclide";
             cbInUse.Checked = true;
         }
 
-        public FormNuclide(List<DecayType> dt, Guid nid)
+        public FormNuclide(ILog log, List<DecayType> dt, Guid nid)
         {
-            InitializeComponent();            
+            InitializeComponent();
 
             // Edit existing nuclide
+            mLog = log;
             PopulateDecayTypes(dt);            
             Nuclide.Id = nid;
             Text = "Edit nuclide";
@@ -170,6 +174,7 @@ namespace DSA_lims
             }
             catch(Exception ex)
             {
+                mLog.Error(ex);
                 MessageBox.Show(StrUtils.makeErrorMessage("Unable to insert. " + ex.Message));
                 return;
             }            
@@ -180,9 +185,15 @@ namespace DSA_lims
 
         private void InsertNuclide()
         {
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection connection = null;
+            SqlTransaction transaction = null;
+
+            try
             {
-                SqlCommand cmd = new SqlCommand("csp_insert_nuclide", conn);
+                connection = DB.OpenConnection();
+                transaction = connection.BeginTransaction();
+
+                SqlCommand cmd = new SqlCommand("csp_insert_nuclide", connection, transaction);
                 cmd.CommandType = CommandType.StoredProcedure;
                 Nuclide.Id = Guid.NewGuid();
                 cmd.Parameters.AddWithValue("@id", Nuclide.Id);
@@ -202,15 +213,32 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@updated_by", Nuclide.UpdatedBy);
                 cmd.ExecuteNonQuery();
 
-                DB.AddAuditMessage(conn, "nuclide", Nuclide.Id, AuditOperation.Insert, JsonConvert.SerializeObject(Nuclide));
-            }        
+                DB.AddAuditMessage(connection, transaction, "nuclide", Nuclide.Id, AuditOperation.Insert, JsonConvert.SerializeObject(Nuclide));
+
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {                
+                transaction?.Rollback();
+                mLog.Error(ex);
+            }
+            finally
+            {                
+                connection?.Close();                 
+            }
         }
 
         private void UpdateNuclide()
         {
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection connection = null;
+            SqlTransaction transaction = null;
+
+            try
             {
-                SqlCommand cmd = new SqlCommand("csp_update_nuclide", conn);
+                connection = DB.OpenConnection();
+                transaction = connection.BeginTransaction();
+
+                SqlCommand cmd = new SqlCommand("csp_update_nuclide", connection, transaction);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@id", Nuclide.Id);
                 cmd.Parameters.AddWithValue("@name", Nuclide.Name);
@@ -227,7 +255,18 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@updated_by", Nuclide.UpdatedBy);
                 cmd.ExecuteNonQuery();
 
-                DB.AddAuditMessage(conn, "nuclide", Nuclide.Id, AuditOperation.Update, JsonConvert.SerializeObject(Nuclide));
+                DB.AddAuditMessage(connection, transaction, "nuclide", Nuclide.Id, AuditOperation.Update, JsonConvert.SerializeObject(Nuclide));
+
+                transaction.Commit();
+            }
+            catch(Exception ex)
+            {
+                transaction?.Rollback();
+                mLog.Error(ex);
+            }
+            finally
+            {
+                connection?.Close();
             }
         }
     }

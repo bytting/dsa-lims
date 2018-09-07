@@ -843,7 +843,7 @@ namespace DSA_lims
 
         private void miNuclidesNew_Click(object sender, EventArgs e)
         {            
-            FormNuclide form = new FormNuclide(decayTypes);
+            FormNuclide form = new FormNuclide(log, decayTypes);
             if (form.ShowDialog() != DialogResult.OK)
                 return;
 
@@ -924,7 +924,7 @@ namespace DSA_lims
             DataGridViewRow row = gridSysNuclides.SelectedRows[0];            
             Guid nid = new Guid(row.Cells[0].Value.ToString());
 
-            FormNuclide form = new FormNuclide(decayTypes, nid);
+            FormNuclide form = new FormNuclide(log, decayTypes, nid);
             if (form.ShowDialog() != DialogResult.OK)
                 return;
 
@@ -946,7 +946,7 @@ namespace DSA_lims
             Guid nid = new Guid(row.Cells[0].Value.ToString());
             string nname = row.Cells[1].Value.ToString();
 
-            FormEnergyLine form = new FormEnergyLine(nid, nname);
+            FormEnergyLine form = new FormEnergyLine(log, nid, nname);
             if (form.ShowDialog() != DialogResult.OK)
                 return;
 
@@ -971,7 +971,7 @@ namespace DSA_lims
             DataGridViewRow row2 = gridSysNuclideTrans.SelectedRows[0];
             Guid eid = new Guid(row2.Cells[0].Value.ToString());
 
-            FormEnergyLine form = new FormEnergyLine(nid, eid, nname);
+            FormEnergyLine form = new FormEnergyLine(log, nid, eid, nname);
             if (form.ShowDialog() != DialogResult.OK)
                 return;
 

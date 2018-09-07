@@ -1,0 +1,345 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E94F7E03-71DA-4DD2-858F-41C3C09EA6CB}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DSA_lims</RootNamespace>
+    <AssemblyName>DSA-lims</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Common.cs" />
+    <Compile Include="Database.cs" />
+    <Compile Include="Environment.cs" />
+    <Compile Include="FormAccreditationRule.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormAccreditationRule.Designer.cs">
+      <DependentUpon>FormAccreditationRule.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormCounty.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormCounty.Designer.cs">
+      <DependentUpon>FormCounty.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormEnergyLine.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormEnergyLine.Designer.cs">
+      <DependentUpon>FormEnergyLine.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormGeometry.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormGeometry.Designer.cs">
+      <DependentUpon>FormGeometry.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormLogin.Designer.cs">
+      <DependentUpon>FormLogin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormMain.Designer.cs">
+      <DependentUpon>FormMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormLaboratory.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormLaboratory.Designer.cs">
+      <DependentUpon>FormLaboratory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormMunicipality.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormMunicipality.Designer.cs">
+      <DependentUpon>FormMunicipality.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormNuclide.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormNuclide.Designer.cs">
+      <DependentUpon>FormNuclide.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormProject.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormProject.Designer.cs">
+      <DependentUpon>FormProject.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormSampler.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSampler.Designer.cs">
+      <DependentUpon>FormSampler.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormSampleStorage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSampleStorage.Designer.cs">
+      <DependentUpon>FormSampleStorage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormSamplingMeth.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSamplingMeth.Designer.cs">
+      <DependentUpon>FormSamplingMeth.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormStation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormStation.Designer.cs">
+      <DependentUpon>FormStation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormUnit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormUnit.Designer.cs">
+      <DependentUpon>FormUnit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormUser.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormUser.Designer.cs">
+      <DependentUpon>FormUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="lang_en.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>lang_en.resx</DependentUpon>
+    </Compile>
+    <Compile Include="lang_nb.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>lang_nb.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Types.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Settings.cs" />
+    <Compile Include="Logger.cs" />
+    <Compile Include="StrUtils.cs" />
+    <EmbeddedResource Include="FormAccreditationRule.resx">
+      <DependentUpon>FormAccreditationRule.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormCounty.resx">
+      <DependentUpon>FormCounty.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormEnergyLine.resx">
+      <DependentUpon>FormEnergyLine.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormGeometry.resx">
+      <DependentUpon>FormGeometry.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormLogin.resx">
+      <DependentUpon>FormLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormMain.en.resx">
+      <DependentUpon>FormMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormMain.resx">
+      <DependentUpon>FormMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormLaboratory.resx">
+      <DependentUpon>FormLaboratory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormMunicipality.resx">
+      <DependentUpon>FormMunicipality.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormNuclide.resx">
+      <DependentUpon>FormNuclide.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormProject.resx">
+      <DependentUpon>FormProject.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSampler.resx">
+      <DependentUpon>FormSampler.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSampleStorage.resx">
+      <DependentUpon>FormSampleStorage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSamplingMeth.resx">
+      <DependentUpon>FormSamplingMeth.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormStation.resx">
+      <DependentUpon>FormStation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormUnit.resx">
+      <DependentUpon>FormUnit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormUser.resx">
+      <DependentUpon>FormUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="lang_en.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>lang_en.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="lang_nb.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>lang_nb.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\menu.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\menu2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\menu16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\search.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\search_gray.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\new_gray.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\edit_gray.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\new_batch_gray.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\import_gray.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\users_gray.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\station_gray.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\projects_gray.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\drawer_gray.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\connection_gray.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\info_gray.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\create_user.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\delete_user.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\user.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\refresh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\new.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\edit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\scan.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\projects.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\import.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\trash.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="images\printer.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

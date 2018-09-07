@@ -1,0 +1,1 @@
+Første blipping av prøve går til søkeliste med valgt prøve. Andre blipping går inn på valgt prøve.

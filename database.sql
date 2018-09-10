@@ -454,7 +454,7 @@ CREATE TABLE preparation_box (
 	create_date datetime NOT NULL,
 	created_by nvarchar(50) NOT NULL,
 	update_date datetime NOT NULL,
-	updated_by uniqueidentifier NOT NULL
+	updated_by nvarchar(50) NOT NULL
 )
 GO
 
@@ -1209,6 +1209,84 @@ create PROC csp_insert_audit_message
 	@create_date datetime
 as
 	insert into audit_log values(@id, @source_table, @source_id, @operation, @value, @create_date);
+go
+
+/*===========================================================================*/
+
+create PROC csp_select_geometry
+	@id uniqueidentifier
+as 
+	select * from preparation_box where id = @id
+go
+
+/*===========================================================================*/
+
+create PROC csp_insert_geometry
+	@id uniqueidentifier,
+	@name nvarchar(80),
+	@min_fill_height float,
+	@max_fill_height float,
+	@in_use bit,
+	@comment nvarchar(1000),
+	@create_date datetime,
+	@created_by nvarchar(50),
+	@update_date datetime,
+	@updated_by nvarchar(50)	
+as 
+	insert into preparation_box values (
+		@id,
+		@name,
+		@min_fill_height,
+		@max_fill_height,
+		@in_use,
+		@comment,		
+		@create_date,
+		@created_by,
+		@update_date,
+		@updated_by
+	);
+go
+
+/*===========================================================================*/
+
+create PROC csp_update_geometry
+	@id uniqueidentifier,
+	@name nvarchar(80),
+	@min_fill_height float,
+	@max_fill_height float,
+	@in_use bit,
+	@comment nvarchar(1000),	
+	@update_date datetime,
+	@updated_by nvarchar(50)	
+as 
+	update preparation_box set 
+		name = @name,
+		min_fill_height_mm = @min_fill_height,
+		max_fill_height_mm = @max_fill_height,
+		in_use = @in_use,
+		comment = @comment,		
+		update_date = @update_date,
+		updated_by = @updated_by
+	where id = @id
+go
+
+/*===========================================================================*/
+
+create PROC csp_select_geometries_flat
+as
+select 
+	id,
+	name,
+	min_fill_height_mm, 
+	max_fill_height_mm, 
+	in_use,
+	comment,
+	create_date,
+	created_by,
+	update_date,
+	updated_by
+from preparation_box
+order by name
 go
 
 /*===========================================================================*/

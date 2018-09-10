@@ -105,6 +105,9 @@ namespace DSA_lims
 
                     log.Info("Populating nuclides");
                     PopulateNuclides(conn);
+
+                    log.Info("Populating geometries");
+                    PopulateGeometries(conn);
                 }
                 
                 HideMenuItems();
@@ -402,6 +405,23 @@ namespace DSA_lims
             gridSysNuclideTrans.Columns["probability_of_decay_uncertainty"].HeaderText = "POD Unc.";
             gridSysNuclideTrans.Columns["total_internal_conversion"].HeaderText = "TIC conv.";
             gridSysNuclideTrans.Columns["kshell_conversion"].HeaderText = "KShell conv.";
+        }
+
+        private void PopulateGeometries(SqlConnection conn)
+        {
+            // Set data source
+            gridSysGeom.DataSource = DB.GetDataTable(conn, "csp_select_geometries_flat", CommandType.StoredProcedure);
+
+            // Set UI state
+            gridSysGeom.Columns["id"].Visible = false;
+            gridSysGeom.Columns["comment"].Visible = false;
+            gridSysGeom.Columns["created_by"].Visible = false;
+            gridSysGeom.Columns["create_date"].Visible = false;
+            gridSysGeom.Columns["updated_by"].Visible = false;
+            gridSysGeom.Columns["update_date"].Visible = false;
+
+            gridSysGeom.Columns["name"].HeaderText = "Name";
+            // FIXME
         }
 
         private void SetLanguageLabels(ResourceManager r)
@@ -999,6 +1019,47 @@ namespace DSA_lims
             {
                 PopulateEnergyLines(conn, nid);
             }
+        }
+
+        private void miNewGeometry_Click(object sender, EventArgs e)
+        {
+            // new geom
+            FormGeometry form = new FormGeometry(log);
+            if (form.ShowDialog() != DialogResult.OK)
+                return;
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                PopulateGeometries(conn);
+            }
+
+            lblStatus.Text = StrUtils.makeStatusMessage("Geometry " + form.Geometry.Name + " inserted");
+        }
+
+        private void miEditGeometry_Click(object sender, EventArgs e)
+        {
+            // edit geom
+            if (gridSysGeom.SelectedRows.Count < 1)
+                return;
+
+            DataGridViewRow row = gridSysGeom.SelectedRows[0];
+            Guid gid = new Guid(row.Cells[0].Value.ToString());
+
+            FormGeometry form = new FormGeometry(log, gid);
+            if (form.ShowDialog() != DialogResult.OK)
+                return;
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                PopulateGeometries(conn);
+            }
+
+            lblStatus.Text = StrUtils.makeStatusMessage("Geometry " + form.Geometry.Name + " updated");
+        }
+
+        private void miDeleteGeometry_Click(object sender, EventArgs e)
+        {
+            // delete geom
         }
     }    
 }

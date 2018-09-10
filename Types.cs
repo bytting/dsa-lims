@@ -100,6 +100,11 @@ namespace DSA_lims
         public string CreatedBy { get; set; }
         public DateTime UpdateDate { get; set; }
         public string UpdatedBy { get; set; }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 
     public class EnergyLineType
@@ -122,5 +127,29 @@ namespace DSA_lims
         public string CreatedBy { get; set; }
         public DateTime UpdateDate { get; set; }
         public string UpdatedBy { get; set; }
+
+        public override string ToString()
+        {
+            return NuclideId.ToString() + " : " + TransmissionFrom.ToString() + " -> " + TransmissionTo.ToString();
+        }
+    }
+
+    public class GeometryType
+    {
+        public Guid Id { get; set; }
+        public string Name { get; set; }
+        public double MinFillHeight { get; set; }
+        public double MaxFillHeight { get; set; }
+        public bool InUse { get; set; }
+        public string Comment { get; set; }
+        public DateTime CreateDate { get; set; }
+        public string CreatedBy { get; set; }
+        public DateTime UpdateDate { get; set; }
+        public string UpdatedBy { get; set; }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

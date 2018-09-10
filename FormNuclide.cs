@@ -78,6 +78,10 @@ namespace DSA_lims
                     tbKXrayEnergy.Text = reader["kxray_energy"].ToString();
                     tbFluorescenceYield.Text = reader["fluorescence_yield"].ToString();
                     tbComment.Text = reader["comment"].ToString();
+                    Nuclide.CreateDate = Convert.ToDateTime(reader["create_date"]);
+                    Nuclide.CreatedBy = reader["created_by"].ToString();
+                    Nuclide.UpdateDate = Convert.ToDateTime(reader["update_date"]);
+                    Nuclide.UpdatedBy = reader["updated_by"].ToString();
                 }
             }            
         }
@@ -161,11 +165,7 @@ namespace DSA_lims
                 Nuclide.XRayEnergy = Convert.ToDouble(tbKXrayEnergy.Text.Trim());
                 Nuclide.FluorescenceYield = Convert.ToDouble(tbFluorescenceYield.Text.Trim());
                 Nuclide.InUse = cbInUse.Checked;
-                Nuclide.Comment = tbComment.Text.Trim();
-                Nuclide.CreateDate = DateTime.Now;
-                Nuclide.CreatedBy = Common.Username;
-                Nuclide.UpdateDate = DateTime.Now;
-                Nuclide.UpdatedBy = Common.Username;
+                Nuclide.Comment = tbComment.Text.Trim();                
 
                 if (Nuclide.Id == Guid.Empty)
                     InsertNuclide();
@@ -190,6 +190,11 @@ namespace DSA_lims
 
             try
             {
+                Nuclide.CreateDate = DateTime.Now;
+                Nuclide.CreatedBy = Common.Username;
+                Nuclide.UpdateDate = DateTime.Now;
+                Nuclide.UpdatedBy = Common.Username;
+
                 connection = DB.OpenConnection();
                 transaction = connection.BeginTransaction();
 
@@ -235,6 +240,9 @@ namespace DSA_lims
 
             try
             {
+                Nuclide.UpdateDate = DateTime.Now;
+                Nuclide.UpdatedBy = Common.Username;
+
                 connection = DB.OpenConnection();
                 transaction = connection.BeginTransaction();
 

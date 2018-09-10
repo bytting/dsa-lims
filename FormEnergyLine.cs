@@ -85,6 +85,10 @@ namespace DSA_lims
                     tbKShellConv.Text = reader["kshell_conversion"].ToString();
                     cbInUse.Checked = Convert.ToBoolean(reader["in_use"]);
                     tbComment.Text = reader["comment"].ToString();
+                    EnergyLine.CreateDate = Convert.ToDateTime(reader["create_date"]);
+                    EnergyLine.CreatedBy = reader["created_by"].ToString();
+                    EnergyLine.UpdateDate = Convert.ToDateTime(reader["update_date"]);
+                    EnergyLine.UpdatedBy = reader["updated_by"].ToString();
                 }
             }
         }
@@ -120,11 +124,7 @@ namespace DSA_lims
             EnergyLine.TotalInternalConversion = Convert.ToDouble(tbTotInternalConv.Text.Trim());
             EnergyLine.KShellConversion = Convert.ToDouble(tbKShellConv.Text.Trim());
             EnergyLine.InUse = Convert.ToBoolean(cbInUse.Checked);
-            EnergyLine.Comment = tbComment.Text.Trim();
-            EnergyLine.CreateDate = DateTime.Now;
-            EnergyLine.CreatedBy = Common.Username;
-            EnergyLine.UpdateDate = DateTime.Now;
-            EnergyLine.UpdatedBy = Common.Username;
+            EnergyLine.Comment = tbComment.Text.Trim();            
 
             if (EnergyLine.Id == Guid.Empty)
                 InsertEnergyLine();
@@ -142,6 +142,11 @@ namespace DSA_lims
 
             try
             {
+                EnergyLine.CreateDate = DateTime.Now;
+                EnergyLine.CreatedBy = Common.Username;
+                EnergyLine.UpdateDate = DateTime.Now;
+                EnergyLine.UpdatedBy = Common.Username;
+
                 connection = DB.OpenConnection();
                 transaction = connection.BeginTransaction();
 
@@ -190,6 +195,9 @@ namespace DSA_lims
 
             try
             {
+                EnergyLine.UpdateDate = DateTime.Now;
+                EnergyLine.UpdatedBy = Common.Username;
+
                 connection = DB.OpenConnection();            
                 transaction = connection.BeginTransaction();
 

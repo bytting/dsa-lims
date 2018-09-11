@@ -1,6 +1,6 @@
 ﻿namespace DSA_lims
 {
-    partial class FormUnit
+    partial class FormActivityUnit
     {
         /// <summary>
         /// Required designer variable.
@@ -30,13 +30,13 @@
         {
             this.SuspendLayout();
             // 
-            // FormUnit
+            // FormActivityUnit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(410, 474);
-            this.Name = "FormUnit";
-            this.Text = "FormUnit";
+            this.ClientSize = new System.Drawing.Size(391, 406);
+            this.Name = "FormActivityUnit";
+            this.Text = "FormActivityUnit";
             this.ResumeLayout(false);
 
         }

@@ -29,9 +29,9 @@ using System.Windows.Forms;
 
 namespace DSA_lims
 {
-    public partial class FormUnit : Form
+    public partial class FormPreparationUnit : Form
     {
-        public FormUnit()
+        public FormPreparationUnit()
         {
             InitializeComponent();
         }

@@ -108,6 +108,9 @@ namespace DSA_lims
 
                     log.Info("Populating geometries");
                     PopulateGeometries(conn);
+
+                    log.Info("Populating counties");
+                    PopulateCounties(conn);
                 }
                 
                 HideMenuItems();
@@ -422,6 +425,46 @@ namespace DSA_lims
 
             gridSysGeom.Columns["name"].HeaderText = "Name";
             // FIXME
+        }
+
+        private void PopulateCounties(SqlConnection conn)
+        {
+            // Set data source
+            gridSysCounty.DataSource = DB.GetDataTable(conn, "csp_select_counties_flat", CommandType.StoredProcedure);
+
+            // Set UI state
+            gridSysCounty.Columns["id"].Visible = false;
+            gridSysCounty.Columns["created_by"].Visible = false;
+            gridSysCounty.Columns["create_date"].Visible = false;
+            gridSysCounty.Columns["updated_by"].Visible = false;
+            gridSysCounty.Columns["update_date"].Visible = false;
+
+            gridSysCounty.Columns["name"].HeaderText = "Name";
+            gridSysCounty.Columns["county_number"].HeaderText = "Number";
+            gridSysCounty.Columns["in_use"].HeaderText = "In use";
+        }
+
+        private void PopulateMunicipalities(SqlConnection conn, Guid cid)
+        {
+            // Set data source
+            SqlDataAdapter adapter = new SqlDataAdapter("csp_select_municipalities_for_county", conn);
+            adapter.SelectCommand.CommandType = CommandType.StoredProcedure;
+            adapter.SelectCommand.Parameters.AddWithValue("@county_id", cid);
+            DataTable dt = new DataTable();
+            adapter.Fill(dt);
+            gridSysMunicipality.DataSource = dt;
+
+            // Set UI state
+            gridSysMunicipality.Columns["id"].Visible = false;
+            gridSysMunicipality.Columns["county_id"].Visible = false;
+            gridSysMunicipality.Columns["created_by"].Visible = false;
+            gridSysMunicipality.Columns["create_date"].Visible = false;
+            gridSysMunicipality.Columns["updated_by"].Visible = false;
+            gridSysMunicipality.Columns["update_date"].Visible = false;
+
+            gridSysMunicipality.Columns["name"].HeaderText = "Name";
+            gridSysMunicipality.Columns["municipality_number"].HeaderText = "Number";
+            gridSysMunicipality.Columns["in_use"].HeaderText = "In use";
         }
 
         private void SetLanguageLabels(ResourceManager r)
@@ -1060,6 +1103,113 @@ namespace DSA_lims
         private void miDeleteGeometry_Click(object sender, EventArgs e)
         {
             // delete geom
+        }
+
+        private void miNewCounty_Click(object sender, EventArgs e)
+        {
+            // new county
+            FormCounty form = new FormCounty(log);
+            if (form.ShowDialog() != DialogResult.OK)
+                return;
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                PopulateCounties(conn);
+            }
+
+            lblStatus.Text = StrUtils.makeStatusMessage("County " + form.County.Name + " inserted");
+        }
+
+        private void miEditCounty_Click(object sender, EventArgs e)
+        {
+            // edit county
+            if (gridSysCounty.SelectedRows.Count < 1)
+                return;
+
+            DataGridViewRow row = gridSysCounty.SelectedRows[0];
+            Guid cid = new Guid(row.Cells[0].Value.ToString());
+
+            FormCounty form = new FormCounty(log, cid);
+            if (form.ShowDialog() != DialogResult.OK)
+                return;
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                PopulateCounties(conn);
+            }
+
+            lblStatus.Text = StrUtils.makeStatusMessage("County " + form.County.Name + " updated");
+        }
+
+        private void miDeleteCounty_Click(object sender, EventArgs e)
+        {
+            // delete county
+        }
+
+        private void miNewMunicipality_Click(object sender, EventArgs e)
+        {
+            // new municipality            
+            if (gridSysCounty.SelectedRows.Count < 1)
+                return;
+
+            DataGridViewRow row = gridSysCounty.SelectedRows[0];
+            Guid cid = new Guid(row.Cells[0].Value.ToString());
+
+            FormMunicipality form = new FormMunicipality(log, cid);
+            if (form.ShowDialog() != DialogResult.OK)
+                return;
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                PopulateMunicipalities(conn, cid);
+            }
+
+            lblStatus.Text = StrUtils.makeStatusMessage("Municipality " + form.Municipality.Name + " inserted");
+        }
+
+        private void miEditMunicipality_Click(object sender, EventArgs e)
+        {
+            // edit municipality
+            if (gridSysCounty.SelectedRows.Count < 1)
+                return;
+
+            if (gridSysMunicipality.SelectedRows.Count < 1)
+                return;
+
+            DataGridViewRow row = gridSysCounty.SelectedRows[0];
+            Guid cid = new Guid(row.Cells[0].Value.ToString());            
+
+            row = gridSysMunicipality.SelectedRows[0];
+            Guid mid = new Guid(row.Cells[0].Value.ToString());            
+
+            FormMunicipality form = new FormMunicipality(log, cid, mid);
+            if (form.ShowDialog() != DialogResult.OK)
+                return;
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                PopulateMunicipalities(conn, cid);
+            }
+
+            lblStatus.Text = StrUtils.makeStatusMessage("Municipality " + form.Municipality.Name + " updated");
+        }
+
+        private void miDeleteMunicipality_Click(object sender, EventArgs e)
+        {
+            // delete municipality
+        }
+
+        private void gridSysCounty_RowStateChanged(object sender, DataGridViewRowStateChangedEventArgs e)
+        {
+            if (e.StateChanged != DataGridViewElementStates.Selected)
+                return;
+
+            Guid cid = new Guid(e.Row.Cells[0].Value.ToString());
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                PopulateMunicipalities(conn, cid);
+            }
         }
     }    
 }

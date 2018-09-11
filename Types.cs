@@ -152,4 +152,39 @@ namespace DSA_lims
             return Name;
         }
     }
+
+    public class CountyType
+    {
+        public Guid Id { get; set; }
+        public string Name { get; set; }
+        public int Number { get; set; }
+        public bool InUse { get; set; }
+        public DateTime CreateDate { get; set; }
+        public string CreatedBy { get; set; }
+        public DateTime UpdateDate { get; set; }
+        public string UpdatedBy { get; set; }
+
+        public override string ToString()
+        {
+            return Name;
+        }
+    }
+
+    public class MunicipalityType
+    {
+        public Guid Id { get; set; }
+        public Guid CountyId { get; set; }
+        public string Name { get; set; }
+        public int Number { get; set; }
+        public bool InUse { get; set; }
+        public DateTime CreateDate { get; set; }
+        public string CreatedBy { get; set; }
+        public DateTime UpdateDate { get; set; }
+        public string UpdatedBy { get; set; }
+
+        public override string ToString()
+        {
+            return Name;
+        }
+    }    
 }

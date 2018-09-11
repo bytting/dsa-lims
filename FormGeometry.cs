@@ -67,8 +67,8 @@ namespace DSA_lims
 
                     reader.Read();
                     tbName.Text = reader["name"].ToString();
-                    tbMinFillHeight.Text = reader["min_fill_height"].ToString();
-                    tbMaxFillHeight.Text = reader["max_fill_height"].ToString();
+                    tbMinFillHeight.Text = reader["min_fill_height_mm"].ToString();
+                    tbMaxFillHeight.Text = reader["max_fill_height_mm"].ToString();
                     cbInUse.Checked = Convert.ToBoolean(reader["in_use"]);
                     tbComment.Text = reader["comment"].ToString();
                     Geometry.CreateDate = Convert.ToDateTime(reader["create_date"]);

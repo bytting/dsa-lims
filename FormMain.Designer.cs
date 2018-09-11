@@ -90,6 +90,9 @@
             this.miMunicipalities = new System.Windows.Forms.ToolStripMenuItem();
             this.miAccreditationRules = new System.Windows.Forms.ToolStripMenuItem();
             this.miGeometries = new System.Windows.Forms.ToolStripMenuItem();
+            this.miNewGeometry = new System.Windows.Forms.ToolStripMenuItem();
+            this.miEditGeometry = new System.Windows.Forms.ToolStripMenuItem();
+            this.miDeleteGeometry = new System.Windows.Forms.ToolStripMenuItem();
             this.miHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.miLogView = new System.Windows.Forms.ToolStripMenuItem();
             this.menuItemAbout = new System.Windows.Forms.ToolStripMenuItem();
@@ -665,14 +668,14 @@
             this.toolStripButton55 = new System.Windows.Forms.ToolStripButton();
             this.tabSysMunicipalities = new System.Windows.Forms.TabPage();
             this.splitContainer19 = new System.Windows.Forms.SplitContainer();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.gridSysCounty = new System.Windows.Forms.DataGridView();
             this.toolsSysCounties = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel32 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton58 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton59 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton77 = new System.Windows.Forms.ToolStripButton();
-            this.dataGridView13 = new System.Windows.Forms.DataGridView();
+            this.gridSysMunicipality = new System.Windows.Forms.DataGridView();
             this.toolsSysMunicipalities = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel33 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
@@ -715,9 +718,13 @@
             this.tools = new System.Windows.Forms.ToolStrip();
             this.btnMenu = new System.Windows.Forms.ToolStripButton();
             this.lblCurrentTab = new System.Windows.Forms.ToolStripLabel();
-            this.miNewGeometry = new System.Windows.Forms.ToolStripMenuItem();
-            this.miEditGeometry = new System.Windows.Forms.ToolStripMenuItem();
-            this.miDeleteGeometry = new System.Windows.Forms.ToolStripMenuItem();
+            this.miNewCounty = new System.Windows.Forms.ToolStripMenuItem();
+            this.miEditCounty = new System.Windows.Forms.ToolStripMenuItem();
+            this.miDeleteCounty = new System.Windows.Forms.ToolStripMenuItem();
+            this.miNewMunicipality = new System.Windows.Forms.ToolStripMenuItem();
+            this.miEditMunicipality = new System.Windows.Forms.ToolStripMenuItem();
+            this.miDeleteMunicipality = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator50 = new System.Windows.Forms.ToolStripSeparator();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tabs.SuspendLayout();
@@ -970,9 +977,9 @@
             this.splitContainer19.Panel1.SuspendLayout();
             this.splitContainer19.Panel2.SuspendLayout();
             this.splitContainer19.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridSysCounty)).BeginInit();
             this.toolsSysCounties.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView13)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridSysMunicipality)).BeginInit();
             this.toolsSysMunicipalities.SuspendLayout();
             this.tabSysAccredRules.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView22)).BeginInit();
@@ -1445,6 +1452,14 @@
             // 
             // miMunicipalities
             // 
+            this.miMunicipalities.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.miNewCounty,
+            this.miEditCounty,
+            this.miDeleteCounty,
+            this.toolStripSeparator50,
+            this.miNewMunicipality,
+            this.miEditMunicipality,
+            this.miDeleteMunicipality});
             this.miMunicipalities.Name = "miMunicipalities";
             this.miMunicipalities.Size = new System.Drawing.Size(173, 22);
             this.miMunicipalities.Text = "&Municipalities";
@@ -1464,6 +1479,27 @@
             this.miGeometries.Name = "miGeometries";
             this.miGeometries.Size = new System.Drawing.Size(173, 22);
             this.miGeometries.Text = "&Geometries";
+            // 
+            // miNewGeometry
+            // 
+            this.miNewGeometry.Name = "miNewGeometry";
+            this.miNewGeometry.Size = new System.Drawing.Size(161, 22);
+            this.miNewGeometry.Text = "&New geometry";
+            this.miNewGeometry.Click += new System.EventHandler(this.miNewGeometry_Click);
+            // 
+            // miEditGeometry
+            // 
+            this.miEditGeometry.Name = "miEditGeometry";
+            this.miEditGeometry.Size = new System.Drawing.Size(161, 22);
+            this.miEditGeometry.Text = "&Edit geometry";
+            this.miEditGeometry.Click += new System.EventHandler(this.miEditGeometry_Click);
+            // 
+            // miDeleteGeometry
+            // 
+            this.miDeleteGeometry.Name = "miDeleteGeometry";
+            this.miDeleteGeometry.Size = new System.Drawing.Size(161, 22);
+            this.miDeleteGeometry.Text = "&Delete geometry";
+            this.miDeleteGeometry.Click += new System.EventHandler(this.miDeleteGeometry_Click);
             // 
             // miHelp
             // 
@@ -3212,7 +3248,7 @@
             // 
             this.splitContainer5.Panel2.Controls.Add(this.panel8);
             this.splitContainer5.Size = new System.Drawing.Size(1115, 241);
-            this.splitContainer5.SplitterDistance = 520;
+            this.splitContainer5.SplitterDistance = 519;
             this.splitContainer5.SplitterWidth = 5;
             this.splitContainer5.TabIndex = 1;
             // 
@@ -3227,7 +3263,7 @@
             this.dataGridView10.Location = new System.Drawing.Point(0, 25);
             this.dataGridView10.Name = "dataGridView10";
             this.dataGridView10.ReadOnly = true;
-            this.dataGridView10.Size = new System.Drawing.Size(520, 216);
+            this.dataGridView10.Size = new System.Drawing.Size(519, 216);
             this.dataGridView10.TabIndex = 0;
             // 
             // toolsSampleResAnalMeth
@@ -3237,7 +3273,7 @@
             this.toolStripLabel6});
             this.toolsSampleResAnalMeth.Location = new System.Drawing.Point(0, 0);
             this.toolsSampleResAnalMeth.Name = "toolsSampleResAnalMeth";
-            this.toolsSampleResAnalMeth.Size = new System.Drawing.Size(520, 25);
+            this.toolsSampleResAnalMeth.Size = new System.Drawing.Size(519, 25);
             this.toolsSampleResAnalMeth.TabIndex = 1;
             this.toolsSampleResAnalMeth.Text = "toolStrip5";
             // 
@@ -3255,7 +3291,7 @@
             this.panel8.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel8.Location = new System.Drawing.Point(0, 0);
             this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(590, 241);
+            this.panel8.Size = new System.Drawing.Size(591, 241);
             this.panel8.TabIndex = 3;
             // 
             // dataGridView11
@@ -3269,7 +3305,7 @@
             this.dataGridView11.Location = new System.Drawing.Point(0, 25);
             this.dataGridView11.Name = "dataGridView11";
             this.dataGridView11.ReadOnly = true;
-            this.dataGridView11.Size = new System.Drawing.Size(590, 216);
+            this.dataGridView11.Size = new System.Drawing.Size(591, 216);
             this.dataGridView11.TabIndex = 1;
             // 
             // toolsSampleResAttachments
@@ -3283,7 +3319,7 @@
             this.toolStripButton18});
             this.toolsSampleResAttachments.Location = new System.Drawing.Point(0, 0);
             this.toolsSampleResAttachments.Name = "toolsSampleResAttachments";
-            this.toolsSampleResAttachments.Size = new System.Drawing.Size(590, 25);
+            this.toolsSampleResAttachments.Size = new System.Drawing.Size(591, 25);
             this.toolsSampleResAttachments.TabIndex = 0;
             this.toolsSampleResAttachments.Text = "toolStrip11";
             // 
@@ -3502,7 +3538,7 @@
             // 
             this.splitContainer6.Panel2.Controls.Add(this.panel12);
             this.splitContainer6.Size = new System.Drawing.Size(1115, 572);
-            this.splitContainer6.SplitterDistance = 780;
+            this.splitContainer6.SplitterDistance = 779;
             this.splitContainer6.SplitterWidth = 5;
             this.splitContainer6.TabIndex = 4;
             // 
@@ -3522,7 +3558,7 @@
             // 
             this.splitContainer7.Panel2.Controls.Add(this.treeView1);
             this.splitContainer7.Panel2.Controls.Add(this.toolsOrderContent);
-            this.splitContainer7.Size = new System.Drawing.Size(780, 572);
+            this.splitContainer7.Size = new System.Drawing.Size(779, 572);
             this.splitContainer7.SplitterDistance = 361;
             this.splitContainer7.SplitterWidth = 5;
             this.splitContainer7.TabIndex = 0;
@@ -3709,7 +3745,7 @@
             this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeView1.Location = new System.Drawing.Point(0, 25);
             this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(414, 547);
+            this.treeView1.Size = new System.Drawing.Size(413, 547);
             this.treeView1.TabIndex = 0;
             // 
             // toolsOrderContent
@@ -3727,7 +3763,7 @@
             this.toolStripButton34});
             this.toolsOrderContent.Location = new System.Drawing.Point(0, 0);
             this.toolsOrderContent.Name = "toolsOrderContent";
-            this.toolsOrderContent.Size = new System.Drawing.Size(414, 25);
+            this.toolsOrderContent.Size = new System.Drawing.Size(413, 25);
             this.toolsOrderContent.TabIndex = 1;
             this.toolsOrderContent.Text = "toolStrip16";
             // 
@@ -3809,7 +3845,7 @@
             this.panel12.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel12.Location = new System.Drawing.Point(0, 0);
             this.panel12.Name = "panel12";
-            this.panel12.Size = new System.Drawing.Size(330, 572);
+            this.panel12.Size = new System.Drawing.Size(331, 572);
             this.panel12.TabIndex = 1;
             // 
             // dataGridView12
@@ -3823,7 +3859,7 @@
             this.dataGridView12.Location = new System.Drawing.Point(0, 25);
             this.dataGridView12.Name = "dataGridView12";
             this.dataGridView12.ReadOnly = true;
-            this.dataGridView12.Size = new System.Drawing.Size(330, 547);
+            this.dataGridView12.Size = new System.Drawing.Size(331, 547);
             this.dataGridView12.TabIndex = 1;
             // 
             // toolsOrderAttachments
@@ -3837,7 +3873,7 @@
             this.toolStripButton23});
             this.toolsOrderAttachments.Location = new System.Drawing.Point(0, 0);
             this.toolsOrderAttachments.Name = "toolsOrderAttachments";
-            this.toolsOrderAttachments.Size = new System.Drawing.Size(330, 25);
+            this.toolsOrderAttachments.Size = new System.Drawing.Size(331, 25);
             this.toolsOrderAttachments.TabIndex = 0;
             this.toolsOrderAttachments.Text = "toolStrip15";
             // 
@@ -7516,29 +7552,37 @@
             // 
             // splitContainer19.Panel1
             // 
-            this.splitContainer19.Panel1.Controls.Add(this.dataGridView1);
+            this.splitContainer19.Panel1.Controls.Add(this.gridSysCounty);
             this.splitContainer19.Panel1.Controls.Add(this.toolsSysCounties);
             // 
             // splitContainer19.Panel2
             // 
-            this.splitContainer19.Panel2.Controls.Add(this.dataGridView13);
+            this.splitContainer19.Panel2.Controls.Add(this.gridSysMunicipality);
             this.splitContainer19.Panel2.Controls.Add(this.toolsSysMunicipalities);
             this.splitContainer19.Size = new System.Drawing.Size(1115, 604);
             this.splitContainer19.SplitterDistance = 517;
             this.splitContainer19.SplitterWidth = 5;
             this.splitContainer19.TabIndex = 1;
             // 
-            // dataGridView1
+            // gridSysCounty
             // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView1.Location = new System.Drawing.Point(0, 25);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.Size = new System.Drawing.Size(517, 579);
-            this.dataGridView1.TabIndex = 1;
+            this.gridSysCounty.AllowUserToAddRows = false;
+            this.gridSysCounty.AllowUserToDeleteRows = false;
+            this.gridSysCounty.AllowUserToResizeRows = false;
+            this.gridSysCounty.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.gridSysCounty.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
+            this.gridSysCounty.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.gridSysCounty.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridSysCounty.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gridSysCounty.Location = new System.Drawing.Point(0, 25);
+            this.gridSysCounty.MultiSelect = false;
+            this.gridSysCounty.Name = "gridSysCounty";
+            this.gridSysCounty.ReadOnly = true;
+            this.gridSysCounty.RowHeadersVisible = false;
+            this.gridSysCounty.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.gridSysCounty.Size = new System.Drawing.Size(517, 579);
+            this.gridSysCounty.TabIndex = 1;
+            this.gridSysCounty.RowStateChanged += new System.Windows.Forms.DataGridViewRowStateChangedEventHandler(this.gridSysCounty_RowStateChanged);
             // 
             // toolsSysCounties
             // 
@@ -7574,6 +7618,7 @@
             this.toolStripButton58.Name = "toolStripButton58";
             this.toolStripButton58.Size = new System.Drawing.Size(51, 22);
             this.toolStripButton58.Text = "New";
+            this.toolStripButton58.Click += new System.EventHandler(this.miNewCounty_Click);
             // 
             // toolStripButton59
             // 
@@ -7582,6 +7627,7 @@
             this.toolStripButton59.Name = "toolStripButton59";
             this.toolStripButton59.Size = new System.Drawing.Size(47, 22);
             this.toolStripButton59.Text = "Edit";
+            this.toolStripButton59.Click += new System.EventHandler(this.miEditCounty_Click);
             // 
             // toolStripButton77
             // 
@@ -7590,18 +7636,25 @@
             this.toolStripButton77.Name = "toolStripButton77";
             this.toolStripButton77.Size = new System.Drawing.Size(60, 22);
             this.toolStripButton77.Text = "Delete";
+            this.toolStripButton77.Click += new System.EventHandler(this.miDeleteCounty_Click);
             // 
-            // dataGridView13
+            // gridSysMunicipality
             // 
-            this.dataGridView13.AllowUserToAddRows = false;
-            this.dataGridView13.AllowUserToDeleteRows = false;
-            this.dataGridView13.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView13.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView13.Location = new System.Drawing.Point(0, 25);
-            this.dataGridView13.Name = "dataGridView13";
-            this.dataGridView13.ReadOnly = true;
-            this.dataGridView13.Size = new System.Drawing.Size(593, 579);
-            this.dataGridView13.TabIndex = 1;
+            this.gridSysMunicipality.AllowUserToAddRows = false;
+            this.gridSysMunicipality.AllowUserToDeleteRows = false;
+            this.gridSysMunicipality.AllowUserToResizeRows = false;
+            this.gridSysMunicipality.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.gridSysMunicipality.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
+            this.gridSysMunicipality.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.gridSysMunicipality.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridSysMunicipality.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gridSysMunicipality.Location = new System.Drawing.Point(0, 25);
+            this.gridSysMunicipality.Name = "gridSysMunicipality";
+            this.gridSysMunicipality.ReadOnly = true;
+            this.gridSysMunicipality.RowHeadersVisible = false;
+            this.gridSysMunicipality.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.gridSysMunicipality.Size = new System.Drawing.Size(593, 579);
+            this.gridSysMunicipality.TabIndex = 1;
             // 
             // toolsSysMunicipalities
             // 
@@ -7637,6 +7690,7 @@
             this.toolStripButton60.Name = "toolStripButton60";
             this.toolStripButton60.Size = new System.Drawing.Size(51, 22);
             this.toolStripButton60.Text = "New";
+            this.toolStripButton60.Click += new System.EventHandler(this.miNewMunicipality_Click);
             // 
             // toolStripButton61
             // 
@@ -7645,6 +7699,7 @@
             this.toolStripButton61.Name = "toolStripButton61";
             this.toolStripButton61.Size = new System.Drawing.Size(47, 22);
             this.toolStripButton61.Text = "Edit";
+            this.toolStripButton61.Click += new System.EventHandler(this.miEditMunicipality_Click);
             // 
             // toolStripButton78
             // 
@@ -7653,6 +7708,7 @@
             this.toolStripButton78.Name = "toolStripButton78";
             this.toolStripButton78.Size = new System.Drawing.Size(60, 22);
             this.toolStripButton78.Text = "Delete";
+            this.toolStripButton78.Click += new System.EventHandler(this.miDeleteMunicipality_Click);
             // 
             // tabSysAccredRules
             // 
@@ -8031,26 +8087,52 @@
             this.lblCurrentTab.Size = new System.Drawing.Size(98, 22);
             this.lblCurrentTab.Text = "<lblCurrentTab>";
             // 
-            // miNewGeometry
+            // miNewCounty
             // 
-            this.miNewGeometry.Name = "miNewGeometry";
-            this.miNewGeometry.Size = new System.Drawing.Size(161, 22);
-            this.miNewGeometry.Text = "&New geometry";
-            this.miNewGeometry.Click += new System.EventHandler(this.miNewGeometry_Click);
+            this.miNewCounty.Name = "miNewCounty";
+            this.miNewCounty.Size = new System.Drawing.Size(176, 22);
+            this.miNewCounty.Text = "&New county";
+            this.miNewCounty.Click += new System.EventHandler(this.miNewCounty_Click);
             // 
-            // miEditGeometry
+            // miEditCounty
             // 
-            this.miEditGeometry.Name = "miEditGeometry";
-            this.miEditGeometry.Size = new System.Drawing.Size(161, 22);
-            this.miEditGeometry.Text = "&Edit geometry";
-            this.miEditGeometry.Click += new System.EventHandler(this.miEditGeometry_Click);
+            this.miEditCounty.Name = "miEditCounty";
+            this.miEditCounty.Size = new System.Drawing.Size(176, 22);
+            this.miEditCounty.Text = "&Edit county";
+            this.miEditCounty.Click += new System.EventHandler(this.miEditCounty_Click);
             // 
-            // miDeleteGeometry
+            // miDeleteCounty
             // 
-            this.miDeleteGeometry.Name = "miDeleteGeometry";
-            this.miDeleteGeometry.Size = new System.Drawing.Size(161, 22);
-            this.miDeleteGeometry.Text = "&Delete geometry";
-            this.miDeleteGeometry.Click += new System.EventHandler(this.miDeleteGeometry_Click);
+            this.miDeleteCounty.Name = "miDeleteCounty";
+            this.miDeleteCounty.Size = new System.Drawing.Size(176, 22);
+            this.miDeleteCounty.Text = "&Delete county";
+            this.miDeleteCounty.Click += new System.EventHandler(this.miDeleteCounty_Click);
+            // 
+            // miNewMunicipality
+            // 
+            this.miNewMunicipality.Name = "miNewMunicipality";
+            this.miNewMunicipality.Size = new System.Drawing.Size(176, 22);
+            this.miNewMunicipality.Text = "New &municipality";
+            this.miNewMunicipality.Click += new System.EventHandler(this.miNewMunicipality_Click);
+            // 
+            // miEditMunicipality
+            // 
+            this.miEditMunicipality.Name = "miEditMunicipality";
+            this.miEditMunicipality.Size = new System.Drawing.Size(176, 22);
+            this.miEditMunicipality.Text = "Edit m&unicipality";
+            this.miEditMunicipality.Click += new System.EventHandler(this.miEditMunicipality_Click);
+            // 
+            // miDeleteMunicipality
+            // 
+            this.miDeleteMunicipality.Name = "miDeleteMunicipality";
+            this.miDeleteMunicipality.Size = new System.Drawing.Size(176, 22);
+            this.miDeleteMunicipality.Text = "Delete mun&icipality";
+            this.miDeleteMunicipality.Click += new System.EventHandler(this.miDeleteMunicipality_Click);
+            // 
+            // toolStripSeparator50
+            // 
+            this.toolStripSeparator50.Name = "toolStripSeparator50";
+            this.toolStripSeparator50.Size = new System.Drawing.Size(173, 6);
             // 
             // FormMain
             // 
@@ -8447,10 +8529,10 @@
             this.splitContainer19.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer19)).EndInit();
             this.splitContainer19.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridSysCounty)).EndInit();
             this.toolsSysCounties.ResumeLayout(false);
             this.toolsSysCounties.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView13)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridSysMunicipality)).EndInit();
             this.toolsSysMunicipalities.ResumeLayout(false);
             this.toolsSysMunicipalities.PerformLayout();
             this.tabSysAccredRules.ResumeLayout(false);
@@ -8989,11 +9071,11 @@
         private System.Windows.Forms.ToolStripButton toolStripButton55;
         private System.Windows.Forms.TabPage tabSysMunicipalities;
         private System.Windows.Forms.SplitContainer splitContainer19;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView gridSysCounty;
         private System.Windows.Forms.ToolStrip toolsSysCounties;
         private System.Windows.Forms.ToolStripButton toolStripButton58;
         private System.Windows.Forms.ToolStripButton toolStripButton59;
-        private System.Windows.Forms.DataGridView dataGridView13;
+        private System.Windows.Forms.DataGridView gridSysMunicipality;
         private System.Windows.Forms.ToolStrip toolsSysMunicipalities;
         private System.Windows.Forms.ToolStripButton toolStripButton60;
         private System.Windows.Forms.ToolStripButton toolStripButton61;
@@ -9175,6 +9257,13 @@
         private System.Windows.Forms.ToolStripMenuItem miNewGeometry;
         private System.Windows.Forms.ToolStripMenuItem miEditGeometry;
         private System.Windows.Forms.ToolStripMenuItem miDeleteGeometry;
+        private System.Windows.Forms.ToolStripMenuItem miNewCounty;
+        private System.Windows.Forms.ToolStripMenuItem miEditCounty;
+        private System.Windows.Forms.ToolStripMenuItem miDeleteCounty;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator50;
+        private System.Windows.Forms.ToolStripMenuItem miNewMunicipality;
+        private System.Windows.Forms.ToolStripMenuItem miEditMunicipality;
+        private System.Windows.Forms.ToolStripMenuItem miDeleteMunicipality;
     }
 }
 

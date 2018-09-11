@@ -255,9 +255,9 @@ GO
 IF OBJECT_ID('dbo.county', 'U') IS NOT NULL DROP TABLE county;
 
 CREATE TABLE county (
-	id uniqueidentifier primary key NOT NULL,
-	county_number int NOT NULL,
+	id uniqueidentifier primary key NOT NULL,	
 	name nvarchar(128) unique NOT NULL,
+	county_number int NOT NULL,
 	in_use bit default 1,
 	create_date datetime NOT NULL,
 	created_by nvarchar(50) NOT NULL,
@@ -273,8 +273,8 @@ IF OBJECT_ID('dbo.municipality', 'U') IS NOT NULL DROP TABLE municipality;
 CREATE TABLE municipality (
 	id uniqueidentifier primary key NOT NULL,
 	county_id uniqueidentifier NOT NULL,
-	municipality_number int NOT NULL,
 	name nvarchar(128) NOT NULL,
+	municipality_number int NOT NULL,	
 	in_use bit default 1,
 	create_date datetime NOT NULL,
 	created_by nvarchar(50) NOT NULL,
@@ -1287,6 +1287,147 @@ select
 	updated_by
 from preparation_box
 order by name
+go
+
+/*===========================================================================*/
+
+create PROC csp_select_county
+	@id uniqueidentifier
+as 
+	select * from county where id = @id
+go
+
+/*===========================================================================*/
+
+create PROC csp_insert_county
+	@id uniqueidentifier,
+	@name nvarchar(80),
+	@county_number int,	
+	@in_use bit,
+	@create_date datetime,
+	@created_by nvarchar(50),
+	@update_date datetime,
+	@updated_by nvarchar(50)	
+as 
+	insert into county values (
+		@id,		
+		@name,		
+		@county_number,		
+		@in_use,
+		@create_date,
+		@created_by,
+		@update_date,
+		@updated_by
+	);
+go
+
+/*===========================================================================*/
+
+create PROC csp_update_county
+	@id uniqueidentifier,
+	@name nvarchar(80),
+	@county_number int,	
+	@in_use bit,
+	@update_date datetime,
+	@updated_by nvarchar(50)	
+as 
+	update county set 
+		name = @name,
+		county_number = @county_number,		
+		in_use = @in_use,		
+		update_date = @update_date,
+		updated_by = @updated_by
+	where id = @id
+go
+
+/*===========================================================================*/
+
+create PROC csp_select_counties_flat
+as
+select 
+	id,
+	name,
+	county_number, 	
+	in_use,	
+	create_date,
+	created_by,
+	update_date,
+	updated_by
+from county
+order by name
+go
+
+/*===========================================================================*/
+
+create PROC csp_select_municipality
+	@id uniqueidentifier
+as 
+	select * from municipality where id = @id
+go
+
+/*===========================================================================*/
+
+create PROC csp_select_municipalities_for_county
+	@county_id uniqueidentifier
+as 
+	select 
+		id,	
+		county_id,
+		name,
+		municipality_number,
+		in_use,
+		create_date,
+		created_by,
+		update_date,
+		updated_by
+	from municipality
+	where county_id = @county_id
+	order by name
+go
+
+/*===========================================================================*/
+
+create PROC csp_insert_municipality
+	@id uniqueidentifier,
+	@county_id uniqueidentifier,
+	@name nvarchar(80),
+	@municipality_number int,	
+	@in_use bit,
+	@create_date datetime,
+	@created_by nvarchar(50),
+	@update_date datetime,
+	@updated_by nvarchar(50)	
+as 
+	insert into municipality values (
+		@id,		
+		@county_id,
+		@name,		
+		@municipality_number,		
+		@in_use,
+		@create_date,
+		@created_by,
+		@update_date,
+		@updated_by
+	);
+go
+
+/*===========================================================================*/
+
+create PROC csp_update_municipality
+	@id uniqueidentifier,
+	@name nvarchar(80),
+	@municipality_number int,	
+	@in_use bit,
+	@update_date datetime,
+	@updated_by nvarchar(50)	
+as 
+	update municipality set 
+		name = @name,
+		municipality_number = @municipality_number,		
+		in_use = @in_use,		
+		update_date = @update_date,
+		updated_by = @updated_by
+	where id = @id
 go
 
 /*===========================================================================*/

@@ -17,10 +17,13 @@
 */
 // Authors: Dag Robole,
 
+using log4net;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -31,9 +34,159 @@ namespace DSA_lims
 {
     public partial class FormCounty : Form
     {
-        public FormCounty()
+        private ILog mLog = null;
+
+        public CountyType County = new CountyType();
+
+        public FormCounty(ILog log)
         {
             InitializeComponent();
+            mLog = log;
+            Text = "Create county";
+            cbInUse.Checked = true;
+        }
+
+        public FormCounty(ILog log, Guid cid)
+        {
+            InitializeComponent();
+            mLog = log;
+            County.Id = cid;
+            Text = "Update county";
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                SqlCommand cmd = new SqlCommand("csp_select_county", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@id", cid);
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    if (!reader.HasRows)
+                        throw new Exception("County with ID " + cid.ToString() + " was not found");
+
+                    reader.Read();
+                    tbName.Text = reader["name"].ToString();
+                    tbNumber.Text = reader["county_number"].ToString();
+                    cbInUse.Checked = Convert.ToBoolean(reader["in_use"]);                    
+                    County.CreateDate = Convert.ToDateTime(reader["create_date"]);
+                    County.CreatedBy = reader["created_by"].ToString();
+                    County.UpdateDate = Convert.ToDateTime(reader["update_date"]);
+                    County.UpdatedBy = reader["updated_by"].ToString();
+                }
+            }
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.Cancel;
+            Close();
+        }
+
+        private void btnOk_Click(object sender, EventArgs e)
+        {
+            if(String.IsNullOrEmpty(tbName.Text.Trim()))
+            {
+                MessageBox.Show("Name is mandatory");
+                return;
+            }
+
+            if (String.IsNullOrEmpty(tbNumber.Text.Trim()))
+            {
+                MessageBox.Show("Number is mandatory");
+                return;
+            }
+
+            County.Name = tbName.Text.Trim();
+            County.Number = Convert.ToInt32(tbNumber.Text.Trim());
+            County.InUse = cbInUse.Checked;
+
+            if (County.Id == Guid.Empty)
+                InsertCounty();
+            else
+                UpdateCounty();
+
+            DialogResult = DialogResult.OK;
+            Close();
+        }
+
+        private void InsertCounty()
+        {
+            SqlConnection connection = null;
+            SqlTransaction transaction = null;
+
+            try
+            {
+                County.CreateDate = DateTime.Now;
+                County.CreatedBy = Common.Username;
+                County.UpdateDate = DateTime.Now;
+                County.UpdatedBy = Common.Username;
+
+                connection = DB.OpenConnection();
+                transaction = connection.BeginTransaction();
+
+                SqlCommand cmd = new SqlCommand("csp_insert_county", connection, transaction);
+                cmd.CommandType = CommandType.StoredProcedure;
+                County.Id = Guid.NewGuid();
+                cmd.Parameters.AddWithValue("@id", County.Id);
+                cmd.Parameters.AddWithValue("@name", County.Name);
+                cmd.Parameters.AddWithValue("@county_number", County.Number);
+                cmd.Parameters.AddWithValue("@in_use", County.InUse);
+                cmd.Parameters.AddWithValue("@create_date", County.CreateDate);
+                cmd.Parameters.AddWithValue("@created_by", County.CreatedBy);
+                cmd.Parameters.AddWithValue("@update_date", County.UpdateDate);
+                cmd.Parameters.AddWithValue("@updated_by", County.UpdatedBy);
+                cmd.ExecuteNonQuery();
+
+                DB.AddAuditMessage(connection, transaction, "county", County.Id, AuditOperation.Insert, JsonConvert.SerializeObject(County));
+
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                transaction?.Rollback();
+                mLog.Error(ex);
+            }
+            finally
+            {
+                connection?.Close();
+            }
+        }
+
+        private void UpdateCounty()
+        {
+            SqlConnection connection = null;
+            SqlTransaction transaction = null;
+
+            try
+            {
+                County.UpdateDate = DateTime.Now;
+                County.UpdatedBy = Common.Username;
+
+                connection = DB.OpenConnection();
+                transaction = connection.BeginTransaction();
+
+                SqlCommand cmd = new SqlCommand("csp_update_county", connection, transaction);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@id", County.Id);
+                cmd.Parameters.AddWithValue("@name", County.Name);
+                cmd.Parameters.AddWithValue("@county_number", County.Number);                
+                cmd.Parameters.AddWithValue("@in_use", County.InUse);                
+                cmd.Parameters.AddWithValue("@update_date", County.UpdateDate);
+                cmd.Parameters.AddWithValue("@updated_by", County.UpdatedBy);
+                cmd.ExecuteNonQuery();
+
+                DB.AddAuditMessage(connection, transaction, "county", County.Id, AuditOperation.Update, JsonConvert.SerializeObject(County));
+
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                transaction?.Rollback();
+                mLog.Error(ex);
+            }
+            finally
+            {
+                connection?.Close();
+            }
         }
     }
 }

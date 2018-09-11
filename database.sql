@@ -500,7 +500,7 @@ CREATE TABLE preparation (
 	instance_status_id int default 1,
 	amount float default 0,
 	prep_unit_id int default 1,		
-	fill_height_mm float default 0,
+	fill_height_mm float default 0,		
 	comment nvarchar(1000) default NULL,
 	create_date datetime NOT NULL,
 	created_by nvarchar(50) NOT NULL,
@@ -562,7 +562,7 @@ CREATE TABLE analysis (
 	activity_unit_id int NOT NULL,
 	sigma float NOT NULL,
 	nuclide_library nvarchar(256) default NULL,
-	mda_library nvarchar(256) default NULL,
+	mda_library nvarchar(256) default NULL,	
 	comment nvarchar(1000) default NULL,
 	create_date datetime NOT NULL,
 	created_by nvarchar(50) NOT NULL,
@@ -698,6 +698,23 @@ GO
 
 /*___________________________________________________________________________*/
 
+IF OBJECT_ID('dbo.sample_storage', 'U') IS NOT NULL DROP TABLE sample_storage;
+
+CREATE TABLE sample_storage (
+	id uniqueidentifier primary key NOT NULL,
+	name nvarchar(256) unique NOT NULL,
+	address nvarchar(1000) default NULL,
+	in_use bit default 1,
+	comment nvarchar(1000) default NULL,
+	create_date datetime NOT NULL,
+	created_by nvarchar(50) NOT NULL,
+	update_date datetime NOT NULL,
+	updated_by nvarchar(50) NOT NULL
+)
+GO
+
+/*___________________________________________________________________________*/
+
 IF OBJECT_ID('dbo.sample_component', 'U') IS NOT NULL DROP TABLE sample_component;
 
 CREATE TABLE sample_component (
@@ -738,6 +755,7 @@ CREATE TABLE sample (
 	laboratory_id uniqueidentifier NOT NULL,
 	instance_status_id int default 1,
 	sample_type_id uniqueidentifier NOT NULL,
+	sample_storage_id uniqueidentifier default NULL,
 	sample_component_id uniqueidentifier default NULL,
 	project2_id uniqueidentifier NOT NULL,
 	station_id uniqueidentifier default NULL,
@@ -1428,6 +1446,162 @@ as
 		update_date = @update_date,
 		updated_by = @updated_by
 	where id = @id
+go
+
+/*===========================================================================*/
+
+create PROC csp_select_station
+	@id uniqueidentifier
+as 
+	select * from station where id = @id
+go
+
+/*===========================================================================*/
+
+create PROC csp_insert_station
+	@id uniqueidentifier,	
+	@name nvarchar(80),
+	@latitude float,	
+	@longitude float,	
+	@altitude float,	
+	@in_use bit,
+	@comment nvarchar(1000),
+	@create_date datetime,
+	@created_by nvarchar(50),
+	@update_date datetime,
+	@updated_by nvarchar(50)	
+as 
+	insert into station values (
+		@id,		
+		@name,
+		@latitude,		
+		@longitude,		
+		@altitude,		
+		@in_use,
+		@comment,
+		@create_date,
+		@created_by,
+		@update_date,
+		@updated_by
+	);
+go
+
+/*===========================================================================*/
+
+create PROC csp_update_station
+	@id uniqueidentifier,	
+	@name nvarchar(80),
+	@latitude float,	
+	@longitude float,	
+	@altitude float,	
+	@in_use bit,
+	@comment nvarchar(1000),	
+	@update_date datetime,
+	@updated_by nvarchar(50)	
+as 
+	update station set 
+		name = @name,
+		latitude = @latitude,	
+		longitude = @longitude,	
+		altitude = @altitude,	
+		in_use = @in_use,
+		comment = @comment,	
+		update_date = @update_date,
+		updated_by = @updated_by
+	where id = @id
+go
+
+/*===========================================================================*/
+
+create PROC csp_select_stations_flat
+as
+select 
+	id,
+	name,
+	latitude, 	
+	longitude, 	
+	altitude, 	
+	in_use,	
+	comment,	
+	create_date,
+	created_by,
+	update_date,
+	updated_by
+from station
+order by name
+go
+
+/*===========================================================================*/
+
+create PROC csp_select_sample_storage
+	@id uniqueidentifier
+as 
+	select * from sample_storage where id = @id
+go
+
+/*===========================================================================*/
+
+create PROC csp_insert_sample_storage
+	@id uniqueidentifier,	
+	@name nvarchar(80),
+	@address nvarchar(1000),
+	@in_use bit,
+	@comment nvarchar(1000),
+	@create_date datetime,
+	@created_by nvarchar(50),
+	@update_date datetime,
+	@updated_by nvarchar(50)	
+as 
+	insert into sample_storage values (
+		@id,		
+		@name,
+		@address,				
+		@in_use,
+		@comment,
+		@create_date,
+		@created_by,
+		@update_date,
+		@updated_by
+	);
+go
+
+/*===========================================================================*/
+
+create PROC csp_update_sample_storage
+	@id uniqueidentifier,	
+	@name nvarchar(80),
+	@address nvarchar(1000),		
+	@in_use bit,
+	@comment nvarchar(1000),	
+	@update_date datetime,
+	@updated_by nvarchar(50)	
+as 
+	update sample_storage set 
+		name = @name,
+		address = @address,			
+		in_use = @in_use,
+		comment = @comment,	
+		update_date = @update_date,
+		updated_by = @updated_by
+	where id = @id
+go
+
+/*===========================================================================*/
+
+create PROC csp_select_sample_storage_flat
+as
+select 
+	id,
+	name,
+	address,
+	in_use,	
+	comment,	
+	create_date,
+	created_by,
+	update_date,
+	updated_by
+from sample_storage
+order by name
 go
 
 /*===========================================================================*/

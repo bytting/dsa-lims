@@ -111,6 +111,12 @@ namespace DSA_lims
 
                     log.Info("Populating counties");
                     PopulateCounties(conn);
+
+                    log.Info("Populating stations");
+                    PopulateStations(conn);
+
+                    log.Info("Populating sample storage");
+                    PopulateSampleStorage(conn);
                 }
                 
                 HideMenuItems();
@@ -467,6 +473,44 @@ namespace DSA_lims
             gridSysMunicipality.Columns["in_use"].HeaderText = "In use";
         }
 
+        private void PopulateStations(SqlConnection conn)
+        {
+            // Set data source
+            gridMetaStation.DataSource = DB.GetDataTable(conn, "csp_select_stations_flat", CommandType.StoredProcedure);
+
+            // Set UI state
+            gridMetaStation.Columns["id"].Visible = false;
+            gridMetaStation.Columns["comment"].Visible = false;
+            gridMetaStation.Columns["created_by"].Visible = false;
+            gridMetaStation.Columns["create_date"].Visible = false;
+            gridMetaStation.Columns["updated_by"].Visible = false;
+            gridMetaStation.Columns["update_date"].Visible = false;
+
+            gridMetaStation.Columns["name"].HeaderText = "Name";
+            gridMetaStation.Columns["latitude"].HeaderText = "Latitude";
+            gridMetaStation.Columns["longitude"].HeaderText = "Longitude";
+            gridMetaStation.Columns["altitude"].HeaderText = "Altitude";
+            gridMetaStation.Columns["in_use"].HeaderText = "In use";
+        }
+
+        private void PopulateSampleStorage(SqlConnection conn)
+        {
+            // Set data source
+            gridMetaSampleStorage.DataSource = DB.GetDataTable(conn, "csp_select_sample_storage_flat", CommandType.StoredProcedure);
+
+            // Set UI state
+            gridMetaSampleStorage.Columns["id"].Visible = false;
+            gridMetaSampleStorage.Columns["comment"].Visible = false;
+            gridMetaSampleStorage.Columns["created_by"].Visible = false;
+            gridMetaSampleStorage.Columns["create_date"].Visible = false;
+            gridMetaSampleStorage.Columns["updated_by"].Visible = false;
+            gridMetaSampleStorage.Columns["update_date"].Visible = false;
+
+            gridMetaSampleStorage.Columns["name"].HeaderText = "Name";
+            gridMetaSampleStorage.Columns["address"].HeaderText = "Address";
+            gridMetaSampleStorage.Columns["in_use"].HeaderText = "In use";
+        }
+
         private void SetLanguageLabels(ResourceManager r)
         {
             lblMenuSamples.Text = r.GetString(lblMenuSamples.Name);
@@ -655,8 +699,8 @@ namespace DSA_lims
                 tabsSample.TabPages.Add(tabSamplesParams);
             if (!tabsSample.TabPages.ContainsKey(tabSamplesPrep.Name))
                 tabsSample.TabPages.Add(tabSamplesPrep);
-            if (!tabsSample.TabPages.ContainsKey(tabSamplesResult.Name))
-                tabsSample.TabPages.Add(tabSamplesResult);
+            if (!tabsSample.TabPages.ContainsKey(tabSamplesAnalysis.Name))
+                tabsSample.TabPages.Add(tabSamplesAnalysis);
         }
 
         private void btnSamplesOpen_Click(object sender, EventArgs e)
@@ -665,7 +709,7 @@ namespace DSA_lims
             tabsSample.TabPages.Add(tabSamplesInfo);
             tabsSample.TabPages.Add(tabSamplesParams);
             tabsSample.TabPages.Add(tabSamplesPrep);
-            tabsSample.TabPages.Add(tabSamplesResult);
+            tabsSample.TabPages.Add(tabSamplesAnalysis);
             returnFromSample = tabSamples;
             tabs.SelectedTab = tabSample;
         }
@@ -1210,6 +1254,88 @@ namespace DSA_lims
             {
                 PopulateMunicipalities(conn, cid);
             }
+        }
+
+        private void miNewStation_Click(object sender, EventArgs e)
+        {
+            // create station
+            FormStation form = new FormStation(log);
+            if (form.ShowDialog() != DialogResult.OK)
+                return;
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                PopulateStations(conn);
+            }
+
+            lblStatus.Text = StrUtils.makeStatusMessage("Station " + form.Station.Name + " inserted");
+        }
+
+        private void miEditStation_Click(object sender, EventArgs e)
+        {
+            // edit station
+            if (gridMetaStation.SelectedRows.Count < 1)
+                return;
+
+            DataGridViewRow row = gridMetaStation.SelectedRows[0];
+            Guid sid = new Guid(row.Cells[0].Value.ToString());
+
+            FormStation form = new FormStation(log, sid);
+            if (form.ShowDialog() != DialogResult.OK)
+                return;
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                PopulateStations(conn);
+            }
+
+            lblStatus.Text = StrUtils.makeStatusMessage("Station " + form.Station.Name + " updated");
+        }
+
+        private void miDeleteStation_Click(object sender, EventArgs e)
+        {
+            // delete station
+        }
+
+        private void miNewSampleStorage_Click(object sender, EventArgs e)
+        {
+            // new sample storage
+            FormSampleStorage form = new FormSampleStorage(log);
+            if (form.ShowDialog() != DialogResult.OK)
+                return;
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                PopulateSampleStorage(conn);
+            }
+
+            lblStatus.Text = StrUtils.makeStatusMessage("Sample storage " + form.SampleStorage.Name + " inserted");
+        }
+
+        private void miEditSampleStorage_Click(object sender, EventArgs e)
+        {
+            // edit sample storage
+            if (gridMetaSampleStorage.SelectedRows.Count < 1)
+                return;
+
+            DataGridViewRow row = gridMetaSampleStorage.SelectedRows[0];
+            Guid ssid = new Guid(row.Cells[0].Value.ToString());
+
+            FormSampleStorage form = new FormSampleStorage(log, ssid);
+            if (form.ShowDialog() != DialogResult.OK)
+                return;
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                PopulateSampleStorage(conn);
+            }
+
+            lblStatus.Text = StrUtils.makeStatusMessage("Sample storage " + form.SampleStorage.Name + " updated");
+        }
+
+        private void miDeleteSampleStorage_Click(object sender, EventArgs e)
+        {
+            // delete sample storage
         }
     }    
 }

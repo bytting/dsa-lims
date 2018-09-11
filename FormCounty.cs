@@ -57,7 +57,7 @@ namespace DSA_lims
             {
                 SqlCommand cmd = new SqlCommand("csp_select_county", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@id", cid);
+                cmd.Parameters.AddWithValue("@id", County.Id);
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
                     if (!reader.HasRows)

@@ -17,10 +17,13 @@
 */
 // Authors: Dag Robole,
 
+using log4net;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -31,9 +34,184 @@ namespace DSA_lims
 {
     public partial class FormStation : Form
     {
-        public FormStation()
+        private ILog mLog = null;
+
+        public StationType Station = new StationType();
+
+        public FormStation(ILog log)
         {
             InitializeComponent();
+            // create new station
+            mLog = log;
+            Text = "Create station";
+            cbInUse.Checked = true;
+        }
+        public FormStation(ILog log, Guid sid)
+        {
+            InitializeComponent();
+            // edit existing station
+            mLog = log;
+            Station.Id = sid;
+            Text = "Update station";
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                SqlCommand cmd = new SqlCommand("csp_select_station", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@id", Station.Id);
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    if (!reader.HasRows)
+                        throw new Exception("Station with ID " + Station.Id.ToString() + " was not found");
+
+                    reader.Read();
+                    tbName.Text = reader["name"].ToString();
+                    tbLatitude.Text = reader["latitude"].ToString();
+                    tbLongitude.Text = reader["longitude"].ToString();
+                    tbAltitude.Text = reader["altitude"].ToString();
+                    cbInUse.Checked = Convert.ToBoolean(reader["in_use"]);
+                    tbComment.Text = reader["comment"].ToString();
+                    Station.CreateDate = Convert.ToDateTime(reader["create_date"]);
+                    Station.CreatedBy = reader["created_by"].ToString();
+                    Station.UpdateDate = Convert.ToDateTime(reader["update_date"]);
+                    Station.UpdatedBy = reader["updated_by"].ToString();
+                }
+            }
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.Cancel;
+            Close();
+        }
+
+        private void btnOk_Click(object sender, EventArgs e)
+        {
+            if (String.IsNullOrEmpty(tbName.Text.Trim()))
+            {
+                MessageBox.Show("Name is mandatory");
+                return;
+            }
+
+            if (String.IsNullOrEmpty(tbLatitude.Text.Trim()))
+            {
+                MessageBox.Show("Latitude is mandatory");
+                return;
+            }
+
+            if (String.IsNullOrEmpty(tbLongitude.Text.Trim()))
+            {
+                MessageBox.Show("Longitude is mandatory");
+                return;
+            }
+
+            if (String.IsNullOrEmpty(tbAltitude.Text.Trim()))
+            {
+                MessageBox.Show("Altitude is mandatory");
+                return;
+            }
+
+            Station.Name = tbName.Text.Trim();
+            Station.Latitude = Convert.ToDouble(tbLatitude.Text.Trim());
+            Station.Longitude = Convert.ToDouble(tbLongitude.Text.Trim());
+            Station.Altitude = Convert.ToDouble(tbAltitude.Text.Trim());
+            Station.InUse = cbInUse.Checked;
+            Station.Comment = tbComment.Text.Trim();
+
+            if (Station.Id == Guid.Empty)
+                InsertStation();
+            else
+                UpdateStation();
+
+            DialogResult = DialogResult.OK;
+            Close();
+        }
+
+        private void InsertStation()
+        {
+            SqlConnection connection = null;
+            SqlTransaction transaction = null;
+
+            try
+            {
+                Station.CreateDate = DateTime.Now;
+                Station.CreatedBy = Common.Username;
+                Station.UpdateDate = DateTime.Now;
+                Station.UpdatedBy = Common.Username;
+
+                connection = DB.OpenConnection();
+                transaction = connection.BeginTransaction();
+
+                SqlCommand cmd = new SqlCommand("csp_insert_station", connection, transaction);
+                cmd.CommandType = CommandType.StoredProcedure;
+                Station.Id = Guid.NewGuid();
+                cmd.Parameters.AddWithValue("@id", Station.Id);
+                cmd.Parameters.AddWithValue("@name", Station.Name);
+                cmd.Parameters.AddWithValue("@latitude", Station.Latitude);
+                cmd.Parameters.AddWithValue("@longitude", Station.Longitude);
+                cmd.Parameters.AddWithValue("@altitude", Station.Altitude);
+                cmd.Parameters.AddWithValue("@in_use", Station.InUse);
+                cmd.Parameters.AddWithValue("@comment", Station.Comment);
+                cmd.Parameters.AddWithValue("@create_date", Station.CreateDate);
+                cmd.Parameters.AddWithValue("@created_by", Station.CreatedBy);
+                cmd.Parameters.AddWithValue("@update_date", Station.UpdateDate);
+                cmd.Parameters.AddWithValue("@updated_by", Station.UpdatedBy);
+                cmd.ExecuteNonQuery();
+
+                DB.AddAuditMessage(connection, transaction, "station", Station.Id, AuditOperation.Insert, JsonConvert.SerializeObject(Station));
+
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                transaction?.Rollback();
+                mLog.Error(ex);
+            }
+            finally
+            {
+                connection?.Close();
+            }
+        }
+
+        private void UpdateStation()
+        {
+            SqlConnection connection = null;
+            SqlTransaction transaction = null;
+
+            try
+            {
+                Station.UpdateDate = DateTime.Now;
+                Station.UpdatedBy = Common.Username;
+
+                connection = DB.OpenConnection();
+                transaction = connection.BeginTransaction();
+
+                SqlCommand cmd = new SqlCommand("csp_update_station", connection, transaction);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@id", Station.Id);
+                cmd.Parameters.AddWithValue("@name", Station.Name);
+                cmd.Parameters.AddWithValue("@latitude", Station.Latitude);
+                cmd.Parameters.AddWithValue("@longitude", Station.Longitude);
+                cmd.Parameters.AddWithValue("@altitude", Station.Altitude);
+                cmd.Parameters.AddWithValue("@in_use", Station.InUse);
+                cmd.Parameters.AddWithValue("@comment", Station.Comment);
+                cmd.Parameters.AddWithValue("@update_date", Station.UpdateDate);
+                cmd.Parameters.AddWithValue("@updated_by", Station.UpdatedBy);
+                cmd.ExecuteNonQuery();
+
+                DB.AddAuditMessage(connection, transaction, "station", Station.Id, AuditOperation.Update, JsonConvert.SerializeObject(Station));
+
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                transaction?.Rollback();
+                mLog.Error(ex);
+            }
+            finally
+            {
+                connection?.Close();
+            }
         }
     }
 }

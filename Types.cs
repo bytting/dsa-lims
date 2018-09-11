@@ -186,5 +186,43 @@ namespace DSA_lims
         {
             return Name;
         }
-    }    
+    }
+
+    public class StationType
+    {
+        public Guid Id { get; set; }        
+        public string Name { get; set; }
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
+        public double Altitude { get; set; }
+        public bool InUse { get; set; }
+        public string Comment { get; set; }
+        public DateTime CreateDate { get; set; }
+        public string CreatedBy { get; set; }
+        public DateTime UpdateDate { get; set; }
+        public string UpdatedBy { get; set; }
+
+        public override string ToString()
+        {
+            return Name;
+        }
+    }
+
+    public class SampleStorageType
+    {
+        public Guid Id { get; set; }
+        public string Name { get; set; }        
+        public string Address { get; set; }
+        public bool InUse { get; set; }
+        public string Comment { get; set; }
+        public DateTime CreateDate { get; set; }
+        public string CreatedBy { get; set; }
+        public DateTime UpdateDate { get; set; }
+        public string UpdatedBy { get; set; }
+
+        public override string ToString()
+        {
+            return Name;
+        }
+    }
 }

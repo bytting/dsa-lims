@@ -51,7 +51,13 @@
             this.miSearch = new System.Windows.Forms.ToolStripMenuItem();
             this.miMeta = new System.Windows.Forms.ToolStripMenuItem();
             this.miStations = new System.Windows.Forms.ToolStripMenuItem();
+            this.miNewStation = new System.Windows.Forms.ToolStripMenuItem();
+            this.miEditStation = new System.Windows.Forms.ToolStripMenuItem();
+            this.miDeleteStation = new System.Windows.Forms.ToolStripMenuItem();
             this.miSampleStorage = new System.Windows.Forms.ToolStripMenuItem();
+            this.miNewSampleStorage = new System.Windows.Forms.ToolStripMenuItem();
+            this.miEditSampleStorage = new System.Windows.Forms.ToolStripMenuItem();
+            this.miDeleteSampleStorage = new System.Windows.Forms.ToolStripMenuItem();
             this.miUnits = new System.Windows.Forms.ToolStripMenuItem();
             this.miSamplers = new System.Windows.Forms.ToolStripMenuItem();
             this.miSamplingMethods = new System.Windows.Forms.ToolStripMenuItem();
@@ -88,6 +94,13 @@
             this.miEnergyLineEdit = new System.Windows.Forms.ToolStripMenuItem();
             this.miEnergyLineDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.miMunicipalities = new System.Windows.Forms.ToolStripMenuItem();
+            this.miNewCounty = new System.Windows.Forms.ToolStripMenuItem();
+            this.miEditCounty = new System.Windows.Forms.ToolStripMenuItem();
+            this.miDeleteCounty = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator50 = new System.Windows.Forms.ToolStripSeparator();
+            this.miNewMunicipality = new System.Windows.Forms.ToolStripMenuItem();
+            this.miEditMunicipality = new System.Windows.Forms.ToolStripMenuItem();
+            this.miDeleteMunicipality = new System.Windows.Forms.ToolStripMenuItem();
             this.miAccreditationRules = new System.Windows.Forms.ToolStripMenuItem();
             this.miGeometries = new System.Windows.Forms.ToolStripMenuItem();
             this.miNewGeometry = new System.Windows.Forms.ToolStripMenuItem();
@@ -249,6 +262,9 @@
             this.dataGridView10 = new System.Windows.Forms.DataGridView();
             this.toolsSampleResAnalMeth = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel6 = new System.Windows.Forms.ToolStripLabel();
+            this.splitContainer21 = new System.Windows.Forms.SplitContainer();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolStripLabel59 = new System.Windows.Forms.ToolStripLabel();
             this.panel8 = new System.Windows.Forms.Panel();
             this.dataGridView11 = new System.Windows.Forms.DataGridView();
             this.toolsSampleResAttachments = new System.Windows.Forms.ToolStrip();
@@ -379,6 +395,7 @@
             this.toolStripButton68 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton69 = new System.Windows.Forms.ToolStripButton();
             this.tabMetaUnits = new System.Windows.Forms.TabPage();
+            this.splitContainer22 = new System.Windows.Forms.SplitContainer();
             this.gridMetaUnitsPrep = new System.Windows.Forms.DataGridView();
             this.toolsMetaUnits = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel38 = new System.Windows.Forms.ToolStripLabel();
@@ -386,6 +403,13 @@
             this.toolStripButton79 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton80 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton81 = new System.Windows.Forms.ToolStripButton();
+            this.gridMetaUnitsActivity = new System.Windows.Forms.DataGridView();
+            this.toolStrip2 = new System.Windows.Forms.ToolStrip();
+            this.toolStripLabel60 = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripSeparator51 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButton100 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton101 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton102 = new System.Windows.Forms.ToolStripButton();
             this.tabMetaSamplers = new System.Windows.Forms.TabPage();
             this.dataGridView14 = new System.Windows.Forms.DataGridView();
             this.toolsMetaSamplers = new System.Windows.Forms.ToolStrip();
@@ -718,30 +742,9 @@
             this.tools = new System.Windows.Forms.ToolStrip();
             this.btnMenu = new System.Windows.Forms.ToolStripButton();
             this.lblCurrentTab = new System.Windows.Forms.ToolStripLabel();
-            this.miNewCounty = new System.Windows.Forms.ToolStripMenuItem();
-            this.miEditCounty = new System.Windows.Forms.ToolStripMenuItem();
-            this.miDeleteCounty = new System.Windows.Forms.ToolStripMenuItem();
-            this.miNewMunicipality = new System.Windows.Forms.ToolStripMenuItem();
-            this.miEditMunicipality = new System.Windows.Forms.ToolStripMenuItem();
-            this.miDeleteMunicipality = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator50 = new System.Windows.Forms.ToolStripSeparator();
-            this.miNewStation = new System.Windows.Forms.ToolStripMenuItem();
-            this.miEditStation = new System.Windows.Forms.ToolStripMenuItem();
-            this.miDeleteStation = new System.Windows.Forms.ToolStripMenuItem();
-            this.splitContainer21 = new System.Windows.Forms.SplitContainer();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.toolStripLabel59 = new System.Windows.Forms.ToolStripLabel();
-            this.miNewSampleStorage = new System.Windows.Forms.ToolStripMenuItem();
-            this.miEditSampleStorage = new System.Windows.Forms.ToolStripMenuItem();
-            this.miDeleteSampleStorage = new System.Windows.Forms.ToolStripMenuItem();
-            this.splitContainer22 = new System.Windows.Forms.SplitContainer();
-            this.toolStrip2 = new System.Windows.Forms.ToolStrip();
-            this.toolStripLabel60 = new System.Windows.Forms.ToolStripLabel();
-            this.toolStripSeparator51 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButton100 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton101 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton102 = new System.Windows.Forms.ToolStripButton();
-            this.gridMetaUnitsActivity = new System.Windows.Forms.DataGridView();
+            this.miProjectsSubEdit = new System.Windows.Forms.ToolStripMenuItem();
+            this.miProjectsSubDelete = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator52 = new System.Windows.Forms.ToolStripSeparator();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tabs.SuspendLayout();
@@ -796,6 +799,11 @@
             this.splitContainer5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView10)).BeginInit();
             this.toolsSampleResAnalMeth.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer21)).BeginInit();
+            this.splitContainer21.Panel1.SuspendLayout();
+            this.splitContainer21.Panel2.SuspendLayout();
+            this.splitContainer21.SuspendLayout();
+            this.toolStrip1.SuspendLayout();
             this.panel8.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView11)).BeginInit();
             this.toolsSampleResAttachments.SuspendLayout();
@@ -845,8 +853,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.gridMetaSampleStorage)).BeginInit();
             this.toolsMetaSampStorage.SuspendLayout();
             this.tabMetaUnits.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer22)).BeginInit();
+            this.splitContainer22.Panel1.SuspendLayout();
+            this.splitContainer22.Panel2.SuspendLayout();
+            this.splitContainer22.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridMetaUnitsPrep)).BeginInit();
             this.toolsMetaUnits.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridMetaUnitsActivity)).BeginInit();
+            this.toolStrip2.SuspendLayout();
             this.tabMetaSamplers.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView14)).BeginInit();
             this.toolsMetaSamplers.SuspendLayout();
@@ -1015,17 +1029,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.gridSysGeom)).BeginInit();
             this.toolsSysGeom.SuspendLayout();
             this.tools.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer21)).BeginInit();
-            this.splitContainer21.Panel1.SuspendLayout();
-            this.splitContainer21.Panel2.SuspendLayout();
-            this.splitContainer21.SuspendLayout();
-            this.toolStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer22)).BeginInit();
-            this.splitContainer22.Panel1.SuspendLayout();
-            this.splitContainer22.Panel2.SuspendLayout();
-            this.splitContainer22.SuspendLayout();
-            this.toolStrip2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gridMetaUnitsActivity)).BeginInit();
             this.SuspendLayout();
             // 
             // menu
@@ -1215,6 +1218,27 @@
             this.miStations.Size = new System.Drawing.Size(174, 22);
             this.miStations.Text = "&Stations";
             // 
+            // miNewStation
+            // 
+            this.miNewStation.Name = "miNewStation";
+            this.miNewStation.Size = new System.Drawing.Size(146, 22);
+            this.miNewStation.Text = "&New station";
+            this.miNewStation.Click += new System.EventHandler(this.miNewStation_Click);
+            // 
+            // miEditStation
+            // 
+            this.miEditStation.Name = "miEditStation";
+            this.miEditStation.Size = new System.Drawing.Size(146, 22);
+            this.miEditStation.Text = "&Edit station";
+            this.miEditStation.Click += new System.EventHandler(this.miEditStation_Click);
+            // 
+            // miDeleteStation
+            // 
+            this.miDeleteStation.Name = "miDeleteStation";
+            this.miDeleteStation.Size = new System.Drawing.Size(146, 22);
+            this.miDeleteStation.Text = "&Delete station";
+            this.miDeleteStation.Click += new System.EventHandler(this.miDeleteStation_Click);
+            // 
             // miSampleStorage
             // 
             this.miSampleStorage.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -1224,6 +1248,27 @@
             this.miSampleStorage.Name = "miSampleStorage";
             this.miSampleStorage.Size = new System.Drawing.Size(174, 22);
             this.miSampleStorage.Text = "S&ample storage";
+            // 
+            // miNewSampleStorage
+            // 
+            this.miNewSampleStorage.Name = "miNewSampleStorage";
+            this.miNewSampleStorage.Size = new System.Drawing.Size(190, 22);
+            this.miNewSampleStorage.Text = "&New sample stoarge";
+            this.miNewSampleStorage.Click += new System.EventHandler(this.miNewSampleStorage_Click);
+            // 
+            // miEditSampleStorage
+            // 
+            this.miEditSampleStorage.Name = "miEditSampleStorage";
+            this.miEditSampleStorage.Size = new System.Drawing.Size(190, 22);
+            this.miEditSampleStorage.Text = "&Edit sample storage";
+            this.miEditSampleStorage.Click += new System.EventHandler(this.miEditSampleStorage_Click);
+            // 
+            // miDeleteSampleStorage
+            // 
+            this.miDeleteSampleStorage.Name = "miDeleteSampleStorage";
+            this.miDeleteSampleStorage.Size = new System.Drawing.Size(190, 22);
+            this.miDeleteSampleStorage.Text = "&Delete sample storage";
+            this.miDeleteSampleStorage.Click += new System.EventHandler(this.miDeleteSampleStorage_Click);
             // 
             // miUnits
             // 
@@ -1261,7 +1306,10 @@
             this.miProjectsNew,
             this.miProjectsEdit,
             this.miProjectsDelete,
-            this.miProjectsSubNew});
+            this.toolStripSeparator52,
+            this.miProjectsSubNew,
+            this.miProjectsSubEdit,
+            this.miProjectsSubDelete});
             this.miProjects.Name = "miProjects";
             this.miProjects.Size = new System.Drawing.Size(61, 20);
             this.miProjects.Text = "&Projects";
@@ -1269,28 +1317,28 @@
             // miProjectsNew
             // 
             this.miProjectsNew.Name = "miProjectsNew";
-            this.miProjectsNew.Size = new System.Drawing.Size(168, 22);
+            this.miProjectsNew.Size = new System.Drawing.Size(177, 22);
             this.miProjectsNew.Text = "&New main project";
             this.miProjectsNew.Click += new System.EventHandler(this.miProjectsNew_Click);
             // 
             // miProjectsEdit
             // 
             this.miProjectsEdit.Name = "miProjectsEdit";
-            this.miProjectsEdit.Size = new System.Drawing.Size(168, 22);
-            this.miProjectsEdit.Text = "&Edit project";
+            this.miProjectsEdit.Size = new System.Drawing.Size(177, 22);
+            this.miProjectsEdit.Text = "&Edit main project";
             this.miProjectsEdit.Click += new System.EventHandler(this.miProjectsEdit_Click);
             // 
             // miProjectsDelete
             // 
             this.miProjectsDelete.Name = "miProjectsDelete";
-            this.miProjectsDelete.Size = new System.Drawing.Size(168, 22);
-            this.miProjectsDelete.Text = "&Delete project";
+            this.miProjectsDelete.Size = new System.Drawing.Size(177, 22);
+            this.miProjectsDelete.Text = "&Delete main project";
             this.miProjectsDelete.Click += new System.EventHandler(this.miProjectsDelete_Click);
             // 
             // miProjectsSubNew
             // 
             this.miProjectsSubNew.Name = "miProjectsSubNew";
-            this.miProjectsSubNew.Size = new System.Drawing.Size(168, 22);
+            this.miProjectsSubNew.Size = new System.Drawing.Size(177, 22);
             this.miProjectsSubNew.Text = "New &sub project";
             this.miProjectsSubNew.Click += new System.EventHandler(this.miProjectsSubNew_Click);
             // 
@@ -1499,6 +1547,53 @@
             this.miMunicipalities.Name = "miMunicipalities";
             this.miMunicipalities.Size = new System.Drawing.Size(173, 22);
             this.miMunicipalities.Text = "&Municipalities";
+            // 
+            // miNewCounty
+            // 
+            this.miNewCounty.Name = "miNewCounty";
+            this.miNewCounty.Size = new System.Drawing.Size(176, 22);
+            this.miNewCounty.Text = "&New county";
+            this.miNewCounty.Click += new System.EventHandler(this.miNewCounty_Click);
+            // 
+            // miEditCounty
+            // 
+            this.miEditCounty.Name = "miEditCounty";
+            this.miEditCounty.Size = new System.Drawing.Size(176, 22);
+            this.miEditCounty.Text = "&Edit county";
+            this.miEditCounty.Click += new System.EventHandler(this.miEditCounty_Click);
+            // 
+            // miDeleteCounty
+            // 
+            this.miDeleteCounty.Name = "miDeleteCounty";
+            this.miDeleteCounty.Size = new System.Drawing.Size(176, 22);
+            this.miDeleteCounty.Text = "&Delete county";
+            this.miDeleteCounty.Click += new System.EventHandler(this.miDeleteCounty_Click);
+            // 
+            // toolStripSeparator50
+            // 
+            this.toolStripSeparator50.Name = "toolStripSeparator50";
+            this.toolStripSeparator50.Size = new System.Drawing.Size(173, 6);
+            // 
+            // miNewMunicipality
+            // 
+            this.miNewMunicipality.Name = "miNewMunicipality";
+            this.miNewMunicipality.Size = new System.Drawing.Size(176, 22);
+            this.miNewMunicipality.Text = "New &municipality";
+            this.miNewMunicipality.Click += new System.EventHandler(this.miNewMunicipality_Click);
+            // 
+            // miEditMunicipality
+            // 
+            this.miEditMunicipality.Name = "miEditMunicipality";
+            this.miEditMunicipality.Size = new System.Drawing.Size(176, 22);
+            this.miEditMunicipality.Text = "Edit m&unicipality";
+            this.miEditMunicipality.Click += new System.EventHandler(this.miEditMunicipality_Click);
+            // 
+            // miDeleteMunicipality
+            // 
+            this.miDeleteMunicipality.Name = "miDeleteMunicipality";
+            this.miDeleteMunicipality.Size = new System.Drawing.Size(176, 22);
+            this.miDeleteMunicipality.Text = "Delete mun&icipality";
+            this.miDeleteMunicipality.Click += new System.EventHandler(this.miDeleteMunicipality_Click);
             // 
             // miAccreditationRules
             // 
@@ -3284,7 +3379,7 @@
             // 
             this.splitContainer5.Panel2.Controls.Add(this.splitContainer21);
             this.splitContainer5.Size = new System.Drawing.Size(1115, 266);
-            this.splitContainer5.SplitterDistance = 328;
+            this.splitContainer5.SplitterDistance = 327;
             this.splitContainer5.SplitterWidth = 5;
             this.splitContainer5.TabIndex = 1;
             // 
@@ -3299,7 +3394,7 @@
             this.dataGridView10.Location = new System.Drawing.Point(0, 25);
             this.dataGridView10.Name = "dataGridView10";
             this.dataGridView10.ReadOnly = true;
-            this.dataGridView10.Size = new System.Drawing.Size(328, 241);
+            this.dataGridView10.Size = new System.Drawing.Size(327, 241);
             this.dataGridView10.TabIndex = 0;
             // 
             // toolsSampleResAnalMeth
@@ -3309,7 +3404,7 @@
             this.toolStripLabel6});
             this.toolsSampleResAnalMeth.Location = new System.Drawing.Point(0, 0);
             this.toolsSampleResAnalMeth.Name = "toolsSampleResAnalMeth";
-            this.toolsSampleResAnalMeth.Size = new System.Drawing.Size(328, 25);
+            this.toolsSampleResAnalMeth.Size = new System.Drawing.Size(327, 25);
             this.toolsSampleResAnalMeth.TabIndex = 1;
             this.toolsSampleResAnalMeth.Text = "toolStrip5";
             // 
@@ -3320,6 +3415,41 @@
             this.toolStripLabel6.Size = new System.Drawing.Size(102, 22);
             this.toolStripLabel6.Text = "Analysis methods";
             // 
+            // splitContainer21
+            // 
+            this.splitContainer21.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer21.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer21.Name = "splitContainer21";
+            // 
+            // splitContainer21.Panel1
+            // 
+            this.splitContainer21.Panel1.Controls.Add(this.toolStrip1);
+            // 
+            // splitContainer21.Panel2
+            // 
+            this.splitContainer21.Panel2.Controls.Add(this.panel8);
+            this.splitContainer21.Size = new System.Drawing.Size(783, 266);
+            this.splitContainer21.SplitterDistance = 406;
+            this.splitContainer21.TabIndex = 4;
+            // 
+            // toolStrip1
+            // 
+            this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripLabel59});
+            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(406, 25);
+            this.toolStrip1.TabIndex = 0;
+            this.toolStrip1.Text = "toolStrip1";
+            // 
+            // toolStripLabel59
+            // 
+            this.toolStripLabel59.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.toolStripLabel59.Name = "toolStripLabel59";
+            this.toolStripLabel59.Size = new System.Drawing.Size(76, 22);
+            this.toolStripLabel59.Text = "Analysis Info";
+            // 
             // panel8
             // 
             this.panel8.Controls.Add(this.dataGridView11);
@@ -3327,7 +3457,7 @@
             this.panel8.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel8.Location = new System.Drawing.Point(0, 0);
             this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(372, 266);
+            this.panel8.Size = new System.Drawing.Size(373, 266);
             this.panel8.TabIndex = 3;
             // 
             // dataGridView11
@@ -3341,7 +3471,7 @@
             this.dataGridView11.Location = new System.Drawing.Point(0, 25);
             this.dataGridView11.Name = "dataGridView11";
             this.dataGridView11.ReadOnly = true;
-            this.dataGridView11.Size = new System.Drawing.Size(372, 241);
+            this.dataGridView11.Size = new System.Drawing.Size(373, 241);
             this.dataGridView11.TabIndex = 1;
             // 
             // toolsSampleResAttachments
@@ -3355,7 +3485,7 @@
             this.toolStripButton18});
             this.toolsSampleResAttachments.Location = new System.Drawing.Point(0, 0);
             this.toolsSampleResAttachments.Name = "toolsSampleResAttachments";
-            this.toolsSampleResAttachments.Size = new System.Drawing.Size(372, 25);
+            this.toolsSampleResAttachments.Size = new System.Drawing.Size(373, 25);
             this.toolsSampleResAttachments.TabIndex = 0;
             this.toolsSampleResAttachments.Text = "toolStrip11";
             // 
@@ -3574,7 +3704,7 @@
             // 
             this.splitContainer6.Panel2.Controls.Add(this.panel12);
             this.splitContainer6.Size = new System.Drawing.Size(1115, 572);
-            this.splitContainer6.SplitterDistance = 779;
+            this.splitContainer6.SplitterDistance = 778;
             this.splitContainer6.SplitterWidth = 5;
             this.splitContainer6.TabIndex = 4;
             // 
@@ -3594,7 +3724,7 @@
             // 
             this.splitContainer7.Panel2.Controls.Add(this.treeView1);
             this.splitContainer7.Panel2.Controls.Add(this.toolsOrderContent);
-            this.splitContainer7.Size = new System.Drawing.Size(779, 572);
+            this.splitContainer7.Size = new System.Drawing.Size(778, 572);
             this.splitContainer7.SplitterDistance = 361;
             this.splitContainer7.SplitterWidth = 5;
             this.splitContainer7.TabIndex = 0;
@@ -3781,7 +3911,7 @@
             this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeView1.Location = new System.Drawing.Point(0, 25);
             this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(413, 547);
+            this.treeView1.Size = new System.Drawing.Size(412, 547);
             this.treeView1.TabIndex = 0;
             // 
             // toolsOrderContent
@@ -3799,7 +3929,7 @@
             this.toolStripButton34});
             this.toolsOrderContent.Location = new System.Drawing.Point(0, 0);
             this.toolsOrderContent.Name = "toolsOrderContent";
-            this.toolsOrderContent.Size = new System.Drawing.Size(413, 25);
+            this.toolsOrderContent.Size = new System.Drawing.Size(412, 25);
             this.toolsOrderContent.TabIndex = 1;
             this.toolsOrderContent.Text = "toolStrip16";
             // 
@@ -3881,7 +4011,7 @@
             this.panel12.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel12.Location = new System.Drawing.Point(0, 0);
             this.panel12.Name = "panel12";
-            this.panel12.Size = new System.Drawing.Size(331, 572);
+            this.panel12.Size = new System.Drawing.Size(332, 572);
             this.panel12.TabIndex = 1;
             // 
             // dataGridView12
@@ -3895,7 +4025,7 @@
             this.dataGridView12.Location = new System.Drawing.Point(0, 25);
             this.dataGridView12.Name = "dataGridView12";
             this.dataGridView12.ReadOnly = true;
-            this.dataGridView12.Size = new System.Drawing.Size(331, 547);
+            this.dataGridView12.Size = new System.Drawing.Size(332, 547);
             this.dataGridView12.TabIndex = 1;
             // 
             // toolsOrderAttachments
@@ -3909,7 +4039,7 @@
             this.toolStripButton23});
             this.toolsOrderAttachments.Location = new System.Drawing.Point(0, 0);
             this.toolsOrderAttachments.Name = "toolsOrderAttachments";
-            this.toolsOrderAttachments.Size = new System.Drawing.Size(331, 25);
+            this.toolsOrderAttachments.Size = new System.Drawing.Size(332, 25);
             this.toolsOrderAttachments.TabIndex = 0;
             this.toolsOrderAttachments.Text = "toolStrip15";
             // 
@@ -4687,6 +4817,25 @@
             this.tabMetaUnits.TabIndex = 9;
             this.tabMetaUnits.Text = "Units";
             // 
+            // splitContainer22
+            // 
+            this.splitContainer22.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer22.Location = new System.Drawing.Point(3, 3);
+            this.splitContainer22.Name = "splitContainer22";
+            // 
+            // splitContainer22.Panel1
+            // 
+            this.splitContainer22.Panel1.Controls.Add(this.gridMetaUnitsPrep);
+            this.splitContainer22.Panel1.Controls.Add(this.toolsMetaUnits);
+            // 
+            // splitContainer22.Panel2
+            // 
+            this.splitContainer22.Panel2.Controls.Add(this.gridMetaUnitsActivity);
+            this.splitContainer22.Panel2.Controls.Add(this.toolStrip2);
+            this.splitContainer22.Size = new System.Drawing.Size(1115, 574);
+            this.splitContainer22.SplitterDistance = 532;
+            this.splitContainer22.TabIndex = 4;
+            // 
             // gridMetaUnitsPrep
             // 
             this.gridMetaUnitsPrep.AllowUserToAddRows = false;
@@ -4751,6 +4900,71 @@
             this.toolStripButton81.Name = "toolStripButton81";
             this.toolStripButton81.Size = new System.Drawing.Size(60, 22);
             this.toolStripButton81.Text = "Delete";
+            // 
+            // gridMetaUnitsActivity
+            // 
+            this.gridMetaUnitsActivity.AllowUserToAddRows = false;
+            this.gridMetaUnitsActivity.AllowUserToDeleteRows = false;
+            this.gridMetaUnitsActivity.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
+            this.gridMetaUnitsActivity.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.gridMetaUnitsActivity.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridMetaUnitsActivity.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gridMetaUnitsActivity.Location = new System.Drawing.Point(0, 25);
+            this.gridMetaUnitsActivity.Name = "gridMetaUnitsActivity";
+            this.gridMetaUnitsActivity.ReadOnly = true;
+            this.gridMetaUnitsActivity.Size = new System.Drawing.Size(579, 549);
+            this.gridMetaUnitsActivity.TabIndex = 1;
+            // 
+            // toolStrip2
+            // 
+            this.toolStrip2.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripLabel60,
+            this.toolStripSeparator51,
+            this.toolStripButton100,
+            this.toolStripButton101,
+            this.toolStripButton102});
+            this.toolStrip2.Location = new System.Drawing.Point(0, 0);
+            this.toolStrip2.Name = "toolStrip2";
+            this.toolStrip2.Size = new System.Drawing.Size(579, 25);
+            this.toolStrip2.TabIndex = 0;
+            this.toolStrip2.Text = "toolStrip2";
+            // 
+            // toolStripLabel60
+            // 
+            this.toolStripLabel60.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.toolStripLabel60.Name = "toolStripLabel60";
+            this.toolStripLabel60.Size = new System.Drawing.Size(80, 22);
+            this.toolStripLabel60.Text = "Activity units";
+            // 
+            // toolStripSeparator51
+            // 
+            this.toolStripSeparator51.Name = "toolStripSeparator51";
+            this.toolStripSeparator51.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripButton100
+            // 
+            this.toolStripButton100.Image = global::DSA_lims.Properties.Resources._new;
+            this.toolStripButton100.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton100.Name = "toolStripButton100";
+            this.toolStripButton100.Size = new System.Drawing.Size(51, 22);
+            this.toolStripButton100.Text = "New";
+            // 
+            // toolStripButton101
+            // 
+            this.toolStripButton101.Image = global::DSA_lims.Properties.Resources.edit;
+            this.toolStripButton101.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton101.Name = "toolStripButton101";
+            this.toolStripButton101.Size = new System.Drawing.Size(47, 22);
+            this.toolStripButton101.Text = "Edit";
+            // 
+            // toolStripButton102
+            // 
+            this.toolStripButton102.Image = global::DSA_lims.Properties.Resources.delete;
+            this.toolStripButton102.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton102.Name = "toolStripButton102";
+            this.toolStripButton102.Size = new System.Drawing.Size(60, 22);
+            this.toolStripButton102.Text = "Delete";
             // 
             // tabMetaSamplers
             // 
@@ -8143,213 +8357,22 @@
             this.lblCurrentTab.Size = new System.Drawing.Size(98, 22);
             this.lblCurrentTab.Text = "<lblCurrentTab>";
             // 
-            // miNewCounty
+            // miProjectsSubEdit
             // 
-            this.miNewCounty.Name = "miNewCounty";
-            this.miNewCounty.Size = new System.Drawing.Size(176, 22);
-            this.miNewCounty.Text = "&New county";
-            this.miNewCounty.Click += new System.EventHandler(this.miNewCounty_Click);
+            this.miProjectsSubEdit.Name = "miProjectsSubEdit";
+            this.miProjectsSubEdit.Size = new System.Drawing.Size(177, 22);
+            this.miProjectsSubEdit.Text = "Edit s&ub project";
             // 
-            // miEditCounty
+            // miProjectsSubDelete
             // 
-            this.miEditCounty.Name = "miEditCounty";
-            this.miEditCounty.Size = new System.Drawing.Size(176, 22);
-            this.miEditCounty.Text = "&Edit county";
-            this.miEditCounty.Click += new System.EventHandler(this.miEditCounty_Click);
+            this.miProjectsSubDelete.Name = "miProjectsSubDelete";
+            this.miProjectsSubDelete.Size = new System.Drawing.Size(177, 22);
+            this.miProjectsSubDelete.Text = "Delete su&b project";
             // 
-            // miDeleteCounty
+            // toolStripSeparator52
             // 
-            this.miDeleteCounty.Name = "miDeleteCounty";
-            this.miDeleteCounty.Size = new System.Drawing.Size(176, 22);
-            this.miDeleteCounty.Text = "&Delete county";
-            this.miDeleteCounty.Click += new System.EventHandler(this.miDeleteCounty_Click);
-            // 
-            // miNewMunicipality
-            // 
-            this.miNewMunicipality.Name = "miNewMunicipality";
-            this.miNewMunicipality.Size = new System.Drawing.Size(176, 22);
-            this.miNewMunicipality.Text = "New &municipality";
-            this.miNewMunicipality.Click += new System.EventHandler(this.miNewMunicipality_Click);
-            // 
-            // miEditMunicipality
-            // 
-            this.miEditMunicipality.Name = "miEditMunicipality";
-            this.miEditMunicipality.Size = new System.Drawing.Size(176, 22);
-            this.miEditMunicipality.Text = "Edit m&unicipality";
-            this.miEditMunicipality.Click += new System.EventHandler(this.miEditMunicipality_Click);
-            // 
-            // miDeleteMunicipality
-            // 
-            this.miDeleteMunicipality.Name = "miDeleteMunicipality";
-            this.miDeleteMunicipality.Size = new System.Drawing.Size(176, 22);
-            this.miDeleteMunicipality.Text = "Delete mun&icipality";
-            this.miDeleteMunicipality.Click += new System.EventHandler(this.miDeleteMunicipality_Click);
-            // 
-            // toolStripSeparator50
-            // 
-            this.toolStripSeparator50.Name = "toolStripSeparator50";
-            this.toolStripSeparator50.Size = new System.Drawing.Size(173, 6);
-            // 
-            // miNewStation
-            // 
-            this.miNewStation.Name = "miNewStation";
-            this.miNewStation.Size = new System.Drawing.Size(152, 22);
-            this.miNewStation.Text = "&New station";
-            this.miNewStation.Click += new System.EventHandler(this.miNewStation_Click);
-            // 
-            // miEditStation
-            // 
-            this.miEditStation.Name = "miEditStation";
-            this.miEditStation.Size = new System.Drawing.Size(152, 22);
-            this.miEditStation.Text = "&Edit station";
-            this.miEditStation.Click += new System.EventHandler(this.miEditStation_Click);
-            // 
-            // miDeleteStation
-            // 
-            this.miDeleteStation.Name = "miDeleteStation";
-            this.miDeleteStation.Size = new System.Drawing.Size(152, 22);
-            this.miDeleteStation.Text = "&Delete station";
-            this.miDeleteStation.Click += new System.EventHandler(this.miDeleteStation_Click);
-            // 
-            // splitContainer21
-            // 
-            this.splitContainer21.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer21.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer21.Name = "splitContainer21";
-            // 
-            // splitContainer21.Panel1
-            // 
-            this.splitContainer21.Panel1.Controls.Add(this.toolStrip1);
-            // 
-            // splitContainer21.Panel2
-            // 
-            this.splitContainer21.Panel2.Controls.Add(this.panel8);
-            this.splitContainer21.Size = new System.Drawing.Size(782, 266);
-            this.splitContainer21.SplitterDistance = 406;
-            this.splitContainer21.TabIndex = 4;
-            // 
-            // toolStrip1
-            // 
-            this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripLabel59});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(406, 25);
-            this.toolStrip1.TabIndex = 0;
-            this.toolStrip1.Text = "toolStrip1";
-            // 
-            // toolStripLabel59
-            // 
-            this.toolStripLabel59.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.toolStripLabel59.Name = "toolStripLabel59";
-            this.toolStripLabel59.Size = new System.Drawing.Size(76, 22);
-            this.toolStripLabel59.Text = "Analysis Info";
-            // 
-            // miNewSampleStorage
-            // 
-            this.miNewSampleStorage.Name = "miNewSampleStorage";
-            this.miNewSampleStorage.Size = new System.Drawing.Size(190, 22);
-            this.miNewSampleStorage.Text = "&New sample stoarge";
-            this.miNewSampleStorage.Click += new System.EventHandler(this.miNewSampleStorage_Click);
-            // 
-            // miEditSampleStorage
-            // 
-            this.miEditSampleStorage.Name = "miEditSampleStorage";
-            this.miEditSampleStorage.Size = new System.Drawing.Size(190, 22);
-            this.miEditSampleStorage.Text = "&Edit sample storage";
-            this.miEditSampleStorage.Click += new System.EventHandler(this.miEditSampleStorage_Click);
-            // 
-            // miDeleteSampleStorage
-            // 
-            this.miDeleteSampleStorage.Name = "miDeleteSampleStorage";
-            this.miDeleteSampleStorage.Size = new System.Drawing.Size(190, 22);
-            this.miDeleteSampleStorage.Text = "&Delete sample storage";
-            this.miDeleteSampleStorage.Click += new System.EventHandler(this.miDeleteSampleStorage_Click);
-            // 
-            // splitContainer22
-            // 
-            this.splitContainer22.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer22.Location = new System.Drawing.Point(3, 3);
-            this.splitContainer22.Name = "splitContainer22";
-            // 
-            // splitContainer22.Panel1
-            // 
-            this.splitContainer22.Panel1.Controls.Add(this.gridMetaUnitsPrep);
-            this.splitContainer22.Panel1.Controls.Add(this.toolsMetaUnits);
-            // 
-            // splitContainer22.Panel2
-            // 
-            this.splitContainer22.Panel2.Controls.Add(this.gridMetaUnitsActivity);
-            this.splitContainer22.Panel2.Controls.Add(this.toolStrip2);
-            this.splitContainer22.Size = new System.Drawing.Size(1115, 574);
-            this.splitContainer22.SplitterDistance = 532;
-            this.splitContainer22.TabIndex = 4;
-            // 
-            // toolStrip2
-            // 
-            this.toolStrip2.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripLabel60,
-            this.toolStripSeparator51,
-            this.toolStripButton100,
-            this.toolStripButton101,
-            this.toolStripButton102});
-            this.toolStrip2.Location = new System.Drawing.Point(0, 0);
-            this.toolStrip2.Name = "toolStrip2";
-            this.toolStrip2.Size = new System.Drawing.Size(579, 25);
-            this.toolStrip2.TabIndex = 0;
-            this.toolStrip2.Text = "toolStrip2";
-            // 
-            // toolStripLabel60
-            // 
-            this.toolStripLabel60.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.toolStripLabel60.Name = "toolStripLabel60";
-            this.toolStripLabel60.Size = new System.Drawing.Size(80, 22);
-            this.toolStripLabel60.Text = "Activity units";
-            // 
-            // toolStripSeparator51
-            // 
-            this.toolStripSeparator51.Name = "toolStripSeparator51";
-            this.toolStripSeparator51.Size = new System.Drawing.Size(6, 25);
-            // 
-            // toolStripButton100
-            // 
-            this.toolStripButton100.Image = global::DSA_lims.Properties.Resources._new;
-            this.toolStripButton100.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton100.Name = "toolStripButton100";
-            this.toolStripButton100.Size = new System.Drawing.Size(51, 22);
-            this.toolStripButton100.Text = "New";
-            // 
-            // toolStripButton101
-            // 
-            this.toolStripButton101.Image = global::DSA_lims.Properties.Resources.edit;
-            this.toolStripButton101.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton101.Name = "toolStripButton101";
-            this.toolStripButton101.Size = new System.Drawing.Size(47, 22);
-            this.toolStripButton101.Text = "Edit";
-            // 
-            // toolStripButton102
-            // 
-            this.toolStripButton102.Image = global::DSA_lims.Properties.Resources.delete;
-            this.toolStripButton102.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton102.Name = "toolStripButton102";
-            this.toolStripButton102.Size = new System.Drawing.Size(60, 22);
-            this.toolStripButton102.Text = "Delete";
-            // 
-            // gridMetaUnitsActivity
-            // 
-            this.gridMetaUnitsActivity.AllowUserToAddRows = false;
-            this.gridMetaUnitsActivity.AllowUserToDeleteRows = false;
-            this.gridMetaUnitsActivity.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
-            this.gridMetaUnitsActivity.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.gridMetaUnitsActivity.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gridMetaUnitsActivity.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridMetaUnitsActivity.Location = new System.Drawing.Point(0, 25);
-            this.gridMetaUnitsActivity.Name = "gridMetaUnitsActivity";
-            this.gridMetaUnitsActivity.ReadOnly = true;
-            this.gridMetaUnitsActivity.Size = new System.Drawing.Size(579, 549);
-            this.gridMetaUnitsActivity.TabIndex = 1;
+            this.toolStripSeparator52.Name = "toolStripSeparator52";
+            this.toolStripSeparator52.Size = new System.Drawing.Size(174, 6);
             // 
             // FormMain
             // 
@@ -8452,6 +8475,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView10)).EndInit();
             this.toolsSampleResAnalMeth.ResumeLayout(false);
             this.toolsSampleResAnalMeth.PerformLayout();
+            this.splitContainer21.Panel1.ResumeLayout(false);
+            this.splitContainer21.Panel1.PerformLayout();
+            this.splitContainer21.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer21)).EndInit();
+            this.splitContainer21.ResumeLayout(false);
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
             this.panel8.ResumeLayout(false);
             this.panel8.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView11)).EndInit();
@@ -8526,9 +8556,18 @@
             this.toolsMetaSampStorage.ResumeLayout(false);
             this.toolsMetaSampStorage.PerformLayout();
             this.tabMetaUnits.ResumeLayout(false);
+            this.splitContainer22.Panel1.ResumeLayout(false);
+            this.splitContainer22.Panel1.PerformLayout();
+            this.splitContainer22.Panel2.ResumeLayout(false);
+            this.splitContainer22.Panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer22)).EndInit();
+            this.splitContainer22.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.gridMetaUnitsPrep)).EndInit();
             this.toolsMetaUnits.ResumeLayout(false);
             this.toolsMetaUnits.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridMetaUnitsActivity)).EndInit();
+            this.toolStrip2.ResumeLayout(false);
+            this.toolStrip2.PerformLayout();
             this.tabMetaSamplers.ResumeLayout(false);
             this.tabMetaSamplers.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView14)).EndInit();
@@ -8777,22 +8816,6 @@
             this.toolsSysGeom.PerformLayout();
             this.tools.ResumeLayout(false);
             this.tools.PerformLayout();
-            this.splitContainer21.Panel1.ResumeLayout(false);
-            this.splitContainer21.Panel1.PerformLayout();
-            this.splitContainer21.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer21)).EndInit();
-            this.splitContainer21.ResumeLayout(false);
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
-            this.splitContainer22.Panel1.ResumeLayout(false);
-            this.splitContainer22.Panel1.PerformLayout();
-            this.splitContainer22.Panel2.ResumeLayout(false);
-            this.splitContainer22.Panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer22)).EndInit();
-            this.splitContainer22.ResumeLayout(false);
-            this.toolStrip2.ResumeLayout(false);
-            this.toolStrip2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gridMetaUnitsActivity)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -9513,6 +9536,9 @@
         private System.Windows.Forms.ToolStripButton toolStripButton101;
         private System.Windows.Forms.ToolStripButton toolStripButton102;
         private System.Windows.Forms.DataGridView gridMetaUnitsActivity;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator52;
+        private System.Windows.Forms.ToolStripMenuItem miProjectsSubEdit;
+        private System.Windows.Forms.ToolStripMenuItem miProjectsSubDelete;
     }
 }
 

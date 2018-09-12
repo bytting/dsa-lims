@@ -105,85 +105,77 @@ namespace DSA_lims
         }
 
         private void btnOk_Click(object sender, EventArgs e)
-        {
-            try
-            {                
-                if (String.IsNullOrEmpty(tbName.Text.Trim()))
-                {
-                    MessageBox.Show("Nuclide name is mandatory");
-                    return;
-                }                
-
-                if (String.IsNullOrEmpty(tbNumberOfProtons.Text.Trim()))
-                {
-                    MessageBox.Show("Number of protons is mandatory");
-                    return;
-                }                
-
-                if (String.IsNullOrEmpty(tbNumberOfNeutrons.Text.Trim()))
-                {
-                    MessageBox.Show("Number of neutrons is mandatory");
-                    return;
-                }                
-
-                if (String.IsNullOrEmpty(tbHalflife.Text.Trim()))
-                {
-                    MessageBox.Show("Halflife is mandatory");
-                    return;
-                }                
-
-                if (String.IsNullOrEmpty(tbHalflifeUncertainty.Text.Trim()))
-                {
-                    MessageBox.Show("Halflife uncertainty is mandatory");
-                    return;
-                }                
-
-                if (cboxDecayTypes.SelectedIndex < 0)
-                {
-                    MessageBox.Show("Decay type is mandatory");
-                    return;
-                }                
-
-                if (String.IsNullOrEmpty(tbKXrayEnergy.Text.Trim()))
-                {
-                    MessageBox.Show("KXray energy is mandatory");
-                    return;
-                }                
-
-                if (String.IsNullOrEmpty(tbFluorescenceYield.Text.Trim()))
-                {
-                    MessageBox.Show("Fluorescence yield is mandatory");
-                    return;
-                }
-
-                Nuclide.Name = tbName.Text.Trim();
-                Nuclide.ProtonCount = Convert.ToInt32(tbNumberOfProtons.Text.Trim());
-                Nuclide.NeutronCount = Convert.ToInt32(tbNumberOfNeutrons.Text.Trim());
-                Nuclide.HalfLife = Convert.ToDouble(tbHalflife.Text.Trim());
-                Nuclide.HalfLifeUncertainty = Convert.ToDouble(tbHalflifeUncertainty.Text.Trim());
-                Nuclide.DecayTypeId = Convert.ToInt32(cboxDecayTypes.SelectedValue);
-                Nuclide.XRayEnergy = Convert.ToDouble(tbKXrayEnergy.Text.Trim());
-                Nuclide.FluorescenceYield = Convert.ToDouble(tbFluorescenceYield.Text.Trim());
-                Nuclide.InUse = cbInUse.Checked;
-                Nuclide.Comment = tbComment.Text.Trim();                
-
-                if (Nuclide.Id == Guid.Empty)
-                    InsertNuclide();
-                else
-                    UpdateNuclide();
-            }
-            catch(Exception ex)
+        {                            
+            if (String.IsNullOrEmpty(tbName.Text.Trim()))
             {
-                mLog.Error(ex);
-                MessageBox.Show(StrUtils.makeErrorMessage("Unable to insert. " + ex.Message));
+                MessageBox.Show("Nuclide name is mandatory");
                 return;
-            }            
+            }                
 
-            DialogResult = DialogResult.OK;
+            if (String.IsNullOrEmpty(tbNumberOfProtons.Text.Trim()))
+            {
+                MessageBox.Show("Number of protons is mandatory");
+                return;
+            }                
+
+            if (String.IsNullOrEmpty(tbNumberOfNeutrons.Text.Trim()))
+            {
+                MessageBox.Show("Number of neutrons is mandatory");
+                return;
+            }                
+
+            if (String.IsNullOrEmpty(tbHalflife.Text.Trim()))
+            {
+                MessageBox.Show("Halflife is mandatory");
+                return;
+            }                
+
+            if (String.IsNullOrEmpty(tbHalflifeUncertainty.Text.Trim()))
+            {
+                MessageBox.Show("Halflife uncertainty is mandatory");
+                return;
+            }                
+
+            if (cboxDecayTypes.SelectedIndex < 0)
+            {
+                MessageBox.Show("Decay type is mandatory");
+                return;
+            }                
+
+            if (String.IsNullOrEmpty(tbKXrayEnergy.Text.Trim()))
+            {
+                MessageBox.Show("KXray energy is mandatory");
+                return;
+            }                
+
+            if (String.IsNullOrEmpty(tbFluorescenceYield.Text.Trim()))
+            {
+                MessageBox.Show("Fluorescence yield is mandatory");
+                return;
+            }
+
+            Nuclide.Name = tbName.Text.Trim();
+            Nuclide.ProtonCount = Convert.ToInt32(tbNumberOfProtons.Text.Trim());
+            Nuclide.NeutronCount = Convert.ToInt32(tbNumberOfNeutrons.Text.Trim());
+            Nuclide.HalfLife = Convert.ToDouble(tbHalflife.Text.Trim());
+            Nuclide.HalfLifeUncertainty = Convert.ToDouble(tbHalflifeUncertainty.Text.Trim());
+            Nuclide.DecayTypeId = Convert.ToInt32(cboxDecayTypes.SelectedValue);
+            Nuclide.XRayEnergy = Convert.ToDouble(tbKXrayEnergy.Text.Trim());
+            Nuclide.FluorescenceYield = Convert.ToDouble(tbFluorescenceYield.Text.Trim());
+            Nuclide.InUse = cbInUse.Checked;
+            Nuclide.Comment = tbComment.Text.Trim();
+
+            bool success;
+            if (Nuclide.Id == Guid.Empty)
+                success = InsertNuclide();
+            else
+                success = UpdateNuclide();
+
+            DialogResult = success ? DialogResult.OK : DialogResult.Abort;
             Close();            
         }
 
-        private void InsertNuclide()
+        private bool InsertNuclide()
         {
             SqlConnection connection = null;
             SqlTransaction transaction = null;
@@ -226,14 +218,17 @@ namespace DSA_lims
             {                
                 transaction?.Rollback();
                 mLog.Error(ex);
+                return false;
             }
             finally
             {                
                 connection?.Close();                 
             }
+
+            return true;
         }
 
-        private void UpdateNuclide()
+        private bool UpdateNuclide()
         {
             SqlConnection connection = null;
             SqlTransaction transaction = null;
@@ -271,11 +266,14 @@ namespace DSA_lims
             {
                 transaction?.Rollback();
                 mLog.Error(ex);
+                return false;
             }
             finally
             {
                 connection?.Close();
             }
+
+            return true;
         }
     }
 }

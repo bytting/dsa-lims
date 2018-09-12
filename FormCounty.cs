@@ -99,16 +99,17 @@ namespace DSA_lims
             County.Number = Convert.ToInt32(tbNumber.Text.Trim());
             County.InUse = cbInUse.Checked;
 
+            bool success;
             if (County.Id == Guid.Empty)
-                InsertCounty();
+                success = InsertCounty();
             else
-                UpdateCounty();
+                success = UpdateCounty();
 
-            DialogResult = DialogResult.OK;
+            DialogResult = success ? DialogResult.OK : DialogResult.Abort;
             Close();
         }
 
-        private void InsertCounty()
+        private bool InsertCounty()
         {
             SqlConnection connection = null;
             SqlTransaction transaction = null;
@@ -144,14 +145,17 @@ namespace DSA_lims
             {
                 transaction?.Rollback();
                 mLog.Error(ex);
+                return false;
             }
             finally
             {
                 connection?.Close();
             }
+
+            return true;
         }
 
-        private void UpdateCounty()
+        private bool UpdateCounty()
         {
             SqlConnection connection = null;
             SqlTransaction transaction = null;
@@ -182,11 +186,14 @@ namespace DSA_lims
             {
                 transaction?.Rollback();
                 mLog.Error(ex);
+                return false;
             }
             finally
             {
                 connection?.Close();
             }
+
+            return true;
         }
     }
 }

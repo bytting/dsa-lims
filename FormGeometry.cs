@@ -111,16 +111,17 @@ namespace DSA_lims
             Geometry.InUse = cbInUse.Checked;
             Geometry.Comment = tbComment.Text.Trim();
 
+            bool success;
             if (Geometry.Id == Guid.Empty)
-                InsertGeometry();
+                success = InsertGeometry();
             else
-                UpdateGeometry();
+                success = UpdateGeometry();
 
-            DialogResult = DialogResult.OK;
+            DialogResult = success ? DialogResult.OK : DialogResult.Abort;
             Close();
         }
 
-        private void InsertGeometry()
+        private bool InsertGeometry()
         {
             SqlConnection connection = null;
             SqlTransaction transaction = null;
@@ -158,14 +159,17 @@ namespace DSA_lims
             {
                 transaction?.Rollback();
                 mLog.Error(ex);
+                return false;
             }
             finally
             {
                 connection?.Close();
             }
+
+            return true;
         }
 
-        private void UpdateGeometry()
+        private bool UpdateGeometry()
         {
             SqlConnection connection = null;
             SqlTransaction transaction = null;
@@ -198,11 +202,14 @@ namespace DSA_lims
             {
                 transaction?.Rollback();
                 mLog.Error(ex);
+                return false;
             }
             finally
             {
                 connection?.Close();
             }
+
+            return true;
         }
     }
 }

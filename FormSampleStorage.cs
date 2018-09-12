@@ -95,16 +95,17 @@ namespace DSA_lims
             SampleStorage.InUse = cbInUse.Checked;
             SampleStorage.Comment = tbComment.Text.Trim();
 
+            bool success;
             if (SampleStorage.Id == Guid.Empty)
-                InsertSampleStorage();
+                success = InsertSampleStorage();
             else
-                UpdateSampleStorage();
+                success = UpdateSampleStorage();
 
-            DialogResult = DialogResult.OK;
+            DialogResult = success ? DialogResult.OK : DialogResult.Abort;
             Close();
         }
 
-        private void InsertSampleStorage()
+        private bool InsertSampleStorage()
         {
             SqlConnection connection = null;
             SqlTransaction transaction = null;
@@ -141,14 +142,17 @@ namespace DSA_lims
             {
                 transaction?.Rollback();
                 mLog.Error(ex);
+                return false;
             }
             finally
             {
                 connection?.Close();
             }
+
+            return true;
         }
 
-        private void UpdateSampleStorage()
+        private bool UpdateSampleStorage()
         {
             SqlConnection connection = null;
             SqlTransaction transaction = null;
@@ -180,11 +184,14 @@ namespace DSA_lims
             {
                 transaction?.Rollback();
                 mLog.Error(ex);
+                return false;
             }
             finally
             {
                 connection?.Close();
             }
+
+            return true;
         }
     }
 }

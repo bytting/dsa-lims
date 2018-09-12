@@ -124,18 +124,19 @@ namespace DSA_lims
             EnergyLine.TotalInternalConversion = Convert.ToDouble(tbTotInternalConv.Text.Trim());
             EnergyLine.KShellConversion = Convert.ToDouble(tbKShellConv.Text.Trim());
             EnergyLine.InUse = Convert.ToBoolean(cbInUse.Checked);
-            EnergyLine.Comment = tbComment.Text.Trim();            
+            EnergyLine.Comment = tbComment.Text.Trim();
 
+            bool success;
             if (EnergyLine.Id == Guid.Empty)
-                InsertEnergyLine();
+                success = InsertEnergyLine();
             else
-                UpdateEnergyLine();
+                success = UpdateEnergyLine();
 
-            DialogResult = DialogResult.OK;
+            DialogResult = success ? DialogResult.OK : DialogResult.Abort;
             Close();
         }
 
-        private void InsertEnergyLine()
+        private bool InsertEnergyLine()
         {
             SqlConnection connection = null;
             SqlTransaction transaction = null;
@@ -181,14 +182,17 @@ namespace DSA_lims
             {
                 transaction?.Rollback();
                 mLog.Error(ex);
+                return false;
             }
             finally
             {
                 connection?.Close();
             }
+
+            return true;
         }
 
-        private void UpdateEnergyLine()
+        private bool UpdateEnergyLine()
         {
             SqlConnection connection = null;
             SqlTransaction transaction = null;
@@ -228,11 +232,14 @@ namespace DSA_lims
             {
                 transaction?.Rollback();
                 mLog.Error(ex);
+                return false;
             }
             finally
             {
                 connection?.Close();
             }
+
+            return true;
         }
     }
 }

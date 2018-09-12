@@ -106,16 +106,17 @@ namespace DSA_lims
             Municipality.Number = Convert.ToInt32(tbNumber.Text.Trim());
             Municipality.InUse = cbInUse.Checked;
 
+            bool success;
             if (Municipality.Id == Guid.Empty)
-                InsertMunicipality();
+                success = InsertMunicipality();
             else
-                UpdateMunicipality();
+                success = UpdateMunicipality();
 
-            DialogResult = DialogResult.OK;
+            DialogResult = success ? DialogResult.OK : DialogResult.Abort;
             Close();
         }
 
-        private void InsertMunicipality()
+        private bool InsertMunicipality()
         {
             SqlConnection connection = null;
             SqlTransaction transaction = null;
@@ -152,14 +153,17 @@ namespace DSA_lims
             {
                 transaction?.Rollback();
                 mLog.Error(ex);
+                return false;
             }
             finally
             {
                 connection?.Close();
             }
+
+            return true;
         }
 
-        private void UpdateMunicipality()
+        private bool UpdateMunicipality()
         {
             SqlConnection connection = null;
             SqlTransaction transaction = null;
@@ -190,11 +194,14 @@ namespace DSA_lims
             {
                 transaction?.Rollback();
                 mLog.Error(ex);
+                return false;
             }
             finally
             {
                 connection?.Close();
             }
+
+            return true;
         }
     }
 }

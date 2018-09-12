@@ -712,15 +712,17 @@ namespace DSA_lims
         {
             // create laboratory
             FormLaboratory form = new FormLaboratory(log);
-            if (form.ShowDialog() != DialogResult.OK)
-                return;
-
-            using (SqlConnection conn = DB.OpenConnection())
-            {
-                PopulateLaboratories(conn);
-            }
-
-            lblStatus.Text = StrUtils.makeStatusMessage("Laboratory " + form.Laboratory.Name + " inserted");
+            switch(form.ShowDialog())
+            {                
+                case DialogResult.OK:
+                    lblStatus.Text = StrUtils.makeStatusMessage("Laboratory " + form.Laboratory.Name + " created");
+                    using (SqlConnection conn = DB.OpenConnection())
+                        PopulateLaboratories(conn);
+                    break;
+                case DialogResult.Abort:
+                    lblStatus.Text = StrUtils.makeErrorMessage("Create laboratory failed");
+                    break;
+            }                            
         }
 
         private void miDeleteLaboratory_Click(object sender, EventArgs e)
@@ -776,15 +778,17 @@ namespace DSA_lims
             Guid lid = new Guid(row.Cells[0].Value.ToString());
 
             FormLaboratory form = new FormLaboratory(log, lid);
-            if (form.ShowDialog() != DialogResult.OK)
-                return;
-
-            using (SqlConnection conn = DB.OpenConnection())
+            switch (form.ShowDialog())
             {
-                PopulateLaboratories(conn);
-            }
-
-            lblStatus.Text = StrUtils.makeStatusMessage("Laboratory " + form.Laboratory.Name + " updated");
+                case DialogResult.OK:
+                    lblStatus.Text = StrUtils.makeStatusMessage("Laboratory " + form.Laboratory.Name + " updated");
+                    using (SqlConnection conn = DB.OpenConnection())
+                        PopulateLaboratories(conn);
+                    break;
+                case DialogResult.Abort:
+                    lblStatus.Text = StrUtils.makeErrorMessage("Update laboratory failed");
+                    break;
+            }                        
         }
 
         private void miEditUser_Click(object sender, EventArgs e)
@@ -799,35 +803,19 @@ namespace DSA_lims
 
         private void miProjectsNew_Click(object sender, EventArgs e)
         {
-            // new main project                        
-            
-            FormProject form = new FormProject();
-            if (form.ShowDialog() != DialogResult.OK)
-                return;
-
-            try
+            // new main project                                    
+            FormProject form = new FormProject(log);
+            switch (form.ShowDialog())
             {
-                using (SqlConnection conn = DB.OpenConnection())
-                {
-                    SqlCommand cmd = new SqlCommand("insert into project (id,name,comment,in_use,create_date,created_by,update_date,updated_by) values(@id,@name,@comment,@in_use,@create_date,@created_by,@update_date,@updated_by)", conn);
-                    cmd.Parameters.AddWithValue("@id", Guid.NewGuid());
-                    cmd.Parameters.AddWithValue("@name", form.ProjectName);
-                    cmd.Parameters.AddWithValue("@comment", form.Comment);
-                    cmd.Parameters.AddWithValue("@in_use", form.InUse);
-                    cmd.Parameters.Add("@create_date", SqlDbType.DateTime).Value = DateTime.Now;
-                    cmd.Parameters.AddWithValue("@created_by", Common.Username);
-                    cmd.Parameters.Add("@update_date", SqlDbType.DateTime).Value = DateTime.Now;
-                    cmd.Parameters.AddWithValue("@updated_by", Common.Username);
-                    cmd.ExecuteNonQuery();
-
-                    PopulateProjects(conn);
-                }
-                lblStatus.Text = StrUtils.makeStatusMessage("Main project " + form.ProjectName + " created");
-            }
-            catch (Exception ex)
-            {
-                log.Error(ex);
-            }            
+                case DialogResult.OK:
+                    lblStatus.Text = StrUtils.makeStatusMessage("Main project " + form.MainProject.Name + " inserted");
+                    using (SqlConnection conn = DB.OpenConnection())
+                        PopulateProjects(conn);
+                    break;
+                case DialogResult.Abort:
+                    lblStatus.Text = StrUtils.makeErrorMessage("Create main project failed");
+                    break;
+            }                        
         }
 
         private void miProjectsSubNew_Click(object sender, EventArgs e)
@@ -838,6 +826,23 @@ namespace DSA_lims
         private void miProjectsEdit_Click(object sender, EventArgs e)
         {
             // edit project
+            if (treeProjects.SelectedNode == null)
+                return;
+
+            Guid pid = new Guid(treeProjects.SelectedNode.Tag.ToString());
+
+            FormProject form = new FormProject(log, pid);
+            switch (form.ShowDialog())
+            {
+                case DialogResult.OK:
+                    lblStatus.Text = StrUtils.makeStatusMessage("Project " + form.MainProject.Name + " updated");
+                    using (SqlConnection conn = DB.OpenConnection())
+                        PopulateProjects(conn);
+                    break;
+                case DialogResult.Abort:
+                    lblStatus.Text = StrUtils.makeErrorMessage("Create project failed");
+                    break;
+            }                        
         }
 
         private void miProjectsDelete_Click(object sender, EventArgs e)
@@ -847,7 +852,7 @@ namespace DSA_lims
 
         private void treeProjects_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            tbProjectsName.Text = "";
+            tbProjectsName.Text = "";                        
             tbProjectsComment.Text = "";
             cbProjectsInUse.Checked = false;
 
@@ -857,12 +862,11 @@ namespace DSA_lims
             try
             {
                 SqlConnection conn = DB.OpenConnection();
-
                 Guid id = new Guid(e.Node.Tag.ToString());
 
                 SqlCommand cmd = new SqlCommand("csp_select_project", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@ID", id);
+                cmd.Parameters.AddWithValue("@id", id);
 
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
@@ -885,15 +889,17 @@ namespace DSA_lims
         private void miNuclidesNew_Click(object sender, EventArgs e)
         {            
             FormNuclide form = new FormNuclide(log, decayTypes);
-            if (form.ShowDialog() != DialogResult.OK)
-                return;
-
-            using (SqlConnection conn = DB.OpenConnection())
+            switch (form.ShowDialog())
             {
-                PopulateNuclides(conn);
-            }
-                            
-            lblStatus.Text = StrUtils.makeStatusMessage("Nuclide " + form.Nuclide.Name + " inserted");
+                case DialogResult.OK:
+                    lblStatus.Text = StrUtils.makeStatusMessage("Nuclide " + form.Nuclide.Name + " inserted");
+                    using (SqlConnection conn = DB.OpenConnection())
+                        PopulateNuclides(conn);
+                    break;
+                case DialogResult.Abort:
+                    lblStatus.Text = StrUtils.makeErrorMessage("Create nuclide failed");
+                    break;
+            }            
         }        
 
         private void miSampleTypesNew_Click(object sender, EventArgs e)
@@ -966,15 +972,17 @@ namespace DSA_lims
             Guid nid = new Guid(row.Cells[0].Value.ToString());
 
             FormNuclide form = new FormNuclide(log, decayTypes, nid);
-            if (form.ShowDialog() != DialogResult.OK)
-                return;
-
-            using (SqlConnection conn = DB.OpenConnection())
+            switch (form.ShowDialog())
             {
-                PopulateNuclides(conn);
-            }
-
-            lblStatus.Text = StrUtils.makeStatusMessage("Nuclide " + form.Nuclide.Name + " updated");
+                case DialogResult.OK:
+                    lblStatus.Text = StrUtils.makeStatusMessage("Nuclide " + form.Nuclide.Name + " updated");
+                    using (SqlConnection conn = DB.OpenConnection())
+                        PopulateNuclides(conn);
+                    break;
+                case DialogResult.Abort:
+                    lblStatus.Text = StrUtils.makeErrorMessage("Update nuclide failed");
+                    break;
+            }                        
         }
 
         private void miEnergyLineNew_Click(object sender, EventArgs e)
@@ -988,15 +996,17 @@ namespace DSA_lims
             string nname = row.Cells[1].Value.ToString();
 
             FormEnergyLine form = new FormEnergyLine(log, nid, nname);
-            if (form.ShowDialog() != DialogResult.OK)
-                return;
-
-            using (SqlConnection conn = DB.OpenConnection())
+            switch (form.ShowDialog())
             {
-                PopulateEnergyLines(conn, nid);
-            }
-
-            lblStatus.Text = StrUtils.makeStatusMessage("Energy line for " + nname + " inserted");
+                case DialogResult.OK:
+                    lblStatus.Text = StrUtils.makeStatusMessage("Energy line for " + nname + " inserted");
+                    using (SqlConnection conn = DB.OpenConnection())
+                        PopulateEnergyLines(conn, nid);
+                    break;
+                case DialogResult.Abort:
+                    lblStatus.Text = StrUtils.makeErrorMessage("Create energy line failed");
+                    break;
+            }                        
         }
 
         private void miEnergyLineEdit_Click(object sender, EventArgs e)
@@ -1013,15 +1023,17 @@ namespace DSA_lims
             Guid eid = new Guid(row2.Cells[0].Value.ToString());
 
             FormEnergyLine form = new FormEnergyLine(log, nid, eid, nname);
-            if (form.ShowDialog() != DialogResult.OK)
-                return;
-
-            using (SqlConnection conn = DB.OpenConnection())
+            switch (form.ShowDialog())
             {
-                PopulateEnergyLines(conn, nid);
-            }
-
-            lblStatus.Text = StrUtils.makeStatusMessage("Energy line for " + nname + " updated");
+                case DialogResult.OK:
+                    lblStatus.Text = StrUtils.makeStatusMessage("Energy line for " + nname + " updated");
+                    using (SqlConnection conn = DB.OpenConnection())
+                        PopulateEnergyLines(conn, nid);
+                    break;
+                case DialogResult.Abort:
+                    lblStatus.Text = StrUtils.makeErrorMessage("Update energy line failed");
+                    break;
+            }                        
         }
 
         private void miEnergyLineDelete_Click(object sender, EventArgs e)
@@ -1046,15 +1058,17 @@ namespace DSA_lims
         {
             // new geom
             FormGeometry form = new FormGeometry(log);
-            if (form.ShowDialog() != DialogResult.OK)
-                return;
-
-            using (SqlConnection conn = DB.OpenConnection())
+            switch (form.ShowDialog())
             {
-                PopulateGeometries(conn);
-            }
-
-            lblStatus.Text = StrUtils.makeStatusMessage("Geometry " + form.Geometry.Name + " inserted");
+                case DialogResult.OK:
+                    lblStatus.Text = StrUtils.makeStatusMessage("Geometry " + form.Geometry.Name + " inserted");
+                    using (SqlConnection conn = DB.OpenConnection())
+                        PopulateGeometries(conn);
+                    break;
+                case DialogResult.Abort:
+                    lblStatus.Text = StrUtils.makeErrorMessage("Create geometry failed");
+                    break;
+            }                        
         }
 
         private void miEditGeometry_Click(object sender, EventArgs e)
@@ -1067,15 +1081,17 @@ namespace DSA_lims
             Guid gid = new Guid(row.Cells[0].Value.ToString());
 
             FormGeometry form = new FormGeometry(log, gid);
-            if (form.ShowDialog() != DialogResult.OK)
-                return;
-
-            using (SqlConnection conn = DB.OpenConnection())
+            switch (form.ShowDialog())
             {
-                PopulateGeometries(conn);
-            }
-
-            lblStatus.Text = StrUtils.makeStatusMessage("Geometry " + form.Geometry.Name + " updated");
+                case DialogResult.OK:
+                    lblStatus.Text = StrUtils.makeStatusMessage("Geometry " + form.Geometry.Name + " updated");
+                    using (SqlConnection conn = DB.OpenConnection())
+                        PopulateGeometries(conn);
+                    break;
+                case DialogResult.Abort:
+                    lblStatus.Text = StrUtils.makeErrorMessage("Update geometry failed");
+                    break;
+            }                        
         }
 
         private void miDeleteGeometry_Click(object sender, EventArgs e)
@@ -1087,15 +1103,17 @@ namespace DSA_lims
         {
             // new county
             FormCounty form = new FormCounty(log);
-            if (form.ShowDialog() != DialogResult.OK)
-                return;
-
-            using (SqlConnection conn = DB.OpenConnection())
+            switch (form.ShowDialog())
             {
-                PopulateCounties(conn);
-            }
-
-            lblStatus.Text = StrUtils.makeStatusMessage("County " + form.County.Name + " inserted");
+                case DialogResult.OK:
+                    lblStatus.Text = StrUtils.makeStatusMessage("County " + form.County.Name + " inserted");
+                    using (SqlConnection conn = DB.OpenConnection())
+                        PopulateCounties(conn);
+                    break;
+                case DialogResult.Abort:
+                    lblStatus.Text = StrUtils.makeErrorMessage("Create county failed");
+                    break;
+            }                        
         }
 
         private void miEditCounty_Click(object sender, EventArgs e)
@@ -1108,15 +1126,17 @@ namespace DSA_lims
             Guid cid = new Guid(row.Cells[0].Value.ToString());
 
             FormCounty form = new FormCounty(log, cid);
-            if (form.ShowDialog() != DialogResult.OK)
-                return;
-
-            using (SqlConnection conn = DB.OpenConnection())
+            switch (form.ShowDialog())
             {
-                PopulateCounties(conn);
-            }
-
-            lblStatus.Text = StrUtils.makeStatusMessage("County " + form.County.Name + " updated");
+                case DialogResult.OK:
+                    lblStatus.Text = StrUtils.makeStatusMessage("County " + form.County.Name + " updated");
+                    using (SqlConnection conn = DB.OpenConnection())
+                        PopulateCounties(conn);
+                    break;
+                case DialogResult.Abort:
+                    lblStatus.Text = StrUtils.makeErrorMessage("Create county failed");
+                    break;
+            }                        
         }
 
         private void miDeleteCounty_Click(object sender, EventArgs e)
@@ -1134,15 +1154,17 @@ namespace DSA_lims
             Guid cid = new Guid(row.Cells[0].Value.ToString());
 
             FormMunicipality form = new FormMunicipality(log, cid);
-            if (form.ShowDialog() != DialogResult.OK)
-                return;
-
-            using (SqlConnection conn = DB.OpenConnection())
+            switch (form.ShowDialog())
             {
-                PopulateMunicipalities(conn, cid);
-            }
-
-            lblStatus.Text = StrUtils.makeStatusMessage("Municipality " + form.Municipality.Name + " inserted");
+                case DialogResult.OK:
+                    lblStatus.Text = StrUtils.makeStatusMessage("Municipality " + form.Municipality.Name + " inserted");
+                    using (SqlConnection conn = DB.OpenConnection())
+                        PopulateMunicipalities(conn, cid);
+                    break;
+                case DialogResult.Abort:
+                    lblStatus.Text = StrUtils.makeErrorMessage("Create municipality failed");
+                    break;
+            }                        
         }
 
         private void miEditMunicipality_Click(object sender, EventArgs e)
@@ -1161,15 +1183,17 @@ namespace DSA_lims
             Guid mid = new Guid(row.Cells[0].Value.ToString());            
 
             FormMunicipality form = new FormMunicipality(log, cid, mid);
-            if (form.ShowDialog() != DialogResult.OK)
-                return;
-
-            using (SqlConnection conn = DB.OpenConnection())
+            switch (form.ShowDialog())
             {
-                PopulateMunicipalities(conn, cid);
-            }
-
-            lblStatus.Text = StrUtils.makeStatusMessage("Municipality " + form.Municipality.Name + " updated");
+                case DialogResult.OK:
+                    lblStatus.Text = StrUtils.makeStatusMessage("Municipality " + form.Municipality.Name + " updated");
+                    using (SqlConnection conn = DB.OpenConnection())
+                        PopulateMunicipalities(conn, cid);
+                    break;
+                case DialogResult.Abort:
+                    lblStatus.Text = StrUtils.makeErrorMessage("Update municipality failed");
+                    break;
+            }                        
         }
 
         private void miDeleteMunicipality_Click(object sender, EventArgs e)
@@ -1194,15 +1218,17 @@ namespace DSA_lims
         {
             // create station
             FormStation form = new FormStation(log);
-            if (form.ShowDialog() != DialogResult.OK)
-                return;
-
-            using (SqlConnection conn = DB.OpenConnection())
+            switch (form.ShowDialog())
             {
-                PopulateStations(conn);
-            }
-
-            lblStatus.Text = StrUtils.makeStatusMessage("Station " + form.Station.Name + " inserted");
+                case DialogResult.OK:
+                    lblStatus.Text = StrUtils.makeStatusMessage("Station " + form.Station.Name + " inserted");
+                    using (SqlConnection conn = DB.OpenConnection())
+                        PopulateStations(conn);
+                    break;
+                case DialogResult.Abort:
+                    lblStatus.Text = StrUtils.makeErrorMessage("Create station failed");
+                    break;
+            }                        
         }
 
         private void miEditStation_Click(object sender, EventArgs e)
@@ -1215,15 +1241,17 @@ namespace DSA_lims
             Guid sid = new Guid(row.Cells[0].Value.ToString());
 
             FormStation form = new FormStation(log, sid);
-            if (form.ShowDialog() != DialogResult.OK)
-                return;
-
-            using (SqlConnection conn = DB.OpenConnection())
+            switch (form.ShowDialog())
             {
-                PopulateStations(conn);
-            }
-
-            lblStatus.Text = StrUtils.makeStatusMessage("Station " + form.Station.Name + " updated");
+                case DialogResult.OK:
+                    lblStatus.Text = StrUtils.makeStatusMessage("Station " + form.Station.Name + " updated");
+                    using (SqlConnection conn = DB.OpenConnection())
+                        PopulateStations(conn);
+                    break;
+                case DialogResult.Abort:
+                    lblStatus.Text = StrUtils.makeErrorMessage("Update station failed");
+                    break;
+            }                        
         }
 
         private void miDeleteStation_Click(object sender, EventArgs e)
@@ -1235,15 +1263,17 @@ namespace DSA_lims
         {
             // new sample storage
             FormSampleStorage form = new FormSampleStorage(log);
-            if (form.ShowDialog() != DialogResult.OK)
-                return;
-
-            using (SqlConnection conn = DB.OpenConnection())
+            switch (form.ShowDialog())
             {
-                PopulateSampleStorage(conn);
-            }
-
-            lblStatus.Text = StrUtils.makeStatusMessage("Sample storage " + form.SampleStorage.Name + " inserted");
+                case DialogResult.OK:
+                    lblStatus.Text = StrUtils.makeStatusMessage("Sample storage " + form.SampleStorage.Name + " inserted");
+                    using (SqlConnection conn = DB.OpenConnection())
+                        PopulateSampleStorage(conn);
+                    break;
+                case DialogResult.Abort:
+                    lblStatus.Text = StrUtils.makeErrorMessage("Create sample storage failed");
+                    break;
+            }                        
         }
 
         private void miEditSampleStorage_Click(object sender, EventArgs e)
@@ -1256,15 +1286,17 @@ namespace DSA_lims
             Guid ssid = new Guid(row.Cells[0].Value.ToString());
 
             FormSampleStorage form = new FormSampleStorage(log, ssid);
-            if (form.ShowDialog() != DialogResult.OK)
-                return;
-
-            using (SqlConnection conn = DB.OpenConnection())
+            switch (form.ShowDialog())
             {
-                PopulateSampleStorage(conn);
-            }
-
-            lblStatus.Text = StrUtils.makeStatusMessage("Sample storage " + form.SampleStorage.Name + " updated");
+                case DialogResult.OK:
+                    lblStatus.Text = StrUtils.makeStatusMessage("Sample storage " + form.SampleStorage.Name + " updated");
+                    using (SqlConnection conn = DB.OpenConnection())
+                        PopulateSampleStorage(conn);
+                    break;
+                case DialogResult.Abort:
+                    lblStatus.Text = StrUtils.makeErrorMessage("Update sample storage failed");
+                    break;
+            }                        
         }
 
         private void miDeleteSampleStorage_Click(object sender, EventArgs e)

@@ -1024,6 +1024,50 @@ go
 
 /*===========================================================================*/
 
+create PROC csp_insert_project
+	@id uniqueidentifier,
+	@name nvarchar(256),	
+	@in_use bit,
+	@comment nvarchar(1000),
+	@create_date datetime,
+	@created_by nvarchar(50),
+	@update_date datetime,
+	@updated_by nvarchar(50)
+as 
+	insert into project values (
+		@id,
+		NULL,
+		@name, 				
+		@comment,
+		@in_use,
+		@create_date,
+		@created_by,
+		@update_date,
+		@updated_by
+	);
+go
+
+/*===========================================================================*/
+
+create PROC csp_update_project
+	@id uniqueidentifier,
+	@name nvarchar(256),	
+	@in_use bit,
+	@comment nvarchar(1000),
+	@update_date datetime,
+	@updated_by nvarchar(50)
+as 
+	update project set
+		name = @name, 				
+		comment = @comment,		
+		in_use = @in_use,
+		update_date = @update_date,
+		updated_by = @updated_by
+	where id = @id
+go
+
+/*===========================================================================*/
+
 create PROC csp_insert_nuclide
 	@id uniqueidentifier,
 	@name nvarchar(16),

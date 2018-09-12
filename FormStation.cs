@@ -118,16 +118,17 @@ namespace DSA_lims
             Station.InUse = cbInUse.Checked;
             Station.Comment = tbComment.Text.Trim();
 
+            bool success;
             if (Station.Id == Guid.Empty)
-                InsertStation();
+                success = InsertStation();
             else
-                UpdateStation();
+                success = UpdateStation();
 
-            DialogResult = DialogResult.OK;
+            DialogResult = success ? DialogResult.OK : DialogResult.Abort;
             Close();
         }
 
-        private void InsertStation()
+        private bool InsertStation()
         {
             SqlConnection connection = null;
             SqlTransaction transaction = null;
@@ -166,14 +167,17 @@ namespace DSA_lims
             {
                 transaction?.Rollback();
                 mLog.Error(ex);
+                return false;
             }
             finally
             {
                 connection?.Close();
             }
+
+            return true;
         }
 
-        private void UpdateStation()
+        private bool UpdateStation()
         {
             SqlConnection connection = null;
             SqlTransaction transaction = null;
@@ -207,11 +211,14 @@ namespace DSA_lims
             {
                 transaction?.Rollback();
                 mLog.Error(ex);
+                return false;
             }
             finally
             {
                 connection?.Close();
             }
+
+            return true;
         }
     }
 }

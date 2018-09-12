@@ -108,16 +108,17 @@ namespace DSA_lims
             Laboratory.InUse = cbInUse.Checked;
             Laboratory.Comment = tbComment.Text.Trim();
 
+            bool success;
             if (Laboratory.Id == Guid.Empty)
-                InsertLaboratory();
+                success = InsertLaboratory();
             else
-                UpdateLaboratory();
+                success = UpdateLaboratory();
 
-            DialogResult = DialogResult.OK;
+            DialogResult = success ? DialogResult.OK : DialogResult.Abort;
             Close();
         }
 
-        private void InsertLaboratory()
+        private bool InsertLaboratory()
         {
             SqlConnection connection = null;
             SqlTransaction transaction = null;
@@ -159,14 +160,17 @@ namespace DSA_lims
             {
                 transaction?.Rollback();
                 mLog.Error(ex);
+                return false;
             }
             finally
             {
                 connection?.Close();
             }
+
+            return true;
         }
 
-        private void UpdateLaboratory()
+        private bool UpdateLaboratory()
         {
             SqlConnection connection = null;
             SqlTransaction transaction = null;
@@ -201,11 +205,14 @@ namespace DSA_lims
             {
                 transaction?.Rollback();
                 mLog.Error(ex);
+                return false;
             }
             finally
             {
                 connection?.Close();
             }
+
+            return true;
         }
     }
 }

@@ -642,7 +642,7 @@ IF OBJECT_ID('dbo.project', 'U') IS NOT NULL DROP TABLE project;
 CREATE TABLE project (
 	id uniqueidentifier primary key NOT NULL,
 	parent_id uniqueidentifier default NULL,
-	name nvarchar(256) unique NOT NULL,
+	name nvarchar(256) NOT NULL,
 	comment nvarchar(1000) default NULL,
 	in_use bit default 1,
 	create_date datetime NOT NULL,
@@ -1016,6 +1016,14 @@ go
 
 /*===========================================================================*/
 
+create PROC csp_select_sub_projects_for_main_project
+	@parent_id uniqueidentifier
+as 
+	select * from project where parent_id = @parent_id order by name
+go
+
+/*===========================================================================*/
+
 create PROC csp_select_sub_projects_short
 	@parent_id uniqueidentifier	
 as 
@@ -1064,6 +1072,32 @@ as
 		update_date = @update_date,
 		updated_by = @updated_by
 	where id = @id
+go
+
+/*===========================================================================*/
+
+create PROC csp_insert_sub_project
+	@id uniqueidentifier,
+	@parent_id uniqueidentifier,
+	@name nvarchar(256),	
+	@in_use bit,
+	@comment nvarchar(1000),
+	@create_date datetime,
+	@created_by nvarchar(50),
+	@update_date datetime,
+	@updated_by nvarchar(50)
+as 
+	insert into project values (
+		@id,
+		@parent_id,
+		@name, 				
+		@comment,
+		@in_use,
+		@create_date,
+		@created_by,
+		@update_date,
+		@updated_by
+	);
 go
 
 /*===========================================================================*/

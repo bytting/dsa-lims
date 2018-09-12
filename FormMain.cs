@@ -310,6 +310,25 @@ namespace DSA_lims
                     }
                 }
 
+                foreach(TreeNode node in treeProjects.Nodes[0].Nodes)
+                {
+                    if (node.Text == SampleTypesRootName)
+                        continue;
+
+                    Guid parent_id = new Guid(node.Tag.ToString());
+                    using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_sub_projects_for_main_project", CommandType.StoredProcedure, new[] { new SqlParameter("@parent_id", parent_id) }))
+                    {
+                        while (reader.Read())
+                        {
+                            Guid id = new Guid(reader["id"].ToString());
+                            string name = reader["name"].ToString();
+
+                            TreeNode n = node.Nodes.Add(name, name);
+                            n.Tag = id;
+                        }
+                    }
+                }
+
                 root.Expand();
             }
             catch (Exception ex)
@@ -816,12 +835,7 @@ namespace DSA_lims
                     lblStatus.Text = StrUtils.makeErrorMessage("Create main project failed");
                     break;
             }                        
-        }
-
-        private void miProjectsSubNew_Click(object sender, EventArgs e)
-        {
-            // new sub project
-        }
+        }        
 
         private void miProjectsEdit_Click(object sender, EventArgs e)
         {
@@ -848,6 +862,75 @@ namespace DSA_lims
         private void miProjectsDelete_Click(object sender, EventArgs e)
         {
             // delete project
+        }
+
+        private void miProjectsSubNew_Click(object sender, EventArgs e)
+        {
+            // new sub project
+            if(treeProjects.SelectedNode == null)
+            {
+                MessageBox.Show("No main project selected");
+                return;
+            }
+
+            if(treeProjects.SelectedNode.Level != 1)
+            {
+                MessageBox.Show("Selected project is not a main project");
+                return;
+            }
+
+            Guid parent_id = new Guid(treeProjects.SelectedNode.Tag.ToString());
+
+            FormProjectSub form = new FormProjectSub(log, treeProjects.SelectedNode.Text, parent_id);
+            switch (form.ShowDialog())
+            {
+                case DialogResult.OK:
+                    lblStatus.Text = StrUtils.makeStatusMessage("Sub project " + form.SubProject.Name + " inserted");
+                    using (SqlConnection conn = DB.OpenConnection())
+                        PopulateProjects(conn);
+                    break;
+                case DialogResult.Abort:
+                    lblStatus.Text = StrUtils.makeErrorMessage("Create sub project failed");
+                    break;
+            }
+        }
+
+        private void miProjectsSubEdit_Click(object sender, EventArgs e)
+        {
+            // edit sub project
+            if (treeProjects.SelectedNode == null)
+            {
+                MessageBox.Show("No main project selected");
+                return;
+            }
+
+            if (treeProjects.SelectedNode.Level != 2)
+            {
+                MessageBox.Show("Selected project is not a sub project");
+                return;
+            }
+
+            Guid parent_id = new Guid(treeProjects.SelectedNode.Parent.Tag.ToString());
+
+            Guid pid = new Guid(treeProjects.SelectedNode.Tag.ToString());
+
+            FormProjectSub form = new FormProjectSub(log, treeProjects.SelectedNode.Parent.Text, parent_id, pid);
+            switch (form.ShowDialog())
+            {
+                case DialogResult.OK:
+                    lblStatus.Text = StrUtils.makeStatusMessage("Sub project " + form.SubProject.Name + " updated");
+                    using (SqlConnection conn = DB.OpenConnection())
+                        PopulateProjects(conn);
+                    break;
+                case DialogResult.Abort:
+                    lblStatus.Text = StrUtils.makeErrorMessage("Create sub project failed");
+                    break;
+            }
+        }
+
+        private void miProjectsSubDelete_Click(object sender, EventArgs e)
+        {
+            // delete sub project
         }
 
         private void treeProjects_AfterSelect(object sender, TreeViewEventArgs e)
@@ -1047,11 +1130,8 @@ namespace DSA_lims
                 return;
             
             Guid nid = new Guid(e.Row.Cells[0].Value.ToString());
-
-            using (SqlConnection conn = DB.OpenConnection())
-            {
+            using (SqlConnection conn = DB.OpenConnection())            
                 PopulateEnergyLines(conn, nid);
-            }
         }
 
         private void miNewGeometry_Click(object sender, EventArgs e)
@@ -1207,11 +1287,8 @@ namespace DSA_lims
                 return;
 
             Guid cid = new Guid(e.Row.Cells[0].Value.ToString());
-
-            using (SqlConnection conn = DB.OpenConnection())
-            {
+            using (SqlConnection conn = DB.OpenConnection())            
                 PopulateMunicipalities(conn, cid);
-            }
         }
 
         private void miNewStation_Click(object sender, EventArgs e)
@@ -1302,6 +1379,6 @@ namespace DSA_lims
         private void miDeleteSampleStorage_Click(object sender, EventArgs e)
         {
             // delete sample storage
-        }
+        }        
     }    
 }

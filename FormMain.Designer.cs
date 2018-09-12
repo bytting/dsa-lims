@@ -5805,6 +5805,7 @@
             this.btnProjectsNew.Name = "btnProjectsNew";
             this.btnProjectsNew.Size = new System.Drawing.Size(51, 22);
             this.btnProjectsNew.Text = "New";
+            this.btnProjectsNew.Click += new System.EventHandler(this.miProjectsNew_Click);
             // 
             // btnProjectsSubNew
             // 
@@ -5813,6 +5814,7 @@
             this.btnProjectsSubNew.Name = "btnProjectsSubNew";
             this.btnProjectsSubNew.Size = new System.Drawing.Size(73, 22);
             this.btnProjectsSubNew.Text = "New sub";
+            this.btnProjectsSubNew.Click += new System.EventHandler(this.miProjectsSubNew_Click);
             // 
             // btnProjectsEdit
             // 
@@ -5821,6 +5823,7 @@
             this.btnProjectsEdit.Name = "btnProjectsEdit";
             this.btnProjectsEdit.Size = new System.Drawing.Size(47, 22);
             this.btnProjectsEdit.Text = "Edit";
+            this.btnProjectsEdit.Click += new System.EventHandler(this.miProjectsEdit_Click);
             // 
             // btnProjectsDelete
             // 
@@ -5829,6 +5832,7 @@
             this.btnProjectsDelete.Name = "btnProjectsDelete";
             this.btnProjectsDelete.Size = new System.Drawing.Size(60, 22);
             this.btnProjectsDelete.Text = "Delete";
+            this.btnProjectsDelete.Click += new System.EventHandler(this.miProjectsDelete_Click);
             // 
             // toolStripSeparator49
             // 
@@ -8362,12 +8366,14 @@
             this.miProjectsSubEdit.Name = "miProjectsSubEdit";
             this.miProjectsSubEdit.Size = new System.Drawing.Size(177, 22);
             this.miProjectsSubEdit.Text = "Edit s&ub project";
+            this.miProjectsSubEdit.Click += new System.EventHandler(this.miProjectsSubEdit_Click);
             // 
             // miProjectsSubDelete
             // 
             this.miProjectsSubDelete.Name = "miProjectsSubDelete";
             this.miProjectsSubDelete.Size = new System.Drawing.Size(177, 22);
             this.miProjectsSubDelete.Text = "Delete su&b project";
+            this.miProjectsSubDelete.Click += new System.EventHandler(this.miProjectsSubDelete_Click);
             // 
             // toolStripSeparator52
             // 

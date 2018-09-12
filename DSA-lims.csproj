@@ -124,6 +124,12 @@
     <Compile Include="FormProject.Designer.cs">
       <DependentUpon>FormProject.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormProjectSub.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormProjectSub.Designer.cs">
+      <DependentUpon>FormProjectSub.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormSampler.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -211,6 +217,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormProject.resx">
       <DependentUpon>FormProject.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormProjectSub.resx">
+      <DependentUpon>FormProjectSub.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormSampler.resx">
       <DependentUpon>FormSampler.cs</DependentUpon>

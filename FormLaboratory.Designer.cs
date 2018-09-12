@@ -53,18 +53,18 @@
             this.panel1.Controls.Add(this.btnCancel);
             this.panel1.Controls.Add(this.btnOk);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 450);
+            this.panel1.Location = new System.Drawing.Point(0, 363);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(427, 32);
+            this.panel1.Size = new System.Drawing.Size(411, 30);
             this.panel1.TabIndex = 0;
             // 
             // btnCancel
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnCancel.Location = new System.Drawing.Point(227, 0);
+            this.btnCancel.Location = new System.Drawing.Point(211, 0);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(100, 32);
+            this.btnCancel.Size = new System.Drawing.Size(100, 30);
             this.btnCancel.TabIndex = 1;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
@@ -74,9 +74,9 @@
             // 
             this.btnOk.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnOk.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnOk.Location = new System.Drawing.Point(327, 0);
+            this.btnOk.Location = new System.Drawing.Point(311, 0);
             this.btnOk.Name = "btnOk";
-            this.btnOk.Size = new System.Drawing.Size(100, 32);
+            this.btnOk.Size = new System.Drawing.Size(100, 30);
             this.btnOk.TabIndex = 0;
             this.btnOk.Text = "Ok";
             this.btnOk.UseVisualStyleBackColor = true;
@@ -85,7 +85,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(37, 34);
+            this.label1.Location = new System.Drawing.Point(24, 29);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(35, 13);
             this.label1.TabIndex = 1;
@@ -93,7 +93,7 @@
             // 
             // tbName
             // 
-            this.tbName.Location = new System.Drawing.Point(145, 31);
+            this.tbName.Location = new System.Drawing.Point(132, 26);
             this.tbName.MaxLength = 256;
             this.tbName.Name = "tbName";
             this.tbName.Size = new System.Drawing.Size(247, 20);
@@ -102,7 +102,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(37, 60);
+            this.label2.Location = new System.Drawing.Point(24, 55);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(33, 13);
             this.label2.TabIndex = 3;
@@ -111,7 +111,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(37, 86);
+            this.label3.Location = new System.Drawing.Point(24, 81);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(45, 13);
             this.label3.TabIndex = 4;
@@ -120,7 +120,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(38, 112);
+            this.label4.Location = new System.Drawing.Point(25, 107);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(32, 13);
             this.label4.TabIndex = 5;
@@ -129,7 +129,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(38, 138);
+            this.label5.Location = new System.Drawing.Point(25, 133);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(76, 13);
             this.label5.TabIndex = 6;
@@ -140,7 +140,7 @@
             this.cbInUse.AutoSize = true;
             this.cbInUse.Checked = true;
             this.cbInUse.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbInUse.Location = new System.Drawing.Point(145, 170);
+            this.cbInUse.Location = new System.Drawing.Point(132, 156);
             this.cbInUse.Name = "cbInUse";
             this.cbInUse.Size = new System.Drawing.Size(55, 17);
             this.cbInUse.TabIndex = 7;
@@ -149,7 +149,7 @@
             // 
             // tbPrefix
             // 
-            this.tbPrefix.Location = new System.Drawing.Point(145, 57);
+            this.tbPrefix.Location = new System.Drawing.Point(132, 52);
             this.tbPrefix.MaxLength = 1;
             this.tbPrefix.Name = "tbPrefix";
             this.tbPrefix.Size = new System.Drawing.Size(247, 20);
@@ -157,39 +157,39 @@
             // 
             // tbAddress
             // 
-            this.tbAddress.Location = new System.Drawing.Point(145, 83);
+            this.tbAddress.Location = new System.Drawing.Point(132, 78);
             this.tbAddress.Name = "tbAddress";
             this.tbAddress.Size = new System.Drawing.Size(247, 20);
             this.tbAddress.TabIndex = 9;
             // 
             // tbEmail
             // 
-            this.tbEmail.Location = new System.Drawing.Point(145, 109);
+            this.tbEmail.Location = new System.Drawing.Point(132, 104);
             this.tbEmail.Name = "tbEmail";
             this.tbEmail.Size = new System.Drawing.Size(247, 20);
             this.tbEmail.TabIndex = 10;
             // 
             // tbPhone
             // 
-            this.tbPhone.Location = new System.Drawing.Point(145, 135);
+            this.tbPhone.Location = new System.Drawing.Point(132, 130);
             this.tbPhone.Name = "tbPhone";
             this.tbPhone.Size = new System.Drawing.Size(247, 20);
             this.tbPhone.TabIndex = 11;
             // 
             // tbComment
             // 
-            this.tbComment.Location = new System.Drawing.Point(41, 268);
+            this.tbComment.Location = new System.Drawing.Point(132, 179);
             this.tbComment.MaxLength = 1000;
             this.tbComment.Multiline = true;
             this.tbComment.Name = "tbComment";
             this.tbComment.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.tbComment.Size = new System.Drawing.Size(351, 142);
+            this.tbComment.Size = new System.Drawing.Size(247, 142);
             this.tbComment.TabIndex = 12;
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(41, 249);
+            this.label6.Location = new System.Drawing.Point(25, 182);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(51, 13);
             this.label6.TabIndex = 13;
@@ -199,7 +199,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(427, 482);
+            this.ClientSize = new System.Drawing.Size(411, 393);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.tbComment);
             this.Controls.Add(this.tbPhone);
@@ -221,7 +221,6 @@
             this.Name = "FormLaboratory";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "DSA-Lims - Laboratory";
-            this.Load += new System.EventHandler(this.FormLaboratory_Load);
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();

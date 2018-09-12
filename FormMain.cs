@@ -326,21 +326,18 @@ namespace DSA_lims
             // Set UI state
             gridMetaLab.Columns["id"].Visible = false;
             gridMetaLab.Columns["assignment_counter"].Visible = false;
+            gridMetaLab.Columns["comment"].Visible = false;
+            gridMetaLab.Columns["create_date"].Visible = false;
+            gridMetaLab.Columns["created_by"].Visible = false;
+            gridMetaLab.Columns["update_date"].Visible = false;
+            gridMetaLab.Columns["updated_by"].Visible = false;
 
             gridMetaLab.Columns["name"].HeaderText = "Name";
             gridMetaLab.Columns["name_prefix"].HeaderText = "Prefix";
             gridMetaLab.Columns["address"].HeaderText = "Address";
             gridMetaLab.Columns["email"].HeaderText = "Email";
             gridMetaLab.Columns["phone"].HeaderText = "Phone";
-            gridMetaLab.Columns["comment"].HeaderText = "Comment";
             gridMetaLab.Columns["in_use"].HeaderText = "In use";
-            gridMetaLab.Columns["create_date"].HeaderText = "Created";
-            gridMetaLab.Columns["created_by"].HeaderText = "Created by";
-            gridMetaLab.Columns["update_date"].HeaderText = "Updated";
-            gridMetaLab.Columns["updated_by"].HeaderText = "Updated by";
-
-            gridMetaLab.Columns["create_date"].DefaultCellStyle.Format = StrUtils.DateFormatNorwegian;
-            gridMetaLab.Columns["update_date"].DefaultCellStyle.Format = StrUtils.DateFormatNorwegian;
         }
 
         private void PopulateUsers(SqlConnection conn)
@@ -388,12 +385,8 @@ namespace DSA_lims
         private void PopulateEnergyLines(SqlConnection conn, Guid nid)
         {
             // Set data source
-            SqlDataAdapter adapter = new SqlDataAdapter("csp_select_energy_lines_for_nuclide", conn);
-            adapter.SelectCommand.CommandType = CommandType.StoredProcedure;
-            adapter.SelectCommand.Parameters.AddWithValue("@nuclide_id", nid);
-            DataTable dt = new DataTable();
-            adapter.Fill(dt);
-            gridSysNuclideTrans.DataSource = dt;
+            gridSysNuclideTrans.DataSource = DB.GetDataTable(conn, "csp_select_energy_lines_for_nuclide", CommandType.StoredProcedure, 
+                new [] { new SqlParameter("@nuclide_id", nid) });
 
             // Set UI state
             gridSysNuclideTrans.Columns["id"].Visible = false;            
@@ -453,12 +446,8 @@ namespace DSA_lims
         private void PopulateMunicipalities(SqlConnection conn, Guid cid)
         {
             // Set data source
-            SqlDataAdapter adapter = new SqlDataAdapter("csp_select_municipalities_for_county", conn);
-            adapter.SelectCommand.CommandType = CommandType.StoredProcedure;
-            adapter.SelectCommand.Parameters.AddWithValue("@county_id", cid);
-            DataTable dt = new DataTable();
-            adapter.Fill(dt);
-            gridSysMunicipality.DataSource = dt;
+            gridSysMunicipality.DataSource = DB.GetDataTable(conn, "csp_select_municipalities_for_county", CommandType.StoredProcedure,
+                new[] { new SqlParameter("@county_id", cid) });
 
             // Set UI state
             gridSysMunicipality.Columns["id"].Visible = false;
@@ -722,38 +711,16 @@ namespace DSA_lims
         private void miNewLaboratory_Click(object sender, EventArgs e)
         {
             // create laboratory
-            FormLaboratory form = new FormLaboratory(false);
+            FormLaboratory form = new FormLaboratory(log);
             if (form.ShowDialog() != DialogResult.OK)
                 return;
 
-            try
+            using (SqlConnection conn = DB.OpenConnection())
             {
-                using (SqlConnection conn = DB.OpenConnection())
-                {
-                    SqlCommand cmd = new SqlCommand("insert into laboratory (id,name,name_prefix,address,email,phone,assignment_counter,comment,in_use,create_date,created_by,update_date,updated_by) values(@id,@name,@name_prefix,@address,@email,@phone,@assignment_counter,@comment,@in_use,@create_date,@created_by,@update_date,@updated_by)", conn);
-                    cmd.Parameters.AddWithValue("@id", Guid.NewGuid());
-                    cmd.Parameters.AddWithValue("@name", form.Label);
-                    cmd.Parameters.AddWithValue("@name_prefix", form.Prefix);
-                    cmd.Parameters.AddWithValue("@address", form.Address);
-                    cmd.Parameters.AddWithValue("@email", form.Email);
-                    cmd.Parameters.AddWithValue("@phone", form.Phone);
-                    cmd.Parameters.AddWithValue("@assignment_counter", 1);
-                    cmd.Parameters.AddWithValue("@comment", form.Comment);
-                    cmd.Parameters.AddWithValue("@in_use", form.InUse);
-                    cmd.Parameters.Add("@create_date", SqlDbType.DateTime).Value = DateTime.Now;
-                    cmd.Parameters.AddWithValue("@created_by", Common.Username);
-                    cmd.Parameters.Add("@update_date", SqlDbType.DateTime).Value = DateTime.Now;
-                    cmd.Parameters.AddWithValue("@updated_by", Common.Username);
-                    cmd.ExecuteNonQuery();
-
-                    PopulateLaboratories(conn);
-                }
-                lblStatus.Text = StrUtils.makeStatusMessage("Laboratory " + form.Label + " created");
+                PopulateLaboratories(conn);
             }
-            catch (Exception ex)
-            {
-                log.Error(ex);
-            }            
+
+            lblStatus.Text = StrUtils.makeStatusMessage("Laboratory " + form.Laboratory.Name + " inserted");
         }
 
         private void miDeleteLaboratory_Click(object sender, EventArgs e)
@@ -802,55 +769,22 @@ namespace DSA_lims
         private void miEditLaboratory_Click(object sender, EventArgs e)
         {
             // edit lab
-
-            if(gridMetaLab.SelectedRows.Count < 1)
-            {
-                MessageBox.Show("No laboratory selected");
+            if (gridMetaLab.SelectedRows.Count < 1)
                 return;
-            }
-
-            // edit laboratory
 
             DataGridViewRow row = gridMetaLab.SelectedRows[0];
+            Guid lid = new Guid(row.Cells[0].Value.ToString());
 
-            FormLaboratory form = new FormLaboratory(true);
-            form.SetValues(
-                row.Cells["name"].Value.ToString(), 
-                row.Cells["name_prefix"].Value.ToString(), 
-                row.Cells["address"].Value.ToString(), 
-                row.Cells["email"].Value.ToString(), 
-                row.Cells["phone"].Value.ToString(), 
-                Convert.ToBoolean(row.Cells["in_use"].Value),
-                row.Cells["comment"].Value.ToString());
-                        
+            FormLaboratory form = new FormLaboratory(log, lid);
             if (form.ShowDialog() != DialogResult.OK)
                 return;
 
-            try
+            using (SqlConnection conn = DB.OpenConnection())
             {
-                using (SqlConnection conn = DB.OpenConnection())
-                {
-                    SqlCommand cmd = new SqlCommand("update laboratory set name=@name,name_prefix=@name_prefix,address=@address,email=@email,phone=@phone,comment=@comment,in_use=@in_use,update_date=@update_date,updated_by=@updated_by where id=@id", conn);
-                    cmd.Parameters.AddWithValue("@id", row.Cells["id"].Value.ToString());
-                    cmd.Parameters.AddWithValue("@name", form.Label);
-                    cmd.Parameters.AddWithValue("@name_prefix", form.Prefix);
-                    cmd.Parameters.AddWithValue("@address", form.Address);
-                    cmd.Parameters.AddWithValue("@email", form.Email);
-                    cmd.Parameters.AddWithValue("@phone", form.Phone);
-                    cmd.Parameters.AddWithValue("@comment", form.Comment);
-                    cmd.Parameters.AddWithValue("@in_use", form.InUse);
-                    cmd.Parameters.Add("@update_date", SqlDbType.DateTime).Value = DateTime.Now;
-                    cmd.Parameters.AddWithValue("@updated_by", Common.Username);
-                    cmd.ExecuteNonQuery();
-
-                    PopulateLaboratories(conn);
-                }
-                lblStatus.Text = StrUtils.makeStatusMessage("Laboratory " + form.Label + " updated");
+                PopulateLaboratories(conn);
             }
-            catch (Exception ex)
-            {
-                log.Error(ex);
-            }            
+
+            lblStatus.Text = StrUtils.makeStatusMessage("Laboratory " + form.Laboratory.Name + " updated");
         }
 
         private void miEditUser_Click(object sender, EventArgs e)

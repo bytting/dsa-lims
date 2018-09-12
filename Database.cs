@@ -38,26 +38,29 @@ namespace DSA_lims
             return connection;
         }
 
-        public static DataTable GetDataTable(SqlConnection conn, string query, CommandType queryType)
+        public static DataTable GetDataTable(SqlConnection conn, string query, CommandType queryType, params SqlParameter[] parameters)
         {
             SqlDataAdapter adapter = new SqlDataAdapter(query, conn);
             adapter.SelectCommand.CommandType = queryType;
+            adapter.SelectCommand.Parameters.AddRange(parameters);
             DataTable dt = new DataTable();
             adapter.Fill(dt);
             return dt;
         }
 
-        public static SqlDataReader GetDataReader(SqlConnection conn, string query, CommandType queryType)
+        public static SqlDataReader GetDataReader(SqlConnection conn, string query, CommandType queryType, params SqlParameter[] parameters)
         {
             SqlCommand cmd = new SqlCommand(query, conn);
             cmd.CommandType = queryType;
+            cmd.Parameters.AddRange(parameters);
             return cmd.ExecuteReader();
         }
 
-        public static object GetScalar(SqlConnection conn, string query, CommandType queryType)
+        public static object GetScalar(SqlConnection conn, string query, CommandType queryType, params SqlParameter[] parameters)
         {
             SqlCommand cmd = new SqlCommand(query, conn);
             cmd.CommandType = queryType;
+            cmd.Parameters.AddRange(parameters);
             return cmd.ExecuteScalar();
         }
 
@@ -72,6 +75,6 @@ namespace DSA_lims
             cmd.Parameters.AddWithValue("@value", msg);
             cmd.Parameters.AddWithValue("@create_date", DateTime.Now);
             cmd.ExecuteNonQuery();
-        }
-    }
+        }        
+    }    
 }

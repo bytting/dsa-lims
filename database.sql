@@ -879,6 +879,82 @@ go
 
 /*===========================================================================*/
 
+create PROC csp_select_laboratory
+	@id uniqueidentifier	
+as 
+select * from laboratory where id = @id
+go
+
+/*===========================================================================*/
+
+create PROC csp_insert_laboratory
+	@id uniqueidentifier,
+	@name nvarchar(256),
+	@name_prefix nvarchar(8),
+	@address nvarchar(256),
+	@email nvarchar(80),
+	@phone nvarchar(80),
+	@assignment_counter int,		
+	@comment nvarchar(1000),
+	@in_use bit,
+	@create_date datetime,
+	@created_by nvarchar(50),
+	@update_date datetime,
+	@updated_by nvarchar(50)
+as 
+	insert into laboratory values (
+		@id,
+		@name,
+		@name_prefix,
+		@address,
+		@email,
+		@phone,
+		@assignment_counter,
+		@comment,
+		@in_use,
+		@create_date,
+		@created_by,
+		@update_date,
+		@updated_by
+	);
+go
+
+/*===========================================================================*/
+
+create PROC csp_update_laboratory
+	@id uniqueidentifier,
+	@name nvarchar(256),
+	@name_prefix nvarchar(8),
+	@address nvarchar(256),
+	@email nvarchar(80),
+	@phone nvarchar(80),
+	@assignment_counter int,		
+	@comment nvarchar(1000),
+	@in_use bit,
+	@create_date datetime,
+	@created_by nvarchar(50),
+	@update_date datetime,
+	@updated_by nvarchar(50)
+as 
+	update laboratory set
+		id = @id,
+		name = @name,
+		name_prefix = @name_prefix,
+		address = @address,
+		email = @email,
+		phone = @phone,
+		assignment_counter = @assignment_counter,
+		comment = @comment,
+		in_use = @in_use,
+		create_date = @create_date,
+		created_by = @created_by,
+		update_date = @update_date,
+		updated_by = @updated_by
+	where id = @id
+go
+
+/*===========================================================================*/
+
 create PROC csp_select_users
 as 
 	select * from account order by username

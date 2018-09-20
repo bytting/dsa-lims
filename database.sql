@@ -65,11 +65,11 @@ CREATE TABLE roles (
 GO
 
 insert into roles (id, name) values(1, 'Administrator')
-insert into roles (id, name) values(2, 'Lab Manager')
-insert into roles (id, name) values(3, 'Lab Staff')
+insert into roles (id, name) values(2, 'Laboratory Manager')
+insert into roles (id, name) values(3, 'Laboratory Operator')
 insert into roles (id, name) values(4, 'Order Manager')
-insert into roles (id, name) values(5, 'Order Staff')
-insert into roles (id, name) values(6, 'Sample Staff')
+insert into roles (id, name) values(5, 'Order Operator')
+insert into roles (id, name) values(6, 'Sample Operator')
 GO
 
 /*___________________________________________________________________________*/
@@ -98,39 +98,38 @@ CREATE TABLE instance_status (
 )
 GO
 
-insert into instance_status values(1, 'Construction')
-insert into instance_status values(2, 'Complete')
-insert into instance_status values(3, 'Rejected')
+insert into instance_status values(1, 'Enabled')
+insert into instance_status values(2, 'Disabled')
 GO
 
 /*___________________________________________________________________________*/
 
-IF OBJECT_ID('dbo.assignment_status', 'U') IS NOT NULL DROP TABLE assignment_status;
+IF OBJECT_ID('dbo.workflow_status', 'U') IS NOT NULL DROP TABLE workflow_status;
 
-CREATE TABLE assignment_status (
+CREATE TABLE workflow_status (
 	id int primary key NOT NULL,
 	name nvarchar(20) NOT NULL	
 )
 GO
 
-insert into assignment_status values(1, 'Open')
-insert into assignment_status values(2, 'Finished')
-insert into assignment_status values(3, 'Rejected')
+insert into workflow_status values(1, 'Construction')
+insert into workflow_status values(2, 'Complete')
+insert into workflow_status values(3, 'Rejected')
 GO
 
 /*___________________________________________________________________________*/
 
-IF OBJECT_ID('dbo.prep_unit', 'U') IS NOT NULL DROP TABLE prep_unit;
+IF OBJECT_ID('dbo.preparation_unit', 'U') IS NOT NULL DROP TABLE preparation_unit;
 
-CREATE TABLE prep_unit (
+CREATE TABLE preparation_unit (
 	id int primary key NOT NULL,
 	name nvarchar(20) NOT NULL	
 )
 GO
 
-insert into prep_unit values(1, 'Wet weight (g)')
-insert into prep_unit values(2, 'Dry weight (g)')
-insert into prep_unit values(3, 'Volume (L)')
+insert into preparation_unit values(1, 'Wet weight (g)')
+insert into preparation_unit values(2, 'Dry weight (g)')
+insert into preparation_unit values(3, 'Volume (L)')
 GO
 
 /*___________________________________________________________________________*/
@@ -138,28 +137,28 @@ GO
 IF OBJECT_ID('dbo.activity_unit', 'U') IS NOT NULL DROP TABLE activity_unit;
 
 CREATE TABLE activity_unit (
-	id int primary key NOT NULL,
+	id uniqueidentifier primary key NOT NULL,	
 	name nvarchar(20) NOT NULL,
 	convert_factor float default NULL,
 	uniform_activity_unit_id int default NULL
 )
 GO
 
-insert into activity_unit values(1, 'Bq', 1.0, 1)
-insert into activity_unit values(2, 'mBq/g', 1000.0, 2)
-insert into activity_unit values(3, 'mBq/g ww', 1000.0, 2)
-insert into activity_unit values(4, 'mBq/g dw', 1000.0, 2)
-insert into activity_unit values(5, 'Bq/g', 1.0, 2)
-insert into activity_unit values(6, 'Bq/g ww', 1.0, 2)
-insert into activity_unit values(7, 'Bq/g dw', 1.0, 2)
-insert into activity_unit values(8, 'Bq/kg', 0.001, 2)
-insert into activity_unit values(9, 'Bq/kg ww', 0.001, 2)
-insert into activity_unit values(10, 'Bq/kg dw', 0.001, 2)
-insert into activity_unit values(11, 'Bq/m2', 1.0, 3)
-insert into activity_unit values(12, 'Bq/m3', 1.0, 4)
-insert into activity_unit values(13, 'mBq/l', 1.0, 4)
-insert into activity_unit values(14, 'Bq/l', 1000.0, 4)
-insert into activity_unit values(15, 'Bq/filter', 1.0, 1)
+insert into activity_unit values(NEWID(), 'Bq', 1.0, 1)
+insert into activity_unit values(NEWID(), 'mBq/g', 1000.0, 2)
+insert into activity_unit values(NEWID(), 'mBq/g ww', 1000.0, 2)
+insert into activity_unit values(NEWID(), 'mBq/g dw', 1000.0, 2)
+insert into activity_unit values(NEWID(), 'Bq/g', 1.0, 2)
+insert into activity_unit values(NEWID(), 'Bq/g ww', 1.0, 2)
+insert into activity_unit values(NEWID(), 'Bq/g dw', 1.0, 2)
+insert into activity_unit values(NEWID(), 'Bq/kg', 0.001, 2)
+insert into activity_unit values(NEWID(), 'Bq/kg ww', 0.001, 2)
+insert into activity_unit values(NEWID(), 'Bq/kg dw', 0.001, 2)
+insert into activity_unit values(NEWID(), 'Bq/m2', 1.0, 3)
+insert into activity_unit values(NEWID(), 'Bq/m3', 1.0, 4)
+insert into activity_unit values(NEWID(), 'mBq/l', 1.0, 4)
+insert into activity_unit values(NEWID(), 'Bq/l', 1000.0, 4)
+insert into activity_unit values(NEWID(), 'Bq/filter', 1.0, 1)
 
 /*___________________________________________________________________________*/
 
@@ -386,7 +385,7 @@ CREATE TABLE assignment (
 	id uniqueidentifier primary key NOT NULL,
 	name nvarchar(80) NOT NULL,	
 	laboratory_id uniqueidentifier NOT NULL,
-	assignment_status_id int default 1,
+	workflow_status_id int default 1,
 	customer_name nvarchar(256) default NULL,
 	customer_address nvarchar(256) default NULL,
 	customer_email nvarchar(80) default NULL,
@@ -517,6 +516,7 @@ CREATE TABLE preparation (
 	preparation_box_id uniqueidentifier NOT NULL,
 	preparation_method_id uniqueidentifier NOT NULL,	
 	instance_status_id int default 1,
+	workflow_status_id int default 1,
 	amount float default 0,
 	prep_unit_id int default 1,		
 	fill_height_mm float default 0,		
@@ -577,6 +577,7 @@ CREATE TABLE analysis (
 	preparation_id uniqueidentifier NOT NULL,
 	analysis_method_id uniqueidentifier NOT NULL,
 	instance_status_id int default 1,
+	workflow_status_id int default 1,
 	specter_reference nvarchar(256) default NULL,
 	activity_unit_id int NOT NULL,
 	sigma float NOT NULL,
@@ -848,6 +849,7 @@ CREATE TABLE analysis_result (
 	analysis_id uniqueidentifier NOT NULL,
 	nuclide_id uniqueidentifier NOT NULL,
 	instance_status_id int default 1,
+	workflow_status_id int default 1,
 	activity float default NULL,
 	activity_unit_id uniqueidentifier NOT NULL,
 	activity_uncertainty float NOT NULL,
@@ -975,6 +977,32 @@ go
 
 /*===========================================================================*/
 
+create PROC csp_select_activity_units
+as 
+	select 
+		id,	
+		name,
+		convert_factor,
+		uniform_activity_unit_id
+	from activity_unit
+	order by name
+go
+
+/*===========================================================================*/
+
+create PROC csp_select_activity_units_flat
+as 
+	select 
+		au.id,	
+		au.name,
+		au.convert_factor,
+		uau.name as 'uniform_activity_name'
+	from activity_unit au, uniform_activity_unit uau where au.uniform_activity_unit_id = uau.id
+	order by au.name
+go
+
+/*===========================================================================*/
+
 create PROC csp_select_users
 as 
 	select * from account order by username
@@ -995,12 +1023,12 @@ as
 		a.username,	
 		a.password_hash,
 		a.fullname,
-		(select name from laboratory where id = a.laboratory_id) as 'laboratory_name',
+		l.name as 'laboratory_name',
 		a.language_code,
 		a.in_use,
 		a.create_date,	
 		a.update_date
-	from account a
+	from account a left outer join laboratory l on a.laboratory_id = l.id
 	order by username
 go
 

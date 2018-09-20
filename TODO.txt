@@ -1,1 +1,5 @@
+
 Første blipping av prøve går til søkeliste med valgt prøve. Andre blipping går inn på valgt prøve.
+
+
+Sammenslåing av prøve kun for prøver av samme prøvetype

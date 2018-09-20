@@ -47,7 +47,9 @@ namespace DSA_lims
         private string SampleTypesRootName = "Sample types";
         private string ProjectsRootName = "Projects";
 
-        private List<DecayType> decayTypes = new List<DecayType>();
+        private List<DecayType> decayTypes = new List<DecayType>();        
+        private List<PreparationUnitType> preparationUnitTypes = new List<PreparationUnitType>();
+        private List<UniformActivityUnitType> uniformActivityUnitTypes = new List<UniformActivityUnitType>();
 
         public FormMain()
         {
@@ -90,9 +92,23 @@ namespace DSA_lims
                     log.Info("Loading decay types");
                     LoadDecayTypes(conn);
 
+                    log.Info("Loading preparation units");
+                    LoadPreparationUnits(conn);
+
+                    log.Info("Loading uniform activity units");
+                    LoadUniformActivityUnits(conn);
+
+                    log.Info("Populating preparation units");
+                    PopulatePreparationUnits(conn);
+
+                    log.Info("Populating activity units");
+                    PopulateActivityUnits(conn);
+
+                    log.Info("Populating uniform activity units");
+                    PopulateUniformActivityUnits(conn);
+
                     log.Info("Populating laboratories");
                     PopulateLaboratories(conn);
-
 
                     log.Info("Populating users");
                     PopulateUsers(conn);
@@ -237,7 +253,7 @@ namespace DSA_lims
         {
             try
             {
-                decayTypes.Clear();                
+                decayTypes.Clear();
 
                 using (SqlDataReader reader = DB.GetDataReader(conn, "select id, name from decay_type order by name", CommandType.Text))
                 {
@@ -253,6 +269,81 @@ namespace DSA_lims
             {
                 log.Error(ex);
             }
+        }
+
+        private void LoadPreparationUnits(SqlConnection conn)
+        {
+            try
+            {
+                preparationUnitTypes.Clear();
+
+                using (SqlDataReader reader = DB.GetDataReader(conn, "select id, name from preparation_unit order by name", CommandType.Text))
+                {
+                    while (reader.Read())
+                    {
+                        int id = Convert.ToInt32(reader["id"]);
+                        string name = reader["name"].ToString();
+                        preparationUnitTypes.Add(new PreparationUnitType(id, name));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+            }
+        }
+
+        private void LoadUniformActivityUnits(SqlConnection conn)
+        {
+            try
+            {
+                uniformActivityUnitTypes.Clear();
+
+                using (SqlDataReader reader = DB.GetDataReader(conn, "select id, name from uniform_activity_unit order by name", CommandType.Text))
+                {
+                    while (reader.Read())
+                    {
+                        int id = Convert.ToInt32(reader["id"]);
+                        string name = reader["name"].ToString();
+                        uniformActivityUnitTypes.Add(new UniformActivityUnitType(id, name));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+            }
+        }
+
+        private void PopulatePreparationUnits(SqlConnection conn)
+        {
+            cboxSamplePrepUnit.DataSource = preparationUnitTypes;
+        }
+
+        private void PopulateUniformActivityUnits(SqlConnection conn)
+        {
+            // populate uniform activity units
+        }
+
+        private void PopulateActivityUnits(SqlConnection conn)
+        {
+            // Set data source
+            DataTable dt = DB.GetDataTable(conn, "csp_select_activity_units_flat", CommandType.StoredProcedure);
+
+            gridMetaUnitsActivity.DataSource = dt;
+
+            gridMetaUnitsActivity.Columns["id"].Visible = false;                        
+
+            gridMetaUnitsActivity.Columns["name"].HeaderText = "Name";
+            gridMetaUnitsActivity.Columns["convert_factor"].HeaderText = "Conv. fact.";
+            gridMetaUnitsActivity.Columns["uniform_activity_name"].HeaderText = "Uni. act.";
+
+            cboxSampleAnalUnit.Items.Clear();            
+            foreach(DataRow row in dt.Rows)
+            {
+                ActivityUnitType au = new ActivityUnitType(new Guid(row["id"].ToString()), row["name"].ToString());
+                cboxSampleAnalUnit.Items.Add(au);
+            }            
         }
 
         private void PopulateSampleTypes(SqlConnection conn)
@@ -365,20 +456,18 @@ namespace DSA_lims
         private void PopulateUsers(SqlConnection conn)
         {
             // Set data source
-            gridMetaUsers.DataSource = DB.GetDataTable(conn, "csp_select_users", CommandType.StoredProcedure);
+            gridMetaUsers.DataSource = DB.GetDataTable(conn, "csp_select_users_flat", CommandType.StoredProcedure);
 
             gridMetaUsers.Columns["password_hash"].Visible = false;
+            gridMetaUsers.Columns["create_date"].Visible = false;
+            gridMetaUsers.Columns["update_date"].Visible = false;
 
             // Set UI state
             gridMetaUsers.Columns["username"].HeaderText = "Username";
             gridMetaUsers.Columns["fullname"].HeaderText = "Name";
+            gridMetaUsers.Columns["laboratory_name"].HeaderText = "Laboratory";
             gridMetaUsers.Columns["language_code"].HeaderText = "Language";
-            gridMetaUsers.Columns["in_use"].HeaderText = "In use";
-            gridMetaUsers.Columns["create_date"].HeaderText = "Created";            
-            gridMetaUsers.Columns["update_date"].HeaderText = "Updated";
-
-            gridMetaUsers.Columns["create_date"].DefaultCellStyle.Format = StrUtils.DateFormatNorwegian;
-            gridMetaUsers.Columns["update_date"].DefaultCellStyle.Format = StrUtils.DateFormatNorwegian;
+            gridMetaUsers.Columns["in_use"].HeaderText = "In use";            
         }
 
         private void PopulateNuclides(SqlConnection conn)

@@ -323,6 +323,25 @@ GO
 
 /*___________________________________________________________________________*/
 
+IF OBJECT_ID('dbo.sampler', 'U') IS NOT NULL DROP TABLE sampler;
+
+CREATE TABLE sampler (
+	id uniqueidentifier primary key NOT NULL,
+	name nvarchar(256) NOT NULL,
+	address nvarchar(256) default NULL,
+	email nvarchar(80) default NULL,
+	phone nvarchar(80) default NULL,
+	in_use bit default 1,
+	comment nvarchar(1000) default NULL,
+	create_date datetime NOT NULL,
+	created_by nvarchar(50) NOT NULL,
+	update_date datetime NOT NULL,
+	updated_by nvarchar(50) NOT NULL
+)
+GO
+
+/*___________________________________________________________________________*/
+
 IF OBJECT_ID('dbo.laboratory', 'U') IS NOT NULL DROP TABLE laboratory;
 
 CREATE TABLE laboratory (
@@ -754,11 +773,12 @@ CREATE TABLE sample (
 	id uniqueidentifier primary key NOT NULL,
 	laboratory_id uniqueidentifier NOT NULL,
 	instance_status_id int default 1,
-	sample_type_id uniqueidentifier NOT NULL,
+	sample_type_id uniqueidentifier NOT NULL,	
 	sample_storage_id uniqueidentifier default NULL,
 	sample_component_id uniqueidentifier default NULL,
 	project2_id uniqueidentifier NOT NULL,
 	station_id uniqueidentifier default NULL,
+	sampler_id uniqueidentifier default NULL,
 	transform_from_id uniqueidentifier default NULL,	
 	transform_to_id uniqueidentifier default NULL,	
 	current_order_id uniqueidentifier default NULL,
@@ -1756,6 +1776,83 @@ select
 	updated_by
 from sample_storage
 order by name
+go
+
+/*===========================================================================*/
+
+create PROC csp_select_samplers
+as 
+	select * from sampler order by name
+go
+
+/*===========================================================================*/
+
+create PROC csp_select_samplers_flat
+as 
+	select * from sampler order by name
+go
+
+/*===========================================================================*/
+
+create PROC csp_select_sampler
+	@id uniqueidentifier
+as 
+	select * from sampler where id = @id
+go
+
+/*===========================================================================*/
+
+create PROC csp_insert_sampler
+	@id uniqueidentifier,
+	@name nvarchar(256),
+	@address nvarchar(256),
+	@email nvarchar(80),
+	@phone nvarchar(80),
+	@in_use bit,
+	@comment nvarchar(1000),
+	@create_date datetime,
+	@created_by nvarchar(50),
+	@update_date datetime,
+	@updated_by nvarchar(50)
+as 
+	insert into sampler values (
+		@id,
+		@name,
+		@address,
+		@email,
+		@phone,
+		@in_use,
+		@comment,
+		@create_date,
+		@created_by,
+		@update_date,
+		@updated_by
+	);
+go
+
+/*===========================================================================*/
+
+create PROC csp_update_sampler
+	@id uniqueidentifier,
+	@name nvarchar(256),
+	@address nvarchar(256),
+	@email nvarchar(80),
+	@phone nvarchar(80),
+	@in_use bit,
+	@comment nvarchar(1000),
+	@update_date datetime,
+	@updated_by nvarchar(50)
+as 
+	update sampler set 
+		name = @name,
+		address = @address,
+		email = @email,
+		phone = @phone,
+		in_use = @in_use,
+		comment = @comment,	
+		update_date = @update_date,
+		updated_by = @updated_by
+	where id = @id
 go
 
 /*===========================================================================*/

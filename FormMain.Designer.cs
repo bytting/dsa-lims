@@ -67,7 +67,10 @@
             this.miProjectsNew = new System.Windows.Forms.ToolStripMenuItem();
             this.miProjectsEdit = new System.Windows.Forms.ToolStripMenuItem();
             this.miProjectsDelete = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator52 = new System.Windows.Forms.ToolStripSeparator();
             this.miProjectsSubNew = new System.Windows.Forms.ToolStripMenuItem();
+            this.miProjectsSubEdit = new System.Windows.Forms.ToolStripMenuItem();
+            this.miProjectsSubDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.miCustomers = new System.Windows.Forms.ToolStripMenuItem();
             this.miTypeRelations = new System.Windows.Forms.ToolStripMenuItem();
             this.miSampleTypesNew = new System.Windows.Forms.ToolStripMenuItem();
@@ -411,7 +414,7 @@
             this.toolStripButton101 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton102 = new System.Windows.Forms.ToolStripButton();
             this.tabMetaSamplers = new System.Windows.Forms.TabPage();
-            this.dataGridView14 = new System.Windows.Forms.DataGridView();
+            this.gridMetaSamplers = new System.Windows.Forms.DataGridView();
             this.toolsMetaSamplers = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel39 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator20 = new System.Windows.Forms.ToolStripSeparator();
@@ -742,9 +745,9 @@
             this.tools = new System.Windows.Forms.ToolStrip();
             this.btnMenu = new System.Windows.Forms.ToolStripButton();
             this.lblCurrentTab = new System.Windows.Forms.ToolStripLabel();
-            this.miProjectsSubEdit = new System.Windows.Forms.ToolStripMenuItem();
-            this.miProjectsSubDelete = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator52 = new System.Windows.Forms.ToolStripSeparator();
+            this.miSamplerNew = new System.Windows.Forms.ToolStripMenuItem();
+            this.miSamplerEdit = new System.Windows.Forms.ToolStripMenuItem();
+            this.miSamplerDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tabs.SuspendLayout();
@@ -862,7 +865,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.gridMetaUnitsActivity)).BeginInit();
             this.toolStrip2.SuspendLayout();
             this.tabMetaSamplers.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView14)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridMetaSamplers)).BeginInit();
             this.toolsMetaSamplers.SuspendLayout();
             this.tabMetaSamplingMeth.SuspendLayout();
             this.toolsMetaSampMeth.SuspendLayout();
@@ -1278,6 +1281,10 @@
             // 
             // miSamplers
             // 
+            this.miSamplers.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.miSamplerNew,
+            this.miSamplerEdit,
+            this.miSamplerDelete});
             this.miSamplers.Name = "miSamplers";
             this.miSamplers.Size = new System.Drawing.Size(174, 22);
             this.miSamplers.Text = "Sa&mplers";
@@ -1335,12 +1342,31 @@
             this.miProjectsDelete.Text = "&Delete main project";
             this.miProjectsDelete.Click += new System.EventHandler(this.miProjectsDelete_Click);
             // 
+            // toolStripSeparator52
+            // 
+            this.toolStripSeparator52.Name = "toolStripSeparator52";
+            this.toolStripSeparator52.Size = new System.Drawing.Size(174, 6);
+            // 
             // miProjectsSubNew
             // 
             this.miProjectsSubNew.Name = "miProjectsSubNew";
             this.miProjectsSubNew.Size = new System.Drawing.Size(177, 22);
             this.miProjectsSubNew.Text = "New &sub project";
             this.miProjectsSubNew.Click += new System.EventHandler(this.miProjectsSubNew_Click);
+            // 
+            // miProjectsSubEdit
+            // 
+            this.miProjectsSubEdit.Name = "miProjectsSubEdit";
+            this.miProjectsSubEdit.Size = new System.Drawing.Size(177, 22);
+            this.miProjectsSubEdit.Text = "Edit s&ub project";
+            this.miProjectsSubEdit.Click += new System.EventHandler(this.miProjectsSubEdit_Click);
+            // 
+            // miProjectsSubDelete
+            // 
+            this.miProjectsSubDelete.Name = "miProjectsSubDelete";
+            this.miProjectsSubDelete.Size = new System.Drawing.Size(177, 22);
+            this.miProjectsSubDelete.Text = "Delete su&b project";
+            this.miProjectsSubDelete.Click += new System.EventHandler(this.miProjectsSubDelete_Click);
             // 
             // miCustomers
             // 
@@ -2047,7 +2073,7 @@
             this.tabsSample.Location = new System.Drawing.Point(3, 28);
             this.tabsSample.Name = "tabsSample";
             this.tabsSample.SelectedIndex = 0;
-            this.tabsSample.Size = new System.Drawing.Size(1129, 581);
+            this.tabsSample.Size = new System.Drawing.Size(1129, 583);
             this.tabsSample.TabIndex = 1;
             this.tabsSample.SelectedIndexChanged += new System.EventHandler(this.tabsSample_SelectedIndexChanged);
             // 
@@ -3269,7 +3295,7 @@
             this.tabSamplesAnalysis.Location = new System.Drawing.Point(4, 22);
             this.tabSamplesAnalysis.Name = "tabSamplesAnalysis";
             this.tabSamplesAnalysis.Padding = new System.Windows.Forms.Padding(3);
-            this.tabSamplesAnalysis.Size = new System.Drawing.Size(1121, 555);
+            this.tabSamplesAnalysis.Size = new System.Drawing.Size(1121, 557);
             this.tabSamplesAnalysis.TabIndex = 3;
             this.tabSamplesAnalysis.Text = "Analysis";
             // 
@@ -3280,7 +3306,7 @@
             this.panel9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel9.Location = new System.Drawing.Point(3, 269);
             this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(1115, 283);
+            this.panel9.Size = new System.Drawing.Size(1115, 285);
             this.panel9.TabIndex = 3;
             // 
             // dataGridView9
@@ -3294,7 +3320,7 @@
             this.dataGridView9.Location = new System.Drawing.Point(0, 25);
             this.dataGridView9.Name = "dataGridView9";
             this.dataGridView9.ReadOnly = true;
-            this.dataGridView9.Size = new System.Drawing.Size(1115, 258);
+            this.dataGridView9.Size = new System.Drawing.Size(1115, 260);
             this.dataGridView9.TabIndex = 0;
             // 
             // toolsSampleResRes
@@ -3379,7 +3405,7 @@
             // 
             this.splitContainer5.Panel2.Controls.Add(this.splitContainer21);
             this.splitContainer5.Size = new System.Drawing.Size(1115, 266);
-            this.splitContainer5.SplitterDistance = 327;
+            this.splitContainer5.SplitterDistance = 324;
             this.splitContainer5.SplitterWidth = 5;
             this.splitContainer5.TabIndex = 1;
             // 
@@ -3394,7 +3420,7 @@
             this.dataGridView10.Location = new System.Drawing.Point(0, 25);
             this.dataGridView10.Name = "dataGridView10";
             this.dataGridView10.ReadOnly = true;
-            this.dataGridView10.Size = new System.Drawing.Size(327, 241);
+            this.dataGridView10.Size = new System.Drawing.Size(324, 241);
             this.dataGridView10.TabIndex = 0;
             // 
             // toolsSampleResAnalMeth
@@ -3404,7 +3430,7 @@
             this.toolStripLabel6});
             this.toolsSampleResAnalMeth.Location = new System.Drawing.Point(0, 0);
             this.toolsSampleResAnalMeth.Name = "toolsSampleResAnalMeth";
-            this.toolsSampleResAnalMeth.Size = new System.Drawing.Size(327, 25);
+            this.toolsSampleResAnalMeth.Size = new System.Drawing.Size(324, 25);
             this.toolsSampleResAnalMeth.TabIndex = 1;
             this.toolsSampleResAnalMeth.Text = "toolStrip5";
             // 
@@ -3412,8 +3438,8 @@
             // 
             this.toolStripLabel6.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.toolStripLabel6.Name = "toolStripLabel6";
-            this.toolStripLabel6.Size = new System.Drawing.Size(102, 22);
-            this.toolStripLabel6.Text = "Analysis methods";
+            this.toolStripLabel6.Size = new System.Drawing.Size(50, 22);
+            this.toolStripLabel6.Text = "Analysis";
             // 
             // splitContainer21
             // 
@@ -3428,7 +3454,7 @@
             // splitContainer21.Panel2
             // 
             this.splitContainer21.Panel2.Controls.Add(this.panel8);
-            this.splitContainer21.Size = new System.Drawing.Size(783, 266);
+            this.splitContainer21.Size = new System.Drawing.Size(786, 266);
             this.splitContainer21.SplitterDistance = 406;
             this.splitContainer21.TabIndex = 4;
             // 
@@ -3457,7 +3483,7 @@
             this.panel8.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel8.Location = new System.Drawing.Point(0, 0);
             this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(373, 266);
+            this.panel8.Size = new System.Drawing.Size(376, 266);
             this.panel8.TabIndex = 3;
             // 
             // dataGridView11
@@ -3471,7 +3497,7 @@
             this.dataGridView11.Location = new System.Drawing.Point(0, 25);
             this.dataGridView11.Name = "dataGridView11";
             this.dataGridView11.ReadOnly = true;
-            this.dataGridView11.Size = new System.Drawing.Size(373, 241);
+            this.dataGridView11.Size = new System.Drawing.Size(376, 241);
             this.dataGridView11.TabIndex = 1;
             // 
             // toolsSampleResAttachments
@@ -3485,7 +3511,7 @@
             this.toolStripButton18});
             this.toolsSampleResAttachments.Location = new System.Drawing.Point(0, 0);
             this.toolsSampleResAttachments.Name = "toolsSampleResAttachments";
-            this.toolsSampleResAttachments.Size = new System.Drawing.Size(373, 25);
+            this.toolsSampleResAttachments.Size = new System.Drawing.Size(376, 25);
             this.toolsSampleResAttachments.TabIndex = 0;
             this.toolsSampleResAttachments.Text = "toolStrip11";
             // 
@@ -3606,9 +3632,9 @@
             this.panel7.Controls.Add(this.btnSampleClose);
             this.panel7.Controls.Add(this.btnSampleSave);
             this.panel7.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel7.Location = new System.Drawing.Point(3, 609);
+            this.panel7.Location = new System.Drawing.Point(3, 611);
             this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(1129, 32);
+            this.panel7.Size = new System.Drawing.Size(1129, 30);
             this.panel7.TabIndex = 4;
             // 
             // btnSamplesPrintPrepLabel
@@ -3616,7 +3642,7 @@
             this.btnSamplesPrintPrepLabel.Dock = System.Windows.Forms.DockStyle.Left;
             this.btnSamplesPrintPrepLabel.Location = new System.Drawing.Point(157, 0);
             this.btnSamplesPrintPrepLabel.Name = "btnSamplesPrintPrepLabel";
-            this.btnSamplesPrintPrepLabel.Size = new System.Drawing.Size(185, 32);
+            this.btnSamplesPrintPrepLabel.Size = new System.Drawing.Size(185, 30);
             this.btnSamplesPrintPrepLabel.TabIndex = 3;
             this.btnSamplesPrintPrepLabel.Text = "Print preparation label";
             this.btnSamplesPrintPrepLabel.UseVisualStyleBackColor = true;
@@ -3626,7 +3652,7 @@
             this.btnSamplesPrintSampleLabel.Dock = System.Windows.Forms.DockStyle.Left;
             this.btnSamplesPrintSampleLabel.Location = new System.Drawing.Point(0, 0);
             this.btnSamplesPrintSampleLabel.Name = "btnSamplesPrintSampleLabel";
-            this.btnSamplesPrintSampleLabel.Size = new System.Drawing.Size(157, 32);
+            this.btnSamplesPrintSampleLabel.Size = new System.Drawing.Size(157, 30);
             this.btnSamplesPrintSampleLabel.TabIndex = 2;
             this.btnSamplesPrintSampleLabel.Text = "Print sample label";
             this.btnSamplesPrintSampleLabel.UseVisualStyleBackColor = true;
@@ -3636,7 +3662,7 @@
             this.btnSampleClose.Dock = System.Windows.Forms.DockStyle.Right;
             this.btnSampleClose.Location = new System.Drawing.Point(895, 0);
             this.btnSampleClose.Name = "btnSampleClose";
-            this.btnSampleClose.Size = new System.Drawing.Size(117, 32);
+            this.btnSampleClose.Size = new System.Drawing.Size(117, 30);
             this.btnSampleClose.TabIndex = 1;
             this.btnSampleClose.Text = "Close";
             this.btnSampleClose.UseVisualStyleBackColor = true;
@@ -3647,7 +3673,7 @@
             this.btnSampleSave.Dock = System.Windows.Forms.DockStyle.Right;
             this.btnSampleSave.Location = new System.Drawing.Point(1012, 0);
             this.btnSampleSave.Name = "btnSampleSave";
-            this.btnSampleSave.Size = new System.Drawing.Size(117, 32);
+            this.btnSampleSave.Size = new System.Drawing.Size(117, 30);
             this.btnSampleSave.TabIndex = 0;
             this.btnSampleSave.Text = "Save";
             this.btnSampleSave.UseVisualStyleBackColor = true;
@@ -3704,7 +3730,7 @@
             // 
             this.splitContainer6.Panel2.Controls.Add(this.panel12);
             this.splitContainer6.Size = new System.Drawing.Size(1115, 572);
-            this.splitContainer6.SplitterDistance = 778;
+            this.splitContainer6.SplitterDistance = 775;
             this.splitContainer6.SplitterWidth = 5;
             this.splitContainer6.TabIndex = 4;
             // 
@@ -3724,7 +3750,7 @@
             // 
             this.splitContainer7.Panel2.Controls.Add(this.treeView1);
             this.splitContainer7.Panel2.Controls.Add(this.toolsOrderContent);
-            this.splitContainer7.Size = new System.Drawing.Size(778, 572);
+            this.splitContainer7.Size = new System.Drawing.Size(775, 572);
             this.splitContainer7.SplitterDistance = 361;
             this.splitContainer7.SplitterWidth = 5;
             this.splitContainer7.TabIndex = 0;
@@ -3911,7 +3937,7 @@
             this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeView1.Location = new System.Drawing.Point(0, 25);
             this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(412, 547);
+            this.treeView1.Size = new System.Drawing.Size(409, 547);
             this.treeView1.TabIndex = 0;
             // 
             // toolsOrderContent
@@ -3929,7 +3955,7 @@
             this.toolStripButton34});
             this.toolsOrderContent.Location = new System.Drawing.Point(0, 0);
             this.toolsOrderContent.Name = "toolsOrderContent";
-            this.toolsOrderContent.Size = new System.Drawing.Size(412, 25);
+            this.toolsOrderContent.Size = new System.Drawing.Size(409, 25);
             this.toolsOrderContent.TabIndex = 1;
             this.toolsOrderContent.Text = "toolStrip16";
             // 
@@ -4011,7 +4037,7 @@
             this.panel12.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel12.Location = new System.Drawing.Point(0, 0);
             this.panel12.Name = "panel12";
-            this.panel12.Size = new System.Drawing.Size(332, 572);
+            this.panel12.Size = new System.Drawing.Size(335, 572);
             this.panel12.TabIndex = 1;
             // 
             // dataGridView12
@@ -4025,7 +4051,7 @@
             this.dataGridView12.Location = new System.Drawing.Point(0, 25);
             this.dataGridView12.Name = "dataGridView12";
             this.dataGridView12.ReadOnly = true;
-            this.dataGridView12.Size = new System.Drawing.Size(332, 547);
+            this.dataGridView12.Size = new System.Drawing.Size(335, 547);
             this.dataGridView12.TabIndex = 1;
             // 
             // toolsOrderAttachments
@@ -4039,7 +4065,7 @@
             this.toolStripButton23});
             this.toolsOrderAttachments.Location = new System.Drawing.Point(0, 0);
             this.toolsOrderAttachments.Name = "toolsOrderAttachments";
-            this.toolsOrderAttachments.Size = new System.Drawing.Size(332, 25);
+            this.toolsOrderAttachments.Size = new System.Drawing.Size(335, 25);
             this.toolsOrderAttachments.TabIndex = 0;
             this.toolsOrderAttachments.Text = "toolStrip15";
             // 
@@ -4969,7 +4995,7 @@
             // tabMetaSamplers
             // 
             this.tabMetaSamplers.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.tabMetaSamplers.Controls.Add(this.dataGridView14);
+            this.tabMetaSamplers.Controls.Add(this.gridMetaSamplers);
             this.tabMetaSamplers.Controls.Add(this.toolsMetaSamplers);
             this.tabMetaSamplers.Location = new System.Drawing.Point(4, 24);
             this.tabMetaSamplers.Name = "tabMetaSamplers";
@@ -4978,17 +5004,24 @@
             this.tabMetaSamplers.TabIndex = 12;
             this.tabMetaSamplers.Text = "Samplers";
             // 
-            // dataGridView14
+            // gridMetaSamplers
             // 
-            this.dataGridView14.AllowUserToAddRows = false;
-            this.dataGridView14.AllowUserToDeleteRows = false;
-            this.dataGridView14.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView14.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView14.Location = new System.Drawing.Point(3, 28);
-            this.dataGridView14.Name = "dataGridView14";
-            this.dataGridView14.ReadOnly = true;
-            this.dataGridView14.Size = new System.Drawing.Size(1115, 549);
-            this.dataGridView14.TabIndex = 0;
+            this.gridMetaSamplers.AllowUserToAddRows = false;
+            this.gridMetaSamplers.AllowUserToDeleteRows = false;
+            this.gridMetaSamplers.AllowUserToResizeRows = false;
+            this.gridMetaSamplers.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.gridMetaSamplers.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
+            this.gridMetaSamplers.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.gridMetaSamplers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridMetaSamplers.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gridMetaSamplers.Location = new System.Drawing.Point(3, 28);
+            this.gridMetaSamplers.MultiSelect = false;
+            this.gridMetaSamplers.Name = "gridMetaSamplers";
+            this.gridMetaSamplers.ReadOnly = true;
+            this.gridMetaSamplers.RowHeadersVisible = false;
+            this.gridMetaSamplers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.gridMetaSamplers.Size = new System.Drawing.Size(1115, 549);
+            this.gridMetaSamplers.TabIndex = 0;
             // 
             // toolsMetaSamplers
             // 
@@ -5024,6 +5057,7 @@
             this.toolStripButton62.Name = "toolStripButton62";
             this.toolStripButton62.Size = new System.Drawing.Size(51, 22);
             this.toolStripButton62.Text = "New";
+            this.toolStripButton62.Click += new System.EventHandler(this.miSamplerNew_Click);
             // 
             // toolStripButton63
             // 
@@ -5032,6 +5066,7 @@
             this.toolStripButton63.Name = "toolStripButton63";
             this.toolStripButton63.Size = new System.Drawing.Size(47, 22);
             this.toolStripButton63.Text = "Edit";
+            this.toolStripButton63.Click += new System.EventHandler(this.miSamplerEdit_Click);
             // 
             // toolStripButton75
             // 
@@ -5040,6 +5075,7 @@
             this.toolStripButton75.Name = "toolStripButton75";
             this.toolStripButton75.Size = new System.Drawing.Size(60, 22);
             this.toolStripButton75.Text = "Delete";
+            this.toolStripButton75.Click += new System.EventHandler(this.miSamplerDelete_Click);
             // 
             // tabMetaSamplingMeth
             // 
@@ -8361,24 +8397,26 @@
             this.lblCurrentTab.Size = new System.Drawing.Size(98, 22);
             this.lblCurrentTab.Text = "<lblCurrentTab>";
             // 
-            // miProjectsSubEdit
+            // miSamplerNew
             // 
-            this.miProjectsSubEdit.Name = "miProjectsSubEdit";
-            this.miProjectsSubEdit.Size = new System.Drawing.Size(177, 22);
-            this.miProjectsSubEdit.Text = "Edit s&ub project";
-            this.miProjectsSubEdit.Click += new System.EventHandler(this.miProjectsSubEdit_Click);
+            this.miSamplerNew.Name = "miSamplerNew";
+            this.miSamplerNew.Size = new System.Drawing.Size(152, 22);
+            this.miSamplerNew.Text = "&New sampler";
+            this.miSamplerNew.Click += new System.EventHandler(this.miSamplerNew_Click);
             // 
-            // miProjectsSubDelete
+            // miSamplerEdit
             // 
-            this.miProjectsSubDelete.Name = "miProjectsSubDelete";
-            this.miProjectsSubDelete.Size = new System.Drawing.Size(177, 22);
-            this.miProjectsSubDelete.Text = "Delete su&b project";
-            this.miProjectsSubDelete.Click += new System.EventHandler(this.miProjectsSubDelete_Click);
+            this.miSamplerEdit.Name = "miSamplerEdit";
+            this.miSamplerEdit.Size = new System.Drawing.Size(152, 22);
+            this.miSamplerEdit.Text = "&Edit sampler";
+            this.miSamplerEdit.Click += new System.EventHandler(this.miSamplerEdit_Click);
             // 
-            // toolStripSeparator52
+            // miSamplerDelete
             // 
-            this.toolStripSeparator52.Name = "toolStripSeparator52";
-            this.toolStripSeparator52.Size = new System.Drawing.Size(174, 6);
+            this.miSamplerDelete.Name = "miSamplerDelete";
+            this.miSamplerDelete.Size = new System.Drawing.Size(152, 22);
+            this.miSamplerDelete.Text = "&Delete sampler";
+            this.miSamplerDelete.Click += new System.EventHandler(this.miSamplerDelete_Click);
             // 
             // FormMain
             // 
@@ -8576,7 +8614,7 @@
             this.toolStrip2.PerformLayout();
             this.tabMetaSamplers.ResumeLayout(false);
             this.tabMetaSamplers.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView14)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridMetaSamplers)).EndInit();
             this.toolsMetaSamplers.ResumeLayout(false);
             this.toolsMetaSamplers.PerformLayout();
             this.tabMetaSamplingMeth.ResumeLayout(false);
@@ -9364,7 +9402,7 @@
         private System.Windows.Forms.ToolStripLabel toolStripLabel31;
         private System.Windows.Forms.ToolStripMenuItem miMeta;
         private System.Windows.Forms.TabPage tabMetaSamplers;
-        private System.Windows.Forms.DataGridView dataGridView14;
+        private System.Windows.Forms.DataGridView gridMetaSamplers;
         private System.Windows.Forms.ToolStrip toolsMetaSamplers;
         private System.Windows.Forms.ToolStripButton toolStripButton62;
         private System.Windows.Forms.ToolStripButton toolStripButton63;
@@ -9545,6 +9583,9 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator52;
         private System.Windows.Forms.ToolStripMenuItem miProjectsSubEdit;
         private System.Windows.Forms.ToolStripMenuItem miProjectsSubDelete;
+        private System.Windows.Forms.ToolStripMenuItem miSamplerNew;
+        private System.Windows.Forms.ToolStripMenuItem miSamplerEdit;
+        private System.Windows.Forms.ToolStripMenuItem miSamplerDelete;
     }
 }
 

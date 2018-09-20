@@ -47,7 +47,7 @@ namespace DSA_lims
         private string SampleTypesRootName = "Sample types";
         private string ProjectsRootName = "Projects";
 
-        List<DecayType> decayTypes = new List<DecayType>();
+        private List<DecayType> decayTypes = new List<DecayType>();
 
         public FormMain()
         {
@@ -117,6 +117,9 @@ namespace DSA_lims
 
                     log.Info("Populating sample storage");
                     PopulateSampleStorage(conn);
+
+                    log.Info("Populating samplers");
+                    PopulateSamplers(conn);
                 }
                 
                 HideMenuItems();
@@ -517,6 +520,26 @@ namespace DSA_lims
             gridMetaSampleStorage.Columns["name"].HeaderText = "Name";
             gridMetaSampleStorage.Columns["address"].HeaderText = "Address";
             gridMetaSampleStorage.Columns["in_use"].HeaderText = "In use";
+        }
+
+        private void PopulateSamplers(SqlConnection conn)
+        {
+            // Set data source
+            gridMetaSamplers.DataSource = DB.GetDataTable(conn, "csp_select_samplers_flat", CommandType.StoredProcedure);
+
+            // Set UI state
+            gridMetaSamplers.Columns["id"].Visible = false;
+            gridMetaSamplers.Columns["comment"].Visible = false;
+            gridMetaSamplers.Columns["created_by"].Visible = false;
+            gridMetaSamplers.Columns["create_date"].Visible = false;
+            gridMetaSamplers.Columns["updated_by"].Visible = false;
+            gridMetaSamplers.Columns["update_date"].Visible = false;
+
+            gridMetaSamplers.Columns["name"].HeaderText = "Name";
+            gridMetaSamplers.Columns["address"].HeaderText = "Address";
+            gridMetaSamplers.Columns["email"].HeaderText = "Email";
+            gridMetaSamplers.Columns["phone"].HeaderText = "Phone";
+            gridMetaSamplers.Columns["in_use"].HeaderText = "In use";
         }
 
         private void SetLanguageLabels(ResourceManager r)
@@ -1379,6 +1402,51 @@ namespace DSA_lims
         private void miDeleteSampleStorage_Click(object sender, EventArgs e)
         {
             // delete sample storage
-        }        
+        }
+
+        private void miSamplerNew_Click(object sender, EventArgs e)
+        {
+            // new sampler
+            FormSampler form = new FormSampler(log);
+            switch (form.ShowDialog())
+            {
+                case DialogResult.OK:
+                    lblStatus.Text = StrUtils.makeStatusMessage("Sampler " + form.Sampler.Name + " inserted");
+                    using (SqlConnection conn = DB.OpenConnection())
+                        PopulateSamplers(conn);
+                    break;
+                case DialogResult.Abort:
+                    lblStatus.Text = StrUtils.makeErrorMessage("Create sampler failed");
+                    break;
+            }
+        }
+
+        private void miSamplerEdit_Click(object sender, EventArgs e)
+        {
+            // edit sampler
+            if (gridMetaSamplers.SelectedRows.Count < 1)
+                return;
+
+            DataGridViewRow row = gridMetaSamplers.SelectedRows[0];
+            Guid sid = new Guid(row.Cells[0].Value.ToString());
+
+            FormSampler form = new FormSampler(log, sid);
+            switch (form.ShowDialog())
+            {
+                case DialogResult.OK:
+                    lblStatus.Text = StrUtils.makeStatusMessage("Sampler " + form.Sampler.Name + " updated");
+                    using (SqlConnection conn = DB.OpenConnection())
+                        PopulateSamplers(conn);
+                    break;
+                case DialogResult.Abort:
+                    lblStatus.Text = StrUtils.makeErrorMessage("Update sampler failed");
+                    break;
+            }
+        }
+
+        private void miSamplerDelete_Click(object sender, EventArgs e)
+        {
+            // delete sampler
+        }
     }    
 }

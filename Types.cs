@@ -19,6 +19,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data.SqlClient;
 using System.Text;
 
@@ -270,6 +271,26 @@ namespace DSA_lims
         public Guid Id { get; set; }
         public Guid MainProjectId { get; set; }
         public string Name { get; set; }
+        public bool InUse { get; set; }
+        public string Comment { get; set; }
+        public DateTime CreateDate { get; set; }
+        public string CreatedBy { get; set; }
+        public DateTime UpdateDate { get; set; }
+        public string UpdatedBy { get; set; }
+
+        public override string ToString()
+        {
+            return Name;
+        }
+    }
+
+    public class SamplerType
+    {
+        public Guid Id { get; set; }
+        public string Name { get; set; }
+        public string Address { get; set; }
+        public string Email { get; set; }
+        public string Phone { get; set; }
         public bool InUse { get; set; }
         public string Comment { get; set; }
         public DateTime CreateDate { get; set; }

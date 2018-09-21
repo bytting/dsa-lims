@@ -51,6 +51,7 @@ namespace DSA_lims
         private List<Tag<int, string>> preparationUnitList = new List<Tag<int, string>>();
         private List<Tag<int, string>> uniformActivityUnitList = new List<Tag<int, string>>();
         private List<Tag<int, string>> workflowStatusList = new List<Tag<int, string>>();
+        private List<Tag<int, string>> locationTypeList = new List<Tag<int, string>>();
 
         public FormMain()
         {
@@ -102,6 +103,9 @@ namespace DSA_lims
                     log.Info("Loading workflow status");
                     LoadWorkflowStatus(conn);
 
+                    log.Info("Loading location types");
+                    LoadLocationTypes(conn);
+
                     log.Info("Populating preparation units");
                     PopulatePreparationUnits(conn);
 
@@ -113,6 +117,9 @@ namespace DSA_lims
 
                     log.Info("Populating workflow status");
                     PopulateWorkflowStatus(conn);
+
+                    log.Info("Populating location types");
+                    PopulateLocationTypes(conn);
 
                     log.Info("Populating laboratories");
                     PopulateLaboratories(conn);
@@ -344,6 +351,28 @@ namespace DSA_lims
             }
         }
 
+        private void LoadLocationTypes(SqlConnection conn)
+        {
+            try
+            {
+                locationTypeList.Clear();
+
+                using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_location_types", CommandType.StoredProcedure))
+                {
+                    while (reader.Read())
+                    {
+                        int id = Convert.ToInt32(reader["id"]);
+                        string name = reader["name"].ToString();
+                        locationTypeList.Add(new Tag<int, string>(id, name));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+            }
+        }
+
         private void PopulatePreparationUnits(SqlConnection conn)
         {
             cboxSamplePrepUnit.DataSource = preparationUnitList;
@@ -359,6 +388,12 @@ namespace DSA_lims
         {
             cboxSampleAnalWorkflowStatus.DataSource = workflowStatusList;
             cboxSampleAnalWorkflowStatus.SelectedIndex = -1;
+        }
+
+        private void PopulateLocationTypes(SqlConnection conn)
+        {
+            cboxSampleInfoLocationTypes.DataSource = locationTypeList;
+            cboxSampleInfoLocationTypes.SelectedIndex = -1;
         }
 
         private void PopulateActivityUnits(SqlConnection conn)
@@ -387,6 +422,8 @@ namespace DSA_lims
             try
             {
                 treeSampleTypes.Nodes.Clear();
+                cboxSampleSampleType.Items.Clear();
+
                 TreeNode root = treeSampleTypes.Nodes.Add(SampleTypesRootName, SampleTypesRootName);
                 
                 using (SqlDataReader reader = DB.GetDataReader(conn, "select id, name, in_use from sample_type order by name", CommandType.Text))
@@ -394,6 +431,10 @@ namespace DSA_lims
                     while (reader.Read())
                     {
                         string sampleType = reader["name"].ToString();
+                        Guid id = new Guid(reader["id"].ToString());
+
+                        cboxSampleSampleType.Items.Add(new Tag<Guid, string>(id, sampleType));
+
                         string[] items = sampleType.Substring(1).Split(new char[] { '/' });
                         TreeNode current = root;
                         foreach (string item in items)
@@ -414,6 +455,8 @@ namespace DSA_lims
                 }
 
                 root.Expand();
+
+                cboxSampleSampleType.SelectedIndex = -1;
             }
             catch(Exception ex)
             {
@@ -612,7 +655,8 @@ namespace DSA_lims
         private void PopulateStations(SqlConnection conn)
         {
             // Set data source
-            gridMetaStation.DataSource = DB.GetDataTable(conn, "csp_select_stations_flat", CommandType.StoredProcedure);
+            DataTable dt = DB.GetDataTable(conn, "csp_select_stations_flat", CommandType.StoredProcedure);
+            gridMetaStation.DataSource = dt;
 
             // Set UI state
             gridMetaStation.Columns["id"].Visible = false;
@@ -626,7 +670,15 @@ namespace DSA_lims
             gridMetaStation.Columns["latitude"].HeaderText = "Latitude";
             gridMetaStation.Columns["longitude"].HeaderText = "Longitude";
             gridMetaStation.Columns["altitude"].HeaderText = "Altitude";
-            gridMetaStation.Columns["in_use"].HeaderText = "In use";
+            gridMetaStation.Columns["in_use"].HeaderText = "In use";            
+
+            cboxSampleInfoStations.Items.Clear();
+            foreach (DataRow row in dt.Rows)
+            {
+                Tag<Guid, string> s = new Tag<Guid, string>(new Guid(row["id"].ToString()), row["name"].ToString());
+                cboxSampleInfoStations.Items.Add(s);
+            }
+            cboxSampleInfoStations.SelectedIndex = -1;
         }
 
         private void PopulateSampleStorage(SqlConnection conn)
@@ -800,7 +852,7 @@ namespace DSA_lims
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
-                            lbSampleTypesComponents.Items.Add(new SampleComponentTag(reader));
+                            lbSampleTypesComponents.Items.Add(new Tag<Guid, string>(new Guid(reader["id"].ToString()), reader["name"].ToString()));
                     }
 
                     lbSampleTypesInheritedComponents.Items.Clear();
@@ -817,7 +869,7 @@ namespace DSA_lims
                         using (SqlDataReader reader = cmd.ExecuteReader())
                         {
                             while (reader.Read())
-                                lbSampleTypesInheritedComponents.Items.Add(new SampleComponentTag(reader));
+                                lbSampleTypesInheritedComponents.Items.Add(new Tag<Guid, string>(new Guid(reader["id"].ToString()), reader["name"].ToString()));
                         }
                     }
                 }
@@ -1581,6 +1633,17 @@ namespace DSA_lims
         private void miSamplerDelete_Click(object sender, EventArgs e)
         {
             // delete sampler
+        }
+
+        private void cboxSampleSampleType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var sampleType = cboxSampleSampleType.SelectedItem as Tag<Guid, string>;            
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                // FIXME: add inherited components
+                cboxSampleSampleComponent.DataSource = DB.GetDataTable(conn, "csp_select_sample_components_for_sample_type", CommandType.StoredProcedure, new SqlParameter("@sample_type_id", sampleType.Id));
+                cboxSampleSampleComponent.SelectedIndex = -1;
+            }
         }
     }    
 }

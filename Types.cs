@@ -30,4 +30,25 @@ namespace DSA_lims
         Update,
         Delete
     }
+
+    public class Tag<I, N>
+    {
+        public Tag()
+        {
+        }
+
+        public Tag(I id, N name)
+        {
+            Id = id;
+            Name = name;
+        }
+
+        public I Id { get; set; }
+        public N Name { get; set; }
+
+        public override string ToString()
+        {
+            return Name.ToString();
+        }
+    }
 }

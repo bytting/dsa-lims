@@ -163,16 +163,16 @@
             this.cboxSampleInfoSampler = new System.Windows.Forms.ComboBox();
             this.button4 = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
-            this.comboBox4 = new System.Windows.Forms.ComboBox();
+            this.cboxSampleSampleType = new System.Windows.Forms.ComboBox();
             this.label8 = new System.Windows.Forms.Label();
-            this.comboBox5 = new System.Windows.Forms.ComboBox();
+            this.cboxSampleSampleComponent = new System.Windows.Forms.ComboBox();
             this.label10 = new System.Windows.Forms.Label();
             this.textBox4 = new System.Windows.Forms.TextBox();
             this.textBox5 = new System.Windows.Forms.TextBox();
             this.textBox6 = new System.Windows.Forms.TextBox();
             this.label25 = new System.Windows.Forms.Label();
             this.label26 = new System.Windows.Forms.Label();
-            this.comboBox6 = new System.Windows.Forms.ComboBox();
+            this.cboxSampleInfoStations = new System.Windows.Forms.ComboBox();
             this.label9 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
@@ -184,7 +184,7 @@
             this.textBox20 = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.comboBox17 = new System.Windows.Forms.ComboBox();
-            this.comboBox18 = new System.Windows.Forms.ComboBox();
+            this.cboxSampleInfoLocationTypes = new System.Windows.Forms.ComboBox();
             this.label50 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
@@ -2287,16 +2287,16 @@
             this.tableLayoutPanel2.Controls.Add(this.cboxSampleInfoSampler, 5, 2);
             this.tableLayoutPanel2.Controls.Add(this.button4, 7, 1);
             this.tableLayoutPanel2.Controls.Add(this.label7, 0, 1);
-            this.tableLayoutPanel2.Controls.Add(this.comboBox4, 1, 1);
+            this.tableLayoutPanel2.Controls.Add(this.cboxSampleSampleType, 1, 1);
             this.tableLayoutPanel2.Controls.Add(this.label8, 0, 2);
-            this.tableLayoutPanel2.Controls.Add(this.comboBox5, 1, 2);
+            this.tableLayoutPanel2.Controls.Add(this.cboxSampleSampleComponent, 1, 2);
             this.tableLayoutPanel2.Controls.Add(this.label10, 2, 4);
             this.tableLayoutPanel2.Controls.Add(this.textBox4, 3, 4);
             this.tableLayoutPanel2.Controls.Add(this.textBox5, 5, 4);
             this.tableLayoutPanel2.Controls.Add(this.textBox6, 7, 4);
             this.tableLayoutPanel2.Controls.Add(this.label25, 4, 4);
             this.tableLayoutPanel2.Controls.Add(this.label26, 6, 4);
-            this.tableLayoutPanel2.Controls.Add(this.comboBox6, 1, 4);
+            this.tableLayoutPanel2.Controls.Add(this.cboxSampleInfoStations, 1, 4);
             this.tableLayoutPanel2.Controls.Add(this.label9, 0, 4);
             this.tableLayoutPanel2.Controls.Add(this.label11, 0, 8);
             this.tableLayoutPanel2.Controls.Add(this.dateTimePicker2, 1, 8);
@@ -2308,7 +2308,7 @@
             this.tableLayoutPanel2.Controls.Add(this.textBox20, 5, 10);
             this.tableLayoutPanel2.Controls.Add(this.label3, 0, 5);
             this.tableLayoutPanel2.Controls.Add(this.comboBox17, 1, 5);
-            this.tableLayoutPanel2.Controls.Add(this.comboBox18, 1, 6);
+            this.tableLayoutPanel2.Controls.Add(this.cboxSampleInfoLocationTypes, 1, 6);
             this.tableLayoutPanel2.Controls.Add(this.label50, 0, 6);
             this.tableLayoutPanel2.Controls.Add(this.textBox1, 3, 6);
             this.tableLayoutPanel2.Controls.Add(this.checkBox1, 3, 8);
@@ -2416,15 +2416,17 @@
             this.label7.TabIndex = 0;
             this.label7.Text = "Sample type";
             // 
-            // comboBox4
+            // cboxSampleSampleType
             // 
-            this.tableLayoutPanel2.SetColumnSpan(this.comboBox4, 6);
-            this.comboBox4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.comboBox4.FormattingEnabled = true;
-            this.comboBox4.Location = new System.Drawing.Point(114, 12);
-            this.comboBox4.Name = "comboBox4";
-            this.comboBox4.Size = new System.Drawing.Size(828, 21);
-            this.comboBox4.TabIndex = 2;
+            this.tableLayoutPanel2.SetColumnSpan(this.cboxSampleSampleType, 6);
+            this.cboxSampleSampleType.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cboxSampleSampleType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxSampleSampleType.FormattingEnabled = true;
+            this.cboxSampleSampleType.Location = new System.Drawing.Point(114, 12);
+            this.cboxSampleSampleType.Name = "cboxSampleSampleType";
+            this.cboxSampleSampleType.Size = new System.Drawing.Size(828, 21);
+            this.cboxSampleSampleType.TabIndex = 2;
+            this.cboxSampleSampleType.SelectedIndexChanged += new System.EventHandler(this.cboxSampleSampleType_SelectedIndexChanged);
             // 
             // label8
             // 
@@ -2437,16 +2439,18 @@
             this.label8.TabIndex = 0;
             this.label8.Text = "Sample component";
             // 
-            // comboBox5
+            // cboxSampleSampleComponent
             // 
-            this.tableLayoutPanel2.SetColumnSpan(this.comboBox5, 2);
-            this.comboBox5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.comboBox5.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox5.FormattingEnabled = true;
-            this.comboBox5.Location = new System.Drawing.Point(114, 44);
-            this.comboBox5.Name = "comboBox5";
-            this.comboBox5.Size = new System.Drawing.Size(272, 21);
-            this.comboBox5.TabIndex = 1;
+            this.tableLayoutPanel2.SetColumnSpan(this.cboxSampleSampleComponent, 2);
+            this.cboxSampleSampleComponent.DisplayMember = "Name";
+            this.cboxSampleSampleComponent.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cboxSampleSampleComponent.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxSampleSampleComponent.FormattingEnabled = true;
+            this.cboxSampleSampleComponent.Location = new System.Drawing.Point(114, 44);
+            this.cboxSampleSampleComponent.Name = "cboxSampleSampleComponent";
+            this.cboxSampleSampleComponent.Size = new System.Drawing.Size(272, 21);
+            this.cboxSampleSampleComponent.TabIndex = 1;
+            this.cboxSampleSampleComponent.ValueMember = "Id";
             // 
             // label10
             // 
@@ -2502,14 +2506,15 @@
             this.label26.TabIndex = 22;
             this.label26.Text = "Altitude";
             // 
-            // comboBox6
+            // cboxSampleInfoStations
             // 
-            this.comboBox6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.comboBox6.FormattingEnabled = true;
-            this.comboBox6.Location = new System.Drawing.Point(114, 94);
-            this.comboBox6.Name = "comboBox6";
-            this.comboBox6.Size = new System.Drawing.Size(161, 21);
-            this.comboBox6.TabIndex = 1;
+            this.cboxSampleInfoStations.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cboxSampleInfoStations.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxSampleInfoStations.FormattingEnabled = true;
+            this.cboxSampleInfoStations.Location = new System.Drawing.Point(114, 94);
+            this.cboxSampleInfoStations.Name = "cboxSampleInfoStations";
+            this.cboxSampleInfoStations.Size = new System.Drawing.Size(161, 21);
+            this.cboxSampleInfoStations.TabIndex = 1;
             // 
             // label9
             // 
@@ -2619,16 +2624,16 @@
             this.comboBox17.Size = new System.Drawing.Size(439, 21);
             this.comboBox17.TabIndex = 27;
             // 
-            // comboBox18
+            // cboxSampleInfoLocationTypes
             // 
-            this.tableLayoutPanel2.SetColumnSpan(this.comboBox18, 2);
-            this.comboBox18.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.comboBox18.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox18.FormattingEnabled = true;
-            this.comboBox18.Location = new System.Drawing.Point(114, 158);
-            this.comboBox18.Name = "comboBox18";
-            this.comboBox18.Size = new System.Drawing.Size(272, 21);
-            this.comboBox18.TabIndex = 28;
+            this.tableLayoutPanel2.SetColumnSpan(this.cboxSampleInfoLocationTypes, 2);
+            this.cboxSampleInfoLocationTypes.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cboxSampleInfoLocationTypes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxSampleInfoLocationTypes.FormattingEnabled = true;
+            this.cboxSampleInfoLocationTypes.Location = new System.Drawing.Point(114, 158);
+            this.cboxSampleInfoLocationTypes.Name = "cboxSampleInfoLocationTypes";
+            this.cboxSampleInfoLocationTypes.Size = new System.Drawing.Size(272, 21);
+            this.cboxSampleInfoLocationTypes.TabIndex = 28;
             // 
             // label50
             // 
@@ -9254,10 +9259,10 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.ComboBox comboBox4;
-        private System.Windows.Forms.ComboBox comboBox5;
+        private System.Windows.Forms.ComboBox cboxSampleSampleType;
+        private System.Windows.Forms.ComboBox cboxSampleSampleComponent;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.ComboBox comboBox6;
+        private System.Windows.Forms.ComboBox cboxSampleInfoStations;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox textBox4;
         private System.Windows.Forms.TextBox textBox5;
@@ -9431,7 +9436,7 @@
         private System.Windows.Forms.ToolStripTextBox tbSamplesSampleID;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox comboBox17;
-        private System.Windows.Forms.ComboBox comboBox18;
+        private System.Windows.Forms.ComboBox cboxSampleInfoLocationTypes;
         private System.Windows.Forms.Label label50;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.TextBox textBox36;

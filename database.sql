@@ -711,6 +711,14 @@ insert into location_type values(2, 'Business number', 1)
 insert into location_type values(3, 'Property unit number', 1)
 insert into location_type values(4, 'Place name', 1)
 insert into location_type values(5, 'Other', 1)
+go
+
+create proc csp_select_location_types
+as
+	select id, name from location_type 
+	where in_use = 1
+	order by name
+go
 
 /*===========================================================================*/
 /* tbl assignment */
@@ -1559,6 +1567,16 @@ create table sample_type (
 )
 go
 
+create proc csp_select_sample_types_short
+as
+	select 
+		id,
+		name
+	from sample_type
+	where in_use = 1
+	order by name
+go
+
 /*===========================================================================*/
 /* tbl sample_storage */
 
@@ -1657,6 +1675,17 @@ create table sample_component (
 	update_date datetime NOT NULL,
 	updated_by nvarchar(50) NOT NULL
 )
+go
+
+create proc csp_select_sample_components_for_sample_type
+	@sample_type_id uniqueidentifier
+as
+	select 
+		id,
+		name		
+	from sample_component
+	where sample_type_id = @sample_type_id and in_use = 1
+	order by name
 go
 
 /*===========================================================================*/

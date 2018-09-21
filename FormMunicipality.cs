@@ -35,7 +35,7 @@ namespace DSA_lims
     {
         private ILog mLog = null;        
 
-        public MunicipalityType Municipality = new MunicipalityType();
+        public MunicipalityModel Municipality = new MunicipalityModel();
 
         public FormMunicipality(ILog log, Guid cid)
         {

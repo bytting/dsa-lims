@@ -36,7 +36,7 @@ namespace DSA_lims
     {
         private ILog mLog = null;
 
-        public StationType Station = new StationType();
+        public StationModel Station = new StationModel();
 
         public FormStation(ILog log)
         {

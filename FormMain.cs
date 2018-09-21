@@ -47,10 +47,10 @@ namespace DSA_lims
         private string SampleTypesRootName = "Sample types";
         private string ProjectsRootName = "Projects";
 
-        private List<DecayType> decayTypes = new List<DecayType>();        
-        private List<PreparationUnitType> preparationUnitTypes = new List<PreparationUnitType>();
-        private List<UniformActivityUnitType> uniformActivityUnitTypes = new List<UniformActivityUnitType>();
-        private List<WorkflowStatusType> workflowStatusTypes = new List<WorkflowStatusType>();
+        private List<Tag<int, string>> decayTypes = new List<Tag<int, string>>();
+        private List<Tag<int, string>> preparationUnitTypes = new List<Tag<int, string>>();
+        private List<Tag<int, string>> uniformActivityUnitTypes = new List<Tag<int, string>>();
+        private List<Tag<int, string>> workflowStatusTypes = new List<Tag<int, string>>();
 
         public FormMain()
         {
@@ -268,7 +268,7 @@ namespace DSA_lims
                     {
                         int id = Convert.ToInt32(reader["id"]);
                         string name = reader["name"].ToString();
-                        decayTypes.Add(new DecayType(id, name));
+                        decayTypes.Add(new Tag<int, string>(id, name));
                     }
                 }
             }
@@ -290,7 +290,7 @@ namespace DSA_lims
                     {
                         int id = Convert.ToInt32(reader["id"]);
                         string name = reader["name"].ToString();
-                        preparationUnitTypes.Add(new PreparationUnitType(id, name));
+                        preparationUnitTypes.Add(new Tag<int, string>(id, name));
                     }
                 }
             }
@@ -312,7 +312,7 @@ namespace DSA_lims
                     {
                         int id = Convert.ToInt32(reader["id"]);
                         string name = reader["name"].ToString();
-                        uniformActivityUnitTypes.Add(new UniformActivityUnitType(id, name));
+                        uniformActivityUnitTypes.Add(new Tag<int, string>(id, name));
                     }
                 }
             }
@@ -334,7 +334,7 @@ namespace DSA_lims
                     {
                         int id = Convert.ToInt32(reader["id"]);
                         string name = reader["name"].ToString();
-                        workflowStatusTypes.Add(new WorkflowStatusType(id, name));
+                        workflowStatusTypes.Add(new Tag<int, string>(id, name));
                     }
                 }
             }
@@ -377,7 +377,7 @@ namespace DSA_lims
             cboxSampleAnalUnit.Items.Clear();            
             foreach(DataRow row in dt.Rows)
             {
-                ActivityUnitType au = new ActivityUnitType(new Guid(row["id"].ToString()), row["name"].ToString());
+                Tag<Guid, string> au = new Tag<Guid, string>(new Guid(row["id"].ToString()), row["name"].ToString());
                 cboxSampleAnalUnit.Items.Add(au);
             }            
         }
@@ -650,7 +650,8 @@ namespace DSA_lims
         private void PopulateSamplers(SqlConnection conn)
         {
             // Set data source
-            gridMetaSamplers.DataSource = DB.GetDataTable(conn, "csp_select_samplers_flat", CommandType.StoredProcedure);
+            DataTable dt = DB.GetDataTable(conn, "csp_select_samplers_flat", CommandType.StoredProcedure);
+            gridMetaSamplers.DataSource = dt;
 
             // Set UI state
             gridMetaSamplers.Columns["id"].Visible = false;
@@ -665,6 +666,14 @@ namespace DSA_lims
             gridMetaSamplers.Columns["email"].HeaderText = "Email";
             gridMetaSamplers.Columns["phone"].HeaderText = "Phone";
             gridMetaSamplers.Columns["in_use"].HeaderText = "In use";
+
+            cboxSampleInfoSampler.Items.Clear();
+            foreach (DataRow row in dt.Rows)
+            {
+                Tag<Guid, string> s = new Tag<Guid, string>(new Guid(row["id"].ToString()), row["name"].ToString());
+                cboxSampleInfoSampler.Items.Add(s);
+            }
+            cboxSampleInfoSampler.SelectedIndex = -1;
         }
 
         private void SetLanguageLabels(ResourceManager r)
@@ -791,7 +800,7 @@ namespace DSA_lims
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
-                            lbSampleTypesComponents.Items.Add(new SampleComponent(reader));
+                            lbSampleTypesComponents.Items.Add(new SampleComponentTag(reader));
                     }
 
                     lbSampleTypesInheritedComponents.Items.Clear();
@@ -808,7 +817,7 @@ namespace DSA_lims
                         using (SqlDataReader reader = cmd.ExecuteReader())
                         {
                             while (reader.Read())
-                                lbSampleTypesInheritedComponents.Items.Add(new SampleComponent(reader));
+                                lbSampleTypesInheritedComponents.Items.Add(new SampleComponentTag(reader));
                         }
                     }
                 }

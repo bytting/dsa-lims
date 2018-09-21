@@ -35,7 +35,7 @@ namespace DSA_lims
     {
         private ILog mLog = null;
 
-        public LaboratoryType Laboratory = new LaboratoryType();
+        public LaboratoryModel Laboratory = new LaboratoryModel();
 
         public FormLaboratory(ILog log)
         {

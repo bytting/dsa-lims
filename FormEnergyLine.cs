@@ -34,7 +34,7 @@ namespace DSA_lims
     public partial class FormEnergyLine : Form
     {
         private ILog mLog = null;
-        EnergyLineType EnergyLine = new EnergyLineType();        
+        EnergyLineModel EnergyLine = new EnergyLineModel();        
 
         public FormEnergyLine(ILog log, Guid nid, string nname)
         {            

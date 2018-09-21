@@ -17,7 +17,7 @@ namespace DSA_lims
     {
         private ILog mLog = null;
 
-        public SubProjectType SubProject = new SubProjectType();
+        public SubProjectModel SubProject = new SubProjectModel();
 
         public FormProjectSub(ILog log, string pname, Guid pid)
         {

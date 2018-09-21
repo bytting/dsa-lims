@@ -35,7 +35,7 @@ namespace DSA_lims
     {
         private ILog mLog = null;
 
-        public SamplerType Sampler = new SamplerType();
+        public SamplerModel Sampler = new SamplerModel();
 
         public FormSampler(ILog log)
         {

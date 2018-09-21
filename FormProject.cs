@@ -35,7 +35,7 @@ namespace DSA_lims
     {
         private ILog mLog = null;
 
-        public MainProjectType MainProject = new MainProjectType();
+        public MainProjectModel MainProject = new MainProjectModel();
 
         public FormProject(ILog log)
         {

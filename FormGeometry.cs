@@ -36,7 +36,7 @@ namespace DSA_lims
     {
         private ILog mLog = null;
 
-        public GeometryType Geometry = new GeometryType();
+        public GeometryModel Geometry = new GeometryModel();
 
         public FormGeometry(ILog log)
         {

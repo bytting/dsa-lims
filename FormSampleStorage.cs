@@ -36,7 +36,7 @@ namespace DSA_lims
     {
         private ILog mLog = null;
 
-        public SampleStorageType SampleStorage = new SampleStorageType();
+        public SampleStorageModel SampleStorage = new SampleStorageModel();
 
         public FormSampleStorage(ILog log)
         {

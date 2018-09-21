@@ -36,7 +36,7 @@ namespace DSA_lims
     {
         private ILog mLog = null;
 
-        public CountyType County = new CountyType();
+        public CountyModel County = new CountyModel();
 
         public FormCounty(ILog log)
         {

@@ -160,7 +160,7 @@
             this.label16 = new System.Windows.Forms.Label();
             this.comboBox8 = new System.Windows.Forms.ComboBox();
             this.label15 = new System.Windows.Forms.Label();
-            this.comboBox7 = new System.Windows.Forms.ComboBox();
+            this.cboxSampleInfoSampler = new System.Windows.Forms.ComboBox();
             this.button4 = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.comboBox4 = new System.Windows.Forms.ComboBox();
@@ -2284,7 +2284,7 @@
             this.tableLayoutPanel2.Controls.Add(this.label16, 6, 2);
             this.tableLayoutPanel2.Controls.Add(this.comboBox8, 7, 2);
             this.tableLayoutPanel2.Controls.Add(this.label15, 4, 2);
-            this.tableLayoutPanel2.Controls.Add(this.comboBox7, 5, 2);
+            this.tableLayoutPanel2.Controls.Add(this.cboxSampleInfoSampler, 5, 2);
             this.tableLayoutPanel2.Controls.Add(this.button4, 7, 1);
             this.tableLayoutPanel2.Controls.Add(this.label7, 0, 1);
             this.tableLayoutPanel2.Controls.Add(this.comboBox4, 1, 1);
@@ -2385,14 +2385,15 @@
             this.label15.TabIndex = 0;
             this.label15.Text = "Sampler";
             // 
-            // comboBox7
+            // cboxSampleInfoSampler
             // 
-            this.comboBox7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.comboBox7.FormattingEnabled = true;
-            this.comboBox7.Location = new System.Drawing.Point(670, 44);
-            this.comboBox7.Name = "comboBox7";
-            this.comboBox7.Size = new System.Drawing.Size(161, 21);
-            this.comboBox7.TabIndex = 1;
+            this.cboxSampleInfoSampler.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cboxSampleInfoSampler.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxSampleInfoSampler.FormattingEnabled = true;
+            this.cboxSampleInfoSampler.Location = new System.Drawing.Point(670, 44);
+            this.cboxSampleInfoSampler.Name = "cboxSampleInfoSampler";
+            this.cboxSampleInfoSampler.Size = new System.Drawing.Size(161, 21);
+            this.cboxSampleInfoSampler.TabIndex = 1;
             // 
             // button4
             // 
@@ -9271,7 +9272,7 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.TextBox textBox7;
-        private System.Windows.Forms.ComboBox comboBox7;
+        private System.Windows.Forms.ComboBox cboxSampleInfoSampler;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.ComboBox comboBox8;
         private System.Windows.Forms.Label label16;

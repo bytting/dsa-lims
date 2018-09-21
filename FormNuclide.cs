@@ -35,9 +35,9 @@ namespace DSA_lims
     public partial class FormNuclide : Form
     {
         private ILog mLog = null;
-        public NuclideType Nuclide = new NuclideType();
+        public NuclideModel Nuclide = new NuclideModel();
 
-        public FormNuclide(ILog log, List<DecayType> dt)
+        public FormNuclide(ILog log, List<Tag<int, string>> dt)
         {
             InitializeComponent();
 
@@ -48,7 +48,7 @@ namespace DSA_lims
             cbInUse.Checked = true;
         }
 
-        public FormNuclide(ILog log, List<DecayType> dt, Guid nid)
+        public FormNuclide(ILog log, List<Tag<int, string>> dt, Guid nid)
         {
             InitializeComponent();
 
@@ -90,7 +90,7 @@ namespace DSA_lims
         {            
         }
 
-        private void PopulateDecayTypes(List<DecayType> dt)
+        private void PopulateDecayTypes(List<Tag<int, string>> dt)
         {
             cboxDecayTypes.DataSource = dt;
             cboxDecayTypes.DisplayMember = "Name";

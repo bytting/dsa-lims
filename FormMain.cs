@@ -50,6 +50,7 @@ namespace DSA_lims
         private List<DecayType> decayTypes = new List<DecayType>();        
         private List<PreparationUnitType> preparationUnitTypes = new List<PreparationUnitType>();
         private List<UniformActivityUnitType> uniformActivityUnitTypes = new List<UniformActivityUnitType>();
+        private List<WorkflowStatusType> workflowStatusTypes = new List<WorkflowStatusType>();
 
         public FormMain()
         {
@@ -98,6 +99,9 @@ namespace DSA_lims
                     log.Info("Loading uniform activity units");
                     LoadUniformActivityUnits(conn);
 
+                    log.Info("Loading workflow status");
+                    LoadWorkflowStatus(conn);
+
                     log.Info("Populating preparation units");
                     PopulatePreparationUnits(conn);
 
@@ -106,6 +110,9 @@ namespace DSA_lims
 
                     log.Info("Populating uniform activity units");
                     PopulateUniformActivityUnits(conn);
+
+                    log.Info("Populating workflow status");
+                    PopulateWorkflowStatus(conn);
 
                     log.Info("Populating laboratories");
                     PopulateLaboratories(conn);
@@ -255,7 +262,7 @@ namespace DSA_lims
             {
                 decayTypes.Clear();
 
-                using (SqlDataReader reader = DB.GetDataReader(conn, "select id, name from decay_type order by name", CommandType.Text))
+                using (SqlDataReader reader = DB.GetDataReader(conn, "select id, name from decay_type order by id", CommandType.Text))
                 {
                     while (reader.Read())
                     {
@@ -277,7 +284,7 @@ namespace DSA_lims
             {
                 preparationUnitTypes.Clear();
 
-                using (SqlDataReader reader = DB.GetDataReader(conn, "select id, name from preparation_unit order by name", CommandType.Text))
+                using (SqlDataReader reader = DB.GetDataReader(conn, "select id, name from preparation_unit order by id", CommandType.Text))
                 {
                     while (reader.Read())
                     {
@@ -299,7 +306,7 @@ namespace DSA_lims
             {
                 uniformActivityUnitTypes.Clear();
 
-                using (SqlDataReader reader = DB.GetDataReader(conn, "select id, name from uniform_activity_unit order by name", CommandType.Text))
+                using (SqlDataReader reader = DB.GetDataReader(conn, "select id, name from uniform_activity_unit order by id", CommandType.Text))
                 {
                     while (reader.Read())
                     {
@@ -315,14 +322,43 @@ namespace DSA_lims
             }
         }
 
+        private void LoadWorkflowStatus(SqlConnection conn)
+        {
+            try
+            {
+                workflowStatusTypes.Clear();                       
+
+                using (SqlDataReader reader = DB.GetDataReader(conn, "select id, name from workflow_status order by id", CommandType.Text))
+                {
+                    while (reader.Read())
+                    {
+                        int id = Convert.ToInt32(reader["id"]);
+                        string name = reader["name"].ToString();
+                        workflowStatusTypes.Add(new WorkflowStatusType(id, name));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+            }
+        }
+
         private void PopulatePreparationUnits(SqlConnection conn)
         {
             cboxSamplePrepUnit.DataSource = preparationUnitTypes;
+            cboxSamplePrepUnit.SelectedIndex = -1;
         }
 
         private void PopulateUniformActivityUnits(SqlConnection conn)
         {
             // populate uniform activity units
+        }
+
+        private void PopulateWorkflowStatus(SqlConnection conn)
+        {
+            cboxSampleAnalWorkflowStatus.DataSource = workflowStatusTypes;
+            cboxSampleAnalWorkflowStatus.SelectedIndex = -1;
         }
 
         private void PopulateActivityUnits(SqlConnection conn)
@@ -334,9 +370,9 @@ namespace DSA_lims
 
             gridMetaUnitsActivity.Columns["id"].Visible = false;                        
 
-            gridMetaUnitsActivity.Columns["name"].HeaderText = "Name";
+            gridMetaUnitsActivity.Columns["name"].HeaderText = "Unit name";
             gridMetaUnitsActivity.Columns["convert_factor"].HeaderText = "Conv. fact.";
-            gridMetaUnitsActivity.Columns["uniform_activity_name"].HeaderText = "Uni. act.";
+            gridMetaUnitsActivity.Columns["uniform_activity_name"].HeaderText = "Uniform unit";
 
             cboxSampleAnalUnit.Items.Clear();            
             foreach(DataRow row in dt.Rows)

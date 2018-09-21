@@ -47,10 +47,10 @@ namespace DSA_lims
         private string SampleTypesRootName = "Sample types";
         private string ProjectsRootName = "Projects";
 
-        private List<Tag<int, string>> decayTypes = new List<Tag<int, string>>();
-        private List<Tag<int, string>> preparationUnitTypes = new List<Tag<int, string>>();
-        private List<Tag<int, string>> uniformActivityUnitTypes = new List<Tag<int, string>>();
-        private List<Tag<int, string>> workflowStatusTypes = new List<Tag<int, string>>();
+        private List<Tag<int, string>> decayTypeList = new List<Tag<int, string>>();
+        private List<Tag<int, string>> preparationUnitList = new List<Tag<int, string>>();
+        private List<Tag<int, string>> uniformActivityUnitList = new List<Tag<int, string>>();
+        private List<Tag<int, string>> workflowStatusList = new List<Tag<int, string>>();
 
         public FormMain()
         {
@@ -260,7 +260,7 @@ namespace DSA_lims
         {
             try
             {
-                decayTypes.Clear();
+                decayTypeList.Clear();
 
                 using (SqlDataReader reader = DB.GetDataReader(conn, "select id, name from decay_type order by id", CommandType.Text))
                 {
@@ -268,7 +268,7 @@ namespace DSA_lims
                     {
                         int id = Convert.ToInt32(reader["id"]);
                         string name = reader["name"].ToString();
-                        decayTypes.Add(new Tag<int, string>(id, name));
+                        decayTypeList.Add(new Tag<int, string>(id, name));
                     }
                 }
             }
@@ -282,7 +282,7 @@ namespace DSA_lims
         {
             try
             {
-                preparationUnitTypes.Clear();
+                preparationUnitList.Clear();
 
                 using (SqlDataReader reader = DB.GetDataReader(conn, "select id, name from preparation_unit order by id", CommandType.Text))
                 {
@@ -290,7 +290,7 @@ namespace DSA_lims
                     {
                         int id = Convert.ToInt32(reader["id"]);
                         string name = reader["name"].ToString();
-                        preparationUnitTypes.Add(new Tag<int, string>(id, name));
+                        preparationUnitList.Add(new Tag<int, string>(id, name));
                     }
                 }
             }
@@ -304,7 +304,7 @@ namespace DSA_lims
         {
             try
             {
-                uniformActivityUnitTypes.Clear();
+                uniformActivityUnitList.Clear();
 
                 using (SqlDataReader reader = DB.GetDataReader(conn, "select id, name from uniform_activity_unit order by id", CommandType.Text))
                 {
@@ -312,7 +312,7 @@ namespace DSA_lims
                     {
                         int id = Convert.ToInt32(reader["id"]);
                         string name = reader["name"].ToString();
-                        uniformActivityUnitTypes.Add(new Tag<int, string>(id, name));
+                        uniformActivityUnitList.Add(new Tag<int, string>(id, name));
                     }
                 }
             }
@@ -326,7 +326,7 @@ namespace DSA_lims
         {
             try
             {
-                workflowStatusTypes.Clear();                       
+                workflowStatusList.Clear();                       
 
                 using (SqlDataReader reader = DB.GetDataReader(conn, "select id, name from workflow_status order by id", CommandType.Text))
                 {
@@ -334,7 +334,7 @@ namespace DSA_lims
                     {
                         int id = Convert.ToInt32(reader["id"]);
                         string name = reader["name"].ToString();
-                        workflowStatusTypes.Add(new Tag<int, string>(id, name));
+                        workflowStatusList.Add(new Tag<int, string>(id, name));
                     }
                 }
             }
@@ -346,7 +346,7 @@ namespace DSA_lims
 
         private void PopulatePreparationUnits(SqlConnection conn)
         {
-            cboxSamplePrepUnit.DataSource = preparationUnitTypes;
+            cboxSamplePrepUnit.DataSource = preparationUnitList;
             cboxSamplePrepUnit.SelectedIndex = -1;
         }
 
@@ -357,7 +357,7 @@ namespace DSA_lims
 
         private void PopulateWorkflowStatus(SqlConnection conn)
         {
-            cboxSampleAnalWorkflowStatus.DataSource = workflowStatusTypes;
+            cboxSampleAnalWorkflowStatus.DataSource = workflowStatusList;
             cboxSampleAnalWorkflowStatus.SelectedIndex = -1;
         }
 
@@ -1128,7 +1128,7 @@ namespace DSA_lims
 
         private void miNuclidesNew_Click(object sender, EventArgs e)
         {            
-            FormNuclide form = new FormNuclide(log, decayTypes);
+            FormNuclide form = new FormNuclide(log, decayTypeList);
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
@@ -1211,7 +1211,7 @@ namespace DSA_lims
             DataGridViewRow row = gridSysNuclides.SelectedRows[0];            
             Guid nid = new Guid(row.Cells[0].Value.ToString());
 
-            FormNuclide form = new FormNuclide(log, decayTypes, nid);
+            FormNuclide form = new FormNuclide(log, decayTypeList, nid);
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:

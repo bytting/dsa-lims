@@ -37,13 +37,13 @@ namespace DSA_lims
         private ILog mLog = null;
         public NuclideModel Nuclide = new NuclideModel();
 
-        public FormNuclide(ILog log, List<Tag<int, string>> dt)
+        public FormNuclide(ILog log, List<Tag<int, string>> decayTypes)
         {
             InitializeComponent();
 
             // Create new nuclide
             mLog = log;
-            PopulateDecayTypes(dt);        
+            PopulateDecayTypes(decayTypes);
             Text = "New nuclide";
             cbInUse.Checked = true;
         }

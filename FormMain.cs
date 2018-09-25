@@ -484,13 +484,10 @@ namespace DSA_lims
                     }
                 }
 
-                foreach(TreeNode node in treeProjects.Nodes[0].Nodes)
+                foreach(TreeNode node in root.Nodes)
                 {
-                    if (node.Text == SampleTypesRootName)
-                        continue;
-
                     Guid parent_id = new Guid(node.Tag.ToString());
-                    using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_sub_projects_for_main_project", CommandType.StoredProcedure, 
+                    using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_sub_projects_short", CommandType.StoredProcedure, 
                         new[] {
                             new SqlParameter("@parent_id", parent_id),
                             new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
@@ -591,14 +588,14 @@ namespace DSA_lims
                 });
 
             // Set UI state
-            gridSysNuclideTrans.Columns["id"].Visible = false;                        
+            gridSysNuclideTrans.Columns["id"].Visible = false;
+            gridSysNuclideTrans.Columns["nuclide_name"].Visible = false;
             gridSysNuclideTrans.Columns["comment"].Visible = false;
             gridSysNuclideTrans.Columns["created_by"].Visible = false;
             gridSysNuclideTrans.Columns["create_date"].Visible = false;
             gridSysNuclideTrans.Columns["updated_by"].Visible = false;
             gridSysNuclideTrans.Columns["update_date"].Visible = false;
-
-            gridSysNuclideTrans.Columns["nuclide_name"].HeaderText = "Nuclide";
+            
             gridSysNuclideTrans.Columns["transmission_from"].HeaderText = "Tr. from";
             gridSysNuclideTrans.Columns["transmission_to"].HeaderText = "Tr. to";
             gridSysNuclideTrans.Columns["energy"].HeaderText = "Energy";
@@ -659,14 +656,14 @@ namespace DSA_lims
                 });
 
             // Set UI state
-            gridSysMunicipality.Columns["id"].Visible = false;            
+            gridSysMunicipality.Columns["id"].Visible = false;
+            gridSysMunicipality.Columns["county_name"].Visible = false;
             gridSysMunicipality.Columns["created_by"].Visible = false;
             gridSysMunicipality.Columns["create_date"].Visible = false;
             gridSysMunicipality.Columns["updated_by"].Visible = false;
             gridSysMunicipality.Columns["update_date"].Visible = false;
 
-            gridSysMunicipality.Columns["name"].HeaderText = "Name";
-            gridSysMunicipality.Columns["county_name"].HeaderText = "County";
+            gridSysMunicipality.Columns["name"].HeaderText = "Name";            
             gridSysMunicipality.Columns["municipality_number"].HeaderText = "Number";
             gridSysMunicipality.Columns["instance_status_name"].HeaderText = "Status";
         }

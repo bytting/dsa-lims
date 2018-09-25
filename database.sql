@@ -551,7 +551,7 @@ as
 		m.update_date,
 		m.updated_by
 	from municipality m, county c, instance_status st
-	where m.county_id = @county_id and m.instance_status_id = st.id and m.instance_status_id <= @instance_status_level
+	where m.county_id = @county_id and m.county_id = c.id and m.instance_status_id = st.id and m.instance_status_id <= @instance_status_level
 	order by m.name
 go
 
@@ -761,12 +761,9 @@ create proc csp_update_laboratory
 	@name_prefix nvarchar(8),
 	@address nvarchar(256),
 	@email nvarchar(80),
-	@phone nvarchar(80),
-	@assignment_counter int,		
+	@phone nvarchar(80),	
 	@instance_status_id int,
-	@comment nvarchar(1000),	
-	@create_date datetime,
-	@created_by nvarchar(50),
+	@comment nvarchar(1000),		
 	@update_date datetime,
 	@updated_by nvarchar(50)
 as 
@@ -776,14 +773,19 @@ as
 		name_prefix = @name_prefix,
 		address = @address,
 		email = @email,
-		phone = @phone,
-		assignment_counter = @assignment_counter,
+		phone = @phone,	
 		instance_status_id = @instance_status_id,
-		comment = @comment,		
-		create_date = @create_date,
-		created_by = @created_by,
+		comment = @comment,
 		update_date = @update_date,
 		updated_by = @updated_by
+	where id = @id
+go
+
+create proc csp_increment_laboratory_assignment_counter
+	@id uniqueidentifier
+as 
+	update laboratory set
+		assignment_counter = assignment_counter + 1		
 	where id = @id
 go
 

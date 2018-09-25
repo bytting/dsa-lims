@@ -42,17 +42,17 @@
             this.label47 = new System.Windows.Forms.Label();
             this.label48 = new System.Windows.Forms.Label();
             this.cboxLab = new System.Windows.Forms.ComboBox();
-            this.cbInUse = new System.Windows.Forms.CheckBox();
             this.label49 = new System.Windows.Forms.Label();
             this.tbUsername = new System.Windows.Forms.TextBox();
             this.tbFullname = new System.Windows.Forms.TextBox();
             this.tbEmail = new System.Windows.Forms.TextBox();
             this.tbPhone = new System.Windows.Forms.TextBox();
-            this.toolStrip25 = new System.Windows.Forms.ToolStrip();
-            this.toolStripLabel5 = new System.Windows.Forms.ToolStripLabel();
-            this.lbRoles = new System.Windows.Forms.ListBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tbPassword1 = new System.Windows.Forms.TextBox();
+            this.cbInUse = new System.Windows.Forms.CheckBox();
+            this.lbRoles = new System.Windows.Forms.ListBox();
+            this.toolStrip25 = new System.Windows.Forms.ToolStrip();
+            this.toolStripLabel5 = new System.Windows.Forms.ToolStripLabel();
             this.btnAddRole = new System.Windows.Forms.ToolStripButton();
             this.btnRemoveRole = new System.Windows.Forms.ToolStripButton();
             this.panel1.SuspendLayout();
@@ -96,6 +96,7 @@
             this.btnOk.TabIndex = 0;
             this.btnOk.Text = "Ok";
             this.btnOk.UseVisualStyleBackColor = true;
+            this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
             // 
             // splitContainer1
             // 
@@ -227,16 +228,6 @@
             this.cboxLab.Size = new System.Drawing.Size(378, 21);
             this.cboxLab.TabIndex = 5;
             // 
-            // cbInUse
-            // 
-            this.cbInUse.AutoSize = true;
-            this.cbInUse.Location = new System.Drawing.Point(99, 247);
-            this.cbInUse.Name = "cbInUse";
-            this.cbInUse.Size = new System.Drawing.Size(57, 17);
-            this.cbInUse.TabIndex = 6;
-            this.cbInUse.Text = "In Use";
-            this.cbInUse.UseVisualStyleBackColor = true;
-            // 
             // label49
             // 
             this.label49.AutoSize = true;
@@ -278,6 +269,42 @@
             this.tbPhone.Size = new System.Drawing.Size(378, 20);
             this.tbPhone.TabIndex = 13;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(3, 180);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(53, 13);
+            this.label1.TabIndex = 14;
+            this.label1.Text = "Password";
+            // 
+            // tbPassword1
+            // 
+            this.tbPassword1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbPassword1.Location = new System.Drawing.Point(99, 183);
+            this.tbPassword1.Name = "tbPassword1";
+            this.tbPassword1.Size = new System.Drawing.Size(378, 20);
+            this.tbPassword1.TabIndex = 15;
+            // 
+            // cbInUse
+            // 
+            this.cbInUse.AutoSize = true;
+            this.cbInUse.Location = new System.Drawing.Point(99, 247);
+            this.cbInUse.Name = "cbInUse";
+            this.cbInUse.Size = new System.Drawing.Size(57, 17);
+            this.cbInUse.TabIndex = 6;
+            this.cbInUse.Text = "In Use";
+            this.cbInUse.UseVisualStyleBackColor = true;
+            // 
+            // lbRoles
+            // 
+            this.lbRoles.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lbRoles.FormattingEnabled = true;
+            this.lbRoles.Location = new System.Drawing.Point(0, 25);
+            this.lbRoles.Name = "lbRoles";
+            this.lbRoles.Size = new System.Drawing.Size(480, 209);
+            this.lbRoles.TabIndex = 3;
+            // 
             // toolStrip25
             // 
             this.toolStrip25.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
@@ -297,32 +324,6 @@
             this.toolStripLabel5.Name = "toolStripLabel5";
             this.toolStripLabel5.Size = new System.Drawing.Size(37, 22);
             this.toolStripLabel5.Text = "Roles";
-            // 
-            // lbRoles
-            // 
-            this.lbRoles.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lbRoles.FormattingEnabled = true;
-            this.lbRoles.Location = new System.Drawing.Point(0, 25);
-            this.lbRoles.Name = "lbRoles";
-            this.lbRoles.Size = new System.Drawing.Size(480, 209);
-            this.lbRoles.TabIndex = 3;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(3, 180);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(53, 13);
-            this.label1.TabIndex = 14;
-            this.label1.Text = "Password";
-            // 
-            // tbPassword1
-            // 
-            this.tbPassword1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbPassword1.Location = new System.Drawing.Point(99, 183);
-            this.tbPassword1.Name = "tbPassword1";
-            this.tbPassword1.Size = new System.Drawing.Size(378, 20);
-            this.tbPassword1.TabIndex = 15;
             // 
             // btnAddRole
             // 

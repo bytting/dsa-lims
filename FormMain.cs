@@ -313,7 +313,7 @@ namespace DSA_lims
             {
                 uniformActivityUnitList.Clear();
 
-                using (SqlDataReader reader = DB.GetDataReader(conn, "select id, name from uniform_activity_unit order by id", CommandType.Text))
+                using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_uniform_activity_units", CommandType.StoredProcedure))
                 {
                     while (reader.Read())
                     {
@@ -407,7 +407,7 @@ namespace DSA_lims
 
             gridMetaUnitsActivity.Columns["name"].HeaderText = "Unit name";
             gridMetaUnitsActivity.Columns["convert_factor"].HeaderText = "Conv. fact.";
-            gridMetaUnitsActivity.Columns["uniform_activity_name"].HeaderText = "Uniform unit";
+            gridMetaUnitsActivity.Columns["uniform_activity_unit_name"].HeaderText = "Uniform unit";
 
             cboxSampleAnalUnit.Items.Clear();            
             foreach(DataRow row in dt.Rows)
@@ -535,7 +535,8 @@ namespace DSA_lims
         private void PopulateUsers(SqlConnection conn)
         {
             // Set data source
-            gridMetaUsers.DataSource = DB.GetDataTable(conn, "csp_select_users_flat", CommandType.StoredProcedure);
+            gridMetaUsers.DataSource = DB.GetDataTable(conn, "csp_select_accounts_flat", CommandType.StoredProcedure, 
+                new SqlParameter("@instance_status_level", 3));
 
             gridMetaUsers.Columns["password_hash"].Visible = false;
             gridMetaUsers.Columns["create_date"].Visible = false;
@@ -546,7 +547,7 @@ namespace DSA_lims
             gridMetaUsers.Columns["fullname"].HeaderText = "Name";
             gridMetaUsers.Columns["laboratory_name"].HeaderText = "Laboratory";
             gridMetaUsers.Columns["language_code"].HeaderText = "Language";
-            gridMetaUsers.Columns["instance_status"].HeaderText = "Status";            
+            gridMetaUsers.Columns["instance_status_name"].HeaderText = "Status";            
         }
 
         private void PopulateNuclides(SqlConnection conn)

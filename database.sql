@@ -132,7 +132,7 @@ create table account (
 )
 go
 
-create proc csp_select_users
+create proc csp_select_accounts
 	@instance_status_level int
 as 
 	select * from account 
@@ -140,12 +140,17 @@ as
 	order by username
 go
 
-create proc csp_select_users_short
+create proc csp_select_accounts_short
+	@instance_status_level int
 as 
-	select username, fullname from account order by username
+	select username, fullname 
+	from account 
+	where instance_status_id <= @instance_status_level
+	order by username
 go
 
-create proc csp_select_users_flat
+create proc csp_select_accounts_flat
+	@instance_status_level int
 as 
 	select 
 		a.username,	
@@ -153,10 +158,13 @@ as
 		a.fullname,
 		l.name as 'laboratory_name',
 		a.language_code,
-		st.name as 'instance_status',
+		st.name as 'instance_status_name',
 		a.create_date,	
 		a.update_date
-	from account a left outer join laboratory l on a.laboratory_id = l.id inner join instance_status st on a.instance_status_id = st.id 
+	from account a 
+		left outer join laboratory l on a.laboratory_id = l.id 
+		inner join instance_status st on a.instance_status_id = st.id 
+	where a.instance_status_id <= @instance_status_level
 	order by username
 go
 
@@ -217,14 +225,24 @@ as
 	order by name
 go
 
+create proc csp_select_activity_units_short
+as 
+	select 
+		id,	
+		name
+	from activity_unit
+	order by name
+go
+
 create proc csp_select_activity_units_flat
 as 
 	select 
 		au.id,	
 		au.name,
 		au.convert_factor,
-		uau.name as 'uniform_activity_name'
-	from activity_unit au, uniform_activity_unit uau where au.uniform_activity_unit_id = uau.id
+		uau.name as 'uniform_activity_unit_name'
+	from activity_unit au, uniform_activity_unit uau 
+	where au.uniform_activity_unit_id = uau.id
 	order by au.name
 go
 
@@ -243,6 +261,16 @@ insert into uniform_activity_unit values(1, 'Bq')
 insert into uniform_activity_unit values(2, 'Bq/g')
 insert into uniform_activity_unit values(3, 'Bq/m2')
 insert into uniform_activity_unit values(4, 'Bq/m3')
+go
+
+create proc csp_select_uniform_activity_units
+as 
+	select 
+		id,	
+		name		
+	from uniform_activity_unit
+	order by name
+go
 
 /*===========================================================================*/
 /* tbl accreditation_term */
@@ -341,12 +369,6 @@ create table county (
 )
 go
 
-create proc csp_select_county
-	@id uniqueidentifier
-as 
-	select * from county where id = @id
-go
-
 create proc csp_insert_county
 	@id uniqueidentifier,
 	@name nvarchar(80),
@@ -386,19 +408,36 @@ as
 	where id = @id
 go
 
+create proc csp_select_county
+	@id uniqueidentifier
+as 
+	select * from county where id = @id
+go
+
+create proc csp_select_counties
+	@instance_status_level int
+as
+	select * 
+	from county 
+	where instance_status_id <= @instance_status_level
+	order by name
+go
+
 create proc csp_select_counties_flat
+	@instance_status_level int
 as
 	select 
-		id,
-		name,
-		county_number, 	
-		instance_status_id,	
-		create_date,
-		created_by,
-		update_date,
-		updated_by
-	from county
-	order by name
+		c.id,
+		c.name,
+		c.county_number, 	
+		st.name as 'instance_status_name',	
+		c.create_date,
+		c.created_by,
+		c.update_date,
+		c.updated_by
+	from county c, instance_status st
+	where c.instance_status_id = st.id
+	order by c.name
 go
 
 /*===========================================================================*/
@@ -417,30 +456,6 @@ create table municipality (
 	update_date datetime NOT NULL,
 	updated_by nvarchar(50) NOT NULL
 )
-go
-
-create proc csp_select_municipality
-	@id uniqueidentifier
-as 
-	select * from municipality where id = @id
-go
-
-create proc csp_select_municipalities_for_county
-	@county_id uniqueidentifier
-as 
-	select 
-		id,	
-		county_id,
-		name,
-		municipality_number,
-		instance_status_id,
-		create_date,
-		created_by,
-		update_date,
-		updated_by
-	from municipality
-	where county_id = @county_id
-	order by name
 go
 
 create proc csp_insert_municipality
@@ -482,6 +497,41 @@ as
 		update_date = @update_date,
 		updated_by = @updated_by
 	where id = @id
+go
+
+create proc csp_select_municipality
+	@id uniqueidentifier
+as 
+	select * from municipality where id = @id
+go
+
+create proc csp_select_municipalities_for_county
+	@county_id uniqueidentifier,
+	@instance_status_level int
+as 
+	select *
+	from municipality
+	where county_id = @county_id and instance_status_id <= @instance_status_level
+	order by name
+go
+
+create proc csp_select_municipalities_for_county_flat
+	@county_id uniqueidentifier,
+	@instance_status_level int
+as 
+	select 
+		m.id,	
+		c.name as 'county_name',
+		m.name,
+		m.municipality_number,
+		st.name as 'instance_status_name',
+		m.create_date,
+		m.created_by,
+		m.update_date,
+		m.updated_by
+	from municipality m, county c, instance_status st
+	where m.county_id = @county_id and m.instance_status_id = st.id and m.instance_status_id <= @instance_status_level
+	order by m.name
 go
 
 /*===========================================================================*/
@@ -544,36 +594,6 @@ create table sampler (
 )
 go
 
-create proc csp_select_samplers
-as 
-	select * from sampler order by name
-go
-
-create proc csp_select_samplers_flat
-as 
-	select 
-		s.id,
-		s.name,
-		s.address,
-		s.email,
-		s.phone,	
-		st.name as 'instance_status',
-		s.comment,
-		s.create_date,
-		s.created_by,
-		s.update_date,
-		s.updated_by
-	 from sampler s, instance_status st
-	 where s.instance_status_id = st.id
-	 order by s.name
-go
-
-create proc csp_select_sampler
-	@id uniqueidentifier
-as 
-	select * from sampler where id = @id
-go
-
 create proc csp_insert_sampler
 	@id uniqueidentifier,
 	@name nvarchar(256),
@@ -625,6 +645,41 @@ as
 	where id = @id
 go
 
+create proc csp_select_samplers
+	@instance_status_level int
+as 
+	select * 
+	from sampler 
+	where instance_status_id <= @instance_status_level
+	order by name
+go
+
+create proc csp_select_samplers_flat
+	@instance_status_level int
+as 
+	select 
+		s.id,
+		s.name,
+		s.address,
+		s.email,
+		s.phone,	
+		st.name as 'instance_status_name',
+		s.comment,
+		s.create_date,
+		s.created_by,
+		s.update_date,
+		s.updated_by
+	 from sampler s, instance_status st
+	 where s.instance_status_id = st.id and s.instance_status_id <= @instance_status_level
+	 order by s.name
+go
+
+create proc csp_select_sampler
+	@id uniqueidentifier
+as 
+	select * from sampler where id = @id
+go
+
 /*===========================================================================*/
 /* tbl laboratory */
 
@@ -638,29 +693,13 @@ create table laboratory (
 	email nvarchar(80) default NULL,
 	phone nvarchar(80) default NULL,
 	assignment_counter int default 1,
-	comment nvarchar(1000) NOT NULL,	
 	instance_status_id int default 1,
+	comment nvarchar(1000) NOT NULL,		
 	create_date datetime NOT NULL,
 	created_by nvarchar(50) NOT NULL,
 	update_date datetime NOT NULL,
 	updated_by nvarchar(50) NOT NULL
 )
-go
-
-create proc csp_select_laboratories
-as
-	select * from  laboratory order by name
-go
-
-create proc csp_select_laboratories_short
-as
-	select id, name	from laboratory order by name
-go
-
-create proc csp_select_laboratory
-	@id uniqueidentifier	
-as 
-select * from laboratory where id = @id
 go
 
 create proc csp_insert_laboratory
@@ -671,8 +710,8 @@ create proc csp_insert_laboratory
 	@email nvarchar(80),
 	@phone nvarchar(80),
 	@assignment_counter int,		
-	@comment nvarchar(1000),
 	@instance_status_id int,
+	@comment nvarchar(1000),	
 	@create_date datetime,
 	@created_by nvarchar(50),
 	@update_date datetime,
@@ -686,8 +725,8 @@ as
 		@email,
 		@phone,
 		@assignment_counter,
-		@comment,
 		@instance_status_id,
+		@comment,		
 		@create_date,
 		@created_by,
 		@update_date,
@@ -703,8 +742,8 @@ create proc csp_update_laboratory
 	@email nvarchar(80),
 	@phone nvarchar(80),
 	@assignment_counter int,		
-	@comment nvarchar(1000),
 	@instance_status_id int,
+	@comment nvarchar(1000),	
 	@create_date datetime,
 	@created_by nvarchar(50),
 	@update_date datetime,
@@ -718,13 +757,61 @@ as
 		email = @email,
 		phone = @phone,
 		assignment_counter = @assignment_counter,
-		comment = @comment,
 		instance_status_id = @instance_status_id,
+		comment = @comment,		
 		create_date = @create_date,
 		created_by = @created_by,
 		update_date = @update_date,
 		updated_by = @updated_by
 	where id = @id
+go
+
+create proc csp_select_laboratories
+	@instance_status_level int
+as
+	select * 
+	from  laboratory 
+	where instance_status_id <= @instance_status_level
+	order by name
+go
+
+create proc csp_select_laboratories_flat
+	@instance_status_level int
+as
+	select
+		l.id,
+		l.name,
+		l.name_prefix,
+		l.address,
+		l.email,
+		l.phone,
+		l.assignment_counter,
+		st.name as 'instance_status_name',
+		l.comment,			
+		l.create_date,
+		l.created_by,
+		l.update_date,
+		l.updated_by
+	from laboratory l, instance_status st
+	where l.instance_status_id = st.id and l.instance_status_id <= @instance_status_level
+	order by l.name
+go
+
+create proc csp_select_laboratories_short
+	@instance_status_level int
+as
+	select 
+		id, 
+		name	
+	from laboratory 
+	where instance_status_id <= @instance_status_level
+	order by name
+go
+
+create proc csp_select_laboratory
+	@id uniqueidentifier	
+as 
+	select * from laboratory where id = @id
 go
 
 /*===========================================================================*/
@@ -747,7 +834,10 @@ go
 
 create proc csp_select_location_types
 as
-	select id, name from location_type 
+	select 
+		id, 
+		name 
+	from location_type 
 	order by name
 go
 
@@ -838,11 +928,11 @@ create table assignment_analysis (
 go
 
 /*===========================================================================*/
-/* tbl preparation_box */
+/* tbl preparation_geometry */
 
-if OBJECT_ID('dbo.preparation_box', 'U') IS NOT NULL drop table preparation_box;
+if OBJECT_ID('dbo.preparation_geometry', 'U') IS NOT NULL drop table preparation_geometry;
 
-create table preparation_box (
+create table preparation_geometry (
 	id uniqueidentifier primary key NOT NULL,
 	name nvarchar(80) NOT NULL,
 	min_fill_height_mm float default 0,
@@ -856,13 +946,7 @@ create table preparation_box (
 )
 go
 
-create proc csp_select_geometry
-	@id uniqueidentifier
-as 
-	select * from preparation_box where id = @id
-go
-
-create proc csp_insert_geometry
+create proc csp_insert_preparation_geometry
 	@id uniqueidentifier,
 	@name nvarchar(80),
 	@min_fill_height float,
@@ -874,7 +958,7 @@ create proc csp_insert_geometry
 	@update_date datetime,
 	@updated_by nvarchar(50)	
 as 
-	insert into preparation_box values (
+	insert into preparation_geometry values (
 		@id,
 		@name,
 		@min_fill_height,
@@ -888,7 +972,7 @@ as
 	);
 go
 
-create proc csp_update_geometry
+create proc csp_update_preparation_geometry
 	@id uniqueidentifier,
 	@name nvarchar(80),
 	@min_fill_height float,
@@ -898,7 +982,7 @@ create proc csp_update_geometry
 	@update_date datetime,
 	@updated_by nvarchar(50)	
 as 
-	update preparation_box set 
+	update preparation_geometry set 
 		name = @name,
 		min_fill_height_mm = @min_fill_height,
 		max_fill_height_mm = @max_fill_height,
@@ -909,21 +993,47 @@ as
 	where id = @id
 go
 
-create proc csp_select_geometries_flat
+create proc csp_select_preparation_geometry
+	@id uniqueidentifier
+as 
+	select * from preparation_geometry where id = @id
+go
+
+create proc csp_select_preparation_geometries
+	@instance_status_level int
 as
 	select 
 		pb.id,
 		pb.name,
 		pb.min_fill_height_mm, 
 		pb.max_fill_height_mm, 
-		st.name as 'instance_status',
+		st.name as 'instance_status_name',
 		pb.comment,
 		pb.create_date,
 		pb.created_by,
 		pb.update_date,
 		pb.updated_by
 	from preparation_box pb, instance_status st
-	where pb.instance_status_id = st.id
+	where pb.instance_status_id = st.id and pb.instance_status_id <= @instance_status_level
+	order by pb.name
+go
+
+create proc csp_select_preparation_geometries_flat
+	@instance_status_level int
+as
+	select 
+		pb.id,
+		pb.name,
+		pb.min_fill_height_mm, 
+		pb.max_fill_height_mm, 
+		st.name as 'instance_status_name',
+		pb.comment,
+		pb.create_date,
+		pb.created_by,
+		pb.update_date,
+		pb.updated_by
+	from preparation_box pb, instance_status st
+	where pb.instance_status_id = st.id and pb.instance_status_id <= @instance_status_level
 	order by pb.name
 go
 
@@ -1065,10 +1175,19 @@ insert into decay_type (id, name) values(2, 'B+')
 insert into decay_type (id, name) values(3, 'B-')
 go
 
+create proc csp_select_decay_types	
+as 
+	select * 
+	from decay_type 
+	order by name
+go
+
 create proc csp_select_decay_type
 	@id int
 as 
-	select * from decay_type where id = @id
+	select * 
+	from decay_type 
+	where id = @id
 go
 
 /*===========================================================================*/
@@ -1163,17 +1282,16 @@ as
 go
 
 create proc csp_select_nuclides
+	@instance_status_level int
 as 
-	select * from nuclide order by name
-go
-
-create proc csp_select_nuclide
-	@id uniqueidentifier
-as 
-	select * from nuclide where id = @id
+	select * 
+	from nuclide 
+	where instance_status_id <= @instance_status_level
+	order by name
 go
 
 create proc csp_select_nuclides_flat
+	@instance_status_level int
 as
 	select 
 		n.id,
@@ -1182,16 +1300,24 @@ as
 		n.neutron_count, 
 		n.half_life_year, 
 		n.half_life_uncertainty, 
-		dt.name as 'decay_type', 
+		dt.name as 'decay_type_name', 
 		n.kxray_energy,
 		n.fluorescence_yield,
+		st.name as 'instance_status_name',
 		n.comment,
 		n.create_date,
 		n.created_by,
 		n.update_date,
 		n.updated_by
-	from nuclide n, decay_type dt where n.decay_type_id = dt.id
+	from nuclide n, decay_type dt, instance_status st
+	where n.decay_type_id = dt.id and n.instance_status_id = st.id and n.instance_status_id <= @instance_status_level
 	order by n.name
+go
+
+create proc csp_select_nuclide
+	@id uniqueidentifier
+as 
+	select * from nuclide where id = @id
 go
 
 /*===========================================================================*/
@@ -1221,7 +1347,7 @@ create table nuclide_transmission (
 )
 go
 
-create proc csp_insert_energy_line
+create proc csp_insert_nuclide_transmission
 	@id uniqueidentifier,
 	@nuclide_id uniqueidentifier,
 	@transmission_from int,
@@ -1263,7 +1389,7 @@ as
 	);
 go
 
-create proc csp_update_energy_line
+create proc csp_update_nuclide_transmission
 	@id uniqueidentifier,	
 	@transmission_from int,
 	@transmission_to int,
@@ -1298,12 +1424,13 @@ as
 	where id = @id
 go
 
-create proc csp_select_energy_lines
+create proc csp_select_nuclide_transmissions
 as 
 	select * from nuclide_transmission order by transmission_from
 go
 
-create proc csp_select_energy_lines_flat
+create proc csp_select_nuclide_transmissions_flat
+	@instance_status_level int
 as 
 	select 
 		nt.id,
@@ -1318,48 +1445,59 @@ as
 		nt.probability_of_decay_uncertainty,
 		nt.total_internal_conversion,
 		nt.kshell_conversion,
-		st.name as 'instance_status',
+		st.name as 'instance_status_name',
 		nt.comment,
 		nt.create_date,
 		nt.created_by,
 		nt.update_date,
 		nt.updated_by
 	from nuclide_transmission nt, nuclide n, instance_status st
-	where nt.nuclide_id = n.id and nt.instance_status_id = st.id
+	where nt.nuclide_id = n.id and nt.instance_status_id = st.id and nt.instance_status_id <= @instance_status_level
 	order by n.name, nt.transmission_from
 go
 
-create proc csp_select_energy_line
+create proc csp_select_nuclide_transmissions_for_nuclide
+	@nuclide_id uniqueidentifier,
+	@instance_status_level int
+as 
+	select *
+	from nuclide_transmission
+	where nuclide_id = @nuclide_id and instance_status_id <= @instance_status_level
+	order by transmission_from
+go
+
+create proc csp_select_nuclide_transmissions_for_nuclide_flat
+	@nuclide_id uniqueidentifier,
+	@instance_status_level int
+as 
+	select 
+		nt.id,	
+		n.name as 'nuclide_name',
+		nt.transmission_from,
+		nt.transmission_to,
+		nt.energy,
+		nt.energy_uncertainty,
+		nt.intensity,
+		nt.intensity_uncertainty,
+		nt.probability_of_decay,
+		nt.probability_of_decay_uncertainty,
+		nt.total_internal_conversion,
+		nt.kshell_conversion,
+		st.name as 'instance_status_name',
+		nt.comment,	
+		nt.create_date,
+		nt.created_by,
+		nt.update_date,
+		nt.updated_by
+	from nuclide_transmission nt, nuclide n, instance_status st
+	where nt.nuclide_id = @nuclide_id and nt.nuclide_id = n.id and nt.instance_status_id <= @instance_status_level
+	order by transmission_from
+go
+
+create proc csp_select_nuclide_transmission
 	@id uniqueidentifier
 as 
 	select * from nuclide_transmission where id = @id
-go
-
-create proc csp_select_energy_lines_for_nuclide
-	@nuclide_id uniqueidentifier
-as 
-	select 
-		id,	
-		nuclide_id,
-		transmission_from,
-		transmission_to,
-		energy,
-		energy_uncertainty,
-		intensity,
-		intensity_uncertainty,
-		probability_of_decay,
-		probability_of_decay_uncertainty,
-		total_internal_conversion,
-		kshell_conversion,
-		instance_status_id,
-		comment,	
-		create_date,
-		created_by,
-		update_date,
-		updated_by
-	from nuclide_transmission
-	where nuclide_id = @nuclide_id
-	order by transmission_from
 go
 
 /*===========================================================================*/
@@ -1378,40 +1516,6 @@ create table project (
 	update_date datetime NOT NULL,
 	updated_by nvarchar(50) NOT NULL
 )
-go
-
-create proc csp_select_project
-	@id uniqueidentifier	
-as 
-	select * from project where id = @id
-go
-
-create proc csp_select_main_projects
-as 
-	select * from project where parent_id is NULL order by name
-go
-
-create proc csp_select_main_projects_short
-as 
-	select id, name	from project where parent_id is NULL order by name
-go
-
-create proc csp_select_sub_projects
-	@parent_id uniqueidentifier
-as 
-	select * from project where parent_id = @parent_id order by name
-go
-
-create proc csp_select_sub_projects_for_main_project
-	@parent_id uniqueidentifier
-as 
-	select * from project where parent_id = @parent_id order by name
-go
-
-create proc csp_select_sub_projects_short
-	@parent_id uniqueidentifier	
-as 
-	select id, name from project where parent_id = @parent_id order by name
 go
 
 create proc csp_insert_project
@@ -1478,6 +1582,54 @@ as
 	);
 go
 
+create proc csp_select_project
+	@id uniqueidentifier	
+as 
+	select * from project where id = @id
+go
+
+create proc csp_select_main_projects
+	@instance_status_level int
+as 
+	select * 
+	from project 
+	where parent_id is NULL and instance_status_id <= @instance_status_level
+	order by name
+go
+
+create proc csp_select_main_projects_short
+	@instance_status_level int
+as 
+	select 
+		id, 
+		name	
+	from project 
+	where parent_id is NULL and instance_status_id <= @instance_status_level
+	order by name
+go
+
+create proc csp_select_sub_projects
+	@parent_id uniqueidentifier,
+	@instance_status_level int
+as 
+	select * 
+	from project 
+	where parent_id = @parent_id and instance_status_id <= @instance_status_level
+	order by name
+go
+
+create proc csp_select_sub_projects_short
+	@parent_id uniqueidentifier,
+	@instance_status_level int
+as 
+	select 
+		id, 
+		name 
+	from project 
+	where parent_id = @parent_id and instance_status_id <= @instance_status_level
+	order by name
+go
+
 /*===========================================================================*/
 /* tbl project_x_account */
 
@@ -1507,12 +1659,6 @@ create table station (
 	update_date datetime NOT NULL,
 	updated_by nvarchar(50) NOT NULL
 )
-go
-
-create proc csp_select_station
-	@id uniqueidentifier
-as 
-	select * from station where id = @id
 go
 
 create proc csp_insert_station
@@ -1566,22 +1712,39 @@ as
 	where id = @id
 go
 
+create proc csp_select_station
+	@id uniqueidentifier
+as 
+	select * from station where id = @id
+go
+
+create proc csp_select_stations
+	@instance_status_level int
+as
+	select *
+	from station
+	where instance_status_id <= @instance_status_level
+	order by name
+go
+
 create proc csp_select_stations_flat
+	@instance_status_level int
 as
 	select 
-		id,
-		name,
-		latitude, 	
-		longitude, 	
-		altitude, 	
-		instance_status_id,	
-		comment,	
-		create_date,
-		created_by,
-		update_date,
-		updated_by
-	from station
-	order by name
+		s.id,
+		s.name,
+		s.latitude, 	
+		s.longitude, 	
+		s.altitude, 	
+		st.name as 'instance_status_name',	
+		s.comment,	
+		s.create_date,
+		s.created_by,
+		s.update_date,
+		s.updated_by
+	from station s, instance_status st
+	where s.instance_status_id = st.id and s.instance_status_id <= @instance_status_level
+	order by s.name
 go
 
 /*===========================================================================*/
@@ -1626,33 +1789,6 @@ create table sample_storage (
 )
 go
 
-create proc csp_select_sample_storage
-	@id uniqueidentifier
-as 
-	select * from sample_storage where id = @id
-go
-
-create proc csp_select_sample_storages
-as
-	select * from sample_storage order by name
-go
-
-create proc csp_select_sample_storages_flat
-as
-	select 
-		s.id,
-		s.name,
-		s.address,
-		st.name as 'instance_status',
-		s.comment,	
-		s.create_date,
-		s.created_by,
-		s.update_date,
-		s.updated_by
-	from sample_storage s, instance_status st
-	order by s.name
-go
-
 create proc csp_insert_sample_storage
 	@id uniqueidentifier,	
 	@name nvarchar(80),
@@ -1694,6 +1830,39 @@ as
 		update_date = @update_date,
 		updated_by = @updated_by
 	where id = @id
+go
+
+create proc csp_select_sample_storage
+	@id uniqueidentifier
+as 
+	select * from sample_storage where id = @id
+go
+
+create proc csp_select_sample_storages
+	@instance_status_level int
+as
+	select * 
+	from sample_storage 
+	where instance_status_id <= @instance_status_level
+	order by name
+go
+
+create proc csp_select_sample_storages_flat
+	@instance_status_level int
+as
+	select 
+		s.id,
+		s.name,
+		s.address,
+		st.name as 'instance_status_name',
+		s.comment,	
+		s.create_date,
+		s.created_by,
+		s.update_date,
+		s.updated_by
+	from sample_storage s, instance_status st
+	where s.instance_status_id = st.id and s.instance_status_id <= @instance_status_level
+	order by s.name
 go
 
 /*===========================================================================*/

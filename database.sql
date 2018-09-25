@@ -25,6 +25,38 @@ USE dsa_lims
 go
 
 /*===========================================================================*/
+/* tbl instance_status */
+
+if OBJECT_ID('dbo.instance_status', 'U') IS NOT NULL drop table instance_status;
+
+create table instance_status (
+	id int primary key NOT NULL,
+	name nvarchar(20) NOT NULL	
+)
+go
+
+insert into instance_status values(1, 'Active')
+insert into instance_status values(2, 'Inactive')
+insert into instance_status values(3, 'Deleted')
+go
+
+/*===========================================================================*/
+/* tbl workflow_status */
+
+if OBJECT_ID('dbo.workflow_status', 'U') IS NOT NULL drop table workflow_status;
+
+create table workflow_status (
+	id int primary key NOT NULL,
+	name nvarchar(20) NOT NULL	
+)
+go
+
+insert into workflow_status values(1, 'Construction')
+insert into workflow_status values(2, 'Complete')
+insert into workflow_status values(3, 'Rejected')
+go
+
+/*===========================================================================*/
 /* tbl audit_log */
 
 if OBJECT_ID('dbo.audit_log', 'U') IS NOT NULL drop table audit_log;
@@ -94,15 +126,18 @@ create table account (
 	fullname nvarchar(128) NOT NULL,
 	laboratory_id uniqueidentifier default NULL,
 	language_code nvarchar(8) default 'en',
-	in_use bit default 1,
+	instance_status_id int default 1,
 	create_date datetime NOT NULL,	
 	update_date datetime NOT NULL
 )
 go
 
 create proc csp_select_users
+	@instance_status_level int
 as 
-	select * from account order by username
+	select * from account 
+	where instance_status_id <= @instance_status_level
+	order by username
 go
 
 create proc csp_select_users_short
@@ -118,27 +153,11 @@ as
 		a.fullname,
 		l.name as 'laboratory_name',
 		a.language_code,
-		a.in_use,
+		st.name as 'instance_status',
 		a.create_date,	
 		a.update_date
-	from account a left outer join laboratory l on a.laboratory_id = l.id
+	from account a left outer join laboratory l on a.laboratory_id = l.id inner join instance_status st on a.instance_status_id = st.id 
 	order by username
-go
-
-/*===========================================================================*/
-/* tbl workflow_status */
-
-if OBJECT_ID('dbo.workflow_status', 'U') IS NOT NULL drop table workflow_status;
-
-create table workflow_status (
-	id int primary key NOT NULL,
-	name nvarchar(20) NOT NULL	
-)
-go
-
-insert into workflow_status values(1, 'Construction')
-insert into workflow_status values(2, 'Complete')
-insert into workflow_status values(3, 'Rejected')
 go
 
 /*===========================================================================*/
@@ -242,7 +261,7 @@ create table accreditation_term (
 	volume_max float default NULL,
 	fill_height_min float default NULL,
 	fill_height_max float default NULL,
-	in_use bit default 1,
+	instance_status_id int default 1,
 	create_date datetime NOT NULL,
 	created_by nvarchar(50) NOT NULL,
 	update_date datetime NOT NULL,
@@ -313,8 +332,8 @@ if OBJECT_ID('dbo.county', 'U') IS NOT NULL drop table county;
 create table county (
 	id uniqueidentifier primary key NOT NULL,	
 	name nvarchar(128) unique NOT NULL,
-	county_number int NOT NULL,
-	in_use bit default 1,
+	county_number int NOT NULL,	
+	instance_status_id int default 1,
 	create_date datetime NOT NULL,
 	created_by nvarchar(50) NOT NULL,
 	update_date datetime NOT NULL,
@@ -332,7 +351,7 @@ create proc csp_insert_county
 	@id uniqueidentifier,
 	@name nvarchar(80),
 	@county_number int,	
-	@in_use bit,
+	@instance_status_id int,
 	@create_date datetime,
 	@created_by nvarchar(50),
 	@update_date datetime,
@@ -342,7 +361,7 @@ as
 		@id,		
 		@name,		
 		@county_number,		
-		@in_use,
+		@instance_status_id,
 		@create_date,
 		@created_by,
 		@update_date,
@@ -354,14 +373,14 @@ create proc csp_update_county
 	@id uniqueidentifier,
 	@name nvarchar(80),
 	@county_number int,	
-	@in_use bit,
+	@instance_status_id int,
 	@update_date datetime,
 	@updated_by nvarchar(50)	
 as 
 	update county set 
 		name = @name,
 		county_number = @county_number,		
-		in_use = @in_use,		
+		instance_status_id = @instance_status_id,		
 		update_date = @update_date,
 		updated_by = @updated_by
 	where id = @id
@@ -373,7 +392,7 @@ as
 		id,
 		name,
 		county_number, 	
-		in_use,	
+		instance_status_id,	
 		create_date,
 		created_by,
 		update_date,
@@ -391,8 +410,8 @@ create table municipality (
 	id uniqueidentifier primary key NOT NULL,
 	county_id uniqueidentifier NOT NULL,
 	name nvarchar(128) NOT NULL,
-	municipality_number int NOT NULL,	
-	in_use bit default 1,
+	municipality_number int NOT NULL,		
+	instance_status_id int default 1,
 	create_date datetime NOT NULL,
 	created_by nvarchar(50) NOT NULL,
 	update_date datetime NOT NULL,
@@ -414,7 +433,7 @@ as
 		county_id,
 		name,
 		municipality_number,
-		in_use,
+		instance_status_id,
 		create_date,
 		created_by,
 		update_date,
@@ -429,7 +448,7 @@ create proc csp_insert_municipality
 	@county_id uniqueidentifier,
 	@name nvarchar(80),
 	@municipality_number int,	
-	@in_use bit,
+	@instance_status_id int,
 	@create_date datetime,
 	@created_by nvarchar(50),
 	@update_date datetime,
@@ -440,7 +459,7 @@ as
 		@county_id,
 		@name,		
 		@municipality_number,		
-		@in_use,
+		@instance_status_id,
 		@create_date,
 		@created_by,
 		@update_date,
@@ -452,14 +471,14 @@ create proc csp_update_municipality
 	@id uniqueidentifier,
 	@name nvarchar(80),
 	@municipality_number int,	
-	@in_use bit,
+	@instance_status_id int,
 	@update_date datetime,
 	@updated_by nvarchar(50)	
 as 
 	update municipality set 
 		name = @name,
 		municipality_number = @municipality_number,		
-		in_use = @in_use,		
+		instance_status_id = @instance_status_id,		
 		update_date = @update_date,
 		updated_by = @updated_by
 	where id = @id
@@ -475,8 +494,8 @@ create table customer (
 	name nvarchar(256) unique NOT NULL,
 	address nvarchar(256) default NULL,
 	email nvarchar(80) default NULL,
-	phone nvarchar(80) default NULL,
-	in_use bit default 1,
+	phone nvarchar(80) default NULL,	
+	instance_status_id int default 1,
 	comment nvarchar(1000) default NULL,
 	create_date datetime NOT NULL,
 	created_by nvarchar(50) NOT NULL,
@@ -496,8 +515,8 @@ create table customer_contact (
 	account_id uniqueidentifier default NULL,
 	name nvarchar(256) NOT NULL,
 	email nvarchar(80) default NULL,
-	phone nvarchar(80) default NULL,
-	in_use bit default 1,
+	phone nvarchar(80) default NULL,	
+	instance_status_id int default 1,
 	create_date datetime NOT NULL,
 	created_by nvarchar(50) NOT NULL,
 	update_date datetime NOT NULL,
@@ -515,8 +534,8 @@ create table sampler (
 	name nvarchar(256) NOT NULL,
 	address nvarchar(256) default NULL,
 	email nvarchar(80) default NULL,
-	phone nvarchar(80) default NULL,
-	in_use bit default 1,
+	phone nvarchar(80) default NULL,	
+	instance_status_id int default 1,
 	comment nvarchar(1000) default NULL,
 	create_date datetime NOT NULL,
 	created_by nvarchar(50) NOT NULL,
@@ -532,7 +551,21 @@ go
 
 create proc csp_select_samplers_flat
 as 
-	select * from sampler order by name
+	select 
+		s.id,
+		s.name,
+		s.address,
+		s.email,
+		s.phone,	
+		st.name as 'instance_status',
+		s.comment,
+		s.create_date,
+		s.created_by,
+		s.update_date,
+		s.updated_by
+	 from sampler s, instance_status st
+	 where s.instance_status_id = st.id
+	 order by s.name
 go
 
 create proc csp_select_sampler
@@ -547,7 +580,7 @@ create proc csp_insert_sampler
 	@address nvarchar(256),
 	@email nvarchar(80),
 	@phone nvarchar(80),
-	@in_use bit,
+	@instance_status_id int,
 	@comment nvarchar(1000),
 	@create_date datetime,
 	@created_by nvarchar(50),
@@ -560,7 +593,7 @@ as
 		@address,
 		@email,
 		@phone,
-		@in_use,
+		@instance_status_id,
 		@comment,
 		@create_date,
 		@created_by,
@@ -575,7 +608,7 @@ create proc csp_update_sampler
 	@address nvarchar(256),
 	@email nvarchar(80),
 	@phone nvarchar(80),
-	@in_use bit,
+	@instance_status_id int,
 	@comment nvarchar(1000),
 	@update_date datetime,
 	@updated_by nvarchar(50)
@@ -585,7 +618,7 @@ as
 		address = @address,
 		email = @email,
 		phone = @phone,
-		in_use = @in_use,
+		instance_status_id = @instance_status_id,
 		comment = @comment,	
 		update_date = @update_date,
 		updated_by = @updated_by
@@ -605,8 +638,8 @@ create table laboratory (
 	email nvarchar(80) default NULL,
 	phone nvarchar(80) default NULL,
 	assignment_counter int default 1,
-	comment nvarchar(1000) NOT NULL,
-	in_use bit default 1,
+	comment nvarchar(1000) NOT NULL,	
+	instance_status_id int default 1,
 	create_date datetime NOT NULL,
 	created_by nvarchar(50) NOT NULL,
 	update_date datetime NOT NULL,
@@ -639,7 +672,7 @@ create proc csp_insert_laboratory
 	@phone nvarchar(80),
 	@assignment_counter int,		
 	@comment nvarchar(1000),
-	@in_use bit,
+	@instance_status_id int,
 	@create_date datetime,
 	@created_by nvarchar(50),
 	@update_date datetime,
@@ -654,7 +687,7 @@ as
 		@phone,
 		@assignment_counter,
 		@comment,
-		@in_use,
+		@instance_status_id,
 		@create_date,
 		@created_by,
 		@update_date,
@@ -671,7 +704,7 @@ create proc csp_update_laboratory
 	@phone nvarchar(80),
 	@assignment_counter int,		
 	@comment nvarchar(1000),
-	@in_use bit,
+	@instance_status_id int,
 	@create_date datetime,
 	@created_by nvarchar(50),
 	@update_date datetime,
@@ -686,7 +719,7 @@ as
 		phone = @phone,
 		assignment_counter = @assignment_counter,
 		comment = @comment,
-		in_use = @in_use,
+		instance_status_id = @instance_status_id,
 		create_date = @create_date,
 		created_by = @created_by,
 		update_date = @update_date,
@@ -701,22 +734,20 @@ if OBJECT_ID('dbo.location_type', 'U') IS NOT NULL drop table location_type;
 
 create table location_type (
 	id int primary key NOT NULL,
-	name nvarchar(32) NOT NULL,	
-	in_use bit default 1	
+	name nvarchar(32) NOT NULL	
 )
 go
 
-insert into location_type values(1, 'Organization number', 1)
-insert into location_type values(2, 'Business number', 1)
-insert into location_type values(3, 'Property unit number', 1)
-insert into location_type values(4, 'Place name', 1)
-insert into location_type values(5, 'Other', 1)
+insert into location_type values(1, 'Organization number')
+insert into location_type values(2, 'Business number')
+insert into location_type values(3, 'Property unit number')
+insert into location_type values(4, 'Place name')
+insert into location_type values(5, 'Other')
 go
 
 create proc csp_select_location_types
 as
 	select id, name from location_type 
-	where in_use = 1
 	order by name
 go
 
@@ -745,6 +776,7 @@ create table assignment (
 	report_comment nvarchar(1000) default NULL,		
 	closed_date datetime default NULL,
 	closed_by uniqueidentifier NOT NULL,
+	instance_status_id int default 1,
 	create_date datetime NOT NULL,
 	created_by nvarchar(50) NOT NULL,
 	update_date datetime NOT NULL,
@@ -814,8 +846,8 @@ create table preparation_box (
 	id uniqueidentifier primary key NOT NULL,
 	name nvarchar(80) NOT NULL,
 	min_fill_height_mm float default 0,
-	max_fill_height_mm float default 0,
-	in_use bit default 1,
+	max_fill_height_mm float default 0,	
+	instance_status_id int default 1,
 	comment nvarchar(1000) default NULL,
 	create_date datetime NOT NULL,
 	created_by nvarchar(50) NOT NULL,
@@ -835,7 +867,7 @@ create proc csp_insert_geometry
 	@name nvarchar(80),
 	@min_fill_height float,
 	@max_fill_height float,
-	@in_use bit,
+	@instance_status_id int,
 	@comment nvarchar(1000),
 	@create_date datetime,
 	@created_by nvarchar(50),
@@ -847,7 +879,7 @@ as
 		@name,
 		@min_fill_height,
 		@max_fill_height,
-		@in_use,
+		@instance_status_id,
 		@comment,		
 		@create_date,
 		@created_by,
@@ -861,7 +893,7 @@ create proc csp_update_geometry
 	@name nvarchar(80),
 	@min_fill_height float,
 	@max_fill_height float,
-	@in_use bit,
+	@instance_status_id int,
 	@comment nvarchar(1000),	
 	@update_date datetime,
 	@updated_by nvarchar(50)	
@@ -870,7 +902,7 @@ as
 		name = @name,
 		min_fill_height_mm = @min_fill_height,
 		max_fill_height_mm = @max_fill_height,
-		in_use = @in_use,
+		instance_status_id = @instance_status_id,
 		comment = @comment,		
 		update_date = @update_date,
 		updated_by = @updated_by
@@ -880,18 +912,19 @@ go
 create proc csp_select_geometries_flat
 as
 	select 
-		id,
-		name,
-		min_fill_height_mm, 
-		max_fill_height_mm, 
-		in_use,
-		comment,
-		create_date,
-		created_by,
-		update_date,
-		updated_by
-	from preparation_box
-	order by name
+		pb.id,
+		pb.name,
+		pb.min_fill_height_mm, 
+		pb.max_fill_height_mm, 
+		st.name as 'instance_status',
+		pb.comment,
+		pb.create_date,
+		pb.created_by,
+		pb.update_date,
+		pb.updated_by
+	from preparation_box pb, instance_status st
+	where pb.instance_status_id = st.id
+	order by pb.name
 go
 
 /*===========================================================================*/
@@ -903,8 +936,8 @@ create table preparation_method (
 	id uniqueidentifier primary key NOT NULL,
 	name nvarchar(80) NOT NULL,
 	description_link nvarchar(1024) default NULL,
-	destructive bit default 0,
-	in_use bit default 1,
+	destructive bit default 0,	
+	instance_status_id int default 1,
 	comment nvarchar(1000) default NULL,
 	create_date datetime NOT NULL,
 	created_by nvarchar(50) NOT NULL,
@@ -940,8 +973,8 @@ create table preparation (
 	amount float default 0,
 	prep_unit_id int default 1,		
 	fill_height_mm float default 0,		
-	comment nvarchar(1000) default NULL,
-	deleted bit default 0,
+	instance_status_id int default 1,
+	comment nvarchar(1000) default NULL,	
 	create_date datetime NOT NULL,
 	created_by nvarchar(50) NOT NULL,
 	update_date datetime NOT NULL,
@@ -958,8 +991,8 @@ create table analysis_method (
 	id uniqueidentifier primary key NOT NULL,
 	name nvarchar(32) NOT NULL,
 	description_link nvarchar(1024) default NULL,
-	specter_reference_regexp nvarchar(256) default NULL,
-	in_use bit default 1,
+	specter_reference_regexp nvarchar(256) default NULL,	
+	instance_status_id int default 1,
 	comment nvarchar(1000) default NULL,
 	create_date datetime NOT NULL,
 	created_by nvarchar(50) NOT NULL,
@@ -1007,8 +1040,8 @@ create table analysis (
 	sigma float NOT NULL,
 	nuclide_library nvarchar(256) default NULL,
 	mda_library nvarchar(256) default NULL,	
-	comment nvarchar(1000) default NULL,
-	deleted bit default 0,
+	instance_status_id int default 1,
+	comment nvarchar(1000) default NULL,	
 	create_date datetime NOT NULL,
 	created_by nvarchar(50) NOT NULL,
 	update_date datetime NOT NULL,
@@ -1052,8 +1085,8 @@ create table nuclide (
 	half_life_uncertainty float NOT NULL,
 	decay_type_id int NOT NULL,
 	kxray_energy float NOT NULL,
-	fluorescence_yield float NOT NULL,
-	in_use bit default 1,
+	fluorescence_yield float NOT NULL,	
+	instance_status_id int default 1,
 	comment nvarchar(1000) NOT NULL,
 	create_date datetime NOT NULL,
 	created_by nvarchar(50) NOT NULL,
@@ -1072,7 +1105,7 @@ create proc csp_insert_nuclide
 	@decay_type_id int,
 	@kxray_energy float,
 	@fluorescence_yield float,
-	@in_use bit,
+	@instance_status_id int,
 	@comment nvarchar(1000),
 	@create_date datetime,
 	@created_by nvarchar(50),
@@ -1089,7 +1122,7 @@ as
 		@decay_type_id, 
 		@kxray_energy,
 		@fluorescence_yield,
-		@in_use,
+		@instance_status_id,
 		@comment,
 		@create_date,
 		@created_by,
@@ -1108,7 +1141,7 @@ create proc csp_update_nuclide
 	@decay_type_id int,
 	@kxray_energy float,
 	@fluorescence_yield float,
-	@in_use bit,
+	@instance_status_id int,
 	@comment nvarchar(1000),	
 	@update_date datetime,
 	@updated_by nvarchar(50)
@@ -1122,7 +1155,7 @@ as
 		decay_type_id = @decay_type_id, 
 		kxray_energy = @kxray_energy,
 		fluorescence_yield = @fluorescence_yield,
-		in_use = @in_use,
+		instance_status_id = @instance_status_id,
 		comment = @comment,		
 		update_date = @update_date,
 		updated_by = @updated_by
@@ -1178,8 +1211,8 @@ create table nuclide_transmission (
 	probability_of_decay float NOT NULL,
 	probability_of_decay_uncertainty float NOT NULL,
 	total_internal_conversion float NOT NULL,
-	kshell_conversion float NOT NULL,
-	in_use bit default 1,
+	kshell_conversion float NOT NULL,	
+	instance_status_id int default 1,
 	comment nvarchar(1000) NOT NULL,
 	create_date datetime NOT NULL,
 	created_by nvarchar(50) NOT NULL,
@@ -1201,7 +1234,7 @@ create proc csp_insert_energy_line
 	@probability_of_decay_uncertainty float,
 	@total_internal_conversion float,
 	@kshell_conversion float,
-	@in_use bit,
+	@instance_status_id int,
 	@comment nvarchar(1000),
 	@create_date datetime,
 	@created_by nvarchar(50),
@@ -1221,7 +1254,7 @@ as
 		@probability_of_decay_uncertainty,
 		@total_internal_conversion,
 		@kshell_conversion,
-		@in_use,
+		@instance_status_id,
 		@comment,
 		@create_date,
 		@created_by,
@@ -1242,7 +1275,7 @@ create proc csp_update_energy_line
 	@probability_of_decay_uncertainty float,
 	@total_internal_conversion float,
 	@kshell_conversion float,
-	@in_use bit,
+	@instance_status_id int,
 	@comment nvarchar(1000),
 	@update_date datetime,
 	@updated_by nvarchar(50)
@@ -1258,7 +1291,7 @@ as
 		probability_of_decay_uncertainty = @probability_of_decay_uncertainty,
 		total_internal_conversion = @total_internal_conversion,
 		kshell_conversion = @kshell_conversion,
-		in_use = @in_use,
+		instance_status_id = @instance_status_id,
 		comment = @comment,
 		update_date = @update_date,
 		updated_by = @updated_by
@@ -1285,14 +1318,14 @@ as
 		nt.probability_of_decay_uncertainty,
 		nt.total_internal_conversion,
 		nt.kshell_conversion,
-		nt.in_use,
+		st.name as 'instance_status',
 		nt.comment,
 		nt.create_date,
 		nt.created_by,
 		nt.update_date,
 		nt.updated_by
-	from nuclide_transmission nt, nuclide n 
-	where nt.nuclide_id = n.id
+	from nuclide_transmission nt, nuclide n, instance_status st
+	where nt.nuclide_id = n.id and nt.instance_status_id = st.id
 	order by n.name, nt.transmission_from
 go
 
@@ -1318,7 +1351,7 @@ as
 		probability_of_decay_uncertainty,
 		total_internal_conversion,
 		kshell_conversion,
-		in_use,
+		instance_status_id,
 		comment,	
 		create_date,
 		created_by,
@@ -1338,8 +1371,8 @@ create table project (
 	id uniqueidentifier primary key NOT NULL,
 	parent_id uniqueidentifier default NULL,
 	name nvarchar(256) NOT NULL,
-	comment nvarchar(1000) default NULL,
-	in_use bit default 1,
+	instance_status_id int default 1,
+	comment nvarchar(1000) default NULL,		
 	create_date datetime NOT NULL,
 	created_by nvarchar(50) NOT NULL,
 	update_date datetime NOT NULL,
@@ -1384,7 +1417,7 @@ go
 create proc csp_insert_project
 	@id uniqueidentifier,
 	@name nvarchar(256),	
-	@in_use bit,
+	@instance_status_id int,
 	@comment nvarchar(1000),
 	@create_date datetime,
 	@created_by nvarchar(50),
@@ -1395,8 +1428,8 @@ as
 		@id,
 		NULL,
 		@name, 				
-		@comment,
-		@in_use,
+		@instance_status_id,
+		@comment,		
 		@create_date,
 		@created_by,
 		@update_date,
@@ -1407,15 +1440,15 @@ go
 create proc csp_update_project
 	@id uniqueidentifier,
 	@name nvarchar(256),	
-	@in_use bit,
+	@instance_status_id int,
 	@comment nvarchar(1000),
 	@update_date datetime,
 	@updated_by nvarchar(50)
 as 
 	update project set
 		name = @name, 				
-		comment = @comment,		
-		in_use = @in_use,
+		instance_status_id = @instance_status_id,
+		comment = @comment,				
 		update_date = @update_date,
 		updated_by = @updated_by
 	where id = @id
@@ -1425,7 +1458,7 @@ create proc csp_insert_sub_project
 	@id uniqueidentifier,
 	@parent_id uniqueidentifier,
 	@name nvarchar(256),	
-	@in_use bit,
+	@instance_status_id int,
 	@comment nvarchar(1000),
 	@create_date datetime,
 	@created_by nvarchar(50),
@@ -1436,8 +1469,8 @@ as
 		@id,
 		@parent_id,
 		@name, 				
-		@comment,
-		@in_use,
+		@instance_status_id,
+		@comment,		
 		@create_date,
 		@created_by,
 		@update_date,
@@ -1466,8 +1499,8 @@ create table station (
 	name nvarchar(128) unique NOT NULL,
 	latitude float default 0,
 	longitude float default 0,
-	altitude float default 0,
-	in_use bit default 1,
+	altitude float default 0,	
+	instance_status_id int default 1,
 	comment nvarchar(1000) default NULL,
 	create_date datetime NOT NULL,
 	created_by nvarchar(50) NOT NULL,
@@ -1488,7 +1521,7 @@ create proc csp_insert_station
 	@latitude float,	
 	@longitude float,	
 	@altitude float,	
-	@in_use bit,
+	@instance_status_id int,
 	@comment nvarchar(1000),
 	@create_date datetime,
 	@created_by nvarchar(50),
@@ -1501,7 +1534,7 @@ as
 		@latitude,		
 		@longitude,		
 		@altitude,		
-		@in_use,
+		@instance_status_id,
 		@comment,
 		@create_date,
 		@created_by,
@@ -1516,7 +1549,7 @@ create proc csp_update_station
 	@latitude float,	
 	@longitude float,	
 	@altitude float,	
-	@in_use bit,
+	@instance_status_id int,
 	@comment nvarchar(1000),	
 	@update_date datetime,
 	@updated_by nvarchar(50)	
@@ -1526,7 +1559,7 @@ as
 		latitude = @latitude,	
 		longitude = @longitude,	
 		altitude = @altitude,	
-		in_use = @in_use,
+		instance_status_id = @instance_status_id,
 		comment = @comment,	
 		update_date = @update_date,
 		updated_by = @updated_by
@@ -1541,7 +1574,7 @@ as
 		latitude, 	
 		longitude, 	
 		altitude, 	
-		in_use,	
+		instance_status_id,	
 		comment,	
 		create_date,
 		created_by,
@@ -1558,8 +1591,7 @@ if OBJECT_ID('dbo.sample_type', 'U') IS NOT NULL drop table sample_type;
 
 create table sample_type (
 	id uniqueidentifier primary key NOT NULL,
-	name nvarchar(256) unique NOT NULL,
-	in_use bit default 1,
+	name nvarchar(256) unique NOT NULL,		
 	create_date datetime NOT NULL,
 	created_by nvarchar(50) NOT NULL,
 	update_date datetime NOT NULL,
@@ -1573,7 +1605,6 @@ as
 		id,
 		name
 	from sample_type
-	where in_use = 1
 	order by name
 go
 
@@ -1585,8 +1616,8 @@ if OBJECT_ID('dbo.sample_storage', 'U') IS NOT NULL drop table sample_storage;
 create table sample_storage (
 	id uniqueidentifier primary key NOT NULL,
 	name nvarchar(256) unique NOT NULL,
-	address nvarchar(1000) default NULL,
-	in_use bit default 1,
+	address nvarchar(1000) default NULL,	
+	instance_status_id int default 1,
 	comment nvarchar(1000) default NULL,
 	create_date datetime NOT NULL,
 	created_by nvarchar(50) NOT NULL,
@@ -1601,11 +1632,32 @@ as
 	select * from sample_storage where id = @id
 go
 
+create proc csp_select_sample_storages
+as
+	select * from sample_storage order by name
+go
+
+create proc csp_select_sample_storages_flat
+as
+	select 
+		s.id,
+		s.name,
+		s.address,
+		st.name as 'instance_status',
+		s.comment,	
+		s.create_date,
+		s.created_by,
+		s.update_date,
+		s.updated_by
+	from sample_storage s, instance_status st
+	order by s.name
+go
+
 create proc csp_insert_sample_storage
 	@id uniqueidentifier,	
 	@name nvarchar(80),
 	@address nvarchar(1000),
-	@in_use bit,
+	@instance_status_id int,
 	@comment nvarchar(1000),
 	@create_date datetime,
 	@created_by nvarchar(50),
@@ -1616,7 +1668,7 @@ as
 		@id,		
 		@name,
 		@address,				
-		@in_use,
+		@instance_status_id,
 		@comment,
 		@create_date,
 		@created_by,
@@ -1629,7 +1681,7 @@ create proc csp_update_sample_storage
 	@id uniqueidentifier,	
 	@name nvarchar(80),
 	@address nvarchar(1000),		
-	@in_use bit,
+	@instance_status_id int,
 	@comment nvarchar(1000),	
 	@update_date datetime,
 	@updated_by nvarchar(50)	
@@ -1637,27 +1689,11 @@ as
 	update sample_storage set 
 		name = @name,
 		address = @address,			
-		in_use = @in_use,
+		instance_status_id = @instance_status_id,
 		comment = @comment,	
 		update_date = @update_date,
 		updated_by = @updated_by
 	where id = @id
-go
-
-create proc csp_select_sample_storage_flat
-as
-	select 
-		id,
-		name,
-		address,
-		in_use,	
-		comment,	
-		create_date,
-		created_by,
-		update_date,
-		updated_by
-	from sample_storage
-	order by name
 go
 
 /*===========================================================================*/
@@ -1669,7 +1705,6 @@ create table sample_component (
 	id uniqueidentifier primary key NOT NULL,
 	sample_type_id uniqueidentifier NOT NULL,
 	name nvarchar(80) NOT NULL,
-	in_use bit default 1,
 	create_date datetime NOT NULL,
 	created_by nvarchar(50) NOT NULL,
 	update_date datetime NOT NULL,
@@ -1684,7 +1719,7 @@ as
 		id,
 		name		
 	from sample_component
-	where sample_type_id = @sample_type_id and in_use = 1
+	where sample_type_id = @sample_type_id
 	order by name
 go
 
@@ -1697,8 +1732,7 @@ create table sample_parameter (
 	id uniqueidentifier primary key NOT NULL,
 	sample_type_id uniqueidentifier NOT NULL,	
 	name nvarchar(80) NOT NULL,
-	type nvarchar(30) NOT NULL,	
-	in_use bit default 1,
+	type nvarchar(30) NOT NULL,			
 	create_date datetime NOT NULL,
 	created_by nvarchar(50) NOT NULL,
 	update_date datetime NOT NULL,
@@ -1742,8 +1776,8 @@ create table sample (
 	lod_temperature float default NULL,
 	confidential bit default 0,	
 	parameters nvarchar(4000) default NULL,
-	comment nvarchar(1000) default NULL,
-	deleted bit default 0,	
+	instance_status_id int default 1,
+	comment nvarchar(1000) default NULL,	
 	create_date datetime NOT NULL,
 	created_by nvarchar(50) NOT NULL,
 	update_date datetime NOT NULL,
@@ -1803,7 +1837,7 @@ create table analysis_result (
 	uniform_activity_unit_id uniqueidentifier NOT NULL,		
 	detection_limit float default NULL,
 	detection_limit_approved bit default 0,
-	deleted bit default 0,
+	instance_status_id int default 1,
 	create_date datetime NOT NULL,
 	created_by nvarchar(50) NOT NULL,
 	update_date datetime NOT NULL,

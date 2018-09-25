@@ -50,7 +50,7 @@ namespace DSA_lims
 
                     reader.Read();
                     tbName.Text = reader["name"].ToString();
-                    cbInUse.Checked = Convert.ToBoolean(reader["in_use"]);
+                    cbInUse.Checked = InstanceStatus.IsActive(reader["instance_status_id"]);
                     tbComment.Text = reader["comment"].ToString();
                     
                     SubProject.CreateDate = Convert.ToDateTime(reader["create_date"]);
@@ -76,7 +76,7 @@ namespace DSA_lims
             }
 
             SubProject.Name = tbName.Text.Trim();
-            SubProject.InUse = cbInUse.Checked;
+            SubProject.InstanceStatusId = cbInUse.Checked ? 1 : 2;
             SubProject.Comment = tbComment.Text.Trim();
 
             bool success;
@@ -110,7 +110,7 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@id", SubProject.Id);
                 cmd.Parameters.AddWithValue("@parent_id", SubProject.MainProjectId);
                 cmd.Parameters.AddWithValue("@name", SubProject.Name);
-                cmd.Parameters.AddWithValue("@in_use", SubProject.InUse);
+                cmd.Parameters.AddWithValue("@instance_status_id", SubProject.InstanceStatusId);
                 cmd.Parameters.AddWithValue("@comment", SubProject.Comment);
                 cmd.Parameters.AddWithValue("@create_date", SubProject.CreateDate);
                 cmd.Parameters.AddWithValue("@created_by", SubProject.CreatedBy);
@@ -153,7 +153,7 @@ namespace DSA_lims
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@id", SubProject.Id);
                 cmd.Parameters.AddWithValue("@name", SubProject.Name);
-                cmd.Parameters.AddWithValue("@in_use", SubProject.InUse);
+                cmd.Parameters.AddWithValue("@instance_status_id", SubProject.InstanceStatusId);
                 cmd.Parameters.AddWithValue("@comment", SubProject.Comment);
                 cmd.Parameters.AddWithValue("@update_date", SubProject.UpdateDate);
                 cmd.Parameters.AddWithValue("@updated_by", SubProject.UpdatedBy);

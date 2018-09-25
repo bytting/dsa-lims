@@ -67,7 +67,7 @@ namespace DSA_lims
                     tbAddress.Text = reader["address"].ToString();
                     tbEmail.Text = reader["email"].ToString();
                     tbPhone.Text = reader["phone"].ToString();
-                    cbInUse.Checked = Convert.ToBoolean(reader["in_use"]);
+                    cbInUse.Checked = InstanceStatus.IsActive(reader["instance_status_id"]);
                     tbComment.Text = reader["comment"].ToString();
                     Sampler.CreateDate = Convert.ToDateTime(reader["create_date"]);
                     Sampler.CreatedBy = reader["created_by"].ToString();
@@ -95,7 +95,7 @@ namespace DSA_lims
             Sampler.Address = tbAddress.Text.Trim();
             Sampler.Email = tbEmail.Text.Trim();
             Sampler.Phone = tbPhone.Text.Trim();
-            Sampler.InUse = cbInUse.Checked;
+            Sampler.InstanceStatusId = cbInUse.Checked ? 1 : 2;
             Sampler.Comment = tbComment.Text.Trim();
 
             bool success;
@@ -131,7 +131,7 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@address", Sampler.Address);
                 cmd.Parameters.AddWithValue("@email", Sampler.Email);
                 cmd.Parameters.AddWithValue("@phone", Sampler.Phone);
-                cmd.Parameters.AddWithValue("@in_use", Sampler.InUse);
+                cmd.Parameters.AddWithValue("@instance_status_id", Sampler.InstanceStatusId);
                 cmd.Parameters.AddWithValue("@comment", Sampler.Comment);
                 cmd.Parameters.AddWithValue("@create_date", Sampler.CreateDate);
                 cmd.Parameters.AddWithValue("@created_by", Sampler.CreatedBy);
@@ -177,7 +177,7 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@address", Sampler.Address);
                 cmd.Parameters.AddWithValue("@email", Sampler.Email);
                 cmd.Parameters.AddWithValue("@phone", Sampler.Phone);
-                cmd.Parameters.AddWithValue("@in_use", Sampler.InUse);
+                cmd.Parameters.AddWithValue("@instance_status_id", Sampler.InstanceStatusId);
                 cmd.Parameters.AddWithValue("@comment", Sampler.Comment);
                 cmd.Parameters.AddWithValue("@update_date", Sampler.UpdateDate);
                 cmd.Parameters.AddWithValue("@updated_by", Sampler.UpdatedBy);

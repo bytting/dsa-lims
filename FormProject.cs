@@ -64,7 +64,7 @@ namespace DSA_lims
 
                     reader.Read();
                     tbName.Text = reader["name"].ToString();
-                    cbInUse.Checked = Convert.ToBoolean(reader["in_use"]);
+                    cbInUse.Checked = InstanceStatus.IsActive(reader["instance_status_id"]);
                     tbComment.Text = reader["comment"].ToString();
 
                     MainProject.CreateDate = Convert.ToDateTime(reader["create_date"]);
@@ -90,7 +90,7 @@ namespace DSA_lims
             }
 
             MainProject.Name = tbName.Text.Trim();
-            MainProject.InUse = cbInUse.Checked;
+            MainProject.InstanceStatusId = cbInUse.Checked ? 1 : 2;
             MainProject.Comment = tbComment.Text.Trim();
 
             bool success;
@@ -123,7 +123,7 @@ namespace DSA_lims
                 MainProject.Id = Guid.NewGuid();
                 cmd.Parameters.AddWithValue("@id", MainProject.Id);
                 cmd.Parameters.AddWithValue("@name", MainProject.Name);                
-                cmd.Parameters.AddWithValue("@in_use", MainProject.InUse);
+                cmd.Parameters.AddWithValue("@instance_status_id", MainProject.InstanceStatusId);
                 cmd.Parameters.AddWithValue("@comment", MainProject.Comment);
                 cmd.Parameters.AddWithValue("@create_date", MainProject.CreateDate);
                 cmd.Parameters.AddWithValue("@created_by", MainProject.CreatedBy);
@@ -166,7 +166,7 @@ namespace DSA_lims
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@id", MainProject.Id);
                 cmd.Parameters.AddWithValue("@name", MainProject.Name);                
-                cmd.Parameters.AddWithValue("@in_use", MainProject.InUse);
+                cmd.Parameters.AddWithValue("@instance_status_id", MainProject.InstanceStatusId);
                 cmd.Parameters.AddWithValue("@comment", MainProject.Comment);
                 cmd.Parameters.AddWithValue("@update_date", MainProject.UpdateDate);
                 cmd.Parameters.AddWithValue("@updated_by", MainProject.UpdatedBy);

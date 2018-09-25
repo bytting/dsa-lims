@@ -69,7 +69,7 @@ namespace DSA_lims
                     tbName.Text = reader["name"].ToString();
                     tbMinFillHeight.Text = reader["min_fill_height_mm"].ToString();
                     tbMaxFillHeight.Text = reader["max_fill_height_mm"].ToString();
-                    cbInUse.Checked = Convert.ToBoolean(reader["in_use"]);
+                    cbInUse.Checked = InstanceStatus.IsActive(reader["instance_status_id"]);
                     tbComment.Text = reader["comment"].ToString();
                     Geometry.CreateDate = Convert.ToDateTime(reader["create_date"]);
                     Geometry.CreatedBy = reader["created_by"].ToString();
@@ -108,7 +108,7 @@ namespace DSA_lims
             Geometry.Name = tbName.Text.Trim();
             Geometry.MinFillHeight = Convert.ToDouble(tbMinFillHeight.Text.Trim());
             Geometry.MaxFillHeight = Convert.ToDouble(tbMaxFillHeight.Text.Trim());
-            Geometry.InUse = cbInUse.Checked;
+            Geometry.InstanceStatusId = cbInUse.Checked ? 1 : 2;
             Geometry.Comment = tbComment.Text.Trim();
 
             bool success;
@@ -143,7 +143,7 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@name", Geometry.Name);
                 cmd.Parameters.AddWithValue("@min_fill_height", Geometry.MinFillHeight);
                 cmd.Parameters.AddWithValue("@max_fill_height", Geometry.MaxFillHeight);
-                cmd.Parameters.AddWithValue("@in_use", Geometry.InUse);
+                cmd.Parameters.AddWithValue("@instance_status_id", Geometry.InstanceStatusId);
                 cmd.Parameters.AddWithValue("@comment", Geometry.Comment);
                 cmd.Parameters.AddWithValue("@create_date", Geometry.CreateDate);
                 cmd.Parameters.AddWithValue("@created_by", Geometry.CreatedBy);
@@ -188,7 +188,7 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@name", Geometry.Name);
                 cmd.Parameters.AddWithValue("@min_fill_height", Geometry.MinFillHeight);
                 cmd.Parameters.AddWithValue("@max_fill_height", Geometry.MaxFillHeight);
-                cmd.Parameters.AddWithValue("@in_use", Geometry.InUse);
+                cmd.Parameters.AddWithValue("@instance_status_id", Geometry.InstanceStatusId);
                 cmd.Parameters.AddWithValue("@comment", Geometry.Comment);                
                 cmd.Parameters.AddWithValue("@update_date", Geometry.UpdateDate);
                 cmd.Parameters.AddWithValue("@updated_by", Geometry.UpdatedBy);

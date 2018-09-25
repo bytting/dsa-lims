@@ -426,7 +426,7 @@ namespace DSA_lims
 
                 TreeNode root = treeSampleTypes.Nodes.Add(SampleTypesRootName, SampleTypesRootName);
                 
-                using (SqlDataReader reader = DB.GetDataReader(conn, "select id, name, in_use from sample_type order by name", CommandType.Text))
+                using (SqlDataReader reader = DB.GetDataReader(conn, "select id, name from sample_type order by name", CommandType.Text))
                 {
                     while (reader.Read())
                     {
@@ -529,7 +529,7 @@ namespace DSA_lims
             gridMetaLab.Columns["address"].HeaderText = "Address";
             gridMetaLab.Columns["email"].HeaderText = "Email";
             gridMetaLab.Columns["phone"].HeaderText = "Phone";
-            gridMetaLab.Columns["in_use"].HeaderText = "In use";
+            gridMetaLab.Columns["instance_status_id"].HeaderText = "Status";
         }
 
         private void PopulateUsers(SqlConnection conn)
@@ -546,7 +546,7 @@ namespace DSA_lims
             gridMetaUsers.Columns["fullname"].HeaderText = "Name";
             gridMetaUsers.Columns["laboratory_name"].HeaderText = "Laboratory";
             gridMetaUsers.Columns["language_code"].HeaderText = "Language";
-            gridMetaUsers.Columns["in_use"].HeaderText = "In use";            
+            gridMetaUsers.Columns["instance_status"].HeaderText = "Status";            
         }
 
         private void PopulateNuclides(SqlConnection conn)
@@ -630,7 +630,7 @@ namespace DSA_lims
 
             gridSysCounty.Columns["name"].HeaderText = "Name";
             gridSysCounty.Columns["county_number"].HeaderText = "Number";
-            gridSysCounty.Columns["in_use"].HeaderText = "In use";
+            gridSysCounty.Columns["instance_status_id"].HeaderText = "Status";
         }
 
         private void PopulateMunicipalities(SqlConnection conn, Guid cid)
@@ -649,7 +649,7 @@ namespace DSA_lims
 
             gridSysMunicipality.Columns["name"].HeaderText = "Name";
             gridSysMunicipality.Columns["municipality_number"].HeaderText = "Number";
-            gridSysMunicipality.Columns["in_use"].HeaderText = "In use";
+            gridSysMunicipality.Columns["instance_status_id"].HeaderText = "Status";
         }
 
         private void PopulateStations(SqlConnection conn)
@@ -670,7 +670,7 @@ namespace DSA_lims
             gridMetaStation.Columns["latitude"].HeaderText = "Latitude";
             gridMetaStation.Columns["longitude"].HeaderText = "Longitude";
             gridMetaStation.Columns["altitude"].HeaderText = "Altitude";
-            gridMetaStation.Columns["in_use"].HeaderText = "In use";            
+            gridMetaStation.Columns["instance_status_id"].HeaderText = "Status";            
 
             cboxSampleInfoStations.Items.Clear();
             foreach (DataRow row in dt.Rows)
@@ -684,7 +684,7 @@ namespace DSA_lims
         private void PopulateSampleStorage(SqlConnection conn)
         {
             // Set data source
-            gridMetaSampleStorage.DataSource = DB.GetDataTable(conn, "csp_select_sample_storage_flat", CommandType.StoredProcedure);
+            gridMetaSampleStorage.DataSource = DB.GetDataTable(conn, "csp_select_sample_storages_flat", CommandType.StoredProcedure);
 
             // Set UI state
             gridMetaSampleStorage.Columns["id"].Visible = false;
@@ -696,7 +696,7 @@ namespace DSA_lims
 
             gridMetaSampleStorage.Columns["name"].HeaderText = "Name";
             gridMetaSampleStorage.Columns["address"].HeaderText = "Address";
-            gridMetaSampleStorage.Columns["in_use"].HeaderText = "In use";
+            gridMetaSampleStorage.Columns["instance_status"].HeaderText = "Status";
         }
 
         private void PopulateSamplers(SqlConnection conn)
@@ -717,7 +717,7 @@ namespace DSA_lims
             gridMetaSamplers.Columns["address"].HeaderText = "Address";
             gridMetaSamplers.Columns["email"].HeaderText = "Email";
             gridMetaSamplers.Columns["phone"].HeaderText = "Phone";
-            gridMetaSamplers.Columns["in_use"].HeaderText = "In use";
+            gridMetaSamplers.Columns["instance_status"].HeaderText = "Status";
 
             cboxSampleInfoSampler.Items.Clear();
             foreach (DataRow row in dt.Rows)
@@ -847,7 +847,7 @@ namespace DSA_lims
                     Guid id = new Guid(e.Node.Tag.ToString());
                     lbSampleTypesComponents.Items.Clear();
 
-                    SqlCommand cmd = new SqlCommand("select id, name, in_use from sample_component where sample_type_id = @ID order by name", conn);
+                    SqlCommand cmd = new SqlCommand("select id, name from sample_component where sample_type_id = @ID order by name", conn);
                     cmd.Parameters.AddWithValue("@ID", id);
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
@@ -1168,8 +1168,8 @@ namespace DSA_lims
                     reader.Read();
 
                     tbProjectsName.Text = reader["name"].ToString();
-                    tbProjectsComment.Text = reader["comment"].ToString();
-                    cbProjectsInUse.Checked = Convert.ToBoolean(reader["in_use"]);
+                    tbProjectsComment.Text = reader["comment"].ToString();                    
+                    cbProjectsInUse.Checked = InstanceStatus.IsActive(reader["instance_status_id"]);
                 }
             }
             catch (Exception ex)

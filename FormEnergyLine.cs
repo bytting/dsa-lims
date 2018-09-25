@@ -83,7 +83,7 @@ namespace DSA_lims
                     tbProbOfDecayUnc.Text = reader["probability_of_decay_uncertainty"].ToString();
                     tbTotInternalConv.Text = reader["total_internal_conversion"].ToString();
                     tbKShellConv.Text = reader["kshell_conversion"].ToString();
-                    cbInUse.Checked = Convert.ToBoolean(reader["in_use"]);
+                    cbInUse.Checked = InstanceStatus.IsActive(reader["instance_status_id"]);
                     tbComment.Text = reader["comment"].ToString();
                     EnergyLine.CreateDate = Convert.ToDateTime(reader["create_date"]);
                     EnergyLine.CreatedBy = reader["created_by"].ToString();
@@ -123,7 +123,7 @@ namespace DSA_lims
             EnergyLine.ProbabilityOfDecayUncertainty = Convert.ToDouble(tbProbOfDecayUnc.Text.Trim());
             EnergyLine.TotalInternalConversion = Convert.ToDouble(tbTotInternalConv.Text.Trim());
             EnergyLine.KShellConversion = Convert.ToDouble(tbKShellConv.Text.Trim());
-            EnergyLine.InUse = Convert.ToBoolean(cbInUse.Checked);
+            EnergyLine.InstanceStatusId = cbInUse.Checked == true ? 1 : 2;
             EnergyLine.Comment = tbComment.Text.Trim();
 
             bool success;
@@ -166,7 +166,7 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@probability_of_decay_uncertainty", EnergyLine.ProbabilityOfDecayUncertainty);
                 cmd.Parameters.AddWithValue("@total_internal_conversion", EnergyLine.TotalInternalConversion);
                 cmd.Parameters.AddWithValue("@kshell_conversion", EnergyLine.KShellConversion);
-                cmd.Parameters.AddWithValue("@in_use", EnergyLine.InUse);
+                cmd.Parameters.AddWithValue("@instance_status_id", EnergyLine.InstanceStatusId);
                 cmd.Parameters.AddWithValue("@comment", EnergyLine.Comment);
                 cmd.Parameters.AddWithValue("@create_date", EnergyLine.CreateDate);
                 cmd.Parameters.AddWithValue("@created_by", EnergyLine.CreatedBy);
@@ -218,7 +218,7 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@probability_of_decay_uncertainty", EnergyLine.ProbabilityOfDecayUncertainty);
                 cmd.Parameters.AddWithValue("@total_internal_conversion", EnergyLine.TotalInternalConversion);
                 cmd.Parameters.AddWithValue("@kshell_conversion", EnergyLine.KShellConversion);
-                cmd.Parameters.AddWithValue("@in_use", EnergyLine.InUse);
+                cmd.Parameters.AddWithValue("@instance_status_id", EnergyLine.InstanceStatusId);
                 cmd.Parameters.AddWithValue("@comment", EnergyLine.Comment);
                 cmd.Parameters.AddWithValue("@update_date", EnergyLine.UpdateDate);
                 cmd.Parameters.AddWithValue("@updated_by", EnergyLine.UpdatedBy);

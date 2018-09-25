@@ -162,7 +162,7 @@ namespace DSA_lims
             Nuclide.DecayTypeId = Convert.ToInt32(cboxDecayTypes.SelectedValue);
             Nuclide.XRayEnergy = Convert.ToDouble(tbKXrayEnergy.Text.Trim());
             Nuclide.FluorescenceYield = Convert.ToDouble(tbFluorescenceYield.Text.Trim());
-            Nuclide.InUse = cbInUse.Checked;
+            Nuclide.InstanceStatusId = cbInUse.Checked ? 1 : 2;
             Nuclide.Comment = tbComment.Text.Trim();
 
             bool success;
@@ -202,7 +202,7 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@decay_type_id", Nuclide.DecayTypeId);
                 cmd.Parameters.AddWithValue("@kxray_energy", Nuclide.XRayEnergy);
                 cmd.Parameters.AddWithValue("@fluorescence_yield", Nuclide.FluorescenceYield);
-                cmd.Parameters.AddWithValue("@in_use", Nuclide.InUse);
+                cmd.Parameters.AddWithValue("@instance_status_id", Nuclide.InstanceStatusId);
                 cmd.Parameters.AddWithValue("@comment", Nuclide.Comment);
                 cmd.Parameters.AddWithValue("@create_date", Nuclide.CreateDate);
                 cmd.Parameters.AddWithValue("@created_by", Nuclide.CreatedBy);
@@ -252,7 +252,7 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@decay_type_id", Nuclide.DecayTypeId);
                 cmd.Parameters.AddWithValue("@kxray_energy", Nuclide.XRayEnergy);
                 cmd.Parameters.AddWithValue("@fluorescence_yield", Nuclide.FluorescenceYield);
-                cmd.Parameters.AddWithValue("@in_use", Nuclide.InUse);
+                cmd.Parameters.AddWithValue("@instance_status_id", Nuclide.InstanceStatusId);
                 cmd.Parameters.AddWithValue("@comment", Nuclide.Comment);
                 cmd.Parameters.AddWithValue("@update_date", Nuclide.UpdateDate);
                 cmd.Parameters.AddWithValue("@updated_by", Nuclide.UpdatedBy);

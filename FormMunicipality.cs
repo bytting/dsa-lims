@@ -73,7 +73,7 @@ namespace DSA_lims
                     reader.Read();
                     tbName.Text = reader["name"].ToString();
                     tbNumber.Text = reader["municipality_number"].ToString();
-                    cbInUse.Checked = Convert.ToBoolean(reader["in_use"]);
+                    cbInUse.Checked = InstanceStatus.IsActive(reader["instance_status_id"]);
                     Municipality.CreateDate = Convert.ToDateTime(reader["create_date"]);
                     Municipality.CreatedBy = reader["created_by"].ToString();
                     Municipality.UpdateDate = Convert.ToDateTime(reader["update_date"]);
@@ -104,7 +104,7 @@ namespace DSA_lims
 
             Municipality.Name = tbName.Text.Trim();
             Municipality.Number = Convert.ToInt32(tbNumber.Text.Trim());
-            Municipality.InUse = cbInUse.Checked;
+            Municipality.InstanceStatusId = cbInUse.Checked ? 1 : 2;
 
             bool success;
             if (Municipality.Id == Guid.Empty)
@@ -138,7 +138,7 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@county_id", Municipality.CountyId);
                 cmd.Parameters.AddWithValue("@name", Municipality.Name);
                 cmd.Parameters.AddWithValue("@municipality_number", Municipality.Number);
-                cmd.Parameters.AddWithValue("@in_use", Municipality.InUse);
+                cmd.Parameters.AddWithValue("@instance_status_id", Municipality.InstanceStatusId);
                 cmd.Parameters.AddWithValue("@create_date", Municipality.CreateDate);
                 cmd.Parameters.AddWithValue("@created_by", Municipality.CreatedBy);
                 cmd.Parameters.AddWithValue("@update_date", Municipality.UpdateDate);
@@ -181,7 +181,7 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@id", Municipality.Id);
                 cmd.Parameters.AddWithValue("@name", Municipality.Name);
                 cmd.Parameters.AddWithValue("@municipality_number", Municipality.Number);
-                cmd.Parameters.AddWithValue("@in_use", Municipality.InUse);
+                cmd.Parameters.AddWithValue("@instance_status_id", Municipality.InstanceStatusId);
                 cmd.Parameters.AddWithValue("@update_date", Municipality.UpdateDate);
                 cmd.Parameters.AddWithValue("@updated_by", Municipality.UpdatedBy);
                 cmd.ExecuteNonQuery();

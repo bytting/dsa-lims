@@ -35,7 +35,7 @@ namespace DSA_lims
         public int DecayTypeId { get; set; }
         public double XRayEnergy { get; set; }
         public double FluorescenceYield { get; set; }
-        public bool InUse { get; set; }
+        public int InstanceStatusId { get; set; }
         public string Comment { get; set; }
         public DateTime CreateDate { get; set; }
         public string CreatedBy { get; set; }
@@ -62,7 +62,7 @@ namespace DSA_lims
         public double ProbabilityOfDecayUncertainty { get; set; }
         public double TotalInternalConversion { get; set; }
         public double KShellConversion { get; set; }
-        public bool InUse { get; set; }
+        public int InstanceStatusId { get; set; }
         public string Comment { get; set; }
         public DateTime CreateDate { get; set; }
         public string CreatedBy { get; set; }
@@ -81,7 +81,7 @@ namespace DSA_lims
         public string Name { get; set; }
         public double MinFillHeight { get; set; }
         public double MaxFillHeight { get; set; }
-        public bool InUse { get; set; }
+        public int InstanceStatusId { get; set; }
         public string Comment { get; set; }
         public DateTime CreateDate { get; set; }
         public string CreatedBy { get; set; }
@@ -99,7 +99,7 @@ namespace DSA_lims
         public Guid Id { get; set; }
         public string Name { get; set; }
         public int Number { get; set; }
-        public bool InUse { get; set; }
+        public int InstanceStatusId { get; set; }
         public DateTime CreateDate { get; set; }
         public string CreatedBy { get; set; }
         public DateTime UpdateDate { get; set; }
@@ -117,7 +117,7 @@ namespace DSA_lims
         public Guid CountyId { get; set; }
         public string Name { get; set; }
         public int Number { get; set; }
-        public bool InUse { get; set; }
+        public int InstanceStatusId { get; set; }
         public DateTime CreateDate { get; set; }
         public string CreatedBy { get; set; }
         public DateTime UpdateDate { get; set; }
@@ -136,7 +136,7 @@ namespace DSA_lims
         public double Latitude { get; set; }
         public double Longitude { get; set; }
         public double Altitude { get; set; }
-        public bool InUse { get; set; }
+        public int InstanceStatusId { get; set; }
         public string Comment { get; set; }
         public DateTime CreateDate { get; set; }
         public string CreatedBy { get; set; }
@@ -154,7 +154,7 @@ namespace DSA_lims
         public Guid Id { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }
-        public bool InUse { get; set; }
+        public int InstanceStatusId { get; set; }
         public string Comment { get; set; }
         public DateTime CreateDate { get; set; }
         public string CreatedBy { get; set; }
@@ -176,7 +176,7 @@ namespace DSA_lims
         public string Email { get; set; }
         public string Phone { get; set; }
         public int AssignmentCounter { get; set; }
-        public bool InUse { get; set; }
+        public int InstanceStatusId { get; set; }
         public string Comment { get; set; }
         public DateTime CreateDate { get; set; }
         public string CreatedBy { get; set; }
@@ -193,7 +193,7 @@ namespace DSA_lims
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public bool InUse { get; set; }
+        public int InstanceStatusId { get; set; }
         public string Comment { get; set; }
         public DateTime CreateDate { get; set; }
         public string CreatedBy { get; set; }
@@ -211,7 +211,7 @@ namespace DSA_lims
         public Guid Id { get; set; }
         public Guid MainProjectId { get; set; }
         public string Name { get; set; }
-        public bool InUse { get; set; }
+        public int InstanceStatusId { get; set; }
         public string Comment { get; set; }
         public DateTime CreateDate { get; set; }
         public string CreatedBy { get; set; }
@@ -231,7 +231,7 @@ namespace DSA_lims
         public string Address { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
-        public bool InUse { get; set; }
+        public int InstanceStatusId { get; set; }
         public string Comment { get; set; }
         public DateTime CreateDate { get; set; }
         public string CreatedBy { get; set; }

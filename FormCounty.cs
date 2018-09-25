@@ -66,7 +66,7 @@ namespace DSA_lims
                     reader.Read();
                     tbName.Text = reader["name"].ToString();
                     tbNumber.Text = reader["county_number"].ToString();
-                    cbInUse.Checked = Convert.ToBoolean(reader["in_use"]);                    
+                    cbInUse.Checked = InstanceStatus.IsActive(reader["instance_status_id"]);
                     County.CreateDate = Convert.ToDateTime(reader["create_date"]);
                     County.CreatedBy = reader["created_by"].ToString();
                     County.UpdateDate = Convert.ToDateTime(reader["update_date"]);
@@ -97,7 +97,7 @@ namespace DSA_lims
 
             County.Name = tbName.Text.Trim();
             County.Number = Convert.ToInt32(tbNumber.Text.Trim());
-            County.InUse = cbInUse.Checked;
+            County.InstanceStatusId = cbInUse.Checked ? 1 : 2;
 
             bool success;
             if (County.Id == Guid.Empty)
@@ -130,7 +130,7 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@id", County.Id);
                 cmd.Parameters.AddWithValue("@name", County.Name);
                 cmd.Parameters.AddWithValue("@county_number", County.Number);
-                cmd.Parameters.AddWithValue("@in_use", County.InUse);
+                cmd.Parameters.AddWithValue("@instance_status_id", County.InstanceStatusId);
                 cmd.Parameters.AddWithValue("@create_date", County.CreateDate);
                 cmd.Parameters.AddWithValue("@created_by", County.CreatedBy);
                 cmd.Parameters.AddWithValue("@update_date", County.UpdateDate);
@@ -173,7 +173,7 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@id", County.Id);
                 cmd.Parameters.AddWithValue("@name", County.Name);
                 cmd.Parameters.AddWithValue("@county_number", County.Number);                
-                cmd.Parameters.AddWithValue("@in_use", County.InUse);                
+                cmd.Parameters.AddWithValue("@instance_status_id", County.InstanceStatusId);                
                 cmd.Parameters.AddWithValue("@update_date", County.UpdateDate);
                 cmd.Parameters.AddWithValue("@updated_by", County.UpdatedBy);
                 cmd.ExecuteNonQuery();

@@ -31,6 +31,23 @@ namespace DSA_lims
         Delete
     }
 
+    public static class InstanceStatus
+    {        
+        public static int Eval(object o)
+        {
+            return Convert.ToInt32(o);
+        }
+
+        public static bool IsActive(object o)
+        {
+            return Convert.ToInt32(o) == Active;
+        }
+
+        public static int Active { get { return 1; } }
+        public static int Inactive { get { return 2; } }
+        public static int Deleted { get { return 3; } }
+    }
+
     public class Tag<I, N>
     {
         public Tag()

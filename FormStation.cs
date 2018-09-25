@@ -69,7 +69,7 @@ namespace DSA_lims
                     tbLatitude.Text = reader["latitude"].ToString();
                     tbLongitude.Text = reader["longitude"].ToString();
                     tbAltitude.Text = reader["altitude"].ToString();
-                    cbInUse.Checked = Convert.ToBoolean(reader["in_use"]);
+                    cbInUse.Checked = InstanceStatus.IsActive(reader["instance_status_id"]);
                     tbComment.Text = reader["comment"].ToString();
                     Station.CreateDate = Convert.ToDateTime(reader["create_date"]);
                     Station.CreatedBy = reader["created_by"].ToString();
@@ -115,7 +115,7 @@ namespace DSA_lims
             Station.Latitude = Convert.ToDouble(tbLatitude.Text.Trim());
             Station.Longitude = Convert.ToDouble(tbLongitude.Text.Trim());
             Station.Altitude = Convert.ToDouble(tbAltitude.Text.Trim());
-            Station.InUse = cbInUse.Checked;
+            Station.InstanceStatusId = cbInUse.Checked ? 1 : 2;
             Station.Comment = tbComment.Text.Trim();
 
             bool success;
@@ -151,7 +151,7 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@latitude", Station.Latitude);
                 cmd.Parameters.AddWithValue("@longitude", Station.Longitude);
                 cmd.Parameters.AddWithValue("@altitude", Station.Altitude);
-                cmd.Parameters.AddWithValue("@in_use", Station.InUse);
+                cmd.Parameters.AddWithValue("@instance_status_id", Station.InstanceStatusId);
                 cmd.Parameters.AddWithValue("@comment", Station.Comment);
                 cmd.Parameters.AddWithValue("@create_date", Station.CreateDate);
                 cmd.Parameters.AddWithValue("@created_by", Station.CreatedBy);
@@ -197,7 +197,7 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@latitude", Station.Latitude);
                 cmd.Parameters.AddWithValue("@longitude", Station.Longitude);
                 cmd.Parameters.AddWithValue("@altitude", Station.Altitude);
-                cmd.Parameters.AddWithValue("@in_use", Station.InUse);
+                cmd.Parameters.AddWithValue("@instance_status_id", Station.InstanceStatusId);
                 cmd.Parameters.AddWithValue("@comment", Station.Comment);
                 cmd.Parameters.AddWithValue("@update_date", Station.UpdateDate);
                 cmd.Parameters.AddWithValue("@updated_by", Station.UpdatedBy);

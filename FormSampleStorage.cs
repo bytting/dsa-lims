@@ -66,7 +66,7 @@ namespace DSA_lims
                     reader.Read();
                     tbName.Text = reader["name"].ToString();
                     tbAddress.Text = reader["address"].ToString();                    
-                    cbInUse.Checked = Convert.ToBoolean(reader["in_use"]);
+                    cbInUse.Checked = InstanceStatus.IsActive(reader["instance_status_id"]);
                     tbComment.Text = reader["comment"].ToString();
                     SampleStorage.CreateDate = Convert.ToDateTime(reader["create_date"]);
                     SampleStorage.CreatedBy = reader["created_by"].ToString();
@@ -92,7 +92,7 @@ namespace DSA_lims
 
             SampleStorage.Name = tbName.Text.Trim();
             SampleStorage.Address = tbAddress.Text.Trim();
-            SampleStorage.InUse = cbInUse.Checked;
+            SampleStorage.InstanceStatusId = cbInUse.Checked ? 1 : 2;
             SampleStorage.Comment = tbComment.Text.Trim();
 
             bool success;
@@ -126,7 +126,7 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@id", SampleStorage.Id);
                 cmd.Parameters.AddWithValue("@name", SampleStorage.Name);
                 cmd.Parameters.AddWithValue("@address", SampleStorage.Address);                
-                cmd.Parameters.AddWithValue("@in_use", SampleStorage.InUse);
+                cmd.Parameters.AddWithValue("@instance_status_id", SampleStorage.InstanceStatusId);
                 cmd.Parameters.AddWithValue("@comment", SampleStorage.Comment);
                 cmd.Parameters.AddWithValue("@create_date", SampleStorage.CreateDate);
                 cmd.Parameters.AddWithValue("@created_by", SampleStorage.CreatedBy);
@@ -170,7 +170,7 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@id", SampleStorage.Id);
                 cmd.Parameters.AddWithValue("@name", SampleStorage.Name);
                 cmd.Parameters.AddWithValue("@address", SampleStorage.Address);                
-                cmd.Parameters.AddWithValue("@in_use", SampleStorage.InUse);
+                cmd.Parameters.AddWithValue("@instance_status_id", SampleStorage.InstanceStatusId);
                 cmd.Parameters.AddWithValue("@comment", SampleStorage.Comment);
                 cmd.Parameters.AddWithValue("@update_date", SampleStorage.UpdateDate);
                 cmd.Parameters.AddWithValue("@updated_by", SampleStorage.UpdatedBy);

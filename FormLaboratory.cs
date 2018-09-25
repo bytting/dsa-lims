@@ -68,7 +68,7 @@ namespace DSA_lims
                     tbAddress.Text = reader["address"].ToString();
                     tbEmail.Text = reader["email"].ToString();
                     tbPhone.Text = reader["phone"].ToString();
-                    cbInUse.Checked = Convert.ToBoolean(reader["in_use"]);
+                    cbInUse.Checked = InstanceStatus.IsActive(reader["instance_status_id"]);
                     tbComment.Text = reader["comment"].ToString();
 
                     Laboratory.AssignmentCounter = Convert.ToInt32(reader["assignment_counter"]);
@@ -105,7 +105,7 @@ namespace DSA_lims
             Laboratory.Address = tbAddress.Text.Trim();
             Laboratory.Email = tbEmail.Text.Trim();
             Laboratory.Phone = tbPhone.Text.Trim();
-            Laboratory.InUse = cbInUse.Checked;
+            Laboratory.InstanceStatusId = cbInUse.Checked ? 1 : 2;
             Laboratory.Comment = tbComment.Text.Trim();
 
             bool success;
@@ -144,7 +144,7 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@email", Laboratory.Email);
                 cmd.Parameters.AddWithValue("@phone", Laboratory.Phone);
                 cmd.Parameters.AddWithValue("@assignment_counter", Laboratory.AssignmentCounter);
-                cmd.Parameters.AddWithValue("@in_use", Laboratory.InUse);
+                cmd.Parameters.AddWithValue("@instance_status_id", Laboratory.InstanceStatusId);
                 cmd.Parameters.AddWithValue("@comment", Laboratory.Comment);
                 cmd.Parameters.AddWithValue("@create_date", Laboratory.CreateDate);
                 cmd.Parameters.AddWithValue("@created_by", Laboratory.CreatedBy);
@@ -191,7 +191,7 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@address", Laboratory.Address);
                 cmd.Parameters.AddWithValue("@email", Laboratory.Email);
                 cmd.Parameters.AddWithValue("@phone", Laboratory.Phone);
-                cmd.Parameters.AddWithValue("@in_use", Laboratory.InUse);
+                cmd.Parameters.AddWithValue("@instance_status_id", Laboratory.InstanceStatusId);
                 cmd.Parameters.AddWithValue("@comment", Laboratory.Comment);
                 cmd.Parameters.AddWithValue("@update_date", Laboratory.UpdateDate);
                 cmd.Parameters.AddWithValue("@updated_by", Laboratory.UpdatedBy);

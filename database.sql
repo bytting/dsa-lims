@@ -40,6 +40,13 @@ insert into instance_status values(2, 'Inactive')
 insert into instance_status values(3, 'Deleted')
 go
 
+create proc csp_select_instance_status	
+as 
+	select * 
+	from instance_status
+	order by id
+go
+
 /*===========================================================================*/
 /* tbl workflow_status */
 
@@ -54,6 +61,13 @@ go
 insert into workflow_status values(1, 'Construction')
 insert into workflow_status values(2, 'Complete')
 insert into workflow_status values(3, 'Rejected')
+go
+
+create proc csp_select_workflow_status	
+as 
+	select * 
+	from workflow_status
+	order by id
 go
 
 /*===========================================================================*/
@@ -182,6 +196,13 @@ go
 insert into preparation_unit values(1, 'Wet weight (g)')
 insert into preparation_unit values(2, 'Dry weight (g)')
 insert into preparation_unit values(3, 'Volume (L)')
+go
+
+create proc csp_select_preparation_units
+as 
+	select *
+	from preparation_unit
+	order by name
 go
 
 /*===========================================================================*/
@@ -1002,20 +1023,10 @@ go
 create proc csp_select_preparation_geometries
 	@instance_status_level int
 as
-	select 
-		pb.id,
-		pb.name,
-		pb.min_fill_height_mm, 
-		pb.max_fill_height_mm, 
-		st.name as 'instance_status_name',
-		pb.comment,
-		pb.create_date,
-		pb.created_by,
-		pb.update_date,
-		pb.updated_by
-	from preparation_box pb, instance_status st
-	where pb.instance_status_id = st.id and pb.instance_status_id <= @instance_status_level
-	order by pb.name
+	select *
+	from preparation_geometry
+	where instance_status_id <= @instance_status_level
+	order by name
 go
 
 create proc csp_select_preparation_geometries_flat
@@ -1032,7 +1043,7 @@ as
 		pb.created_by,
 		pb.update_date,
 		pb.updated_by
-	from preparation_box pb, instance_status st
+	from preparation_geometry pb, instance_status st
 	where pb.instance_status_id = st.id and pb.instance_status_id <= @instance_status_level
 	order by pb.name
 go
@@ -1077,7 +1088,7 @@ create table preparation (
 	sample_id uniqueidentifier NOT NULL,
 	assignment_id uniqueidentifier default NULL,
 	laboratory_id uniqueidentifier NOT NULL,
-	preparation_box_id uniqueidentifier NOT NULL,
+	preparation_geometry_id uniqueidentifier NOT NULL,
 	preparation_method_id uniqueidentifier NOT NULL,
 	workflow_status_id int default 1,
 	amount float default 0,
@@ -1490,7 +1501,7 @@ as
 		nt.update_date,
 		nt.updated_by
 	from nuclide_transmission nt, nuclide n, instance_status st
-	where nt.nuclide_id = @nuclide_id and nt.nuclide_id = n.id and nt.instance_status_id <= @instance_status_level
+	where nt.nuclide_id = @nuclide_id and nt.nuclide_id = n.id and nt.instance_status_id = st.id and nt.instance_status_id <= @instance_status_level
 	order by transmission_from
 go
 

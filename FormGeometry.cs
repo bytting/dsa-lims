@@ -57,7 +57,7 @@ namespace DSA_lims
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                SqlCommand cmd = new SqlCommand("csp_select_geometry", conn);
+                SqlCommand cmd = new SqlCommand("csp_select_preparation_geometry", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@id", gid);
                 using (SqlDataReader reader = cmd.ExecuteReader())
@@ -136,7 +136,7 @@ namespace DSA_lims
                 connection = DB.OpenConnection();
                 transaction = connection.BeginTransaction();                
 
-                SqlCommand cmd = new SqlCommand("csp_insert_geometry", connection, transaction);
+                SqlCommand cmd = new SqlCommand("csp_insert_preparation_geometry", connection, transaction);
                 cmd.CommandType = CommandType.StoredProcedure;
                 Geometry.Id = Guid.NewGuid();
                 cmd.Parameters.AddWithValue("@id", Geometry.Id);
@@ -151,7 +151,7 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@updated_by", Geometry.UpdatedBy);
                 cmd.ExecuteNonQuery();
 
-                DB.AddAuditMessage(connection, transaction, "geometry", Geometry.Id, AuditOperation.Insert, JsonConvert.SerializeObject(Geometry));
+                DB.AddAuditMessage(connection, transaction, "preparation_geometry", Geometry.Id, AuditOperation.Insert, JsonConvert.SerializeObject(Geometry));
 
                 transaction.Commit();
             }
@@ -182,7 +182,7 @@ namespace DSA_lims
                 connection = DB.OpenConnection();
                 transaction = connection.BeginTransaction();
 
-                SqlCommand cmd = new SqlCommand("csp_update_geometry", connection, transaction);
+                SqlCommand cmd = new SqlCommand("csp_update_preparation_geometry", connection, transaction);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@id", Geometry.Id);
                 cmd.Parameters.AddWithValue("@name", Geometry.Name);
@@ -194,7 +194,7 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@updated_by", Geometry.UpdatedBy);
                 cmd.ExecuteNonQuery();
 
-                DB.AddAuditMessage(connection, transaction, "geometry", Geometry.Id, AuditOperation.Update, JsonConvert.SerializeObject(Geometry));
+                DB.AddAuditMessage(connection, transaction, "preparation_geometry", Geometry.Id, AuditOperation.Update, JsonConvert.SerializeObject(Geometry));
 
                 transaction.Commit();
             }

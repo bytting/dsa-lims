@@ -64,7 +64,7 @@ namespace DSA_lims
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                SqlCommand cmd = new SqlCommand("csp_select_energy_line", conn);
+                SqlCommand cmd = new SqlCommand("csp_select_nuclide_transmission", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@id", EnergyLine.Id);
                 using (SqlDataReader reader = cmd.ExecuteReader())
@@ -151,7 +151,7 @@ namespace DSA_lims
                 connection = DB.OpenConnection();
                 transaction = connection.BeginTransaction();
 
-                SqlCommand cmd = new SqlCommand("csp_insert_energy_line", connection, transaction);
+                SqlCommand cmd = new SqlCommand("csp_insert_nuclide_transmission", connection, transaction);
                 cmd.CommandType = CommandType.StoredProcedure;
                 EnergyLine.Id = Guid.NewGuid();
                 cmd.Parameters.AddWithValue("@id", EnergyLine.Id);
@@ -205,7 +205,7 @@ namespace DSA_lims
                 connection = DB.OpenConnection();            
                 transaction = connection.BeginTransaction();
 
-                SqlCommand cmd = new SqlCommand("csp_update_energy_line", connection, transaction);
+                SqlCommand cmd = new SqlCommand("csp_update_nuclide_transmission", connection, transaction);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@id", EnergyLine.Id);
                 cmd.Parameters.AddWithValue("@transmission_from", EnergyLine.TransmissionFrom);

@@ -269,7 +269,7 @@ namespace DSA_lims
             {
                 decayTypeList.Clear();
 
-                using (SqlDataReader reader = DB.GetDataReader(conn, "select id, name from decay_type order by id", CommandType.Text))
+                using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_decay_types", CommandType.StoredProcedure))
                 {
                     while (reader.Read())
                     {
@@ -291,7 +291,7 @@ namespace DSA_lims
             {
                 preparationUnitList.Clear();
 
-                using (SqlDataReader reader = DB.GetDataReader(conn, "select id, name from preparation_unit order by id", CommandType.Text))
+                using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_preparation_units", CommandType.StoredProcedure))
                 {
                     while (reader.Read())
                     {
@@ -335,7 +335,7 @@ namespace DSA_lims
             {
                 workflowStatusList.Clear();                       
 
-                using (SqlDataReader reader = DB.GetDataReader(conn, "select id, name from workflow_status order by id", CommandType.Text))
+                using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_workflow_status", CommandType.StoredProcedure))
                 {
                     while (reader.Read())
                     {
@@ -426,7 +426,7 @@ namespace DSA_lims
 
                 TreeNode root = treeSampleTypes.Nodes.Add(SampleTypesRootName, SampleTypesRootName);
                 
-                using (SqlDataReader reader = DB.GetDataReader(conn, "select id, name from sample_type order by name", CommandType.Text))
+                using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_sample_types_short", CommandType.StoredProcedure))
                 {
                     while (reader.Read())
                     {
@@ -471,7 +471,8 @@ namespace DSA_lims
                 treeProjects.Nodes.Clear();
                 TreeNode root = treeProjects.Nodes.Add(ProjectsRootName, ProjectsRootName);
 
-                using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_main_projects_short", CommandType.StoredProcedure))
+                using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_main_projects_short", CommandType.StoredProcedure, 
+                    new SqlParameter("@instance_status_level", InstanceStatus.Deleted)))
                 {
                     while (reader.Read())
                     {
@@ -489,7 +490,11 @@ namespace DSA_lims
                         continue;
 
                     Guid parent_id = new Guid(node.Tag.ToString());
-                    using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_sub_projects_for_main_project", CommandType.StoredProcedure, new[] { new SqlParameter("@parent_id", parent_id) }))
+                    using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_sub_projects_for_main_project", CommandType.StoredProcedure, 
+                        new[] {
+                            new SqlParameter("@parent_id", parent_id),
+                            new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
+                        }))
                     {
                         while (reader.Read())
                         {
@@ -513,7 +518,8 @@ namespace DSA_lims
         private void PopulateLaboratories(SqlConnection conn)
         {
             // Set data source
-            gridMetaLab.DataSource = DB.GetDataTable(conn, "csp_select_laboratories", CommandType.StoredProcedure);
+            gridMetaLab.DataSource = DB.GetDataTable(conn, "csp_select_laboratories_flat", CommandType.StoredProcedure, 
+                new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
 
             // Set UI state
             gridMetaLab.Columns["id"].Visible = false;
@@ -529,14 +535,14 @@ namespace DSA_lims
             gridMetaLab.Columns["address"].HeaderText = "Address";
             gridMetaLab.Columns["email"].HeaderText = "Email";
             gridMetaLab.Columns["phone"].HeaderText = "Phone";
-            gridMetaLab.Columns["instance_status_id"].HeaderText = "Status";
+            gridMetaLab.Columns["instance_status_name"].HeaderText = "Status";
         }
 
         private void PopulateUsers(SqlConnection conn)
         {
             // Set data source
             gridMetaUsers.DataSource = DB.GetDataTable(conn, "csp_select_accounts_flat", CommandType.StoredProcedure, 
-                new SqlParameter("@instance_status_level", 3));
+                new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
 
             gridMetaUsers.Columns["password_hash"].Visible = false;
             gridMetaUsers.Columns["create_date"].Visible = false;
@@ -553,7 +559,8 @@ namespace DSA_lims
         private void PopulateNuclides(SqlConnection conn)
         {
             // Set data source
-            gridSysNuclides.DataSource = DB.GetDataTable(conn, "csp_select_nuclides_flat", CommandType.StoredProcedure);
+            gridSysNuclides.DataSource = DB.GetDataTable(conn, "csp_select_nuclides_flat", CommandType.StoredProcedure, 
+                new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
 
             // Set UI state
             gridSysNuclides.Columns["id"].Visible = false;
@@ -568,26 +575,30 @@ namespace DSA_lims
             gridSysNuclides.Columns["neutron_count"].HeaderText = "Neutrons";
             gridSysNuclides.Columns["half_life_year"].HeaderText = "T 1/2 (Years)";
             gridSysNuclides.Columns["half_life_uncertainty"].HeaderText = "T 1/2 Unc. (Years)";
-            gridSysNuclides.Columns["decay_type"].HeaderText = "Decay type";
+            gridSysNuclides.Columns["decay_type_name"].HeaderText = "Decay type";
             gridSysNuclides.Columns["kxray_energy"].HeaderText = "KXray Energy";
             gridSysNuclides.Columns["fluorescence_yield"].HeaderText = "Fluorescence Yield";
+            gridSysNuclides.Columns["instance_status_name"].HeaderText = "Status";
         }
 
         private void PopulateEnergyLines(SqlConnection conn, Guid nid)
         {
             // Set data source
-            gridSysNuclideTrans.DataSource = DB.GetDataTable(conn, "csp_select_energy_lines_for_nuclide", CommandType.StoredProcedure, 
-                new [] { new SqlParameter("@nuclide_id", nid) });
+            gridSysNuclideTrans.DataSource = DB.GetDataTable(conn, "csp_select_nuclide_transmissions_for_nuclide_flat", CommandType.StoredProcedure, 
+                new [] {
+                    new SqlParameter("@nuclide_id", nid),
+                    new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
+                });
 
             // Set UI state
-            gridSysNuclideTrans.Columns["id"].Visible = false;            
-            gridSysNuclideTrans.Columns["nuclide_id"].Visible = false;
+            gridSysNuclideTrans.Columns["id"].Visible = false;                        
             gridSysNuclideTrans.Columns["comment"].Visible = false;
             gridSysNuclideTrans.Columns["created_by"].Visible = false;
             gridSysNuclideTrans.Columns["create_date"].Visible = false;
             gridSysNuclideTrans.Columns["updated_by"].Visible = false;
             gridSysNuclideTrans.Columns["update_date"].Visible = false;
 
+            gridSysNuclideTrans.Columns["nuclide_name"].HeaderText = "Nuclide";
             gridSysNuclideTrans.Columns["transmission_from"].HeaderText = "Tr. from";
             gridSysNuclideTrans.Columns["transmission_to"].HeaderText = "Tr. to";
             gridSysNuclideTrans.Columns["energy"].HeaderText = "Energy";
@@ -598,12 +609,14 @@ namespace DSA_lims
             gridSysNuclideTrans.Columns["probability_of_decay_uncertainty"].HeaderText = "POD Unc.";
             gridSysNuclideTrans.Columns["total_internal_conversion"].HeaderText = "TIC conv.";
             gridSysNuclideTrans.Columns["kshell_conversion"].HeaderText = "KShell conv.";
+            gridSysNuclideTrans.Columns["instance_status_name"].HeaderText = "Status";
         }
 
         private void PopulateGeometries(SqlConnection conn)
         {
             // Set data source
-            gridSysGeom.DataSource = DB.GetDataTable(conn, "csp_select_geometries_flat", CommandType.StoredProcedure);
+            gridSysGeom.DataSource = DB.GetDataTable(conn, "csp_select_preparation_geometries_flat", CommandType.StoredProcedure, 
+                new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
 
             // Set UI state
             gridSysGeom.Columns["id"].Visible = false;
@@ -614,13 +627,15 @@ namespace DSA_lims
             gridSysGeom.Columns["update_date"].Visible = false;
 
             gridSysGeom.Columns["name"].HeaderText = "Name";
+            gridSysGeom.Columns["instance_status_name"].HeaderText = "Status";
             // FIXME
         }
 
         private void PopulateCounties(SqlConnection conn)
         {
             // Set data source
-            gridSysCounty.DataSource = DB.GetDataTable(conn, "csp_select_counties_flat", CommandType.StoredProcedure);
+            gridSysCounty.DataSource = DB.GetDataTable(conn, "csp_select_counties_flat", CommandType.StoredProcedure, 
+                new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
 
             // Set UI state
             gridSysCounty.Columns["id"].Visible = false;
@@ -631,32 +646,36 @@ namespace DSA_lims
 
             gridSysCounty.Columns["name"].HeaderText = "Name";
             gridSysCounty.Columns["county_number"].HeaderText = "Number";
-            gridSysCounty.Columns["instance_status_id"].HeaderText = "Status";
+            gridSysCounty.Columns["instance_status_name"].HeaderText = "Status";
         }
 
         private void PopulateMunicipalities(SqlConnection conn, Guid cid)
         {
             // Set data source
-            gridSysMunicipality.DataSource = DB.GetDataTable(conn, "csp_select_municipalities_for_county", CommandType.StoredProcedure,
-                new[] { new SqlParameter("@county_id", cid) });
+            gridSysMunicipality.DataSource = DB.GetDataTable(conn, "csp_select_municipalities_for_county_flat", CommandType.StoredProcedure,
+                new[] {
+                    new SqlParameter("@county_id", cid),
+                    new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
+                });
 
             // Set UI state
-            gridSysMunicipality.Columns["id"].Visible = false;
-            gridSysMunicipality.Columns["county_id"].Visible = false;
+            gridSysMunicipality.Columns["id"].Visible = false;            
             gridSysMunicipality.Columns["created_by"].Visible = false;
             gridSysMunicipality.Columns["create_date"].Visible = false;
             gridSysMunicipality.Columns["updated_by"].Visible = false;
             gridSysMunicipality.Columns["update_date"].Visible = false;
 
             gridSysMunicipality.Columns["name"].HeaderText = "Name";
+            gridSysMunicipality.Columns["county_name"].HeaderText = "County";
             gridSysMunicipality.Columns["municipality_number"].HeaderText = "Number";
-            gridSysMunicipality.Columns["instance_status_id"].HeaderText = "Status";
+            gridSysMunicipality.Columns["instance_status_name"].HeaderText = "Status";
         }
 
         private void PopulateStations(SqlConnection conn)
         {
             // Set data source
-            DataTable dt = DB.GetDataTable(conn, "csp_select_stations_flat", CommandType.StoredProcedure);
+            DataTable dt = DB.GetDataTable(conn, "csp_select_stations_flat", CommandType.StoredProcedure, 
+                new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
             gridMetaStation.DataSource = dt;
 
             // Set UI state
@@ -671,7 +690,7 @@ namespace DSA_lims
             gridMetaStation.Columns["latitude"].HeaderText = "Latitude";
             gridMetaStation.Columns["longitude"].HeaderText = "Longitude";
             gridMetaStation.Columns["altitude"].HeaderText = "Altitude";
-            gridMetaStation.Columns["instance_status_id"].HeaderText = "Status";            
+            gridMetaStation.Columns["instance_status_name"].HeaderText = "Status";            
 
             cboxSampleInfoStations.Items.Clear();
             foreach (DataRow row in dt.Rows)
@@ -685,7 +704,8 @@ namespace DSA_lims
         private void PopulateSampleStorage(SqlConnection conn)
         {
             // Set data source
-            gridMetaSampleStorage.DataSource = DB.GetDataTable(conn, "csp_select_sample_storages_flat", CommandType.StoredProcedure);
+            gridMetaSampleStorage.DataSource = DB.GetDataTable(conn, "csp_select_sample_storages_flat", CommandType.StoredProcedure, 
+                new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
 
             // Set UI state
             gridMetaSampleStorage.Columns["id"].Visible = false;
@@ -697,13 +717,14 @@ namespace DSA_lims
 
             gridMetaSampleStorage.Columns["name"].HeaderText = "Name";
             gridMetaSampleStorage.Columns["address"].HeaderText = "Address";
-            gridMetaSampleStorage.Columns["instance_status"].HeaderText = "Status";
+            gridMetaSampleStorage.Columns["instance_status_name"].HeaderText = "Status";
         }
 
         private void PopulateSamplers(SqlConnection conn)
         {
             // Set data source
-            DataTable dt = DB.GetDataTable(conn, "csp_select_samplers_flat", CommandType.StoredProcedure);
+            DataTable dt = DB.GetDataTable(conn, "csp_select_samplers_flat", CommandType.StoredProcedure, 
+                new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
             gridMetaSamplers.DataSource = dt;
 
             // Set UI state
@@ -718,7 +739,7 @@ namespace DSA_lims
             gridMetaSamplers.Columns["address"].HeaderText = "Address";
             gridMetaSamplers.Columns["email"].HeaderText = "Email";
             gridMetaSamplers.Columns["phone"].HeaderText = "Phone";
-            gridMetaSamplers.Columns["instance_status"].HeaderText = "Status";
+            gridMetaSamplers.Columns["instance_status_name"].HeaderText = "Status";
 
             cboxSampleInfoSampler.Items.Clear();
             foreach (DataRow row in dt.Rows)

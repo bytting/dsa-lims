@@ -153,7 +153,7 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@updated_by", Geometry.UpdatedBy);
                 cmd.ExecuteNonQuery();
 
-                DB.AddAuditMessage(connection, transaction, "preparation_geometry", Geometry.Id, AuditOperation.Insert, JsonConvert.SerializeObject(Geometry));
+                DB.AddAuditMessage(connection, transaction, "preparation_geometry", Geometry.Id, AuditOperationType.Insert, JsonConvert.SerializeObject(Geometry));
 
                 transaction.Commit();
             }
@@ -196,7 +196,7 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@updated_by", Geometry.UpdatedBy);
                 cmd.ExecuteNonQuery();
 
-                DB.AddAuditMessage(connection, transaction, "preparation_geometry", Geometry.Id, AuditOperation.Update, JsonConvert.SerializeObject(Geometry));
+                DB.AddAuditMessage(connection, transaction, "preparation_geometry", Geometry.Id, AuditOperationType.Update, JsonConvert.SerializeObject(Geometry));
 
                 transaction.Commit();
             }

@@ -154,7 +154,7 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@updated_by", Laboratory.UpdatedBy);
                 cmd.ExecuteNonQuery();
 
-                DB.AddAuditMessage(connection, transaction, "laboratory", Laboratory.Id, AuditOperation.Insert, JsonConvert.SerializeObject(Laboratory));
+                DB.AddAuditMessage(connection, transaction, "laboratory", Laboratory.Id, AuditOperationType.Insert, JsonConvert.SerializeObject(Laboratory));
 
                 transaction.Commit();
             }
@@ -199,7 +199,7 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@updated_by", Laboratory.UpdatedBy);
                 cmd.ExecuteNonQuery();
 
-                DB.AddAuditMessage(connection, transaction, "laboratory", Laboratory.Id, AuditOperation.Update, JsonConvert.SerializeObject(Laboratory));
+                DB.AddAuditMessage(connection, transaction, "laboratory", Laboratory.Id, AuditOperationType.Update, JsonConvert.SerializeObject(Laboratory));
 
                 transaction.Commit();
             }

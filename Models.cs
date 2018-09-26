@@ -19,13 +19,20 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 namespace DSA_lims
 {
     public abstract class ModelBase
     {
+        public ModelBase() {}
+
+        public ModelBase(Guid id, string name)
+        {
+            Id = id;
+            Name = name;
+        }
+
         public Guid Id { get; set; }
         public string Name { get; set; }
 
@@ -41,7 +48,10 @@ namespace DSA_lims
     }
 
     public class NuclideModel : ModelBase
-    {        
+    {
+        public NuclideModel() {}
+        public NuclideModel(Guid id, string name) : base(id, name) {}
+
         public int ProtonCount { get; set; }
         public int NeutronCount { get; set; }
         public double HalfLife { get; set; }
@@ -55,6 +65,9 @@ namespace DSA_lims
 
     public class EnergyLineModel : ModelBase
     {
+        public EnergyLineModel() { }
+        public EnergyLineModel(Guid id, string name) : base(id, name) { }
+
         public Guid NuclideId { get; set; }
         public double TransmissionFrom { get; set; }
         public double TransmissionTo { get; set; }
@@ -76,7 +89,10 @@ namespace DSA_lims
     }
 
     public class GeometryModel : ModelBase
-    {        
+    {
+        public GeometryModel() { }
+        public GeometryModel(Guid id, string name) : base(id, name) { }
+
         public double MinFillHeight { get; set; }
         public double MaxFillHeight { get; set; }
         public int InstanceStatusId { get; set; }
@@ -84,20 +100,29 @@ namespace DSA_lims
     }
 
     public class CountyModel : ModelBase
-    {        
+    {
+        public CountyModel() { }
+        public CountyModel(Guid id, string name) : base(id, name) { }
+
         public int Number { get; set; }
         public int InstanceStatusId { get; set; }        
     }
 
     public class MunicipalityModel : ModelBase
-    {        
+    {
+        public MunicipalityModel() { }
+        public MunicipalityModel(Guid id, string name) : base(id, name) { }
+
         public Guid CountyId { get; set; }    
         public int Number { get; set; }
         public int InstanceStatusId { get; set; }        
     }
 
     public class StationModel : ModelBase
-    {        
+    {
+        public StationModel() { }
+        public StationModel(Guid id, string name) : base(id, name) { }
+
         public double Latitude { get; set; }
         public double Longitude { get; set; }
         public double Altitude { get; set; }
@@ -106,14 +131,20 @@ namespace DSA_lims
     }
 
     public class SampleStorageModel : ModelBase
-    {        
+    {
+        public SampleStorageModel() { }
+        public SampleStorageModel(Guid id, string name) : base(id, name) { }
+
         public string Address { get; set; }
         public int InstanceStatusId { get; set; }
         public string Comment { get; set; }        
     }
 
     public class LaboratoryModel : ModelBase
-    {        
+    {
+        public LaboratoryModel() { }
+        public LaboratoryModel(Guid id, string name) : base(id, name) { }
+
         public string NamePrefix { get; set; }
         public string Address { get; set; }
         public string Email { get; set; }
@@ -124,18 +155,27 @@ namespace DSA_lims
     }
 
     public class MainProjectModel : ModelBase
-    {        
+    {
+        public MainProjectModel() { }
+        public MainProjectModel(Guid id, string name) : base(id, name) { }
+
         public int InstanceStatusId { get; set; }
         public string Comment { get; set; }        
     }
 
     public class SubProjectModel : MainProjectModel
-    {        
+    {
+        public SubProjectModel() { }
+        public SubProjectModel(Guid id, string name) : base(id, name) { }
+
         public Guid MainProjectId { get; set; }
     }
 
     public class SamplerModel : ModelBase
-    {        
+    {
+        public SamplerModel() { }
+        public SamplerModel(Guid id, string name) : base(id, name) { }
+
         public string Address { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
@@ -144,16 +184,24 @@ namespace DSA_lims
     }
 
     public class SampleComponentModel : ModelBase
-    {        
+    {
+        public SampleComponentModel() { }
+        public SampleComponentModel(Guid id, string name) : base(id, name) { }
     }
 
     public class SampleParameterModel : ModelBase
-    {        
+    {
+        public SampleParameterModel() { }
+        public SampleParameterModel(Guid id, string name) : base(id, name) { }
+
         public string Type { get; set; }
     }
 
     public class SampleTypeModel : ModelBase
     {
+        public SampleTypeModel() { }
+        public SampleTypeModel(Guid id, string name) : base(id, name) { }
+
         public string ShortName { get; set; }
         public string LongName { get { return ShortName + " -> " + Name;  } }
 

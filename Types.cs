@@ -19,19 +19,18 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Text;
 
 namespace DSA_lims
 {
-    public enum StatusMessage
+    public enum StatusMessageType
     {
         Success,
         Warning,
         Error
     }
 
-    public enum AuditOperation
+    public enum AuditOperationType
     {
         Insert,
         Update,
@@ -55,13 +54,13 @@ namespace DSA_lims
         public static int Deleted { get { return 3; } }
     }
 
-    public class Tag<I, N>
+    public class Lemma<I, N>
     {
-        public Tag()
+        public Lemma()
         {
         }
 
-        public Tag(I id, N name)
+        public Lemma(I id, N name)
         {
             Id = id;
             Name = name;

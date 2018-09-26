@@ -211,7 +211,7 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@updated_by", Nuclide.UpdatedBy);
                 cmd.ExecuteNonQuery();
 
-                DB.AddAuditMessage(connection, transaction, "nuclide", Nuclide.Id, AuditOperation.Insert, JsonConvert.SerializeObject(Nuclide));
+                DB.AddAuditMessage(connection, transaction, "nuclide", Nuclide.Id, AuditOperationType.Insert, JsonConvert.SerializeObject(Nuclide));
 
                 transaction.Commit();
             }
@@ -259,7 +259,7 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@updated_by", Nuclide.UpdatedBy);
                 cmd.ExecuteNonQuery();
 
-                DB.AddAuditMessage(connection, transaction, "nuclide", Nuclide.Id, AuditOperation.Update, JsonConvert.SerializeObject(Nuclide));
+                DB.AddAuditMessage(connection, transaction, "nuclide", Nuclide.Id, AuditOperationType.Update, JsonConvert.SerializeObject(Nuclide));
 
                 transaction.Commit();
             }

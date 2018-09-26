@@ -139,7 +139,7 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@updated_by", County.UpdatedBy);
                 cmd.ExecuteNonQuery();
 
-                DB.AddAuditMessage(connection, transaction, "county", County.Id, AuditOperation.Insert, JsonConvert.SerializeObject(County));
+                DB.AddAuditMessage(connection, transaction, "county", County.Id, AuditOperationType.Insert, JsonConvert.SerializeObject(County));
 
                 transaction.Commit();
             }
@@ -180,7 +180,7 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@updated_by", County.UpdatedBy);
                 cmd.ExecuteNonQuery();
 
-                DB.AddAuditMessage(connection, transaction, "county", County.Id, AuditOperation.Update, JsonConvert.SerializeObject(County));
+                DB.AddAuditMessage(connection, transaction, "county", County.Id, AuditOperationType.Update, JsonConvert.SerializeObject(County));
 
                 transaction.Commit();
             }

@@ -133,7 +133,7 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@updated_by", MainProject.UpdatedBy);
                 cmd.ExecuteNonQuery();
 
-                DB.AddAuditMessage(connection, transaction, "project", MainProject.Id, AuditOperation.Insert, JsonConvert.SerializeObject(MainProject));
+                DB.AddAuditMessage(connection, transaction, "project", MainProject.Id, AuditOperationType.Insert, JsonConvert.SerializeObject(MainProject));
 
                 transaction.Commit();
             }
@@ -174,7 +174,7 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@updated_by", MainProject.UpdatedBy);
                 cmd.ExecuteNonQuery();
 
-                DB.AddAuditMessage(connection, transaction, "project", MainProject.Id, AuditOperation.Update, JsonConvert.SerializeObject(MainProject));
+                DB.AddAuditMessage(connection, transaction, "project", MainProject.Id, AuditOperationType.Update, JsonConvert.SerializeObject(MainProject));
 
                 transaction.Commit();
             }

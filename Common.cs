@@ -19,9 +19,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace DSA_lims
 {
@@ -29,12 +27,12 @@ namespace DSA_lims
     {
         public static string Username { get; set; }
 
-        public static List<Tag<int, string>> InstanceStatusList = new List<Tag<int, string>>();
-        public static List<Tag<int, string>> DecayTypeList = new List<Tag<int, string>>();
-        public static List<Tag<int, string>> PreparationUnitList = new List<Tag<int, string>>();
-        public static List<Tag<int, string>> UniformActivityUnitList = new List<Tag<int, string>>();
-        public static List<Tag<int, string>> WorkflowStatusList = new List<Tag<int, string>>();
-        public static List<Tag<int, string>> LocationTypeList = new List<Tag<int, string>>();
+        public static List<Lemma<int, string>> InstanceStatusList = new List<Lemma<int, string>>();
+        public static List<Lemma<int, string>> DecayTypeList = new List<Lemma<int, string>>();
+        public static List<Lemma<int, string>> PreparationUnitList = new List<Lemma<int, string>>();
+        public static List<Lemma<int, string>> UniformActivityUnitList = new List<Lemma<int, string>>();
+        public static List<Lemma<int, string>> WorkflowStatusList = new List<Lemma<int, string>>();
+        public static List<Lemma<int, string>> LocationTypeList = new List<Lemma<int, string>>();
 
         public static List<SampleTypeModel> SampleTypes = new List<SampleTypeModel>();
     }

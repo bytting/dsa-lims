@@ -141,7 +141,7 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@updated_by", Sampler.UpdatedBy);
                 cmd.ExecuteNonQuery();
 
-                DB.AddAuditMessage(connection, transaction, "sampler", Sampler.Id, AuditOperation.Insert, JsonConvert.SerializeObject(Sampler));
+                DB.AddAuditMessage(connection, transaction, "sampler", Sampler.Id, AuditOperationType.Insert, JsonConvert.SerializeObject(Sampler));
 
                 transaction.Commit();
             }
@@ -185,7 +185,7 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@updated_by", Sampler.UpdatedBy);
                 cmd.ExecuteNonQuery();
 
-                DB.AddAuditMessage(connection, transaction, "sampler", Sampler.Id, AuditOperation.Update, JsonConvert.SerializeObject(Sampler));
+                DB.AddAuditMessage(connection, transaction, "sampler", Sampler.Id, AuditOperationType.Update, JsonConvert.SerializeObject(Sampler));
 
                 transaction.Commit();
             }

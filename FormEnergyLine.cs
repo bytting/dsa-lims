@@ -176,7 +176,7 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@updated_by", EnergyLine.UpdatedBy);
                 cmd.ExecuteNonQuery();
 
-                DB.AddAuditMessage(connection, transaction, "nuclide_transmission", EnergyLine.Id, AuditOperation.Insert, JsonConvert.SerializeObject(EnergyLine));
+                DB.AddAuditMessage(connection, transaction, "nuclide_transmission", EnergyLine.Id, AuditOperationType.Insert, JsonConvert.SerializeObject(EnergyLine));
 
                 transaction.Commit();
             }
@@ -226,7 +226,7 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@updated_by", EnergyLine.UpdatedBy);
                 cmd.ExecuteNonQuery();
 
-                DB.AddAuditMessage(connection, transaction, "nuclide_transmission", EnergyLine.Id, AuditOperation.Update, JsonConvert.SerializeObject(EnergyLine));
+                DB.AddAuditMessage(connection, transaction, "nuclide_transmission", EnergyLine.Id, AuditOperationType.Update, JsonConvert.SerializeObject(EnergyLine));
 
                 transaction.Commit();
             }

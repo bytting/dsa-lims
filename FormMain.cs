@@ -140,19 +140,19 @@ namespace DSA_lims
             //
         }
 
-        private void SetStatusMessage(string msg, StatusMessage msgLevel = StatusMessage.Success)
+        private void SetStatusMessage(string msg, StatusMessageType msgLevel = StatusMessageType.Success)
         {
             switch(msgLevel)
             {
-                case StatusMessage.Success:
+                case StatusMessageType.Success:
                     lblStatus.Text = StrUtils.makeStatusMessage(msg);
                     lblStatus.ForeColor = SystemColors.ControlText;
                     break;
-                case StatusMessage.Warning:
+                case StatusMessageType.Warning:
                     lblStatus.Text = StrUtils.makeStatusMessage(msg);
                     lblStatus.ForeColor = Color.OrangeRed;
                     break;
-                case StatusMessage.Error:
+                case StatusMessageType.Error:
                     lblStatus.Text = StrUtils.makeErrorMessage(msg);
                     lblStatus.ForeColor = Color.Red;
                     break;
@@ -256,7 +256,7 @@ namespace DSA_lims
                 using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_instance_status", CommandType.StoredProcedure))
                 {
                     while (reader.Read())
-                        Common.InstanceStatusList.Add(new Tag<int, string>(Convert.ToInt32(reader["id"]), reader["name"].ToString()));
+                        Common.InstanceStatusList.Add(new Lemma<int, string>(Convert.ToInt32(reader["id"]), reader["name"].ToString()));
                 }
             }
             catch (Exception ex)
@@ -275,12 +275,8 @@ namespace DSA_lims
 
                 using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_decay_types", CommandType.StoredProcedure))
                 {
-                    while (reader.Read())
-                    {
-                        int id = Convert.ToInt32(reader["id"]);
-                        string name = reader["name"].ToString();
-                        Common.DecayTypeList.Add(new Tag<int, string>(id, name));
-                    }
+                    while (reader.Read())                    
+                        Common.DecayTypeList.Add(new Lemma<int, string>(Convert.ToInt32(reader["id"]), reader["name"].ToString()));
                 }
             }
             catch (Exception ex)
@@ -300,11 +296,7 @@ namespace DSA_lims
                 using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_preparation_units", CommandType.StoredProcedure))
                 {
                     while (reader.Read())
-                    {
-                        int id = Convert.ToInt32(reader["id"]);
-                        string name = reader["name"].ToString();
-                        Common.PreparationUnitList.Add(new Tag<int, string>(id, name));
-                    }
+                        Common.PreparationUnitList.Add(new Lemma<int, string>(Convert.ToInt32(reader["id"]), reader["name"].ToString()));
                 }
             }
             catch (Exception ex)
@@ -324,11 +316,7 @@ namespace DSA_lims
                 using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_uniform_activity_units", CommandType.StoredProcedure))
                 {
                     while (reader.Read())
-                    {
-                        int id = Convert.ToInt32(reader["id"]);
-                        string name = reader["name"].ToString();
-                        Common.UniformActivityUnitList.Add(new Tag<int, string>(id, name));
-                    }
+                        Common.UniformActivityUnitList.Add(new Lemma<int, string>(Convert.ToInt32(reader["id"]), reader["name"].ToString()));
                 }
             }
             catch (Exception ex)
@@ -348,11 +336,7 @@ namespace DSA_lims
                 using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_workflow_status", CommandType.StoredProcedure))
                 {
                     while (reader.Read())
-                    {
-                        int id = Convert.ToInt32(reader["id"]);
-                        string name = reader["name"].ToString();
-                        Common.WorkflowStatusList.Add(new Tag<int, string>(id, name));
-                    }
+                        Common.WorkflowStatusList.Add(new Lemma<int, string>(Convert.ToInt32(reader["id"]), reader["name"].ToString()));
                 }
             }
             catch (Exception ex)
@@ -372,11 +356,7 @@ namespace DSA_lims
                 using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_location_types", CommandType.StoredProcedure))
                 {
                     while (reader.Read())
-                    {
-                        int id = Convert.ToInt32(reader["id"]);
-                        string name = reader["name"].ToString();
-                        Common.LocationTypeList.Add(new Tag<int, string>(id, name));
-                    }
+                        Common.LocationTypeList.Add(new Lemma<int, string>(Convert.ToInt32(reader["id"]), reader["name"].ToString()));
                 }
             }
             catch (Exception ex)
@@ -391,12 +371,7 @@ namespace DSA_lims
                 new SqlParameter("@sample_type_id", st.Id)))
             {
                 while (reader.Read())
-                {
-                    SampleComponentModel sampleComponent = new SampleComponentModel();
-                    sampleComponent.Id = new Guid(reader["id"].ToString());
-                    sampleComponent.Name = reader["name"].ToString();
-                    st.SampleComponents.Add(sampleComponent);
-                }
+                    st.SampleComponents.Add(new SampleComponentModel(new Guid(reader["id"].ToString()), reader["name"].ToString()));
             }
 
             foreach (SampleTypeModel s in st.SampleTypes)
@@ -409,9 +384,7 @@ namespace DSA_lims
             {
                 while (reader.Read())
                 {
-                    SampleParameterModel sampleParameter = new SampleParameterModel();
-                    sampleParameter.Id = new Guid(reader["id"].ToString());
-                    sampleParameter.Name = reader["name"].ToString();
+                    SampleParameterModel sampleParameter = new SampleParameterModel(new Guid(reader["id"].ToString()), reader["name"].ToString());                    
                     sampleParameter.Type = reader["type"].ToString();
                     st.SampleParameters.Add(sampleParameter);
                 }
@@ -433,9 +406,7 @@ namespace DSA_lims
                 {
                     while (reader.Read())
                     {
-                        SampleTypeModel sampleType = new SampleTypeModel();
-                        sampleType.Id = new Guid(reader["id"].ToString());
-                        sampleType.Name = reader["name"].ToString();
+                        SampleTypeModel sampleType = new SampleTypeModel(new Guid(reader["id"].ToString()), reader["name"].ToString());
 
                         string[] items = sampleType.Name.Substring(1).Split(new char[] { '/' });
                         List<SampleTypeModel> current = Common.SampleTypes;
@@ -523,10 +494,7 @@ namespace DSA_lims
 
             cboxSampleAnalUnit.Items.Clear();            
             foreach(DataRow row in dt.Rows)
-            {
-                Tag<Guid, string> au = new Tag<Guid, string>(new Guid(row["id"].ToString()), row["name"].ToString());
-                cboxSampleAnalUnit.Items.Add(au);
-            }            
+                cboxSampleAnalUnit.Items.Add(new Lemma<Guid, string>(new Guid(row["id"].ToString()), row["name"].ToString()));
         }
 
         private void AddSampleTypeNodes(TreeNodeCollection nodes, SampleTypeModel st)
@@ -802,9 +770,8 @@ namespace DSA_lims
 
             cboxSampleInfoStations.Items.Clear();
             foreach (DataRow row in dt.Rows)
-            {
-                Tag<Guid, string> s = new Tag<Guid, string>(new Guid(row["id"].ToString()), row["name"].ToString());
-                cboxSampleInfoStations.Items.Add(s);
+            {                
+                cboxSampleInfoStations.Items.Add(new Lemma<Guid, string>(new Guid(row["id"].ToString()), row["name"].ToString()));
             }
             cboxSampleInfoStations.SelectedIndex = -1;
         }
@@ -855,10 +822,7 @@ namespace DSA_lims
 
             cboxSampleInfoSampler.Items.Clear();
             foreach (DataRow row in dt.Rows)
-            {
-                Tag<Guid, string> s = new Tag<Guid, string>(new Guid(row["id"].ToString()), row["name"].ToString());
-                cboxSampleInfoSampler.Items.Add(s);
-            }
+                cboxSampleInfoSampler.Items.Add(new Lemma<Guid, string>(new Guid(row["id"].ToString()), row["name"].ToString()));
             cboxSampleInfoSampler.SelectedIndex = -1;
         }
 
@@ -1069,7 +1033,7 @@ namespace DSA_lims
                         PopulateLaboratories(conn);
                     break;
                 case DialogResult.Abort:
-                    SetStatusMessage("Create laboratory failed", StatusMessage.Error);
+                    SetStatusMessage("Create laboratory failed", StatusMessageType.Error);
                     break;
             }                            
         }
@@ -1135,7 +1099,7 @@ namespace DSA_lims
                         PopulateLaboratories(conn);
                     break;
                 case DialogResult.Abort:
-                    SetStatusMessage("Update laboratory failed", StatusMessage.Error);                    
+                    SetStatusMessage("Update laboratory failed", StatusMessageType.Error);                    
                     break;
             }                        
         }
@@ -1162,7 +1126,7 @@ namespace DSA_lims
                         PopulateProjects(conn);
                     break;
                 case DialogResult.Abort:
-                    SetStatusMessage("Create main project failed", StatusMessage.Error);
+                    SetStatusMessage("Create main project failed", StatusMessageType.Error);
                     break;
             }                        
         }        
@@ -1184,7 +1148,7 @@ namespace DSA_lims
                         PopulateProjects(conn);
                     break;
                 case DialogResult.Abort:
-                    SetStatusMessage("Create project failed", StatusMessage.Error);
+                    SetStatusMessage("Create project failed", StatusMessageType.Error);
                     break;
             }                        
         }
@@ -1220,7 +1184,7 @@ namespace DSA_lims
                         PopulateProjects(conn);
                     break;
                 case DialogResult.Abort:
-                    SetStatusMessage("Create sub project failed", StatusMessage.Error);
+                    SetStatusMessage("Create sub project failed", StatusMessageType.Error);
                     break;
             }
         }
@@ -1253,7 +1217,7 @@ namespace DSA_lims
                         PopulateProjects(conn);
                     break;
                 case DialogResult.Abort:
-                    SetStatusMessage("Create sub project failed", StatusMessage.Error);
+                    SetStatusMessage("Create sub project failed", StatusMessageType.Error);
                     break;
             }
         }
@@ -1310,7 +1274,7 @@ namespace DSA_lims
                         PopulateNuclides(conn);
                     break;
                 case DialogResult.Abort:
-                    SetStatusMessage("Create nuclide failed", StatusMessage.Error);
+                    SetStatusMessage("Create nuclide failed", StatusMessageType.Error);
                     break;
             }            
         }        
@@ -1393,7 +1357,7 @@ namespace DSA_lims
                         PopulateNuclides(conn);
                     break;
                 case DialogResult.Abort:
-                    SetStatusMessage("Update nuclide failed", StatusMessage.Error);
+                    SetStatusMessage("Update nuclide failed", StatusMessageType.Error);
                     break;
             }                        
         }
@@ -1417,7 +1381,7 @@ namespace DSA_lims
                         PopulateEnergyLines(conn, nid);
                     break;
                 case DialogResult.Abort:
-                    SetStatusMessage("Create energy line failed", StatusMessage.Error);
+                    SetStatusMessage("Create energy line failed", StatusMessageType.Error);
                     break;
             }                        
         }
@@ -1444,7 +1408,7 @@ namespace DSA_lims
                         PopulateEnergyLines(conn, nid);
                     break;
                 case DialogResult.Abort:
-                    SetStatusMessage("Update energy line failed", StatusMessage.Error);
+                    SetStatusMessage("Update energy line failed", StatusMessageType.Error);
                     break;
             }                        
         }
@@ -1476,7 +1440,7 @@ namespace DSA_lims
                         PopulateGeometries(conn);
                     break;
                 case DialogResult.Abort:
-                    SetStatusMessage("Create geometry failed", StatusMessage.Error);
+                    SetStatusMessage("Create geometry failed", StatusMessageType.Error);
                     break;
             }                        
         }
@@ -1499,7 +1463,7 @@ namespace DSA_lims
                         PopulateGeometries(conn);
                     break;
                 case DialogResult.Abort:
-                    SetStatusMessage("Update geometry failed", StatusMessage.Error);
+                    SetStatusMessage("Update geometry failed", StatusMessageType.Error);
                     break;
             }                        
         }
@@ -1521,7 +1485,7 @@ namespace DSA_lims
                         PopulateCounties(conn);
                     break;
                 case DialogResult.Abort:
-                    SetStatusMessage("Create county failed", StatusMessage.Error);
+                    SetStatusMessage("Create county failed", StatusMessageType.Error);
                     break;
             }                        
         }
@@ -1544,7 +1508,7 @@ namespace DSA_lims
                         PopulateCounties(conn);
                     break;
                 case DialogResult.Abort:
-                    SetStatusMessage("Create county failed", StatusMessage.Error);
+                    SetStatusMessage("Create county failed", StatusMessageType.Error);
                     break;
             }                        
         }
@@ -1572,7 +1536,7 @@ namespace DSA_lims
                         PopulateMunicipalities(conn, cid);
                     break;
                 case DialogResult.Abort:
-                    SetStatusMessage("Create municipality failed", StatusMessage.Error);
+                    SetStatusMessage("Create municipality failed", StatusMessageType.Error);
                     break;
             }                        
         }
@@ -1601,7 +1565,7 @@ namespace DSA_lims
                         PopulateMunicipalities(conn, cid);
                     break;
                 case DialogResult.Abort:
-                    SetStatusMessage("Update municipality failed", StatusMessage.Error);
+                    SetStatusMessage("Update municipality failed", StatusMessageType.Error);
                     break;
             }                        
         }
@@ -1633,7 +1597,7 @@ namespace DSA_lims
                         PopulateStations(conn);
                     break;
                 case DialogResult.Abort:
-                    SetStatusMessage("Create station failed", StatusMessage.Error);
+                    SetStatusMessage("Create station failed", StatusMessageType.Error);
                     break;
             }                        
         }
@@ -1656,7 +1620,7 @@ namespace DSA_lims
                         PopulateStations(conn);
                     break;
                 case DialogResult.Abort:
-                    SetStatusMessage("Update station failed", StatusMessage.Error);
+                    SetStatusMessage("Update station failed", StatusMessageType.Error);
                     break;
             }                        
         }
@@ -1678,7 +1642,7 @@ namespace DSA_lims
                         PopulateSampleStorage(conn);
                     break;
                 case DialogResult.Abort:
-                    SetStatusMessage("Create sample storage failed", StatusMessage.Error);
+                    SetStatusMessage("Create sample storage failed", StatusMessageType.Error);
                     break;
             }                        
         }
@@ -1701,7 +1665,7 @@ namespace DSA_lims
                         PopulateSampleStorage(conn);
                     break;
                 case DialogResult.Abort:
-                    SetStatusMessage("Update sample storage failed", StatusMessage.Error);
+                    SetStatusMessage("Update sample storage failed", StatusMessageType.Error);
                     break;
             }                        
         }
@@ -1723,7 +1687,7 @@ namespace DSA_lims
                         PopulateSamplers(conn);
                     break;
                 case DialogResult.Abort:
-                    SetStatusMessage("Create sampler failed", StatusMessage.Error);
+                    SetStatusMessage("Create sampler failed", StatusMessageType.Error);
                     break;
             }
         }
@@ -1746,7 +1710,7 @@ namespace DSA_lims
                         PopulateSamplers(conn);
                     break;
                 case DialogResult.Abort:
-                    SetStatusMessage("Update sampler failed", StatusMessage.Error);
+                    SetStatusMessage("Update sampler failed", StatusMessageType.Error);
                     break;
             }
         }
@@ -1797,7 +1761,7 @@ namespace DSA_lims
                 cboxSampleSampleType.Text = "";
                 cboxSampleSampleType.SelectedItem = null;
                 cboxSampleSampleComponent.Items.Clear();
-                SetStatusMessage("You must select an existing sample type", StatusMessage.Warning);
+                SetStatusMessage("You must select an existing sample type", StatusMessageType.Warning);
             }
         }
 

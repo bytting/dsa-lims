@@ -387,7 +387,7 @@ namespace DSA_lims
                     SampleComponentModel sampleComponent = new SampleComponentModel();
                     sampleComponent.Id = new Guid(reader["id"].ToString());
                     sampleComponent.Name = reader["name"].ToString();
-                    st.Components.Add(sampleComponent);
+                    st.SampleComponents.Add(sampleComponent);
                 }
             }
 
@@ -405,7 +405,7 @@ namespace DSA_lims
                     sampleParameter.Id = new Guid(reader["id"].ToString());
                     sampleParameter.Name = reader["name"].ToString();
                     sampleParameter.Type = reader["type"].ToString();
-                    st.Parameters.Add(sampleParameter);
+                    st.SampleParameters.Add(sampleParameter);
                 }
             }
 
@@ -941,9 +941,8 @@ namespace DSA_lims
                 lbSampleTypesComponents.Items.Clear();
                 lbSampleTypesInheritedComponents.Items.Clear();
 
-                SampleTypeModel st = tnode.Tag as SampleTypeModel;                
-                foreach(SampleComponentModel sm in st.Components)
-                    lbSampleTypesComponents.Items.Add(sm.Name);
+                SampleTypeModel st = tnode.Tag as SampleTypeModel;
+                lbSampleTypesComponents.Items.AddRange(st.SampleComponents.ToArray());
 
                 while (tnode.Parent != null)
                 {
@@ -951,9 +950,8 @@ namespace DSA_lims
                     if (tnode.Tag == null)
                         throw new Exception("Missing ID tag in treeSampleTypes_AfterSelect");
 
-                    SampleTypeModel s = tnode.Tag as SampleTypeModel;                    
-                    foreach (SampleComponentModel sm in s.Components)
-                        lbSampleTypesInheritedComponents.Items.Add(sm.Name);
+                    SampleTypeModel s = tnode.Tag as SampleTypeModel;
+                    lbSampleTypesInheritedComponents.Items.AddRange(s.SampleComponents.ToArray());
                 }
             }
             catch(Exception ex)
@@ -1721,7 +1719,7 @@ namespace DSA_lims
         {
             var st = cboxSampleSampleType.SelectedItem as SampleTypeModel;
             cboxSampleSampleComponent.Items.Clear();
-            cboxSampleSampleComponent.Items.AddRange(st.Components.ToArray());
+            cboxSampleSampleComponent.Items.AddRange(st.SampleComponents.ToArray());
 
             TreeNode[] tnode = treeSampleTypes.Nodes.Find(st.Name, true);
             if(tnode != null && tnode.Length != 0)
@@ -1731,7 +1729,7 @@ namespace DSA_lims
                 {
                     n = n.Parent;
                     SampleTypeModel s = n.Tag as SampleTypeModel;
-                    cboxSampleSampleComponent.Items.AddRange(s.Components.ToArray());
+                    cboxSampleSampleComponent.Items.AddRange(s.SampleComponents.ToArray());
                 }
             }
 

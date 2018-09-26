@@ -157,7 +157,7 @@ namespace DSA_lims
         public string ShortName { get; set; }
 
         public List<SampleTypeModel> SampleTypes = new List<SampleTypeModel>();
-        public List<SampleComponentModel> Components = new List<SampleComponentModel>();
-        public List<SampleParameterModel> Parameters = new List<SampleParameterModel>();
+        public List<SampleComponentModel> SampleComponents = new List<SampleComponentModel>();
+        public List<SampleParameterModel> SampleParameters = new List<SampleParameterModel>();
     }
 }

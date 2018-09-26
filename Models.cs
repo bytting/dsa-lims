@@ -24,19 +24,11 @@ using System.Text;
 
 namespace DSA_lims
 {
-    public class NuclideModel
+    public abstract class ModelBase
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public int ProtonCount { get; set; }
-        public int NeutronCount { get; set; }
-        public double HalfLife { get; set; }
-        public double HalfLifeUncertainty { get; set; }
-        public int DecayTypeId { get; set; }
-        public double XRayEnergy { get; set; }
-        public double FluorescenceYield { get; set; }
-        public int InstanceStatusId { get; set; }
-        public string Comment { get; set; }
+
         public DateTime CreateDate { get; set; }
         public string CreatedBy { get; set; }
         public DateTime UpdateDate { get; set; }
@@ -48,9 +40,21 @@ namespace DSA_lims
         }
     }
 
-    public class EnergyLineModel
+    public class NuclideModel : ModelBase
+    {        
+        public int ProtonCount { get; set; }
+        public int NeutronCount { get; set; }
+        public double HalfLife { get; set; }
+        public double HalfLifeUncertainty { get; set; }
+        public int DecayTypeId { get; set; }
+        public double XRayEnergy { get; set; }
+        public double FluorescenceYield { get; set; }
+        public int InstanceStatusId { get; set; }
+        public string Comment { get; set; }
+    }
+
+    public class EnergyLineModel : ModelBase
     {
-        public Guid Id { get; set; }
         public Guid NuclideId { get; set; }
         public double TransmissionFrom { get; set; }
         public double TransmissionTo { get; set; }
@@ -63,11 +67,7 @@ namespace DSA_lims
         public double TotalInternalConversion { get; set; }
         public double KShellConversion { get; set; }
         public int InstanceStatusId { get; set; }
-        public string Comment { get; set; }
-        public DateTime CreateDate { get; set; }
-        public string CreatedBy { get; set; }
-        public DateTime UpdateDate { get; set; }
-        public string UpdatedBy { get; set; }
+        public string Comment { get; set; }        
 
         public override string ToString()
         {
@@ -75,172 +75,89 @@ namespace DSA_lims
         }
     }
 
-    public class GeometryModel
-    {
-        public Guid Id { get; set; }
-        public string Name { get; set; }
+    public class GeometryModel : ModelBase
+    {        
         public double MinFillHeight { get; set; }
         public double MaxFillHeight { get; set; }
         public int InstanceStatusId { get; set; }
-        public string Comment { get; set; }
-        public DateTime CreateDate { get; set; }
-        public string CreatedBy { get; set; }
-        public DateTime UpdateDate { get; set; }
-        public string UpdatedBy { get; set; }
-
-        public override string ToString()
-        {
-            return Name;
-        }
+        public string Comment { get; set; }        
     }
 
-    public class CountyModel
-    {
-        public Guid Id { get; set; }
-        public string Name { get; set; }
+    public class CountyModel : ModelBase
+    {        
         public int Number { get; set; }
-        public int InstanceStatusId { get; set; }
-        public DateTime CreateDate { get; set; }
-        public string CreatedBy { get; set; }
-        public DateTime UpdateDate { get; set; }
-        public string UpdatedBy { get; set; }
-
-        public override string ToString()
-        {
-            return Name;
-        }
+        public int InstanceStatusId { get; set; }        
     }
 
-    public class MunicipalityModel
-    {
-        public Guid Id { get; set; }
-        public Guid CountyId { get; set; }
-        public string Name { get; set; }
+    public class MunicipalityModel : ModelBase
+    {        
+        public Guid CountyId { get; set; }    
         public int Number { get; set; }
-        public int InstanceStatusId { get; set; }
-        public DateTime CreateDate { get; set; }
-        public string CreatedBy { get; set; }
-        public DateTime UpdateDate { get; set; }
-        public string UpdatedBy { get; set; }
-
-        public override string ToString()
-        {
-            return Name;
-        }
+        public int InstanceStatusId { get; set; }        
     }
 
-    public class StationModel
-    {
-        public Guid Id { get; set; }
-        public string Name { get; set; }
+    public class StationModel : ModelBase
+    {        
         public double Latitude { get; set; }
         public double Longitude { get; set; }
         public double Altitude { get; set; }
         public int InstanceStatusId { get; set; }
-        public string Comment { get; set; }
-        public DateTime CreateDate { get; set; }
-        public string CreatedBy { get; set; }
-        public DateTime UpdateDate { get; set; }
-        public string UpdatedBy { get; set; }
-
-        public override string ToString()
-        {
-            return Name;
-        }
+        public string Comment { get; set; }        
     }
 
-    public class SampleStorageModel
-    {
-        public Guid Id { get; set; }
-        public string Name { get; set; }
+    public class SampleStorageModel : ModelBase
+    {        
         public string Address { get; set; }
         public int InstanceStatusId { get; set; }
-        public string Comment { get; set; }
-        public DateTime CreateDate { get; set; }
-        public string CreatedBy { get; set; }
-        public DateTime UpdateDate { get; set; }
-        public string UpdatedBy { get; set; }
-
-        public override string ToString()
-        {
-            return Name;
-        }
+        public string Comment { get; set; }        
     }
 
-    public class LaboratoryModel
-    {
-        public Guid Id { get; set; }
-        public string Name { get; set; }
+    public class LaboratoryModel : ModelBase
+    {        
         public string NamePrefix { get; set; }
         public string Address { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
         public int AssignmentCounter { get; set; }
         public int InstanceStatusId { get; set; }
-        public string Comment { get; set; }
-        public DateTime CreateDate { get; set; }
-        public string CreatedBy { get; set; }
-        public DateTime UpdateDate { get; set; }
-        public string UpdatedBy { get; set; }
-
-        public override string ToString()
-        {
-            return Name;
-        }
+        public string Comment { get; set; }        
     }
 
-    public class MainProjectModel
-    {
-        public Guid Id { get; set; }
-        public string Name { get; set; }
+    public class MainProjectModel : ModelBase
+    {        
         public int InstanceStatusId { get; set; }
-        public string Comment { get; set; }
-        public DateTime CreateDate { get; set; }
-        public string CreatedBy { get; set; }
-        public DateTime UpdateDate { get; set; }
-        public string UpdatedBy { get; set; }
-
-        public override string ToString()
-        {
-            return Name;
-        }
+        public string Comment { get; set; }        
     }
 
-    public class SubProjectModel
-    {
-        public Guid Id { get; set; }
+    public class SubProjectModel : MainProjectModel
+    {        
         public Guid MainProjectId { get; set; }
-        public string Name { get; set; }
-        public int InstanceStatusId { get; set; }
-        public string Comment { get; set; }
-        public DateTime CreateDate { get; set; }
-        public string CreatedBy { get; set; }
-        public DateTime UpdateDate { get; set; }
-        public string UpdatedBy { get; set; }
-
-        public override string ToString()
-        {
-            return Name;
-        }
     }
 
-    public class SamplerModel
-    {
-        public Guid Id { get; set; }
-        public string Name { get; set; }
+    public class SamplerModel : ModelBase
+    {        
         public string Address { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
         public int InstanceStatusId { get; set; }
-        public string Comment { get; set; }
-        public DateTime CreateDate { get; set; }
-        public string CreatedBy { get; set; }
-        public DateTime UpdateDate { get; set; }
-        public string UpdatedBy { get; set; }
+        public string Comment { get; set; }        
+    }
 
-        public override string ToString()
-        {
-            return Name;
-        }
+    public class SampleComponentModel : ModelBase
+    {        
+    }
+
+    public class SampleParameterModel : ModelBase
+    {        
+        public string Type { get; set; }
+    }
+
+    public class SampleTypeModel : ModelBase
+    {
+        public string ShortName { get; set; }
+
+        public List<SampleTypeModel> SampleTypes = new List<SampleTypeModel>();
+        public List<SampleComponentModel> Components = new List<SampleComponentModel>();
+        public List<SampleParameterModel> Parameters = new List<SampleParameterModel>();
     }
 }

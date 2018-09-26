@@ -1922,6 +1922,18 @@ create table sample_parameter (
 )
 go
 
+create proc csp_select_sample_parameter_for_sample_type
+	@sample_type_id uniqueidentifier
+as
+	select 
+		id,
+		name,
+		type
+	from sample_parameter
+	where sample_type_id = @sample_type_id
+	order by name
+go
+
 /*===========================================================================*/
 /* tbl sample */
 

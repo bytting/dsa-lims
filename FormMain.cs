@@ -44,7 +44,6 @@ namespace DSA_lims
 
         private ResourceManager r = null;
         private TabPage returnFromSample = null;
-        private string SampleTypesRootName = "Sample types";
         private string ProjectsRootName = "Projects";
 
         private List<Tag<int, string>> decayTypeList = new List<Tag<int, string>>();
@@ -52,6 +51,8 @@ namespace DSA_lims
         private List<Tag<int, string>> uniformActivityUnitList = new List<Tag<int, string>>();
         private List<Tag<int, string>> workflowStatusList = new List<Tag<int, string>>();
         private List<Tag<int, string>> locationTypeList = new List<Tag<int, string>>();
+
+        private List<SampleTypeModel> sampleTypes = new List<SampleTypeModel>();
 
         public FormMain()
         {
@@ -105,6 +106,9 @@ namespace DSA_lims
 
                     log.Info("Loading location types");
                     LoadLocationTypes(conn);
+
+                    log.Info("Loading sample types");
+                    LoadSampleTypes(conn);
 
                     log.Info("Populating preparation units");
                     PopulatePreparationUnits(conn);
@@ -373,6 +377,94 @@ namespace DSA_lims
             }
         }
 
+        private void AddSampleTypeComponents(SqlConnection conn, SampleTypeModel st)
+        {
+            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_sample_components_for_sample_type", CommandType.StoredProcedure, 
+                new SqlParameter("@sample_type_id", st.Id)))
+            {
+                while (reader.Read())
+                {
+                    SampleComponentModel sampleComponent = new SampleComponentModel();
+                    sampleComponent.Id = new Guid(reader["id"].ToString());
+                    sampleComponent.Name = reader["name"].ToString();
+                    st.Components.Add(sampleComponent);
+                }
+            }
+
+            foreach (SampleTypeModel s in st.SampleTypes)
+                AddSampleTypeComponents(conn, s);
+        }
+        private void AddSampleTypeParameters(SqlConnection conn, SampleTypeModel st)
+        {
+            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_sample_parameters_for_sample_type", CommandType.StoredProcedure,
+                new SqlParameter("@sample_type_id", st.Id)))
+            {
+                while (reader.Read())
+                {
+                    SampleParameterModel sampleParameter = new SampleParameterModel();
+                    sampleParameter.Id = new Guid(reader["id"].ToString());
+                    sampleParameter.Name = reader["name"].ToString();
+                    sampleParameter.Type = reader["type"].ToString();
+                    st.Parameters.Add(sampleParameter);
+                }
+            }
+
+            foreach (SampleTypeModel s in st.SampleTypes)
+                AddSampleTypeParameters(conn, s);
+        }
+
+        private void LoadSampleTypes(SqlConnection conn)
+        {
+            try
+            {
+                sampleTypes.Clear();
+
+                using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_sample_types_short", CommandType.StoredProcedure))
+                {
+                    while (reader.Read())
+                    {
+                        SampleTypeModel sampleType = new SampleTypeModel();
+                        sampleType.Id = new Guid(reader["id"].ToString());
+                        sampleType.Name = reader["name"].ToString();
+
+                        string[] items = sampleType.Name.Substring(1).Split(new char[] { '/' });
+                        List<SampleTypeModel> current = sampleTypes;
+                        foreach (string item in items)
+                        {
+                            SampleTypeModel found = current.Find(x => x.ShortName == item);
+                            if (found != null)
+                            {
+                                current = found.SampleTypes;
+                                continue;
+                            }
+                            else
+                            {                                
+                                sampleType.ShortName = item;
+                                current.Add(sampleType);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+            }
+
+            try
+            {                
+                foreach (SampleTypeModel st in sampleTypes)
+                {
+                    AddSampleTypeComponents(conn, st);
+                    AddSampleTypeParameters(conn, st);
+                }            
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+            }
+        }
+
         private void PopulatePreparationUnits(SqlConnection conn)
         {
             cboxSamplePrepUnit.DataSource = preparationUnitList;
@@ -417,6 +509,18 @@ namespace DSA_lims
             }            
         }
 
+        private void AddSampleTypeNodes(TreeNodeCollection nodes, SampleTypeModel st)
+        {
+            TreeNode node = nodes.Add(st.Name, st.ShortName);
+            node.ToolTipText = st.Name;
+            node.Tag = st;
+
+            cboxSampleSampleType.Items.Add(st);
+
+            foreach (SampleTypeModel s in st.SampleTypes)
+                AddSampleTypeNodes(node.Nodes, s);
+        }
+
         private void PopulateSampleTypes(SqlConnection conn)
         {
             try
@@ -424,44 +528,15 @@ namespace DSA_lims
                 treeSampleTypes.Nodes.Clear();
                 cboxSampleSampleType.Items.Clear();
 
-                TreeNode root = treeSampleTypes.Nodes.Add(SampleTypesRootName, SampleTypesRootName);
-                
-                using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_sample_types_short", CommandType.StoredProcedure))
-                {
-                    while (reader.Read())
-                    {
-                        string sampleType = reader["name"].ToString();
-                        Guid id = new Guid(reader["id"].ToString());
-
-                        cboxSampleSampleType.Items.Add(new Tag<Guid, string>(id, sampleType));
-
-                        string[] items = sampleType.Substring(1).Split(new char[] { '/' });
-                        TreeNode current = root;
-                        foreach (string item in items)
-                        {
-                            if (current.Nodes.ContainsKey(item))
-                            {
-                                current = current.Nodes[item];
-                                continue;
-                            }
-                            else
-                            {
-                                current = current.Nodes.Add(item, item);
-                                current.ToolTipText = sampleType;
-                                current.Tag = reader["id"].ToString();
-                            }
-                        }
-                    }
-                }
-
-                root.Expand();
+                foreach(SampleTypeModel st in sampleTypes)                
+                    AddSampleTypeNodes(treeSampleTypes.Nodes, st);
 
                 cboxSampleSampleType.SelectedIndex = -1;
             }
             catch(Exception ex)
             {
                 log.Error(ex);
-            }
+            }            
         }
 
         private void PopulateProjects(SqlConnection conn)
@@ -859,38 +934,26 @@ namespace DSA_lims
             if (e.Node.Tag == null)
                 return;
 
+            TreeNode tnode = e.Node;
+
             try
             {
-                using (SqlConnection conn = DB.OpenConnection())
+                lbSampleTypesComponents.Items.Clear();
+                lbSampleTypesInheritedComponents.Items.Clear();
+
+                SampleTypeModel st = tnode.Tag as SampleTypeModel;                
+                foreach(SampleComponentModel sm in st.Components)
+                    lbSampleTypesComponents.Items.Add(sm.Name);
+
+                while (tnode.Parent != null)
                 {
-                    Guid id = new Guid(e.Node.Tag.ToString());
-                    lbSampleTypesComponents.Items.Clear();
+                    tnode = tnode.Parent;
+                    if (tnode.Tag == null)
+                        throw new Exception("Missing ID tag in treeSampleTypes_AfterSelect");
 
-                    SqlCommand cmd = new SqlCommand("select id, name from sample_component where sample_type_id = @ID order by name", conn);
-                    cmd.Parameters.AddWithValue("@ID", id);
-                    using (SqlDataReader reader = cmd.ExecuteReader())
-                    {
-                        while (reader.Read())
-                            lbSampleTypesComponents.Items.Add(new Tag<Guid, string>(new Guid(reader["id"].ToString()), reader["name"].ToString()));
-                    }
-
-                    lbSampleTypesInheritedComponents.Items.Clear();
-                    TreeNode node = e.Node;
-                    while (node.Parent != null && node.Parent.Level != 0)
-                    {
-                        node = node.Parent;
-                        if (node.Tag == null)
-                            throw new Exception("Missing ID tag in treeSampleTypes_AfterSelect");
-
-                        id = new Guid(node.Tag.ToString());
-                        cmd.Parameters.Clear();
-                        cmd.Parameters.AddWithValue("@ID", id);
-                        using (SqlDataReader reader = cmd.ExecuteReader())
-                        {
-                            while (reader.Read())
-                                lbSampleTypesInheritedComponents.Items.Add(new Tag<Guid, string>(new Guid(reader["id"].ToString()), reader["name"].ToString()));
-                        }
-                    }
+                    SampleTypeModel s = tnode.Tag as SampleTypeModel;                    
+                    foreach (SampleComponentModel sm in s.Components)
+                        lbSampleTypesInheritedComponents.Items.Add(sm.Name);
                 }
             }
             catch(Exception ex)
@@ -1656,13 +1719,23 @@ namespace DSA_lims
 
         private void cboxSampleSampleType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var sampleType = cboxSampleSampleType.SelectedItem as Tag<Guid, string>;            
-            using (SqlConnection conn = DB.OpenConnection())
+            var st = cboxSampleSampleType.SelectedItem as SampleTypeModel;
+            cboxSampleSampleComponent.Items.Clear();
+            cboxSampleSampleComponent.Items.AddRange(st.Components.ToArray());
+
+            TreeNode[] tnode = treeSampleTypes.Nodes.Find(st.Name, true);
+            if(tnode != null && tnode.Length != 0)
             {
-                // FIXME: add inherited components
-                cboxSampleSampleComponent.DataSource = DB.GetDataTable(conn, "csp_select_sample_components_for_sample_type", CommandType.StoredProcedure, new SqlParameter("@sample_type_id", sampleType.Id));
-                cboxSampleSampleComponent.SelectedIndex = -1;
+                TreeNode n = tnode[0];
+                while (n.Parent != null)
+                {
+                    n = n.Parent;
+                    SampleTypeModel s = n.Tag as SampleTypeModel;
+                    cboxSampleSampleComponent.Items.AddRange(s.Components.ToArray());
+                }
             }
+
+            cboxSampleSampleComponent.SelectedIndex = -1;
         }
     }    
 }

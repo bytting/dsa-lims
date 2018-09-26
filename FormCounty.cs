@@ -42,8 +42,9 @@ namespace DSA_lims
         {
             InitializeComponent();
             mLog = log;
-            Text = "Create county";
-            cbInUse.Checked = true;
+            Text = "Create county";            
+            cboxInstanceStatus.DataSource = Common.InstanceStatusList;
+            cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
         }
 
         public FormCounty(ILog log, Guid cid)
@@ -52,6 +53,7 @@ namespace DSA_lims
             mLog = log;
             County.Id = cid;
             Text = "Update county";
+            cboxInstanceStatus.DataSource = Common.InstanceStatusList;
 
             using (SqlConnection conn = DB.OpenConnection())
             {
@@ -66,7 +68,7 @@ namespace DSA_lims
                     reader.Read();
                     tbName.Text = reader["name"].ToString();
                     tbNumber.Text = reader["county_number"].ToString();
-                    cbInUse.Checked = InstanceStatus.IsActive(reader["instance_status_id"]);
+                    cboxInstanceStatus.SelectedValue = InstanceStatus.Eval(reader["instance_status_id"]);
                     County.CreateDate = Convert.ToDateTime(reader["create_date"]);
                     County.CreatedBy = reader["created_by"].ToString();
                     County.UpdateDate = Convert.ToDateTime(reader["update_date"]);
@@ -97,7 +99,7 @@ namespace DSA_lims
 
             County.Name = tbName.Text.Trim();
             County.Number = Convert.ToInt32(tbNumber.Text.Trim());
-            County.InstanceStatusId = cbInUse.Checked ? 1 : 2;
+            County.InstanceStatusId = InstanceStatus.Eval(cboxInstanceStatus.SelectedValue);
 
             bool success;
             if (County.Id == Guid.Empty)

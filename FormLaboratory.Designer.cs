@@ -38,13 +38,14 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.cbInUse = new System.Windows.Forms.CheckBox();
             this.tbPrefix = new System.Windows.Forms.TextBox();
             this.tbAddress = new System.Windows.Forms.TextBox();
             this.tbEmail = new System.Windows.Forms.TextBox();
             this.tbPhone = new System.Windows.Forms.TextBox();
             this.tbComment = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
+            this.cboxInstanceStatus = new System.Windows.Forms.ComboBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -53,7 +54,7 @@
             this.panel1.Controls.Add(this.btnCancel);
             this.panel1.Controls.Add(this.btnOk);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 363);
+            this.panel1.Location = new System.Drawing.Point(0, 350);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(411, 30);
             this.panel1.TabIndex = 0;
@@ -135,18 +136,6 @@
             this.label5.TabIndex = 6;
             this.label5.Text = "Phone number";
             // 
-            // cbInUse
-            // 
-            this.cbInUse.AutoSize = true;
-            this.cbInUse.Checked = true;
-            this.cbInUse.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbInUse.Location = new System.Drawing.Point(132, 156);
-            this.cbInUse.Name = "cbInUse";
-            this.cbInUse.Size = new System.Drawing.Size(55, 17);
-            this.cbInUse.TabIndex = 7;
-            this.cbInUse.Text = "In use";
-            this.cbInUse.UseVisualStyleBackColor = true;
-            // 
             // tbPrefix
             // 
             this.tbPrefix.Location = new System.Drawing.Point(132, 52);
@@ -178,35 +167,56 @@
             // 
             // tbComment
             // 
-            this.tbComment.Location = new System.Drawing.Point(132, 179);
+            this.tbComment.Location = new System.Drawing.Point(132, 196);
             this.tbComment.MaxLength = 1000;
             this.tbComment.Multiline = true;
             this.tbComment.Name = "tbComment";
             this.tbComment.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.tbComment.Size = new System.Drawing.Size(247, 142);
+            this.tbComment.Size = new System.Drawing.Size(247, 125);
             this.tbComment.TabIndex = 12;
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(25, 182);
+            this.label6.Location = new System.Drawing.Point(24, 199);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(51, 13);
             this.label6.TabIndex = 13;
             this.label6.Text = "Comment";
             // 
+            // cboxInstanceStatus
+            // 
+            this.cboxInstanceStatus.DisplayMember = "Name";
+            this.cboxInstanceStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxInstanceStatus.FormattingEnabled = true;
+            this.cboxInstanceStatus.Location = new System.Drawing.Point(132, 157);
+            this.cboxInstanceStatus.Name = "cboxInstanceStatus";
+            this.cboxInstanceStatus.Size = new System.Drawing.Size(247, 21);
+            this.cboxInstanceStatus.TabIndex = 14;
+            this.cboxInstanceStatus.ValueMember = "Id";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(25, 160);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(37, 13);
+            this.label7.TabIndex = 15;
+            this.label7.Text = "Status";
+            // 
             // FormLaboratory
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(411, 393);
+            this.ClientSize = new System.Drawing.Size(411, 380);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.cboxInstanceStatus);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.tbComment);
             this.Controls.Add(this.tbPhone);
             this.Controls.Add(this.tbEmail);
             this.Controls.Add(this.tbAddress);
             this.Controls.Add(this.tbPrefix);
-            this.Controls.Add(this.cbInUse);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
@@ -238,12 +248,13 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.CheckBox cbInUse;
         private System.Windows.Forms.TextBox tbPrefix;
         private System.Windows.Forms.TextBox tbAddress;
         private System.Windows.Forms.TextBox tbEmail;
         private System.Windows.Forms.TextBox tbPhone;
         private System.Windows.Forms.TextBox tbComment;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.ComboBox cboxInstanceStatus;
+        private System.Windows.Forms.Label label7;
     }
 }

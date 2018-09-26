@@ -44,7 +44,8 @@ namespace DSA_lims
             // create new station
             mLog = log;
             Text = "Create station";
-            cbInUse.Checked = true;
+            cboxInstanceStatus.DataSource = Common.InstanceStatusList;
+            cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
         }
         public FormStation(ILog log, Guid sid)
         {
@@ -53,6 +54,7 @@ namespace DSA_lims
             mLog = log;
             Station.Id = sid;
             Text = "Update station";
+            cboxInstanceStatus.DataSource = Common.InstanceStatusList;
 
             using (SqlConnection conn = DB.OpenConnection())
             {
@@ -69,7 +71,7 @@ namespace DSA_lims
                     tbLatitude.Text = reader["latitude"].ToString();
                     tbLongitude.Text = reader["longitude"].ToString();
                     tbAltitude.Text = reader["altitude"].ToString();
-                    cbInUse.Checked = InstanceStatus.IsActive(reader["instance_status_id"]);
+                    cboxInstanceStatus.SelectedValue = InstanceStatus.Eval(reader["instance_status_id"]);
                     tbComment.Text = reader["comment"].ToString();
                     Station.CreateDate = Convert.ToDateTime(reader["create_date"]);
                     Station.CreatedBy = reader["created_by"].ToString();
@@ -115,7 +117,7 @@ namespace DSA_lims
             Station.Latitude = Convert.ToDouble(tbLatitude.Text.Trim());
             Station.Longitude = Convert.ToDouble(tbLongitude.Text.Trim());
             Station.Altitude = Convert.ToDouble(tbAltitude.Text.Trim());
-            Station.InstanceStatusId = cbInUse.Checked ? 1 : 2;
+            Station.InstanceStatusId = InstanceStatus.Eval(cboxInstanceStatus.SelectedValue);
             Station.Comment = tbComment.Text.Trim();
 
             bool success;

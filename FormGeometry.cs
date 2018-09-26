@@ -44,7 +44,8 @@ namespace DSA_lims
 
             mLog = log;
             Text = "New geometry";
-            cbInUse.Checked = true;
+            cboxInstanceStatus.DataSource = Common.InstanceStatusList;
+            cboxInstanceStatus.SelectedValue = InstanceStatus.Active;            
         }
 
         public FormGeometry(ILog log, Guid gid)
@@ -54,6 +55,7 @@ namespace DSA_lims
             mLog = log;
             Text = "Edit geometry";
             Geometry.Id = gid;
+            cboxInstanceStatus.DataSource = Common.InstanceStatusList;
 
             using (SqlConnection conn = DB.OpenConnection())
             {
@@ -69,7 +71,7 @@ namespace DSA_lims
                     tbName.Text = reader["name"].ToString();
                     tbMinFillHeight.Text = reader["min_fill_height_mm"].ToString();
                     tbMaxFillHeight.Text = reader["max_fill_height_mm"].ToString();
-                    cbInUse.Checked = InstanceStatus.IsActive(reader["instance_status_id"]);
+                    cboxInstanceStatus.SelectedValue = InstanceStatus.Eval(reader["instance_status_id"]);
                     tbComment.Text = reader["comment"].ToString();
                     Geometry.CreateDate = Convert.ToDateTime(reader["create_date"]);
                     Geometry.CreatedBy = reader["created_by"].ToString();
@@ -108,7 +110,7 @@ namespace DSA_lims
             Geometry.Name = tbName.Text.Trim();
             Geometry.MinFillHeight = Convert.ToDouble(tbMinFillHeight.Text.Trim());
             Geometry.MaxFillHeight = Convert.ToDouble(tbMaxFillHeight.Text.Trim());
-            Geometry.InstanceStatusId = cbInUse.Checked ? 1 : 2;
+            Geometry.InstanceStatusId = InstanceStatus.Eval(cboxInstanceStatus.SelectedValue);
             Geometry.Comment = tbComment.Text.Trim();
 
             bool success;

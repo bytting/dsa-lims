@@ -40,9 +40,10 @@
             this.tbLatitude = new System.Windows.Forms.TextBox();
             this.tbLongitude = new System.Windows.Forms.TextBox();
             this.tbAltitude = new System.Windows.Forms.TextBox();
-            this.cbInUse = new System.Windows.Forms.CheckBox();
             this.label5 = new System.Windows.Forms.Label();
             this.tbComment = new System.Windows.Forms.TextBox();
+            this.cboxInstanceStatus = new System.Windows.Forms.ComboBox();
+            this.label6 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -51,15 +52,15 @@
             this.panel1.Controls.Add(this.btnCancel);
             this.panel1.Controls.Add(this.btnOk);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 379);
+            this.panel1.Location = new System.Drawing.Point(0, 356);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(387, 30);
+            this.panel1.Size = new System.Drawing.Size(342, 30);
             this.panel1.TabIndex = 7;
             // 
             // btnCancel
             // 
             this.btnCancel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnCancel.Location = new System.Drawing.Point(187, 0);
+            this.btnCancel.Location = new System.Drawing.Point(142, 0);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(100, 30);
             this.btnCancel.TabIndex = 1;
@@ -70,7 +71,7 @@
             // btnOk
             // 
             this.btnOk.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnOk.Location = new System.Drawing.Point(287, 0);
+            this.btnOk.Location = new System.Drawing.Point(242, 0);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(100, 30);
             this.btnOk.TabIndex = 0;
@@ -108,7 +109,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(25, 109);
+            this.label4.Location = new System.Drawing.Point(22, 106);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(42, 13);
             this.label4.TabIndex = 11;
@@ -118,44 +119,34 @@
             // 
             this.tbName.Location = new System.Drawing.Point(105, 25);
             this.tbName.Name = "tbName";
-            this.tbName.Size = new System.Drawing.Size(245, 20);
+            this.tbName.Size = new System.Drawing.Size(206, 20);
             this.tbName.TabIndex = 12;
             // 
             // tbLatitude
             // 
-            this.tbLatitude.Location = new System.Drawing.Point(105, 52);
+            this.tbLatitude.Location = new System.Drawing.Point(105, 51);
             this.tbLatitude.Name = "tbLatitude";
-            this.tbLatitude.Size = new System.Drawing.Size(245, 20);
+            this.tbLatitude.Size = new System.Drawing.Size(206, 20);
             this.tbLatitude.TabIndex = 13;
             // 
             // tbLongitude
             // 
-            this.tbLongitude.Location = new System.Drawing.Point(105, 79);
+            this.tbLongitude.Location = new System.Drawing.Point(105, 77);
             this.tbLongitude.Name = "tbLongitude";
-            this.tbLongitude.Size = new System.Drawing.Size(245, 20);
+            this.tbLongitude.Size = new System.Drawing.Size(206, 20);
             this.tbLongitude.TabIndex = 14;
             // 
             // tbAltitude
             // 
-            this.tbAltitude.Location = new System.Drawing.Point(105, 106);
+            this.tbAltitude.Location = new System.Drawing.Point(105, 103);
             this.tbAltitude.Name = "tbAltitude";
-            this.tbAltitude.Size = new System.Drawing.Size(245, 20);
+            this.tbAltitude.Size = new System.Drawing.Size(206, 20);
             this.tbAltitude.TabIndex = 15;
-            // 
-            // cbInUse
-            // 
-            this.cbInUse.AutoSize = true;
-            this.cbInUse.Location = new System.Drawing.Point(105, 133);
-            this.cbInUse.Name = "cbInUse";
-            this.cbInUse.Size = new System.Drawing.Size(55, 17);
-            this.cbInUse.TabIndex = 16;
-            this.cbInUse.Text = "In use";
-            this.cbInUse.UseVisualStyleBackColor = true;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(28, 159);
+            this.label5.Location = new System.Drawing.Point(25, 174);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(51, 13);
             this.label5.TabIndex = 17;
@@ -163,22 +154,43 @@
             // 
             // tbComment
             // 
-            this.tbComment.Location = new System.Drawing.Point(105, 159);
+            this.tbComment.Location = new System.Drawing.Point(105, 171);
             this.tbComment.MaxLength = 1000;
             this.tbComment.Multiline = true;
             this.tbComment.Name = "tbComment";
             this.tbComment.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.tbComment.Size = new System.Drawing.Size(245, 189);
+            this.tbComment.Size = new System.Drawing.Size(206, 154);
             this.tbComment.TabIndex = 18;
+            // 
+            // cboxInstanceStatus
+            // 
+            this.cboxInstanceStatus.DisplayMember = "Name";
+            this.cboxInstanceStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxInstanceStatus.FormattingEnabled = true;
+            this.cboxInstanceStatus.Location = new System.Drawing.Point(105, 129);
+            this.cboxInstanceStatus.Name = "cboxInstanceStatus";
+            this.cboxInstanceStatus.Size = new System.Drawing.Size(206, 21);
+            this.cboxInstanceStatus.TabIndex = 19;
+            this.cboxInstanceStatus.ValueMember = "Id";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(25, 132);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(37, 13);
+            this.label6.TabIndex = 20;
+            this.label6.Text = "Status";
             // 
             // FormStation
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(387, 409);
+            this.ClientSize = new System.Drawing.Size(342, 386);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.cboxInstanceStatus);
             this.Controls.Add(this.tbComment);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.cbInUse);
             this.Controls.Add(this.tbAltitude);
             this.Controls.Add(this.tbLongitude);
             this.Controls.Add(this.tbLatitude);
@@ -214,8 +226,9 @@
         private System.Windows.Forms.TextBox tbLatitude;
         private System.Windows.Forms.TextBox tbLongitude;
         private System.Windows.Forms.TextBox tbAltitude;
-        private System.Windows.Forms.CheckBox cbInUse;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox tbComment;
+        private System.Windows.Forms.ComboBox cboxInstanceStatus;
+        private System.Windows.Forms.Label label6;
     }
 }

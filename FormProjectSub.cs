@@ -26,7 +26,8 @@ namespace DSA_lims
             SubProject.MainProjectId = pid;            
             Text = "Create new sub project";
             tbMainProjectName.Text = pname;
-            cbInUse.Checked = true;
+            cboxInstanceStatus.DataSource = Common.InstanceStatusList;
+            cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
         }
 
         public FormProjectSub(ILog log, string pname, Guid pid, Guid spid)
@@ -37,6 +38,7 @@ namespace DSA_lims
             SubProject.MainProjectId = pid;            
             Text = "Update sub project";
             tbMainProjectName.Text = pname;
+            cboxInstanceStatus.DataSource = Common.InstanceStatusList;
 
             using (SqlConnection conn = DB.OpenConnection())
             {
@@ -50,7 +52,7 @@ namespace DSA_lims
 
                     reader.Read();
                     tbName.Text = reader["name"].ToString();
-                    cbInUse.Checked = InstanceStatus.IsActive(reader["instance_status_id"]);
+                    cboxInstanceStatus.SelectedValue = InstanceStatus.Eval(reader["instance_status_id"]);
                     tbComment.Text = reader["comment"].ToString();
                     
                     SubProject.CreateDate = Convert.ToDateTime(reader["create_date"]);
@@ -76,7 +78,7 @@ namespace DSA_lims
             }
 
             SubProject.Name = tbName.Text.Trim();
-            SubProject.InstanceStatusId = cbInUse.Checked ? 1 : 2;
+            SubProject.InstanceStatusId = InstanceStatus.Eval(cboxInstanceStatus.SelectedValue);
             SubProject.Comment = tbComment.Text.Trim();
 
             bool success;

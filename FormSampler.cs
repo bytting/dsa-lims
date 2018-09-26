@@ -42,7 +42,8 @@ namespace DSA_lims
             InitializeComponent();
             mLog = log;
             Text = "Create sampler";
-            cbInUse.Checked = true;
+            cboxInstanceStatus.DataSource = Common.InstanceStatusList;
+            cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
         }
 
         public FormSampler(ILog log, Guid sid)
@@ -51,6 +52,7 @@ namespace DSA_lims
             mLog = log;
             Sampler.Id = sid;
             Text = "Update sampler";
+            cboxInstanceStatus.DataSource = Common.InstanceStatusList;
 
             using (SqlConnection conn = DB.OpenConnection())
             {
@@ -67,7 +69,7 @@ namespace DSA_lims
                     tbAddress.Text = reader["address"].ToString();
                     tbEmail.Text = reader["email"].ToString();
                     tbPhone.Text = reader["phone"].ToString();
-                    cbInUse.Checked = InstanceStatus.IsActive(reader["instance_status_id"]);
+                    cboxInstanceStatus.SelectedValue = InstanceStatus.Eval(reader["instance_status_id"]);
                     tbComment.Text = reader["comment"].ToString();
                     Sampler.CreateDate = Convert.ToDateTime(reader["create_date"]);
                     Sampler.CreatedBy = reader["created_by"].ToString();
@@ -95,7 +97,7 @@ namespace DSA_lims
             Sampler.Address = tbAddress.Text.Trim();
             Sampler.Email = tbEmail.Text.Trim();
             Sampler.Phone = tbPhone.Text.Trim();
-            Sampler.InstanceStatusId = cbInUse.Checked ? 1 : 2;
+            Sampler.InstanceStatusId = InstanceStatus.Eval(cboxInstanceStatus.SelectedValue);
             Sampler.Comment = tbComment.Text.Trim();
 
             bool success;

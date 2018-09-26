@@ -37,26 +37,28 @@ namespace DSA_lims
         private ILog mLog = null;
         public NuclideModel Nuclide = new NuclideModel();
 
-        public FormNuclide(ILog log, List<Tag<int, string>> decayTypes)
+        public FormNuclide(ILog log)
         {
             InitializeComponent();
 
             // Create new nuclide
             mLog = log;
-            PopulateDecayTypes(decayTypes);
+            PopulateDecayTypes();
             Text = "New nuclide";
-            cbInUse.Checked = true;
+            cboxInstanceStatus.DataSource = Common.InstanceStatusList;
+            cboxInstanceStatus.SelectedValue = InstanceStatus.Active;            
         }
 
-        public FormNuclide(ILog log, List<Tag<int, string>> dt, Guid nid)
+        public FormNuclide(ILog log, Guid nid)
         {
             InitializeComponent();
 
             // Edit existing nuclide
             mLog = log;
-            PopulateDecayTypes(dt);            
+            PopulateDecayTypes();            
             Nuclide.Id = nid;
             Text = "Edit nuclide";
+            cboxInstanceStatus.DataSource = Common.InstanceStatusList;
 
             using (SqlConnection conn = DB.OpenConnection())
             {
@@ -77,6 +79,7 @@ namespace DSA_lims
                     cboxDecayTypes.SelectedValue = Convert.ToInt32(reader["decay_type_id"]);
                     tbKXrayEnergy.Text = reader["kxray_energy"].ToString();
                     tbFluorescenceYield.Text = reader["fluorescence_yield"].ToString();
+                    cboxInstanceStatus.SelectedValue = InstanceStatus.Eval(reader["instance_status_id"]);
                     tbComment.Text = reader["comment"].ToString();
                     Nuclide.CreateDate = Convert.ToDateTime(reader["create_date"]);
                     Nuclide.CreatedBy = reader["created_by"].ToString();
@@ -90,11 +93,9 @@ namespace DSA_lims
         {            
         }
 
-        private void PopulateDecayTypes(List<Tag<int, string>> dt)
+        private void PopulateDecayTypes()
         {
-            cboxDecayTypes.DataSource = dt;
-            cboxDecayTypes.DisplayMember = "Name";
-            cboxDecayTypes.ValueMember = "Id";
+            cboxDecayTypes.DataSource = Common.DecayTypeList;
             cboxDecayTypes.SelectedIndex = -1;
         }
 
@@ -162,7 +163,7 @@ namespace DSA_lims
             Nuclide.DecayTypeId = Convert.ToInt32(cboxDecayTypes.SelectedValue);
             Nuclide.XRayEnergy = Convert.ToDouble(tbKXrayEnergy.Text.Trim());
             Nuclide.FluorescenceYield = Convert.ToDouble(tbFluorescenceYield.Text.Trim());
-            Nuclide.InstanceStatusId = cbInUse.Checked ? 1 : 2;
+            Nuclide.InstanceStatusId = InstanceStatus.Eval(cboxInstanceStatus.SelectedValue);
             Nuclide.Comment = tbComment.Text.Trim();
 
             bool success;

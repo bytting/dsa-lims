@@ -44,13 +44,7 @@ namespace DSA_lims
 
         private ResourceManager r = null;
         private TabPage returnFromSample = null;
-        private string ProjectsRootName = "Projects";
-
-        private List<Tag<int, string>> decayTypeList = new List<Tag<int, string>>();
-        private List<Tag<int, string>> preparationUnitList = new List<Tag<int, string>>();
-        private List<Tag<int, string>> uniformActivityUnitList = new List<Tag<int, string>>();
-        private List<Tag<int, string>> workflowStatusList = new List<Tag<int, string>>();
-        private List<Tag<int, string>> locationTypeList = new List<Tag<int, string>>();
+        private string ProjectsRootName = "Projects";        
 
         private List<SampleTypeModel> sampleTypes = new List<SampleTypeModel>();
 
@@ -92,67 +86,28 @@ namespace DSA_lims
                 {
                     Common.Username = "Admin"; // FIXME
 
-                    log.Info("Loading decay types");
+                    LoadInstanceStatus(conn);
                     LoadDecayTypes(conn);
-
-                    log.Info("Loading preparation units");
                     LoadPreparationUnits(conn);
-
-                    log.Info("Loading uniform activity units");
                     LoadUniformActivityUnits(conn);
-
-                    log.Info("Loading workflow status");
                     LoadWorkflowStatus(conn);
-
-                    log.Info("Loading location types");
                     LoadLocationTypes(conn);
-
-                    log.Info("Loading sample types");
                     LoadSampleTypes(conn);
-
-                    log.Info("Populating preparation units");
+                    
                     PopulatePreparationUnits(conn);
-
-                    log.Info("Populating activity units");
                     PopulateActivityUnits(conn);
-
-                    log.Info("Populating uniform activity units");
                     PopulateUniformActivityUnits(conn);
-
-                    log.Info("Populating workflow status");
                     PopulateWorkflowStatus(conn);
-
-                    log.Info("Populating location types");
                     PopulateLocationTypes(conn);
-
-                    log.Info("Populating laboratories");
                     PopulateLaboratories(conn);
-
-                    log.Info("Populating users");
                     PopulateUsers(conn);
-
-                    log.Info("Populating sample types");
                     PopulateSampleTypes(conn);
-
-                    log.Info("Populating projects");
                     PopulateProjects(conn);
-
-                    log.Info("Populating nuclides");
                     PopulateNuclides(conn);
-
-                    log.Info("Populating geometries");
                     PopulateGeometries(conn);
-
-                    log.Info("Populating counties");
                     PopulateCounties(conn);
-
-                    log.Info("Populating stations");
                     PopulateStations(conn);
-
-                    log.Info("Populating sample storage");
                     PopulateSampleStorage(conn);
-
-                    log.Info("Populating samplers");
                     PopulateSamplers(conn);
                 }
                 
@@ -267,11 +222,33 @@ namespace DSA_lims
             }
         }
 
-        private void LoadDecayTypes(SqlConnection conn)
+        private void LoadInstanceStatus(SqlConnection conn)
         {
+            log.Info("Loading instance status");
+
             try
             {
-                decayTypeList.Clear();
+                Common.InstanceStatusList.Clear();
+
+                using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_instance_status", CommandType.StoredProcedure))
+                {
+                    while (reader.Read())
+                        Common.InstanceStatusList.Add(new Tag<int, string>(Convert.ToInt32(reader["id"]), reader["name"].ToString()));
+                }
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+            }
+        }
+
+        private void LoadDecayTypes(SqlConnection conn)
+        {
+            log.Info("Loading decay types");
+
+            try
+            {
+                Common.DecayTypeList.Clear();
 
                 using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_decay_types", CommandType.StoredProcedure))
                 {
@@ -279,7 +256,7 @@ namespace DSA_lims
                     {
                         int id = Convert.ToInt32(reader["id"]);
                         string name = reader["name"].ToString();
-                        decayTypeList.Add(new Tag<int, string>(id, name));
+                        Common.DecayTypeList.Add(new Tag<int, string>(id, name));
                     }
                 }
             }
@@ -291,9 +268,11 @@ namespace DSA_lims
 
         private void LoadPreparationUnits(SqlConnection conn)
         {
+            log.Info("Loading preparation units");
+
             try
             {
-                preparationUnitList.Clear();
+                Common.PreparationUnitList.Clear();
 
                 using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_preparation_units", CommandType.StoredProcedure))
                 {
@@ -301,7 +280,7 @@ namespace DSA_lims
                     {
                         int id = Convert.ToInt32(reader["id"]);
                         string name = reader["name"].ToString();
-                        preparationUnitList.Add(new Tag<int, string>(id, name));
+                        Common.PreparationUnitList.Add(new Tag<int, string>(id, name));
                     }
                 }
             }
@@ -313,9 +292,11 @@ namespace DSA_lims
 
         private void LoadUniformActivityUnits(SqlConnection conn)
         {
+            log.Info("Loading uniform activity units");
+
             try
             {
-                uniformActivityUnitList.Clear();
+                Common.UniformActivityUnitList.Clear();
 
                 using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_uniform_activity_units", CommandType.StoredProcedure))
                 {
@@ -323,7 +304,7 @@ namespace DSA_lims
                     {
                         int id = Convert.ToInt32(reader["id"]);
                         string name = reader["name"].ToString();
-                        uniformActivityUnitList.Add(new Tag<int, string>(id, name));
+                        Common.UniformActivityUnitList.Add(new Tag<int, string>(id, name));
                     }
                 }
             }
@@ -335,9 +316,11 @@ namespace DSA_lims
 
         private void LoadWorkflowStatus(SqlConnection conn)
         {
+            log.Info("Loading workflow status");
+
             try
             {
-                workflowStatusList.Clear();                       
+                Common.WorkflowStatusList.Clear();                       
 
                 using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_workflow_status", CommandType.StoredProcedure))
                 {
@@ -345,7 +328,7 @@ namespace DSA_lims
                     {
                         int id = Convert.ToInt32(reader["id"]);
                         string name = reader["name"].ToString();
-                        workflowStatusList.Add(new Tag<int, string>(id, name));
+                        Common.WorkflowStatusList.Add(new Tag<int, string>(id, name));
                     }
                 }
             }
@@ -357,9 +340,11 @@ namespace DSA_lims
 
         private void LoadLocationTypes(SqlConnection conn)
         {
+            log.Info("Loading location types");
+
             try
             {
-                locationTypeList.Clear();
+                Common.LocationTypeList.Clear();
 
                 using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_location_types", CommandType.StoredProcedure))
                 {
@@ -367,7 +352,7 @@ namespace DSA_lims
                     {
                         int id = Convert.ToInt32(reader["id"]);
                         string name = reader["name"].ToString();
-                        locationTypeList.Add(new Tag<int, string>(id, name));
+                        Common.LocationTypeList.Add(new Tag<int, string>(id, name));
                     }
                 }
             }
@@ -415,6 +400,8 @@ namespace DSA_lims
 
         private void LoadSampleTypes(SqlConnection conn)
         {
+            log.Info("Loading sample types");
+
             try
             {
                 sampleTypes.Clear();
@@ -467,29 +454,39 @@ namespace DSA_lims
 
         private void PopulatePreparationUnits(SqlConnection conn)
         {
-            cboxSamplePrepUnit.DataSource = preparationUnitList;
+            log.Info("Populating preparation units");
+
+            cboxSamplePrepUnit.DataSource = Common.PreparationUnitList;
             cboxSamplePrepUnit.SelectedIndex = -1;
         }
 
         private void PopulateUniformActivityUnits(SqlConnection conn)
         {
+            log.Info("Populating uniform activity units");
+
             // populate uniform activity units
         }
 
         private void PopulateWorkflowStatus(SqlConnection conn)
         {
-            cboxSampleAnalWorkflowStatus.DataSource = workflowStatusList;
+            log.Info("Populating workflow status");
+
+            cboxSampleAnalWorkflowStatus.DataSource = Common.WorkflowStatusList;
             cboxSampleAnalWorkflowStatus.SelectedIndex = -1;
         }
 
         private void PopulateLocationTypes(SqlConnection conn)
         {
-            cboxSampleInfoLocationTypes.DataSource = locationTypeList;
+            log.Info("Populating location types");
+
+            cboxSampleInfoLocationTypes.DataSource = Common.LocationTypeList;
             cboxSampleInfoLocationTypes.SelectedIndex = -1;
         }
 
         private void PopulateActivityUnits(SqlConnection conn)
         {
+            log.Info("Populating activity units");
+
             // Set data source
             DataTable dt = DB.GetDataTable(conn, "csp_select_activity_units_flat", CommandType.StoredProcedure);
 
@@ -523,6 +520,8 @@ namespace DSA_lims
 
         private void PopulateSampleTypes(SqlConnection conn)
         {
+            log.Info("Populating sample types");
+
             try
             {
                 treeSampleTypes.Nodes.Clear();
@@ -541,6 +540,8 @@ namespace DSA_lims
 
         private void PopulateProjects(SqlConnection conn)
         {
+            log.Info("Populating projects");
+
             try
             {
                 treeProjects.Nodes.Clear();
@@ -589,6 +590,8 @@ namespace DSA_lims
 
         private void PopulateLaboratories(SqlConnection conn)
         {
+            log.Info("Populating laboratories");
+
             // Set data source
             gridMetaLab.DataSource = DB.GetDataTable(conn, "csp_select_laboratories_flat", CommandType.StoredProcedure, 
                 new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
@@ -612,6 +615,8 @@ namespace DSA_lims
 
         private void PopulateUsers(SqlConnection conn)
         {
+            log.Info("Populating users");
+
             // Set data source
             gridMetaUsers.DataSource = DB.GetDataTable(conn, "csp_select_accounts_flat", CommandType.StoredProcedure, 
                 new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
@@ -630,6 +635,8 @@ namespace DSA_lims
 
         private void PopulateNuclides(SqlConnection conn)
         {
+            log.Info("Populating nuclides");
+
             // Set data source
             gridSysNuclides.DataSource = DB.GetDataTable(conn, "csp_select_nuclides_flat", CommandType.StoredProcedure, 
                 new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
@@ -686,6 +693,8 @@ namespace DSA_lims
 
         private void PopulateGeometries(SqlConnection conn)
         {
+            log.Info("Populating geometries");
+
             // Set data source
             gridSysGeom.DataSource = DB.GetDataTable(conn, "csp_select_preparation_geometries_flat", CommandType.StoredProcedure, 
                 new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
@@ -705,6 +714,8 @@ namespace DSA_lims
 
         private void PopulateCounties(SqlConnection conn)
         {
+            log.Info("Populating counties");
+
             // Set data source
             gridSysCounty.DataSource = DB.GetDataTable(conn, "csp_select_counties_flat", CommandType.StoredProcedure, 
                 new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
@@ -745,6 +756,8 @@ namespace DSA_lims
 
         private void PopulateStations(SqlConnection conn)
         {
+            log.Info("Populating stations");
+
             // Set data source
             DataTable dt = DB.GetDataTable(conn, "csp_select_stations_flat", CommandType.StoredProcedure, 
                 new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
@@ -775,6 +788,8 @@ namespace DSA_lims
 
         private void PopulateSampleStorage(SqlConnection conn)
         {
+            log.Info("Populating sample storage");
+
             // Set data source
             gridMetaSampleStorage.DataSource = DB.GetDataTable(conn, "csp_select_sample_storages_flat", CommandType.StoredProcedure, 
                 new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
@@ -794,6 +809,8 @@ namespace DSA_lims
 
         private void PopulateSamplers(SqlConnection conn)
         {
+            log.Info("Populating samplers");
+
             // Set data source
             DataTable dt = DB.GetDataTable(conn, "csp_select_samplers_flat", CommandType.StoredProcedure, 
                 new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
@@ -1260,7 +1277,7 @@ namespace DSA_lims
 
         private void miNuclidesNew_Click(object sender, EventArgs e)
         {            
-            FormNuclide form = new FormNuclide(log, decayTypeList);
+            FormNuclide form = new FormNuclide(log);
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
@@ -1343,7 +1360,7 @@ namespace DSA_lims
             DataGridViewRow row = gridSysNuclides.SelectedRows[0];            
             Guid nid = new Guid(row.Cells[0].Value.ToString());
 
-            FormNuclide form = new FormNuclide(log, decayTypeList, nid);
+            FormNuclide form = new FormNuclide(log, nid);
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:

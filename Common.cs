@@ -28,5 +28,12 @@ namespace DSA_lims
     public static class Common
     {
         public static string Username { get; set; }
+
+        public static List<Tag<int, string>> InstanceStatusList = new List<Tag<int, string>>();
+        public static List<Tag<int, string>> DecayTypeList = new List<Tag<int, string>>();
+        public static List<Tag<int, string>> PreparationUnitList = new List<Tag<int, string>>();
+        public static List<Tag<int, string>> UniformActivityUnitList = new List<Tag<int, string>>();
+        public static List<Tag<int, string>> WorkflowStatusList = new List<Tag<int, string>>();
+        public static List<Tag<int, string>> LocationTypeList = new List<Tag<int, string>>();
     }
 }

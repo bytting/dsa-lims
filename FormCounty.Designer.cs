@@ -36,7 +36,8 @@
             this.tbName = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.tbNumber = new System.Windows.Forms.TextBox();
-            this.cbInUse = new System.Windows.Forms.CheckBox();
+            this.cboxInstanceStatus = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -45,15 +46,15 @@
             this.panel1.Controls.Add(this.btnCancel);
             this.panel1.Controls.Add(this.btnOk);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 207);
+            this.panel1.Location = new System.Drawing.Point(0, 129);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(354, 30);
+            this.panel1.Size = new System.Drawing.Size(348, 30);
             this.panel1.TabIndex = 6;
             // 
             // btnCancel
             // 
             this.btnCancel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnCancel.Location = new System.Drawing.Point(154, 0);
+            this.btnCancel.Location = new System.Drawing.Point(148, 0);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(100, 30);
             this.btnCancel.TabIndex = 1;
@@ -64,7 +65,7 @@
             // btnOk
             // 
             this.btnOk.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnOk.Location = new System.Drawing.Point(254, 0);
+            this.btnOk.Location = new System.Drawing.Point(248, 0);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(100, 30);
             this.btnOk.TabIndex = 0;
@@ -75,7 +76,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(27, 39);
+            this.label1.Location = new System.Drawing.Point(24, 23);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(35, 13);
             this.label1.TabIndex = 7;
@@ -83,7 +84,7 @@
             // 
             // tbName
             // 
-            this.tbName.Location = new System.Drawing.Point(102, 36);
+            this.tbName.Location = new System.Drawing.Point(99, 20);
             this.tbName.Name = "tbName";
             this.tbName.Size = new System.Drawing.Size(221, 20);
             this.tbName.TabIndex = 8;
@@ -91,7 +92,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(27, 69);
+            this.label2.Location = new System.Drawing.Point(24, 53);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(44, 13);
             this.label2.TabIndex = 9;
@@ -99,27 +100,38 @@
             // 
             // tbNumber
             // 
-            this.tbNumber.Location = new System.Drawing.Point(102, 66);
+            this.tbNumber.Location = new System.Drawing.Point(99, 50);
             this.tbNumber.Name = "tbNumber";
             this.tbNumber.Size = new System.Drawing.Size(221, 20);
             this.tbNumber.TabIndex = 10;
             // 
-            // cbInUse
+            // cboxInstanceStatus
             // 
-            this.cbInUse.AutoSize = true;
-            this.cbInUse.Location = new System.Drawing.Point(102, 93);
-            this.cbInUse.Name = "cbInUse";
-            this.cbInUse.Size = new System.Drawing.Size(55, 17);
-            this.cbInUse.TabIndex = 11;
-            this.cbInUse.Text = "In use";
-            this.cbInUse.UseVisualStyleBackColor = true;
+            this.cboxInstanceStatus.DisplayMember = "Name";
+            this.cboxInstanceStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxInstanceStatus.FormattingEnabled = true;
+            this.cboxInstanceStatus.Location = new System.Drawing.Point(99, 80);
+            this.cboxInstanceStatus.Name = "cboxInstanceStatus";
+            this.cboxInstanceStatus.Size = new System.Drawing.Size(221, 21);
+            this.cboxInstanceStatus.TabIndex = 11;
+            this.cboxInstanceStatus.ValueMember = "Id";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(24, 83);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(37, 13);
+            this.label3.TabIndex = 12;
+            this.label3.Text = "Status";
             // 
             // FormCounty
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(354, 237);
-            this.Controls.Add(this.cbInUse);
+            this.ClientSize = new System.Drawing.Size(348, 159);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.cboxInstanceStatus);
             this.Controls.Add(this.tbNumber);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.tbName);
@@ -147,6 +159,7 @@
         private System.Windows.Forms.TextBox tbName;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox tbNumber;
-        private System.Windows.Forms.CheckBox cbInUse;
+        private System.Windows.Forms.ComboBox cboxInstanceStatus;
+        private System.Windows.Forms.Label label3;
     }
 }

@@ -42,7 +42,8 @@ namespace DSA_lims
             InitializeComponent();
             mLog = log;
             Text = "Create new main project";
-            cbInUse.Checked = true;
+            cboxInstanceStatus.DataSource = Common.InstanceStatusList;
+            cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
         }
 
         public FormProject(ILog log, Guid pid)
@@ -51,6 +52,7 @@ namespace DSA_lims
             mLog = log;
             MainProject.Id = pid;
             Text = "Update main project";
+            cboxInstanceStatus.DataSource = Common.InstanceStatusList;
 
             using (SqlConnection conn = DB.OpenConnection())
             {
@@ -64,7 +66,7 @@ namespace DSA_lims
 
                     reader.Read();
                     tbName.Text = reader["name"].ToString();
-                    cbInUse.Checked = InstanceStatus.IsActive(reader["instance_status_id"]);
+                    cboxInstanceStatus.SelectedValue = InstanceStatus.Eval(reader["instance_status_id"]);
                     tbComment.Text = reader["comment"].ToString();
 
                     MainProject.CreateDate = Convert.ToDateTime(reader["create_date"]);
@@ -90,7 +92,7 @@ namespace DSA_lims
             }
 
             MainProject.Name = tbName.Text.Trim();
-            MainProject.InstanceStatusId = cbInUse.Checked ? 1 : 2;
+            MainProject.InstanceStatusId = InstanceStatus.Eval(cboxInstanceStatus.SelectedValue);
             MainProject.Comment = tbComment.Text.Trim();
 
             bool success;

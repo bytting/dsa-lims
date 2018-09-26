@@ -50,7 +50,8 @@
             this.tbKXrayEnergy = new System.Windows.Forms.TextBox();
             this.tbFluorescenceYield = new System.Windows.Forms.TextBox();
             this.tbComment = new System.Windows.Forms.TextBox();
-            this.cbInUse = new System.Windows.Forms.CheckBox();
+            this.cboxInstanceStatus = new System.Windows.Forms.ComboBox();
+            this.label10 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -59,7 +60,7 @@
             this.panel1.Controls.Add(this.btnCancel);
             this.panel1.Controls.Add(this.btnOk);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 463);
+            this.panel1.Location = new System.Drawing.Point(0, 471);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(476, 30);
             this.panel1.TabIndex = 0;
@@ -161,7 +162,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(26, 318);
+            this.label9.Location = new System.Drawing.Point(26, 321);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(51, 13);
             this.label9.TabIndex = 9;
@@ -204,12 +205,14 @@
             // 
             // cboxDecayTypes
             // 
+            this.cboxDecayTypes.DisplayMember = "Name";
             this.cboxDecayTypes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxDecayTypes.FormattingEnabled = true;
             this.cboxDecayTypes.Location = new System.Drawing.Point(173, 195);
             this.cboxDecayTypes.Name = "cboxDecayTypes";
             this.cboxDecayTypes.Size = new System.Drawing.Size(271, 21);
             this.cboxDecayTypes.TabIndex = 15;
+            this.cboxDecayTypes.ValueMember = "Id";
             // 
             // tbKXrayEnergy
             // 
@@ -227,7 +230,7 @@
             // 
             // tbComment
             // 
-            this.tbComment.Location = new System.Drawing.Point(173, 315);
+            this.tbComment.Location = new System.Drawing.Point(173, 318);
             this.tbComment.MaxLength = 1000;
             this.tbComment.Multiline = true;
             this.tbComment.Name = "tbComment";
@@ -235,22 +238,33 @@
             this.tbComment.Size = new System.Drawing.Size(271, 125);
             this.tbComment.TabIndex = 18;
             // 
-            // cbInUse
+            // cboxInstanceStatus
             // 
-            this.cbInUse.AutoSize = true;
-            this.cbInUse.Location = new System.Drawing.Point(173, 282);
-            this.cbInUse.Name = "cbInUse";
-            this.cbInUse.Size = new System.Drawing.Size(55, 17);
-            this.cbInUse.TabIndex = 19;
-            this.cbInUse.Text = "In use";
-            this.cbInUse.UseVisualStyleBackColor = true;
+            this.cboxInstanceStatus.DisplayMember = "Name";
+            this.cboxInstanceStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxInstanceStatus.FormattingEnabled = true;
+            this.cboxInstanceStatus.Location = new System.Drawing.Point(173, 287);
+            this.cboxInstanceStatus.Name = "cboxInstanceStatus";
+            this.cboxInstanceStatus.Size = new System.Drawing.Size(271, 21);
+            this.cboxInstanceStatus.TabIndex = 19;
+            this.cboxInstanceStatus.ValueMember = "Id";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(26, 290);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(37, 13);
+            this.label10.TabIndex = 20;
+            this.label10.Text = "Status";
             // 
             // FormNuclide
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(476, 493);
-            this.Controls.Add(this.cbInUse);
+            this.ClientSize = new System.Drawing.Size(476, 501);
+            this.Controls.Add(this.label10);
+            this.Controls.Add(this.cboxInstanceStatus);
             this.Controls.Add(this.tbComment);
             this.Controls.Add(this.tbFluorescenceYield);
             this.Controls.Add(this.tbKXrayEnergy);
@@ -307,6 +321,7 @@
         private System.Windows.Forms.TextBox tbKXrayEnergy;
         private System.Windows.Forms.TextBox tbFluorescenceYield;
         private System.Windows.Forms.TextBox tbComment;
-        private System.Windows.Forms.CheckBox cbInUse;
+        private System.Windows.Forms.ComboBox cboxInstanceStatus;
+        private System.Windows.Forms.Label label10;
     }
 }

@@ -47,7 +47,8 @@ namespace DSA_lims
 
             Text = "Create energy line";
             tbNuclide.Text = nname;
-            cbInUse.Checked = true;
+            cboxInstanceStatus.DataSource = Common.InstanceStatusList;
+            cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
         }
 
         public FormEnergyLine(ILog log, Guid nid, Guid eid, string nname)
@@ -61,6 +62,7 @@ namespace DSA_lims
 
             Text = "Update energy line";
             tbNuclide.Text = nname;
+            cboxInstanceStatus.DataSource = Common.InstanceStatusList;
 
             using (SqlConnection conn = DB.OpenConnection())
             {
@@ -83,7 +85,7 @@ namespace DSA_lims
                     tbProbOfDecayUnc.Text = reader["probability_of_decay_uncertainty"].ToString();
                     tbTotInternalConv.Text = reader["total_internal_conversion"].ToString();
                     tbKShellConv.Text = reader["kshell_conversion"].ToString();
-                    cbInUse.Checked = InstanceStatus.IsActive(reader["instance_status_id"]);
+                    cboxInstanceStatus.SelectedValue = InstanceStatus.Eval(reader["instance_status_id"]);
                     tbComment.Text = reader["comment"].ToString();
                     EnergyLine.CreateDate = Convert.ToDateTime(reader["create_date"]);
                     EnergyLine.CreatedBy = reader["created_by"].ToString();
@@ -123,7 +125,7 @@ namespace DSA_lims
             EnergyLine.ProbabilityOfDecayUncertainty = Convert.ToDouble(tbProbOfDecayUnc.Text.Trim());
             EnergyLine.TotalInternalConversion = Convert.ToDouble(tbTotInternalConv.Text.Trim());
             EnergyLine.KShellConversion = Convert.ToDouble(tbKShellConv.Text.Trim());
-            EnergyLine.InstanceStatusId = cbInUse.Checked == true ? 1 : 2;
+            EnergyLine.InstanceStatusId = InstanceStatus.Eval(cboxInstanceStatus.SelectedValue);
             EnergyLine.Comment = tbComment.Text.Trim();
 
             bool success;

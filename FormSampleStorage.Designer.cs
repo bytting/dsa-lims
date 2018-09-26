@@ -35,10 +35,11 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.cbInUse = new System.Windows.Forms.CheckBox();
             this.tbName = new System.Windows.Forms.TextBox();
             this.tbAddress = new System.Windows.Forms.TextBox();
             this.tbComment = new System.Windows.Forms.TextBox();
+            this.cboxInstanceStatus = new System.Windows.Forms.ComboBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -47,15 +48,15 @@
             this.panel1.Controls.Add(this.btnCancel);
             this.panel1.Controls.Add(this.btnOk);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 307);
+            this.panel1.Location = new System.Drawing.Point(0, 289);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(367, 30);
+            this.panel1.Size = new System.Drawing.Size(336, 30);
             this.panel1.TabIndex = 8;
             // 
             // btnCancel
             // 
             this.btnCancel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnCancel.Location = new System.Drawing.Point(167, 0);
+            this.btnCancel.Location = new System.Drawing.Point(136, 0);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(100, 30);
             this.btnCancel.TabIndex = 1;
@@ -66,7 +67,7 @@
             // btnOk
             // 
             this.btnOk.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnOk.Location = new System.Drawing.Point(267, 0);
+            this.btnOk.Location = new System.Drawing.Point(236, 0);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(100, 30);
             this.btnOk.TabIndex = 0;
@@ -95,55 +96,66 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(20, 104);
+            this.label3.Location = new System.Drawing.Point(20, 125);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(51, 13);
             this.label3.TabIndex = 11;
             this.label3.Text = "Comment";
             // 
-            // cbInUse
-            // 
-            this.cbInUse.AutoSize = true;
-            this.cbInUse.Location = new System.Drawing.Point(105, 81);
-            this.cbInUse.Name = "cbInUse";
-            this.cbInUse.Size = new System.Drawing.Size(55, 17);
-            this.cbInUse.TabIndex = 12;
-            this.cbInUse.Text = "In use";
-            this.cbInUse.UseVisualStyleBackColor = true;
-            // 
             // tbName
             // 
             this.tbName.Location = new System.Drawing.Point(105, 28);
             this.tbName.Name = "tbName";
-            this.tbName.Size = new System.Drawing.Size(231, 20);
+            this.tbName.Size = new System.Drawing.Size(201, 20);
             this.tbName.TabIndex = 13;
             // 
             // tbAddress
             // 
             this.tbAddress.Location = new System.Drawing.Point(105, 55);
             this.tbAddress.Name = "tbAddress";
-            this.tbAddress.Size = new System.Drawing.Size(231, 20);
+            this.tbAddress.Size = new System.Drawing.Size(201, 20);
             this.tbAddress.TabIndex = 14;
             // 
             // tbComment
             // 
-            this.tbComment.Location = new System.Drawing.Point(105, 104);
+            this.tbComment.Location = new System.Drawing.Point(105, 122);
             this.tbComment.MaxLength = 1000;
             this.tbComment.Multiline = true;
             this.tbComment.Name = "tbComment";
             this.tbComment.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.tbComment.Size = new System.Drawing.Size(231, 169);
+            this.tbComment.Size = new System.Drawing.Size(201, 137);
             this.tbComment.TabIndex = 15;
+            // 
+            // cboxInstanceStatus
+            // 
+            this.cboxInstanceStatus.DisplayMember = "Name";
+            this.cboxInstanceStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxInstanceStatus.FormattingEnabled = true;
+            this.cboxInstanceStatus.Location = new System.Drawing.Point(105, 82);
+            this.cboxInstanceStatus.Name = "cboxInstanceStatus";
+            this.cboxInstanceStatus.Size = new System.Drawing.Size(201, 21);
+            this.cboxInstanceStatus.TabIndex = 16;
+            this.cboxInstanceStatus.ValueMember = "Id";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(20, 85);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(37, 13);
+            this.label4.TabIndex = 17;
+            this.label4.Text = "Status";
             // 
             // FormSampleStorage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(367, 337);
+            this.ClientSize = new System.Drawing.Size(336, 319);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.cboxInstanceStatus);
             this.Controls.Add(this.tbComment);
             this.Controls.Add(this.tbAddress);
             this.Controls.Add(this.tbName);
-            this.Controls.Add(this.cbInUse);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -169,9 +181,10 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.CheckBox cbInUse;
         private System.Windows.Forms.TextBox tbName;
         private System.Windows.Forms.TextBox tbAddress;
         private System.Windows.Forms.TextBox tbComment;
+        private System.Windows.Forms.ComboBox cboxInstanceStatus;
+        private System.Windows.Forms.Label label4;
     }
 }

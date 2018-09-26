@@ -49,12 +49,13 @@
             this.tbPhone = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tbPassword1 = new System.Windows.Forms.TextBox();
-            this.cbInUse = new System.Windows.Forms.CheckBox();
             this.lbRoles = new System.Windows.Forms.ListBox();
             this.toolStrip25 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel5 = new System.Windows.Forms.ToolStripLabel();
             this.btnAddRole = new System.Windows.Forms.ToolStripButton();
             this.btnRemoveRole = new System.Windows.Forms.ToolStripButton();
+            this.cboxInstanceStatus = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -70,16 +71,16 @@
             this.panel1.Controls.Add(this.btnCancel);
             this.panel1.Controls.Add(this.btnOk);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 525);
+            this.panel1.Location = new System.Drawing.Point(0, 458);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(480, 32);
+            this.panel1.Size = new System.Drawing.Size(456, 32);
             this.panel1.TabIndex = 1;
             // 
             // btnCancel
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnCancel.Location = new System.Drawing.Point(280, 0);
+            this.btnCancel.Location = new System.Drawing.Point(256, 0);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(100, 32);
             this.btnCancel.TabIndex = 1;
@@ -90,7 +91,7 @@
             // 
             this.btnOk.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnOk.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnOk.Location = new System.Drawing.Point(380, 0);
+            this.btnOk.Location = new System.Drawing.Point(356, 0);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(100, 32);
             this.btnOk.TabIndex = 0;
@@ -113,8 +114,8 @@
             // 
             this.splitContainer1.Panel2.Controls.Add(this.lbRoles);
             this.splitContainer1.Panel2.Controls.Add(this.toolStrip25);
-            this.splitContainer1.Size = new System.Drawing.Size(480, 525);
-            this.splitContainer1.SplitterDistance = 287;
+            this.splitContainer1.Size = new System.Drawing.Size(456, 458);
+            this.splitContainer1.SplitterDistance = 250;
             this.splitContainer1.TabIndex = 3;
             // 
             // tableLayoutPanel8
@@ -136,32 +137,32 @@
             this.tableLayoutPanel8.Controls.Add(this.tbPhone, 1, 4);
             this.tableLayoutPanel8.Controls.Add(this.label1, 0, 6);
             this.tableLayoutPanel8.Controls.Add(this.tbPassword1, 1, 6);
-            this.tableLayoutPanel8.Controls.Add(this.cbInUse, 1, 8);
+            this.tableLayoutPanel8.Controls.Add(this.cboxInstanceStatus, 1, 8);
+            this.tableLayoutPanel8.Controls.Add(this.label2, 0, 8);
             this.tableLayoutPanel8.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel8.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel8.Name = "tableLayoutPanel8";
             this.tableLayoutPanel8.RowCount = 10;
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
+            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26F));
+            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26F));
+            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26F));
+            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26F));
+            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26F));
+            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26F));
+            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26F));
+            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26F));
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel8.Size = new System.Drawing.Size(480, 287);
+            this.tableLayoutPanel8.Size = new System.Drawing.Size(456, 250);
             this.tableLayoutPanel8.TabIndex = 3;
             // 
             // panel19
             // 
             this.panel19.Controls.Add(this.tbPassword2);
             this.panel19.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel19.Location = new System.Drawing.Point(99, 215);
+            this.panel19.Location = new System.Drawing.Point(94, 179);
             this.panel19.Name = "panel19";
-            this.panel19.Size = new System.Drawing.Size(378, 26);
+            this.panel19.Size = new System.Drawing.Size(359, 20);
             this.panel19.TabIndex = 9;
             // 
             // tbPassword2
@@ -170,13 +171,13 @@
             this.tbPassword2.Location = new System.Drawing.Point(0, 0);
             this.tbPassword2.Name = "tbPassword2";
             this.tbPassword2.PasswordChar = '*';
-            this.tbPassword2.Size = new System.Drawing.Size(378, 20);
+            this.tbPassword2.Size = new System.Drawing.Size(359, 20);
             this.tbPassword2.TabIndex = 8;
             // 
             // label44
             // 
             this.label44.AutoSize = true;
-            this.label44.Location = new System.Drawing.Point(3, 52);
+            this.label44.Location = new System.Drawing.Point(3, 46);
             this.label44.Name = "label44";
             this.label44.Size = new System.Drawing.Size(52, 13);
             this.label44.TabIndex = 0;
@@ -194,7 +195,7 @@
             // label46
             // 
             this.label46.AutoSize = true;
-            this.label46.Location = new System.Drawing.Point(3, 84);
+            this.label46.Location = new System.Drawing.Point(3, 72);
             this.label46.Name = "label46";
             this.label46.Size = new System.Drawing.Size(32, 13);
             this.label46.TabIndex = 2;
@@ -203,7 +204,7 @@
             // label47
             // 
             this.label47.AutoSize = true;
-            this.label47.Location = new System.Drawing.Point(3, 116);
+            this.label47.Location = new System.Drawing.Point(3, 98);
             this.label47.Name = "label47";
             this.label47.Size = new System.Drawing.Size(38, 13);
             this.label47.TabIndex = 3;
@@ -212,7 +213,7 @@
             // label48
             // 
             this.label48.AutoSize = true;
-            this.label48.Location = new System.Drawing.Point(3, 148);
+            this.label48.Location = new System.Drawing.Point(3, 124);
             this.label48.Name = "label48";
             this.label48.Size = new System.Drawing.Size(57, 13);
             this.label48.TabIndex = 4;
@@ -223,15 +224,15 @@
             this.cboxLab.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cboxLab.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxLab.FormattingEnabled = true;
-            this.cboxLab.Location = new System.Drawing.Point(99, 151);
+            this.cboxLab.Location = new System.Drawing.Point(94, 127);
             this.cboxLab.Name = "cboxLab";
-            this.cboxLab.Size = new System.Drawing.Size(378, 21);
+            this.cboxLab.Size = new System.Drawing.Size(359, 21);
             this.cboxLab.TabIndex = 5;
             // 
             // label49
             // 
             this.label49.AutoSize = true;
-            this.label49.Location = new System.Drawing.Point(3, 212);
+            this.label49.Location = new System.Drawing.Point(3, 176);
             this.label49.Name = "label49";
             this.label49.Size = new System.Drawing.Size(82, 13);
             this.label49.TabIndex = 7;
@@ -240,39 +241,39 @@
             // tbUsername
             // 
             this.tbUsername.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbUsername.Location = new System.Drawing.Point(99, 23);
+            this.tbUsername.Location = new System.Drawing.Point(94, 23);
             this.tbUsername.Name = "tbUsername";
-            this.tbUsername.Size = new System.Drawing.Size(378, 20);
+            this.tbUsername.Size = new System.Drawing.Size(359, 20);
             this.tbUsername.TabIndex = 10;
             // 
             // tbFullname
             // 
             this.tbFullname.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbFullname.Location = new System.Drawing.Point(99, 55);
+            this.tbFullname.Location = new System.Drawing.Point(94, 49);
             this.tbFullname.Name = "tbFullname";
-            this.tbFullname.Size = new System.Drawing.Size(378, 20);
+            this.tbFullname.Size = new System.Drawing.Size(359, 20);
             this.tbFullname.TabIndex = 11;
             // 
             // tbEmail
             // 
             this.tbEmail.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbEmail.Location = new System.Drawing.Point(99, 87);
+            this.tbEmail.Location = new System.Drawing.Point(94, 75);
             this.tbEmail.Name = "tbEmail";
-            this.tbEmail.Size = new System.Drawing.Size(378, 20);
+            this.tbEmail.Size = new System.Drawing.Size(359, 20);
             this.tbEmail.TabIndex = 12;
             // 
             // tbPhone
             // 
             this.tbPhone.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbPhone.Location = new System.Drawing.Point(99, 119);
+            this.tbPhone.Location = new System.Drawing.Point(94, 101);
             this.tbPhone.Name = "tbPhone";
-            this.tbPhone.Size = new System.Drawing.Size(378, 20);
+            this.tbPhone.Size = new System.Drawing.Size(359, 20);
             this.tbPhone.TabIndex = 13;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(3, 180);
+            this.label1.Location = new System.Drawing.Point(3, 150);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(53, 13);
             this.label1.TabIndex = 14;
@@ -281,20 +282,10 @@
             // tbPassword1
             // 
             this.tbPassword1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbPassword1.Location = new System.Drawing.Point(99, 183);
+            this.tbPassword1.Location = new System.Drawing.Point(94, 153);
             this.tbPassword1.Name = "tbPassword1";
-            this.tbPassword1.Size = new System.Drawing.Size(378, 20);
+            this.tbPassword1.Size = new System.Drawing.Size(359, 20);
             this.tbPassword1.TabIndex = 15;
-            // 
-            // cbInUse
-            // 
-            this.cbInUse.AutoSize = true;
-            this.cbInUse.Location = new System.Drawing.Point(99, 247);
-            this.cbInUse.Name = "cbInUse";
-            this.cbInUse.Size = new System.Drawing.Size(57, 17);
-            this.cbInUse.TabIndex = 6;
-            this.cbInUse.Text = "In Use";
-            this.cbInUse.UseVisualStyleBackColor = true;
             // 
             // lbRoles
             // 
@@ -302,7 +293,7 @@
             this.lbRoles.FormattingEnabled = true;
             this.lbRoles.Location = new System.Drawing.Point(0, 25);
             this.lbRoles.Name = "lbRoles";
-            this.lbRoles.Size = new System.Drawing.Size(480, 209);
+            this.lbRoles.Size = new System.Drawing.Size(456, 179);
             this.lbRoles.TabIndex = 3;
             // 
             // toolStrip25
@@ -314,7 +305,7 @@
             this.btnRemoveRole});
             this.toolStrip25.Location = new System.Drawing.Point(0, 0);
             this.toolStrip25.Name = "toolStrip25";
-            this.toolStrip25.Size = new System.Drawing.Size(480, 25);
+            this.toolStrip25.Size = new System.Drawing.Size(456, 25);
             this.toolStrip25.TabIndex = 2;
             this.toolStrip25.Text = "toolStrip25";
             // 
@@ -343,11 +334,32 @@
             this.btnRemoveRole.Size = new System.Drawing.Size(23, 22);
             this.btnRemoveRole.Text = "toolStripButton2";
             // 
+            // cboxInstanceStatus
+            // 
+            this.cboxInstanceStatus.DisplayMember = "Name";
+            this.cboxInstanceStatus.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cboxInstanceStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxInstanceStatus.FormattingEnabled = true;
+            this.cboxInstanceStatus.Location = new System.Drawing.Point(94, 205);
+            this.cboxInstanceStatus.Name = "cboxInstanceStatus";
+            this.cboxInstanceStatus.Size = new System.Drawing.Size(359, 21);
+            this.cboxInstanceStatus.TabIndex = 16;
+            this.cboxInstanceStatus.ValueMember = "Id";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(3, 202);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(37, 13);
+            this.label2.TabIndex = 17;
+            this.label2.Text = "Status";
+            // 
             // FormUser
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(480, 557);
+            this.ClientSize = new System.Drawing.Size(456, 490);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -388,7 +400,6 @@
         private System.Windows.Forms.Label label47;
         private System.Windows.Forms.Label label48;
         private System.Windows.Forms.ComboBox cboxLab;
-        private System.Windows.Forms.CheckBox cbInUse;
         private System.Windows.Forms.Label label49;
         private System.Windows.Forms.TextBox tbUsername;
         private System.Windows.Forms.TextBox tbFullname;
@@ -401,5 +412,7 @@
         private System.Windows.Forms.ToolStripButton btnRemoveRole;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox tbPassword1;
+        private System.Windows.Forms.ComboBox cboxInstanceStatus;
+        private System.Windows.Forms.Label label2;
     }
 }

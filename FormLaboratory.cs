@@ -42,7 +42,8 @@ namespace DSA_lims
             InitializeComponent();
             mLog = log;
             Text = "Create laboratory";
-            cbInUse.Checked = true;
+            cboxInstanceStatus.DataSource = Common.InstanceStatusList;
+            cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
         }
 
         public FormLaboratory(ILog log, Guid lid)
@@ -51,6 +52,7 @@ namespace DSA_lims
             mLog = log;
             Laboratory.Id = lid;
             Text = "Update laboratory";
+            cboxInstanceStatus.DataSource = Common.InstanceStatusList;
 
             using (SqlConnection conn = DB.OpenConnection())
             {
@@ -68,7 +70,7 @@ namespace DSA_lims
                     tbAddress.Text = reader["address"].ToString();
                     tbEmail.Text = reader["email"].ToString();
                     tbPhone.Text = reader["phone"].ToString();
-                    cbInUse.Checked = InstanceStatus.IsActive(reader["instance_status_id"]);
+                    cboxInstanceStatus.SelectedValue = InstanceStatus.Eval(reader["instance_status_id"]);
                     tbComment.Text = reader["comment"].ToString();
 
                     Laboratory.AssignmentCounter = Convert.ToInt32(reader["assignment_counter"]);
@@ -105,7 +107,7 @@ namespace DSA_lims
             Laboratory.Address = tbAddress.Text.Trim();
             Laboratory.Email = tbEmail.Text.Trim();
             Laboratory.Phone = tbPhone.Text.Trim();
-            Laboratory.InstanceStatusId = cbInUse.Checked ? 1 : 2;
+            Laboratory.InstanceStatusId = InstanceStatus.Eval(cboxInstanceStatus.SelectedValue);
             Laboratory.Comment = tbComment.Text.Trim();
 
             bool success;

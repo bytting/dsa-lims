@@ -40,7 +40,6 @@
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
-            this.cbInUse = new System.Windows.Forms.CheckBox();
             this.tbComment = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
             this.tbNuclide = new System.Windows.Forms.TextBox();
@@ -55,8 +54,10 @@
             this.tbTotInternalConv = new System.Windows.Forms.TextBox();
             this.tbKShellConv = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.btnOk = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
+            this.btnOk = new System.Windows.Forms.Button();
+            this.cboxInstanceStatus = new System.Windows.Forms.ComboBox();
+            this.label13 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -159,19 +160,9 @@
             this.label11.TabIndex = 10;
             this.label11.Text = "KShell conversion";
             // 
-            // cbInUse
-            // 
-            this.cbInUse.AutoSize = true;
-            this.cbInUse.Location = new System.Drawing.Point(200, 299);
-            this.cbInUse.Name = "cbInUse";
-            this.cbInUse.Size = new System.Drawing.Size(55, 17);
-            this.cbInUse.TabIndex = 11;
-            this.cbInUse.Text = "In use";
-            this.cbInUse.UseVisualStyleBackColor = true;
-            // 
             // tbComment
             // 
-            this.tbComment.Location = new System.Drawing.Point(33, 340);
+            this.tbComment.Location = new System.Drawing.Point(33, 349);
             this.tbComment.Multiline = true;
             this.tbComment.Name = "tbComment";
             this.tbComment.ScrollBars = System.Windows.Forms.ScrollBars.Both;
@@ -181,7 +172,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(33, 324);
+            this.label12.Location = new System.Drawing.Point(33, 333);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(51, 13);
             this.label12.TabIndex = 13;
@@ -270,21 +261,10 @@
             this.panel1.Controls.Add(this.btnCancel);
             this.panel1.Controls.Add(this.btnOk);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 478);
+            this.panel1.Location = new System.Drawing.Point(0, 485);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(409, 30);
             this.panel1.TabIndex = 25;
-            // 
-            // btnOk
-            // 
-            this.btnOk.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnOk.Location = new System.Drawing.Point(309, 0);
-            this.btnOk.Name = "btnOk";
-            this.btnOk.Size = new System.Drawing.Size(100, 30);
-            this.btnOk.TabIndex = 0;
-            this.btnOk.Text = "Ok";
-            this.btnOk.UseVisualStyleBackColor = true;
-            this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
             // 
             // btnCancel
             // 
@@ -297,11 +277,44 @@
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
+            // btnOk
+            // 
+            this.btnOk.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnOk.Location = new System.Drawing.Point(309, 0);
+            this.btnOk.Name = "btnOk";
+            this.btnOk.Size = new System.Drawing.Size(100, 30);
+            this.btnOk.TabIndex = 0;
+            this.btnOk.Text = "Ok";
+            this.btnOk.UseVisualStyleBackColor = true;
+            this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
+            // 
+            // cboxInstanceStatus
+            // 
+            this.cboxInstanceStatus.DisplayMember = "Name";
+            this.cboxInstanceStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxInstanceStatus.FormattingEnabled = true;
+            this.cboxInstanceStatus.Location = new System.Drawing.Point(200, 300);
+            this.cboxInstanceStatus.Name = "cboxInstanceStatus";
+            this.cboxInstanceStatus.Size = new System.Drawing.Size(176, 21);
+            this.cboxInstanceStatus.TabIndex = 26;
+            this.cboxInstanceStatus.ValueMember = "Id";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(35, 303);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(37, 13);
+            this.label13.TabIndex = 27;
+            this.label13.Text = "Status";
+            // 
             // FormEnergyLine
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(409, 508);
+            this.ClientSize = new System.Drawing.Size(409, 515);
+            this.Controls.Add(this.label13);
+            this.Controls.Add(this.cboxInstanceStatus);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.tbKShellConv);
             this.Controls.Add(this.tbTotInternalConv);
@@ -316,7 +329,6 @@
             this.Controls.Add(this.tbNuclide);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.tbComment);
-            this.Controls.Add(this.cbInUse);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.label9);
@@ -354,7 +366,6 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.CheckBox cbInUse;
         private System.Windows.Forms.TextBox tbComment;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.TextBox tbNuclide;
@@ -371,5 +382,7 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnOk;
+        private System.Windows.Forms.ComboBox cboxInstanceStatus;
+        private System.Windows.Forms.Label label13;
     }
 }

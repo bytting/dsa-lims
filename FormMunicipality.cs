@@ -43,7 +43,8 @@ namespace DSA_lims
             mLog = log;
             Municipality.CountyId = cid;
             Text = "Create municipality";
-            cbInUse.Checked = true;
+            cboxInstanceStatus.DataSource = Common.InstanceStatusList;
+            cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
         }
 
         public FormMunicipality(ILog log, Guid cid, Guid mid)
@@ -53,6 +54,7 @@ namespace DSA_lims
             Municipality.CountyId = cid;
             Municipality.Id = mid;
             Text = "Update municipality";
+            cboxInstanceStatus.DataSource = Common.InstanceStatusList;
 
             using (SqlConnection conn = DB.OpenConnection())
             {
@@ -73,7 +75,7 @@ namespace DSA_lims
                     reader.Read();
                     tbName.Text = reader["name"].ToString();
                     tbNumber.Text = reader["municipality_number"].ToString();
-                    cbInUse.Checked = InstanceStatus.IsActive(reader["instance_status_id"]);
+                    cboxInstanceStatus.SelectedValue = InstanceStatus.Eval(reader["instance_status_id"]);
                     Municipality.CreateDate = Convert.ToDateTime(reader["create_date"]);
                     Municipality.CreatedBy = reader["created_by"].ToString();
                     Municipality.UpdateDate = Convert.ToDateTime(reader["update_date"]);
@@ -104,7 +106,7 @@ namespace DSA_lims
 
             Municipality.Name = tbName.Text.Trim();
             Municipality.Number = Convert.ToInt32(tbNumber.Text.Trim());
-            Municipality.InstanceStatusId = cbInUse.Checked ? 1 : 2;
+            Municipality.InstanceStatusId = InstanceStatus.Eval(cboxInstanceStatus.SelectedValue);
 
             bool success;
             if (Municipality.Id == Guid.Empty)

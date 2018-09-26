@@ -43,7 +43,8 @@ namespace DSA_lims
             InitializeComponent();
             mLog = log;
             Text = "Create sample storage";
-            cbInUse.Checked = true;
+            cboxInstanceStatus.DataSource = Common.InstanceStatusList;
+            cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
         }
 
         public FormSampleStorage(ILog log, Guid ssid)
@@ -52,6 +53,7 @@ namespace DSA_lims
             mLog = log;
             SampleStorage.Id = ssid;
             Text = "Update sample storage";
+            cboxInstanceStatus.DataSource = Common.InstanceStatusList;
 
             using (SqlConnection conn = DB.OpenConnection())
             {
@@ -65,8 +67,8 @@ namespace DSA_lims
 
                     reader.Read();
                     tbName.Text = reader["name"].ToString();
-                    tbAddress.Text = reader["address"].ToString();                    
-                    cbInUse.Checked = InstanceStatus.IsActive(reader["instance_status_id"]);
+                    tbAddress.Text = reader["address"].ToString();
+                    cboxInstanceStatus.SelectedValue = InstanceStatus.Eval(reader["instance_status_id"]);
                     tbComment.Text = reader["comment"].ToString();
                     SampleStorage.CreateDate = Convert.ToDateTime(reader["create_date"]);
                     SampleStorage.CreatedBy = reader["created_by"].ToString();
@@ -92,7 +94,7 @@ namespace DSA_lims
 
             SampleStorage.Name = tbName.Text.Trim();
             SampleStorage.Address = tbAddress.Text.Trim();
-            SampleStorage.InstanceStatusId = cbInUse.Checked ? 1 : 2;
+            SampleStorage.InstanceStatusId = InstanceStatus.Eval(cboxInstanceStatus.SelectedValue);
             SampleStorage.Comment = tbComment.Text.Trim();
 
             bool success;

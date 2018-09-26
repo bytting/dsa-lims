@@ -44,9 +44,7 @@ namespace DSA_lims
 
         private ResourceManager r = null;
         private TabPage returnFromSample = null;
-        private string ProjectsRootName = "Projects";        
-
-        private List<SampleTypeModel> sampleTypes = new List<SampleTypeModel>();
+        private string ProjectsRootName = "Projects";
 
         public FormMain()
         {
@@ -140,6 +138,31 @@ namespace DSA_lims
         private void FormMain_Paint(object sender, PaintEventArgs e)
         {
             //
+        }
+
+        private void SetStatusMessage(string msg, StatusMessage msgLevel = StatusMessage.Success)
+        {
+            switch(msgLevel)
+            {
+                case StatusMessage.Success:
+                    lblStatus.Text = StrUtils.makeStatusMessage(msg);
+                    lblStatus.ForeColor = SystemColors.ControlText;
+                    break;
+                case StatusMessage.Warning:
+                    lblStatus.Text = StrUtils.makeStatusMessage(msg);
+                    lblStatus.ForeColor = Color.OrangeRed;
+                    break;
+                case StatusMessage.Error:
+                    lblStatus.Text = StrUtils.makeErrorMessage(msg);
+                    lblStatus.ForeColor = Color.Red;
+                    break;
+            }            
+        }
+
+        private void ClearStatusMessage()
+        {
+            lblStatus.Text = "";
+            lblStatus.ForeColor = SystemColors.ControlText;
         }
 
         private void HideMenuItems()
@@ -404,7 +427,7 @@ namespace DSA_lims
 
             try
             {
-                sampleTypes.Clear();
+                Common.SampleTypes.Clear();
 
                 using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_sample_types_short", CommandType.StoredProcedure))
                 {
@@ -415,7 +438,7 @@ namespace DSA_lims
                         sampleType.Name = reader["name"].ToString();
 
                         string[] items = sampleType.Name.Substring(1).Split(new char[] { '/' });
-                        List<SampleTypeModel> current = sampleTypes;
+                        List<SampleTypeModel> current = Common.SampleTypes;
                         foreach (string item in items)
                         {
                             SampleTypeModel found = current.Find(x => x.ShortName == item);
@@ -440,7 +463,7 @@ namespace DSA_lims
 
             try
             {                
-                foreach (SampleTypeModel st in sampleTypes)
+                foreach (SampleTypeModel st in Common.SampleTypes)
                 {
                     AddSampleTypeComponents(conn, st);
                     AddSampleTypeParameters(conn, st);
@@ -509,7 +532,7 @@ namespace DSA_lims
         private void AddSampleTypeNodes(TreeNodeCollection nodes, SampleTypeModel st)
         {
             TreeNode node = nodes.Add(st.Name, st.ShortName);
-            node.ToolTipText = st.Name;
+            node.ToolTipText = st.Name.Substring(1);
             node.Tag = st;
 
             cboxSampleSampleType.Items.Add(st);
@@ -527,7 +550,7 @@ namespace DSA_lims
                 treeSampleTypes.Nodes.Clear();
                 cboxSampleSampleType.Items.Clear();
 
-                foreach(SampleTypeModel st in sampleTypes)                
+                foreach(SampleTypeModel st in Common.SampleTypes)
                     AddSampleTypeNodes(treeSampleTypes.Nodes, st);
 
                 cboxSampleSampleType.SelectedIndex = -1;
@@ -850,6 +873,7 @@ namespace DSA_lims
         private void tabs_SelectedIndexChanged(object sender, EventArgs e)
         {
             lblCurrentTab.Text = tabs.SelectedTab.Text;
+            ClearStatusMessage();
 
             HideMenuItems();
 
@@ -992,7 +1016,7 @@ namespace DSA_lims
             settings.UseActiveDirectoryCredentials = cbMachineSettingsUseAD.Checked;
 
             SaveSettings(DSAEnvironment.SettingsFilename);
-            lblStatus.Text = StrUtils.makeStatusMessage("Settings saved");
+            SetStatusMessage("Settings saved");
         }
 
         private void btnUserSettingsSave_Click(object sender, EventArgs e)
@@ -1040,12 +1064,12 @@ namespace DSA_lims
             switch(form.ShowDialog())
             {                
                 case DialogResult.OK:
-                    lblStatus.Text = StrUtils.makeStatusMessage("Laboratory " + form.Laboratory.Name + " created");
+                    SetStatusMessage("Laboratory " + form.Laboratory.Name + " created");
                     using (SqlConnection conn = DB.OpenConnection())
                         PopulateLaboratories(conn);
                     break;
                 case DialogResult.Abort:
-                    lblStatus.Text = StrUtils.makeErrorMessage("Create laboratory failed");
+                    SetStatusMessage("Create laboratory failed", StatusMessage.Error);
                     break;
             }                            
         }
@@ -1106,12 +1130,12 @@ namespace DSA_lims
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
-                    lblStatus.Text = StrUtils.makeStatusMessage("Laboratory " + form.Laboratory.Name + " updated");
+                    SetStatusMessage("Laboratory " + form.Laboratory.Name + " updated");
                     using (SqlConnection conn = DB.OpenConnection())
                         PopulateLaboratories(conn);
                     break;
                 case DialogResult.Abort:
-                    lblStatus.Text = StrUtils.makeErrorMessage("Update laboratory failed");
+                    SetStatusMessage("Update laboratory failed", StatusMessage.Error);                    
                     break;
             }                        
         }
@@ -1133,12 +1157,12 @@ namespace DSA_lims
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
-                    lblStatus.Text = StrUtils.makeStatusMessage("Main project " + form.MainProject.Name + " inserted");
+                    SetStatusMessage("Main project " + form.MainProject.Name + " inserted");                    
                     using (SqlConnection conn = DB.OpenConnection())
                         PopulateProjects(conn);
                     break;
                 case DialogResult.Abort:
-                    lblStatus.Text = StrUtils.makeErrorMessage("Create main project failed");
+                    SetStatusMessage("Create main project failed", StatusMessage.Error);
                     break;
             }                        
         }        
@@ -1155,12 +1179,12 @@ namespace DSA_lims
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
-                    lblStatus.Text = StrUtils.makeStatusMessage("Project " + form.MainProject.Name + " updated");
+                    SetStatusMessage("Project " + form.MainProject.Name + " updated");
                     using (SqlConnection conn = DB.OpenConnection())
                         PopulateProjects(conn);
                     break;
                 case DialogResult.Abort:
-                    lblStatus.Text = StrUtils.makeErrorMessage("Create project failed");
+                    SetStatusMessage("Create project failed", StatusMessage.Error);
                     break;
             }                        
         }
@@ -1191,12 +1215,12 @@ namespace DSA_lims
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
-                    lblStatus.Text = StrUtils.makeStatusMessage("Sub project " + form.SubProject.Name + " inserted");
+                    SetStatusMessage("Sub project " + form.SubProject.Name + " inserted");
                     using (SqlConnection conn = DB.OpenConnection())
                         PopulateProjects(conn);
                     break;
                 case DialogResult.Abort:
-                    lblStatus.Text = StrUtils.makeErrorMessage("Create sub project failed");
+                    SetStatusMessage("Create sub project failed", StatusMessage.Error);
                     break;
             }
         }
@@ -1224,12 +1248,12 @@ namespace DSA_lims
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
-                    lblStatus.Text = StrUtils.makeStatusMessage("Sub project " + form.SubProject.Name + " updated");
+                    SetStatusMessage("Sub project " + form.SubProject.Name + " updated");
                     using (SqlConnection conn = DB.OpenConnection())
                         PopulateProjects(conn);
                     break;
                 case DialogResult.Abort:
-                    lblStatus.Text = StrUtils.makeErrorMessage("Create sub project failed");
+                    SetStatusMessage("Create sub project failed", StatusMessage.Error);
                     break;
             }
         }
@@ -1281,12 +1305,12 @@ namespace DSA_lims
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
-                    lblStatus.Text = StrUtils.makeStatusMessage("Nuclide " + form.Nuclide.Name + " inserted");
+                    SetStatusMessage("Nuclide " + form.Nuclide.Name + " inserted");
                     using (SqlConnection conn = DB.OpenConnection())
                         PopulateNuclides(conn);
                     break;
                 case DialogResult.Abort:
-                    lblStatus.Text = StrUtils.makeErrorMessage("Create nuclide failed");
+                    SetStatusMessage("Create nuclide failed", StatusMessage.Error);
                     break;
             }            
         }        
@@ -1364,12 +1388,12 @@ namespace DSA_lims
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
-                    lblStatus.Text = StrUtils.makeStatusMessage("Nuclide " + form.Nuclide.Name + " updated");
+                    SetStatusMessage("Nuclide " + form.Nuclide.Name + " updated");
                     using (SqlConnection conn = DB.OpenConnection())
                         PopulateNuclides(conn);
                     break;
                 case DialogResult.Abort:
-                    lblStatus.Text = StrUtils.makeErrorMessage("Update nuclide failed");
+                    SetStatusMessage("Update nuclide failed", StatusMessage.Error);
                     break;
             }                        
         }
@@ -1388,12 +1412,12 @@ namespace DSA_lims
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
-                    lblStatus.Text = StrUtils.makeStatusMessage("Energy line for " + nname + " inserted");
+                    SetStatusMessage("Energy line for " + nname + " inserted");
                     using (SqlConnection conn = DB.OpenConnection())
                         PopulateEnergyLines(conn, nid);
                     break;
                 case DialogResult.Abort:
-                    lblStatus.Text = StrUtils.makeErrorMessage("Create energy line failed");
+                    SetStatusMessage("Create energy line failed", StatusMessage.Error);
                     break;
             }                        
         }
@@ -1415,12 +1439,12 @@ namespace DSA_lims
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
-                    lblStatus.Text = StrUtils.makeStatusMessage("Energy line for " + nname + " updated");
+                    SetStatusMessage("Energy line for " + nname + " updated");
                     using (SqlConnection conn = DB.OpenConnection())
                         PopulateEnergyLines(conn, nid);
                     break;
                 case DialogResult.Abort:
-                    lblStatus.Text = StrUtils.makeErrorMessage("Update energy line failed");
+                    SetStatusMessage("Update energy line failed", StatusMessage.Error);
                     break;
             }                        
         }
@@ -1447,12 +1471,12 @@ namespace DSA_lims
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
-                    lblStatus.Text = StrUtils.makeStatusMessage("Geometry " + form.Geometry.Name + " inserted");
+                    SetStatusMessage("Geometry " + form.Geometry.Name + " inserted");
                     using (SqlConnection conn = DB.OpenConnection())
                         PopulateGeometries(conn);
                     break;
                 case DialogResult.Abort:
-                    lblStatus.Text = StrUtils.makeErrorMessage("Create geometry failed");
+                    SetStatusMessage("Create geometry failed", StatusMessage.Error);
                     break;
             }                        
         }
@@ -1470,12 +1494,12 @@ namespace DSA_lims
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
-                    lblStatus.Text = StrUtils.makeStatusMessage("Geometry " + form.Geometry.Name + " updated");
+                    SetStatusMessage("Geometry " + form.Geometry.Name + " updated");
                     using (SqlConnection conn = DB.OpenConnection())
                         PopulateGeometries(conn);
                     break;
                 case DialogResult.Abort:
-                    lblStatus.Text = StrUtils.makeErrorMessage("Update geometry failed");
+                    SetStatusMessage("Update geometry failed", StatusMessage.Error);
                     break;
             }                        
         }
@@ -1492,12 +1516,12 @@ namespace DSA_lims
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
-                    lblStatus.Text = StrUtils.makeStatusMessage("County " + form.County.Name + " inserted");
+                    SetStatusMessage("County " + form.County.Name + " inserted");
                     using (SqlConnection conn = DB.OpenConnection())
                         PopulateCounties(conn);
                     break;
                 case DialogResult.Abort:
-                    lblStatus.Text = StrUtils.makeErrorMessage("Create county failed");
+                    SetStatusMessage("Create county failed", StatusMessage.Error);
                     break;
             }                        
         }
@@ -1515,12 +1539,12 @@ namespace DSA_lims
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
-                    lblStatus.Text = StrUtils.makeStatusMessage("County " + form.County.Name + " updated");
+                    SetStatusMessage("County " + form.County.Name + " updated");
                     using (SqlConnection conn = DB.OpenConnection())
                         PopulateCounties(conn);
                     break;
                 case DialogResult.Abort:
-                    lblStatus.Text = StrUtils.makeErrorMessage("Create county failed");
+                    SetStatusMessage("Create county failed", StatusMessage.Error);
                     break;
             }                        
         }
@@ -1543,12 +1567,12 @@ namespace DSA_lims
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
-                    lblStatus.Text = StrUtils.makeStatusMessage("Municipality " + form.Municipality.Name + " inserted");
+                    SetStatusMessage("Municipality " + form.Municipality.Name + " inserted");
                     using (SqlConnection conn = DB.OpenConnection())
                         PopulateMunicipalities(conn, cid);
                     break;
                 case DialogResult.Abort:
-                    lblStatus.Text = StrUtils.makeErrorMessage("Create municipality failed");
+                    SetStatusMessage("Create municipality failed", StatusMessage.Error);
                     break;
             }                        
         }
@@ -1572,12 +1596,12 @@ namespace DSA_lims
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
-                    lblStatus.Text = StrUtils.makeStatusMessage("Municipality " + form.Municipality.Name + " updated");
+                    SetStatusMessage("Municipality " + form.Municipality.Name + " updated");
                     using (SqlConnection conn = DB.OpenConnection())
                         PopulateMunicipalities(conn, cid);
                     break;
                 case DialogResult.Abort:
-                    lblStatus.Text = StrUtils.makeErrorMessage("Update municipality failed");
+                    SetStatusMessage("Update municipality failed", StatusMessage.Error);
                     break;
             }                        
         }
@@ -1604,12 +1628,12 @@ namespace DSA_lims
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
-                    lblStatus.Text = StrUtils.makeStatusMessage("Station " + form.Station.Name + " inserted");
+                    SetStatusMessage("Station " + form.Station.Name + " inserted");
                     using (SqlConnection conn = DB.OpenConnection())
                         PopulateStations(conn);
                     break;
                 case DialogResult.Abort:
-                    lblStatus.Text = StrUtils.makeErrorMessage("Create station failed");
+                    SetStatusMessage("Create station failed", StatusMessage.Error);
                     break;
             }                        
         }
@@ -1627,12 +1651,12 @@ namespace DSA_lims
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
-                    lblStatus.Text = StrUtils.makeStatusMessage("Station " + form.Station.Name + " updated");
+                    SetStatusMessage("Station " + form.Station.Name + " updated");
                     using (SqlConnection conn = DB.OpenConnection())
                         PopulateStations(conn);
                     break;
                 case DialogResult.Abort:
-                    lblStatus.Text = StrUtils.makeErrorMessage("Update station failed");
+                    SetStatusMessage("Update station failed", StatusMessage.Error);
                     break;
             }                        
         }
@@ -1649,12 +1673,12 @@ namespace DSA_lims
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
-                    lblStatus.Text = StrUtils.makeStatusMessage("Sample storage " + form.SampleStorage.Name + " inserted");
+                    SetStatusMessage("Sample storage " + form.SampleStorage.Name + " inserted");
                     using (SqlConnection conn = DB.OpenConnection())
                         PopulateSampleStorage(conn);
                     break;
                 case DialogResult.Abort:
-                    lblStatus.Text = StrUtils.makeErrorMessage("Create sample storage failed");
+                    SetStatusMessage("Create sample storage failed", StatusMessage.Error);
                     break;
             }                        
         }
@@ -1672,12 +1696,12 @@ namespace DSA_lims
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
-                    lblStatus.Text = StrUtils.makeStatusMessage("Sample storage " + form.SampleStorage.Name + " updated");
+                    SetStatusMessage("Sample storage " + form.SampleStorage.Name + " updated");
                     using (SqlConnection conn = DB.OpenConnection())
                         PopulateSampleStorage(conn);
                     break;
                 case DialogResult.Abort:
-                    lblStatus.Text = StrUtils.makeErrorMessage("Update sample storage failed");
+                    SetStatusMessage("Update sample storage failed", StatusMessage.Error);
                     break;
             }                        
         }
@@ -1694,12 +1718,12 @@ namespace DSA_lims
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
-                    lblStatus.Text = StrUtils.makeStatusMessage("Sampler " + form.Sampler.Name + " inserted");
+                    SetStatusMessage("Sampler " + form.Sampler.Name + " inserted");
                     using (SqlConnection conn = DB.OpenConnection())
                         PopulateSamplers(conn);
                     break;
                 case DialogResult.Abort:
-                    lblStatus.Text = StrUtils.makeErrorMessage("Create sampler failed");
+                    SetStatusMessage("Create sampler failed", StatusMessage.Error);
                     break;
             }
         }
@@ -1717,12 +1741,12 @@ namespace DSA_lims
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
-                    lblStatus.Text = StrUtils.makeStatusMessage("Sampler " + form.Sampler.Name + " updated");
+                    SetStatusMessage("Sampler " + form.Sampler.Name + " updated");
                     using (SqlConnection conn = DB.OpenConnection())
                         PopulateSamplers(conn);
                     break;
                 case DialogResult.Abort:
-                    lblStatus.Text = StrUtils.makeErrorMessage("Update sampler failed");
+                    SetStatusMessage("Update sampler failed", StatusMessage.Error);
                     break;
             }
         }
@@ -1734,6 +1758,8 @@ namespace DSA_lims
 
         private void cboxSampleSampleType_SelectedIndexChanged(object sender, EventArgs e)
         {
+            ClearStatusMessage();
+
             var st = cboxSampleSampleType.SelectedItem as SampleTypeModel;
             cboxSampleSampleComponent.Items.Clear();
             cboxSampleSampleComponent.Items.AddRange(st.SampleComponents.ToArray());
@@ -1751,6 +1777,33 @@ namespace DSA_lims
             }
 
             cboxSampleSampleComponent.SelectedIndex = -1;
+        }
+
+        private void cboxSampleSampleType_Leave(object sender, EventArgs e)
+        {
+            ClearStatusMessage();
+
+            if (String.IsNullOrEmpty(cboxSampleSampleType.Text.Trim()))
+            {
+                cboxSampleSampleType.Text = "";
+                cboxSampleSampleType.SelectedItem = null;
+                cboxSampleSampleComponent.Items.Clear();
+                return;
+            }
+
+            SampleTypeModel st = cboxSampleSampleType.SelectedItem as SampleTypeModel;
+            if (st == null)
+            {
+                cboxSampleSampleType.Text = "";
+                cboxSampleSampleType.SelectedItem = null;
+                cboxSampleSampleComponent.Items.Clear();
+                SetStatusMessage("You must select an existing sample type", StatusMessage.Warning);
+            }
+        }
+
+        private void btnSampleSelectSampleType_Click(object sender, EventArgs e)
+        {
+            // Select sample type...
         }
     }    
 }

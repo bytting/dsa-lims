@@ -155,6 +155,7 @@ namespace DSA_lims
     public class SampleTypeModel : ModelBase
     {
         public string ShortName { get; set; }
+        public string LongName { get { return ShortName + " -> " + Name;  } }
 
         public List<SampleTypeModel> SampleTypes = new List<SampleTypeModel>();
         public List<SampleComponentModel> SampleComponents = new List<SampleComponentModel>();

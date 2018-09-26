@@ -24,12 +24,19 @@ using System.Text;
 
 namespace DSA_lims
 {
+    public enum StatusMessage
+    {
+        Success,
+        Warning,
+        Error
+    }
+
     public enum AuditOperation
     {
         Insert,
         Update,
         Delete
-    }
+    }    
 
     public static class InstanceStatus
     {        

@@ -35,5 +35,7 @@ namespace DSA_lims
         public static List<Tag<int, string>> UniformActivityUnitList = new List<Tag<int, string>>();
         public static List<Tag<int, string>> WorkflowStatusList = new List<Tag<int, string>>();
         public static List<Tag<int, string>> LocationTypeList = new List<Tag<int, string>>();
+
+        public static List<SampleTypeModel> SampleTypes = new List<SampleTypeModel>();
     }
 }

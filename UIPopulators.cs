@@ -80,32 +80,53 @@ namespace DSA_lims
                 cb.Items.Add(new Lemma<Guid, string>(new Guid(row["id"].ToString()), row["name"].ToString()));
         }
 
-        private static void AddSampleTypeNodes(TreeNodeCollection nodes, SampleTypeModel st, ComboBox cb)
+        private static void AddSampleTypeNodes(TreeNodeCollection nodes, SampleTypeModel st)
         {
             TreeNode node = nodes.Add(st.Name, st.ShortName);
             node.ToolTipText = st.Name.Substring(1);
             node.Tag = st;
 
-            cb?.Items.Add(st);
-
             foreach (SampleTypeModel s in st.SampleTypes)
-                AddSampleTypeNodes(node.Nodes, s, cb);
+                AddSampleTypeNodes(node.Nodes, s);
         }
 
-        public static void PopulateSampleTypes(SqlConnection conn, TreeView tree, ComboBox cb)
+        public static void PopulateSampleTypes(SqlConnection conn, TreeView tree)
         {
             Common.Log.Info("Populating sample types");
 
             try
             {
                 tree.Nodes.Clear();
-                cb?.Items.Clear();
 
                 foreach (SampleTypeModel st in Common.SampleTypes)
-                    AddSampleTypeNodes(tree.Nodes, st, cb);
+                    AddSampleTypeNodes(tree.Nodes, st);
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+            }
+        }
 
-                if(cb != null)
-                    cb.SelectedIndex = -1;
+        private static void AddSampleTypeNodes(ComboBox cb, SampleTypeModel st)
+        {
+            cb.Items.Add(st);
+
+            foreach (SampleTypeModel s in st.SampleTypes)
+                AddSampleTypeNodes(cb, s);
+        }
+
+        public static void PopulateSampleTypes(SqlConnection conn, ComboBox cb)
+        {
+            Common.Log.Info("Populating sample types");
+
+            try
+            {
+                cb.Items.Clear();
+
+                foreach (SampleTypeModel st in Common.SampleTypes)
+                    AddSampleTypeNodes(cb, st);
+
+                cb.SelectedIndex = -1;
             }
             catch (Exception ex)
             {
@@ -320,8 +341,10 @@ namespace DSA_lims
             Common.Log.Info("Populating counties");
 
             // Set data source
-            grid.DataSource = DB.GetDataTable(conn, "csp_select_counties_flat", CommandType.StoredProcedure,
+            DataTable dt = DB.GetDataTable(conn, "csp_select_counties_flat", CommandType.StoredProcedure,
                 new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
+
+            grid.DataSource = dt;
 
             // Set UI state
             grid.Columns["id"].Visible = false;
@@ -333,6 +356,29 @@ namespace DSA_lims
             grid.Columns["name"].HeaderText = "Name";
             grid.Columns["county_number"].HeaderText = "Number";
             grid.Columns["instance_status_name"].HeaderText = "Status";
+        }
+
+        public static void PopulateCounties(SqlConnection conn, ComboBox cb)
+        {            
+            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_counties", CommandType.StoredProcedure,
+                new SqlParameter("@instance_status_level", InstanceStatus.Active)))
+            {
+                cb.Items.Clear();
+
+                while (reader.Read())
+                {
+                    CountyModel county = new CountyModel(new Guid(reader["id"].ToString()), reader["name"].ToString());
+                    county.Number = Convert.ToInt32(reader["county_number"]);
+                    county.InstanceStatusId = Convert.ToInt32(reader["instance_status_id"]);
+                    county.CreateDate = Convert.ToDateTime(reader["create_date"]);
+                    county.CreatedBy = reader["created_by"].ToString();
+                    county.UpdateDate = Convert.ToDateTime(reader["update_date"]);
+                    county.UpdatedBy = reader["updated_by"].ToString();
+                    cb.Items.Add(county);
+                }
+
+                cb.SelectedIndex = -1;
+            }                
         }
 
         public static void PopulateMunicipalities(SqlConnection conn, Guid cid, DataGridView grid)
@@ -357,6 +403,32 @@ namespace DSA_lims
             grid.Columns["name"].HeaderText = "Name";
             grid.Columns["municipality_number"].HeaderText = "Number";
             grid.Columns["instance_status_name"].HeaderText = "Status";
+        }
+
+        public static void PopulateMunicipalities(SqlConnection conn, Guid cid, ComboBox cb)
+        {
+            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_municipalities_for_county", CommandType.StoredProcedure,
+                new[] {
+                    new SqlParameter("@county_id", cid),
+                    new SqlParameter("@instance_status_level", InstanceStatus.Active)
+                }))
+            {
+                cb.Items.Clear();
+
+                while (reader.Read())
+                {
+                    MunicipalityModel municipality = new MunicipalityModel(new Guid(reader["id"].ToString()), reader["name"].ToString());
+                    municipality.Number = Convert.ToInt32(reader["municipality_number"]);                    
+                    municipality.InstanceStatusId = Convert.ToInt32(reader["instance_status_id"]);
+                    municipality.CreateDate = Convert.ToDateTime(reader["create_date"]);
+                    municipality.CreatedBy = reader["created_by"].ToString();
+                    municipality.UpdateDate = Convert.ToDateTime(reader["update_date"]);
+                    municipality.UpdatedBy = reader["updated_by"].ToString();
+                    cb.Items.Add(municipality);
+                }
+
+                cb.SelectedIndex = -1;
+            }
         }
 
         public static void PopulateStations(SqlConnection conn, DataGridView grid, ComboBox cb)

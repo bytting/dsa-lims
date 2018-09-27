@@ -99,7 +99,8 @@ namespace DSA_lims
                     UI.PopulateWorkflowStatus(conn, cboxSampleAnalWorkflowStatus);
                     UI.PopulateLocationTypes(conn, cboxSampleInfoLocationTypes);
                     UI.PopulateActivityUnits(conn, gridMetaUnitsActivity, cboxSampleAnalUnit);
-                    UI.PopulateSampleTypes(conn, treeSampleTypes, cboxSampleSampleType);
+                    UI.PopulateSampleTypes(conn, treeSampleTypes);
+                    UI.PopulateSampleTypes(conn, cboxSampleSampleType);
                     UI.PopulateProjects(conn, treeProjects, cboxSampleProject);
                     UI.PopulateLaboratories(conn, gridMetaLab);
                     UI.PopulateUsers(conn, gridMetaUsers);
@@ -107,6 +108,7 @@ namespace DSA_lims
                     UI.PopulateGeometries(conn, gridSysGeom);
                     UI.PopulateUniformActivityUnits(conn);                                        
                     UI.PopulateCounties(conn, gridSysCounty);
+                    UI.PopulateCounties(conn, cboxSampleCounties);
                     UI.PopulateStations(conn, gridMetaStation, cboxSampleInfoStations);
                     UI.PopulateSampleStorage(conn, gridMetaSampleStorage);
                     UI.PopulateSamplers(conn, gridMetaSamplers, cboxSampleInfoSampler);
@@ -1146,6 +1148,12 @@ namespace DSA_lims
         {
             ClearStatusMessage();
 
+            if (cboxSampleSampleType.SelectedItem == null)
+            {
+                cboxSampleSampleComponent.Items.Clear();
+                return;
+            }
+
             var st = cboxSampleSampleType.SelectedItem as SampleTypeModel;
             cboxSampleSampleComponent.Items.Clear();
             cboxSampleSampleComponent.Items.AddRange(st.SampleComponents.ToArray());
@@ -1251,6 +1259,21 @@ namespace DSA_lims
             }
 
             lblSampleToolExId.Text = "[Ex.Id] " + tbSampleExId.Text.Trim();
+        }
+
+        private void cboxSampleCounties_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(cboxSampleCounties.SelectedItem == null)
+            {
+                cboxSampleMunicipalities.DataSource = null;
+                return;
+            }
+
+            CountyModel county = cboxSampleCounties.SelectedItem as CountyModel;
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                UI.PopulateMunicipalities(conn, county.Id, cboxSampleMunicipalities);
+            }                
         }
     }    
 }

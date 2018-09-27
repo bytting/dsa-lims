@@ -22,10 +22,8 @@ namespace DSA_lims
 
         private void FormSelectSampleType_Load(object sender, EventArgs e)
         {
-            using (SqlConnection conn = DB.OpenConnection())
-            {
-                UI.PopulateSampleTypes(conn, treeSampleTypes, null);
-            }                
+            using (SqlConnection conn = DB.OpenConnection())            
+                UI.PopulateSampleTypes(conn, treeSampleTypes);
         }
 
         private void btnCancel_Click(object sender, EventArgs e)

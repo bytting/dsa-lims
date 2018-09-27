@@ -95,23 +95,25 @@ namespace DSA_lims
                     UI.LoadLocationTypes(conn);
                     UI.LoadSampleTypes(conn);
                     
-                    UI.PopulatePreparationUnits(conn, cboxSamplePrepUnit);
-                    UI.PopulateWorkflowStatus(conn, cboxSampleAnalWorkflowStatus);
-                    UI.PopulateLocationTypes(conn, cboxSampleInfoLocationTypes);
+                    UI.PopulatePreparationUnits(cboxSamplePrepUnit);
+                    UI.PopulateWorkflowStatus(cboxSampleAnalWorkflowStatus);
+                    UI.PopulateLocationTypes(cboxSampleInfoLocationTypes);
                     UI.PopulateActivityUnits(conn, gridMetaUnitsActivity, cboxSampleAnalUnit);
-                    UI.PopulateSampleTypes(conn, treeSampleTypes);
-                    UI.PopulateSampleTypes(conn, cboxSampleSampleType);
+                    UI.PopulateSampleTypes(treeSampleTypes);
+                    UI.PopulateSampleTypes(cboxSampleSampleType);
                     UI.PopulateProjects(conn, treeProjects, cboxSampleProject);
                     UI.PopulateLaboratories(conn, gridMetaLab);
+                    UI.PopulateLaboratories(conn, cboxSampleLaboratory);
                     UI.PopulateUsers(conn, gridMetaUsers);
                     UI.PopulateNuclides(conn, gridSysNuclides);
-                    UI.PopulateGeometries(conn, gridSysGeom);
-                    UI.PopulateUniformActivityUnits(conn);                                        
+                    UI.PopulateGeometries(conn, gridSysGeom);                    
                     UI.PopulateCounties(conn, gridSysCounty);
                     UI.PopulateCounties(conn, cboxSampleCounties);
-                    UI.PopulateStations(conn, gridMetaStation, cboxSampleInfoStations);
+                    UI.PopulateStations(conn, gridMetaStation);
+                    UI.PopulateStations(conn, cboxSampleInfoStations);
                     UI.PopulateSampleStorage(conn, gridMetaSampleStorage);
-                    UI.PopulateSamplers(conn, gridMetaSamplers, cboxSampleInfoSampler);
+                    UI.PopulateSamplers(conn, gridMetaSamplers);
+                    UI.PopulateSamplers(conn, cboxSampleInfoSampler);
                 }
                 
                 HideMenuItems();
@@ -446,8 +448,7 @@ namespace DSA_lims
         }
 
         private void miNewLaboratory_Click(object sender, EventArgs e)
-        {
-            // create laboratory
+        {            
             FormLaboratory form = new FormLaboratory(log);
             switch(form.ShowDialog())
             {                
@@ -853,8 +854,7 @@ namespace DSA_lims
         }
 
         private void miNewGeometry_Click(object sender, EventArgs e)
-        {
-            // new geom
+        {         
             FormGeometry form = new FormGeometry(log);
             switch (form.ShowDialog())
             {
@@ -870,8 +870,7 @@ namespace DSA_lims
         }
 
         private void miEditGeometry_Click(object sender, EventArgs e)
-        {
-            // edit geom
+        {            
             if (gridSysGeom.SelectedRows.Count < 1)
                 return;
 
@@ -898,8 +897,7 @@ namespace DSA_lims
         }
 
         private void miNewCounty_Click(object sender, EventArgs e)
-        {
-            // new county
+        {            
             FormCounty form = new FormCounty(log);
             switch (form.ShowDialog())
             {
@@ -915,8 +913,7 @@ namespace DSA_lims
         }
 
         private void miEditCounty_Click(object sender, EventArgs e)
-        {
-            // edit county
+        {        
             if (gridSysCounty.SelectedRows.Count < 1)
                 return;
 
@@ -943,8 +940,7 @@ namespace DSA_lims
         }
 
         private void miNewMunicipality_Click(object sender, EventArgs e)
-        {
-            // new municipality            
+        {        
             if (gridSysCounty.SelectedRows.Count < 1)
                 return;
 
@@ -966,8 +962,7 @@ namespace DSA_lims
         }
 
         private void miEditMunicipality_Click(object sender, EventArgs e)
-        {
-            // edit municipality
+        {        
             if (gridSysCounty.SelectedRows.Count < 1)
                 return;
 
@@ -1010,15 +1005,17 @@ namespace DSA_lims
         }
 
         private void miNewStation_Click(object sender, EventArgs e)
-        {
-            // create station
+        {        
             FormStation form = new FormStation(log);
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
                     SetStatusMessage("Station " + form.Station.Name + " inserted");
                     using (SqlConnection conn = DB.OpenConnection())
-                        UI.PopulateStations(conn, gridMetaStation, cboxSampleInfoStations);
+                    {
+                        UI.PopulateStations(conn, gridMetaStation);
+                        UI.PopulateStations(conn, cboxSampleInfoStations);
+                    }                        
                     break;
                 case DialogResult.Abort:
                     SetStatusMessage("Create station failed", StatusMessageType.Error);
@@ -1027,8 +1024,7 @@ namespace DSA_lims
         }
 
         private void miEditStation_Click(object sender, EventArgs e)
-        {
-            // edit station
+        {            
             if (gridMetaStation.SelectedRows.Count < 1)
                 return;
 
@@ -1041,7 +1037,10 @@ namespace DSA_lims
                 case DialogResult.OK:
                     SetStatusMessage("Station " + form.Station.Name + " updated");
                     using (SqlConnection conn = DB.OpenConnection())
-                        UI.PopulateStations(conn, gridMetaStation, cboxSampleInfoStations);
+                    {
+                        UI.PopulateStations(conn, gridMetaStation);
+                        UI.PopulateStations(conn, cboxSampleInfoStations);
+                    }                        
                     break;
                 case DialogResult.Abort:
                     SetStatusMessage("Update station failed", StatusMessageType.Error);
@@ -1055,8 +1054,7 @@ namespace DSA_lims
         }
 
         private void miNewSampleStorage_Click(object sender, EventArgs e)
-        {
-            // new sample storage
+        {        
             FormSampleStorage form = new FormSampleStorage(log);
             switch (form.ShowDialog())
             {
@@ -1072,8 +1070,7 @@ namespace DSA_lims
         }
 
         private void miEditSampleStorage_Click(object sender, EventArgs e)
-        {
-            // edit sample storage
+        {        
             if (gridMetaSampleStorage.SelectedRows.Count < 1)
                 return;
 
@@ -1100,15 +1097,17 @@ namespace DSA_lims
         }
 
         private void miSamplerNew_Click(object sender, EventArgs e)
-        {
-            // new sampler
+        {        
             FormSampler form = new FormSampler(log);
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
                     SetStatusMessage("Sampler " + form.Sampler.Name + " inserted");
                     using (SqlConnection conn = DB.OpenConnection())
-                        UI.PopulateSamplers(conn, gridMetaSamplers, cboxSampleInfoSampler);
+                    {
+                        UI.PopulateSamplers(conn, gridMetaSamplers);
+                        UI.PopulateSamplers(conn, cboxSampleInfoSampler);
+                    }                        
                     break;
                 case DialogResult.Abort:
                     SetStatusMessage("Create sampler failed", StatusMessageType.Error);
@@ -1117,8 +1116,7 @@ namespace DSA_lims
         }
 
         private void miSamplerEdit_Click(object sender, EventArgs e)
-        {
-            // edit sampler
+        {        
             if (gridMetaSamplers.SelectedRows.Count < 1)
                 return;
 
@@ -1131,7 +1129,10 @@ namespace DSA_lims
                 case DialogResult.OK:
                     SetStatusMessage("Sampler " + form.Sampler.Name + " updated");
                     using (SqlConnection conn = DB.OpenConnection())
-                        UI.PopulateSamplers(conn, gridMetaSamplers, cboxSampleInfoSampler);
+                    {
+                        UI.PopulateSamplers(conn, gridMetaSamplers);
+                        UI.PopulateSamplers(conn, cboxSampleInfoSampler);
+                    }                        
                     break;
                 case DialogResult.Abort:
                     SetStatusMessage("Update sampler failed", StatusMessageType.Error);
@@ -1244,10 +1245,19 @@ namespace DSA_lims
                 return;
             }
 
-            StationModel station = cboxSampleInfoStations.SelectedItem as StationModel;
-            tbSampleInfoLatitude.Text = station.Latitude.ToString();
-            tbSampleInfoLongitude.Text = station.Longitude.ToString();
-            tbSampleInfoAltitude.Text = station.Altitude.ToString();
+            Lemma<Guid, string> station = cboxSampleInfoStations.SelectedItem as Lemma<Guid, string>;
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_station", CommandType.StoredProcedure, 
+                    new SqlParameter("@id", station.Id)))
+                {
+                    reader.Read();
+                    tbSampleInfoLatitude.Text = reader["latitude"].ToString();
+                    tbSampleInfoLongitude.Text = reader["longitude"].ToString();
+                    tbSampleInfoAltitude.Text = reader["altitude"].ToString();
+                }
+            }                
         }
 
         private void tbSampleExId_TextChanged(object sender, EventArgs e)
@@ -1269,11 +1279,9 @@ namespace DSA_lims
                 return;
             }
 
-            CountyModel county = cboxSampleCounties.SelectedItem as CountyModel;
-            using (SqlConnection conn = DB.OpenConnection())
-            {
+            Lemma<Guid, string> county = cboxSampleCounties.SelectedItem as Lemma<Guid, string>;
+            using (SqlConnection conn = DB.OpenConnection())            
                 UI.PopulateMunicipalities(conn, county.Id, cboxSampleMunicipalities);
-            }                
         }
     }    
 }

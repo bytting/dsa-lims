@@ -29,42 +29,26 @@ namespace DSA_lims
 {
     public static partial class UI    
     {
-        public static void PopulatePreparationUnits(SqlConnection conn, ComboBox cb)
+        public static void PopulatePreparationUnits(ComboBox cb)
         {
-            Common.Log.Info("Populating preparation units");
-
             cb.DataSource = Common.PreparationUnitList;
             cb.SelectedIndex = -1;
-        }
+        }        
 
-        public static void PopulateUniformActivityUnits(SqlConnection conn)
+        public static void PopulateWorkflowStatus(ComboBox cb)
         {
-            Common.Log.Info("Populating uniform activity units");
-
-            // populate uniform activity units
-        }
-
-        public static void PopulateWorkflowStatus(SqlConnection conn, ComboBox cb)
-        {
-            Common.Log.Info("Populating workflow status");
-
             cb.DataSource = Common.WorkflowStatusList;
             cb.SelectedIndex = -1;
         }
 
-        public static void PopulateLocationTypes(SqlConnection conn, ComboBox cb)
+        public static void PopulateLocationTypes(ComboBox cb)
         {
-            Common.Log.Info("Populating location types");
-
             cb.DataSource = Common.LocationTypeList;
             cb.SelectedIndex = -1;
         }
 
         public static void PopulateActivityUnits(SqlConnection conn, DataGridView grid, ComboBox cb)
-        {
-            Common.Log.Info("Populating activity units");
-
-            // Set data source
+        {            
             DataTable dt = DB.GetDataTable(conn, "csp_select_activity_units_flat", CommandType.StoredProcedure);
 
             grid.DataSource = dt;
@@ -90,21 +74,12 @@ namespace DSA_lims
                 AddSampleTypeNodes(node.Nodes, s);
         }
 
-        public static void PopulateSampleTypes(SqlConnection conn, TreeView tree)
-        {
-            Common.Log.Info("Populating sample types");
+        public static void PopulateSampleTypes(TreeView tree)
+        {            
+            tree.Nodes.Clear();
 
-            try
-            {
-                tree.Nodes.Clear();
-
-                foreach (SampleTypeModel st in Common.SampleTypes)
-                    AddSampleTypeNodes(tree.Nodes, st);
-            }
-            catch (Exception ex)
-            {
-                Common.Log.Error(ex);
-            }
+            foreach (SampleTypeModel st in Common.SampleTypes)
+                AddSampleTypeNodes(tree.Nodes, st);
         }
 
         private static void AddSampleTypeNodes(ComboBox cb, SampleTypeModel st)
@@ -115,91 +90,71 @@ namespace DSA_lims
                 AddSampleTypeNodes(cb, s);
         }
 
-        public static void PopulateSampleTypes(SqlConnection conn, ComboBox cb)
+        public static void PopulateSampleTypes(ComboBox cb)
         {
-            Common.Log.Info("Populating sample types");
+            cb.Items.Clear();
 
-            try
-            {
-                cb.Items.Clear();
+            foreach (SampleTypeModel st in Common.SampleTypes)
+                AddSampleTypeNodes(cb, st);
 
-                foreach (SampleTypeModel st in Common.SampleTypes)
-                    AddSampleTypeNodes(cb, st);
-
-                cb.SelectedIndex = -1;
-            }
-            catch (Exception ex)
-            {
-                Common.Log.Error(ex);
-            }
+            cb.SelectedIndex = -1;            
         }
 
         public static void PopulateProjects(SqlConnection conn, TreeView tree, ComboBox cb)
-        {
-            Common.Log.Info("Populating projects");
+        {            
+            tree.Nodes.Clear();
+            cb.Items.Clear();
 
-            try
+            TreeNode root = tree.Nodes.Add("Projects", "Projects");
+
+            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_main_projects_short", CommandType.StoredProcedure,
+                new SqlParameter("@instance_status_level", InstanceStatus.Deleted)))
             {
-                tree.Nodes.Clear();
-                cb.Items.Clear();
+                while (reader.Read())
+                {
+                    Guid id = new Guid(reader["id"].ToString());
+                    string name = reader["name"].ToString();
 
-                TreeNode root = tree.Nodes.Add("Projects", "Projects");
+                    TreeNode node = root.Nodes.Add(name, name);
+                    node.Tag = id;
 
-                using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_main_projects_short", CommandType.StoredProcedure,
-                    new SqlParameter("@instance_status_level", InstanceStatus.Deleted)))
+                    cb.Items.Add(new Lemma<Guid, string>(id, name));
+                }
+            }
+
+            foreach (TreeNode node in root.Nodes)
+            {
+                Guid parent_id = new Guid(node.Tag.ToString());
+                using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_sub_projects_short", CommandType.StoredProcedure,
+                    new[] {
+                        new SqlParameter("@parent_id", parent_id),
+                        new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
+                    }))
                 {
                     while (reader.Read())
                     {
                         Guid id = new Guid(reader["id"].ToString());
                         string name = reader["name"].ToString();
 
-                        TreeNode node = root.Nodes.Add(name, name);
-                        node.Tag = id;
-
-                        cb.Items.Add(new Lemma<Guid, string>(id, name));
+                        TreeNode n = node.Nodes.Add(name, name);
+                        n.Tag = id;
                     }
                 }
-
-                foreach (TreeNode node in root.Nodes)
-                {
-                    Guid parent_id = new Guid(node.Tag.ToString());
-                    using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_sub_projects_short", CommandType.StoredProcedure,
-                        new[] {
-                            new SqlParameter("@parent_id", parent_id),
-                            new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
-                        }))
-                    {
-                        while (reader.Read())
-                        {
-                            Guid id = new Guid(reader["id"].ToString());
-                            string name = reader["name"].ToString();
-
-                            TreeNode n = node.Nodes.Add(name, name);
-                            n.Tag = id;
-                        }
-                    }
-                }
-
-                root.Expand();
             }
-            catch (Exception ex)
-            {
-                Common.Log.Error(ex);
-            }
+
+            root.Expand();
         }
 
         public static void PopulateSubProjects(SqlConnection conn, Guid pid, ComboBox cb)
-        {
-            Common.Log.Info("Populating sub-projects");
-
-            cb.Items.Clear();
-
+        {                        
             using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_sub_projects_short", CommandType.StoredProcedure,
                 new[] {
                     new SqlParameter("@parent_id", pid),
                     new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
                 }))
             {
+                cb.Items.Clear();
+
                 while (reader.Read())
                 {
                     Guid id = new Guid(reader["id"].ToString());
@@ -207,13 +162,13 @@ namespace DSA_lims
 
                     cb.Items.Add(new Lemma<Guid, string>(id, name));
                 }
+
+                cb.SelectedIndex = -1;
             }
         }
 
         public static void PopulateLaboratories(SqlConnection conn, DataGridView grid)
-        {
-            Common.Log.Info("Populating laboratories");
-
+        {            
             // Set data source
             grid.DataSource = DB.GetDataTable(conn, "csp_select_laboratories_flat", CommandType.StoredProcedure,
                 new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
@@ -235,10 +190,22 @@ namespace DSA_lims
             grid.Columns["instance_status_name"].HeaderText = "Status";
         }
 
-        public static void PopulateUsers(SqlConnection conn, DataGridView grid)
+        public static void PopulateLaboratories(SqlConnection conn, ComboBox cb)
         {
-            Common.Log.Info("Populating users");
+            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_laboratories", CommandType.StoredProcedure,                
+                    new SqlParameter("@instance_status_level", InstanceStatus.Deleted)))
+            {
+                cb.Items.Clear();
 
+                while (reader.Read())
+                    cb.Items.Add(new Lemma<Guid, string>(new Guid(reader["id"].ToString()), reader["name"].ToString()));
+
+                cb.SelectedIndex = -1;
+            }
+        }
+
+        public static void PopulateUsers(SqlConnection conn, DataGridView grid)
+        {            
             // Set data source
             grid.DataSource = DB.GetDataTable(conn, "csp_select_accounts_flat", CommandType.StoredProcedure,
                 new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
@@ -256,9 +223,7 @@ namespace DSA_lims
         }
 
         public static void PopulateNuclides(SqlConnection conn, DataGridView grid)
-        {
-            Common.Log.Info("Populating nuclides");
-
+        {            
             // Set data source
             grid.DataSource = DB.GetDataTable(conn, "csp_select_nuclides_flat", CommandType.StoredProcedure,
                 new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
@@ -284,8 +249,6 @@ namespace DSA_lims
 
         public static void PopulateEnergyLines(SqlConnection conn, Guid nid, DataGridView grid)
         {
-            Common.Log.Info("Populating energy lines");
-
             // Set data source
             grid.DataSource = DB.GetDataTable(conn, "csp_select_nuclide_transmissions_for_nuclide_flat", CommandType.StoredProcedure,
                 new[] {
@@ -317,8 +280,6 @@ namespace DSA_lims
 
         public static void PopulateGeometries(SqlConnection conn, DataGridView grid)
         {
-            Common.Log.Info("Populating geometries");
-
             // Set data source
             grid.DataSource = DB.GetDataTable(conn, "csp_select_preparation_geometries_flat", CommandType.StoredProcedure,
                 new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
@@ -337,9 +298,7 @@ namespace DSA_lims
         }
 
         public static void PopulateCounties(SqlConnection conn, DataGridView grid)
-        {
-            Common.Log.Info("Populating counties");
-
+        {            
             // Set data source
             DataTable dt = DB.GetDataTable(conn, "csp_select_counties_flat", CommandType.StoredProcedure,
                 new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
@@ -365,17 +324,8 @@ namespace DSA_lims
             {
                 cb.Items.Clear();
 
-                while (reader.Read())
-                {
-                    CountyModel county = new CountyModel(new Guid(reader["id"].ToString()), reader["name"].ToString());
-                    county.Number = Convert.ToInt32(reader["county_number"]);
-                    county.InstanceStatusId = Convert.ToInt32(reader["instance_status_id"]);
-                    county.CreateDate = Convert.ToDateTime(reader["create_date"]);
-                    county.CreatedBy = reader["created_by"].ToString();
-                    county.UpdateDate = Convert.ToDateTime(reader["update_date"]);
-                    county.UpdatedBy = reader["updated_by"].ToString();
-                    cb.Items.Add(county);
-                }
+                while (reader.Read())                
+                    cb.Items.Add(new Lemma<Guid, string>(new Guid(reader["id"].ToString()), reader["name"].ToString()));
 
                 cb.SelectedIndex = -1;
             }                
@@ -383,8 +333,6 @@ namespace DSA_lims
 
         public static void PopulateMunicipalities(SqlConnection conn, Guid cid, DataGridView grid)
         {
-            Common.Log.Info("Populating municipalities");
-
             // Set data source
             grid.DataSource = DB.GetDataTable(conn, "csp_select_municipalities_for_county_flat", CommandType.StoredProcedure,
                 new[] {
@@ -416,31 +364,17 @@ namespace DSA_lims
                 cb.Items.Clear();
 
                 while (reader.Read())
-                {
-                    MunicipalityModel municipality = new MunicipalityModel(new Guid(reader["id"].ToString()), reader["name"].ToString());
-                    municipality.Number = Convert.ToInt32(reader["municipality_number"]);                    
-                    municipality.InstanceStatusId = Convert.ToInt32(reader["instance_status_id"]);
-                    municipality.CreateDate = Convert.ToDateTime(reader["create_date"]);
-                    municipality.CreatedBy = reader["created_by"].ToString();
-                    municipality.UpdateDate = Convert.ToDateTime(reader["update_date"]);
-                    municipality.UpdatedBy = reader["updated_by"].ToString();
-                    cb.Items.Add(municipality);
-                }
+                    cb.Items.Add(new Lemma<Guid, string>(new Guid(reader["id"].ToString()), reader["name"].ToString()));
 
                 cb.SelectedIndex = -1;
             }
         }
 
-        public static void PopulateStations(SqlConnection conn, DataGridView grid, ComboBox cb)
+        public static void PopulateStations(SqlConnection conn, DataGridView grid)
         {
-            Common.Log.Info("Populating stations");
-
-            // Set data source
-            DataTable dt = DB.GetDataTable(conn, "csp_select_stations_flat", CommandType.StoredProcedure,
+            grid.DataSource = DB.GetDataTable(conn, "csp_select_stations_flat", CommandType.StoredProcedure,
                 new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
-            grid.DataSource = dt;
 
-            // Set UI state
             grid.Columns["id"].Visible = false;
             grid.Columns["comment"].Visible = false;
             grid.Columns["created_by"].Visible = false;
@@ -453,28 +387,27 @@ namespace DSA_lims
             grid.Columns["longitude"].HeaderText = "Longitude";
             grid.Columns["altitude"].HeaderText = "Altitude";
             grid.Columns["instance_status_name"].HeaderText = "Status";
+        }
 
-            cb.Items.Clear();
-            foreach (DataRow row in dt.Rows)
+        public static void PopulateStations(SqlConnection conn, ComboBox cb)
+        {            
+            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_stations_flat", CommandType.StoredProcedure,
+                new SqlParameter("@instance_status_level", InstanceStatus.Deleted)))
             {
-                StationModel station = new StationModel(new Guid(row["id"].ToString()), row["name"].ToString());
-                station.Latitude = Convert.ToDouble(row["latitude"]);
-                station.Longitude = Convert.ToDouble(row["longitude"]);
-                station.Altitude = Convert.ToDouble(row["altitude"]);
-                cb.Items.Add(station);
+                cb.Items.Clear();
+
+                while (reader.Read())
+                    cb.Items.Add(new Lemma<Guid, string>(new Guid(reader["id"].ToString()), reader["name"].ToString()));
+
+                cb.SelectedIndex = -1;
             }
-            cb.SelectedIndex = -1;
         }
 
         public static void PopulateSampleStorage(SqlConnection conn, DataGridView grid)
-        {
-            Common.Log.Info("Populating sample storage");
-
-            // Set data source
+        {         
             grid.DataSource = DB.GetDataTable(conn, "csp_select_sample_storages_flat", CommandType.StoredProcedure,
                 new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
-
-            // Set UI state
+        
             grid.Columns["id"].Visible = false;
             grid.Columns["comment"].Visible = false;
             grid.Columns["created_by"].Visible = false;
@@ -487,16 +420,11 @@ namespace DSA_lims
             grid.Columns["instance_status_name"].HeaderText = "Status";
         }
 
-        public static void PopulateSamplers(SqlConnection conn, DataGridView grid, ComboBox cb)
+        public static void PopulateSamplers(SqlConnection conn, DataGridView grid)
         {
-            Common.Log.Info("Populating samplers");
-
-            // Set data source
-            DataTable dt = DB.GetDataTable(conn, "csp_select_samplers_flat", CommandType.StoredProcedure,
+            grid.DataSource = DB.GetDataTable(conn, "csp_select_samplers_flat", CommandType.StoredProcedure,
                 new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
-            grid.DataSource = dt;
-
-            // Set UI state
+        
             grid.Columns["id"].Visible = false;
             grid.Columns["comment"].Visible = false;
             grid.Columns["created_by"].Visible = false;
@@ -509,11 +437,20 @@ namespace DSA_lims
             grid.Columns["email"].HeaderText = "Email";
             grid.Columns["phone"].HeaderText = "Phone";
             grid.Columns["instance_status_name"].HeaderText = "Status";
+        }
 
-            cb.Items.Clear();
-            foreach (DataRow row in dt.Rows)
-                cb.Items.Add(new Lemma<Guid, string>(new Guid(row["id"].ToString()), row["name"].ToString()));
-            cb.SelectedIndex = -1;
+        public static void PopulateSamplers(SqlConnection conn, ComboBox cb)
+        {            
+            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_samplers_flat", CommandType.StoredProcedure,
+                new SqlParameter("@instance_status_level", InstanceStatus.Deleted)))
+            {
+                cb.Items.Clear();
+
+                while (reader.Read())
+                    cb.Items.Add(new Lemma<Guid, string>(new Guid(reader["id"].ToString()), reader["name"].ToString()));
+
+                cb.SelectedIndex = -1;
+            }                
         }
     }
 }

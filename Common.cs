@@ -17,6 +17,7 @@
 */
 // Authors: Dag Robole,
 
+using log4net;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -25,6 +26,7 @@ namespace DSA_lims
 {
     public static class Common
     {
+        public static ILog Log = null;
         public static string Username { get; set; }
 
         public static List<Lemma<int, string>> InstanceStatusList = new List<Lemma<int, string>>();

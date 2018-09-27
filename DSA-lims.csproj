@@ -148,6 +148,12 @@
     <Compile Include="FormSamplingMeth.Designer.cs">
       <DependentUpon>FormSamplingMeth.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormSelectSampleType.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSelectSampleType.Designer.cs">
+      <DependentUpon>FormSelectSampleType.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormStation.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -183,6 +189,8 @@
     <Compile Include="Settings.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="StrUtils.cs" />
+    <Compile Include="UILoaders.cs" />
+    <Compile Include="UIPopulators.cs" />
     <EmbeddedResource Include="FormAccreditationRule.resx">
       <DependentUpon>FormAccreditationRule.cs</DependentUpon>
     </EmbeddedResource>
@@ -230,6 +238,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormSamplingMeth.resx">
       <DependentUpon>FormSamplingMeth.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSelectSampleType.resx">
+      <DependentUpon>FormSelectSampleType.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormStation.resx">
       <DependentUpon>FormStation.cs</DependentUpon>

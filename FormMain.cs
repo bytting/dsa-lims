@@ -29,7 +29,6 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Globalization;
 using System.Reflection;
-using System.Configuration;
 using System.Data.SqlClient;
 using log4net;
 using System.IO;
@@ -38,13 +37,12 @@ using System.Xml.Serialization;
 namespace DSA_lims
 {
     public partial class FormMain : Form
-    {        
+    {
         private ILog log = null;
         private DSASettings settings = new DSASettings();        
 
         private ResourceManager r = null;
-        private TabPage returnFromSample = null;
-        private string ProjectsRootName = "Projects";
+        private TabPage returnFromSample = null;        
 
         public FormMain()
         {
@@ -58,7 +56,7 @@ namespace DSA_lims
         {
             try
             {
-                log = DSALogger.CreateLogger(tbLog);
+                Common.Log = log = DSALogger.CreateLogger(tbLog);
 
                 tabs.Appearance = TabAppearance.FlatButtons;
                 tabs.ItemSize = new Size(0, 1);
@@ -68,6 +66,11 @@ namespace DSA_lims
                 lblStatus.Text = "";
                 btnSamplesPrintSampleLabel.Visible = true;
                 btnSamplesPrintPrepLabel.Visible = false;
+                lblSampleToolId.Text = "";
+                lblSampleToolExId.Text = "";
+                lblSampleToolProject.Text = "";
+                lblSampleToolSubProject.Text = "";
+                lblSampleToolLaboratory.Text = "";
 
                 tbMenuLookup.Text = "";
                 ActiveControl = tbMenuLookup;
@@ -84,29 +87,29 @@ namespace DSA_lims
                 {
                     Common.Username = "Admin"; // FIXME
 
-                    LoadInstanceStatus(conn);
-                    LoadDecayTypes(conn);
-                    LoadPreparationUnits(conn);
-                    LoadUniformActivityUnits(conn);
-                    LoadWorkflowStatus(conn);
-                    LoadLocationTypes(conn);
-                    LoadSampleTypes(conn);
+                    UI.LoadInstanceStatus(conn);
+                    UI.LoadDecayTypes(conn);
+                    UI.LoadPreparationUnits(conn);
+                    UI.LoadUniformActivityUnits(conn);
+                    UI.LoadWorkflowStatus(conn);
+                    UI.LoadLocationTypes(conn);
+                    UI.LoadSampleTypes(conn);
                     
-                    PopulatePreparationUnits(conn);
-                    PopulateActivityUnits(conn);
-                    PopulateUniformActivityUnits(conn);
-                    PopulateWorkflowStatus(conn);
-                    PopulateLocationTypes(conn);
-                    PopulateLaboratories(conn);
-                    PopulateUsers(conn);
-                    PopulateSampleTypes(conn);
-                    PopulateProjects(conn);
-                    PopulateNuclides(conn);
-                    PopulateGeometries(conn);
-                    PopulateCounties(conn);
-                    PopulateStations(conn);
-                    PopulateSampleStorage(conn);
-                    PopulateSamplers(conn);
+                    UI.PopulatePreparationUnits(conn, cboxSamplePrepUnit);
+                    UI.PopulateWorkflowStatus(conn, cboxSampleAnalWorkflowStatus);
+                    UI.PopulateLocationTypes(conn, cboxSampleInfoLocationTypes);
+                    UI.PopulateActivityUnits(conn, gridMetaUnitsActivity, cboxSampleAnalUnit);
+                    UI.PopulateSampleTypes(conn, treeSampleTypes, cboxSampleSampleType);
+                    UI.PopulateProjects(conn, treeProjects, cboxSampleProject);
+                    UI.PopulateLaboratories(conn, gridMetaLab);
+                    UI.PopulateUsers(conn, gridMetaUsers);
+                    UI.PopulateNuclides(conn, gridSysNuclides);
+                    UI.PopulateGeometries(conn, gridSysGeom);
+                    UI.PopulateUniformActivityUnits(conn);                                        
+                    UI.PopulateCounties(conn, gridSysCounty);
+                    UI.PopulateStations(conn, gridMetaStation, cboxSampleInfoStations);
+                    UI.PopulateSampleStorage(conn, gridMetaSampleStorage);
+                    UI.PopulateSamplers(conn, gridMetaSamplers, cboxSampleInfoSampler);
                 }
                 
                 HideMenuItems();
@@ -243,588 +246,7 @@ namespace DSA_lims
             {
                 log.Error(ex.Message, ex);
             }
-        }
-
-        private void LoadInstanceStatus(SqlConnection conn)
-        {
-            log.Info("Loading instance status");
-
-            try
-            {
-                Common.InstanceStatusList.Clear();
-
-                using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_instance_status", CommandType.StoredProcedure))
-                {
-                    while (reader.Read())
-                        Common.InstanceStatusList.Add(new Lemma<int, string>(Convert.ToInt32(reader["id"]), reader["name"].ToString()));
-                }
-            }
-            catch (Exception ex)
-            {
-                log.Error(ex);
-            }
-        }
-
-        private void LoadDecayTypes(SqlConnection conn)
-        {
-            log.Info("Loading decay types");
-
-            try
-            {
-                Common.DecayTypeList.Clear();
-
-                using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_decay_types", CommandType.StoredProcedure))
-                {
-                    while (reader.Read())                    
-                        Common.DecayTypeList.Add(new Lemma<int, string>(Convert.ToInt32(reader["id"]), reader["name"].ToString()));
-                }
-            }
-            catch (Exception ex)
-            {
-                log.Error(ex);
-            }
-        }
-
-        private void LoadPreparationUnits(SqlConnection conn)
-        {
-            log.Info("Loading preparation units");
-
-            try
-            {
-                Common.PreparationUnitList.Clear();
-
-                using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_preparation_units", CommandType.StoredProcedure))
-                {
-                    while (reader.Read())
-                        Common.PreparationUnitList.Add(new Lemma<int, string>(Convert.ToInt32(reader["id"]), reader["name"].ToString()));
-                }
-            }
-            catch (Exception ex)
-            {
-                log.Error(ex);
-            }
-        }
-
-        private void LoadUniformActivityUnits(SqlConnection conn)
-        {
-            log.Info("Loading uniform activity units");
-
-            try
-            {
-                Common.UniformActivityUnitList.Clear();
-
-                using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_uniform_activity_units", CommandType.StoredProcedure))
-                {
-                    while (reader.Read())
-                        Common.UniformActivityUnitList.Add(new Lemma<int, string>(Convert.ToInt32(reader["id"]), reader["name"].ToString()));
-                }
-            }
-            catch (Exception ex)
-            {
-                log.Error(ex);
-            }
-        }
-
-        private void LoadWorkflowStatus(SqlConnection conn)
-        {
-            log.Info("Loading workflow status");
-
-            try
-            {
-                Common.WorkflowStatusList.Clear();                       
-
-                using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_workflow_status", CommandType.StoredProcedure))
-                {
-                    while (reader.Read())
-                        Common.WorkflowStatusList.Add(new Lemma<int, string>(Convert.ToInt32(reader["id"]), reader["name"].ToString()));
-                }
-            }
-            catch (Exception ex)
-            {
-                log.Error(ex);
-            }
-        }
-
-        private void LoadLocationTypes(SqlConnection conn)
-        {
-            log.Info("Loading location types");
-
-            try
-            {
-                Common.LocationTypeList.Clear();
-
-                using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_location_types", CommandType.StoredProcedure))
-                {
-                    while (reader.Read())
-                        Common.LocationTypeList.Add(new Lemma<int, string>(Convert.ToInt32(reader["id"]), reader["name"].ToString()));
-                }
-            }
-            catch (Exception ex)
-            {
-                log.Error(ex);
-            }
-        }
-
-        private void AddSampleTypeComponents(SqlConnection conn, SampleTypeModel st)
-        {
-            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_sample_components_for_sample_type", CommandType.StoredProcedure, 
-                new SqlParameter("@sample_type_id", st.Id)))
-            {
-                while (reader.Read())
-                    st.SampleComponents.Add(new SampleComponentModel(new Guid(reader["id"].ToString()), reader["name"].ToString()));
-            }
-
-            foreach (SampleTypeModel s in st.SampleTypes)
-                AddSampleTypeComponents(conn, s);
-        }
-        private void AddSampleTypeParameters(SqlConnection conn, SampleTypeModel st)
-        {
-            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_sample_parameters_for_sample_type", CommandType.StoredProcedure,
-                new SqlParameter("@sample_type_id", st.Id)))
-            {
-                while (reader.Read())
-                {
-                    SampleParameterModel sampleParameter = new SampleParameterModel(new Guid(reader["id"].ToString()), reader["name"].ToString());                    
-                    sampleParameter.Type = reader["type"].ToString();
-                    st.SampleParameters.Add(sampleParameter);
-                }
-            }
-
-            foreach (SampleTypeModel s in st.SampleTypes)
-                AddSampleTypeParameters(conn, s);
-        }
-
-        private void LoadSampleTypes(SqlConnection conn)
-        {
-            log.Info("Loading sample types");
-
-            try
-            {
-                Common.SampleTypes.Clear();
-
-                using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_sample_types_short", CommandType.StoredProcedure))
-                {
-                    while (reader.Read())
-                    {
-                        SampleTypeModel sampleType = new SampleTypeModel(new Guid(reader["id"].ToString()), reader["name"].ToString());
-
-                        string[] items = sampleType.Name.Substring(1).Split(new char[] { '/' });
-                        List<SampleTypeModel> current = Common.SampleTypes;
-                        foreach (string item in items)
-                        {
-                            SampleTypeModel found = current.Find(x => x.ShortName == item);
-                            if (found != null)
-                            {
-                                current = found.SampleTypes;
-                                continue;
-                            }
-                            else
-                            {                                
-                                sampleType.ShortName = item;
-                                current.Add(sampleType);
-                            }
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                log.Error(ex);
-            }
-
-            try
-            {                
-                foreach (SampleTypeModel st in Common.SampleTypes)
-                {
-                    AddSampleTypeComponents(conn, st);
-                    AddSampleTypeParameters(conn, st);
-                }            
-            }
-            catch (Exception ex)
-            {
-                log.Error(ex);
-            }
-        }
-
-        private void PopulatePreparationUnits(SqlConnection conn)
-        {
-            log.Info("Populating preparation units");
-
-            cboxSamplePrepUnit.DataSource = Common.PreparationUnitList;
-            cboxSamplePrepUnit.SelectedIndex = -1;
-        }
-
-        private void PopulateUniformActivityUnits(SqlConnection conn)
-        {
-            log.Info("Populating uniform activity units");
-
-            // populate uniform activity units
-        }
-
-        private void PopulateWorkflowStatus(SqlConnection conn)
-        {
-            log.Info("Populating workflow status");
-
-            cboxSampleAnalWorkflowStatus.DataSource = Common.WorkflowStatusList;
-            cboxSampleAnalWorkflowStatus.SelectedIndex = -1;
-        }
-
-        private void PopulateLocationTypes(SqlConnection conn)
-        {
-            log.Info("Populating location types");
-
-            cboxSampleInfoLocationTypes.DataSource = Common.LocationTypeList;
-            cboxSampleInfoLocationTypes.SelectedIndex = -1;
-        }
-
-        private void PopulateActivityUnits(SqlConnection conn)
-        {
-            log.Info("Populating activity units");
-
-            // Set data source
-            DataTable dt = DB.GetDataTable(conn, "csp_select_activity_units_flat", CommandType.StoredProcedure);
-
-            gridMetaUnitsActivity.DataSource = dt;
-
-            gridMetaUnitsActivity.Columns["id"].Visible = false;                        
-
-            gridMetaUnitsActivity.Columns["name"].HeaderText = "Unit name";
-            gridMetaUnitsActivity.Columns["convert_factor"].HeaderText = "Conv. fact.";
-            gridMetaUnitsActivity.Columns["uniform_activity_unit_name"].HeaderText = "Uniform unit";
-
-            cboxSampleAnalUnit.Items.Clear();            
-            foreach(DataRow row in dt.Rows)
-                cboxSampleAnalUnit.Items.Add(new Lemma<Guid, string>(new Guid(row["id"].ToString()), row["name"].ToString()));
-        }
-
-        private void AddSampleTypeNodes(TreeNodeCollection nodes, SampleTypeModel st)
-        {
-            TreeNode node = nodes.Add(st.Name, st.ShortName);
-            node.ToolTipText = st.Name.Substring(1);
-            node.Tag = st;
-
-            cboxSampleSampleType.Items.Add(st);
-
-            foreach (SampleTypeModel s in st.SampleTypes)
-                AddSampleTypeNodes(node.Nodes, s);
-        }
-
-        private void PopulateSampleTypes(SqlConnection conn)
-        {
-            log.Info("Populating sample types");
-
-            try
-            {
-                treeSampleTypes.Nodes.Clear();
-                cboxSampleSampleType.Items.Clear();
-
-                foreach(SampleTypeModel st in Common.SampleTypes)
-                    AddSampleTypeNodes(treeSampleTypes.Nodes, st);
-
-                cboxSampleSampleType.SelectedIndex = -1;
-            }
-            catch(Exception ex)
-            {
-                log.Error(ex);
-            }            
-        }
-
-        private void PopulateProjects(SqlConnection conn)
-        {
-            log.Info("Populating projects");
-
-            try
-            {
-                treeProjects.Nodes.Clear();
-                TreeNode root = treeProjects.Nodes.Add(ProjectsRootName, ProjectsRootName);
-
-                using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_main_projects_short", CommandType.StoredProcedure, 
-                    new SqlParameter("@instance_status_level", InstanceStatus.Deleted)))
-                {
-                    while (reader.Read())
-                    {
-                        Guid id = new Guid(reader["id"].ToString());
-                        string name = reader["name"].ToString();
-
-                        TreeNode node = root.Nodes.Add(name, name);
-                        node.Tag = id;
-                    }
-                }
-
-                foreach(TreeNode node in root.Nodes)
-                {
-                    Guid parent_id = new Guid(node.Tag.ToString());
-                    using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_sub_projects_short", CommandType.StoredProcedure, 
-                        new[] {
-                            new SqlParameter("@parent_id", parent_id),
-                            new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
-                        }))
-                    {
-                        while (reader.Read())
-                        {
-                            Guid id = new Guid(reader["id"].ToString());
-                            string name = reader["name"].ToString();
-
-                            TreeNode n = node.Nodes.Add(name, name);
-                            n.Tag = id;
-                        }
-                    }
-                }
-
-                root.Expand();
-            }
-            catch (Exception ex)
-            {
-                log.Error(ex);
-            }
-        }
-
-        private void PopulateLaboratories(SqlConnection conn)
-        {
-            log.Info("Populating laboratories");
-
-            // Set data source
-            gridMetaLab.DataSource = DB.GetDataTable(conn, "csp_select_laboratories_flat", CommandType.StoredProcedure, 
-                new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
-
-            // Set UI state
-            gridMetaLab.Columns["id"].Visible = false;
-            gridMetaLab.Columns["assignment_counter"].Visible = false;
-            gridMetaLab.Columns["comment"].Visible = false;
-            gridMetaLab.Columns["create_date"].Visible = false;
-            gridMetaLab.Columns["created_by"].Visible = false;
-            gridMetaLab.Columns["update_date"].Visible = false;
-            gridMetaLab.Columns["updated_by"].Visible = false;
-
-            gridMetaLab.Columns["name"].HeaderText = "Name";
-            gridMetaLab.Columns["name_prefix"].HeaderText = "Prefix";
-            gridMetaLab.Columns["address"].HeaderText = "Address";
-            gridMetaLab.Columns["email"].HeaderText = "Email";
-            gridMetaLab.Columns["phone"].HeaderText = "Phone";
-            gridMetaLab.Columns["instance_status_name"].HeaderText = "Status";
-        }
-
-        private void PopulateUsers(SqlConnection conn)
-        {
-            log.Info("Populating users");
-
-            // Set data source
-            gridMetaUsers.DataSource = DB.GetDataTable(conn, "csp_select_accounts_flat", CommandType.StoredProcedure, 
-                new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
-
-            gridMetaUsers.Columns["password_hash"].Visible = false;
-            gridMetaUsers.Columns["create_date"].Visible = false;
-            gridMetaUsers.Columns["update_date"].Visible = false;
-
-            // Set UI state
-            gridMetaUsers.Columns["username"].HeaderText = "Username";
-            gridMetaUsers.Columns["fullname"].HeaderText = "Name";
-            gridMetaUsers.Columns["laboratory_name"].HeaderText = "Laboratory";
-            gridMetaUsers.Columns["language_code"].HeaderText = "Language";
-            gridMetaUsers.Columns["instance_status_name"].HeaderText = "Status";            
-        }
-
-        private void PopulateNuclides(SqlConnection conn)
-        {
-            log.Info("Populating nuclides");
-
-            // Set data source
-            gridSysNuclides.DataSource = DB.GetDataTable(conn, "csp_select_nuclides_flat", CommandType.StoredProcedure, 
-                new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
-
-            // Set UI state
-            gridSysNuclides.Columns["id"].Visible = false;
-            gridSysNuclides.Columns["comment"].Visible = false;
-            gridSysNuclides.Columns["created_by"].Visible = false;
-            gridSysNuclides.Columns["create_date"].Visible = false;
-            gridSysNuclides.Columns["updated_by"].Visible = false;
-            gridSysNuclides.Columns["update_date"].Visible = false;
-
-            gridSysNuclides.Columns["name"].HeaderText = "Name";
-            gridSysNuclides.Columns["proton_count"].HeaderText = "Protons";
-            gridSysNuclides.Columns["neutron_count"].HeaderText = "Neutrons";
-            gridSysNuclides.Columns["half_life_year"].HeaderText = "T 1/2 (Years)";
-            gridSysNuclides.Columns["half_life_uncertainty"].HeaderText = "T 1/2 Unc. (Years)";
-            gridSysNuclides.Columns["decay_type_name"].HeaderText = "Decay type";
-            gridSysNuclides.Columns["kxray_energy"].HeaderText = "KXray Energy";
-            gridSysNuclides.Columns["fluorescence_yield"].HeaderText = "Fluorescence Yield";
-            gridSysNuclides.Columns["instance_status_name"].HeaderText = "Status";
-        }
-
-        private void PopulateEnergyLines(SqlConnection conn, Guid nid)
-        {
-            // Set data source
-            gridSysNuclideTrans.DataSource = DB.GetDataTable(conn, "csp_select_nuclide_transmissions_for_nuclide_flat", CommandType.StoredProcedure, 
-                new [] {
-                    new SqlParameter("@nuclide_id", nid),
-                    new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
-                });
-
-            // Set UI state
-            gridSysNuclideTrans.Columns["id"].Visible = false;
-            gridSysNuclideTrans.Columns["nuclide_name"].Visible = false;
-            gridSysNuclideTrans.Columns["comment"].Visible = false;
-            gridSysNuclideTrans.Columns["created_by"].Visible = false;
-            gridSysNuclideTrans.Columns["create_date"].Visible = false;
-            gridSysNuclideTrans.Columns["updated_by"].Visible = false;
-            gridSysNuclideTrans.Columns["update_date"].Visible = false;
-            
-            gridSysNuclideTrans.Columns["transmission_from"].HeaderText = "Tr. from";
-            gridSysNuclideTrans.Columns["transmission_to"].HeaderText = "Tr. to";
-            gridSysNuclideTrans.Columns["energy"].HeaderText = "Energy";
-            gridSysNuclideTrans.Columns["energy_uncertainty"].HeaderText = "Energy Unc.";
-            gridSysNuclideTrans.Columns["intensity"].HeaderText = "Intensity";
-            gridSysNuclideTrans.Columns["intensity_uncertainty"].HeaderText = "Intensity Unc.";
-            gridSysNuclideTrans.Columns["probability_of_decay"].HeaderText = "POD";
-            gridSysNuclideTrans.Columns["probability_of_decay_uncertainty"].HeaderText = "POD Unc.";
-            gridSysNuclideTrans.Columns["total_internal_conversion"].HeaderText = "TIC conv.";
-            gridSysNuclideTrans.Columns["kshell_conversion"].HeaderText = "KShell conv.";
-            gridSysNuclideTrans.Columns["instance_status_name"].HeaderText = "Status";
-        }
-
-        private void PopulateGeometries(SqlConnection conn)
-        {
-            log.Info("Populating geometries");
-
-            // Set data source
-            gridSysGeom.DataSource = DB.GetDataTable(conn, "csp_select_preparation_geometries_flat", CommandType.StoredProcedure, 
-                new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
-
-            // Set UI state
-            gridSysGeom.Columns["id"].Visible = false;
-            gridSysGeom.Columns["comment"].Visible = false;
-            gridSysGeom.Columns["created_by"].Visible = false;
-            gridSysGeom.Columns["create_date"].Visible = false;
-            gridSysGeom.Columns["updated_by"].Visible = false;
-            gridSysGeom.Columns["update_date"].Visible = false;
-
-            gridSysGeom.Columns["name"].HeaderText = "Name";
-            gridSysGeom.Columns["instance_status_name"].HeaderText = "Status";
-            // FIXME
-        }
-
-        private void PopulateCounties(SqlConnection conn)
-        {
-            log.Info("Populating counties");
-
-            // Set data source
-            gridSysCounty.DataSource = DB.GetDataTable(conn, "csp_select_counties_flat", CommandType.StoredProcedure, 
-                new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
-
-            // Set UI state
-            gridSysCounty.Columns["id"].Visible = false;
-            gridSysCounty.Columns["created_by"].Visible = false;
-            gridSysCounty.Columns["create_date"].Visible = false;
-            gridSysCounty.Columns["updated_by"].Visible = false;
-            gridSysCounty.Columns["update_date"].Visible = false;
-
-            gridSysCounty.Columns["name"].HeaderText = "Name";
-            gridSysCounty.Columns["county_number"].HeaderText = "Number";
-            gridSysCounty.Columns["instance_status_name"].HeaderText = "Status";
-        }
-
-        private void PopulateMunicipalities(SqlConnection conn, Guid cid)
-        {
-            // Set data source
-            gridSysMunicipality.DataSource = DB.GetDataTable(conn, "csp_select_municipalities_for_county_flat", CommandType.StoredProcedure,
-                new[] {
-                    new SqlParameter("@county_id", cid),
-                    new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
-                });
-
-            // Set UI state
-            gridSysMunicipality.Columns["id"].Visible = false;
-            gridSysMunicipality.Columns["county_name"].Visible = false;
-            gridSysMunicipality.Columns["created_by"].Visible = false;
-            gridSysMunicipality.Columns["create_date"].Visible = false;
-            gridSysMunicipality.Columns["updated_by"].Visible = false;
-            gridSysMunicipality.Columns["update_date"].Visible = false;
-
-            gridSysMunicipality.Columns["name"].HeaderText = "Name";            
-            gridSysMunicipality.Columns["municipality_number"].HeaderText = "Number";
-            gridSysMunicipality.Columns["instance_status_name"].HeaderText = "Status";
-        }
-
-        private void PopulateStations(SqlConnection conn)
-        {
-            log.Info("Populating stations");
-
-            // Set data source
-            DataTable dt = DB.GetDataTable(conn, "csp_select_stations_flat", CommandType.StoredProcedure, 
-                new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
-            gridMetaStation.DataSource = dt;
-
-            // Set UI state
-            gridMetaStation.Columns["id"].Visible = false;
-            gridMetaStation.Columns["comment"].Visible = false;
-            gridMetaStation.Columns["created_by"].Visible = false;
-            gridMetaStation.Columns["create_date"].Visible = false;
-            gridMetaStation.Columns["updated_by"].Visible = false;
-            gridMetaStation.Columns["update_date"].Visible = false;
-
-            gridMetaStation.Columns["name"].HeaderText = "Name";
-            gridMetaStation.Columns["latitude"].HeaderText = "Latitude";
-            gridMetaStation.Columns["longitude"].HeaderText = "Longitude";
-            gridMetaStation.Columns["altitude"].HeaderText = "Altitude";
-            gridMetaStation.Columns["instance_status_name"].HeaderText = "Status";            
-
-            cboxSampleInfoStations.Items.Clear();
-            foreach (DataRow row in dt.Rows)
-            {                
-                cboxSampleInfoStations.Items.Add(new Lemma<Guid, string>(new Guid(row["id"].ToString()), row["name"].ToString()));
-            }
-            cboxSampleInfoStations.SelectedIndex = -1;
-        }
-
-        private void PopulateSampleStorage(SqlConnection conn)
-        {
-            log.Info("Populating sample storage");
-
-            // Set data source
-            gridMetaSampleStorage.DataSource = DB.GetDataTable(conn, "csp_select_sample_storages_flat", CommandType.StoredProcedure, 
-                new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
-
-            // Set UI state
-            gridMetaSampleStorage.Columns["id"].Visible = false;
-            gridMetaSampleStorage.Columns["comment"].Visible = false;
-            gridMetaSampleStorage.Columns["created_by"].Visible = false;
-            gridMetaSampleStorage.Columns["create_date"].Visible = false;
-            gridMetaSampleStorage.Columns["updated_by"].Visible = false;
-            gridMetaSampleStorage.Columns["update_date"].Visible = false;
-
-            gridMetaSampleStorage.Columns["name"].HeaderText = "Name";
-            gridMetaSampleStorage.Columns["address"].HeaderText = "Address";
-            gridMetaSampleStorage.Columns["instance_status_name"].HeaderText = "Status";
-        }
-
-        private void PopulateSamplers(SqlConnection conn)
-        {
-            log.Info("Populating samplers");
-
-            // Set data source
-            DataTable dt = DB.GetDataTable(conn, "csp_select_samplers_flat", CommandType.StoredProcedure, 
-                new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
-            gridMetaSamplers.DataSource = dt;
-
-            // Set UI state
-            gridMetaSamplers.Columns["id"].Visible = false;
-            gridMetaSamplers.Columns["comment"].Visible = false;
-            gridMetaSamplers.Columns["created_by"].Visible = false;
-            gridMetaSamplers.Columns["create_date"].Visible = false;
-            gridMetaSamplers.Columns["updated_by"].Visible = false;
-            gridMetaSamplers.Columns["update_date"].Visible = false;
-
-            gridMetaSamplers.Columns["name"].HeaderText = "Name";
-            gridMetaSamplers.Columns["address"].HeaderText = "Address";
-            gridMetaSamplers.Columns["email"].HeaderText = "Email";
-            gridMetaSamplers.Columns["phone"].HeaderText = "Phone";
-            gridMetaSamplers.Columns["instance_status_name"].HeaderText = "Status";
-
-            cboxSampleInfoSampler.Items.Clear();
-            foreach (DataRow row in dt.Rows)
-                cboxSampleInfoSampler.Items.Add(new Lemma<Guid, string>(new Guid(row["id"].ToString()), row["name"].ToString()));
-            cboxSampleInfoSampler.SelectedIndex = -1;
-        }
+        }        
 
         private void SetLanguageLabels(ResourceManager r)
         {
@@ -1030,7 +452,7 @@ namespace DSA_lims
                 case DialogResult.OK:
                     SetStatusMessage("Laboratory " + form.Laboratory.Name + " created");
                     using (SqlConnection conn = DB.OpenConnection())
-                        PopulateLaboratories(conn);
+                        UI.PopulateLaboratories(conn, gridMetaLab);
                     break;
                 case DialogResult.Abort:
                     SetStatusMessage("Create laboratory failed", StatusMessageType.Error);
@@ -1096,7 +518,7 @@ namespace DSA_lims
                 case DialogResult.OK:
                     SetStatusMessage("Laboratory " + form.Laboratory.Name + " updated");
                     using (SqlConnection conn = DB.OpenConnection())
-                        PopulateLaboratories(conn);
+                        UI.PopulateLaboratories(conn, gridMetaLab);
                     break;
                 case DialogResult.Abort:
                     SetStatusMessage("Update laboratory failed", StatusMessageType.Error);                    
@@ -1123,7 +545,7 @@ namespace DSA_lims
                 case DialogResult.OK:
                     SetStatusMessage("Main project " + form.MainProject.Name + " inserted");                    
                     using (SqlConnection conn = DB.OpenConnection())
-                        PopulateProjects(conn);
+                        UI.PopulateProjects(conn, treeProjects, cboxSampleProject);
                     break;
                 case DialogResult.Abort:
                     SetStatusMessage("Create main project failed", StatusMessageType.Error);
@@ -1145,7 +567,7 @@ namespace DSA_lims
                 case DialogResult.OK:
                     SetStatusMessage("Project " + form.MainProject.Name + " updated");
                     using (SqlConnection conn = DB.OpenConnection())
-                        PopulateProjects(conn);
+                        UI.PopulateProjects(conn, treeProjects, cboxSampleProject);
                     break;
                 case DialogResult.Abort:
                     SetStatusMessage("Create project failed", StatusMessageType.Error);
@@ -1181,7 +603,7 @@ namespace DSA_lims
                 case DialogResult.OK:
                     SetStatusMessage("Sub project " + form.SubProject.Name + " inserted");
                     using (SqlConnection conn = DB.OpenConnection())
-                        PopulateProjects(conn);
+                        UI.PopulateProjects(conn, treeProjects, cboxSampleProject);
                     break;
                 case DialogResult.Abort:
                     SetStatusMessage("Create sub project failed", StatusMessageType.Error);
@@ -1214,7 +636,7 @@ namespace DSA_lims
                 case DialogResult.OK:
                     SetStatusMessage("Sub project " + form.SubProject.Name + " updated");
                     using (SqlConnection conn = DB.OpenConnection())
-                        PopulateProjects(conn);
+                        UI.PopulateProjects(conn, treeProjects, cboxSampleProject);
                     break;
                 case DialogResult.Abort:
                     SetStatusMessage("Create sub project failed", StatusMessageType.Error);
@@ -1271,7 +693,7 @@ namespace DSA_lims
                 case DialogResult.OK:
                     SetStatusMessage("Nuclide " + form.Nuclide.Name + " inserted");
                     using (SqlConnection conn = DB.OpenConnection())
-                        PopulateNuclides(conn);
+                        UI.PopulateNuclides(conn, gridSysNuclides);
                     break;
                 case DialogResult.Abort:
                     SetStatusMessage("Create nuclide failed", StatusMessageType.Error);
@@ -1354,7 +776,7 @@ namespace DSA_lims
                 case DialogResult.OK:
                     SetStatusMessage("Nuclide " + form.Nuclide.Name + " updated");
                     using (SqlConnection conn = DB.OpenConnection())
-                        PopulateNuclides(conn);
+                        UI.PopulateNuclides(conn, gridSysNuclides);
                     break;
                 case DialogResult.Abort:
                     SetStatusMessage("Update nuclide failed", StatusMessageType.Error);
@@ -1378,7 +800,7 @@ namespace DSA_lims
                 case DialogResult.OK:
                     SetStatusMessage("Energy line for " + nname + " inserted");
                     using (SqlConnection conn = DB.OpenConnection())
-                        PopulateEnergyLines(conn, nid);
+                        UI.PopulateEnergyLines(conn, nid, gridSysNuclideTrans);
                     break;
                 case DialogResult.Abort:
                     SetStatusMessage("Create energy line failed", StatusMessageType.Error);
@@ -1405,7 +827,7 @@ namespace DSA_lims
                 case DialogResult.OK:
                     SetStatusMessage("Energy line for " + nname + " updated");
                     using (SqlConnection conn = DB.OpenConnection())
-                        PopulateEnergyLines(conn, nid);
+                        UI.PopulateEnergyLines(conn, nid, gridSysNuclideTrans);
                     break;
                 case DialogResult.Abort:
                     SetStatusMessage("Update energy line failed", StatusMessageType.Error);
@@ -1425,7 +847,7 @@ namespace DSA_lims
             
             Guid nid = new Guid(e.Row.Cells[0].Value.ToString());
             using (SqlConnection conn = DB.OpenConnection())            
-                PopulateEnergyLines(conn, nid);
+                UI.PopulateEnergyLines(conn, nid, gridSysNuclideTrans);
         }
 
         private void miNewGeometry_Click(object sender, EventArgs e)
@@ -1437,7 +859,7 @@ namespace DSA_lims
                 case DialogResult.OK:
                     SetStatusMessage("Geometry " + form.Geometry.Name + " inserted");
                     using (SqlConnection conn = DB.OpenConnection())
-                        PopulateGeometries(conn);
+                        UI.PopulateGeometries(conn, gridSysGeom);
                     break;
                 case DialogResult.Abort:
                     SetStatusMessage("Create geometry failed", StatusMessageType.Error);
@@ -1460,7 +882,7 @@ namespace DSA_lims
                 case DialogResult.OK:
                     SetStatusMessage("Geometry " + form.Geometry.Name + " updated");
                     using (SqlConnection conn = DB.OpenConnection())
-                        PopulateGeometries(conn);
+                        UI.PopulateGeometries(conn, gridSysGeom);
                     break;
                 case DialogResult.Abort:
                     SetStatusMessage("Update geometry failed", StatusMessageType.Error);
@@ -1482,7 +904,7 @@ namespace DSA_lims
                 case DialogResult.OK:
                     SetStatusMessage("County " + form.County.Name + " inserted");
                     using (SqlConnection conn = DB.OpenConnection())
-                        PopulateCounties(conn);
+                        UI.PopulateCounties(conn, gridSysCounty);
                     break;
                 case DialogResult.Abort:
                     SetStatusMessage("Create county failed", StatusMessageType.Error);
@@ -1505,7 +927,7 @@ namespace DSA_lims
                 case DialogResult.OK:
                     SetStatusMessage("County " + form.County.Name + " updated");
                     using (SqlConnection conn = DB.OpenConnection())
-                        PopulateCounties(conn);
+                        UI.PopulateCounties(conn, gridSysCounty);
                     break;
                 case DialogResult.Abort:
                     SetStatusMessage("Create county failed", StatusMessageType.Error);
@@ -1533,7 +955,7 @@ namespace DSA_lims
                 case DialogResult.OK:
                     SetStatusMessage("Municipality " + form.Municipality.Name + " inserted");
                     using (SqlConnection conn = DB.OpenConnection())
-                        PopulateMunicipalities(conn, cid);
+                        UI.PopulateMunicipalities(conn, cid, gridSysMunicipality);
                     break;
                 case DialogResult.Abort:
                     SetStatusMessage("Create municipality failed", StatusMessageType.Error);
@@ -1562,7 +984,7 @@ namespace DSA_lims
                 case DialogResult.OK:
                     SetStatusMessage("Municipality " + form.Municipality.Name + " updated");
                     using (SqlConnection conn = DB.OpenConnection())
-                        PopulateMunicipalities(conn, cid);
+                        UI.PopulateMunicipalities(conn, cid, gridSysMunicipality);
                     break;
                 case DialogResult.Abort:
                     SetStatusMessage("Update municipality failed", StatusMessageType.Error);
@@ -1582,7 +1004,7 @@ namespace DSA_lims
 
             Guid cid = new Guid(e.Row.Cells[0].Value.ToString());
             using (SqlConnection conn = DB.OpenConnection())            
-                PopulateMunicipalities(conn, cid);
+                UI.PopulateMunicipalities(conn, cid, gridSysMunicipality);
         }
 
         private void miNewStation_Click(object sender, EventArgs e)
@@ -1594,7 +1016,7 @@ namespace DSA_lims
                 case DialogResult.OK:
                     SetStatusMessage("Station " + form.Station.Name + " inserted");
                     using (SqlConnection conn = DB.OpenConnection())
-                        PopulateStations(conn);
+                        UI.PopulateStations(conn, gridMetaStation, cboxSampleInfoStations);
                     break;
                 case DialogResult.Abort:
                     SetStatusMessage("Create station failed", StatusMessageType.Error);
@@ -1617,7 +1039,7 @@ namespace DSA_lims
                 case DialogResult.OK:
                     SetStatusMessage("Station " + form.Station.Name + " updated");
                     using (SqlConnection conn = DB.OpenConnection())
-                        PopulateStations(conn);
+                        UI.PopulateStations(conn, gridMetaStation, cboxSampleInfoStations);
                     break;
                 case DialogResult.Abort:
                     SetStatusMessage("Update station failed", StatusMessageType.Error);
@@ -1639,7 +1061,7 @@ namespace DSA_lims
                 case DialogResult.OK:
                     SetStatusMessage("Sample storage " + form.SampleStorage.Name + " inserted");
                     using (SqlConnection conn = DB.OpenConnection())
-                        PopulateSampleStorage(conn);
+                        UI.PopulateSampleStorage(conn, gridMetaSampleStorage);
                     break;
                 case DialogResult.Abort:
                     SetStatusMessage("Create sample storage failed", StatusMessageType.Error);
@@ -1662,7 +1084,7 @@ namespace DSA_lims
                 case DialogResult.OK:
                     SetStatusMessage("Sample storage " + form.SampleStorage.Name + " updated");
                     using (SqlConnection conn = DB.OpenConnection())
-                        PopulateSampleStorage(conn);
+                        UI.PopulateSampleStorage(conn, gridMetaSampleStorage);
                     break;
                 case DialogResult.Abort:
                     SetStatusMessage("Update sample storage failed", StatusMessageType.Error);
@@ -1684,7 +1106,7 @@ namespace DSA_lims
                 case DialogResult.OK:
                     SetStatusMessage("Sampler " + form.Sampler.Name + " inserted");
                     using (SqlConnection conn = DB.OpenConnection())
-                        PopulateSamplers(conn);
+                        UI.PopulateSamplers(conn, gridMetaSamplers, cboxSampleInfoSampler);
                     break;
                 case DialogResult.Abort:
                     SetStatusMessage("Create sampler failed", StatusMessageType.Error);
@@ -1707,7 +1129,7 @@ namespace DSA_lims
                 case DialogResult.OK:
                     SetStatusMessage("Sampler " + form.Sampler.Name + " updated");
                     using (SqlConnection conn = DB.OpenConnection())
-                        PopulateSamplers(conn);
+                        UI.PopulateSamplers(conn, gridMetaSamplers, cboxSampleInfoSampler);
                     break;
                 case DialogResult.Abort:
                     SetStatusMessage("Update sampler failed", StatusMessageType.Error);
@@ -1767,7 +1189,68 @@ namespace DSA_lims
 
         private void btnSampleSelectSampleType_Click(object sender, EventArgs e)
         {
-            // Select sample type...
+            FormSelectSampleType form = new FormSelectSampleType();
+            if (form.ShowDialog() != DialogResult.OK)
+                return;
+
+            cboxSampleSampleType.SelectedItem = form.SelectedSampleType;
+        }
+
+        private void cboxSampleProject_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cboxSampleProject.SelectedItem == null)
+            {
+                lblSampleToolProject.Text = "";
+                lblSampleToolSubProject.Text = "";
+                return;
+            }
+
+            Lemma<Guid, string> project = cboxSampleProject.SelectedItem as Lemma<Guid, string>;
+            using (SqlConnection conn = DB.OpenConnection())            
+                UI.PopulateSubProjects(conn, project.Id, cboxSampleSubProject);
+
+            lblSampleToolProject.Text = "[Project] " + project.Name;
+            lblSampleToolSubProject.Text = "";
+        }
+
+        private void cboxSampleSubProject_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cboxSampleSubProject.SelectedItem == null)
+            {
+                lblSampleToolSubProject.Text = "";
+                return;
+            }                
+
+            Lemma<Guid, string> subProject = cboxSampleSubProject.SelectedItem as Lemma<Guid, string>;
+
+            lblSampleToolSubProject.Text = subProject.Name;
+        }
+
+        private void cboxSampleInfoStations_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(cboxSampleInfoStations.SelectedItem == null)
+            {
+                tbSampleInfoLatitude.Text = "";
+                tbSampleInfoLongitude.Text = "";
+                tbSampleInfoAltitude.Text = "";
+                return;
+            }
+
+            StationModel station = cboxSampleInfoStations.SelectedItem as StationModel;
+            tbSampleInfoLatitude.Text = station.Latitude.ToString();
+            tbSampleInfoLongitude.Text = station.Longitude.ToString();
+            tbSampleInfoAltitude.Text = station.Altitude.ToString();
+        }
+
+        private void tbSampleExId_TextChanged(object sender, EventArgs e)
+        {
+            if(String.IsNullOrEmpty(tbSampleExId.Text.Trim()))
+            {
+                lblSampleToolExId.Text = "";
+                return;
+            }
+
+            lblSampleToolExId.Text = "[Ex.Id] " + tbSampleExId.Text.Trim();
         }
     }    
 }

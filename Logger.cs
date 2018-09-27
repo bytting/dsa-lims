@@ -32,7 +32,8 @@ namespace DSA_lims
 {    
     public static class DSALogger
     {
-        private static bool initialized = false;
+        private static bool initialized = false;        
+
         public static ILog CreateLogger(RichTextBox tb)
         {
             if(initialized)            
@@ -66,7 +67,7 @@ namespace DSA_lims
 
             initialized = true;
             return LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-        }
+        }        
     }
 
     public class TextBoxAppender : AppenderSkeleton

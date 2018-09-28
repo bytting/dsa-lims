@@ -189,8 +189,7 @@
     <Compile Include="Settings.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="StrUtils.cs" />
-    <Compile Include="UILoaders.cs" />
-    <Compile Include="UIPopulators.cs" />
+    <Compile Include="UserInterface.cs" />
     <EmbeddedResource Include="FormAccreditationRule.resx">
       <DependentUpon>FormAccreditationRule.cs</DependentUpon>
     </EmbeddedResource>

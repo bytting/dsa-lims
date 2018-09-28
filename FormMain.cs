@@ -87,13 +87,13 @@ namespace DSA_lims
                 {
                     Common.Username = "Admin"; // FIXME
 
-                    UI.LoadInstanceStatus(conn);
-                    UI.LoadDecayTypes(conn);
-                    UI.LoadPreparationUnits(conn);
-                    UI.LoadUniformActivityUnits(conn);
-                    UI.LoadWorkflowStatus(conn);
-                    UI.LoadLocationTypes(conn);
-                    UI.LoadSampleTypes(conn);
+                    DB.LoadInstanceStatus(conn);
+                    DB.LoadDecayTypes(conn);
+                    DB.LoadPreparationUnits(conn);
+                    DB.LoadUniformActivityUnits(conn);
+                    DB.LoadWorkflowStatus(conn);
+                    DB.LoadLocationTypes(conn);
+                    DB.LoadSampleTypes(conn);
                     
                     UI.PopulatePreparationUnits(cboxSamplePrepUnit);
                     UI.PopulateWorkflowStatus(cboxSampleAnalWorkflowStatus);

@@ -18,6 +18,7 @@
 // Authors: Dag Robole,
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Text;
@@ -75,6 +76,208 @@ namespace DSA_lims
             cmd.Parameters.AddWithValue("@value", msg);
             cmd.Parameters.AddWithValue("@create_date", DateTime.Now);
             cmd.ExecuteNonQuery();
-        }        
+        }
+
+        public static void LoadInstanceStatus(SqlConnection conn)
+        {
+            Common.Log.Info("Loading instance status");
+
+            try
+            {
+                Common.InstanceStatusList.Clear();
+
+                using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_instance_status", CommandType.StoredProcedure))
+                {
+                    while (reader.Read())
+                        Common.InstanceStatusList.Add(new Lemma<int, string>(Convert.ToInt32(reader["id"]), reader["name"].ToString()));
+                }
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+            }
+        }
+
+        public static void LoadDecayTypes(SqlConnection conn)
+        {
+            Common.Log.Info("Loading decay types");
+
+            try
+            {
+                Common.DecayTypeList.Clear();
+
+                using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_decay_types", CommandType.StoredProcedure))
+                {
+                    while (reader.Read())
+                        Common.DecayTypeList.Add(new Lemma<int, string>(Convert.ToInt32(reader["id"]), reader["name"].ToString()));
+                }
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+            }
+        }
+
+        public static void LoadPreparationUnits(SqlConnection conn)
+        {
+            Common.Log.Info("Loading preparation units");
+
+            try
+            {
+                Common.PreparationUnitList.Clear();
+
+                using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_preparation_units", CommandType.StoredProcedure))
+                {
+                    while (reader.Read())
+                        Common.PreparationUnitList.Add(new Lemma<int, string>(Convert.ToInt32(reader["id"]), reader["name"].ToString()));
+                }
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+            }
+        }
+
+        public static void LoadUniformActivityUnits(SqlConnection conn)
+        {
+            Common.Log.Info("Loading uniform activity units");
+
+            try
+            {
+                Common.UniformActivityUnitList.Clear();
+
+                using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_uniform_activity_units", CommandType.StoredProcedure))
+                {
+                    while (reader.Read())
+                        Common.UniformActivityUnitList.Add(new Lemma<int, string>(Convert.ToInt32(reader["id"]), reader["name"].ToString()));
+                }
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+            }
+        }
+
+        public static void LoadWorkflowStatus(SqlConnection conn)
+        {
+            Common.Log.Info("Loading workflow status");
+
+            try
+            {
+                Common.WorkflowStatusList.Clear();
+
+                using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_workflow_status", CommandType.StoredProcedure))
+                {
+                    while (reader.Read())
+                        Common.WorkflowStatusList.Add(new Lemma<int, string>(Convert.ToInt32(reader["id"]), reader["name"].ToString()));
+                }
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+            }
+        }
+
+        public static void LoadLocationTypes(SqlConnection conn)
+        {
+            Common.Log.Info("Loading location types");
+
+            try
+            {
+                Common.LocationTypeList.Clear();
+
+                using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_location_types", CommandType.StoredProcedure))
+                {
+                    while (reader.Read())
+                        Common.LocationTypeList.Add(new Lemma<int, string>(Convert.ToInt32(reader["id"]), reader["name"].ToString()));
+                }
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+            }
+        }
+
+        private static void AddSampleTypeComponents(SqlConnection conn, SampleTypeModel st)
+        {
+            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_sample_components_for_sample_type", CommandType.StoredProcedure,
+                new SqlParameter("@sample_type_id", st.Id)))
+            {
+                while (reader.Read())
+                    st.SampleComponents.Add(new SampleComponentModel(new Guid(reader["id"].ToString()), reader["name"].ToString()));
+            }
+
+            foreach (SampleTypeModel s in st.SampleTypes)
+                AddSampleTypeComponents(conn, s);
+        }
+
+        private static void AddSampleTypeParameters(SqlConnection conn, SampleTypeModel st)
+        {
+            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_sample_parameters_for_sample_type", CommandType.StoredProcedure,
+                new SqlParameter("@sample_type_id", st.Id)))
+            {
+                while (reader.Read())
+                {
+                    SampleParameterModel sampleParameter = new SampleParameterModel(new Guid(reader["id"].ToString()), reader["name"].ToString());
+                    sampleParameter.Type = reader["type"].ToString();
+                    st.SampleParameters.Add(sampleParameter);
+                }
+            }
+
+            foreach (SampleTypeModel s in st.SampleTypes)
+                AddSampleTypeParameters(conn, s);
+        }
+
+        public static void LoadSampleTypes(SqlConnection conn)
+        {
+            Common.Log.Info("Loading sample types");
+
+            try
+            {
+                Common.SampleTypes.Clear();
+
+                using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_sample_types_short", CommandType.StoredProcedure))
+                {
+                    while (reader.Read())
+                    {
+                        SampleTypeModel sampleType = new SampleTypeModel(new Guid(reader["id"].ToString()), reader["name"].ToString());
+
+                        string[] items = sampleType.Name.Substring(1).Split(new char[] { '/' });
+                        List<SampleTypeModel> current = Common.SampleTypes;
+                        foreach (string item in items)
+                        {
+                            SampleTypeModel found = current.Find(x => x.ShortName == item);
+                            if (found != null)
+                            {
+                                current = found.SampleTypes;
+                                continue;
+                            }
+                            else
+                            {
+                                sampleType.ShortName = item;
+                                current.Add(sampleType);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+            }
+
+            try
+            {
+                foreach (SampleTypeModel st in Common.SampleTypes)
+                {
+                    AddSampleTypeComponents(conn, st);
+                    AddSampleTypeParameters(conn, st);
+                }
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+            }
+        }
     }    
 }

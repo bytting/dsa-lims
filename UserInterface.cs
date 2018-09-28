@@ -313,6 +313,23 @@ namespace DSA_lims
             // FIXME
         }
 
+        public static void PopulateGeometries(SqlConnection conn, params ComboBox[] cbn)
+        {
+            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_preparation_geometries_short", CommandType.StoredProcedure,
+                new SqlParameter("@instance_status_level", InstanceStatus.Deleted)))
+            {
+                foreach (ComboBox cb in cbn)
+                    cb.Items.Clear();
+
+                while (reader.Read())
+                    foreach (ComboBox cb in cbn)
+                        cb.Items.Add(new Lemma<Guid, string>(new Guid(reader["id"].ToString()), reader["name"].ToString()));
+
+                foreach (ComboBox cb in cbn)
+                    cb.SelectedIndex = -1;
+            }
+        }
+
         public static void PopulateCounties(SqlConnection conn, DataGridView grid)
         {
             grid.DataSource = DB.GetDataTable(conn, "csp_select_counties_flat", CommandType.StoredProcedure,

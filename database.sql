@@ -891,11 +891,9 @@ go
 
 create proc csp_select_location_types
 as
-	select 
-		id, 
-		name 
+	select *
 	from location_type 
-	order by name
+	order by id
 go
 
 /*===========================================================================*/
@@ -1060,6 +1058,17 @@ create proc csp_select_preparation_geometries
 	@instance_status_level int
 as
 	select *
+	from preparation_geometry
+	where instance_status_id <= @instance_status_level
+	order by name
+go
+
+create proc csp_select_preparation_geometries_short
+	@instance_status_level int
+as
+	select
+		id,
+		name
 	from preparation_geometry
 	where instance_status_id <= @instance_status_level
 	order by name

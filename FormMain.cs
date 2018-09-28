@@ -105,7 +105,8 @@ namespace DSA_lims
                     UI.PopulateLaboratories(conn, cboxSampleLaboratory);
                     UI.PopulateUsers(conn, gridMetaUsers);
                     UI.PopulateNuclides(conn, gridSysNuclides);
-                    UI.PopulateGeometries(conn, gridSysGeom);                    
+                    UI.PopulateGeometries(conn, gridSysGeom);
+                    UI.PopulateGeometries(conn, cboxSamplePrepGeom);
                     UI.PopulateCounties(conn, gridSysCounty);
                     UI.PopulateCounties(conn, cboxSampleCounties);
                     UI.PopulateStations(conn, gridMetaStation);
@@ -362,9 +363,16 @@ namespace DSA_lims
         private void treeSampleTypes_AfterSelect(object sender, TreeViewEventArgs e)
         {
             if (e.Node.Tag == null)
+            {
+                lblTypeRelSampCompSel.Text = "";
+                lblTypeRelSampParSel.Text = "";
+                lblTypeRelSampPrepSel.Text = "";
                 return;
+            }
 
             TreeNode tnode = e.Node;
+
+            lblTypeRelSampCompSel.Text = lblTypeRelSampParSel.Text = lblTypeRelSampPrepSel.Text = tnode.Text;
 
             try
             {
@@ -675,7 +683,6 @@ namespace DSA_lims
         private void miSampleTypesEdit_Click(object sender, EventArgs e)
         {
             // Edit sample type
-
         }
 
         private void miSampleTypesDelete_Click(object sender, EventArgs e)
@@ -824,7 +831,10 @@ namespace DSA_lims
                 case DialogResult.OK:
                     SetStatusMessage("Geometry " + form.Geometry.Name + " inserted");
                     using (SqlConnection conn = DB.OpenConnection())
+                    {
                         UI.PopulateGeometries(conn, gridSysGeom);
+                        UI.PopulateGeometries(conn, cboxSamplePrepGeom);
+                    }
                     break;
                 case DialogResult.Abort:
                     SetStatusMessage("Create geometry failed", StatusMessageType.Error);

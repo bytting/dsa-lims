@@ -154,21 +154,21 @@ namespace DSA_lims
         public string Comment { get; set; }        
     }
 
-    public class MainProjectModel : ModelBase
+    public class ProjectMainModel : ModelBase
     {
-        public MainProjectModel() { }
-        public MainProjectModel(Guid id, string name) : base(id, name) { }
+        public ProjectMainModel() { }
+        public ProjectMainModel(Guid id, string name) : base(id, name) { }
 
         public int InstanceStatusId { get; set; }
         public string Comment { get; set; }        
     }
 
-    public class SubProjectModel : MainProjectModel
+    public class ProjectSubModel : ProjectMainModel
     {
-        public SubProjectModel() { }
-        public SubProjectModel(Guid id, string name) : base(id, name) { }
+        public ProjectSubModel() { }
+        public ProjectSubModel(Guid id, string name) : base(id, name) { }
 
-        public Guid MainProjectId { get; set; }
+        public Guid ProjectMainId { get; set; }
     }
 
     public class SamplerModel : ModelBase

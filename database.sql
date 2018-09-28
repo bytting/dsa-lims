@@ -1514,13 +1514,12 @@ as
 go
 
 /*===========================================================================*/
-/* tbl project */
+/* tbl project_main */
 
-if OBJECT_ID('dbo.project', 'U') IS NOT NULL drop table project;
+if OBJECT_ID('dbo.project_main', 'U') IS NOT NULL drop table project_main;
 
-create table project (
+create table project_main (
 	id uniqueidentifier primary key NOT NULL,
-	parent_id uniqueidentifier default NULL,
 	name nvarchar(256) NOT NULL,
 	instance_status_id int default 1,
 	comment nvarchar(1000) default NULL,		
@@ -1531,7 +1530,7 @@ create table project (
 )
 go
 
-create proc csp_insert_project
+create proc csp_insert_project_main
 	@id uniqueidentifier,
 	@name nvarchar(256),	
 	@instance_status_id int,
@@ -1541,9 +1540,8 @@ create proc csp_insert_project
 	@update_date datetime,
 	@updated_by nvarchar(50)
 as 
-	insert into project values (
+	insert into project_main values (
 		@id,
-		NULL,
 		@name, 				
 		@instance_status_id,
 		@comment,		
@@ -1554,7 +1552,7 @@ as
 	);
 go
 
-create proc csp_update_project
+create proc csp_update_project_main
 	@id uniqueidentifier,
 	@name nvarchar(256),	
 	@instance_status_id int,
@@ -1562,7 +1560,7 @@ create proc csp_update_project
 	@update_date datetime,
 	@updated_by nvarchar(50)
 as 
-	update project set
+	update project_main set
 		name = @name, 				
 		instance_status_id = @instance_status_id,
 		comment = @comment,				
@@ -1571,9 +1569,70 @@ as
 	where id = @id
 go
 
-create proc csp_insert_sub_project
+create proc csp_select_project_main
+	@id uniqueidentifier	
+as 
+	select * from project_main where id = @id
+go
+
+create proc csp_select_projects_main
+	@instance_status_level int
+as 
+	select * 
+	from project_main
+	where instance_status_id <= @instance_status_level
+	order by name
+go
+
+create proc csp_select_projects_main_flat
+	@instance_status_level int
+as 
+	select
+		pm.id,
+		pm.name,
+		st.name as 'instance_status_name',
+		pm.comment,
+		pm.create_date,
+		pm.created_by,
+		pm.update_date,
+		pm.updated_by
+	from project_main pm, instance_status st
+	where pm.instance_status_id = st.id and pm.instance_status_id <= @instance_status_level
+	order by name
+go
+
+create proc csp_select_projects_main_short
+	@instance_status_level int
+as 
+	select 
+		id, 
+		name	
+	from project_main 
+	where instance_status_id <= @instance_status_level
+	order by name
+go
+
+/*===========================================================================*/
+/* tbl project_sub */
+
+if OBJECT_ID('dbo.project_sub', 'U') IS NOT NULL drop table project_sub;
+
+create table project_sub (
+	id uniqueidentifier primary key NOT NULL,
+	project_main_id uniqueidentifier NOT NULL,
+	name nvarchar(256) NOT NULL,
+	instance_status_id int default 1,
+	comment nvarchar(1000) default NULL,		
+	create_date datetime NOT NULL,
+	created_by nvarchar(50) NOT NULL,
+	update_date datetime NOT NULL,
+	updated_by nvarchar(50) NOT NULL
+)
+go
+
+create proc csp_insert_project_sub
 	@id uniqueidentifier,
-	@parent_id uniqueidentifier,
+	@project_main_id uniqueidentifier,
 	@name nvarchar(256),	
 	@instance_status_id int,
 	@comment nvarchar(1000),
@@ -1582,9 +1641,9 @@ create proc csp_insert_sub_project
 	@update_date datetime,
 	@updated_by nvarchar(50)
 as 
-	insert into project values (
+	insert into project_sub values (
 		@id,
-		@parent_id,
+		@project_main_id,
 		@name, 				
 		@instance_status_id,
 		@comment,		
@@ -1595,61 +1654,79 @@ as
 	);
 go
 
-create proc csp_select_project
-	@id uniqueidentifier	
+create proc csp_update_project_sub
+	@id uniqueidentifier,
+	@project_main_id uniqueidentifier,
+	@name nvarchar(256),	
+	@instance_status_id int,
+	@comment nvarchar(1000),
+	@update_date datetime,
+	@updated_by nvarchar(50)
 as 
-	select * from project where id = @id
+	update project_sub set
+		name = @name,
+		project_main_id = @project_main_id,
+		instance_status_id = @instance_status_id,
+		comment = @comment,				
+		update_date = @update_date,
+		updated_by = @updated_by
+	where id = @id
 go
 
-create proc csp_select_main_projects
+create proc csp_select_project_sub
+	@id uniqueidentifier	
+as 
+	select * from project_sub where id = @id
+go
+
+create proc csp_select_projects_sub
+	@project_main_id uniqueidentifier,
 	@instance_status_level int
 as 
 	select * 
-	from project 
-	where parent_id is NULL and instance_status_id <= @instance_status_level
+	from project_sub 
+	where project_main_id = @project_main_id and instance_status_id <= @instance_status_level
 	order by name
 go
 
-create proc csp_select_main_projects_short
+create proc csp_select_projects_sub_flat
+	@project_main_id uniqueidentifier,
+	@instance_status_level int
+as 
+	select
+		ps.id,
+		pm.name as 'project_main_name',
+		ps.name,
+		st.name as 'instance_status_name',
+		ps.comment,
+		ps.create_date,
+		ps.created_by,
+		ps.update_date,
+		ps.updated_by
+	from project_sub ps, project_main pm, instance_status st
+	where ps.project_main_id = pm.id and ps.project_main_id = @project_main_id and ps.instance_status_id = st.id and ps.instance_status_id <= @instance_status_level
+	order by name
+go
+
+create proc csp_select_projects_sub_short
+	@project_main_id uniqueidentifier,
 	@instance_status_level int
 as 
 	select 
 		id, 
 		name	
-	from project 
-	where parent_id is NULL and instance_status_id <= @instance_status_level
-	order by name
-go
-
-create proc csp_select_sub_projects
-	@parent_id uniqueidentifier,
-	@instance_status_level int
-as 
-	select * 
-	from project 
-	where parent_id = @parent_id and instance_status_id <= @instance_status_level
-	order by name
-go
-
-create proc csp_select_sub_projects_short
-	@parent_id uniqueidentifier,
-	@instance_status_level int
-as 
-	select 
-		id, 
-		name 
-	from project 
-	where parent_id = @parent_id and instance_status_id <= @instance_status_level
+	from project_sub 
+	where project_main_id = @project_main_id and instance_status_id <= @instance_status_level
 	order by name
 go
 
 /*===========================================================================*/
-/* tbl project_x_account */
+/* tbl project_sub_x_account */
 
-if OBJECT_ID('dbo.project_x_account', 'U') IS NOT NULL drop table project_x_account;
+if OBJECT_ID('dbo.project_sub_x_account', 'U') IS NOT NULL drop table project_sub_x_account;
 
-create table project_x_account (
-	project_id uniqueidentifier NOT NULL,
+create table project_sub_x_account (
+	project_sub_id uniqueidentifier NOT NULL,
 	account_id uniqueidentifier NOT NULL
 )
 go
@@ -1952,13 +2029,13 @@ create table sample (
 	transform_to_id uniqueidentifier default NULL,	
 	current_order_id uniqueidentifier default NULL,
 	imported_from nvarchar(128) default NULL,
-	imported_from_id nvarchar(128) default NULL,	
+	imported_from_id nvarchar(128) default NULL,		
+	municipality_id uniqueidentifier default NULL,
+	location_type nvarchar(50) default NULL,
+	location nvarchar(128) default NULL,	
 	latitude float default 0,
 	longitude float default 0,
 	altitude float default 0,
-	community nvarchar(256) default NULL,
-	location_type nvarchar(50) default NULL,
-	location nvarchar(128) default NULL,	
 	sampling_date_from datetime NOT NULL,
 	sampling_date_to datetime default NULL,
 	reference_date datetime NOT NULL,

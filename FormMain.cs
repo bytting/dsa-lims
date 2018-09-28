@@ -101,7 +101,8 @@ namespace DSA_lims
                     UI.PopulateActivityUnits(conn, gridMetaUnitsActivity, cboxSampleAnalUnit);
                     UI.PopulateSampleTypes(treeSampleTypes);
                     UI.PopulateSampleTypes(cboxSampleSampleType);
-                    UI.PopulateProjects(conn, treeProjects, cboxSampleProject);
+                    UI.PopulateProjectsMain(conn, gridProjectMain);
+                    UI.PopulateProjectsMain(conn, cboxSampleProject);
                     UI.PopulateLaboratories(conn, gridMetaLab);
                     UI.PopulateLaboratories(conn, cboxSampleLaboratory);
                     UI.PopulateUsers(conn, gridMetaUsers);
@@ -541,14 +542,17 @@ namespace DSA_lims
 
         private void miProjectsNew_Click(object sender, EventArgs e)
         {
-            // new main project                                    
+            // new main project
             FormProject form = new FormProject(log);
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
-                    SetStatusMessage("Main project " + form.MainProject.Name + " inserted");                    
+                    SetStatusMessage("Main project " + form.MainProject.Name + " inserted");
                     using (SqlConnection conn = DB.OpenConnection())
-                        UI.PopulateProjects(conn, treeProjects, cboxSampleProject);
+                    {
+                        UI.PopulateProjectsMain(conn, gridProjectMain);
+                        UI.PopulateProjectsMain(conn, cboxSampleProject);
+                    }
                     break;
                 case DialogResult.Abort:
                     SetStatusMessage("Create main project failed", StatusMessageType.Error);
@@ -558,22 +562,24 @@ namespace DSA_lims
 
         private void miProjectsEdit_Click(object sender, EventArgs e)
         {
-            // edit project
-            if (treeProjects.SelectedNode == null)
+            if (gridProjectMain.SelectedRows.Count < 1)
                 return;
 
-            Guid pid = new Guid(treeProjects.SelectedNode.Tag.ToString());
+            Guid pmid = new Guid(gridProjectMain.SelectedRows[0].Cells["id"].Value.ToString());
 
-            FormProject form = new FormProject(log, pid);
+            FormProject form = new FormProject(log, pmid);
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
                     SetStatusMessage("Project " + form.MainProject.Name + " updated");
                     using (SqlConnection conn = DB.OpenConnection())
-                        UI.PopulateProjects(conn, treeProjects, cboxSampleProject);
+                    {
+                        UI.PopulateProjectsMain(conn, gridProjectMain);
+                        UI.PopulateProjectsMain(conn, cboxSampleProject);
+                    }
                     break;
                 case DialogResult.Abort:
-                    SetStatusMessage("Create project failed", StatusMessageType.Error);
+                    SetStatusMessage("Edit main project failed", StatusMessageType.Error);
                     break;
             }                        
         }
@@ -586,30 +592,28 @@ namespace DSA_lims
         private void miProjectsSubNew_Click(object sender, EventArgs e)
         {
             // new sub project
-            if(treeProjects.SelectedNode == null)
+            if (gridProjectMain.SelectedRows.Count < 1)
             {
-                MessageBox.Show("No main project selected");
+                MessageBox.Show("You must select a main project first");
                 return;
             }
 
-            if(treeProjects.SelectedNode.Level != 1)
-            {
-                MessageBox.Show("Selected project is not a main project");
-                return;
-            }
-
-            Guid parent_id = new Guid(treeProjects.SelectedNode.Tag.ToString());
-
-            FormProjectSub form = new FormProjectSub(log, treeProjects.SelectedNode.Text, parent_id);
+            Guid pmid = new Guid(gridProjectMain.SelectedRows[0].Cells["id"].Value.ToString());
+            string pmname = gridProjectMain.SelectedRows[0].Cells["name"].Value.ToString();
+            
+            FormProjectSub form = new FormProjectSub(log, pmname, pmid);
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
                     SetStatusMessage("Sub project " + form.SubProject.Name + " inserted");
                     using (SqlConnection conn = DB.OpenConnection())
-                        UI.PopulateProjects(conn, treeProjects, cboxSampleProject);
+                    {
+                        UI.PopulateProjectsSub(conn, gridProjectSub, pmid);
+                        UI.PopulateProjectsSub(conn, cboxSampleSubProject, pmid);
+                    }
                     break;
                 case DialogResult.Abort:
-                    SetStatusMessage("Create sub project failed", StatusMessageType.Error);
+                    SetStatusMessage("Create main project failed", StatusMessageType.Error);
                     break;
             }
         }
@@ -617,32 +621,29 @@ namespace DSA_lims
         private void miProjectsSubEdit_Click(object sender, EventArgs e)
         {
             // edit sub project
-            if (treeProjects.SelectedNode == null)
-            {
-                MessageBox.Show("No main project selected");
+            if (gridProjectMain.SelectedRows.Count < 1)
                 return;
-            }
 
-            if (treeProjects.SelectedNode.Level != 2)
-            {
-                MessageBox.Show("Selected project is not a sub project");
+            if (gridProjectSub.SelectedRows.Count < 1)
                 return;
-            }
 
-            Guid parent_id = new Guid(treeProjects.SelectedNode.Parent.Tag.ToString());
+            Guid pmid = new Guid(gridProjectMain.SelectedRows[0].Cells["id"].Value.ToString());
+            string pmname = gridProjectMain.SelectedRows[0].Cells["name"].Value.ToString();
+            Guid psid = new Guid(gridProjectSub.SelectedRows[0].Cells["id"].Value.ToString());
 
-            Guid pid = new Guid(treeProjects.SelectedNode.Tag.ToString());
-
-            FormProjectSub form = new FormProjectSub(log, treeProjects.SelectedNode.Parent.Text, parent_id, pid);
+            FormProjectSub form = new FormProjectSub(log, pmname, pmid, psid);
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
-                    SetStatusMessage("Sub project " + form.SubProject.Name + " updated");
+                    SetStatusMessage("Project " + form.SubProject.Name + " updated");
                     using (SqlConnection conn = DB.OpenConnection())
-                        UI.PopulateProjects(conn, treeProjects, cboxSampleProject);
+                    {
+                        UI.PopulateProjectsSub(conn, gridProjectSub, pmid);
+                        UI.PopulateProjectsSub(conn, cboxSampleSubProject, pmid);
+                    }
                     break;
                 case DialogResult.Abort:
-                    SetStatusMessage("Create sub project failed", StatusMessageType.Error);
+                    SetStatusMessage("Edit main project failed", StatusMessageType.Error);
                     break;
             }
         }
@@ -650,42 +651,6 @@ namespace DSA_lims
         private void miProjectsSubDelete_Click(object sender, EventArgs e)
         {
             // delete sub project
-        }
-
-        private void treeProjects_AfterSelect(object sender, TreeViewEventArgs e)
-        {
-            tbProjectsName.Text = "";                        
-            tbProjectsComment.Text = "";
-            cbProjectsInUse.Checked = false;
-
-            if (e.Node.Tag == null)
-                return;
-
-            try
-            {
-                SqlConnection conn = DB.OpenConnection();
-                Guid id = new Guid(e.Node.Tag.ToString());
-
-                SqlCommand cmd = new SqlCommand("csp_select_project", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@id", id);
-
-                using (SqlDataReader reader = cmd.ExecuteReader())
-                {
-                    if (!reader.HasRows)
-                        return;
-
-                    reader.Read();
-
-                    tbProjectsName.Text = reader["name"].ToString();
-                    tbProjectsComment.Text = reader["comment"].ToString();                    
-                    cbProjectsInUse.Checked = InstanceStatus.IsActive(reader["instance_status_id"]);
-                }
-            }
-            catch (Exception ex)
-            {
-                log.Error(ex);
-            }
         }
 
         private void miNuclidesNew_Click(object sender, EventArgs e)
@@ -999,7 +964,7 @@ namespace DSA_lims
             if (e.StateChanged != DataGridViewElementStates.Selected)
                 return;
 
-            Guid cid = new Guid(e.Row.Cells[0].Value.ToString());
+            Guid cid = new Guid(e.Row.Cells["id"].Value.ToString());
             using (SqlConnection conn = DB.OpenConnection())            
                 UI.PopulateMunicipalities(conn, cid, gridSysMunicipality);
         }
@@ -1216,7 +1181,7 @@ namespace DSA_lims
 
             Lemma<Guid, string> project = cboxSampleProject.SelectedItem as Lemma<Guid, string>;
             using (SqlConnection conn = DB.OpenConnection())            
-                UI.PopulateSubProjects(conn, project.Id, cboxSampleSubProject);
+                UI.PopulateProjectsSub(conn, cboxSampleSubProject, project.Id);
 
             lblSampleToolProject.Text = "[Project] " + project.Name;
             lblSampleToolSubProject.Text = "";
@@ -1282,6 +1247,21 @@ namespace DSA_lims
             Lemma<Guid, string> county = cboxSampleCounties.SelectedItem as Lemma<Guid, string>;
             using (SqlConnection conn = DB.OpenConnection())            
                 UI.PopulateMunicipalities(conn, county.Id, cboxSampleMunicipalities);
+        }
+
+        private void btnProjectsSubEdit_Click(object sender, EventArgs e)
+        {
+            // edit sub project
+        }
+
+        private void gridProjectMain_RowStateChanged(object sender, DataGridViewRowStateChangedEventArgs e)
+        {
+            if (e.StateChanged != DataGridViewElementStates.Selected)
+                return;
+
+            Guid pmid = new Guid(e.Row.Cells["id"].Value.ToString());
+            using (SqlConnection conn = DB.OpenConnection())
+                UI.PopulateProjectsSub(conn, gridProjectSub, pmid);
         }
     }    
 }

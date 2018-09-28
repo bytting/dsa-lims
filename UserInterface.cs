@@ -100,68 +100,70 @@ namespace DSA_lims
             cb.SelectedIndex = -1;            
         }
 
-        public static void PopulateProjects(SqlConnection conn, TreeView tree, ComboBox cb)
-        {            
-            tree.Nodes.Clear();
-            cb.Items.Clear();
+        public static void PopulateProjectsMain(SqlConnection conn, DataGridView grid)
+        {
+            DataTable dt = DB.GetDataTable(conn, "csp_select_projects_main_flat", CommandType.StoredProcedure,
+                    new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
+            grid.DataSource = dt;
 
-            TreeNode root = tree.Nodes.Add("Projects", "Projects");
+            grid.Columns["id"].Visible = false;
+            grid.Columns["comment"].Visible = false;
+            grid.Columns["create_date"].Visible = false;
+            grid.Columns["created_by"].Visible = false;
+            grid.Columns["update_date"].Visible = false;
+            grid.Columns["updated_by"].Visible = false;
 
-            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_main_projects_short", CommandType.StoredProcedure,
-                new SqlParameter("@instance_status_level", InstanceStatus.Deleted)))
-            {
-                while (reader.Read())
-                {
-                    Guid id = new Guid(reader["id"].ToString());
-                    string name = reader["name"].ToString();
-
-                    TreeNode node = root.Nodes.Add(name, name);
-                    node.Tag = id;
-
-                    cb.Items.Add(new Lemma<Guid, string>(id, name));
-                }
-            }
-
-            foreach (TreeNode node in root.Nodes)
-            {
-                Guid parent_id = new Guid(node.Tag.ToString());
-                using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_sub_projects_short", CommandType.StoredProcedure,
-                    new[] {
-                        new SqlParameter("@parent_id", parent_id),
-                        new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
-                    }))
-                {
-                    while (reader.Read())
-                    {
-                        Guid id = new Guid(reader["id"].ToString());
-                        string name = reader["name"].ToString();
-
-                        TreeNode n = node.Nodes.Add(name, name);
-                        n.Tag = id;
-                    }
-                }
-            }
-
-            root.Expand();
+            grid.Columns["name"].HeaderText = "Name";
+            grid.Columns["instance_status_name"].HeaderText = "Status";            
         }
 
-        public static void PopulateSubProjects(SqlConnection conn, Guid pid, ComboBox cb)
-        {                        
-            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_sub_projects_short", CommandType.StoredProcedure,
+        public static void PopulateProjectsMain(SqlConnection conn, ComboBox cb)
+        {
+            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_projects_main_short", CommandType.StoredProcedure,
+                    new SqlParameter("@instance_status_level", InstanceStatus.Deleted)))
+            {
+                cb.Items.Clear();
+
+                while (reader.Read())
+                    cb.Items.Add(new Lemma<Guid, string>(new Guid(reader["id"].ToString()), reader["name"].ToString()));
+
+                cb.SelectedIndex = -1;
+            }
+        }
+
+        public static void PopulateProjectsSub(SqlConnection conn, DataGridView grid, Guid project_main_id)
+        {
+            DataTable dt = DB.GetDataTable(conn, "csp_select_projects_sub_flat", CommandType.StoredProcedure,
                 new[] {
-                    new SqlParameter("@parent_id", pid),
+                    new SqlParameter("@project_main_id", project_main_id),
+                    new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
+                });
+            grid.DataSource = dt;
+
+            grid.Columns["id"].Visible = false;
+            grid.Columns["comment"].Visible = false;
+            grid.Columns["create_date"].Visible = false;
+            grid.Columns["created_by"].Visible = false;
+            grid.Columns["update_date"].Visible = false;
+            grid.Columns["updated_by"].Visible = false;
+            grid.Columns["project_main_name"].Visible = false;
+
+            grid.Columns["name"].HeaderText = "Name";
+            grid.Columns["instance_status_name"].HeaderText = "Status";
+        }
+
+        public static void PopulateProjectsSub(SqlConnection conn, ComboBox cb, Guid project_main_id)
+        {
+            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_projects_sub_short", CommandType.StoredProcedure,
+                    new[] {
+                    new SqlParameter("@project_main_id", project_main_id),
                     new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
                 }))
             {
                 cb.Items.Clear();
 
                 while (reader.Read())
-                {
-                    Guid id = new Guid(reader["id"].ToString());
-                    string name = reader["name"].ToString();
-
-                    cb.Items.Add(new Lemma<Guid, string>(id, name));
-                }
+                    cb.Items.Add(new Lemma<Guid, string>(new Guid(reader["id"].ToString()), reader["name"].ToString()));
 
                 cb.SelectedIndex = -1;
             }
@@ -320,7 +322,7 @@ namespace DSA_lims
         public static void PopulateCounties(SqlConnection conn, ComboBox cb)
         {            
             using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_counties", CommandType.StoredProcedure,
-                new SqlParameter("@instance_status_level", InstanceStatus.Active)))
+                new SqlParameter("@instance_status_level", InstanceStatus.Deleted)))
             {
                 cb.Items.Clear();
 

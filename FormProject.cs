@@ -35,7 +35,7 @@ namespace DSA_lims
     {
         private ILog mLog = null;
 
-        public MainProjectModel MainProject = new MainProjectModel();
+        public ProjectMainModel MainProject = new ProjectMainModel();
 
         public FormProject(ILog log)
         {
@@ -56,7 +56,7 @@ namespace DSA_lims
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                SqlCommand cmd = new SqlCommand("csp_select_project", conn);
+                SqlCommand cmd = new SqlCommand("csp_select_project_main", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@id", MainProject.Id);
                 using (SqlDataReader reader = cmd.ExecuteReader())
@@ -120,7 +120,7 @@ namespace DSA_lims
                 connection = DB.OpenConnection();
                 transaction = connection.BeginTransaction();
 
-                SqlCommand cmd = new SqlCommand("csp_insert_project", connection, transaction);
+                SqlCommand cmd = new SqlCommand("csp_insert_project_main", connection, transaction);
                 cmd.CommandType = CommandType.StoredProcedure;
                 MainProject.Id = Guid.NewGuid();
                 cmd.Parameters.AddWithValue("@id", MainProject.Id);
@@ -133,7 +133,7 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@updated_by", MainProject.UpdatedBy);
                 cmd.ExecuteNonQuery();
 
-                DB.AddAuditMessage(connection, transaction, "project", MainProject.Id, AuditOperationType.Insert, JsonConvert.SerializeObject(MainProject));
+                DB.AddAuditMessage(connection, transaction, "project_main", MainProject.Id, AuditOperationType.Insert, JsonConvert.SerializeObject(MainProject));
 
                 transaction.Commit();
             }
@@ -164,7 +164,7 @@ namespace DSA_lims
                 connection = DB.OpenConnection();
                 transaction = connection.BeginTransaction();
 
-                SqlCommand cmd = new SqlCommand("csp_update_project", connection, transaction);
+                SqlCommand cmd = new SqlCommand("csp_update_project_main", connection, transaction);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@id", MainProject.Id);
                 cmd.Parameters.AddWithValue("@name", MainProject.Name);                
@@ -174,7 +174,7 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@updated_by", MainProject.UpdatedBy);
                 cmd.ExecuteNonQuery();
 
-                DB.AddAuditMessage(connection, transaction, "project", MainProject.Id, AuditOperationType.Update, JsonConvert.SerializeObject(MainProject));
+                DB.AddAuditMessage(connection, transaction, "project_main", MainProject.Id, AuditOperationType.Update, JsonConvert.SerializeObject(MainProject));
 
                 transaction.Commit();
             }

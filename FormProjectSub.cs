@@ -17,13 +17,13 @@ namespace DSA_lims
     {
         private ILog mLog = null;
 
-        public SubProjectModel SubProject = new SubProjectModel();
+        public ProjectSubModel SubProject = new ProjectSubModel();
 
         public FormProjectSub(ILog log, string pname, Guid pid)
         {
             InitializeComponent();
             mLog = log;
-            SubProject.MainProjectId = pid;            
+            SubProject.ProjectMainId = pid;            
             Text = "Create new sub project";
             tbMainProjectName.Text = pname;
             cboxInstanceStatus.DataSource = Common.InstanceStatusList;
@@ -35,14 +35,14 @@ namespace DSA_lims
             InitializeComponent();
             mLog = log;
             SubProject.Id = spid;
-            SubProject.MainProjectId = pid;            
+            SubProject.ProjectMainId = pid;            
             Text = "Update sub project";
             tbMainProjectName.Text = pname;
             cboxInstanceStatus.DataSource = Common.InstanceStatusList;
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                SqlCommand cmd = new SqlCommand("csp_select_project", conn);
+                SqlCommand cmd = new SqlCommand("csp_select_project_sub", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@id", SubProject.Id);
                 using (SqlDataReader reader = cmd.ExecuteReader())
@@ -106,11 +106,11 @@ namespace DSA_lims
                 connection = DB.OpenConnection();
                 transaction = connection.BeginTransaction();
 
-                SqlCommand cmd = new SqlCommand("csp_insert_sub_project", connection, transaction);
+                SqlCommand cmd = new SqlCommand("csp_insert_project_sub", connection, transaction);
                 cmd.CommandType = CommandType.StoredProcedure;
                 SubProject.Id = Guid.NewGuid();
                 cmd.Parameters.AddWithValue("@id", SubProject.Id);
-                cmd.Parameters.AddWithValue("@parent_id", SubProject.MainProjectId);
+                cmd.Parameters.AddWithValue("@project_main_id", SubProject.ProjectMainId);
                 cmd.Parameters.AddWithValue("@name", SubProject.Name);
                 cmd.Parameters.AddWithValue("@instance_status_id", SubProject.InstanceStatusId);
                 cmd.Parameters.AddWithValue("@comment", SubProject.Comment);
@@ -120,7 +120,7 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@updated_by", SubProject.UpdatedBy);
                 cmd.ExecuteNonQuery();
 
-                DB.AddAuditMessage(connection, transaction, "project", SubProject.Id, AuditOperationType.Insert, JsonConvert.SerializeObject(SubProject));
+                DB.AddAuditMessage(connection, transaction, "project_sub", SubProject.Id, AuditOperationType.Insert, JsonConvert.SerializeObject(SubProject));
 
                 transaction.Commit();
             }
@@ -151,7 +151,7 @@ namespace DSA_lims
                 connection = DB.OpenConnection();
                 transaction = connection.BeginTransaction();
 
-                SqlCommand cmd = new SqlCommand("csp_update_project", connection, transaction);
+                SqlCommand cmd = new SqlCommand("csp_update_project_sub", connection, transaction);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@id", SubProject.Id);
                 cmd.Parameters.AddWithValue("@name", SubProject.Name);
@@ -161,7 +161,7 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@updated_by", SubProject.UpdatedBy);
                 cmd.ExecuteNonQuery();
 
-                DB.AddAuditMessage(connection, transaction, "project", SubProject.Id, AuditOperationType.Update, JsonConvert.SerializeObject(SubProject));
+                DB.AddAuditMessage(connection, transaction, "project_sub", SubProject.Id, AuditOperationType.Update, JsonConvert.SerializeObject(SubProject));
 
                 transaction.Commit();
             }

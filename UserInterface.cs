@@ -29,22 +29,31 @@ namespace DSA_lims
 {
     public static partial class UI    
     {
-        public static void PopulatePreparationUnits(ComboBox cb)
+        public static void PopulatePreparationUnits(params ComboBox[] cbn)
         {
-            cb.DataSource = Common.PreparationUnitList;
-            cb.SelectedIndex = -1;
+            foreach (ComboBox cb in cbn)
+            {
+                cb.DataSource = Common.PreparationUnitList;
+                cb.SelectedIndex = -1;
+            }
         }        
 
-        public static void PopulateWorkflowStatus(ComboBox cb)
+        public static void PopulateWorkflowStatus(params ComboBox[] cbn)
         {
-            cb.DataSource = Common.WorkflowStatusList;
-            cb.SelectedIndex = -1;
+            foreach(ComboBox cb in cbn)
+            {
+                cb.DataSource = Common.WorkflowStatusList;
+                cb.SelectedIndex = -1;
+            }            
         }
 
-        public static void PopulateLocationTypes(ComboBox cb)
+        public static void PopulateLocationTypes(params ComboBox[] cbn)
         {
-            cb.DataSource = Common.LocationTypeList;
-            cb.SelectedIndex = -1;
+            foreach (ComboBox cb in cbn)
+            {
+                cb.DataSource = Common.LocationTypeList;
+                cb.SelectedIndex = -1;
+            }
         }
 
         public static void PopulateActivityUnits(SqlConnection conn, DataGridView grid, ComboBox cb)
@@ -90,14 +99,17 @@ namespace DSA_lims
                 AddSampleTypeNodes(cb, s);
         }
 
-        public static void PopulateSampleTypes(ComboBox cb)
+        public static void PopulateSampleTypes(params ComboBox[] cbn)
         {
-            cb.Items.Clear();
+            foreach (ComboBox cb in cbn)
+            {
+                cb.Items.Clear();
 
-            foreach (SampleTypeModel st in Common.SampleTypes)
-                AddSampleTypeNodes(cb, st);
+                foreach (SampleTypeModel st in Common.SampleTypes)
+                    AddSampleTypeNodes(cb, st);
 
-            cb.SelectedIndex = -1;            
+                cb.SelectedIndex = -1;
+            }
         }
 
         public static void PopulateProjectsMain(SqlConnection conn, DataGridView grid)
@@ -117,17 +129,20 @@ namespace DSA_lims
             grid.Columns["instance_status_name"].HeaderText = "Status";            
         }
 
-        public static void PopulateProjectsMain(SqlConnection conn, ComboBox cb)
+        public static void PopulateProjectsMain(SqlConnection conn, params ComboBox[] cbn)
         {
             using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_projects_main_short", CommandType.StoredProcedure,
                     new SqlParameter("@instance_status_level", InstanceStatus.Deleted)))
             {
-                cb.Items.Clear();
+                foreach(ComboBox cb in cbn)
+                    cb.Items.Clear();
 
-                while (reader.Read())
-                    cb.Items.Add(new Lemma<Guid, string>(new Guid(reader["id"].ToString()), reader["name"].ToString()));
+                while (reader.Read())                
+                    foreach (ComboBox cb in cbn)
+                        cb.Items.Add(new Lemma<Guid, string>(new Guid(reader["id"].ToString()), reader["name"].ToString()));
 
-                cb.SelectedIndex = -1;
+                foreach (ComboBox cb in cbn)
+                    cb.SelectedIndex = -1;
             }
         }
 
@@ -152,7 +167,7 @@ namespace DSA_lims
             grid.Columns["instance_status_name"].HeaderText = "Status";
         }
 
-        public static void PopulateProjectsSub(SqlConnection conn, ComboBox cb, Guid project_main_id)
+        public static void PopulateProjectsSub(SqlConnection conn, Guid project_main_id, params ComboBox[] cbn)
         {
             using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_projects_sub_short", CommandType.StoredProcedure,
                     new[] {
@@ -160,12 +175,15 @@ namespace DSA_lims
                     new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
                 }))
             {
-                cb.Items.Clear();
+                foreach (ComboBox cb in cbn)
+                    cb.Items.Clear();
 
                 while (reader.Read())
-                    cb.Items.Add(new Lemma<Guid, string>(new Guid(reader["id"].ToString()), reader["name"].ToString()));
+                    foreach (ComboBox cb in cbn)
+                        cb.Items.Add(new Lemma<Guid, string>(new Guid(reader["id"].ToString()), reader["name"].ToString()));
 
-                cb.SelectedIndex = -1;
+                foreach (ComboBox cb in cbn)
+                    cb.SelectedIndex = -1;
             }
         }
 
@@ -192,17 +210,20 @@ namespace DSA_lims
             grid.Columns["instance_status_name"].HeaderText = "Status";
         }
 
-        public static void PopulateLaboratories(SqlConnection conn, ComboBox cb)
+        public static void PopulateLaboratories(SqlConnection conn, params ComboBox[] cbn)
         {
-            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_laboratories", CommandType.StoredProcedure,                
+            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_laboratories_short", CommandType.StoredProcedure,                
                     new SqlParameter("@instance_status_level", InstanceStatus.Deleted)))
             {
-                cb.Items.Clear();
+                foreach(ComboBox cb in cbn)
+                    cb.Items.Clear();
 
                 while (reader.Read())
-                    cb.Items.Add(new Lemma<Guid, string>(new Guid(reader["id"].ToString()), reader["name"].ToString()));
+                    foreach (ComboBox cb in cbn)
+                        cb.Items.Add(new Lemma<Guid, string>(new Guid(reader["id"].ToString()), reader["name"].ToString()));
 
-                cb.SelectedIndex = -1;
+                foreach (ComboBox cb in cbn)
+                    cb.SelectedIndex = -1;
             }
         }
 
@@ -319,17 +340,20 @@ namespace DSA_lims
             grid.Columns["instance_status_name"].HeaderText = "Status";
         }
 
-        public static void PopulateCounties(SqlConnection conn, ComboBox cb)
+        public static void PopulateCounties(SqlConnection conn, params ComboBox[] cbn)
         {            
-            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_counties", CommandType.StoredProcedure,
+            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_counties_short", CommandType.StoredProcedure,
                 new SqlParameter("@instance_status_level", InstanceStatus.Deleted)))
             {
-                cb.Items.Clear();
+                foreach (ComboBox cb in cbn)
+                    cb.Items.Clear();
 
-                while (reader.Read())                
-                    cb.Items.Add(new Lemma<Guid, string>(new Guid(reader["id"].ToString()), reader["name"].ToString()));
+                while (reader.Read())
+                    foreach (ComboBox cb in cbn)
+                        cb.Items.Add(new Lemma<Guid, string>(new Guid(reader["id"].ToString()), reader["name"].ToString()));
 
-                cb.SelectedIndex = -1;
+                foreach (ComboBox cb in cbn)
+                    cb.SelectedIndex = -1;
             }                
         }
 
@@ -355,20 +379,23 @@ namespace DSA_lims
             grid.Columns["instance_status_name"].HeaderText = "Status";
         }
 
-        public static void PopulateMunicipalities(SqlConnection conn, Guid cid, ComboBox cb)
+        public static void PopulateMunicipalities(SqlConnection conn, Guid cid, params ComboBox[] cbn)
         {
-            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_municipalities_for_county", CommandType.StoredProcedure,
+            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_municipalities_for_county_short", CommandType.StoredProcedure,
                 new[] {
                     new SqlParameter("@county_id", cid),
                     new SqlParameter("@instance_status_level", InstanceStatus.Active)
                 }))
             {
-                cb.Items.Clear();
+                foreach (ComboBox cb in cbn)
+                    cb.Items.Clear();
 
                 while (reader.Read())
-                    cb.Items.Add(new Lemma<Guid, string>(new Guid(reader["id"].ToString()), reader["name"].ToString()));
+                    foreach (ComboBox cb in cbn)
+                        cb.Items.Add(new Lemma<Guid, string>(new Guid(reader["id"].ToString()), reader["name"].ToString()));
 
-                cb.SelectedIndex = -1;
+                foreach (ComboBox cb in cbn)
+                    cb.SelectedIndex = -1;
             }
         }
 
@@ -391,17 +418,20 @@ namespace DSA_lims
             grid.Columns["instance_status_name"].HeaderText = "Status";
         }
 
-        public static void PopulateStations(SqlConnection conn, ComboBox cb)
+        public static void PopulateStations(SqlConnection conn, params ComboBox[] cbn)
         {            
-            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_stations_flat", CommandType.StoredProcedure,
+            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_stations_short", CommandType.StoredProcedure,
                 new SqlParameter("@instance_status_level", InstanceStatus.Deleted)))
             {
-                cb.Items.Clear();
+                foreach (ComboBox cb in cbn)
+                    cb.Items.Clear();
 
                 while (reader.Read())
-                    cb.Items.Add(new Lemma<Guid, string>(new Guid(reader["id"].ToString()), reader["name"].ToString()));
+                    foreach (ComboBox cb in cbn)
+                        cb.Items.Add(new Lemma<Guid, string>(new Guid(reader["id"].ToString()), reader["name"].ToString()));
 
-                cb.SelectedIndex = -1;
+                foreach (ComboBox cb in cbn)
+                    cb.SelectedIndex = -1;
             }
         }
 
@@ -441,17 +471,20 @@ namespace DSA_lims
             grid.Columns["instance_status_name"].HeaderText = "Status";
         }
 
-        public static void PopulateSamplers(SqlConnection conn, ComboBox cb)
+        public static void PopulateSamplers(SqlConnection conn, params ComboBox[] cbn)
         {            
-            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_samplers_flat", CommandType.StoredProcedure,
+            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_samplers_short", CommandType.StoredProcedure,
                 new SqlParameter("@instance_status_level", InstanceStatus.Deleted)))
             {
-                cb.Items.Clear();
+                foreach (ComboBox cb in cbn)
+                    cb.Items.Clear();
 
                 while (reader.Read())
-                    cb.Items.Add(new Lemma<Guid, string>(new Guid(reader["id"].ToString()), reader["name"].ToString()));
+                    foreach (ComboBox cb in cbn)
+                        cb.Items.Add(new Lemma<Guid, string>(new Guid(reader["id"].ToString()), reader["name"].ToString()));
 
-                cb.SelectedIndex = -1;
+                foreach (ComboBox cb in cbn)
+                    cb.SelectedIndex = -1;
             }                
         }
     }

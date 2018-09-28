@@ -96,7 +96,7 @@ namespace DSA_lims
                     DB.LoadSampleTypes(conn);
                     
                     UI.PopulatePreparationUnits(cboxSamplePrepUnit);
-                    UI.PopulateWorkflowStatus(cboxSampleAnalWorkflowStatus);
+                    UI.PopulateWorkflowStatus(cboxSampleAnalWorkflowStatus, cboxSamplePrepWorkflowStatus);
                     UI.PopulateLocationTypes(cboxSampleInfoLocationTypes);
                     UI.PopulateActivityUnits(conn, gridMetaUnitsActivity, cboxSampleAnalUnit);
                     UI.PopulateSampleTypes(treeSampleTypes);
@@ -609,7 +609,7 @@ namespace DSA_lims
                     using (SqlConnection conn = DB.OpenConnection())
                     {
                         UI.PopulateProjectsSub(conn, gridProjectSub, pmid);
-                        UI.PopulateProjectsSub(conn, cboxSampleSubProject, pmid);
+                        UI.PopulateProjectsSub(conn, pmid, cboxSampleSubProject);
                     }
                     break;
                 case DialogResult.Abort:
@@ -639,7 +639,7 @@ namespace DSA_lims
                     using (SqlConnection conn = DB.OpenConnection())
                     {
                         UI.PopulateProjectsSub(conn, gridProjectSub, pmid);
-                        UI.PopulateProjectsSub(conn, cboxSampleSubProject, pmid);
+                        UI.PopulateProjectsSub(conn, pmid, cboxSampleSubProject);
                     }
                     break;
                 case DialogResult.Abort:
@@ -1181,7 +1181,7 @@ namespace DSA_lims
 
             Lemma<Guid, string> project = cboxSampleProject.SelectedItem as Lemma<Guid, string>;
             using (SqlConnection conn = DB.OpenConnection())            
-                UI.PopulateProjectsSub(conn, cboxSampleSubProject, project.Id);
+                UI.PopulateProjectsSub(conn, project.Id, cboxSampleSubProject);
 
             lblSampleToolProject.Text = "[Project] " + project.Name;
             lblSampleToolSubProject.Text = "";

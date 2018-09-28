@@ -444,6 +444,17 @@ as
 	order by name
 go
 
+create proc csp_select_counties_short
+	@instance_status_level int
+as
+	select
+		id,
+		name
+	from county 
+	where instance_status_id <= @instance_status_level
+	order by name
+go
+
 create proc csp_select_counties_flat
 	@instance_status_level int
 as
@@ -531,6 +542,18 @@ create proc csp_select_municipalities_for_county
 	@instance_status_level int
 as 
 	select *
+	from municipality
+	where county_id = @county_id and instance_status_id <= @instance_status_level
+	order by name
+go
+
+create proc csp_select_municipalities_for_county_short
+	@county_id uniqueidentifier,
+	@instance_status_level int
+as 
+	select
+		id,
+		name
 	from municipality
 	where county_id = @county_id and instance_status_id <= @instance_status_level
 	order by name
@@ -670,6 +693,17 @@ create proc csp_select_samplers
 	@instance_status_level int
 as 
 	select * 
+	from sampler 
+	where instance_status_id <= @instance_status_level
+	order by name
+go
+
+create proc csp_select_samplers_short
+	@instance_status_level int
+as 
+	select
+		id,
+		name
 	from sampler 
 	where instance_status_id <= @instance_status_level
 	order by name
@@ -1812,6 +1846,17 @@ create proc csp_select_stations
 	@instance_status_level int
 as
 	select *
+	from station
+	where instance_status_id <= @instance_status_level
+	order by name
+go
+
+create proc csp_select_stations_short
+	@instance_status_level int
+as
+	select 
+		id, 
+		name
 	from station
 	where instance_status_id <= @instance_status_level
 	order by name

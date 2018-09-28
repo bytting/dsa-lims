@@ -17,8 +17,6 @@
 */
 // Authors: Dag Robole,
 
-using log4net;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -28,28 +26,25 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Newtonsoft.Json;
 
 namespace DSA_lims
 {
     public partial class FormProject : Form
     {
-        private ILog mLog = null;
-
         public ProjectMainModel MainProject = new ProjectMainModel();
 
-        public FormProject(ILog log)
+        public FormProject()
         {
-            InitializeComponent();
-            mLog = log;
+            InitializeComponent();            
             Text = "Create new main project";
             cboxInstanceStatus.DataSource = Common.InstanceStatusList;
             cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
         }
 
-        public FormProject(ILog log, Guid pid)
+        public FormProject(Guid pid)
         {
-            InitializeComponent();
-            mLog = log;
+            InitializeComponent();            
             MainProject.Id = pid;
             Text = "Update main project";
             cboxInstanceStatus.DataSource = Common.InstanceStatusList;
@@ -140,7 +135,7 @@ namespace DSA_lims
             catch (Exception ex)
             {
                 transaction?.Rollback();
-                mLog.Error(ex);
+                Common.Log.Error(ex);
                 return false;
             }
             finally
@@ -181,7 +176,7 @@ namespace DSA_lims
             catch (Exception ex)
             {
                 transaction?.Rollback();
-                mLog.Error(ex);
+                Common.Log.Error(ex);
                 return false;
             }
             finally

@@ -17,8 +17,6 @@
 */
 // Authors: Dag Robole,
 
-using log4net;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -28,28 +26,25 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Newtonsoft.Json;
 
 namespace DSA_lims
 {
     public partial class FormLaboratory : Form
     {
-        private ILog mLog = null;
-
         public LaboratoryModel Laboratory = new LaboratoryModel();
 
-        public FormLaboratory(ILog log)
+        public FormLaboratory()
         {
-            InitializeComponent();
-            mLog = log;
+            InitializeComponent();            
             Text = "Create laboratory";
             cboxInstanceStatus.DataSource = Common.InstanceStatusList;
             cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
         }
 
-        public FormLaboratory(ILog log, Guid lid)
+        public FormLaboratory(Guid lid)
         {
-            InitializeComponent();
-            mLog = log;
+            InitializeComponent();            
             Laboratory.Id = lid;
             Text = "Update laboratory";
             cboxInstanceStatus.DataSource = Common.InstanceStatusList;
@@ -161,7 +156,7 @@ namespace DSA_lims
             catch (Exception ex)
             {
                 transaction?.Rollback();
-                mLog.Error(ex);
+                Common.Log.Error(ex);
                 return false;
             }
             finally
@@ -206,7 +201,7 @@ namespace DSA_lims
             catch (Exception ex)
             {
                 transaction?.Rollback();
-                mLog.Error(ex);
+                Common.Log.Error(ex);
                 return false;
             }
             finally

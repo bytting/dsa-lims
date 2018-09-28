@@ -17,8 +17,6 @@
 */
 // Authors: Dag Robole,
 
-using log4net;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -27,30 +25,26 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using Newtonsoft.Json;
 
 namespace DSA_lims
 {
     public partial class FormCounty : Form
     {
-        private ILog mLog = null;
-
         public CountyModel County = new CountyModel();
 
-        public FormCounty(ILog log)
+        public FormCounty()
         {
             InitializeComponent();
-            mLog = log;
             Text = "Create county";            
             cboxInstanceStatus.DataSource = Common.InstanceStatusList;
             cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
         }
 
-        public FormCounty(ILog log, Guid cid)
+        public FormCounty(Guid cid)
         {
-            InitializeComponent();
-            mLog = log;
+            InitializeComponent();            
             County.Id = cid;
             Text = "Update county";
             cboxInstanceStatus.DataSource = Common.InstanceStatusList;
@@ -146,7 +140,7 @@ namespace DSA_lims
             catch (Exception ex)
             {
                 transaction?.Rollback();
-                mLog.Error(ex);
+                Common.Log.Error(ex);
                 return false;
             }
             finally
@@ -187,7 +181,7 @@ namespace DSA_lims
             catch (Exception ex)
             {
                 transaction?.Rollback();
-                mLog.Error(ex);
+                Common.Log.Error(ex);
                 return false;
             }
             finally

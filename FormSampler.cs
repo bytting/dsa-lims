@@ -21,35 +21,29 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Drawing;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using log4net;
 using Newtonsoft.Json;
-using System.Data.SqlClient;
 
 namespace DSA_lims
 {
     public partial class FormSampler : Form
     {
-        private ILog mLog = null;
-
         public SamplerModel Sampler = new SamplerModel();
 
-        public FormSampler(ILog log)
+        public FormSampler()
         {
-            InitializeComponent();
-            mLog = log;
+            InitializeComponent();            
             Text = "Create sampler";
             cboxInstanceStatus.DataSource = Common.InstanceStatusList;
             cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
         }
 
-        public FormSampler(ILog log, Guid sid)
+        public FormSampler(Guid sid)
         {
-            InitializeComponent();
-            mLog = log;
+            InitializeComponent();            
             Sampler.Id = sid;
             Text = "Update sampler";
             cboxInstanceStatus.DataSource = Common.InstanceStatusList;
@@ -148,7 +142,7 @@ namespace DSA_lims
             catch (Exception ex)
             {
                 transaction?.Rollback();
-                mLog.Error(ex);
+                Common.Log.Error(ex);
                 return false;
             }
             finally
@@ -192,7 +186,7 @@ namespace DSA_lims
             catch (Exception ex)
             {
                 transaction?.Rollback();
-                mLog.Error(ex);
+                Common.Log.Error(ex);
                 return false;
             }
             finally

@@ -17,31 +17,27 @@
 */
 // Authors: Dag Robole,
 
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using log4net;
+using Newtonsoft.Json;
 
 namespace DSA_lims
 {
     public partial class FormEnergyLine : Form
     {
-        private ILog mLog = null;
         EnergyLineModel EnergyLine = new EnergyLineModel();        
 
-        public FormEnergyLine(ILog log, Guid nid, string nname)
+        public FormEnergyLine(Guid nid, string nname)
         {            
             InitializeComponent();
 
-            // Creating a new line     
-            mLog = log;
+            // Creating a new line                 
             EnergyLine.NuclideId = nid;
             EnergyLine.Id = Guid.Empty;
 
@@ -51,12 +47,11 @@ namespace DSA_lims
             cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
         }
 
-        public FormEnergyLine(ILog log, Guid nid, Guid eid, string nname)
+        public FormEnergyLine(Guid nid, Guid eid, string nname)
         {            
             InitializeComponent();
 
-            // Update existing line            
-            mLog = log;
+            // Update existing line                        
             EnergyLine.NuclideId = nid;
             EnergyLine.Id = eid;
 
@@ -183,7 +178,7 @@ namespace DSA_lims
             catch(Exception ex)
             {
                 transaction?.Rollback();
-                mLog.Error(ex);
+                Common.Log.Error(ex);
                 return false;
             }
             finally
@@ -233,7 +228,7 @@ namespace DSA_lims
             catch(Exception ex)
             {
                 transaction?.Rollback();
-                mLog.Error(ex);
+                Common.Log.Error(ex);
                 return false;
             }
             finally

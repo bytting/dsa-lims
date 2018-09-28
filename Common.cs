@@ -27,6 +27,7 @@ namespace DSA_lims
     public static class Common
     {
         public static ILog Log = null;
+        public static DSASettings Settings = new DSASettings();
         public static string Username { get; set; }
 
         public static List<Lemma<int, string>> InstanceStatusList = new List<Lemma<int, string>>();

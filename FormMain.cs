@@ -38,9 +38,6 @@ namespace DSA_lims
 {
     public partial class FormMain : Form
     {
-        private ILog log = null;
-        private DSASettings settings = new DSASettings();        
-
         private ResourceManager r = null;
         private TabPage returnFromSample = null;        
 
@@ -56,7 +53,7 @@ namespace DSA_lims
         {
             try
             {
-                Common.Log = log = DSALogger.CreateLogger(tbLog);
+                Common.Log = DSALogger.CreateLogger(tbLog);
 
                 tabs.Appearance = TabAppearance.FlatButtons;
                 tabs.ItemSize = new Size(0, 1);
@@ -76,12 +73,12 @@ namespace DSA_lims
                 ActiveControl = tbMenuLookup;
 
                 r = new ResourceManager("DSA_lims.lang_" + CultureInfo.CurrentUICulture.TwoLetterISOLanguageName, Assembly.GetExecutingAssembly());
-                log.Info("Setting language " + CultureInfo.CurrentUICulture.TwoLetterISOLanguageName);
+                Common.Log.Info("Setting language " + CultureInfo.CurrentUICulture.TwoLetterISOLanguageName);
                 SetLanguageLabels(r);
 
-                log.Info("Loading settings file " + DSAEnvironment.SettingsFilename);
+                Common.Log.Info("Loading settings file " + DSAEnvironment.SettingsFilename);
                 LoadSettings(DSAEnvironment.SettingsFilename);
-                cbMachineSettingsUseAD.Checked = settings.UseActiveDirectoryCredentials;
+                cbMachineSettingsUseAD.Checked = Common.Settings.UseActiveDirectoryCredentials;
 
                 using (SqlConnection conn = DB.OpenConnection())
                 {
@@ -98,7 +95,8 @@ namespace DSA_lims
                     UI.PopulatePreparationUnits(cboxSamplePrepUnit);
                     UI.PopulateWorkflowStatus(cboxSampleAnalWorkflowStatus, cboxSamplePrepWorkflowStatus);
                     UI.PopulateLocationTypes(cboxSampleInfoLocationTypes);
-                    UI.PopulateActivityUnits(conn, gridMetaUnitsActivity, cboxSampleAnalUnit);
+                    UI.PopulateActivityUnits(conn, gridMetaUnitsActivity);
+                    UI.PopulateActivityUnits(conn, cboxSampleAnalUnit);
                     UI.PopulateSampleTypes(treeSampleTypes);
                     UI.PopulateSampleTypes(cboxSampleSampleType);
                     UI.PopulateProjectsMain(conn, gridProjectMain);
@@ -119,11 +117,11 @@ namespace DSA_lims
                 
                 HideMenuItems();
 
-                log.Info("Application loaded successfully");
+                Common.Log.Info("Application loaded successfully");
             }
             catch(Exception ex)
             {
-                log.Fatal(ex.Message, ex);
+                Common.Log.Fatal(ex.Message, ex);
                 Environment.Exit(1);
             }
         }        
@@ -135,12 +133,12 @@ namespace DSA_lims
 
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
         {
-            log.Info("Application closing down");            
+            Common.Log.Info("Application closing down");            
         }
 
         private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
-        {            
-            log.Info("Application closed successfully");
+        {
+            Common.Log.Info("Application closed successfully");
         }
 
         private void FormMain_Paint(object sender, PaintEventArgs e)
@@ -211,7 +209,7 @@ namespace DSA_lims
 
         private void ShowLogin()
         {
-            FormLogin formLogin = new FormLogin(settings);
+            FormLogin formLogin = new FormLogin(Common.Settings);
             if (formLogin.ShowDialog() != DialogResult.OK)
                 Close();
         }
@@ -223,13 +221,13 @@ namespace DSA_lims
                 // Serialize settings to file
                 using (StreamWriter sw = new StreamWriter(settingsFilename))
                 {
-                    XmlSerializer x = new XmlSerializer(settings.GetType());
-                    x.Serialize(sw, settings);
+                    XmlSerializer x = new XmlSerializer(Common.Settings.GetType());
+                    x.Serialize(sw, Common.Settings);
                 }
             }
             catch (Exception ex)
             {
-                log.Error(ex.Message, ex);
+                Common.Log.Error(ex.Message, ex);
             }
         }
 
@@ -243,13 +241,13 @@ namespace DSA_lims
                 // Deserialize settings from file
                 using (StreamReader sr = new StreamReader(settingsFilename))
                 {
-                    XmlSerializer x = new XmlSerializer(settings.GetType());
-                    settings = x.Deserialize(sr) as DSASettings;
+                    XmlSerializer x = new XmlSerializer(Common.Settings.GetType());
+                    Common.Settings = x.Deserialize(sr) as DSASettings;
                 }
             }
             catch (Exception ex)
             {
-                log.Error(ex.Message, ex);
+                Common.Log.Error(ex.Message, ex);
             }
         }        
 
@@ -388,7 +386,7 @@ namespace DSA_lims
             }
             catch(Exception ex)
             {
-                log.Error(ex);
+                Common.Log.Error(ex);
             }            
         }        
 
@@ -404,7 +402,7 @@ namespace DSA_lims
 
         private void btnMachineSettingsSave_Click(object sender, EventArgs e)
         {
-            settings.UseActiveDirectoryCredentials = cbMachineSettingsUseAD.Checked;
+            Common.Settings.UseActiveDirectoryCredentials = cbMachineSettingsUseAD.Checked;
 
             SaveSettings(DSAEnvironment.SettingsFilename);
             SetStatusMessage("Settings saved");
@@ -450,7 +448,7 @@ namespace DSA_lims
 
         private void miNewLaboratory_Click(object sender, EventArgs e)
         {            
-            FormLaboratory form = new FormLaboratory(log);
+            FormLaboratory form = new FormLaboratory();
             switch(form.ShowDialog())
             {                
                 case DialogResult.OK:
@@ -516,7 +514,7 @@ namespace DSA_lims
             DataGridViewRow row = gridMetaLab.SelectedRows[0];
             Guid lid = new Guid(row.Cells[0].Value.ToString());
 
-            FormLaboratory form = new FormLaboratory(log, lid);
+            FormLaboratory form = new FormLaboratory(lid);
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
@@ -543,7 +541,7 @@ namespace DSA_lims
         private void miProjectsNew_Click(object sender, EventArgs e)
         {
             // new main project
-            FormProject form = new FormProject(log);
+            FormProject form = new FormProject();
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
@@ -567,7 +565,7 @@ namespace DSA_lims
 
             Guid pmid = new Guid(gridProjectMain.SelectedRows[0].Cells["id"].Value.ToString());
 
-            FormProject form = new FormProject(log, pmid);
+            FormProject form = new FormProject(pmid);
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
@@ -601,7 +599,7 @@ namespace DSA_lims
             Guid pmid = new Guid(gridProjectMain.SelectedRows[0].Cells["id"].Value.ToString());
             string pmname = gridProjectMain.SelectedRows[0].Cells["name"].Value.ToString();
             
-            FormProjectSub form = new FormProjectSub(log, pmname, pmid);
+            FormProjectSub form = new FormProjectSub(pmname, pmid);
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
@@ -631,7 +629,7 @@ namespace DSA_lims
             string pmname = gridProjectMain.SelectedRows[0].Cells["name"].Value.ToString();
             Guid psid = new Guid(gridProjectSub.SelectedRows[0].Cells["id"].Value.ToString());
 
-            FormProjectSub form = new FormProjectSub(log, pmname, pmid, psid);
+            FormProjectSub form = new FormProjectSub(pmname, pmid, psid);
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
@@ -655,7 +653,7 @@ namespace DSA_lims
 
         private void miNuclidesNew_Click(object sender, EventArgs e)
         {            
-            FormNuclide form = new FormNuclide(log);
+            FormNuclide form = new FormNuclide();
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
@@ -738,7 +736,7 @@ namespace DSA_lims
             DataGridViewRow row = gridSysNuclides.SelectedRows[0];            
             Guid nid = new Guid(row.Cells[0].Value.ToString());
 
-            FormNuclide form = new FormNuclide(log, nid);
+            FormNuclide form = new FormNuclide(nid);
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
@@ -762,7 +760,7 @@ namespace DSA_lims
             Guid nid = new Guid(row.Cells[0].Value.ToString());
             string nname = row.Cells[1].Value.ToString();
 
-            FormEnergyLine form = new FormEnergyLine(log, nid, nname);
+            FormEnergyLine form = new FormEnergyLine(nid, nname);
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
@@ -789,7 +787,7 @@ namespace DSA_lims
             DataGridViewRow row2 = gridSysNuclideTrans.SelectedRows[0];
             Guid eid = new Guid(row2.Cells[0].Value.ToString());
 
-            FormEnergyLine form = new FormEnergyLine(log, nid, eid, nname);
+            FormEnergyLine form = new FormEnergyLine(nid, eid, nname);
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
@@ -820,7 +818,7 @@ namespace DSA_lims
 
         private void miNewGeometry_Click(object sender, EventArgs e)
         {         
-            FormGeometry form = new FormGeometry(log);
+            FormGeometry form = new FormGeometry();
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
@@ -842,7 +840,7 @@ namespace DSA_lims
             DataGridViewRow row = gridSysGeom.SelectedRows[0];
             Guid gid = new Guid(row.Cells[0].Value.ToString());
 
-            FormGeometry form = new FormGeometry(log, gid);
+            FormGeometry form = new FormGeometry(gid);
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
@@ -863,7 +861,7 @@ namespace DSA_lims
 
         private void miNewCounty_Click(object sender, EventArgs e)
         {            
-            FormCounty form = new FormCounty(log);
+            FormCounty form = new FormCounty();
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
@@ -885,7 +883,7 @@ namespace DSA_lims
             DataGridViewRow row = gridSysCounty.SelectedRows[0];
             Guid cid = new Guid(row.Cells[0].Value.ToString());
 
-            FormCounty form = new FormCounty(log, cid);
+            FormCounty form = new FormCounty(cid);
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
@@ -912,7 +910,7 @@ namespace DSA_lims
             DataGridViewRow row = gridSysCounty.SelectedRows[0];
             Guid cid = new Guid(row.Cells[0].Value.ToString());
 
-            FormMunicipality form = new FormMunicipality(log, cid);
+            FormMunicipality form = new FormMunicipality(cid);
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
@@ -940,7 +938,7 @@ namespace DSA_lims
             row = gridSysMunicipality.SelectedRows[0];
             Guid mid = new Guid(row.Cells[0].Value.ToString());            
 
-            FormMunicipality form = new FormMunicipality(log, cid, mid);
+            FormMunicipality form = new FormMunicipality(cid, mid);
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
@@ -971,7 +969,7 @@ namespace DSA_lims
 
         private void miNewStation_Click(object sender, EventArgs e)
         {        
-            FormStation form = new FormStation(log);
+            FormStation form = new FormStation();
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
@@ -996,7 +994,7 @@ namespace DSA_lims
             DataGridViewRow row = gridMetaStation.SelectedRows[0];
             Guid sid = new Guid(row.Cells[0].Value.ToString());
 
-            FormStation form = new FormStation(log, sid);
+            FormStation form = new FormStation(sid);
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
@@ -1020,7 +1018,7 @@ namespace DSA_lims
 
         private void miNewSampleStorage_Click(object sender, EventArgs e)
         {        
-            FormSampleStorage form = new FormSampleStorage(log);
+            FormSampleStorage form = new FormSampleStorage();
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
@@ -1042,7 +1040,7 @@ namespace DSA_lims
             DataGridViewRow row = gridMetaSampleStorage.SelectedRows[0];
             Guid ssid = new Guid(row.Cells[0].Value.ToString());
 
-            FormSampleStorage form = new FormSampleStorage(log, ssid);
+            FormSampleStorage form = new FormSampleStorage(ssid);
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
@@ -1063,7 +1061,7 @@ namespace DSA_lims
 
         private void miSamplerNew_Click(object sender, EventArgs e)
         {        
-            FormSampler form = new FormSampler(log);
+            FormSampler form = new FormSampler();
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
@@ -1088,7 +1086,7 @@ namespace DSA_lims
             DataGridViewRow row = gridMetaSamplers.SelectedRows[0];
             Guid sid = new Guid(row.Cells[0].Value.ToString());
 
-            FormSampler form = new FormSampler(log, sid);
+            FormSampler form = new FormSampler(sid);
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:

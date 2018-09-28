@@ -17,8 +17,6 @@
 */
 // Authors: Dag Robole,
 
-using log4net;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -27,32 +25,28 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using Newtonsoft.Json;
 
 namespace DSA_lims
 {
     public partial class FormGeometry : Form
     {
-        private ILog mLog = null;
-
         public GeometryModel Geometry = new GeometryModel();
 
-        public FormGeometry(ILog log)
+        public FormGeometry()
         {
             InitializeComponent();
-
-            mLog = log;
+            
             Text = "New geometry";
             cboxInstanceStatus.DataSource = Common.InstanceStatusList;
             cboxInstanceStatus.SelectedValue = InstanceStatus.Active;            
         }
 
-        public FormGeometry(ILog log, Guid gid)
+        public FormGeometry(Guid gid)
         {
             InitializeComponent();
-
-            mLog = log;
+            
             Text = "Edit geometry";
             Geometry.Id = gid;
             cboxInstanceStatus.DataSource = Common.InstanceStatusList;
@@ -160,7 +154,7 @@ namespace DSA_lims
             catch (Exception ex)
             {
                 transaction?.Rollback();
-                mLog.Error(ex);
+                Common.Log.Error(ex);
                 return false;
             }
             finally
@@ -203,7 +197,7 @@ namespace DSA_lims
             catch (Exception ex)
             {
                 transaction?.Rollback();
-                mLog.Error(ex);
+                Common.Log.Error(ex);
                 return false;
             }
             finally

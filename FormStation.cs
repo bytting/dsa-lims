@@ -17,8 +17,6 @@
 */
 // Authors: Dag Robole,
 
-using log4net;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -27,31 +25,27 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using Newtonsoft.Json;
 
 namespace DSA_lims
 {
     public partial class FormStation : Form
     {
-        private ILog mLog = null;
-
         public StationModel Station = new StationModel();
 
-        public FormStation(ILog log)
+        public FormStation()
         {
             InitializeComponent();
-            // create new station
-            mLog = log;
+            // create new station            
             Text = "Create station";
             cboxInstanceStatus.DataSource = Common.InstanceStatusList;
             cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
         }
-        public FormStation(ILog log, Guid sid)
+        public FormStation(Guid sid)
         {
             InitializeComponent();
-            // edit existing station
-            mLog = log;
+            // edit existing station            
             Station.Id = sid;
             Text = "Update station";
             cboxInstanceStatus.DataSource = Common.InstanceStatusList;
@@ -168,7 +162,7 @@ namespace DSA_lims
             catch (Exception ex)
             {
                 transaction?.Rollback();
-                mLog.Error(ex);
+                Common.Log.Error(ex);
                 return false;
             }
             finally
@@ -212,7 +206,7 @@ namespace DSA_lims
             catch (Exception ex)
             {
                 transaction?.Rollback();
-                mLog.Error(ex);
+                Common.Log.Error(ex);
                 return false;
             }
             finally

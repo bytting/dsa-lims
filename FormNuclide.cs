@@ -22,39 +22,33 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using log4net;
 using Newtonsoft.Json;
 
 namespace DSA_lims
 {
     public partial class FormNuclide : Form
     {
-        private ILog mLog = null;
         public NuclideModel Nuclide = new NuclideModel();
 
-        public FormNuclide(ILog log)
+        public FormNuclide()
         {
             InitializeComponent();
 
-            // Create new nuclide
-            mLog = log;
+            // Create new nuclide            
             PopulateDecayTypes();
             Text = "New nuclide";
             cboxInstanceStatus.DataSource = Common.InstanceStatusList;
             cboxInstanceStatus.SelectedValue = InstanceStatus.Active;            
         }
 
-        public FormNuclide(ILog log, Guid nid)
+        public FormNuclide(Guid nid)
         {
             InitializeComponent();
 
-            // Edit existing nuclide
-            mLog = log;
+            // Edit existing nuclide            
             PopulateDecayTypes();            
             Nuclide.Id = nid;
             Text = "Edit nuclide";
@@ -218,7 +212,7 @@ namespace DSA_lims
             catch (Exception ex)
             {                
                 transaction?.Rollback();
-                mLog.Error(ex);
+                Common.Log.Error(ex);
                 return false;
             }
             finally
@@ -266,7 +260,7 @@ namespace DSA_lims
             catch(Exception ex)
             {
                 transaction?.Rollback();
-                mLog.Error(ex);
+                Common.Log.Error(ex);
                 return false;
             }
             finally

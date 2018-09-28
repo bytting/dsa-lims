@@ -34,7 +34,7 @@ namespace DSA_lims
 
         public static SqlConnection OpenConnection()
         {
-            SqlConnection connection = new SqlConnection(Properties.Settings.Default.DSADB);
+            SqlConnection connection = new SqlConnection(GetConnectionString());
             connection.Open();
             return connection;
         }

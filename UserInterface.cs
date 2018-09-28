@@ -56,21 +56,31 @@ namespace DSA_lims
             }
         }
 
-        public static void PopulateActivityUnits(SqlConnection conn, DataGridView grid, ComboBox cb)
-        {            
-            DataTable dt = DB.GetDataTable(conn, "csp_select_activity_units_flat", CommandType.StoredProcedure);
-
-            grid.DataSource = dt;
+        public static void PopulateActivityUnits(SqlConnection conn, DataGridView grid)
+        {
+            grid.DataSource = DB.GetDataTable(conn, "csp_select_activity_units_flat", CommandType.StoredProcedure);
 
             grid.Columns["id"].Visible = false;
 
             grid.Columns["name"].HeaderText = "Unit name";
             grid.Columns["convert_factor"].HeaderText = "Conv. fact.";
             grid.Columns["uniform_activity_unit_name"].HeaderText = "Uniform unit";
+        }
 
-            cb.Items.Clear();
-            foreach (DataRow row in dt.Rows)
-                cb.Items.Add(new Lemma<Guid, string>(new Guid(row["id"].ToString()), row["name"].ToString()));
+        public static void PopulateActivityUnits(SqlConnection conn, params ComboBox[] cbn)
+        {
+            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_activity_units_short", CommandType.StoredProcedure))
+            {
+                foreach (ComboBox cb in cbn)
+                    cb.Items.Clear();
+
+                while (reader.Read())
+                    foreach (ComboBox cb in cbn)
+                        cb.Items.Add(new Lemma<Guid, string>(new Guid(reader["id"].ToString()), reader["name"].ToString()));
+
+                foreach (ComboBox cb in cbn)
+                    cb.SelectedIndex = -1;
+            }
         }
 
         private static void AddSampleTypeNodes(TreeNodeCollection nodes, SampleTypeModel st)
@@ -114,9 +124,8 @@ namespace DSA_lims
 
         public static void PopulateProjectsMain(SqlConnection conn, DataGridView grid)
         {
-            DataTable dt = DB.GetDataTable(conn, "csp_select_projects_main_flat", CommandType.StoredProcedure,
-                    new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
-            grid.DataSource = dt;
+            grid.DataSource = DB.GetDataTable(conn, "csp_select_projects_main_flat", CommandType.StoredProcedure,
+                new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
 
             grid.Columns["id"].Visible = false;
             grid.Columns["comment"].Visible = false;
@@ -132,7 +141,7 @@ namespace DSA_lims
         public static void PopulateProjectsMain(SqlConnection conn, params ComboBox[] cbn)
         {
             using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_projects_main_short", CommandType.StoredProcedure,
-                    new SqlParameter("@instance_status_level", InstanceStatus.Deleted)))
+                new SqlParameter("@instance_status_level", InstanceStatus.Deleted)))
             {
                 foreach(ComboBox cb in cbn)
                     cb.Items.Clear();
@@ -148,12 +157,10 @@ namespace DSA_lims
 
         public static void PopulateProjectsSub(SqlConnection conn, DataGridView grid, Guid project_main_id)
         {
-            DataTable dt = DB.GetDataTable(conn, "csp_select_projects_sub_flat", CommandType.StoredProcedure,
-                new[] {
-                    new SqlParameter("@project_main_id", project_main_id),
-                    new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
-                });
-            grid.DataSource = dt;
+            grid.DataSource = DB.GetDataTable(conn, "csp_select_projects_sub_flat", CommandType.StoredProcedure,            
+                new SqlParameter("@project_main_id", project_main_id),
+                new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
+            );
 
             grid.Columns["id"].Visible = false;
             grid.Columns["comment"].Visible = false;
@@ -170,10 +177,8 @@ namespace DSA_lims
         public static void PopulateProjectsSub(SqlConnection conn, Guid project_main_id, params ComboBox[] cbn)
         {
             using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_projects_sub_short", CommandType.StoredProcedure,
-                    new[] {
-                    new SqlParameter("@project_main_id", project_main_id),
-                    new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
-                }))
+                new SqlParameter("@project_main_id", project_main_id),
+                new SqlParameter("@instance_status_level", InstanceStatus.Deleted)))
             {
                 foreach (ComboBox cb in cbn)
                     cb.Items.Clear();
@@ -188,12 +193,10 @@ namespace DSA_lims
         }
 
         public static void PopulateLaboratories(SqlConnection conn, DataGridView grid)
-        {            
-            // Set data source
+        {                        
             grid.DataSource = DB.GetDataTable(conn, "csp_select_laboratories_flat", CommandType.StoredProcedure,
                 new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
-
-            // Set UI state
+        
             grid.Columns["id"].Visible = false;
             grid.Columns["assignment_counter"].Visible = false;
             grid.Columns["comment"].Visible = false;
@@ -212,8 +215,8 @@ namespace DSA_lims
 
         public static void PopulateLaboratories(SqlConnection conn, params ComboBox[] cbn)
         {
-            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_laboratories_short", CommandType.StoredProcedure,                
-                    new SqlParameter("@instance_status_level", InstanceStatus.Deleted)))
+            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_laboratories_short", CommandType.StoredProcedure,
+                new SqlParameter("@instance_status_level", InstanceStatus.Deleted)))
             {
                 foreach(ComboBox cb in cbn)
                     cb.Items.Clear();
@@ -228,16 +231,14 @@ namespace DSA_lims
         }
 
         public static void PopulateUsers(SqlConnection conn, DataGridView grid)
-        {            
-            // Set data source
+        {                        
             grid.DataSource = DB.GetDataTable(conn, "csp_select_accounts_flat", CommandType.StoredProcedure,
                 new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
 
             grid.Columns["password_hash"].Visible = false;
             grid.Columns["create_date"].Visible = false;
             grid.Columns["update_date"].Visible = false;
-
-            // Set UI state
+        
             grid.Columns["username"].HeaderText = "Username";
             grid.Columns["fullname"].HeaderText = "Name";
             grid.Columns["laboratory_name"].HeaderText = "Laboratory";
@@ -246,12 +247,10 @@ namespace DSA_lims
         }
 
         public static void PopulateNuclides(SqlConnection conn, DataGridView grid)
-        {            
-            // Set data source
+        {                        
             grid.DataSource = DB.GetDataTable(conn, "csp_select_nuclides_flat", CommandType.StoredProcedure,
                 new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
-
-            // Set UI state
+        
             grid.Columns["id"].Visible = false;
             grid.Columns["comment"].Visible = false;
             grid.Columns["created_by"].Visible = false;
@@ -271,15 +270,11 @@ namespace DSA_lims
         }
 
         public static void PopulateEnergyLines(SqlConnection conn, Guid nid, DataGridView grid)
-        {
-            // Set data source
+        {            
             grid.DataSource = DB.GetDataTable(conn, "csp_select_nuclide_transmissions_for_nuclide_flat", CommandType.StoredProcedure,
-                new[] {
-                    new SqlParameter("@nuclide_id", nid),
-                    new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
-                });
+                new SqlParameter("@nuclide_id", nid),
+                new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
 
-            // Set UI state
             grid.Columns["id"].Visible = false;
             grid.Columns["nuclide_name"].Visible = false;
             grid.Columns["comment"].Visible = false;
@@ -302,12 +297,10 @@ namespace DSA_lims
         }
 
         public static void PopulateGeometries(SqlConnection conn, DataGridView grid)
-        {
-            // Set data source
+        {            
             grid.DataSource = DB.GetDataTable(conn, "csp_select_preparation_geometries_flat", CommandType.StoredProcedure,
                 new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
-
-            // Set UI state
+        
             grid.Columns["id"].Visible = false;
             grid.Columns["comment"].Visible = false;
             grid.Columns["created_by"].Visible = false;
@@ -321,14 +314,10 @@ namespace DSA_lims
         }
 
         public static void PopulateCounties(SqlConnection conn, DataGridView grid)
-        {            
-            // Set data source
-            DataTable dt = DB.GetDataTable(conn, "csp_select_counties_flat", CommandType.StoredProcedure,
+        {
+            grid.DataSource = DB.GetDataTable(conn, "csp_select_counties_flat", CommandType.StoredProcedure,
                 new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
-
-            grid.DataSource = dt;
-
-            // Set UI state
+        
             grid.Columns["id"].Visible = false;
             grid.Columns["created_by"].Visible = false;
             grid.Columns["create_date"].Visible = false;
@@ -358,15 +347,11 @@ namespace DSA_lims
         }
 
         public static void PopulateMunicipalities(SqlConnection conn, Guid cid, DataGridView grid)
-        {
-            // Set data source
+        {            
             grid.DataSource = DB.GetDataTable(conn, "csp_select_municipalities_for_county_flat", CommandType.StoredProcedure,
-                new[] {
-                    new SqlParameter("@county_id", cid),
-                    new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
-                });
-
-            // Set UI state
+                new SqlParameter("@county_id", cid),
+                new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
+        
             grid.Columns["id"].Visible = false;
             grid.Columns["county_name"].Visible = false;
             grid.Columns["created_by"].Visible = false;
@@ -382,10 +367,8 @@ namespace DSA_lims
         public static void PopulateMunicipalities(SqlConnection conn, Guid cid, params ComboBox[] cbn)
         {
             using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_municipalities_for_county_short", CommandType.StoredProcedure,
-                new[] {
-                    new SqlParameter("@county_id", cid),
-                    new SqlParameter("@instance_status_level", InstanceStatus.Active)
-                }))
+                new SqlParameter("@county_id", cid),
+                new SqlParameter("@instance_status_level", InstanceStatus.Active)))
             {
                 foreach (ComboBox cb in cbn)
                     cb.Items.Clear();

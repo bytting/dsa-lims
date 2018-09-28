@@ -41,15 +41,15 @@
             this.panel1.Controls.Add(this.btnCancel);
             this.panel1.Controls.Add(this.btnOk);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 616);
+            this.panel1.Location = new System.Drawing.Point(0, 564);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(584, 30);
+            this.panel1.Size = new System.Drawing.Size(488, 30);
             this.panel1.TabIndex = 0;
             // 
             // btnCancel
             // 
             this.btnCancel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnCancel.Location = new System.Drawing.Point(350, 0);
+            this.btnCancel.Location = new System.Drawing.Point(254, 0);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(117, 30);
             this.btnCancel.TabIndex = 1;
@@ -60,7 +60,7 @@
             // btnOk
             // 
             this.btnOk.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnOk.Location = new System.Drawing.Point(467, 0);
+            this.btnOk.Location = new System.Drawing.Point(371, 0);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(117, 30);
             this.btnOk.TabIndex = 0;
@@ -73,16 +73,17 @@
             this.treeSampleTypes.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.treeSampleTypes.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.treeSampleTypes.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeSampleTypes.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.treeSampleTypes.Location = new System.Drawing.Point(0, 0);
             this.treeSampleTypes.Name = "treeSampleTypes";
-            this.treeSampleTypes.Size = new System.Drawing.Size(584, 616);
+            this.treeSampleTypes.Size = new System.Drawing.Size(488, 564);
             this.treeSampleTypes.TabIndex = 1;
             // 
             // FormSelectSampleType
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(584, 646);
+            this.ClientSize = new System.Drawing.Size(488, 594);
             this.Controls.Add(this.treeSampleTypes);
             this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));

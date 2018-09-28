@@ -17,8 +17,6 @@
 */
 // Authors: Dag Robole,
 
-using log4net;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -29,28 +27,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Newtonsoft.Json;
 
 namespace DSA_lims
 {
     public partial class FormSampleStorage : Form
     {
-        private ILog mLog = null;
-
         public SampleStorageModel SampleStorage = new SampleStorageModel();
 
-        public FormSampleStorage(ILog log)
+        public FormSampleStorage()
         {
-            InitializeComponent();
-            mLog = log;
+            InitializeComponent();     
             Text = "Create sample storage";
             cboxInstanceStatus.DataSource = Common.InstanceStatusList;
             cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
         }
 
-        public FormSampleStorage(ILog log, Guid ssid)
+        public FormSampleStorage(Guid ssid)
         {
-            InitializeComponent();
-            mLog = log;
+            InitializeComponent();            
             SampleStorage.Id = ssid;
             Text = "Update sample storage";
             cboxInstanceStatus.DataSource = Common.InstanceStatusList;
@@ -143,7 +138,7 @@ namespace DSA_lims
             catch (Exception ex)
             {
                 transaction?.Rollback();
-                mLog.Error(ex);
+                Common.Log.Error(ex);
                 return false;
             }
             finally
@@ -185,7 +180,7 @@ namespace DSA_lims
             catch (Exception ex)
             {
                 transaction?.Rollback();
-                mLog.Error(ex);
+                Common.Log.Error(ex);
                 return false;
             }
             finally

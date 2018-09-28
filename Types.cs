@@ -19,6 +19,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Text;
 
 namespace DSA_lims
@@ -56,9 +57,7 @@ namespace DSA_lims
 
     public class Lemma<I, N>
     {
-        public Lemma()
-        {
-        }
+        public Lemma() {}
 
         public Lemma(I id, N name)
         {

@@ -364,6 +364,7 @@
     <None Include="images\printer.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="comments.txt" />
     <Content Include="database.sql" />
     <None Include="images\tree_16.png" />
   </ItemGroup>

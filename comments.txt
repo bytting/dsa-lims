@@ -1,0 +1,5 @@
+﻿
+
+Skrive ut prep info til tekst fil, for import til ny analyse programvare.
+
+Sette default tidspungt til 12.00 for alle datoer

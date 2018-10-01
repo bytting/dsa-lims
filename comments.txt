@@ -1,5 +1,14 @@
 ﻿
+Skrive ut prep info til fil, for import til ny analyse programvare (Thomas)
 
-Skrive ut prep info til tekst fil, for import til ny analyse programvare.
+Sette default tidspunkt til 12.00 for prøvetaking og referansesdatoer (Thomas)
 
-Sette default tidspungt til 12.00 for alle datoer
+Kunne skrive ut prøveinfo for alle prøver i et oppdrag (Parvine)
+
+Legge til askevekt som alternativ på prep (Parvine)
+
+Koble fylke/kommune til stasjoner? (Thomas)
+
+Bruke samme enhet for prep og analyse, og regne om til den enheten oppdragsgiver ønsker når rapporten genereres? (Dag/Thomas)
+
+Er det  lurt å ta vare på all nuklide data (Medfører vedlikehold som kanskje ikke er nødvendig)

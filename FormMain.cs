@@ -39,7 +39,6 @@ namespace DSA_lims
     public partial class FormMain : Form
     {
         private ResourceManager r = null;
-        private TabPage returnFromSample = null;        
 
         public FormMain()
         {
@@ -114,6 +113,8 @@ namespace DSA_lims
                     UI.PopulateSampleStorage(conn, gridMetaSampleStorage);
                     UI.PopulateSamplers(conn, gridMetaSamplers);
                     UI.PopulateSamplers(conn, cboxSampleInfoSampler);
+                    UI.PopulateSamplingMethods(conn, gridMetaSamplingMeth);
+                    UI.PopulateSamplingMethods(conn, cboxSampleInfoSamplingMeth);
                 }
                 
                 HideMenuItems();
@@ -347,14 +348,6 @@ namespace DSA_lims
             }
         }
 
-        private void btnMenuNewSample_Click(object sender, EventArgs e)
-        {            
-            tabsSample.TabPages.Clear();
-            tabsSample.TabPages.Add(tabSamplesInfo);
-            returnFromSample = tabMenu;
-            tabs.SelectedTab = tabSample;
-        }
-
         private void btnMenuNewOrder_Click(object sender, EventArgs e)
         {
             tabs.SelectedTab = tabOrder;
@@ -419,33 +412,16 @@ namespace DSA_lims
         private void btnUserSettingsSave_Click(object sender, EventArgs e)
         {
             //
-        }
-
-        private void btnSampleClose_Click(object sender, EventArgs e)
-        {
-            if (returnFromSample != null)
-                tabs.SelectedTab = returnFromSample;
-            else tabs.SelectedTab = tabMenu;
-        }
+        }        
 
         private void btnSampleSave_Click(object sender, EventArgs e)
         {
-            if (!tabsSample.TabPages.ContainsKey(tabSamplesParams.Name))
-                tabsSample.TabPages.Add(tabSamplesParams);
-            if (!tabsSample.TabPages.ContainsKey(tabSamplesPrep.Name))
-                tabsSample.TabPages.Add(tabSamplesPrep);
-            if (!tabsSample.TabPages.ContainsKey(tabSamplesAnalysis.Name))
-                tabsSample.TabPages.Add(tabSamplesAnalysis);
+            // TODO: Save sample
+            tabs.SelectedTab = tabSamples;
         }
 
         private void btnSamplesOpen_Click(object sender, EventArgs e)
-        {
-            tabsSample.TabPages.Clear();
-            tabsSample.TabPages.Add(tabSamplesInfo);
-            tabsSample.TabPages.Add(tabSamplesParams);
-            tabsSample.TabPages.Add(tabSamplesPrep);
-            tabsSample.TabPages.Add(tabSamplesAnalysis);
-            returnFromSample = tabSamples;
+        {            
             tabs.SelectedTab = tabSample;
         }
 
@@ -1270,6 +1246,139 @@ namespace DSA_lims
             Guid pmid = new Guid(e.Row.Cells["id"].Value.ToString());
             using (SqlConnection conn = DB.OpenConnection())
                 UI.PopulateProjectsSub(conn, gridProjectSub, pmid);
+        }
+
+        private void miSamplesNew_Click(object sender, EventArgs e)
+        {
+            // new sample
+            tabs.SelectedTab = tabSample;
+        }
+
+        private void miSamplesImportExcel_Click(object sender, EventArgs e)
+        {
+            // Import sample from excel
+        }
+
+        private void miSamplesEdit_Click(object sender, EventArgs e)
+        {
+            // edit sample
+        }
+
+        private void miSamplesDelete_Click(object sender, EventArgs e)
+        {
+            // delete sample
+        }
+
+        private void miSamplesSplit_Click(object sender, EventArgs e)
+        {
+            // split sample
+        }
+
+        private void miSamplesMerge_Click(object sender, EventArgs e)
+        {
+            // merge sample
+        }
+
+        private void miSamplesSetOrder_Click(object sender, EventArgs e)
+        {
+            // sample, set order
+        }
+
+        private void miSamplesSetProject_Click(object sender, EventArgs e)
+        {
+            // sample, set project
+        }
+
+        private void miSamplesSetCustomer_Click(object sender, EventArgs e)
+        {
+            // sample, set customer
+        }
+
+        private void miSamplesSetSampler_Click(object sender, EventArgs e)
+        {
+            // sample, set sampler
+        }
+
+        private void miSamplesSetSamplingMethod_Click(object sender, EventArgs e)
+        {
+            // sample, set sampling method
+        }
+
+        private void miSamplesPrepAnal_Click(object sender, EventArgs e)
+        {
+            // go to sample prep/anal
+            tabs.SelectedTab = tabPrepAnal;
+        }
+
+        private void btnSampleClose_Click(object sender, EventArgs e)
+        {
+            tabs.SelectedTab = tabSamples;
+        }
+
+        private void btnPrepAnalClose_Click(object sender, EventArgs e)
+        {
+            tabs.SelectedTab = tabSamples;
+        }
+
+        private void btnPrepAnalSave_Click(object sender, EventArgs e)
+        {
+            tabs.SelectedTab = tabSamples;
+        }
+
+        private void miSamplesSetExcempt_Click(object sender, EventArgs e)
+        {
+            // set sample excempt from public
+        }
+
+        private void miSamplingMethodNew_Click(object sender, EventArgs e)
+        {
+            // new sampling method
+            FormSamplingMeth form = new FormSamplingMeth();
+            switch (form.ShowDialog())
+            {
+                case DialogResult.OK:
+                    SetStatusMessage("Sampling method " + form.SamplingMethod.Name + " inserted");
+                    using (SqlConnection conn = DB.OpenConnection())
+                    {
+                        UI.PopulateSamplingMethods(conn, gridMetaSamplingMeth);
+                        UI.PopulateSamplingMethods(conn, cboxSampleInfoSamplingMeth);
+                    }
+                    break;
+                case DialogResult.Abort:
+                    SetStatusMessage("Create sampler failed", StatusMessageType.Error);
+                    break;
+            }
+        }
+
+        private void miSamplingMethodEdit_Click(object sender, EventArgs e)
+        {
+            // edit sampling method
+            if (gridMetaSamplingMeth.SelectedRows.Count < 1)
+                return;
+
+            DataGridViewRow row = gridMetaSamplingMeth.SelectedRows[0];
+            Guid smid = new Guid(row.Cells[0].Value.ToString());
+
+            FormSamplingMeth form = new FormSamplingMeth(smid);
+            switch (form.ShowDialog())
+            {
+                case DialogResult.OK:
+                    SetStatusMessage("Sampling method " + form.SamplingMethod.Name + " updated");
+                    using (SqlConnection conn = DB.OpenConnection())
+                    {
+                        UI.PopulateSamplingMethods(conn, gridMetaSamplingMeth);
+                        UI.PopulateSamplingMethods(conn, cboxSampleInfoSamplingMeth);
+                    }
+                    break;
+                case DialogResult.Abort:
+                    SetStatusMessage("Update sampling method failed", StatusMessageType.Error);
+                    break;
+            }
+        }
+
+        private void miSamplingMethodDelete_Click(object sender, EventArgs e)
+        {
+            // delete sampling method
         }
     }    
 }

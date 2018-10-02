@@ -487,5 +487,38 @@ namespace DSA_lims
                     cb.SelectedIndex = -1;
             }                
         }
+
+        public static void PopulateSamplingMethods(SqlConnection conn, DataGridView grid)
+        {
+            grid.DataSource = DB.GetDataTable(conn, "csp_select_sampling_methods_flat", CommandType.StoredProcedure,
+                new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
+
+            grid.Columns["id"].Visible = false;
+            grid.Columns["comment"].Visible = false;
+            grid.Columns["created_by"].Visible = false;
+            grid.Columns["create_date"].Visible = false;
+            grid.Columns["updated_by"].Visible = false;
+            grid.Columns["update_date"].Visible = false;
+
+            grid.Columns["name"].HeaderText = "Name";
+            grid.Columns["instance_status_name"].HeaderText = "Status";
+        }
+
+        public static void PopulateSamplingMethods(SqlConnection conn, params ComboBox[] cbn)
+        {
+            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_sampling_methods_short", CommandType.StoredProcedure,
+                new SqlParameter("@instance_status_level", InstanceStatus.Deleted)))
+            {
+                foreach (ComboBox cb in cbn)
+                    cb.Items.Clear();
+
+                while (reader.Read())
+                    foreach (ComboBox cb in cbn)
+                        cb.Items.Add(new Lemma<Guid, string>(new Guid(reader["id"].ToString()), reader["name"].ToString()));
+
+                foreach (ComboBox cb in cbn)
+                    cb.SelectedIndex = -1;
+            }
+        }
     }
 }

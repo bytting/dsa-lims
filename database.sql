@@ -195,14 +195,15 @@ go
 
 insert into preparation_unit values(1, 'Wet weight (g)')
 insert into preparation_unit values(2, 'Dry weight (g)')
-insert into preparation_unit values(3, 'Volume (L)')
+insert into preparation_unit values(3, 'Ash weight (g)')
+insert into preparation_unit values(4, 'Volume (L)')
 go
 
 create proc csp_select_preparation_units
 as 
 	select *
 	from preparation_unit
-	order by name
+	order by id
 go
 
 /*===========================================================================*/
@@ -733,6 +734,105 @@ create proc csp_select_sampler
 	@id uniqueidentifier
 as 
 	select * from sampler where id = @id
+go
+
+/*===========================================================================*/
+/* tbl sampling_method */
+
+if OBJECT_ID('dbo.sampling_method', 'U') IS NOT NULL drop table sampling_method;
+
+create table sampling_method (
+	id uniqueidentifier primary key NOT NULL,
+	name nvarchar(256) NOT NULL,
+	instance_status_id int default 1,
+	comment nvarchar(1000) default NULL,
+	create_date datetime NOT NULL,
+	created_by nvarchar(50) NOT NULL,
+	update_date datetime NOT NULL,
+	updated_by nvarchar(50) NOT NULL
+)
+go
+
+create proc csp_insert_sampling_method
+	@id uniqueidentifier,
+	@name nvarchar(256),
+	@instance_status_id int,
+	@comment nvarchar(1000),
+	@create_date datetime,
+	@created_by nvarchar(50),
+	@update_date datetime,
+	@updated_by nvarchar(50)
+as 
+	insert into sampling_method values (
+		@id,
+		@name,		
+		@instance_status_id,
+		@comment,
+		@create_date,
+		@created_by,
+		@update_date,
+		@updated_by
+	);
+go
+
+create proc csp_update_sampling_method
+	@id uniqueidentifier,
+	@name nvarchar(256),	
+	@instance_status_id int,
+	@comment nvarchar(1000),
+	@update_date datetime,
+	@updated_by nvarchar(50)
+as 
+	update sampling_method set 
+		name = @name,		
+		instance_status_id = @instance_status_id,
+		comment = @comment,	
+		update_date = @update_date,
+		updated_by = @updated_by
+	where id = @id
+go
+
+create proc csp_select_sampling_methods
+	@instance_status_level int
+as 
+	select * 
+	from sampling_method
+	where instance_status_id <= @instance_status_level
+	order by name
+go
+
+create proc csp_select_sampling_methods_short
+	@instance_status_level int
+as 
+	select
+		id,
+		name
+	from sampling_method
+	where instance_status_id <= @instance_status_level
+	order by name
+go
+
+create proc csp_select_sampling_methods_flat
+	@instance_status_level int
+as 
+	select 
+		s.id,
+		s.name,
+		st.name as 'instance_status_name',
+		s.comment,
+		s.create_date,
+		s.created_by,
+		s.update_date,
+		s.updated_by
+	 from sampling_method s, instance_status st
+	 where s.instance_status_id = st.id and s.instance_status_id <= @instance_status_level
+	 order by s.name
+go
+
+create proc csp_select_sampling_method
+	@id uniqueidentifier
+as 
+	select * from sampling_method where id = @id
 go
 
 /*===========================================================================*/

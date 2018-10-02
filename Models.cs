@@ -183,6 +183,15 @@ namespace DSA_lims
         public string Comment { get; set; }        
     }
 
+    public class SamplingMethodModel : ModelBase
+    {
+        public SamplingMethodModel() { }
+        public SamplingMethodModel(Guid id, string name) : base(id, name) { }        
+
+        public int InstanceStatusId { get; set; }
+        public string Comment { get; set; }
+    }
+
     public class SampleComponentModel : ModelBase
     {
         public SampleComponentModel() { }

@@ -99,7 +99,7 @@ namespace DSA_lims
                     UI.PopulateSampleTypes(treeSampleTypes);
                     UI.PopulateSampleTypes(cboxSampleSampleType);
                     UI.PopulateProjectsMain(conn, gridProjectMain);
-                    UI.PopulateProjectsMain(conn, cboxSampleProject);
+                    UI.PopulateProjectsMain(conn, cboxSampleProject, cboxSamplesProjects);
                     UI.PopulateLaboratories(conn, gridMetaLab);
                     UI.PopulateLaboratories(conn, cboxSampleLaboratory);
                     UI.PopulateUsers(conn, gridMetaUsers);
@@ -299,8 +299,8 @@ namespace DSA_lims
             else if (tabs.SelectedTab == tabSamples)
             {
                 miSamples.Visible = true;
-                tbSampleListLookup.Text = "";
-                ActiveControl = tbSampleListLookup;
+                tbSamplesLookup.Text = "";
+                ActiveControl = tbSamplesLookup;
             }            
             else if (tabs.SelectedTab == tabProjects)
             {
@@ -620,7 +620,7 @@ namespace DSA_lims
                     using (SqlConnection conn = DB.OpenConnection())
                     {
                         UI.PopulateProjectsMain(conn, gridProjectMain);
-                        UI.PopulateProjectsMain(conn, cboxSampleProject);
+                        UI.PopulateProjectsMain(conn, cboxSampleProject, cboxSamplesProjects);
                     }
                     break;
                 case DialogResult.Abort:
@@ -644,7 +644,7 @@ namespace DSA_lims
                     using (SqlConnection conn = DB.OpenConnection())
                     {
                         UI.PopulateProjectsMain(conn, gridProjectMain);
-                        UI.PopulateProjectsMain(conn, cboxSampleProject);
+                        UI.PopulateProjectsMain(conn, cboxSampleProject, cboxSamplesProjects);
                     }
                     break;
                 case DialogResult.Abort:
@@ -1466,6 +1466,19 @@ namespace DSA_lims
         private void miSamplingMethodDelete_Click(object sender, EventArgs e)
         {
             // delete sampling method
+        }
+
+        private void cboxSamplesProjects_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cboxSamplesProjects.SelectedItem == null)
+            {
+                cboxSamplesProjectsSub.Items.Clear();
+                return;
+            }
+
+            Lemma<Guid, string> project = cboxSamplesProjects.SelectedItem as Lemma<Guid, string>;
+            using (SqlConnection conn = DB.OpenConnection())
+                UI.PopulateProjectsSub(conn, project.Id, cboxSamplesProjectsSub);
         }
     }    
 }

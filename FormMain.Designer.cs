@@ -143,8 +143,6 @@
             this.layoutMenuSamples = new System.Windows.Forms.TableLayoutPanel();
             this.btnMenuNewSample = new System.Windows.Forms.Button();
             this.button8 = new System.Windows.Forms.Button();
-            this.btnMenuBatchReg = new System.Windows.Forms.Button();
-            this.button15 = new System.Windows.Forms.Button();
             this.lblMenuSamples = new System.Windows.Forms.Label();
             this.tbMenuLookup = new System.Windows.Forms.TextBox();
             this.layoutMenuOrders = new System.Windows.Forms.TableLayoutPanel();
@@ -389,17 +387,17 @@
             this.gridSamples = new System.Windows.Forms.DataGridView();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.panel31 = new System.Windows.Forms.Panel();
-            this.comboBox4 = new System.Windows.Forms.ComboBox();
+            this.cboxSamplesOrders = new System.Windows.Forms.ComboBox();
             this.panel36 = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
             this.panel19 = new System.Windows.Forms.Panel();
-            this.comboBox11 = new System.Windows.Forms.ComboBox();
+            this.cboxSamplesProjectsSub = new System.Windows.Forms.ComboBox();
             this.panel62 = new System.Windows.Forms.Panel();
             this.label13 = new System.Windows.Forms.Label();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.cboxSamplesProjects = new System.Windows.Forms.ComboBox();
             this.panel28 = new System.Windows.Forms.Panel();
             this.label45 = new System.Windows.Forms.Label();
-            this.tbSampleListLookup = new System.Windows.Forms.TextBox();
+            this.tbSamplesLookup = new System.Windows.Forms.TextBox();
             this.panel30 = new System.Windows.Forms.Panel();
             this.label49 = new System.Windows.Forms.Label();
             this.toolsSamples = new System.Windows.Forms.ToolStrip();
@@ -851,6 +849,9 @@
             this.label17 = new System.Windows.Forms.Label();
             this.cboxSampleSampleStorage = new System.Windows.Forms.ComboBox();
             this.cbSampleConfidential = new System.Windows.Forms.CheckBox();
+            this.btnSamplesPrintInfoForSelected = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tabs.SuspendLayout();
@@ -2087,10 +2088,10 @@
             this.layoutMenuSamples.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.layoutMenuSamples.Controls.Add(this.btnMenuNewSample, 0, 1);
             this.layoutMenuSamples.Controls.Add(this.button8, 1, 1);
-            this.layoutMenuSamples.Controls.Add(this.btnMenuBatchReg, 0, 2);
-            this.layoutMenuSamples.Controls.Add(this.button15, 1, 2);
             this.layoutMenuSamples.Controls.Add(this.lblMenuSamples, 0, 0);
             this.layoutMenuSamples.Controls.Add(this.tbMenuLookup, 1, 0);
+            this.layoutMenuSamples.Controls.Add(this.button2, 0, 2);
+            this.layoutMenuSamples.Controls.Add(this.button4, 1, 2);
             this.layoutMenuSamples.Dock = System.Windows.Forms.DockStyle.Fill;
             this.layoutMenuSamples.Location = new System.Drawing.Point(9, 9);
             this.layoutMenuSamples.Margin = new System.Windows.Forms.Padding(9);
@@ -2133,36 +2134,6 @@
             this.button8.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.button8.UseVisualStyleBackColor = true;
             this.button8.Click += new System.EventHandler(this.btnSamples_Click);
-            // 
-            // btnMenuBatchReg
-            // 
-            this.btnMenuBatchReg.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnMenuBatchReg.Font = new System.Drawing.Font("Arial", 13F, System.Drawing.FontStyle.Bold);
-            this.btnMenuBatchReg.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.btnMenuBatchReg.Image = global::DSA_lims.Properties.Resources.new_batch_gray;
-            this.btnMenuBatchReg.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnMenuBatchReg.Location = new System.Drawing.Point(3, 233);
-            this.btnMenuBatchReg.Name = "btnMenuBatchReg";
-            this.btnMenuBatchReg.Size = new System.Drawing.Size(270, 192);
-            this.btnMenuBatchReg.TabIndex = 2;
-            this.btnMenuBatchReg.Text = "New sample batch";
-            this.btnMenuBatchReg.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnMenuBatchReg.UseVisualStyleBackColor = true;
-            // 
-            // button15
-            // 
-            this.button15.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button15.Font = new System.Drawing.Font("Arial", 13F, System.Drawing.FontStyle.Bold);
-            this.button15.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.button15.Image = global::DSA_lims.Properties.Resources.import_gray;
-            this.button15.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.button15.Location = new System.Drawing.Point(279, 233);
-            this.button15.Name = "button15";
-            this.button15.Size = new System.Drawing.Size(270, 192);
-            this.button15.TabIndex = 3;
-            this.button15.Text = "Import samples";
-            this.button15.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.button15.UseVisualStyleBackColor = true;
             // 
             // lblMenuSamples
             // 
@@ -4891,7 +4862,7 @@
             // 
             // panel31
             // 
-            this.panel31.Controls.Add(this.comboBox4);
+            this.panel31.Controls.Add(this.cboxSamplesOrders);
             this.panel31.Controls.Add(this.panel36);
             this.panel31.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel31.Location = new System.Drawing.Point(12, 49);
@@ -4899,15 +4870,15 @@
             this.panel31.Size = new System.Drawing.Size(1117, 23);
             this.panel31.TabIndex = 11;
             // 
-            // comboBox4
+            // cboxSamplesOrders
             // 
-            this.comboBox4.Dock = System.Windows.Forms.DockStyle.Left;
-            this.comboBox4.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox4.FormattingEnabled = true;
-            this.comboBox4.Location = new System.Drawing.Point(75, 0);
-            this.comboBox4.Name = "comboBox4";
-            this.comboBox4.Size = new System.Drawing.Size(164, 23);
-            this.comboBox4.TabIndex = 1;
+            this.cboxSamplesOrders.Dock = System.Windows.Forms.DockStyle.Left;
+            this.cboxSamplesOrders.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxSamplesOrders.FormattingEnabled = true;
+            this.cboxSamplesOrders.Location = new System.Drawing.Point(75, 0);
+            this.cboxSamplesOrders.Name = "cboxSamplesOrders";
+            this.cboxSamplesOrders.Size = new System.Drawing.Size(164, 23);
+            this.cboxSamplesOrders.TabIndex = 1;
             // 
             // panel36
             // 
@@ -4930,11 +4901,11 @@
             // 
             // panel19
             // 
-            this.panel19.Controls.Add(this.comboBox11);
+            this.panel19.Controls.Add(this.cboxSamplesProjectsSub);
             this.panel19.Controls.Add(this.panel62);
-            this.panel19.Controls.Add(this.comboBox2);
+            this.panel19.Controls.Add(this.cboxSamplesProjects);
             this.panel19.Controls.Add(this.panel28);
-            this.panel19.Controls.Add(this.tbSampleListLookup);
+            this.panel19.Controls.Add(this.tbSamplesLookup);
             this.panel19.Controls.Add(this.panel30);
             this.panel19.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel19.Location = new System.Drawing.Point(12, 26);
@@ -4942,15 +4913,15 @@
             this.panel19.Size = new System.Drawing.Size(1117, 23);
             this.panel19.TabIndex = 10;
             // 
-            // comboBox11
+            // cboxSamplesProjectsSub
             // 
-            this.comboBox11.Dock = System.Windows.Forms.DockStyle.Left;
-            this.comboBox11.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox11.FormattingEnabled = true;
-            this.comboBox11.Location = new System.Drawing.Point(581, 0);
-            this.comboBox11.Name = "comboBox11";
-            this.comboBox11.Size = new System.Drawing.Size(193, 23);
-            this.comboBox11.TabIndex = 5;
+            this.cboxSamplesProjectsSub.Dock = System.Windows.Forms.DockStyle.Left;
+            this.cboxSamplesProjectsSub.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxSamplesProjectsSub.FormattingEnabled = true;
+            this.cboxSamplesProjectsSub.Location = new System.Drawing.Point(581, 0);
+            this.cboxSamplesProjectsSub.Name = "cboxSamplesProjectsSub";
+            this.cboxSamplesProjectsSub.Size = new System.Drawing.Size(193, 23);
+            this.cboxSamplesProjectsSub.TabIndex = 5;
             // 
             // panel62
             // 
@@ -4971,15 +4942,16 @@
             this.label13.Text = "Sub-project";
             this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // comboBox2
+            // cboxSamplesProjects
             // 
-            this.comboBox2.Dock = System.Windows.Forms.DockStyle.Left;
-            this.comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(295, 0);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(203, 23);
-            this.comboBox2.TabIndex = 3;
+            this.cboxSamplesProjects.Dock = System.Windows.Forms.DockStyle.Left;
+            this.cboxSamplesProjects.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxSamplesProjects.FormattingEnabled = true;
+            this.cboxSamplesProjects.Location = new System.Drawing.Point(295, 0);
+            this.cboxSamplesProjects.Name = "cboxSamplesProjects";
+            this.cboxSamplesProjects.Size = new System.Drawing.Size(203, 23);
+            this.cboxSamplesProjects.TabIndex = 3;
+            this.cboxSamplesProjects.SelectedIndexChanged += new System.EventHandler(this.cboxSamplesProjects_SelectedIndexChanged);
             // 
             // panel28
             // 
@@ -5000,14 +4972,14 @@
             this.label45.Text = "Project";
             this.label45.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // tbSampleListLookup
+            // tbSamplesLookup
             // 
-            this.tbSampleListLookup.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.tbSampleListLookup.Dock = System.Windows.Forms.DockStyle.Left;
-            this.tbSampleListLookup.Location = new System.Drawing.Point(75, 0);
-            this.tbSampleListLookup.Name = "tbSampleListLookup";
-            this.tbSampleListLookup.Size = new System.Drawing.Size(164, 21);
-            this.tbSampleListLookup.TabIndex = 6;
+            this.tbSamplesLookup.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.tbSamplesLookup.Dock = System.Windows.Forms.DockStyle.Left;
+            this.tbSamplesLookup.Location = new System.Drawing.Point(75, 0);
+            this.tbSamplesLookup.Name = "tbSamplesLookup";
+            this.tbSamplesLookup.Size = new System.Drawing.Size(164, 21);
+            this.tbSamplesLookup.TabIndex = 6;
             // 
             // panel30
             // 
@@ -5202,6 +5174,7 @@
             // 
             // panel24
             // 
+            this.panel24.Controls.Add(this.btnSamplesPrintInfoForSelected);
             this.panel24.Controls.Add(this.btnSamplesClose);
             this.panel24.Controls.Add(this.btnSamplesOpen);
             this.panel24.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -9606,6 +9579,36 @@
             this.cbSampleConfidential.Text = "Excempt from public";
             this.cbSampleConfidential.UseVisualStyleBackColor = true;
             // 
+            // btnSamplesPrintInfoForSelected
+            // 
+            this.btnSamplesPrintInfoForSelected.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnSamplesPrintInfoForSelected.Location = new System.Drawing.Point(0, 0);
+            this.btnSamplesPrintInfoForSelected.Name = "btnSamplesPrintInfoForSelected";
+            this.btnSamplesPrintInfoForSelected.Size = new System.Drawing.Size(219, 30);
+            this.btnSamplesPrintInfoForSelected.TabIndex = 2;
+            this.btnSamplesPrintInfoForSelected.Text = "Print info for selected samples";
+            this.btnSamplesPrintInfoForSelected.UseVisualStyleBackColor = true;
+            // 
+            // button2
+            // 
+            this.button2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button2.Font = new System.Drawing.Font("Arial", 13F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button2.Location = new System.Drawing.Point(3, 233);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(270, 192);
+            this.button2.TabIndex = 6;
+            this.button2.UseVisualStyleBackColor = true;
+            // 
+            // button4
+            // 
+            this.button4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.button4.Font = new System.Drawing.Font("Arial", 13F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button4.Location = new System.Drawing.Point(279, 233);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(270, 192);
+            this.button4.TabIndex = 7;
+            this.button4.UseVisualStyleBackColor = true;
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -10294,8 +10297,6 @@
         private System.Windows.Forms.TableLayoutPanel layoutMenuSamples;
         private System.Windows.Forms.Button btnMenuNewSample;
         private System.Windows.Forms.Button button8;
-        private System.Windows.Forms.Button btnMenuBatchReg;
-        private System.Windows.Forms.Button button15;
         private System.Windows.Forms.Label lblMenuSamples;
         private System.Windows.Forms.TableLayoutPanel layoutMenuOrders;
         private System.Windows.Forms.Label lblMenuOrders;
@@ -10893,17 +10894,17 @@
         private System.Windows.Forms.ToolStripMenuItem miSamplesPrepAnal;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Panel panel31;
-        private System.Windows.Forms.ComboBox comboBox4;
+        private System.Windows.Forms.ComboBox cboxSamplesOrders;
         private System.Windows.Forms.Panel panel36;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Panel panel19;
-        private System.Windows.Forms.ComboBox comboBox11;
+        private System.Windows.Forms.ComboBox cboxSamplesProjectsSub;
         private System.Windows.Forms.Panel panel62;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.ComboBox cboxSamplesProjects;
         private System.Windows.Forms.Panel panel28;
         private System.Windows.Forms.Label label45;
-        private System.Windows.Forms.TextBox tbSampleListLookup;
+        private System.Windows.Forms.TextBox tbSamplesLookup;
         private System.Windows.Forms.Panel panel30;
         private System.Windows.Forms.Label label49;
         private System.Windows.Forms.ToolStripMenuItem miSamplesSetExcempt;
@@ -10949,6 +10950,9 @@
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.ComboBox cboxSampleSampleStorage;
         private System.Windows.Forms.CheckBox cbSampleConfidential;
+        private System.Windows.Forms.Button btnSamplesPrintInfoForSelected;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button4;
     }
 }
 

@@ -218,4 +218,43 @@ namespace DSA_lims
         public List<SampleComponentModel> SampleComponents = new List<SampleComponentModel>();
         public List<SampleParameterModel> SampleParameters = new List<SampleParameterModel>();
     }
+
+    public class SampleModel : ModelBase
+    {
+        public SampleModel() { }
+        public SampleModel(Guid id, string name) : base(id, name) { }
+
+        public Guid LaboratoryId { get; set; }
+        public Guid SampleTypeId { get; set; }
+        public Guid SampleStorageId { get; set; }
+        public Guid SampleComponentId { get; set; }
+        public Guid ProjectSubId { get; set; }
+        public Guid StationId { get; set; }
+        public Guid SamplerId { get; set; }
+        public Guid TransformFromId { get; set; }
+        public Guid TransformToId { get; set; }
+        public Guid CurrentOrderId { get; set; }
+        public string ImportedFrom { get; set; }
+        public string ImportedFromId { get; set; }
+        public Guid MunicipalityId { get; set; }
+        public string LocationType { get; set; }
+        public string Location { get; set; }
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
+        public double Altitude { get; set; }
+        public DateTime SamplingDateFrom { get; set; }
+        public DateTime SamplingDateTo { get; set; }
+        public DateTime ReferenceDate { get; set; }
+        public string ExternalId { get; set; }
+        public double WetWeight_g { get; set; }
+        public double DryWeight_g { get; set; }
+        public double Volume_l { get; set; }
+        public double LodWeightStart { get; set; }
+        public double LodWeightEnd { get; set; }
+        public double LodTemperature { get; set; }
+        public bool Confidential { get; set; }
+        public string Parameters { get; set; }
+        public int InstanceStatusId { get; set; }
+        public string Comment { get; set; }
+    }
 }

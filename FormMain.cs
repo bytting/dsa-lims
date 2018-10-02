@@ -111,10 +111,12 @@ namespace DSA_lims
                     UI.PopulateStations(conn, gridMetaStation);
                     UI.PopulateStations(conn, cboxSampleInfoStations);
                     UI.PopulateSampleStorage(conn, gridMetaSampleStorage);
+                    UI.PopulateSampleStorage(conn, cboxSampleSampleStorage);
                     UI.PopulateSamplers(conn, gridMetaSamplers);
                     UI.PopulateSamplers(conn, cboxSampleInfoSampler);
                     UI.PopulateSamplingMethods(conn, gridMetaSamplingMeth);
                     UI.PopulateSamplingMethods(conn, cboxSampleInfoSamplingMeth);
+                    UI.PopulateSamples(conn, gridSamples);
                 }
                 
                 HideMenuItems();
@@ -416,7 +418,92 @@ namespace DSA_lims
 
         private void btnSampleSave_Click(object sender, EventArgs e)
         {
-            // TODO: Save sample
+            try
+            {
+                SampleModel sample = new SampleModel(Guid.NewGuid(), "1");
+                sample.LaboratoryId = (cboxSampleLaboratory.SelectedItem as Lemma<Guid, string>).Id;
+                sample.SampleTypeId = (cboxSampleSampleType.SelectedItem as SampleTypeModel).Id;
+                sample.SampleStorageId = (cboxSampleSampleStorage.SelectedItem as Lemma<Guid, string>).Id;
+                sample.SampleComponentId = (cboxSampleSampleComponent.SelectedItem as SampleComponentModel).Id;
+                sample.ProjectSubId = (cboxSampleSubProject.SelectedItem as Lemma<Guid, string>).Id;
+                sample.StationId = (cboxSampleInfoStations.SelectedItem as Lemma<Guid, string>).Id;
+                sample.SamplerId = (cboxSampleInfoSampler.SelectedItem as Lemma<Guid, string>).Id;
+                sample.TransformFromId = Guid.Empty;
+                sample.TransformToId = Guid.Empty;
+                sample.CurrentOrderId = Guid.Empty;
+                sample.ImportedFrom = "";
+                sample.ImportedFromId = "";
+                sample.MunicipalityId = (cboxSampleMunicipalities.SelectedItem as Lemma<Guid, string>).Id;
+                sample.LocationType = cboxSampleInfoLocationTypes.Text;
+                sample.Location = tbSampleLocation.Text.Trim();
+                sample.Latitude = Convert.ToDouble(tbSampleInfoLatitude.Text.Trim());
+                sample.Longitude = Convert.ToDouble(tbSampleInfoLongitude.Text.Trim());
+                sample.Altitude = Convert.ToDouble(tbSampleInfoAltitude.Text.Trim());
+                sample.SamplingDateFrom = new DateTime(dtSampleSamplingDateFrom.Value.Year, dtSampleSamplingDateFrom.Value.Month, dtSampleSamplingDateFrom.Value.Day, dtSampleSamplingTimeFrom.Value.Hour, dtSampleSamplingTimeFrom.Value.Minute, dtSampleSamplingTimeFrom.Value.Second);
+                sample.SamplingDateTo = new DateTime(dtSampleSamplingDateTo.Value.Year, dtSampleSamplingDateTo.Value.Month, dtSampleSamplingDateTo.Value.Day, dtSampleSamplingTimeTo.Value.Hour, dtSampleSamplingTimeTo.Value.Minute, dtSampleSamplingTimeTo.Value.Second);
+                sample.ReferenceDate = new DateTime(dtSampleReferenceDate.Value.Year, dtSampleReferenceDate.Value.Month, dtSampleReferenceDate.Value.Day, dtSampleReferenceTime.Value.Hour, dtSampleReferenceTime.Value.Minute, dtSampleReferenceTime.Value.Second);
+                sample.ExternalId = tbSampleExId.Text.Trim();
+                //sample.WetWeight_g
+                //sample.DryWeight_g { get; set; }
+                //sample.Volume_l { get; set; }
+                //sample.LodWeightStart { get; set; }
+                //sample.LodWeightEnd { get; set; }
+                //sample.LodTemperature { get; set; }
+                sample.Confidential = cbSampleConfidential.Checked;
+                //sample.Parameters { get; set; }
+                sample.InstanceStatusId = InstanceStatus.Active;
+                sample.Comment = tbSampleComment.Text.Trim();
+
+                using (SqlConnection conn = DB.OpenConnection())
+                {
+                    SqlCommand cmd = new SqlCommand("csp_insert_sample", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@id", sample.Id);
+                    cmd.Parameters.AddWithValue("@laboratory_id", sample.LaboratoryId);
+                    cmd.Parameters.AddWithValue("@sample_type_id", sample.SampleTypeId);
+                    cmd.Parameters.AddWithValue("@sample_storage_id", sample.SampleStorageId);
+                    cmd.Parameters.AddWithValue("@sample_component_id", sample.SampleComponentId);
+                    cmd.Parameters.AddWithValue("@project_sub_id", sample.ProjectSubId);
+                    cmd.Parameters.AddWithValue("@station_id", sample.StationId);
+                    cmd.Parameters.AddWithValue("@sampler_id", sample.SamplerId);
+                    cmd.Parameters.AddWithValue("@transform_from_id", sample.TransformFromId);
+                    cmd.Parameters.AddWithValue("@transform_to_id", sample.TransformToId);
+                    cmd.Parameters.AddWithValue("@current_order_id", sample.CurrentOrderId);
+                    cmd.Parameters.AddWithValue("@imported_from", sample.ImportedFrom);
+                    cmd.Parameters.AddWithValue("@imported_from_id", sample.ImportedFromId);
+                    cmd.Parameters.AddWithValue("@municipality_id", sample.MunicipalityId);
+                    cmd.Parameters.AddWithValue("@location_type", sample.LocationType);
+                    cmd.Parameters.AddWithValue("@location", sample.Location);
+                    cmd.Parameters.AddWithValue("@latitude", sample.Latitude);
+                    cmd.Parameters.AddWithValue("@longitude", sample.Longitude);
+                    cmd.Parameters.AddWithValue("@altitude", sample.Altitude);
+                    cmd.Parameters.AddWithValue("@sampling_date_from", sample.SamplingDateFrom);
+                    cmd.Parameters.AddWithValue("@sampling_date_to", sample.SamplingDateTo);
+                    cmd.Parameters.AddWithValue("@reference_date", sample.ReferenceDate);
+                    cmd.Parameters.AddWithValue("@external_id", sample.ExternalId);
+                    cmd.Parameters.AddWithValue("@wet_weight_g", DBNull.Value);
+                    cmd.Parameters.AddWithValue("@dry_weight_g", DBNull.Value);
+                    cmd.Parameters.AddWithValue("@volume_l", DBNull.Value);
+                    cmd.Parameters.AddWithValue("@lod_weight_start", DBNull.Value);
+                    cmd.Parameters.AddWithValue("@lod_weight_end", DBNull.Value);
+                    cmd.Parameters.AddWithValue("@lod_temperature", DBNull.Value);
+                    cmd.Parameters.AddWithValue("@confidential", sample.Confidential);
+                    cmd.Parameters.AddWithValue("@parameters", DBNull.Value);
+                    cmd.Parameters.AddWithValue("@instance_status_id", sample.InstanceStatusId);
+                    cmd.Parameters.AddWithValue("@comment", sample.Comment);
+                    cmd.Parameters.AddWithValue("@create_date", DateTime.Now);
+                    cmd.Parameters.AddWithValue("@created_by", Common.Username);
+                    cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
+                    cmd.Parameters.AddWithValue("@updated_by", Common.Username);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch(Exception ex)
+            {
+                Common.Log.Error(ex);
+            }
+
             tabs.SelectedTab = tabSamples;
         }
 

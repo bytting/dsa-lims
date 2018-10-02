@@ -452,6 +452,23 @@ namespace DSA_lims
             grid.Columns["instance_status_name"].HeaderText = "Status";
         }
 
+        public static void PopulateSampleStorage(SqlConnection conn, params ComboBox[] cbn)
+        {
+            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_sample_storages_short", CommandType.StoredProcedure,
+                new SqlParameter("@instance_status_level", InstanceStatus.Deleted)))
+            {
+                foreach (ComboBox cb in cbn)
+                    cb.Items.Clear();
+
+                while (reader.Read())
+                    foreach (ComboBox cb in cbn)
+                        cb.Items.Add(new Lemma<Guid, string>(new Guid(reader["id"].ToString()), reader["name"].ToString()));
+
+                foreach (ComboBox cb in cbn)
+                    cb.SelectedIndex = -1;
+            }
+        }
+
         public static void PopulateSamplers(SqlConnection conn, DataGridView grid)
         {
             grid.DataSource = DB.GetDataTable(conn, "csp_select_samplers_flat", CommandType.StoredProcedure,
@@ -519,6 +536,24 @@ namespace DSA_lims
                 foreach (ComboBox cb in cbn)
                     cb.SelectedIndex = -1;
             }
+        }
+
+        public static void PopulateSamples(SqlConnection conn, DataGridView grid)
+        {
+            grid.DataSource = DB.GetDataTable(conn, "csp_select_samples", CommandType.StoredProcedure,
+                new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
+
+            grid.Columns["id"].Visible = false;
+            grid.Columns["comment"].Visible = false;
+            grid.Columns["created_by"].Visible = false;
+            grid.Columns["create_date"].Visible = false;
+            grid.Columns["updated_by"].Visible = false;
+            grid.Columns["update_date"].Visible = false;
+            
+            grid.Columns["latitude"].HeaderText = "Latitude";
+            grid.Columns["longitude"].HeaderText = "Longitude";
+            grid.Columns["altitude"].HeaderText = "Altitude";
+            grid.Columns["instance_status_id"].HeaderText = "Status";
         }
     }
 }

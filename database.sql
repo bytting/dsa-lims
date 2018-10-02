@@ -2091,6 +2091,15 @@ as
 	order by name
 go
 
+create proc csp_select_sample_storages_short
+	@instance_status_level int
+as
+	select id, name
+	from sample_storage 
+	where instance_status_id <= @instance_status_level
+	order by name
+go
+
 create proc csp_select_sample_storages_flat
 	@instance_status_level int
 as
@@ -2176,7 +2185,7 @@ create table sample (
 	sample_type_id uniqueidentifier NOT NULL,	
 	sample_storage_id uniqueidentifier default NULL,
 	sample_component_id uniqueidentifier default NULL,
-	project2_id uniqueidentifier NOT NULL,
+	project_sub_id uniqueidentifier NOT NULL,
 	station_id uniqueidentifier default NULL,
 	sampler_id uniqueidentifier default NULL,
 	transform_from_id uniqueidentifier default NULL,	
@@ -2193,6 +2202,7 @@ create table sample (
 	sampling_date_from datetime NOT NULL,
 	sampling_date_to datetime default NULL,
 	reference_date datetime NOT NULL,
+	external_id nvarchar(128) default NULL,
 	wet_weight_g float default NULL,	
 	dry_weight_g float default NULL,
 	volume_l float default NULL,
@@ -2208,6 +2218,95 @@ create table sample (
 	update_date datetime NOT NULL,
 	updated_by nvarchar(50) NOT NULL
 )
+go
+
+create proc csp_insert_sample
+	@id uniqueidentifier,
+	@laboratory_id uniqueidentifier,	
+	@sample_type_id uniqueidentifier,	
+	@sample_storage_id uniqueidentifier,
+	@sample_component_id uniqueidentifier,
+	@project_sub_id uniqueidentifier,
+	@station_id uniqueidentifier,
+	@sampler_id uniqueidentifier,
+	@transform_from_id uniqueidentifier,	
+	@transform_to_id uniqueidentifier,	
+	@current_order_id uniqueidentifier,
+	@imported_from nvarchar(128),
+	@imported_from_id nvarchar(128),		
+	@municipality_id uniqueidentifier,
+	@location_type nvarchar(50),
+	@location nvarchar(128),	
+	@latitude float,
+	@longitude float,
+	@altitude float,
+	@sampling_date_from datetime,
+	@sampling_date_to datetime,
+	@reference_date datetime,
+	@external_id nvarchar(128),
+	@wet_weight_g float,	
+	@dry_weight_g float,
+	@volume_l float,
+	@lod_weight_start float,	
+	@lod_weight_end float,	
+	@lod_temperature float,
+	@confidential bit,	
+	@parameters nvarchar(4000),
+	@instance_status_id int,
+	@comment nvarchar(1000),	
+	@create_date datetime,
+	@created_by nvarchar(50),
+	@update_date datetime,
+	@updated_by nvarchar(50)
+as 
+	insert into sample values (
+		@id,
+		@laboratory_id,	
+		@sample_type_id,	
+		@sample_storage_id,
+		@sample_component_id,
+		@project_sub_id,
+		@station_id,
+		@sampler_id,
+		@transform_from_id,	
+		@transform_to_id,	
+		@current_order_id ,
+		@imported_from,
+		@imported_from_id,		
+		@municipality_id,
+		@location_type,
+		@location,	
+		@latitude,
+		@longitude,
+		@altitude,
+		@sampling_date_from,
+		@sampling_date_to,
+		@reference_date,
+		@external_id,
+		@wet_weight_g,	
+		@dry_weight_g,
+		@volume_l,
+		@lod_weight_start,	
+		@lod_weight_end,	
+		@lod_temperature,
+		@confidential,	
+		@parameters,
+		@instance_status_id,
+		@comment,	
+		@create_date,
+		@created_by,
+		@update_date,
+		@updated_by
+	);
+go
+
+create proc csp_select_samples
+	@instance_status_level int
+as
+	select * 
+	from sample 
+	where instance_status_id <= @instance_status_level
+	order by create_date
 go
 
 /*===========================================================================*/

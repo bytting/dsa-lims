@@ -224,6 +224,7 @@ namespace DSA_lims
         public SampleModel() { }
         public SampleModel(Guid id, string name) : base(id, name) { }
 
+        public int Number { get; set; }
         public Guid LaboratoryId { get; set; }
         public Guid SampleTypeId { get; set; }
         public Guid SampleStorageId { get; set; }

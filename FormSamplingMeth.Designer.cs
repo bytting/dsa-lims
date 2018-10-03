@@ -82,12 +82,14 @@
             // 
             // cboxInstanceStatus
             // 
+            this.cboxInstanceStatus.DisplayMember = "Name";
             this.cboxInstanceStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxInstanceStatus.FormattingEnabled = true;
             this.cboxInstanceStatus.Location = new System.Drawing.Point(92, 61);
             this.cboxInstanceStatus.Name = "cboxInstanceStatus";
             this.cboxInstanceStatus.Size = new System.Drawing.Size(186, 21);
             this.cboxInstanceStatus.TabIndex = 12;
+            this.cboxInstanceStatus.ValueMember = "Id";
             // 
             // tbComment
             // 

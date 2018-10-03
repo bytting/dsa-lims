@@ -2181,6 +2181,7 @@ if OBJECT_ID('dbo.sample', 'U') IS NOT NULL drop table sample;
 
 create table sample (
 	id uniqueidentifier primary key NOT NULL,
+	number int unique NOT NULL,	
 	laboratory_id uniqueidentifier NOT NULL,	
 	sample_type_id uniqueidentifier NOT NULL,	
 	sample_storage_id uniqueidentifier default NULL,
@@ -2195,7 +2196,7 @@ create table sample (
 	imported_from_id nvarchar(128) default NULL,		
 	municipality_id uniqueidentifier default NULL,
 	location_type nvarchar(50) default NULL,
-	location nvarchar(128) default NULL,	
+	location nvarchar(128) default NULL,		
 	latitude float default 0,
 	longitude float default 0,
 	altitude float default 0,
@@ -2221,7 +2222,7 @@ create table sample (
 go
 
 create proc csp_insert_sample
-	@id uniqueidentifier,
+	@id uniqueidentifier,	
 	@laboratory_id uniqueidentifier,	
 	@sample_type_id uniqueidentifier,	
 	@sample_storage_id uniqueidentifier,
@@ -2257,10 +2258,16 @@ create proc csp_insert_sample
 	@create_date datetime,
 	@created_by nvarchar(50),
 	@update_date datetime,
-	@updated_by nvarchar(50)
-as 
+	@updated_by nvarchar(50),
+	@number int output
+as 	
+	begin transaction;
+
+	select @number = value from counters where name like 'sample_counter';
+
 	insert into sample values (
-		@id,
+		@id,		
+		@number,
 		@laboratory_id,	
 		@sample_type_id,	
 		@sample_storage_id,
@@ -2298,6 +2305,12 @@ as
 		@update_date,
 		@updated_by
 	);
+
+	update counters set value = @number + 1 where name like 'sample_counter';
+
+	commit;
+
+	return
 go
 
 create proc csp_select_samples
@@ -2307,6 +2320,67 @@ as
 	from sample 
 	where instance_status_id <= @instance_status_level
 	order by create_date
+go
+
+create proc csp_select_samples_flat
+	@instance_status_level int
+as
+	select
+		s.id,	
+		s.number,
+		l.name as 'laboratory_name',	
+		st.name as 'sample_type_name',	
+		ss.name as 'sample_storage_name',
+		sc.name as 'sample_component_name',
+		pm.name as 'project_main_name',
+		ps.name as 'project_sub_name',
+		sta.name as 'station_name',
+		sa.name as 'sampler_name',
+		(select number from sample where id = s.transform_from_id) as 'split_parent',	
+		(select number from sample where id = s.transform_to_id) as 'merge_child',
+		ass.name as 'current_order_name',
+		s.imported_from,
+		s.imported_from_id,		
+		co.name as 'county_name',
+		mun.name as 'municipality_name',
+		s.location_type,
+		s.location,	
+		s.latitude,
+		s.longitude,
+		s.altitude,
+		s.sampling_date_from,
+		s.sampling_date_to,
+		s.reference_date,
+		s.external_id,
+		s.wet_weight_g,	
+		s.dry_weight_g,
+		s.volume_l,
+		s.lod_weight_start,	
+		s.lod_weight_end,	
+		s.lod_temperature,
+		s.confidential,	
+		s.parameters,
+		insta.name as 'instance_status_name',
+		s.comment,	
+		s.create_date,
+		s.created_by,
+		s.update_date,
+		s.updated_by
+	from sample s 
+		left outer join laboratory l on s.laboratory_id = l.id
+		left outer join sample_type st on s.sample_type_id = st.id
+		left outer join sample_storage ss on s.sample_storage_id = ss.id
+		left outer join sample_component sc on s.sample_component_id = sc.id
+		inner join project_sub ps on s.project_sub_id = ps.id
+		inner join project_main pm on pm.id = ps.project_main_id
+		left outer join station sta on s.station_id = sta.id
+		left outer join sampler sa on s.sampler_id = sa.id
+		left outer join assignment ass on s.current_order_id = ass.id
+		left outer join municipality mun on s.municipality_id = mun.id
+		left outer join county co on mun.county_id = co.id
+		inner join instance_status insta on s.instance_status_id = insta.id
+	where s.instance_status_id <= @@instance_status_level
+	order by s.create_date
 go
 
 /*===========================================================================*/

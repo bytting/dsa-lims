@@ -540,7 +540,7 @@ namespace DSA_lims
 
         public static void PopulateSamples(SqlConnection conn, DataGridView grid)
         {
-            grid.DataSource = DB.GetDataTable(conn, "csp_select_samples", CommandType.StoredProcedure,
+            grid.DataSource = DB.GetDataTable(conn, "csp_select_samples_flat", CommandType.StoredProcedure,
                 new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
 
             grid.Columns["id"].Visible = false;
@@ -553,7 +553,7 @@ namespace DSA_lims
             grid.Columns["latitude"].HeaderText = "Latitude";
             grid.Columns["longitude"].HeaderText = "Longitude";
             grid.Columns["altitude"].HeaderText = "Altitude";
-            grid.Columns["instance_status_id"].HeaderText = "Status";
+            grid.Columns["instance_status_name"].HeaderText = "Status";
         }
     }
 }

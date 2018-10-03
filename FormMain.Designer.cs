@@ -849,6 +849,9 @@
             this.toolStripLabel22 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator57 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton97 = new System.Windows.Forms.ToolStripButton();
+            this.label13 = new System.Windows.Forms.Label();
+            this.cboxSamplesStatus = new System.Windows.Forms.ComboBox();
+            this.label18 = new System.Windows.Forms.Label();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tabs.SuspendLayout();
@@ -4880,30 +4883,31 @@
             this.gridSamples.AllowUserToAddRows = false;
             this.gridSamples.AllowUserToDeleteRows = false;
             this.gridSamples.AllowUserToResizeRows = false;
+            this.gridSamples.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.gridSamples.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
             this.gridSamples.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.gridSamples.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridSamples.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridSamples.Location = new System.Drawing.Point(3, 127);
+            this.gridSamples.Location = new System.Drawing.Point(3, 136);
             this.gridSamples.Name = "gridSamples";
             this.gridSamples.ReadOnly = true;
             this.gridSamples.RowHeadersVisible = false;
             this.gridSamples.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridSamples.Size = new System.Drawing.Size(1141, 484);
+            this.gridSamples.Size = new System.Drawing.Size(1141, 475);
             this.gridSamples.TabIndex = 5;
             // 
             // cboxSamplesOrders
             // 
             this.cboxSamplesOrders.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxSamplesOrders.FormattingEnabled = true;
-            this.cboxSamplesOrders.Location = new System.Drawing.Point(692, 25);
+            this.cboxSamplesOrders.Location = new System.Drawing.Point(85, 46);
             this.cboxSamplesOrders.Name = "cboxSamplesOrders";
             this.cboxSamplesOrders.Size = new System.Drawing.Size(164, 23);
             this.cboxSamplesOrders.TabIndex = 1;
             // 
             // label2
             // 
-            this.label2.Location = new System.Drawing.Point(642, 23);
+            this.label2.Location = new System.Drawing.Point(35, 46);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(44, 23);
             this.label2.TabIndex = 11;
@@ -4914,7 +4918,7 @@
             // 
             this.cboxSamplesProjectsSub.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxSamplesProjectsSub.FormattingEnabled = true;
-            this.cboxSamplesProjectsSub.Location = new System.Drawing.Point(481, 24);
+            this.cboxSamplesProjectsSub.Location = new System.Drawing.Point(583, 16);
             this.cboxSamplesProjectsSub.Name = "cboxSamplesProjectsSub";
             this.cboxSamplesProjectsSub.Size = new System.Drawing.Size(155, 23);
             this.cboxSamplesProjectsSub.TabIndex = 5;
@@ -4923,7 +4927,7 @@
             // 
             this.cboxSamplesProjects.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxSamplesProjects.FormattingEnabled = true;
-            this.cboxSamplesProjects.Location = new System.Drawing.Point(311, 24);
+            this.cboxSamplesProjects.Location = new System.Drawing.Point(326, 15);
             this.cboxSamplesProjects.Name = "cboxSamplesProjects";
             this.cboxSamplesProjects.Size = new System.Drawing.Size(164, 23);
             this.cboxSamplesProjects.TabIndex = 3;
@@ -4931,7 +4935,7 @@
             // 
             // label45
             // 
-            this.label45.Location = new System.Drawing.Point(249, 25);
+            this.label45.Location = new System.Drawing.Point(264, 16);
             this.label45.Name = "label45";
             this.label45.Size = new System.Drawing.Size(56, 23);
             this.label45.TabIndex = 2;
@@ -4940,15 +4944,15 @@
             // 
             // tbSamplesLookup
             // 
-            this.tbSamplesLookup.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.tbSamplesLookup.Location = new System.Drawing.Point(89, 26);
+            this.tbSamplesLookup.BackColor = System.Drawing.SystemColors.Window;
+            this.tbSamplesLookup.Location = new System.Drawing.Point(85, 17);
             this.tbSamplesLookup.Name = "tbSamplesLookup";
-            this.tbSamplesLookup.Size = new System.Drawing.Size(154, 21);
+            this.tbSamplesLookup.Size = new System.Drawing.Size(164, 21);
             this.tbSamplesLookup.TabIndex = 6;
             // 
             // label49
             // 
-            this.label49.Location = new System.Drawing.Point(13, 25);
+            this.label49.Location = new System.Drawing.Point(9, 16);
             this.label49.Name = "label49";
             this.label49.Size = new System.Drawing.Size(70, 23);
             this.label49.TabIndex = 7;
@@ -4971,7 +4975,7 @@
             this.toolStripSeparator45,
             this.toolStripDropDownButton2,
             this.toolStripButton96});
-            this.toolsSamples.Location = new System.Drawing.Point(3, 102);
+            this.toolsSamples.Location = new System.Drawing.Point(3, 111);
             this.toolsSamples.Name = "toolsSamples";
             this.toolsSamples.Size = new System.Drawing.Size(1141, 25);
             this.toolsSamples.TabIndex = 3;
@@ -4981,8 +4985,8 @@
             // 
             this.toolStripLabel56.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.toolStripLabel56.Name = "toolStripLabel56";
-            this.toolStripLabel56.Size = new System.Drawing.Size(89, 22);
-            this.toolStripLabel56.Text = "Samples found";
+            this.toolStripLabel56.Size = new System.Drawing.Size(53, 22);
+            this.toolStripLabel56.Text = "Samples";
             // 
             // toolStripSeparator30
             // 
@@ -5344,7 +5348,7 @@
             this.btnProjectsSubEdit.Name = "btnProjectsSubEdit";
             this.btnProjectsSubEdit.Size = new System.Drawing.Size(47, 22);
             this.btnProjectsSubEdit.Text = "Edit";
-            this.btnProjectsSubEdit.Click += new System.EventHandler(this.btnProjectsSubEdit_Click);
+            this.btnProjectsSubEdit.Click += new System.EventHandler(this.miProjectsSubEdit_Click);
             // 
             // toolStripSeparator56
             // 
@@ -9528,6 +9532,9 @@
             // 
             // panel78
             // 
+            this.panel78.Controls.Add(this.label18);
+            this.panel78.Controls.Add(this.cboxSamplesStatus);
+            this.panel78.Controls.Add(this.label13);
             this.panel78.Controls.Add(this.cboxSamplesOrders);
             this.panel78.Controls.Add(this.label2);
             this.panel78.Controls.Add(this.cboxSamplesProjectsSub);
@@ -9538,7 +9545,7 @@
             this.panel78.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel78.Location = new System.Drawing.Point(3, 28);
             this.panel78.Name = "panel78";
-            this.panel78.Size = new System.Drawing.Size(1141, 74);
+            this.panel78.Size = new System.Drawing.Size(1141, 83);
             this.panel78.TabIndex = 8;
             // 
             // toolStripLabel22
@@ -9560,6 +9567,33 @@
             this.toolStripButton97.Name = "toolStripButton97";
             this.toolStripButton97.Size = new System.Drawing.Size(69, 22);
             this.toolStripButton97.Text = "Clear all";
+            // 
+            // label13
+            // 
+            this.label13.Location = new System.Drawing.Point(279, 44);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(41, 24);
+            this.label13.TabIndex = 12;
+            this.label13.Text = "Status";
+            this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // cboxSamplesStatus
+            // 
+            this.cboxSamplesStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxSamplesStatus.FormattingEnabled = true;
+            this.cboxSamplesStatus.Location = new System.Drawing.Point(326, 46);
+            this.cboxSamplesStatus.Name = "cboxSamplesStatus";
+            this.cboxSamplesStatus.Size = new System.Drawing.Size(164, 23);
+            this.cboxSamplesStatus.TabIndex = 13;
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(507, 20);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(70, 15);
+            this.label18.TabIndex = 14;
+            this.label18.Text = "Sub-project";
             // 
             // FormMain
             // 
@@ -10898,6 +10932,9 @@
         private System.Windows.Forms.ToolStripLabel toolStripLabel22;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator57;
         private System.Windows.Forms.ToolStripButton toolStripButton97;
+        private System.Windows.Forms.ComboBox cboxSamplesStatus;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label18;
     }
 }
 

@@ -2200,9 +2200,9 @@ create table sample (
 	latitude float default 0,
 	longitude float default 0,
 	altitude float default 0,
-	sampling_date_from datetime NOT NULL,
+	sampling_date_from datetime default NULL,
 	sampling_date_to datetime default NULL,
-	reference_date datetime NOT NULL,
+	reference_date datetime default NULL,
 	external_id nvarchar(128) default NULL,
 	wet_weight_g float default NULL,	
 	dry_weight_g float default NULL,
@@ -2266,7 +2266,7 @@ as
 	select @number = value from counters where name like 'sample_counter';
 
 	insert into sample values (
-		@id,		
+		@id,
 		@number,
 		@laboratory_id,	
 		@sample_type_id,	
@@ -2380,6 +2380,34 @@ as
 		left outer join county co on mun.county_id = co.id
 		inner join instance_status insta on s.instance_status_id = insta.id
 	where s.instance_status_id <= @@instance_status_level
+	order by s.create_date
+go
+
+create proc csp_select_samples_informative_flat
+	@instance_status_level int
+as
+	select
+		s.id,	
+		s.number,
+		s.external_id,
+		l.name as 'laboratory_name',	
+		st.name as 'sample_type_name',	
+		sc.name as 'sample_component_name',		
+		pm.name + ' - ' + ps.name as 'project_name',
+		ss.name as 'sample_storage_name',
+		ass.name as 'current_order_name',
+		s.reference_date,		
+		insta.name as 'instance_status_name'		
+	from sample s 
+		left outer join laboratory l on s.laboratory_id = l.id
+		left outer join sample_type st on s.sample_type_id = st.id
+		left outer join sample_storage ss on s.sample_storage_id = ss.id
+		left outer join sample_component sc on s.sample_component_id = sc.id
+		inner join project_sub ps on s.project_sub_id = ps.id
+		inner join project_main pm on pm.id = ps.project_main_id				
+		left outer join assignment ass on s.current_order_id = ass.id		
+		inner join instance_status insta on s.instance_status_id = insta.id
+	where s.instance_status_id <= @instance_status_level
 	order by s.create_date
 go
 

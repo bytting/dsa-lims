@@ -90,7 +90,8 @@ namespace DSA_lims
                     DB.LoadWorkflowStatus(conn);
                     DB.LoadLocationTypes(conn);
                     DB.LoadSampleTypes(conn);
-                    
+
+                    UI.PopulateInstanceStatus(cboxSamplesStatus);
                     UI.PopulatePreparationUnits(cboxSamplePrepUnit);
                     UI.PopulateWorkflowStatus(cboxSampleAnalWorkflowStatus, cboxSamplePrepWorkflowStatus);
                     UI.PopulateLocationTypes(cboxSampleInfoLocationTypes);
@@ -116,7 +117,7 @@ namespace DSA_lims
                     UI.PopulateSamplers(conn, cboxSampleInfoSampler);
                     UI.PopulateSamplingMethods(conn, gridMetaSamplingMeth);
                     UI.PopulateSamplingMethods(conn, cboxSampleInfoSamplingMeth);
-                    UI.PopulateSamples(conn, gridSamples);
+                    UI.PopulateSamples(conn, gridSamples);                    
                 }
                 
                 HideMenuItems();
@@ -418,6 +419,30 @@ namespace DSA_lims
 
         private void btnSampleSave_Click(object sender, EventArgs e)
         {
+            if(cboxSampleLaboratory.SelectedItem == null)
+            {
+                MessageBox.Show("Laboratory is mandatory");
+                return;
+            }
+
+            if (cboxSampleSampleType.SelectedItem == null)
+            {
+                MessageBox.Show("Sample type is mandatory");
+                return;
+            }
+
+            if (cboxSampleProject.SelectedItem == null)
+            {
+                MessageBox.Show("Main project is mandatory");
+                return;
+            }
+
+            if (cboxSampleSubProject.SelectedItem == null)
+            {
+                MessageBox.Show("Sub project is mandatory");
+                return;
+            }
+
             try
             {
                 using (SqlConnection conn = DB.OpenConnection())
@@ -729,7 +754,7 @@ namespace DSA_lims
                     }
                     break;
                 case DialogResult.Abort:
-                    SetStatusMessage("Edit main project failed", StatusMessageType.Error);
+                    SetStatusMessage("Edit sub project failed", StatusMessageType.Error);
                     break;
             }
         }
@@ -1335,11 +1360,6 @@ namespace DSA_lims
             Lemma<Guid, string> county = cboxSampleCounties.SelectedItem as Lemma<Guid, string>;
             using (SqlConnection conn = DB.OpenConnection())            
                 UI.PopulateMunicipalities(conn, county.Id, cboxSampleMunicipalities);
-        }
-
-        private void btnProjectsSubEdit_Click(object sender, EventArgs e)
-        {
-            // edit sub project
         }
 
         private void gridProjectMain_RowStateChanged(object sender, DataGridViewRowStateChangedEventArgs e)

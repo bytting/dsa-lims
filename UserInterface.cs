@@ -29,6 +29,15 @@ namespace DSA_lims
 {
     public static partial class UI    
     {
+        public static void PopulateInstanceStatus(params ComboBox[] cbn)
+        {
+            foreach (ComboBox cb in cbn)
+            {
+                cb.DataSource = Common.InstanceStatusList;
+                cb.SelectedIndex = -1;
+            }
+        }
+
         public static void PopulatePreparationUnits(params ComboBox[] cbn)
         {
             foreach (ComboBox cb in cbn)
@@ -540,20 +549,23 @@ namespace DSA_lims
 
         public static void PopulateSamples(SqlConnection conn, DataGridView grid)
         {
-            grid.DataSource = DB.GetDataTable(conn, "csp_select_samples_flat", CommandType.StoredProcedure,
+            grid.DataSource = DB.GetDataTable(conn, "csp_select_samples_informative_flat", CommandType.StoredProcedure,
                 new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
 
             grid.Columns["id"].Visible = false;
-            grid.Columns["comment"].Visible = false;
-            grid.Columns["created_by"].Visible = false;
-            grid.Columns["create_date"].Visible = false;
-            grid.Columns["updated_by"].Visible = false;
-            grid.Columns["update_date"].Visible = false;
-            
-            grid.Columns["latitude"].HeaderText = "Latitude";
-            grid.Columns["longitude"].HeaderText = "Longitude";
-            grid.Columns["altitude"].HeaderText = "Altitude";
+
+            grid.Columns["number"].HeaderText = "Sample id";
+            grid.Columns["external_id"].HeaderText = "Ex.Id";
+            grid.Columns["laboratory_name"].HeaderText = "Laboratory";
+            grid.Columns["sample_type_name"].HeaderText = "Type";
+            grid.Columns["sample_component_name"].HeaderText = "Component";
+            grid.Columns["project_name"].HeaderText = "Project";
+            grid.Columns["sample_storage_name"].HeaderText = "Storage";
+            grid.Columns["current_order_name"].HeaderText = "Order";
+            grid.Columns["reference_date"].HeaderText = "Ref.date";
             grid.Columns["instance_status_name"].HeaderText = "Status";
+
+            grid.Columns["reference_date"].DefaultCellStyle.Format = StrUtils.DateFormatNorwegian;
         }
     }
 }

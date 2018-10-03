@@ -167,6 +167,7 @@ namespace DSA_lims
                 SqlCommand cmd = new SqlCommand("csp_update_project_sub", connection, transaction);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@id", SubProject.Id);
+                cmd.Parameters.AddWithValue("@project_main_id", SubProject.ProjectMainId);
                 cmd.Parameters.AddWithValue("@name", SubProject.Name);
                 cmd.Parameters.AddWithValue("@instance_status_id", SubProject.InstanceStatusId);
                 cmd.Parameters.AddWithValue("@comment", SubProject.Comment);

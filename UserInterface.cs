@@ -567,5 +567,41 @@ namespace DSA_lims
 
             grid.Columns["reference_date"].DefaultCellStyle.Format = StrUtils.DateFormatNorwegian;
         }
+
+        public static void PopulatePreparationMethods(SqlConnection conn, DataGridView grid)
+        {
+            grid.DataSource = DB.GetDataTable(conn, "csp_select_preparation_methods_flat", CommandType.StoredProcedure,
+                new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
+
+            grid.Columns["id"].Visible = false;
+            grid.Columns["comment"].Visible = false;
+            grid.Columns["created_by"].Visible = false;
+            grid.Columns["create_date"].Visible = false;
+            grid.Columns["updated_by"].Visible = false;
+            grid.Columns["update_date"].Visible = false;
+
+            grid.Columns["name"].HeaderText = "Name";
+            grid.Columns["description_link"].HeaderText = "Desc. link";
+            grid.Columns["destructive"].HeaderText = "Destructive";
+            grid.Columns["instance_status_name"].HeaderText = "Status";
+        }
+
+        public static void PopulateAnalysisMethods(SqlConnection conn, DataGridView grid)
+        {
+            grid.DataSource = DB.GetDataTable(conn, "csp_select_analysis_methods_flat", CommandType.StoredProcedure,
+                new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
+
+            grid.Columns["id"].Visible = false;
+            grid.Columns["comment"].Visible = false;
+            grid.Columns["created_by"].Visible = false;
+            grid.Columns["create_date"].Visible = false;
+            grid.Columns["updated_by"].Visible = false;
+            grid.Columns["update_date"].Visible = false;
+
+            grid.Columns["name"].HeaderText = "Name";
+            grid.Columns["description_link"].HeaderText = "Desc. link";
+            grid.Columns["specter_reference_regexp"].HeaderText = "Spec.Ref RegExp";
+            grid.Columns["instance_status_name"].HeaderText = "Status";
+        }
     }
 }

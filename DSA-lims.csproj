@@ -70,6 +70,12 @@
     <Compile Include="FormActivityUnit.Designer.cs">
       <DependentUpon>FormActivityUnit.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormAnalysisMethods.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormAnalysisMethods.Designer.cs">
+      <DependentUpon>FormAnalysisMethods.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormCounty.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -117,6 +123,12 @@
     </Compile>
     <Compile Include="FormNuclide.Designer.cs">
       <DependentUpon>FormNuclide.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormPreparationMethod.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormPreparationMethod.Designer.cs">
+      <DependentUpon>FormPreparationMethod.cs</DependentUpon>
     </Compile>
     <Compile Include="FormProject.cs">
       <SubType>Form</SubType>
@@ -196,6 +208,9 @@
     <EmbeddedResource Include="FormActivityUnit.resx">
       <DependentUpon>FormActivityUnit.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormAnalysisMethods.resx">
+      <DependentUpon>FormAnalysisMethods.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormCounty.resx">
       <DependentUpon>FormCounty.cs</DependentUpon>
     </EmbeddedResource>
@@ -222,6 +237,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormNuclide.resx">
       <DependentUpon>FormNuclide.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormPreparationMethod.resx">
+      <DependentUpon>FormPreparationMethod.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormProject.resx">
       <DependentUpon>FormProject.cs</DependentUpon>

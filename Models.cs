@@ -183,6 +183,28 @@ namespace DSA_lims
         public string Comment { get; set; }        
     }
 
+    public class PreparationMethodModel : ModelBase
+    {
+        public PreparationMethodModel() { }
+        public PreparationMethodModel(Guid id, string name) : base(id, name) { }
+
+        public string DescriptionLink { get; set; }
+        public bool Destructive { get; set; }
+        public int InstanceStatusId { get; set; }
+        public string Comment { get; set; }
+    }
+
+    public class AnalysisMethodModel : ModelBase
+    {
+        public AnalysisMethodModel() { }
+        public AnalysisMethodModel(Guid id, string name) : base(id, name) { }
+
+        public string DescriptionLink { get; set; }
+        public string SpecterReferenceRegExp { get; set; }
+        public int InstanceStatusId { get; set; }
+        public string Comment { get; set; }
+    }
+
     public class SamplingMethodModel : ModelBase
     {
         public SamplingMethodModel() { }

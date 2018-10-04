@@ -117,7 +117,9 @@ namespace DSA_lims
                     UI.PopulateSamplers(conn, cboxSampleInfoSampler);
                     UI.PopulateSamplingMethods(conn, gridMetaSamplingMeth);
                     UI.PopulateSamplingMethods(conn, cboxSampleInfoSamplingMeth);
-                    UI.PopulateSamples(conn, gridSamples);                    
+                    UI.PopulateSamples(conn, gridSamples);
+                    UI.PopulatePreparationMethods(conn, gridTypeRelPrepMeth);
+                    UI.PopulateAnalysisMethods(conn, gridTypeRelAnalMeth);
                 }
                 
                 HideMenuItems();
@@ -1519,6 +1521,104 @@ namespace DSA_lims
             Lemma<Guid, string> project = cboxSamplesProjects.SelectedItem as Lemma<Guid, string>;
             using (SqlConnection conn = DB.OpenConnection())
                 UI.PopulateProjectsSub(conn, project.Id, cboxSamplesProjectsSub);
+        }
+
+        private void miPreparationMethodsNew_Click(object sender, EventArgs e)
+        {
+            // new preparation method
+            FormPreparationMethod form = new FormPreparationMethod();
+            switch (form.ShowDialog())
+            {
+                case DialogResult.OK:
+                    SetStatusMessage("Preparation method " + form.PreparationMethod.Name + " inserted");
+                    using (SqlConnection conn = DB.OpenConnection())
+                    {
+                        UI.PopulatePreparationMethods(conn, gridTypeRelPrepMeth);
+                    }
+                    break;
+                case DialogResult.Abort:
+                    SetStatusMessage("Create preparation method failed", StatusMessageType.Error);
+                    break;
+            }
+        }
+
+        private void miPreparationMethodEdit_Click(object sender, EventArgs e)
+        {
+            // edit preparation method
+            if (gridTypeRelPrepMeth.SelectedRows.Count < 1)
+                return;
+
+            DataGridViewRow row = gridTypeRelPrepMeth.SelectedRows[0];
+            Guid pmid = new Guid(row.Cells[0].Value.ToString());
+
+            FormPreparationMethod form = new FormPreparationMethod(pmid);
+            switch (form.ShowDialog())
+            {
+                case DialogResult.OK:
+                    SetStatusMessage("Preparation method " + form.PreparationMethod.Name + " updated");
+                    using (SqlConnection conn = DB.OpenConnection())
+                    {
+                        UI.PopulatePreparationMethods(conn, gridTypeRelPrepMeth);
+                    }
+                    break;
+                case DialogResult.Abort:
+                    SetStatusMessage("Update preparation method failed", StatusMessageType.Error);
+                    break;
+            }
+        }
+
+        private void miPreparationMethodDelete_Click(object sender, EventArgs e)
+        {
+            // delete preparation method
+        }
+
+        private void miAnalysisMethodsNew_Click(object sender, EventArgs e)
+        {
+            // new analysis method
+            FormAnalysisMethods form = new FormAnalysisMethods();
+            switch (form.ShowDialog())
+            {
+                case DialogResult.OK:
+                    SetStatusMessage("Analysis method " + form.AnalysisMethod.Name + " inserted");
+                    using (SqlConnection conn = DB.OpenConnection())
+                    {
+                        UI.PopulateAnalysisMethods(conn, gridTypeRelAnalMeth);
+                    }
+                    break;
+                case DialogResult.Abort:
+                    SetStatusMessage("Create preparation method failed", StatusMessageType.Error);
+                    break;
+            }
+        }
+
+        private void miAnalysisMethodsEdit_Click(object sender, EventArgs e)
+        {
+            // edit analysis method
+            if (gridTypeRelAnalMeth.SelectedRows.Count < 1)
+                return;
+
+            DataGridViewRow row = gridTypeRelAnalMeth.SelectedRows[0];
+            Guid amid = new Guid(row.Cells[0].Value.ToString());
+
+            FormAnalysisMethods form = new FormAnalysisMethods(amid);
+            switch (form.ShowDialog())
+            {
+                case DialogResult.OK:
+                    SetStatusMessage("Analysis method " + form.AnalysisMethod.Name + " updated");
+                    using (SqlConnection conn = DB.OpenConnection())
+                    {
+                        UI.PopulateAnalysisMethods(conn, gridTypeRelAnalMeth);
+                    }
+                    break;
+                case DialogResult.Abort:
+                    SetStatusMessage("Update analysis method failed", StatusMessageType.Error);
+                    break;
+            }
+        }
+
+        private void miAnalysisMethodsDelete_Click(object sender, EventArgs e)
+        {
+            // delete analysis method
         }
     }    
 }

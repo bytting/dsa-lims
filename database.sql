@@ -1212,6 +1212,87 @@ create table preparation_method (
 )
 go
 
+create proc csp_insert_preparation_method
+	@id uniqueidentifier,
+	@name nvarchar(80),
+	@description_link nvarchar(256),	
+	@destructive bit,	
+	@instance_status_id int,
+	@comment nvarchar(1000),
+	@create_date datetime,
+	@created_by nvarchar(50),
+	@update_date datetime,
+	@updated_by nvarchar(50)	
+as 
+	insert into preparation_method values (
+		@id,
+		@name,
+		@description_link,		
+		@destructive,
+		@instance_status_id,
+		@comment,		
+		@create_date,
+		@created_by,
+		@update_date,
+		@updated_by
+	);
+go
+
+create proc csp_update_preparation_method
+	@id uniqueidentifier,
+	@name nvarchar(80),
+	@description_link nvarchar(256),	
+	@destructive bit,	
+	@instance_status_id int,
+	@comment nvarchar(1000),	
+	@update_date datetime,
+	@updated_by nvarchar(50)	
+as 
+	update preparation_method set 
+		name = @name,
+		description_link = @description_link,
+		destructive = @destructive,
+		instance_status_id = @instance_status_id,
+		comment = @comment,		
+		update_date = @update_date,
+		updated_by = @updated_by
+	where id = @id
+go
+
+create proc csp_select_preparation_method
+	@id uniqueidentifier
+as 
+	select * from preparation_method where id = @id
+go
+
+create proc csp_select_preparation_methods
+	@instance_status_level int
+as
+	select *
+	from preparation_method
+	where instance_status_id <= @instance_status_level
+	order by name
+go
+
+create proc csp_select_preparation_methods_flat
+	@instance_status_level int
+as
+	select 
+		pm.id,
+		pm.name,
+		pm.description_link, 
+		pm.destructive, 
+		st.name as 'instance_status_name',
+		pm.comment,
+		pm.create_date,
+		pm.created_by,
+		pm.update_date,
+		pm.updated_by
+	from preparation_method pm, instance_status st
+	where pm.instance_status_id = st.id and pm.instance_status_id <= @instance_status_level
+	order by pm.name
+go
+
 /*===========================================================================*/
 /* tbl laboratory_x_preparation_method */
 
@@ -1265,6 +1346,87 @@ create table analysis_method (
 	update_date datetime NOT NULL,
 	updated_by nvarchar(50) NOT NULL
 )
+go
+
+create proc csp_insert_analysis_method
+	@id uniqueidentifier,
+	@name nvarchar(80),
+	@description_link nvarchar(256),	
+	@specter_reference_regexp nvarchar(256),	
+	@instance_status_id int,
+	@comment nvarchar(1000),
+	@create_date datetime,
+	@created_by nvarchar(50),
+	@update_date datetime,
+	@updated_by nvarchar(50)	
+as 
+	insert into analysis_method values (
+		@id,
+		@name,
+		@description_link,		
+		@specter_reference_regexp,
+		@instance_status_id,
+		@comment,		
+		@create_date,
+		@created_by,
+		@update_date,
+		@updated_by
+	);
+go
+
+create proc csp_update_analysis_method
+	@id uniqueidentifier,
+	@name nvarchar(80),
+	@description_link nvarchar(256),	
+	@specter_reference_regexp nvarchar(256),	
+	@instance_status_id int,
+	@comment nvarchar(1000),	
+	@update_date datetime,
+	@updated_by nvarchar(50)	
+as 
+	update analysis_method set 
+		name = @name,
+		description_link = @description_link,
+		specter_reference_regexp = @specter_reference_regexp,
+		instance_status_id = @instance_status_id,
+		comment = @comment,		
+		update_date = @update_date,
+		updated_by = @updated_by
+	where id = @id
+go
+
+create proc csp_select_analysis_method
+	@id uniqueidentifier
+as 
+	select * from analysis_method where id = @id
+go
+
+create proc csp_select_analysis_methods
+	@instance_status_level int
+as
+	select *
+	from analysis_method
+	where instance_status_id <= @instance_status_level
+	order by name
+go
+
+create proc csp_select_analysis_methods_flat
+	@instance_status_level int
+as
+	select 
+		am.id,
+		am.name,
+		am.description_link, 
+		am.specter_reference_regexp, 
+		st.name as 'instance_status_name',
+		am.comment,
+		am.create_date,
+		am.created_by,
+		am.update_date,
+		am.updated_by
+	from analysis_method am, instance_status st
+	where am.instance_status_id = st.id and am.instance_status_id <= @instance_status_level
+	order by am.name
 go
 
 /*===========================================================================*/

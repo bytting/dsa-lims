@@ -538,6 +538,9 @@ namespace DSA_lims
 
                     cmd.ExecuteNonQuery();
 
+                    cboxSampleSampleType.SelectedIndex = -1;
+                    lblStatus.Text = StrUtils.makeStatusMessage("Sample " + sampleNumber.Value.ToString() + " created");
+
                     UI.PopulateSamples(conn, gridSamples);
                 }
             }
@@ -546,7 +549,7 @@ namespace DSA_lims
                 Common.Log.Error(ex);
             }
 
-            tabs.SelectedTab = tabSamples;
+            //tabs.SelectedTab = tabSamples;
         }
 
         private void btnSamplesOpen_Click(object sender, EventArgs e)

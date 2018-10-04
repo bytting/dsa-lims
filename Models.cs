@@ -204,7 +204,7 @@ namespace DSA_lims
         public SampleParameterModel(Guid id, string name) : base(id, name) { }
 
         public string Type { get; set; }
-    }
+    }    
 
     public class SampleTypeModel : ModelBase
     {
@@ -216,6 +216,6 @@ namespace DSA_lims
 
         public List<SampleTypeModel> SampleTypes = new List<SampleTypeModel>();
         public List<SampleComponentModel> SampleComponents = new List<SampleComponentModel>();
-        public List<SampleParameterModel> SampleParameters = new List<SampleParameterModel>();
+        public List<SampleParameterModel> SampleParameters = new List<SampleParameterModel>();     
     }    
 }

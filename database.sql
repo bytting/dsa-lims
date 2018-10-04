@@ -1998,12 +1998,28 @@ if OBJECT_ID('dbo.sample_type', 'U') IS NOT NULL drop table sample_type;
 
 create table sample_type (
 	id uniqueidentifier primary key NOT NULL,
-	name nvarchar(256) unique NOT NULL,		
+	name nvarchar(800) unique NOT NULL,		
+	short_name nvarchar(200) NOT NULL,		
 	create_date datetime NOT NULL,
 	created_by nvarchar(50) NOT NULL,
 	update_date datetime NOT NULL,
 	updated_by nvarchar(50) NOT NULL
 )
+go
+
+create proc csp_select_sample_type
+	@id uniqueidentifier
+as
+	select *
+	from sample_type
+	where id = @id
+go
+
+create proc csp_select_sample_types
+as
+	select *
+	from sample_type
+	order by name
 go
 
 create proc csp_select_sample_types_short
@@ -2391,7 +2407,7 @@ as
 		s.number,
 		s.external_id,
 		l.name as 'laboratory_name',	
-		st.name as 'sample_type_name',	
+		st.short_name as 'sample_type_name',	
 		sc.name as 'sample_component_name',		
 		pm.name + ' - ' + ps.name as 'project_name',
 		ss.name as 'sample_storage_name',
@@ -2408,7 +2424,7 @@ as
 		left outer join assignment ass on s.current_order_id = ass.id		
 		inner join instance_status insta on s.instance_status_id = insta.id
 	where s.instance_status_id <= @instance_status_level
-	order by s.create_date
+	order by s.create_date desc
 go
 
 /*===========================================================================*/

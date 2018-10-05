@@ -39,6 +39,37 @@ namespace DSA_lims
             return connection;
         }
 
+        public static object MakeParam(Type type, object o)
+        {
+            if (o == null)
+                return DBNull.Value;
+
+            if(o.GetType() == typeof(string))
+            {
+                string s = Convert.ToString(o);
+                if (String.IsNullOrEmpty(s))
+                    return DBNull.Value;
+            }
+
+            if (type == typeof(double))
+                return Convert.ToDouble(o);
+            else if (type == typeof(float))
+                return Convert.ToSingle(o);
+            else if (type == typeof(int) || type == typeof(Int32))
+                return Convert.ToInt32(o);
+            else if (type == typeof(Int16))
+                return Convert.ToInt16(o);
+            else if (type == typeof(Int64))
+                return Convert.ToInt64(o);
+            else if (type == typeof(DateTime))
+                return Convert.ToDateTime(o);
+            else if (type == typeof(bool))
+                return Convert.ToBoolean(o);
+            else if (type == typeof(string))
+                return o.ToString();
+            else return o.ToString();
+        }
+
         public static DataTable GetDataTable(SqlConnection conn, string query, CommandType queryType, params SqlParameter[] parameters)
         {
             SqlDataAdapter adapter = new SqlDataAdapter(query, conn);
@@ -196,16 +227,6 @@ namespace DSA_lims
             {
                 Common.Log.Error(ex);
             }
-        }
-
-        public static object MakeParam(Type type, object o)
-        {
-            if (type == typeof(double))
-                return Convert.ToDouble(o);
-            else if(type == typeof(int))
-                return Convert.ToInt32(o);
-            else
-                return o.ToString();
-        }
+        }        
     }    
 }

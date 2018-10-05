@@ -32,12 +32,22 @@ namespace DSA_lims
 {
     public partial class FormProjectSub : Form
     {
-        public ProjectSubModel SubProject = new ProjectSubModel();
+        private Dictionary<string, object> p = new Dictionary<string, object>();
+
+        public Guid ProjectSubId
+        {
+            get { return p.ContainsKey("id") ? (Guid)p["id"] : Guid.Empty; }
+        }
+
+        public string ProjectSubName
+        {
+            get { return p.ContainsKey("name") ? p["name"].ToString() : String.Empty; }
+        }        
 
         public FormProjectSub(string pname, Guid pid)
         {
             InitializeComponent();            
-            SubProject.ProjectMainId = pid;            
+            p["project_main_id"] = pid;            
             Text = "Create new sub project";
             tbMainProjectName.Text = pname;
             cboxInstanceStatus.DataSource = Common.InstanceStatusList;
@@ -47,8 +57,8 @@ namespace DSA_lims
         public FormProjectSub(string pname, Guid pid, Guid spid)
         {
             InitializeComponent();            
-            SubProject.Id = spid;
-            SubProject.ProjectMainId = pid;            
+            p["id"] = spid;
+            p["project_main_id"] = pid;            
             Text = "Update sub project";
             tbMainProjectName.Text = pname;
             cboxInstanceStatus.DataSource = Common.InstanceStatusList;
@@ -57,21 +67,20 @@ namespace DSA_lims
             {
                 SqlCommand cmd = new SqlCommand("csp_select_project_sub", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@id", SubProject.Id);
+                cmd.Parameters.AddWithValue("@id", p["id"]);
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
                     if (!reader.HasRows)
-                        throw new Exception("Project with ID " + SubProject.Id.ToString() + " was not found");
+                        throw new Exception("Project with ID " + p["id"] + " was not found");
 
                     reader.Read();
                     tbName.Text = reader["name"].ToString();
                     cboxInstanceStatus.SelectedValue = InstanceStatus.Eval(reader["instance_status_id"]);
                     tbComment.Text = reader["comment"].ToString();
-                    
-                    SubProject.CreateDate = Convert.ToDateTime(reader["create_date"]);
-                    SubProject.CreatedBy = reader["created_by"].ToString();
-                    SubProject.UpdateDate = Convert.ToDateTime(reader["update_date"]);
-                    SubProject.UpdatedBy = reader["updated_by"].ToString();
+                    p["create_date"] = reader["create_date"];
+                    p["created_by"] = reader["created_by"];
+                    p["update_date"] = reader["update_date"];
+                    p["updated_by"] = reader["updated_by"];
                 }
             }
         }
@@ -90,12 +99,12 @@ namespace DSA_lims
                 return;
             }
 
-            SubProject.Name = tbName.Text.Trim();
-            SubProject.InstanceStatusId = InstanceStatus.Eval(cboxInstanceStatus.SelectedValue);
-            SubProject.Comment = tbComment.Text.Trim();
+            p["name"] = tbName.Text.Trim();
+            p["instance_status_id"] = InstanceStatus.Eval(cboxInstanceStatus.SelectedValue);
+            p["comment"] = tbComment.Text.Trim();
 
             bool success;
-            if (SubProject.Id == Guid.Empty)
+            if (!p.ContainsKey("id"))
                 success = InsertSubProject();
             else
                 success = UpdateSubProject();
@@ -111,29 +120,29 @@ namespace DSA_lims
 
             try
             {
-                SubProject.CreateDate = DateTime.Now;
-                SubProject.CreatedBy = Common.Username;
-                SubProject.UpdateDate = DateTime.Now;
-                SubProject.UpdatedBy = Common.Username;
+                p["create_date"] = DateTime.Now;
+                p["created_by"] = Common.Username;
+                p["update_date"] = DateTime.Now;
+                p["updated_by"] = Common.Username;
 
                 connection = DB.OpenConnection();
                 transaction = connection.BeginTransaction();
 
                 SqlCommand cmd = new SqlCommand("csp_insert_project_sub", connection, transaction);
                 cmd.CommandType = CommandType.StoredProcedure;
-                SubProject.Id = Guid.NewGuid();
-                cmd.Parameters.AddWithValue("@id", SubProject.Id);
-                cmd.Parameters.AddWithValue("@project_main_id", SubProject.ProjectMainId);
-                cmd.Parameters.AddWithValue("@name", SubProject.Name);
-                cmd.Parameters.AddWithValue("@instance_status_id", SubProject.InstanceStatusId);
-                cmd.Parameters.AddWithValue("@comment", SubProject.Comment);
-                cmd.Parameters.AddWithValue("@create_date", SubProject.CreateDate);
-                cmd.Parameters.AddWithValue("@created_by", SubProject.CreatedBy);
-                cmd.Parameters.AddWithValue("@update_date", SubProject.UpdateDate);
-                cmd.Parameters.AddWithValue("@updated_by", SubProject.UpdatedBy);
+                p["id"] = Guid.NewGuid();
+                cmd.Parameters.AddWithValue("@id", p["id"]);
+                cmd.Parameters.AddWithValue("@project_main_id", p["project_main_id"]);
+                cmd.Parameters.AddWithValue("@name", p["name"]);
+                cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
+                cmd.Parameters.AddWithValue("@comment", p["comment"]);
+                cmd.Parameters.AddWithValue("@create_date", p["create_date"]);
+                cmd.Parameters.AddWithValue("@created_by", p["created_by"]);
+                cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
+                cmd.Parameters.AddWithValue("@updated_by", p["updated_by"]);
                 cmd.ExecuteNonQuery();
 
-                DB.AddAuditMessage(connection, transaction, "project_sub", SubProject.Id, AuditOperationType.Insert, JsonConvert.SerializeObject(SubProject));
+                DB.AddAuditMessage(connection, transaction, "project_sub", (Guid)p["id"], AuditOperationType.Insert, JsonConvert.SerializeObject(p));
 
                 transaction.Commit();
             }
@@ -158,24 +167,24 @@ namespace DSA_lims
 
             try
             {
-                SubProject.UpdateDate = DateTime.Now;
-                SubProject.UpdatedBy = Common.Username;
+                p["update_date"] = DateTime.Now;
+                p["updated_by"] = Common.Username;
 
                 connection = DB.OpenConnection();
                 transaction = connection.BeginTransaction();
 
                 SqlCommand cmd = new SqlCommand("csp_update_project_sub", connection, transaction);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@id", SubProject.Id);
-                cmd.Parameters.AddWithValue("@project_main_id", SubProject.ProjectMainId);
-                cmd.Parameters.AddWithValue("@name", SubProject.Name);
-                cmd.Parameters.AddWithValue("@instance_status_id", SubProject.InstanceStatusId);
-                cmd.Parameters.AddWithValue("@comment", SubProject.Comment);
-                cmd.Parameters.AddWithValue("@update_date", SubProject.UpdateDate);
-                cmd.Parameters.AddWithValue("@updated_by", SubProject.UpdatedBy);
+                cmd.Parameters.AddWithValue("@id", p["id"]);
+                cmd.Parameters.AddWithValue("@project_main_id", p["project_main_id"]);
+                cmd.Parameters.AddWithValue("@name", p["name"]);
+                cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
+                cmd.Parameters.AddWithValue("@comment", p["comment"]);
+                cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
+                cmd.Parameters.AddWithValue("@updated_by", p["updated_by"]);
                 cmd.ExecuteNonQuery();
 
-                DB.AddAuditMessage(connection, transaction, "project_sub", SubProject.Id, AuditOperationType.Update, JsonConvert.SerializeObject(SubProject));
+                DB.AddAuditMessage(connection, transaction, "project_sub", (Guid)p["id"], AuditOperationType.Update, JsonConvert.SerializeObject(p));
 
                 transaction.Commit();
             }

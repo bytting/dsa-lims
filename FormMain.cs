@@ -620,7 +620,7 @@ namespace DSA_lims
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
-                    SetStatusMessage("Main project " + form.MainProject.Name + " inserted");
+                    SetStatusMessage("Main project " + form.ProjectName + " created");
                     using (SqlConnection conn = DB.OpenConnection())
                     {
                         UI.PopulateProjectsMain(conn, gridProjectMain);
@@ -644,7 +644,7 @@ namespace DSA_lims
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
-                    SetStatusMessage("Project " + form.MainProject.Name + " updated");
+                    SetStatusMessage("Project " + form.ProjectName + " updated");
                     using (SqlConnection conn = DB.OpenConnection())
                     {
                         UI.PopulateProjectsMain(conn, gridProjectMain);
@@ -678,7 +678,7 @@ namespace DSA_lims
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
-                    SetStatusMessage("Sub project " + form.SubProject.Name + " inserted");
+                    SetStatusMessage("Sub project " + form.ProjectSubName + " created");
                     using (SqlConnection conn = DB.OpenConnection())
                     {
                         UI.PopulateProjectsSub(conn, gridProjectSub, pmid);
@@ -708,7 +708,7 @@ namespace DSA_lims
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
-                    SetStatusMessage("Project " + form.SubProject.Name + " updated");
+                    SetStatusMessage("Project " + form.ProjectSubName + " updated");
                     using (SqlConnection conn = DB.OpenConnection())
                     {
                         UI.PopulateProjectsSub(conn, gridProjectSub, pmid);

@@ -45,24 +45,7 @@ namespace DSA_lims
         {
             return Name;
         }
-    }        
-
-    public class ProjectMainModel : ModelBase
-    {
-        public ProjectMainModel() { }
-        public ProjectMainModel(Guid id, string name) : base(id, name) { }
-
-        public int InstanceStatusId { get; set; }
-        public string Comment { get; set; }        
-    }
-
-    public class ProjectSubModel : ProjectMainModel
-    {
-        public ProjectSubModel() { }
-        public ProjectSubModel(Guid id, string name) : base(id, name) { }
-
-        public Guid ProjectMainId { get; set; }
-    }
+    }                
 
     public class SamplerModel : ModelBase
     {

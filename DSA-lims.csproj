@@ -384,6 +384,10 @@
   <ItemGroup>
     <Content Include="comments.txt" />
     <Content Include="database.sql" />
+    <None Include="images\prep_anal.png" />
+    <None Include="images\set.png" />
+    <None Include="images\merge.png" />
+    <None Include="images\split.png" />
     <None Include="images\tree_16.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

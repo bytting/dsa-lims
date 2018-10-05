@@ -197,5 +197,15 @@ namespace DSA_lims
                 Common.Log.Error(ex);
             }
         }
+
+        public static object MakeParam(Type type, object o)
+        {
+            if (type == typeof(double))
+                return Convert.ToDouble(o);
+            else if(type == typeof(int))
+                return Convert.ToInt32(o);
+            else
+                return o.ToString();
+        }
     }    
 }

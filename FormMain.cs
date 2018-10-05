@@ -59,9 +59,7 @@ namespace DSA_lims
                 tabs.SizeMode = TabSizeMode.Fixed;
                 tabs.SelectedTab = tabMenu;
                 lblCurrentTab.Text = tabs.SelectedTab.Text;
-                lblStatus.Text = "";
-                btnSamplesPrintSampleLabel.Visible = true;
-                btnSamplesPrintPrepLabel.Visible = false;
+                lblStatus.Text = "";                
                 lblSampleToolId.Text = "";
                 lblSampleToolExId.Text = "";
                 lblSampleToolProject.Text = "";
@@ -268,7 +266,6 @@ namespace DSA_lims
         private void tabs_SelectedIndexChanged(object sender, EventArgs e)
         {
             lblCurrentTab.Text = tabs.SelectedTab.Text;
-            ClearStatusMessage();
 
             HideMenuItems();
 
@@ -343,13 +340,7 @@ namespace DSA_lims
 
         private void tabsSample_SelectedIndexChanged(object sender, EventArgs e)
         {
-            btnSamplesPrintSampleLabel.Visible = true;
-            btnSamplesPrintPrepLabel.Visible = false;
-
-            if (tabsSample.SelectedTab == tabSamplesPrep)
-            {
-                btnSamplesPrintPrepLabel.Visible = true;
-            }
+            //
         }
 
         private void btnMenuNewOrder_Click(object sender, EventArgs e)
@@ -465,70 +456,24 @@ namespace DSA_lims
                     SqlCommand cmd = new SqlCommand("csp_insert_sample", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@id", Guid.NewGuid());
-                    if(cboxSampleLaboratory.SelectedItem == null)
-                        cmd.Parameters.AddWithValue("@laboratory_id", DBNull.Value);
-                    else
-                        cmd.Parameters.AddWithValue("@laboratory_id", (cboxSampleLaboratory.SelectedItem as Lemma<Guid, string>).Id);
-
-                    if(cboxSampleSampleType.SelectedItem == null)
-                        cmd.Parameters.AddWithValue("@sample_type_id", DBNull.Value);
-                    else
-                        cmd.Parameters.AddWithValue("@sample_type_id", (cboxSampleSampleType.SelectedItem as Lemma<Guid, string>).Id);
-
-                    if (cboxSampleSampleStorage.SelectedItem == null)
-                        cmd.Parameters.AddWithValue("@sample_storage_id", DBNull.Value);
-                    else
-                        cmd.Parameters.AddWithValue("@sample_storage_id", (cboxSampleSampleStorage.SelectedItem as Lemma<Guid, string>).Id);
-
-                    if (cboxSampleSampleComponent.SelectedItem == null)
-                        cmd.Parameters.AddWithValue("@sample_component_id", DBNull.Value);
-                    else
-                        cmd.Parameters.AddWithValue("@sample_component_id", (cboxSampleSampleComponent.SelectedItem as SampleComponentModel).Id);
-
-                    if (cboxSampleSubProject.SelectedItem == null)
-                        cmd.Parameters.AddWithValue("@project_sub_id", DBNull.Value);
-                    else
-                        cmd.Parameters.AddWithValue("@project_sub_id", (cboxSampleSubProject.SelectedItem as Lemma<Guid, string>).Id);
-
-                    if (cboxSampleInfoStations.SelectedItem == null)
-                        cmd.Parameters.AddWithValue("@station_id", DBNull.Value);
-                    else
-                        cmd.Parameters.AddWithValue("@station_id", (cboxSampleInfoStations.SelectedItem as Lemma<Guid, string>).Id);
-
-                    if (cboxSampleInfoSampler.SelectedItem == null)
-                        cmd.Parameters.AddWithValue("@sampler_id", DBNull.Value);
-                    else
-                        cmd.Parameters.AddWithValue("@sampler_id", (cboxSampleInfoSampler.SelectedItem as Lemma<Guid, string>).Id);
-
+                    cmd.Parameters.AddWithValue("@laboratory_id", Lemma<Guid, string>.IdParam(cboxSampleLaboratory.SelectedItem));
+                    cmd.Parameters.AddWithValue("@sample_type_id", Lemma<Guid, string>.IdParam(cboxSampleSampleType.SelectedItem));
+                    cmd.Parameters.AddWithValue("@sample_storage_id", Lemma<Guid, string>.IdParam(cboxSampleSampleStorage.SelectedItem));
+                    cmd.Parameters.AddWithValue("@sample_component_id", Lemma<Guid, string>.IdParam(cboxSampleSampleComponent.SelectedItem));
+                    cmd.Parameters.AddWithValue("@project_sub_id", Lemma<Guid, string>.IdParam(cboxSampleSubProject.SelectedItem));
+                    cmd.Parameters.AddWithValue("@station_id", Lemma<Guid, string>.IdParam(cboxSampleInfoStations.SelectedItem));
+                    cmd.Parameters.AddWithValue("@sampler_id", Lemma<Guid, string>.IdParam(cboxSampleInfoSampler.SelectedItem));
                     cmd.Parameters.AddWithValue("@transform_from_id", Guid.Empty);
                     cmd.Parameters.AddWithValue("@transform_to_id", Guid.Empty);
                     cmd.Parameters.AddWithValue("@current_order_id", Guid.Empty);
                     cmd.Parameters.AddWithValue("@imported_from", "");
                     cmd.Parameters.AddWithValue("@imported_from_id", "");
-
-                    if (cboxSampleMunicipalities.SelectedItem == null)
-                        cmd.Parameters.AddWithValue("@municipality_id", DBNull.Value);
-                    else
-                        cmd.Parameters.AddWithValue("@municipality_id", (cboxSampleMunicipalities.SelectedItem as Lemma<Guid, string>).Id);
-
+                    cmd.Parameters.AddWithValue("@municipality_id", Lemma<Guid, string>.IdParam(cboxSampleMunicipalities.SelectedItem));
                     cmd.Parameters.AddWithValue("@location_type", cboxSampleInfoLocationTypes.Text);
                     cmd.Parameters.AddWithValue("@location", tbSampleLocation.Text.Trim());
-
-                    if(String.IsNullOrEmpty(tbSampleInfoLatitude.Text.Trim()))
-                        cmd.Parameters.AddWithValue("@latitude", DBNull.Value);
-                    else
-                        cmd.Parameters.AddWithValue("@latitude", Convert.ToDouble(tbSampleInfoLatitude.Text.Trim()));
-
-                    if (String.IsNullOrEmpty(tbSampleInfoLongitude.Text.Trim()))
-                        cmd.Parameters.AddWithValue("@longitude", DBNull.Value);
-                    else
-                        cmd.Parameters.AddWithValue("@longitude", Convert.ToDouble(tbSampleInfoLongitude.Text.Trim()));
-
-                    if (String.IsNullOrEmpty(tbSampleInfoAltitude.Text.Trim()))
-                        cmd.Parameters.AddWithValue("@altitude", DBNull.Value);
-                    else
-                        cmd.Parameters.AddWithValue("@altitude", Convert.ToDouble(tbSampleInfoAltitude.Text.Trim()));
-                    
+                    cmd.Parameters.AddWithValue("@latitude", DB.MakeParam(typeof(double), tbSampleInfoLatitude.Text.Trim()));
+                    cmd.Parameters.AddWithValue("@longitude", DB.MakeParam(typeof(double), tbSampleInfoLongitude.Text.Trim()));
+                    cmd.Parameters.AddWithValue("@altitude", DB.MakeParam(typeof(double), tbSampleInfoAltitude.Text.Trim()));
                     cmd.Parameters.AddWithValue("@sampling_date_from", new DateTime(dtSampleSamplingDateFrom.Value.Year, dtSampleSamplingDateFrom.Value.Month, dtSampleSamplingDateFrom.Value.Day, dtSampleSamplingTimeFrom.Value.Hour, dtSampleSamplingTimeFrom.Value.Minute, dtSampleSamplingTimeFrom.Value.Second));
                     cmd.Parameters.AddWithValue("@sampling_date_to", new DateTime(dtSampleSamplingDateTo.Value.Year, dtSampleSamplingDateTo.Value.Month, dtSampleSamplingDateTo.Value.Day, dtSampleSamplingTimeTo.Value.Hour, dtSampleSamplingTimeTo.Value.Minute, dtSampleSamplingTimeTo.Value.Second));
                     cmd.Parameters.AddWithValue("@reference_date", new DateTime(dtSampleReferenceDate.Value.Year, dtSampleReferenceDate.Value.Month, dtSampleReferenceDate.Value.Day, dtSampleReferenceTime.Value.Hour, dtSampleReferenceTime.Value.Minute, dtSampleReferenceTime.Value.Second));
@@ -550,19 +495,20 @@ namespace DSA_lims
                     cmd.Parameters.Add(sampleNumber);
 
                     cmd.ExecuteNonQuery();
-
-                    cboxSampleSampleType.SelectedIndex = -1;
+                    
                     lblStatus.Text = StrUtils.makeStatusMessage("Sample " + sampleNumber.Value.ToString() + " created");
 
                     UI.PopulateSamples(conn, gridSamples);
+
+                    tabs.SelectedTab = tabSamples;
+
+                    tbSamplesLookup.Text = sampleNumber.Value.ToString();                    
                 }
             }
             catch(Exception ex)
             {
                 Common.Log.Error(ex);
-            }
-
-            //tabs.SelectedTab = tabSamples;
+            }            
         }
 
         private void btnSamplesOpen_Click(object sender, EventArgs e)

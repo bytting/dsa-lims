@@ -32,7 +32,17 @@ namespace DSA_lims
 {
     public partial class FormStation : Form
     {
-        public StationModel Station = new StationModel();
+        private Dictionary<string, object> p = new Dictionary<string, object>();
+
+        public Guid StationId
+        {
+            get { return p.ContainsKey("id") ? (Guid)p["id"] : Guid.Empty; }
+        }
+
+        public string StationName
+        {
+            get { return p.ContainsKey("name") ? p["name"].ToString() : String.Empty; }
+        }
 
         public FormStation()
         {
@@ -46,7 +56,7 @@ namespace DSA_lims
         {
             InitializeComponent();
             // edit existing station            
-            Station.Id = sid;
+            p["id"] = sid;
             Text = "Update station";
             cboxInstanceStatus.DataSource = Common.InstanceStatusList;
 
@@ -54,11 +64,11 @@ namespace DSA_lims
             {
                 SqlCommand cmd = new SqlCommand("csp_select_station", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@id", Station.Id);
+                cmd.Parameters.AddWithValue("@id", p["id"]);
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
                     if (!reader.HasRows)
-                        throw new Exception("Station with ID " + Station.Id.ToString() + " was not found");
+                        throw new Exception("Station with ID " + p["id"] + " was not found");
 
                     reader.Read();
                     tbName.Text = reader["name"].ToString();
@@ -67,10 +77,10 @@ namespace DSA_lims
                     tbAltitude.Text = reader["altitude"].ToString();
                     cboxInstanceStatus.SelectedValue = InstanceStatus.Eval(reader["instance_status_id"]);
                     tbComment.Text = reader["comment"].ToString();
-                    Station.CreateDate = Convert.ToDateTime(reader["create_date"]);
-                    Station.CreatedBy = reader["created_by"].ToString();
-                    Station.UpdateDate = Convert.ToDateTime(reader["update_date"]);
-                    Station.UpdatedBy = reader["updated_by"].ToString();
+                    p["create_date"] = reader["create_date"];
+                    p["created_by"] = reader["created_by"];
+                    p["update_date"] = reader["update_date"];
+                    p["updated_by"] = reader["updated_by"];
                 }
             }
         }
@@ -107,15 +117,15 @@ namespace DSA_lims
                 return;
             }
 
-            Station.Name = tbName.Text.Trim();
-            Station.Latitude = Convert.ToDouble(tbLatitude.Text.Trim());
-            Station.Longitude = Convert.ToDouble(tbLongitude.Text.Trim());
-            Station.Altitude = Convert.ToDouble(tbAltitude.Text.Trim());
-            Station.InstanceStatusId = InstanceStatus.Eval(cboxInstanceStatus.SelectedValue);
-            Station.Comment = tbComment.Text.Trim();
+            p["name"] = tbName.Text.Trim();
+            p["latitude"] = Convert.ToDouble(tbLatitude.Text.Trim());
+            p["longitude"] = Convert.ToDouble(tbLongitude.Text.Trim());
+            p["altitude"] = Convert.ToDouble(tbAltitude.Text.Trim());
+            p["instance_status_id"] = InstanceStatus.Eval(cboxInstanceStatus.SelectedValue);
+            p["comment"] = tbComment.Text.Trim();
 
             bool success;
-            if (Station.Id == Guid.Empty)
+            if (!p.ContainsKey("id"))
                 success = InsertStation();
             else
                 success = UpdateStation();
@@ -131,31 +141,31 @@ namespace DSA_lims
 
             try
             {
-                Station.CreateDate = DateTime.Now;
-                Station.CreatedBy = Common.Username;
-                Station.UpdateDate = DateTime.Now;
-                Station.UpdatedBy = Common.Username;
+                p["create_date"] = DateTime.Now;
+                p["created_by"] = Common.Username;
+                p["update_date"] = DateTime.Now;
+                p["updated_by"] = Common.Username;
 
                 connection = DB.OpenConnection();
                 transaction = connection.BeginTransaction();
 
                 SqlCommand cmd = new SqlCommand("csp_insert_station", connection, transaction);
                 cmd.CommandType = CommandType.StoredProcedure;
-                Station.Id = Guid.NewGuid();
-                cmd.Parameters.AddWithValue("@id", Station.Id);
-                cmd.Parameters.AddWithValue("@name", Station.Name);
-                cmd.Parameters.AddWithValue("@latitude", Station.Latitude);
-                cmd.Parameters.AddWithValue("@longitude", Station.Longitude);
-                cmd.Parameters.AddWithValue("@altitude", Station.Altitude);
-                cmd.Parameters.AddWithValue("@instance_status_id", Station.InstanceStatusId);
-                cmd.Parameters.AddWithValue("@comment", Station.Comment);
-                cmd.Parameters.AddWithValue("@create_date", Station.CreateDate);
-                cmd.Parameters.AddWithValue("@created_by", Station.CreatedBy);
-                cmd.Parameters.AddWithValue("@update_date", Station.UpdateDate);
-                cmd.Parameters.AddWithValue("@updated_by", Station.UpdatedBy);
+                p["id"] = Guid.NewGuid();
+                cmd.Parameters.AddWithValue("@id", p["id"]);
+                cmd.Parameters.AddWithValue("@name", p["name"]);
+                cmd.Parameters.AddWithValue("@latitude", p["latitude"]);
+                cmd.Parameters.AddWithValue("@longitude", p["longitude"]);
+                cmd.Parameters.AddWithValue("@altitude", p["altitude"]);
+                cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
+                cmd.Parameters.AddWithValue("@comment", p["comment"]);
+                cmd.Parameters.AddWithValue("@create_date", p["create_date"]);
+                cmd.Parameters.AddWithValue("@created_by", p["created_by"]);
+                cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
+                cmd.Parameters.AddWithValue("@updated_by", p["updated_by"]);
                 cmd.ExecuteNonQuery();
 
-                DB.AddAuditMessage(connection, transaction, "station", Station.Id, AuditOperationType.Insert, JsonConvert.SerializeObject(Station));
+                DB.AddAuditMessage(connection, transaction, "station", (Guid)p["id"], AuditOperationType.Insert, JsonConvert.SerializeObject(p));
 
                 transaction.Commit();
             }
@@ -180,26 +190,26 @@ namespace DSA_lims
 
             try
             {
-                Station.UpdateDate = DateTime.Now;
-                Station.UpdatedBy = Common.Username;
+                p["update_date"] = DateTime.Now;
+                p["updated_by"] = Common.Username;
 
                 connection = DB.OpenConnection();
                 transaction = connection.BeginTransaction();
 
                 SqlCommand cmd = new SqlCommand("csp_update_station", connection, transaction);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@id", Station.Id);
-                cmd.Parameters.AddWithValue("@name", Station.Name);
-                cmd.Parameters.AddWithValue("@latitude", Station.Latitude);
-                cmd.Parameters.AddWithValue("@longitude", Station.Longitude);
-                cmd.Parameters.AddWithValue("@altitude", Station.Altitude);
-                cmd.Parameters.AddWithValue("@instance_status_id", Station.InstanceStatusId);
-                cmd.Parameters.AddWithValue("@comment", Station.Comment);
-                cmd.Parameters.AddWithValue("@update_date", Station.UpdateDate);
-                cmd.Parameters.AddWithValue("@updated_by", Station.UpdatedBy);
+                cmd.Parameters.AddWithValue("@id", p["id"]);
+                cmd.Parameters.AddWithValue("@name", p["name"]);
+                cmd.Parameters.AddWithValue("@latitude", p["latitude"]);
+                cmd.Parameters.AddWithValue("@longitude", p["longitude"]);
+                cmd.Parameters.AddWithValue("@altitude", p["altitude"]);
+                cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
+                cmd.Parameters.AddWithValue("@comment", p["comment"]);
+                cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
+                cmd.Parameters.AddWithValue("@updated_by", p["updated_by"]);
                 cmd.ExecuteNonQuery();
 
-                DB.AddAuditMessage(connection, transaction, "station", Station.Id, AuditOperationType.Update, JsonConvert.SerializeObject(Station));
+                DB.AddAuditMessage(connection, transaction, "station", (Guid)p["id"], AuditOperationType.Update, JsonConvert.SerializeObject(p));
 
                 transaction.Commit();
             }

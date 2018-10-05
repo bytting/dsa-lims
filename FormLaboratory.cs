@@ -32,7 +32,17 @@ namespace DSA_lims
 {
     public partial class FormLaboratory : Form
     {
-        public LaboratoryModel Laboratory = new LaboratoryModel();
+        private Dictionary<string, object> p = new Dictionary<string, object>();
+
+        public Guid LaboratoryId
+        {
+            get { return p.ContainsKey("id") ? (Guid)p["id"] : Guid.Empty; }
+        }
+
+        public string LaboratoryName
+        {
+            get { return p.ContainsKey("name") ? p["name"].ToString() : String.Empty; }
+        }
 
         public FormLaboratory()
         {
@@ -45,7 +55,7 @@ namespace DSA_lims
         public FormLaboratory(Guid lid)
         {
             InitializeComponent();            
-            Laboratory.Id = lid;
+            p["id"] = lid;
             Text = "Update laboratory";
             cboxInstanceStatus.DataSource = Common.InstanceStatusList;
 
@@ -53,11 +63,11 @@ namespace DSA_lims
             {
                 SqlCommand cmd = new SqlCommand("csp_select_laboratory", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@id", Laboratory.Id);
+                cmd.Parameters.AddWithValue("@id", p["id"]);
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
                     if (!reader.HasRows)
-                        throw new Exception("Laboratory with ID " + Laboratory.Id.ToString() + " was not found");
+                        throw new Exception("Laboratory with ID " + p["id"] + " was not found");
 
                     reader.Read();
                     tbName.Text = reader["name"].ToString();
@@ -68,11 +78,11 @@ namespace DSA_lims
                     cboxInstanceStatus.SelectedValue = InstanceStatus.Eval(reader["instance_status_id"]);
                     tbComment.Text = reader["comment"].ToString();
 
-                    Laboratory.AssignmentCounter = Convert.ToInt32(reader["assignment_counter"]);
-                    Laboratory.CreateDate = Convert.ToDateTime(reader["create_date"]);
-                    Laboratory.CreatedBy = reader["created_by"].ToString();
-                    Laboratory.UpdateDate = Convert.ToDateTime(reader["update_date"]);
-                    Laboratory.UpdatedBy = reader["updated_by"].ToString();
+                    p["assignment_counter"] = reader["assignment_counter"];
+                    p["create_date"] = reader["create_date"];
+                    p["created_by"] = reader["created_by"];
+                    p["update_date"] = reader["update_date"];
+                    p["updated_by"] = reader["updated_by"];
                 }
             }
         }
@@ -97,16 +107,16 @@ namespace DSA_lims
                 return;
             }
 
-            Laboratory.Name = tbName.Text.Trim();
-            Laboratory.NamePrefix = tbPrefix.Text.Trim();
-            Laboratory.Address = tbAddress.Text.Trim();
-            Laboratory.Email = tbEmail.Text.Trim();
-            Laboratory.Phone = tbPhone.Text.Trim();
-            Laboratory.InstanceStatusId = InstanceStatus.Eval(cboxInstanceStatus.SelectedValue);
-            Laboratory.Comment = tbComment.Text.Trim();
+            p["name"] = tbName.Text.Trim();
+            p["name_prefix"] = tbPrefix.Text.Trim();
+            p["address"] = tbAddress.Text.Trim();
+            p["email"] = tbEmail.Text.Trim();
+            p["phone"] = tbPhone.Text.Trim();
+            p["instance_status_id"] = InstanceStatus.Eval(cboxInstanceStatus.SelectedValue);
+            p["comment"] = tbComment.Text.Trim();
 
             bool success;
-            if (Laboratory.Id == Guid.Empty)
+            if (!p.ContainsKey("id"))
                 success = InsertLaboratory();
             else
                 success = UpdateLaboratory();
@@ -122,34 +132,34 @@ namespace DSA_lims
 
             try
             {
-                Laboratory.AssignmentCounter = 1;
-                Laboratory.CreateDate = DateTime.Now;
-                Laboratory.CreatedBy = Common.Username;
-                Laboratory.UpdateDate = DateTime.Now;
-                Laboratory.UpdatedBy = Common.Username;
+                p["assignment_counter"] = 1;
+                p["create_date"] = DateTime.Now;
+                p["created_by"] = Common.Username;
+                p["update_date"] = DateTime.Now;
+                p["updated_by"] = Common.Username;
 
                 connection = DB.OpenConnection();
                 transaction = connection.BeginTransaction();
 
                 SqlCommand cmd = new SqlCommand("csp_insert_laboratory", connection, transaction);
                 cmd.CommandType = CommandType.StoredProcedure;
-                Laboratory.Id = Guid.NewGuid();
-                cmd.Parameters.AddWithValue("@id", Laboratory.Id);
-                cmd.Parameters.AddWithValue("@name", Laboratory.Name);
-                cmd.Parameters.AddWithValue("@name_prefix", Laboratory.NamePrefix);
-                cmd.Parameters.AddWithValue("@address", Laboratory.Address);
-                cmd.Parameters.AddWithValue("@email", Laboratory.Email);
-                cmd.Parameters.AddWithValue("@phone", Laboratory.Phone);
-                cmd.Parameters.AddWithValue("@assignment_counter", Laboratory.AssignmentCounter);
-                cmd.Parameters.AddWithValue("@instance_status_id", Laboratory.InstanceStatusId);
-                cmd.Parameters.AddWithValue("@comment", Laboratory.Comment);
-                cmd.Parameters.AddWithValue("@create_date", Laboratory.CreateDate);
-                cmd.Parameters.AddWithValue("@created_by", Laboratory.CreatedBy);
-                cmd.Parameters.AddWithValue("@update_date", Laboratory.UpdateDate);
-                cmd.Parameters.AddWithValue("@updated_by", Laboratory.UpdatedBy);
+                p["id"] = Guid.NewGuid();
+                cmd.Parameters.AddWithValue("@id", p["id"]);
+                cmd.Parameters.AddWithValue("@name", p["name"]);
+                cmd.Parameters.AddWithValue("@name_prefix", p["name_prefix"]);
+                cmd.Parameters.AddWithValue("@address", p["address"]);
+                cmd.Parameters.AddWithValue("@email", p["email"]);
+                cmd.Parameters.AddWithValue("@phone", p["phone"]);
+                cmd.Parameters.AddWithValue("@assignment_counter", p["assignment_counter"]);
+                cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
+                cmd.Parameters.AddWithValue("@comment", p["comment"]);
+                cmd.Parameters.AddWithValue("@create_date", p["create_date"]);
+                cmd.Parameters.AddWithValue("@created_by", p["created_by"]);
+                cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
+                cmd.Parameters.AddWithValue("@updated_by", p["updated_by"]);
                 cmd.ExecuteNonQuery();
 
-                DB.AddAuditMessage(connection, transaction, "laboratory", Laboratory.Id, AuditOperationType.Insert, JsonConvert.SerializeObject(Laboratory));
+                DB.AddAuditMessage(connection, transaction, "laboratory", (Guid)p["id"], AuditOperationType.Insert, JsonConvert.SerializeObject(p));
 
                 transaction.Commit();
             }
@@ -174,27 +184,27 @@ namespace DSA_lims
 
             try
             {
-                Laboratory.UpdateDate = DateTime.Now;
-                Laboratory.UpdatedBy = Common.Username;
+                p["update_date"] = DateTime.Now;
+                p["updated_by"] = Common.Username;
 
                 connection = DB.OpenConnection();
                 transaction = connection.BeginTransaction();
 
                 SqlCommand cmd = new SqlCommand("csp_update_laboratory", connection, transaction);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@id", Laboratory.Id);
-                cmd.Parameters.AddWithValue("@name", Laboratory.Name);
-                cmd.Parameters.AddWithValue("@name_prefix", Laboratory.NamePrefix);                
-                cmd.Parameters.AddWithValue("@address", Laboratory.Address);
-                cmd.Parameters.AddWithValue("@email", Laboratory.Email);
-                cmd.Parameters.AddWithValue("@phone", Laboratory.Phone);
-                cmd.Parameters.AddWithValue("@instance_status_id", Laboratory.InstanceStatusId);
-                cmd.Parameters.AddWithValue("@comment", Laboratory.Comment);
-                cmd.Parameters.AddWithValue("@update_date", Laboratory.UpdateDate);
-                cmd.Parameters.AddWithValue("@updated_by", Laboratory.UpdatedBy);
+                cmd.Parameters.AddWithValue("@id", p["id"]);
+                cmd.Parameters.AddWithValue("@name", p["name"]);
+                cmd.Parameters.AddWithValue("@name_prefix", p["name_prefix"]);                
+                cmd.Parameters.AddWithValue("@address", p["address"]);
+                cmd.Parameters.AddWithValue("@email", p["email"]);
+                cmd.Parameters.AddWithValue("@phone", p["phone"]);
+                cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
+                cmd.Parameters.AddWithValue("@comment", p["comment"]);
+                cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
+                cmd.Parameters.AddWithValue("@updated_by", p["updated_by"]);
                 cmd.ExecuteNonQuery();
 
-                DB.AddAuditMessage(connection, transaction, "laboratory", Laboratory.Id, AuditOperationType.Update, JsonConvert.SerializeObject(Laboratory));
+                DB.AddAuditMessage(connection, transaction, "laboratory", (Guid)p["id"], AuditOperationType.Update, JsonConvert.SerializeObject(p));
 
                 transaction.Commit();
             }

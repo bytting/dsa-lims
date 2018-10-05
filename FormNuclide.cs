@@ -31,14 +31,25 @@ namespace DSA_lims
 {
     public partial class FormNuclide : Form
     {
-        public NuclideModel Nuclide = new NuclideModel();
+        private Dictionary<string, object> p = new Dictionary<string, object>();
+
+        public Guid NuclideId
+        {
+            get { return p.ContainsKey("id") ? (Guid)p["id"] : Guid.Empty; }
+        }
+
+        public string NuclideName
+        {
+            get { return p.ContainsKey("name") ? p["name"].ToString() : String.Empty; }
+        }        
 
         public FormNuclide()
         {
             InitializeComponent();
 
             // Create new nuclide            
-            PopulateDecayTypes();
+            cboxDecayTypes.DataSource = Common.DecayTypeList;
+            cboxDecayTypes.SelectedIndex = -1;
             Text = "New nuclide";
             cboxInstanceStatus.DataSource = Common.InstanceStatusList;
             cboxInstanceStatus.SelectedValue = InstanceStatus.Active;            
@@ -49,8 +60,9 @@ namespace DSA_lims
             InitializeComponent();
 
             // Edit existing nuclide            
-            PopulateDecayTypes();            
-            Nuclide.Id = nid;
+            cboxDecayTypes.DataSource = Common.DecayTypeList;
+            cboxDecayTypes.SelectedIndex = -1;
+            p["id"] = nid;
             Text = "Edit nuclide";
             cboxInstanceStatus.DataSource = Common.InstanceStatusList;
 
@@ -62,7 +74,7 @@ namespace DSA_lims
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
                     if(!reader.HasRows)                    
-                        throw new Exception("Nuclide with ID " + Nuclide.Id.ToString() + " was not found");                    
+                        throw new Exception("Nuclide with ID " + p["id"] + " was not found");                    
 
                     reader.Read();
                     tbName.Text = reader["name"].ToString();
@@ -75,22 +87,12 @@ namespace DSA_lims
                     tbFluorescenceYield.Text = reader["fluorescence_yield"].ToString();
                     cboxInstanceStatus.SelectedValue = InstanceStatus.Eval(reader["instance_status_id"]);
                     tbComment.Text = reader["comment"].ToString();
-                    Nuclide.CreateDate = Convert.ToDateTime(reader["create_date"]);
-                    Nuclide.CreatedBy = reader["created_by"].ToString();
-                    Nuclide.UpdateDate = Convert.ToDateTime(reader["update_date"]);
-                    Nuclide.UpdatedBy = reader["updated_by"].ToString();
+                    p["create_date"] = reader["create_date"];
+                    p["created_by"] = reader["created_by"];
+                    p["update_date"] = reader["update_date"];
+                    p["updated_by"] = reader["updated_by"];
                 }
             }            
-        }
-
-        private void FormNuclide_Load(object sender, EventArgs e)
-        {            
-        }
-
-        private void PopulateDecayTypes()
-        {
-            cboxDecayTypes.DataSource = Common.DecayTypeList;
-            cboxDecayTypes.SelectedIndex = -1;
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -149,19 +151,19 @@ namespace DSA_lims
                 return;
             }
 
-            Nuclide.Name = tbName.Text.Trim();
-            Nuclide.ProtonCount = Convert.ToInt32(tbNumberOfProtons.Text.Trim());
-            Nuclide.NeutronCount = Convert.ToInt32(tbNumberOfNeutrons.Text.Trim());
-            Nuclide.HalfLife = Convert.ToDouble(tbHalflife.Text.Trim());
-            Nuclide.HalfLifeUncertainty = Convert.ToDouble(tbHalflifeUncertainty.Text.Trim());
-            Nuclide.DecayTypeId = Convert.ToInt32(cboxDecayTypes.SelectedValue);
-            Nuclide.XRayEnergy = Convert.ToDouble(tbKXrayEnergy.Text.Trim());
-            Nuclide.FluorescenceYield = Convert.ToDouble(tbFluorescenceYield.Text.Trim());
-            Nuclide.InstanceStatusId = InstanceStatus.Eval(cboxInstanceStatus.SelectedValue);
-            Nuclide.Comment = tbComment.Text.Trim();
+            p["name"] = tbName.Text.Trim();
+            p["proton_count"] = Convert.ToInt32(tbNumberOfProtons.Text.Trim());
+            p["neutron_count"] = Convert.ToInt32(tbNumberOfNeutrons.Text.Trim());
+            p["halflife"] = Convert.ToDouble(tbHalflife.Text.Trim());
+            p["halflife_uncertainty"] = Convert.ToDouble(tbHalflifeUncertainty.Text.Trim());
+            p["decay_type_id"] = Convert.ToInt32(cboxDecayTypes.SelectedValue);
+            p["xray_energy"] = Convert.ToDouble(tbKXrayEnergy.Text.Trim());
+            p["fluorescence_yield"] = Convert.ToDouble(tbFluorescenceYield.Text.Trim());
+            p["instance_status_id"] = InstanceStatus.Eval(cboxInstanceStatus.SelectedValue);
+            p["comment"] = tbComment.Text.Trim();
 
             bool success;
-            if (Nuclide.Id == Guid.Empty)
+            if (!p.ContainsKey("id"))
                 success = InsertNuclide();
             else
                 success = UpdateNuclide();
@@ -177,35 +179,35 @@ namespace DSA_lims
 
             try
             {
-                Nuclide.CreateDate = DateTime.Now;
-                Nuclide.CreatedBy = Common.Username;
-                Nuclide.UpdateDate = DateTime.Now;
-                Nuclide.UpdatedBy = Common.Username;
+                p["create_date"] = DateTime.Now;
+                p["created_by"] = Common.Username;
+                p["update_date"] = DateTime.Now;
+                p["updated_by"] = Common.Username;
 
                 connection = DB.OpenConnection();
                 transaction = connection.BeginTransaction();
 
                 SqlCommand cmd = new SqlCommand("csp_insert_nuclide", connection, transaction);
                 cmd.CommandType = CommandType.StoredProcedure;
-                Nuclide.Id = Guid.NewGuid();
-                cmd.Parameters.AddWithValue("@id", Nuclide.Id);
-                cmd.Parameters.AddWithValue("@name", Nuclide.Name);
-                cmd.Parameters.AddWithValue("@proton_count", Nuclide.ProtonCount);
-                cmd.Parameters.AddWithValue("@neutron_count", Nuclide.NeutronCount);
-                cmd.Parameters.AddWithValue("@half_life_year", Nuclide.HalfLife);
-                cmd.Parameters.AddWithValue("@half_life_uncertainty", Nuclide.HalfLifeUncertainty);
-                cmd.Parameters.AddWithValue("@decay_type_id", Nuclide.DecayTypeId);
-                cmd.Parameters.AddWithValue("@kxray_energy", Nuclide.XRayEnergy);
-                cmd.Parameters.AddWithValue("@fluorescence_yield", Nuclide.FluorescenceYield);
-                cmd.Parameters.AddWithValue("@instance_status_id", Nuclide.InstanceStatusId);
-                cmd.Parameters.AddWithValue("@comment", Nuclide.Comment);
-                cmd.Parameters.AddWithValue("@create_date", Nuclide.CreateDate);
-                cmd.Parameters.AddWithValue("@created_by", Nuclide.CreatedBy);
-                cmd.Parameters.AddWithValue("@update_date", Nuclide.UpdateDate);
-                cmd.Parameters.AddWithValue("@updated_by", Nuclide.UpdatedBy);
+                p["id"] = Guid.NewGuid();
+                cmd.Parameters.AddWithValue("@id", p["id"]);
+                cmd.Parameters.AddWithValue("@name", p["name"]);
+                cmd.Parameters.AddWithValue("@proton_count", p["proton_count"]);
+                cmd.Parameters.AddWithValue("@neutron_count", p["nautron_count"]);
+                cmd.Parameters.AddWithValue("@half_life_year", p["halflife"]);
+                cmd.Parameters.AddWithValue("@half_life_uncertainty", p["halflife_uncertainty"]);
+                cmd.Parameters.AddWithValue("@decay_type_id", p["decay_type_id"]);
+                cmd.Parameters.AddWithValue("@kxray_energy", p["xray_energy"]);
+                cmd.Parameters.AddWithValue("@fluorescence_yield", p["fluorescence_yield"]);
+                cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
+                cmd.Parameters.AddWithValue("@comment", p["comment"]);
+                cmd.Parameters.AddWithValue("@create_date", p["create_date"]);
+                cmd.Parameters.AddWithValue("@created_by", p["created_by"]);
+                cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
+                cmd.Parameters.AddWithValue("@updated_by", p["updated_by"]);
                 cmd.ExecuteNonQuery();
 
-                DB.AddAuditMessage(connection, transaction, "nuclide", Nuclide.Id, AuditOperationType.Insert, JsonConvert.SerializeObject(Nuclide));
+                DB.AddAuditMessage(connection, transaction, "nuclide", (Guid)p["id"], AuditOperationType.Insert, JsonConvert.SerializeObject(p));
 
                 transaction.Commit();
             }
@@ -230,30 +232,30 @@ namespace DSA_lims
 
             try
             {
-                Nuclide.UpdateDate = DateTime.Now;
-                Nuclide.UpdatedBy = Common.Username;
+                p["update_date"] = DateTime.Now;
+                p["updated_by"] = Common.Username;
 
                 connection = DB.OpenConnection();
                 transaction = connection.BeginTransaction();
 
                 SqlCommand cmd = new SqlCommand("csp_update_nuclide", connection, transaction);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@id", Nuclide.Id);
-                cmd.Parameters.AddWithValue("@name", Nuclide.Name);
-                cmd.Parameters.AddWithValue("@proton_count", Nuclide.ProtonCount);
-                cmd.Parameters.AddWithValue("@neutron_count", Nuclide.NeutronCount);
-                cmd.Parameters.AddWithValue("@half_life_year", Nuclide.HalfLife);
-                cmd.Parameters.AddWithValue("@half_life_uncertainty", Nuclide.HalfLifeUncertainty);
-                cmd.Parameters.AddWithValue("@decay_type_id", Nuclide.DecayTypeId);
-                cmd.Parameters.AddWithValue("@kxray_energy", Nuclide.XRayEnergy);
-                cmd.Parameters.AddWithValue("@fluorescence_yield", Nuclide.FluorescenceYield);
-                cmd.Parameters.AddWithValue("@instance_status_id", Nuclide.InstanceStatusId);
-                cmd.Parameters.AddWithValue("@comment", Nuclide.Comment);
-                cmd.Parameters.AddWithValue("@update_date", Nuclide.UpdateDate);
-                cmd.Parameters.AddWithValue("@updated_by", Nuclide.UpdatedBy);
+                cmd.Parameters.AddWithValue("@id", p["id"]);
+                cmd.Parameters.AddWithValue("@name", p["name"]);
+                cmd.Parameters.AddWithValue("@proton_count", p["proton_count"]);
+                cmd.Parameters.AddWithValue("@neutron_count", p["neutron_count"]);
+                cmd.Parameters.AddWithValue("@half_life_year", p["halflife"]);
+                cmd.Parameters.AddWithValue("@half_life_uncertainty", p["halflife_uncertainty"]);
+                cmd.Parameters.AddWithValue("@decay_type_id", p["decay_type_id"]);
+                cmd.Parameters.AddWithValue("@kxray_energy", p["xray_energy"]);
+                cmd.Parameters.AddWithValue("@fluorescence_yield", p["fluorescence_yield"]);
+                cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
+                cmd.Parameters.AddWithValue("@comment", p["comment"]);
+                cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
+                cmd.Parameters.AddWithValue("@updated_by", p["updated_by"]);
                 cmd.ExecuteNonQuery();
 
-                DB.AddAuditMessage(connection, transaction, "nuclide", Nuclide.Id, AuditOperationType.Update, JsonConvert.SerializeObject(Nuclide));
+                DB.AddAuditMessage(connection, transaction, "nuclide", (Guid)p["id"], AuditOperationType.Update, JsonConvert.SerializeObject(p));
 
                 transaction.Commit();
             }

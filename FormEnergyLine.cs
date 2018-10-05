@@ -31,15 +31,24 @@ namespace DSA_lims
 {
     public partial class FormEnergyLine : Form
     {
-        EnergyLineModel EnergyLine = new EnergyLineModel();        
+        private Dictionary<string, object> p = new Dictionary<string, object>();
+
+        public Guid EnergyLineId
+        {
+            get { return p.ContainsKey("id") ? (Guid)p["id"] : Guid.Empty; }
+        }
+
+        public string EnergyLineName
+        {
+            get { return p.ContainsKey("name") ? p["name"].ToString() : String.Empty; }
+        }        
 
         public FormEnergyLine(Guid nid, string nname)
         {            
             InitializeComponent();
 
             // Creating a new line                 
-            EnergyLine.NuclideId = nid;
-            EnergyLine.Id = Guid.Empty;
+            p["nuclide_id"] = nid;
 
             Text = "Create energy line";
             tbNuclide.Text = nname;
@@ -52,8 +61,8 @@ namespace DSA_lims
             InitializeComponent();
 
             // Update existing line                        
-            EnergyLine.NuclideId = nid;
-            EnergyLine.Id = eid;
+            p["nuclide_id"] = nid;
+            p["id"] = eid;
 
             Text = "Update energy line";
             tbNuclide.Text = nname;
@@ -63,11 +72,11 @@ namespace DSA_lims
             {
                 SqlCommand cmd = new SqlCommand("csp_select_nuclide_transmission", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@id", EnergyLine.Id);
+                cmd.Parameters.AddWithValue("@id", p["id"]);
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
                     if (!reader.HasRows)
-                        throw new Exception("Energy line with ID " + EnergyLine.Id.ToString() + " was not found");
+                        throw new Exception("Energy line with ID " + p["id"] + " was not found");
 
                     reader.Read();
                     tbTransFrom.Text = reader["transmission_from"].ToString();
@@ -82,10 +91,10 @@ namespace DSA_lims
                     tbKShellConv.Text = reader["kshell_conversion"].ToString();
                     cboxInstanceStatus.SelectedValue = InstanceStatus.Eval(reader["instance_status_id"]);
                     tbComment.Text = reader["comment"].ToString();
-                    EnergyLine.CreateDate = Convert.ToDateTime(reader["create_date"]);
-                    EnergyLine.CreatedBy = reader["created_by"].ToString();
-                    EnergyLine.UpdateDate = Convert.ToDateTime(reader["update_date"]);
-                    EnergyLine.UpdatedBy = reader["updated_by"].ToString();
+                    p["create_date"] = reader["create_date"];
+                    p["created_by"] = reader["created_by"];
+                    p["update_date"] = reader["update_date"];
+                    p["updated_by"] = reader["updated_by"];
                 }
             }
         }
@@ -109,22 +118,22 @@ namespace DSA_lims
                 MessageBox.Show("Transmission to is mandatory");
                 return;
             }
-                        
-            EnergyLine.TransmissionFrom = Convert.ToDouble(tbTransFrom.Text.Trim());
-            EnergyLine.TransmissionTo = Convert.ToDouble(tbTransTo.Text.Trim());
-            EnergyLine.Energy = Convert.ToDouble(tbEnergy.Text.Trim());
-            EnergyLine.EnergyUncertainty = Convert.ToDouble(tbEnergyUnc.Text.Trim());
-            EnergyLine.Intensity = Convert.ToDouble(tbIntensity.Text.Trim());
-            EnergyLine.IntensityUncertainty = Convert.ToDouble(tbIntensityUnc.Text.Trim());
-            EnergyLine.ProbabilityOfDecay = Convert.ToDouble(tbProbOfDecay.Text.Trim());
-            EnergyLine.ProbabilityOfDecayUncertainty = Convert.ToDouble(tbProbOfDecayUnc.Text.Trim());
-            EnergyLine.TotalInternalConversion = Convert.ToDouble(tbTotInternalConv.Text.Trim());
-            EnergyLine.KShellConversion = Convert.ToDouble(tbKShellConv.Text.Trim());
-            EnergyLine.InstanceStatusId = InstanceStatus.Eval(cboxInstanceStatus.SelectedValue);
-            EnergyLine.Comment = tbComment.Text.Trim();
+
+            p["transmission_from"] = Convert.ToDouble(tbTransFrom.Text.Trim());
+            p["transmission_to"] = Convert.ToDouble(tbTransTo.Text.Trim());
+            p["energy"] = Convert.ToDouble(tbEnergy.Text.Trim());
+            p["energy_uncertainty"] = Convert.ToDouble(tbEnergyUnc.Text.Trim());
+            p["intensity"] = Convert.ToDouble(tbIntensity.Text.Trim());
+            p["intensity_uncertainty"] = Convert.ToDouble(tbIntensityUnc.Text.Trim());
+            p["probability_of_decay"] = Convert.ToDouble(tbProbOfDecay.Text.Trim());
+            p["probability_of_decay_uncertainty"] = Convert.ToDouble(tbProbOfDecayUnc.Text.Trim());
+            p["total_internal_conversion"] = Convert.ToDouble(tbTotInternalConv.Text.Trim());
+            p["kshell_conversion"] = Convert.ToDouble(tbKShellConv.Text.Trim());
+            p["instance_status_id"] = InstanceStatus.Eval(cboxInstanceStatus.SelectedValue);
+            p["comment"] = tbComment.Text.Trim();
 
             bool success;
-            if (EnergyLine.Id == Guid.Empty)
+            if (!p.ContainsKey("id"))
                 success = InsertEnergyLine();
             else
                 success = UpdateEnergyLine();
@@ -140,38 +149,38 @@ namespace DSA_lims
 
             try
             {
-                EnergyLine.CreateDate = DateTime.Now;
-                EnergyLine.CreatedBy = Common.Username;
-                EnergyLine.UpdateDate = DateTime.Now;
-                EnergyLine.UpdatedBy = Common.Username;
+                p["create_date"] = DateTime.Now;
+                p["created_by"] = Common.Username;
+                p["update_date"] = DateTime.Now;
+                p["updated_by"] = Common.Username;
 
                 connection = DB.OpenConnection();
                 transaction = connection.BeginTransaction();
 
                 SqlCommand cmd = new SqlCommand("csp_insert_nuclide_transmission", connection, transaction);
                 cmd.CommandType = CommandType.StoredProcedure;
-                EnergyLine.Id = Guid.NewGuid();
-                cmd.Parameters.AddWithValue("@id", EnergyLine.Id);
-                cmd.Parameters.AddWithValue("@nuclide_id", EnergyLine.NuclideId);
-                cmd.Parameters.AddWithValue("@transmission_from", EnergyLine.TransmissionFrom);
-                cmd.Parameters.AddWithValue("@transmission_to", EnergyLine.TransmissionTo);
-                cmd.Parameters.AddWithValue("@energy", EnergyLine.Energy);
-                cmd.Parameters.AddWithValue("@energy_uncertainty", EnergyLine.EnergyUncertainty);
-                cmd.Parameters.AddWithValue("@intensity", EnergyLine.Intensity);
-                cmd.Parameters.AddWithValue("@intensity_uncertainty", EnergyLine.IntensityUncertainty);
-                cmd.Parameters.AddWithValue("@probability_of_decay", EnergyLine.ProbabilityOfDecay);
-                cmd.Parameters.AddWithValue("@probability_of_decay_uncertainty", EnergyLine.ProbabilityOfDecayUncertainty);
-                cmd.Parameters.AddWithValue("@total_internal_conversion", EnergyLine.TotalInternalConversion);
-                cmd.Parameters.AddWithValue("@kshell_conversion", EnergyLine.KShellConversion);
-                cmd.Parameters.AddWithValue("@instance_status_id", EnergyLine.InstanceStatusId);
-                cmd.Parameters.AddWithValue("@comment", EnergyLine.Comment);
-                cmd.Parameters.AddWithValue("@create_date", EnergyLine.CreateDate);
-                cmd.Parameters.AddWithValue("@created_by", EnergyLine.CreatedBy);
-                cmd.Parameters.AddWithValue("@update_date", EnergyLine.UpdateDate);
-                cmd.Parameters.AddWithValue("@updated_by", EnergyLine.UpdatedBy);
+                p["id"] = Guid.NewGuid();
+                cmd.Parameters.AddWithValue("@id", p["id"]);
+                cmd.Parameters.AddWithValue("@nuclide_id", p["nuclide_id"]);
+                cmd.Parameters.AddWithValue("@transmission_from", p["transmission_from"]);
+                cmd.Parameters.AddWithValue("@transmission_to", p["transmission_to"]);
+                cmd.Parameters.AddWithValue("@energy", p["energy"]);
+                cmd.Parameters.AddWithValue("@energy_uncertainty", p["energy_uncertainty"]);
+                cmd.Parameters.AddWithValue("@intensity", p["intensity"]);
+                cmd.Parameters.AddWithValue("@intensity_uncertainty", p["intensity_uncertainty"]);
+                cmd.Parameters.AddWithValue("@probability_of_decay", p["probability_of_decay"]);
+                cmd.Parameters.AddWithValue("@probability_of_decay_uncertainty", p["probability_of_decay_uncertainty"]);
+                cmd.Parameters.AddWithValue("@total_internal_conversion", p["total_internal_conversion"]);
+                cmd.Parameters.AddWithValue("@kshell_conversion", p["kshell_conversion"]);
+                cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
+                cmd.Parameters.AddWithValue("@comment", p["comment"]);
+                cmd.Parameters.AddWithValue("@create_date", p["create_date"]);
+                cmd.Parameters.AddWithValue("@created_by", p["created_by"]);
+                cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
+                cmd.Parameters.AddWithValue("@updated_by", p["updated_by"]);
                 cmd.ExecuteNonQuery();
 
-                DB.AddAuditMessage(connection, transaction, "nuclide_transmission", EnergyLine.Id, AuditOperationType.Insert, JsonConvert.SerializeObject(EnergyLine));
+                DB.AddAuditMessage(connection, transaction, "nuclide_transmission", (Guid)p["id"], AuditOperationType.Insert, JsonConvert.SerializeObject(p));
 
                 transaction.Commit();
             }
@@ -196,32 +205,32 @@ namespace DSA_lims
 
             try
             {
-                EnergyLine.UpdateDate = DateTime.Now;
-                EnergyLine.UpdatedBy = Common.Username;
+                p["update_date"] = DateTime.Now;
+                p["updated_by"] = Common.Username;
 
                 connection = DB.OpenConnection();            
                 transaction = connection.BeginTransaction();
 
                 SqlCommand cmd = new SqlCommand("csp_update_nuclide_transmission", connection, transaction);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@id", EnergyLine.Id);
-                cmd.Parameters.AddWithValue("@transmission_from", EnergyLine.TransmissionFrom);
-                cmd.Parameters.AddWithValue("@transmission_to", EnergyLine.TransmissionTo);
-                cmd.Parameters.AddWithValue("@energy", EnergyLine.Energy);
-                cmd.Parameters.AddWithValue("@energy_uncertainty", EnergyLine.EnergyUncertainty);
-                cmd.Parameters.AddWithValue("@intensity", EnergyLine.Intensity);
-                cmd.Parameters.AddWithValue("@intensity_uncertainty", EnergyLine.IntensityUncertainty);
-                cmd.Parameters.AddWithValue("@probability_of_decay", EnergyLine.ProbabilityOfDecay);
-                cmd.Parameters.AddWithValue("@probability_of_decay_uncertainty", EnergyLine.ProbabilityOfDecayUncertainty);
-                cmd.Parameters.AddWithValue("@total_internal_conversion", EnergyLine.TotalInternalConversion);
-                cmd.Parameters.AddWithValue("@kshell_conversion", EnergyLine.KShellConversion);
-                cmd.Parameters.AddWithValue("@instance_status_id", EnergyLine.InstanceStatusId);
-                cmd.Parameters.AddWithValue("@comment", EnergyLine.Comment);
-                cmd.Parameters.AddWithValue("@update_date", EnergyLine.UpdateDate);
-                cmd.Parameters.AddWithValue("@updated_by", EnergyLine.UpdatedBy);
+                cmd.Parameters.AddWithValue("@id", p["id"]);
+                cmd.Parameters.AddWithValue("@transmission_from", p["transmission_from"]);
+                cmd.Parameters.AddWithValue("@transmission_to", p["transmission_to"]);
+                cmd.Parameters.AddWithValue("@energy", p["energy"]);
+                cmd.Parameters.AddWithValue("@energy_uncertainty", p["energy_uncertainty"]);
+                cmd.Parameters.AddWithValue("@intensity", p["intensity"]);
+                cmd.Parameters.AddWithValue("@intensity_uncertainty", p["intensity_uncertainty"]);
+                cmd.Parameters.AddWithValue("@probability_of_decay", p["probability_of_decay"]);
+                cmd.Parameters.AddWithValue("@probability_of_decay_uncertainty", p["probability_of_decay_uncertainty"]);
+                cmd.Parameters.AddWithValue("@total_internal_conversion", p["total_internal_conversion"]);
+                cmd.Parameters.AddWithValue("@kshell_conversion", p["kshell_conversion"]);
+                cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
+                cmd.Parameters.AddWithValue("@comment", p["comment"]);
+                cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
+                cmd.Parameters.AddWithValue("@updated_by", p["updated_by"]);
                 cmd.ExecuteNonQuery();
 
-                DB.AddAuditMessage(connection, transaction, "nuclide_transmission", EnergyLine.Id, AuditOperationType.Update, JsonConvert.SerializeObject(EnergyLine));
+                DB.AddAuditMessage(connection, transaction, "nuclide_transmission", (Guid)p["id"], AuditOperationType.Update, JsonConvert.SerializeObject(p));
 
                 transaction.Commit();
             }

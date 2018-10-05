@@ -291,7 +291,6 @@
             this.Name = "FormNuclide";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Add/Edit nuclide";
-            this.Load += new System.EventHandler(this.FormNuclide_Load);
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();

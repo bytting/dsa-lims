@@ -527,7 +527,7 @@ namespace DSA_lims
             switch(form.ShowDialog())
             {                
                 case DialogResult.OK:
-                    SetStatusMessage("Laboratory " + form.Laboratory.Name + " created");
+                    SetStatusMessage("Laboratory " + form.LaboratoryName + " created");
                     using (SqlConnection conn = DB.OpenConnection())
                         UI.PopulateLaboratories(conn, gridMetaLab);
                     break;
@@ -593,7 +593,7 @@ namespace DSA_lims
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
-                    SetStatusMessage("Laboratory " + form.Laboratory.Name + " updated");
+                    SetStatusMessage("Laboratory " + form.LaboratoryName + " updated");
                     using (SqlConnection conn = DB.OpenConnection())
                         UI.PopulateLaboratories(conn, gridMetaLab);
                     break;
@@ -732,7 +732,7 @@ namespace DSA_lims
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
-                    SetStatusMessage("Nuclide " + form.Nuclide.Name + " inserted");
+                    SetStatusMessage("Nuclide " + form.NuclideName + " inserted");
                     using (SqlConnection conn = DB.OpenConnection())
                         UI.PopulateNuclides(conn, gridSysNuclides);
                     break;
@@ -814,7 +814,7 @@ namespace DSA_lims
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
-                    SetStatusMessage("Nuclide " + form.Nuclide.Name + " updated");
+                    SetStatusMessage("Nuclide " + form.NuclideName + " updated");
                     using (SqlConnection conn = DB.OpenConnection())
                         UI.PopulateNuclides(conn, gridSysNuclides);
                     break;
@@ -838,7 +838,7 @@ namespace DSA_lims
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
-                    SetStatusMessage("Energy line for " + nname + " inserted");
+                    SetStatusMessage("Energy line for " + nname + " created");
                     using (SqlConnection conn = DB.OpenConnection())
                         UI.PopulateEnergyLines(conn, nid, gridSysNuclideTrans);
                     break;
@@ -896,7 +896,7 @@ namespace DSA_lims
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
-                    SetStatusMessage("Geometry " + form.Geometry.Name + " inserted");
+                    SetStatusMessage("Geometry " + form.GeometryName + " created");
                     using (SqlConnection conn = DB.OpenConnection())
                     {
                         UI.PopulateGeometries(conn, gridSysGeom);
@@ -921,7 +921,7 @@ namespace DSA_lims
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
-                    SetStatusMessage("Geometry " + form.Geometry.Name + " updated");
+                    SetStatusMessage("Geometry " + form.GeometryName + " updated");
                     using (SqlConnection conn = DB.OpenConnection())
                         UI.PopulateGeometries(conn, gridSysGeom);
                     break;
@@ -942,7 +942,7 @@ namespace DSA_lims
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
-                    SetStatusMessage("County " + form.County.Name + " inserted");
+                    SetStatusMessage("County " + form.CountyName + " created");
                     using (SqlConnection conn = DB.OpenConnection())
                         UI.PopulateCounties(conn, gridSysCounty);
                     break;
@@ -964,7 +964,7 @@ namespace DSA_lims
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
-                    SetStatusMessage("County " + form.County.Name + " updated");
+                    SetStatusMessage("County " + form.CountyName + " updated");
                     using (SqlConnection conn = DB.OpenConnection())
                         UI.PopulateCounties(conn, gridSysCounty);
                     break;
@@ -991,7 +991,7 @@ namespace DSA_lims
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
-                    SetStatusMessage("Municipality " + form.Municipality.Name + " inserted");
+                    SetStatusMessage("Municipality " + form.MunicipalityName + " created");
                     using (SqlConnection conn = DB.OpenConnection())
                         UI.PopulateMunicipalities(conn, cid, gridSysMunicipality);
                     break;
@@ -1019,7 +1019,7 @@ namespace DSA_lims
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
-                    SetStatusMessage("Municipality " + form.Municipality.Name + " updated");
+                    SetStatusMessage("Municipality " + form.MunicipalityName + " updated");
                     using (SqlConnection conn = DB.OpenConnection())
                         UI.PopulateMunicipalities(conn, cid, gridSysMunicipality);
                     break;
@@ -1050,7 +1050,7 @@ namespace DSA_lims
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
-                    SetStatusMessage("Station " + form.Station.Name + " inserted");
+                    SetStatusMessage("Station " + form.StationName + " created");
                     using (SqlConnection conn = DB.OpenConnection())
                     {
                         UI.PopulateStations(conn, gridMetaStation);
@@ -1075,7 +1075,7 @@ namespace DSA_lims
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
-                    SetStatusMessage("Station " + form.Station.Name + " updated");
+                    SetStatusMessage("Station " + form.StationName + " updated");
                     using (SqlConnection conn = DB.OpenConnection())
                     {
                         UI.PopulateStations(conn, gridMetaStation);
@@ -1099,7 +1099,7 @@ namespace DSA_lims
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
-                    SetStatusMessage("Sample storage " + form.SampleStorage.Name + " inserted");
+                    SetStatusMessage("Sample storage " + form.SampleStorageName + " created");
                     using (SqlConnection conn = DB.OpenConnection())
                         UI.PopulateSampleStorage(conn, gridMetaSampleStorage);
                     break;
@@ -1121,7 +1121,7 @@ namespace DSA_lims
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
-                    SetStatusMessage("Sample storage " + form.SampleStorage.Name + " updated");
+                    SetStatusMessage("Sample storage " + form.SampleStorageName + " updated");
                     using (SqlConnection conn = DB.OpenConnection())
                         UI.PopulateSampleStorage(conn, gridMetaSampleStorage);
                     break;

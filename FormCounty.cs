@@ -32,7 +32,17 @@ namespace DSA_lims
 {
     public partial class FormCounty : Form
     {
-        public CountyModel County = new CountyModel();
+        private Dictionary<string, object> p = new Dictionary<string, object>();
+
+        public Guid CountyId
+        {
+            get { return p.ContainsKey("id") ? (Guid)p["id"] : Guid.Empty; }
+        }
+
+        public string CountyName
+        {
+            get { return p.ContainsKey("name") ? p["name"].ToString() : String.Empty; }
+        }
 
         public FormCounty()
         {
@@ -45,7 +55,7 @@ namespace DSA_lims
         public FormCounty(Guid cid)
         {
             InitializeComponent();            
-            County.Id = cid;
+            p["id"] = cid;
             Text = "Update county";
             cboxInstanceStatus.DataSource = Common.InstanceStatusList;
 
@@ -53,20 +63,20 @@ namespace DSA_lims
             {
                 SqlCommand cmd = new SqlCommand("csp_select_county", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@id", County.Id);
+                cmd.Parameters.AddWithValue("@id", p["id"]);
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
                     if (!reader.HasRows)
-                        throw new Exception("County with ID " + cid.ToString() + " was not found");
+                        throw new Exception("County with ID " + p["id"] + " was not found");
 
                     reader.Read();
                     tbName.Text = reader["name"].ToString();
                     tbNumber.Text = reader["county_number"].ToString();
                     cboxInstanceStatus.SelectedValue = InstanceStatus.Eval(reader["instance_status_id"]);
-                    County.CreateDate = Convert.ToDateTime(reader["create_date"]);
-                    County.CreatedBy = reader["created_by"].ToString();
-                    County.UpdateDate = Convert.ToDateTime(reader["update_date"]);
-                    County.UpdatedBy = reader["updated_by"].ToString();
+                    p["create_date"] = reader["create_date"];
+                    p["created_by"] = reader["created_by"];
+                    p["update_date"] = reader["update_date"];
+                    p["updated_by"] = reader["updated_by"];
                 }
             }
         }
@@ -91,12 +101,12 @@ namespace DSA_lims
                 return;
             }
 
-            County.Name = tbName.Text.Trim();
-            County.Number = Convert.ToInt32(tbNumber.Text.Trim());
-            County.InstanceStatusId = InstanceStatus.Eval(cboxInstanceStatus.SelectedValue);
+            p["name"] = tbName.Text.Trim();
+            p["number"] = Convert.ToInt32(tbNumber.Text.Trim());
+            p["instance_status_id"] = InstanceStatus.Eval(cboxInstanceStatus.SelectedValue);
 
             bool success;
-            if (County.Id == Guid.Empty)
+            if (!p.ContainsKey("id"))
                 success = InsertCounty();
             else
                 success = UpdateCounty();
@@ -112,28 +122,28 @@ namespace DSA_lims
 
             try
             {
-                County.CreateDate = DateTime.Now;
-                County.CreatedBy = Common.Username;
-                County.UpdateDate = DateTime.Now;
-                County.UpdatedBy = Common.Username;
+                p["create_date"] = DateTime.Now;
+                p["created_by"] = Common.Username;
+                p["update_date"] = DateTime.Now;
+                p["updated_by"] = Common.Username;
 
                 connection = DB.OpenConnection();
                 transaction = connection.BeginTransaction();
 
                 SqlCommand cmd = new SqlCommand("csp_insert_county", connection, transaction);
                 cmd.CommandType = CommandType.StoredProcedure;
-                County.Id = Guid.NewGuid();
-                cmd.Parameters.AddWithValue("@id", County.Id);
-                cmd.Parameters.AddWithValue("@name", County.Name);
-                cmd.Parameters.AddWithValue("@county_number", County.Number);
-                cmd.Parameters.AddWithValue("@instance_status_id", County.InstanceStatusId);
-                cmd.Parameters.AddWithValue("@create_date", County.CreateDate);
-                cmd.Parameters.AddWithValue("@created_by", County.CreatedBy);
-                cmd.Parameters.AddWithValue("@update_date", County.UpdateDate);
-                cmd.Parameters.AddWithValue("@updated_by", County.UpdatedBy);
+                p["id"] = Guid.NewGuid();
+                cmd.Parameters.AddWithValue("@id", p["id"]);
+                cmd.Parameters.AddWithValue("@name", p["name"]);
+                cmd.Parameters.AddWithValue("@county_number", p["number"]);
+                cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
+                cmd.Parameters.AddWithValue("@create_date", p["create_date"]);
+                cmd.Parameters.AddWithValue("@created_by", p["created_by"]);
+                cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
+                cmd.Parameters.AddWithValue("@updated_by", p["updated_by"]);
                 cmd.ExecuteNonQuery();
 
-                DB.AddAuditMessage(connection, transaction, "county", County.Id, AuditOperationType.Insert, JsonConvert.SerializeObject(County));
+                DB.AddAuditMessage(connection, transaction, "county", (Guid)p["id"], AuditOperationType.Insert, JsonConvert.SerializeObject(p));
 
                 transaction.Commit();
             }
@@ -158,23 +168,23 @@ namespace DSA_lims
 
             try
             {
-                County.UpdateDate = DateTime.Now;
-                County.UpdatedBy = Common.Username;
+                p["update_date"] = DateTime.Now;
+                p["updated_by"] = Common.Username;
 
                 connection = DB.OpenConnection();
                 transaction = connection.BeginTransaction();
 
                 SqlCommand cmd = new SqlCommand("csp_update_county", connection, transaction);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@id", County.Id);
-                cmd.Parameters.AddWithValue("@name", County.Name);
-                cmd.Parameters.AddWithValue("@county_number", County.Number);                
-                cmd.Parameters.AddWithValue("@instance_status_id", County.InstanceStatusId);                
-                cmd.Parameters.AddWithValue("@update_date", County.UpdateDate);
-                cmd.Parameters.AddWithValue("@updated_by", County.UpdatedBy);
+                cmd.Parameters.AddWithValue("@id", p["id"]);
+                cmd.Parameters.AddWithValue("@name", p["name"]);
+                cmd.Parameters.AddWithValue("@county_number", p["number"]);                
+                cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);                
+                cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
+                cmd.Parameters.AddWithValue("@updated_by", p["updated_by"]);
                 cmd.ExecuteNonQuery();
 
-                DB.AddAuditMessage(connection, transaction, "county", County.Id, AuditOperationType.Update, JsonConvert.SerializeObject(County));
+                DB.AddAuditMessage(connection, transaction, "county", (Guid)p["id"], AuditOperationType.Update, JsonConvert.SerializeObject(p));
 
                 transaction.Commit();
             }

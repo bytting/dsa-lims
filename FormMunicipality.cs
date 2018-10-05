@@ -32,12 +32,22 @@ namespace DSA_lims
 {
     public partial class FormMunicipality : Form
     {
-        public MunicipalityModel Municipality = new MunicipalityModel();
+        private Dictionary<string, object> p = new Dictionary<string, object>();
+
+        public Guid MunicipalityId
+        {
+            get { return p.ContainsKey("id") ? (Guid)p["id"] : Guid.Empty; }
+        }
+
+        public string MunicipalityName
+        {
+            get { return p.ContainsKey("name") ? p["name"].ToString() : String.Empty; }
+        }
 
         public FormMunicipality(Guid cid)
         {
             InitializeComponent();            
-            Municipality.CountyId = cid;
+            p["county_id"] = cid;
             Text = "Create municipality";
             cboxInstanceStatus.DataSource = Common.InstanceStatusList;
             cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
@@ -45,9 +55,9 @@ namespace DSA_lims
 
         public FormMunicipality(Guid cid, Guid mid)
         {
-            InitializeComponent();            
-            Municipality.CountyId = cid;
-            Municipality.Id = mid;
+            InitializeComponent();
+            p["county_id"] = cid;
+            p["id"] = mid;
             Text = "Update municipality";
             cboxInstanceStatus.DataSource = Common.InstanceStatusList;
 
@@ -55,26 +65,26 @@ namespace DSA_lims
             {
                 SqlCommand cmd = new SqlCommand("select name from county where id = @id", conn);
                 cmd.CommandType = CommandType.Text;
-                cmd.Parameters.AddWithValue("@id", Municipality.CountyId);
+                cmd.Parameters.AddWithValue("@id", p["county_id"]);
                 tbCounty.Text = cmd.ExecuteScalar().ToString();
 
                 cmd.CommandText = "csp_select_municipality";
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Clear();
-                cmd.Parameters.AddWithValue("@id", Municipality.Id);
+                cmd.Parameters.AddWithValue("@id", p["id"]);
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
                     if (!reader.HasRows)
-                        throw new Exception("Municipality with ID " + Municipality.Id.ToString() + " was not found");
+                        throw new Exception("Municipality with ID " + p["id"] + " was not found");
 
                     reader.Read();
                     tbName.Text = reader["name"].ToString();
                     tbNumber.Text = reader["municipality_number"].ToString();
                     cboxInstanceStatus.SelectedValue = InstanceStatus.Eval(reader["instance_status_id"]);
-                    Municipality.CreateDate = Convert.ToDateTime(reader["create_date"]);
-                    Municipality.CreatedBy = reader["created_by"].ToString();
-                    Municipality.UpdateDate = Convert.ToDateTime(reader["update_date"]);
-                    Municipality.UpdatedBy = reader["updated_by"].ToString();
+                    p["create_date"] = reader["create_date"];
+                    p["created_by"] = reader["created_by"];
+                    p["update_date"] = reader["update_date"];
+                    p["updated_by"] = reader["updated_by"];
                 }
             }
         }
@@ -99,12 +109,12 @@ namespace DSA_lims
                 return;
             }
 
-            Municipality.Name = tbName.Text.Trim();
-            Municipality.Number = Convert.ToInt32(tbNumber.Text.Trim());
-            Municipality.InstanceStatusId = InstanceStatus.Eval(cboxInstanceStatus.SelectedValue);
+            p["name"] = tbName.Text.Trim();
+            p["number"] = Convert.ToInt32(tbNumber.Text.Trim());
+            p["instance_status_id"] = InstanceStatus.Eval(cboxInstanceStatus.SelectedValue);
 
             bool success;
-            if (Municipality.Id == Guid.Empty)
+            if (!p.ContainsKey("id"))
                 success = InsertMunicipality();
             else
                 success = UpdateMunicipality();
@@ -120,29 +130,29 @@ namespace DSA_lims
 
             try
             {
-                Municipality.CreateDate = DateTime.Now;
-                Municipality.CreatedBy = Common.Username;
-                Municipality.UpdateDate = DateTime.Now;
-                Municipality.UpdatedBy = Common.Username;
+                p["create_date"] = DateTime.Now;
+                p["created_by"] = Common.Username;
+                p["update_date"] = DateTime.Now;
+                p["updated_by"] = Common.Username;
 
                 connection = DB.OpenConnection();
                 transaction = connection.BeginTransaction();
 
                 SqlCommand cmd = new SqlCommand("csp_insert_municipality", connection, transaction);
                 cmd.CommandType = CommandType.StoredProcedure;
-                Municipality.Id = Guid.NewGuid();
-                cmd.Parameters.AddWithValue("@id", Municipality.Id);
-                cmd.Parameters.AddWithValue("@county_id", Municipality.CountyId);
-                cmd.Parameters.AddWithValue("@name", Municipality.Name);
-                cmd.Parameters.AddWithValue("@municipality_number", Municipality.Number);
-                cmd.Parameters.AddWithValue("@instance_status_id", Municipality.InstanceStatusId);
-                cmd.Parameters.AddWithValue("@create_date", Municipality.CreateDate);
-                cmd.Parameters.AddWithValue("@created_by", Municipality.CreatedBy);
-                cmd.Parameters.AddWithValue("@update_date", Municipality.UpdateDate);
-                cmd.Parameters.AddWithValue("@updated_by", Municipality.UpdatedBy);
+                p["id"] = Guid.NewGuid();
+                cmd.Parameters.AddWithValue("@id", p["id"]);
+                cmd.Parameters.AddWithValue("@county_id", p["county_id"]);
+                cmd.Parameters.AddWithValue("@name", p["name"]);
+                cmd.Parameters.AddWithValue("@municipality_number", p["number"]);
+                cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
+                cmd.Parameters.AddWithValue("@create_date", p["create_date"]);
+                cmd.Parameters.AddWithValue("@created_by", p["created_by"]);
+                cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
+                cmd.Parameters.AddWithValue("@updated_by", p["updated_by"]);
                 cmd.ExecuteNonQuery();
 
-                DB.AddAuditMessage(connection, transaction, "municipality", Municipality.Id, AuditOperationType.Insert, JsonConvert.SerializeObject(Municipality));
+                DB.AddAuditMessage(connection, transaction, "municipality", (Guid)p["id"], AuditOperationType.Insert, JsonConvert.SerializeObject(p));
 
                 transaction.Commit();
             }
@@ -167,23 +177,23 @@ namespace DSA_lims
 
             try
             {
-                Municipality.UpdateDate = DateTime.Now;
-                Municipality.UpdatedBy = Common.Username;
+                p["update_date"] = DateTime.Now;
+                p["updated_by"] = Common.Username;
 
                 connection = DB.OpenConnection();
                 transaction = connection.BeginTransaction();
 
                 SqlCommand cmd = new SqlCommand("csp_update_municipality", connection, transaction);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@id", Municipality.Id);
-                cmd.Parameters.AddWithValue("@name", Municipality.Name);
-                cmd.Parameters.AddWithValue("@municipality_number", Municipality.Number);
-                cmd.Parameters.AddWithValue("@instance_status_id", Municipality.InstanceStatusId);
-                cmd.Parameters.AddWithValue("@update_date", Municipality.UpdateDate);
-                cmd.Parameters.AddWithValue("@updated_by", Municipality.UpdatedBy);
+                cmd.Parameters.AddWithValue("@id", p["id"]);
+                cmd.Parameters.AddWithValue("@name", p["name"]);
+                cmd.Parameters.AddWithValue("@municipality_number", p["number"]);
+                cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
+                cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
+                cmd.Parameters.AddWithValue("@updated_by", p["updated_by"]);
                 cmd.ExecuteNonQuery();
 
-                DB.AddAuditMessage(connection, transaction, "municipality", Municipality.Id, AuditOperationType.Update, JsonConvert.SerializeObject(Municipality));
+                DB.AddAuditMessage(connection, transaction, "municipality", (Guid)p["id"], AuditOperationType.Update, JsonConvert.SerializeObject(p));
 
                 transaction.Commit();
             }

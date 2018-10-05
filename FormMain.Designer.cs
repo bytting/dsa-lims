@@ -6259,7 +6259,7 @@
             this.tabsSys.Location = new System.Drawing.Point(3, 3);
             this.tabsSys.Name = "tabsSys";
             this.tabsSys.SelectedIndex = 0;
-            this.tabsSys.Size = new System.Drawing.Size(1141, 640);
+            this.tabsSys.Size = new System.Drawing.Size(1141, 638);
             this.tabsSys.TabIndex = 0;
             this.tabsSys.SelectedIndexChanged += new System.EventHandler(this.tabsSys_SelectedIndexChanged);
             // 
@@ -6270,7 +6270,7 @@
             this.tabSysLaboratories.Location = new System.Drawing.Point(4, 24);
             this.tabSysLaboratories.Name = "tabSysLaboratories";
             this.tabSysLaboratories.Padding = new System.Windows.Forms.Padding(3);
-            this.tabSysLaboratories.Size = new System.Drawing.Size(1133, 612);
+            this.tabSysLaboratories.Size = new System.Drawing.Size(1133, 610);
             this.tabSysLaboratories.TabIndex = 2;
             this.tabSysLaboratories.Text = "Laboratories";
             // 
@@ -6288,7 +6288,7 @@
             // splitContainer9.Panel2
             // 
             this.splitContainer9.Panel2.Controls.Add(this.splitContainer10);
-            this.splitContainer9.Size = new System.Drawing.Size(1127, 606);
+            this.splitContainer9.Size = new System.Drawing.Size(1127, 604);
             this.splitContainer9.SplitterDistance = 630;
             this.splitContainer9.TabIndex = 3;
             // 
@@ -6308,7 +6308,7 @@
             this.gridMetaLab.ReadOnly = true;
             this.gridMetaLab.RowHeadersVisible = false;
             this.gridMetaLab.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridMetaLab.Size = new System.Drawing.Size(630, 581);
+            this.gridMetaLab.Size = new System.Drawing.Size(630, 579);
             this.gridMetaLab.TabIndex = 2;
             // 
             // toolsSysLab
@@ -6354,7 +6354,7 @@
             // 
             this.splitContainer10.Panel2.Controls.Add(this.listBox5);
             this.splitContainer10.Panel2.Controls.Add(this.toolsSysLabAnalMeth);
-            this.splitContainer10.Size = new System.Drawing.Size(493, 606);
+            this.splitContainer10.Size = new System.Drawing.Size(493, 604);
             this.splitContainer10.SplitterDistance = 293;
             this.splitContainer10.TabIndex = 0;
             // 
@@ -6401,7 +6401,7 @@
             this.listBox5.ItemHeight = 15;
             this.listBox5.Location = new System.Drawing.Point(0, 25);
             this.listBox5.Name = "listBox5";
-            this.listBox5.Size = new System.Drawing.Size(493, 284);
+            this.listBox5.Size = new System.Drawing.Size(493, 282);
             this.listBox5.TabIndex = 1;
             // 
             // toolsSysLabAnalMeth
@@ -6785,7 +6785,7 @@
             this.tabSysNuclides.Location = new System.Drawing.Point(4, 24);
             this.tabSysNuclides.Name = "tabSysNuclides";
             this.tabSysNuclides.Padding = new System.Windows.Forms.Padding(3);
-            this.tabSysNuclides.Size = new System.Drawing.Size(1133, 612);
+            this.tabSysNuclides.Size = new System.Drawing.Size(1133, 610);
             this.tabSysNuclides.TabIndex = 9;
             this.tabSysNuclides.Text = "Nuclides";
             // 
@@ -6805,8 +6805,8 @@
             // 
             this.splitContainer20.Panel2.Controls.Add(this.gridSysNuclideTrans);
             this.splitContainer20.Panel2.Controls.Add(this.toolsSysEnergyLines);
-            this.splitContainer20.Size = new System.Drawing.Size(1127, 608);
-            this.splitContainer20.SplitterDistance = 283;
+            this.splitContainer20.Size = new System.Drawing.Size(1127, 604);
+            this.splitContainer20.SplitterDistance = 282;
             this.splitContainer20.SplitterWidth = 5;
             this.splitContainer20.TabIndex = 2;
             // 
@@ -6826,7 +6826,7 @@
             this.gridSysNuclides.ReadOnly = true;
             this.gridSysNuclides.RowHeadersVisible = false;
             this.gridSysNuclides.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridSysNuclides.Size = new System.Drawing.Size(1127, 258);
+            this.gridSysNuclides.Size = new System.Drawing.Size(1127, 257);
             this.gridSysNuclides.TabIndex = 1;
             this.gridSysNuclides.RowStateChanged += new System.Windows.Forms.DataGridViewRowStateChangedEventHandler(this.gridSysNuclides_RowStateChanged);
             // 
@@ -6873,7 +6873,7 @@
             this.gridSysNuclideTrans.ReadOnly = true;
             this.gridSysNuclideTrans.RowHeadersVisible = false;
             this.gridSysNuclideTrans.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridSysNuclideTrans.Size = new System.Drawing.Size(1127, 295);
+            this.gridSysNuclideTrans.Size = new System.Drawing.Size(1127, 292);
             this.gridSysNuclideTrans.TabIndex = 1;
             // 
             // toolsSysEnergyLines

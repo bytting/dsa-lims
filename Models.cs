@@ -232,12 +232,31 @@ namespace DSA_lims
     {
         public SampleTypeModel() { }
         public SampleTypeModel(Guid id, string name) : base(id, name) { }
-
+        
         public string ShortName { get; set; }
-        public string LongName { get { return ShortName + " -> " + Name;  } }
 
-        public List<SampleTypeModel> SampleTypes = new List<SampleTypeModel>();
-        public List<SampleComponentModel> SampleComponents = new List<SampleComponentModel>();
-        public List<SampleParameterModel> SampleParameters = new List<SampleParameterModel>();     
+        public static string NameToLabel(string name)
+        {
+            if (String.IsNullOrEmpty(name))
+                return String.Empty;
+
+            string[] items = name.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
+            if(items.Length < 1)
+                return String.Empty;
+
+            return items[items.Length - 1] + " -> " + name;
+        }
+
+        public static string LabelToName(string label)
+        {
+            if (String.IsNullOrEmpty(label))
+                return String.Empty;
+
+            int idx = label.IndexOf(" -> ");
+            if(idx < 0)
+                return String.Empty;
+
+            return label.Substring(idx + 4);
+        }
     }    
 }

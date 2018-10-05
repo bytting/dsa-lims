@@ -35,8 +35,6 @@ namespace DSA_lims
         public static List<Lemma<int, string>> PreparationUnitList = new List<Lemma<int, string>>();
         public static List<Lemma<int, string>> UniformActivityUnitList = new List<Lemma<int, string>>();
         public static List<Lemma<int, string>> WorkflowStatusList = new List<Lemma<int, string>>();
-        public static List<Lemma<int, string>> LocationTypeList = new List<Lemma<int, string>>();
-
-        public static List<SampleTypeModel> SampleTypes = new List<SampleTypeModel>();
+        public static List<Lemma<int, string>> LocationTypeList = new List<Lemma<int, string>>();        
     }
 }

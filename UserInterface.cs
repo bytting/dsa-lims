@@ -90,46 +90,7 @@ namespace DSA_lims
                 foreach (ComboBox cb in cbn)
                     cb.SelectedIndex = -1;
             }
-        }
-
-        private static void AddSampleTypeNodes(TreeNodeCollection nodes, SampleTypeModel st)
-        {
-            TreeNode node = nodes.Add(st.Name, st.ShortName);
-            node.ToolTipText = st.Name.Substring(1);
-            node.Tag = st;
-
-            foreach (SampleTypeModel s in st.SampleTypes)
-                AddSampleTypeNodes(node.Nodes, s);
-        }
-
-        public static void PopulateSampleTypes(TreeView tree)
-        {            
-            tree.Nodes.Clear();
-
-            foreach (SampleTypeModel st in Common.SampleTypes)
-                AddSampleTypeNodes(tree.Nodes, st);
-        }
-
-        private static void AddSampleTypeNodes(ComboBox cb, SampleTypeModel st)
-        {
-            cb.Items.Add(st);
-
-            foreach (SampleTypeModel s in st.SampleTypes)
-                AddSampleTypeNodes(cb, s);
-        }
-
-        public static void PopulateSampleTypes(params ComboBox[] cbn)
-        {
-            foreach (ComboBox cb in cbn)
-            {
-                cb.Items.Clear();
-
-                foreach (SampleTypeModel st in Common.SampleTypes)
-                    AddSampleTypeNodes(cb, st);
-
-                cb.SelectedIndex = -1;
-            }
-        }
+        }        
 
         public static void PopulateProjectsMain(SqlConnection conn, DataGridView grid)
         {
@@ -602,6 +563,61 @@ namespace DSA_lims
             grid.Columns["description_link"].HeaderText = "Desc. link";
             grid.Columns["specter_reference_regexp"].HeaderText = "Spec.Ref RegExp";
             grid.Columns["instance_status_name"].HeaderText = "Status";
+        }
+
+        public static void PopulateSampleTypes(SqlConnection conn, TreeView tree)
+        {            
+            try
+            {
+                tree.Nodes.Clear();
+
+                using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_sample_types_short", CommandType.StoredProcedure))
+                {
+                    while (reader.Read())
+                    {
+                        Lemma<Guid, string> sampleType = new Lemma<Guid, string>(new Guid(reader["id"].ToString()), reader["name"].ToString());
+
+                        string[] items = sampleType.Name.Substring(1).Split(new char[] { '/' });
+                        TreeNodeCollection current = tree.Nodes;
+                        string key = "";
+                        foreach (string item in items)
+                        {
+                            key += "/" + item;
+                            if (current.ContainsKey(key))
+                            {
+                                current = current[key].Nodes;                                
+                                continue;
+                            }
+                            else
+                            {
+                                TreeNode n = current.Add(key, item);
+                                n.Tag = sampleType;
+                                n.ToolTipText = key;
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+            }
+        }        
+
+        public static void PopulateSampleTypes(SqlConnection conn, params ComboBox[] cbn)
+        {
+            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_sample_types_short", CommandType.StoredProcedure))
+            {
+                foreach (ComboBox cb in cbn)
+                    cb.Items.Clear();
+
+                while (reader.Read())
+                    foreach (ComboBox cb in cbn)
+                        cb.Items.Add(new Lemma<Guid, string>(new Guid(reader["id"].ToString()), SampleTypeModel.NameToLabel(reader["name"].ToString())));
+
+                foreach (ComboBox cb in cbn)
+                    cb.SelectedIndex = -1;
+            }            
         }
     }
 }

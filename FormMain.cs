@@ -88,17 +88,14 @@ namespace DSA_lims
                     DB.LoadPreparationUnits(conn);
                     DB.LoadUniformActivityUnits(conn);
                     DB.LoadWorkflowStatus(conn);
-                    DB.LoadLocationTypes(conn);
-                    DB.LoadSampleTypes(conn);
+                    DB.LoadLocationTypes(conn);                    
 
                     UI.PopulateInstanceStatus(cboxSamplesStatus);
                     UI.PopulatePreparationUnits(cboxSamplePrepUnit);
                     UI.PopulateWorkflowStatus(cboxSampleAnalWorkflowStatus, cboxSamplePrepWorkflowStatus);
                     UI.PopulateLocationTypes(cboxSampleInfoLocationTypes);
                     UI.PopulateActivityUnits(conn, gridMetaUnitsActivity);
-                    UI.PopulateActivityUnits(conn, cboxSampleAnalUnit);
-                    UI.PopulateSampleTypes(treeSampleTypes);
-                    UI.PopulateSampleTypes(cboxSampleSampleType);
+                    UI.PopulateActivityUnits(conn, cboxSampleAnalUnit);                                        
                     UI.PopulateProjectsMain(conn, gridProjectMain);
                     UI.PopulateProjectsMain(conn, cboxSampleProject, cboxSamplesProjects);
                     UI.PopulateLaboratories(conn, gridMetaLab);
@@ -120,6 +117,8 @@ namespace DSA_lims
                     UI.PopulateSamples(conn, gridSamples);
                     UI.PopulatePreparationMethods(conn, gridTypeRelPrepMeth);
                     UI.PopulateAnalysisMethods(conn, gridTypeRelAnalMeth);
+                    UI.PopulateSampleTypes(conn, treeSampleTypes);
+                    UI.PopulateSampleTypes(conn, cboxSampleSampleType);
                 }
                 
                 HideMenuItems();
@@ -377,17 +376,11 @@ namespace DSA_lims
                 lbSampleTypesComponents.Items.Clear();
                 lbSampleTypesInheritedComponents.Items.Clear();
 
-                SampleTypeModel st = tnode.Tag as SampleTypeModel;
-                lbSampleTypesComponents.Items.AddRange(st.SampleComponents.ToArray());
+                Lemma<Guid, string> sampleType = tnode.Tag as Lemma<Guid, string>;
 
-                while (tnode.Parent != null)
+                using (SqlConnection conn = DB.OpenConnection())
                 {
-                    tnode = tnode.Parent;
-                    if (tnode.Tag == null)
-                        throw new Exception("Missing ID tag in treeSampleTypes_AfterSelect");
-
-                    SampleTypeModel s = tnode.Tag as SampleTypeModel;
-                    lbSampleTypesInheritedComponents.Items.AddRange(s.SampleComponents.ToArray());
+                    AddSampleTypeComponents(conn, sampleType, false, tnode);
                 }
             }
             catch(Exception ex)
@@ -395,6 +388,24 @@ namespace DSA_lims
                 Common.Log.Error(ex);
             }            
         }        
+
+        private void AddSampleTypeComponents(SqlConnection conn, Lemma<Guid, string> sampleType, bool inherited, TreeNode tnode)
+        {
+            ListBox lb = inherited ? lbSampleTypesInheritedComponents : lbSampleTypesComponents;
+
+            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_sample_components_for_sample_type", CommandType.StoredProcedure,
+                    new SqlParameter("@sample_type_id", sampleType.Id)))
+            {
+                while (reader.Read())
+                    lb.Items.Add(new Lemma<Guid, string>(new Guid(reader["id"].ToString()), reader["name"].ToString()));
+            }
+
+            if (tnode.Parent != null)
+            {
+                Lemma<Guid, string> st = tnode.Parent.Tag as Lemma<Guid, string>;
+                AddSampleTypeComponents(conn, st, true, tnode.Parent);
+            }
+        }
 
         private void miUserSettings_Click(object sender, EventArgs e)
         {
@@ -462,7 +473,7 @@ namespace DSA_lims
                     if(cboxSampleSampleType.SelectedItem == null)
                         cmd.Parameters.AddWithValue("@sample_type_id", DBNull.Value);
                     else
-                        cmd.Parameters.AddWithValue("@sample_type_id", (cboxSampleSampleType.SelectedItem as SampleTypeModel).Id);
+                        cmd.Parameters.AddWithValue("@sample_type_id", (cboxSampleSampleType.SelectedItem as Lemma<Guid, string>).Id);
 
                     if (cboxSampleSampleStorage.SelectedItem == null)
                         cmd.Parameters.AddWithValue("@sample_storage_id", DBNull.Value);
@@ -1231,30 +1242,40 @@ namespace DSA_lims
         private void cboxSampleSampleType_SelectedIndexChanged(object sender, EventArgs e)
         {
             ClearStatusMessage();
-
-            if (cboxSampleSampleType.SelectedItem == null)
-            {
-                cboxSampleSampleComponent.Items.Clear();
-                return;
-            }
-
-            var st = cboxSampleSampleType.SelectedItem as SampleTypeModel;
             cboxSampleSampleComponent.Items.Clear();
-            cboxSampleSampleComponent.Items.AddRange(st.SampleComponents.ToArray());
 
-            TreeNode[] tnode = treeSampleTypes.Nodes.Find(st.Name, true);
-            if(tnode != null && tnode.Length != 0)
+            if (cboxSampleSampleType.SelectedItem == null)            
+                return;
+
+            var st = cboxSampleSampleType.SelectedItem as Lemma<Guid, string>;
+            Lemma<Guid, string> sampleType = new Lemma<Guid, string>(st.Id, SampleTypeModel.LabelToName(st.Name));
+
+            using (SqlConnection conn = DB.OpenConnection())
             {
-                TreeNode n = tnode[0];
-                while (n.Parent != null)
-                {
-                    n = n.Parent;
-                    SampleTypeModel s = n.Tag as SampleTypeModel;
-                    cboxSampleSampleComponent.Items.AddRange(s.SampleComponents.ToArray());
-                }
+                AddSampleTypeComponents(conn, sampleType);
             }
 
             cboxSampleSampleComponent.SelectedIndex = -1;
+        }
+
+        private void AddSampleTypeComponents(SqlConnection conn, Lemma<Guid, string> sampleType)
+        {
+            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_sample_components_for_sample_type", CommandType.StoredProcedure,
+                    new SqlParameter("@sample_type_id", sampleType.Id)))
+            {
+                while (reader.Read())
+                    cboxSampleSampleComponent.Items.Add(new Lemma<Guid, string>(new Guid(reader["id"].ToString()), reader["name"].ToString()));
+            }
+            
+            TreeNode[] tnodes = treeSampleTypes.Nodes.Find(sampleType.Name, true);
+            if (tnodes.Length < 1)
+                return;
+
+            if (tnodes[0].Parent != null)
+            {
+                Lemma<Guid, string> st = tnodes[0].Parent.Tag as Lemma<Guid, string>;
+                AddSampleTypeComponents(conn, st);
+            }
         }
 
         private void cboxSampleSampleType_Leave(object sender, EventArgs e)
@@ -1269,7 +1290,7 @@ namespace DSA_lims
                 return;
             }
 
-            SampleTypeModel st = cboxSampleSampleType.SelectedItem as SampleTypeModel;
+            Lemma<Guid, string> st = cboxSampleSampleType.SelectedItem as Lemma<Guid, string>;
             if (st == null)
             {
                 cboxSampleSampleType.Text = "";
@@ -1285,7 +1306,7 @@ namespace DSA_lims
             if (form.ShowDialog() != DialogResult.OK)
                 return;
 
-            cboxSampleSampleType.SelectedItem = form.SelectedSampleType;
+            cboxSampleSampleType.SelectedIndex = cboxSampleSampleType.FindStringExact(SampleTypeModel.NameToLabel(form.SelectedSampleType.Name));
         }
 
         private void cboxSampleProject_SelectedIndexChanged(object sender, EventArgs e)
@@ -1298,8 +1319,10 @@ namespace DSA_lims
             }
 
             Lemma<Guid, string> project = cboxSampleProject.SelectedItem as Lemma<Guid, string>;
-            using (SqlConnection conn = DB.OpenConnection())            
+            using (SqlConnection conn = DB.OpenConnection())
+            {
                 UI.PopulateProjectsSub(conn, project.Id, cboxSampleSubProject);
+            }
 
             lblSampleToolProject.Text = "[Project] " + project.Name;
             lblSampleToolSubProject.Text = "";

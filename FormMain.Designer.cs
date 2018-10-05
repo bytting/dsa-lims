@@ -104,6 +104,10 @@
             this.miPreparationMethodsNew = new System.Windows.Forms.ToolStripMenuItem();
             this.miPreparationMethodEdit = new System.Windows.Forms.ToolStripMenuItem();
             this.miPreparationMethodDelete = new System.Windows.Forms.ToolStripMenuItem();
+            this.miAnalysisMethods = new System.Windows.Forms.ToolStripMenuItem();
+            this.miAnalysisMethodsNew = new System.Windows.Forms.ToolStripMenuItem();
+            this.miAnalysisMethodsEdit = new System.Windows.Forms.ToolStripMenuItem();
+            this.miAnalysisMethodsDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.miAuditLog = new System.Windows.Forms.ToolStripMenuItem();
             this.miLog = new System.Windows.Forms.ToolStripMenuItem();
             this.miSys = new System.Windows.Forms.ToolStripMenuItem();
@@ -857,10 +861,6 @@
             this.tools = new System.Windows.Forms.ToolStrip();
             this.btnMenu = new System.Windows.Forms.ToolStripButton();
             this.lblCurrentTab = new System.Windows.Forms.ToolStripLabel();
-            this.miAnalysisMethods = new System.Windows.Forms.ToolStripMenuItem();
-            this.miAnalysisMethodsNew = new System.Windows.Forms.ToolStripMenuItem();
-            this.miAnalysisMethodsEdit = new System.Windows.Forms.ToolStripMenuItem();
-            this.miAnalysisMethodsDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tabs.SuspendLayout();
@@ -1777,6 +1777,37 @@
             this.miPreparationMethodDelete.Size = new System.Drawing.Size(216, 22);
             this.miPreparationMethodDelete.Text = "&Delete preparation method";
             this.miPreparationMethodDelete.Click += new System.EventHandler(this.miPreparationMethodDelete_Click);
+            // 
+            // miAnalysisMethods
+            // 
+            this.miAnalysisMethods.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.miAnalysisMethodsNew,
+            this.miAnalysisMethodsEdit,
+            this.miAnalysisMethodsDelete});
+            this.miAnalysisMethods.Name = "miAnalysisMethods";
+            this.miAnalysisMethods.Size = new System.Drawing.Size(185, 22);
+            this.miAnalysisMethods.Text = "&Analysis methods";
+            // 
+            // miAnalysisMethodsNew
+            // 
+            this.miAnalysisMethodsNew.Name = "miAnalysisMethodsNew";
+            this.miAnalysisMethodsNew.Size = new System.Drawing.Size(196, 22);
+            this.miAnalysisMethodsNew.Text = "&New analysis method";
+            this.miAnalysisMethodsNew.Click += new System.EventHandler(this.miAnalysisMethodsNew_Click);
+            // 
+            // miAnalysisMethodsEdit
+            // 
+            this.miAnalysisMethodsEdit.Name = "miAnalysisMethodsEdit";
+            this.miAnalysisMethodsEdit.Size = new System.Drawing.Size(196, 22);
+            this.miAnalysisMethodsEdit.Text = "&Edit analysis method";
+            this.miAnalysisMethodsEdit.Click += new System.EventHandler(this.miAnalysisMethodsEdit_Click);
+            // 
+            // miAnalysisMethodsDelete
+            // 
+            this.miAnalysisMethodsDelete.Name = "miAnalysisMethodsDelete";
+            this.miAnalysisMethodsDelete.Size = new System.Drawing.Size(196, 22);
+            this.miAnalysisMethodsDelete.Text = "&Delete analysis method";
+            this.miAnalysisMethodsDelete.Click += new System.EventHandler(this.miAnalysisMethodsDelete_Click);
             // 
             // miAuditLog
             // 
@@ -3346,7 +3377,7 @@
             // 
             this.splitContainer6.Panel2.Controls.Add(this.panel12);
             this.splitContainer6.Size = new System.Drawing.Size(1127, 574);
-            this.splitContainer6.SplitterDistance = 767;
+            this.splitContainer6.SplitterDistance = 766;
             this.splitContainer6.SplitterWidth = 5;
             this.splitContainer6.TabIndex = 4;
             // 
@@ -3366,7 +3397,7 @@
             // 
             this.splitContainer7.Panel2.Controls.Add(this.treeView1);
             this.splitContainer7.Panel2.Controls.Add(this.toolsOrderContent);
-            this.splitContainer7.Size = new System.Drawing.Size(767, 574);
+            this.splitContainer7.Size = new System.Drawing.Size(766, 574);
             this.splitContainer7.SplitterDistance = 361;
             this.splitContainer7.SplitterWidth = 5;
             this.splitContainer7.TabIndex = 0;
@@ -3553,7 +3584,7 @@
             this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeView1.Location = new System.Drawing.Point(0, 25);
             this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(401, 549);
+            this.treeView1.Size = new System.Drawing.Size(400, 549);
             this.treeView1.TabIndex = 0;
             // 
             // toolsOrderContent
@@ -3571,7 +3602,7 @@
             this.toolStripButton34});
             this.toolsOrderContent.Location = new System.Drawing.Point(0, 0);
             this.toolsOrderContent.Name = "toolsOrderContent";
-            this.toolsOrderContent.Size = new System.Drawing.Size(401, 25);
+            this.toolsOrderContent.Size = new System.Drawing.Size(400, 25);
             this.toolsOrderContent.TabIndex = 1;
             this.toolsOrderContent.Text = "toolStrip16";
             // 
@@ -3653,7 +3684,7 @@
             this.panel12.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel12.Location = new System.Drawing.Point(0, 0);
             this.panel12.Name = "panel12";
-            this.panel12.Size = new System.Drawing.Size(355, 574);
+            this.panel12.Size = new System.Drawing.Size(356, 574);
             this.panel12.TabIndex = 1;
             // 
             // dataGridView12
@@ -3667,7 +3698,7 @@
             this.dataGridView12.Location = new System.Drawing.Point(0, 25);
             this.dataGridView12.Name = "dataGridView12";
             this.dataGridView12.ReadOnly = true;
-            this.dataGridView12.Size = new System.Drawing.Size(355, 549);
+            this.dataGridView12.Size = new System.Drawing.Size(356, 549);
             this.dataGridView12.TabIndex = 1;
             // 
             // toolsOrderAttachments
@@ -3681,7 +3712,7 @@
             this.toolStripButton23});
             this.toolsOrderAttachments.Location = new System.Drawing.Point(0, 0);
             this.toolsOrderAttachments.Name = "toolsOrderAttachments";
-            this.toolsOrderAttachments.Size = new System.Drawing.Size(355, 25);
+            this.toolsOrderAttachments.Size = new System.Drawing.Size(356, 25);
             this.toolsOrderAttachments.TabIndex = 0;
             this.toolsOrderAttachments.Text = "toolStrip15";
             // 
@@ -9669,37 +9700,6 @@
             this.lblCurrentTab.Name = "lblCurrentTab";
             this.lblCurrentTab.Size = new System.Drawing.Size(98, 22);
             this.lblCurrentTab.Text = "<lblCurrentTab>";
-            // 
-            // miAnalysisMethods
-            // 
-            this.miAnalysisMethods.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.miAnalysisMethodsNew,
-            this.miAnalysisMethodsEdit,
-            this.miAnalysisMethodsDelete});
-            this.miAnalysisMethods.Name = "miAnalysisMethods";
-            this.miAnalysisMethods.Size = new System.Drawing.Size(185, 22);
-            this.miAnalysisMethods.Text = "&Analysis methods";
-            // 
-            // miAnalysisMethodsNew
-            // 
-            this.miAnalysisMethodsNew.Name = "miAnalysisMethodsNew";
-            this.miAnalysisMethodsNew.Size = new System.Drawing.Size(196, 22);
-            this.miAnalysisMethodsNew.Text = "&New analysis method";
-            this.miAnalysisMethodsNew.Click += new System.EventHandler(this.miAnalysisMethodsNew_Click);
-            // 
-            // miAnalysisMethodsEdit
-            // 
-            this.miAnalysisMethodsEdit.Name = "miAnalysisMethodsEdit";
-            this.miAnalysisMethodsEdit.Size = new System.Drawing.Size(196, 22);
-            this.miAnalysisMethodsEdit.Text = "&Edit analysis method";
-            this.miAnalysisMethodsEdit.Click += new System.EventHandler(this.miAnalysisMethodsEdit_Click);
-            // 
-            // miAnalysisMethodsDelete
-            // 
-            this.miAnalysisMethodsDelete.Name = "miAnalysisMethodsDelete";
-            this.miAnalysisMethodsDelete.Size = new System.Drawing.Size(196, 22);
-            this.miAnalysisMethodsDelete.Text = "&Delete analysis method";
-            this.miAnalysisMethodsDelete.Click += new System.EventHandler(this.miAnalysisMethodsDelete_Click);
             // 
             // FormMain
             // 

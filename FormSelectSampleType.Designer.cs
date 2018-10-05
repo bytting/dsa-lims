@@ -76,6 +76,7 @@
             this.treeSampleTypes.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.treeSampleTypes.Location = new System.Drawing.Point(0, 0);
             this.treeSampleTypes.Name = "treeSampleTypes";
+            this.treeSampleTypes.ShowNodeToolTips = true;
             this.treeSampleTypes.Size = new System.Drawing.Size(488, 564);
             this.treeSampleTypes.TabIndex = 1;
             // 

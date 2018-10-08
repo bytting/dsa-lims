@@ -372,7 +372,11 @@ namespace DSA_lims
 
                 using (SqlConnection conn = DB.OpenConnection())
                 {
+                    // add sample components
                     AddSampleTypeComponents(conn, sampleType, false, tnode);
+
+                    // add preparation methods
+                    UI.PopulateSampleTypePrepMeth(conn, tnode, lbTypeRelSampTypePrepMeth, lbTypeRelSampTypeInheritedPrepMeth);
                 }
             }
             catch(Exception ex)
@@ -1589,6 +1593,67 @@ namespace DSA_lims
         private void miAnalysisMethodsDelete_Click(object sender, EventArgs e)
         {
             // delete analysis method
+        }
+
+        private void miAddPrepMethToSampType_Click(object sender, EventArgs e)
+        {
+            if(treeSampleTypes.SelectedNode == null)
+            {
+                MessageBox.Show("You must select a sample type first");
+                return;
+            }
+
+            Lemma<Guid, string> st = treeSampleTypes.SelectedNode.Tag as Lemma<Guid, string>;            
+            string existingMethods = GetPreparationMethodsForSampleType(treeSampleTypes.SelectedNode);
+
+            FormSampTypeXPrepMeth form = new FormSampTypeXPrepMeth(st, existingMethods);
+            if (form.ShowDialog() == DialogResult.Cancel)
+                return;
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                UI.PopulateSampleTypePrepMeth(conn, treeSampleTypes.SelectedNode, lbTypeRelSampTypePrepMeth, lbTypeRelSampTypeInheritedPrepMeth);
+            }
+        }        
+
+        private string GetPreparationMethodsForSampleType(TreeNode tnode)
+        {
+            string existingMethods = "";
+            Lemma<Guid, string> st = tnode.Tag as Lemma<Guid, string>;
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                SqlCommand cmd = new SqlCommand(@"
+select pm.id, pm.name from preparation_method pm	
+    inner join sample_type_x_preparation_method stpm on stpm.preparation_method_id = pm.id
+    inner join sample_type st on stpm.sample_type_id = st.id and st.id = @sample_type_id
+order by name
+", conn);
+                cmd.Parameters.AddWithValue("@sample_type_id", st.Id);
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())                    
+                        existingMethods += "'" + reader["id"] + "',";
+                }
+
+                while (tnode.Parent != null)
+                {
+                    tnode = tnode.Parent;
+                    st = tnode.Tag as Lemma<Guid, string>;
+
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.AddWithValue("@sample_type_id", st.Id);
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())                        
+                            existingMethods += "'" + reader["id"] + "',";
+                    }
+                }
+
+                if (existingMethods.Length > 0)
+                    existingMethods = existingMethods.Substring(0, existingMethods.Length - 1);
+            }
+
+            return existingMethods;
         }
     }    
 }

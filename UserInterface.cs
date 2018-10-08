@@ -635,5 +635,41 @@ namespace DSA_lims
                     cb.SelectedIndex = -1;
             }            
         }
+
+        public static void PopulateSampleTypePrepMeth(SqlConnection conn, TreeNode tnode, ListBox lb, ListBox lbInherited)
+        {
+            Lemma<Guid, string> sampleType = tnode.Tag as Lemma<Guid, string>;
+
+            string query = @"
+select pm.id, pm.name from preparation_method pm	
+    inner join sample_type_x_preparation_method stpm on stpm.preparation_method_id = pm.id
+    inner join sample_type st on stpm.sample_type_id = st.id and st.id = @sample_type_id
+order by name";
+
+            lb.Items.Clear();
+            using (SqlDataReader reader = DB.GetDataReader(conn, query, CommandType.Text, new SqlParameter("@sample_type_id", sampleType.Id)))
+            {
+                while (reader.Read())
+                {
+                    Lemma<Guid, string> st = new Lemma<Guid, string>(new Guid(reader["id"].ToString()), reader["name"].ToString());
+                    lb.Items.Add(st);
+                }
+            }            
+
+            lbInherited.Items.Clear();
+            while (tnode.Parent != null)
+            {
+                tnode = tnode.Parent;
+                sampleType = tnode.Tag as Lemma<Guid, string>;
+                using (SqlDataReader reader = DB.GetDataReader(conn, query, CommandType.Text, new SqlParameter("@sample_type_id", sampleType.Id)))
+                {
+                    while (reader.Read())
+                    {
+                        Lemma<Guid, string> st = new Lemma<Guid, string>(new Guid(reader["id"].ToString()), reader["name"].ToString());
+                        lbInherited.Items.Add(st);
+                    }
+                }
+            }
+        }
     }
 }

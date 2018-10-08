@@ -15,7 +15,7 @@ namespace DSA_lims
     {
         private Lemma<Guid, string> SampleType = null;        
 
-        public FormSampTypeXPrepMeth(Lemma<Guid, string> sampType, string existingMethods)
+        public FormSampTypeXPrepMeth(Lemma<Guid, string> sampType, List<Guid> existingMethods)
         {
             InitializeComponent();
 
@@ -25,10 +25,13 @@ namespace DSA_lims
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                string query = "";
-                if (String.IsNullOrEmpty(existingMethods))
+                var methArr = from item in existingMethods select "'" + item + "'";
+                string smeth = string.Join(",", methArr);
+
+                string query;
+                if (String.IsNullOrEmpty(smeth))
                     query = "select id, name from preparation_method order by name";
-                else query = "select id, name from preparation_method where id not in(" + existingMethods + ") order by name";
+                else query = "select id, name from preparation_method where id not in(" + smeth + ") order by name";
 
                 using (SqlDataReader reader = DB.GetDataReader(conn, query, CommandType.Text))
                 {

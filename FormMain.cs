@@ -1604,7 +1604,7 @@ namespace DSA_lims
             }
 
             Lemma<Guid, string> st = treeSampleTypes.SelectedNode.Tag as Lemma<Guid, string>;            
-            string existingMethods = GetPreparationMethodsForSampleType(treeSampleTypes.SelectedNode);
+            List<Guid> existingMethods = GetPreparationMethodsForSampleType(treeSampleTypes.SelectedNode);
 
             FormSampTypeXPrepMeth form = new FormSampTypeXPrepMeth(st, existingMethods);
             if (form.ShowDialog() == DialogResult.Cancel)
@@ -1616,9 +1616,9 @@ namespace DSA_lims
             }
         }        
 
-        private string GetPreparationMethodsForSampleType(TreeNode tnode)
+        private List<Guid> GetPreparationMethodsForSampleType(TreeNode tnode)
         {
-            string existingMethods = "";
+            List<Guid> existingMethods = new List<Guid>();
             Lemma<Guid, string> st = tnode.Tag as Lemma<Guid, string>;
             using (SqlConnection conn = DB.OpenConnection())
             {
@@ -1632,7 +1632,7 @@ order by name
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())                    
-                        existingMethods += "'" + reader["id"] + "',";
+                        existingMethods.Add(new Guid(reader["id"].ToString()));
                 }
 
                 while (tnode.Parent != null)
@@ -1644,14 +1644,11 @@ order by name
                     cmd.Parameters.AddWithValue("@sample_type_id", st.Id);
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
-                        while (reader.Read())                        
-                            existingMethods += "'" + reader["id"] + "',";
+                        while (reader.Read())
+                            existingMethods.Add(new Guid(reader["id"].ToString()));
                     }
                 }
-
-                if (existingMethods.Length > 0)
-                    existingMethods = existingMethods.Substring(0, existingMethods.Length - 1);
-            }
+            }            
 
             return existingMethods;
         }

@@ -1142,7 +1142,7 @@ namespace DSA_lims
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
-                    SetStatusMessage("Sampler " + form.Sampler.Name + " inserted");
+                    SetStatusMessage("Sampler " + form.SamplerName + " created");
                     using (SqlConnection conn = DB.OpenConnection())
                     {
                         UI.PopulateSamplers(conn, gridMetaSamplers);
@@ -1167,7 +1167,7 @@ namespace DSA_lims
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
-                    SetStatusMessage("Sampler " + form.Sampler.Name + " updated");
+                    SetStatusMessage("Sampler " + form.SamplerName + " updated");
                     using (SqlConnection conn = DB.OpenConnection())
                     {
                         UI.PopulateSamplers(conn, gridMetaSamplers);
@@ -1194,7 +1194,7 @@ namespace DSA_lims
                 return;
 
             var st = cboxSampleSampleType.SelectedItem as Lemma<Guid, string>;
-            Lemma<Guid, string> sampleType = new Lemma<Guid, string>(st.Id, SampleTypeModel.LabelToName(st.Name));
+            Lemma<Guid, string> sampleType = new Lemma<Guid, string>(st.Id, StrUtils.LabelToSampleTypeName(st.Name));
 
             using (SqlConnection conn = DB.OpenConnection())
             {
@@ -1252,7 +1252,7 @@ namespace DSA_lims
             if (form.ShowDialog() != DialogResult.OK)
                 return;
 
-            cboxSampleSampleType.SelectedIndex = cboxSampleSampleType.FindStringExact(SampleTypeModel.NameToLabel(form.SelectedSampleType.Name));
+            cboxSampleSampleType.SelectedIndex = cboxSampleSampleType.FindStringExact(StrUtils.SampleTypeNameToLabel(form.SelectedSampleType.Name));
         }
 
         private void cboxSampleProject_SelectedIndexChanged(object sender, EventArgs e)
@@ -1435,7 +1435,7 @@ namespace DSA_lims
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
-                    SetStatusMessage("Sampling method " + form.SamplingMethod.Name + " inserted");
+                    SetStatusMessage("Sampling method " + form.SamplingMethodName + " created");
                     using (SqlConnection conn = DB.OpenConnection())
                     {
                         UI.PopulateSamplingMethods(conn, gridMetaSamplingMeth);
@@ -1461,7 +1461,7 @@ namespace DSA_lims
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
-                    SetStatusMessage("Sampling method " + form.SamplingMethod.Name + " updated");
+                    SetStatusMessage("Sampling method " + form.SamplingMethodName + " updated");
                     using (SqlConnection conn = DB.OpenConnection())
                     {
                         UI.PopulateSamplingMethods(conn, gridMetaSamplingMeth);
@@ -1499,7 +1499,7 @@ namespace DSA_lims
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
-                    SetStatusMessage("Preparation method " + form.PreparationMethod.Name + " inserted");
+                    SetStatusMessage("Preparation method " + form.PreparationMethodName + " created");
                     using (SqlConnection conn = DB.OpenConnection())
                     {
                         UI.PopulatePreparationMethods(conn, gridTypeRelPrepMeth);
@@ -1524,7 +1524,7 @@ namespace DSA_lims
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
-                    SetStatusMessage("Preparation method " + form.PreparationMethod.Name + " updated");
+                    SetStatusMessage("Preparation method " + form.PreparationMethodName + " updated");
                     using (SqlConnection conn = DB.OpenConnection())
                     {
                         UI.PopulatePreparationMethods(conn, gridTypeRelPrepMeth);
@@ -1548,7 +1548,7 @@ namespace DSA_lims
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
-                    SetStatusMessage("Analysis method " + form.AnalysisMethod.Name + " inserted");
+                    SetStatusMessage("Analysis method " + form.AnalysisMethodName + " created");
                     using (SqlConnection conn = DB.OpenConnection())
                     {
                         UI.PopulateAnalysisMethods(conn, gridTypeRelAnalMeth);
@@ -1573,7 +1573,7 @@ namespace DSA_lims
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
-                    SetStatusMessage("Analysis method " + form.AnalysisMethod.Name + " updated");
+                    SetStatusMessage("Analysis method " + form.AnalysisMethodName + " updated");
                     using (SqlConnection conn = DB.OpenConnection())
                     {
                         UI.PopulateAnalysisMethods(conn, gridTypeRelAnalMeth);

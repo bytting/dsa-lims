@@ -221,14 +221,11 @@ go
 
 insert into activity_unit values(NEWID(), 'Bq', 1.0, 1)
 insert into activity_unit values(NEWID(), 'mBq/g', 1000.0, 2)
-insert into activity_unit values(NEWID(), 'mBq/g ww', 1000.0, 2)
-insert into activity_unit values(NEWID(), 'mBq/g dw', 1000.0, 2)
+insert into activity_unit values(NEWID(), 'mBq/g', 1000.0, 2)
 insert into activity_unit values(NEWID(), 'Bq/g', 1.0, 2)
-insert into activity_unit values(NEWID(), 'Bq/g ww', 1.0, 2)
-insert into activity_unit values(NEWID(), 'Bq/g dw', 1.0, 2)
+insert into activity_unit values(NEWID(), 'Bq/g', 1.0, 2)
 insert into activity_unit values(NEWID(), 'Bq/kg', 0.001, 2)
-insert into activity_unit values(NEWID(), 'Bq/kg ww', 0.001, 2)
-insert into activity_unit values(NEWID(), 'Bq/kg dw', 0.001, 2)
+insert into activity_unit values(NEWID(), 'Bq/kg', 0.001, 2)
 insert into activity_unit values(NEWID(), 'Bq/m2', 1.0, 3)
 insert into activity_unit values(NEWID(), 'Bq/m3', 1.0, 4)
 insert into activity_unit values(NEWID(), 'mBq/l', 1.0, 4)
@@ -266,6 +263,31 @@ as
 	from activity_unit au, uniform_activity_unit uau 
 	where au.uniform_activity_unit_id = uau.id
 	order by au.name
+go
+
+/*===========================================================================*/
+/* tbl activity_unit_type */
+
+if OBJECT_ID('dbo.activity_unit_type', 'U') IS NOT NULL drop table activity_unit_type;
+
+create table activity_unit_type (
+	id int primary key NOT NULL,	
+	name nvarchar(32) NOT NULL	
+)
+go
+
+insert into activity_unit_type values(1, 'Wet weight')
+insert into activity_unit_type values(2, 'Dry weight')
+insert into activity_unit_type values(3, 'Ash weight')
+go
+
+create proc csp_select_activity_unit_types
+as 
+	select 
+		id,	
+		name		
+	from activity_unit_type
+	order by name
 go
 
 /*===========================================================================*/
@@ -1465,6 +1487,7 @@ create table analysis (
 	workflow_status_id int default 1,
 	specter_reference nvarchar(256) default NULL,
 	activity_unit_id int NOT NULL,
+	activity_unit_type_id int NOT NULL,
 	sigma float NOT NULL,
 	nuclide_library nvarchar(256) default NULL,
 	mda_library nvarchar(256) default NULL,	

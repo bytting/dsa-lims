@@ -32,7 +32,17 @@ namespace DSA_lims
 {
     public partial class FormSamplingMeth : Form
     {
-        public SamplingMethodModel SamplingMethod = new SamplingMethodModel();
+        private Dictionary<string, object> p = new Dictionary<string, object>();
+
+        public Guid SamplingMethodId
+        {
+            get { return p.ContainsKey("id") ? (Guid)p["id"] : Guid.Empty; }
+        }
+
+        public string SamplingMethodName
+        {
+            get { return p.ContainsKey("name") ? p["name"].ToString() : String.Empty; }
+        }
 
         public FormSamplingMeth()
         {
@@ -45,7 +55,7 @@ namespace DSA_lims
         public FormSamplingMeth(Guid smid)
         {
             InitializeComponent();
-            SamplingMethod.Id = smid;
+            p["id"] = smid;
             Text = "Update sampling method";
             cboxInstanceStatus.DataSource = Common.InstanceStatusList;
 
@@ -53,20 +63,20 @@ namespace DSA_lims
             {
                 SqlCommand cmd = new SqlCommand("csp_select_sampling_method", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@id", SamplingMethod.Id);
+                cmd.Parameters.AddWithValue("@id", p["id"]);
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
                     if (!reader.HasRows)
-                        throw new Exception("Sampler with ID " + SamplingMethod.Id.ToString() + " was not found");
+                        throw new Exception("Sampler with ID " + p["id"] + " was not found");
 
                     reader.Read();
                     tbName.Text = reader["name"].ToString();
                     cboxInstanceStatus.SelectedValue = InstanceStatus.Eval(reader["instance_status_id"]);
                     tbComment.Text = reader["comment"].ToString();
-                    SamplingMethod.CreateDate = Convert.ToDateTime(reader["create_date"]);
-                    SamplingMethod.CreatedBy = reader["created_by"].ToString();
-                    SamplingMethod.UpdateDate = Convert.ToDateTime(reader["update_date"]);
-                    SamplingMethod.UpdatedBy = reader["updated_by"].ToString();
+                    p["create_date"] = reader["create_date"];
+                    p["created_by"] = reader["created_by"];
+                    p["update_date"] = reader["update_date"];
+                    p["updated_by"] = reader["updated_by"];
                 }
             }
         }
@@ -85,12 +95,12 @@ namespace DSA_lims
                 return;
             }
 
-            SamplingMethod.Name = tbName.Text.Trim();
-            SamplingMethod.InstanceStatusId = InstanceStatus.Eval(cboxInstanceStatus.SelectedValue);
-            SamplingMethod.Comment = tbComment.Text.Trim();
+            p["name"] = tbName.Text.Trim();
+            p["instance_status_id"] = InstanceStatus.Eval(cboxInstanceStatus.SelectedValue);
+            p["comment"] = tbComment.Text.Trim();
 
             bool success;
-            if (SamplingMethod.Id == Guid.Empty)
+            if (!p.ContainsKey("id"))
                 success = InsertSamplingMethod();
             else
                 success = UpdateSamplingMethod();
@@ -106,28 +116,28 @@ namespace DSA_lims
 
             try
             {
-                SamplingMethod.CreateDate = DateTime.Now;
-                SamplingMethod.CreatedBy = Common.Username;
-                SamplingMethod.UpdateDate = DateTime.Now;
-                SamplingMethod.UpdatedBy = Common.Username;
+                p["create_date"] = DateTime.Now;
+                p["created_by"] = Common.Username;
+                p["update_date"] = DateTime.Now;
+                p["updated_by"] = Common.Username;
 
                 connection = DB.OpenConnection();
                 transaction = connection.BeginTransaction();
 
                 SqlCommand cmd = new SqlCommand("csp_insert_sampling_method", connection, transaction);
                 cmd.CommandType = CommandType.StoredProcedure;
-                SamplingMethod.Id = Guid.NewGuid();
-                cmd.Parameters.AddWithValue("@id", SamplingMethod.Id);
-                cmd.Parameters.AddWithValue("@name", SamplingMethod.Name);
-                cmd.Parameters.AddWithValue("@instance_status_id", SamplingMethod.InstanceStatusId);
-                cmd.Parameters.AddWithValue("@comment", SamplingMethod.Comment);
-                cmd.Parameters.AddWithValue("@create_date", SamplingMethod.CreateDate);
-                cmd.Parameters.AddWithValue("@created_by", SamplingMethod.CreatedBy);
-                cmd.Parameters.AddWithValue("@update_date", SamplingMethod.UpdateDate);
-                cmd.Parameters.AddWithValue("@updated_by", SamplingMethod.UpdatedBy);
+                p["id"] = Guid.NewGuid();
+                cmd.Parameters.AddWithValue("@id", p["id"]);
+                cmd.Parameters.AddWithValue("@name", p["name"]);
+                cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
+                cmd.Parameters.AddWithValue("@comment", p["comment"]);
+                cmd.Parameters.AddWithValue("@create_date", p["create_date"]);
+                cmd.Parameters.AddWithValue("@created_by", p["created_by"]);
+                cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
+                cmd.Parameters.AddWithValue("@updated_by", p["updated_by"]);
                 cmd.ExecuteNonQuery();
 
-                DB.AddAuditMessage(connection, transaction, "sampling_method", SamplingMethod.Id, AuditOperationType.Insert, JsonConvert.SerializeObject(SamplingMethod));
+                DB.AddAuditMessage(connection, transaction, "sampling_method", (Guid)p["id"], AuditOperationType.Insert, JsonConvert.SerializeObject(p));
 
                 transaction.Commit();
             }
@@ -152,23 +162,23 @@ namespace DSA_lims
 
             try
             {
-                SamplingMethod.UpdateDate = DateTime.Now;
-                SamplingMethod.UpdatedBy = Common.Username;
+                p["update_date"] = DateTime.Now;
+                p["updated_by"] = Common.Username;
 
                 connection = DB.OpenConnection();
                 transaction = connection.BeginTransaction();
 
                 SqlCommand cmd = new SqlCommand("csp_update_sampling_method", connection, transaction);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@id", SamplingMethod.Id);
-                cmd.Parameters.AddWithValue("@name", SamplingMethod.Name);                
-                cmd.Parameters.AddWithValue("@instance_status_id", SamplingMethod.InstanceStatusId);
-                cmd.Parameters.AddWithValue("@comment", SamplingMethod.Comment);
-                cmd.Parameters.AddWithValue("@update_date", SamplingMethod.UpdateDate);
-                cmd.Parameters.AddWithValue("@updated_by", SamplingMethod.UpdatedBy);
+                cmd.Parameters.AddWithValue("@id", p["id"]);
+                cmd.Parameters.AddWithValue("@name", p["name"]);                
+                cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
+                cmd.Parameters.AddWithValue("@comment", p["comment"]);
+                cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
+                cmd.Parameters.AddWithValue("@updated_by", p["updated_by"]);
                 cmd.ExecuteNonQuery();
 
-                DB.AddAuditMessage(connection, transaction, "sampling_method", SamplingMethod.Id, AuditOperationType.Update, JsonConvert.SerializeObject(SamplingMethod));
+                DB.AddAuditMessage(connection, transaction, "sampling_method", (Guid)p["id"], AuditOperationType.Update, JsonConvert.SerializeObject(p));
 
                 transaction.Commit();
             }

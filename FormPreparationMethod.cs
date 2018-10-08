@@ -30,7 +30,17 @@ namespace DSA_lims
 {
     public partial class FormPreparationMethod : Form
     {
-        public PreparationMethodModel PreparationMethod = new PreparationMethodModel();
+        private Dictionary<string, object> p = new Dictionary<string, object>();
+
+        public Guid PreparationMethodId
+        {
+            get { return p.ContainsKey("id") ? (Guid)p["id"] : Guid.Empty; }
+        }
+
+        public string PreparationMethodName
+        {
+            get { return p.ContainsKey("name") ? p["name"].ToString() : String.Empty; }
+        }
 
         public FormPreparationMethod()
         {
@@ -43,7 +53,7 @@ namespace DSA_lims
         public FormPreparationMethod(Guid pmid)
         {
             InitializeComponent();
-            PreparationMethod.Id = pmid;
+            p["id"] = pmid;
             Text = "Update preparation method";
             cboxInstanceStatus.DataSource = Common.InstanceStatusList;
 
@@ -51,11 +61,11 @@ namespace DSA_lims
             {
                 SqlCommand cmd = new SqlCommand("csp_select_preparation_method", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@id", PreparationMethod.Id);
+                cmd.Parameters.AddWithValue("@id", p["id"]);
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
                     if (!reader.HasRows)
-                        throw new Exception("Preparation method with ID " + PreparationMethod.Id.ToString() + " was not found");
+                        throw new Exception("Preparation method with ID " + p["id"] + " was not found");
 
                     reader.Read();
                     tbName.Text = reader["name"].ToString();
@@ -63,10 +73,10 @@ namespace DSA_lims
                     cbDestructive.Checked = Convert.ToBoolean(reader["destructive"]);
                     cboxInstanceStatus.SelectedValue = InstanceStatus.Eval(reader["instance_status_id"]);
                     tbComment.Text = reader["comment"].ToString();
-                    PreparationMethod.CreateDate = Convert.ToDateTime(reader["create_date"]);
-                    PreparationMethod.CreatedBy = reader["created_by"].ToString();
-                    PreparationMethod.UpdateDate = Convert.ToDateTime(reader["update_date"]);
-                    PreparationMethod.UpdatedBy = reader["updated_by"].ToString();
+                    p["create_date"] = reader["create_date"];
+                    p["created_by"] = reader["created_by"];
+                    p["update_date"] = reader["update_date"];
+                    p["updated_by"] = reader["updated_by"];
                 }
             }
         }
@@ -79,14 +89,14 @@ namespace DSA_lims
                 return;
             }
 
-            PreparationMethod.Name = tbName.Text.Trim();
-            PreparationMethod.DescriptionLink = tbDescriptionLink.Text.Trim();
-            PreparationMethod.Destructive = cbDestructive.Checked;
-            PreparationMethod.InstanceStatusId = InstanceStatus.Eval(cboxInstanceStatus.SelectedValue);
-            PreparationMethod.Comment = tbComment.Text.Trim();
+            p["name"] = tbName.Text.Trim();
+            p["description_link"] = tbDescriptionLink.Text.Trim();
+            p["destructive"] = cbDestructive.Checked;
+            p["instance_status_id"] = InstanceStatus.Eval(cboxInstanceStatus.SelectedValue);
+            p["comment"] = tbComment.Text.Trim();
 
             bool success;
-            if (PreparationMethod.Id == Guid.Empty)
+            if (!p.ContainsKey("id"))
                 success = InsertPreparationMethod();
             else
                 success = UpdatePreparationMethod();
@@ -108,30 +118,30 @@ namespace DSA_lims
 
             try
             {
-                PreparationMethod.CreateDate = DateTime.Now;
-                PreparationMethod.CreatedBy = Common.Username;
-                PreparationMethod.UpdateDate = DateTime.Now;
-                PreparationMethod.UpdatedBy = Common.Username;
+                p["create_date"] = DateTime.Now;
+                p["created_by"] = Common.Username;
+                p["update_date"] = DateTime.Now;
+                p["updated_by"] = Common.Username;
 
                 connection = DB.OpenConnection();
                 transaction = connection.BeginTransaction();
 
                 SqlCommand cmd = new SqlCommand("csp_insert_preparation_method", connection, transaction);
                 cmd.CommandType = CommandType.StoredProcedure;
-                PreparationMethod.Id = Guid.NewGuid();
-                cmd.Parameters.AddWithValue("@id", PreparationMethod.Id);
-                cmd.Parameters.AddWithValue("@name", PreparationMethod.Name);
-                cmd.Parameters.AddWithValue("@description_link", PreparationMethod.DescriptionLink);
-                cmd.Parameters.AddWithValue("@destructive", PreparationMethod.Destructive);
-                cmd.Parameters.AddWithValue("@instance_status_id", PreparationMethod.InstanceStatusId);
-                cmd.Parameters.AddWithValue("@comment", PreparationMethod.Comment);
-                cmd.Parameters.AddWithValue("@create_date", PreparationMethod.CreateDate);
-                cmd.Parameters.AddWithValue("@created_by", PreparationMethod.CreatedBy);
-                cmd.Parameters.AddWithValue("@update_date", PreparationMethod.UpdateDate);
-                cmd.Parameters.AddWithValue("@updated_by", PreparationMethod.UpdatedBy);
+                p["id"] = Guid.NewGuid();
+                cmd.Parameters.AddWithValue("@id", p["id"]);
+                cmd.Parameters.AddWithValue("@name", p["name"]);
+                cmd.Parameters.AddWithValue("@description_link", p["description_link"]);
+                cmd.Parameters.AddWithValue("@destructive", p["destructive"]);
+                cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
+                cmd.Parameters.AddWithValue("@comment", p["comment"]);
+                cmd.Parameters.AddWithValue("@create_date", p["create_date"]);
+                cmd.Parameters.AddWithValue("@created_by", p["created_by"]);
+                cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
+                cmd.Parameters.AddWithValue("@updated_by", p["updated_by"]);
                 cmd.ExecuteNonQuery();
 
-                DB.AddAuditMessage(connection, transaction, "preparation_method", PreparationMethod.Id, AuditOperationType.Insert, JsonConvert.SerializeObject(PreparationMethod));
+                DB.AddAuditMessage(connection, transaction, "preparation_method", (Guid)p["id"], AuditOperationType.Insert, JsonConvert.SerializeObject(p));
 
                 transaction.Commit();
             }
@@ -156,25 +166,25 @@ namespace DSA_lims
 
             try
             {
-                PreparationMethod.UpdateDate = DateTime.Now;
-                PreparationMethod.UpdatedBy = Common.Username;
+                p["update_date"] = DateTime.Now;
+                p["updated_by"] = Common.Username;
 
                 connection = DB.OpenConnection();
                 transaction = connection.BeginTransaction();
 
                 SqlCommand cmd = new SqlCommand("csp_update_preparation_method", connection, transaction);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@id", PreparationMethod.Id);
-                cmd.Parameters.AddWithValue("@name", PreparationMethod.Name);
-                cmd.Parameters.AddWithValue("@description_link", PreparationMethod.DescriptionLink);
-                cmd.Parameters.AddWithValue("@destructive", PreparationMethod.Destructive);
-                cmd.Parameters.AddWithValue("@instance_status_id", PreparationMethod.InstanceStatusId);
-                cmd.Parameters.AddWithValue("@comment", PreparationMethod.Comment);
-                cmd.Parameters.AddWithValue("@update_date", PreparationMethod.UpdateDate);
-                cmd.Parameters.AddWithValue("@updated_by", PreparationMethod.UpdatedBy);
+                cmd.Parameters.AddWithValue("@id", p["id"]);
+                cmd.Parameters.AddWithValue("@name", p["name"]);
+                cmd.Parameters.AddWithValue("@description_link", p["description_link"]);
+                cmd.Parameters.AddWithValue("@destructive", p["destructive"]);
+                cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
+                cmd.Parameters.AddWithValue("@comment", p["comment"]);
+                cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
+                cmd.Parameters.AddWithValue("@updated_by", p["updated_by"]);
                 cmd.ExecuteNonQuery();
 
-                DB.AddAuditMessage(connection, transaction, "preparation_method", PreparationMethod.Id, AuditOperationType.Update, JsonConvert.SerializeObject(PreparationMethod));
+                DB.AddAuditMessage(connection, transaction, "preparation_method", (Guid)p["id"], AuditOperationType.Update, JsonConvert.SerializeObject(p));
 
                 transaction.Commit();
             }

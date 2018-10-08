@@ -194,7 +194,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>lang_nb.resx</DependentUpon>
     </Compile>
-    <Compile Include="Models.cs" />
     <Compile Include="Types.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

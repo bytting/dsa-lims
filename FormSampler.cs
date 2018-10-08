@@ -31,7 +31,17 @@ namespace DSA_lims
 {
     public partial class FormSampler : Form
     {
-        public SamplerModel Sampler = new SamplerModel();
+        private Dictionary<string, object> p = new Dictionary<string, object>();
+
+        public Guid SamplerId
+        {
+            get { return p.ContainsKey("id") ? (Guid)p["id"] : Guid.Empty; }
+        }
+
+        public string SamplerName
+        {
+            get { return p.ContainsKey("name") ? p["name"].ToString() : String.Empty; }
+        }
 
         public FormSampler()
         {
@@ -44,7 +54,7 @@ namespace DSA_lims
         public FormSampler(Guid sid)
         {
             InitializeComponent();            
-            Sampler.Id = sid;
+            p["id"] = sid;
             Text = "Update sampler";
             cboxInstanceStatus.DataSource = Common.InstanceStatusList;
 
@@ -52,11 +62,11 @@ namespace DSA_lims
             {
                 SqlCommand cmd = new SqlCommand("csp_select_sampler", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@id", Sampler.Id);
+                cmd.Parameters.AddWithValue("@id", p["id"]);
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
                     if (!reader.HasRows)
-                        throw new Exception("Sampler with ID " + Sampler.Id.ToString() + " was not found");
+                        throw new Exception("Sampler with ID " + p["id"] + " was not found");
 
                     reader.Read();
                     tbName.Text = reader["name"].ToString();
@@ -65,10 +75,10 @@ namespace DSA_lims
                     tbPhone.Text = reader["phone"].ToString();
                     cboxInstanceStatus.SelectedValue = InstanceStatus.Eval(reader["instance_status_id"]);
                     tbComment.Text = reader["comment"].ToString();
-                    Sampler.CreateDate = Convert.ToDateTime(reader["create_date"]);
-                    Sampler.CreatedBy = reader["created_by"].ToString();
-                    Sampler.UpdateDate = Convert.ToDateTime(reader["update_date"]);
-                    Sampler.UpdatedBy = reader["updated_by"].ToString();
+                    p["create_date"] = reader["create_date"];
+                    p["created_by"] = reader["created_by"];
+                    p["update_date"] = reader["update_date"];
+                    p["updated_by"] = reader["updated_by"];
                 }
             }
         }
@@ -87,15 +97,15 @@ namespace DSA_lims
                 return;
             }
 
-            Sampler.Name = tbName.Text.Trim();
-            Sampler.Address = tbAddress.Text.Trim();
-            Sampler.Email = tbEmail.Text.Trim();
-            Sampler.Phone = tbPhone.Text.Trim();
-            Sampler.InstanceStatusId = InstanceStatus.Eval(cboxInstanceStatus.SelectedValue);
-            Sampler.Comment = tbComment.Text.Trim();
+            p["name"] = tbName.Text.Trim();
+            p["address"] = tbAddress.Text.Trim();
+            p["email"] = tbEmail.Text.Trim();
+            p["phone"] = tbPhone.Text.Trim();
+            p["instance_status_id"] = InstanceStatus.Eval(cboxInstanceStatus.SelectedValue);
+            p["comment"] = tbComment.Text.Trim();
 
             bool success;
-            if (Sampler.Id == Guid.Empty)
+            if (!p.ContainsKey("id"))
                 success = InsertSampler();
             else
                 success = UpdateSampler();
@@ -111,31 +121,31 @@ namespace DSA_lims
 
             try
             {
-                Sampler.CreateDate = DateTime.Now;
-                Sampler.CreatedBy = Common.Username;
-                Sampler.UpdateDate = DateTime.Now;
-                Sampler.UpdatedBy = Common.Username;
+                p["create_date"] = DateTime.Now;
+                p["created_by"] = Common.Username;
+                p["update_date"] = DateTime.Now;
+                p["updated_by"] = Common.Username;
 
                 connection = DB.OpenConnection();
                 transaction = connection.BeginTransaction();
 
                 SqlCommand cmd = new SqlCommand("csp_insert_sampler", connection, transaction);
                 cmd.CommandType = CommandType.StoredProcedure;
-                Sampler.Id = Guid.NewGuid();
-                cmd.Parameters.AddWithValue("@id", Sampler.Id);
-                cmd.Parameters.AddWithValue("@name", Sampler.Name);
-                cmd.Parameters.AddWithValue("@address", Sampler.Address);
-                cmd.Parameters.AddWithValue("@email", Sampler.Email);
-                cmd.Parameters.AddWithValue("@phone", Sampler.Phone);
-                cmd.Parameters.AddWithValue("@instance_status_id", Sampler.InstanceStatusId);
-                cmd.Parameters.AddWithValue("@comment", Sampler.Comment);
-                cmd.Parameters.AddWithValue("@create_date", Sampler.CreateDate);
-                cmd.Parameters.AddWithValue("@created_by", Sampler.CreatedBy);
-                cmd.Parameters.AddWithValue("@update_date", Sampler.UpdateDate);
-                cmd.Parameters.AddWithValue("@updated_by", Sampler.UpdatedBy);
+                p["id"] = Guid.NewGuid();
+                cmd.Parameters.AddWithValue("@id", p["id"]);
+                cmd.Parameters.AddWithValue("@name", p["name"]);
+                cmd.Parameters.AddWithValue("@address", p["address"]);
+                cmd.Parameters.AddWithValue("@email", p["email"]);
+                cmd.Parameters.AddWithValue("@phone", p["phone"]);
+                cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
+                cmd.Parameters.AddWithValue("@comment", p["comment"]);
+                cmd.Parameters.AddWithValue("@create_date", p["create_date"]);
+                cmd.Parameters.AddWithValue("@created_by", p["created_by"]);
+                cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
+                cmd.Parameters.AddWithValue("@updated_by", p["updated_by"]);
                 cmd.ExecuteNonQuery();
 
-                DB.AddAuditMessage(connection, transaction, "sampler", Sampler.Id, AuditOperationType.Insert, JsonConvert.SerializeObject(Sampler));
+                DB.AddAuditMessage(connection, transaction, "sampler", (Guid)p["id"], AuditOperationType.Insert, JsonConvert.SerializeObject(p));
 
                 transaction.Commit();
             }
@@ -160,26 +170,26 @@ namespace DSA_lims
 
             try
             {
-                Sampler.UpdateDate = DateTime.Now;
-                Sampler.UpdatedBy = Common.Username;
+                p["update_date"] = DateTime.Now;
+                p["updated_by"] = Common.Username;
 
                 connection = DB.OpenConnection();
                 transaction = connection.BeginTransaction();
 
                 SqlCommand cmd = new SqlCommand("csp_update_sampler", connection, transaction);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@id", Sampler.Id);
-                cmd.Parameters.AddWithValue("@name", Sampler.Name);
-                cmd.Parameters.AddWithValue("@address", Sampler.Address);
-                cmd.Parameters.AddWithValue("@email", Sampler.Email);
-                cmd.Parameters.AddWithValue("@phone", Sampler.Phone);
-                cmd.Parameters.AddWithValue("@instance_status_id", Sampler.InstanceStatusId);
-                cmd.Parameters.AddWithValue("@comment", Sampler.Comment);
-                cmd.Parameters.AddWithValue("@update_date", Sampler.UpdateDate);
-                cmd.Parameters.AddWithValue("@updated_by", Sampler.UpdatedBy);
+                cmd.Parameters.AddWithValue("@id", p["id"]);
+                cmd.Parameters.AddWithValue("@name", p["name"]);
+                cmd.Parameters.AddWithValue("@address", p["address"]);
+                cmd.Parameters.AddWithValue("@email", p["email"]);
+                cmd.Parameters.AddWithValue("@phone", p["phone"]);
+                cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
+                cmd.Parameters.AddWithValue("@comment", p["comment"]);
+                cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
+                cmd.Parameters.AddWithValue("@updated_by", p["updated_by"]);
                 cmd.ExecuteNonQuery();
 
-                DB.AddAuditMessage(connection, transaction, "sampler", Sampler.Id, AuditOperationType.Update, JsonConvert.SerializeObject(Sampler));
+                DB.AddAuditMessage(connection, transaction, "sampler", (Guid)p["id"], AuditOperationType.Update, JsonConvert.SerializeObject(p));
 
                 transaction.Commit();
             }

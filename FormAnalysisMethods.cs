@@ -30,7 +30,17 @@ namespace DSA_lims
 {
     public partial class FormAnalysisMethods : Form
     {
-        public AnalysisMethodModel AnalysisMethod = new AnalysisMethodModel();
+        private Dictionary<string, object> p = new Dictionary<string, object>();
+
+        public Guid AnalysisMethodId
+        {
+            get { return p.ContainsKey("id") ? (Guid)p["id"] : Guid.Empty; }
+        }
+
+        public string AnalysisMethodName
+        {
+            get { return p.ContainsKey("name") ? p["name"].ToString() : String.Empty; }
+        }
 
         public FormAnalysisMethods()
         {
@@ -43,7 +53,7 @@ namespace DSA_lims
         public FormAnalysisMethods(Guid amid)
         {
             InitializeComponent();
-            AnalysisMethod.Id = amid;
+            p["id"] = amid;
             Text = "Update analysis method";
             cboxInstanceStatus.DataSource = Common.InstanceStatusList;
 
@@ -51,11 +61,11 @@ namespace DSA_lims
             {
                 SqlCommand cmd = new SqlCommand("csp_select_analysis_method", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@id", AnalysisMethod.Id);
+                cmd.Parameters.AddWithValue("@id", p["id"]);
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
                     if (!reader.HasRows)
-                        throw new Exception("Analysis method with ID " + AnalysisMethod.Id.ToString() + " was not found");
+                        throw new Exception("Analysis method with ID " + p["id"] + " was not found");
 
                     reader.Read();
                     tbName.Text = reader["name"].ToString();
@@ -63,10 +73,10 @@ namespace DSA_lims
                     tbSpecRefRegExp.Text = reader["specter_reference_regexp"].ToString();
                     cboxInstanceStatus.SelectedValue = InstanceStatus.Eval(reader["instance_status_id"]);
                     tbComment.Text = reader["comment"].ToString();
-                    AnalysisMethod.CreateDate = Convert.ToDateTime(reader["create_date"]);
-                    AnalysisMethod.CreatedBy = reader["created_by"].ToString();
-                    AnalysisMethod.UpdateDate = Convert.ToDateTime(reader["update_date"]);
-                    AnalysisMethod.UpdatedBy = reader["updated_by"].ToString();
+                    p["create_date"] = reader["create_date"];
+                    p["created_by"] = reader["created_by"];
+                    p["update_date"] = reader["update_date"];
+                    p["updated_by"] = reader["updated_by"];
                 }
             }
         }
@@ -85,14 +95,14 @@ namespace DSA_lims
                 return;
             }
 
-            AnalysisMethod.Name = tbName.Text.Trim();
-            AnalysisMethod.DescriptionLink = tbDescriptionLink.Text.Trim();
-            AnalysisMethod.SpecterReferenceRegExp = tbSpecRefRegExp.Text.Trim();
-            AnalysisMethod.InstanceStatusId = InstanceStatus.Eval(cboxInstanceStatus.SelectedValue);
-            AnalysisMethod.Comment = tbComment.Text.Trim();
+            p["name"] = tbName.Text.Trim();
+            p["description_link"] = tbDescriptionLink.Text.Trim();
+            p["specter_reference_regexp"] = tbSpecRefRegExp.Text.Trim();
+            p["instance_status_id"] = InstanceStatus.Eval(cboxInstanceStatus.SelectedValue);
+            p["comment"] = tbComment.Text.Trim();
 
             bool success;
-            if (AnalysisMethod.Id == Guid.Empty)
+            if (!p.ContainsKey("id"))
                 success = InsertAnalysisMethod();
             else
                 success = UpdateAnalysisMethod();
@@ -108,30 +118,30 @@ namespace DSA_lims
 
             try
             {
-                AnalysisMethod.CreateDate = DateTime.Now;
-                AnalysisMethod.CreatedBy = Common.Username;
-                AnalysisMethod.UpdateDate = DateTime.Now;
-                AnalysisMethod.UpdatedBy = Common.Username;
+                p["create_date"] = DateTime.Now;
+                p["created_by"] = Common.Username;
+                p["update_date"] = DateTime.Now;
+                p["updated_by"] = Common.Username;
 
                 connection = DB.OpenConnection();
                 transaction = connection.BeginTransaction();
 
                 SqlCommand cmd = new SqlCommand("csp_insert_analysis_method", connection, transaction);
                 cmd.CommandType = CommandType.StoredProcedure;
-                AnalysisMethod.Id = Guid.NewGuid();
-                cmd.Parameters.AddWithValue("@id", AnalysisMethod.Id);
-                cmd.Parameters.AddWithValue("@name", AnalysisMethod.Name);
-                cmd.Parameters.AddWithValue("@description_link", AnalysisMethod.DescriptionLink);
-                cmd.Parameters.AddWithValue("@specter_reference_regexp", AnalysisMethod.SpecterReferenceRegExp);
-                cmd.Parameters.AddWithValue("@instance_status_id", AnalysisMethod.InstanceStatusId);
-                cmd.Parameters.AddWithValue("@comment", AnalysisMethod.Comment);
-                cmd.Parameters.AddWithValue("@create_date", AnalysisMethod.CreateDate);
-                cmd.Parameters.AddWithValue("@created_by", AnalysisMethod.CreatedBy);
-                cmd.Parameters.AddWithValue("@update_date", AnalysisMethod.UpdateDate);
-                cmd.Parameters.AddWithValue("@updated_by", AnalysisMethod.UpdatedBy);
+                p["id"] = Guid.NewGuid();
+                cmd.Parameters.AddWithValue("@id", p["id"]);
+                cmd.Parameters.AddWithValue("@name", p["name"]);
+                cmd.Parameters.AddWithValue("@description_link", p["description_link"]);
+                cmd.Parameters.AddWithValue("@specter_reference_regexp", p["specter_reference_regexp"]);
+                cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
+                cmd.Parameters.AddWithValue("@comment", p["comment"]);
+                cmd.Parameters.AddWithValue("@create_date", p["create_date"]);
+                cmd.Parameters.AddWithValue("@created_by", p["created_by"]);
+                cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
+                cmd.Parameters.AddWithValue("@updated_by", p["updated_by"]);
                 cmd.ExecuteNonQuery();
 
-                DB.AddAuditMessage(connection, transaction, "analysis_method", AnalysisMethod.Id, AuditOperationType.Insert, JsonConvert.SerializeObject(AnalysisMethod));
+                DB.AddAuditMessage(connection, transaction, "analysis_method", (Guid)p["id"], AuditOperationType.Insert, JsonConvert.SerializeObject(p));
 
                 transaction.Commit();
             }
@@ -156,25 +166,25 @@ namespace DSA_lims
 
             try
             {
-                AnalysisMethod.UpdateDate = DateTime.Now;
-                AnalysisMethod.UpdatedBy = Common.Username;
+                p["update_date"] = DateTime.Now;
+                p["updated_by"] = Common.Username;
 
                 connection = DB.OpenConnection();
                 transaction = connection.BeginTransaction();
 
                 SqlCommand cmd = new SqlCommand("csp_update_analysis_method", connection, transaction);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@id", AnalysisMethod.Id);
-                cmd.Parameters.AddWithValue("@name", AnalysisMethod.Name);
-                cmd.Parameters.AddWithValue("@description_link", AnalysisMethod.DescriptionLink);
-                cmd.Parameters.AddWithValue("@specter_reference_regexp", AnalysisMethod.SpecterReferenceRegExp);
-                cmd.Parameters.AddWithValue("@instance_status_id", AnalysisMethod.InstanceStatusId);
-                cmd.Parameters.AddWithValue("@comment", AnalysisMethod.Comment);
-                cmd.Parameters.AddWithValue("@update_date", AnalysisMethod.UpdateDate);
-                cmd.Parameters.AddWithValue("@updated_by", AnalysisMethod.UpdatedBy);
+                cmd.Parameters.AddWithValue("@id", p["id"]);
+                cmd.Parameters.AddWithValue("@name", p["name"]);
+                cmd.Parameters.AddWithValue("@description_link", p["description_link"]);
+                cmd.Parameters.AddWithValue("@specter_reference_regexp", p["specter_reference_regexp"]);
+                cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
+                cmd.Parameters.AddWithValue("@comment", p["comment"]);
+                cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
+                cmd.Parameters.AddWithValue("@updated_by", p["updated_by"]);
                 cmd.ExecuteNonQuery();
 
-                DB.AddAuditMessage(connection, transaction, "analysis_method", AnalysisMethod.Id, AuditOperationType.Update, JsonConvert.SerializeObject(AnalysisMethod));
+                DB.AddAuditMessage(connection, transaction, "analysis_method", (Guid)p["id"], AuditOperationType.Update, JsonConvert.SerializeObject(p));
 
                 transaction.Commit();
             }

@@ -613,7 +613,7 @@ namespace DSA_lims
 
                 while (reader.Read())
                     foreach (ComboBox cb in cbn)
-                        cb.Items.Add(new Lemma<Guid, string>(new Guid(reader["id"].ToString()), SampleTypeModel.NameToLabel(reader["name"].ToString())));
+                        cb.Items.Add(new Lemma<Guid, string>(new Guid(reader["id"].ToString()), StrUtils.SampleTypeNameToLabel(reader["name"].ToString())));
 
                 foreach (ComboBox cb in cbn)
                     cb.SelectedIndex = -1;

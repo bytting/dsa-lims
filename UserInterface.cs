@@ -90,7 +90,23 @@ namespace DSA_lims
                 foreach (ComboBox cb in cbn)
                     cb.SelectedIndex = -1;
             }
-        }        
+        }
+
+        public static void PopulateActivityUnitTypes(SqlConnection conn, params ComboBox[] cbn)
+        {
+            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_activity_unit_types", CommandType.StoredProcedure))
+            {
+                foreach (ComboBox cb in cbn)
+                    cb.Items.Clear();
+
+                while (reader.Read())
+                    foreach (ComboBox cb in cbn)
+                        cb.Items.Add(new Lemma<int, string>(Convert.ToInt32(reader["id"]), reader["name"].ToString()));
+
+                foreach (ComboBox cb in cbn)
+                    cb.SelectedIndex = -1;
+            }
+        }
 
         public static void PopulateProjectsMain(SqlConnection conn, DataGridView grid)
         {

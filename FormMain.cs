@@ -93,7 +93,8 @@ namespace DSA_lims
                     UI.PopulateWorkflowStatus(cboxSampleAnalWorkflowStatus, cboxSamplePrepWorkflowStatus);
                     UI.PopulateLocationTypes(cboxSampleInfoLocationTypes);
                     UI.PopulateActivityUnits(conn, gridMetaUnitsActivity);
-                    UI.PopulateActivityUnits(conn, cboxSampleAnalUnit);                                        
+                    UI.PopulateActivityUnits(conn, cboxSampleAnalUnit);
+                    UI.PopulateActivityUnitTypes(conn, cboxSampleAnalUnitType);
                     UI.PopulateProjectsMain(conn, gridProjectMain);
                     UI.PopulateProjectsMain(conn, cboxSampleProject, cboxSamplesProjects);
                     UI.PopulateLaboratories(conn, gridMetaLab);

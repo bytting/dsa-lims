@@ -287,7 +287,7 @@ as
 		id,	
 		name		
 	from activity_unit_type
-	order by name
+	order by id
 go
 
 /*===========================================================================*/

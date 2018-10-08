@@ -13,19 +13,21 @@ namespace DSA_lims
 {
     public partial class FormSampTypeXPrepMeth : Form
     {
-        private Lemma<Guid, string> SampleType = null;        
+        private Lemma<Guid, string> SampleType = null;
+        private List<Guid> MethodsBelow = null;
 
-        public FormSampTypeXPrepMeth(Lemma<Guid, string> sampType, List<Guid> existingMethods)
+        public FormSampTypeXPrepMeth(Lemma<Guid, string> sampType, List<Guid> methodsAbove, List<Guid> methodsBelow)
         {
             InitializeComponent();
 
-            SampleType = sampType;            
+            SampleType = sampType;
+            MethodsBelow = methodsBelow;
 
             tbSampleType.Text = StrUtils.SampleTypeNameToLabel(SampleType.Name);            
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                var methArr = from item in existingMethods select "'" + item + "'";
+                var methArr = from item in methodsAbove select "'" + item + "'";
                 string smeth = string.Join(",", methArr);
 
                 string query;
@@ -53,9 +55,19 @@ namespace DSA_lims
         }
 
         private void btnOk_Click(object sender, EventArgs e)
-        {
+        {            
             if (lbPrepMeth.SelectedItems.Count > 0)
             {
+                foreach (object item in lbPrepMeth.SelectedItems)
+                {
+                    var selItem = item as Lemma<Guid, string>;
+                    if(MethodsBelow.Contains(selItem.Id))
+                    {
+                        MessageBox.Show("Preparation method " + selItem.Name + " already exist for one or more sample types below this one. You must remove these first");
+                        return;
+                    }
+                }
+
                 using (SqlConnection conn = DB.OpenConnection())
                 {
                     SqlCommand cmd = new SqlCommand("insert into sample_type_x_preparation_method values(@sample_type_id, @preparation_method_id)", conn);

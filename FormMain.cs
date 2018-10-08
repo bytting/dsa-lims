@@ -1604,9 +1604,12 @@ namespace DSA_lims
             }
 
             Lemma<Guid, string> st = treeSampleTypes.SelectedNode.Tag as Lemma<Guid, string>;            
-            List<Guid> existingMethods = GetPreparationMethodsForSampleType(treeSampleTypes.SelectedNode);
+            List<Guid> methodsAbove = GetPreparationMethodsForSampleType(treeSampleTypes.SelectedNode, true);
 
-            FormSampTypeXPrepMeth form = new FormSampTypeXPrepMeth(st, existingMethods);
+            List<Guid> methodsBelow = new List<Guid>();
+            GetPreparationMethodsBelowSampleType(treeSampleTypes.SelectedNode, methodsBelow);
+
+            FormSampTypeXPrepMeth form = new FormSampTypeXPrepMeth(st, methodsAbove, methodsBelow);
             if (form.ShowDialog() == DialogResult.Cancel)
                 return;
 
@@ -1616,7 +1619,7 @@ namespace DSA_lims
             }
         }        
 
-        private List<Guid> GetPreparationMethodsForSampleType(TreeNode tnode)
+        private List<Guid> GetPreparationMethodsForSampleType(TreeNode tnode, bool ascend)
         {
             List<Guid> existingMethods = new List<Guid>();
             Lemma<Guid, string> st = tnode.Tag as Lemma<Guid, string>;
@@ -1635,22 +1638,34 @@ order by name
                         existingMethods.Add(new Guid(reader["id"].ToString()));
                 }
 
-                while (tnode.Parent != null)
+                if (ascend)
                 {
-                    tnode = tnode.Parent;
-                    st = tnode.Tag as Lemma<Guid, string>;
-
-                    cmd.Parameters.Clear();
-                    cmd.Parameters.AddWithValue("@sample_type_id", st.Id);
-                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    while (tnode.Parent != null)
                     {
-                        while (reader.Read())
-                            existingMethods.Add(new Guid(reader["id"].ToString()));
+                        tnode = tnode.Parent;
+                        st = tnode.Tag as Lemma<Guid, string>;
+
+                        cmd.Parameters.Clear();
+                        cmd.Parameters.AddWithValue("@sample_type_id", st.Id);
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                                existingMethods.Add(new Guid(reader["id"].ToString()));
+                        }
                     }
                 }
             }            
 
             return existingMethods;
+        }
+
+        private void GetPreparationMethodsBelowSampleType(TreeNode tnode, List<Guid> methods)
+        {
+            foreach (TreeNode tn in tnode.Nodes)
+            {
+                methods.AddRange(GetPreparationMethodsForSampleType(tn, false));
+                GetPreparationMethodsBelowSampleType(tn, methods);
+            }
         }
     }    
 }

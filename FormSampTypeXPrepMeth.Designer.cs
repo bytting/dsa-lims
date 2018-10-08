@@ -93,7 +93,7 @@
             this.lbPrepMeth.FormattingEnabled = true;
             this.lbPrepMeth.Location = new System.Drawing.Point(32, 114);
             this.lbPrepMeth.Name = "lbPrepMeth";
-            this.lbPrepMeth.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
+            this.lbPrepMeth.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.lbPrepMeth.Size = new System.Drawing.Size(319, 329);
             this.lbPrepMeth.TabIndex = 9;
             // 

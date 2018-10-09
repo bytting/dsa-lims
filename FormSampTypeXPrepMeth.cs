@@ -13,17 +13,19 @@ namespace DSA_lims
 {
     public partial class FormSampTypeXPrepMeth : Form
     {
-        private Lemma<Guid, string> SampleType = null;
+        private Guid SampleTypeId = Guid.Empty;
+        private string SampleTypeName = String.Empty;
         private List<Guid> MethodsBelow = null;
 
-        public FormSampTypeXPrepMeth(Lemma<Guid, string> sampType, List<Guid> methodsAbove, List<Guid> methodsBelow)
+        public FormSampTypeXPrepMeth(string sampleTypeName, Guid sampleTypeId, List<Guid> methodsAbove, List<Guid> methodsBelow)
         {
             InitializeComponent();
 
-            SampleType = sampType;
+            SampleTypeId = sampleTypeId;
+            SampleTypeName = sampleTypeName;
             MethodsBelow = methodsBelow;
 
-            tbSampleType.Text = StrUtils.SampleTypeNameToLabel(SampleType.Name);            
+            tbSampleType.Text = SampleTypeName;            
 
             using (SqlConnection conn = DB.OpenConnection())
             {
@@ -77,7 +79,7 @@ namespace DSA_lims
                         var selItem = item as Lemma<Guid, string>;
 
                         cmd.Parameters.Clear();
-                        cmd.Parameters.AddWithValue("@sample_type_id", SampleType.Id);
+                        cmd.Parameters.AddWithValue("@sample_type_id", SampleTypeId);
                         cmd.Parameters.AddWithValue("@preparation_method_id", selItem.Id);
                         cmd.ExecuteNonQuery();
                     }

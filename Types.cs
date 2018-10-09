@@ -80,5 +80,34 @@ namespace DSA_lims
             else return (o as Lemma<I, N>).Id;
 
         }
-    }    
+    }
+
+    public class Lemma<I, PI, N>
+    {
+        public Lemma() { }
+
+        public Lemma(I id, PI parentId, N name)
+        {
+            Id = id;
+            ParentId = parentId;
+            Name = name;
+        }
+
+        public I Id { get; set; }
+        public PI ParentId { get; set; }
+        public N Name { get; set; }
+
+        public override string ToString()
+        {
+            return Name.ToString();
+        }
+
+        public static object IdParam(object o)
+        {
+            if (o == null)
+                return DBNull.Value;
+            else return (o as Lemma<I, PI, N>).Id;
+
+        }
+    }
 }

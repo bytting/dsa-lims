@@ -63,7 +63,7 @@ insert into workflow_status values(2, 'Complete')
 insert into workflow_status values(3, 'Rejected')
 go
 
-create proc csp_select_workflow_status	
+create proc csp_select_workflow_status
 as 
 	select * 
 	from workflow_status
@@ -2183,13 +2183,56 @@ if OBJECT_ID('dbo.sample_type', 'U') IS NOT NULL drop table sample_type;
 
 create table sample_type (
 	id uniqueidentifier primary key NOT NULL,
-	name nvarchar(800) unique NOT NULL,		
-	short_name nvarchar(200) NOT NULL,		
+	parent_id uniqueidentifier default NULL,	
+	name nvarchar(80) NOT NULL,
+	name_common nvarchar(80) default NULL,
+	name_latin nvarchar(80) default NULL,
 	create_date datetime NOT NULL,
 	created_by nvarchar(50) NOT NULL,
 	update_date datetime NOT NULL,
 	updated_by nvarchar(50) NOT NULL
 )
+go
+
+create proc csp_insert_sample_type
+	@id uniqueidentifier,	
+	@parent_id uniqueidentifier,		
+	@name nvarchar(80),
+	@name_common nvarchar(80),
+	@name_latin nvarchar(80),
+	@create_date datetime,
+	@created_by nvarchar(50),
+	@update_date datetime,
+	@updated_by nvarchar(50)	
+as 
+	insert into sample_type values (
+		@id,
+		@parent_id,
+		@name,		
+		@name_common,
+		@name_latin,
+		@create_date,
+		@created_by,
+		@update_date,
+		@updated_by
+	);
+go
+
+create proc csp_update_sample_type
+	@id uniqueidentifier,		
+	@name nvarchar(80),
+	@name_common nvarchar(80),
+	@name_latin nvarchar(80),	
+	@update_date datetime,
+	@updated_by nvarchar(50)	
+as 
+	update sample_type set 
+		name = @name,		
+		name_common = @name_common,
+		name_latin = @name_latin,
+		update_date = @update_date,
+		updated_by = @updated_by
+	where id = @id
 go
 
 create proc csp_select_sample_type
@@ -2592,7 +2635,7 @@ as
 		s.number,
 		s.external_id,
 		l.name as 'laboratory_name',	
-		st.short_name as 'sample_type_name',	
+		st.name as 'sample_type_name',	
 		sc.name as 'sample_component_name',		
 		pm.name + ' - ' + ps.name as 'project_name',
 		ss.name as 'sample_storage_name',

@@ -154,6 +154,12 @@
     <Compile Include="FormSampleStorage.Designer.cs">
       <DependentUpon>FormSampleStorage.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormSampleType.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSampleType.Designer.cs">
+      <DependentUpon>FormSampleType.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormSamplingMeth.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -257,6 +263,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormSampleStorage.resx">
       <DependentUpon>FormSampleStorage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSampleType.resx">
+      <DependentUpon>FormSampleType.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormSamplingMeth.resx">
       <DependentUpon>FormSamplingMeth.cs</DependentUpon>

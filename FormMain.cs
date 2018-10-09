@@ -117,7 +117,7 @@ namespace DSA_lims
                     UI.PopulatePreparationMethods(conn, gridTypeRelPrepMeth);
                     UI.PopulateAnalysisMethods(conn, gridTypeRelAnalMeth);
                     UI.PopulateSampleTypes(conn, treeSampleTypes);
-                    UI.PopulateSampleTypes(conn, cboxSampleSampleType);
+                    UI.PopulateSampleTypes(treeSampleTypes, cboxSampleSampleType);
                 }
                 
                 HideMenuItems();
@@ -350,15 +350,7 @@ namespace DSA_lims
         }
 
         private void treeSampleTypes_AfterSelect(object sender, TreeViewEventArgs e)
-        {
-            if (e.Node.Tag == null)
-            {
-                lblTypeRelSampCompSel.Text = "";
-                lblTypeRelSampParSel.Text = "";
-                lblTypeRelSampPrepSel.Text = "";
-                return;
-            }
-
+        {            
             TreeNode tnode = e.Node;
 
             lblTypeRelSampCompSel.Text = lblTypeRelSampParSel.Text = lblTypeRelSampPrepSel.Text = tnode.Text;
@@ -368,12 +360,12 @@ namespace DSA_lims
                 lbSampleTypesComponents.Items.Clear();
                 lbSampleTypesInheritedComponents.Items.Clear();
 
-                Lemma<Guid, string> sampleType = tnode.Tag as Lemma<Guid, string>;
+                Guid sampleTypeId = new Guid(tnode.Name);
 
                 using (SqlConnection conn = DB.OpenConnection())
                 {
                     // add sample components
-                    AddSampleTypeComponents(conn, sampleType, false, tnode);
+                    AddSampleTypeComponents(conn, sampleTypeId, false, tnode);
 
                     // add preparation methods
                     UI.PopulateSampleTypePrepMeth(conn, tnode, lbTypeRelSampTypePrepMeth, lbTypeRelSampTypeInheritedPrepMeth);
@@ -385,12 +377,12 @@ namespace DSA_lims
             }            
         }        
 
-        private void AddSampleTypeComponents(SqlConnection conn, Lemma<Guid, string> sampleType, bool inherited, TreeNode tnode)
+        private void AddSampleTypeComponents(SqlConnection conn, Guid sampleTypeId, bool inherited, TreeNode tnode)
         {
             ListBox lb = inherited ? lbSampleTypesInheritedComponents : lbSampleTypesComponents;
 
             using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_sample_components_for_sample_type", CommandType.StoredProcedure,
-                    new SqlParameter("@sample_type_id", sampleType.Id)))
+                    new SqlParameter("@sample_type_id", sampleTypeId)))
             {
                 while (reader.Read())
                     lb.Items.Add(new Lemma<Guid, string>(new Guid(reader["id"].ToString()), reader["name"].ToString()));
@@ -398,8 +390,8 @@ namespace DSA_lims
 
             if (tnode.Parent != null)
             {
-                Lemma<Guid, string> st = tnode.Parent.Tag as Lemma<Guid, string>;
-                AddSampleTypeComponents(conn, st, true, tnode.Parent);
+                Guid parentId = new Guid(tnode.Parent.Name);
+                AddSampleTypeComponents(conn, parentId, true, tnode.Parent);
             }
         }
 
@@ -737,7 +729,7 @@ namespace DSA_lims
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
-                    SetStatusMessage("Nuclide " + form.NuclideName + " inserted");
+                    SetStatusMessage("Nuclide " + form.NuclideName + " created");
                     using (SqlConnection conn = DB.OpenConnection())
                         UI.PopulateNuclides(conn, gridSysNuclides);
                     break;
@@ -750,11 +742,57 @@ namespace DSA_lims
         private void miSampleTypesNew_Click(object sender, EventArgs e)
         {
             // New sample type
+            if (treeSampleTypes.SelectedNode == null)
+                return;
+            
+            FormSampleType form = new FormSampleType(
+                new Guid(treeSampleTypes.SelectedNode.Name), 
+                treeSampleTypes.SelectedNode.Text, 
+                treeSampleTypes.SelectedNode.ToolTipText, 
+                false);
+
+            switch (form.ShowDialog())
+            {
+                case DialogResult.OK:
+                    SetStatusMessage("Sample type " + form.SampleTypeName + " created");
+                    using (SqlConnection conn = DB.OpenConnection())
+                    {
+                        UI.PopulateSampleTypes(conn, treeSampleTypes);
+                        UI.PopulateSampleTypes(treeSampleTypes, cboxSampleSampleType);
+                    }
+                    break;
+                case DialogResult.Abort:
+                    SetStatusMessage("Create sample type failed", StatusMessageType.Error);
+                    break;
+            }
         }
 
         private void miSampleTypesEdit_Click(object sender, EventArgs e)
         {
             // Edit sample type
+            if (treeSampleTypes.SelectedNode == null)
+                return;
+
+            FormSampleType form = new FormSampleType(
+                new Guid(treeSampleTypes.SelectedNode.Name),
+                treeSampleTypes.SelectedNode.Text,
+                treeSampleTypes.SelectedNode.ToolTipText,
+                true);
+
+            switch (form.ShowDialog())
+            {
+                case DialogResult.OK:
+                    SetStatusMessage("Sample type " + form.SampleTypeName + " updated");
+                    using (SqlConnection conn = DB.OpenConnection())
+                    {
+                        UI.PopulateSampleTypes(conn, treeSampleTypes);
+                        UI.PopulateSampleTypes(treeSampleTypes, cboxSampleSampleType);
+                    }
+                    break;
+                case DialogResult.Abort:
+                    SetStatusMessage("Update sample type failed", StatusMessageType.Error);
+                    break;
+            }
         }
 
         private void miSampleTypesDelete_Click(object sender, EventArgs e)
@@ -1198,34 +1236,32 @@ namespace DSA_lims
             if (cboxSampleSampleType.SelectedItem == null)            
                 return;
 
-            var st = cboxSampleSampleType.SelectedItem as Lemma<Guid, string>;
-            Lemma<Guid, string> sampleType = new Lemma<Guid, string>(st.Id, StrUtils.LabelToSampleTypeName(st.Name));
+            var sampleType = cboxSampleSampleType.SelectedItem as Lemma<Guid, string>;
+            TreeNode[] tnodes = treeSampleTypes.Nodes.Find(sampleType.Id.ToString(), true);
+            if (tnodes.Length < 1)
+                return;
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                AddSampleTypeComponents(conn, sampleType);
+                AddSampleTypeComponents(conn, sampleType.Id, tnodes[0]);
             }
 
             cboxSampleSampleComponent.SelectedIndex = -1;
         }
 
-        private void AddSampleTypeComponents(SqlConnection conn, Lemma<Guid, string> sampleType)
+        private void AddSampleTypeComponents(SqlConnection conn, Guid sampleTypeId, TreeNode tnode)
         {
             using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_sample_components_for_sample_type", CommandType.StoredProcedure,
-                    new SqlParameter("@sample_type_id", sampleType.Id)))
+                    new SqlParameter("@sample_type_id", sampleTypeId)))
             {
                 while (reader.Read())
                     cboxSampleSampleComponent.Items.Add(new Lemma<Guid, string>(new Guid(reader["id"].ToString()), reader["name"].ToString()));
             }
-            
-            TreeNode[] tnodes = treeSampleTypes.Nodes.Find(sampleType.Name, true);
-            if (tnodes.Length < 1)
-                return;
 
-            if (tnodes[0].Parent != null)
+            if (tnode.Parent != null)
             {
-                Lemma<Guid, string> st = tnodes[0].Parent.Tag as Lemma<Guid, string>;
-                AddSampleTypeComponents(conn, st);
+                Guid parentId = new Guid(tnode.Parent.Name);
+                AddSampleTypeComponents(conn, parentId, tnode.Parent);
             }
         }
 
@@ -1257,7 +1293,8 @@ namespace DSA_lims
             if (form.ShowDialog() != DialogResult.OK)
                 return;
 
-            cboxSampleSampleType.SelectedIndex = cboxSampleSampleType.FindStringExact(StrUtils.SampleTypeNameToLabel(form.SelectedSampleType.Name));
+            cboxSampleSampleType.SelectedIndex = cboxSampleSampleType.FindStringExact(
+                form.SelectedSampleTypeName + " -> " + form.SelectedSampleTypePath);
         }
 
         private void cboxSampleProject_SelectedIndexChanged(object sender, EventArgs e)
@@ -1602,14 +1639,18 @@ namespace DSA_lims
                 MessageBox.Show("You must select a sample type first");
                 return;
             }
-
-            Lemma<Guid, string> st = treeSampleTypes.SelectedNode.Tag as Lemma<Guid, string>;            
+            
             List<Guid> methodsAbove = GetPreparationMethodsForSampleType(treeSampleTypes.SelectedNode, true);
 
             List<Guid> methodsBelow = new List<Guid>();
             GetPreparationMethodsBelowSampleType(treeSampleTypes.SelectedNode, methodsBelow);
 
-            FormSampTypeXPrepMeth form = new FormSampTypeXPrepMeth(st, methodsAbove, methodsBelow);
+            FormSampTypeXPrepMeth form = new FormSampTypeXPrepMeth(
+                treeSampleTypes.SelectedNode.Text, 
+                new Guid(treeSampleTypes.SelectedNode.Name), 
+                methodsAbove, 
+                methodsBelow);
+
             if (form.ShowDialog() == DialogResult.Cancel)
                 return;
 
@@ -1622,7 +1663,7 @@ namespace DSA_lims
         private List<Guid> GetPreparationMethodsForSampleType(TreeNode tnode, bool ascend)
         {
             List<Guid> existingMethods = new List<Guid>();
-            Lemma<Guid, string> st = tnode.Tag as Lemma<Guid, string>;
+            Guid sampleTypeId = new Guid(tnode.Name);
             using (SqlConnection conn = DB.OpenConnection())
             {
                 SqlCommand cmd = new SqlCommand(@"
@@ -1631,7 +1672,7 @@ select pm.id, pm.name from preparation_method pm
     inner join sample_type st on stpm.sample_type_id = st.id and st.id = @sample_type_id
 order by name
 ", conn);
-                cmd.Parameters.AddWithValue("@sample_type_id", st.Id);
+                cmd.Parameters.AddWithValue("@sample_type_id", sampleTypeId);
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())                    
@@ -1643,10 +1684,10 @@ order by name
                     while (tnode.Parent != null)
                     {
                         tnode = tnode.Parent;
-                        st = tnode.Tag as Lemma<Guid, string>;
+                        sampleTypeId = new Guid(tnode.Name);
 
                         cmd.Parameters.Clear();
-                        cmd.Parameters.AddWithValue("@sample_type_id", st.Id);
+                        cmd.Parameters.AddWithValue("@sample_type_id", sampleTypeId);
                         using (SqlDataReader reader = cmd.ExecuteReader())
                         {
                             while (reader.Read())

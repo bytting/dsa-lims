@@ -36,30 +36,6 @@ namespace DSA_lims
         public static string makeErrorMessage(string msg)
         {
             return msg + ". See log for more details";
-        }
-
-        public static string SampleTypeNameToLabel(string name)
-        {
-            if (String.IsNullOrEmpty(name))
-                return String.Empty;
-
-            string[] items = name.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
-            if (items.Length < 1)
-                return String.Empty;
-
-            return items[items.Length - 1] + " -> " + name;
-        }
-
-        public static string LabelToSampleTypeName(string label)
-        {
-            if (String.IsNullOrEmpty(label))
-                return String.Empty;
-
-            int idx = label.IndexOf(" -> ");
-            if (idx < 0)
-                return String.Empty;
-
-            return label.Substring(idx + 4);
-        }
+        }        
     }
 }

@@ -31,7 +31,9 @@ namespace DSA_lims
 {
     public partial class FormSelectSampleType : Form
     {
-        public Lemma<Guid, string> SelectedSampleType = null;
+        public Guid SelectedSampleTypeId = Guid.Empty;
+        public string SelectedSampleTypeName = String.Empty;
+        public string SelectedSampleTypePath = String.Empty;
 
         public FormSelectSampleType()
         {
@@ -58,7 +60,9 @@ namespace DSA_lims
                 return;
             }
 
-            SelectedSampleType = treeSampleTypes.SelectedNode.Tag as Lemma<Guid, string>;
+            SelectedSampleTypeId = new Guid(treeSampleTypes.SelectedNode.Name);
+            SelectedSampleTypeName = treeSampleTypes.SelectedNode.Text;
+            SelectedSampleTypePath = treeSampleTypes.SelectedNode.ToolTipText;
 
             DialogResult = DialogResult.OK;
             Close();

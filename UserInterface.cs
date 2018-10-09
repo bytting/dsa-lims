@@ -647,21 +647,7 @@ namespace DSA_lims
                 AddSampleTypeChildrenCB(tree.Nodes, cb);
 
             foreach (ComboBox cb in cbn)
-                cb.SelectedIndex = -1;
-
-            /*
-            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_sample_types_short", CommandType.StoredProcedure))
-            {
-                foreach (ComboBox cb in cbn)
-                    cb.Items.Clear();
-
-                while (reader.Read())
-                    foreach (ComboBox cb in cbn)
-                        cb.Items.Add(new Lemma<Guid, string>(new Guid(reader["id"].ToString()), StrUtils.SampleTypeNameToLabel(reader["name"].ToString())));
-
-                foreach (ComboBox cb in cbn)
-                    cb.SelectedIndex = -1;
-            } */
+                cb.SelectedIndex = -1;            
         }
 
         public static void PopulateSampleTypePrepMeth(SqlConnection conn, TreeNode tnode, ListBox lb, ListBox lbInherited)
@@ -697,6 +683,24 @@ order by name";
                         Lemma<Guid, string> st = new Lemma<Guid, string>(new Guid(reader["id"].ToString()), reader["name"].ToString());
                         lbInherited.Items.Add(st);
                     }
+                }
+            }
+        }
+
+        public static void PopulateSampleComponents(SqlConnection conn, Guid sampleTypeId, ListBox lb)
+        {
+            lb.Items.Clear();            
+
+            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_sample_components_for_sample_type", CommandType.StoredProcedure, 
+                new SqlParameter("@sample_type_id", sampleTypeId)))
+            {
+                while (reader.Read())
+                {
+                    Lemma<Guid, string> sampleComponent = new Lemma<Guid, string>(
+                        new Guid(reader["id"].ToString()),
+                        reader["name"].ToString());
+
+                    lb.Items.Add(sampleComponent);
                 }
             }
         }

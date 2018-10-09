@@ -2378,6 +2378,48 @@ create table sample_component (
 )
 go
 
+create proc csp_insert_sample_component
+	@id uniqueidentifier,	
+	@sample_type_id uniqueidentifier,
+	@name nvarchar(80),
+	@create_date datetime,
+	@created_by nvarchar(50),
+	@update_date datetime,
+	@updated_by nvarchar(50)	
+as 
+	insert into sample_component values (
+		@id,		
+		@sample_type_id,
+		@name,
+		@create_date,
+		@created_by,
+		@update_date,
+		@updated_by
+	);
+go
+
+create proc csp_update_sample_component
+	@id uniqueidentifier,
+	@name nvarchar(80),
+	@update_date datetime,
+	@updated_by nvarchar(50)	
+as 
+	update sample_component set 
+		name = @name,
+		update_date = @update_date,
+		updated_by = @updated_by
+	where id = @id
+go
+
+create proc csp_select_sample_component
+	@id uniqueidentifier
+as
+	select *
+	from sample_component
+	where id = @id
+	order by name
+go
+
 create proc csp_select_sample_components_for_sample_type
 	@sample_type_id uniqueidentifier
 as

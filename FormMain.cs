@@ -1708,5 +1708,67 @@ order by name
                 GetPreparationMethodsBelowSampleType(tn, methods);
             }
         }
+
+        private void miTypeRelSampleTypesCompNew_Click(object sender, EventArgs e)
+        {
+            if (treeSampleTypes.SelectedNode == null)
+            {
+                MessageBox.Show("You must select a sample type first");
+                return;
+            }
+
+            // new sample component
+            Guid sampleTypeId = new Guid(treeSampleTypes.SelectedNode.Name);
+
+            FormSampleComponent form = new FormSampleComponent(sampleTypeId);
+            switch (form.ShowDialog())
+            {
+                case DialogResult.OK:
+                    SetStatusMessage("Sample component " + form.SampleComponentName + " created");
+                    using (SqlConnection conn = DB.OpenConnection())
+                    {                        
+                        UI.PopulateSampleComponents(conn, sampleTypeId, lbSampleTypesComponents);
+                    }
+                    break;
+                case DialogResult.Abort:
+                    SetStatusMessage("Create preparation method failed", StatusMessageType.Error);
+                    break;
+            }
+        }
+
+        private void miTypeRelSampleTypesCompEdit_Click(object sender, EventArgs e)
+        {
+            // edit sample component
+            if (treeSampleTypes.SelectedNode == null)
+            {
+                MessageBox.Show("You must select a sample type first");
+                return;
+            }
+
+            if (lbSampleTypesComponents.SelectedItems.Count < 1)
+            {
+                MessageBox.Show("You must select a sample component first");
+                return;
+            }
+
+            Guid sampleTypeId = new Guid(treeSampleTypes.SelectedNode.Name);
+
+            Lemma<Guid, string> sampleComponent = lbSampleTypesComponents.SelectedItems[0] as Lemma<Guid, string>;
+
+            FormSampleComponent form = new FormSampleComponent(sampleTypeId, sampleComponent.Id);
+            switch (form.ShowDialog())
+            {
+                case DialogResult.OK:
+                    SetStatusMessage("Sample component " + form.SampleComponentName + " updated");
+                    using (SqlConnection conn = DB.OpenConnection())
+                    {
+                        UI.PopulateSampleComponents(conn, sampleTypeId, lbSampleTypesComponents);
+                    }
+                    break;
+                case DialogResult.Abort:
+                    SetStatusMessage("Update preparation method failed", StatusMessageType.Error);
+                    break;
+            }
+        }
     }    
 }

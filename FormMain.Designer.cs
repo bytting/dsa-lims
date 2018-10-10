@@ -558,7 +558,6 @@
             this.toolStripButton49 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton50 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton91 = new System.Windows.Forms.ToolStripButton();
-            this.dataGridView26 = new System.Windows.Forms.DataGridView();
             this.toolsTypeRelPrepAnalMeth = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel20 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator40 = new System.Windows.Forms.ToolStripSeparator();
@@ -875,6 +874,8 @@
             this.btnMenu = new System.Windows.Forms.ToolStripButton();
             this.lblCurrentTab = new System.Windows.Forms.ToolStripLabel();
             this.lbTypRelAnalMethNuclides = new System.Windows.Forms.ListBox();
+            this.lbTypRelPrepMethAddAnalMeth = new System.Windows.Forms.ListBox();
+            this.toolStripSeparator60 = new System.Windows.Forms.ToolStripSeparator();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tabs.SuspendLayout();
@@ -1035,7 +1036,6 @@
             this.splitContainer15.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridTypeRelPrepMeth)).BeginInit();
             this.toolsTypeRelPrepMeth.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView26)).BeginInit();
             this.toolsTypeRelPrepAnalMeth.SuspendLayout();
             this.tabTypeRelationsAnalMeth.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer17)).BeginInit();
@@ -3645,6 +3645,7 @@
             this.toolsOrderContent.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolsOrderContent.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripLabel8,
+            this.toolStripSeparator60,
             this.toolStripBtOrderAddContent,
             this.toolStripBtOrderDeleteContent,
             this.toolStripSeparator1,
@@ -6494,7 +6495,7 @@
             // 
             // splitContainer15.Panel2
             // 
-            this.splitContainer15.Panel2.Controls.Add(this.dataGridView26);
+            this.splitContainer15.Panel2.Controls.Add(this.lbTypRelPrepMethAddAnalMeth);
             this.splitContainer15.Panel2.Controls.Add(this.toolsTypeRelPrepAnalMeth);
             this.splitContainer15.Size = new System.Drawing.Size(1127, 574);
             this.splitContainer15.SplitterDistance = 526;
@@ -6572,18 +6573,6 @@
             this.toolStripButton91.Size = new System.Drawing.Size(60, 22);
             this.toolStripButton91.Text = "Delete";
             this.toolStripButton91.Click += new System.EventHandler(this.miPreparationMethodDelete_Click);
-            // 
-            // dataGridView26
-            // 
-            this.dataGridView26.AllowUserToAddRows = false;
-            this.dataGridView26.AllowUserToDeleteRows = false;
-            this.dataGridView26.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView26.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView26.Location = new System.Drawing.Point(0, 25);
-            this.dataGridView26.Name = "dataGridView26";
-            this.dataGridView26.ReadOnly = true;
-            this.dataGridView26.Size = new System.Drawing.Size(597, 549);
-            this.dataGridView26.TabIndex = 1;
             // 
             // toolsTypeRelPrepAnalMeth
             // 
@@ -9825,6 +9814,24 @@
             this.lbTypRelAnalMethNuclides.Size = new System.Drawing.Size(537, 549);
             this.lbTypRelAnalMethNuclides.TabIndex = 1;
             // 
+            // lbTypRelPrepMethAddAnalMeth
+            // 
+            this.lbTypRelPrepMethAddAnalMeth.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.lbTypRelPrepMethAddAnalMeth.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.lbTypRelPrepMethAddAnalMeth.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lbTypRelPrepMethAddAnalMeth.FormattingEnabled = true;
+            this.lbTypRelPrepMethAddAnalMeth.ItemHeight = 15;
+            this.lbTypRelPrepMethAddAnalMeth.Location = new System.Drawing.Point(0, 25);
+            this.lbTypRelPrepMethAddAnalMeth.Name = "lbTypRelPrepMethAddAnalMeth";
+            this.lbTypRelPrepMethAddAnalMeth.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+            this.lbTypRelPrepMethAddAnalMeth.Size = new System.Drawing.Size(597, 549);
+            this.lbTypRelPrepMethAddAnalMeth.TabIndex = 1;
+            // 
+            // toolStripSeparator60
+            // 
+            this.toolStripSeparator60.Name = "toolStripSeparator60";
+            this.toolStripSeparator60.Size = new System.Drawing.Size(6, 25);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -10084,7 +10091,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.gridTypeRelPrepMeth)).EndInit();
             this.toolsTypeRelPrepMeth.ResumeLayout(false);
             this.toolsTypeRelPrepMeth.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView26)).EndInit();
             this.toolsTypeRelPrepAnalMeth.ResumeLayout(false);
             this.toolsTypeRelPrepAnalMeth.PerformLayout();
             this.tabTypeRelationsAnalMeth.ResumeLayout(false);
@@ -10581,7 +10587,6 @@
         private System.Windows.Forms.SplitContainer splitContainer15;
         private System.Windows.Forms.DataGridView gridTypeRelPrepMeth;
         private System.Windows.Forms.ToolStrip toolsTypeRelPrepMeth;
-        private System.Windows.Forms.DataGridView dataGridView26;
         private System.Windows.Forms.ToolStrip toolsTypeRelPrepAnalMeth;
         private System.Windows.Forms.ToolStripButton toolStripButton47;
         private System.Windows.Forms.ToolStripButton toolStripButton48;
@@ -11175,6 +11180,8 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator58;
         private System.Windows.Forms.ToolStripMenuItem miAnalysisMethodsAddNuclide;
         private System.Windows.Forms.ListBox lbTypRelAnalMethNuclides;
+        private System.Windows.Forms.ListBox lbTypRelPrepMethAddAnalMeth;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator60;
     }
 }
 

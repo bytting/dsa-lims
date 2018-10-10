@@ -1770,5 +1770,65 @@ order by name
                     break;
             }
         }
+
+        private void miAnalysisMethodsAddNuclide_Click(object sender, EventArgs e)
+        {
+            // add nuclide to analysis method
+            if (gridTypeRelAnalMeth.SelectedRows.Count < 1)
+            {
+                MessageBox.Show("You must select an analysis type first");
+                return;
+            }
+
+            Guid amid = new Guid(gridTypeRelAnalMeth.SelectedRows[0].Cells["id"].Value.ToString());
+            string amname = gridTypeRelAnalMeth.SelectedRows[0].Cells["name"].Value.ToString();
+
+            List<Guid> existingNuclides = GetNuclidesForAnalysisType(amid);
+
+            FormAnalMethXNuclide form = new FormAnalMethXNuclide(amname, amid, existingNuclides);
+
+            if (form.ShowDialog() == DialogResult.Cancel)
+                return;
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                UI.PopulateAnalMethNuclides(conn, amid, lbTypRelAnalMethNuclides);
+            }
+        }
+
+        public List<Guid> GetNuclidesForAnalysisType(Guid amid)
+        {
+            List<Guid> existingNuclides = new List<Guid>();            
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                SqlCommand cmd = new SqlCommand(@"
+select n.id, n.name from nuclide n
+    inner join analysis_method_x_nuclide amn on amn.nuclide_id = n.id
+    inner join analysis_method am on amn.analysis_method_id = am.id and am.id = @analysis_method_id
+order by name
+", conn);
+                cmd.Parameters.AddWithValue("@analysis_method_id", amid);
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                        existingNuclides.Add(new Guid(reader["id"].ToString()));
+                }
+            }
+
+            return existingNuclides;
+        }
+
+        private void gridTypeRelAnalMeth_RowStateChanged(object sender, DataGridViewRowStateChangedEventArgs e)
+        {
+            if (e.StateChanged != DataGridViewElementStates.Selected)
+                return;
+
+            Guid amid = new Guid(e.Row.Cells["id"].Value.ToString());
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                UI.PopulateAnalMethNuclides(conn, amid, lbTypRelAnalMethNuclides);
+            }
+        }
     }    
 }

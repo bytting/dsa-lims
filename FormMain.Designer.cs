@@ -96,6 +96,16 @@
             this.miProjectsSubDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.miCustomers = new System.Windows.Forms.ToolStripMenuItem();
             this.miTypeRelations = new System.Windows.Forms.ToolStripMenuItem();
+            this.miTypeRelSampleTypes = new System.Windows.Forms.ToolStripMenuItem();
+            this.miTypeRelSampleTypesNew = new System.Windows.Forms.ToolStripMenuItem();
+            this.miTypeRelSampleTypesEdit = new System.Windows.Forms.ToolStripMenuItem();
+            this.miTypeRelSampleTypesDelete = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator61 = new System.Windows.Forms.ToolStripSeparator();
+            this.miTypeRelSampleTypesComps = new System.Windows.Forms.ToolStripMenuItem();
+            this.miTypeRelSampleTypesCompNew = new System.Windows.Forms.ToolStripMenuItem();
+            this.miTypeRelSampleTypesCompEdit = new System.Windows.Forms.ToolStripMenuItem();
+            this.miTypeRelSampleTypesPrepMeth = new System.Windows.Forms.ToolStripMenuItem();
+            this.miTypeRelSampleTypesPrepMethAdd = new System.Windows.Forms.ToolStripMenuItem();
             this.miPreparationMethods = new System.Windows.Forms.ToolStripMenuItem();
             this.miPreparationMethodsNew = new System.Windows.Forms.ToolStripMenuItem();
             this.miPreparationMethodEdit = new System.Windows.Forms.ToolStripMenuItem();
@@ -104,6 +114,8 @@
             this.miAnalysisMethodsNew = new System.Windows.Forms.ToolStripMenuItem();
             this.miAnalysisMethodsEdit = new System.Windows.Forms.ToolStripMenuItem();
             this.miAnalysisMethodsDelete = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator58 = new System.Windows.Forms.ToolStripSeparator();
+            this.miAnalysisMethodsAddNuclide = new System.Windows.Forms.ToolStripMenuItem();
             this.miAuditLog = new System.Windows.Forms.ToolStripMenuItem();
             this.miLog = new System.Windows.Forms.ToolStripMenuItem();
             this.miSys = new System.Windows.Forms.ToolStripMenuItem();
@@ -561,7 +573,6 @@
             this.toolStripButton51 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton52 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton93 = new System.Windows.Forms.ToolStripButton();
-            this.dataGridView28 = new System.Windows.Forms.DataGridView();
             this.toolsTypeRelNuclides = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel23 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator42 = new System.Windows.Forms.ToolStripSeparator();
@@ -863,16 +874,7 @@
             this.tools = new System.Windows.Forms.ToolStrip();
             this.btnMenu = new System.Windows.Forms.ToolStripButton();
             this.lblCurrentTab = new System.Windows.Forms.ToolStripLabel();
-            this.miTypeRelSampleTypes = new System.Windows.Forms.ToolStripMenuItem();
-            this.miTypeRelSampleTypesNew = new System.Windows.Forms.ToolStripMenuItem();
-            this.miTypeRelSampleTypesEdit = new System.Windows.Forms.ToolStripMenuItem();
-            this.miTypeRelSampleTypesDelete = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator61 = new System.Windows.Forms.ToolStripSeparator();
-            this.miTypeRelSampleTypesPrepMeth = new System.Windows.Forms.ToolStripMenuItem();
-            this.miTypeRelSampleTypesPrepMethAdd = new System.Windows.Forms.ToolStripMenuItem();
-            this.miTypeRelSampleTypesComps = new System.Windows.Forms.ToolStripMenuItem();
-            this.miTypeRelSampleTypesCompNew = new System.Windows.Forms.ToolStripMenuItem();
-            this.miTypeRelSampleTypesCompEdit = new System.Windows.Forms.ToolStripMenuItem();
+            this.lbTypRelAnalMethNuclides = new System.Windows.Forms.ListBox();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tabs.SuspendLayout();
@@ -1042,7 +1044,6 @@
             this.splitContainer17.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridTypeRelAnalMeth)).BeginInit();
             this.toolsTypeRelAnalMeth.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView28)).BeginInit();
             this.toolsTypeRelNuclides.SuspendLayout();
             this.panel27.SuspendLayout();
             this.tabAuditLog.SuspendLayout();
@@ -1730,6 +1731,83 @@
             this.miTypeRelations.Size = new System.Drawing.Size(93, 20);
             this.miTypeRelations.Text = "&Type relations";
             // 
+            // miTypeRelSampleTypes
+            // 
+            this.miTypeRelSampleTypes.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.miTypeRelSampleTypesNew,
+            this.miTypeRelSampleTypesEdit,
+            this.miTypeRelSampleTypesDelete,
+            this.toolStripSeparator61,
+            this.miTypeRelSampleTypesComps,
+            this.miTypeRelSampleTypesPrepMeth});
+            this.miTypeRelSampleTypes.Name = "miTypeRelSampleTypes";
+            this.miTypeRelSampleTypes.Size = new System.Drawing.Size(185, 22);
+            this.miTypeRelSampleTypes.Text = "&Sample types";
+            // 
+            // miTypeRelSampleTypesNew
+            // 
+            this.miTypeRelSampleTypesNew.Name = "miTypeRelSampleTypesNew";
+            this.miTypeRelSampleTypesNew.Size = new System.Drawing.Size(185, 22);
+            this.miTypeRelSampleTypesNew.Text = "&New sample type";
+            this.miTypeRelSampleTypesNew.Click += new System.EventHandler(this.miSampleTypesNew_Click);
+            // 
+            // miTypeRelSampleTypesEdit
+            // 
+            this.miTypeRelSampleTypesEdit.Name = "miTypeRelSampleTypesEdit";
+            this.miTypeRelSampleTypesEdit.Size = new System.Drawing.Size(185, 22);
+            this.miTypeRelSampleTypesEdit.Text = "&Edit sample type";
+            this.miTypeRelSampleTypesEdit.Click += new System.EventHandler(this.miSampleTypesEdit_Click);
+            // 
+            // miTypeRelSampleTypesDelete
+            // 
+            this.miTypeRelSampleTypesDelete.Name = "miTypeRelSampleTypesDelete";
+            this.miTypeRelSampleTypesDelete.Size = new System.Drawing.Size(185, 22);
+            this.miTypeRelSampleTypesDelete.Text = "&Delete sample type";
+            this.miTypeRelSampleTypesDelete.Click += new System.EventHandler(this.miSampleTypesDelete_Click);
+            // 
+            // toolStripSeparator61
+            // 
+            this.toolStripSeparator61.Name = "toolStripSeparator61";
+            this.toolStripSeparator61.Size = new System.Drawing.Size(182, 6);
+            // 
+            // miTypeRelSampleTypesComps
+            // 
+            this.miTypeRelSampleTypesComps.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.miTypeRelSampleTypesCompNew,
+            this.miTypeRelSampleTypesCompEdit});
+            this.miTypeRelSampleTypesComps.Name = "miTypeRelSampleTypesComps";
+            this.miTypeRelSampleTypesComps.Size = new System.Drawing.Size(185, 22);
+            this.miTypeRelSampleTypesComps.Text = "&Components";
+            // 
+            // miTypeRelSampleTypesCompNew
+            // 
+            this.miTypeRelSampleTypesCompNew.Name = "miTypeRelSampleTypesCompNew";
+            this.miTypeRelSampleTypesCompNew.Size = new System.Drawing.Size(163, 22);
+            this.miTypeRelSampleTypesCompNew.Text = "&New component";
+            this.miTypeRelSampleTypesCompNew.Click += new System.EventHandler(this.miTypeRelSampleTypesCompNew_Click);
+            // 
+            // miTypeRelSampleTypesCompEdit
+            // 
+            this.miTypeRelSampleTypesCompEdit.Name = "miTypeRelSampleTypesCompEdit";
+            this.miTypeRelSampleTypesCompEdit.Size = new System.Drawing.Size(163, 22);
+            this.miTypeRelSampleTypesCompEdit.Text = "&Edit component";
+            this.miTypeRelSampleTypesCompEdit.Click += new System.EventHandler(this.miTypeRelSampleTypesCompEdit_Click);
+            // 
+            // miTypeRelSampleTypesPrepMeth
+            // 
+            this.miTypeRelSampleTypesPrepMeth.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.miTypeRelSampleTypesPrepMethAdd});
+            this.miTypeRelSampleTypesPrepMeth.Name = "miTypeRelSampleTypesPrepMeth";
+            this.miTypeRelSampleTypesPrepMeth.Size = new System.Drawing.Size(185, 22);
+            this.miTypeRelSampleTypesPrepMeth.Text = "&Preparation methods";
+            // 
+            // miTypeRelSampleTypesPrepMethAdd
+            // 
+            this.miTypeRelSampleTypesPrepMethAdd.Name = "miTypeRelSampleTypesPrepMethAdd";
+            this.miTypeRelSampleTypesPrepMethAdd.Size = new System.Drawing.Size(177, 22);
+            this.miTypeRelSampleTypesPrepMethAdd.Text = "&Add to sample type";
+            this.miTypeRelSampleTypesPrepMethAdd.Click += new System.EventHandler(this.miAddPrepMethToSampType_Click);
+            // 
             // miPreparationMethods
             // 
             this.miPreparationMethods.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -1766,7 +1844,9 @@
             this.miAnalysisMethods.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.miAnalysisMethodsNew,
             this.miAnalysisMethodsEdit,
-            this.miAnalysisMethodsDelete});
+            this.miAnalysisMethodsDelete,
+            this.toolStripSeparator58,
+            this.miAnalysisMethodsAddNuclide});
             this.miAnalysisMethods.Name = "miAnalysisMethods";
             this.miAnalysisMethods.Size = new System.Drawing.Size(185, 22);
             this.miAnalysisMethods.Text = "&Analysis methods";
@@ -1791,6 +1871,18 @@
             this.miAnalysisMethodsDelete.Size = new System.Drawing.Size(196, 22);
             this.miAnalysisMethodsDelete.Text = "&Delete analysis method";
             this.miAnalysisMethodsDelete.Click += new System.EventHandler(this.miAnalysisMethodsDelete_Click);
+            // 
+            // toolStripSeparator58
+            // 
+            this.toolStripSeparator58.Name = "toolStripSeparator58";
+            this.toolStripSeparator58.Size = new System.Drawing.Size(193, 6);
+            // 
+            // miAnalysisMethodsAddNuclide
+            // 
+            this.miAnalysisMethodsAddNuclide.Name = "miAnalysisMethodsAddNuclide";
+            this.miAnalysisMethodsAddNuclide.Size = new System.Drawing.Size(196, 22);
+            this.miAnalysisMethodsAddNuclide.Text = "&Add nuclide";
+            this.miAnalysisMethodsAddNuclide.Click += new System.EventHandler(this.miAnalysisMethodsAddNuclide_Click);
             // 
             // miAuditLog
             // 
@@ -3338,7 +3430,7 @@
             // 
             this.splitContainer6.Panel2.Controls.Add(this.panel12);
             this.splitContainer6.Size = new System.Drawing.Size(1127, 574);
-            this.splitContainer6.SplitterDistance = 762;
+            this.splitContainer6.SplitterDistance = 760;
             this.splitContainer6.SplitterWidth = 5;
             this.splitContainer6.TabIndex = 4;
             // 
@@ -3358,7 +3450,7 @@
             // 
             this.splitContainer7.Panel2.Controls.Add(this.treeView1);
             this.splitContainer7.Panel2.Controls.Add(this.toolsOrderContent);
-            this.splitContainer7.Size = new System.Drawing.Size(762, 574);
+            this.splitContainer7.Size = new System.Drawing.Size(760, 574);
             this.splitContainer7.SplitterDistance = 361;
             this.splitContainer7.SplitterWidth = 5;
             this.splitContainer7.TabIndex = 0;
@@ -3545,7 +3637,7 @@
             this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeView1.Location = new System.Drawing.Point(0, 25);
             this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(396, 549);
+            this.treeView1.Size = new System.Drawing.Size(394, 549);
             this.treeView1.TabIndex = 0;
             // 
             // toolsOrderContent
@@ -3563,7 +3655,7 @@
             this.toolStripButton34});
             this.toolsOrderContent.Location = new System.Drawing.Point(0, 0);
             this.toolsOrderContent.Name = "toolsOrderContent";
-            this.toolsOrderContent.Size = new System.Drawing.Size(396, 25);
+            this.toolsOrderContent.Size = new System.Drawing.Size(394, 25);
             this.toolsOrderContent.TabIndex = 1;
             this.toolsOrderContent.Text = "toolStrip16";
             // 
@@ -3645,7 +3737,7 @@
             this.panel12.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel12.Location = new System.Drawing.Point(0, 0);
             this.panel12.Name = "panel12";
-            this.panel12.Size = new System.Drawing.Size(360, 574);
+            this.panel12.Size = new System.Drawing.Size(362, 574);
             this.panel12.TabIndex = 1;
             // 
             // dataGridView12
@@ -3659,7 +3751,7 @@
             this.dataGridView12.Location = new System.Drawing.Point(0, 25);
             this.dataGridView12.Name = "dataGridView12";
             this.dataGridView12.ReadOnly = true;
-            this.dataGridView12.Size = new System.Drawing.Size(360, 549);
+            this.dataGridView12.Size = new System.Drawing.Size(362, 549);
             this.dataGridView12.TabIndex = 1;
             // 
             // toolsOrderAttachments
@@ -3673,7 +3765,7 @@
             this.toolStripButton23});
             this.toolsOrderAttachments.Location = new System.Drawing.Point(0, 0);
             this.toolsOrderAttachments.Name = "toolsOrderAttachments";
-            this.toolsOrderAttachments.Size = new System.Drawing.Size(360, 25);
+            this.toolsOrderAttachments.Size = new System.Drawing.Size(362, 25);
             this.toolsOrderAttachments.TabIndex = 0;
             this.toolsOrderAttachments.Text = "toolStrip15";
             // 
@@ -6257,10 +6349,10 @@
             // 
             this.tabTypeRelSampTypePrep.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.tabTypeRelSampTypePrep.Controls.Add(this.splitContainer13);
-            this.tabTypeRelSampTypePrep.Location = new System.Drawing.Point(4, 24);
+            this.tabTypeRelSampTypePrep.Location = new System.Drawing.Point(4, 22);
             this.tabTypeRelSampTypePrep.Name = "tabTypeRelSampTypePrep";
             this.tabTypeRelSampTypePrep.Padding = new System.Windows.Forms.Padding(3);
-            this.tabTypeRelSampTypePrep.Size = new System.Drawing.Size(742, 546);
+            this.tabTypeRelSampTypePrep.Size = new System.Drawing.Size(742, 550);
             this.tabTypeRelSampTypePrep.TabIndex = 2;
             this.tabTypeRelSampTypePrep.Text = "Preparation methods";
             // 
@@ -6280,8 +6372,8 @@
             // 
             this.splitContainer13.Panel2.Controls.Add(this.lbTypeRelSampTypeInheritedPrepMeth);
             this.splitContainer13.Panel2.Controls.Add(this.toolsTypeRelSampAnalMeth);
-            this.splitContainer13.Size = new System.Drawing.Size(736, 540);
-            this.splitContainer13.SplitterDistance = 219;
+            this.splitContainer13.Size = new System.Drawing.Size(736, 544);
+            this.splitContainer13.SplitterDistance = 220;
             this.splitContainer13.TabIndex = 0;
             // 
             // lbTypeRelSampTypePrepMeth
@@ -6293,7 +6385,7 @@
             this.lbTypeRelSampTypePrepMeth.ItemHeight = 15;
             this.lbTypeRelSampTypePrepMeth.Location = new System.Drawing.Point(0, 25);
             this.lbTypeRelSampTypePrepMeth.Name = "lbTypeRelSampTypePrepMeth";
-            this.lbTypeRelSampTypePrepMeth.Size = new System.Drawing.Size(736, 194);
+            this.lbTypeRelSampTypePrepMeth.Size = new System.Drawing.Size(736, 195);
             this.lbTypeRelSampTypePrepMeth.TabIndex = 1;
             // 
             // toolsTypeRelSampPrepMeth
@@ -6357,7 +6449,7 @@
             this.lbTypeRelSampTypeInheritedPrepMeth.Location = new System.Drawing.Point(0, 25);
             this.lbTypeRelSampTypeInheritedPrepMeth.Name = "lbTypeRelSampTypeInheritedPrepMeth";
             this.lbTypeRelSampTypeInheritedPrepMeth.SelectionMode = System.Windows.Forms.SelectionMode.None;
-            this.lbTypeRelSampTypeInheritedPrepMeth.Size = new System.Drawing.Size(736, 292);
+            this.lbTypeRelSampTypeInheritedPrepMeth.Size = new System.Drawing.Size(736, 295);
             this.lbTypeRelSampTypeInheritedPrepMeth.TabIndex = 1;
             // 
             // toolsTypeRelSampAnalMeth
@@ -6559,10 +6651,10 @@
             // 
             // splitContainer17.Panel2
             // 
-            this.splitContainer17.Panel2.Controls.Add(this.dataGridView28);
+            this.splitContainer17.Panel2.Controls.Add(this.lbTypRelAnalMethNuclides);
             this.splitContainer17.Panel2.Controls.Add(this.toolsTypeRelNuclides);
             this.splitContainer17.Size = new System.Drawing.Size(1127, 574);
-            this.splitContainer17.SplitterDistance = 525;
+            this.splitContainer17.SplitterDistance = 586;
             this.splitContainer17.TabIndex = 1;
             // 
             // gridTypeRelAnalMeth
@@ -6581,8 +6673,9 @@
             this.gridTypeRelAnalMeth.ReadOnly = true;
             this.gridTypeRelAnalMeth.RowHeadersVisible = false;
             this.gridTypeRelAnalMeth.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridTypeRelAnalMeth.Size = new System.Drawing.Size(525, 549);
+            this.gridTypeRelAnalMeth.Size = new System.Drawing.Size(586, 549);
             this.gridTypeRelAnalMeth.TabIndex = 1;
+            this.gridTypeRelAnalMeth.RowStateChanged += new System.Windows.Forms.DataGridViewRowStateChangedEventHandler(this.gridTypeRelAnalMeth_RowStateChanged);
             // 
             // toolsTypeRelAnalMeth
             // 
@@ -6595,7 +6688,7 @@
             this.toolStripButton93});
             this.toolsTypeRelAnalMeth.Location = new System.Drawing.Point(0, 0);
             this.toolsTypeRelAnalMeth.Name = "toolsTypeRelAnalMeth";
-            this.toolsTypeRelAnalMeth.Size = new System.Drawing.Size(525, 25);
+            this.toolsTypeRelAnalMeth.Size = new System.Drawing.Size(586, 25);
             this.toolsTypeRelAnalMeth.TabIndex = 0;
             this.toolsTypeRelAnalMeth.Text = "toolStrip39";
             // 
@@ -6638,18 +6731,6 @@
             this.toolStripButton93.Text = "Delete";
             this.toolStripButton93.Click += new System.EventHandler(this.miAnalysisMethodsDelete_Click);
             // 
-            // dataGridView28
-            // 
-            this.dataGridView28.AllowUserToAddRows = false;
-            this.dataGridView28.AllowUserToDeleteRows = false;
-            this.dataGridView28.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView28.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView28.Location = new System.Drawing.Point(0, 25);
-            this.dataGridView28.Name = "dataGridView28";
-            this.dataGridView28.ReadOnly = true;
-            this.dataGridView28.Size = new System.Drawing.Size(598, 549);
-            this.dataGridView28.TabIndex = 1;
-            // 
             // toolsTypeRelNuclides
             // 
             this.toolsTypeRelNuclides.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
@@ -6660,7 +6741,7 @@
             this.toolStripButton54});
             this.toolsTypeRelNuclides.Location = new System.Drawing.Point(0, 0);
             this.toolsTypeRelNuclides.Name = "toolsTypeRelNuclides";
-            this.toolsTypeRelNuclides.Size = new System.Drawing.Size(598, 25);
+            this.toolsTypeRelNuclides.Size = new System.Drawing.Size(537, 25);
             this.toolsTypeRelNuclides.TabIndex = 0;
             this.toolsTypeRelNuclides.Text = "toolStrip40";
             // 
@@ -6683,6 +6764,7 @@
             this.toolStripButton53.Name = "toolStripButton53";
             this.toolStripButton53.Size = new System.Drawing.Size(49, 22);
             this.toolStripButton53.Text = "Add";
+            this.toolStripButton53.Click += new System.EventHandler(this.miAnalysisMethodsAddNuclide_Click);
             // 
             // toolStripButton54
             // 
@@ -9731,82 +9813,17 @@
             this.lblCurrentTab.Size = new System.Drawing.Size(98, 22);
             this.lblCurrentTab.Text = "<lblCurrentTab>";
             // 
-            // miTypeRelSampleTypes
+            // lbTypRelAnalMethNuclides
             // 
-            this.miTypeRelSampleTypes.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.miTypeRelSampleTypesNew,
-            this.miTypeRelSampleTypesEdit,
-            this.miTypeRelSampleTypesDelete,
-            this.toolStripSeparator61,
-            this.miTypeRelSampleTypesComps,
-            this.miTypeRelSampleTypesPrepMeth});
-            this.miTypeRelSampleTypes.Name = "miTypeRelSampleTypes";
-            this.miTypeRelSampleTypes.Size = new System.Drawing.Size(185, 22);
-            this.miTypeRelSampleTypes.Text = "&Sample types";
-            // 
-            // miTypeRelSampleTypesNew
-            // 
-            this.miTypeRelSampleTypesNew.Name = "miTypeRelSampleTypesNew";
-            this.miTypeRelSampleTypesNew.Size = new System.Drawing.Size(185, 22);
-            this.miTypeRelSampleTypesNew.Text = "&New sample type";
-            this.miTypeRelSampleTypesNew.Click += new System.EventHandler(this.miSampleTypesNew_Click);
-            // 
-            // miTypeRelSampleTypesEdit
-            // 
-            this.miTypeRelSampleTypesEdit.Name = "miTypeRelSampleTypesEdit";
-            this.miTypeRelSampleTypesEdit.Size = new System.Drawing.Size(185, 22);
-            this.miTypeRelSampleTypesEdit.Text = "&Edit sample type";
-            this.miTypeRelSampleTypesEdit.Click += new System.EventHandler(this.miSampleTypesEdit_Click);
-            // 
-            // miTypeRelSampleTypesDelete
-            // 
-            this.miTypeRelSampleTypesDelete.Name = "miTypeRelSampleTypesDelete";
-            this.miTypeRelSampleTypesDelete.Size = new System.Drawing.Size(185, 22);
-            this.miTypeRelSampleTypesDelete.Text = "&Delete sample type";
-            this.miTypeRelSampleTypesDelete.Click += new System.EventHandler(this.miSampleTypesDelete_Click);
-            // 
-            // toolStripSeparator61
-            // 
-            this.toolStripSeparator61.Name = "toolStripSeparator61";
-            this.toolStripSeparator61.Size = new System.Drawing.Size(182, 6);
-            // 
-            // miTypeRelSampleTypesPrepMeth
-            // 
-            this.miTypeRelSampleTypesPrepMeth.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.miTypeRelSampleTypesPrepMethAdd});
-            this.miTypeRelSampleTypesPrepMeth.Name = "miTypeRelSampleTypesPrepMeth";
-            this.miTypeRelSampleTypesPrepMeth.Size = new System.Drawing.Size(185, 22);
-            this.miTypeRelSampleTypesPrepMeth.Text = "&Preparation methods";
-            // 
-            // miTypeRelSampleTypesPrepMethAdd
-            // 
-            this.miTypeRelSampleTypesPrepMethAdd.Name = "miTypeRelSampleTypesPrepMethAdd";
-            this.miTypeRelSampleTypesPrepMethAdd.Size = new System.Drawing.Size(177, 22);
-            this.miTypeRelSampleTypesPrepMethAdd.Text = "&Add to sample type";
-            this.miTypeRelSampleTypesPrepMethAdd.Click += new System.EventHandler(this.miAddPrepMethToSampType_Click);
-            // 
-            // miTypeRelSampleTypesComps
-            // 
-            this.miTypeRelSampleTypesComps.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.miTypeRelSampleTypesCompNew,
-            this.miTypeRelSampleTypesCompEdit});
-            this.miTypeRelSampleTypesComps.Name = "miTypeRelSampleTypesComps";
-            this.miTypeRelSampleTypesComps.Size = new System.Drawing.Size(185, 22);
-            this.miTypeRelSampleTypesComps.Text = "&Components";
-            // 
-            // miTypeRelSampleTypesCompNew
-            // 
-            this.miTypeRelSampleTypesCompNew.Name = "miTypeRelSampleTypesCompNew";
-            this.miTypeRelSampleTypesCompNew.Size = new System.Drawing.Size(163, 22);
-            this.miTypeRelSampleTypesCompNew.Text = "&New component";
-            this.miTypeRelSampleTypesCompNew.Click += new System.EventHandler(this.miTypeRelSampleTypesCompNew_Click);
-            // 
-            // miTypeRelSampleTypesCompEdit
-            // 
-            this.miTypeRelSampleTypesCompEdit.Name = "miTypeRelSampleTypesCompEdit";
-            this.miTypeRelSampleTypesCompEdit.Size = new System.Drawing.Size(163, 22);
-            this.miTypeRelSampleTypesCompEdit.Text = "&Edit component";
-            this.miTypeRelSampleTypesCompEdit.Click += new System.EventHandler(this.miTypeRelSampleTypesCompEdit_Click);
+            this.lbTypRelAnalMethNuclides.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.lbTypRelAnalMethNuclides.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.lbTypRelAnalMethNuclides.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lbTypRelAnalMethNuclides.FormattingEnabled = true;
+            this.lbTypRelAnalMethNuclides.ItemHeight = 15;
+            this.lbTypRelAnalMethNuclides.Location = new System.Drawing.Point(0, 25);
+            this.lbTypRelAnalMethNuclides.Name = "lbTypRelAnalMethNuclides";
+            this.lbTypRelAnalMethNuclides.Size = new System.Drawing.Size(537, 549);
+            this.lbTypRelAnalMethNuclides.TabIndex = 1;
             // 
             // FormMain
             // 
@@ -10080,7 +10097,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.gridTypeRelAnalMeth)).EndInit();
             this.toolsTypeRelAnalMeth.ResumeLayout(false);
             this.toolsTypeRelAnalMeth.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView28)).EndInit();
             this.toolsTypeRelNuclides.ResumeLayout(false);
             this.toolsTypeRelNuclides.PerformLayout();
             this.panel27.ResumeLayout(false);
@@ -10577,7 +10593,6 @@
         private System.Windows.Forms.ToolStrip toolsTypeRelAnalMeth;
         private System.Windows.Forms.ToolStripButton toolStripButton51;
         private System.Windows.Forms.ToolStripButton toolStripButton52;
-        private System.Windows.Forms.DataGridView dataGridView28;
         private System.Windows.Forms.ToolStrip toolsTypeRelNuclides;
         private System.Windows.Forms.ToolStripLabel toolStripLabel23;
         private System.Windows.Forms.ToolStripButton toolStripButton53;
@@ -11157,6 +11172,9 @@
         private System.Windows.Forms.ToolStripMenuItem miTypeRelSampleTypesComps;
         private System.Windows.Forms.ToolStripMenuItem miTypeRelSampleTypesCompNew;
         private System.Windows.Forms.ToolStripMenuItem miTypeRelSampleTypesCompEdit;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator58;
+        private System.Windows.Forms.ToolStripMenuItem miAnalysisMethodsAddNuclide;
+        private System.Windows.Forms.ListBox lbTypRelAnalMethNuclides;
     }
 }
 

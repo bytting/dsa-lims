@@ -704,5 +704,24 @@ order by name";
                 }
             }
         }
+
+        public static void PopulateAnalMethNuclides(SqlConnection conn, Guid analysisMethodId, ListBox lb)
+        {
+            string query = @"
+select n.id, n.name from nuclide n
+    inner join analysis_method_x_nuclide amn on amn.nuclide_id = n.id
+    inner join analysis_method am on amn.analysis_method_id = am.id and am.id = @analysis_method_id
+order by name";
+
+            lb.Items.Clear();
+            using (SqlDataReader reader = DB.GetDataReader(conn, query, CommandType.Text, new SqlParameter("@analysis_method_id", analysisMethodId)))
+            {
+                while (reader.Read())
+                {
+                    Lemma<Guid, string> st = new Lemma<Guid, string>(new Guid(reader["id"].ToString()), reader["name"].ToString());
+                    lb.Items.Add(st);
+                }
+            }
+        }
     }
 }

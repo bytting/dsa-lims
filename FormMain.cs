@@ -119,6 +119,7 @@ namespace DSA_lims
                     UI.PopulateSampleTypes(conn, treeSampleTypes);
                     UI.PopulateSampleTypes(treeSampleTypes, cboxSampleSampleType);
                     UI.PopulateSigma(cboxPrepAnalAnalSigma, cboxOrderRequestedSigma);
+                    UI.PopulateCustomers(conn, InstanceStatusType.Active, cboxOrderCustomerName);
                 }
                 
                 HideMenuItems();
@@ -484,7 +485,7 @@ namespace DSA_lims
                     cmd.Parameters.AddWithValue("@lod_temperature", DBNull.Value);
                     cmd.Parameters.AddWithValue("@confidential", cbSampleConfidential.Checked ? 1 : 0);
                     cmd.Parameters.AddWithValue("@parameters", DBNull.Value);
-                    cmd.Parameters.AddWithValue("@instance_status_id", InstanceStatus.Active);
+                    cmd.Parameters.AddWithValue("@instance_status_id", InstanceStatusType.Active);
                     cmd.Parameters.AddWithValue("@comment", tbSampleComment.Text.Trim());
                     cmd.Parameters.AddWithValue("@create_date", DateTime.Now);
                     cmd.Parameters.AddWithValue("@created_by", Common.Username);

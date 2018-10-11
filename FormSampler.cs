@@ -48,7 +48,7 @@ namespace DSA_lims
             InitializeComponent();            
             Text = "Create sampler";
             cboxInstanceStatus.DataSource = Common.InstanceStatusList;
-            cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
+            cboxInstanceStatus.SelectedValue = InstanceStatusType.Active;
         }
 
         public FormSampler(Guid sid)
@@ -73,7 +73,7 @@ namespace DSA_lims
                     tbAddress.Text = reader["address"].ToString();
                     tbEmail.Text = reader["email"].ToString();
                     tbPhone.Text = reader["phone"].ToString();
-                    cboxInstanceStatus.SelectedValue = InstanceStatus.Eval(reader["instance_status_id"]);
+                    cboxInstanceStatus.SelectedValue = reader["instance_status_id"];
                     tbComment.Text = reader["comment"].ToString();
                     p["create_date"] = reader["create_date"];
                     p["created_by"] = reader["created_by"];
@@ -101,7 +101,7 @@ namespace DSA_lims
             p["address"] = tbAddress.Text.Trim();
             p["email"] = tbEmail.Text.Trim();
             p["phone"] = tbPhone.Text.Trim();
-            p["instance_status_id"] = InstanceStatus.Eval(cboxInstanceStatus.SelectedValue);
+            p["instance_status_id"] = cboxInstanceStatus.SelectedValue;
             p["comment"] = tbComment.Text.Trim();
 
             bool success;

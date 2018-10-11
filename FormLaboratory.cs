@@ -49,7 +49,7 @@ namespace DSA_lims
             InitializeComponent();            
             Text = "Create laboratory";
             cboxInstanceStatus.DataSource = Common.InstanceStatusList;
-            cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
+            cboxInstanceStatus.SelectedValue = InstanceStatusType.Active;
         }
 
         public FormLaboratory(Guid lid)
@@ -75,7 +75,7 @@ namespace DSA_lims
                     tbAddress.Text = reader["address"].ToString();
                     tbEmail.Text = reader["email"].ToString();
                     tbPhone.Text = reader["phone"].ToString();
-                    cboxInstanceStatus.SelectedValue = InstanceStatus.Eval(reader["instance_status_id"]);
+                    cboxInstanceStatus.SelectedValue = reader["instance_status_id"];
                     tbComment.Text = reader["comment"].ToString();
 
                     p["assignment_counter"] = reader["assignment_counter"];
@@ -112,7 +112,7 @@ namespace DSA_lims
             p["address"] = tbAddress.Text.Trim();
             p["email"] = tbEmail.Text.Trim();
             p["phone"] = tbPhone.Text.Trim();
-            p["instance_status_id"] = InstanceStatus.Eval(cboxInstanceStatus.SelectedValue);
+            p["instance_status_id"] = cboxInstanceStatus.SelectedValue;
             p["comment"] = tbComment.Text.Trim();
 
             bool success;

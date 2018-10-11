@@ -111,7 +111,7 @@ namespace DSA_lims
         public static void PopulateProjectsMain(SqlConnection conn, DataGridView grid)
         {
             grid.DataSource = DB.GetDataTable(conn, "csp_select_projects_main_flat", CommandType.StoredProcedure,
-                new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
+                new SqlParameter("@instance_status_level", InstanceStatusType.Deleted));
 
             grid.Columns["id"].Visible = false;
             grid.Columns["comment"].Visible = false;
@@ -127,7 +127,7 @@ namespace DSA_lims
         public static void PopulateProjectsMain(SqlConnection conn, params ComboBox[] cbn)
         {
             using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_projects_main_short", CommandType.StoredProcedure,
-                new SqlParameter("@instance_status_level", InstanceStatus.Deleted)))
+                new SqlParameter("@instance_status_level", InstanceStatusType.Deleted)))
             {
                 foreach(ComboBox cb in cbn)
                     cb.Items.Clear();
@@ -145,7 +145,7 @@ namespace DSA_lims
         {
             grid.DataSource = DB.GetDataTable(conn, "csp_select_projects_sub_flat", CommandType.StoredProcedure,            
                 new SqlParameter("@project_main_id", project_main_id),
-                new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
+                new SqlParameter("@instance_status_level", InstanceStatusType.Deleted)
             );
 
             grid.Columns["id"].Visible = false;
@@ -164,7 +164,7 @@ namespace DSA_lims
         {
             using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_projects_sub_short", CommandType.StoredProcedure,
                 new SqlParameter("@project_main_id", project_main_id),
-                new SqlParameter("@instance_status_level", InstanceStatus.Deleted)))
+                new SqlParameter("@instance_status_level", InstanceStatusType.Deleted)))
             {
                 foreach (ComboBox cb in cbn)
                     cb.Items.Clear();
@@ -181,7 +181,7 @@ namespace DSA_lims
         public static void PopulateLaboratories(SqlConnection conn, DataGridView grid)
         {                        
             grid.DataSource = DB.GetDataTable(conn, "csp_select_laboratories_flat", CommandType.StoredProcedure,
-                new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
+                new SqlParameter("@instance_status_level", InstanceStatusType.Deleted));
         
             grid.Columns["id"].Visible = false;
             grid.Columns["assignment_counter"].Visible = false;
@@ -202,7 +202,7 @@ namespace DSA_lims
         public static void PopulateLaboratories(SqlConnection conn, params ComboBox[] cbn)
         {
             using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_laboratories_short", CommandType.StoredProcedure,
-                new SqlParameter("@instance_status_level", InstanceStatus.Deleted)))
+                new SqlParameter("@instance_status_level", InstanceStatusType.Deleted)))
             {
                 foreach(ComboBox cb in cbn)
                     cb.Items.Clear();
@@ -219,7 +219,7 @@ namespace DSA_lims
         public static void PopulateUsers(SqlConnection conn, DataGridView grid)
         {                        
             grid.DataSource = DB.GetDataTable(conn, "csp_select_accounts_flat", CommandType.StoredProcedure,
-                new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
+                new SqlParameter("@instance_status_level", InstanceStatusType.Deleted));
 
             grid.Columns["password_hash"].Visible = false;
             grid.Columns["create_date"].Visible = false;
@@ -235,7 +235,7 @@ namespace DSA_lims
         public static void PopulateNuclides(SqlConnection conn, DataGridView grid)
         {                        
             grid.DataSource = DB.GetDataTable(conn, "csp_select_nuclides_flat", CommandType.StoredProcedure,
-                new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
+                new SqlParameter("@instance_status_level", InstanceStatusType.Deleted));
         
             grid.Columns["id"].Visible = false;
             grid.Columns["comment"].Visible = false;
@@ -259,7 +259,7 @@ namespace DSA_lims
         {            
             grid.DataSource = DB.GetDataTable(conn, "csp_select_nuclide_transmissions_for_nuclide_flat", CommandType.StoredProcedure,
                 new SqlParameter("@nuclide_id", nid),
-                new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
+                new SqlParameter("@instance_status_level", InstanceStatusType.Deleted));
 
             grid.Columns["id"].Visible = false;
             grid.Columns["nuclide_name"].Visible = false;
@@ -285,7 +285,7 @@ namespace DSA_lims
         public static void PopulateGeometries(SqlConnection conn, DataGridView grid)
         {            
             grid.DataSource = DB.GetDataTable(conn, "csp_select_preparation_geometries_flat", CommandType.StoredProcedure,
-                new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
+                new SqlParameter("@instance_status_level", InstanceStatusType.Deleted));
         
             grid.Columns["id"].Visible = false;
             grid.Columns["comment"].Visible = false;
@@ -302,7 +302,7 @@ namespace DSA_lims
         public static void PopulateGeometries(SqlConnection conn, params ComboBox[] cbn)
         {
             using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_preparation_geometries_short", CommandType.StoredProcedure,
-                new SqlParameter("@instance_status_level", InstanceStatus.Deleted)))
+                new SqlParameter("@instance_status_level", InstanceStatusType.Deleted)))
             {
                 foreach (ComboBox cb in cbn)
                     cb.Items.Clear();
@@ -319,7 +319,7 @@ namespace DSA_lims
         public static void PopulateCounties(SqlConnection conn, DataGridView grid)
         {
             grid.DataSource = DB.GetDataTable(conn, "csp_select_counties_flat", CommandType.StoredProcedure,
-                new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
+                new SqlParameter("@instance_status_level", InstanceStatusType.Deleted));
         
             grid.Columns["id"].Visible = false;
             grid.Columns["created_by"].Visible = false;
@@ -335,7 +335,7 @@ namespace DSA_lims
         public static void PopulateCounties(SqlConnection conn, params ComboBox[] cbn)
         {            
             using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_counties_short", CommandType.StoredProcedure,
-                new SqlParameter("@instance_status_level", InstanceStatus.Deleted)))
+                new SqlParameter("@instance_status_level", InstanceStatusType.Deleted)))
             {
                 foreach (ComboBox cb in cbn)
                     cb.Items.Clear();
@@ -353,7 +353,7 @@ namespace DSA_lims
         {            
             grid.DataSource = DB.GetDataTable(conn, "csp_select_municipalities_for_county_flat", CommandType.StoredProcedure,
                 new SqlParameter("@county_id", cid),
-                new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
+                new SqlParameter("@instance_status_level", InstanceStatusType.Deleted));
         
             grid.Columns["id"].Visible = false;
             grid.Columns["county_name"].Visible = false;
@@ -371,7 +371,7 @@ namespace DSA_lims
         {
             using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_municipalities_for_county_short", CommandType.StoredProcedure,
                 new SqlParameter("@county_id", cid),
-                new SqlParameter("@instance_status_level", InstanceStatus.Active)))
+                new SqlParameter("@instance_status_level", InstanceStatusType.Active)))
             {
                 foreach (ComboBox cb in cbn)
                     cb.Items.Clear();
@@ -388,7 +388,7 @@ namespace DSA_lims
         public static void PopulateStations(SqlConnection conn, DataGridView grid)
         {
             grid.DataSource = DB.GetDataTable(conn, "csp_select_stations_flat", CommandType.StoredProcedure,
-                new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
+                new SqlParameter("@instance_status_level", InstanceStatusType.Deleted));
 
             grid.Columns["id"].Visible = false;
             grid.Columns["comment"].Visible = false;
@@ -407,7 +407,7 @@ namespace DSA_lims
         public static void PopulateStations(SqlConnection conn, params ComboBox[] cbn)
         {            
             using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_stations_short", CommandType.StoredProcedure,
-                new SqlParameter("@instance_status_level", InstanceStatus.Deleted)))
+                new SqlParameter("@instance_status_level", InstanceStatusType.Deleted)))
             {
                 foreach (ComboBox cb in cbn)
                     cb.Items.Clear();
@@ -424,7 +424,7 @@ namespace DSA_lims
         public static void PopulateSampleStorage(SqlConnection conn, DataGridView grid)
         {         
             grid.DataSource = DB.GetDataTable(conn, "csp_select_sample_storages_flat", CommandType.StoredProcedure,
-                new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
+                new SqlParameter("@instance_status_level", InstanceStatusType.Deleted));
         
             grid.Columns["id"].Visible = false;
             grid.Columns["comment"].Visible = false;
@@ -441,7 +441,7 @@ namespace DSA_lims
         public static void PopulateSampleStorage(SqlConnection conn, params ComboBox[] cbn)
         {
             using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_sample_storages_short", CommandType.StoredProcedure,
-                new SqlParameter("@instance_status_level", InstanceStatus.Deleted)))
+                new SqlParameter("@instance_status_level", InstanceStatusType.Deleted)))
             {
                 foreach (ComboBox cb in cbn)
                     cb.Items.Clear();
@@ -458,7 +458,7 @@ namespace DSA_lims
         public static void PopulateSamplers(SqlConnection conn, DataGridView grid)
         {
             grid.DataSource = DB.GetDataTable(conn, "csp_select_samplers_flat", CommandType.StoredProcedure,
-                new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
+                new SqlParameter("@instance_status_level", InstanceStatusType.Deleted));
         
             grid.Columns["id"].Visible = false;
             grid.Columns["comment"].Visible = false;
@@ -477,7 +477,7 @@ namespace DSA_lims
         public static void PopulateSamplers(SqlConnection conn, params ComboBox[] cbn)
         {            
             using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_samplers_short", CommandType.StoredProcedure,
-                new SqlParameter("@instance_status_level", InstanceStatus.Deleted)))
+                new SqlParameter("@instance_status_level", InstanceStatusType.Deleted)))
             {
                 foreach (ComboBox cb in cbn)
                     cb.Items.Clear();
@@ -494,7 +494,7 @@ namespace DSA_lims
         public static void PopulateSamplingMethods(SqlConnection conn, DataGridView grid)
         {
             grid.DataSource = DB.GetDataTable(conn, "csp_select_sampling_methods_flat", CommandType.StoredProcedure,
-                new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
+                new SqlParameter("@instance_status_level", InstanceStatusType.Deleted));
 
             grid.Columns["id"].Visible = false;
             grid.Columns["comment"].Visible = false;
@@ -510,7 +510,7 @@ namespace DSA_lims
         public static void PopulateSamplingMethods(SqlConnection conn, params ComboBox[] cbn)
         {
             using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_sampling_methods_short", CommandType.StoredProcedure,
-                new SqlParameter("@instance_status_level", InstanceStatus.Deleted)))
+                new SqlParameter("@instance_status_level", InstanceStatusType.Deleted)))
             {
                 foreach (ComboBox cb in cbn)
                     cb.Items.Clear();
@@ -527,7 +527,7 @@ namespace DSA_lims
         public static void PopulateSamples(SqlConnection conn, DataGridView grid)
         {
             grid.DataSource = DB.GetDataTable(conn, "csp_select_samples_informative_flat", CommandType.StoredProcedure,
-                new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
+                new SqlParameter("@instance_status_level", InstanceStatusType.Deleted));
 
             grid.Columns["id"].Visible = false;
 
@@ -548,7 +548,7 @@ namespace DSA_lims
         public static void PopulatePreparationMethods(SqlConnection conn, DataGridView grid)
         {
             grid.DataSource = DB.GetDataTable(conn, "csp_select_preparation_methods_flat", CommandType.StoredProcedure,
-                new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
+                new SqlParameter("@instance_status_level", InstanceStatusType.Deleted));
 
             grid.Columns["id"].Visible = false;
             grid.Columns["comment"].Visible = false;
@@ -566,7 +566,7 @@ namespace DSA_lims
         public static void PopulateAnalysisMethods(SqlConnection conn, DataGridView grid)
         {
             grid.DataSource = DB.GetDataTable(conn, "csp_select_analysis_methods_flat", CommandType.StoredProcedure,
-                new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
+                new SqlParameter("@instance_status_level", InstanceStatusType.Deleted));
 
             grid.Columns["id"].Visible = false;
             grid.Columns["comment"].Visible = false;
@@ -750,6 +750,23 @@ order by name";
                 cb.Items.Clear();
                 cb.Items.AddRange(new object[] { 1.0, 2.0, 3.0 });
                 cb.SelectedIndex = -1;
+            }
+        }
+
+        public static void PopulateCustomers(SqlConnection conn, InstanceStatusType statusLevel, params ComboBox[] cbs)
+        {
+            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_customers", CommandType.StoredProcedure, 
+                new SqlParameter("@instance_status_level", statusLevel)))
+            {
+                foreach (ComboBox cb in cbs)
+                    cb.Items.Clear();
+
+                while (reader.Read())
+                    foreach (ComboBox cb in cbs)
+                        cb.Items.Add(new Lemma<Guid, string>(new Guid(reader["id"].ToString()), reader["name"].ToString()));
+
+                foreach (ComboBox cb in cbs)
+                    cb.SelectedIndex = -1;
             }
         }
     }

@@ -47,7 +47,7 @@ namespace DSA_lims
             InitializeComponent();
             Text = "Create preparation method";
             cboxInstanceStatus.DataSource = Common.InstanceStatusList;
-            cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
+            cboxInstanceStatus.SelectedValue = InstanceStatusType.Active;
         }
 
         public FormPreparationMethod(Guid pmid)
@@ -71,7 +71,7 @@ namespace DSA_lims
                     tbName.Text = reader["name"].ToString();
                     tbDescriptionLink.Text = reader["description_link"].ToString();                    
                     cbDestructive.Checked = Convert.ToBoolean(reader["destructive"]);
-                    cboxInstanceStatus.SelectedValue = InstanceStatus.Eval(reader["instance_status_id"]);
+                    cboxInstanceStatus.SelectedValue = reader["instance_status_id"];
                     tbComment.Text = reader["comment"].ToString();
                     p["create_date"] = reader["create_date"];
                     p["created_by"] = reader["created_by"];
@@ -92,7 +92,7 @@ namespace DSA_lims
             p["name"] = tbName.Text.Trim();
             p["description_link"] = tbDescriptionLink.Text.Trim();
             p["destructive"] = cbDestructive.Checked;
-            p["instance_status_id"] = InstanceStatus.Eval(cboxInstanceStatus.SelectedValue);
+            p["instance_status_id"] = cboxInstanceStatus.SelectedValue;
             p["comment"] = tbComment.Text.Trim();
 
             bool success;

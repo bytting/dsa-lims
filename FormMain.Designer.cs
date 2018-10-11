@@ -56,6 +56,8 @@
             this.toolStripSeparator67 = new System.Windows.Forms.ToolStripSeparator();
             this.miOrderAddAnalMeth = new System.Windows.Forms.ToolStripMenuItem();
             this.miOrderRemAnalMeth = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator68 = new System.Windows.Forms.ToolStripSeparator();
+            this.miOrderSave = new System.Windows.Forms.ToolStripMenuItem();
             this.miSearch = new System.Windows.Forms.ToolStripMenuItem();
             this.miMeta = new System.Windows.Forms.ToolStripMenuItem();
             this.miStations = new System.Windows.Forms.ToolStripMenuItem();
@@ -280,13 +282,18 @@
             this.label38 = new System.Windows.Forms.Label();
             this.label39 = new System.Windows.Forms.Label();
             this.label40 = new System.Windows.Forms.Label();
-            this.label41 = new System.Windows.Forms.Label();
             this.label42 = new System.Windows.Forms.Label();
             this.cboxOrderResponsible = new System.Windows.Forms.ComboBox();
             this.cboxOrderLaboratory = new System.Windows.Forms.ComboBox();
             this.cboxOrderRequestedSigma = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.tbOrderId = new System.Windows.Forms.TextBox();
+            this.label41 = new System.Windows.Forms.Label();
+            this.cboxOrderWorkflowStatus = new System.Windows.Forms.ComboBox();
+            this.label20 = new System.Windows.Forms.Label();
+            this.panel30 = new System.Windows.Forms.Panel();
+            this.tbOrderDeadline = new System.Windows.Forms.TextBox();
+            this.btnOrderSelectDeadline = new System.Windows.Forms.Button();
             this.toolsOrderDetails = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel19 = new System.Windows.Forms.ToolStripLabel();
             this.treeOrderContent = new System.Windows.Forms.TreeView();
@@ -320,7 +327,7 @@
             this.label35 = new System.Windows.Forms.Label();
             this.label36 = new System.Windows.Forms.Label();
             this.label37 = new System.Windows.Forms.Label();
-            this.comboBox14 = new System.Windows.Forms.ComboBox();
+            this.cboxOrderCustomerName = new System.Windows.Forms.ComboBox();
             this.comboBox15 = new System.Windows.Forms.ComboBox();
             this.textBox24 = new System.Windows.Forms.TextBox();
             this.textBox25 = new System.Windows.Forms.TextBox();
@@ -901,13 +908,6 @@
             this.tools = new System.Windows.Forms.ToolStrip();
             this.btnMenu = new System.Windows.Forms.ToolStripButton();
             this.lblCurrentTab = new System.Windows.Forms.ToolStripLabel();
-            this.toolStripSeparator68 = new System.Windows.Forms.ToolStripSeparator();
-            this.miOrderSave = new System.Windows.Forms.ToolStripMenuItem();
-            this.cboxOrderWorkflowStatus = new System.Windows.Forms.ComboBox();
-            this.label20 = new System.Windows.Forms.Label();
-            this.panel30 = new System.Windows.Forms.Panel();
-            this.btnOrderSelectDeadline = new System.Windows.Forms.Button();
-            this.tbOrderDeadline = new System.Windows.Forms.TextBox();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tabs.SuspendLayout();
@@ -943,6 +943,7 @@
             this.splitContainer7.Panel2.SuspendLayout();
             this.splitContainer7.SuspendLayout();
             this.tableLayoutPanel6.SuspendLayout();
+            this.panel30.SuspendLayout();
             this.toolsOrderDetails.SuspendLayout();
             this.toolsOrderContent.SuspendLayout();
             this.panel12.SuspendLayout();
@@ -1234,7 +1235,6 @@
             this.panel63.SuspendLayout();
             this.toolStrip7.SuspendLayout();
             this.tools.SuspendLayout();
-            this.panel30.SuspendLayout();
             this.SuspendLayout();
             // 
             // menu
@@ -1458,6 +1458,18 @@
             this.miOrderRemAnalMeth.Size = new System.Drawing.Size(226, 22);
             this.miOrderRemAnalMeth.Text = "Re&move analysis method";
             this.miOrderRemAnalMeth.Click += new System.EventHandler(this.miOrderRemAnalMeth_Click);
+            // 
+            // toolStripSeparator68
+            // 
+            this.toolStripSeparator68.Name = "toolStripSeparator68";
+            this.toolStripSeparator68.Size = new System.Drawing.Size(223, 6);
+            // 
+            // miOrderSave
+            // 
+            this.miOrderSave.Name = "miOrderSave";
+            this.miOrderSave.Size = new System.Drawing.Size(226, 22);
+            this.miOrderSave.Text = "&Save order";
+            this.miOrderSave.Click += new System.EventHandler(this.miOrderSave_Click);
             // 
             // miSearch
             // 
@@ -3597,7 +3609,7 @@
             // 
             this.splitContainer6.Panel2.Controls.Add(this.panel12);
             this.splitContainer6.Size = new System.Drawing.Size(1127, 574);
-            this.splitContainer6.SplitterDistance = 782;
+            this.splitContainer6.SplitterDistance = 781;
             this.splitContainer6.SplitterWidth = 5;
             this.splitContainer6.TabIndex = 4;
             // 
@@ -3617,7 +3629,7 @@
             // 
             this.splitContainer7.Panel2.Controls.Add(this.treeOrderContent);
             this.splitContainer7.Panel2.Controls.Add(this.toolsOrderContent);
-            this.splitContainer7.Size = new System.Drawing.Size(782, 574);
+            this.splitContainer7.Size = new System.Drawing.Size(781, 574);
             this.splitContainer7.SplitterDistance = 361;
             this.splitContainer7.SplitterWidth = 5;
             this.splitContainer7.TabIndex = 0;
@@ -3699,18 +3711,6 @@
             this.label40.Text = "Requested sigma";
             this.label40.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // label41
-            // 
-            this.label41.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label41.AutoSize = true;
-            this.tableLayoutPanel6.SetColumnSpan(this.label41, 2);
-            this.label41.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
-            this.label41.Location = new System.Drawing.Point(3, 198);
-            this.label41.Name = "label41";
-            this.label41.Size = new System.Drawing.Size(105, 13);
-            this.label41.TabIndex = 3;
-            this.label41.Text = "Content comment";
-            // 
             // label42
             // 
             this.label42.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -3775,6 +3775,69 @@
             this.tbOrderId.Size = new System.Drawing.Size(235, 21);
             this.tbOrderId.TabIndex = 11;
             // 
+            // label41
+            // 
+            this.label41.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label41.AutoSize = true;
+            this.tableLayoutPanel6.SetColumnSpan(this.label41, 2);
+            this.label41.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
+            this.label41.Location = new System.Drawing.Point(3, 198);
+            this.label41.Name = "label41";
+            this.label41.Size = new System.Drawing.Size(105, 13);
+            this.label41.TabIndex = 3;
+            this.label41.Text = "Content comment";
+            // 
+            // cboxOrderWorkflowStatus
+            // 
+            this.cboxOrderWorkflowStatus.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cboxOrderWorkflowStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxOrderWorkflowStatus.FormattingEnabled = true;
+            this.cboxOrderWorkflowStatus.Location = new System.Drawing.Point(123, 139);
+            this.cboxOrderWorkflowStatus.Name = "cboxOrderWorkflowStatus";
+            this.cboxOrderWorkflowStatus.Size = new System.Drawing.Size(235, 23);
+            this.cboxOrderWorkflowStatus.TabIndex = 12;
+            // 
+            // label20
+            // 
+            this.label20.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label20.Location = new System.Drawing.Point(3, 136);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(114, 25);
+            this.label20.TabIndex = 13;
+            this.label20.Text = "Workflow status";
+            this.label20.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // panel30
+            // 
+            this.panel30.Controls.Add(this.tbOrderDeadline);
+            this.panel30.Controls.Add(this.btnOrderSelectDeadline);
+            this.panel30.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel30.Location = new System.Drawing.Point(123, 87);
+            this.panel30.Name = "panel30";
+            this.panel30.Size = new System.Drawing.Size(235, 21);
+            this.panel30.TabIndex = 14;
+            // 
+            // tbOrderDeadline
+            // 
+            this.tbOrderDeadline.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbOrderDeadline.Location = new System.Drawing.Point(0, 0);
+            this.tbOrderDeadline.Name = "tbOrderDeadline";
+            this.tbOrderDeadline.ReadOnly = true;
+            this.tbOrderDeadline.Size = new System.Drawing.Size(199, 21);
+            this.tbOrderDeadline.TabIndex = 1;
+            // 
+            // btnOrderSelectDeadline
+            // 
+            this.btnOrderSelectDeadline.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnOrderSelectDeadline.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnOrderSelectDeadline.Location = new System.Drawing.Point(199, 0);
+            this.btnOrderSelectDeadline.Name = "btnOrderSelectDeadline";
+            this.btnOrderSelectDeadline.Size = new System.Drawing.Size(36, 21);
+            this.btnOrderSelectDeadline.TabIndex = 0;
+            this.btnOrderSelectDeadline.Text = "...";
+            this.btnOrderSelectDeadline.UseVisualStyleBackColor = true;
+            this.btnOrderSelectDeadline.Click += new System.EventHandler(this.btnOrderSelectDeadline_Click);
+            // 
             // toolsOrderDetails
             // 
             this.toolsOrderDetails.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
@@ -3798,7 +3861,7 @@
             this.treeOrderContent.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeOrderContent.Location = new System.Drawing.Point(0, 25);
             this.treeOrderContent.Name = "treeOrderContent";
-            this.treeOrderContent.Size = new System.Drawing.Size(416, 549);
+            this.treeOrderContent.Size = new System.Drawing.Size(415, 549);
             this.treeOrderContent.TabIndex = 0;
             // 
             // toolsOrderContent
@@ -3817,7 +3880,7 @@
             this.btnOrderRemAnalMeth});
             this.toolsOrderContent.Location = new System.Drawing.Point(0, 0);
             this.toolsOrderContent.Name = "toolsOrderContent";
-            this.toolsOrderContent.Size = new System.Drawing.Size(416, 25);
+            this.toolsOrderContent.Size = new System.Drawing.Size(415, 25);
             this.toolsOrderContent.TabIndex = 1;
             this.toolsOrderContent.Text = "toolStrip16";
             // 
@@ -3916,7 +3979,7 @@
             this.panel12.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel12.Location = new System.Drawing.Point(0, 0);
             this.panel12.Name = "panel12";
-            this.panel12.Size = new System.Drawing.Size(340, 574);
+            this.panel12.Size = new System.Drawing.Size(341, 574);
             this.panel12.TabIndex = 1;
             // 
             // dataGridView12
@@ -3930,7 +3993,7 @@
             this.dataGridView12.Location = new System.Drawing.Point(0, 25);
             this.dataGridView12.Name = "dataGridView12";
             this.dataGridView12.ReadOnly = true;
-            this.dataGridView12.Size = new System.Drawing.Size(340, 549);
+            this.dataGridView12.Size = new System.Drawing.Size(341, 549);
             this.dataGridView12.TabIndex = 1;
             // 
             // toolsOrderAttachments
@@ -3944,7 +4007,7 @@
             this.toolStripButton23});
             this.toolsOrderAttachments.Location = new System.Drawing.Point(0, 0);
             this.toolsOrderAttachments.Name = "toolsOrderAttachments";
-            this.toolsOrderAttachments.Size = new System.Drawing.Size(340, 25);
+            this.toolsOrderAttachments.Size = new System.Drawing.Size(341, 25);
             this.toolsOrderAttachments.TabIndex = 0;
             this.toolsOrderAttachments.Text = "toolStrip15";
             // 
@@ -4028,7 +4091,7 @@
             this.tableLayoutPanel5.Controls.Add(this.label35, 2, 3);
             this.tableLayoutPanel5.Controls.Add(this.label36, 0, 3);
             this.tableLayoutPanel5.Controls.Add(this.label37, 0, 4);
-            this.tableLayoutPanel5.Controls.Add(this.comboBox14, 1, 1);
+            this.tableLayoutPanel5.Controls.Add(this.cboxOrderCustomerName, 1, 1);
             this.tableLayoutPanel5.Controls.Add(this.comboBox15, 3, 1);
             this.tableLayoutPanel5.Controls.Add(this.textBox24, 1, 2);
             this.tableLayoutPanel5.Controls.Add(this.textBox25, 1, 3);
@@ -4118,15 +4181,15 @@
             this.label37.TabIndex = 6;
             this.label37.Text = "Customer phone";
             // 
-            // comboBox14
+            // cboxOrderCustomerName
             // 
-            this.comboBox14.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.comboBox14.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox14.FormattingEnabled = true;
-            this.comboBox14.Location = new System.Drawing.Point(172, 12);
-            this.comboBox14.Name = "comboBox14";
-            this.comboBox14.Size = new System.Drawing.Size(388, 23);
-            this.comboBox14.TabIndex = 7;
+            this.cboxOrderCustomerName.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cboxOrderCustomerName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxOrderCustomerName.FormattingEnabled = true;
+            this.cboxOrderCustomerName.Location = new System.Drawing.Point(172, 12);
+            this.cboxOrderCustomerName.Name = "cboxOrderCustomerName";
+            this.cboxOrderCustomerName.Size = new System.Drawing.Size(388, 23);
+            this.cboxOrderCustomerName.TabIndex = 7;
             // 
             // comboBox15
             // 
@@ -10085,69 +10148,6 @@
             this.lblCurrentTab.Size = new System.Drawing.Size(98, 22);
             this.lblCurrentTab.Text = "<lblCurrentTab>";
             // 
-            // toolStripSeparator68
-            // 
-            this.toolStripSeparator68.Name = "toolStripSeparator68";
-            this.toolStripSeparator68.Size = new System.Drawing.Size(223, 6);
-            // 
-            // miOrderSave
-            // 
-            this.miOrderSave.Name = "miOrderSave";
-            this.miOrderSave.Size = new System.Drawing.Size(226, 22);
-            this.miOrderSave.Text = "&Save order";
-            this.miOrderSave.Click += new System.EventHandler(this.miOrderSave_Click);
-            // 
-            // cboxOrderWorkflowStatus
-            // 
-            this.cboxOrderWorkflowStatus.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cboxOrderWorkflowStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboxOrderWorkflowStatus.FormattingEnabled = true;
-            this.cboxOrderWorkflowStatus.Location = new System.Drawing.Point(123, 139);
-            this.cboxOrderWorkflowStatus.Name = "cboxOrderWorkflowStatus";
-            this.cboxOrderWorkflowStatus.Size = new System.Drawing.Size(235, 23);
-            this.cboxOrderWorkflowStatus.TabIndex = 12;
-            // 
-            // label20
-            // 
-            this.label20.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label20.Location = new System.Drawing.Point(3, 136);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(114, 25);
-            this.label20.TabIndex = 13;
-            this.label20.Text = "Workflow status";
-            this.label20.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // panel30
-            // 
-            this.panel30.Controls.Add(this.tbOrderDeadline);
-            this.panel30.Controls.Add(this.btnOrderSelectDeadline);
-            this.panel30.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel30.Location = new System.Drawing.Point(123, 87);
-            this.panel30.Name = "panel30";
-            this.panel30.Size = new System.Drawing.Size(235, 21);
-            this.panel30.TabIndex = 14;
-            // 
-            // btnOrderSelectDeadline
-            // 
-            this.btnOrderSelectDeadline.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnOrderSelectDeadline.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnOrderSelectDeadline.Location = new System.Drawing.Point(199, 0);
-            this.btnOrderSelectDeadline.Name = "btnOrderSelectDeadline";
-            this.btnOrderSelectDeadline.Size = new System.Drawing.Size(36, 21);
-            this.btnOrderSelectDeadline.TabIndex = 0;
-            this.btnOrderSelectDeadline.Text = "...";
-            this.btnOrderSelectDeadline.UseVisualStyleBackColor = true;
-            this.btnOrderSelectDeadline.Click += new System.EventHandler(this.btnOrderSelectDeadline_Click);
-            // 
-            // tbOrderDeadline
-            // 
-            this.tbOrderDeadline.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbOrderDeadline.Location = new System.Drawing.Point(0, 0);
-            this.tbOrderDeadline.Name = "tbOrderDeadline";
-            this.tbOrderDeadline.ReadOnly = true;
-            this.tbOrderDeadline.Size = new System.Drawing.Size(199, 21);
-            this.tbOrderDeadline.TabIndex = 1;
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -10220,6 +10220,8 @@
             this.splitContainer7.ResumeLayout(false);
             this.tableLayoutPanel6.ResumeLayout(false);
             this.tableLayoutPanel6.PerformLayout();
+            this.panel30.ResumeLayout(false);
+            this.panel30.PerformLayout();
             this.toolsOrderDetails.ResumeLayout(false);
             this.toolsOrderDetails.PerformLayout();
             this.toolsOrderContent.ResumeLayout(false);
@@ -10648,8 +10650,6 @@
             this.toolStrip7.PerformLayout();
             this.tools.ResumeLayout(false);
             this.tools.PerformLayout();
-            this.panel30.ResumeLayout(false);
-            this.panel30.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -10742,7 +10742,7 @@
         private System.Windows.Forms.Panel panel14;
         private System.Windows.Forms.Label label43;
         private System.Windows.Forms.TextBox textBox29;
-        private System.Windows.Forms.ComboBox comboBox14;
+        private System.Windows.Forms.ComboBox cboxOrderCustomerName;
         private System.Windows.Forms.ComboBox comboBox15;
         private System.Windows.Forms.TextBox textBox24;
         private System.Windows.Forms.TextBox textBox25;

@@ -621,6 +621,15 @@ create table customer (
 )
 go
 
+create proc csp_select_customers
+	@instance_status_level int
+as 
+	select *
+	from customer
+	where instance_status_id <= @instance_status_level
+	order by name
+go
+
 /*===========================================================================*/
 /* tbl customer_contact */
 
@@ -1028,7 +1037,7 @@ create table assignment (
 	name nvarchar(80) NOT NULL,	
 	laboratory_id uniqueidentifier NOT NULL,
 	account_id uniqueidentifier NOT NULL,
-	deadline datetime default NULL,
+	deadline datetime NOT NULL,
 	requested_sigma float default NULL,
 	workflow_status_id int default 1,
 	customer_name nvarchar(256) default NULL,
@@ -1043,7 +1052,7 @@ create table assignment (
 	content_comment nvarchar(1000) default NULL,
 	report_comment nvarchar(1000) default NULL,		
 	closed_date datetime default NULL,
-	closed_by uniqueidentifier NOT NULL,
+	closed_by uniqueidentifier default NULL,
 	instance_status_id int default 1,
 	create_date datetime NOT NULL,
 	created_by nvarchar(50) NOT NULL,

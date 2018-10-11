@@ -52,7 +52,7 @@ namespace DSA_lims
             cboxDecayTypes.SelectedIndex = -1;
             Text = "New nuclide";
             cboxInstanceStatus.DataSource = Common.InstanceStatusList;
-            cboxInstanceStatus.SelectedValue = InstanceStatus.Active;            
+            cboxInstanceStatus.SelectedValue = InstanceStatusType.Active;            
         }
 
         public FormNuclide(Guid nid)
@@ -85,7 +85,7 @@ namespace DSA_lims
                     cboxDecayTypes.SelectedValue = Convert.ToInt32(reader["decay_type_id"]);
                     tbKXrayEnergy.Text = reader["kxray_energy"].ToString();
                     tbFluorescenceYield.Text = reader["fluorescence_yield"].ToString();
-                    cboxInstanceStatus.SelectedValue = InstanceStatus.Eval(reader["instance_status_id"]);
+                    cboxInstanceStatus.SelectedValue = reader["instance_status_id"];
                     tbComment.Text = reader["comment"].ToString();
                     p["create_date"] = reader["create_date"];
                     p["created_by"] = reader["created_by"];
@@ -159,7 +159,7 @@ namespace DSA_lims
             p["decay_type_id"] = Convert.ToInt32(cboxDecayTypes.SelectedValue);
             p["xray_energy"] = Convert.ToDouble(tbKXrayEnergy.Text.Trim());
             p["fluorescence_yield"] = Convert.ToDouble(tbFluorescenceYield.Text.Trim());
-            p["instance_status_id"] = InstanceStatus.Eval(cboxInstanceStatus.SelectedValue);
+            p["instance_status_id"] = cboxInstanceStatus.SelectedValue;
             p["comment"] = tbComment.Text.Trim();
 
             bool success;

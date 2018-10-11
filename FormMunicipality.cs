@@ -50,7 +50,7 @@ namespace DSA_lims
             p["county_id"] = cid;
             Text = "Create municipality";
             cboxInstanceStatus.DataSource = Common.InstanceStatusList;
-            cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
+            cboxInstanceStatus.SelectedValue = InstanceStatusType.Active;
         }
 
         public FormMunicipality(Guid cid, Guid mid)
@@ -80,7 +80,7 @@ namespace DSA_lims
                     reader.Read();
                     tbName.Text = reader["name"].ToString();
                     tbNumber.Text = reader["municipality_number"].ToString();
-                    cboxInstanceStatus.SelectedValue = InstanceStatus.Eval(reader["instance_status_id"]);
+                    cboxInstanceStatus.SelectedValue = reader["instance_status_id"];
                     p["create_date"] = reader["create_date"];
                     p["created_by"] = reader["created_by"];
                     p["update_date"] = reader["update_date"];
@@ -111,7 +111,7 @@ namespace DSA_lims
 
             p["name"] = tbName.Text.Trim();
             p["number"] = Convert.ToInt32(tbNumber.Text.Trim());
-            p["instance_status_id"] = InstanceStatus.Eval(cboxInstanceStatus.SelectedValue);
+            p["instance_status_id"] = cboxInstanceStatus.SelectedValue;
 
             bool success;
             if (!p.ContainsKey("id"))

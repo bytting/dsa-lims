@@ -51,7 +51,7 @@ namespace DSA_lims
             Text = "Create new sub project";
             tbMainProjectName.Text = pname;
             cboxInstanceStatus.DataSource = Common.InstanceStatusList;
-            cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
+            cboxInstanceStatus.SelectedValue = InstanceStatusType.Active;
         }
 
         public FormProjectSub(string pname, Guid pid, Guid spid)
@@ -75,7 +75,7 @@ namespace DSA_lims
 
                     reader.Read();
                     tbName.Text = reader["name"].ToString();
-                    cboxInstanceStatus.SelectedValue = InstanceStatus.Eval(reader["instance_status_id"]);
+                    cboxInstanceStatus.SelectedValue = reader["instance_status_id"];
                     tbComment.Text = reader["comment"].ToString();
                     p["create_date"] = reader["create_date"];
                     p["created_by"] = reader["created_by"];
@@ -100,7 +100,7 @@ namespace DSA_lims
             }
 
             p["name"] = tbName.Text.Trim();
-            p["instance_status_id"] = InstanceStatus.Eval(cboxInstanceStatus.SelectedValue);
+            p["instance_status_id"] = cboxInstanceStatus.SelectedValue;
             p["comment"] = tbComment.Text.Trim();
 
             bool success;

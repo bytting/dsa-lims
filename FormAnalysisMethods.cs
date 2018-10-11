@@ -47,7 +47,7 @@ namespace DSA_lims
             InitializeComponent();
             Text = "Create analysis method";
             cboxInstanceStatus.DataSource = Common.InstanceStatusList;
-            cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
+            cboxInstanceStatus.SelectedValue = InstanceStatusType.Active;
         }
 
         public FormAnalysisMethods(Guid amid)
@@ -71,7 +71,7 @@ namespace DSA_lims
                     tbName.Text = reader["name"].ToString();
                     tbDescriptionLink.Text = reader["description_link"].ToString();
                     tbSpecRefRegExp.Text = reader["specter_reference_regexp"].ToString();
-                    cboxInstanceStatus.SelectedValue = InstanceStatus.Eval(reader["instance_status_id"]);
+                    cboxInstanceStatus.SelectedValue = reader["instance_status_id"];
                     tbComment.Text = reader["comment"].ToString();
                     p["create_date"] = reader["create_date"];
                     p["created_by"] = reader["created_by"];
@@ -98,7 +98,7 @@ namespace DSA_lims
             p["name"] = tbName.Text.Trim();
             p["description_link"] = tbDescriptionLink.Text.Trim();
             p["specter_reference_regexp"] = tbSpecRefRegExp.Text.Trim();
-            p["instance_status_id"] = InstanceStatus.Eval(cboxInstanceStatus.SelectedValue);
+            p["instance_status_id"] = cboxInstanceStatus.SelectedValue;
             p["comment"] = tbComment.Text.Trim();
 
             bool success;

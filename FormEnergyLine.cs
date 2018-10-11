@@ -53,7 +53,7 @@ namespace DSA_lims
             Text = "Create energy line";
             tbNuclide.Text = nname;
             cboxInstanceStatus.DataSource = Common.InstanceStatusList;
-            cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
+            cboxInstanceStatus.SelectedValue = InstanceStatusType.Active;
         }
 
         public FormEnergyLine(Guid nid, Guid eid, string nname)
@@ -89,7 +89,7 @@ namespace DSA_lims
                     tbProbOfDecayUnc.Text = reader["probability_of_decay_uncertainty"].ToString();
                     tbTotInternalConv.Text = reader["total_internal_conversion"].ToString();
                     tbKShellConv.Text = reader["kshell_conversion"].ToString();
-                    cboxInstanceStatus.SelectedValue = InstanceStatus.Eval(reader["instance_status_id"]);
+                    cboxInstanceStatus.SelectedValue = reader["instance_status_id"];
                     tbComment.Text = reader["comment"].ToString();
                     p["create_date"] = reader["create_date"];
                     p["created_by"] = reader["created_by"];
@@ -129,7 +129,7 @@ namespace DSA_lims
             p["probability_of_decay_uncertainty"] = Convert.ToDouble(tbProbOfDecayUnc.Text.Trim());
             p["total_internal_conversion"] = Convert.ToDouble(tbTotInternalConv.Text.Trim());
             p["kshell_conversion"] = Convert.ToDouble(tbKShellConv.Text.Trim());
-            p["instance_status_id"] = InstanceStatus.Eval(cboxInstanceStatus.SelectedValue);
+            p["instance_status_id"] = cboxInstanceStatus.SelectedValue;
             p["comment"] = tbComment.Text.Trim();
 
             bool success;

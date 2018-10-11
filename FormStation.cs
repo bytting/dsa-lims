@@ -50,7 +50,7 @@ namespace DSA_lims
             // create new station            
             Text = "Create station";
             cboxInstanceStatus.DataSource = Common.InstanceStatusList;
-            cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
+            cboxInstanceStatus.SelectedValue = InstanceStatusType.Active;
         }
         public FormStation(Guid sid)
         {
@@ -75,7 +75,7 @@ namespace DSA_lims
                     tbLatitude.Text = reader["latitude"].ToString();
                     tbLongitude.Text = reader["longitude"].ToString();
                     tbAltitude.Text = reader["altitude"].ToString();
-                    cboxInstanceStatus.SelectedValue = InstanceStatus.Eval(reader["instance_status_id"]);
+                    cboxInstanceStatus.SelectedValue = reader["instance_status_id"];
                     tbComment.Text = reader["comment"].ToString();
                     p["create_date"] = reader["create_date"];
                     p["created_by"] = reader["created_by"];
@@ -121,7 +121,7 @@ namespace DSA_lims
             p["latitude"] = Convert.ToDouble(tbLatitude.Text.Trim());
             p["longitude"] = Convert.ToDouble(tbLongitude.Text.Trim());
             p["altitude"] = Convert.ToDouble(tbAltitude.Text.Trim());
-            p["instance_status_id"] = InstanceStatus.Eval(cboxInstanceStatus.SelectedValue);
+            p["instance_status_id"] = cboxInstanceStatus.SelectedValue;
             p["comment"] = tbComment.Text.Trim();
 
             bool success;

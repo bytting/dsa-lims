@@ -36,23 +36,13 @@ namespace DSA_lims
         Insert,
         Update,
         Delete
-    }    
+    }
 
-    public static class InstanceStatus
-    {        
-        public static int Eval(object o)
-        {
-            return Convert.ToInt32(o);
-        }
-
-        public static bool IsActive(object o)
-        {
-            return Convert.ToInt32(o) == Active;
-        }
-
-        public static int Active { get { return 1; } }
-        public static int Inactive { get { return 2; } }
-        public static int Deleted { get { return 3; } }
+    public enum InstanceStatusType
+    {
+        Active = 1,
+        Inactive,
+        Deleted
     }
 
     public class Lemma<I, N>

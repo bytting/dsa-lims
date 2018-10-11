@@ -119,6 +119,7 @@ namespace DSA_lims
                     UI.PopulateSampleTypes(conn, treeSampleTypes);
                     UI.PopulateSampleTypes(treeSampleTypes, cboxSampleSampleType);
                     UI.PopulateSigma(cboxPrepAnalAnalSigma, cboxOrderRequestedSigma);
+                    UI.PopulateCustomers(conn, InstanceStatusType.Deleted, gridCustomers);
                     UI.PopulateCustomers(conn, InstanceStatusType.Active, cboxOrderCustomerName);
                 }
                 
@@ -1996,6 +1997,57 @@ order by name
             DateTime selectedDate = form.SelectedDate;
             tbOrderDeadline.Tag = selectedDate;
             tbOrderDeadline.Text = selectedDate.ToString(StrUtils.DateFormatNorwegian);
+        }
+
+        private void miCustomersNew_Click(object sender, EventArgs e)
+        {
+            // create new customer            
+            FormCustomer form = new FormCustomer();
+            switch (form.ShowDialog())
+            {
+                case DialogResult.OK:
+                    SetStatusMessage("Customer " + form.CustomerName + " created");
+                    using (SqlConnection conn = DB.OpenConnection())
+                    {
+                        UI.PopulateCustomers(conn, InstanceStatusType.Deleted, gridCustomers);
+                        UI.PopulateCustomers(conn, InstanceStatusType.Active, cboxOrderCustomerName);
+                    }
+                    break;
+                case DialogResult.Abort:
+                    SetStatusMessage("Create customer failed", StatusMessageType.Error);
+                    break;
+            }
+        }
+
+        private void miCustomersEdit_Click(object sender, EventArgs e)
+        {
+            // edit customer
+            if (gridCustomers.SelectedRows.Count < 1)
+                return;
+
+            DataGridViewRow row = gridCustomers.SelectedRows[0];
+            Guid cid = new Guid(row.Cells[0].Value.ToString());
+
+            FormCustomer form = new FormCustomer(cid);
+            switch (form.ShowDialog())
+            {
+                case DialogResult.OK:
+                    SetStatusMessage("Customer " + form.CustomerName + " updated");
+                    using (SqlConnection conn = DB.OpenConnection())
+                    {
+                        UI.PopulateCustomers(conn, InstanceStatusType.Deleted, gridCustomers);
+                        UI.PopulateCustomers(conn, InstanceStatusType.Active, cboxOrderCustomerName);
+                    }
+                    break;
+                case DialogResult.Abort:
+                    SetStatusMessage("Update customer failed", StatusMessageType.Error);
+                    break;
+            }
+        }
+
+        private void miCustomersDelete_Click(object sender, EventArgs e)
+        {
+            // delete customer
         }
     }    
 }

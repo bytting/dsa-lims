@@ -515,14 +515,14 @@
             this.btnMainProjectsSave = new System.Windows.Forms.Button();
             this.tabCustomers = new System.Windows.Forms.TabPage();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.dataGridView19 = new System.Windows.Forms.DataGridView();
+            this.gridCustomers = new System.Windows.Forms.DataGridView();
             this.toolsCust = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel45 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator33 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButton32 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton37 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton85 = new System.Windows.Forms.ToolStripButton();
-            this.dataGridView20 = new System.Windows.Forms.DataGridView();
+            this.btnCustomersNew = new System.Windows.Forms.ToolStripButton();
+            this.btnCustomersEdit = new System.Windows.Forms.ToolStripButton();
+            this.btnCustomersDelete = new System.Windows.Forms.ToolStripButton();
+            this.gridCustomerContacts = new System.Windows.Forms.DataGridView();
             this.toolsCustContacts = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel46 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator34 = new System.Windows.Forms.ToolStripSeparator();
@@ -908,6 +908,9 @@
             this.tools = new System.Windows.Forms.ToolStrip();
             this.btnMenu = new System.Windows.Forms.ToolStripButton();
             this.lblCurrentTab = new System.Windows.Forms.ToolStripLabel();
+            this.miCustomersNew = new System.Windows.Forms.ToolStripMenuItem();
+            this.miCustomersEdit = new System.Windows.Forms.ToolStripMenuItem();
+            this.miCustomersDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tabs.SuspendLayout();
@@ -1029,9 +1032,9 @@
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView19)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridCustomers)).BeginInit();
             this.toolsCust.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView20)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridCustomerContacts)).BeginInit();
             this.toolsCustContacts.SuspendLayout();
             this.panel3.SuspendLayout();
             this.tabTypeRel.SuspendLayout();
@@ -1866,6 +1869,10 @@
             // 
             // miCustomers
             // 
+            this.miCustomers.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.miCustomersNew,
+            this.miCustomersEdit,
+            this.miCustomersDelete});
             this.miCustomers.Name = "miCustomers";
             this.miCustomers.Size = new System.Drawing.Size(76, 20);
             this.miCustomers.Text = "&Customers";
@@ -3609,7 +3616,7 @@
             // 
             this.splitContainer6.Panel2.Controls.Add(this.panel12);
             this.splitContainer6.Size = new System.Drawing.Size(1127, 574);
-            this.splitContainer6.SplitterDistance = 781;
+            this.splitContainer6.SplitterDistance = 780;
             this.splitContainer6.SplitterWidth = 5;
             this.splitContainer6.TabIndex = 4;
             // 
@@ -3629,7 +3636,7 @@
             // 
             this.splitContainer7.Panel2.Controls.Add(this.treeOrderContent);
             this.splitContainer7.Panel2.Controls.Add(this.toolsOrderContent);
-            this.splitContainer7.Size = new System.Drawing.Size(781, 574);
+            this.splitContainer7.Size = new System.Drawing.Size(780, 574);
             this.splitContainer7.SplitterDistance = 361;
             this.splitContainer7.SplitterWidth = 5;
             this.splitContainer7.TabIndex = 0;
@@ -3861,7 +3868,7 @@
             this.treeOrderContent.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeOrderContent.Location = new System.Drawing.Point(0, 25);
             this.treeOrderContent.Name = "treeOrderContent";
-            this.treeOrderContent.Size = new System.Drawing.Size(415, 549);
+            this.treeOrderContent.Size = new System.Drawing.Size(414, 549);
             this.treeOrderContent.TabIndex = 0;
             // 
             // toolsOrderContent
@@ -3880,7 +3887,7 @@
             this.btnOrderRemAnalMeth});
             this.toolsOrderContent.Location = new System.Drawing.Point(0, 0);
             this.toolsOrderContent.Name = "toolsOrderContent";
-            this.toolsOrderContent.Size = new System.Drawing.Size(415, 25);
+            this.toolsOrderContent.Size = new System.Drawing.Size(414, 25);
             this.toolsOrderContent.TabIndex = 1;
             this.toolsOrderContent.Text = "toolStrip16";
             // 
@@ -3979,7 +3986,7 @@
             this.panel12.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel12.Location = new System.Drawing.Point(0, 0);
             this.panel12.Name = "panel12";
-            this.panel12.Size = new System.Drawing.Size(341, 574);
+            this.panel12.Size = new System.Drawing.Size(342, 574);
             this.panel12.TabIndex = 1;
             // 
             // dataGridView12
@@ -3993,7 +4000,7 @@
             this.dataGridView12.Location = new System.Drawing.Point(0, 25);
             this.dataGridView12.Name = "dataGridView12";
             this.dataGridView12.ReadOnly = true;
-            this.dataGridView12.Size = new System.Drawing.Size(341, 549);
+            this.dataGridView12.Size = new System.Drawing.Size(342, 549);
             this.dataGridView12.TabIndex = 1;
             // 
             // toolsOrderAttachments
@@ -4007,7 +4014,7 @@
             this.toolStripButton23});
             this.toolsOrderAttachments.Location = new System.Drawing.Point(0, 0);
             this.toolsOrderAttachments.Name = "toolsOrderAttachments";
-            this.toolsOrderAttachments.Size = new System.Drawing.Size(341, 25);
+            this.toolsOrderAttachments.Size = new System.Drawing.Size(342, 25);
             this.toolsOrderAttachments.TabIndex = 0;
             this.toolsOrderAttachments.Text = "toolStrip15";
             // 
@@ -6099,29 +6106,36 @@
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.dataGridView19);
+            this.splitContainer1.Panel1.Controls.Add(this.gridCustomers);
             this.splitContainer1.Panel1.Controls.Add(this.toolsCust);
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.dataGridView20);
+            this.splitContainer1.Panel2.Controls.Add(this.gridCustomerContacts);
             this.splitContainer1.Panel2.Controls.Add(this.toolsCustContacts);
             this.splitContainer1.Size = new System.Drawing.Size(1141, 608);
             this.splitContainer1.SplitterDistance = 528;
             this.splitContainer1.SplitterWidth = 5;
             this.splitContainer1.TabIndex = 0;
             // 
-            // dataGridView19
+            // gridCustomers
             // 
-            this.dataGridView19.AllowUserToAddRows = false;
-            this.dataGridView19.AllowUserToDeleteRows = false;
-            this.dataGridView19.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView19.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView19.Location = new System.Drawing.Point(0, 25);
-            this.dataGridView19.Name = "dataGridView19";
-            this.dataGridView19.ReadOnly = true;
-            this.dataGridView19.Size = new System.Drawing.Size(528, 583);
-            this.dataGridView19.TabIndex = 1;
+            this.gridCustomers.AllowUserToAddRows = false;
+            this.gridCustomers.AllowUserToDeleteRows = false;
+            this.gridCustomers.AllowUserToResizeRows = false;
+            this.gridCustomers.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.gridCustomers.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
+            this.gridCustomers.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.gridCustomers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridCustomers.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gridCustomers.Location = new System.Drawing.Point(0, 25);
+            this.gridCustomers.MultiSelect = false;
+            this.gridCustomers.Name = "gridCustomers";
+            this.gridCustomers.ReadOnly = true;
+            this.gridCustomers.RowHeadersVisible = false;
+            this.gridCustomers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.gridCustomers.Size = new System.Drawing.Size(528, 583);
+            this.gridCustomers.TabIndex = 1;
             // 
             // toolsCust
             // 
@@ -6129,9 +6143,9 @@
             this.toolsCust.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripLabel45,
             this.toolStripSeparator33,
-            this.toolStripButton32,
-            this.toolStripButton37,
-            this.toolStripButton85});
+            this.btnCustomersNew,
+            this.btnCustomersEdit,
+            this.btnCustomersDelete});
             this.toolsCust.Location = new System.Drawing.Point(0, 0);
             this.toolsCust.Name = "toolsCust";
             this.toolsCust.Size = new System.Drawing.Size(528, 25);
@@ -6150,41 +6164,51 @@
             this.toolStripSeparator33.Name = "toolStripSeparator33";
             this.toolStripSeparator33.Size = new System.Drawing.Size(6, 25);
             // 
-            // toolStripButton32
+            // btnCustomersNew
             // 
-            this.toolStripButton32.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton32.Image")));
-            this.toolStripButton32.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton32.Name = "toolStripButton32";
-            this.toolStripButton32.Size = new System.Drawing.Size(51, 22);
-            this.toolStripButton32.Text = "New";
+            this.btnCustomersNew.Image = ((System.Drawing.Image)(resources.GetObject("btnCustomersNew.Image")));
+            this.btnCustomersNew.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnCustomersNew.Name = "btnCustomersNew";
+            this.btnCustomersNew.Size = new System.Drawing.Size(51, 22);
+            this.btnCustomersNew.Text = "New";
+            this.btnCustomersNew.Click += new System.EventHandler(this.miCustomersNew_Click);
             // 
-            // toolStripButton37
+            // btnCustomersEdit
             // 
-            this.toolStripButton37.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton37.Image")));
-            this.toolStripButton37.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton37.Name = "toolStripButton37";
-            this.toolStripButton37.Size = new System.Drawing.Size(47, 22);
-            this.toolStripButton37.Text = "Edit";
+            this.btnCustomersEdit.Image = ((System.Drawing.Image)(resources.GetObject("btnCustomersEdit.Image")));
+            this.btnCustomersEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnCustomersEdit.Name = "btnCustomersEdit";
+            this.btnCustomersEdit.Size = new System.Drawing.Size(47, 22);
+            this.btnCustomersEdit.Text = "Edit";
+            this.btnCustomersEdit.Click += new System.EventHandler(this.miCustomersEdit_Click);
             // 
-            // toolStripButton85
+            // btnCustomersDelete
             // 
-            this.toolStripButton85.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton85.Image")));
-            this.toolStripButton85.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton85.Name = "toolStripButton85";
-            this.toolStripButton85.Size = new System.Drawing.Size(60, 22);
-            this.toolStripButton85.Text = "Delete";
+            this.btnCustomersDelete.Image = ((System.Drawing.Image)(resources.GetObject("btnCustomersDelete.Image")));
+            this.btnCustomersDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnCustomersDelete.Name = "btnCustomersDelete";
+            this.btnCustomersDelete.Size = new System.Drawing.Size(60, 22);
+            this.btnCustomersDelete.Text = "Delete";
+            this.btnCustomersDelete.Click += new System.EventHandler(this.miCustomersDelete_Click);
             // 
-            // dataGridView20
+            // gridCustomerContacts
             // 
-            this.dataGridView20.AllowUserToAddRows = false;
-            this.dataGridView20.AllowUserToDeleteRows = false;
-            this.dataGridView20.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView20.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView20.Location = new System.Drawing.Point(0, 25);
-            this.dataGridView20.Name = "dataGridView20";
-            this.dataGridView20.ReadOnly = true;
-            this.dataGridView20.Size = new System.Drawing.Size(608, 583);
-            this.dataGridView20.TabIndex = 1;
+            this.gridCustomerContacts.AllowUserToAddRows = false;
+            this.gridCustomerContacts.AllowUserToDeleteRows = false;
+            this.gridCustomerContacts.AllowUserToResizeRows = false;
+            this.gridCustomerContacts.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.gridCustomerContacts.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
+            this.gridCustomerContacts.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.gridCustomerContacts.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridCustomerContacts.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gridCustomerContacts.Location = new System.Drawing.Point(0, 25);
+            this.gridCustomerContacts.MultiSelect = false;
+            this.gridCustomerContacts.Name = "gridCustomerContacts";
+            this.gridCustomerContacts.ReadOnly = true;
+            this.gridCustomerContacts.RowHeadersVisible = false;
+            this.gridCustomerContacts.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.gridCustomerContacts.Size = new System.Drawing.Size(608, 583);
+            this.gridCustomerContacts.TabIndex = 1;
             // 
             // toolsCustContacts
             // 
@@ -10148,6 +10172,27 @@
             this.lblCurrentTab.Size = new System.Drawing.Size(98, 22);
             this.lblCurrentTab.Text = "<lblCurrentTab>";
             // 
+            // miCustomersNew
+            // 
+            this.miCustomersNew.Name = "miCustomersNew";
+            this.miCustomersNew.Size = new System.Drawing.Size(160, 22);
+            this.miCustomersNew.Text = "&New customer";
+            this.miCustomersNew.Click += new System.EventHandler(this.miCustomersNew_Click);
+            // 
+            // miCustomersEdit
+            // 
+            this.miCustomersEdit.Name = "miCustomersEdit";
+            this.miCustomersEdit.Size = new System.Drawing.Size(160, 22);
+            this.miCustomersEdit.Text = "&Edit customer";
+            this.miCustomersEdit.Click += new System.EventHandler(this.miCustomersEdit_Click);
+            // 
+            // miCustomersDelete
+            // 
+            this.miCustomersDelete.Name = "miCustomersDelete";
+            this.miCustomersDelete.Size = new System.Drawing.Size(160, 22);
+            this.miCustomersDelete.Text = "&Delete customer";
+            this.miCustomersDelete.Click += new System.EventHandler(this.miCustomersDelete_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -10352,10 +10397,10 @@
             this.splitContainer1.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView19)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridCustomers)).EndInit();
             this.toolsCust.ResumeLayout(false);
             this.toolsCust.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView20)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridCustomerContacts)).EndInit();
             this.toolsCustContacts.ResumeLayout(false);
             this.toolsCustContacts.PerformLayout();
             this.panel3.ResumeLayout(false);
@@ -10847,16 +10892,16 @@
         private System.Windows.Forms.TabPage tabCustomers;
         private System.Windows.Forms.Button btnMenuMetadata;
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.DataGridView dataGridView19;
+        private System.Windows.Forms.DataGridView gridCustomers;
         private System.Windows.Forms.ToolStrip toolsCust;
-        private System.Windows.Forms.DataGridView dataGridView20;
+        private System.Windows.Forms.DataGridView gridCustomerContacts;
         private System.Windows.Forms.ToolStrip toolsCustContacts;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Button btnCustomerClose;
         private System.Windows.Forms.Button button16;
-        private System.Windows.Forms.ToolStripButton toolStripButton32;
+        private System.Windows.Forms.ToolStripButton btnCustomersNew;
         private System.Windows.Forms.ToolStripButton toolStripButton36;
-        private System.Windows.Forms.ToolStripButton toolStripButton37;
+        private System.Windows.Forms.ToolStripButton btnCustomersEdit;
         private System.Windows.Forms.ToolStripButton toolStripButton38;
         private System.Windows.Forms.ToolStrip tools;
         private System.Windows.Forms.ToolStripButton btnMenu;
@@ -11146,7 +11191,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator32;
         private System.Windows.Forms.ToolStripLabel toolStripLabel45;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator33;
-        private System.Windows.Forms.ToolStripButton toolStripButton85;
+        private System.Windows.Forms.ToolStripButton btnCustomersDelete;
         private System.Windows.Forms.ToolStripLabel toolStripLabel46;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator34;
         private System.Windows.Forms.ToolStripButton toolStripButton86;
@@ -11536,6 +11581,9 @@
         private System.Windows.Forms.Panel panel30;
         private System.Windows.Forms.Button btnOrderSelectDeadline;
         private System.Windows.Forms.TextBox tbOrderDeadline;
+        private System.Windows.Forms.ToolStripMenuItem miCustomersNew;
+        private System.Windows.Forms.ToolStripMenuItem miCustomersEdit;
+        private System.Windows.Forms.ToolStripMenuItem miCustomersDelete;
     }
 }
 

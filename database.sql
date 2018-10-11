@@ -621,12 +621,91 @@ create table customer (
 )
 go
 
+create proc csp_insert_customer
+	@id uniqueidentifier,
+	@name nvarchar(256),
+	@address nvarchar(256),
+	@email nvarchar(80),
+	@phone nvarchar(80),
+	@instance_status_id int,
+	@comment nvarchar(1000),
+	@create_date datetime,
+	@created_by nvarchar(50),
+	@update_date datetime,
+	@updated_by nvarchar(50)
+as 
+	insert into customer values (
+		@id,
+		@name,
+		@address,
+		@email,
+		@phone,
+		@instance_status_id,
+		@comment,
+		@create_date,
+		@created_by,
+		@update_date,
+		@updated_by
+	);
+go
+
+create proc csp_update_customer
+	@id uniqueidentifier,
+	@name nvarchar(256),
+	@address nvarchar(256),
+	@email nvarchar(80),
+	@phone nvarchar(80),
+	@instance_status_id int,
+	@comment nvarchar(1000),
+	@update_date datetime,
+	@updated_by nvarchar(50)
+as 
+	update customer set 
+		name = @name,
+		address = @address,
+		email = @email,
+		phone = @phone,
+		instance_status_id = @instance_status_id,
+		comment = @comment,		
+		update_date = @update_date,
+		updated_by = @updated_by
+	where id = @id
+go
+
+create proc csp_select_customer
+	@id uniqueidentifier
+as 
+	select *
+	from customer
+	where id = @id
+go
+
 create proc csp_select_customers
 	@instance_status_level int
 as 
 	select *
 	from customer
 	where instance_status_id <= @instance_status_level
+	order by name
+go
+
+create proc csp_select_customers_flat
+	@instance_status_level int
+as 
+	select
+		c.id,
+		c.name,
+		c.address,
+		c.email,
+		c.phone,
+		stat.name as 'instance_status_name',
+		c.comment,
+		c.create_date,
+		c.created_by,
+		c.update_date,
+		c.updated_by
+	from customer c, instance_status stat
+	where c.instance_status_id = stat.id and c.instance_status_id <= @instance_status_level
 	order by name
 go
 

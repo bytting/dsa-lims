@@ -20,6 +20,7 @@ namespace DSA_lims
         public FormAnalMethXNuclide(string analysisMethodName, Guid analysisMethodId, List<Guid> existingNuclides)
         {
             InitializeComponent();
+
             AnalysisMethodId = analysisMethodId;
             AnalysisMethodName = analysisMethodName;
             ExistingNuclides = existingNuclides;

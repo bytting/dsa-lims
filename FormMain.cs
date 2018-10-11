@@ -1818,6 +1818,11 @@ order by name
             return existingNuclides;
         }
 
+        private void miAnalysisMethodsRemNuclide_Click(object sender, EventArgs e)
+        {
+            // remove nuclides from analysis method
+        }
+
         private void gridTypeRelAnalMeth_RowStateChanged(object sender, DataGridViewRowStateChangedEventArgs e)
         {
             if (e.StateChanged != DataGridViewElementStates.Selected)
@@ -1828,6 +1833,71 @@ order by name
             using (SqlConnection conn = DB.OpenConnection())
             {
                 UI.PopulateAnalMethNuclides(conn, amid, lbTypRelAnalMethNuclides);
+            }
+        }
+
+        private void miTypeRelPrepMethAddAnalMeth_Click(object sender, EventArgs e)
+        {
+            // add analysis methods to preparation method
+            if (gridTypeRelPrepMeth.SelectedRows.Count < 1)
+            {
+                MessageBox.Show("You must select a preparation method first");
+                return;
+            }
+
+            Guid pmid = new Guid(gridTypeRelPrepMeth.SelectedRows[0].Cells["id"].Value.ToString());
+            string pmname = gridTypeRelPrepMeth.SelectedRows[0].Cells["name"].Value.ToString();
+
+            List<Guid> existingAnalysisMethods = GetAnalysisMethodsForPreparationMethod(pmid);
+
+            FormPrepMethXAnalMeth form = new FormPrepMethXAnalMeth(pmname, pmid, existingAnalysisMethods);
+
+            if (form.ShowDialog() == DialogResult.Cancel)
+                return;
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                UI.PopulatePrepMethAnalMeths(conn, pmid, lbTypRelPrepMethAnalMeth);
+            }
+        }
+
+        public List<Guid> GetAnalysisMethodsForPreparationMethod(Guid pmid)
+        {
+            List<Guid> existingAnalysisMethods = new List<Guid>();
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                SqlCommand cmd = new SqlCommand(@"
+select am.id, am.name from analysis_method am
+    inner join preparation_method_x_analysis_method pmam on pmam.analysis_method_id = am.id
+    inner join preparation_method pm on pmam.preparation_method_id = pm.id and pm.id = @preparation_method_id
+order by name
+", conn);
+                cmd.Parameters.AddWithValue("@preparation_method_id", pmid);
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                        existingAnalysisMethods.Add(new Guid(reader["id"].ToString()));
+                }
+            }
+
+            return existingAnalysisMethods;
+        }
+
+        private void miTypeRelPrepMethRemAnalMeth_Click(object sender, EventArgs e)
+        {
+            // remove analysis methods to preparation method
+        }
+
+        private void gridTypeRelPrepMeth_RowStateChanged(object sender, DataGridViewRowStateChangedEventArgs e)
+        {
+            if (e.StateChanged != DataGridViewElementStates.Selected)
+                return;
+
+            Guid pmid = new Guid(e.Row.Cells["id"].Value.ToString());
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                UI.PopulatePrepMethAnalMeths(conn, pmid, lbTypRelPrepMethAnalMeth);
             }
         }
     }    

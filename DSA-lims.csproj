@@ -136,6 +136,12 @@
     <Compile Include="FormPreparationMethod.Designer.cs">
       <DependentUpon>FormPreparationMethod.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormPrepMethXAnalMeth.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormPrepMethXAnalMeth.Designer.cs">
+      <DependentUpon>FormPrepMethXAnalMeth.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormProject.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -266,6 +272,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormPreparationMethod.resx">
       <DependentUpon>FormPreparationMethod.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormPrepMethXAnalMeth.resx">
+      <DependentUpon>FormPrepMethXAnalMeth.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormProject.resx">
       <DependentUpon>FormProject.cs</DependentUpon>

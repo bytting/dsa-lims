@@ -1900,5 +1900,60 @@ order by name
                 UI.PopulatePrepMethAnalMeths(conn, pmid, lbTypRelPrepMethAnalMeth);
             }
         }
+
+        private void miOrdersClearAllFilters_Click(object sender, EventArgs e)
+        {
+            // clear all order filters
+        }
+
+        private void miOrdersNew_Click(object sender, EventArgs e)
+        {
+            // create new order
+            tabs.SelectedTab = tabOrder;
+        }
+
+        private void miOrdersEdit_Click(object sender, EventArgs e)
+        {
+            // edit existing order
+        }
+
+        private void miOrdersDelete_Click(object sender, EventArgs e)
+        {
+            // delete order
+        }
+
+        private void miOrderAddSampleType_Click(object sender, EventArgs e)
+        {
+            // add sample type to order
+            FormOrderAddSampleType form = new FormOrderAddSampleType(treeSampleTypes);
+            if (form.ShowDialog() != DialogResult.OK)
+                return;
+            //
+        }
+
+        private void miOrderRemSampleType_Click(object sender, EventArgs e)
+        {
+            // remove sample type from order
+        }
+
+        private void miOrderAddPrepMeth_Click(object sender, EventArgs e)
+        {
+            // add preparation method to order
+        }
+
+        private void miOrderRemPrepMeth_Click(object sender, EventArgs e)
+        {
+            // remove preparation method from order
+        }
+
+        private void miOrderAddAnalMeth_Click(object sender, EventArgs e)
+        {
+            // add analysis method to order
+        }
+
+        private void miOrderRemAnalMeth_Click(object sender, EventArgs e)
+        {
+            // remove analysis method from order
+        }
     }    
 }

@@ -48,6 +48,14 @@
             this.miMachineSettings = new System.Windows.Forms.ToolStripMenuItem();
             this.miSample = new System.Windows.Forms.ToolStripMenuItem();
             this.miOrder = new System.Windows.Forms.ToolStripMenuItem();
+            this.miOrderAddSampleType = new System.Windows.Forms.ToolStripMenuItem();
+            this.miOrderRemSampleType = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator66 = new System.Windows.Forms.ToolStripSeparator();
+            this.miOrderAddPrepMeth = new System.Windows.Forms.ToolStripMenuItem();
+            this.miOrderRemPrepMeth = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator67 = new System.Windows.Forms.ToolStripSeparator();
+            this.miOrderAddAnalMeth = new System.Windows.Forms.ToolStripMenuItem();
+            this.miOrderRemAnalMeth = new System.Windows.Forms.ToolStripMenuItem();
             this.miSearch = new System.Windows.Forms.ToolStripMenuItem();
             this.miMeta = new System.Windows.Forms.ToolStripMenuItem();
             this.miStations = new System.Windows.Forms.ToolStripMenuItem();
@@ -68,6 +76,11 @@
             this.miSamplingMethodEdit = new System.Windows.Forms.ToolStripMenuItem();
             this.miSamplingMethodDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.miOrders = new System.Windows.Forms.ToolStripMenuItem();
+            this.miOrdersNew = new System.Windows.Forms.ToolStripMenuItem();
+            this.miOrdersEdit = new System.Windows.Forms.ToolStripMenuItem();
+            this.miOrdersDelete = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator65 = new System.Windows.Forms.ToolStripSeparator();
+            this.miOrdersClearAllFilters = new System.Windows.Forms.ToolStripMenuItem();
             this.miSamples = new System.Windows.Forms.ToolStripMenuItem();
             this.miSamplesNew = new System.Windows.Forms.ToolStripMenuItem();
             this.miSamplesImport = new System.Windows.Forms.ToolStripMenuItem();
@@ -263,32 +276,32 @@
             this.splitContainer6 = new System.Windows.Forms.SplitContainer();
             this.splitContainer7 = new System.Windows.Forms.SplitContainer();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
-            this.textBox21 = new System.Windows.Forms.TextBox();
+            this.tbOrderContentComment = new System.Windows.Forms.TextBox();
             this.label38 = new System.Windows.Forms.Label();
             this.label39 = new System.Windows.Forms.Label();
             this.label40 = new System.Windows.Forms.Label();
             this.label41 = new System.Windows.Forms.Label();
             this.label42 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.comboBox12 = new System.Windows.Forms.ComboBox();
-            this.dateTimePicker7 = new System.Windows.Forms.DateTimePicker();
-            this.comboBox13 = new System.Windows.Forms.ComboBox();
+            this.cboxOrderResponsible = new System.Windows.Forms.ComboBox();
+            this.cboxOrderLaboratory = new System.Windows.Forms.ComboBox();
+            this.dtOrderDeadline = new System.Windows.Forms.DateTimePicker();
+            this.cboxOrderRequestedSigma = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.tbOrderId = new System.Windows.Forms.TextBox();
             this.toolsOrderDetails = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel19 = new System.Windows.Forms.ToolStripLabel();
-            this.treeView1 = new System.Windows.Forms.TreeView();
+            this.treeOrderContent = new System.Windows.Forms.TreeView();
             this.toolsOrderContent = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel8 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator60 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripBtOrderAddContent = new System.Windows.Forms.ToolStripButton();
-            this.toolStripBtOrderDeleteContent = new System.Windows.Forms.ToolStripButton();
+            this.btnOrderAddSampleType = new System.Windows.Forms.ToolStripButton();
+            this.btnOrderRemSampleType = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButton8 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton25 = new System.Windows.Forms.ToolStripButton();
+            this.btnOrderAddPrepMeth = new System.Windows.Forms.ToolStripButton();
+            this.btnOrderRemPrepMeth = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButton28 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton34 = new System.Windows.Forms.ToolStripButton();
+            this.btnOrderAddAnalMeth = new System.Windows.Forms.ToolStripButton();
+            this.btnOrderRemAnalMeth = new System.Windows.Forms.ToolStripButton();
             this.panel12 = new System.Windows.Forms.Panel();
             this.dataGridView12 = new System.Windows.Forms.DataGridView();
             this.toolsOrderAttachments = new System.Windows.Forms.ToolStrip();
@@ -399,15 +412,24 @@
             this.panel18 = new System.Windows.Forms.Panel();
             this.btnMetaClose = new System.Windows.Forms.Button();
             this.tabOrders = new System.Windows.Forms.TabPage();
-            this.dataGridView15 = new System.Windows.Forms.DataGridView();
+            this.gridOrders = new System.Windows.Forms.DataGridView();
+            this.toolStrip9 = new System.Windows.Forms.ToolStrip();
+            this.toolStripLabel44 = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripSeparator64 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnOrdersNew = new System.Windows.Forms.ToolStripButton();
+            this.btnOrdersEdit = new System.Windows.Forms.ToolStripButton();
+            this.btnOrdersDelete = new System.Windows.Forms.ToolStripButton();
             this.panel2 = new System.Windows.Forms.Panel();
             this.label52 = new System.Windows.Forms.Label();
-            this.cbxOrdersClosed = new System.Windows.Forms.CheckBox();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
+            this.cbxOrdersFilterClosed = new System.Windows.Forms.CheckBox();
+            this.cboxOrdersFilterYear = new System.Windows.Forms.ComboBox();
             this.panel23 = new System.Windows.Forms.Panel();
             this.btnOrdersClose = new System.Windows.Forms.Button();
             this.btnOrdersOpen = new System.Windows.Forms.Button();
             this.toolsOrders = new System.Windows.Forms.ToolStrip();
+            this.toolStripLabel30 = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripSeparator63 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnOrdersClearAllFilters = new System.Windows.Forms.ToolStripButton();
             this.tabSamples = new System.Windows.Forms.TabPage();
             this.gridSamples = new System.Windows.Forms.DataGridView();
             this.toolsSamples = new System.Windows.Forms.ToolStrip();
@@ -963,9 +985,11 @@
             this.toolsMetaSampMeth.SuspendLayout();
             this.panel18.SuspendLayout();
             this.tabOrders.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView15)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridOrders)).BeginInit();
+            this.toolStrip9.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel23.SuspendLayout();
+            this.toolsOrders.SuspendLayout();
             this.tabSamples.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridSamples)).BeginInit();
             this.toolsSamples.SuspendLayout();
@@ -1361,9 +1385,70 @@
             // 
             // miOrder
             // 
+            this.miOrder.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.miOrderAddSampleType,
+            this.miOrderRemSampleType,
+            this.toolStripSeparator66,
+            this.miOrderAddPrepMeth,
+            this.miOrderRemPrepMeth,
+            this.toolStripSeparator67,
+            this.miOrderAddAnalMeth,
+            this.miOrderRemAnalMeth});
             this.miOrder.Name = "miOrder";
             this.miOrder.Size = new System.Drawing.Size(49, 20);
             this.miOrder.Text = "&Order";
+            // 
+            // miOrderAddSampleType
+            // 
+            this.miOrderAddSampleType.Name = "miOrderAddSampleType";
+            this.miOrderAddSampleType.Size = new System.Drawing.Size(226, 22);
+            this.miOrderAddSampleType.Text = "&Add sample type";
+            this.miOrderAddSampleType.Click += new System.EventHandler(this.miOrderAddSampleType_Click);
+            // 
+            // miOrderRemSampleType
+            // 
+            this.miOrderRemSampleType.Name = "miOrderRemSampleType";
+            this.miOrderRemSampleType.Size = new System.Drawing.Size(226, 22);
+            this.miOrderRemSampleType.Text = "&Remove sample type";
+            this.miOrderRemSampleType.Click += new System.EventHandler(this.miOrderRemSampleType_Click);
+            // 
+            // toolStripSeparator66
+            // 
+            this.toolStripSeparator66.Name = "toolStripSeparator66";
+            this.toolStripSeparator66.Size = new System.Drawing.Size(223, 6);
+            // 
+            // miOrderAddPrepMeth
+            // 
+            this.miOrderAddPrepMeth.Name = "miOrderAddPrepMeth";
+            this.miOrderAddPrepMeth.Size = new System.Drawing.Size(226, 22);
+            this.miOrderAddPrepMeth.Text = "Add &preparation method";
+            this.miOrderAddPrepMeth.Click += new System.EventHandler(this.miOrderAddPrepMeth_Click);
+            // 
+            // miOrderRemPrepMeth
+            // 
+            this.miOrderRemPrepMeth.Name = "miOrderRemPrepMeth";
+            this.miOrderRemPrepMeth.Size = new System.Drawing.Size(226, 22);
+            this.miOrderRemPrepMeth.Text = "Remove pre&paration method";
+            this.miOrderRemPrepMeth.Click += new System.EventHandler(this.miOrderRemPrepMeth_Click);
+            // 
+            // toolStripSeparator67
+            // 
+            this.toolStripSeparator67.Name = "toolStripSeparator67";
+            this.toolStripSeparator67.Size = new System.Drawing.Size(223, 6);
+            // 
+            // miOrderAddAnalMeth
+            // 
+            this.miOrderAddAnalMeth.Name = "miOrderAddAnalMeth";
+            this.miOrderAddAnalMeth.Size = new System.Drawing.Size(226, 22);
+            this.miOrderAddAnalMeth.Text = "Add &analysis method";
+            this.miOrderAddAnalMeth.Click += new System.EventHandler(this.miOrderAddAnalMeth_Click);
+            // 
+            // miOrderRemAnalMeth
+            // 
+            this.miOrderRemAnalMeth.Name = "miOrderRemAnalMeth";
+            this.miOrderRemAnalMeth.Size = new System.Drawing.Size(226, 22);
+            this.miOrderRemAnalMeth.Text = "Re&move analysis method";
+            this.miOrderRemAnalMeth.Click += new System.EventHandler(this.miOrderRemAnalMeth_Click);
             // 
             // miSearch
             // 
@@ -1515,9 +1600,48 @@
             // 
             // miOrders
             // 
+            this.miOrders.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.miOrdersNew,
+            this.miOrdersEdit,
+            this.miOrdersDelete,
+            this.toolStripSeparator65,
+            this.miOrdersClearAllFilters});
             this.miOrders.Name = "miOrders";
             this.miOrders.Size = new System.Drawing.Size(54, 20);
             this.miOrders.Text = "Or&ders";
+            // 
+            // miOrdersNew
+            // 
+            this.miOrdersNew.Name = "miOrdersNew";
+            this.miOrdersNew.Size = new System.Drawing.Size(148, 22);
+            this.miOrdersNew.Text = "&New order";
+            this.miOrdersNew.Click += new System.EventHandler(this.miOrdersNew_Click);
+            // 
+            // miOrdersEdit
+            // 
+            this.miOrdersEdit.Name = "miOrdersEdit";
+            this.miOrdersEdit.Size = new System.Drawing.Size(148, 22);
+            this.miOrdersEdit.Text = "&Edit order";
+            this.miOrdersEdit.Click += new System.EventHandler(this.miOrdersEdit_Click);
+            // 
+            // miOrdersDelete
+            // 
+            this.miOrdersDelete.Name = "miOrdersDelete";
+            this.miOrdersDelete.Size = new System.Drawing.Size(148, 22);
+            this.miOrdersDelete.Text = "&Delete order";
+            this.miOrdersDelete.Click += new System.EventHandler(this.miOrdersDelete_Click);
+            // 
+            // toolStripSeparator65
+            // 
+            this.toolStripSeparator65.Name = "toolStripSeparator65";
+            this.toolStripSeparator65.Size = new System.Drawing.Size(145, 6);
+            // 
+            // miOrdersClearAllFilters
+            // 
+            this.miOrdersClearAllFilters.Name = "miOrdersClearAllFilters";
+            this.miOrdersClearAllFilters.Size = new System.Drawing.Size(148, 22);
+            this.miOrdersClearAllFilters.Text = "&Clear all filters";
+            this.miOrdersClearAllFilters.Click += new System.EventHandler(this.miOrdersClearAllFilters_Click);
             // 
             // miSamples
             // 
@@ -3464,7 +3588,7 @@
             // 
             this.splitContainer6.Panel2.Controls.Add(this.panel12);
             this.splitContainer6.Size = new System.Drawing.Size(1127, 574);
-            this.splitContainer6.SplitterDistance = 758;
+            this.splitContainer6.SplitterDistance = 757;
             this.splitContainer6.SplitterWidth = 5;
             this.splitContainer6.TabIndex = 4;
             // 
@@ -3482,9 +3606,9 @@
             // 
             // splitContainer7.Panel2
             // 
-            this.splitContainer7.Panel2.Controls.Add(this.treeView1);
+            this.splitContainer7.Panel2.Controls.Add(this.treeOrderContent);
             this.splitContainer7.Panel2.Controls.Add(this.toolsOrderContent);
-            this.splitContainer7.Size = new System.Drawing.Size(758, 574);
+            this.splitContainer7.Size = new System.Drawing.Size(757, 574);
             this.splitContainer7.SplitterDistance = 361;
             this.splitContainer7.SplitterWidth = 5;
             this.splitContainer7.TabIndex = 0;
@@ -3494,18 +3618,18 @@
             this.tableLayoutPanel6.ColumnCount = 2;
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25.23809F));
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 74.76191F));
-            this.tableLayoutPanel6.Controls.Add(this.textBox21, 0, 7);
+            this.tableLayoutPanel6.Controls.Add(this.tbOrderContentComment, 0, 7);
             this.tableLayoutPanel6.Controls.Add(this.label38, 0, 2);
             this.tableLayoutPanel6.Controls.Add(this.label39, 0, 4);
             this.tableLayoutPanel6.Controls.Add(this.label40, 0, 5);
             this.tableLayoutPanel6.Controls.Add(this.label41, 0, 6);
             this.tableLayoutPanel6.Controls.Add(this.label42, 0, 3);
-            this.tableLayoutPanel6.Controls.Add(this.comboBox1, 1, 3);
-            this.tableLayoutPanel6.Controls.Add(this.comboBox12, 1, 2);
-            this.tableLayoutPanel6.Controls.Add(this.dateTimePicker7, 1, 4);
-            this.tableLayoutPanel6.Controls.Add(this.comboBox13, 1, 5);
+            this.tableLayoutPanel6.Controls.Add(this.cboxOrderResponsible, 1, 3);
+            this.tableLayoutPanel6.Controls.Add(this.cboxOrderLaboratory, 1, 2);
+            this.tableLayoutPanel6.Controls.Add(this.dtOrderDeadline, 1, 4);
+            this.tableLayoutPanel6.Controls.Add(this.cboxOrderRequestedSigma, 1, 5);
             this.tableLayoutPanel6.Controls.Add(this.label4, 0, 1);
-            this.tableLayoutPanel6.Controls.Add(this.textBox3, 1, 1);
+            this.tableLayoutPanel6.Controls.Add(this.tbOrderId, 1, 1);
             this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel6.Location = new System.Drawing.Point(0, 25);
             this.tableLayoutPanel6.Name = "tableLayoutPanel6";
@@ -3521,16 +3645,16 @@
             this.tableLayoutPanel6.Size = new System.Drawing.Size(361, 549);
             this.tableLayoutPanel6.TabIndex = 1;
             // 
-            // textBox21
+            // tbOrderContentComment
             // 
-            this.tableLayoutPanel6.SetColumnSpan(this.textBox21, 2);
-            this.textBox21.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox21.Location = new System.Drawing.Point(3, 204);
-            this.textBox21.Multiline = true;
-            this.textBox21.Name = "textBox21";
-            this.textBox21.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBox21.Size = new System.Drawing.Size(355, 375);
-            this.textBox21.TabIndex = 4;
+            this.tableLayoutPanel6.SetColumnSpan(this.tbOrderContentComment, 2);
+            this.tbOrderContentComment.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbOrderContentComment.Location = new System.Drawing.Point(3, 204);
+            this.tbOrderContentComment.Multiline = true;
+            this.tbOrderContentComment.Name = "tbOrderContentComment";
+            this.tbOrderContentComment.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.tbOrderContentComment.Size = new System.Drawing.Size(355, 375);
+            this.tbOrderContentComment.TabIndex = 4;
             // 
             // label38
             // 
@@ -3584,49 +3708,49 @@
             this.label42.TabIndex = 5;
             this.label42.Text = "Responsible";
             // 
-            // comboBox1
+            // cboxOrderResponsible
             // 
-            this.comboBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(94, 76);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(264, 23);
-            this.comboBox1.TabIndex = 6;
+            this.cboxOrderResponsible.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cboxOrderResponsible.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxOrderResponsible.FormattingEnabled = true;
+            this.cboxOrderResponsible.Location = new System.Drawing.Point(94, 76);
+            this.cboxOrderResponsible.Name = "cboxOrderResponsible";
+            this.cboxOrderResponsible.Size = new System.Drawing.Size(264, 23);
+            this.cboxOrderResponsible.TabIndex = 6;
             // 
-            // comboBox12
+            // cboxOrderLaboratory
             // 
-            this.comboBox12.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.comboBox12.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox12.FormattingEnabled = true;
-            this.comboBox12.Location = new System.Drawing.Point(94, 44);
-            this.comboBox12.Name = "comboBox12";
-            this.comboBox12.Size = new System.Drawing.Size(264, 23);
-            this.comboBox12.TabIndex = 7;
+            this.cboxOrderLaboratory.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cboxOrderLaboratory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxOrderLaboratory.FormattingEnabled = true;
+            this.cboxOrderLaboratory.Location = new System.Drawing.Point(94, 44);
+            this.cboxOrderLaboratory.Name = "cboxOrderLaboratory";
+            this.cboxOrderLaboratory.Size = new System.Drawing.Size(264, 23);
+            this.cboxOrderLaboratory.TabIndex = 7;
             // 
-            // dateTimePicker7
+            // dtOrderDeadline
             // 
-            this.dateTimePicker7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dateTimePicker7.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dateTimePicker7.Location = new System.Drawing.Point(94, 108);
-            this.dateTimePicker7.Name = "dateTimePicker7";
-            this.dateTimePicker7.Size = new System.Drawing.Size(264, 21);
-            this.dateTimePicker7.TabIndex = 8;
+            this.dtOrderDeadline.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dtOrderDeadline.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtOrderDeadline.Location = new System.Drawing.Point(94, 108);
+            this.dtOrderDeadline.Name = "dtOrderDeadline";
+            this.dtOrderDeadline.Size = new System.Drawing.Size(264, 21);
+            this.dtOrderDeadline.TabIndex = 8;
             // 
-            // comboBox13
+            // cboxOrderRequestedSigma
             // 
-            this.comboBox13.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.comboBox13.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox13.FormattingEnabled = true;
-            this.comboBox13.Items.AddRange(new object[] {
+            this.cboxOrderRequestedSigma.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cboxOrderRequestedSigma.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxOrderRequestedSigma.FormattingEnabled = true;
+            this.cboxOrderRequestedSigma.Items.AddRange(new object[] {
             "",
             "1",
             "2",
             "3"});
-            this.comboBox13.Location = new System.Drawing.Point(94, 140);
-            this.comboBox13.Name = "comboBox13";
-            this.comboBox13.Size = new System.Drawing.Size(264, 23);
-            this.comboBox13.TabIndex = 9;
+            this.cboxOrderRequestedSigma.Location = new System.Drawing.Point(94, 140);
+            this.cboxOrderRequestedSigma.Name = "cboxOrderRequestedSigma";
+            this.cboxOrderRequestedSigma.Size = new System.Drawing.Size(264, 23);
+            this.cboxOrderRequestedSigma.TabIndex = 9;
             // 
             // label4
             // 
@@ -3638,15 +3762,15 @@
             this.label4.TabIndex = 10;
             this.label4.Text = "Id";
             // 
-            // textBox3
+            // tbOrderId
             // 
-            this.textBox3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox3.Enabled = false;
-            this.textBox3.Location = new System.Drawing.Point(94, 12);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.ReadOnly = true;
-            this.textBox3.Size = new System.Drawing.Size(264, 21);
-            this.textBox3.TabIndex = 11;
+            this.tbOrderId.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbOrderId.Enabled = false;
+            this.tbOrderId.Location = new System.Drawing.Point(94, 12);
+            this.tbOrderId.Name = "tbOrderId";
+            this.tbOrderId.ReadOnly = true;
+            this.tbOrderId.Size = new System.Drawing.Size(264, 21);
+            this.tbOrderId.TabIndex = 11;
             // 
             // toolsOrderDetails
             // 
@@ -3666,13 +3790,13 @@
             this.toolStripLabel19.Size = new System.Drawing.Size(45, 22);
             this.toolStripLabel19.Text = "Details";
             // 
-            // treeView1
+            // treeOrderContent
             // 
-            this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.treeView1.Location = new System.Drawing.Point(0, 25);
-            this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(392, 549);
-            this.treeView1.TabIndex = 0;
+            this.treeOrderContent.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeOrderContent.Location = new System.Drawing.Point(0, 25);
+            this.treeOrderContent.Name = "treeOrderContent";
+            this.treeOrderContent.Size = new System.Drawing.Size(391, 549);
+            this.treeOrderContent.TabIndex = 0;
             // 
             // toolsOrderContent
             // 
@@ -3680,17 +3804,17 @@
             this.toolsOrderContent.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripLabel8,
             this.toolStripSeparator60,
-            this.toolStripBtOrderAddContent,
-            this.toolStripBtOrderDeleteContent,
+            this.btnOrderAddSampleType,
+            this.btnOrderRemSampleType,
             this.toolStripSeparator1,
-            this.toolStripButton8,
-            this.toolStripButton25,
+            this.btnOrderAddPrepMeth,
+            this.btnOrderRemPrepMeth,
             this.toolStripSeparator2,
-            this.toolStripButton28,
-            this.toolStripButton34});
+            this.btnOrderAddAnalMeth,
+            this.btnOrderRemAnalMeth});
             this.toolsOrderContent.Location = new System.Drawing.Point(0, 0);
             this.toolsOrderContent.Name = "toolsOrderContent";
-            this.toolsOrderContent.Size = new System.Drawing.Size(392, 25);
+            this.toolsOrderContent.Size = new System.Drawing.Size(391, 25);
             this.toolsOrderContent.TabIndex = 1;
             this.toolsOrderContent.Text = "toolStrip16";
             // 
@@ -3706,69 +3830,81 @@
             this.toolStripSeparator60.Name = "toolStripSeparator60";
             this.toolStripSeparator60.Size = new System.Drawing.Size(6, 25);
             // 
-            // toolStripBtOrderAddContent
+            // btnOrderAddSampleType
             // 
-            this.toolStripBtOrderAddContent.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripBtOrderAddContent.Image = ((System.Drawing.Image)(resources.GetObject("toolStripBtOrderAddContent.Image")));
-            this.toolStripBtOrderAddContent.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripBtOrderAddContent.Name = "toolStripBtOrderAddContent";
-            this.toolStripBtOrderAddContent.Size = new System.Drawing.Size(23, 22);
-            this.toolStripBtOrderAddContent.Text = "Add type";
+            this.btnOrderAddSampleType.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnOrderAddSampleType.Image = ((System.Drawing.Image)(resources.GetObject("btnOrderAddSampleType.Image")));
+            this.btnOrderAddSampleType.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnOrderAddSampleType.Name = "btnOrderAddSampleType";
+            this.btnOrderAddSampleType.Size = new System.Drawing.Size(23, 22);
+            this.btnOrderAddSampleType.Text = "Add type";
+            this.btnOrderAddSampleType.ToolTipText = "Add sample type to order";
+            this.btnOrderAddSampleType.Click += new System.EventHandler(this.miOrderAddSampleType_Click);
             // 
-            // toolStripBtOrderDeleteContent
+            // btnOrderRemSampleType
             // 
-            this.toolStripBtOrderDeleteContent.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripBtOrderDeleteContent.Image = ((System.Drawing.Image)(resources.GetObject("toolStripBtOrderDeleteContent.Image")));
-            this.toolStripBtOrderDeleteContent.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripBtOrderDeleteContent.Name = "toolStripBtOrderDeleteContent";
-            this.toolStripBtOrderDeleteContent.Size = new System.Drawing.Size(23, 22);
-            this.toolStripBtOrderDeleteContent.Text = "Add prep";
+            this.btnOrderRemSampleType.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnOrderRemSampleType.Image = ((System.Drawing.Image)(resources.GetObject("btnOrderRemSampleType.Image")));
+            this.btnOrderRemSampleType.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnOrderRemSampleType.Name = "btnOrderRemSampleType";
+            this.btnOrderRemSampleType.Size = new System.Drawing.Size(23, 22);
+            this.btnOrderRemSampleType.Text = "Add prep";
+            this.btnOrderRemSampleType.ToolTipText = "Remove sample type from order";
+            this.btnOrderRemSampleType.Click += new System.EventHandler(this.miOrderRemSampleType_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
             // 
-            // toolStripButton8
+            // btnOrderAddPrepMeth
             // 
-            this.toolStripButton8.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton8.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton8.Image")));
-            this.toolStripButton8.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton8.Name = "toolStripButton8";
-            this.toolStripButton8.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton8.Text = "Add analysis";
+            this.btnOrderAddPrepMeth.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnOrderAddPrepMeth.Image = ((System.Drawing.Image)(resources.GetObject("btnOrderAddPrepMeth.Image")));
+            this.btnOrderAddPrepMeth.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnOrderAddPrepMeth.Name = "btnOrderAddPrepMeth";
+            this.btnOrderAddPrepMeth.Size = new System.Drawing.Size(23, 22);
+            this.btnOrderAddPrepMeth.Text = "Add analysis";
+            this.btnOrderAddPrepMeth.ToolTipText = "Add preparation method to order";
+            this.btnOrderAddPrepMeth.Click += new System.EventHandler(this.miOrderAddPrepMeth_Click);
             // 
-            // toolStripButton25
+            // btnOrderRemPrepMeth
             // 
-            this.toolStripButton25.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton25.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton25.Image")));
-            this.toolStripButton25.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton25.Name = "toolStripButton25";
-            this.toolStripButton25.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton25.Text = "toolStripButton25";
+            this.btnOrderRemPrepMeth.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnOrderRemPrepMeth.Image = ((System.Drawing.Image)(resources.GetObject("btnOrderRemPrepMeth.Image")));
+            this.btnOrderRemPrepMeth.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnOrderRemPrepMeth.Name = "btnOrderRemPrepMeth";
+            this.btnOrderRemPrepMeth.Size = new System.Drawing.Size(23, 22);
+            this.btnOrderRemPrepMeth.Text = "toolStripButton25";
+            this.btnOrderRemPrepMeth.ToolTipText = "Remove preparation method from order";
+            this.btnOrderRemPrepMeth.Click += new System.EventHandler(this.miOrderRemPrepMeth_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
             // 
-            // toolStripButton28
+            // btnOrderAddAnalMeth
             // 
-            this.toolStripButton28.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton28.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton28.Image")));
-            this.toolStripButton28.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton28.Name = "toolStripButton28";
-            this.toolStripButton28.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton28.Text = "toolStripButton28";
+            this.btnOrderAddAnalMeth.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnOrderAddAnalMeth.Image = ((System.Drawing.Image)(resources.GetObject("btnOrderAddAnalMeth.Image")));
+            this.btnOrderAddAnalMeth.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnOrderAddAnalMeth.Name = "btnOrderAddAnalMeth";
+            this.btnOrderAddAnalMeth.Size = new System.Drawing.Size(23, 22);
+            this.btnOrderAddAnalMeth.Text = "toolStripButton28";
+            this.btnOrderAddAnalMeth.ToolTipText = "Add analysis method to order";
+            this.btnOrderAddAnalMeth.Click += new System.EventHandler(this.miOrderAddAnalMeth_Click);
             // 
-            // toolStripButton34
+            // btnOrderRemAnalMeth
             // 
-            this.toolStripButton34.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton34.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton34.Image")));
-            this.toolStripButton34.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton34.Name = "toolStripButton34";
-            this.toolStripButton34.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton34.Text = "toolStripButton34";
+            this.btnOrderRemAnalMeth.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnOrderRemAnalMeth.Image = ((System.Drawing.Image)(resources.GetObject("btnOrderRemAnalMeth.Image")));
+            this.btnOrderRemAnalMeth.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnOrderRemAnalMeth.Name = "btnOrderRemAnalMeth";
+            this.btnOrderRemAnalMeth.Size = new System.Drawing.Size(23, 22);
+            this.btnOrderRemAnalMeth.Text = "toolStripButton34";
+            this.btnOrderRemAnalMeth.ToolTipText = "Remove analysis method from order";
+            this.btnOrderRemAnalMeth.Click += new System.EventHandler(this.miOrderRemAnalMeth_Click);
             // 
             // panel12
             // 
@@ -3777,7 +3913,7 @@
             this.panel12.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel12.Location = new System.Drawing.Point(0, 0);
             this.panel12.Name = "panel12";
-            this.panel12.Size = new System.Drawing.Size(364, 574);
+            this.panel12.Size = new System.Drawing.Size(365, 574);
             this.panel12.TabIndex = 1;
             // 
             // dataGridView12
@@ -3791,7 +3927,7 @@
             this.dataGridView12.Location = new System.Drawing.Point(0, 25);
             this.dataGridView12.Name = "dataGridView12";
             this.dataGridView12.ReadOnly = true;
-            this.dataGridView12.Size = new System.Drawing.Size(364, 549);
+            this.dataGridView12.Size = new System.Drawing.Size(365, 549);
             this.dataGridView12.TabIndex = 1;
             // 
             // toolsOrderAttachments
@@ -3805,7 +3941,7 @@
             this.toolStripButton23});
             this.toolsOrderAttachments.Location = new System.Drawing.Point(0, 0);
             this.toolsOrderAttachments.Name = "toolsOrderAttachments";
-            this.toolsOrderAttachments.Size = new System.Drawing.Size(364, 25);
+            this.toolsOrderAttachments.Size = new System.Drawing.Size(365, 25);
             this.toolsOrderAttachments.TabIndex = 0;
             this.toolsOrderAttachments.Text = "toolStrip15";
             // 
@@ -4930,7 +5066,8 @@
             // tabOrders
             // 
             this.tabOrders.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.tabOrders.Controls.Add(this.dataGridView15);
+            this.tabOrders.Controls.Add(this.gridOrders);
+            this.tabOrders.Controls.Add(this.toolStrip9);
             this.tabOrders.Controls.Add(this.panel2);
             this.tabOrders.Controls.Add(this.panel23);
             this.tabOrders.Controls.Add(this.toolsOrders);
@@ -4941,58 +5078,112 @@
             this.tabOrders.TabIndex = 6;
             this.tabOrders.Text = "Orders";
             // 
-            // dataGridView15
+            // gridOrders
             // 
-            this.dataGridView15.AllowUserToAddRows = false;
-            this.dataGridView15.AllowUserToDeleteRows = false;
-            this.dataGridView15.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
-            this.dataGridView15.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dataGridView15.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView15.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView15.Location = new System.Drawing.Point(3, 104);
-            this.dataGridView15.Name = "dataGridView15";
-            this.dataGridView15.ReadOnly = true;
-            this.dataGridView15.Size = new System.Drawing.Size(1141, 507);
-            this.dataGridView15.TabIndex = 2;
+            this.gridOrders.AllowUserToAddRows = false;
+            this.gridOrders.AllowUserToDeleteRows = false;
+            this.gridOrders.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
+            this.gridOrders.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.gridOrders.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridOrders.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gridOrders.Location = new System.Drawing.Point(3, 116);
+            this.gridOrders.Name = "gridOrders";
+            this.gridOrders.ReadOnly = true;
+            this.gridOrders.Size = new System.Drawing.Size(1141, 495);
+            this.gridOrders.TabIndex = 2;
+            // 
+            // toolStrip9
+            // 
+            this.toolStrip9.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStrip9.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripLabel44,
+            this.toolStripSeparator64,
+            this.btnOrdersNew,
+            this.btnOrdersEdit,
+            this.btnOrdersDelete});
+            this.toolStrip9.Location = new System.Drawing.Point(3, 91);
+            this.toolStrip9.Name = "toolStrip9";
+            this.toolStrip9.Size = new System.Drawing.Size(1141, 25);
+            this.toolStrip9.TabIndex = 4;
+            this.toolStrip9.Text = "toolStrip9";
+            // 
+            // toolStripLabel44
+            // 
+            this.toolStripLabel44.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.toolStripLabel44.Name = "toolStripLabel44";
+            this.toolStripLabel44.Size = new System.Drawing.Size(45, 22);
+            this.toolStripLabel44.Text = "Orders";
+            // 
+            // toolStripSeparator64
+            // 
+            this.toolStripSeparator64.Name = "toolStripSeparator64";
+            this.toolStripSeparator64.Size = new System.Drawing.Size(6, 25);
+            // 
+            // btnOrdersNew
+            // 
+            this.btnOrdersNew.Image = global::DSA_lims.Properties.Resources._new;
+            this.btnOrdersNew.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnOrdersNew.Name = "btnOrdersNew";
+            this.btnOrdersNew.Size = new System.Drawing.Size(51, 22);
+            this.btnOrdersNew.Text = "New";
+            this.btnOrdersNew.Click += new System.EventHandler(this.miOrdersNew_Click);
+            // 
+            // btnOrdersEdit
+            // 
+            this.btnOrdersEdit.Image = global::DSA_lims.Properties.Resources.edit;
+            this.btnOrdersEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnOrdersEdit.Name = "btnOrdersEdit";
+            this.btnOrdersEdit.Size = new System.Drawing.Size(47, 22);
+            this.btnOrdersEdit.Text = "Edit";
+            this.btnOrdersEdit.Click += new System.EventHandler(this.miOrdersEdit_Click);
+            // 
+            // btnOrdersDelete
+            // 
+            this.btnOrdersDelete.Image = global::DSA_lims.Properties.Resources.delete;
+            this.btnOrdersDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnOrdersDelete.Name = "btnOrdersDelete";
+            this.btnOrdersDelete.Size = new System.Drawing.Size(60, 22);
+            this.btnOrdersDelete.Text = "Delete";
+            this.btnOrdersDelete.Click += new System.EventHandler(this.miOrdersDelete_Click);
             // 
             // panel2
             // 
             this.panel2.Controls.Add(this.label52);
-            this.panel2.Controls.Add(this.cbxOrdersClosed);
-            this.panel2.Controls.Add(this.comboBox3);
+            this.panel2.Controls.Add(this.cbxOrdersFilterClosed);
+            this.panel2.Controls.Add(this.cboxOrdersFilterYear);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel2.Location = new System.Drawing.Point(3, 28);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1141, 76);
+            this.panel2.Size = new System.Drawing.Size(1141, 63);
             this.panel2.TabIndex = 3;
             // 
             // label52
             // 
             this.label52.AutoSize = true;
             this.label52.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label52.Location = new System.Drawing.Point(47, 35);
+            this.label52.Location = new System.Drawing.Point(25, 24);
             this.label52.Name = "label52";
             this.label52.Size = new System.Drawing.Size(33, 13);
             this.label52.TabIndex = 3;
             this.label52.Text = "Year";
             // 
-            // cbxOrdersClosed
+            // cbxOrdersFilterClosed
             // 
-            this.cbxOrdersClosed.AutoSize = true;
-            this.cbxOrdersClosed.Location = new System.Drawing.Point(255, 33);
-            this.cbxOrdersClosed.Name = "cbxOrdersClosed";
-            this.cbxOrdersClosed.Size = new System.Drawing.Size(138, 19);
-            this.cbxOrdersClosed.TabIndex = 2;
-            this.cbxOrdersClosed.Text = "Show Closed Orders";
-            this.cbxOrdersClosed.UseVisualStyleBackColor = true;
+            this.cbxOrdersFilterClosed.AutoSize = true;
+            this.cbxOrdersFilterClosed.Location = new System.Drawing.Point(233, 22);
+            this.cbxOrdersFilterClosed.Name = "cbxOrdersFilterClosed";
+            this.cbxOrdersFilterClosed.Size = new System.Drawing.Size(138, 19);
+            this.cbxOrdersFilterClosed.TabIndex = 2;
+            this.cbxOrdersFilterClosed.Text = "Show Closed Orders";
+            this.cbxOrdersFilterClosed.UseVisualStyleBackColor = true;
             // 
-            // comboBox3
+            // cboxOrdersFilterYear
             // 
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Location = new System.Drawing.Point(92, 31);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(140, 23);
-            this.comboBox3.TabIndex = 0;
+            this.cboxOrdersFilterYear.FormattingEnabled = true;
+            this.cboxOrdersFilterYear.Location = new System.Drawing.Point(70, 20);
+            this.cboxOrdersFilterYear.Name = "cboxOrdersFilterYear";
+            this.cboxOrdersFilterYear.Size = new System.Drawing.Size(140, 23);
+            this.cboxOrdersFilterYear.TabIndex = 0;
             // 
             // panel23
             // 
@@ -5029,11 +5220,36 @@
             // toolsOrders
             // 
             this.toolsOrders.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolsOrders.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripLabel30,
+            this.toolStripSeparator63,
+            this.btnOrdersClearAllFilters});
             this.toolsOrders.Location = new System.Drawing.Point(3, 3);
             this.toolsOrders.Name = "toolsOrders";
             this.toolsOrders.Size = new System.Drawing.Size(1141, 25);
             this.toolsOrders.TabIndex = 0;
             this.toolsOrders.Text = "toolStrip13";
+            // 
+            // toolStripLabel30
+            // 
+            this.toolStripLabel30.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.toolStripLabel30.Name = "toolStripLabel30";
+            this.toolStripLabel30.Size = new System.Drawing.Size(81, 22);
+            this.toolStripLabel30.Text = "Search filters";
+            // 
+            // toolStripSeparator63
+            // 
+            this.toolStripSeparator63.Name = "toolStripSeparator63";
+            this.toolStripSeparator63.Size = new System.Drawing.Size(6, 25);
+            // 
+            // btnOrdersClearAllFilters
+            // 
+            this.btnOrdersClearAllFilters.Image = global::DSA_lims.Properties.Resources.trash;
+            this.btnOrdersClearAllFilters.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnOrdersClearAllFilters.Name = "btnOrdersClearAllFilters";
+            this.btnOrdersClearAllFilters.Size = new System.Drawing.Size(69, 22);
+            this.btnOrdersClearAllFilters.Text = "Clear all";
+            this.btnOrdersClearAllFilters.Click += new System.EventHandler(this.miOrdersClearAllFilters_Click);
             // 
             // tabSamples
             // 
@@ -10018,10 +10234,14 @@
             this.panel18.ResumeLayout(false);
             this.tabOrders.ResumeLayout(false);
             this.tabOrders.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView15)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridOrders)).EndInit();
+            this.toolStrip9.ResumeLayout(false);
+            this.toolStrip9.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.panel23.ResumeLayout(false);
+            this.toolsOrders.ResumeLayout(false);
+            this.toolsOrders.PerformLayout();
             this.tabSamples.ResumeLayout(false);
             this.tabSamples.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridSamples)).EndInit();
@@ -10483,15 +10703,15 @@
         private System.Windows.Forms.Label label39;
         private System.Windows.Forms.Label label40;
         private System.Windows.Forms.Label label41;
-        private System.Windows.Forms.TextBox textBox21;
+        private System.Windows.Forms.TextBox tbOrderContentComment;
         private System.Windows.Forms.Label label42;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.ComboBox comboBox12;
-        private System.Windows.Forms.DateTimePicker dateTimePicker7;
-        private System.Windows.Forms.ComboBox comboBox13;
+        private System.Windows.Forms.ComboBox cboxOrderResponsible;
+        private System.Windows.Forms.ComboBox cboxOrderLaboratory;
+        private System.Windows.Forms.DateTimePicker dtOrderDeadline;
+        private System.Windows.Forms.ComboBox cboxOrderRequestedSigma;
         private System.Windows.Forms.ToolStrip toolsOrderDetails;
         private System.Windows.Forms.ToolStripLabel toolStripLabel19;
-        private System.Windows.Forms.TreeView treeView1;
+        private System.Windows.Forms.TreeView treeOrderContent;
         private System.Windows.Forms.ToolStrip toolsOrderContent;
         private System.Windows.Forms.ToolStripLabel toolStripLabel8;
         private System.Windows.Forms.Panel panel12;
@@ -10514,7 +10734,7 @@
         private System.Windows.Forms.Panel panel21;
         private System.Windows.Forms.ToolStripLabel toolStripLabel18;
         private System.Windows.Forms.TabPage tabOrders;
-        private System.Windows.Forms.DataGridView dataGridView15;
+        private System.Windows.Forms.DataGridView gridOrders;
         private System.Windows.Forms.Panel panel23;
         private System.Windows.Forms.Button btnOrdersClose;
         private System.Windows.Forms.Button btnOrdersOpen;
@@ -10531,7 +10751,7 @@
         private System.Windows.Forms.ToolStripLabel lblSampleToolExId;
         private System.Windows.Forms.ToolStripLabel lblSampleToolProject;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox tbOrderId;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox tbSampleExId;
         private System.Windows.Forms.DataGridView gridSamples;
@@ -10558,7 +10778,7 @@
         private System.Windows.Forms.ToolStripButton toolStripButton7;
         private System.Windows.Forms.ToolStripButton toolStripButton35;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.ComboBox comboBox3;
+        private System.Windows.Forms.ComboBox cboxOrdersFilterYear;
         private System.Windows.Forms.Button btnMenuCustomer;
         private System.Windows.Forms.Button btnMenuSearch;
         private System.Windows.Forms.TabPage tabCustomers;
@@ -10579,16 +10799,16 @@
         private System.Windows.Forms.ToolStripButton btnMenu;
         private System.Windows.Forms.ToolStripLabel lblCurrentTab;
         private System.Windows.Forms.TextBox tbMenuLookup;
-        private System.Windows.Forms.ToolStripButton toolStripBtOrderAddContent;
-        private System.Windows.Forms.ToolStripButton toolStripBtOrderDeleteContent;
+        private System.Windows.Forms.ToolStripButton btnOrderAddSampleType;
+        private System.Windows.Forms.ToolStripButton btnOrderRemSampleType;
         private System.Windows.Forms.Label label52;
-        private System.Windows.Forms.CheckBox cbxOrdersClosed;
+        private System.Windows.Forms.CheckBox cbxOrdersFilterClosed;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripButton toolStripButton8;
-        private System.Windows.Forms.ToolStripButton toolStripButton25;
+        private System.Windows.Forms.ToolStripButton btnOrderAddPrepMeth;
+        private System.Windows.Forms.ToolStripButton btnOrderRemPrepMeth;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.ToolStripButton toolStripButton28;
-        private System.Windows.Forms.ToolStripButton toolStripButton34;
+        private System.Windows.Forms.ToolStripButton btnOrderAddAnalMeth;
+        private System.Windows.Forms.ToolStripButton btnOrderRemAnalMeth;
         private System.Windows.Forms.TabPage tabTypeRel;
         private System.Windows.Forms.SplitContainer splitContainer12;
         private System.Windows.Forms.ToolStrip toolsTypeRelSamp;
@@ -11224,6 +11444,28 @@
         private System.Windows.Forms.ToolStripMenuItem miTypeRelPrepMethAddAnalMeth;
         private System.Windows.Forms.ToolStripMenuItem miTypeRelPrepMethRemAnalMeth;
         private System.Windows.Forms.ToolStripMenuItem miAnalysisMethodsRemNuclide;
+        private System.Windows.Forms.ToolStrip toolStrip9;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel30;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator63;
+        private System.Windows.Forms.ToolStripButton btnOrdersClearAllFilters;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel44;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator64;
+        private System.Windows.Forms.ToolStripButton btnOrdersNew;
+        private System.Windows.Forms.ToolStripButton btnOrdersEdit;
+        private System.Windows.Forms.ToolStripMenuItem miOrdersNew;
+        private System.Windows.Forms.ToolStripMenuItem miOrdersEdit;
+        private System.Windows.Forms.ToolStripMenuItem miOrdersDelete;
+        private System.Windows.Forms.ToolStripButton btnOrdersDelete;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator65;
+        private System.Windows.Forms.ToolStripMenuItem miOrdersClearAllFilters;
+        private System.Windows.Forms.ToolStripMenuItem miOrderAddSampleType;
+        private System.Windows.Forms.ToolStripMenuItem miOrderRemSampleType;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator66;
+        private System.Windows.Forms.ToolStripMenuItem miOrderAddPrepMeth;
+        private System.Windows.Forms.ToolStripMenuItem miOrderRemPrepMeth;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator67;
+        private System.Windows.Forms.ToolStripMenuItem miOrderAddAnalMeth;
+        private System.Windows.Forms.ToolStripMenuItem miOrderRemAnalMeth;
     }
 }
 

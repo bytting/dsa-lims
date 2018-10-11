@@ -130,6 +130,12 @@
     <Compile Include="FormNuclide.Designer.cs">
       <DependentUpon>FormNuclide.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormOrderAddSampleType.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormOrderAddSampleType.Designer.cs">
+      <DependentUpon>FormOrderAddSampleType.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormPreparationMethod.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -269,6 +275,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormNuclide.resx">
       <DependentUpon>FormNuclide.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormOrderAddSampleType.resx">
+      <DependentUpon>FormOrderAddSampleType.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormPreparationMethod.resx">
       <DependentUpon>FormPreparationMethod.cs</DependentUpon>

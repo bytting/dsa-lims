@@ -17,10 +17,10 @@
 */
 // Authors: Dag Robole,
 
-using log4net;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using log4net;
 
 namespace DSA_lims
 {
@@ -35,6 +35,6 @@ namespace DSA_lims
         public static List<Lemma<int, string>> PreparationUnitList = new List<Lemma<int, string>>();
         public static List<Lemma<int, string>> UniformActivityUnitList = new List<Lemma<int, string>>();
         public static List<Lemma<int, string>> WorkflowStatusList = new List<Lemma<int, string>>();
-        public static List<Lemma<int, string>> LocationTypeList = new List<Lemma<int, string>>();
+        public static List<Lemma<int, string>> LocationTypeList = new List<Lemma<int, string>>();        
     }
 }

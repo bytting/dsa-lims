@@ -196,6 +196,12 @@
     <Compile Include="FormSampTypeXPrepMeth.Designer.cs">
       <DependentUpon>FormSampTypeXPrepMeth.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormSelectDate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSelectDate.Designer.cs">
+      <DependentUpon>FormSelectDate.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormSelectSampleType.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -308,6 +314,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormSampTypeXPrepMeth.resx">
       <DependentUpon>FormSampTypeXPrepMeth.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSelectDate.resx">
+      <DependentUpon>FormSelectDate.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormSelectSampleType.resx">
       <DependentUpon>FormSelectSampleType.cs</DependentUpon>

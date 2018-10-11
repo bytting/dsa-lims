@@ -90,7 +90,7 @@ namespace DSA_lims
 
                     UI.PopulateInstanceStatus(cboxSamplesStatus);
                     UI.PopulatePreparationUnits(cboxSamplePrepUnit);
-                    UI.PopulateWorkflowStatus(cboxSampleAnalWorkflowStatus, cboxSamplePrepWorkflowStatus);
+                    UI.PopulateWorkflowStatus(cboxSampleAnalWorkflowStatus, cboxSamplePrepWorkflowStatus, cboxOrderWorkflowStatus);
                     UI.PopulateLocationTypes(cboxSampleInfoLocationTypes);
                     UI.PopulateActivityUnits(conn, gridMetaUnitsActivity);
                     UI.PopulateActivityUnits(conn, cboxSampleAnalUnit);
@@ -118,6 +118,7 @@ namespace DSA_lims
                     UI.PopulateAnalysisMethods(conn, gridTypeRelAnalMeth);
                     UI.PopulateSampleTypes(conn, treeSampleTypes);
                     UI.PopulateSampleTypes(treeSampleTypes, cboxSampleSampleType);
+                    UI.PopulateSigma(cboxPrepAnalAnalSigma, cboxOrderRequestedSigma);
                 }
                 
                 HideMenuItems();
@@ -281,7 +282,7 @@ namespace DSA_lims
             }
             else if (tabs.SelectedTab == tabOrder)
             {
-                miOrder.Visible = true;
+                miOrder.Visible = true;                                
             }
             else if (tabs.SelectedTab == tabSearch)
             {
@@ -1954,6 +1955,46 @@ order by name
         private void miOrderRemAnalMeth_Click(object sender, EventArgs e)
         {
             // remove analysis method from order
+        }
+
+        private void miOrderSave_Click(object sender, EventArgs e)
+        {
+            // save order
+            if(cboxOrderLaboratory.SelectedItem == null)
+            {
+                MessageBox.Show("Laboratory is mandatory");
+                return;
+            }
+
+            if (cboxOrderResponsible.SelectedItem == null)
+            {
+                MessageBox.Show("Responsible is mandatory");
+                return;
+            }
+
+            if (String.IsNullOrEmpty(tbOrderDeadline.Text))
+            {
+                MessageBox.Show("Deadline is mandatory");
+                return;
+            }
+
+            if (cboxOrderRequestedSigma.SelectedIndex < 0)
+            {
+                MessageBox.Show("Requested sigma is mandatory");
+                return;
+            }
+
+        }
+
+        private void btnOrderSelectDeadline_Click(object sender, EventArgs e)
+        {
+            FormSelectDate form = new FormSelectDate();
+            if (form.ShowDialog() != DialogResult.OK)
+                return;
+
+            DateTime selectedDate = form.SelectedDate;
+            tbOrderDeadline.Tag = selectedDate;
+            tbOrderDeadline.Text = selectedDate.ToString(StrUtils.DateFormatNorwegian);
         }
     }    
 }

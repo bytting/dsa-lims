@@ -542,7 +542,7 @@ namespace DSA_lims
             grid.Columns["reference_date"].HeaderText = "Ref.date";
             grid.Columns["instance_status_name"].HeaderText = "Status";
 
-            grid.Columns["reference_date"].DefaultCellStyle.Format = StrUtils.DateFormatNorwegian;
+            grid.Columns["reference_date"].DefaultCellStyle.Format = StrUtils.DateTimeFormatNorwegian;
         }
 
         public static void PopulatePreparationMethods(SqlConnection conn, DataGridView grid)
@@ -740,6 +740,16 @@ order by name";
                     Lemma<Guid, string> am = new Lemma<Guid, string>(new Guid(reader["id"].ToString()), reader["name"].ToString());
                     lb.Items.Add(am);
                 }
+            }
+        }
+
+        public static void PopulateSigma(params ComboBox[] cbs)
+        {
+            foreach (ComboBox cb in cbs)
+            {
+                cb.Items.Clear();
+                cb.Items.AddRange(new object[] { 1.0, 2.0, 3.0 });
+                cb.SelectedIndex = -1;
             }
         }
     }

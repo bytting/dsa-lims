@@ -18,26 +18,39 @@
 // Authors: Dag Robole,
 
 using System;
-using System.Linq;
+using System.ComponentModel;
+using System.Data;
 using System.Text;
+using System.Windows.Forms;
 
 namespace DSA_lims
 {
-    public static class StrUtils
+    public partial class FormSelectDate : Form
     {
-        public static string DateTimeFormatISO = "yyyy-MM-dd HH:mm:ss";
-        public static string DateFormatISO = "yyyy-MM-dd";
-        public static string DateTimeFormatNorwegian = "dd.MM.yyyy HH:mm:ss";
-        public static string DateFormatNorwegian = "dd.MM.yyyy";
+        public DateTime SelectedDate = new DateTime();
 
-        public static string makeStatusMessage(string msg)
+        public FormSelectDate()
         {
-            return DateTime.Now.ToString(DateTimeFormatNorwegian) + " - " + msg;
+            InitializeComponent();
         }
 
-        public static string makeErrorMessage(string msg)
+        private void btnCancel_Click(object sender, EventArgs e)
         {
-            return msg + ". See log for more details";
-        }        
+            DialogResult = DialogResult.Cancel;
+            Close();
+        }
+
+        private void btnOk_Click(object sender, EventArgs e)
+        {
+            SelectedDate = dtSelectDate.Value;
+            DialogResult = DialogResult.OK;
+            Close();
+        }
+
+        private void FormSelectDate_Load(object sender, EventArgs e)
+        {
+            DateTime now = DateTime.Now;
+            dtSelectDate.Value = new DateTime(now.Year, now.Month, now.Day, 12, 0, 0);
+        }
     }
 }

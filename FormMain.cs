@@ -1771,17 +1771,11 @@ order by name
 
         public List<Guid> GetNuclidesForAnalysisType(Guid amid)
         {
-            List<Guid> existingNuclides = new List<Guid>();            
+            List<Guid> existingNuclides = new List<Guid>();
             using (SqlConnection conn = DB.OpenConnection())
             {
-                SqlCommand cmd = new SqlCommand(@"
-select n.id, n.name from nuclide n
-    inner join analysis_method_x_nuclide amn on amn.nuclide_id = n.id
-    inner join analysis_method am on amn.analysis_method_id = am.id and am.id = @analysis_method_id
-order by name
-", conn);
-                cmd.Parameters.AddWithValue("@analysis_method_id", amid);
-                using (SqlDataReader reader = cmd.ExecuteReader())
+                using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_nuclides_for_analysis_method", CommandType.StoredProcedure,
+                    new SqlParameter("@analysis_method_id", amid)))
                 {
                     while (reader.Read())
                         existingNuclides.Add(new Guid(reader["id"].ToString()));
@@ -1823,17 +1817,12 @@ order by name
 
         public List<Guid> GetAnalysisMethodsForPreparationMethod(Guid pmid)
         {
-            List<Guid> existingAnalysisMethods = new List<Guid>();
+            List<Guid> existingAnalysisMethods = new List<Guid>();            
+
             using (SqlConnection conn = DB.OpenConnection())
             {
-                SqlCommand cmd = new SqlCommand(@"
-select am.id, am.name from analysis_method am
-    inner join preparation_method_x_analysis_method pmam on pmam.analysis_method_id = am.id
-    inner join preparation_method pm on pmam.preparation_method_id = pm.id and pm.id = @preparation_method_id
-order by name
-", conn);
-                cmd.Parameters.AddWithValue("@preparation_method_id", pmid);
-                using (SqlDataReader reader = cmd.ExecuteReader())
+                using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_analysis_methods_for_preparation_method", CommandType.StoredProcedure,
+                    new SqlParameter("@preparation_method_id", pmid)))
                 {
                     while (reader.Read())
                         existingAnalysisMethods.Add(new Guid(reader["id"].ToString()));

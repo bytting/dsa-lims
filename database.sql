@@ -1621,6 +1621,15 @@ as
 	order by am.name
 go
 
+create proc csp_select_analysis_methods_for_preparation_method
+	@preparation_method_id uniqueidentifier
+as
+	select am.id, am.name from analysis_method am
+		inner join preparation_method_x_analysis_method pmam on pmam.analysis_method_id = am.id 
+			and pmam.preparation_method_id = @preparation_method_id
+	order by name
+go
+
 /*===========================================================================*/
 /* tbl laboratory_x_analysis_method */
 
@@ -1829,6 +1838,15 @@ create proc csp_select_nuclide
 	@id uniqueidentifier
 as 
 	select * from nuclide where id = @id
+go
+
+create proc csp_select_nuclides_for_analysis_method
+	@analysis_method_id uniqueidentifier
+as 
+	select n.id, n.name 
+	from nuclide n inner join analysis_method_x_nuclide amn on amn.nuclide_id = n.id 
+		and amn.analysis_method_id = @analysis_method_id    
+order by name
 go
 
 /*===========================================================================*/

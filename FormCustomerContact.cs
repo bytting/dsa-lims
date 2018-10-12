@@ -17,68 +17,84 @@
 */
 // Authors: Dag Robole,
 
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using Newtonsoft.Json;
 
 namespace DSA_lims
 {
-    public partial class FormPreparationMethod : Form
+    public partial class FormCustomerContact : Form
     {
         private Dictionary<string, object> p = new Dictionary<string, object>();
 
-        public Guid PreparationMethodId
+        public Guid ContactId
         {
             get { return p.ContainsKey("id") ? (Guid)p["id"] : Guid.Empty; }
         }
 
-        public string PreparationMethodName
+        public string ContactName
         {
             get { return p.ContainsKey("name") ? p["name"].ToString() : String.Empty; }
         }
 
-        public FormPreparationMethod()
+        public FormCustomerContact(Guid cid, string cname)
         {
             InitializeComponent();
-            Text = "Create preparation method";
+            p["customer_id"] = cid;
+            Text = "DSA-Lims - Create customer contact";
+            tbCustomer.Text = cname;
             cboxInstanceStatus.DataSource = Common.InstanceStatusList;
             cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
         }
 
-        public FormPreparationMethod(Guid pmid)
+        public FormCustomerContact(Guid cid, string cname, Guid contid)
         {
             InitializeComponent();
-            p["id"] = pmid;
-            Text = "Update preparation method";
+            p["customer_id"] = cid;
+            tbCustomer.Text = cname;
+            p["id"] = contid;
+            Text = "DSA-Lims - Update customer contact";
             cboxInstanceStatus.DataSource = Common.InstanceStatusList;
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                SqlCommand cmd = new SqlCommand("csp_select_preparation_method", conn);
+                SqlCommand cmd = new SqlCommand("select name from customer where id = @id", conn);
+                cmd.CommandType = CommandType.Text;
+                cmd.Parameters.AddWithValue("@id", p["customer_id"]);
+                tbCustomer.Text = cmd.ExecuteScalar().ToString();
+
+                cmd.CommandText = "csp_select_customer_contact";
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Clear();
                 cmd.Parameters.AddWithValue("@id", p["id"]);
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
                     if (!reader.HasRows)
-                        throw new Exception("Preparation method with ID " + p["id"] + " was not found");
+                        throw new Exception("Customer contact with ID " + p["id"] + " was not found");
 
                     reader.Read();
                     tbName.Text = reader["name"].ToString();
-                    tbDescriptionLink.Text = reader["description_link"].ToString();                    
-                    cbDestructive.Checked = Convert.ToBoolean(reader["destructive"]);
+                    tbEmail.Text = reader["email"].ToString();
+                    tbPhone.Text = reader["phone"].ToString();
                     cboxInstanceStatus.SelectedValue = reader["instance_status_id"];
-                    tbComment.Text = reader["comment"].ToString();
                     p["create_date"] = reader["create_date"];
                     p["created_by"] = reader["created_by"];
                     p["update_date"] = reader["update_date"];
                     p["updated_by"] = reader["updated_by"];
                 }
             }
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.Cancel;
+            Close();
         }
 
         private void btnOk_Click(object sender, EventArgs e)
@@ -90,28 +106,21 @@ namespace DSA_lims
             }
 
             p["name"] = tbName.Text.Trim();
-            p["description_link"] = tbDescriptionLink.Text.Trim();
-            p["destructive"] = cbDestructive.Checked;
+            p["email"] = tbEmail.Text.Trim();
+            p["phone"] = tbPhone.Text.Trim();
             p["instance_status_id"] = cboxInstanceStatus.SelectedValue;
-            p["comment"] = tbComment.Text.Trim();
 
             bool success;
             if (!p.ContainsKey("id"))
-                success = InsertPreparationMethod();
+                success = InsertCustomerContact();
             else
-                success = UpdatePreparationMethod();
+                success = UpdateCustomerContact();
 
             DialogResult = success ? DialogResult.OK : DialogResult.Abort;
             Close();
         }
 
-        private void btnCancel_Click(object sender, EventArgs e)
-        {
-            DialogResult = DialogResult.Cancel;
-            Close();
-        }
-
-        private bool InsertPreparationMethod()
+        private bool InsertCustomerContact()
         {
             SqlConnection connection = null;
             SqlTransaction transaction = null;
@@ -126,22 +135,22 @@ namespace DSA_lims
                 connection = DB.OpenConnection();
                 transaction = connection.BeginTransaction();
 
-                SqlCommand cmd = new SqlCommand("csp_insert_preparation_method", connection, transaction);
+                SqlCommand cmd = new SqlCommand("csp_insert_customer_contact", connection, transaction);
                 cmd.CommandType = CommandType.StoredProcedure;
                 p["id"] = Guid.NewGuid();
                 cmd.Parameters.AddWithValue("@id", p["id"]);
+                cmd.Parameters.AddWithValue("@customer_id", p["customer_id"]);
                 cmd.Parameters.AddWithValue("@name", p["name"]);
-                cmd.Parameters.AddWithValue("@description_link", p["description_link"]);
-                cmd.Parameters.AddWithValue("@destructive", p["destructive"]);
+                cmd.Parameters.AddWithValue("@email", p["email"]);
+                cmd.Parameters.AddWithValue("@phone", p["phone"]);                
                 cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
-                cmd.Parameters.AddWithValue("@comment", p["comment"]);
                 cmd.Parameters.AddWithValue("@create_date", p["create_date"]);
                 cmd.Parameters.AddWithValue("@created_by", p["created_by"]);
                 cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
                 cmd.Parameters.AddWithValue("@updated_by", p["updated_by"]);
                 cmd.ExecuteNonQuery();
 
-                DB.AddAuditMessage(connection, transaction, "preparation_method", (Guid)p["id"], AuditOperationType.Insert, JsonConvert.SerializeObject(p));
+                DB.AddAuditMessage(connection, transaction, "customer_contact", (Guid)p["id"], AuditOperationType.Insert, JsonConvert.SerializeObject(p));
 
                 transaction.Commit();
             }
@@ -159,7 +168,7 @@ namespace DSA_lims
             return true;
         }
 
-        private bool UpdatePreparationMethod()
+        private bool UpdateCustomerContact()
         {
             SqlConnection connection = null;
             SqlTransaction transaction = null;
@@ -172,19 +181,18 @@ namespace DSA_lims
                 connection = DB.OpenConnection();
                 transaction = connection.BeginTransaction();
 
-                SqlCommand cmd = new SqlCommand("csp_update_preparation_method", connection, transaction);
+                SqlCommand cmd = new SqlCommand("csp_update_customer_contact", connection, transaction);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@id", p["id"]);
                 cmd.Parameters.AddWithValue("@name", p["name"]);
-                cmd.Parameters.AddWithValue("@description_link", p["description_link"]);
-                cmd.Parameters.AddWithValue("@destructive", p["destructive"]);
+                cmd.Parameters.AddWithValue("@email", p["email"]);
+                cmd.Parameters.AddWithValue("@phone", p["phone"]);
                 cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
-                cmd.Parameters.AddWithValue("@comment", p["comment"]);
                 cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
                 cmd.Parameters.AddWithValue("@updated_by", p["updated_by"]);
                 cmd.ExecuteNonQuery();
 
-                DB.AddAuditMessage(connection, transaction, "preparation_method", (Guid)p["id"], AuditOperationType.Update, JsonConvert.SerializeObject(p));
+                DB.AddAuditMessage(connection, transaction, "customer_contact", (Guid)p["id"], AuditOperationType.Update, JsonConvert.SerializeObject(p));
 
                 transaction.Commit();
             }

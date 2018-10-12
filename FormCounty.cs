@@ -49,7 +49,7 @@ namespace DSA_lims
             InitializeComponent();
             Text = "Create county";            
             cboxInstanceStatus.DataSource = Common.InstanceStatusList;
-            cboxInstanceStatus.SelectedValue = InstanceStatusType.Active;
+            cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
         }
 
         public FormCounty(Guid cid)

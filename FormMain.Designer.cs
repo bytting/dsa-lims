@@ -110,6 +110,9 @@
             this.miProjectsSubEdit = new System.Windows.Forms.ToolStripMenuItem();
             this.miProjectsSubDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.miCustomers = new System.Windows.Forms.ToolStripMenuItem();
+            this.miCustomersNew = new System.Windows.Forms.ToolStripMenuItem();
+            this.miCustomersEdit = new System.Windows.Forms.ToolStripMenuItem();
+            this.miCustomersDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.miTypeRelations = new System.Windows.Forms.ToolStripMenuItem();
             this.miTypeRelSampleTypes = new System.Windows.Forms.ToolStripMenuItem();
             this.miTypeRelSampleTypesNew = new System.Windows.Forms.ToolStripMenuItem();
@@ -328,7 +331,7 @@
             this.label36 = new System.Windows.Forms.Label();
             this.label37 = new System.Windows.Forms.Label();
             this.cboxOrderCustomerName = new System.Windows.Forms.ComboBox();
-            this.comboBox15 = new System.Windows.Forms.ComboBox();
+            this.cboxOrderContact = new System.Windows.Forms.ComboBox();
             this.textBox24 = new System.Windows.Forms.TextBox();
             this.textBox25 = new System.Windows.Forms.TextBox();
             this.textBox26 = new System.Windows.Forms.TextBox();
@@ -908,9 +911,10 @@
             this.tools = new System.Windows.Forms.ToolStrip();
             this.btnMenu = new System.Windows.Forms.ToolStripButton();
             this.lblCurrentTab = new System.Windows.Forms.ToolStripLabel();
-            this.miCustomersNew = new System.Windows.Forms.ToolStripMenuItem();
-            this.miCustomersEdit = new System.Windows.Forms.ToolStripMenuItem();
-            this.miCustomersDelete = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator69 = new System.Windows.Forms.ToolStripSeparator();
+            this.miCustomerContactNew = new System.Windows.Forms.ToolStripMenuItem();
+            this.miCustomerContactEdit = new System.Windows.Forms.ToolStripMenuItem();
+            this.miCustomerContactDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tabs.SuspendLayout();
@@ -1872,10 +1876,35 @@
             this.miCustomers.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.miCustomersNew,
             this.miCustomersEdit,
-            this.miCustomersDelete});
+            this.miCustomersDelete,
+            this.toolStripSeparator69,
+            this.miCustomerContactNew,
+            this.miCustomerContactEdit,
+            this.miCustomerContactDelete});
             this.miCustomers.Name = "miCustomers";
             this.miCustomers.Size = new System.Drawing.Size(76, 20);
             this.miCustomers.Text = "&Customers";
+            // 
+            // miCustomersNew
+            // 
+            this.miCustomersNew.Name = "miCustomersNew";
+            this.miCustomersNew.Size = new System.Drawing.Size(203, 22);
+            this.miCustomersNew.Text = "&New customer";
+            this.miCustomersNew.Click += new System.EventHandler(this.miCustomersNew_Click);
+            // 
+            // miCustomersEdit
+            // 
+            this.miCustomersEdit.Name = "miCustomersEdit";
+            this.miCustomersEdit.Size = new System.Drawing.Size(203, 22);
+            this.miCustomersEdit.Text = "&Edit customer";
+            this.miCustomersEdit.Click += new System.EventHandler(this.miCustomersEdit_Click);
+            // 
+            // miCustomersDelete
+            // 
+            this.miCustomersDelete.Name = "miCustomersDelete";
+            this.miCustomersDelete.Size = new System.Drawing.Size(203, 22);
+            this.miCustomersDelete.Text = "&Delete customer";
+            this.miCustomersDelete.Click += new System.EventHandler(this.miCustomersDelete_Click);
             // 
             // miTypeRelations
             // 
@@ -3616,7 +3645,7 @@
             // 
             this.splitContainer6.Panel2.Controls.Add(this.panel12);
             this.splitContainer6.Size = new System.Drawing.Size(1127, 574);
-            this.splitContainer6.SplitterDistance = 780;
+            this.splitContainer6.SplitterDistance = 779;
             this.splitContainer6.SplitterWidth = 5;
             this.splitContainer6.TabIndex = 4;
             // 
@@ -3636,7 +3665,7 @@
             // 
             this.splitContainer7.Panel2.Controls.Add(this.treeOrderContent);
             this.splitContainer7.Panel2.Controls.Add(this.toolsOrderContent);
-            this.splitContainer7.Size = new System.Drawing.Size(780, 574);
+            this.splitContainer7.Size = new System.Drawing.Size(779, 574);
             this.splitContainer7.SplitterDistance = 361;
             this.splitContainer7.SplitterWidth = 5;
             this.splitContainer7.TabIndex = 0;
@@ -3868,7 +3897,7 @@
             this.treeOrderContent.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeOrderContent.Location = new System.Drawing.Point(0, 25);
             this.treeOrderContent.Name = "treeOrderContent";
-            this.treeOrderContent.Size = new System.Drawing.Size(414, 549);
+            this.treeOrderContent.Size = new System.Drawing.Size(413, 549);
             this.treeOrderContent.TabIndex = 0;
             // 
             // toolsOrderContent
@@ -3887,7 +3916,7 @@
             this.btnOrderRemAnalMeth});
             this.toolsOrderContent.Location = new System.Drawing.Point(0, 0);
             this.toolsOrderContent.Name = "toolsOrderContent";
-            this.toolsOrderContent.Size = new System.Drawing.Size(414, 25);
+            this.toolsOrderContent.Size = new System.Drawing.Size(413, 25);
             this.toolsOrderContent.TabIndex = 1;
             this.toolsOrderContent.Text = "toolStrip16";
             // 
@@ -3986,7 +4015,7 @@
             this.panel12.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel12.Location = new System.Drawing.Point(0, 0);
             this.panel12.Name = "panel12";
-            this.panel12.Size = new System.Drawing.Size(342, 574);
+            this.panel12.Size = new System.Drawing.Size(343, 574);
             this.panel12.TabIndex = 1;
             // 
             // dataGridView12
@@ -4000,7 +4029,7 @@
             this.dataGridView12.Location = new System.Drawing.Point(0, 25);
             this.dataGridView12.Name = "dataGridView12";
             this.dataGridView12.ReadOnly = true;
-            this.dataGridView12.Size = new System.Drawing.Size(342, 549);
+            this.dataGridView12.Size = new System.Drawing.Size(343, 549);
             this.dataGridView12.TabIndex = 1;
             // 
             // toolsOrderAttachments
@@ -4014,7 +4043,7 @@
             this.toolStripButton23});
             this.toolsOrderAttachments.Location = new System.Drawing.Point(0, 0);
             this.toolsOrderAttachments.Name = "toolsOrderAttachments";
-            this.toolsOrderAttachments.Size = new System.Drawing.Size(342, 25);
+            this.toolsOrderAttachments.Size = new System.Drawing.Size(343, 25);
             this.toolsOrderAttachments.TabIndex = 0;
             this.toolsOrderAttachments.Text = "toolStrip15";
             // 
@@ -4099,7 +4128,7 @@
             this.tableLayoutPanel5.Controls.Add(this.label36, 0, 3);
             this.tableLayoutPanel5.Controls.Add(this.label37, 0, 4);
             this.tableLayoutPanel5.Controls.Add(this.cboxOrderCustomerName, 1, 1);
-            this.tableLayoutPanel5.Controls.Add(this.comboBox15, 3, 1);
+            this.tableLayoutPanel5.Controls.Add(this.cboxOrderContact, 3, 1);
             this.tableLayoutPanel5.Controls.Add(this.textBox24, 1, 2);
             this.tableLayoutPanel5.Controls.Add(this.textBox25, 1, 3);
             this.tableLayoutPanel5.Controls.Add(this.textBox26, 1, 4);
@@ -4197,16 +4226,17 @@
             this.cboxOrderCustomerName.Name = "cboxOrderCustomerName";
             this.cboxOrderCustomerName.Size = new System.Drawing.Size(388, 23);
             this.cboxOrderCustomerName.TabIndex = 7;
+            this.cboxOrderCustomerName.SelectedIndexChanged += new System.EventHandler(this.cboxOrderCustomerName_SelectedIndexChanged);
             // 
-            // comboBox15
+            // cboxOrderContact
             // 
-            this.comboBox15.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.comboBox15.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox15.FormattingEnabled = true;
-            this.comboBox15.Location = new System.Drawing.Point(735, 12);
-            this.comboBox15.Name = "comboBox15";
-            this.comboBox15.Size = new System.Drawing.Size(389, 23);
-            this.comboBox15.TabIndex = 8;
+            this.cboxOrderContact.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cboxOrderContact.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxOrderContact.FormattingEnabled = true;
+            this.cboxOrderContact.Location = new System.Drawing.Point(735, 12);
+            this.cboxOrderContact.Name = "cboxOrderContact";
+            this.cboxOrderContact.Size = new System.Drawing.Size(389, 23);
+            this.cboxOrderContact.TabIndex = 8;
             // 
             // textBox24
             // 
@@ -5774,7 +5804,7 @@
             this.gridProjectMain.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.gridProjectMain.Size = new System.Drawing.Size(380, 583);
             this.gridProjectMain.TabIndex = 1;
-            this.gridProjectMain.RowStateChanged += new System.Windows.Forms.DataGridViewRowStateChangedEventHandler(this.gridProjectMain_RowStateChanged);
+            this.gridProjectMain.SelectionChanged += new System.EventHandler(this.gridProjectMain_SelectionChanged);
             // 
             // toolStrip4
             // 
@@ -6136,6 +6166,7 @@
             this.gridCustomers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.gridCustomers.Size = new System.Drawing.Size(528, 583);
             this.gridCustomers.TabIndex = 1;
+            this.gridCustomers.SelectionChanged += new System.EventHandler(this.gridCustomers_SelectionChanged);
             // 
             // toolsCust
             // 
@@ -6244,6 +6275,7 @@
             this.toolStripButton36.Name = "toolStripButton36";
             this.toolStripButton36.Size = new System.Drawing.Size(51, 22);
             this.toolStripButton36.Text = "New";
+            this.toolStripButton36.Click += new System.EventHandler(this.miCustomerContactNew_Click);
             // 
             // toolStripButton38
             // 
@@ -6252,6 +6284,7 @@
             this.toolStripButton38.Name = "toolStripButton38";
             this.toolStripButton38.Size = new System.Drawing.Size(47, 22);
             this.toolStripButton38.Text = "Edit";
+            this.toolStripButton38.Click += new System.EventHandler(this.miCustomerContactEdit_Click);
             // 
             // toolStripButton86
             // 
@@ -6260,6 +6293,7 @@
             this.toolStripButton86.Name = "toolStripButton86";
             this.toolStripButton86.Size = new System.Drawing.Size(60, 22);
             this.toolStripButton86.Text = "Delete";
+            this.toolStripButton86.Click += new System.EventHandler(this.miCustomerContactDelete_Click);
             // 
             // panel3
             // 
@@ -6865,7 +6899,7 @@
             this.gridTypeRelPrepMeth.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.gridTypeRelPrepMeth.Size = new System.Drawing.Size(576, 549);
             this.gridTypeRelPrepMeth.TabIndex = 1;
-            this.gridTypeRelPrepMeth.RowStateChanged += new System.Windows.Forms.DataGridViewRowStateChangedEventHandler(this.gridTypeRelPrepMeth_RowStateChanged);
+            this.gridTypeRelPrepMeth.SelectionChanged += new System.EventHandler(this.gridTypeRelPrepMeth_SelectionChanged);
             // 
             // toolsTypeRelPrepMeth
             // 
@@ -7026,7 +7060,7 @@
             this.gridTypeRelAnalMeth.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.gridTypeRelAnalMeth.Size = new System.Drawing.Size(586, 549);
             this.gridTypeRelAnalMeth.TabIndex = 1;
-            this.gridTypeRelAnalMeth.RowStateChanged += new System.Windows.Forms.DataGridViewRowStateChangedEventHandler(this.gridTypeRelAnalMeth_RowStateChanged);
+            this.gridTypeRelAnalMeth.SelectionChanged += new System.EventHandler(this.gridTypeRelAnalMeth_SelectionChanged);
             // 
             // toolsTypeRelAnalMeth
             // 
@@ -8133,7 +8167,7 @@
             this.gridSysCounty.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.gridSysCounty.Size = new System.Drawing.Size(521, 579);
             this.gridSysCounty.TabIndex = 1;
-            this.gridSysCounty.RowStateChanged += new System.Windows.Forms.DataGridViewRowStateChangedEventHandler(this.gridSysCounty_RowStateChanged);
+            this.gridSysCounty.SelectionChanged += new System.EventHandler(this.gridSysCounty_SelectionChanged);
             // 
             // toolsSysCounties
             // 
@@ -8386,7 +8420,7 @@
             this.gridSysNuclides.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.gridSysNuclides.Size = new System.Drawing.Size(1127, 257);
             this.gridSysNuclides.TabIndex = 1;
-            this.gridSysNuclides.RowStateChanged += new System.Windows.Forms.DataGridViewRowStateChangedEventHandler(this.gridSysNuclides_RowStateChanged);
+            this.gridSysNuclides.SelectionChanged += new System.EventHandler(this.gridSysNuclides_SelectionChanged);
             // 
             // toolsSysNuclides
             // 
@@ -10172,26 +10206,31 @@
             this.lblCurrentTab.Size = new System.Drawing.Size(98, 22);
             this.lblCurrentTab.Text = "<lblCurrentTab>";
             // 
-            // miCustomersNew
+            // toolStripSeparator69
             // 
-            this.miCustomersNew.Name = "miCustomersNew";
-            this.miCustomersNew.Size = new System.Drawing.Size(160, 22);
-            this.miCustomersNew.Text = "&New customer";
-            this.miCustomersNew.Click += new System.EventHandler(this.miCustomersNew_Click);
+            this.toolStripSeparator69.Name = "toolStripSeparator69";
+            this.toolStripSeparator69.Size = new System.Drawing.Size(200, 6);
             // 
-            // miCustomersEdit
+            // miCustomerContactNew
             // 
-            this.miCustomersEdit.Name = "miCustomersEdit";
-            this.miCustomersEdit.Size = new System.Drawing.Size(160, 22);
-            this.miCustomersEdit.Text = "&Edit customer";
-            this.miCustomersEdit.Click += new System.EventHandler(this.miCustomersEdit_Click);
+            this.miCustomerContactNew.Name = "miCustomerContactNew";
+            this.miCustomerContactNew.Size = new System.Drawing.Size(203, 22);
+            this.miCustomerContactNew.Text = "New c&ustomer contact";
+            this.miCustomerContactNew.Click += new System.EventHandler(this.miCustomerContactNew_Click);
             // 
-            // miCustomersDelete
+            // miCustomerContactEdit
             // 
-            this.miCustomersDelete.Name = "miCustomersDelete";
-            this.miCustomersDelete.Size = new System.Drawing.Size(160, 22);
-            this.miCustomersDelete.Text = "&Delete customer";
-            this.miCustomersDelete.Click += new System.EventHandler(this.miCustomersDelete_Click);
+            this.miCustomerContactEdit.Name = "miCustomerContactEdit";
+            this.miCustomerContactEdit.Size = new System.Drawing.Size(203, 22);
+            this.miCustomerContactEdit.Text = "Edit cu&stomer contact";
+            this.miCustomerContactEdit.Click += new System.EventHandler(this.miCustomerContactEdit_Click);
+            // 
+            // miCustomerContactDelete
+            // 
+            this.miCustomerContactDelete.Name = "miCustomerContactDelete";
+            this.miCustomerContactDelete.Size = new System.Drawing.Size(203, 22);
+            this.miCustomerContactDelete.Text = "Delete cus&tomer contact";
+            this.miCustomerContactDelete.Click += new System.EventHandler(this.miCustomerContactDelete_Click);
             // 
             // FormMain
             // 
@@ -10788,7 +10827,7 @@
         private System.Windows.Forms.Label label43;
         private System.Windows.Forms.TextBox textBox29;
         private System.Windows.Forms.ComboBox cboxOrderCustomerName;
-        private System.Windows.Forms.ComboBox comboBox15;
+        private System.Windows.Forms.ComboBox cboxOrderContact;
         private System.Windows.Forms.TextBox textBox24;
         private System.Windows.Forms.TextBox textBox25;
         private System.Windows.Forms.TextBox textBox26;
@@ -11584,6 +11623,10 @@
         private System.Windows.Forms.ToolStripMenuItem miCustomersNew;
         private System.Windows.Forms.ToolStripMenuItem miCustomersEdit;
         private System.Windows.Forms.ToolStripMenuItem miCustomersDelete;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator69;
+        private System.Windows.Forms.ToolStripMenuItem miCustomerContactNew;
+        private System.Windows.Forms.ToolStripMenuItem miCustomerContactEdit;
+        private System.Windows.Forms.ToolStripMenuItem miCustomerContactDelete;
     }
 }
 

@@ -51,7 +51,7 @@ namespace DSA_lims
             Text = "Create new sub project";
             tbMainProjectName.Text = pname;
             cboxInstanceStatus.DataSource = Common.InstanceStatusList;
-            cboxInstanceStatus.SelectedValue = InstanceStatusType.Active;
+            cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
         }
 
         public FormProjectSub(string pname, Guid pid, Guid spid)

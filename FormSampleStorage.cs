@@ -50,7 +50,7 @@ namespace DSA_lims
             InitializeComponent();     
             Text = "Create sample storage";
             cboxInstanceStatus.DataSource = Common.InstanceStatusList;
-            cboxInstanceStatus.SelectedValue = InstanceStatusType.Active;
+            cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
         }
 
         public FormSampleStorage(Guid ssid)

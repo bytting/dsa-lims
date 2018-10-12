@@ -119,8 +119,8 @@ namespace DSA_lims
                     UI.PopulateSampleTypes(conn, treeSampleTypes);
                     UI.PopulateSampleTypes(treeSampleTypes, cboxSampleSampleType);
                     UI.PopulateSigma(cboxPrepAnalAnalSigma, cboxOrderRequestedSigma);
-                    UI.PopulateCustomers(conn, InstanceStatusType.Deleted, gridCustomers);
-                    UI.PopulateCustomers(conn, InstanceStatusType.Active, cboxOrderCustomerName);
+                    UI.PopulateCustomers(conn, InstanceStatus.Deleted, gridCustomers);
+                    UI.PopulateCustomers(conn, InstanceStatus.Active, cboxOrderCustomerName);
                 }
                 
                 HideMenuItems();
@@ -486,7 +486,7 @@ namespace DSA_lims
                     cmd.Parameters.AddWithValue("@lod_temperature", DBNull.Value);
                     cmd.Parameters.AddWithValue("@confidential", cbSampleConfidential.Checked ? 1 : 0);
                     cmd.Parameters.AddWithValue("@parameters", DBNull.Value);
-                    cmd.Parameters.AddWithValue("@instance_status_id", InstanceStatusType.Active);
+                    cmd.Parameters.AddWithValue("@instance_status_id", InstanceStatus.Active);
                     cmd.Parameters.AddWithValue("@comment", tbSampleComment.Text.Trim());
                     cmd.Parameters.AddWithValue("@create_date", DateTime.Now);
                     cmd.Parameters.AddWithValue("@created_by", Common.Username);
@@ -924,17 +924,7 @@ namespace DSA_lims
         private void miEnergyLineDelete_Click(object sender, EventArgs e)
         {
             // delete energy line
-        }
-
-        private void gridSysNuclides_RowStateChanged(object sender, DataGridViewRowStateChangedEventArgs e)
-        {
-            if (e.StateChanged != DataGridViewElementStates.Selected)
-                return;
-            
-            Guid nid = new Guid(e.Row.Cells[0].Value.ToString());
-            using (SqlConnection conn = DB.OpenConnection())            
-                UI.PopulateEnergyLines(conn, nid, gridSysNuclideTrans);
-        }
+        }        
 
         private void miNewGeometry_Click(object sender, EventArgs e)
         {         
@@ -1078,17 +1068,7 @@ namespace DSA_lims
         private void miDeleteMunicipality_Click(object sender, EventArgs e)
         {
             // delete municipality
-        }
-
-        private void gridSysCounty_RowStateChanged(object sender, DataGridViewRowStateChangedEventArgs e)
-        {
-            if (e.StateChanged != DataGridViewElementStates.Selected)
-                return;
-
-            Guid cid = new Guid(e.Row.Cells["id"].Value.ToString());
-            using (SqlConnection conn = DB.OpenConnection())            
-                UI.PopulateMunicipalities(conn, cid, gridSysMunicipality);
-        }
+        }        
 
         private void miNewStation_Click(object sender, EventArgs e)
         {        
@@ -1379,17 +1359,7 @@ namespace DSA_lims
             Lemma<Guid, string> county = cboxSampleCounties.SelectedItem as Lemma<Guid, string>;
             using (SqlConnection conn = DB.OpenConnection())            
                 UI.PopulateMunicipalities(conn, county.Id, cboxSampleMunicipalities);
-        }
-
-        private void gridProjectMain_RowStateChanged(object sender, DataGridViewRowStateChangedEventArgs e)
-        {
-            if (e.StateChanged != DataGridViewElementStates.Selected)
-                return;
-
-            Guid pmid = new Guid(e.Row.Cells["id"].Value.ToString());
-            using (SqlConnection conn = DB.OpenConnection())
-                UI.PopulateProjectsSub(conn, gridProjectSub, pmid);
-        }
+        }        
 
         private void miSamplesNew_Click(object sender, EventArgs e)
         {
@@ -1824,20 +1794,7 @@ order by name
         private void miAnalysisMethodsRemNuclide_Click(object sender, EventArgs e)
         {
             // remove nuclides from analysis method
-        }
-
-        private void gridTypeRelAnalMeth_RowStateChanged(object sender, DataGridViewRowStateChangedEventArgs e)
-        {
-            if (e.StateChanged != DataGridViewElementStates.Selected)
-                return;
-
-            Guid amid = new Guid(e.Row.Cells["id"].Value.ToString());
-
-            using (SqlConnection conn = DB.OpenConnection())
-            {
-                UI.PopulateAnalMethNuclides(conn, amid, lbTypRelAnalMethNuclides);
-            }
-        }
+        }        
 
         private void miTypeRelPrepMethAddAnalMeth_Click(object sender, EventArgs e)
         {
@@ -1889,20 +1846,7 @@ order by name
         private void miTypeRelPrepMethRemAnalMeth_Click(object sender, EventArgs e)
         {
             // remove analysis methods to preparation method
-        }
-
-        private void gridTypeRelPrepMeth_RowStateChanged(object sender, DataGridViewRowStateChangedEventArgs e)
-        {
-            if (e.StateChanged != DataGridViewElementStates.Selected)
-                return;
-
-            Guid pmid = new Guid(e.Row.Cells["id"].Value.ToString());
-
-            using (SqlConnection conn = DB.OpenConnection())
-            {
-                UI.PopulatePrepMethAnalMeths(conn, pmid, lbTypRelPrepMethAnalMeth);
-            }
-        }
+        }        
 
         private void miOrdersClearAllFilters_Click(object sender, EventArgs e)
         {
@@ -1985,7 +1929,6 @@ order by name
                 MessageBox.Show("Requested sigma is mandatory");
                 return;
             }
-
         }
 
         private void btnOrderSelectDeadline_Click(object sender, EventArgs e)
@@ -2009,8 +1952,8 @@ order by name
                     SetStatusMessage("Customer " + form.CustomerName + " created");
                     using (SqlConnection conn = DB.OpenConnection())
                     {
-                        UI.PopulateCustomers(conn, InstanceStatusType.Deleted, gridCustomers);
-                        UI.PopulateCustomers(conn, InstanceStatusType.Active, cboxOrderCustomerName);
+                        UI.PopulateCustomers(conn, InstanceStatus.Deleted, gridCustomers);
+                        UI.PopulateCustomers(conn, InstanceStatus.Active, cboxOrderCustomerName);
                     }
                     break;
                 case DialogResult.Abort:
@@ -2026,7 +1969,7 @@ order by name
                 return;
 
             DataGridViewRow row = gridCustomers.SelectedRows[0];
-            Guid cid = new Guid(row.Cells[0].Value.ToString());
+            Guid cid = new Guid(row.Cells["id"].Value.ToString());
 
             FormCustomer form = new FormCustomer(cid);
             switch (form.ShowDialog())
@@ -2035,8 +1978,8 @@ order by name
                     SetStatusMessage("Customer " + form.CustomerName + " updated");
                     using (SqlConnection conn = DB.OpenConnection())
                     {
-                        UI.PopulateCustomers(conn, InstanceStatusType.Deleted, gridCustomers);
-                        UI.PopulateCustomers(conn, InstanceStatusType.Active, cboxOrderCustomerName);
+                        UI.PopulateCustomers(conn, InstanceStatus.Deleted, gridCustomers);
+                        UI.PopulateCustomers(conn, InstanceStatus.Active, cboxOrderCustomerName);
                     }
                     break;
                 case DialogResult.Abort:
@@ -2048,6 +1991,150 @@ order by name
         private void miCustomersDelete_Click(object sender, EventArgs e)
         {
             // delete customer
+        }
+
+        private void miCustomerContactNew_Click(object sender, EventArgs e)
+        {
+            // new customer contact
+            if (gridCustomers.SelectedRows.Count < 1)
+            {
+                MessageBox.Show("You must select a customer first");
+                return;
+            }                
+
+            DataGridViewRow row = gridCustomers.SelectedRows[0];
+            Guid cid = new Guid(row.Cells["id"].Value.ToString());
+            string cname = row.Cells["name"].Value.ToString();
+
+            FormCustomerContact form = new FormCustomerContact(cid, cname);
+            switch (form.ShowDialog())
+            {
+                case DialogResult.OK:
+                    SetStatusMessage("Customer contact " + form.ContactName + " created");
+                    using (SqlConnection conn = DB.OpenConnection())
+                    {
+                        UI.PopulateCustomerContacts(conn, cid, InstanceStatus.Deleted, gridCustomerContacts);
+                    }
+                    break;
+                case DialogResult.Abort:
+                    SetStatusMessage("Create customer contact failed", StatusMessageType.Error);
+                    break;
+            }
+        }
+
+        private void miCustomerContactEdit_Click(object sender, EventArgs e)
+        {
+            // edit customer contact            
+            if (gridCustomers.SelectedRows.Count < 1 || gridCustomerContacts.SelectedRows.Count < 1)
+                return;
+
+            DataGridViewRow row = gridCustomers.SelectedRows[0];
+            Guid cid = new Guid(row.Cells["id"].Value.ToString());
+            string cname = row.Cells["name"].Value.ToString();
+
+            row = gridCustomerContacts.SelectedRows[0];
+            Guid ccid = new Guid(row.Cells["id"].Value.ToString());
+
+            FormCustomerContact form = new FormCustomerContact(cid, cname, ccid);
+            switch (form.ShowDialog())
+            {
+                case DialogResult.OK:
+                    SetStatusMessage("Customer contact " + form.ContactName + " updated");
+                    using (SqlConnection conn = DB.OpenConnection())
+                    {
+                        UI.PopulateCustomerContacts(conn, cid, InstanceStatus.Deleted, gridCustomerContacts);
+                    }
+                    break;
+                case DialogResult.Abort:
+                    SetStatusMessage("Update customer contact failed", StatusMessageType.Error);
+                    break;
+            }
+        }
+
+        private void miCustomerContactDelete_Click(object sender, EventArgs e)
+        {
+            // delete customer contact
+        }        
+
+        private void cboxOrderCustomerName_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(cboxOrderCustomerName.SelectedItem == null)
+            {
+                cboxOrderContact.Items.Clear();
+                return;
+            }
+
+            Lemma<Guid, string> c = cboxOrderCustomerName.SelectedItem as Lemma<Guid, string>;
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                UI.PopulateCustomerContacts(conn, c.Id, InstanceStatus.Active, cboxOrderContact);
+            }
+        }
+
+        private void gridCustomers_SelectionChanged(object sender, EventArgs e)
+        {
+            if (gridCustomers.SelectedRows.Count < 1)
+                return;
+
+            Guid cid = new Guid(gridCustomers.SelectedRows[0].Cells["id"].Value.ToString());
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                UI.PopulateCustomerContacts(conn, cid, InstanceStatus.Deleted, gridCustomerContacts);
+            }
+        }
+
+        private void gridSysNuclides_SelectionChanged(object sender, EventArgs e)
+        {
+            if (gridSysNuclides.SelectedRows.Count < 1)
+                return;
+
+            Guid nid = new Guid(gridSysNuclides.SelectedRows[0].Cells[0].Value.ToString());
+            using (SqlConnection conn = DB.OpenConnection())
+                UI.PopulateEnergyLines(conn, nid, gridSysNuclideTrans);
+        }
+
+        private void gridSysCounty_SelectionChanged(object sender, EventArgs e)
+        {
+            if (gridSysCounty.SelectedRows.Count < 1)
+                return;
+
+            Guid cid = new Guid(gridSysCounty.SelectedRows[0].Cells["id"].Value.ToString());
+            using (SqlConnection conn = DB.OpenConnection())
+                UI.PopulateMunicipalities(conn, cid, gridSysMunicipality);
+        }
+
+        private void gridProjectMain_SelectionChanged(object sender, EventArgs e)
+        {
+            if (gridProjectMain.SelectedRows.Count < 1)
+                return;
+
+            Guid pmid = new Guid(gridProjectMain.SelectedRows[0].Cells["id"].Value.ToString());
+            using (SqlConnection conn = DB.OpenConnection())
+                UI.PopulateProjectsSub(conn, gridProjectSub, pmid);
+        }
+
+        private void gridTypeRelAnalMeth_SelectionChanged(object sender, EventArgs e)
+        {
+            if (gridTypeRelAnalMeth.SelectedRows.Count < 1)
+                return;
+
+            Guid amid = new Guid(gridTypeRelAnalMeth.SelectedRows[0].Cells["id"].Value.ToString());
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                UI.PopulateAnalMethNuclides(conn, amid, lbTypRelAnalMethNuclides);
+            }
+        }
+
+        private void gridTypeRelPrepMeth_SelectionChanged(object sender, EventArgs e)
+        {
+            if (gridTypeRelPrepMeth.SelectedRows.Count < 1)
+                return;
+
+            Guid pmid = new Guid(gridTypeRelPrepMeth.SelectedRows[0].Cells["id"].Value.ToString());
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                UI.PopulatePrepMethAnalMeths(conn, pmid, lbTypRelPrepMethAnalMeth);
+            }
         }
     }    
 }

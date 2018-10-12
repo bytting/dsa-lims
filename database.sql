@@ -717,7 +717,6 @@ if OBJECT_ID('dbo.customer_contact', 'U') IS NOT NULL drop table customer_contac
 create table customer_contact (
 	id uniqueidentifier primary key NOT NULL,
 	customer_id uniqueidentifier NOT NULL,
-	account_id uniqueidentifier default NULL,
 	name nvarchar(256) NOT NULL,
 	email nvarchar(80) default NULL,
 	phone nvarchar(80) default NULL,	
@@ -727,6 +726,88 @@ create table customer_contact (
 	update_date datetime NOT NULL,
 	updated_by nvarchar(50) NOT NULL
 )
+go
+
+create proc csp_insert_customer_contact
+	@id uniqueidentifier,
+	@customer_id uniqueidentifier,
+	@name nvarchar(256),
+	@email nvarchar(80),
+	@phone nvarchar(80),
+	@instance_status_id int,
+	@create_date datetime,
+	@created_by nvarchar(50),
+	@update_date datetime,
+	@updated_by nvarchar(50)
+as 
+	insert into customer_contact values (
+		@id,
+		@customer_id,
+		@name,	
+		@email,
+		@phone,
+		@instance_status_id,		
+		@create_date,
+		@created_by,
+		@update_date,
+		@updated_by
+	);
+go
+
+create proc csp_update_customer_contact
+	@id uniqueidentifier,	
+	@name nvarchar(256),	
+	@email nvarchar(80),
+	@phone nvarchar(80),
+	@instance_status_id int,
+	@update_date datetime,
+	@updated_by nvarchar(50)
+as 
+	update customer_contact set 
+		name = @name,	
+		email = @email,
+		phone = @phone,
+		instance_status_id = @instance_status_id,		
+		update_date = @update_date,
+		updated_by = @updated_by
+	where id = @id
+go
+
+create proc csp_select_customer_contact
+	@id uniqueidentifier
+as 
+	select *
+	from customer_contact
+	where id = @id
+go
+
+create proc csp_select_customer_contacts_for_customer
+	@customer_id uniqueidentifier,
+	@instance_status_level int
+as 
+	select *
+	from customer_contact
+	where customer_id = @customer_id and instance_status_id <= @instance_status_level
+	order by name
+go
+
+create proc csp_select_customer_contacts_for_customer_flat
+	@customer_id uniqueidentifier,
+	@instance_status_level int
+as 
+	select
+		cc.id,
+		cc.name,
+		cc.email,
+		cc.phone,
+		stat.name as 'instance_status_name',
+		cc.create_date,
+		cc.created_by,
+		cc.update_date,
+		cc.updated_by
+	from customer_contact cc, instance_status stat
+	where cc.customer_id = @customer_id and cc.instance_status_id = stat.id and cc.instance_status_id <= @instance_status_level
+	order by name
 go
 
 /*===========================================================================*/

@@ -50,7 +50,7 @@ namespace DSA_lims
             // create new station            
             Text = "Create station";
             cboxInstanceStatus.DataSource = Common.InstanceStatusList;
-            cboxInstanceStatus.SelectedValue = InstanceStatusType.Active;
+            cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
         }
         public FormStation(Guid sid)
         {

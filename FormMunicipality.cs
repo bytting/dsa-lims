@@ -50,7 +50,7 @@ namespace DSA_lims
             p["county_id"] = cid;
             Text = "Create municipality";
             cboxInstanceStatus.DataSource = Common.InstanceStatusList;
-            cboxInstanceStatus.SelectedValue = InstanceStatusType.Active;
+            cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
         }
 
         public FormMunicipality(Guid cid, Guid mid)

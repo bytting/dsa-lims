@@ -47,7 +47,7 @@ namespace DSA_lims
             InitializeComponent();
             Text = "Create analysis method";
             cboxInstanceStatus.DataSource = Common.InstanceStatusList;
-            cboxInstanceStatus.SelectedValue = InstanceStatusType.Active;
+            cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
         }
 
         public FormAnalysisMethods(Guid amid)

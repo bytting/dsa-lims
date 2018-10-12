@@ -53,7 +53,7 @@ namespace DSA_lims
             Text = "Create energy line";
             tbNuclide.Text = nname;
             cboxInstanceStatus.DataSource = Common.InstanceStatusList;
-            cboxInstanceStatus.SelectedValue = InstanceStatusType.Active;
+            cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
         }
 
         public FormEnergyLine(Guid nid, Guid eid, string nname)

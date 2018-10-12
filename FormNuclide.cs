@@ -52,7 +52,7 @@ namespace DSA_lims
             cboxDecayTypes.SelectedIndex = -1;
             Text = "New nuclide";
             cboxInstanceStatus.DataSource = Common.InstanceStatusList;
-            cboxInstanceStatus.SelectedValue = InstanceStatusType.Active;            
+            cboxInstanceStatus.SelectedValue = InstanceStatus.Active;            
         }
 
         public FormNuclide(Guid nid)

@@ -36,13 +36,13 @@ namespace DSA_lims
         Insert,
         Update,
         Delete
-    }
+    }    
 
-    public enum InstanceStatusType
+    public static class InstanceStatus
     {
-        Active = 1,
-        Inactive,
-        Deleted
+        public const int Active = 1;
+        public const int Inactive = 2;
+        public const int Deleted = 3;
     }
 
     public class Lemma<I, N>

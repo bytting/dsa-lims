@@ -50,7 +50,7 @@ namespace DSA_lims
             
             Text = "New geometry";
             cboxInstanceStatus.DataSource = Common.InstanceStatusList;
-            cboxInstanceStatus.SelectedValue = InstanceStatusType.Active;
+            cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
         }
 
         public FormGeometry(Guid gid)

@@ -48,7 +48,7 @@ namespace DSA_lims
             InitializeComponent();            
             Text = "Create sampler";
             cboxInstanceStatus.DataSource = Common.InstanceStatusList;
-            cboxInstanceStatus.SelectedValue = InstanceStatusType.Active;
+            cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
         }
 
         public FormSampler(Guid sid)

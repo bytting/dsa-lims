@@ -178,10 +178,10 @@ namespace DSA_lims
             }
         }
 
-        public static void PopulateLaboratories(SqlConnection conn, DataGridView grid)
+        public static void PopulateLaboratories(SqlConnection conn, int instanceStatusLevel, DataGridView grid)
         {                        
             grid.DataSource = DB.GetDataTable(conn, "csp_select_laboratories_flat", CommandType.StoredProcedure,
-                new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
+                new SqlParameter("@instance_status_level", instanceStatusLevel));
         
             grid.Columns["id"].Visible = false;
             grid.Columns["assignment_counter"].Visible = false;
@@ -199,10 +199,10 @@ namespace DSA_lims
             grid.Columns["instance_status_name"].HeaderText = "Status";
         }
 
-        public static void PopulateLaboratories(SqlConnection conn, params ComboBox[] cbn)
+        public static void PopulateLaboratories(SqlConnection conn, int instanceStatusLevel, params ComboBox[] cbn)
         {
             using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_laboratories_short", CommandType.StoredProcedure,
-                new SqlParameter("@instance_status_level", InstanceStatus.Deleted)))
+                new SqlParameter("@instance_status_level", instanceStatusLevel)))
             {
                 foreach(ComboBox cb in cbn)
                     cb.Items.Clear();
@@ -216,10 +216,10 @@ namespace DSA_lims
             }
         }
 
-        public static void PopulateUsers(SqlConnection conn, DataGridView grid)
+        public static void PopulateUsers(SqlConnection conn, int instanceStatusLevel, DataGridView grid)
         {                        
             grid.DataSource = DB.GetDataTable(conn, "csp_select_accounts_flat", CommandType.StoredProcedure,
-                new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
+                new SqlParameter("@instance_status_level", instanceStatusLevel));
 
             grid.Columns["password_hash"].Visible = false;
             grid.Columns["create_date"].Visible = false;
@@ -227,9 +227,29 @@ namespace DSA_lims
         
             grid.Columns["username"].HeaderText = "Username";
             grid.Columns["fullname"].HeaderText = "Name";
+            grid.Columns["email"].HeaderText = "Email";
+            grid.Columns["phone"].HeaderText = "Phone";
             grid.Columns["laboratory_name"].HeaderText = "Laboratory";
             grid.Columns["language_code"].HeaderText = "Language";
             grid.Columns["instance_status_name"].HeaderText = "Status";
+        }
+
+        public static void PopulateUsers(SqlConnection conn, Guid laboratoryId, int instanceStatusLevel, params ComboBox[] cbn)
+        {
+            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_accounts_for_laboratory", CommandType.StoredProcedure,
+                new SqlParameter("@laboratory_id", laboratoryId),
+                new SqlParameter("@instance_status_level", instanceStatusLevel)))
+            {
+                foreach (ComboBox cb in cbn)
+                    cb.Items.Clear();
+
+                while (reader.Read())
+                    foreach (ComboBox cb in cbn)
+                        cb.Items.Add(new Lemma<string, string>(reader["username"].ToString(), reader["fullname"].ToString()));
+
+                foreach (ComboBox cb in cbn)
+                    cb.SelectedIndex = -1;
+            }
         }
 
         public static void PopulateNuclides(SqlConnection conn, DataGridView grid)

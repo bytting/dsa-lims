@@ -90,16 +90,16 @@ namespace DSA_lims
 
                     UI.PopulateInstanceStatus(cboxSamplesStatus);
                     UI.PopulatePreparationUnits(cboxSamplePrepUnit);
-                    UI.PopulateWorkflowStatus(cboxSampleAnalWorkflowStatus, cboxSamplePrepWorkflowStatus, cboxOrderWorkflowStatus);
+                    UI.PopulateWorkflowStatus(cboxSampleAnalWorkflowStatus, cboxSamplePrepWorkflowStatus);
                     UI.PopulateLocationTypes(cboxSampleInfoLocationTypes);
                     UI.PopulateActivityUnits(conn, gridMetaUnitsActivity);
                     UI.PopulateActivityUnits(conn, cboxSampleAnalUnit);
                     UI.PopulateActivityUnitTypes(conn, cboxSampleAnalUnitType);
                     UI.PopulateProjectsMain(conn, gridProjectMain);
                     UI.PopulateProjectsMain(conn, cboxSampleProject, cboxSamplesProjects);
-                    UI.PopulateLaboratories(conn, gridMetaLab);
-                    UI.PopulateLaboratories(conn, cboxSampleLaboratory);
-                    UI.PopulateUsers(conn, gridMetaUsers);
+                    UI.PopulateLaboratories(conn, InstanceStatus.Deleted, gridMetaLab);
+                    UI.PopulateLaboratories(conn, InstanceStatus.Active, cboxSampleLaboratory, cboxOrderLaboratory);
+                    UI.PopulateUsers(conn, InstanceStatus.Deleted, gridMetaUsers);                    
                     UI.PopulateNuclides(conn, gridSysNuclides);
                     UI.PopulateGeometries(conn, gridSysGeom);
                     UI.PopulateGeometries(conn, cboxSamplePrepGeom);
@@ -529,7 +529,10 @@ namespace DSA_lims
                 case DialogResult.OK:
                     SetStatusMessage("Laboratory " + form.LaboratoryName + " created");
                     using (SqlConnection conn = DB.OpenConnection())
-                        UI.PopulateLaboratories(conn, gridMetaLab);
+                    {                        
+                        UI.PopulateLaboratories(conn, InstanceStatus.Deleted, gridMetaLab);
+                        UI.PopulateLaboratories(conn, InstanceStatus.Active, cboxSampleLaboratory, cboxOrderLaboratory);
+                    }
                     break;
                 case DialogResult.Abort:
                     SetStatusMessage("Create laboratory failed", StatusMessageType.Error);
@@ -595,7 +598,10 @@ namespace DSA_lims
                 case DialogResult.OK:
                     SetStatusMessage("Laboratory " + form.LaboratoryName + " updated");
                     using (SqlConnection conn = DB.OpenConnection())
-                        UI.PopulateLaboratories(conn, gridMetaLab);
+                    {                        
+                        UI.PopulateLaboratories(conn, InstanceStatus.Deleted, gridMetaLab);
+                        UI.PopulateLaboratories(conn, InstanceStatus.Active, cboxSampleLaboratory, cboxOrderLaboratory);
+                    }
                     break;
                 case DialogResult.Abort:
                     SetStatusMessage("Update laboratory failed", StatusMessageType.Error);                    
@@ -606,6 +612,22 @@ namespace DSA_lims
         private void miEditUser_Click(object sender, EventArgs e)
         {
             // edit user
+            if(gridMetaUsers.SelectedRows.Count < 1)
+            {
+                MessageBox.Show("You must select a user first");
+                return;
+            }
+            
+            string uname = gridMetaUsers.SelectedRows[0].Cells["username"].Value.ToString();
+
+            FormUser form = new FormUser(uname);
+            if (form.ShowDialog() != DialogResult.OK)
+                return;
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                UI.PopulateUsers(conn, InstanceStatus.Deleted, gridMetaUsers);
+            }
         }
 
         private void miResetPass_Click(object sender, EventArgs e)
@@ -1918,6 +1940,69 @@ order by name
                 MessageBox.Show("Requested sigma is mandatory");
                 return;
             }
+
+            try
+            {
+                using (SqlConnection conn = DB.OpenConnection())
+                {
+                    Lemma<Guid, string> lab = cboxOrderLaboratory.SelectedItem as Lemma<Guid, string>;
+                    object o = DB.GetScalar(conn, "select name_prefix from laboratory where id = @id", CommandType.Text, new SqlParameter("@id", lab.Id));
+                    if(o == null || o == DBNull.Value)
+                    {                        
+                        Common.Log.Error("Unable to get name_prefix for laboratory " + lab.Name);
+                        MessageBox.Show("Unable to get name_prefix for laboratory " + lab.Name);
+                        return;
+                    }
+                    string prefix = o.ToString();
+                    string orderName = prefix + "-" + DateTime.Now.ToString("yyyy") + "-";
+
+
+                    SqlParameter assignmentCounter = new SqlParameter("@assignment_counter", SqlDbType.Int) { Direction = ParameterDirection.Output };
+
+                    SqlCommand cmd = new SqlCommand("csp_insert_assignment", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.AddWithValue("@id", Guid.NewGuid());
+                    cmd.Parameters.AddWithValue("@name", orderName);
+                    cmd.Parameters.AddWithValue("@laboratory_id", Lemma<Guid, string>.IdParam(cboxOrderLaboratory.SelectedItem));
+                    Lemma<string, string> account = cboxOrderResponsible.SelectedItem as Lemma<string, string>;
+                    cmd.Parameters.AddWithValue("@account_id", account.Id);
+                    cmd.Parameters.AddWithValue("@deadline", (DateTime)tbOrderDeadline.Tag);
+                    cmd.Parameters.AddWithValue("@requested_sigma", Convert.ToDouble(cboxOrderRequestedSigma.Text));
+                    cmd.Parameters.AddWithValue("@customer_name", cboxOrderCustomerName.Text);
+                    cmd.Parameters.AddWithValue("@customer_address", tbOrderCustomerAddress.Text.Trim());
+                    cmd.Parameters.AddWithValue("@customer_email", tbOrderCustomerEmail.Text.Trim());
+                    cmd.Parameters.AddWithValue("@customer_phone", tbOrderCustomerPhone.Text.Trim());
+                    cmd.Parameters.AddWithValue("@customer_contact_name", cboxOrderContact.Text);                    
+                    cmd.Parameters.AddWithValue("@customer_contact_email", tbOrderContactEmail.Text.Trim());
+                    cmd.Parameters.AddWithValue("@customer_contact_phone", tbOrderContactPhone.Text.Trim());
+                    cmd.Parameters.AddWithValue("@approved_customer", 0);
+                    cmd.Parameters.AddWithValue("@approved_laboratory", 0);
+                    cmd.Parameters.AddWithValue("@content_comment", DBNull.Value);
+                    cmd.Parameters.AddWithValue("@report_comment", DBNull.Value);
+                    cmd.Parameters.AddWithValue("@closed_date", DBNull.Value);
+                    cmd.Parameters.AddWithValue("@closed_by", DBNull.Value);                    
+                    cmd.Parameters.AddWithValue("@instance_status_id", InstanceStatus.Active);
+                    cmd.Parameters.AddWithValue("@create_date", DateTime.Now);
+                    cmd.Parameters.AddWithValue("@created_by", Common.Username);
+                    cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
+                    cmd.Parameters.AddWithValue("@updated_by", Common.Username);                    
+                    cmd.Parameters.Add(assignmentCounter);
+
+                    cmd.ExecuteNonQuery();
+
+                    orderName += assignmentCounter.Value.ToString();
+                    lblStatus.Text = StrUtils.makeStatusMessage("Order " + orderName + " created");
+
+                    //UI.PopulateOrders(conn, gridOrders);
+
+                    tabs.SelectedTab = tabOrders;
+                }
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+            }
         }
 
         private void btnOrderSelectDeadline_Click(object sender, EventArgs e)
@@ -2123,6 +2208,18 @@ order by name
             using (SqlConnection conn = DB.OpenConnection())
             {
                 UI.PopulatePrepMethAnalMeths(conn, pmid, lbTypRelPrepMethAnalMeth);
+            }
+        }
+
+        private void cboxOrderLaboratory_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cboxOrderLaboratory.SelectedItem == null)
+                return;
+
+            Lemma<Guid, string> lab = cboxOrderLaboratory.SelectedItem as Lemma<Guid, string>;
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                UI.PopulateUsers(conn, lab.Id, InstanceStatus.Active, cboxOrderResponsible);
             }
         }
     }    

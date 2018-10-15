@@ -135,15 +135,71 @@ go
 if OBJECT_ID('dbo.account', 'U') IS NOT NULL drop table account;
 
 create table account (	
-	username nvarchar(50) primary key NOT NULL,	
-	password_hash nchar(64) NOT NULL,
+	username nvarchar(50) primary key NOT NULL,		
 	fullname nvarchar(128) NOT NULL,
+	email nvarchar(80) default NULL,
+	phone nvarchar(80) default NULL,
 	laboratory_id uniqueidentifier default NULL,
 	language_code nvarchar(8) default 'en',
 	instance_status_id int default 1,
+	password_hash nchar(64) NOT NULL,
 	create_date datetime NOT NULL,	
 	update_date datetime NOT NULL
 )
+go
+
+create proc csp_insert_account
+	@username nvarchar(50),
+	@fullname nvarchar(128),
+	@email nvarchar(80),
+	@phone nvarchar(80),
+	@laboratory_id uniqueidentifier,
+	@language_code nvarchar(8),
+	@instance_status_id int,
+	@password_hash nchar(64),
+	@create_date datetime,	
+	@update_date datetime
+as 
+	insert into account values (
+		@username,
+		@fullname,
+		@email,
+		@phone,
+		@laboratory_id,
+		@language_code,
+		@instance_status_id,
+		@password_hash,
+		@create_date,
+		@update_date
+	);
+go
+
+create proc csp_update_account
+	@username nvarchar(50),
+	@fullname nvarchar(128),
+	@email nvarchar(80),
+	@phone nvarchar(80),
+	@laboratory_id uniqueidentifier,
+	@language_code nvarchar(8),
+	@instance_status_id int,	
+	@update_date datetime
+as 
+	update account set
+		fullname = @fullname,
+		email = @email,
+		phone = @phone,
+		laboratory_id = @laboratory_id,
+		language_code = @language_code,
+		instance_status_id = @instance_status_id,
+		update_date = @update_date
+	where username = @username
+go
+
+create proc csp_select_account
+	@username nvarchar(50)
+as 
+	select * from account 
+	where username = @username
 go
 
 create proc csp_select_accounts
@@ -167,18 +223,29 @@ create proc csp_select_accounts_flat
 	@instance_status_level int
 as 
 	select 
-		a.username,	
-		a.password_hash,
+		a.username,			
 		a.fullname,
+		a.email,
+		a.phone,
 		l.name as 'laboratory_name',
 		a.language_code,
 		st.name as 'instance_status_name',
+		a.password_hash,
 		a.create_date,	
 		a.update_date
 	from account a 
 		left outer join laboratory l on a.laboratory_id = l.id 
 		inner join instance_status st on a.instance_status_id = st.id 
 	where a.instance_status_id <= @instance_status_level
+	order by username
+go
+
+create proc csp_select_accounts_for_laboratory
+	@laboratory_id uniqueidentifier,
+	@instance_status_level int
+as 
+	select * from account 
+	where laboratory_id = @laboratory_id and instance_status_id <= @instance_status_level
 	order by username
 go
 
@@ -1196,10 +1263,9 @@ create table assignment (
 	id uniqueidentifier primary key NOT NULL,
 	name nvarchar(80) NOT NULL,	
 	laboratory_id uniqueidentifier NOT NULL,
-	account_id uniqueidentifier NOT NULL,
+	account_id nvarchar(50) NOT NULL,
 	deadline datetime NOT NULL,
-	requested_sigma float default NULL,
-	workflow_status_id int default 1,
+	requested_sigma float default NULL,	
 	customer_name nvarchar(256) default NULL,
 	customer_address nvarchar(256) default NULL,
 	customer_email nvarchar(80) default NULL,
@@ -1212,13 +1278,78 @@ create table assignment (
 	content_comment nvarchar(1000) default NULL,
 	report_comment nvarchar(1000) default NULL,		
 	closed_date datetime default NULL,
-	closed_by uniqueidentifier default NULL,
+	closed_by nvarchar(50) default NULL,
 	instance_status_id int default 1,
 	create_date datetime NOT NULL,
 	created_by nvarchar(50) NOT NULL,
 	update_date datetime NOT NULL,
 	updated_by nvarchar(50) NOT NULL
 )
+go
+
+create proc csp_insert_assignment
+	@id uniqueidentifier,
+	@name nvarchar(80),	
+	@laboratory_id uniqueidentifier,
+	@account_id nvarchar(50),
+	@deadline datetime,
+	@requested_sigma float,	
+	@customer_name nvarchar(256),
+	@customer_address nvarchar(256),
+	@customer_email nvarchar(80),
+	@customer_phone nvarchar(80),
+	@customer_contact_name nvarchar(256),	
+	@customer_contact_email nvarchar(80),
+	@customer_contact_phone nvarchar(80),	
+	@approved_customer bit,
+	@approved_laboratory bit,	
+	@content_comment nvarchar(1000),
+	@report_comment nvarchar(1000),		
+	@closed_date datetime,
+	@closed_by nvarchar(50),
+	@instance_status_id int,
+	@create_date datetime,
+	@created_by nvarchar(50),
+	@update_date datetime,
+	@updated_by nvarchar(50),
+	@assignment_counter int output
+as 	
+	begin transaction;
+
+	select @assignment_counter = assignment_counter from laboratory where id = @laboratory_id;
+
+	insert into assignment values (
+		@id,
+		CONCAT(@name, @assignment_counter),	
+		@laboratory_id,
+		@account_id,
+		@deadline,
+		@requested_sigma,	
+		@customer_name,
+		@customer_address,
+		@customer_email,
+		@customer_phone,
+		@customer_contact_name,	
+		@customer_contact_email,
+		@customer_contact_phone,	
+		@approved_customer,
+		@approved_laboratory,	
+		@content_comment,
+		@report_comment,		
+		@closed_date,
+		@closed_by,
+		@instance_status_id,
+		@create_date,
+		@created_by,
+		@update_date,
+		@updated_by		
+	);
+
+	update laboratory set assignment_counter = @assignment_counter + 1 where id = @laboratory_id;
+
+	commit;
+
+	return
 go
 
 /*===========================================================================*/

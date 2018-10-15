@@ -464,6 +464,9 @@
   <ItemGroup>
     <Content Include="comments.txt" />
     <Content Include="database.sql" />
+    <None Include="images\datetime_16.png" />
+    <None Include="images\datetime_32.png" />
+    <None Include="images\datetime.png" />
     <None Include="images\prep_anal.png" />
     <None Include="images\set.png" />
     <None Include="images\merge.png" />

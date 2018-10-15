@@ -121,6 +121,7 @@ namespace DSA_lims
                     UI.PopulateSigma(cboxPrepAnalAnalSigma, cboxOrderRequestedSigma);
                     UI.PopulateCustomers(conn, InstanceStatus.Deleted, gridCustomers);
                     UI.PopulateCustomers(conn, InstanceStatus.Active, cboxOrderCustomerName);
+                    UI.PopulateOrders(conn, InstanceStatus.Deleted, gridOrders);
                 }
                 
                 HideMenuItems();
@@ -1994,7 +1995,7 @@ order by name
                     orderName += assignmentCounter.Value.ToString();
                     lblStatus.Text = StrUtils.makeStatusMessage("Order " + orderName + " created");
 
-                    //UI.PopulateOrders(conn, gridOrders);
+                    UI.PopulateOrders(conn, InstanceStatus.Deleted, gridOrders);
 
                     tabs.SelectedTab = tabOrders;
                 }

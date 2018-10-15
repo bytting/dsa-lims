@@ -1352,6 +1352,40 @@ as
 	return
 go
 
+create proc csp_select_assignments_flat
+	@instance_status_level int
+as
+	select		
+		a.id,
+		a.name,	
+		a.laboratory_id,
+		a.account_id,
+		a.deadline,
+		a.requested_sigma,	
+		a.customer_name,
+		a.customer_address,
+		a.customer_email,
+		a.customer_phone,
+		a.customer_contact_name,	
+		a.customer_contact_email,
+		a.customer_contact_phone,	
+		a.approved_customer,
+		a.approved_laboratory,	
+		a.content_comment,
+		a.report_comment,		
+		a.closed_date,
+		a.closed_by,
+		insta.name as 'instance_status_name',
+		a.create_date,
+		a.created_by,
+		a.update_date,
+		a.updated_by		
+	from assignment a 		
+		inner join instance_status insta on a.instance_status_id = insta.id
+	where a.instance_status_id <= @instance_status_level
+	order by a.create_date
+go
+
 /*===========================================================================*/
 /* tbl assignment_sample */
 
@@ -2984,7 +3018,7 @@ as
 		left outer join municipality mun on s.municipality_id = mun.id
 		left outer join county co on mun.county_id = co.id
 		inner join instance_status insta on s.instance_status_id = insta.id
-	where s.instance_status_id <= @@instance_status_level
+	where s.instance_status_id <= @instance_status_level
 	order by s.create_date
 go
 

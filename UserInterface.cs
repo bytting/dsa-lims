@@ -834,5 +834,20 @@ order by name";
             grid.Columns["phone"].HeaderText = "Phone";
             grid.Columns["instance_status_name"].HeaderText = "Status";
         }
+
+        public static void PopulateOrders(SqlConnection conn, int statusLevel, DataGridView grid)
+        {
+            grid.DataSource = DB.GetDataTable(conn, "csp_select_assignments_flat", CommandType.StoredProcedure,
+                new SqlParameter("@instance_status_level", statusLevel));
+
+            grid.Columns["id"].Visible = false;
+            grid.Columns["created_by"].Visible = false;
+            grid.Columns["create_date"].Visible = false;
+            grid.Columns["updated_by"].Visible = false;
+            grid.Columns["update_date"].Visible = false;
+
+            grid.Columns["name"].HeaderText = "Name";
+            grid.Columns["instance_status_name"].HeaderText = "Status";
+        }
     }
 }

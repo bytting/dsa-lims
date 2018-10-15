@@ -5191,6 +5191,8 @@
             // 
             this.gridOrders.AllowUserToAddRows = false;
             this.gridOrders.AllowUserToDeleteRows = false;
+            this.gridOrders.AllowUserToResizeRows = false;
+            this.gridOrders.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.gridOrders.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
             this.gridOrders.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.gridOrders.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -5198,6 +5200,8 @@
             this.gridOrders.Location = new System.Drawing.Point(3, 116);
             this.gridOrders.Name = "gridOrders";
             this.gridOrders.ReadOnly = true;
+            this.gridOrders.RowHeadersVisible = false;
+            this.gridOrders.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.gridOrders.Size = new System.Drawing.Size(1141, 495);
             this.gridOrders.TabIndex = 2;
             // 

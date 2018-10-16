@@ -294,7 +294,7 @@
             this.cboxOrderLaboratory = new System.Windows.Forms.ComboBox();
             this.cboxOrderRequestedSigma = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.tbOrderId = new System.Windows.Forms.TextBox();
+            this.tbOrderName = new System.Windows.Forms.TextBox();
             this.label41 = new System.Windows.Forms.Label();
             this.panel30 = new System.Windows.Forms.Panel();
             this.tbOrderDeadline = new System.Windows.Forms.TextBox();
@@ -2633,7 +2633,7 @@
             this.btnMenuNewOrder.Text = "New order";
             this.btnMenuNewOrder.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btnMenuNewOrder.UseVisualStyleBackColor = true;
-            this.btnMenuNewOrder.Click += new System.EventHandler(this.btnMenuNewOrder_Click);
+            this.btnMenuNewOrder.Click += new System.EventHandler(this.miOrdersNew_Click);
             // 
             // button17
             // 
@@ -3670,7 +3670,7 @@
             // 
             this.splitContainer6.Panel2.Controls.Add(this.panel12);
             this.splitContainer6.Size = new System.Drawing.Size(1127, 574);
-            this.splitContainer6.SplitterDistance = 778;
+            this.splitContainer6.SplitterDistance = 777;
             this.splitContainer6.SplitterWidth = 5;
             this.splitContainer6.TabIndex = 4;
             // 
@@ -3690,7 +3690,7 @@
             // 
             this.splitContainer7.Panel2.Controls.Add(this.treeOrderContent);
             this.splitContainer7.Panel2.Controls.Add(this.toolsOrderContent);
-            this.splitContainer7.Size = new System.Drawing.Size(778, 574);
+            this.splitContainer7.Size = new System.Drawing.Size(777, 574);
             this.splitContainer7.SplitterDistance = 361;
             this.splitContainer7.SplitterWidth = 5;
             this.splitContainer7.TabIndex = 0;
@@ -3709,7 +3709,7 @@
             this.tableLayoutPanel6.Controls.Add(this.cboxOrderLaboratory, 1, 1);
             this.tableLayoutPanel6.Controls.Add(this.cboxOrderRequestedSigma, 1, 4);
             this.tableLayoutPanel6.Controls.Add(this.label4, 0, 0);
-            this.tableLayoutPanel6.Controls.Add(this.tbOrderId, 1, 0);
+            this.tableLayoutPanel6.Controls.Add(this.tbOrderName, 1, 0);
             this.tableLayoutPanel6.Controls.Add(this.label41, 0, 6);
             this.tableLayoutPanel6.Controls.Add(this.panel30, 1, 3);
             this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -3822,17 +3822,17 @@
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(114, 25);
             this.label4.TabIndex = 10;
-            this.label4.Text = "Id";
+            this.label4.Text = "Name";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // tbOrderId
+            // tbOrderName
             // 
-            this.tbOrderId.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbOrderId.Location = new System.Drawing.Point(123, 3);
-            this.tbOrderId.Name = "tbOrderId";
-            this.tbOrderId.ReadOnly = true;
-            this.tbOrderId.Size = new System.Drawing.Size(235, 21);
-            this.tbOrderId.TabIndex = 11;
+            this.tbOrderName.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbOrderName.Location = new System.Drawing.Point(123, 3);
+            this.tbOrderName.Name = "tbOrderName";
+            this.tbOrderName.ReadOnly = true;
+            this.tbOrderName.Size = new System.Drawing.Size(235, 21);
+            this.tbOrderName.TabIndex = 11;
             // 
             // label41
             // 
@@ -3902,7 +3902,7 @@
             this.treeOrderContent.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeOrderContent.Location = new System.Drawing.Point(0, 25);
             this.treeOrderContent.Name = "treeOrderContent";
-            this.treeOrderContent.Size = new System.Drawing.Size(412, 549);
+            this.treeOrderContent.Size = new System.Drawing.Size(411, 549);
             this.treeOrderContent.TabIndex = 0;
             // 
             // toolsOrderContent
@@ -3921,7 +3921,7 @@
             this.btnOrderRemAnalMeth});
             this.toolsOrderContent.Location = new System.Drawing.Point(0, 0);
             this.toolsOrderContent.Name = "toolsOrderContent";
-            this.toolsOrderContent.Size = new System.Drawing.Size(412, 25);
+            this.toolsOrderContent.Size = new System.Drawing.Size(411, 25);
             this.toolsOrderContent.TabIndex = 1;
             this.toolsOrderContent.Text = "toolStrip16";
             // 
@@ -4020,7 +4020,7 @@
             this.panel12.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel12.Location = new System.Drawing.Point(0, 0);
             this.panel12.Name = "panel12";
-            this.panel12.Size = new System.Drawing.Size(344, 574);
+            this.panel12.Size = new System.Drawing.Size(345, 574);
             this.panel12.TabIndex = 1;
             // 
             // dataGridView12
@@ -4034,7 +4034,7 @@
             this.dataGridView12.Location = new System.Drawing.Point(0, 25);
             this.dataGridView12.Name = "dataGridView12";
             this.dataGridView12.ReadOnly = true;
-            this.dataGridView12.Size = new System.Drawing.Size(344, 549);
+            this.dataGridView12.Size = new System.Drawing.Size(345, 549);
             this.dataGridView12.TabIndex = 1;
             // 
             // toolsOrderAttachments
@@ -4048,7 +4048,7 @@
             this.toolStripButton23});
             this.toolsOrderAttachments.Location = new System.Drawing.Point(0, 0);
             this.toolsOrderAttachments.Name = "toolsOrderAttachments";
-            this.toolsOrderAttachments.Size = new System.Drawing.Size(344, 25);
+            this.toolsOrderAttachments.Size = new System.Drawing.Size(345, 25);
             this.toolsOrderAttachments.TabIndex = 0;
             this.toolsOrderAttachments.Text = "toolStrip15";
             // 
@@ -6496,7 +6496,7 @@
             this.splitContainer16.Panel2.Controls.Add(this.lbSampleTypesInheritedComponents);
             this.splitContainer16.Panel2.Controls.Add(this.toolsTypeRelSampCompInherit);
             this.splitContainer16.Size = new System.Drawing.Size(736, 540);
-            this.splitContainer16.SplitterDistance = 254;
+            this.splitContainer16.SplitterDistance = 253;
             this.splitContainer16.TabIndex = 0;
             // 
             // lbSampleTypesComponents
@@ -6508,7 +6508,7 @@
             this.lbSampleTypesComponents.ItemHeight = 15;
             this.lbSampleTypesComponents.Location = new System.Drawing.Point(0, 25);
             this.lbSampleTypesComponents.Name = "lbSampleTypesComponents";
-            this.lbSampleTypesComponents.Size = new System.Drawing.Size(736, 229);
+            this.lbSampleTypesComponents.Size = new System.Drawing.Size(736, 228);
             this.lbSampleTypesComponents.TabIndex = 2;
             // 
             // toolsTypeRelSampComp
@@ -6582,7 +6582,7 @@
             this.lbSampleTypesInheritedComponents.Location = new System.Drawing.Point(0, 25);
             this.lbSampleTypesInheritedComponents.Name = "lbSampleTypesInheritedComponents";
             this.lbSampleTypesInheritedComponents.SelectionMode = System.Windows.Forms.SelectionMode.None;
-            this.lbSampleTypesInheritedComponents.Size = new System.Drawing.Size(736, 257);
+            this.lbSampleTypesInheritedComponents.Size = new System.Drawing.Size(736, 258);
             this.lbSampleTypesInheritedComponents.TabIndex = 3;
             // 
             // toolsTypeRelSampCompInherit
@@ -10882,7 +10882,7 @@
         private System.Windows.Forms.ToolStripLabel lblSampleToolExId;
         private System.Windows.Forms.ToolStripLabel lblSampleToolProject;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox tbOrderId;
+        private System.Windows.Forms.TextBox tbOrderName;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox tbSampleExId;
         private System.Windows.Forms.DataGridView gridSamples;

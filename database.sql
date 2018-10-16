@@ -1265,7 +1265,7 @@ create table assignment (
 	laboratory_id uniqueidentifier NOT NULL,
 	account_id nvarchar(50) NOT NULL,
 	deadline datetime NOT NULL,
-	requested_sigma float default NULL,	
+	requested_sigma float default NULL,
 	customer_name nvarchar(256) default NULL,
 	customer_address nvarchar(256) default NULL,
 	customer_email nvarchar(80) default NULL,
@@ -1352,14 +1352,22 @@ as
 	return
 go
 
+create proc csp_select_assignments
+	@instance_status_level int
+as
+	select *
+	from assignment
+	where instance_status_id <= @instance_status_level
+go
+
 create proc csp_select_assignments_flat
 	@instance_status_level int
 as
 	select		
 		a.id,
-		a.name,	
-		a.laboratory_id,
-		a.account_id,
+		a.name,
+		l.name as 'laboratory_name',
+		acc.fullname as 'account_name',
 		a.deadline,
 		a.requested_sigma,	
 		a.customer_name,
@@ -1381,21 +1389,25 @@ as
 		a.update_date,
 		a.updated_by		
 	from assignment a 		
+		inner join laboratory l on a.laboratory_id = l.id
+		inner join account acc on a.account_id = acc.username
 		inner join instance_status insta on a.instance_status_id = insta.id
 	where a.instance_status_id <= @instance_status_level
 	order by a.create_date
 go
 
 /*===========================================================================*/
-/* tbl assignment_sample */
+/* tbl assignment_x_sample */
 
-if OBJECT_ID('dbo.assignment_sample', 'U') IS NOT NULL drop table assignment_sample;
+if OBJECT_ID('dbo.assignment_sample_type', 'U') IS NOT NULL drop table assignment_sample_type;
 
-create table assignment_sample (
+create table assignment_sample_type (
 	id uniqueidentifier primary key NOT NULL,	
 	assignment_id uniqueidentifier NOT NULL,	
 	sample_type_id uniqueidentifier NOT NULL,	
 	sample_count int NOT NULL,
+	requested_activity_unit_id uniqueidentifier default NULL,
+	requested_activity_unit_type_id int default NULL,
 	return_to_sender bit default 0,
 	comment nvarchar(1000) default NULL,
 	create_date datetime NOT NULL,
@@ -1403,6 +1415,36 @@ create table assignment_sample (
 	update_date datetime NOT NULL,
 	updated_by nvarchar(50) NOT NULL
 )
+go
+
+create proc csp_insert_assignment_sample_type
+	@id uniqueidentifier,	
+	@assignment_id uniqueidentifier,	
+	@sample_type_id uniqueidentifier,	
+	@sample_count int,
+	@requested_activity_unit_id uniqueidentifier,
+	@requested_activity_unit_type_id int,
+	@return_to_sender bit,
+	@comment nvarchar(1000),
+	@create_date datetime,
+	@created_by nvarchar(50),
+	@update_date datetime,
+	@updated_by nvarchar(50)
+as	
+	insert into assignment_sample_type values (
+		@id,	
+		@assignment_id,	
+		@sample_type_id,	
+		@sample_count,
+		@requested_activity_unit_id,
+		@requested_activity_unit_type_id,
+		@return_to_sender,
+		@comment,
+		@create_date,
+		@created_by,
+		@update_date,
+		@updated_by
+	);
 go
 
 /*===========================================================================*/

@@ -841,13 +841,51 @@ order by name";
                 new SqlParameter("@instance_status_level", statusLevel));
 
             grid.Columns["id"].Visible = false;
+            grid.Columns["customer_address"].Visible = false;
+            grid.Columns["customer_email"].Visible = false;
+            grid.Columns["customer_phone"].Visible = false;
+            grid.Columns["customer_contact_email"].Visible = false;
+            grid.Columns["customer_contact_phone"].Visible = false;
+            grid.Columns["content_comment"].Visible = false;
+            grid.Columns["report_comment"].Visible = false;
             grid.Columns["created_by"].Visible = false;
             grid.Columns["create_date"].Visible = false;
             grid.Columns["updated_by"].Visible = false;
             grid.Columns["update_date"].Visible = false;
 
             grid.Columns["name"].HeaderText = "Name";
+            grid.Columns["laboratory_name"].HeaderText = "Laboratory";
+            grid.Columns["account_name"].HeaderText = "Responsible";
+            grid.Columns["requested_sigma"].HeaderText = "Req.Sigma";
+            grid.Columns["deadline"].HeaderText = "Deadline";
+            grid.Columns["customer_name"].HeaderText = "Customer";
+            grid.Columns["customer_contact_name"].HeaderText = "Customer contact";
+            grid.Columns["approved_customer"].HeaderText = "Appr.Cust";
+            grid.Columns["approved_laboratory"].HeaderText = "Appr.Lab";
+            grid.Columns["closed_date"].HeaderText = "Closed at";
+            grid.Columns["closed_by"].HeaderText = "Closed by";
             grid.Columns["instance_status_name"].HeaderText = "Status";
+
+            grid.Columns["deadline"].DefaultCellStyle.Format = StrUtils.DateFormatNorwegian;
+        }
+
+        public static void PopulateOrderContent(SqlConnection conn, Guid selectedOrder, TreeView tree)
+        {
+            tree.Nodes.Clear();
+            string query = @"
+select ast.*, st.name as 'sample_type_name'
+from assignment_sample_type ast, sample_type st
+where assignment_id = @assignment_id and ast.sample_type_id = st.id
+";
+            using (SqlDataReader reader = DB.GetDataReader(conn, query, CommandType.Text, 
+                new SqlParameter("@assignment_id", selectedOrder)))
+            {
+                while(reader.Read())
+                {
+                    string name = reader["sample_type_name"].ToString() + " (" + reader["sample_count"].ToString() + ")";
+                    TreeNode tnode = tree.Nodes.Add(reader["sample_type_id"].ToString(), name);
+                }
+            }
         }
     }
 }

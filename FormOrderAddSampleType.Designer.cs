@@ -36,12 +36,18 @@
             this.label2 = new System.Windows.Forms.Label();
             this.btnSelectSampleType = new System.Windows.Forms.Button();
             this.panelSampleType = new System.Windows.Forms.Panel();
-            this.tbCount = new System.Windows.Forms.TextBox();
             this.cboxSampleType = new System.Windows.Forms.ComboBox();
+            this.tbCount = new System.Windows.Forms.TextBox();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.label3 = new System.Windows.Forms.Label();
             this.cboxSampleComponent = new System.Windows.Forms.ComboBox();
+            this.cbReturnToSender = new System.Windows.Forms.CheckBox();
+            this.cboxRequestedUnit = new System.Windows.Forms.ComboBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.cboxRequestedUnitType = new System.Windows.Forms.ComboBox();
+            this.tbComment = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panelSampleType.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -52,7 +58,7 @@
             this.panel1.Controls.Add(this.btnCancel);
             this.panel1.Controls.Add(this.btnOk);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 147);
+            this.panel1.Location = new System.Drawing.Point(0, 299);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(623, 30);
             this.panel1.TabIndex = 6;
@@ -82,7 +88,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(23, 37);
+            this.label1.Location = new System.Drawing.Point(34, 37);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(108, 13);
             this.label1.TabIndex = 7;
@@ -91,7 +97,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(96, 91);
+            this.label2.Location = new System.Drawing.Point(107, 91);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(35, 13);
             this.label2.TabIndex = 9;
@@ -101,9 +107,9 @@
             // 
             this.btnSelectSampleType.Dock = System.Windows.Forms.DockStyle.Right;
             this.btnSelectSampleType.Image = global::DSA_lims.Properties.Resources.tree_16;
-            this.btnSelectSampleType.Location = new System.Drawing.Point(414, 0);
+            this.btnSelectSampleType.Location = new System.Drawing.Point(423, 0);
             this.btnSelectSampleType.Name = "btnSelectSampleType";
-            this.btnSelectSampleType.Size = new System.Drawing.Size(35, 23);
+            this.btnSelectSampleType.Size = new System.Drawing.Size(26, 23);
             this.btnSelectSampleType.TabIndex = 10;
             this.btnSelectSampleType.Text = "...";
             this.btnSelectSampleType.UseVisualStyleBackColor = true;
@@ -118,13 +124,6 @@
             this.panelSampleType.Size = new System.Drawing.Size(449, 23);
             this.panelSampleType.TabIndex = 11;
             // 
-            // tbCount
-            // 
-            this.tbCount.Location = new System.Drawing.Point(148, 88);
-            this.tbCount.Name = "tbCount";
-            this.tbCount.Size = new System.Drawing.Size(121, 20);
-            this.tbCount.TabIndex = 12;
-            // 
             // cboxSampleType
             // 
             this.cboxSampleType.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
@@ -133,17 +132,24 @@
             this.cboxSampleType.FormattingEnabled = true;
             this.cboxSampleType.Location = new System.Drawing.Point(0, 0);
             this.cboxSampleType.Name = "cboxSampleType";
-            this.cboxSampleType.Size = new System.Drawing.Size(414, 21);
+            this.cboxSampleType.Size = new System.Drawing.Size(423, 21);
             this.cboxSampleType.Sorted = true;
             this.cboxSampleType.TabIndex = 11;
             this.cboxSampleType.SelectedIndexChanged += new System.EventHandler(this.cboxSampleType_SelectedIndexChanged);
             this.cboxSampleType.Leave += new System.EventHandler(this.cboxSampleType_Leave);
             // 
+            // tbCount
+            // 
+            this.tbCount.Location = new System.Drawing.Point(148, 88);
+            this.tbCount.Name = "tbCount";
+            this.tbCount.Size = new System.Drawing.Size(449, 20);
+            this.tbCount.TabIndex = 12;
+            // 
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.lblStatus});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 177);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 329);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(623, 22);
             this.statusStrip1.TabIndex = 13;
@@ -158,7 +164,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(23, 64);
+            this.label3.Location = new System.Drawing.Point(44, 64);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(98, 13);
             this.label3.TabIndex = 14;
@@ -173,11 +179,73 @@
             this.cboxSampleComponent.Size = new System.Drawing.Size(449, 21);
             this.cboxSampleComponent.TabIndex = 15;
             // 
+            // cbReturnToSender
+            // 
+            this.cbReturnToSender.AutoSize = true;
+            this.cbReturnToSender.Location = new System.Drawing.Point(148, 152);
+            this.cbReturnToSender.Name = "cbReturnToSender";
+            this.cbReturnToSender.Size = new System.Drawing.Size(146, 17);
+            this.cbReturnToSender.TabIndex = 16;
+            this.cbReturnToSender.Text = "Return samples to sender";
+            this.cbReturnToSender.UseVisualStyleBackColor = true;
+            // 
+            // cboxRequestedUnit
+            // 
+            this.cboxRequestedUnit.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxRequestedUnit.FormattingEnabled = true;
+            this.cboxRequestedUnit.Location = new System.Drawing.Point(148, 114);
+            this.cboxRequestedUnit.Name = "cboxRequestedUnit";
+            this.cboxRequestedUnit.Size = new System.Drawing.Size(222, 21);
+            this.cboxRequestedUnit.TabIndex = 17;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(63, 117);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(79, 13);
+            this.label4.TabIndex = 18;
+            this.label4.Text = "Requested unit";
+            // 
+            // cboxRequestedUnitType
+            // 
+            this.cboxRequestedUnitType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxRequestedUnitType.FormattingEnabled = true;
+            this.cboxRequestedUnitType.Location = new System.Drawing.Point(376, 114);
+            this.cboxRequestedUnitType.Name = "cboxRequestedUnitType";
+            this.cboxRequestedUnitType.Size = new System.Drawing.Size(221, 21);
+            this.cboxRequestedUnitType.TabIndex = 19;
+            // 
+            // tbComment
+            // 
+            this.tbComment.Location = new System.Drawing.Point(148, 188);
+            this.tbComment.MaxLength = 1000;
+            this.tbComment.Multiline = true;
+            this.tbComment.Name = "tbComment";
+            this.tbComment.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.tbComment.Size = new System.Drawing.Size(449, 87);
+            this.tbComment.TabIndex = 20;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(91, 191);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(51, 13);
+            this.label5.TabIndex = 21;
+            this.label5.Text = "Comment";
+            // 
             // FormOrderAddSampleType
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(623, 199);
+            this.ClientSize = new System.Drawing.Size(623, 351);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.tbComment);
+            this.Controls.Add(this.cboxRequestedUnitType);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.cboxRequestedUnit);
+            this.Controls.Add(this.cbReturnToSender);
             this.Controls.Add(this.cboxSampleComponent);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.tbCount);
@@ -218,5 +286,11 @@
         private System.Windows.Forms.ToolStripStatusLabel lblStatus;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox cboxSampleComponent;
+        private System.Windows.Forms.CheckBox cbReturnToSender;
+        private System.Windows.Forms.ComboBox cboxRequestedUnit;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.ComboBox cboxRequestedUnitType;
+        private System.Windows.Forms.TextBox tbComment;
+        private System.Windows.Forms.Label label5;
     }
 }

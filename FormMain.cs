@@ -40,6 +40,8 @@ namespace DSA_lims
     {
         private ResourceManager r = null;
 
+        private Guid selectedOrder = Guid.Empty;
+
         public FormMain()
         {
             InitializeComponent();
@@ -346,11 +348,6 @@ namespace DSA_lims
         private void tabsSample_SelectedIndexChanged(object sender, EventArgs e)
         {
             //
-        }
-
-        private void btnMenuNewOrder_Click(object sender, EventArgs e)
-        {
-            tabs.SelectedTab = tabOrder;
         }
 
         private void treeSampleTypes_AfterSelect(object sender, TreeViewEventArgs e)
@@ -1865,15 +1862,48 @@ order by name
             // clear all order filters
         }
 
+        private void SetOrderEditingState(bool state)
+        {
+            miOrderAddSampleType.Enabled = state;
+            miOrderRemSampleType.Enabled = state;
+            miOrderAddPrepMeth.Enabled = state;
+            miOrderRemPrepMeth.Enabled = state;
+            miOrderAddAnalMeth.Enabled = state;
+            miOrderRemAnalMeth.Enabled = state;
+
+            btnOrderAddSampleType.Enabled = state;
+            btnOrderRemSampleType.Enabled = state;
+            btnOrderAddPrepMeth.Enabled = state;
+            btnOrderRemPrepMeth.Enabled = state;
+            btnOrderAddAnalMeth.Enabled = state;
+            btnOrderRemAnalMeth.Enabled = state;
+        }
+
         private void miOrdersNew_Click(object sender, EventArgs e)
         {
             // create new order
+            SetOrderEditingState(false);
+
             tabs.SelectedTab = tabOrder;
         }
 
         private void miOrdersEdit_Click(object sender, EventArgs e)
         {
             // edit existing order
+            if(gridOrders.SelectedRows.Count < 1)
+            {
+                MessageBox.Show("You must select an order forst");
+                return;
+            }
+
+            selectedOrder = new Guid(gridOrders.SelectedRows[0].Cells["id"].Value.ToString());
+            tbOrderName.Text = gridOrders.SelectedRows[0].Cells["name"].Value.ToString();
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                UI.PopulateOrderContent(conn, selectedOrder, treeOrderContent);
+            }
+
+            tabs.SelectedTab = tabOrder;
         }
 
         private void miOrdersDelete_Click(object sender, EventArgs e)
@@ -1884,10 +1914,14 @@ order by name
         private void miOrderAddSampleType_Click(object sender, EventArgs e)
         {
             // add sample type to order
-            FormOrderAddSampleType form = new FormOrderAddSampleType(treeSampleTypes);
+            FormOrderAddSampleType form = new FormOrderAddSampleType(selectedOrder, treeSampleTypes);
             if (form.ShowDialog() != DialogResult.OK)
                 return;
-            //
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                UI.PopulateOrderContent(conn, selectedOrder, treeOrderContent);
+            }
         }
 
         private void miOrderRemSampleType_Click(object sender, EventArgs e)
@@ -1962,8 +1996,8 @@ order by name
 
                     SqlCommand cmd = new SqlCommand("csp_insert_assignment", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.Clear();
-                    cmd.Parameters.AddWithValue("@id", Guid.NewGuid());
+                    Guid newGuid = Guid.NewGuid();
+                    cmd.Parameters.AddWithValue("@id", newGuid);
                     cmd.Parameters.AddWithValue("@name", orderName);
                     cmd.Parameters.AddWithValue("@laboratory_id", Lemma<Guid, string>.IdParam(cboxOrderLaboratory.SelectedItem));
                     Lemma<string, string> account = cboxOrderResponsible.SelectedItem as Lemma<string, string>;
@@ -1992,12 +2026,14 @@ order by name
 
                     cmd.ExecuteNonQuery();
 
+                    selectedOrder = newGuid;
+
                     orderName += assignmentCounter.Value.ToString();
                     lblStatus.Text = StrUtils.makeStatusMessage("Order " + orderName + " created");
 
                     UI.PopulateOrders(conn, InstanceStatus.Deleted, gridOrders);
-
-                    tabs.SelectedTab = tabOrders;
+                    tbOrderName.Text = orderName;
+                    SetOrderEditingState(true);
                 }
             }
             catch (Exception ex)

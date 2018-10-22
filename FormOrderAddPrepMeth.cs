@@ -25,6 +25,7 @@ namespace DSA_lims
 
             using (SqlConnection conn = DB.OpenConnection())
             {
+                UI.PopulateLaboratories(conn, InstanceStatus.Active, cboxPrepMethLaboratory);
                 UI.PopulatePreparationMethods(conn, cboxPreparationMethod);
             }
         }
@@ -90,7 +91,9 @@ namespace DSA_lims
 
         private void cbPrepsAlreadyExists_CheckedChanged(object sender, EventArgs e)
         {
-            cboxPrepMethLaboratory.Enabled = true;
+            cboxPrepMethLaboratory.Enabled = cbPrepsAlreadyExists.Checked;
+            if (cbPrepsAlreadyExists.Checked == false)
+                cboxPrepMethLaboratory.SelectedIndex = -1;
         }
     }
 }

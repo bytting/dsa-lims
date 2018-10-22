@@ -1517,9 +1517,12 @@ as
 		apm.id as 'id',
 		apm.preparation_method_count as 'count', 
 		apm.comment as 'comment', 
+		apm.preparation_laboratory_id as 'preparation_laboratory_id', 
+		lab.name as 'preparation_laboratory_name', 
 		pm.name as 'preparation_method_name'
-	from assignment_preparation_method apm, preparation_method pm
-	where apm.assignment_sample_type_id = @assignment_sample_type_id and apm.preparation_method_id = pm.id
+	from assignment_preparation_method apm 
+		inner join preparation_method pm on apm.assignment_sample_type_id = @assignment_sample_type_id and apm.preparation_method_id = pm.id
+		left outer join laboratory lab on apm.preparation_laboratory_id = lab.id
 	order by pm.name
 go
 

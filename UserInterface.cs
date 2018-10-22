@@ -940,8 +940,11 @@ order by name";
                     new SqlParameter("@assignment_sample_type_id", orderSampleTypeId)))
                 {
                     while (reader.Read())
-                    {
+                    {                        
                         string txt = reader["count"].ToString() + ", " + reader["preparation_method_name"].ToString();
+                        if (reader["preparation_laboratory_id"] != DBNull.Value)
+                            txt += " (" + reader["preparation_laboratory_name"].ToString() + ")";
+
                         TreeNode tn = tnode.Nodes.Add(reader["id"].ToString(), txt);
                         tn.ToolTipText = reader["comment"].ToString();
                     }

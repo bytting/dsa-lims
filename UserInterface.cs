@@ -21,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -583,6 +584,28 @@ namespace DSA_lims
             grid.Columns["instance_status_name"].HeaderText = "Status";
         }
 
+        public static void PopulatePreparationMethods(SqlConnection conn, params ComboBox[] cbn)
+        {
+            foreach (ComboBox cbox in cbn)
+                cbox.Items.Clear();
+
+            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_preparation_methods_short", CommandType.StoredProcedure, 
+                new SqlParameter("@instance_status_level", InstanceStatus.Active)))
+            {
+                while (reader.Read())
+                {
+                    foreach (ComboBox cbox in cbn)
+                    {
+                        Lemma<Guid, string> pm = new Lemma<Guid, string>(new Guid(reader["id"].ToString()), reader["name"].ToString());
+                        cbox.Items.Add(pm);
+                    }
+                }
+            }
+
+            foreach (ComboBox cbox in cbn)
+                cbox.SelectedIndex = -1;
+        }
+
         public static void PopulateAnalysisMethods(SqlConnection conn, DataGridView grid)
         {
             grid.DataSource = DB.GetDataTable(conn, "csp_select_analysis_methods_flat", CommandType.StoredProcedure,
@@ -599,6 +622,28 @@ namespace DSA_lims
             grid.Columns["description_link"].HeaderText = "Desc. link";
             grid.Columns["specter_reference_regexp"].HeaderText = "Spec.Ref RegExp";
             grid.Columns["instance_status_name"].HeaderText = "Status";
+        }
+
+        public static void PopulateAnalysisMethods(SqlConnection conn, params ComboBox[] cbn)
+        {
+            foreach (ComboBox cbox in cbn)
+                cbox.Items.Clear();
+
+            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_analysis_methods_short", CommandType.StoredProcedure,
+                new SqlParameter("@instance_status_level", InstanceStatus.Active)))
+            {
+                while (reader.Read())
+                {
+                    foreach (ComboBox cbox in cbn)
+                    {
+                        Lemma<Guid, string> pm = new Lemma<Guid, string>(new Guid(reader["id"].ToString()), reader["name"].ToString());
+                        cbox.Items.Add(pm);
+                    }
+                }
+            }
+
+            foreach (ComboBox cbox in cbn)
+                cbox.SelectedIndex = -1;
         }
 
         private static void AddSampleTypeChildren(List<Lemma<Guid, Guid, string>> sampleTypeList, TreeNode tnode)
@@ -872,20 +917,57 @@ order by name";
         public static void PopulateOrderContent(SqlConnection conn, Guid selectedOrder, TreeView tree)
         {
             tree.Nodes.Clear();
-            string query = @"
-select ast.*, st.name as 'sample_type_name'
-from assignment_sample_type ast, sample_type st
-where assignment_id = @assignment_id and ast.sample_type_id = st.id
-";
-            using (SqlDataReader reader = DB.GetDataReader(conn, query, CommandType.Text, 
+            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_assignment_sample_types", CommandType.StoredProcedure, 
                 new SqlParameter("@assignment_id", selectedOrder)))
             {
-                while(reader.Read())
+                while (reader.Read())
                 {
-                    string name = reader["sample_type_name"].ToString() + " (" + reader["sample_count"].ToString() + ")";
-                    TreeNode tnode = tree.Nodes.Add(reader["sample_type_id"].ToString(), name);
+                    string txt = reader["sample_count"].ToString() + ", " + reader["sample_type_name"].ToString();
+                    if(reader["sample_component_name"] != DBNull.Value)
+                        txt += " (" + reader["sample_component_name"].ToString() + ")";
+
+                    TreeNode tnode = tree.Nodes.Add(reader["id"].ToString(), txt);
+                    tnode.ToolTipText = reader["sample_comment"].ToString();                    
+                    tnode.NodeFont = new Font(tree.Font.FontFamily, tree.Font.Size, FontStyle.Bold);
                 }
             }
+
+            foreach(TreeNode tnode in tree.Nodes)
+            {
+                Guid orderSampleTypeId = new Guid(tnode.Name);
+
+                using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_assignment_preparation_methods", CommandType.StoredProcedure, 
+                    new SqlParameter("@assignment_sample_type_id", orderSampleTypeId)))
+                {
+                    while (reader.Read())
+                    {
+                        string txt = reader["count"].ToString() + ", " + reader["preparation_method_name"].ToString();
+                        TreeNode tn = tnode.Nodes.Add(reader["id"].ToString(), txt);
+                        tn.ToolTipText = reader["comment"].ToString();
+                    }
+                }
+            }
+            
+            foreach (TreeNode tnode in tree.Nodes)
+            {
+                foreach (TreeNode tn in tnode.Nodes)
+                {
+                    Guid orderPrepMethId = new Guid(tn.Name);
+
+                    using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_assignment_analysis_methods", CommandType.StoredProcedure,
+                        new SqlParameter("@assignment_preparation_method_id", orderPrepMethId)))
+                    {
+                        while (reader.Read())
+                        {
+                            string txt = reader["count"].ToString() + ", " + reader["analysis_method_name"].ToString();
+                            TreeNode tn2 = tn.Nodes.Add(reader["id"].ToString(), txt);
+                            tn2.ToolTipText = reader["comment"].ToString();
+                        }
+                    }
+                }
+            }
+
+            tree.ExpandAll();
         }
     }
 }

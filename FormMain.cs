@@ -1932,6 +1932,28 @@ order by name
         private void miOrderAddPrepMeth_Click(object sender, EventArgs e)
         {
             // add preparation method to order
+            if (treeOrderContent.SelectedNode == null)
+            {
+                MessageBox.Show("You must select a sample type first");
+                return;
+            }
+
+            TreeNode tnode = treeOrderContent.SelectedNode;
+            if(tnode.Level != 0)
+            {
+                MessageBox.Show("You must select a sample type first");
+                return;
+            }
+
+            Guid orderSampleTypeId = new Guid(tnode.Name);
+            FormOrderAddPrepMeth form = new FormOrderAddPrepMeth(orderSampleTypeId);
+            if (form.ShowDialog() != DialogResult.OK)
+                return;
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                UI.PopulateOrderContent(conn, selectedOrder, treeOrderContent);
+            }
         }
 
         private void miOrderRemPrepMeth_Click(object sender, EventArgs e)
@@ -1942,6 +1964,29 @@ order by name
         private void miOrderAddAnalMeth_Click(object sender, EventArgs e)
         {
             // add analysis method to order
+            if (treeOrderContent.SelectedNode == null)
+            {
+                MessageBox.Show("You must select a preparation method first");
+                return;
+            }
+
+            TreeNode tnode = treeOrderContent.SelectedNode;
+
+            if (tnode.Level != 1)
+            {
+                MessageBox.Show("You must select a preparation method first");
+                return;
+            }
+            
+            Guid orderPrepMethId = new Guid(tnode.Name);
+            FormOrderAddAnalMeth form = new FormOrderAddAnalMeth(orderPrepMethId);
+            if (form.ShowDialog() != DialogResult.OK)
+                return;
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                UI.PopulateOrderContent(conn, selectedOrder, treeOrderContent);
+            }
         }
 
         private void miOrderRemAnalMeth_Click(object sender, EventArgs e)

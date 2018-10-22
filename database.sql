@@ -1397,7 +1397,7 @@ as
 go
 
 /*===========================================================================*/
-/* tbl assignment_x_sample */
+/* tbl assignment_sample_type */
 
 if OBJECT_ID('dbo.assignment_sample_type', 'U') IS NOT NULL drop table assignment_sample_type;
 
@@ -1405,6 +1405,7 @@ create table assignment_sample_type (
 	id uniqueidentifier primary key NOT NULL,	
 	assignment_id uniqueidentifier NOT NULL,	
 	sample_type_id uniqueidentifier NOT NULL,	
+	sample_component_id uniqueidentifier default NULL,	
 	sample_count int NOT NULL,
 	requested_activity_unit_id uniqueidentifier default NULL,
 	requested_activity_unit_type_id int default NULL,
@@ -1421,6 +1422,7 @@ create proc csp_insert_assignment_sample_type
 	@id uniqueidentifier,	
 	@assignment_id uniqueidentifier,	
 	@sample_type_id uniqueidentifier,	
+	@sample_component_id uniqueidentifier,	
 	@sample_count int,
 	@requested_activity_unit_id uniqueidentifier,
 	@requested_activity_unit_type_id int,
@@ -1435,6 +1437,7 @@ as
 		@id,	
 		@assignment_id,	
 		@sample_type_id,	
+		@sample_component_id,	
 		@sample_count,
 		@requested_activity_unit_id,
 		@requested_activity_unit_type_id,
@@ -1447,15 +1450,32 @@ as
 	);
 go
 
+create proc csp_select_assignment_sample_types
+	@assignment_id uniqueidentifier
+as
+	select 
+	ast.id as 'id', 
+	ast.sample_count as 'sample_count',
+	st.name as 'sample_type_name', 	
+	sc.name as 'sample_component_name',
+	ast.comment as 'sample_comment'
+from assignment_sample_type ast
+	inner join sample_type st on ast.sample_type_id = st.id and ast.assignment_id = @assignment_id
+	left outer join sample_component sc on ast.sample_component_id = sc.id
+	order by st.name
+go
+
 /*===========================================================================*/
-/* tbl assignment_preparation */
+/* tbl assignment_preparation_method */
 
-if OBJECT_ID('dbo.assignment_preparation', 'U') IS NOT NULL drop table assignment_preparation;
+if OBJECT_ID('dbo.assignment_preparation_method', 'U') IS NOT NULL drop table assignment_preparation_method;
 
-create table assignment_preparation (
-	id uniqueidentifier primary key NOT NULL,	
-	assignment_sample_id uniqueidentifier NOT NULL,		
-	preparation_method_id uniqueidentifier NOT NULL,
+create table assignment_preparation_method (
+	id uniqueidentifier primary key NOT NULL,		
+	assignment_sample_type_id uniqueidentifier NOT NULL,				
+	preparation_method_id uniqueidentifier default NULL,
+	preparation_method_count int NOT NULL,
+	preparation_laboratory_id uniqueidentifier default NULL,
 	comment nvarchar(1000) default NULL,
 	create_date datetime NOT NULL,
 	created_by nvarchar(50) NOT NULL,
@@ -1464,21 +1484,98 @@ create table assignment_preparation (
 )
 go
 
+create proc csp_insert_assignment_preparation_method
+	@id uniqueidentifier,	
+	@assignment_sample_type_id uniqueidentifier,	
+	@preparation_method_id uniqueidentifier,
+	@preparation_method_count int,
+	@preparation_laboratory_id uniqueidentifier,
+	@comment nvarchar(1000),
+	@create_date datetime,
+	@created_by nvarchar(50),
+	@update_date datetime,
+	@updated_by nvarchar(50)
+as	
+	insert into assignment_preparation_method values (
+		@id,	
+		@assignment_sample_type_id,	
+		@preparation_method_id,
+		@preparation_method_count,
+		@preparation_laboratory_id,
+		@comment,
+		@create_date,
+		@created_by,
+		@update_date,
+		@updated_by
+	);
+go
+
+create proc csp_select_assignment_preparation_methods
+	@assignment_sample_type_id uniqueidentifier
+as	
+	select 
+		apm.id as 'id',
+		apm.preparation_method_count as 'count', 
+		apm.comment as 'comment', 
+		pm.name as 'preparation_method_name'
+	from assignment_preparation_method apm, preparation_method pm
+	where apm.assignment_sample_type_id = @assignment_sample_type_id and apm.preparation_method_id = pm.id
+	order by pm.name
+go
+
 /*===========================================================================*/
-/* tbl assignment_analysis */
+/* tbl assignment_analysis_method */
 
-if OBJECT_ID('dbo.assignment_analysis', 'U') IS NOT NULL drop table assignment_analysis;
+if OBJECT_ID('dbo.assignment_analysis_method', 'U') IS NOT NULL drop table assignment_analysis_method;
 
-create table assignment_analysis (
-	id uniqueidentifier primary key NOT NULL,	
-	assignment_preparation_id uniqueidentifier default NULL,		
-	analysis_method_id uniqueidentifier NOT NULL,
+create table assignment_analysis_method (
+	id uniqueidentifier primary key NOT NULL,		
+	assignment_preparation_method_id uniqueidentifier NOT NULL,				
+	analysis_method_id uniqueidentifier default NULL,
+	analysis_method_count int NOT NULL,
 	comment nvarchar(1000) default NULL,
 	create_date datetime NOT NULL,
 	created_by nvarchar(50) NOT NULL,
 	update_date datetime NOT NULL,
 	updated_by nvarchar(50) NOT NULL
 )
+go
+
+create proc csp_insert_assignment_analysis_method
+	@id uniqueidentifier,	
+	@assignment_preparation_method_id uniqueidentifier,	
+	@analysis_method_id uniqueidentifier,
+	@analysis_method_count int,
+	@comment nvarchar(1000),
+	@create_date datetime,
+	@created_by nvarchar(50),
+	@update_date datetime,
+	@updated_by nvarchar(50)
+as	
+	insert into assignment_analysis_method values (
+		@id,	
+		@assignment_preparation_method_id,	
+		@analysis_method_id,
+		@analysis_method_count,
+		@comment,
+		@create_date,
+		@created_by,
+		@update_date,
+		@updated_by
+	);
+go
+
+create proc csp_select_assignment_analysis_methods
+	@assignment_preparation_method_id uniqueidentifier
+as	
+	select 
+		aam.id as 'id', 
+		aam.analysis_method_count as 'count', 
+		aam.comment as 'comment', 
+		am.name as 'analysis_method_name'
+	from assignment_analysis_method aam, analysis_method am
+	where aam.assignment_preparation_method_id = @assignment_preparation_method_id and aam.analysis_method_id = am.id
+	order by am.name
 go
 
 /*===========================================================================*/
@@ -1673,6 +1770,15 @@ as
 	order by name
 go
 
+create proc csp_select_preparation_methods_short
+	@instance_status_level int
+as
+	select id, name
+	from preparation_method
+	where instance_status_id <= @instance_status_level
+	order by name
+go
+
 create proc csp_select_preparation_methods_flat
 	@instance_status_level int
 as
@@ -1809,6 +1915,15 @@ as
 	order by name
 go
 
+create proc csp_select_analysis_methods_short
+	@instance_status_level int
+as
+	select id, name
+	from analysis_method
+	where instance_status_id <= @instance_status_level
+	order by name
+go
+
 create proc csp_select_analysis_methods_flat
 	@instance_status_level int
 as
@@ -1826,15 +1941,6 @@ as
 	from analysis_method am, instance_status st
 	where am.instance_status_id = st.id and am.instance_status_id <= @instance_status_level
 	order by am.name
-go
-
-create proc csp_select_analysis_methods_for_preparation_method
-	@preparation_method_id uniqueidentifier
-as
-	select am.id, am.name from analysis_method am
-		inner join preparation_method_x_analysis_method pmam on pmam.analysis_method_id = am.id 
-			and pmam.preparation_method_id = @preparation_method_id
-	order by name
 go
 
 /*===========================================================================*/
@@ -3103,6 +3209,15 @@ create table sample_type_x_preparation_method (
 )
 go
 
+create proc csp_select_preparation_methods_for_sample_type
+	@sample_type_id uniqueidentifier
+as
+	select pm.* 
+	from preparation_method pm, sample_type_x_preparation_method stpm
+	where pm.id = stpm.preparation_method_id and stpm.sample_type_id = @sample_type_id
+	order by pm.name
+go
+
 /*===========================================================================*/
 /* tbl preparation_method_x_analysis_method */
 
@@ -3112,6 +3227,15 @@ create table preparation_method_x_analysis_method (
 	preparation_method_id uniqueidentifier NOT NULL,
 	analysis_method_id uniqueidentifier NOT NULL
 )
+go
+
+create proc csp_select_analysis_methods_for_preparation_method
+	@preparation_method_id uniqueidentifier
+as
+	select am.id, am.name from analysis_method am
+		inner join preparation_method_x_analysis_method pmam on pmam.analysis_method_id = am.id 
+			and pmam.preparation_method_id = @preparation_method_id
+	order by name
 go
 
 /*===========================================================================*/

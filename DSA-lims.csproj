@@ -142,6 +142,18 @@
     <Compile Include="FormNuclide.Designer.cs">
       <DependentUpon>FormNuclide.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormOrderAddAnalMeth.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormOrderAddAnalMeth.Designer.cs">
+      <DependentUpon>FormOrderAddAnalMeth.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormOrderAddPrepMeth.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormOrderAddPrepMeth.Designer.cs">
+      <DependentUpon>FormOrderAddPrepMeth.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormOrderAddSampleType.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -299,6 +311,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormNuclide.resx">
       <DependentUpon>FormNuclide.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormOrderAddAnalMeth.resx">
+      <DependentUpon>FormOrderAddAnalMeth.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormOrderAddPrepMeth.resx">
+      <DependentUpon>FormOrderAddPrepMeth.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormOrderAddSampleType.resx">
       <DependentUpon>FormOrderAddSampleType.cs</DependentUpon>

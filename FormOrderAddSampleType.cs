@@ -51,36 +51,47 @@ namespace DSA_lims
                 return;
             }
 
-            if(String.IsNullOrEmpty(tbCount.Text.Trim()))
+            if(String.IsNullOrEmpty(tbNumSamples.Text.Trim()))
             {
-                MessageBox.Show("Count is mandatory");
+                MessageBox.Show("Number of samples is mandatory");
                 return;
-            }            
+            }
 
             try
             {
                 using (SqlConnection conn = DB.OpenConnection())
                 {
                     Lemma<Guid, string> sampleType = cboxSampleType.SelectedItem as Lemma<Guid, string>;
-                    int count = Convert.ToInt32(tbCount.Text);
+                    Lemma<Guid, string> sampleComponent = cboxSampleComponent.SelectedItem as Lemma<Guid, string>;
+                    int count = Convert.ToInt32(tbNumSamples.Text);
                     Lemma<Guid, string> activityUnit = cboxRequestedUnit.SelectedItem as Lemma<Guid, string>;
-                    Lemma<int, string> activityUnitType = cboxRequestedUnitType.SelectedItem as Lemma<int, string>;
+                    Lemma<int, string> activityUnitType = cboxRequestedUnitType.SelectedItem as Lemma<int, string>;                    
 
                     SqlCommand cmd = new SqlCommand("csp_insert_assignment_sample_type", conn);
                     cmd.CommandType = CommandType.StoredProcedure;                    
                     cmd.Parameters.AddWithValue("@id", Guid.NewGuid());
                     cmd.Parameters.AddWithValue("@assignment_id", OrderId);
-                    cmd.Parameters.AddWithValue("@sample_type_id", sampleType.Id);                    
+                    cmd.Parameters.AddWithValue("@sample_type_id", sampleType.Id);
+
+                    if (sampleComponent == null)
+                        cmd.Parameters.AddWithValue("@sample_component_id", DBNull.Value);
+                    else
+                        cmd.Parameters.AddWithValue("@sample_component_id", sampleComponent.Id);
+
                     cmd.Parameters.AddWithValue("@sample_count", count);
+
                     if(activityUnit == null)
                         cmd.Parameters.AddWithValue("@requested_activity_unit_id", DBNull.Value);
                     else
                         cmd.Parameters.AddWithValue("@requested_activity_unit_id", activityUnit.Id);
+
                     if (activityUnitType == null)
                         cmd.Parameters.AddWithValue("@requested_activity_unit_type_id", DBNull.Value);
                     else
                         cmd.Parameters.AddWithValue("@requested_activity_unit_type_id", activityUnitType.Id);
+
                     cmd.Parameters.AddWithValue("@return_to_sender", cbReturnToSender.Checked ? 1 : 0);
+
                     cmd.Parameters.AddWithValue("@comment", tbComment.Text);
                     cmd.Parameters.AddWithValue("@create_date", DateTime.Now);
                     cmd.Parameters.AddWithValue("@created_by", Common.Username);
@@ -117,7 +128,10 @@ namespace DSA_lims
             cboxSampleComponent.Items.Clear();
 
             if (cboxSampleType.SelectedItem == null)
+            {
+                cboxSampleComponent.Items.Clear();
                 return;
+            }
 
             var sampleType = cboxSampleType.SelectedItem as Lemma<Guid, string>;
             TreeNode[] tnodes = TreeSampleTypes.Nodes.Find(sampleType.Id.ToString(), true);
@@ -176,6 +190,6 @@ namespace DSA_lims
             }
 
             CheckExistingSampleType();
-        }        
+        }
     }
 }

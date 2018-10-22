@@ -37,7 +37,6 @@
             this.btnSelectSampleType = new System.Windows.Forms.Button();
             this.panelSampleType = new System.Windows.Forms.Panel();
             this.cboxSampleType = new System.Windows.Forms.ComboBox();
-            this.tbCount = new System.Windows.Forms.TextBox();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.label3 = new System.Windows.Forms.Label();
@@ -48,6 +47,7 @@
             this.cboxRequestedUnitType = new System.Windows.Forms.ComboBox();
             this.tbComment = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
+            this.tbNumSamples = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             this.panelSampleType.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -58,17 +58,17 @@
             this.panel1.Controls.Add(this.btnCancel);
             this.panel1.Controls.Add(this.btnOk);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 299);
+            this.panel1.Location = new System.Drawing.Point(0, 324);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(623, 30);
+            this.panel1.Size = new System.Drawing.Size(640, 28);
             this.panel1.TabIndex = 6;
             // 
             // btnCancel
             // 
             this.btnCancel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnCancel.Location = new System.Drawing.Point(423, 0);
+            this.btnCancel.Location = new System.Drawing.Point(440, 0);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(100, 30);
+            this.btnCancel.Size = new System.Drawing.Size(100, 28);
             this.btnCancel.TabIndex = 1;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
@@ -77,9 +77,9 @@
             // btnOk
             // 
             this.btnOk.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnOk.Location = new System.Drawing.Point(523, 0);
+            this.btnOk.Location = new System.Drawing.Point(540, 0);
             this.btnOk.Name = "btnOk";
-            this.btnOk.Size = new System.Drawing.Size(100, 30);
+            this.btnOk.Size = new System.Drawing.Size(100, 28);
             this.btnOk.TabIndex = 0;
             this.btnOk.Text = "Ok";
             this.btnOk.UseVisualStyleBackColor = true;
@@ -88,7 +88,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(34, 37);
+            this.label1.Location = new System.Drawing.Point(34, 36);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(108, 13);
             this.label1.TabIndex = 7;
@@ -97,11 +97,11 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(107, 91);
+            this.label2.Location = new System.Drawing.Point(45, 90);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(35, 13);
+            this.label2.Size = new System.Drawing.Size(97, 13);
             this.label2.TabIndex = 9;
-            this.label2.Text = "Count";
+            this.label2.Text = "Number of samples";
             // 
             // btnSelectSampleType
             // 
@@ -119,7 +119,7 @@
             // 
             this.panelSampleType.Controls.Add(this.cboxSampleType);
             this.panelSampleType.Controls.Add(this.btnSelectSampleType);
-            this.panelSampleType.Location = new System.Drawing.Point(148, 32);
+            this.panelSampleType.Location = new System.Drawing.Point(148, 31);
             this.panelSampleType.Name = "panelSampleType";
             this.panelSampleType.Size = new System.Drawing.Size(449, 23);
             this.panelSampleType.TabIndex = 11;
@@ -138,20 +138,13 @@
             this.cboxSampleType.SelectedIndexChanged += new System.EventHandler(this.cboxSampleType_SelectedIndexChanged);
             this.cboxSampleType.Leave += new System.EventHandler(this.cboxSampleType_Leave);
             // 
-            // tbCount
-            // 
-            this.tbCount.Location = new System.Drawing.Point(148, 88);
-            this.tbCount.Name = "tbCount";
-            this.tbCount.Size = new System.Drawing.Size(449, 20);
-            this.tbCount.TabIndex = 12;
-            // 
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.lblStatus});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 329);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 352);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(623, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(640, 22);
             this.statusStrip1.TabIndex = 13;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -164,7 +157,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(44, 64);
+            this.label3.Location = new System.Drawing.Point(44, 63);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(98, 13);
             this.label3.TabIndex = 14;
@@ -174,7 +167,7 @@
             // 
             this.cboxSampleComponent.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxSampleComponent.FormattingEnabled = true;
-            this.cboxSampleComponent.Location = new System.Drawing.Point(148, 61);
+            this.cboxSampleComponent.Location = new System.Drawing.Point(148, 60);
             this.cboxSampleComponent.Name = "cboxSampleComponent";
             this.cboxSampleComponent.Size = new System.Drawing.Size(449, 21);
             this.cboxSampleComponent.TabIndex = 15;
@@ -182,7 +175,7 @@
             // cbReturnToSender
             // 
             this.cbReturnToSender.AutoSize = true;
-            this.cbReturnToSender.Location = new System.Drawing.Point(148, 152);
+            this.cbReturnToSender.Location = new System.Drawing.Point(148, 151);
             this.cbReturnToSender.Name = "cbReturnToSender";
             this.cbReturnToSender.Size = new System.Drawing.Size(146, 17);
             this.cbReturnToSender.TabIndex = 16;
@@ -193,7 +186,7 @@
             // 
             this.cboxRequestedUnit.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxRequestedUnit.FormattingEnabled = true;
-            this.cboxRequestedUnit.Location = new System.Drawing.Point(148, 114);
+            this.cboxRequestedUnit.Location = new System.Drawing.Point(148, 113);
             this.cboxRequestedUnit.Name = "cboxRequestedUnit";
             this.cboxRequestedUnit.Size = new System.Drawing.Size(222, 21);
             this.cboxRequestedUnit.TabIndex = 17;
@@ -201,7 +194,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(63, 117);
+            this.label4.Location = new System.Drawing.Point(63, 116);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(79, 13);
             this.label4.TabIndex = 18;
@@ -211,56 +204,63 @@
             // 
             this.cboxRequestedUnitType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxRequestedUnitType.FormattingEnabled = true;
-            this.cboxRequestedUnitType.Location = new System.Drawing.Point(376, 114);
+            this.cboxRequestedUnitType.Location = new System.Drawing.Point(376, 113);
             this.cboxRequestedUnitType.Name = "cboxRequestedUnitType";
             this.cboxRequestedUnitType.Size = new System.Drawing.Size(221, 21);
             this.cboxRequestedUnitType.TabIndex = 19;
             // 
             // tbComment
             // 
-            this.tbComment.Location = new System.Drawing.Point(148, 188);
+            this.tbComment.Location = new System.Drawing.Point(148, 186);
             this.tbComment.MaxLength = 1000;
             this.tbComment.Multiline = true;
             this.tbComment.Name = "tbComment";
             this.tbComment.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.tbComment.Size = new System.Drawing.Size(449, 87);
+            this.tbComment.Size = new System.Drawing.Size(449, 102);
             this.tbComment.TabIndex = 20;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(91, 191);
+            this.label5.Location = new System.Drawing.Point(91, 189);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(51, 13);
             this.label5.TabIndex = 21;
             this.label5.Text = "Comment";
             // 
+            // tbNumSamples
+            // 
+            this.tbNumSamples.Location = new System.Drawing.Point(148, 87);
+            this.tbNumSamples.Name = "tbNumSamples";
+            this.tbNumSamples.Size = new System.Drawing.Size(449, 20);
+            this.tbNumSamples.TabIndex = 26;
+            // 
             // FormOrderAddSampleType
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(623, 351);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.tbComment);
-            this.Controls.Add(this.cboxRequestedUnitType);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.cboxRequestedUnit);
-            this.Controls.Add(this.cbReturnToSender);
-            this.Controls.Add(this.cboxSampleComponent);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.tbCount);
-            this.Controls.Add(this.panelSampleType);
-            this.Controls.Add(this.label2);
+            this.ClientSize = new System.Drawing.Size(640, 374);
+            this.Controls.Add(this.tbNumSamples);
             this.Controls.Add(this.label1);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.panelSampleType);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.cboxRequestedUnitType);
+            this.Controls.Add(this.tbComment);
             this.Controls.Add(this.panel1);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.statusStrip1);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.cbReturnToSender);
+            this.Controls.Add(this.cboxRequestedUnit);
+            this.Controls.Add(this.cboxSampleComponent);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FormOrderAddSampleType";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "DSA-Lims - Add sample type to order";
+            this.Text = "DSA-Lims - Add entry to order";
             this.Load += new System.EventHandler(this.FormOrderAddSampleType_Load);
             this.panel1.ResumeLayout(false);
             this.panelSampleType.ResumeLayout(false);
@@ -280,7 +280,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnSelectSampleType;
         private System.Windows.Forms.Panel panelSampleType;
-        private System.Windows.Forms.TextBox tbCount;
         private System.Windows.Forms.ComboBox cboxSampleType;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel lblStatus;
@@ -292,5 +291,6 @@
         private System.Windows.Forms.ComboBox cboxRequestedUnitType;
         private System.Windows.Forms.TextBox tbComment;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox tbNumSamples;
     }
 }

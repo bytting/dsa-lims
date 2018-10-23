@@ -914,7 +914,26 @@ order by name";
             grid.Columns["deadline"].DefaultCellStyle.Format = StrUtils.DateFormatNorwegian;
         }
 
-        public static void PopulateOrderContent(SqlConnection conn, Guid selectedOrder, TreeView tree)
+        public static void PopulateOrders(SqlConnection conn, int statusLevel, Guid laboratoryId, DataGridView grid)
+        {
+            string query = @"
+select id, name, customer_name, customer_contact_name 
+from assignment a 
+where laboratory_id = @laboratory_id and instance_status_id <= @instance_status_level 
+order by create_date desc";
+
+            grid.DataSource = DB.GetDataTable(conn, query, CommandType.Text,
+                new SqlParameter("@laboratory_id", laboratoryId),
+                new SqlParameter("@instance_status_level", statusLevel));
+
+            grid.Columns["id"].Visible = false;            
+
+            grid.Columns["name"].HeaderText = "Name";
+            grid.Columns["customer_name"].HeaderText = "Customer";
+            grid.Columns["customer_contact_name"].HeaderText = "Customer contact";
+        }
+
+        public static void PopulateOrderContent(SqlConnection conn, Guid selectedOrder, TreeView tree, TreeView treeSampleTypes)
         {
             tree.Nodes.Clear();
             using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_assignment_sample_types", CommandType.StoredProcedure, 
@@ -924,10 +943,13 @@ order by name";
                 {
                     string txt = reader["sample_count"].ToString() + ", " + reader["sample_type_name"].ToString();
                     if(reader["sample_component_name"] != DBNull.Value)
-                        txt += " (" + reader["sample_component_name"].ToString() + ")";
+                        txt += ", " + reader["sample_component_name"].ToString();
+                    TreeNode[] nodes = treeSampleTypes.Nodes.Find(reader["sample_type_id"].ToString(), true);
+                    if (nodes.Length > 0)
+                        txt += " (" + nodes[0].FullPath + ")";
 
                     TreeNode tnode = tree.Nodes.Add(reader["id"].ToString(), txt);
-                    tnode.ToolTipText = reader["sample_comment"].ToString();                    
+                    tnode.ToolTipText = reader["sample_comment"].ToString();
                     tnode.NodeFont = new Font(tree.Font.FontFamily, tree.Font.Size, FontStyle.Bold);
                 }
             }

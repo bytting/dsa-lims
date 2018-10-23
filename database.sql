@@ -1455,6 +1455,7 @@ create proc csp_select_assignment_sample_types
 as
 	select 
 	ast.id as 'id', 
+	ast.sample_type_id as 'sample_type_id', 
 	ast.sample_count as 'sample_count',
 	st.name as 'sample_type_name', 	
 	sc.name as 'sample_component_name',

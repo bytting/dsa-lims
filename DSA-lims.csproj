@@ -226,6 +226,12 @@
     <Compile Include="FormSelectDate.Designer.cs">
       <DependentUpon>FormSelectDate.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormSelectOrder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSelectOrder.Designer.cs">
+      <DependentUpon>FormSelectOrder.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormSelectSampleType.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -353,6 +359,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormSelectDate.resx">
       <DependentUpon>FormSelectDate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSelectOrder.resx">
+      <DependentUpon>FormSelectOrder.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormSelectSampleType.resx">
       <DependentUpon>FormSelectSampleType.cs</DependentUpon>

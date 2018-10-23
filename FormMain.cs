@@ -1415,6 +1415,14 @@ namespace DSA_lims
         private void miSamplesSetOrder_Click(object sender, EventArgs e)
         {
             // sample, set order
+            if (gridSamples.SelectedRows.Count < 1)
+                return;
+
+            Guid sampleId = new Guid(gridSamples.SelectedRows[0].Cells["id"].Value.ToString());
+            FormSelectOrder form = new FormSelectOrder(treeSampleTypes);
+            if (form.ShowDialog() != DialogResult.OK)
+                return;
+            Guid orderId = form.SelectedOrder;
         }
 
         private void miSamplesSetProject_Click(object sender, EventArgs e)
@@ -1900,7 +1908,7 @@ order by name
             tbOrderName.Text = gridOrders.SelectedRows[0].Cells["name"].Value.ToString();
             using (SqlConnection conn = DB.OpenConnection())
             {
-                UI.PopulateOrderContent(conn, selectedOrder, treeOrderContent);
+                UI.PopulateOrderContent(conn, selectedOrder, treeOrderContent, treeSampleTypes);
             }
 
             tabs.SelectedTab = tabOrder;
@@ -1920,7 +1928,7 @@ order by name
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                UI.PopulateOrderContent(conn, selectedOrder, treeOrderContent);
+                UI.PopulateOrderContent(conn, selectedOrder, treeOrderContent, treeSampleTypes);
             }
         }
 
@@ -1952,7 +1960,7 @@ order by name
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                UI.PopulateOrderContent(conn, selectedOrder, treeOrderContent);
+                UI.PopulateOrderContent(conn, selectedOrder, treeOrderContent, treeSampleTypes);
             }
         }
 
@@ -1985,7 +1993,7 @@ order by name
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                UI.PopulateOrderContent(conn, selectedOrder, treeOrderContent);
+                UI.PopulateOrderContent(conn, selectedOrder, treeOrderContent, treeSampleTypes);
             }
         }
 

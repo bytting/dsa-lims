@@ -1424,6 +1424,7 @@ namespace DSA_lims
                 return;
             Guid orderId = form.SelectedOrder;
             Guid orderLineId = form.SelectedOrderLine;
+
             MessageBox.Show("Order id: " + orderId.ToString() + ", Order line id: " + orderLineId.ToString());
         }
 

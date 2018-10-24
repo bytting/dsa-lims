@@ -15,6 +15,7 @@ namespace DSA_lims
         private TreeView TreeSampleTypes = null;
         private Guid SampleId = Guid.Empty;
 
+        public Guid SelectedLaboratory = Guid.Empty;
         public Guid SelectedOrder = Guid.Empty;
         public Guid SelectedOrderLine = Guid.Empty;
 
@@ -39,6 +40,12 @@ namespace DSA_lims
 
         private void btnOk_Click(object sender, EventArgs e)
         {
+            if(cboxLaboratory.SelectedItem == null)
+            {
+                MessageBox.Show("You must select a laboratory first");
+                return;
+            }
+
             if(gridOrders.SelectedRows.Count < 1)
             {
                 MessageBox.Show("You must select a order first");
@@ -49,13 +56,138 @@ namespace DSA_lims
             {
                 MessageBox.Show("You must select a order line first");
                 return;
-            }            
+            }
 
+            TreeNode tnode = treeOrderLines.SelectedNode;
+
+            if(tnode.Level != 0)
+            {
+                MessageBox.Show("You must select a top level order line for this sample");
+                return;
+            }
+
+            Lemma<Guid, string> lab = cboxLaboratory.SelectedItem as Lemma<Guid, string>;
+            SelectedLaboratory = lab.Id;
             SelectedOrder = new Guid(gridOrders.SelectedRows[0].Cells["id"].Value.ToString());
-            SelectedOrderLine = new Guid(treeOrderLines.SelectedNode.Name);
+            SelectedOrderLine = new Guid(tnode.Name);
+
+            GenerateOrderPreparations(SampleId, SelectedLaboratory, SelectedOrder, SelectedOrderLine, tnode.Nodes);
 
             DialogResult = DialogResult.OK;
             Close();
+        }
+
+        private void GenerateOrderPreparations(Guid sampleId, Guid labId, Guid orderId, Guid orderLineId, TreeNodeCollection tnodes)
+        {
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                foreach (TreeNode tnode in tnodes)
+                {
+                    Guid prepMethLineId = Guid.Parse(tnode.Name);
+
+                    if (tnode.Tag != null)
+                    {
+                        List<Guid> prepList = tnode.Tag as List<Guid>;
+                        foreach (Guid pid in prepList)
+                        {
+                            GenerateOrderAnalyses(conn, orderId, labId, pid, tnode.Nodes);
+                        }
+                    }
+                    else
+                    {
+                        Guid prepMethId = Guid.Empty;
+                        int prepCount = 0;
+
+                        string query = "select preparation_method_id, preparation_method_count from assignment_preparation_method where id = @id";
+                        using (SqlDataReader reader = DB.GetDataReader(conn, query, CommandType.Text, new SqlParameter("@id", prepMethLineId)))
+                        {
+                            reader.Read(); // FIXME
+                            prepMethId = Guid.Parse(reader["preparation_method_id"].ToString());
+                            prepCount = Convert.ToInt32(reader["preparation_method_count"]);
+                        }
+
+                        SqlCommand cmd = new SqlCommand("csp_insert_preparation", conn);
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        while (prepCount > 0)
+                        {
+                            prepCount--;
+
+                            Guid newPrepId = Guid.NewGuid();
+                            cmd.Parameters.Clear();
+                            cmd.Parameters.AddWithValue("@id", newPrepId);
+                            cmd.Parameters.AddWithValue("@sample_id", sampleId);
+                            cmd.Parameters.AddWithValue("@assignment_id", orderId);
+                            cmd.Parameters.AddWithValue("@laboratory_id", labId);
+                            cmd.Parameters.AddWithValue("@preparation_geometry_id", DBNull.Value);
+                            cmd.Parameters.AddWithValue("@preparation_method_id", prepMethId);
+                            cmd.Parameters.AddWithValue("@workflow_status_id", 1);
+                            cmd.Parameters.AddWithValue("@amount", DBNull.Value);
+                            cmd.Parameters.AddWithValue("@prep_unit_id", DBNull.Value);
+                            cmd.Parameters.AddWithValue("@fill_height_mm", DBNull.Value);
+                            cmd.Parameters.AddWithValue("@instance_status_id", InstanceStatus.Active);
+                            cmd.Parameters.AddWithValue("@comment", DBNull.Value);
+                            cmd.Parameters.AddWithValue("@create_date", DateTime.Now);
+                            cmd.Parameters.AddWithValue("@created_by", Common.Username);
+                            cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
+                            cmd.Parameters.AddWithValue("@updated_by", Common.Username);
+
+                            cmd.ExecuteNonQuery();
+
+                            GenerateOrderAnalyses(conn, orderId, labId, newPrepId, tnode.Nodes);
+                        }
+                    }
+                }
+            }
+        }
+
+        private void GenerateOrderAnalyses(SqlConnection conn, Guid orderId, Guid labId, Guid prepId, TreeNodeCollection tnodes)
+        {
+            Guid analMethId = Guid.Empty;
+            int analCount = 0;                        
+
+            foreach (TreeNode tnode in tnodes)
+            {
+                Guid analMethLineId = Guid.Parse(tnode.Name);
+
+                string query = "select analysis_method_id, analysis_method_count from assignment_analysis_method where id = @id";
+                using (SqlDataReader reader = DB.GetDataReader(conn, query, CommandType.Text, new SqlParameter("@id", analMethLineId)))
+                {
+                    reader.Read(); // FIXME
+                    analMethId = Guid.Parse(reader["analysis_method_id"].ToString());
+                    analCount = Convert.ToInt32(reader["analysis_method_count"]);
+                }
+
+                SqlCommand cmd = new SqlCommand("csp_insert_analysis", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                while (analCount > 0)
+                {
+                    analCount--;    
+
+                    Guid newAnalId = Guid.NewGuid();
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.AddWithValue("@id", newAnalId);
+                    cmd.Parameters.AddWithValue("@assignment_id", orderId);
+                    cmd.Parameters.AddWithValue("@laboratory_id", labId);
+                    cmd.Parameters.AddWithValue("@preparation_id", prepId);
+                    cmd.Parameters.AddWithValue("@analysis_method_id", analMethId);
+                    cmd.Parameters.AddWithValue("@workflow_status_id", 1);
+                    cmd.Parameters.AddWithValue("@specter_reference", DBNull.Value);
+                    cmd.Parameters.AddWithValue("@activity_unit_id", DBNull.Value);
+                    cmd.Parameters.AddWithValue("@activity_unit_type_id", DBNull.Value);
+                    cmd.Parameters.AddWithValue("@sigma", DBNull.Value);
+                    cmd.Parameters.AddWithValue("@nuclide_library", DBNull.Value);
+                    cmd.Parameters.AddWithValue("@mda_library", DBNull.Value);
+                    cmd.Parameters.AddWithValue("@instance_status_id", InstanceStatus.Active);
+                    cmd.Parameters.AddWithValue("@comment", DBNull.Value);
+                    cmd.Parameters.AddWithValue("@create_date", DateTime.Now);
+                    cmd.Parameters.AddWithValue("@created_by", Common.Username);
+                    cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
+                    cmd.Parameters.AddWithValue("@updated_by", Common.Username);
+                                        
+                    cmd.ExecuteNonQuery();
+                }
+            }
         }
 
         private void cboxLaboratory_SelectedIndexChanged(object sender, EventArgs e)
@@ -120,6 +252,14 @@ namespace DSA_lims
             if (form.ShowDialog() != DialogResult.OK)
                 return;
 
+            if (form.SelectedPreparationIds.Count == 0)
+                tnode.Tag = null;
+            else
+            {
+                List<Guid> guidList = new List<Guid>();
+                guidList.AddRange(form.SelectedPreparationIds);
+                tnode.Tag = guidList;
+            }            
         }
     }
 }

@@ -1823,7 +1823,7 @@ create table preparation (
 	sample_id uniqueidentifier NOT NULL,
 	assignment_id uniqueidentifier default NULL,
 	laboratory_id uniqueidentifier NOT NULL,
-	preparation_geometry_id uniqueidentifier NOT NULL,
+	preparation_geometry_id uniqueidentifier default NULL,
 	preparation_method_id uniqueidentifier NOT NULL,
 	workflow_status_id int default 1,
 	amount float default 0,
@@ -1836,6 +1836,44 @@ create table preparation (
 	update_date datetime NOT NULL,
 	updated_by nvarchar(50) NOT NULL
 )
+go
+
+create proc csp_insert_preparation
+	@id uniqueidentifier,
+	@sample_id uniqueidentifier,
+	@assignment_id uniqueidentifier,
+	@laboratory_id uniqueidentifier,
+	@preparation_geometry_id uniqueidentifier,
+	@preparation_method_id uniqueidentifier,
+	@workflow_status_id int,
+	@amount float,
+	@prep_unit_id int,
+	@fill_height_mm float,
+	@instance_status_id int,
+	@comment nvarchar(1000),	
+	@create_date datetime,
+	@created_by nvarchar(50),
+	@update_date datetime,
+	@updated_by nvarchar(50)
+as 
+	insert into preparation values (
+		@id,
+		@sample_id,
+		@assignment_id,
+		@laboratory_id,
+		@preparation_geometry_id,
+		@preparation_method_id,
+		@workflow_status_id,
+		@amount,
+		@prep_unit_id,
+		@fill_height_mm,
+		@instance_status_id,
+		@comment,	
+		@create_date,
+		@created_by,
+		@update_date,
+		@updated_by
+	);
 go
 
 /*===========================================================================*/
@@ -1982,9 +2020,9 @@ create table analysis (
 	analysis_method_id uniqueidentifier NOT NULL,	
 	workflow_status_id int default 1,
 	specter_reference nvarchar(256) default NULL,
-	activity_unit_id int NOT NULL,
-	activity_unit_type_id int NOT NULL,
-	sigma float NOT NULL,
+	activity_unit_id int default NULL,
+	activity_unit_type_id int default NULL,
+	sigma float default NULL,
 	nuclide_library nvarchar(256) default NULL,
 	mda_library nvarchar(256) default NULL,	
 	instance_status_id int default 1,
@@ -1994,6 +2032,48 @@ create table analysis (
 	update_date datetime NOT NULL,
 	updated_by nvarchar(50) NOT NULL
 )
+go
+
+create proc csp_insert_analysis
+	@id uniqueidentifier,
+	@assignment_id uniqueidentifier,
+	@laboratory_id uniqueidentifier,
+	@preparation_id uniqueidentifier,
+	@analysis_method_id uniqueidentifier,	
+	@workflow_status_id int,
+	@specter_reference nvarchar(256),
+	@activity_unit_id int,
+	@activity_unit_type_id int,
+	@sigma float,
+	@nuclide_library nvarchar(256),
+	@mda_library nvarchar(256),	
+	@instance_status_id int,
+	@comment nvarchar(1000),	
+	@create_date datetime,
+	@created_by nvarchar(50),
+	@update_date datetime,
+	@updated_by nvarchar(50)
+as 
+	insert into analysis values (
+		@id,
+		@assignment_id,
+		@laboratory_id,
+		@preparation_id,
+		@analysis_method_id,	
+		@workflow_status_id,
+		@specter_reference,
+		@activity_unit_id,
+		@activity_unit_type_id,
+		@sigma,
+		@nuclide_library,
+		@mda_library,	
+		@instance_status_id,
+		@comment,	
+		@create_date,
+		@created_by,
+		@update_date,
+		@updated_by
+	);
 go
 
 /*===========================================================================*/
@@ -3200,6 +3280,25 @@ as
 		inner join instance_status insta on s.instance_status_id = insta.id
 	where s.instance_status_id <= @instance_status_level
 	order by s.create_date desc
+go
+
+/*===========================================================================*/
+/* tbl sample_x_assignment_sample_type */
+
+if OBJECT_ID('dbo.sample_x_assignment_sample_type', 'U') IS NOT NULL drop table sample_x_assignment_sample_type;
+
+create table sample_x_assignment_sample_type (
+	sample_id uniqueidentifier NOT NULL,
+	assignment_sample_type_id uniqueidentifier NOT NULL
+)
+go
+
+create proc csp_insert_sample_x_assignment_sample_type
+	@sample_id uniqueidentifier,	
+	@assignment_sample_type_id uniqueidentifier
+as 	
+	insert into sample_x_assignment_sample_type 
+	values(@sample_id, @assignment_sample_type_id)
 go
 
 /*===========================================================================*/

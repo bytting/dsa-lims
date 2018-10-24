@@ -15,6 +15,8 @@ namespace DSA_lims
         private Guid LaboratoryId = Guid.Empty;
         private Guid SampleId = Guid.Empty;
 
+        public List<Guid> SelectedPreparationIds = new List<Guid>();
+
         public FormSelectExistingPreps(Guid labId, Guid sampId)
         {
             InitializeComponent();
@@ -39,6 +41,13 @@ namespace DSA_lims
 
         private void btnOk_Click(object sender, EventArgs e)
         {
+            SelectedPreparationIds.Clear();
+
+            foreach (DataGridViewRow row in gridPreparations.SelectedRows)
+            {
+                SelectedPreparationIds.Add(new Guid(row.Cells["id"].Value.ToString()));
+            }
+
             DialogResult = DialogResult.OK;
             Close();
         }

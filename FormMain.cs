@@ -1419,10 +1419,12 @@ namespace DSA_lims
                 return;
 
             Guid sampleId = new Guid(gridSamples.SelectedRows[0].Cells["id"].Value.ToString());
-            FormSelectOrder form = new FormSelectOrder(treeSampleTypes);
+            FormSelectOrder form = new FormSelectOrder(treeSampleTypes, sampleId);
             if (form.ShowDialog() != DialogResult.OK)
                 return;
             Guid orderId = form.SelectedOrder;
+            Guid orderLineId = form.SelectedOrderLine;
+            MessageBox.Show("Order id: " + orderId.ToString() + ", Order line id: " + orderLineId.ToString());
         }
 
         private void miSamplesSetProject_Click(object sender, EventArgs e)

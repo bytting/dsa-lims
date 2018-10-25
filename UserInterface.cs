@@ -552,7 +552,7 @@ namespace DSA_lims
 
             grid.Columns["id"].Visible = false;
 
-            grid.Columns["number"].HeaderText = "Sample id";
+            grid.Columns["number"].HeaderText = "Sample name";
             grid.Columns["external_id"].HeaderText = "Ex.Id";
             grid.Columns["laboratory_name"].HeaderText = "Laboratory";
             grid.Columns["sample_type_name"].HeaderText = "Type";
@@ -933,25 +933,47 @@ order by create_date desc";
             grid.Columns["customer_contact_name"].HeaderText = "Customer contact";
         }
 
-        public static void PopulateOrderContent(SqlConnection conn, Guid selectedOrder, TreeView tree, TreeView treeSampleTypes)
+        public static void PopulateOrderContent(SqlConnection conn, Guid selectedOrder, TreeView tree, Guid sampleTypeId, TreeView treeSampleTypes)
         {
             tree.Nodes.Clear();
-            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_assignment_sample_types", CommandType.StoredProcedure, 
-                new SqlParameter("@assignment_id", selectedOrder)))
+
+            SqlDataReader astReader = null;
+
+            try
             {
-                while (reader.Read())
+                if (sampleTypeId == Guid.Empty)
                 {
-                    string txt = reader["sample_count"].ToString() + ", " + reader["sample_type_name"].ToString();
-                    if(reader["sample_component_name"] != DBNull.Value)
-                        txt += ", " + reader["sample_component_name"].ToString();
-                    TreeNode[] nodes = treeSampleTypes.Nodes.Find(reader["sample_type_id"].ToString(), true);
+                    astReader = DB.GetDataReader(conn, "csp_select_assignment_sample_types", CommandType.StoredProcedure, 
+                        new SqlParameter("@assignment_id", selectedOrder));
+                }
+                else
+                {
+                    astReader = DB.GetDataReader(conn, "csp_select_assignment_sample_types_for_sample_type", CommandType.StoredProcedure, 
+                        new SqlParameter("@assignment_id", selectedOrder),
+                        new SqlParameter("@sample_type_id", sampleTypeId));
+                }
+                
+                while (astReader.Read())
+                {
+                    string txt = astReader["sample_count"].ToString() + ", " + astReader["sample_type_name"].ToString();
+                    if (astReader["sample_component_name"] != DBNull.Value)
+                        txt += ", " + astReader["sample_component_name"].ToString();
+                    TreeNode[] nodes = treeSampleTypes.Nodes.Find(astReader["sample_type_id"].ToString(), true);
                     if (nodes.Length > 0)
                         txt += " (" + nodes[0].FullPath + ")";
 
-                    TreeNode tnode = tree.Nodes.Add(reader["id"].ToString(), txt);
-                    tnode.ToolTipText = reader["sample_comment"].ToString();
+                    TreeNode tnode = tree.Nodes.Add(astReader["id"].ToString(), txt);
+                    tnode.ToolTipText = astReader["sample_comment"].ToString();
                     tnode.NodeFont = new Font(tree.Font.FontFamily, tree.Font.Size, FontStyle.Bold);
                 }
+            }
+            catch(Exception ex)
+            {
+                Common.Log.Error(ex);
+            }
+            finally
+            {
+                astReader?.Close();
             }
 
             foreach(TreeNode tnode in tree.Nodes)

@@ -14,6 +14,7 @@ namespace DSA_lims
     {
         private TreeView TreeSampleTypes = null;
         private Guid SampleId = Guid.Empty;
+        private Guid SampleTypeId = Guid.Empty;
 
         public Guid SelectedLaboratory = Guid.Empty;
         public Guid SelectedOrder = Guid.Empty;
@@ -29,6 +30,10 @@ namespace DSA_lims
             using (SqlConnection conn = DB.OpenConnection())
             {
                 UI.PopulateLaboratories(conn, InstanceStatus.Deleted, cboxLaboratory);
+
+                object o = DB.GetScalar(conn, "select sample_type_id from sample where id = @id", CommandType.Text, new SqlParameter("@id", SampleId));
+                if (o != null && o != DBNull.Value)
+                    SampleTypeId = Guid.Parse(o.ToString());
             }
         }
 
@@ -197,7 +202,10 @@ namespace DSA_lims
 
         private void cboxLaboratory_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cboxLaboratory.SelectedItem == null)
+            gridOrders.DataSource = null;
+            treeOrderLines.Nodes.Clear();
+
+            if (cboxLaboratory.SelectedItem == null)            
                 return;
 
             Lemma<Guid, string> lab = cboxLaboratory.SelectedItem as Lemma<Guid, string>;
@@ -215,17 +223,9 @@ namespace DSA_lims
             Guid oid = new Guid(gridOrders.SelectedRows[0].Cells["id"].Value.ToString());
             using (SqlConnection conn = DB.OpenConnection())
             {
-                UI.PopulateOrderContent(conn, oid, treeOrderLines, TreeSampleTypes);
+                UI.PopulateOrderContent(conn, oid, treeOrderLines, SampleTypeId, TreeSampleTypes);
             }
-        }
-
-        private void treeOrderLines_AfterSelect(object sender, TreeViewEventArgs e)
-        {
-            /*TreeNode tnode = treeOrderLines.SelectedNode;
-            while (tnode.Level != 0)
-                tnode = tnode.Parent;
-            treeOrderLines.SelectedNode = tnode;*/
-        }
+        }        
 
         private void btnExistingPreps_Click(object sender, EventArgs e)
         {
@@ -265,6 +265,53 @@ namespace DSA_lims
                 guidList.AddRange(form.SelectedPreparationIds);
                 tnode.Tag = guidList;
             }            
+
+            if(tnode.Tag == null)
+            {
+                if (tnode.Text.EndsWith(" ..."))
+                    tnode.Text = tnode.Text.Substring(0, tnode.Text.Length - 4);
+            }
+            else
+            {
+                if (!tnode.Text.EndsWith(" ..."))
+                    tnode.Text = tnode.Text + " ...";
+            }
+
+            UpdateCurrentPreparations(tnode);
+        }
+
+        private void treeOrderLines_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            UpdateCurrentPreparations(e.Node);
+        }
+
+        private void UpdateCurrentPreparations(TreeNode tnode)
+        {
+            tbCurrentPreparations.Text = "";
+
+            if (tnode.Level != 1)
+                return;
+
+            if (tnode.Tag == null)
+                return;
+
+            string query = "select number from preparation where id in (";
+            List<Guid> prepList = tnode.Tag as List<Guid>;
+            foreach (Guid id in prepList)
+                query += "'" + id.ToString() + "',";
+            query = query.Substring(0, query.Length - 1) + ")";
+
+            string line = "Connected preparations: ";
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                using (SqlDataReader reader = DB.GetDataReader(conn, query, CommandType.Text))
+                {
+                    while (reader.Read())
+                        line += reader["number"].ToString() + ", ";
+                }
+            }
+
+            tbCurrentPreparations.Text = line.Substring(0, line.Length - 2);
         }
     }
 }

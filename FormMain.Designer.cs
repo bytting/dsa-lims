@@ -3946,10 +3946,10 @@
             this.treeOrderContent.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.treeOrderContent.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.treeOrderContent.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.treeOrderContent.Font = new System.Drawing.Font("Courier New", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.treeOrderContent.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.treeOrderContent.HideSelection = false;
-            this.treeOrderContent.Indent = 80;
-            this.treeOrderContent.ItemHeight = 20;
+            this.treeOrderContent.Indent = 40;
+            this.treeOrderContent.ItemHeight = 26;
             this.treeOrderContent.Location = new System.Drawing.Point(10, 10);
             this.treeOrderContent.Name = "treeOrderContent";
             this.treeOrderContent.PathSeparator = "/";
@@ -6373,8 +6373,10 @@
             this.treeSampleTypes.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.treeSampleTypes.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.treeSampleTypes.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.treeSampleTypes.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.treeSampleTypes.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.treeSampleTypes.HideSelection = false;
+            this.treeSampleTypes.Indent = 32;
+            this.treeSampleTypes.ItemHeight = 24;
             this.treeSampleTypes.Location = new System.Drawing.Point(0, 25);
             this.treeSampleTypes.Name = "treeSampleTypes";
             this.treeSampleTypes.PathSeparator = "/";
@@ -8667,8 +8669,9 @@
             this.treePrepAnal.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.treePrepAnal.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.treePrepAnal.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.treePrepAnal.Font = new System.Drawing.Font("Courier New", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.treePrepAnal.Indent = 32;
+            this.treePrepAnal.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.treePrepAnal.Indent = 40;
+            this.treePrepAnal.ItemHeight = 26;
             this.treePrepAnal.Location = new System.Drawing.Point(12, 12);
             this.treePrepAnal.Name = "treePrepAnal";
             this.treePrepAnal.PathSeparator = "/";

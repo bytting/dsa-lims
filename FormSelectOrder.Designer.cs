@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormSelectOrder));
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnCancel = new System.Windows.Forms.Button();
@@ -42,7 +42,6 @@
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.tbCurrentPreparations = new System.Windows.Forms.TextBox();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -115,8 +114,8 @@
             this.gridOrders.AllowUserToAddRows = false;
             this.gridOrders.AllowUserToDeleteRows = false;
             this.gridOrders.AllowUserToResizeRows = false;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.gridOrders.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.gridOrders.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
             this.gridOrders.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.gridOrders.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
             this.gridOrders.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -154,9 +153,10 @@
             this.treeOrderLines.Location = new System.Drawing.Point(14, 14);
             this.treeOrderLines.Name = "treeOrderLines";
             this.treeOrderLines.PathSeparator = "/";
+            this.treeOrderLines.ShowNodeToolTips = true;
             this.treeOrderLines.ShowPlusMinus = false;
             this.treeOrderLines.ShowRootLines = false;
-            this.treeOrderLines.Size = new System.Drawing.Size(627, 246);
+            this.treeOrderLines.Size = new System.Drawing.Size(627, 260);
             this.treeOrderLines.TabIndex = 0;
             this.treeOrderLines.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeOrderLines_AfterSelect);
             // 
@@ -175,7 +175,6 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.panel3);
-            this.splitContainer1.Panel2.Controls.Add(this.tbCurrentPreparations);
             this.splitContainer1.Panel2.Controls.Add(this.toolStrip1);
             this.splitContainer1.Size = new System.Drawing.Size(655, 565);
             this.splitContainer1.SplitterDistance = 247;
@@ -207,19 +206,8 @@
             this.panel3.Location = new System.Drawing.Point(0, 25);
             this.panel3.Name = "panel3";
             this.panel3.Padding = new System.Windows.Forms.Padding(14);
-            this.panel3.Size = new System.Drawing.Size(655, 274);
+            this.panel3.Size = new System.Drawing.Size(655, 288);
             this.panel3.TabIndex = 2;
-            // 
-            // tbCurrentPreparations
-            // 
-            this.tbCurrentPreparations.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.tbCurrentPreparations.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.tbCurrentPreparations.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tbCurrentPreparations.Location = new System.Drawing.Point(0, 299);
-            this.tbCurrentPreparations.Name = "tbCurrentPreparations";
-            this.tbCurrentPreparations.ReadOnly = true;
-            this.tbCurrentPreparations.Size = new System.Drawing.Size(655, 14);
-            this.tbCurrentPreparations.TabIndex = 3;
             // 
             // toolStrip1
             // 
@@ -307,6 +295,5 @@
         private System.Windows.Forms.ToolStrip toolStrip2;
         private System.Windows.Forms.ToolStripLabel toolStripLabel2;
         private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.TextBox tbCurrentPreparations;
     }
 }

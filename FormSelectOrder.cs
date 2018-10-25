@@ -223,7 +223,7 @@ namespace DSA_lims
             Guid oid = new Guid(gridOrders.SelectedRows[0].Cells["id"].Value.ToString());
             using (SqlConnection conn = DB.OpenConnection())
             {
-                UI.PopulateOrderContent(conn, oid, treeOrderLines, SampleTypeId, TreeSampleTypes);
+                UI.PopulateOrderContent(conn, oid, treeOrderLines, SampleTypeId, TreeSampleTypes, false);
             }
         }        
 
@@ -287,7 +287,7 @@ namespace DSA_lims
 
         private void UpdateCurrentPreparations(TreeNode tnode)
         {
-            tbCurrentPreparations.Text = "";
+            tnode.ToolTipText = "";
 
             if (tnode.Level != 1)
                 return;
@@ -311,7 +311,7 @@ namespace DSA_lims
                 }
             }
 
-            tbCurrentPreparations.Text = line.Substring(0, line.Length - 2);
+            tnode.ToolTipText = line.Substring(0, line.Length - 2);
         }
     }
 }

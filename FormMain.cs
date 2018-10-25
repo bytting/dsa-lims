@@ -1995,7 +1995,7 @@ order by name
             tbOrderName.Text = gridOrders.SelectedRows[0].Cells["name"].Value.ToString();
             using (SqlConnection conn = DB.OpenConnection())
             {
-                UI.PopulateOrderContent(conn, selectedOrder, treeOrderContent, Guid.Empty, treeSampleTypes);
+                UI.PopulateOrderContent(conn, selectedOrder, treeOrderContent, Guid.Empty, treeSampleTypes, true);
             }
 
             tabs.SelectedTab = tabOrder;
@@ -2015,7 +2015,7 @@ order by name
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                UI.PopulateOrderContent(conn, selectedOrder, treeOrderContent, Guid.Empty, treeSampleTypes);
+                UI.PopulateOrderContent(conn, selectedOrder, treeOrderContent, Guid.Empty, treeSampleTypes, true);
             }
         }
 
@@ -2047,7 +2047,7 @@ order by name
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                UI.PopulateOrderContent(conn, selectedOrder, treeOrderContent, Guid.Empty, treeSampleTypes);
+                UI.PopulateOrderContent(conn, selectedOrder, treeOrderContent, Guid.Empty, treeSampleTypes, true);
             }
         }
 
@@ -2080,7 +2080,7 @@ order by name
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                UI.PopulateOrderContent(conn, selectedOrder, treeOrderContent, Guid.Empty, treeSampleTypes);
+                UI.PopulateOrderContent(conn, selectedOrder, treeOrderContent, Guid.Empty, treeSampleTypes, true);
             }
         }
 

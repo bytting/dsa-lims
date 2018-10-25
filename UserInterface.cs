@@ -933,7 +933,7 @@ order by create_date desc";
             grid.Columns["customer_contact_name"].HeaderText = "Customer contact";
         }
 
-        public static void PopulateOrderContent(SqlConnection conn, Guid selectedOrder, TreeView tree, Guid sampleTypeId, TreeView treeSampleTypes)
+        public static void PopulateOrderContent(SqlConnection conn, Guid selectedOrder, TreeView tree, Guid sampleTypeId, TreeView treeSampleTypes, bool useCommentToolTips)
         {
             tree.Nodes.Clear();
 
@@ -963,7 +963,7 @@ order by create_date desc";
                         txt += " (" + nodes[0].FullPath + ")";
 
                     TreeNode tnode = tree.Nodes.Add(astReader["id"].ToString(), txt);
-                    tnode.ToolTipText = astReader["sample_comment"].ToString();
+                    tnode.ToolTipText = useCommentToolTips ? astReader["sample_comment"].ToString() : "";
                     tnode.NodeFont = new Font(tree.Font.FontFamily, tree.Font.Size, FontStyle.Bold);
                 }
             }
@@ -990,7 +990,7 @@ order by create_date desc";
                             txt += " (" + reader["preparation_laboratory_name"].ToString() + ")";
 
                         TreeNode tn = tnode.Nodes.Add(reader["id"].ToString(), txt);
-                        tn.ToolTipText = reader["comment"].ToString();
+                        tn.ToolTipText = useCommentToolTips ? reader["comment"].ToString() : "";
                     }
                 }
             }
@@ -1008,7 +1008,7 @@ order by create_date desc";
                         {
                             string txt = reader["count"].ToString() + ", " + reader["analysis_method_name"].ToString();
                             TreeNode tn2 = tn.Nodes.Add(reader["id"].ToString(), txt);
-                            tn2.ToolTipText = reader["comment"].ToString();
+                            tn2.ToolTipText = useCommentToolTips ? reader["comment"].ToString() : "";
                         }
                     }
                 }

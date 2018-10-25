@@ -1821,6 +1821,7 @@ if OBJECT_ID('dbo.preparation', 'U') IS NOT NULL drop table preparation;
 create table preparation (
 	id uniqueidentifier primary key NOT NULL,
 	sample_id uniqueidentifier NOT NULL,
+	number int NOT NULL,
 	assignment_id uniqueidentifier default NULL,
 	laboratory_id uniqueidentifier NOT NULL,
 	preparation_geometry_id uniqueidentifier default NULL,
@@ -1841,6 +1842,7 @@ go
 create proc csp_insert_preparation
 	@id uniqueidentifier,
 	@sample_id uniqueidentifier,
+	@number int,
 	@assignment_id uniqueidentifier,
 	@laboratory_id uniqueidentifier,
 	@preparation_geometry_id uniqueidentifier,
@@ -1859,6 +1861,7 @@ as
 	insert into preparation values (
 		@id,
 		@sample_id,
+		@number,
 		@assignment_id,
 		@laboratory_id,
 		@preparation_geometry_id,
@@ -2014,6 +2017,7 @@ if OBJECT_ID('dbo.analysis', 'U') IS NOT NULL drop table analysis;
 
 create table analysis (
 	id uniqueidentifier primary key NOT NULL,
+	number int NOT NULL,
 	assignment_id uniqueidentifier default NULL,
 	laboratory_id uniqueidentifier NOT NULL,
 	preparation_id uniqueidentifier NOT NULL,
@@ -2036,6 +2040,7 @@ go
 
 create proc csp_insert_analysis
 	@id uniqueidentifier,
+	@number int,
 	@assignment_id uniqueidentifier,
 	@laboratory_id uniqueidentifier,
 	@preparation_id uniqueidentifier,
@@ -2056,6 +2061,7 @@ create proc csp_insert_analysis
 as 
 	insert into analysis values (
 		@id,
+		@number,
 		@assignment_id,
 		@laboratory_id,
 		@preparation_id,

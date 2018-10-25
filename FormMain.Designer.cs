@@ -898,6 +898,7 @@
             this.tools = new System.Windows.Forms.ToolStrip();
             this.btnMenu = new System.Windows.Forms.ToolStripButton();
             this.lblCurrentTab = new System.Windows.Forms.ToolStripLabel();
+            this.panel31 = new System.Windows.Forms.Panel();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tabs.SuspendLayout();
@@ -1220,6 +1221,7 @@
             this.panel63.SuspendLayout();
             this.toolStrip7.SuspendLayout();
             this.tools.SuspendLayout();
+            this.panel31.SuspendLayout();
             this.SuspendLayout();
             // 
             // menu
@@ -8651,7 +8653,7 @@
             // 
             // splitContainer2.Panel1
             // 
-            this.splitContainer2.Panel1.Controls.Add(this.treePrepAnal);
+            this.splitContainer2.Panel1.Controls.Add(this.panel31);
             // 
             // splitContainer2.Panel2
             // 
@@ -8665,10 +8667,13 @@
             this.treePrepAnal.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.treePrepAnal.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.treePrepAnal.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.treePrepAnal.Location = new System.Drawing.Point(0, 0);
+            this.treePrepAnal.Font = new System.Drawing.Font("Courier New", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.treePrepAnal.Indent = 32;
+            this.treePrepAnal.Location = new System.Drawing.Point(12, 12);
             this.treePrepAnal.Name = "treePrepAnal";
             this.treePrepAnal.PathSeparator = "/";
-            this.treePrepAnal.Size = new System.Drawing.Size(427, 583);
+            this.treePrepAnal.ShowRootLines = false;
+            this.treePrepAnal.Size = new System.Drawing.Size(403, 559);
             this.treePrepAnal.TabIndex = 0;
             // 
             // tabsPrepAnal
@@ -10051,6 +10056,16 @@
             this.lblCurrentTab.Size = new System.Drawing.Size(98, 22);
             this.lblCurrentTab.Text = "<lblCurrentTab>";
             // 
+            // panel31
+            // 
+            this.panel31.Controls.Add(this.treePrepAnal);
+            this.panel31.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel31.Location = new System.Drawing.Point(0, 0);
+            this.panel31.Name = "panel31";
+            this.panel31.Padding = new System.Windows.Forms.Padding(12);
+            this.panel31.Size = new System.Drawing.Size(427, 583);
+            this.panel31.TabIndex = 1;
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -10542,6 +10557,7 @@
             this.toolStrip7.PerformLayout();
             this.tools.ResumeLayout(false);
             this.tools.PerformLayout();
+            this.panel31.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -11418,6 +11434,7 @@
         private System.Windows.Forms.SplitContainer splitContainer3;
         private System.Windows.Forms.TreeView treePrepAnal;
         private System.Windows.Forms.SplitContainer splitContainer4;
+        private System.Windows.Forms.Panel panel31;
     }
 }
 

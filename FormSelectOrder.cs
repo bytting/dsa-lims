@@ -81,6 +81,8 @@ namespace DSA_lims
         {
             using (SqlConnection conn = DB.OpenConnection())
             {
+                int nextPrepNumber = 1;
+
                 foreach (TreeNode tnode in tnodes)
                 {
                     Guid prepMethLineId = Guid.Parse(tnode.Name);
@@ -110,12 +112,11 @@ namespace DSA_lims
                         cmd.CommandType = CommandType.StoredProcedure;
                         while (prepCount > 0)
                         {
-                            prepCount--;
-
                             Guid newPrepId = Guid.NewGuid();
                             cmd.Parameters.Clear();
                             cmd.Parameters.AddWithValue("@id", newPrepId);
                             cmd.Parameters.AddWithValue("@sample_id", sampleId);
+                            cmd.Parameters.AddWithValue("@number", nextPrepNumber++);
                             cmd.Parameters.AddWithValue("@assignment_id", orderId);
                             cmd.Parameters.AddWithValue("@laboratory_id", labId);
                             cmd.Parameters.AddWithValue("@preparation_geometry_id", DBNull.Value);
@@ -134,6 +135,8 @@ namespace DSA_lims
                             cmd.ExecuteNonQuery();
 
                             GenerateOrderAnalyses(conn, orderId, labId, newPrepId, tnode.Nodes);
+
+                            prepCount--;
                         }
                     }
                 }
@@ -143,7 +146,8 @@ namespace DSA_lims
         private void GenerateOrderAnalyses(SqlConnection conn, Guid orderId, Guid labId, Guid prepId, TreeNodeCollection tnodes)
         {
             Guid analMethId = Guid.Empty;
-            int analCount = 0;                        
+            int analCount = 0;
+            int nextAnalNumber = 1;
 
             foreach (TreeNode tnode in tnodes)
             {
@@ -161,12 +165,11 @@ namespace DSA_lims
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 while (analCount > 0)
-                {
-                    analCount--;    
-
+                {                    
                     Guid newAnalId = Guid.NewGuid();
                     cmd.Parameters.Clear();
                     cmd.Parameters.AddWithValue("@id", newAnalId);
+                    cmd.Parameters.AddWithValue("@number", nextAnalNumber++);
                     cmd.Parameters.AddWithValue("@assignment_id", orderId);
                     cmd.Parameters.AddWithValue("@laboratory_id", labId);
                     cmd.Parameters.AddWithValue("@preparation_id", prepId);
@@ -186,6 +189,8 @@ namespace DSA_lims
                     cmd.Parameters.AddWithValue("@updated_by", Common.Username);
                                         
                     cmd.ExecuteNonQuery();
+
+                    analCount--;
                 }
             }
         }

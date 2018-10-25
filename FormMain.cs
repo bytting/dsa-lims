@@ -1451,7 +1451,91 @@ namespace DSA_lims
         private void miSamplesPrepAnal_Click(object sender, EventArgs e)
         {
             // go to sample prep/anal
+            if(gridSamples.SelectedRows.Count < 1)
+            {
+                MessageBox.Show("You must select a sample first");
+                return;
+            }
+
+            if (gridSamples.SelectedRows.Count > 1)
+            {
+                MessageBox.Show("You must select a single sample");
+                return;
+            }
+
+            Guid sampleId = new Guid(gridSamples.SelectedRows[0].Cells["id"].Value.ToString());
+            PopulatePrepAnal(sampleId);
+
             tabs.SelectedTab = tabPrepAnal;
+        }
+
+        private void PopulatePrepAnal(Guid sampleId)
+        {
+            treePrepAnal.Nodes.Clear();
+
+            using(SqlConnection conn = DB.OpenConnection())
+            {
+                TreeNode sampleNode = null;
+
+                string query = @"
+select s.id as 'sample_id', s.number as 'sample_number', l.name as 'laboratory_name'
+from sample s
+    inner join laboratory l on l.id = s.laboratory_id
+where s.id = @id
+";
+
+                using (SqlDataReader reader = DB.GetDataReader(conn, query, CommandType.Text, 
+                    new SqlParameter("@id", sampleId)))
+                {
+                    reader.Read();
+                    string txt = reader["sample_number"].ToString() + " - " + reader["laboratory_name"].ToString();
+                    sampleNode = treePrepAnal.Nodes.Add(sampleId.ToString(), txt);
+                }
+
+                query = @"
+select p.id as 'preparation_id', p.number as 'preparation_number', a.name as 'assignment_name', pm.name as 'preparation_method_name'
+from preparation p 
+    inner join preparation_method pm on pm.id = p.preparation_method_id
+    left outer join assignment a on a.id = p.assignment_id
+where sample_id = @sample_id
+";
+                using (SqlDataReader reader = DB.GetDataReader(conn, query, CommandType.Text,
+                    new SqlParameter("@sample_id", sampleId)))
+                {
+                    while (reader.Read())
+                    {
+                        string txt = reader["preparation_number"].ToString() 
+                            + " - " + reader["preparation_method_name"].ToString() + ", " 
+                            + reader["assignment_name"].ToString();
+                        TreeNode prepNode = sampleNode.Nodes.Add(reader["preparation_id"].ToString(), txt);
+                    }
+                }
+                
+                foreach (TreeNode prepNode in sampleNode.Nodes)
+                {
+                    Guid prepId = new Guid(prepNode.Name);
+                    query = @"
+select a.id as 'analysis_id', a.number as 'analysis_number', am.name as 'analysis_method_name', ass.name as 'assignment_name'
+from analysis a 
+    inner join analysis_method am on am.id = a.analysis_method_id
+    left outer join assignment ass on ass.id = a.assignment_id
+where preparation_id = @preparation_id
+";
+                    using (SqlDataReader reader = DB.GetDataReader(conn, query, CommandType.Text,
+                        new SqlParameter("@preparation_id", prepId)))
+                    {
+                        while (reader.Read())
+                        {
+                            string txt = reader["analysis_number"].ToString() + " - " 
+                                + reader["analysis_method_name"].ToString() + ", " 
+                                + reader["assignment_name"].ToString();
+                            TreeNode analNode = prepNode.Nodes.Add(reader["analysis_id"].ToString(), txt);
+                        }
+                    }
+                }
+            }
+
+            treePrepAnal.ExpandAll();
         }
 
         private void btnSampleClose_Click(object sender, EventArgs e)

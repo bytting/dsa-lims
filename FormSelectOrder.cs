@@ -239,7 +239,7 @@ namespace DSA_lims
                 return;
 
             Guid prepLabId = Guid.Empty;
-            Guid apmId = new Guid(tnode.Name);
+            Guid apmId = Guid.Parse(tnode.Name);
 
             using (SqlConnection conn = DB.OpenConnection())
             {
@@ -250,7 +250,7 @@ namespace DSA_lims
                     MessageBox.Show("Preparation method is not marked as existing");
                     return;
                 }
-                prepLabId = new Guid(o.ToString());
+                prepLabId = Guid.Parse(o.ToString());
             }
 
             FormSelectExistingPreps form = new FormSelectExistingPreps(prepLabId, SampleId);
@@ -259,12 +259,8 @@ namespace DSA_lims
 
             if (form.SelectedPreparationIds.Count == 0)
                 tnode.Tag = null;
-            else
-            {
-                List<Guid> guidList = new List<Guid>();
-                guidList.AddRange(form.SelectedPreparationIds);
-                tnode.Tag = guidList;
-            }            
+            else            
+                tnode.Tag = new List<Guid>(form.SelectedPreparationIds);
 
             if(tnode.Tag == null)
             {
@@ -289,29 +285,19 @@ namespace DSA_lims
         {
             tnode.ToolTipText = "";
 
-            if (tnode.Level != 1)
+            if (tnode.Level != 1 || tnode.Tag == null)
                 return;
 
-            if (tnode.Tag == null)
-                return;
-
-            string query = "select number from preparation where id in (";
             List<Guid> prepList = tnode.Tag as List<Guid>;
-            foreach (Guid id in prepList)
-                query += "'" + id.ToString() + "',";
-            query = query.Substring(0, query.Length - 1) + ")";
+            string query = "select number from preparation where id in (" 
+                + String.Join(",", prepList.Select(x => "'" + x.ToString() + "'").ToArray()) + ")";
 
-            string line = "Connected preparations: ";
-            using (SqlConnection conn = DB.OpenConnection())
-            {
-                using (SqlDataReader reader = DB.GetDataReader(conn, query, CommandType.Text))
-                {
-                    while (reader.Read())
-                        line += reader["number"].ToString() + ", ";
-                }
-            }
+            List<object> prepNums = new List<object>();
+            using (SqlConnection conn = DB.OpenConnection())            
+                using (SqlDataReader reader = DB.GetDataReader(conn, query, CommandType.Text))            
+                    while (reader.Read()) prepNums.Add(reader["number"]);
 
-            tnode.ToolTipText = line.Substring(0, line.Length - 2);
+            tnode.ToolTipText = "Connected preparations: " + String.Join(", ", prepNums);
         }
     }
 }

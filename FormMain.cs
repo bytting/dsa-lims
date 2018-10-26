@@ -60,6 +60,12 @@ namespace DSA_lims
                 tabs.ItemSize = new Size(0, 1);
                 tabs.SizeMode = TabSizeMode.Fixed;
                 tabs.SelectedTab = tabMenu;
+
+                tabsPrepAnal.Appearance = TabAppearance.FlatButtons;
+                tabsPrepAnal.ItemSize = new Size(0, 1);
+                tabsPrepAnal.SizeMode = TabSizeMode.Fixed;
+                tabsPrepAnal.SelectedTab = tabMenu;
+
                 lblCurrentTab.Text = tabs.SelectedTab.Text;
                 lblStatus.Text = "";                
                 lblSampleToolId.Text = "";
@@ -2399,6 +2405,49 @@ order by name
             {
                 UI.PopulateUsers(conn, lab.Id, InstanceStatus.Active, cboxOrderResponsible);
             }
+        }
+
+        private void treePrepAnal_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            switch(e.Node.Level)
+            {
+                case 0:                    
+                    tabsPrepAnal.SelectedTab = tabPrepAnalSample;
+                    break;
+                case 1:                
+                    tabsPrepAnal.SelectedTab = tabPrepAnalPreps;
+                    break;
+                case 2:                
+                    tabsPrepAnal.SelectedTab = tabPrepAnalAnalysis;
+                    break;
+            }
+        }
+
+        private void TreeDrawNode(DrawTreeNodeEventArgs e)
+        {
+            if (e.Node == null)
+                return;
+            
+            var selected = (e.State & TreeNodeStates.Selected) == TreeNodeStates.Selected;
+            var unfocused = !e.Node.TreeView.Focused;
+            
+            if (selected && unfocused)
+            {
+                var font = e.Node.NodeFont ?? e.Node.TreeView.Font;
+                e.Graphics.FillRectangle(SystemBrushes.Highlight, e.Bounds);
+                TextRenderer.DrawText(e.Graphics, e.Node.Text, font, e.Bounds, SystemColors.HighlightText, TextFormatFlags.GlyphOverhangPadding);
+            }
+            else e.DrawDefault = true;            
+        }
+
+        private void treePrepAnal_DrawNode(object sender, DrawTreeNodeEventArgs e)
+        {
+            TreeDrawNode(e);
+        }
+
+        private void treeSampleTypes_DrawNode(object sender, DrawTreeNodeEventArgs e)
+        {
+            TreeDrawNode(e);
         }
     }    
 }

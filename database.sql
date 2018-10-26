@@ -287,16 +287,13 @@ create table activity_unit (
 go
 
 insert into activity_unit values(NEWID(), 'Bq', 1.0, 1)
-insert into activity_unit values(NEWID(), 'mBq/g', 1000.0, 2)
-insert into activity_unit values(NEWID(), 'mBq/g', 1000.0, 2)
 insert into activity_unit values(NEWID(), 'Bq/g', 1.0, 2)
-insert into activity_unit values(NEWID(), 'Bq/g', 1.0, 2)
-insert into activity_unit values(NEWID(), 'Bq/kg', 0.001, 2)
 insert into activity_unit values(NEWID(), 'Bq/kg', 0.001, 2)
 insert into activity_unit values(NEWID(), 'Bq/m2', 1.0, 3)
 insert into activity_unit values(NEWID(), 'Bq/m3', 1.0, 4)
-insert into activity_unit values(NEWID(), 'mBq/l', 1.0, 4)
 insert into activity_unit values(NEWID(), 'Bq/l', 1000.0, 4)
+insert into activity_unit values(NEWID(), 'mBq/g', 1000.0, 2)
+insert into activity_unit values(NEWID(), 'mBq/l', 1.0, 4)
 insert into activity_unit values(NEWID(), 'Bq/filter', 1.0, 1)
 go
 

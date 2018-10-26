@@ -760,7 +760,7 @@
             this.panel31 = new System.Windows.Forms.Panel();
             this.treePrepAnal = new System.Windows.Forms.TreeView();
             this.tabsPrepAnal = new System.Windows.Forms.TabControl();
-            this.tabPrepAnalParams = new System.Windows.Forms.TabPage();
+            this.tabPrepAnalSample = new System.Windows.Forms.TabPage();
             this.splitContainer4 = new System.Windows.Forms.SplitContainer();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.panel66 = new System.Windows.Forms.Panel();
@@ -792,7 +792,7 @@
             this.textBox20 = new System.Windows.Forms.TextBox();
             this.panel69 = new System.Windows.Forms.Panel();
             this.label65 = new System.Windows.Forms.Label();
-            this.tabSamplesPrep = new System.Windows.Forms.TabPage();
+            this.tabPrepAnalPreps = new System.Windows.Forms.TabPage();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel60 = new System.Windows.Forms.Panel();
@@ -820,7 +820,6 @@
             this.label27 = new System.Windows.Forms.Label();
             this.toolsSamplePrepInfo = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel13 = new System.Windows.Forms.ToolStripLabel();
-            this.toolStripSeparator59 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton106 = new System.Windows.Forms.ToolStripButton();
             this.panel5 = new System.Windows.Forms.Panel();
             this.dataGridView7 = new System.Windows.Forms.DataGridView();
@@ -830,7 +829,7 @@
             this.toolStripButton11 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton12 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton13 = new System.Windows.Forms.ToolStripButton();
-            this.tabSamplesAnalysis = new System.Windows.Forms.TabPage();
+            this.tabPrepAnalAnalysis = new System.Windows.Forms.TabPage();
             this.splitContainer5 = new System.Windows.Forms.SplitContainer();
             this.splitContainer21 = new System.Windows.Forms.SplitContainer();
             this.panel49 = new System.Windows.Forms.Panel();
@@ -889,16 +888,15 @@
             this.btnPrepAnalClose = new System.Windows.Forms.Button();
             this.btnPrepAnalSave = new System.Windows.Forms.Button();
             this.toolStrip7 = new System.Windows.Forms.ToolStrip();
-            this.lblPrepAnalToolsOrder = new System.Windows.Forms.ToolStripLabel();
-            this.lblPrepAnalToolsId = new System.Windows.Forms.ToolStripLabel();
-            this.lblPrepAnalToolsExId = new System.Windows.Forms.ToolStripLabel();
-            this.lblPrepAnalToolsProj = new System.Windows.Forms.ToolStripLabel();
-            this.lblPrepAnalToolsSubProj = new System.Windows.Forms.ToolStripLabel();
             this.tools = new System.Windows.Forms.ToolStrip();
             this.btnMenu = new System.Windows.Forms.ToolStripButton();
             this.lblCurrentTab = new System.Windows.Forms.ToolStripLabel();
             this.toolStripButton8 = new System.Windows.Forms.ToolStripButton();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripButton14 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton15 = new System.Windows.Forms.ToolStripButton();
+            this.toolStrip10 = new System.Windows.Forms.ToolStrip();
+            this.toolStripLabel6 = new System.Windows.Forms.ToolStripLabel();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tabs.SuspendLayout();
@@ -1145,7 +1143,7 @@
             this.splitContainer2.SuspendLayout();
             this.panel31.SuspendLayout();
             this.tabsPrepAnal.SuspendLayout();
-            this.tabPrepAnalParams.SuspendLayout();
+            this.tabPrepAnalSample.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).BeginInit();
             this.splitContainer4.Panel1.SuspendLayout();
             this.splitContainer4.Panel2.SuspendLayout();
@@ -1166,7 +1164,7 @@
             this.panel71.SuspendLayout();
             this.panel68.SuspendLayout();
             this.panel69.SuspendLayout();
-            this.tabSamplesPrep.SuspendLayout();
+            this.tabPrepAnalPreps.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).BeginInit();
             this.splitContainer3.Panel1.SuspendLayout();
             this.splitContainer3.Panel2.SuspendLayout();
@@ -1187,7 +1185,7 @@
             this.panel5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView7)).BeginInit();
             this.toolsSampleAttachments.SuspendLayout();
-            this.tabSamplesAnalysis.SuspendLayout();
+            this.tabPrepAnalAnalysis.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer5)).BeginInit();
             this.splitContainer5.Panel1.SuspendLayout();
             this.splitContainer5.Panel2.SuspendLayout();
@@ -1222,6 +1220,7 @@
             this.panel63.SuspendLayout();
             this.toolStrip7.SuspendLayout();
             this.tools.SuspendLayout();
+            this.toolStrip10.SuspendLayout();
             this.SuspendLayout();
             // 
             // menu
@@ -6359,16 +6358,18 @@
             this.treeSampleTypes.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.treeSampleTypes.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.treeSampleTypes.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeSampleTypes.DrawMode = System.Windows.Forms.TreeViewDrawMode.OwnerDrawText;
             this.treeSampleTypes.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.treeSampleTypes.HideSelection = false;
             this.treeSampleTypes.Indent = 32;
-            this.treeSampleTypes.ItemHeight = 24;
+            this.treeSampleTypes.ItemHeight = 22;
             this.treeSampleTypes.Location = new System.Drawing.Point(0, 25);
             this.treeSampleTypes.Name = "treeSampleTypes";
             this.treeSampleTypes.PathSeparator = "/";
             this.treeSampleTypes.ShowNodeToolTips = true;
             this.treeSampleTypes.Size = new System.Drawing.Size(372, 549);
             this.treeSampleTypes.TabIndex = 1;
+            this.treeSampleTypes.DrawNode += new System.Windows.Forms.DrawTreeNodeEventHandler(this.treeSampleTypes_DrawNode);
             this.treeSampleTypes.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeSampleTypes_AfterSelect);
             // 
             // toolsTypeRelSamp
@@ -8625,7 +8626,6 @@
             this.tabPrepAnal.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.tabPrepAnal.Controls.Add(this.splitContainer2);
             this.tabPrepAnal.Controls.Add(this.panel63);
-            this.tabPrepAnal.Controls.Add(this.toolStrip7);
             this.tabPrepAnal.Location = new System.Drawing.Point(4, 24);
             this.tabPrepAnal.Name = "tabPrepAnal";
             this.tabPrepAnal.Padding = new System.Windows.Forms.Padding(3);
@@ -8636,17 +8636,18 @@
             // splitContainer2
             // 
             this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer2.Location = new System.Drawing.Point(3, 28);
+            this.splitContainer2.Location = new System.Drawing.Point(3, 3);
             this.splitContainer2.Name = "splitContainer2";
             // 
             // splitContainer2.Panel1
             // 
             this.splitContainer2.Panel1.Controls.Add(this.panel31);
+            this.splitContainer2.Panel1.Controls.Add(this.toolStrip7);
             // 
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.tabsPrepAnal);
-            this.splitContainer2.Size = new System.Drawing.Size(1141, 583);
+            this.splitContainer2.Size = new System.Drawing.Size(1141, 608);
             this.splitContainer2.SplitterDistance = 427;
             this.splitContainer2.TabIndex = 4;
             // 
@@ -8654,7 +8655,7 @@
             // 
             this.panel31.Controls.Add(this.treePrepAnal);
             this.panel31.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel31.Location = new System.Drawing.Point(0, 0);
+            this.panel31.Location = new System.Drawing.Point(0, 25);
             this.panel31.Name = "panel31";
             this.panel31.Padding = new System.Windows.Forms.Padding(12);
             this.panel31.Size = new System.Drawing.Size(427, 583);
@@ -8665,43 +8666,48 @@
             this.treePrepAnal.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.treePrepAnal.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.treePrepAnal.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treePrepAnal.DrawMode = System.Windows.Forms.TreeViewDrawMode.OwnerDrawText;
             this.treePrepAnal.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.treePrepAnal.HideSelection = false;
             this.treePrepAnal.Indent = 40;
-            this.treePrepAnal.ItemHeight = 26;
+            this.treePrepAnal.ItemHeight = 22;
             this.treePrepAnal.Location = new System.Drawing.Point(12, 12);
             this.treePrepAnal.Name = "treePrepAnal";
             this.treePrepAnal.PathSeparator = "/";
             this.treePrepAnal.ShowRootLines = false;
             this.treePrepAnal.Size = new System.Drawing.Size(403, 559);
             this.treePrepAnal.TabIndex = 0;
+            this.treePrepAnal.DrawNode += new System.Windows.Forms.DrawTreeNodeEventHandler(this.treePrepAnal_DrawNode);
+            this.treePrepAnal.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treePrepAnal_AfterSelect);
             // 
             // tabsPrepAnal
             // 
-            this.tabsPrepAnal.Controls.Add(this.tabPrepAnalParams);
-            this.tabsPrepAnal.Controls.Add(this.tabSamplesPrep);
-            this.tabsPrepAnal.Controls.Add(this.tabSamplesAnalysis);
+            this.tabsPrepAnal.Controls.Add(this.tabPrepAnalSample);
+            this.tabsPrepAnal.Controls.Add(this.tabPrepAnalPreps);
+            this.tabsPrepAnal.Controls.Add(this.tabPrepAnalAnalysis);
             this.tabsPrepAnal.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabsPrepAnal.Location = new System.Drawing.Point(0, 0);
             this.tabsPrepAnal.Name = "tabsPrepAnal";
             this.tabsPrepAnal.SelectedIndex = 0;
-            this.tabsPrepAnal.Size = new System.Drawing.Size(710, 583);
+            this.tabsPrepAnal.Size = new System.Drawing.Size(710, 608);
             this.tabsPrepAnal.TabIndex = 3;
             // 
-            // tabPrepAnalParams
+            // tabPrepAnalSample
             // 
-            this.tabPrepAnalParams.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.tabPrepAnalParams.Controls.Add(this.splitContainer4);
-            this.tabPrepAnalParams.Location = new System.Drawing.Point(4, 24);
-            this.tabPrepAnalParams.Name = "tabPrepAnalParams";
-            this.tabPrepAnalParams.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPrepAnalParams.Size = new System.Drawing.Size(702, 555);
-            this.tabPrepAnalParams.TabIndex = 5;
-            this.tabPrepAnalParams.Text = "Sample parameters";
+            this.tabPrepAnalSample.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.tabPrepAnalSample.Controls.Add(this.splitContainer4);
+            this.tabPrepAnalSample.Controls.Add(this.toolStrip10);
+            this.tabPrepAnalSample.Location = new System.Drawing.Point(4, 24);
+            this.tabPrepAnalSample.Name = "tabPrepAnalSample";
+            this.tabPrepAnalSample.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPrepAnalSample.Size = new System.Drawing.Size(702, 580);
+            this.tabPrepAnalSample.TabIndex = 5;
+            this.tabPrepAnalSample.Text = "Sample";
             // 
             // splitContainer4
             // 
             this.splitContainer4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer4.Location = new System.Drawing.Point(3, 3);
+            this.splitContainer4.Location = new System.Drawing.Point(3, 28);
             this.splitContainer4.Name = "splitContainer4";
             // 
             // splitContainer4.Panel1
@@ -9020,16 +9026,16 @@
             this.label65.Text = "Start weight (g)";
             this.label65.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // tabSamplesPrep
+            // tabPrepAnalPreps
             // 
-            this.tabSamplesPrep.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.tabSamplesPrep.Controls.Add(this.splitContainer3);
-            this.tabSamplesPrep.Location = new System.Drawing.Point(4, 22);
-            this.tabSamplesPrep.Name = "tabSamplesPrep";
-            this.tabSamplesPrep.Padding = new System.Windows.Forms.Padding(3);
-            this.tabSamplesPrep.Size = new System.Drawing.Size(702, 557);
-            this.tabSamplesPrep.TabIndex = 3;
-            this.tabSamplesPrep.Text = "Preparations";
+            this.tabPrepAnalPreps.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.tabPrepAnalPreps.Controls.Add(this.splitContainer3);
+            this.tabPrepAnalPreps.Location = new System.Drawing.Point(4, 24);
+            this.tabPrepAnalPreps.Name = "tabPrepAnalPreps";
+            this.tabPrepAnalPreps.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPrepAnalPreps.Size = new System.Drawing.Size(702, 580);
+            this.tabPrepAnalPreps.TabIndex = 3;
+            this.tabPrepAnalPreps.Text = "Preparations";
             // 
             // splitContainer3
             // 
@@ -9291,7 +9297,6 @@
             this.toolsSamplePrepInfo.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolsSamplePrepInfo.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripLabel13,
-            this.toolStripSeparator59,
             this.toolStripButton106});
             this.toolsSamplePrepInfo.Location = new System.Drawing.Point(0, 0);
             this.toolsSamplePrepInfo.Name = "toolsSamplePrepInfo";
@@ -9303,16 +9308,12 @@
             // 
             this.toolStripLabel13.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.toolStripLabel13.Name = "toolStripLabel13";
-            this.toolStripLabel13.Size = new System.Drawing.Size(62, 22);
-            this.toolStripLabel13.Text = "Prep. Info";
-            // 
-            // toolStripSeparator59
-            // 
-            this.toolStripSeparator59.Name = "toolStripSeparator59";
-            this.toolStripSeparator59.Size = new System.Drawing.Size(6, 25);
+            this.toolStripLabel13.Size = new System.Drawing.Size(97, 22);
+            this.toolStripLabel13.Text = "Preparation info";
             // 
             // toolStripButton106
             // 
+            this.toolStripButton106.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.toolStripButton106.Image = global::DSA_lims.Properties.Resources.printer;
             this.toolStripButton106.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton106.Name = "toolStripButton106";
@@ -9394,16 +9395,16 @@
             this.toolStripButton13.Size = new System.Drawing.Size(60, 22);
             this.toolStripButton13.Text = "Delete";
             // 
-            // tabSamplesAnalysis
+            // tabPrepAnalAnalysis
             // 
-            this.tabSamplesAnalysis.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.tabSamplesAnalysis.Controls.Add(this.splitContainer5);
-            this.tabSamplesAnalysis.Location = new System.Drawing.Point(4, 22);
-            this.tabSamplesAnalysis.Name = "tabSamplesAnalysis";
-            this.tabSamplesAnalysis.Padding = new System.Windows.Forms.Padding(3);
-            this.tabSamplesAnalysis.Size = new System.Drawing.Size(702, 557);
-            this.tabSamplesAnalysis.TabIndex = 4;
-            this.tabSamplesAnalysis.Text = "Analyses";
+            this.tabPrepAnalAnalysis.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.tabPrepAnalAnalysis.Controls.Add(this.splitContainer5);
+            this.tabPrepAnalAnalysis.Location = new System.Drawing.Point(4, 24);
+            this.tabPrepAnalAnalysis.Name = "tabPrepAnalAnalysis";
+            this.tabPrepAnalAnalysis.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPrepAnalAnalysis.Size = new System.Drawing.Size(702, 580);
+            this.tabPrepAnalAnalysis.TabIndex = 4;
+            this.tabPrepAnalAnalysis.Text = "Analyses";
             // 
             // splitContainer5
             // 
@@ -9419,8 +9420,8 @@
             // splitContainer5.Panel2
             // 
             this.splitContainer5.Panel2.Controls.Add(this.panel9);
-            this.splitContainer5.Size = new System.Drawing.Size(696, 551);
-            this.splitContainer5.SplitterDistance = 285;
+            this.splitContainer5.Size = new System.Drawing.Size(696, 574);
+            this.splitContainer5.SplitterDistance = 296;
             this.splitContainer5.SplitterWidth = 5;
             this.splitContainer5.TabIndex = 1;
             // 
@@ -9445,7 +9446,7 @@
             // splitContainer21.Panel2
             // 
             this.splitContainer21.Panel2.Controls.Add(this.panel8);
-            this.splitContainer21.Size = new System.Drawing.Size(696, 285);
+            this.splitContainer21.Size = new System.Drawing.Size(696, 296);
             this.splitContainer21.SplitterDistance = 367;
             this.splitContainer21.TabIndex = 4;
             // 
@@ -9456,7 +9457,7 @@
             this.panel49.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel49.Location = new System.Drawing.Point(0, 200);
             this.panel49.Name = "panel49";
-            this.panel49.Size = new System.Drawing.Size(367, 85);
+            this.panel49.Size = new System.Drawing.Size(367, 96);
             this.panel49.TabIndex = 7;
             // 
             // textBox31
@@ -9467,7 +9468,7 @@
             this.textBox31.Multiline = true;
             this.textBox31.Name = "textBox31";
             this.textBox31.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBox31.Size = new System.Drawing.Size(261, 85);
+            this.textBox31.Size = new System.Drawing.Size(261, 96);
             this.textBox31.TabIndex = 1;
             // 
             // panel50
@@ -9476,7 +9477,7 @@
             this.panel50.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel50.Location = new System.Drawing.Point(0, 0);
             this.panel50.Name = "panel50";
-            this.panel50.Size = new System.Drawing.Size(106, 85);
+            this.panel50.Size = new System.Drawing.Size(106, 96);
             this.panel50.TabIndex = 0;
             // 
             // label60
@@ -9484,7 +9485,7 @@
             this.label60.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label60.Location = new System.Drawing.Point(0, 0);
             this.label60.Name = "label60";
-            this.label60.Size = new System.Drawing.Size(106, 85);
+            this.label60.Size = new System.Drawing.Size(106, 96);
             this.label60.TabIndex = 0;
             this.label60.Text = "Comment";
             this.label60.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -9775,8 +9776,8 @@
             // 
             this.toolStripLabel59.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.toolStripLabel59.Name = "toolStripLabel59";
-            this.toolStripLabel59.Size = new System.Drawing.Size(76, 22);
-            this.toolStripLabel59.Text = "Analysis Info";
+            this.toolStripLabel59.Size = new System.Drawing.Size(75, 22);
+            this.toolStripLabel59.Text = "Analysis info";
             // 
             // panel8
             // 
@@ -9785,7 +9786,7 @@
             this.panel8.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel8.Location = new System.Drawing.Point(0, 0);
             this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(325, 285);
+            this.panel8.Size = new System.Drawing.Size(325, 296);
             this.panel8.TabIndex = 3;
             // 
             // dataGridView11
@@ -9799,7 +9800,7 @@
             this.dataGridView11.Location = new System.Drawing.Point(0, 25);
             this.dataGridView11.Name = "dataGridView11";
             this.dataGridView11.ReadOnly = true;
-            this.dataGridView11.Size = new System.Drawing.Size(325, 260);
+            this.dataGridView11.Size = new System.Drawing.Size(325, 271);
             this.dataGridView11.TabIndex = 1;
             // 
             // toolsSampleResAttachments
@@ -9860,7 +9861,7 @@
             this.panel9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel9.Location = new System.Drawing.Point(0, 0);
             this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(696, 261);
+            this.panel9.Size = new System.Drawing.Size(696, 273);
             this.panel9.TabIndex = 3;
             // 
             // dataGridView9
@@ -9874,7 +9875,7 @@
             this.dataGridView9.Location = new System.Drawing.Point(0, 25);
             this.dataGridView9.Name = "dataGridView9";
             this.dataGridView9.ReadOnly = true;
-            this.dataGridView9.Size = new System.Drawing.Size(696, 236);
+            this.dataGridView9.Size = new System.Drawing.Size(696, 248);
             this.dataGridView9.TabIndex = 0;
             // 
             // toolsSampleResRes
@@ -9979,51 +9980,13 @@
             // 
             this.toolStrip7.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStrip7.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.lblPrepAnalToolsOrder,
-            this.lblPrepAnalToolsId,
-            this.lblPrepAnalToolsExId,
-            this.lblPrepAnalToolsProj,
-            this.lblPrepAnalToolsSubProj});
-            this.toolStrip7.Location = new System.Drawing.Point(3, 3);
+            this.toolStripButton14,
+            this.toolStripButton15});
+            this.toolStrip7.Location = new System.Drawing.Point(0, 0);
             this.toolStrip7.Name = "toolStrip7";
-            this.toolStrip7.Size = new System.Drawing.Size(1141, 25);
+            this.toolStrip7.Size = new System.Drawing.Size(427, 25);
             this.toolStrip7.TabIndex = 0;
             this.toolStrip7.Text = "toolStrip7";
-            // 
-            // lblPrepAnalToolsOrder
-            // 
-            this.lblPrepAnalToolsOrder.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.lblPrepAnalToolsOrder.Name = "lblPrepAnalToolsOrder";
-            this.lblPrepAnalToolsOrder.Size = new System.Drawing.Size(56, 22);
-            this.lblPrepAnalToolsOrder.Text = "<Order>";
-            // 
-            // lblPrepAnalToolsId
-            // 
-            this.lblPrepAnalToolsId.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.lblPrepAnalToolsId.Name = "lblPrepAnalToolsId";
-            this.lblPrepAnalToolsId.Size = new System.Drawing.Size(34, 22);
-            this.lblPrepAnalToolsId.Text = "<Id>";
-            // 
-            // lblPrepAnalToolsExId
-            // 
-            this.lblPrepAnalToolsExId.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.lblPrepAnalToolsExId.Name = "lblPrepAnalToolsExId";
-            this.lblPrepAnalToolsExId.Size = new System.Drawing.Size(50, 22);
-            this.lblPrepAnalToolsExId.Text = "<Ex.Id>";
-            // 
-            // lblPrepAnalToolsProj
-            // 
-            this.lblPrepAnalToolsProj.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.lblPrepAnalToolsProj.Name = "lblPrepAnalToolsProj";
-            this.lblPrepAnalToolsProj.Size = new System.Drawing.Size(63, 22);
-            this.lblPrepAnalToolsProj.Text = "<Project>";
-            // 
-            // lblPrepAnalToolsSubProj
-            // 
-            this.lblPrepAnalToolsSubProj.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.lblPrepAnalToolsSubProj.Name = "lblPrepAnalToolsSubProj";
-            this.lblPrepAnalToolsSubProj.Size = new System.Drawing.Size(89, 22);
-            this.lblPrepAnalToolsSubProj.Text = "<Sub-Project>";
             // 
             // tools
             // 
@@ -10070,6 +10033,40 @@
             this.toolStripMenuItem1.Size = new System.Drawing.Size(212, 22);
             this.toolStripMenuItem1.Text = "Add to order";
             this.toolStripMenuItem1.Click += new System.EventHandler(this.miSamplesSetOrder_Click);
+            // 
+            // toolStripButton14
+            // 
+            this.toolStripButton14.Image = global::DSA_lims.Properties.Resources._new;
+            this.toolStripButton14.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton14.Name = "toolStripButton14";
+            this.toolStripButton14.Size = new System.Drawing.Size(113, 22);
+            this.toolStripButton14.Text = "Add preparation";
+            // 
+            // toolStripButton15
+            // 
+            this.toolStripButton15.Image = global::DSA_lims.Properties.Resources._new;
+            this.toolStripButton15.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton15.Name = "toolStripButton15";
+            this.toolStripButton15.Size = new System.Drawing.Size(93, 22);
+            this.toolStripButton15.Text = "Add analysis";
+            // 
+            // toolStrip10
+            // 
+            this.toolStrip10.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStrip10.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripLabel6});
+            this.toolStrip10.Location = new System.Drawing.Point(3, 3);
+            this.toolStrip10.Name = "toolStrip10";
+            this.toolStrip10.Size = new System.Drawing.Size(696, 25);
+            this.toolStrip10.TabIndex = 3;
+            this.toolStrip10.Text = "toolStrip10";
+            // 
+            // toolStripLabel6
+            // 
+            this.toolStripLabel6.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.toolStripLabel6.Name = "toolStripLabel6";
+            this.toolStripLabel6.Size = new System.Drawing.Size(73, 22);
+            this.toolStripLabel6.Text = "Sample info";
             // 
             // FormMain
             // 
@@ -10452,14 +10449,15 @@
             this.toolsSysGeom.ResumeLayout(false);
             this.toolsSysGeom.PerformLayout();
             this.tabPrepAnal.ResumeLayout(false);
-            this.tabPrepAnal.PerformLayout();
             this.splitContainer2.Panel1.ResumeLayout(false);
+            this.splitContainer2.Panel1.PerformLayout();
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
             this.panel31.ResumeLayout(false);
             this.tabsPrepAnal.ResumeLayout(false);
-            this.tabPrepAnalParams.ResumeLayout(false);
+            this.tabPrepAnalSample.ResumeLayout(false);
+            this.tabPrepAnalSample.PerformLayout();
             this.splitContainer4.Panel1.ResumeLayout(false);
             this.splitContainer4.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).EndInit();
@@ -10487,7 +10485,7 @@
             this.panel68.ResumeLayout(false);
             this.panel68.PerformLayout();
             this.panel69.ResumeLayout(false);
-            this.tabSamplesPrep.ResumeLayout(false);
+            this.tabPrepAnalPreps.ResumeLayout(false);
             this.splitContainer3.Panel1.ResumeLayout(false);
             this.splitContainer3.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).EndInit();
@@ -10516,7 +10514,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView7)).EndInit();
             this.toolsSampleAttachments.ResumeLayout(false);
             this.toolsSampleAttachments.PerformLayout();
-            this.tabSamplesAnalysis.ResumeLayout(false);
+            this.tabPrepAnalAnalysis.ResumeLayout(false);
             this.splitContainer5.Panel1.ResumeLayout(false);
             this.splitContainer5.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer5)).EndInit();
@@ -10563,6 +10561,8 @@
             this.toolStrip7.PerformLayout();
             this.tools.ResumeLayout(false);
             this.tools.PerformLayout();
+            this.toolStrip10.ResumeLayout(false);
+            this.toolStrip10.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -11195,7 +11195,7 @@
         private System.Windows.Forms.Button btnPrepAnalSave;
         private System.Windows.Forms.ToolStrip toolStrip7;
         private System.Windows.Forms.TabControl tabsPrepAnal;
-        private System.Windows.Forms.TabPage tabSamplesPrep;
+        private System.Windows.Forms.TabPage tabPrepAnalPreps;
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.DataGridView dataGridView7;
         private System.Windows.Forms.ToolStrip toolsSampleAttachments;
@@ -11230,7 +11230,7 @@
         private System.Windows.Forms.Label label27;
         private System.Windows.Forms.ToolStrip toolsSamplePrepInfo;
         private System.Windows.Forms.ToolStripLabel toolStripLabel13;
-        private System.Windows.Forms.TabPage tabSamplesAnalysis;
+        private System.Windows.Forms.TabPage tabPrepAnalAnalysis;
         private System.Windows.Forms.Panel panel9;
         private System.Windows.Forms.DataGridView dataGridView9;
         private System.Windows.Forms.ToolStrip toolsSampleResRes;
@@ -11281,11 +11281,6 @@
         private System.Windows.Forms.ToolStripButton toolStripButton16;
         private System.Windows.Forms.ToolStripButton toolStripButton17;
         private System.Windows.Forms.ToolStripButton toolStripButton18;
-        private System.Windows.Forms.ToolStripLabel lblPrepAnalToolsId;
-        private System.Windows.Forms.ToolStripLabel lblPrepAnalToolsExId;
-        private System.Windows.Forms.ToolStripLabel lblPrepAnalToolsProj;
-        private System.Windows.Forms.ToolStripLabel lblPrepAnalToolsSubProj;
-        private System.Windows.Forms.ToolStripLabel lblPrepAnalToolsOrder;
         private System.Windows.Forms.ToolStripMenuItem miSamplesNew;
         private System.Windows.Forms.ToolStripMenuItem miSamplesImport;
         private System.Windows.Forms.ToolStripMenuItem miSamplesImportExcel;
@@ -11310,7 +11305,7 @@
         private System.Windows.Forms.Label label49;
         private System.Windows.Forms.ToolStripMenuItem miSamplesSetExcempt;
         private System.Windows.Forms.ToolStripMenuItem excemptFromPublicToolStripMenuItem;
-        private System.Windows.Forms.TabPage tabPrepAnalParams;
+        private System.Windows.Forms.TabPage tabPrepAnalSample;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Panel panel66;
@@ -11370,7 +11365,6 @@
         private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton4;
         private System.Windows.Forms.ToolStripMenuItem sampleLabelToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sampleInfoForSelectedToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator59;
         private System.Windows.Forms.ToolStripButton toolStripButton106;
         private System.Windows.Forms.Panel panel19;
         private System.Windows.Forms.ComboBox cboxSampleAnalUnitType;
@@ -11440,6 +11434,10 @@
         private System.Windows.Forms.Panel panel31;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ToolStripButton toolStripButton8;
+        private System.Windows.Forms.ToolStripButton toolStripButton14;
+        private System.Windows.Forms.ToolStripButton toolStripButton15;
+        private System.Windows.Forms.ToolStrip toolStrip10;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel6;
     }
 }
 

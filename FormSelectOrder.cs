@@ -1,4 +1,23 @@
-﻿using System;
+﻿/*	
+	DSA Lims - Laboratory Information Management System
+    Copyright (C) 2018  Norwegian Radiation Protection Authority
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+// Authors: Dag Robole,
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -14,18 +33,21 @@ namespace DSA_lims
     {
         private TreeView TreeSampleTypes = null;
         private Guid SampleId = Guid.Empty;
+        private string SampleNumber = String.Empty;
         private Guid SampleTypeId = Guid.Empty;
 
-        public Guid SelectedLaboratory = Guid.Empty;
-        public Guid SelectedOrder = Guid.Empty;
-        public Guid SelectedOrderLine = Guid.Empty;
+        public Guid SelectedLaboratoryId = Guid.Empty;
+        public Guid SelectedOrderId = Guid.Empty;
+        public string SelectedOrderName = String.Empty;
+        public Guid SelectedOrderLineId = Guid.Empty;
 
-        public FormSelectOrder(TreeView treeSampleTypes, Guid sampId)
+        public FormSelectOrder(TreeView treeSampleTypes, Guid sampId, string sampleNumber)
         {
             InitializeComponent();
 
             TreeSampleTypes = treeSampleTypes;
             SampleId = sampId;
+            SampleNumber = sampleNumber;
 
             using (SqlConnection conn = DB.OpenConnection())
             {
@@ -72,11 +94,12 @@ namespace DSA_lims
             }
 
             Lemma<Guid, string> lab = cboxLaboratory.SelectedItem as Lemma<Guid, string>;
-            SelectedLaboratory = lab.Id;
-            SelectedOrder = new Guid(gridOrders.SelectedRows[0].Cells["id"].Value.ToString());
-            SelectedOrderLine = new Guid(tnode.Name);
+            SelectedLaboratoryId = lab.Id;
+            SelectedOrderId = Guid.Parse(gridOrders.SelectedRows[0].Cells["id"].Value.ToString());
+            SelectedOrderName = gridOrders.SelectedRows[0].Cells["name"].Value.ToString();
+            SelectedOrderLineId = Guid.Parse(tnode.Name);
 
-            GenerateOrderPreparations(SampleId, SelectedLaboratory, SelectedOrder, SelectedOrderLine, tnode.Nodes);
+            GenerateOrderPreparations(SampleId, SelectedLaboratoryId, SelectedOrderId, SelectedOrderLineId, tnode.Nodes);
 
             DialogResult = DialogResult.OK;
             Close();
@@ -84,8 +107,14 @@ namespace DSA_lims
 
         private void GenerateOrderPreparations(Guid sampleId, Guid labId, Guid orderId, Guid orderLineId, TreeNodeCollection tnodes)
         {
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection connection = null;
+            SqlTransaction transaction = null;
+
+            try
             {
+                connection = DB.OpenConnection();
+                transaction = connection.BeginTransaction();
+            
                 int nextPrepNumber = 1;
 
                 foreach (TreeNode tnode in tnodes)
@@ -95,10 +124,8 @@ namespace DSA_lims
                     if (tnode.Tag != null)
                     {
                         List<Guid> prepList = tnode.Tag as List<Guid>;
-                        foreach (Guid pid in prepList)
-                        {
-                            GenerateOrderAnalyses(conn, orderId, labId, pid, tnode.Nodes);
-                        }
+                        foreach (Guid pid in prepList)                        
+                            GenerateOrderAnalyses(connection, transaction, orderId, labId, pid, tnode.Nodes);
                     }
                     else
                     {
@@ -106,14 +133,14 @@ namespace DSA_lims
                         int prepCount = 0;
 
                         string query = "select preparation_method_id, preparation_method_count from assignment_preparation_method where id = @id";
-                        using (SqlDataReader reader = DB.GetDataReader(conn, query, CommandType.Text, new SqlParameter("@id", prepMethLineId)))
+                        using (SqlDataReader reader = DB.GetDataReader(connection, transaction, query, CommandType.Text, new SqlParameter("@id", prepMethLineId)))
                         {
                             reader.Read(); // FIXME
                             prepMethId = Guid.Parse(reader["preparation_method_id"].ToString());
                             prepCount = Convert.ToInt32(reader["preparation_method_count"]);
                         }
 
-                        SqlCommand cmd = new SqlCommand("csp_insert_preparation", conn);
+                        SqlCommand cmd = new SqlCommand("csp_insert_preparation", connection, transaction);
                         cmd.CommandType = CommandType.StoredProcedure;
                         while (prepCount > 0)
                         {
@@ -139,16 +166,27 @@ namespace DSA_lims
 
                             cmd.ExecuteNonQuery();
 
-                            GenerateOrderAnalyses(conn, orderId, labId, newPrepId, tnode.Nodes);
+                            GenerateOrderAnalyses(connection, transaction, orderId, labId, newPrepId, tnode.Nodes);
 
                             prepCount--;
                         }
                     }
                 }
+
+                transaction.Commit();
+            }
+            catch(Exception ex)
+            {
+                transaction?.Rollback();
+                Common.Log.Error(ex);
+            }
+            finally
+            {
+                connection?.Close();
             }
         }
 
-        private void GenerateOrderAnalyses(SqlConnection conn, Guid orderId, Guid labId, Guid prepId, TreeNodeCollection tnodes)
+        private void GenerateOrderAnalyses(SqlConnection conn, SqlTransaction trans, Guid orderId, Guid labId, Guid prepId, TreeNodeCollection tnodes)
         {
             Guid analMethId = Guid.Empty;
             int analCount = 0;
@@ -159,14 +197,14 @@ namespace DSA_lims
                 Guid analMethLineId = Guid.Parse(tnode.Name);
 
                 string query = "select analysis_method_id, analysis_method_count from assignment_analysis_method where id = @id";
-                using (SqlDataReader reader = DB.GetDataReader(conn, query, CommandType.Text, new SqlParameter("@id", analMethLineId)))
+                using (SqlDataReader reader = DB.GetDataReader(conn, trans, query, CommandType.Text, new SqlParameter("@id", analMethLineId)))
                 {
                     reader.Read(); // FIXME
                     analMethId = Guid.Parse(reader["analysis_method_id"].ToString());
                     analCount = Convert.ToInt32(reader["analysis_method_count"]);
                 }
 
-                SqlCommand cmd = new SqlCommand("csp_insert_analysis", conn);
+                SqlCommand cmd = new SqlCommand("csp_insert_analysis", conn, trans);
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 while (analCount > 0)
@@ -295,7 +333,7 @@ namespace DSA_lims
             List<object> prepNums = new List<object>();
             using (SqlConnection conn = DB.OpenConnection())            
                 using (SqlDataReader reader = DB.GetDataReader(conn, query, CommandType.Text))            
-                    while (reader.Read()) prepNums.Add(reader["number"]);
+                    while (reader.Read()) prepNums.Add(SampleNumber + "/" + reader["number"]);
 
             tnode.ToolTipText = "Connected preparations: " + String.Join(", ", prepNums);
         }

@@ -463,7 +463,6 @@ namespace DSA_lims
                     cmd.Parameters.AddWithValue("@sampler_id", Lemma<Guid, string>.IdParam(cboxSampleInfoSampler.SelectedItem));
                     cmd.Parameters.AddWithValue("@transform_from_id", Guid.Empty);
                     cmd.Parameters.AddWithValue("@transform_to_id", Guid.Empty);
-                    cmd.Parameters.AddWithValue("@current_order_id", Guid.Empty);
                     cmd.Parameters.AddWithValue("@imported_from", DBNull.Value);
                     cmd.Parameters.AddWithValue("@imported_from_id", DBNull.Value);
                     cmd.Parameters.AddWithValue("@municipality_id", Lemma<Guid, string>.IdParam(cboxSampleMunicipalities.SelectedItem));
@@ -1414,18 +1413,20 @@ namespace DSA_lims
 
         private void miSamplesSetOrder_Click(object sender, EventArgs e)
         {
-            // sample, set order
+            // add sample to order
             if (gridSamples.SelectedRows.Count < 1)
                 return;
 
-            Guid sampleId = new Guid(gridSamples.SelectedRows[0].Cells["id"].Value.ToString());
-            FormSelectOrder form = new FormSelectOrder(treeSampleTypes, sampleId);
+            Guid sampleId = Guid.Parse(gridSamples.SelectedRows[0].Cells["id"].Value.ToString());
+            string sampleNumber = gridSamples.SelectedRows[0].Cells["number"].Value.ToString();
+
+            FormSelectOrder form = new FormSelectOrder(treeSampleTypes, sampleId, sampleNumber);
             if (form.ShowDialog() != DialogResult.OK)
                 return;
-            Guid orderId = form.SelectedOrder;
-            Guid orderLineId = form.SelectedOrderLine;
 
-            MessageBox.Show("Order id: " + orderId.ToString() + ", Order line id: " + orderLineId.ToString());
+            string sampleName = gridSamples.SelectedRows[0].Cells["number"].Value.ToString();
+
+            lblStatus.Text = StrUtils.makeStatusMessage("Successfully added sample " + sampleName + " to order " + form.SelectedOrderName);
         }
 
         private void miSamplesSetProject_Click(object sender, EventArgs e)

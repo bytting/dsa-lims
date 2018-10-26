@@ -80,12 +80,19 @@ namespace DSA_lims
             return dt;
         }
 
-        public static SqlDataReader GetDataReader(SqlConnection conn, string query, CommandType queryType, params SqlParameter[] parameters)
+        public static SqlDataReader GetDataReader(SqlConnection conn, SqlTransaction trans, string query, CommandType queryType, params SqlParameter[] parameters)
         {
             SqlCommand cmd = new SqlCommand(query, conn);
+            if (trans != null)
+                cmd.Transaction = trans;
             cmd.CommandType = queryType;
             cmd.Parameters.AddRange(parameters);
             return cmd.ExecuteReader();
+        }
+
+        public static SqlDataReader GetDataReader(SqlConnection conn, string query, CommandType queryType, params SqlParameter[] parameters)
+        {
+            return GetDataReader(conn, null, query, queryType, parameters);
         }
 
         public static object GetScalar(SqlConnection conn, string query, CommandType queryType, params SqlParameter[] parameters)

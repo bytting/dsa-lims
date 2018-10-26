@@ -94,7 +94,6 @@
             this.miSamplesMerge = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator49 = new System.Windows.Forms.ToolStripSeparator();
             this.miSamplesSet = new System.Windows.Forms.ToolStripMenuItem();
-            this.miSamplesSetOrder = new System.Windows.Forms.ToolStripMenuItem();
             this.miSamplesSetProject = new System.Windows.Forms.ToolStripMenuItem();
             this.miSamplesSetCustomer = new System.Windows.Forms.ToolStripMenuItem();
             this.miSamplesSetSampler = new System.Windows.Forms.ToolStripMenuItem();
@@ -456,7 +455,6 @@
             this.toolStripButton105 = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator45 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripDropDownButton2 = new System.Windows.Forms.ToolStripDropDownButton();
-            this.orderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.projectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.customerToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.samplerToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -759,6 +757,7 @@
             this.toolStripButton76 = new System.Windows.Forms.ToolStripButton();
             this.tabPrepAnal = new System.Windows.Forms.TabPage();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.panel31 = new System.Windows.Forms.Panel();
             this.treePrepAnal = new System.Windows.Forms.TreeView();
             this.tabsPrepAnal = new System.Windows.Forms.TabControl();
             this.tabPrepAnalParams = new System.Windows.Forms.TabPage();
@@ -898,7 +897,8 @@
             this.tools = new System.Windows.Forms.ToolStrip();
             this.btnMenu = new System.Windows.Forms.ToolStripButton();
             this.lblCurrentTab = new System.Windows.Forms.ToolStripLabel();
-            this.panel31 = new System.Windows.Forms.Panel();
+            this.toolStripButton8 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tabs.SuspendLayout();
@@ -1143,6 +1143,7 @@
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
+            this.panel31.SuspendLayout();
             this.tabsPrepAnal.SuspendLayout();
             this.tabPrepAnalParams.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).BeginInit();
@@ -1221,7 +1222,6 @@
             this.panel63.SuspendLayout();
             this.toolStrip7.SuspendLayout();
             this.tools.SuspendLayout();
-            this.panel31.SuspendLayout();
             this.SuspendLayout();
             // 
             // menu
@@ -1662,6 +1662,7 @@
             this.miSamplesSplit,
             this.miSamplesMerge,
             this.toolStripSeparator49,
+            this.toolStripMenuItem1,
             this.miSamplesSet,
             this.miSamplesPrepAnal});
             this.miSamples.Name = "miSamples";
@@ -1731,7 +1732,6 @@
             // miSamplesSet
             // 
             this.miSamplesSet.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.miSamplesSetOrder,
             this.miSamplesSetProject,
             this.miSamplesSetCustomer,
             this.miSamplesSetSampler,
@@ -1740,13 +1740,6 @@
             this.miSamplesSet.Name = "miSamplesSet";
             this.miSamplesSet.Size = new System.Drawing.Size(212, 22);
             this.miSamplesSet.Text = "&Set...";
-            // 
-            // miSamplesSetOrder
-            // 
-            this.miSamplesSetOrder.Name = "miSamplesSetOrder";
-            this.miSamplesSetOrder.Size = new System.Drawing.Size(184, 22);
-            this.miSamplesSetOrder.Text = "&Order";
-            this.miSamplesSetOrder.Click += new System.EventHandler(this.miSamplesSetOrder_Click);
             // 
             // miSamplesSetProject
             // 
@@ -5390,6 +5383,7 @@
             this.toolStripButton98,
             this.toolStripButton105,
             this.toolStripSeparator45,
+            this.toolStripButton8,
             this.toolStripDropDownButton2,
             this.toolStripButton96,
             this.toolStripDropDownButton4});
@@ -5486,7 +5480,6 @@
             // toolStripDropDownButton2
             // 
             this.toolStripDropDownButton2.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.orderToolStripMenuItem,
             this.projectToolStripMenuItem,
             this.customerToolStripMenuItem1,
             this.samplerToolStripMenuItem1,
@@ -5497,13 +5490,6 @@
             this.toolStripDropDownButton2.Name = "toolStripDropDownButton2";
             this.toolStripDropDownButton2.Size = new System.Drawing.Size(61, 22);
             this.toolStripDropDownButton2.Text = "Set...";
-            // 
-            // orderToolStripMenuItem
-            // 
-            this.orderToolStripMenuItem.Name = "orderToolStripMenuItem";
-            this.orderToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
-            this.orderToolStripMenuItem.Text = "&Order";
-            this.orderToolStripMenuItem.Click += new System.EventHandler(this.miSamplesSetOrder_Click);
             // 
             // projectToolStripMenuItem
             // 
@@ -8664,6 +8650,16 @@
             this.splitContainer2.SplitterDistance = 427;
             this.splitContainer2.TabIndex = 4;
             // 
+            // panel31
+            // 
+            this.panel31.Controls.Add(this.treePrepAnal);
+            this.panel31.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel31.Location = new System.Drawing.Point(0, 0);
+            this.panel31.Name = "panel31";
+            this.panel31.Padding = new System.Windows.Forms.Padding(12);
+            this.panel31.Size = new System.Drawing.Size(427, 583);
+            this.panel31.TabIndex = 1;
+            // 
             // treePrepAnal
             // 
             this.treePrepAnal.BackColor = System.Drawing.SystemColors.ButtonFace;
@@ -10059,15 +10055,21 @@
             this.lblCurrentTab.Size = new System.Drawing.Size(98, 22);
             this.lblCurrentTab.Text = "<lblCurrentTab>";
             // 
-            // panel31
+            // toolStripButton8
             // 
-            this.panel31.Controls.Add(this.treePrepAnal);
-            this.panel31.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel31.Location = new System.Drawing.Point(0, 0);
-            this.panel31.Name = "panel31";
-            this.panel31.Padding = new System.Windows.Forms.Padding(12);
-            this.panel31.Size = new System.Drawing.Size(427, 583);
-            this.panel31.TabIndex = 1;
+            this.toolStripButton8.Image = global::DSA_lims.Properties.Resources._new;
+            this.toolStripButton8.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton8.Name = "toolStripButton8";
+            this.toolStripButton8.Size = new System.Drawing.Size(94, 22);
+            this.toolStripButton8.Text = "Add to order";
+            this.toolStripButton8.Click += new System.EventHandler(this.miSamplesSetOrder_Click);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(212, 22);
+            this.toolStripMenuItem1.Text = "Add to order";
+            this.toolStripMenuItem1.Click += new System.EventHandler(this.miSamplesSetOrder_Click);
             // 
             // FormMain
             // 
@@ -10455,6 +10457,7 @@
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
+            this.panel31.ResumeLayout(false);
             this.tabsPrepAnal.ResumeLayout(false);
             this.tabPrepAnalParams.ResumeLayout(false);
             this.splitContainer4.Panel1.ResumeLayout(false);
@@ -10560,7 +10563,6 @@
             this.toolStrip7.PerformLayout();
             this.tools.ResumeLayout(false);
             this.tools.PerformLayout();
-            this.panel31.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -11181,7 +11183,6 @@
         private System.Windows.Forms.ToolStripButton toolStripButton98;
         private System.Windows.Forms.ToolStripButton toolStripButton105;
         private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton2;
-        private System.Windows.Forms.ToolStripMenuItem orderToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem projectToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem customerToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem samplerToolStripMenuItem1;
@@ -11295,7 +11296,6 @@
         private System.Windows.Forms.ToolStripMenuItem miSamplesMerge;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator49;
         private System.Windows.Forms.ToolStripMenuItem miSamplesSet;
-        private System.Windows.Forms.ToolStripMenuItem miSamplesSetOrder;
         private System.Windows.Forms.ToolStripMenuItem miSamplesSetProject;
         private System.Windows.Forms.ToolStripMenuItem miSamplesSetCustomer;
         private System.Windows.Forms.ToolStripMenuItem miSamplesSetSampler;
@@ -11438,6 +11438,8 @@
         private System.Windows.Forms.TreeView treePrepAnal;
         private System.Windows.Forms.SplitContainer splitContainer4;
         private System.Windows.Forms.Panel panel31;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripButton toolStripButton8;
     }
 }
 

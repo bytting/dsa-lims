@@ -1393,7 +1393,7 @@ as
 		inner join account acc on a.account_id = acc.username
 		inner join instance_status insta on a.instance_status_id = insta.id
 	where a.instance_status_id <= @instance_status_level
-	order by a.create_date
+	order by a.create_date desc
 go
 
 /*===========================================================================*/
@@ -3084,8 +3084,7 @@ create table sample (
 	station_id uniqueidentifier default NULL,
 	sampler_id uniqueidentifier default NULL,
 	transform_from_id uniqueidentifier default NULL,	
-	transform_to_id uniqueidentifier default NULL,	
-	current_order_id uniqueidentifier default NULL,
+	transform_to_id uniqueidentifier default NULL,		
 	imported_from nvarchar(128) default NULL,
 	imported_from_id nvarchar(128) default NULL,		
 	municipality_id uniqueidentifier default NULL,
@@ -3125,8 +3124,7 @@ create proc csp_insert_sample
 	@station_id uniqueidentifier,
 	@sampler_id uniqueidentifier,
 	@transform_from_id uniqueidentifier,	
-	@transform_to_id uniqueidentifier,	
-	@current_order_id uniqueidentifier,
+	@transform_to_id uniqueidentifier,		
 	@imported_from nvarchar(128),
 	@imported_from_id nvarchar(128),		
 	@municipality_id uniqueidentifier,
@@ -3170,8 +3168,7 @@ as
 		@station_id,
 		@sampler_id,
 		@transform_from_id,	
-		@transform_to_id,	
-		@current_order_id ,
+		@transform_to_id,			
 		@imported_from,
 		@imported_from_id,		
 		@municipality_id,
@@ -3232,7 +3229,6 @@ as
 		sa.name as 'sampler_name',
 		(select number from sample where id = s.transform_from_id) as 'split_parent',	
 		(select number from sample where id = s.transform_to_id) as 'merge_child',
-		ass.name as 'current_order_name',
 		s.imported_from,
 		s.imported_from_id,		
 		co.name as 'county_name',
@@ -3269,7 +3265,6 @@ as
 		inner join project_main pm on pm.id = ps.project_main_id
 		left outer join station sta on s.station_id = sta.id
 		left outer join sampler sa on s.sampler_id = sa.id
-		left outer join assignment ass on s.current_order_id = ass.id
 		left outer join municipality mun on s.municipality_id = mun.id
 		left outer join county co on mun.county_id = co.id
 		inner join instance_status insta on s.instance_status_id = insta.id
@@ -3289,7 +3284,6 @@ as
 		sc.name as 'sample_component_name',		
 		pm.name + ' - ' + ps.name as 'project_name',
 		ss.name as 'sample_storage_name',
-		ass.name as 'current_order_name',
 		s.reference_date,		
 		insta.name as 'instance_status_name'		
 	from sample s 
@@ -3298,8 +3292,7 @@ as
 		left outer join sample_storage ss on s.sample_storage_id = ss.id
 		left outer join sample_component sc on s.sample_component_id = sc.id
 		inner join project_sub ps on s.project_sub_id = ps.id
-		inner join project_main pm on pm.id = ps.project_main_id				
-		left outer join assignment ass on s.current_order_id = ass.id		
+		inner join project_main pm on pm.id = ps.project_main_id
 		inner join instance_status insta on s.instance_status_id = insta.id
 	where s.instance_status_id <= @instance_status_level
 	order by s.create_date desc

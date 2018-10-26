@@ -559,7 +559,6 @@ namespace DSA_lims
             grid.Columns["sample_component_name"].HeaderText = "Component";
             grid.Columns["project_name"].HeaderText = "Project";
             grid.Columns["sample_storage_name"].HeaderText = "Storage";
-            grid.Columns["current_order_name"].HeaderText = "Order";
             grid.Columns["reference_date"].HeaderText = "Ref.date";
             grid.Columns["instance_status_name"].HeaderText = "Status";
 

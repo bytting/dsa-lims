@@ -3211,6 +3211,59 @@ as
 	return
 go
 
+create proc csp_update_sample
+	@id uniqueidentifier,	
+	@laboratory_id uniqueidentifier,	
+	@sample_type_id uniqueidentifier,	
+	@sample_storage_id uniqueidentifier,
+	@sample_component_id uniqueidentifier,
+	@project_sub_id uniqueidentifier,
+	@station_id uniqueidentifier,
+	@sampler_id uniqueidentifier,
+	@sampling_method_id uniqueidentifier,	
+	@municipality_id uniqueidentifier,
+	@location_type nvarchar(50),
+	@location nvarchar(128),	
+	@latitude float,
+	@longitude float,
+	@altitude float,
+	@sampling_date_from datetime,
+	@sampling_date_to datetime,
+	@reference_date datetime,
+	@external_id nvarchar(128),	
+	@confidential bit,		
+	@instance_status_id int,	
+	@comment nvarchar(1000),
+	@update_date datetime,
+	@updated_by nvarchar(50)	
+as 		
+	update sample set		
+		laboratory_id = @laboratory_id,	
+		sample_type_id = @sample_type_id,	
+		sample_storage_id = @sample_storage_id,
+		sample_component_id = @sample_component_id,
+		project_sub_id = @project_sub_id,
+		station_id = @station_id,
+		sampler_id = @sampler_id,
+		sampling_method_id = @sampling_method_id,	
+		municipality_id = @municipality_id,
+		location_type = @location_type,
+		location = @location,	
+		latitude = @latitude,
+		longitude = @longitude,
+		altitude = @altitude,
+		sampling_date_from = @sampling_date_from,
+		sampling_date_to = @sampling_date_to,
+		reference_date = @reference_date,
+		external_id = @external_id,	
+		confidential = @confidential,			
+		instance_status_id = @instance_status_id,	
+		comment = @comment,
+		update_date = @update_date,
+		updated_by = @updated_by		
+	where id = @id
+go
+
 create proc csp_select_sample
 	@id uniqueidentifier
 as

@@ -561,6 +561,7 @@ namespace DSA_lims
             grid.Columns["sample_storage_name"].HeaderText = "Storage";
             grid.Columns["reference_date"].HeaderText = "Ref.date";
             grid.Columns["instance_status_name"].HeaderText = "Status";
+            grid.Columns["locked_by"].HeaderText = "Locked by";
 
             grid.Columns["reference_date"].DefaultCellStyle.Format = StrUtils.DateTimeFormatNorwegian;
         }
@@ -909,6 +910,7 @@ order by name";
             grid.Columns["closed_date"].HeaderText = "Closed at";
             grid.Columns["closed_by"].HeaderText = "Closed by";
             grid.Columns["instance_status_name"].HeaderText = "Status";
+            grid.Columns["locked_by"].HeaderText = "Locked by";
 
             grid.Columns["deadline"].DefaultCellStyle.Format = StrUtils.DateFormatNorwegian;
         }

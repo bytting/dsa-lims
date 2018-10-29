@@ -41,6 +41,7 @@ namespace DSA_lims
         private ResourceManager r = null;
 
         private Guid selectedOrder = Guid.Empty;
+        private Guid selectedSample = Guid.Empty;
 
         public FormMain()
         {
@@ -278,7 +279,7 @@ namespace DSA_lims
 
         private void tabs_SelectedIndexChanged(object sender, EventArgs e)
         {
-            lblCurrentTab.Text = tabs.SelectedTab.Text;
+            lblCurrentTab.Text = tabs.SelectedTab.Text;            
 
             HideMenuItems();
 
@@ -290,6 +291,9 @@ namespace DSA_lims
             else if (tabs.SelectedTab == tabSample)
             {
                 miSample.Visible = true;
+                if (selectedSample == Guid.Empty)
+                    btnSampleSave.Text = "Save";
+                else btnSampleSave.Text = "Update";
             }
             else if (tabs.SelectedTab == tabOrder)
             {
@@ -455,58 +459,68 @@ namespace DSA_lims
             {
                 using (SqlConnection conn = DB.OpenConnection())
                 {
-                    SqlParameter sampleNumber = new SqlParameter("@number", SqlDbType.Int) { Direction = ParameterDirection.Output };
+                    if (selectedSample == Guid.Empty)
+                    {
+                        // create new sample
+                        SqlParameter sampleNumber = new SqlParameter("@number", SqlDbType.Int) { Direction = ParameterDirection.Output };
 
-                    SqlCommand cmd = new SqlCommand("csp_insert_sample", conn);
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@id", Guid.NewGuid());
-                    cmd.Parameters.AddWithValue("@laboratory_id", Lemma<Guid, string>.IdParam(cboxSampleLaboratory.SelectedItem));
-                    cmd.Parameters.AddWithValue("@sample_type_id", Lemma<Guid, string>.IdParam(cboxSampleSampleType.SelectedItem));
-                    cmd.Parameters.AddWithValue("@sample_storage_id", Lemma<Guid, string>.IdParam(cboxSampleSampleStorage.SelectedItem));
-                    cmd.Parameters.AddWithValue("@sample_component_id", Lemma<Guid, string>.IdParam(cboxSampleSampleComponent.SelectedItem));
-                    cmd.Parameters.AddWithValue("@project_sub_id", Lemma<Guid, string>.IdParam(cboxSampleSubProject.SelectedItem));
-                    cmd.Parameters.AddWithValue("@station_id", Lemma<Guid, string>.IdParam(cboxSampleInfoStations.SelectedItem));
-                    cmd.Parameters.AddWithValue("@sampler_id", Lemma<Guid, string>.IdParam(cboxSampleInfoSampler.SelectedItem));
-                    cmd.Parameters.AddWithValue("@sampling_method_id", Lemma<Guid, string>.IdParam(cboxSampleInfoSamplingMeth.SelectedItem));
-                    cmd.Parameters.AddWithValue("@transform_from_id", Guid.Empty);
-                    cmd.Parameters.AddWithValue("@transform_to_id", Guid.Empty);
-                    cmd.Parameters.AddWithValue("@imported_from", DBNull.Value);
-                    cmd.Parameters.AddWithValue("@imported_from_id", DBNull.Value);
-                    cmd.Parameters.AddWithValue("@municipality_id", Lemma<Guid, string>.IdParam(cboxSampleMunicipalities.SelectedItem));
-                    cmd.Parameters.AddWithValue("@location_type", DB.MakeParam(typeof(string), cboxSampleInfoLocationTypes.Text));
-                    cmd.Parameters.AddWithValue("@location", DB.MakeParam(typeof(string), tbSampleLocation.Text.Trim()));
-                    cmd.Parameters.AddWithValue("@latitude", DB.MakeParam(typeof(double), tbSampleInfoLatitude.Text.Trim()));
-                    cmd.Parameters.AddWithValue("@longitude", DB.MakeParam(typeof(double), tbSampleInfoLongitude.Text.Trim()));
-                    cmd.Parameters.AddWithValue("@altitude", DB.MakeParam(typeof(double), tbSampleInfoAltitude.Text.Trim()));
-                    cmd.Parameters.AddWithValue("@sampling_date_from", new DateTime(dtSampleSamplingDateFrom.Value.Year, dtSampleSamplingDateFrom.Value.Month, dtSampleSamplingDateFrom.Value.Day, dtSampleSamplingTimeFrom.Value.Hour, dtSampleSamplingTimeFrom.Value.Minute, dtSampleSamplingTimeFrom.Value.Second));
-                    cmd.Parameters.AddWithValue("@sampling_date_to", new DateTime(dtSampleSamplingDateTo.Value.Year, dtSampleSamplingDateTo.Value.Month, dtSampleSamplingDateTo.Value.Day, dtSampleSamplingTimeTo.Value.Hour, dtSampleSamplingTimeTo.Value.Minute, dtSampleSamplingTimeTo.Value.Second));
-                    cmd.Parameters.AddWithValue("@reference_date", new DateTime(dtSampleReferenceDate.Value.Year, dtSampleReferenceDate.Value.Month, dtSampleReferenceDate.Value.Day, dtSampleReferenceTime.Value.Hour, dtSampleReferenceTime.Value.Minute, dtSampleReferenceTime.Value.Second));
-                    cmd.Parameters.AddWithValue("@external_id", DB.MakeParam(typeof(string), tbSampleExId.Text.Trim()));
-                    cmd.Parameters.AddWithValue("@wet_weight_g", DBNull.Value);
-                    cmd.Parameters.AddWithValue("@dry_weight_g", DBNull.Value);
-                    cmd.Parameters.AddWithValue("@volume_l", DBNull.Value);
-                    cmd.Parameters.AddWithValue("@lod_weight_start", DBNull.Value);
-                    cmd.Parameters.AddWithValue("@lod_weight_end", DBNull.Value);
-                    cmd.Parameters.AddWithValue("@lod_temperature", DBNull.Value);
-                    cmd.Parameters.AddWithValue("@confidential", cbSampleConfidential.Checked ? 1 : 0);
-                    cmd.Parameters.AddWithValue("@parameters", DBNull.Value);
-                    cmd.Parameters.AddWithValue("@instance_status_id", InstanceStatus.Active);
-                    cmd.Parameters.AddWithValue("@comment", tbSampleComment.Text.Trim());
-                    cmd.Parameters.AddWithValue("@create_date", DateTime.Now);
-                    cmd.Parameters.AddWithValue("@created_by", Common.Username);
-                    cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
-                    cmd.Parameters.AddWithValue("@updated_by", Common.Username);
-                    cmd.Parameters.Add(sampleNumber);
+                        SqlCommand cmd = new SqlCommand("csp_insert_sample", conn);
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@id", Guid.NewGuid());
+                        cmd.Parameters.AddWithValue("@laboratory_id", Lemma<Guid, string>.IdParam(cboxSampleLaboratory.SelectedItem));
+                        cmd.Parameters.AddWithValue("@sample_type_id", Lemma<Guid, string>.IdParam(cboxSampleSampleType.SelectedItem));
+                        cmd.Parameters.AddWithValue("@sample_storage_id", Lemma<Guid, string>.IdParam(cboxSampleSampleStorage.SelectedItem));
+                        cmd.Parameters.AddWithValue("@sample_component_id", Lemma<Guid, string>.IdParam(cboxSampleSampleComponent.SelectedItem));
+                        cmd.Parameters.AddWithValue("@project_sub_id", Lemma<Guid, string>.IdParam(cboxSampleSubProject.SelectedItem));
+                        cmd.Parameters.AddWithValue("@station_id", Lemma<Guid, string>.IdParam(cboxSampleInfoStations.SelectedItem));
+                        cmd.Parameters.AddWithValue("@sampler_id", Lemma<Guid, string>.IdParam(cboxSampleInfoSampler.SelectedItem));
+                        cmd.Parameters.AddWithValue("@sampling_method_id", Lemma<Guid, string>.IdParam(cboxSampleInfoSamplingMeth.SelectedItem));
+                        cmd.Parameters.AddWithValue("@transform_from_id", Guid.Empty);
+                        cmd.Parameters.AddWithValue("@transform_to_id", Guid.Empty);
+                        cmd.Parameters.AddWithValue("@imported_from", DBNull.Value);
+                        cmd.Parameters.AddWithValue("@imported_from_id", DBNull.Value);
+                        cmd.Parameters.AddWithValue("@municipality_id", Lemma<Guid, string>.IdParam(cboxSampleMunicipalities.SelectedItem));
+                        cmd.Parameters.AddWithValue("@location_type", DB.MakeParam(typeof(string), cboxSampleInfoLocationTypes.Text));
+                        cmd.Parameters.AddWithValue("@location", DB.MakeParam(typeof(string), tbSampleLocation.Text.Trim()));
+                        cmd.Parameters.AddWithValue("@latitude", DB.MakeParam(typeof(double), tbSampleInfoLatitude.Text.Trim()));
+                        cmd.Parameters.AddWithValue("@longitude", DB.MakeParam(typeof(double), tbSampleInfoLongitude.Text.Trim()));
+                        cmd.Parameters.AddWithValue("@altitude", DB.MakeParam(typeof(double), tbSampleInfoAltitude.Text.Trim()));
+                        cmd.Parameters.AddWithValue("@sampling_date_from", new DateTime(dtSampleSamplingDateFrom.Value.Year, dtSampleSamplingDateFrom.Value.Month, dtSampleSamplingDateFrom.Value.Day, dtSampleSamplingTimeFrom.Value.Hour, dtSampleSamplingTimeFrom.Value.Minute, dtSampleSamplingTimeFrom.Value.Second));
+                        cmd.Parameters.AddWithValue("@sampling_date_to", new DateTime(dtSampleSamplingDateTo.Value.Year, dtSampleSamplingDateTo.Value.Month, dtSampleSamplingDateTo.Value.Day, dtSampleSamplingTimeTo.Value.Hour, dtSampleSamplingTimeTo.Value.Minute, dtSampleSamplingTimeTo.Value.Second));
+                        cmd.Parameters.AddWithValue("@reference_date", new DateTime(dtSampleReferenceDate.Value.Year, dtSampleReferenceDate.Value.Month, dtSampleReferenceDate.Value.Day, dtSampleReferenceTime.Value.Hour, dtSampleReferenceTime.Value.Minute, dtSampleReferenceTime.Value.Second));
+                        cmd.Parameters.AddWithValue("@external_id", DB.MakeParam(typeof(string), tbSampleExId.Text.Trim()));
+                        cmd.Parameters.AddWithValue("@wet_weight_g", DBNull.Value);
+                        cmd.Parameters.AddWithValue("@dry_weight_g", DBNull.Value);
+                        cmd.Parameters.AddWithValue("@volume_l", DBNull.Value);
+                        cmd.Parameters.AddWithValue("@lod_weight_start", DBNull.Value);
+                        cmd.Parameters.AddWithValue("@lod_weight_end", DBNull.Value);
+                        cmd.Parameters.AddWithValue("@lod_temperature", DBNull.Value);
+                        cmd.Parameters.AddWithValue("@confidential", cbSampleConfidential.Checked ? 1 : 0);
+                        cmd.Parameters.AddWithValue("@parameters", DBNull.Value);
+                        cmd.Parameters.AddWithValue("@instance_status_id", InstanceStatus.Active);
+                        cmd.Parameters.AddWithValue("@locked_by", DBNull.Value);
+                        cmd.Parameters.AddWithValue("@comment", tbSampleComment.Text.Trim());
+                        cmd.Parameters.AddWithValue("@create_date", DateTime.Now);
+                        cmd.Parameters.AddWithValue("@created_by", Common.Username);
+                        cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
+                        cmd.Parameters.AddWithValue("@updated_by", Common.Username);
+                        cmd.Parameters.Add(sampleNumber);
 
-                    cmd.ExecuteNonQuery();
-                    
-                    lblStatus.Text = StrUtils.makeStatusMessage("Sample " + sampleNumber.Value.ToString() + " created");
+                        cmd.ExecuteNonQuery();
+
+                        lblStatus.Text = StrUtils.makeStatusMessage("Sample " + sampleNumber.Value.ToString() + " created");                        
+
+                        tbSamplesLookup.Text = sampleNumber.Value.ToString();
+                    }
+                    else
+                    {
+                        // update selected sample
+                        // TODO
+                    }
 
                     UI.PopulateSamples(conn, gridSamples);
 
                     tabs.SelectedTab = tabSamples;
-
-                    tbSamplesLookup.Text = sampleNumber.Value.ToString();                    
                 }
             }
             catch(Exception ex)
@@ -1390,6 +1404,8 @@ namespace DSA_lims
         private void miSamplesNew_Click(object sender, EventArgs e)
         {
             // new sample
+            selectedSample = Guid.Empty;
+
             ClearSampleInfo();
 
             tabs.SelectedTab = tabSample;
@@ -1443,11 +1459,11 @@ namespace DSA_lims
                 return;
             }
 
-            Guid sampleId = Guid.Parse(gridSamples.SelectedRows[0].Cells["id"].Value.ToString());
+            selectedSample = Guid.Parse(gridSamples.SelectedRows[0].Cells["id"].Value.ToString());
 
             ClearSampleInfo();
 
-            PopulateSample(sampleId);
+            PopulateSample(selectedSample);
 
             tabs.SelectedTab = tabSample;
         }
@@ -2174,6 +2190,7 @@ order by name
         private void miOrdersNew_Click(object sender, EventArgs e)
         {
             // create new order
+            selectedOrder = Guid.Empty;
             SetOrderEditingState(false);
 
             tabs.SelectedTab = tabOrder;
@@ -2188,7 +2205,7 @@ order by name
                 return;
             }
 
-            selectedOrder = new Guid(gridOrders.SelectedRows[0].Cells["id"].Value.ToString());
+            selectedOrder = Guid.Parse(gridOrders.SelectedRows[0].Cells["id"].Value.ToString());
             tbOrderName.Text = gridOrders.SelectedRows[0].Cells["name"].Value.ToString();
             using (SqlConnection conn = DB.OpenConnection())
             {
@@ -2353,8 +2370,9 @@ order by name
                     cmd.Parameters.AddWithValue("@content_comment", DBNull.Value);
                     cmd.Parameters.AddWithValue("@report_comment", DBNull.Value);
                     cmd.Parameters.AddWithValue("@closed_date", DBNull.Value);
-                    cmd.Parameters.AddWithValue("@closed_by", DBNull.Value);                    
+                    cmd.Parameters.AddWithValue("@closed_by", DBNull.Value);
                     cmd.Parameters.AddWithValue("@instance_status_id", InstanceStatus.Active);
+                    cmd.Parameters.AddWithValue("@locked_by", DBNull.Value);
                     cmd.Parameters.AddWithValue("@create_date", DateTime.Now);
                     cmd.Parameters.AddWithValue("@created_by", Common.Username);
                     cmd.Parameters.AddWithValue("@update_date", DateTime.Now);

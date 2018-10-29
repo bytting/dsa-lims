@@ -3080,6 +3080,7 @@ create table sample (
 	project_sub_id uniqueidentifier NOT NULL,
 	station_id uniqueidentifier default NULL,
 	sampler_id uniqueidentifier default NULL,
+	sampling_method_id uniqueidentifier default NULL,
 	transform_from_id uniqueidentifier default NULL,	
 	transform_to_id uniqueidentifier default NULL,		
 	imported_from nvarchar(128) default NULL,
@@ -3120,6 +3121,7 @@ create proc csp_insert_sample
 	@project_sub_id uniqueidentifier,
 	@station_id uniqueidentifier,
 	@sampler_id uniqueidentifier,
+	@sampling_method_id uniqueidentifier,
 	@transform_from_id uniqueidentifier,	
 	@transform_to_id uniqueidentifier,		
 	@imported_from nvarchar(128),
@@ -3164,6 +3166,7 @@ as
 		@project_sub_id,
 		@station_id,
 		@sampler_id,
+		@sampling_method_id,
 		@transform_from_id,	
 		@transform_to_id,			
 		@imported_from,
@@ -3201,6 +3204,14 @@ as
 	return
 go
 
+create proc csp_select_sample
+	@id uniqueidentifier
+as
+	select * 
+	from sample 
+	where id = @id
+go
+
 create proc csp_select_samples
 	@instance_status_level int
 as
@@ -3224,6 +3235,7 @@ as
 		ps.name as 'project_sub_name',
 		sta.name as 'station_name',
 		sa.name as 'sampler_name',
+		sm.name as 'sampling_method_name',
 		(select number from sample where id = s.transform_from_id) as 'split_parent',	
 		(select number from sample where id = s.transform_to_id) as 'merge_child',
 		s.imported_from,
@@ -3262,6 +3274,7 @@ as
 		inner join project_main pm on pm.id = ps.project_main_id
 		left outer join station sta on s.station_id = sta.id
 		left outer join sampler sa on s.sampler_id = sa.id
+		left outer join sampling_method sm on s.sampling_method_id = sm.id
 		left outer join municipality mun on s.municipality_id = mun.id
 		left outer join county co on mun.county_id = co.id
 		inner join instance_status insta on s.instance_status_id = insta.id

@@ -467,6 +467,7 @@ namespace DSA_lims
                     cmd.Parameters.AddWithValue("@project_sub_id", Lemma<Guid, string>.IdParam(cboxSampleSubProject.SelectedItem));
                     cmd.Parameters.AddWithValue("@station_id", Lemma<Guid, string>.IdParam(cboxSampleInfoStations.SelectedItem));
                     cmd.Parameters.AddWithValue("@sampler_id", Lemma<Guid, string>.IdParam(cboxSampleInfoSampler.SelectedItem));
+                    cmd.Parameters.AddWithValue("@sampling_method_id", Lemma<Guid, string>.IdParam(cboxSampleInfoSamplingMeth.SelectedItem));
                     cmd.Parameters.AddWithValue("@transform_from_id", Guid.Empty);
                     cmd.Parameters.AddWithValue("@transform_to_id", Guid.Empty);
                     cmd.Parameters.AddWithValue("@imported_from", DBNull.Value);
@@ -1389,6 +1390,8 @@ namespace DSA_lims
         private void miSamplesNew_Click(object sender, EventArgs e)
         {
             // new sample
+            ClearSampleInfo();
+
             tabs.SelectedTab = tabSample;
         }
 
@@ -1397,9 +1400,196 @@ namespace DSA_lims
             // Import sample from excel
         }
 
+        private void ClearSampleInfo()
+        {
+            cboxSampleSampleType.SelectedIndex = -1;
+            cboxSampleSampleComponent.SelectedIndex = -1;
+            cboxSampleInfoSampler.SelectedIndex = -1;
+            cboxSampleInfoSamplingMeth.SelectedIndex = -1;
+            cboxSampleProject.SelectedIndex = -1;
+            cboxSampleSubProject.SelectedIndex = -1;
+            cboxSampleInfoStations.SelectedIndex = -1;
+            tbSampleInfoLatitude.Text = "";
+            tbSampleInfoLongitude.Text = "";
+            tbSampleInfoAltitude.Text = "";
+            cboxSampleCounties.SelectedIndex = -1;
+            cboxSampleMunicipalities.SelectedIndex = -1;
+            cboxSampleInfoLocationTypes.SelectedIndex = -1;
+            tbSampleLocation.Text = "";
+            cboxSampleLaboratory.SelectedIndex = -1;
+            DateTime now = DateTime.Now;
+            dtSampleSamplingDateFrom.Value = now;
+            dtSampleSamplingTimeFrom.Value = new DateTime(now.Year, now.Month, now.Day, 12, 0, 0);
+            dtSampleSamplingDateTo.Value = now;
+            dtSampleSamplingTimeTo.Value = new DateTime(now.Year, now.Month, now.Day, 12, 0, 0);
+            cbSampleUseSamplingTimeTo.Checked = false;
+            dtSampleSamplingDateTo.Enabled = false;
+            dtSampleSamplingTimeTo.Enabled = false;
+            dtSampleReferenceDate.Value = now;
+            dtSampleReferenceTime.Value = new DateTime(now.Year, now.Month, now.Day, 12, 0, 0);
+            tbSampleExId.Text = "";
+            cbSampleConfidential.Checked = false;
+            cboxSampleSampleStorage.SelectedIndex = -1;
+            tbSampleComment.Text = "";
+            gridSampleAttachments.DataSource = null;
+        }
+
         private void miSamplesEdit_Click(object sender, EventArgs e)
         {
             // edit sample
+            if(gridSamples.SelectedRows.Count < 1)
+            {
+                MessageBox.Show("You must select a sample first");
+                return;
+            }
+
+            Guid sampleId = Guid.Parse(gridSamples.SelectedRows[0].Cells["id"].Value.ToString());
+
+            ClearSampleInfo();
+
+            PopulateSample(sampleId);
+
+            tabs.SelectedTab = tabSample;
+        }
+
+        private void PopulateSample(Guid sampleId)
+        {
+            Dictionary<string, object> map = new Dictionary<string, object>();
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_sample", CommandType.StoredProcedure,
+                    new SqlParameter("@id", sampleId)))
+                {
+                    if (!reader.HasRows)
+                    {
+                        Common.Log.Error("Sample with ID " + sampleId.ToString() + " was not found");
+                        MessageBox.Show("Sample with ID " + sampleId.ToString() + " was not found");
+                        return;
+                    }
+
+                    reader.Read();
+
+                    map["id"] = reader["id"];
+                    map["number"] = reader["number"];
+                    map["laboratory_id"] = reader["laboratory_id"];
+                    map["sample_type_id"] = reader["sample_type_id"];
+                    map["sample_storage_id"] = reader["sample_storage_id"];
+                    map["sample_component_id"] = reader["sample_component_id"];
+                    map["project_sub_id"] = reader["project_sub_id"];
+                    map["station_id"] = reader["station_id"];
+                    map["sampler_id"] = reader["sampler_id"];
+                    map["sampling_method_id"] = reader["sampling_method_id"];
+                    map["transform_from_id"] = reader["transform_from_id"];
+                    map["transform_to_id"] = reader["transform_to_id"];
+                    map["imported_from"] = reader["imported_from"];
+                    map["imported_from_id"] = reader["imported_from_id"];
+                    map["municipality_id"] = reader["municipality_id"];
+                    map["location_type"] = reader["location_type"];
+                    map["location"] = reader["location"];
+                    map["latitude"] = reader["latitude"];
+                    map["longitude"] = reader["longitude"];
+                    map["altitude"] = reader["altitude"];
+                    map["sampling_date_from"] = reader["sampling_date_from"];
+                    map["sampling_date_to"] = reader["sampling_date_to"];
+                    map["reference_date"] = reader["reference_date"];
+                    map["external_id"] = reader["external_id"];
+                    map["wet_weight_g"] = reader["wet_weight_g"];
+                    map["dry_weight_g"] = reader["dry_weight_g"];
+                    map["volume_l"] = reader["volume_l"];
+                    map["lod_weight_start"] = reader["lod_weight_start"];
+                    map["lod_weight_end"] = reader["lod_weight_end"];
+                    map["lod_temperature"] = reader["lod_temperature"];
+                    map["confidential"] = reader["confidential"];
+                    map["parameters"] = reader["parameters"];
+                    map["instance_status_id"] = reader["instance_status_id"];
+                    map["comment"] = reader["comment"];
+                    map["create_date"] = reader["create_date"];
+                    map["created_by"] = reader["created_by"];
+                    map["update_date"] = reader["update_date"];
+                    map["updated_by"] = reader["updated_by"];
+                }                
+
+                SetCboxItem(cboxSampleSampleType, map, "sample_type_id");
+                SetCboxItem(cboxSampleSampleComponent, map, "sample_component_id");
+                SetCboxItem(cboxSampleInfoSampler, map, "sampler_id");
+                SetCboxItem(cboxSampleInfoSamplingMeth, map, "sampling_method_id");
+
+                if (map["project_sub_id"] != DBNull.Value)
+                {
+                    object o = DB.GetScalar(conn, "select project_main_id from project_sub where id = @id", CommandType.Text, new SqlParameter("@id", map["project_sub_id"]));
+                    Guid projectId = Guid.Parse(o.ToString());
+                    SetCboxItem(cboxSampleProject, map, projectId);
+                    SetCboxItem(cboxSampleSubProject, map, "project_sub_id");
+                }
+
+                SetCboxItem(cboxSampleInfoStations, map, "station_id");
+
+                if (map["municipality_id"] != DBNull.Value)
+                {
+                    object o = DB.GetScalar(conn, "select county_id from municipality where id = @id", CommandType.Text, new SqlParameter("@id", map["municipality_id"]));
+                    Guid municipalityId = Guid.Parse(o.ToString());
+                    SetCboxItem(cboxSampleCounties, map, municipalityId);
+                    SetCboxItem(cboxSampleMunicipalities, map, "municipality_id");
+                }
+
+                cboxSampleInfoLocationTypes.Text = map["location_type"].ToString();
+                tbSampleLocation.Text = map["location"].ToString();
+
+                SetCboxItem(cboxSampleLaboratory, map, "laboratory_id");
+
+                DateTime samplingDateFrom = Convert.ToDateTime(map["sampling_date_from"]);
+                DateTime samplingDateTo = Convert.ToDateTime(map["sampling_date_to"]);
+                DateTime referenceDate = Convert.ToDateTime(map["reference_date"]);
+                dtSampleSamplingDateFrom.Value = dtSampleSamplingTimeFrom.Value = samplingDateFrom;
+                dtSampleSamplingDateTo.Value = dtSampleSamplingTimeTo.Value = samplingDateTo;                
+                dtSampleReferenceDate.Value = dtSampleReferenceTime.Value = referenceDate;
+
+                tbSampleExId.Text = map["external_id"].ToString();
+                cbSampleConfidential.Checked = Convert.ToBoolean(map["confidential"]);
+
+                SetCboxItem(cboxSampleSampleStorage, map, "sample_storage_id");
+
+                tbSampleComment.Text = map["comment"].ToString();
+            }            
+        }
+
+        private void SetCboxItem(ComboBox cbox, Dictionary<string, object> map, string field)
+        {
+            cbox.SelectedIndex = -1;
+
+            if (map[field] != DBNull.Value)
+            {                
+                Guid id = Guid.Parse(map[field].ToString());
+                foreach (Lemma<Guid, string> l in cbox.Items)
+                {
+                    if (l.Id == id)
+                    {
+                        cbox.SelectedItem = l;
+                        break;
+                    }
+                }
+            }
+        }
+
+        private void SetCboxItem(ComboBox cbox, Dictionary<string, object> map, Guid id)
+        {
+            cbox.SelectedIndex = -1;
+                        
+            foreach (Lemma<Guid, string> l in cbox.Items)
+            {
+                if (l.Id == id)
+                {
+                    cbox.SelectedItem = l;
+                    break;
+                }
+            }
+        }
+
+        private void cbSampleUseSamplingTimeTo_CheckedChanged(object sender, EventArgs e)
+        {
+            dtSampleSamplingDateTo.Enabled = cbSampleUseSamplingTimeTo.Checked;
+            dtSampleSamplingTimeTo.Enabled = cbSampleUseSamplingTimeTo.Checked;
         }
 
         private void miSamplesDelete_Click(object sender, EventArgs e)
@@ -2448,6 +2638,6 @@ order by name
         private void treeSampleTypes_DrawNode(object sender, DrawTreeNodeEventArgs e)
         {
             TreeDrawNode(e);
-        }
+        }        
     }    
 }

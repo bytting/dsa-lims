@@ -93,6 +93,7 @@
             this.miSamplesSplit = new System.Windows.Forms.ToolStripMenuItem();
             this.miSamplesMerge = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator49 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.miSamplesSet = new System.Windows.Forms.ToolStripMenuItem();
             this.miSamplesSetProject = new System.Windows.Forms.ToolStripMenuItem();
             this.miSamplesSetCustomer = new System.Windows.Forms.ToolStripMenuItem();
@@ -209,7 +210,7 @@
             this.toolStrip3 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel61 = new System.Windows.Forms.ToolStripLabel();
             this.panelSamplesAttachments = new System.Windows.Forms.Panel();
-            this.dataGridView2 = new System.Windows.Forms.DataGridView();
+            this.gridSampleAttachments = new System.Windows.Forms.DataGridView();
             this.toolsSampleSampInfoAttachments = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel18 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator46 = new System.Windows.Forms.ToolStripSeparator();
@@ -244,7 +245,7 @@
             this.cboxSampleCounties = new System.Windows.Forms.ComboBox();
             this.cboxSampleInfoLocationTypes = new System.Windows.Forms.ComboBox();
             this.label50 = new System.Windows.Forms.Label();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.cbSampleUseSamplingTimeTo = new System.Windows.Forms.CheckBox();
             this.tbSampleLocation = new System.Windows.Forms.TextBox();
             this.panel22 = new System.Windows.Forms.Panel();
             this.cboxSampleSampleType = new System.Windows.Forms.ComboBox();
@@ -448,12 +449,13 @@
             this.toolStripButton99 = new System.Windows.Forms.ToolStripButton();
             this.toolStripDropDownButton3 = new System.Windows.Forms.ToolStripDropDownButton();
             this.excelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripButton103 = new System.Windows.Forms.ToolStripButton();
+            this.btnSamplesEdit = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton104 = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator47 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton98 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton105 = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator45 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButton8 = new System.Windows.Forms.ToolStripButton();
             this.toolStripDropDownButton2 = new System.Windows.Forms.ToolStripDropDownButton();
             this.projectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.customerToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -759,6 +761,9 @@
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.panel31 = new System.Windows.Forms.Panel();
             this.treePrepAnal = new System.Windows.Forms.TreeView();
+            this.toolStrip7 = new System.Windows.Forms.ToolStrip();
+            this.toolStripButton14 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton15 = new System.Windows.Forms.ToolStripButton();
             this.tabsPrepAnal = new System.Windows.Forms.TabControl();
             this.tabPrepAnalSample = new System.Windows.Forms.TabPage();
             this.splitContainer4 = new System.Windows.Forms.SplitContainer();
@@ -792,6 +797,8 @@
             this.textBox20 = new System.Windows.Forms.TextBox();
             this.panel69 = new System.Windows.Forms.Panel();
             this.label65 = new System.Windows.Forms.Label();
+            this.toolStrip10 = new System.Windows.Forms.ToolStrip();
+            this.toolStripLabel6 = new System.Windows.Forms.ToolStripLabel();
             this.tabPrepAnalPreps = new System.Windows.Forms.TabPage();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -887,16 +894,9 @@
             this.panel63 = new System.Windows.Forms.Panel();
             this.btnPrepAnalClose = new System.Windows.Forms.Button();
             this.btnPrepAnalSave = new System.Windows.Forms.Button();
-            this.toolStrip7 = new System.Windows.Forms.ToolStrip();
             this.tools = new System.Windows.Forms.ToolStrip();
             this.btnMenu = new System.Windows.Forms.ToolStripButton();
             this.lblCurrentTab = new System.Windows.Forms.ToolStripLabel();
-            this.toolStripButton8 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripButton14 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton15 = new System.Windows.Forms.ToolStripButton();
-            this.toolStrip10 = new System.Windows.Forms.ToolStrip();
-            this.toolStripLabel6 = new System.Windows.Forms.ToolStripLabel();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tabs.SuspendLayout();
@@ -911,7 +911,7 @@
             this.panel21.SuspendLayout();
             this.toolStrip3.SuspendLayout();
             this.panelSamplesAttachments.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridSampleAttachments)).BeginInit();
             this.toolsSampleSampInfoAttachments.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.panel22.SuspendLayout();
@@ -1142,6 +1142,7 @@
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
             this.panel31.SuspendLayout();
+            this.toolStrip7.SuspendLayout();
             this.tabsPrepAnal.SuspendLayout();
             this.tabPrepAnalSample.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).BeginInit();
@@ -1164,6 +1165,7 @@
             this.panel71.SuspendLayout();
             this.panel68.SuspendLayout();
             this.panel69.SuspendLayout();
+            this.toolStrip10.SuspendLayout();
             this.tabPrepAnalPreps.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).BeginInit();
             this.splitContainer3.Panel1.SuspendLayout();
@@ -1218,9 +1220,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView9)).BeginInit();
             this.toolsSampleResRes.SuspendLayout();
             this.panel63.SuspendLayout();
-            this.toolStrip7.SuspendLayout();
             this.tools.SuspendLayout();
-            this.toolStrip10.SuspendLayout();
             this.SuspendLayout();
             // 
             // menu
@@ -1727,6 +1727,13 @@
             // 
             this.toolStripSeparator49.Name = "toolStripSeparator49";
             this.toolStripSeparator49.Size = new System.Drawing.Size(209, 6);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(212, 22);
+            this.toolStripMenuItem1.Text = "Add to order";
+            this.toolStripMenuItem1.Click += new System.EventHandler(this.miSamplesSetOrder_Click);
             // 
             // miSamplesSet
             // 
@@ -2812,7 +2819,7 @@
             // 
             // panelSamplesAttachments
             // 
-            this.panelSamplesAttachments.Controls.Add(this.dataGridView2);
+            this.panelSamplesAttachments.Controls.Add(this.gridSampleAttachments);
             this.panelSamplesAttachments.Controls.Add(this.toolsSampleSampInfoAttachments);
             this.panelSamplesAttachments.Dock = System.Windows.Forms.DockStyle.Right;
             this.panelSamplesAttachments.Location = new System.Drawing.Point(639, 0);
@@ -2820,18 +2827,19 @@
             this.panelSamplesAttachments.Size = new System.Drawing.Size(488, 249);
             this.panelSamplesAttachments.TabIndex = 0;
             // 
-            // dataGridView2
+            // gridSampleAttachments
             // 
-            this.dataGridView2.AllowUserToAddRows = false;
-            this.dataGridView2.AllowUserToDeleteRows = false;
-            this.dataGridView2.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
-            this.dataGridView2.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView2.Location = new System.Drawing.Point(0, 29);
-            this.dataGridView2.Name = "dataGridView2";
-            this.dataGridView2.ReadOnly = true;
-            this.dataGridView2.Size = new System.Drawing.Size(342, 78);
-            this.dataGridView2.TabIndex = 1;
+            this.gridSampleAttachments.AllowUserToAddRows = false;
+            this.gridSampleAttachments.AllowUserToDeleteRows = false;
+            this.gridSampleAttachments.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
+            this.gridSampleAttachments.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.gridSampleAttachments.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridSampleAttachments.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gridSampleAttachments.Location = new System.Drawing.Point(0, 25);
+            this.gridSampleAttachments.Name = "gridSampleAttachments";
+            this.gridSampleAttachments.ReadOnly = true;
+            this.gridSampleAttachments.Size = new System.Drawing.Size(488, 224);
+            this.gridSampleAttachments.TabIndex = 1;
             // 
             // toolsSampleSampInfoAttachments
             // 
@@ -2922,7 +2930,7 @@
             this.tableLayoutPanel2.Controls.Add(this.cboxSampleCounties, 1, 5);
             this.tableLayoutPanel2.Controls.Add(this.cboxSampleInfoLocationTypes, 1, 6);
             this.tableLayoutPanel2.Controls.Add(this.label50, 0, 6);
-            this.tableLayoutPanel2.Controls.Add(this.checkBox1, 3, 8);
+            this.tableLayoutPanel2.Controls.Add(this.cbSampleUseSamplingTimeTo, 3, 8);
             this.tableLayoutPanel2.Controls.Add(this.tbSampleLocation, 2, 6);
             this.tableLayoutPanel2.Controls.Add(this.panel22, 1, 1);
             this.tableLayoutPanel2.Controls.Add(this.label14, 0, 3);
@@ -3238,18 +3246,19 @@
             this.label50.Text = "Location type";
             this.label50.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // checkBox1
+            // cbSampleUseSamplingTimeTo
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.tableLayoutPanel2.SetColumnSpan(this.checkBox1, 2);
-            this.checkBox1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.checkBox1.Location = new System.Drawing.Point(558, 197);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(113, 22);
-            this.checkBox1.TabIndex = 3;
-            this.checkBox1.Text = "Sampling time (To)";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.cbSampleUseSamplingTimeTo.AutoSize = true;
+            this.cbSampleUseSamplingTimeTo.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.tableLayoutPanel2.SetColumnSpan(this.cbSampleUseSamplingTimeTo, 2);
+            this.cbSampleUseSamplingTimeTo.Dock = System.Windows.Forms.DockStyle.Right;
+            this.cbSampleUseSamplingTimeTo.Location = new System.Drawing.Point(558, 197);
+            this.cbSampleUseSamplingTimeTo.Name = "cbSampleUseSamplingTimeTo";
+            this.cbSampleUseSamplingTimeTo.Size = new System.Drawing.Size(113, 22);
+            this.cbSampleUseSamplingTimeTo.TabIndex = 3;
+            this.cbSampleUseSamplingTimeTo.Text = "Sampling time (To)";
+            this.cbSampleUseSamplingTimeTo.UseVisualStyleBackColor = true;
+            this.cbSampleUseSamplingTimeTo.CheckedChanged += new System.EventHandler(this.cbSampleUseSamplingTimeTo_CheckedChanged);
             // 
             // tbSampleLocation
             // 
@@ -5376,7 +5385,7 @@
             this.toolStripSeparator30,
             this.toolStripButton99,
             this.toolStripDropDownButton3,
-            this.toolStripButton103,
+            this.btnSamplesEdit,
             this.toolStripButton104,
             this.toolStripSeparator47,
             this.toolStripButton98,
@@ -5430,14 +5439,14 @@
             this.excelToolStripMenuItem.Text = "Excel";
             this.excelToolStripMenuItem.Click += new System.EventHandler(this.miSamplesImportExcel_Click);
             // 
-            // toolStripButton103
+            // btnSamplesEdit
             // 
-            this.toolStripButton103.Image = global::DSA_lims.Properties.Resources.edit;
-            this.toolStripButton103.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton103.Name = "toolStripButton103";
-            this.toolStripButton103.Size = new System.Drawing.Size(47, 22);
-            this.toolStripButton103.Text = "Edit";
-            this.toolStripButton103.Click += new System.EventHandler(this.miSamplesEdit_Click);
+            this.btnSamplesEdit.Image = global::DSA_lims.Properties.Resources.edit;
+            this.btnSamplesEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSamplesEdit.Name = "btnSamplesEdit";
+            this.btnSamplesEdit.Size = new System.Drawing.Size(47, 22);
+            this.btnSamplesEdit.Text = "Edit";
+            this.btnSamplesEdit.Click += new System.EventHandler(this.miSamplesEdit_Click);
             // 
             // toolStripButton104
             // 
@@ -5475,6 +5484,15 @@
             // 
             this.toolStripSeparator45.Name = "toolStripSeparator45";
             this.toolStripSeparator45.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripButton8
+            // 
+            this.toolStripButton8.Image = global::DSA_lims.Properties.Resources._new;
+            this.toolStripButton8.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton8.Name = "toolStripButton8";
+            this.toolStripButton8.Size = new System.Drawing.Size(94, 22);
+            this.toolStripButton8.Text = "Add to order";
+            this.toolStripButton8.Click += new System.EventHandler(this.miSamplesSetOrder_Click);
             // 
             // toolStripDropDownButton2
             // 
@@ -8680,6 +8698,34 @@
             this.treePrepAnal.DrawNode += new System.Windows.Forms.DrawTreeNodeEventHandler(this.treePrepAnal_DrawNode);
             this.treePrepAnal.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treePrepAnal_AfterSelect);
             // 
+            // toolStrip7
+            // 
+            this.toolStrip7.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStrip7.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripButton14,
+            this.toolStripButton15});
+            this.toolStrip7.Location = new System.Drawing.Point(0, 0);
+            this.toolStrip7.Name = "toolStrip7";
+            this.toolStrip7.Size = new System.Drawing.Size(427, 25);
+            this.toolStrip7.TabIndex = 0;
+            this.toolStrip7.Text = "toolStrip7";
+            // 
+            // toolStripButton14
+            // 
+            this.toolStripButton14.Image = global::DSA_lims.Properties.Resources._new;
+            this.toolStripButton14.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton14.Name = "toolStripButton14";
+            this.toolStripButton14.Size = new System.Drawing.Size(113, 22);
+            this.toolStripButton14.Text = "Add preparation";
+            // 
+            // toolStripButton15
+            // 
+            this.toolStripButton15.Image = global::DSA_lims.Properties.Resources._new;
+            this.toolStripButton15.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton15.Name = "toolStripButton15";
+            this.toolStripButton15.Size = new System.Drawing.Size(93, 22);
+            this.toolStripButton15.Text = "Add analysis";
+            // 
             // tabsPrepAnal
             // 
             this.tabsPrepAnal.Controls.Add(this.tabPrepAnalSample);
@@ -9026,14 +9072,32 @@
             this.label65.Text = "Start weight (g)";
             this.label65.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // toolStrip10
+            // 
+            this.toolStrip10.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStrip10.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripLabel6});
+            this.toolStrip10.Location = new System.Drawing.Point(3, 3);
+            this.toolStrip10.Name = "toolStrip10";
+            this.toolStrip10.Size = new System.Drawing.Size(696, 25);
+            this.toolStrip10.TabIndex = 3;
+            this.toolStrip10.Text = "toolStrip10";
+            // 
+            // toolStripLabel6
+            // 
+            this.toolStripLabel6.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.toolStripLabel6.Name = "toolStripLabel6";
+            this.toolStripLabel6.Size = new System.Drawing.Size(73, 22);
+            this.toolStripLabel6.Text = "Sample info";
+            // 
             // tabPrepAnalPreps
             // 
             this.tabPrepAnalPreps.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.tabPrepAnalPreps.Controls.Add(this.splitContainer3);
-            this.tabPrepAnalPreps.Location = new System.Drawing.Point(4, 24);
+            this.tabPrepAnalPreps.Location = new System.Drawing.Point(4, 22);
             this.tabPrepAnalPreps.Name = "tabPrepAnalPreps";
             this.tabPrepAnalPreps.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPrepAnalPreps.Size = new System.Drawing.Size(702, 580);
+            this.tabPrepAnalPreps.Size = new System.Drawing.Size(702, 582);
             this.tabPrepAnalPreps.TabIndex = 3;
             this.tabPrepAnalPreps.Text = "Preparations";
             // 
@@ -9399,10 +9463,10 @@
             // 
             this.tabPrepAnalAnalysis.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.tabPrepAnalAnalysis.Controls.Add(this.splitContainer5);
-            this.tabPrepAnalAnalysis.Location = new System.Drawing.Point(4, 24);
+            this.tabPrepAnalAnalysis.Location = new System.Drawing.Point(4, 22);
             this.tabPrepAnalAnalysis.Name = "tabPrepAnalAnalysis";
             this.tabPrepAnalAnalysis.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPrepAnalAnalysis.Size = new System.Drawing.Size(702, 580);
+            this.tabPrepAnalAnalysis.Size = new System.Drawing.Size(702, 582);
             this.tabPrepAnalAnalysis.TabIndex = 4;
             this.tabPrepAnalAnalysis.Text = "Analyses";
             // 
@@ -9420,8 +9484,8 @@
             // splitContainer5.Panel2
             // 
             this.splitContainer5.Panel2.Controls.Add(this.panel9);
-            this.splitContainer5.Size = new System.Drawing.Size(696, 574);
-            this.splitContainer5.SplitterDistance = 296;
+            this.splitContainer5.Size = new System.Drawing.Size(696, 576);
+            this.splitContainer5.SplitterDistance = 297;
             this.splitContainer5.SplitterWidth = 5;
             this.splitContainer5.TabIndex = 1;
             // 
@@ -9446,7 +9510,7 @@
             // splitContainer21.Panel2
             // 
             this.splitContainer21.Panel2.Controls.Add(this.panel8);
-            this.splitContainer21.Size = new System.Drawing.Size(696, 296);
+            this.splitContainer21.Size = new System.Drawing.Size(696, 297);
             this.splitContainer21.SplitterDistance = 367;
             this.splitContainer21.TabIndex = 4;
             // 
@@ -9457,7 +9521,7 @@
             this.panel49.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel49.Location = new System.Drawing.Point(0, 200);
             this.panel49.Name = "panel49";
-            this.panel49.Size = new System.Drawing.Size(367, 96);
+            this.panel49.Size = new System.Drawing.Size(367, 97);
             this.panel49.TabIndex = 7;
             // 
             // textBox31
@@ -9468,7 +9532,7 @@
             this.textBox31.Multiline = true;
             this.textBox31.Name = "textBox31";
             this.textBox31.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBox31.Size = new System.Drawing.Size(261, 96);
+            this.textBox31.Size = new System.Drawing.Size(261, 97);
             this.textBox31.TabIndex = 1;
             // 
             // panel50
@@ -9477,7 +9541,7 @@
             this.panel50.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel50.Location = new System.Drawing.Point(0, 0);
             this.panel50.Name = "panel50";
-            this.panel50.Size = new System.Drawing.Size(106, 96);
+            this.panel50.Size = new System.Drawing.Size(106, 97);
             this.panel50.TabIndex = 0;
             // 
             // label60
@@ -9485,7 +9549,7 @@
             this.label60.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label60.Location = new System.Drawing.Point(0, 0);
             this.label60.Name = "label60";
-            this.label60.Size = new System.Drawing.Size(106, 96);
+            this.label60.Size = new System.Drawing.Size(106, 97);
             this.label60.TabIndex = 0;
             this.label60.Text = "Comment";
             this.label60.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -9786,7 +9850,7 @@
             this.panel8.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel8.Location = new System.Drawing.Point(0, 0);
             this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(325, 296);
+            this.panel8.Size = new System.Drawing.Size(325, 297);
             this.panel8.TabIndex = 3;
             // 
             // dataGridView11
@@ -9800,7 +9864,7 @@
             this.dataGridView11.Location = new System.Drawing.Point(0, 25);
             this.dataGridView11.Name = "dataGridView11";
             this.dataGridView11.ReadOnly = true;
-            this.dataGridView11.Size = new System.Drawing.Size(325, 271);
+            this.dataGridView11.Size = new System.Drawing.Size(325, 272);
             this.dataGridView11.TabIndex = 1;
             // 
             // toolsSampleResAttachments
@@ -9861,7 +9925,7 @@
             this.panel9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel9.Location = new System.Drawing.Point(0, 0);
             this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(696, 273);
+            this.panel9.Size = new System.Drawing.Size(696, 274);
             this.panel9.TabIndex = 3;
             // 
             // dataGridView9
@@ -9875,7 +9939,7 @@
             this.dataGridView9.Location = new System.Drawing.Point(0, 25);
             this.dataGridView9.Name = "dataGridView9";
             this.dataGridView9.ReadOnly = true;
-            this.dataGridView9.Size = new System.Drawing.Size(696, 248);
+            this.dataGridView9.Size = new System.Drawing.Size(696, 249);
             this.dataGridView9.TabIndex = 0;
             // 
             // toolsSampleResRes
@@ -9976,18 +10040,6 @@
             this.btnPrepAnalSave.UseVisualStyleBackColor = true;
             this.btnPrepAnalSave.Click += new System.EventHandler(this.btnPrepAnalSave_Click);
             // 
-            // toolStrip7
-            // 
-            this.toolStrip7.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.toolStrip7.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButton14,
-            this.toolStripButton15});
-            this.toolStrip7.Location = new System.Drawing.Point(0, 0);
-            this.toolStrip7.Name = "toolStrip7";
-            this.toolStrip7.Size = new System.Drawing.Size(427, 25);
-            this.toolStrip7.TabIndex = 0;
-            this.toolStrip7.Text = "toolStrip7";
-            // 
             // tools
             // 
             this.tools.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
@@ -10017,56 +10069,6 @@
             this.lblCurrentTab.Name = "lblCurrentTab";
             this.lblCurrentTab.Size = new System.Drawing.Size(98, 22);
             this.lblCurrentTab.Text = "<lblCurrentTab>";
-            // 
-            // toolStripButton8
-            // 
-            this.toolStripButton8.Image = global::DSA_lims.Properties.Resources._new;
-            this.toolStripButton8.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton8.Name = "toolStripButton8";
-            this.toolStripButton8.Size = new System.Drawing.Size(94, 22);
-            this.toolStripButton8.Text = "Add to order";
-            this.toolStripButton8.Click += new System.EventHandler(this.miSamplesSetOrder_Click);
-            // 
-            // toolStripMenuItem1
-            // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(212, 22);
-            this.toolStripMenuItem1.Text = "Add to order";
-            this.toolStripMenuItem1.Click += new System.EventHandler(this.miSamplesSetOrder_Click);
-            // 
-            // toolStripButton14
-            // 
-            this.toolStripButton14.Image = global::DSA_lims.Properties.Resources._new;
-            this.toolStripButton14.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton14.Name = "toolStripButton14";
-            this.toolStripButton14.Size = new System.Drawing.Size(113, 22);
-            this.toolStripButton14.Text = "Add preparation";
-            // 
-            // toolStripButton15
-            // 
-            this.toolStripButton15.Image = global::DSA_lims.Properties.Resources._new;
-            this.toolStripButton15.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton15.Name = "toolStripButton15";
-            this.toolStripButton15.Size = new System.Drawing.Size(93, 22);
-            this.toolStripButton15.Text = "Add analysis";
-            // 
-            // toolStrip10
-            // 
-            this.toolStrip10.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.toolStrip10.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripLabel6});
-            this.toolStrip10.Location = new System.Drawing.Point(3, 3);
-            this.toolStrip10.Name = "toolStrip10";
-            this.toolStrip10.Size = new System.Drawing.Size(696, 25);
-            this.toolStrip10.TabIndex = 3;
-            this.toolStrip10.Text = "toolStrip10";
-            // 
-            // toolStripLabel6
-            // 
-            this.toolStripLabel6.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.toolStripLabel6.Name = "toolStripLabel6";
-            this.toolStripLabel6.Size = new System.Drawing.Size(73, 22);
-            this.toolStripLabel6.Text = "Sample info";
             // 
             // FormMain
             // 
@@ -10111,7 +10113,7 @@
             this.toolStrip3.PerformLayout();
             this.panelSamplesAttachments.ResumeLayout(false);
             this.panelSamplesAttachments.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridSampleAttachments)).EndInit();
             this.toolsSampleSampInfoAttachments.ResumeLayout(false);
             this.toolsSampleSampInfoAttachments.PerformLayout();
             this.tableLayoutPanel2.ResumeLayout(false);
@@ -10455,6 +10457,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
             this.panel31.ResumeLayout(false);
+            this.toolStrip7.ResumeLayout(false);
+            this.toolStrip7.PerformLayout();
             this.tabsPrepAnal.ResumeLayout(false);
             this.tabPrepAnalSample.ResumeLayout(false);
             this.tabPrepAnalSample.PerformLayout();
@@ -10485,6 +10489,8 @@
             this.panel68.ResumeLayout(false);
             this.panel68.PerformLayout();
             this.panel69.ResumeLayout(false);
+            this.toolStrip10.ResumeLayout(false);
+            this.toolStrip10.PerformLayout();
             this.tabPrepAnalPreps.ResumeLayout(false);
             this.splitContainer3.Panel1.ResumeLayout(false);
             this.splitContainer3.Panel2.ResumeLayout(false);
@@ -10557,12 +10563,8 @@
             this.toolsSampleResRes.ResumeLayout(false);
             this.toolsSampleResRes.PerformLayout();
             this.panel63.ResumeLayout(false);
-            this.toolStrip7.ResumeLayout(false);
-            this.toolStrip7.PerformLayout();
             this.tools.ResumeLayout(false);
             this.tools.PerformLayout();
-            this.toolStrip10.ResumeLayout(false);
-            this.toolStrip10.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -10588,7 +10590,7 @@
         private System.Windows.Forms.TabPage tabSamplesInfo;
         private System.Windows.Forms.TabPage tabSamplesParams;
         private System.Windows.Forms.Panel panelSamplesAttachments;
-        private System.Windows.Forms.DataGridView dataGridView2;
+        private System.Windows.Forms.DataGridView gridSampleAttachments;
         private System.Windows.Forms.ToolStrip toolsSampleSampInfoAttachments;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.ToolStripButton toolStripButton2;
@@ -10609,7 +10611,7 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.DateTimePicker dtSampleSamplingDateTo;
         private System.Windows.Forms.DateTimePicker dtSampleSamplingTimeTo;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox cbSampleUseSamplingTimeTo;
         private System.Windows.Forms.DateTimePicker dtSampleReferenceDate;
         private System.Windows.Forms.DateTimePicker dtSampleReferenceTime;
         private System.Windows.Forms.Label label12;
@@ -11175,7 +11177,7 @@
         private System.Windows.Forms.ToolStripLabel lblTypeRelSampPrepSel;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator30;
         private System.Windows.Forms.ToolStripButton toolStripButton99;
-        private System.Windows.Forms.ToolStripButton toolStripButton103;
+        private System.Windows.Forms.ToolStripButton btnSamplesEdit;
         private System.Windows.Forms.ToolStripButton toolStripButton104;
         private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton3;
         private System.Windows.Forms.ToolStripMenuItem excelToolStripMenuItem;

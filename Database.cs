@@ -26,7 +26,7 @@ using System.Text;
 namespace DSA_lims
 {
     public static class DB
-    {    
+    {
         public static string GetConnectionString()
         {
             return Properties.Settings.Default.DSADB;
@@ -44,7 +44,7 @@ namespace DSA_lims
             if (o == null)
                 return DBNull.Value;
 
-            if(o.GetType() == typeof(string))
+            if (o.GetType() == typeof(string))
             {
                 string s = Convert.ToString(o);
                 if (String.IsNullOrEmpty(s))
@@ -234,6 +234,37 @@ namespace DSA_lims
             {
                 Common.Log.Error(ex);
             }
-        }        
-    }    
+        }
+
+        public static int GetNextSampleCount(SqlConnection conn, SqlTransaction trans)
+        {
+            SqlParameter nextNumber = new SqlParameter("@current_count", SqlDbType.Int) { Direction = ParameterDirection.Output };
+
+            SqlCommand cmd = new SqlCommand("csp_increment_sample_counter", conn, trans);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add(nextNumber);
+            cmd.ExecuteNonQuery();
+            return Convert.ToInt32(nextNumber.Value);
+        }
+
+        public static string GetOrderPrefix(SqlConnection conn, SqlTransaction trans, Guid labId)
+        {
+            SqlCommand cmd = new SqlCommand("select name_prefix from laboratory where id = @id", conn, trans);
+            cmd.CommandType = CommandType.Text;
+            cmd.Parameters.AddWithValue("@id", labId);
+            return cmd.ExecuteScalar().ToString();
+        }
+
+        public static int GetNextOrderCount(SqlConnection conn, SqlTransaction trans, Guid labId)
+        {
+            SqlParameter nextNumber = new SqlParameter("@current_count", SqlDbType.Int) { Direction = ParameterDirection.Output };
+
+            SqlCommand cmd = new SqlCommand("csp_increment_assignment_counter", conn, trans);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@laboratory_id", labId);
+            cmd.Parameters.Add(nextNumber);
+            cmd.ExecuteNonQuery();
+            return Convert.ToInt32(nextNumber.Value);
+        }
+    }
 }

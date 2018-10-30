@@ -1170,12 +1170,13 @@ as
 	where id = @id
 go
 
-create proc csp_increment_laboratory_assignment_counter
-	@id uniqueidentifier
+create proc csp_increment_assignment_counter
+	@laboratory_id uniqueidentifier,
+	@current_count int output
 as 
-	update laboratory set
-		assignment_counter = assignment_counter + 1		
-	where id = @id
+	select @current_count = assignment_counter from laboratory where id = @laboratory_id;
+	update laboratory set assignment_counter = @current_count + 1 where id = @laboratory_id;
+	return
 go
 
 create proc csp_select_laboratories
@@ -1310,16 +1311,11 @@ create proc csp_insert_assignment
 	@create_date datetime,
 	@created_by nvarchar(50),
 	@update_date datetime,
-	@updated_by nvarchar(50),
-	@assignment_counter int output
-as 	
-	begin transaction;
-
-	select @assignment_counter = assignment_counter from laboratory where id = @laboratory_id;
-
+	@updated_by nvarchar(50)	
+as 		
 	insert into assignment values (
 		@id,
-		CONCAT(@name, @assignment_counter),	
+		@name,
 		@laboratory_id,
 		@account_id,
 		@deadline,
@@ -1344,12 +1340,14 @@ as
 		@update_date,
 		@updated_by		
 	);
+go
 
-	update laboratory set assignment_counter = @assignment_counter + 1 where id = @laboratory_id;
-
-	commit;
-
-	return
+create proc csp_select_assignment
+	@id uniqueidentifier
+as
+	select *
+	from assignment
+	where id = @id
 go
 
 create proc csp_select_assignments
@@ -3096,6 +3094,7 @@ create table sample (
 	longitude float default 0,
 	altitude float default 0,
 	sampling_date_from datetime default NULL,
+	use_sampling_date_to bit default 0,
 	sampling_date_to datetime default NULL,
 	reference_date datetime default NULL,
 	external_id nvarchar(128) default NULL,
@@ -3117,8 +3116,17 @@ create table sample (
 )
 go
 
+create proc csp_increment_sample_counter
+	@current_count int output
+as
+	select @current_count = value from counters where name = 'sample_counter';
+	update counters set value = @current_count + 1 where name = 'sample_counter';
+	return
+go
+
 create proc csp_insert_sample
 	@id uniqueidentifier,	
+	@number int,
 	@laboratory_id uniqueidentifier,	
 	@sample_type_id uniqueidentifier,	
 	@sample_storage_id uniqueidentifier,
@@ -3138,6 +3146,7 @@ create proc csp_insert_sample
 	@longitude float,
 	@altitude float,
 	@sampling_date_from datetime,
+	@use_sampling_date_to bit,
 	@sampling_date_to datetime,
 	@reference_date datetime,
 	@external_id nvarchar(128),
@@ -3155,13 +3164,8 @@ create proc csp_insert_sample
 	@create_date datetime,
 	@created_by nvarchar(50),
 	@update_date datetime,
-	@updated_by nvarchar(50),
-	@number int output
-as 	
-	begin transaction;
-
-	select @number = value from counters where name like 'sample_counter';
-
+	@updated_by nvarchar(50)	
+as
 	insert into sample values (
 		@id,
 		@number,
@@ -3184,6 +3188,7 @@ as
 		@longitude,
 		@altitude,
 		@sampling_date_from,
+		@use_sampling_date_to,
 		@sampling_date_to,
 		@reference_date,
 		@external_id,
@@ -3203,12 +3208,6 @@ as
 		@update_date,
 		@updated_by
 	);
-
-	update counters set value = @number + 1 where name like 'sample_counter';
-
-	commit;
-
-	return
 go
 
 create proc csp_update_sample
@@ -3228,6 +3227,7 @@ create proc csp_update_sample
 	@longitude float,
 	@altitude float,
 	@sampling_date_from datetime,
+	@use_sampling_date_to bit,
 	@sampling_date_to datetime,
 	@reference_date datetime,
 	@external_id nvarchar(128),	
@@ -3253,6 +3253,7 @@ as
 		longitude = @longitude,
 		altitude = @altitude,
 		sampling_date_from = @sampling_date_from,
+		use_sampling_date_to = @use_sampling_date_to,
 		sampling_date_to = @sampling_date_to,
 		reference_date = @reference_date,
 		external_id = @external_id,	
@@ -3308,6 +3309,7 @@ as
 		s.longitude,
 		s.altitude,
 		s.sampling_date_from,
+		s.use_sampling_date_to,
 		s.sampling_date_to,
 		s.reference_date,
 		s.external_id,

@@ -355,7 +355,7 @@
             this.textBox23 = new System.Windows.Forms.TextBox();
             this.checkBox3 = new System.Windows.Forms.CheckBox();
             this.label43 = new System.Windows.Forms.Label();
-            this.textBox29 = new System.Windows.Forms.TextBox();
+            this.tbOrderReportComment = new System.Windows.Forms.TextBox();
             this.textBox36 = new System.Windows.Forms.TextBox();
             this.toolsOrderStatus = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel17 = new System.Windows.Forms.ToolStripLabel();
@@ -1620,33 +1620,33 @@
             // miOrdersNew
             // 
             this.miOrdersNew.Name = "miOrdersNew";
-            this.miOrdersNew.Size = new System.Drawing.Size(148, 22);
+            this.miOrdersNew.Size = new System.Drawing.Size(152, 22);
             this.miOrdersNew.Text = "&New order";
             this.miOrdersNew.Click += new System.EventHandler(this.miOrdersNew_Click);
             // 
             // miOrdersEdit
             // 
             this.miOrdersEdit.Name = "miOrdersEdit";
-            this.miOrdersEdit.Size = new System.Drawing.Size(148, 22);
+            this.miOrdersEdit.Size = new System.Drawing.Size(152, 22);
             this.miOrdersEdit.Text = "&Edit order";
             this.miOrdersEdit.Click += new System.EventHandler(this.miOrdersEdit_Click);
             // 
             // miOrdersDelete
             // 
             this.miOrdersDelete.Name = "miOrdersDelete";
-            this.miOrdersDelete.Size = new System.Drawing.Size(148, 22);
+            this.miOrdersDelete.Size = new System.Drawing.Size(152, 22);
             this.miOrdersDelete.Text = "&Delete order";
             this.miOrdersDelete.Click += new System.EventHandler(this.miOrdersDelete_Click);
             // 
             // toolStripSeparator65
             // 
             this.toolStripSeparator65.Name = "toolStripSeparator65";
-            this.toolStripSeparator65.Size = new System.Drawing.Size(145, 6);
+            this.toolStripSeparator65.Size = new System.Drawing.Size(149, 6);
             // 
             // miOrdersClearAllFilters
             // 
             this.miOrdersClearAllFilters.Name = "miOrdersClearAllFilters";
-            this.miOrdersClearAllFilters.Size = new System.Drawing.Size(148, 22);
+            this.miOrdersClearAllFilters.Size = new System.Drawing.Size(152, 22);
             this.miOrdersClearAllFilters.Text = "&Clear all filters";
             this.miOrdersClearAllFilters.Click += new System.EventHandler(this.miOrdersClearAllFilters_Click);
             // 
@@ -3934,6 +3934,7 @@
             // 
             // panelOrderContent
             // 
+            this.panelOrderContent.BackColor = System.Drawing.SystemColors.Window;
             this.panelOrderContent.Controls.Add(this.treeOrderContent);
             this.panelOrderContent.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelOrderContent.Location = new System.Drawing.Point(0, 25);
@@ -3944,7 +3945,7 @@
             // 
             // treeOrderContent
             // 
-            this.treeOrderContent.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.treeOrderContent.BackColor = System.Drawing.SystemColors.Window;
             this.treeOrderContent.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.treeOrderContent.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeOrderContent.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -4316,7 +4317,7 @@
             this.tableLayoutPanel7.Controls.Add(this.panel14, 0, 4);
             this.tableLayoutPanel7.Controls.Add(this.panel16, 1, 1);
             this.tableLayoutPanel7.Controls.Add(this.label43, 0, 2);
-            this.tableLayoutPanel7.Controls.Add(this.textBox29, 0, 3);
+            this.tableLayoutPanel7.Controls.Add(this.tbOrderReportComment, 0, 3);
             this.tableLayoutPanel7.Controls.Add(this.textBox36, 0, 0);
             this.tableLayoutPanel7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel7.Location = new System.Drawing.Point(0, 25);
@@ -4445,16 +4446,16 @@
             this.label43.TabIndex = 7;
             this.label43.Text = "Report comment";
             // 
-            // textBox29
+            // tbOrderReportComment
             // 
-            this.tableLayoutPanel7.SetColumnSpan(this.textBox29, 2);
-            this.textBox29.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox29.Location = new System.Drawing.Point(3, 205);
-            this.textBox29.Multiline = true;
-            this.textBox29.Name = "textBox29";
-            this.textBox29.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBox29.Size = new System.Drawing.Size(1121, 123);
-            this.textBox29.TabIndex = 8;
+            this.tableLayoutPanel7.SetColumnSpan(this.tbOrderReportComment, 2);
+            this.tbOrderReportComment.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbOrderReportComment.Location = new System.Drawing.Point(3, 205);
+            this.tbOrderReportComment.Multiline = true;
+            this.tbOrderReportComment.Name = "tbOrderReportComment";
+            this.tbOrderReportComment.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.tbOrderReportComment.Size = new System.Drawing.Size(1121, 123);
+            this.tbOrderReportComment.TabIndex = 8;
             // 
             // textBox36
             // 
@@ -8671,6 +8672,7 @@
             // 
             // panel31
             // 
+            this.panel31.BackColor = System.Drawing.SystemColors.Window;
             this.panel31.Controls.Add(this.treePrepAnal);
             this.panel31.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel31.Location = new System.Drawing.Point(0, 25);
@@ -8681,7 +8683,7 @@
             // 
             // treePrepAnal
             // 
-            this.treePrepAnal.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.treePrepAnal.BackColor = System.Drawing.SystemColors.Window;
             this.treePrepAnal.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.treePrepAnal.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treePrepAnal.DrawMode = System.Windows.Forms.TreeViewDrawMode.OwnerDrawText;
@@ -10656,7 +10658,7 @@
         private System.Windows.Forms.TextBox textBox23;
         private System.Windows.Forms.Panel panel14;
         private System.Windows.Forms.Label label43;
-        private System.Windows.Forms.TextBox textBox29;
+        private System.Windows.Forms.TextBox tbOrderReportComment;
         private System.Windows.Forms.ComboBox cboxOrderCustomerName;
         private System.Windows.Forms.ComboBox cboxOrderContact;
         private System.Windows.Forms.TextBox tbOrderCustomerAddress;

@@ -151,7 +151,13 @@ namespace DSA_lims
 
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Common.Log.Info("Application closing down");            
+            Common.Log.Info("Application closing down");
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                DB.UnlockSamples(conn);
+                DB.UnlockOrders(conn);
+            }
         }
 
         private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
@@ -291,13 +297,19 @@ namespace DSA_lims
             else if (tabs.SelectedTab == tabSample)
             {
                 miSample.Visible = true;
+
                 if (selectedSample == Guid.Empty)
+                {
                     btnSampleSave.Text = "Save";
-                else btnSampleSave.Text = "Update";
+                }
+                else
+                {
+                    btnSampleSave.Text = "Update";                    
+                }
             }
             else if (tabs.SelectedTab == tabOrder)
             {
-                miOrder.Visible = true;                                
+                miOrder.Visible = true;                
             }
             else if (tabs.SelectedTab == tabSearch)
             {
@@ -342,7 +354,7 @@ namespace DSA_lims
             {
                 miSys.Visible = true;
                 tabsSys_SelectedIndexChanged(sender, e);
-            }                        
+            }
         }
 
         private void btnSamples_Click(object sender, EventArgs e)
@@ -1505,6 +1517,7 @@ namespace DSA_lims
         private void miSamplesEdit_Click(object sender, EventArgs e)
         {
             // edit sample
+
             if(gridSamples.SelectedRows.Count < 1)
             {
                 MessageBox.Show("You must select a sample first");
@@ -1515,113 +1528,113 @@ namespace DSA_lims
 
             ClearSampleInfo();
 
-            PopulateSample(selectedSample);
+            using (SqlConnection conn = DB.OpenConnection())
+            {                
+                PopulateSample(conn, selectedSample);
+            }
 
             tabs.SelectedTab = tabSample;
         }
 
-        private void PopulateSample(Guid sampleId)
+        private void PopulateSample(SqlConnection conn, Guid sampleId)
         {
             Dictionary<string, object> map = new Dictionary<string, object>();
-
-            using (SqlConnection conn = DB.OpenConnection())
+            
+            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_sample", CommandType.StoredProcedure,
+                new SqlParameter("@id", sampleId)))
             {
-                using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_sample", CommandType.StoredProcedure,
-                    new SqlParameter("@id", sampleId)))
+                if (!reader.HasRows)
                 {
-                    if (!reader.HasRows)
-                    {
-                        Common.Log.Error("Sample with ID " + sampleId.ToString() + " was not found");
-                        MessageBox.Show("Sample with ID " + sampleId.ToString() + " was not found");
-                        return;
-                    }
-
-                    reader.Read();
-
-                    map["id"] = reader["id"];
-                    map["number"] = reader["number"];
-                    map["laboratory_id"] = reader["laboratory_id"];
-                    map["sample_type_id"] = reader["sample_type_id"];
-                    map["sample_storage_id"] = reader["sample_storage_id"];
-                    map["sample_component_id"] = reader["sample_component_id"];
-                    map["project_sub_id"] = reader["project_sub_id"];
-                    map["station_id"] = reader["station_id"];
-                    map["sampler_id"] = reader["sampler_id"];
-                    map["sampling_method_id"] = reader["sampling_method_id"];
-                    map["transform_from_id"] = reader["transform_from_id"];
-                    map["transform_to_id"] = reader["transform_to_id"];
-                    map["imported_from"] = reader["imported_from"];
-                    map["imported_from_id"] = reader["imported_from_id"];
-                    map["municipality_id"] = reader["municipality_id"];
-                    map["location_type"] = reader["location_type"];
-                    map["location"] = reader["location"];
-                    map["latitude"] = reader["latitude"];
-                    map["longitude"] = reader["longitude"];
-                    map["altitude"] = reader["altitude"];
-                    map["sampling_date_from"] = reader["sampling_date_from"];
-                    map["use_sampling_date_to"] = reader["use_sampling_date_to"];
-                    map["sampling_date_to"] = reader["sampling_date_to"];
-                    map["reference_date"] = reader["reference_date"];
-                    map["external_id"] = reader["external_id"];
-                    map["wet_weight_g"] = reader["wet_weight_g"];
-                    map["dry_weight_g"] = reader["dry_weight_g"];
-                    map["volume_l"] = reader["volume_l"];
-                    map["lod_weight_start"] = reader["lod_weight_start"];
-                    map["lod_weight_end"] = reader["lod_weight_end"];
-                    map["lod_temperature"] = reader["lod_temperature"];
-                    map["confidential"] = reader["confidential"];
-                    map["parameters"] = reader["parameters"];
-                    map["instance_status_id"] = reader["instance_status_id"];
-                    map["comment"] = reader["comment"];
-                    map["create_date"] = reader["create_date"];
-                    map["created_by"] = reader["created_by"];
-                    map["update_date"] = reader["update_date"];
-                    map["updated_by"] = reader["updated_by"];
-                }                
-
-                SetCboxItem(cboxSampleSampleType, map, "sample_type_id");
-                SetCboxItem(cboxSampleSampleComponent, map, "sample_component_id");
-                SetCboxItem(cboxSampleInfoSampler, map, "sampler_id");
-                SetCboxItem(cboxSampleInfoSamplingMeth, map, "sampling_method_id");
-
-                if (map["project_sub_id"] != DBNull.Value)
-                {
-                    object o = DB.GetScalar(conn, "select project_main_id from project_sub where id = @id", CommandType.Text, new SqlParameter("@id", map["project_sub_id"]));
-                    Guid projectId = Guid.Parse(o.ToString());
-                    SetCboxItem(cboxSampleProject, map, projectId);
-                    SetCboxItem(cboxSampleSubProject, map, "project_sub_id");
+                    Common.Log.Error("Sample with ID " + sampleId.ToString() + " was not found");
+                    MessageBox.Show("Sample with ID " + sampleId.ToString() + " was not found");
+                    return;
                 }
 
-                SetCboxItem(cboxSampleInfoStations, map, "station_id");
+                reader.Read();
 
-                if (map["municipality_id"] != DBNull.Value)
-                {
-                    object o = DB.GetScalar(conn, "select county_id from municipality where id = @id", CommandType.Text, new SqlParameter("@id", map["municipality_id"]));
-                    Guid municipalityId = Guid.Parse(o.ToString());
-                    SetCboxItem(cboxSampleCounties, map, municipalityId);
-                    SetCboxItem(cboxSampleMunicipalities, map, "municipality_id");
-                }
+                map["id"] = reader["id"];
+                map["number"] = reader["number"];
+                map["laboratory_id"] = reader["laboratory_id"];
+                map["sample_type_id"] = reader["sample_type_id"];
+                map["sample_storage_id"] = reader["sample_storage_id"];
+                map["sample_component_id"] = reader["sample_component_id"];
+                map["project_sub_id"] = reader["project_sub_id"];
+                map["station_id"] = reader["station_id"];
+                map["sampler_id"] = reader["sampler_id"];
+                map["sampling_method_id"] = reader["sampling_method_id"];
+                map["transform_from_id"] = reader["transform_from_id"];
+                map["transform_to_id"] = reader["transform_to_id"];
+                map["imported_from"] = reader["imported_from"];
+                map["imported_from_id"] = reader["imported_from_id"];
+                map["municipality_id"] = reader["municipality_id"];
+                map["location_type"] = reader["location_type"];
+                map["location"] = reader["location"];
+                map["latitude"] = reader["latitude"];
+                map["longitude"] = reader["longitude"];
+                map["altitude"] = reader["altitude"];
+                map["sampling_date_from"] = reader["sampling_date_from"];
+                map["use_sampling_date_to"] = reader["use_sampling_date_to"];
+                map["sampling_date_to"] = reader["sampling_date_to"];
+                map["reference_date"] = reader["reference_date"];
+                map["external_id"] = reader["external_id"];
+                map["wet_weight_g"] = reader["wet_weight_g"];
+                map["dry_weight_g"] = reader["dry_weight_g"];
+                map["volume_l"] = reader["volume_l"];
+                map["lod_weight_start"] = reader["lod_weight_start"];
+                map["lod_weight_end"] = reader["lod_weight_end"];
+                map["lod_temperature"] = reader["lod_temperature"];
+                map["confidential"] = reader["confidential"];
+                map["parameters"] = reader["parameters"];
+                map["instance_status_id"] = reader["instance_status_id"];
+                map["comment"] = reader["comment"];
+                map["create_date"] = reader["create_date"];
+                map["created_by"] = reader["created_by"];
+                map["update_date"] = reader["update_date"];
+                map["updated_by"] = reader["updated_by"];
+            }                
 
-                cboxSampleInfoLocationTypes.Text = map["location_type"].ToString();
-                tbSampleLocation.Text = map["location"].ToString();
+            SetCboxItem(cboxSampleSampleType, map, "sample_type_id");
+            SetCboxItem(cboxSampleSampleComponent, map, "sample_component_id");
+            SetCboxItem(cboxSampleInfoSampler, map, "sampler_id");
+            SetCboxItem(cboxSampleInfoSamplingMeth, map, "sampling_method_id");
 
-                SetCboxItem(cboxSampleLaboratory, map, "laboratory_id");
+            if (map["project_sub_id"] != DBNull.Value)
+            {
+                object o = DB.GetScalar(conn, "select project_main_id from project_sub where id = @id", CommandType.Text, new SqlParameter("@id", map["project_sub_id"]));
+                Guid projectId = Guid.Parse(o.ToString());
+                SetCboxItem(cboxSampleProject, map, projectId);
+                SetCboxItem(cboxSampleSubProject, map, "project_sub_id");
+            }
 
-                DateTime samplingDateFrom = Convert.ToDateTime(map["sampling_date_from"]);
-                DateTime samplingDateTo = Convert.ToDateTime(map["sampling_date_to"]);
-                DateTime referenceDate = Convert.ToDateTime(map["reference_date"]);
-                dtSampleSamplingDateFrom.Value = dtSampleSamplingTimeFrom.Value = samplingDateFrom;
-                cbSampleUseSamplingTimeTo.Checked = Convert.ToBoolean(map["use_sampling_date_to"]);
-                dtSampleSamplingDateTo.Value = dtSampleSamplingTimeTo.Value = samplingDateTo;                
-                dtSampleReferenceDate.Value = dtSampleReferenceTime.Value = referenceDate;
+            SetCboxItem(cboxSampleInfoStations, map, "station_id");
 
-                tbSampleExId.Text = map["external_id"].ToString();
-                cbSampleConfidential.Checked = Convert.ToBoolean(map["confidential"]);
+            if (map["municipality_id"] != DBNull.Value)
+            {
+                object o = DB.GetScalar(conn, "select county_id from municipality where id = @id", CommandType.Text, new SqlParameter("@id", map["municipality_id"]));
+                Guid municipalityId = Guid.Parse(o.ToString());
+                SetCboxItem(cboxSampleCounties, map, municipalityId);
+                SetCboxItem(cboxSampleMunicipalities, map, "municipality_id");
+            }
 
-                SetCboxItem(cboxSampleSampleStorage, map, "sample_storage_id");
+            cboxSampleInfoLocationTypes.Text = map["location_type"].ToString();
+            tbSampleLocation.Text = map["location"].ToString();
 
-                tbSampleComment.Text = map["comment"].ToString();
-            }            
+            SetCboxItem(cboxSampleLaboratory, map, "laboratory_id");
+
+            DateTime samplingDateFrom = Convert.ToDateTime(map["sampling_date_from"]);
+            DateTime samplingDateTo = Convert.ToDateTime(map["sampling_date_to"]);
+            DateTime referenceDate = Convert.ToDateTime(map["reference_date"]);
+            dtSampleSamplingDateFrom.Value = dtSampleSamplingTimeFrom.Value = samplingDateFrom;
+            cbSampleUseSamplingTimeTo.Checked = Convert.ToBoolean(map["use_sampling_date_to"]);
+            dtSampleSamplingDateTo.Value = dtSampleSamplingTimeTo.Value = samplingDateTo;                
+            dtSampleReferenceDate.Value = dtSampleReferenceTime.Value = referenceDate;
+
+            tbSampleExId.Text = map["external_id"].ToString();
+            cbSampleConfidential.Checked = Convert.ToBoolean(map["confidential"]);
+
+            SetCboxItem(cboxSampleSampleStorage, map, "sample_storage_id");
+
+            tbSampleComment.Text = map["comment"].ToString();
         }
 
         private void SetCboxItem(ComboBox cbox, Dictionary<string, object> map, string idField)
@@ -1730,74 +1743,75 @@ namespace DSA_lims
                 return;
             }
 
-            Guid sampleId = new Guid(gridSamples.SelectedRows[0].Cells["id"].Value.ToString());
-            PopulatePrepAnal(sampleId);
+            selectedSample = Guid.Parse(gridSamples.SelectedRows[0].Cells["id"].Value.ToString());
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                PopulatePrepAnal(conn, selectedSample);
+            }
 
             tabs.SelectedTab = tabPrepAnal;
         }
 
-        private void PopulatePrepAnal(Guid sampleId)
+        private void PopulatePrepAnal(SqlConnection conn, Guid sampleId)
         {
             treePrepAnal.Nodes.Clear();
+            
+            TreeNode sampleNode = null;
 
-            using(SqlConnection conn = DB.OpenConnection())
-            {
-                TreeNode sampleNode = null;
-
-                string query = @"
+            string query = @"
 select s.id as 'sample_id', s.number as 'sample_number', l.name as 'laboratory_name'
 from sample s
-    inner join laboratory l on l.id = s.laboratory_id
+inner join laboratory l on l.id = s.laboratory_id
 where s.id = @id
 ";
 
-                using (SqlDataReader reader = DB.GetDataReader(conn, query, CommandType.Text, 
-                    new SqlParameter("@id", sampleId)))
-                {
-                    reader.Read();
-                    string txt = reader["sample_number"].ToString() + " - " + reader["laboratory_name"].ToString();
-                    sampleNode = treePrepAnal.Nodes.Add(sampleId.ToString(), txt);
-                }
+            using (SqlDataReader reader = DB.GetDataReader(conn, query, CommandType.Text, 
+                new SqlParameter("@id", sampleId)))
+            {
+                reader.Read();
+                string txt = reader["sample_number"].ToString() + " - " + reader["laboratory_name"].ToString();
+                sampleNode = treePrepAnal.Nodes.Add(sampleId.ToString(), txt);
+            }
 
-                query = @"
+            query = @"
 select p.id as 'preparation_id', p.number as 'preparation_number', a.name as 'assignment_name', pm.name as 'preparation_method_name'
 from preparation p 
-    inner join preparation_method pm on pm.id = p.preparation_method_id
-    left outer join assignment a on a.id = p.assignment_id
+inner join preparation_method pm on pm.id = p.preparation_method_id
+left outer join assignment a on a.id = p.assignment_id
 where sample_id = @sample_id
 ";
+            using (SqlDataReader reader = DB.GetDataReader(conn, query, CommandType.Text,
+                new SqlParameter("@sample_id", sampleId)))
+            {
+                while (reader.Read())
+                {
+                    string txt = reader["preparation_number"].ToString() 
+                        + " - " + reader["preparation_method_name"].ToString() + ", " 
+                        + reader["assignment_name"].ToString();
+                    TreeNode prepNode = sampleNode.Nodes.Add(reader["preparation_id"].ToString(), txt);
+                }
+            }
+                
+            foreach (TreeNode prepNode in sampleNode.Nodes)
+            {
+                Guid prepId = new Guid(prepNode.Name);
+                query = @"
+select a.id as 'analysis_id', a.number as 'analysis_number', am.name as 'analysis_method_name', ass.name as 'assignment_name'
+from analysis a 
+inner join analysis_method am on am.id = a.analysis_method_id
+left outer join assignment ass on ass.id = a.assignment_id
+where preparation_id = @preparation_id
+";
                 using (SqlDataReader reader = DB.GetDataReader(conn, query, CommandType.Text,
-                    new SqlParameter("@sample_id", sampleId)))
+                    new SqlParameter("@preparation_id", prepId)))
                 {
                     while (reader.Read())
                     {
-                        string txt = reader["preparation_number"].ToString() 
-                            + " - " + reader["preparation_method_name"].ToString() + ", " 
+                        string txt = reader["analysis_number"].ToString() + " - " 
+                            + reader["analysis_method_name"].ToString() + ", " 
                             + reader["assignment_name"].ToString();
-                        TreeNode prepNode = sampleNode.Nodes.Add(reader["preparation_id"].ToString(), txt);
-                    }
-                }
-                
-                foreach (TreeNode prepNode in sampleNode.Nodes)
-                {
-                    Guid prepId = new Guid(prepNode.Name);
-                    query = @"
-select a.id as 'analysis_id', a.number as 'analysis_number', am.name as 'analysis_method_name', ass.name as 'assignment_name'
-from analysis a 
-    inner join analysis_method am on am.id = a.analysis_method_id
-    left outer join assignment ass on ass.id = a.assignment_id
-where preparation_id = @preparation_id
-";
-                    using (SqlDataReader reader = DB.GetDataReader(conn, query, CommandType.Text,
-                        new SqlParameter("@preparation_id", prepId)))
-                    {
-                        while (reader.Read())
-                        {
-                            string txt = reader["analysis_number"].ToString() + " - " 
-                                + reader["analysis_method_name"].ToString() + ", " 
-                                + reader["assignment_name"].ToString();
-                            TreeNode analNode = prepNode.Nodes.Add(reader["analysis_id"].ToString(), txt);
-                        }
+                        TreeNode analNode = prepNode.Nodes.Add(reader["analysis_id"].ToString(), txt);
                     }
                 }
             }
@@ -2800,6 +2814,50 @@ order by name
         private void treeSampleTypes_DrawNode(object sender, DrawTreeNodeEventArgs e)
         {
             TreeDrawNode(e);
-        }        
+        }
+
+        private void tabs_Selecting(object sender, TabControlCancelEventArgs e)
+        {
+            if (e.TabPage == tabSample || e.TabPage == tabPrepAnal)
+            {
+                using (SqlConnection conn = DB.OpenConnection())
+                {
+                    if (!DB.LockSample(conn, selectedSample))
+                    {
+                        MessageBox.Show("Unable to lock sample");
+                        e.Cancel = true;                        
+                    }
+                }
+            }
+            else if (e.TabPage == tabOrder)
+            {
+                using (SqlConnection conn = DB.OpenConnection())
+                {
+                    if (!DB.LockOrder(conn, selectedOrder))
+                    {
+                        MessageBox.Show("Unable to lock order");
+                        e.Cancel = true;
+                    }
+                }
+            }
+        }
+
+        private void tabs_Deselecting(object sender, TabControlCancelEventArgs e)
+        {
+            if(e.TabPage == tabSample || e.TabPage == tabPrepAnal)
+            {
+                using (SqlConnection conn = DB.OpenConnection())
+                {
+                    DB.UnlockSamples(conn);
+                }                    
+            }
+            else if (e.TabPage == tabOrder)
+            {
+                using (SqlConnection conn = DB.OpenConnection())
+                {
+                    DB.UnlockOrders(conn);
+                }
+            }
+        }
     }    
 }

@@ -27,6 +27,9 @@ namespace DSA_lims
 {
     public static class DB
     {
+        private static List<Guid> LockedSamples = new List<Guid>();
+        private static List<Guid> LockedOrders = new List<Guid>();
+
         public static string GetConnectionString()
         {
             return Properties.Settings.Default.DSADB;
@@ -247,6 +250,72 @@ namespace DSA_lims
             return Convert.ToInt32(nextNumber.Value);
         }
 
+        public static bool LockSample(SqlConnection conn, Guid sampleId)
+        {
+            SqlTransaction trans = null;
+
+            try
+            {
+                trans = conn.BeginTransaction();
+                SqlCommand cmd = new SqlCommand("select locked_by from sample where id = @id", conn, trans);
+                cmd.CommandType = CommandType.Text;
+                cmd.Parameters.AddWithValue("@id", sampleId);
+                object o = cmd.ExecuteScalar();                
+                if (o == DBNull.Value)
+                {
+                    cmd.CommandText = "update sample set locked_by = @locked_by where id = @id";
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.AddWithValue("@locked_by", Common.Username);
+                    cmd.Parameters.AddWithValue("@id", sampleId);
+                    cmd.ExecuteNonQuery();
+                    trans.Commit();
+                    if(!LockedSamples.Contains(sampleId))
+                        LockedSamples.Add(sampleId);
+                    return true;
+                }
+                else
+                {
+                    trans.Commit();
+
+                    if(o.ToString().ToLower() == Common.Username.ToLower())
+                    {
+                        if (!LockedSamples.Contains(sampleId))
+                            LockedSamples.Add(sampleId);
+                        return true;
+                    }
+
+                    return false;
+                }                
+            }
+            catch(Exception ex)
+            {
+                trans?.Rollback();
+                Common.Log.Error(ex);
+                return false;
+            }                        
+        }
+
+        public static void UnlockSamples(SqlConnection conn)
+        {            
+            try
+            {
+                SqlCommand cmd = new SqlCommand("update sample set locked_by = NULL where id = @id", conn);
+                cmd.CommandType = CommandType.Text;
+
+                foreach (Guid id in LockedSamples)
+                {
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.ExecuteNonQuery();
+                }
+                LockedSamples.Clear();
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);                
+            }
+        }
+
         public static string GetOrderPrefix(SqlConnection conn, SqlTransaction trans, Guid labId)
         {
             SqlCommand cmd = new SqlCommand("select name_prefix from laboratory where id = @id", conn, trans);
@@ -265,6 +334,72 @@ namespace DSA_lims
             cmd.Parameters.Add(nextNumber);
             cmd.ExecuteNonQuery();
             return Convert.ToInt32(nextNumber.Value);
+        }
+
+        public static bool LockOrder(SqlConnection conn, Guid orderId)
+        {
+            SqlTransaction trans = null;
+
+            try
+            {
+                trans = conn.BeginTransaction();
+                SqlCommand cmd = new SqlCommand("select locked_by from assignment where id = @id", conn, trans);
+                cmd.CommandType = CommandType.Text;
+                cmd.Parameters.AddWithValue("@id", orderId);
+                object o = cmd.ExecuteScalar();
+                if (o == DBNull.Value)
+                {
+                    cmd.CommandText = "update assignment set locked_by = @locked_by where id = @id";
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.AddWithValue("@locked_by", Common.Username);
+                    cmd.Parameters.AddWithValue("@id", orderId);
+                    cmd.ExecuteNonQuery();
+                    trans.Commit();
+                    if (!LockedOrders.Contains(orderId))
+                        LockedOrders.Add(orderId);
+                    return true;
+                }
+                else
+                {
+                    trans.Commit();
+
+                    if(o.ToString().ToLower() == Common.Username.ToLower())
+                    {
+                        if (!LockedOrders.Contains(orderId))
+                            LockedOrders.Add(orderId);
+                        return true;
+                    }
+                    
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                trans?.Rollback();
+                Common.Log.Error(ex);
+                return false;
+            }
+        }
+
+        public static void UnlockOrders(SqlConnection conn)
+        {
+            try
+            {
+                SqlCommand cmd = new SqlCommand("update assignment set locked_by = NULL where id = @id", conn);
+                cmd.CommandType = CommandType.Text;
+
+                foreach (Guid id in LockedOrders)
+                {
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.ExecuteNonQuery();
+                }
+                LockedOrders.Clear();
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+            }
         }
     }
 }

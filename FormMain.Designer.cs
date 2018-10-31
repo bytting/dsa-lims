@@ -360,7 +360,7 @@
             this.toolsOrderStatus = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel17 = new System.Windows.Forms.ToolStripLabel();
             this.tabOrderSamples = new System.Windows.Forms.TabPage();
-            this.dataGridView18 = new System.Windows.Forms.DataGridView();
+            this.gridOrderSamples = new System.Windows.Forms.DataGridView();
             this.toolsOrderSamples = new System.Windows.Forms.ToolStrip();
             this.toolStripButton7 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton35 = new System.Windows.Forms.ToolStripButton();
@@ -949,7 +949,7 @@
             this.panel16.SuspendLayout();
             this.toolsOrderStatus.SuspendLayout();
             this.tabOrderSamples.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView18)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridOrderSamples)).BeginInit();
             this.toolsOrderSamples.SuspendLayout();
             this.panel13.SuspendLayout();
             this.tabSearch.SuspendLayout();
@@ -4492,7 +4492,7 @@
             // tabOrderSamples
             // 
             this.tabOrderSamples.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.tabOrderSamples.Controls.Add(this.dataGridView18);
+            this.tabOrderSamples.Controls.Add(this.gridOrderSamples);
             this.tabOrderSamples.Controls.Add(this.toolsOrderSamples);
             this.tabOrderSamples.Location = new System.Drawing.Point(4, 24);
             this.tabOrderSamples.Name = "tabOrderSamples";
@@ -4501,17 +4501,23 @@
             this.tabOrderSamples.TabIndex = 3;
             this.tabOrderSamples.Text = "Samples";
             // 
-            // dataGridView18
+            // gridOrderSamples
             // 
-            this.dataGridView18.AllowUserToAddRows = false;
-            this.dataGridView18.AllowUserToDeleteRows = false;
-            this.dataGridView18.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView18.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView18.Location = new System.Drawing.Point(3, 28);
-            this.dataGridView18.Name = "dataGridView18";
-            this.dataGridView18.ReadOnly = true;
-            this.dataGridView18.Size = new System.Drawing.Size(1127, 549);
-            this.dataGridView18.TabIndex = 1;
+            this.gridOrderSamples.AllowUserToAddRows = false;
+            this.gridOrderSamples.AllowUserToDeleteRows = false;
+            this.gridOrderSamples.AllowUserToResizeRows = false;
+            this.gridOrderSamples.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.gridOrderSamples.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
+            this.gridOrderSamples.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.gridOrderSamples.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridOrderSamples.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gridOrderSamples.Location = new System.Drawing.Point(3, 28);
+            this.gridOrderSamples.Name = "gridOrderSamples";
+            this.gridOrderSamples.ReadOnly = true;
+            this.gridOrderSamples.RowHeadersVisible = false;
+            this.gridOrderSamples.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.gridOrderSamples.Size = new System.Drawing.Size(1127, 549);
+            this.gridOrderSamples.TabIndex = 1;
             // 
             // toolsOrderSamples
             // 
@@ -10178,7 +10184,7 @@
             this.toolsOrderStatus.PerformLayout();
             this.tabOrderSamples.ResumeLayout(false);
             this.tabOrderSamples.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView18)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridOrderSamples)).EndInit();
             this.toolsOrderSamples.ResumeLayout(false);
             this.toolsOrderSamples.PerformLayout();
             this.panel13.ResumeLayout(false);
@@ -10753,7 +10759,7 @@
         private System.Windows.Forms.ToolStripButton toolStripButton4;
         private System.Windows.Forms.ToolStripButton toolStripButton6;
         private System.Windows.Forms.TabPage tabOrderSamples;
-        private System.Windows.Forms.DataGridView dataGridView18;
+        private System.Windows.Forms.DataGridView gridOrderSamples;
         private System.Windows.Forms.ToolStrip toolsOrderSamples;
         private System.Windows.Forms.ToolStripButton toolStripButton7;
         private System.Windows.Forms.ToolStripButton toolStripButton35;

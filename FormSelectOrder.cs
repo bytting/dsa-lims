@@ -169,9 +169,14 @@ namespace DSA_lims
                             GenerateOrderAnalyses(connection, transaction, orderId, labId, newPrepId, tnode.Nodes);
 
                             prepCount--;
-                        }
+                        }                        
                     }
                 }
+
+                SqlCommand cmd2 = new SqlCommand("insert into sample_x_assignment_sample_type values(@sample_id, @assignment_sample_type_id)", connection, transaction);
+                cmd2.Parameters.AddWithValue("@sample_id", sampleId);
+                cmd2.Parameters.AddWithValue("@assignment_sample_type_id", orderLineId);
+                cmd2.ExecuteNonQuery();
 
                 transaction.Commit();
             }

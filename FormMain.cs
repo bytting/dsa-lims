@@ -2376,6 +2376,19 @@ order by name
                 // TODO
 
                 UI.PopulateOrderContent(conn, selectedOrder, treeOrderContent, Guid.Empty, treeSampleTypes, true);
+
+                string query = @"
+select 
+    s.id,
+    s.number as 'Name',
+    s.external_id as 'Ex.Id',
+    st.name as 'sample_type'
+from sample s inner join sample_x_assignment_sample_type sxast on s.id = sxast.sample_id
+	inner join assignment_sample_type ast on sxast.assignment_sample_type_id = ast.id and ast.assignment_id = @assignment_id
+    left outer join sample_type st on s.sample_type_id = st.id
+";
+                gridOrderSamples.DataSource = DB.GetDataTable(conn, query, CommandType.Text, new SqlParameter("@assignment_id", id));
+                gridOrderSamples.Columns["id"].Visible = false;
             }
         }
 
@@ -2818,7 +2831,7 @@ order by name
 
         private void tabs_Selecting(object sender, TabControlCancelEventArgs e)
         {
-            if (e.TabPage == tabSample || e.TabPage == tabPrepAnal)
+            if ((e.TabPage == tabSample || e.TabPage == tabPrepAnal) && selectedSample != Guid.Empty)
             {
                 using (SqlConnection conn = DB.OpenConnection())
                 {
@@ -2829,7 +2842,7 @@ order by name
                     }
                 }
             }
-            else if (e.TabPage == tabOrder)
+            else if (e.TabPage == tabOrder && selectedOrder != Guid.Empty)
             {
                 using (SqlConnection conn = DB.OpenConnection())
                 {

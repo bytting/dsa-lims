@@ -1683,6 +1683,21 @@ namespace DSA_lims
         private void miSamplesSplit_Click(object sender, EventArgs e)
         {
             // split sample
+            if(gridSamples.SelectedRows.Count < 1)
+            {
+                MessageBox.Show("You must select a sample first");
+                return;
+            }
+
+            Guid sampleId = Guid.Parse(gridSamples.SelectedRows[0].Cells["id"].Value.ToString());
+            FormSampleSplit form = new FormSampleSplit(sampleId);
+            if (form.ShowDialog() != DialogResult.OK)
+                return;
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                UI.PopulateSamples(conn, gridSamples);
+            }
         }
 
         private void miSamplesMerge_Click(object sender, EventArgs e)
@@ -2377,18 +2392,20 @@ order by name
 
                 UI.PopulateOrderContent(conn, selectedOrder, treeOrderContent, Guid.Empty, treeSampleTypes, true);
 
-                string query = @"
-select 
-    s.id,
-    s.number as 'Name',
-    s.external_id as 'Ex.Id',
-    st.name as 'sample_type'
-from sample s inner join sample_x_assignment_sample_type sxast on s.id = sxast.sample_id
-	inner join assignment_sample_type ast on sxast.assignment_sample_type_id = ast.id and ast.assignment_id = @assignment_id
-    left outer join sample_type st on s.sample_type_id = st.id
-";
-                gridOrderSamples.DataSource = DB.GetDataTable(conn, query, CommandType.Text, new SqlParameter("@assignment_id", id));
+                gridOrderSamples.DataSource = DB.GetDataTable(
+                    conn, 
+                    "csp_select_samples_for_assignment_flat", 
+                    CommandType.StoredProcedure, 
+                    new SqlParameter("@assignment_id", id));
+
                 gridOrderSamples.Columns["id"].Visible = false;
+
+                gridOrderSamples.Columns["number"].HeaderText = "Sample";
+                gridOrderSamples.Columns["external_id"].HeaderText = "Ex.Id";
+                gridOrderSamples.Columns["laboratory_name"].HeaderText = "Laboratory";
+                gridOrderSamples.Columns["sample_type_name"].HeaderText = "Sample type";
+                gridOrderSamples.Columns["sample_component_name"].HeaderText = "Sample component";
+                gridOrderSamples.Columns["project_name"].HeaderText = "Project";
             }
         }
 

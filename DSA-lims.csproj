@@ -196,6 +196,12 @@
     <Compile Include="FormSampler.Designer.cs">
       <DependentUpon>FormSampler.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormSampleSplit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSampleSplit.Designer.cs">
+      <DependentUpon>FormSampleSplit.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormSampleStorage.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -350,6 +356,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormSampler.resx">
       <DependentUpon>FormSampler.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSampleSplit.resx">
+      <DependentUpon>FormSampleSplit.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormSampleStorage.resx">
       <DependentUpon>FormSampleStorage.cs</DependentUpon>

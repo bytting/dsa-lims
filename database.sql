@@ -3352,12 +3352,12 @@ as
 		s.id,	
 		s.number,
 		s.external_id,
-		l.name as 'laboratory_name',	
+		l.name as 'laboratory_name',
 		st.name as 'sample_type_name',	
-		sc.name as 'sample_component_name',		
+		sc.name as 'sample_component_name',
 		pm.name + ' - ' + ps.name as 'project_name',
 		ss.name as 'sample_storage_name',
-		s.reference_date,				
+		s.reference_date,
 		insta.name as 'instance_status_name',
 		s.locked_by
 	from sample s 
@@ -3370,6 +3370,26 @@ as
 		inner join instance_status insta on s.instance_status_id = insta.id
 	where s.instance_status_id <= @instance_status_level
 	order by s.create_date desc
+go
+
+create proc csp_select_samples_for_assignment_flat
+	@assignment_id uniqueidentifier
+as
+	select
+		s.id,	
+		s.number,
+		s.external_id,
+		l.name as 'laboratory_name',
+		st.name as 'sample_type_name',	
+		sc.name as 'sample_component_name',
+		pm.name + ' - ' + ps.name as 'project_name'
+from sample s inner join sample_x_assignment_sample_type sxast on s.id = sxast.sample_id
+	inner join assignment_sample_type ast on sxast.assignment_sample_type_id = ast.id and ast.assignment_id = @assignment_id
+	left outer join laboratory l on s.laboratory_id = l.id
+    left outer join sample_type st on s.sample_type_id = st.id	
+	left outer join sample_component sc on s.sample_component_id = sc.id
+	inner join project_sub ps on s.project_sub_id = ps.id
+	inner join project_main pm on pm.id = ps.project_main_id
 go
 
 /*===========================================================================*/

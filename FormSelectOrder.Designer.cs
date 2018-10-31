@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormSelectOrder));
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnCancel = new System.Windows.Forms.Button();
@@ -63,9 +63,9 @@
             this.panel1.Controls.Add(this.btnCancel);
             this.panel1.Controls.Add(this.btnOk);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 641);
+            this.panel1.Location = new System.Drawing.Point(0, 645);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(655, 32);
+            this.panel1.Size = new System.Drawing.Size(655, 28);
             this.panel1.TabIndex = 7;
             // 
             // btnCancel
@@ -73,7 +73,7 @@
             this.btnCancel.Dock = System.Windows.Forms.DockStyle.Right;
             this.btnCancel.Location = new System.Drawing.Point(421, 0);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(117, 32);
+            this.btnCancel.Size = new System.Drawing.Size(117, 28);
             this.btnCancel.TabIndex = 1;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
@@ -84,7 +84,7 @@
             this.btnOk.Dock = System.Windows.Forms.DockStyle.Right;
             this.btnOk.Location = new System.Drawing.Point(538, 0);
             this.btnOk.Name = "btnOk";
-            this.btnOk.Size = new System.Drawing.Size(117, 32);
+            this.btnOk.Size = new System.Drawing.Size(117, 28);
             this.btnOk.TabIndex = 0;
             this.btnOk.Text = "Ok";
             this.btnOk.UseVisualStyleBackColor = true;
@@ -93,7 +93,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(29, 31);
+            this.label1.Location = new System.Drawing.Point(31, 30);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(65, 15);
             this.label1.TabIndex = 8;
@@ -103,9 +103,9 @@
             // 
             this.cboxLaboratory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxLaboratory.FormattingEnabled = true;
-            this.cboxLaboratory.Location = new System.Drawing.Point(121, 28);
+            this.cboxLaboratory.Location = new System.Drawing.Point(102, 27);
             this.cboxLaboratory.Name = "cboxLaboratory";
-            this.cboxLaboratory.Size = new System.Drawing.Size(283, 23);
+            this.cboxLaboratory.Size = new System.Drawing.Size(304, 23);
             this.cboxLaboratory.TabIndex = 9;
             this.cboxLaboratory.SelectedIndexChanged += new System.EventHandler(this.cboxLaboratory_SelectedIndexChanged);
             // 
@@ -114,8 +114,8 @@
             this.gridOrders.AllowUserToAddRows = false;
             this.gridOrders.AllowUserToDeleteRows = false;
             this.gridOrders.AllowUserToResizeRows = false;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.gridOrders.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.gridOrders.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.gridOrders.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.gridOrders.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
             this.gridOrders.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -128,7 +128,7 @@
             this.gridOrders.RowHeadersVisible = false;
             this.gridOrders.RowTemplate.DefaultCellStyle.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.gridOrders.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridOrders.Size = new System.Drawing.Size(655, 222);
+            this.gridOrders.Size = new System.Drawing.Size(655, 223);
             this.gridOrders.TabIndex = 10;
             this.gridOrders.SelectionChanged += new System.EventHandler(this.gridOrders_SelectionChanged);
             // 
@@ -144,19 +144,19 @@
             // 
             // treeOrderLines
             // 
-            this.treeOrderLines.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.treeOrderLines.BackColor = System.Drawing.SystemColors.Window;
             this.treeOrderLines.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.treeOrderLines.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeOrderLines.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.treeOrderLines.Indent = 40;
-            this.treeOrderLines.ItemHeight = 26;
+            this.treeOrderLines.ItemHeight = 22;
             this.treeOrderLines.Location = new System.Drawing.Point(14, 14);
             this.treeOrderLines.Name = "treeOrderLines";
             this.treeOrderLines.PathSeparator = "/";
             this.treeOrderLines.ShowNodeToolTips = true;
             this.treeOrderLines.ShowPlusMinus = false;
             this.treeOrderLines.ShowRootLines = false;
-            this.treeOrderLines.Size = new System.Drawing.Size(627, 260);
+            this.treeOrderLines.Size = new System.Drawing.Size(627, 263);
             this.treeOrderLines.TabIndex = 0;
             this.treeOrderLines.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeOrderLines_AfterSelect);
             // 
@@ -176,8 +176,8 @@
             // 
             this.splitContainer1.Panel2.Controls.Add(this.panel3);
             this.splitContainer1.Panel2.Controls.Add(this.toolStrip1);
-            this.splitContainer1.Size = new System.Drawing.Size(655, 565);
-            this.splitContainer1.SplitterDistance = 247;
+            this.splitContainer1.Size = new System.Drawing.Size(655, 569);
+            this.splitContainer1.SplitterDistance = 248;
             this.splitContainer1.SplitterWidth = 5;
             this.splitContainer1.TabIndex = 15;
             // 
@@ -201,12 +201,13 @@
             // 
             // panel3
             // 
+            this.panel3.BackColor = System.Drawing.SystemColors.Window;
             this.panel3.Controls.Add(this.treeOrderLines);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(0, 25);
             this.panel3.Name = "panel3";
             this.panel3.Padding = new System.Windows.Forms.Padding(14);
-            this.panel3.Size = new System.Drawing.Size(655, 288);
+            this.panel3.Size = new System.Drawing.Size(655, 291);
             this.panel3.TabIndex = 2;
             // 
             // toolStrip1
@@ -236,11 +237,12 @@
             // 
             // btnExistingPreps
             // 
-            this.btnExistingPreps.Image = ((System.Drawing.Image)(resources.GetObject("btnExistingPreps.Image")));
+            this.btnExistingPreps.Enabled = false;
+            this.btnExistingPreps.Image = global::DSA_lims.Properties.Resources.prep_anal;
             this.btnExistingPreps.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnExistingPreps.Name = "btnExistingPreps";
-            this.btnExistingPreps.Size = new System.Drawing.Size(182, 22);
-            this.btnExistingPreps.Text = "Manage existing preparations";
+            this.btnExistingPreps.Size = new System.Drawing.Size(156, 22);
+            this.btnExistingPreps.Text = "Set external preparations";
             this.btnExistingPreps.Click += new System.EventHandler(this.btnExistingPreps_Click);
             // 
             // FormSelectOrder

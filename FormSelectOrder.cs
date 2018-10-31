@@ -290,7 +290,7 @@ namespace DSA_lims
                     new SqlParameter("@id", apmId));
                 if(o == null || o == DBNull.Value)
                 {
-                    MessageBox.Show("Preparation method is not marked as existing");
+                    MessageBox.Show("These preparations are not marked as external");
                     return;
                 }
                 prepLabId = Guid.Parse(o.ToString());
@@ -322,6 +322,8 @@ namespace DSA_lims
         private void treeOrderLines_AfterSelect(object sender, TreeViewEventArgs e)
         {
             UpdateCurrentPreparations(e.Node);
+
+            btnExistingPreps.Enabled = e.Node.Level == 1;
         }
 
         private void UpdateCurrentPreparations(TreeNode tnode)

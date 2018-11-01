@@ -3359,7 +3359,9 @@ as
 		ss.name as 'sample_storage_name',
 		s.reference_date,
 		insta.name as 'instance_status_name',
-		s.locked_by
+		s.locked_by,
+		(select number from sample where id = s.transform_from_id) as 'split_from',
+		(select number from sample where id = s.transform_to_id) as 'merge_to'
 	from sample s 
 		left outer join laboratory l on s.laboratory_id = l.id
 		left outer join sample_type st on s.sample_type_id = st.id

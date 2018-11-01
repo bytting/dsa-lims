@@ -1703,6 +1703,38 @@ namespace DSA_lims
         private void miSamplesMerge_Click(object sender, EventArgs e)
         {
             // merge sample
+            if (gridSamples.SelectedRows.Count < 2)
+            {
+                MessageBox.Show("You must select two or more samples to merge");
+                return;
+            }
+
+            List<Guid> sampleIds = new List<Guid>();
+            foreach(DataGridViewRow row in gridSamples.SelectedRows)            
+                sampleIds.Add(Guid.Parse(row.Cells["id"].Value.ToString()));
+
+            var sampleIdsArr = from item in sampleIds select "'" + item + "'";
+            string sampleIdsCsv = string.Join(",", sampleIdsArr);
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                Func<string, int> nCheck = field => Convert.ToInt32(DB.GetScalar(conn, "select count(distinct(" + field + ")) from sample where id in(" + sampleIdsCsv + ")", CommandType.Text));
+
+                if ((nCheck("laboratory_id") & nCheck("project_sub_id") & nCheck("sample_type_id")) != 1)
+                {
+                    MessageBox.Show("All samples to be merged must have the same laboratory, project and sample type");
+                    return;
+                }            
+            }                
+
+            FormSampleMerge form = new FormSampleMerge(sampleIdsCsv);
+            if (form.ShowDialog() != DialogResult.OK)
+                return;
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                UI.PopulateSamples(conn, gridSamples);
+            }
         }
 
         private void miSamplesSetOrder_Click(object sender, EventArgs e)

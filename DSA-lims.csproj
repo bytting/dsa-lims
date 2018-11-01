@@ -190,6 +190,12 @@
     <Compile Include="FormSampleComponent.Designer.cs">
       <DependentUpon>FormSampleComponent.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormSampleMerge.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSampleMerge.Designer.cs">
+      <DependentUpon>FormSampleMerge.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormSampler.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -353,6 +359,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormSampleComponent.resx">
       <DependentUpon>FormSampleComponent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSampleMerge.resx">
+      <DependentUpon>FormSampleMerge.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormSampler.resx">
       <DependentUpon>FormSampler.cs</DependentUpon>

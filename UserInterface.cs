@@ -562,6 +562,8 @@ namespace DSA_lims
             grid.Columns["reference_date"].HeaderText = "Ref.date";
             grid.Columns["instance_status_name"].HeaderText = "Status";
             grid.Columns["locked_by"].HeaderText = "Locked by";
+            grid.Columns["split_from"].HeaderText = "Split from";
+            grid.Columns["merge_to"].HeaderText = "Merge to";
 
             grid.Columns["reference_date"].DefaultCellStyle.Format = StrUtils.DateTimeFormatNorwegian;
         }

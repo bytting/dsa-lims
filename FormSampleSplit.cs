@@ -136,7 +136,7 @@ namespace DSA_lims
                     cmd.Parameters.AddWithValue("@sampler_id", map["sampler_id"]);
                     cmd.Parameters.AddWithValue("@sampling_method_id", map["sampling_method_id"]);
                     cmd.Parameters.AddWithValue("@transform_from_id", map["id"]);
-                    cmd.Parameters.AddWithValue("@transform_to_id", Guid.Empty);
+                    cmd.Parameters.AddWithValue("@transform_to_id", DBNull.Value);
                     cmd.Parameters.AddWithValue("@imported_from", DBNull.Value);
                     cmd.Parameters.AddWithValue("@imported_from_id", DBNull.Value);
                     cmd.Parameters.AddWithValue("@municipality_id", map["municipality_id"]);

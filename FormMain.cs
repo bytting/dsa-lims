@@ -493,8 +493,8 @@ namespace DSA_lims
                     cmd.Parameters.AddWithValue("@station_id", Lemma<Guid, string>.IdParam(cboxSampleInfoStations.SelectedItem));
                     cmd.Parameters.AddWithValue("@sampler_id", Lemma<Guid, string>.IdParam(cboxSampleInfoSampler.SelectedItem));
                     cmd.Parameters.AddWithValue("@sampling_method_id", Lemma<Guid, string>.IdParam(cboxSampleInfoSamplingMeth.SelectedItem));
-                    cmd.Parameters.AddWithValue("@transform_from_id", Guid.Empty);
-                    cmd.Parameters.AddWithValue("@transform_to_id", Guid.Empty);
+                    cmd.Parameters.AddWithValue("@transform_from_id", DBNull.Value);
+                    cmd.Parameters.AddWithValue("@transform_to_id", DBNull.Value);
                     cmd.Parameters.AddWithValue("@imported_from", DBNull.Value);
                     cmd.Parameters.AddWithValue("@imported_from_id", DBNull.Value);
                     cmd.Parameters.AddWithValue("@municipality_id", Lemma<Guid, string>.IdParam(cboxSampleMunicipalities.SelectedItem));
@@ -1689,8 +1689,27 @@ namespace DSA_lims
                 return;
             }
 
-            Guid sampleId = Guid.Parse(gridSamples.SelectedRows[0].Cells["id"].Value.ToString());
-            FormSampleSplit form = new FormSampleSplit(sampleId);
+            Guid sid = Guid.Parse(gridSamples.SelectedRows[0].Cells["id"].Value.ToString());
+            string comp = gridSamples.SelectedRows[0].Cells["sample_component_name"].Value.ToString();
+            if(!String.IsNullOrEmpty(comp))
+            {
+                MessageBox.Show("Can not split a sample which is already a component");
+                return;
+            }
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                int splitTest = Convert.ToInt32(DB.GetScalar(conn, "select count(*) from sample where transform_from_id = @id", CommandType.Text, 
+                    new SqlParameter("@id", sid)));
+
+                if(splitTest > 0)
+                {
+                    MessageBox.Show("Sample has already been split");
+                    return;
+                }
+            }   
+                                     
+            FormSampleSplit form = new FormSampleSplit(sid);
             if (form.ShowDialog() != DialogResult.OK)
                 return;
 
@@ -1718,13 +1737,20 @@ namespace DSA_lims
 
             using (SqlConnection conn = DB.OpenConnection())
             {
+                int mergeTest = Convert.ToInt32(DB.GetScalar(conn, "select count(transform_to_id)from sample where id in (" + sampleIdsCsv + ")", CommandType.Text));
+                if(mergeTest > 0)
+                {
+                    MessageBox.Show("One or more samples has already been merged");
+                    return;
+                }
+
                 Func<string, int> nCheck = field => Convert.ToInt32(DB.GetScalar(conn, "select count(distinct(" + field + ")) from sample where id in(" + sampleIdsCsv + ")", CommandType.Text));
 
                 if ((nCheck("laboratory_id") & nCheck("project_sub_id") & nCheck("sample_type_id")) != 1)
                 {
                     MessageBox.Show("All samples to be merged must have the same laboratory, project and sample type");
                     return;
-                }            
+                }
             }                
 
             FormSampleMerge form = new FormSampleMerge(sampleIdsCsv);

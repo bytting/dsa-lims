@@ -3371,7 +3371,7 @@ as
 		inner join project_main pm on pm.id = ps.project_main_id
 		inner join instance_status insta on s.instance_status_id = insta.id
 	where s.instance_status_id <= @instance_status_level
-	order by s.create_date desc
+	order by s.number desc
 go
 
 create proc csp_select_samples_for_assignment_flat

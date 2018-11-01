@@ -772,6 +772,31 @@ order by name";
             }
         }
 
+        public static void PopulateSampleComponentsAscending(SqlConnection conn, Guid sampleTypeId, TreeNode tnode, ComboBox cbox)
+        {
+            cbox.Items.Clear();
+
+            AddSampleTypeComponentsAscending(conn, sampleTypeId, tnode, cbox);
+
+            cbox.SelectedIndex = -1;
+        }
+
+        private static void AddSampleTypeComponentsAscending(SqlConnection conn, Guid sampleTypeId, TreeNode tnode, ComboBox cbox)
+        {
+            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_sample_components_for_sample_type", CommandType.StoredProcedure,
+                    new SqlParameter("@sample_type_id", sampleTypeId)))
+            {
+                while (reader.Read())
+                    cbox.Items.Add(new Lemma<Guid, string>(new Guid(reader["id"].ToString()), reader["name"].ToString()));
+            }
+
+            if (tnode.Parent != null)
+            {
+                Guid parentId = new Guid(tnode.Parent.Name);
+                AddSampleTypeComponentsAscending(conn, parentId, tnode.Parent, cbox);
+            }
+        }
+
         public static void PopulateAnalMethNuclides(SqlConnection conn, Guid analysisMethodId, ListBox lb)
         {
             lb.Items.Clear();

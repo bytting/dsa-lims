@@ -33,7 +33,7 @@ namespace DSA_lims
     {
         private Dictionary<string, object> map = new Dictionary<string, object>();
 
-        public FormSampleSplit(Guid sampleId)
+        public FormSampleSplit(Guid sampleId, TreeView treeSampleTypes)
         {
             InitializeComponent();
 
@@ -72,17 +72,14 @@ namespace DSA_lims
 
                 string sampleTypeName = DB.GetScalar(conn, "select name from sample_type where id = @id", CommandType.Text, new SqlParameter("@id", map["sample_type_id"])).ToString();
                 tbSampleType.Text = sampleTypeName;
-
-                using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_sample_components_for_sample_type", CommandType.StoredProcedure, 
-                    new SqlParameter("@sample_type_id", map["sample_type_id"])))
+                
+                TreeNode[] tnodes = treeSampleTypes.Nodes.Find(map["sample_type_id"].ToString(), true);
+                if (tnodes.Length < 1)
                 {
-                    while (reader.Read())
-                    {
-                        cboxComponents.Items.Add(new Lemma<Guid, string>(Guid.Parse(reader["id"].ToString()), reader["name"].ToString()));
-                    }
+                    throw new Exception("Unable to find sample type id " + map["sample_type_id"].ToString());
                 }
 
-                cboxComponents.SelectedIndex = -1;
+                UI.PopulateSampleComponentsAscending(conn, Guid.Parse(map["sample_type_id"].ToString()), tnodes[0], cboxComponents);
             }
         }
 

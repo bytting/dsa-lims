@@ -1315,7 +1315,7 @@ namespace DSA_lims
         }
 
         private void cboxSampleSampleType_SelectedIndexChanged(object sender, EventArgs e)
-        {
+        {            
             ClearStatusMessage();
             cboxSampleSampleComponent.Items.Clear();
 
@@ -1329,27 +1329,11 @@ namespace DSA_lims
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                AddSampleTypeComponents(conn, sampleType.Id, tnodes[0]);
+                UI.PopulateSampleComponentsAscending(conn, sampleType.Id, tnodes[0], cboxSampleSampleComponent);
             }
 
             cboxSampleSampleComponent.SelectedIndex = -1;
-        }
-
-        private void AddSampleTypeComponents(SqlConnection conn, Guid sampleTypeId, TreeNode tnode)
-        {
-            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_sample_components_for_sample_type", CommandType.StoredProcedure,
-                    new SqlParameter("@sample_type_id", sampleTypeId)))
-            {
-                while (reader.Read())
-                    cboxSampleSampleComponent.Items.Add(new Lemma<Guid, string>(new Guid(reader["id"].ToString()), reader["name"].ToString()));
-            }
-
-            if (tnode.Parent != null)
-            {
-                Guid parentId = new Guid(tnode.Parent.Name);
-                AddSampleTypeComponents(conn, parentId, tnode.Parent);
-            }
-        }
+        }        
 
         private void cboxSampleSampleType_Leave(object sender, EventArgs e)
         {
@@ -1693,23 +1677,21 @@ namespace DSA_lims
             string comp = gridSamples.SelectedRows[0].Cells["sample_component_name"].Value.ToString();
             if(!String.IsNullOrEmpty(comp))
             {
-                MessageBox.Show("Can not split a sample which is already a component");
+                MessageBox.Show("Cannot split a sample which is already a component");
                 return;
             }
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                int splitTest = Convert.ToInt32(DB.GetScalar(conn, "select count(*) from sample where transform_from_id = @id", CommandType.Text, 
-                    new SqlParameter("@id", sid)));
-
-                if(splitTest > 0)
+                int mergeTest = Convert.ToInt32(DB.GetScalar(conn, "select count(transform_to_id) from sample where id = '" + sid.ToString() + "'", CommandType.Text));
+                if (mergeTest > 0)
                 {
-                    MessageBox.Show("Sample has already been split");
+                    MessageBox.Show("Sample has already been merged");
                     return;
                 }
             }   
                                      
-            FormSampleSplit form = new FormSampleSplit(sid);
+            FormSampleSplit form = new FormSampleSplit(sid, treeSampleTypes);
             if (form.ShowDialog() != DialogResult.OK)
                 return;
 
@@ -1717,6 +1699,8 @@ namespace DSA_lims
             {
                 UI.PopulateSamples(conn, gridSamples);
             }
+
+            lblStatus.Text = StrUtils.makeStatusMessage("Splitting sample successful");
         }
 
         private void miSamplesMerge_Click(object sender, EventArgs e)
@@ -1737,10 +1721,17 @@ namespace DSA_lims
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                int mergeTest = Convert.ToInt32(DB.GetScalar(conn, "select count(transform_to_id)from sample where id in (" + sampleIdsCsv + ")", CommandType.Text));
+                int mergeTest = Convert.ToInt32(DB.GetScalar(conn, "select count(transform_to_id) from sample where id in (" + sampleIdsCsv + ")", CommandType.Text));
                 if(mergeTest > 0)
                 {
-                    MessageBox.Show("One or more samples has already been merged");
+                    MessageBox.Show("Cannot merge, one or more of these samples has already been merged");
+                    return;
+                }
+
+                int splitTest = Convert.ToInt32(DB.GetScalar(conn, "select count(transform_from_id) from sample where id in (" + sampleIdsCsv + ")", CommandType.Text));
+                if(splitTest > 0)
+                {
+                    MessageBox.Show("Cannot merge, one or more of these samples has already been splitted");
                     return;
                 }
 
@@ -1761,6 +1752,8 @@ namespace DSA_lims
             {
                 UI.PopulateSamples(conn, gridSamples);
             }
+
+            lblStatus.Text = StrUtils.makeStatusMessage("Merging samples successful");
         }
 
         private void miSamplesSetOrder_Click(object sender, EventArgs e)

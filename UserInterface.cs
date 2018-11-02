@@ -552,7 +552,7 @@ namespace DSA_lims
 
             grid.Columns["id"].Visible = false;
 
-            grid.Columns["number"].HeaderText = "Sample name";
+            grid.Columns["number"].HeaderText = "Sample number";
             grid.Columns["external_id"].HeaderText = "Ex.Id";
             grid.Columns["laboratory_name"].HeaderText = "Laboratory";
             grid.Columns["sample_type_name"].HeaderText = "Type";

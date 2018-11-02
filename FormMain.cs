@@ -43,6 +43,8 @@ namespace DSA_lims
         private Guid selectedOrder = Guid.Empty;
         private Guid selectedSample = Guid.Empty;
 
+        private TabPage lastTab;
+
         public FormMain()
         {
             InitializeComponent();
@@ -61,6 +63,7 @@ namespace DSA_lims
                 tabs.ItemSize = new Size(0, 1);
                 tabs.SizeMode = TabSizeMode.Fixed;
                 tabs.SelectedTab = tabMenu;
+                lastTab = tabs.SelectedTab;
 
                 tabsPrepAnal.Appearance = TabAppearance.FlatButtons;
                 tabsPrepAnal.ItemSize = new Size(0, 1);
@@ -130,7 +133,7 @@ namespace DSA_lims
                     UI.PopulateSigma(cboxPrepAnalAnalSigma, cboxOrderRequestedSigma);
                     UI.PopulateCustomers(conn, InstanceStatus.Deleted, gridCustomers);
                     UI.PopulateCustomers(conn, InstanceStatus.Active, cboxOrderCustomerName);
-                    UI.PopulateOrders(conn, InstanceStatus.Deleted, gridOrders);
+                    //UI.PopulateOrders(conn, InstanceStatus.Deleted, gridOrders);
                 }
                 
                 HideMenuItems();
@@ -590,17 +593,7 @@ namespace DSA_lims
             {
                 conn?.Close();
             }     
-        }
-
-        private void btnSamplesOpen_Click(object sender, EventArgs e)
-        {            
-            tabs.SelectedTab = tabSample;
-        }
-
-        private void btnOrdersOpen_Click(object sender, EventArgs e)
-        {
-            tabs.SelectedTab = tabOrder;
-        }
+        }                
 
         private void miNewLaboratory_Click(object sender, EventArgs e)
         {            
@@ -1826,8 +1819,9 @@ namespace DSA_lims
             TreeNode sampleNode = null;
 
             string query = @"
-select s.id as 'sample_id', s.number as 'sample_number', l.name as 'laboratory_name'
+select s.id as 'sample_id', s.number as 'sample_number', st.name as 'sample_type_name', l.name as 'laboratory_name'
 from sample s
+inner join sample_type st on st.id = s.sample_type_id
 inner join laboratory l on l.id = s.laboratory_id
 where s.id = @id
 ";
@@ -1836,7 +1830,7 @@ where s.id = @id
                 new SqlParameter("@id", sampleId)))
             {
                 reader.Read();
-                string txt = reader["sample_number"].ToString() + " - " + reader["laboratory_name"].ToString();
+                string txt = reader["sample_number"].ToString() + " - " + reader["sample_type_name"].ToString() + ", " + reader["laboratory_name"].ToString();
                 sampleNode = treePrepAnal.Nodes.Add(sampleId.ToString(), txt);
             }
 
@@ -2302,24 +2296,7 @@ order by name
         private void miOrdersClearAllFilters_Click(object sender, EventArgs e)
         {
             // clear all order filters
-        }
-
-        private void SetOrderEditingState(bool state)
-        {
-            miOrderAddSampleType.Enabled = state;
-            miOrderRemSampleType.Enabled = state;
-            miOrderAddPrepMeth.Enabled = state;
-            miOrderRemPrepMeth.Enabled = state;
-            miOrderAddAnalMeth.Enabled = state;
-            miOrderRemAnalMeth.Enabled = state;
-
-            btnOrderAddSampleType.Enabled = state;
-            btnOrderRemSampleType.Enabled = state;
-            btnOrderAddPrepMeth.Enabled = state;
-            btnOrderRemPrepMeth.Enabled = state;
-            btnOrderAddAnalMeth.Enabled = state;
-            btnOrderRemAnalMeth.Enabled = state;
-        }
+        }        
 
         private void miOrdersNew_Click(object sender, EventArgs e)
         {
@@ -2327,7 +2304,14 @@ order by name
             ClearOrderInfo();
             selectedOrder = Guid.Empty;
 
-            SetOrderEditingState(false);
+            FormOrderNew form = new FormOrderNew();
+            if (form.ShowDialog() != DialogResult.OK)
+                return;
+
+            selectedOrder = form.OrderId;
+            tbOrderName.Text = form.OrderName;
+            PopulateOrder(selectedOrder);
+
             tabs.SelectedTab = tabOrder;
         }
 
@@ -2343,8 +2327,7 @@ order by name
             ClearOrderInfo();
             selectedOrder = Guid.Parse(gridOrders.SelectedRows[0].Cells["id"].Value.ToString());
             PopulateOrder(selectedOrder);                        
-
-            SetOrderEditingState(true);
+            
             tabs.SelectedTab = tabOrder;
         }
 
@@ -2546,7 +2529,7 @@ order by name
         private void miOrderSave_Click(object sender, EventArgs e)
         {
             // save order
-            if(cboxOrderLaboratory.SelectedItem == null)
+            /*if(cboxOrderLaboratory.SelectedItem == null)
             {
                 MessageBox.Show("Laboratory is mandatory");
                 return;
@@ -2633,7 +2616,7 @@ order by name
             finally
             {
                 conn?.Close();
-            }
+            }*/
         }
 
         private void btnOrderSelectDeadline_Click(object sender, EventArgs e)
@@ -2906,7 +2889,7 @@ order by name
                     if (!DB.LockSample(conn, selectedSample))
                     {
                         MessageBox.Show("Unable to lock sample");
-                        e.Cancel = true;                        
+                        e.Cancel = true;
                     }
                 }
             }
@@ -2919,6 +2902,13 @@ order by name
                         MessageBox.Show("Unable to lock order");
                         e.Cancel = true;
                     }
+                }
+            }
+            else if (e.TabPage == tabOrders)
+            {
+                using (SqlConnection conn = DB.OpenConnection())
+                {
+                    UI.PopulateOrders(conn, InstanceStatus.Active, gridOrders);
                 }
             }
         }
@@ -2939,6 +2929,20 @@ order by name
                     DB.UnlockOrders(conn);
                 }
             }
+        }
+
+        private void miBack_Click(object sender, EventArgs e)
+        {
+            tabs.SelectedTab = lastTab;
+        }
+
+        private void tabs_Deselected(object sender, TabControlEventArgs e)
+        {
+            if(e.TabPage == tabSamples)            
+                lastTab = tabSamples;
+            else if(e.TabPage == tabOrders)
+                lastTab = tabOrders;
+            else lastTab = tabMenu;
         }
     }    
 }

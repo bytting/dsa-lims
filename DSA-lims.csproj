@@ -160,6 +160,12 @@
     <Compile Include="FormOrderAddSampleType.Designer.cs">
       <DependentUpon>FormOrderAddSampleType.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormOrderNew.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormOrderNew.Designer.cs">
+      <DependentUpon>FormOrderNew.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormPreparationMethod.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -345,6 +351,9 @@
     <EmbeddedResource Include="FormOrderAddSampleType.resx">
       <DependentUpon>FormOrderAddSampleType.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormOrderNew.resx">
+      <DependentUpon>FormOrderNew.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormPreparationMethod.resx">
       <DependentUpon>FormPreparationMethod.cs</DependentUpon>
     </EmbeddedResource>
@@ -518,6 +527,7 @@
   <ItemGroup>
     <Content Include="comments.txt" />
     <Content Include="database.sql" />
+    <None Include="images\left.png" />
     <None Include="images\datetime_16.png" />
     <None Include="images\datetime_32.png" />
     <None Include="images\datetime.png" />

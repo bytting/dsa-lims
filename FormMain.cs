@@ -99,7 +99,7 @@ namespace DSA_lims
                     DB.LoadWorkflowStatus(conn);
                     DB.LoadLocationTypes(conn);                    
 
-                    UI.PopulateInstanceStatus(cboxSamplesStatus);
+                    UI.PopulateInstanceStatus(cboxSamplesStatus, cboxSampleInstanceStatus);
                     UI.PopulatePreparationUnits(cboxSamplePrepUnit);
                     UI.PopulateWorkflowStatus(cboxSampleAnalWorkflowStatus, cboxSamplePrepWorkflowStatus);
                     UI.PopulateLocationTypes(cboxSampleInfoLocationTypes);
@@ -1290,7 +1290,7 @@ namespace DSA_lims
             if (form.ShowDialog() != DialogResult.OK)
                 return;
             
-            selectedSample = form.SampleId;
+            selectedSample = form.SampleId;            
             using (SqlConnection conn = DB.OpenConnection())
             {
                 PopulateSample(conn, selectedSample);
@@ -1366,7 +1366,7 @@ namespace DSA_lims
         private void PopulateSample(SqlConnection conn, Guid sampleId)
         {
             Dictionary<string, object> map = new Dictionary<string, object>();
-            
+
             using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_sample", CommandType.StoredProcedure,
                 new SqlParameter("@id", sampleId)))
             {
@@ -1418,7 +1418,7 @@ namespace DSA_lims
                 map["created_by"] = reader["created_by"];
                 map["update_date"] = reader["update_date"];
                 map["updated_by"] = reader["updated_by"];
-            }                
+            }
 
             SetCboxItem(cboxSampleSampleType, map, "sample_type_id");
             SetCboxItem(cboxSampleSampleComponent, map, "sample_component_id");
@@ -1453,7 +1453,7 @@ namespace DSA_lims
             DateTime referenceDate = Convert.ToDateTime(map["reference_date"]);
             dtSampleSamplingDateFrom.Value = dtSampleSamplingTimeFrom.Value = samplingDateFrom;
             cbSampleUseSamplingTimeTo.Checked = Convert.ToBoolean(map["use_sampling_date_to"]);
-            dtSampleSamplingDateTo.Value = dtSampleSamplingTimeTo.Value = samplingDateTo;                
+            dtSampleSamplingDateTo.Value = dtSampleSamplingTimeTo.Value = samplingDateTo;
             dtSampleReferenceDate.Value = dtSampleReferenceTime.Value = referenceDate;
 
             tbSampleExId.Text = map["external_id"].ToString();
@@ -1461,7 +1461,11 @@ namespace DSA_lims
 
             SetCboxItem(cboxSampleSampleStorage, map, "sample_storage_id");
 
+            cboxSampleInstanceStatus.SelectedValue = map["instance_status_id"];
+
             tbSampleComment.Text = map["comment"].ToString();
+            lblSampleToolId.Text = "[Sample] " + map["number"].ToString();
+            lblSampleToolLaboratory.Text = String.IsNullOrEmpty(cboxSampleLaboratory.Text) ? "" : "[Laboratory] " + cboxSampleLaboratory.Text;
         }
 
         private void SetCboxItem(ComboBox cbox, Dictionary<string, object> map, string idField)
@@ -1471,14 +1475,7 @@ namespace DSA_lims
             if (map[idField] != DBNull.Value)
             {                
                 Guid id = Guid.Parse(map[idField].ToString());
-                foreach (Lemma<Guid, string> l in cbox.Items)
-                {
-                    if (l.Id == id)
-                    {
-                        cbox.SelectedItem = l;
-                        break;
-                    }
-                }
+                SetCboxItem(cbox, map, id);
             }
         }
 
@@ -1494,7 +1491,7 @@ namespace DSA_lims
                     break;
                 }
             }
-        }
+        }        
 
         private void cbSampleUseSamplingTimeTo_CheckedChanged(object sender, EventArgs e)
         {
@@ -2754,7 +2751,7 @@ order by name
             {
                 using (SqlConnection conn = DB.OpenConnection())
                 {
-                    UI.PopulateSamples(conn, gridOrders);
+                    UI.PopulateSamples(conn, gridSamples);
                 }
             }
         }
@@ -2848,6 +2845,7 @@ order by name
                 cmd.Parameters.AddWithValue("@reference_date", new DateTime(dtSampleReferenceDate.Value.Year, dtSampleReferenceDate.Value.Month, dtSampleReferenceDate.Value.Day, dtSampleReferenceTime.Value.Hour, dtSampleReferenceTime.Value.Minute, dtSampleReferenceTime.Value.Second));
                 cmd.Parameters.AddWithValue("@external_id", DB.MakeParam(typeof(string), tbSampleExId.Text.Trim()));
                 cmd.Parameters.AddWithValue("@confidential", cbSampleConfidential.Checked ? 1 : 0);
+                cmd.Parameters.AddWithValue("@instance_status_id", Lemma<int, string>.IdParam(cboxSampleInstanceStatus.SelectedItem));
                 cmd.Parameters.AddWithValue("@comment", tbSampleComment.Text.Trim());
                 cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
                 cmd.Parameters.AddWithValue("@updated_by", Common.Username);

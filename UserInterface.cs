@@ -34,7 +34,7 @@ namespace DSA_lims
         {
             foreach (ComboBox cb in cbn)
             {
-                cb.DataSource = Common.InstanceStatusList;
+                cb.DataSource = new List<Lemma<int, string>>(Common.InstanceStatusList);
                 cb.SelectedIndex = -1;
             }
         }
@@ -43,7 +43,7 @@ namespace DSA_lims
         {
             foreach (ComboBox cb in cbn)
             {
-                cb.DataSource = Common.PreparationUnitList;
+                cb.DataSource = new List<Lemma<int, string>>(Common.PreparationUnitList);
                 cb.SelectedIndex = -1;
             }
         }        
@@ -52,7 +52,7 @@ namespace DSA_lims
         {
             foreach(ComboBox cb in cbn)
             {
-                cb.DataSource = Common.WorkflowStatusList;
+                cb.DataSource = new List<Lemma<int, string>>(Common.WorkflowStatusList);
                 cb.SelectedIndex = -1;
             }            
         }
@@ -61,7 +61,7 @@ namespace DSA_lims
         {
             foreach (ComboBox cb in cbn)
             {
-                cb.DataSource = Common.LocationTypeList;
+                cb.DataSource = new List<Lemma<int, string>>(Common.LocationTypeList);
                 cb.SelectedIndex = -1;
             }
         }

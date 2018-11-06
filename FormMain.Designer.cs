@@ -897,6 +897,8 @@
             this.label20 = new System.Windows.Forms.Label();
             this.panel23 = new System.Windows.Forms.Panel();
             this.label21 = new System.Windows.Forms.Label();
+            this.label22 = new System.Windows.Forms.Label();
+            this.cboxSampleInstanceStatus = new System.Windows.Forms.ComboBox();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tabs.SuspendLayout();
@@ -2953,6 +2955,8 @@
             this.layoutSample.Controls.Add(this.panel7, 0, 1);
             this.layoutSample.Controls.Add(this.panel13, 0, 4);
             this.layoutSample.Controls.Add(this.panel23, 0, 13);
+            this.layoutSample.Controls.Add(this.label22, 0, 15);
+            this.layoutSample.Controls.Add(this.cboxSampleInstanceStatus, 1, 15);
             this.layoutSample.Dock = System.Windows.Forms.DockStyle.Fill;
             this.layoutSample.Location = new System.Drawing.Point(3, 28);
             this.layoutSample.Name = "layoutSample";
@@ -10057,6 +10061,28 @@
             this.label21.TabIndex = 0;
             this.label21.Text = "*";
             // 
+            // label22
+            // 
+            this.label22.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label22.Location = new System.Drawing.Point(3, 430);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(156, 30);
+            this.label22.TabIndex = 54;
+            this.label22.Text = "Status";
+            this.label22.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // cboxSampleInstanceStatus
+            // 
+            this.cboxSampleInstanceStatus.DisplayMember = "Name";
+            this.cboxSampleInstanceStatus.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cboxSampleInstanceStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxSampleInstanceStatus.FormattingEnabled = true;
+            this.cboxSampleInstanceStatus.Location = new System.Drawing.Point(165, 433);
+            this.cboxSampleInstanceStatus.Name = "cboxSampleInstanceStatus";
+            this.cboxSampleInstanceStatus.Size = new System.Drawing.Size(318, 21);
+            this.cboxSampleInstanceStatus.TabIndex = 55;
+            this.cboxSampleInstanceStatus.ValueMember = "Id";
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -11435,6 +11461,8 @@
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Panel panel23;
         private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.ComboBox cboxSampleInstanceStatus;
     }
 }
 

@@ -127,11 +127,8 @@ namespace DSA_lims
             lblStatus.Text = "";            
             cboxSampleComponent.Items.Clear();
 
-            if (cboxSampleType.SelectedItem == null)
-            {
-                cboxSampleComponent.Items.Clear();
-                return;
-            }
+            if (cboxSampleType.SelectedItem == null)            
+                return;            
 
             var sampleType = cboxSampleType.SelectedItem as Lemma<Guid, string>;
             TreeNode[] tnodes = TreeSampleTypes.Nodes.Find(sampleType.Id.ToString(), true);

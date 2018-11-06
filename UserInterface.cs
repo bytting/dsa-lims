@@ -551,6 +551,7 @@ namespace DSA_lims
                 new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
 
             grid.Columns["id"].Visible = false;
+            grid.Columns["merge_to"].Visible = false;
 
             grid.Columns["number"].HeaderText = "Sample number";
             grid.Columns["external_id"].HeaderText = "Ex.Id";
@@ -562,8 +563,8 @@ namespace DSA_lims
             grid.Columns["reference_date"].HeaderText = "Ref.date";
             grid.Columns["instance_status_name"].HeaderText = "Status";
             grid.Columns["locked_by"].HeaderText = "Locked by";
-            grid.Columns["split_from"].HeaderText = "Split from";
-            grid.Columns["merge_to"].HeaderText = "Merge to";
+            grid.Columns["split_from"].HeaderText = "Split from";            
+            grid.Columns["merge_from"].HeaderText = "Merge from";
 
             grid.Columns["reference_date"].DefaultCellStyle.Format = StrUtils.DateTimeFormatNorwegian;
         }

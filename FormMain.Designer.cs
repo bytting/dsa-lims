@@ -265,6 +265,8 @@
             this.label17 = new System.Windows.Forms.Label();
             this.cboxSampleSampleStorage = new System.Windows.Forms.ComboBox();
             this.cbSampleConfidential = new System.Windows.Forms.CheckBox();
+            this.btnSampleUpdate = new System.Windows.Forms.Button();
+            this.btnSampleAddToOrder = new System.Windows.Forms.Button();
             this.tabSamplesParams = new System.Windows.Forms.TabPage();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.toolStrip6 = new System.Windows.Forms.ToolStrip();
@@ -278,9 +280,6 @@
             this.lblSampleToolProject = new System.Windows.Forms.ToolStripLabel();
             this.lblSampleToolSubProject = new System.Windows.Forms.ToolStripLabel();
             this.lblSampleToolLaboratory = new System.Windows.Forms.ToolStripLabel();
-            this.panel7 = new System.Windows.Forms.Panel();
-            this.btnSampleClose = new System.Windows.Forms.Button();
-            this.btnSampleSave = new System.Windows.Forms.Button();
             this.tabOrder = new System.Windows.Forms.TabPage();
             this.tabsOrder = new System.Windows.Forms.TabControl();
             this.tabOrderInfo = new System.Windows.Forms.TabPage();
@@ -917,7 +916,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.toolStrip6.SuspendLayout();
             this.toolsSample.SuspendLayout();
-            this.panel7.SuspendLayout();
             this.tabOrder.SuspendLayout();
             this.tabsOrder.SuspendLayout();
             this.tabOrderInfo.SuspendLayout();
@@ -2433,7 +2431,6 @@
             this.tabs.SelectedIndexChanged += new System.EventHandler(this.tabs_SelectedIndexChanged);
             this.tabs.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.tabs_Selecting);
             this.tabs.Deselecting += new System.Windows.Forms.TabControlCancelEventHandler(this.tabs_Deselecting);
-            this.tabs.Deselected += new System.Windows.Forms.TabControlEventHandler(this.tabs_Deselected);
             // 
             // tabMenu
             // 
@@ -2757,7 +2754,6 @@
             this.tabSample.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.tabSample.Controls.Add(this.tabsSample);
             this.tabSample.Controls.Add(this.toolsSample);
-            this.tabSample.Controls.Add(this.panel7);
             this.tabSample.Location = new System.Drawing.Point(4, 24);
             this.tabSample.Name = "tabSample";
             this.tabSample.Padding = new System.Windows.Forms.Padding(3);
@@ -2774,7 +2770,7 @@
             this.tabsSample.Location = new System.Drawing.Point(3, 28);
             this.tabsSample.Name = "tabsSample";
             this.tabsSample.SelectedIndex = 0;
-            this.tabsSample.Size = new System.Drawing.Size(1141, 585);
+            this.tabsSample.Size = new System.Drawing.Size(1141, 613);
             this.tabsSample.TabIndex = 1;
             this.tabsSample.SelectedIndexChanged += new System.EventHandler(this.tabsSample_SelectedIndexChanged);
             // 
@@ -2787,7 +2783,7 @@
             this.tabSamplesInfo.Location = new System.Drawing.Point(4, 24);
             this.tabSamplesInfo.Name = "tabSamplesInfo";
             this.tabSamplesInfo.Padding = new System.Windows.Forms.Padding(3);
-            this.tabSamplesInfo.Size = new System.Drawing.Size(1133, 557);
+            this.tabSamplesInfo.Size = new System.Drawing.Size(1133, 585);
             this.tabSamplesInfo.TabIndex = 0;
             this.tabSamplesInfo.Text = "Sample Info";
             // 
@@ -2797,9 +2793,9 @@
             this.panel21.Controls.Add(this.toolStrip3);
             this.panel21.Controls.Add(this.panelSamplesAttachments);
             this.panel21.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel21.Location = new System.Drawing.Point(3, 303);
+            this.panel21.Location = new System.Drawing.Point(3, 328);
             this.panel21.Name = "panel21";
-            this.panel21.Size = new System.Drawing.Size(1127, 251);
+            this.panel21.Size = new System.Drawing.Size(1127, 254);
             this.panel21.TabIndex = 1;
             // 
             // tbSampleComment
@@ -2809,7 +2805,7 @@
             this.tbSampleComment.Multiline = true;
             this.tbSampleComment.Name = "tbSampleComment";
             this.tbSampleComment.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.tbSampleComment.Size = new System.Drawing.Size(639, 226);
+            this.tbSampleComment.Size = new System.Drawing.Size(639, 229);
             this.tbSampleComment.TabIndex = 17;
             // 
             // toolStrip3
@@ -2837,7 +2833,7 @@
             this.panelSamplesAttachments.Dock = System.Windows.Forms.DockStyle.Right;
             this.panelSamplesAttachments.Location = new System.Drawing.Point(639, 0);
             this.panelSamplesAttachments.Name = "panelSamplesAttachments";
-            this.panelSamplesAttachments.Size = new System.Drawing.Size(488, 251);
+            this.panelSamplesAttachments.Size = new System.Drawing.Size(488, 254);
             this.panelSamplesAttachments.TabIndex = 0;
             // 
             // gridSampleAttachments
@@ -2851,7 +2847,7 @@
             this.gridSampleAttachments.Location = new System.Drawing.Point(0, 25);
             this.gridSampleAttachments.Name = "gridSampleAttachments";
             this.gridSampleAttachments.ReadOnly = true;
-            this.gridSampleAttachments.Size = new System.Drawing.Size(488, 226);
+            this.gridSampleAttachments.Size = new System.Drawing.Size(488, 229);
             this.gridSampleAttachments.TabIndex = 1;
             // 
             // toolsSampleSampInfoAttachments
@@ -2959,10 +2955,12 @@
             this.tableLayoutPanel2.Controls.Add(this.label17, 4, 10);
             this.tableLayoutPanel2.Controls.Add(this.cboxSampleSampleStorage, 5, 10);
             this.tableLayoutPanel2.Controls.Add(this.cbSampleConfidential, 1, 10);
+            this.tableLayoutPanel2.Controls.Add(this.btnSampleUpdate, 7, 11);
+            this.tableLayoutPanel2.Controls.Add(this.btnSampleAddToOrder, 1, 11);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 12;
+            this.tableLayoutPanel2.RowCount = 13;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 10F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
@@ -2974,8 +2972,9 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(1127, 300);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(1127, 325);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
             // dtSampleSamplingTimeTo
@@ -3463,6 +3462,27 @@
             this.cbSampleConfidential.Text = "Excempt from public";
             this.cbSampleConfidential.UseVisualStyleBackColor = true;
             // 
+            // btnSampleUpdate
+            // 
+            this.btnSampleUpdate.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnSampleUpdate.Location = new System.Drawing.Point(958, 281);
+            this.btnSampleUpdate.Name = "btnSampleUpdate";
+            this.btnSampleUpdate.Size = new System.Drawing.Size(166, 26);
+            this.btnSampleUpdate.TabIndex = 46;
+            this.btnSampleUpdate.Text = "Update sample";
+            this.btnSampleUpdate.UseVisualStyleBackColor = true;
+            this.btnSampleUpdate.Click += new System.EventHandler(this.btnSampleUpdate_Click);
+            // 
+            // btnSampleAddToOrder
+            // 
+            this.btnSampleAddToOrder.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnSampleAddToOrder.Location = new System.Drawing.Point(115, 281);
+            this.btnSampleAddToOrder.Name = "btnSampleAddToOrder";
+            this.btnSampleAddToOrder.Size = new System.Drawing.Size(163, 26);
+            this.btnSampleAddToOrder.TabIndex = 47;
+            this.btnSampleAddToOrder.Text = "Add to order";
+            this.btnSampleAddToOrder.UseVisualStyleBackColor = true;
+            // 
             // tabSamplesParams
             // 
             this.tabSamplesParams.BackColor = System.Drawing.SystemColors.ButtonFace;
@@ -3471,7 +3491,7 @@
             this.tabSamplesParams.Location = new System.Drawing.Point(4, 24);
             this.tabSamplesParams.Name = "tabSamplesParams";
             this.tabSamplesParams.Padding = new System.Windows.Forms.Padding(3);
-            this.tabSamplesParams.Size = new System.Drawing.Size(1133, 557);
+            this.tabSamplesParams.Size = new System.Drawing.Size(1133, 585);
             this.tabSamplesParams.TabIndex = 1;
             this.tabSamplesParams.Text = "Parameters";
             // 
@@ -3486,7 +3506,7 @@
             this.dataGridView1.Location = new System.Drawing.Point(3, 28);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.Size = new System.Drawing.Size(1127, 526);
+            this.dataGridView1.Size = new System.Drawing.Size(1127, 554);
             this.dataGridView1.TabIndex = 1;
             // 
             // toolStrip6
@@ -3581,38 +3601,6 @@
             this.lblSampleToolLaboratory.Name = "lblSampleToolLaboratory";
             this.lblSampleToolLaboratory.Size = new System.Drawing.Size(91, 22);
             this.lblSampleToolLaboratory.Text = "<Laboratory>";
-            // 
-            // panel7
-            // 
-            this.panel7.Controls.Add(this.btnSampleClose);
-            this.panel7.Controls.Add(this.btnSampleSave);
-            this.panel7.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel7.Location = new System.Drawing.Point(3, 613);
-            this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(1141, 28);
-            this.panel7.TabIndex = 4;
-            // 
-            // btnSampleClose
-            // 
-            this.btnSampleClose.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnSampleClose.Location = new System.Drawing.Point(907, 0);
-            this.btnSampleClose.Name = "btnSampleClose";
-            this.btnSampleClose.Size = new System.Drawing.Size(117, 28);
-            this.btnSampleClose.TabIndex = 1;
-            this.btnSampleClose.Text = "Close";
-            this.btnSampleClose.UseVisualStyleBackColor = true;
-            this.btnSampleClose.Click += new System.EventHandler(this.btnSampleClose_Click);
-            // 
-            // btnSampleSave
-            // 
-            this.btnSampleSave.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnSampleSave.Location = new System.Drawing.Point(1024, 0);
-            this.btnSampleSave.Name = "btnSampleSave";
-            this.btnSampleSave.Size = new System.Drawing.Size(117, 28);
-            this.btnSampleSave.TabIndex = 0;
-            this.btnSampleSave.Text = "Save";
-            this.btnSampleSave.UseVisualStyleBackColor = true;
-            this.btnSampleSave.Click += new System.EventHandler(this.btnSampleSave_Click);
             // 
             // tabOrder
             // 
@@ -3784,7 +3772,7 @@
             this.label38.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label38.Location = new System.Drawing.Point(3, 25);
             this.label38.Name = "label38";
-            this.label38.Size = new System.Drawing.Size(137, 25);
+            this.label38.Size = new System.Drawing.Size(138, 25);
             this.label38.TabIndex = 0;
             this.label38.Text = "Laboratory";
             this.label38.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -3794,7 +3782,7 @@
             this.label39.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label39.Location = new System.Drawing.Point(3, 75);
             this.label39.Name = "label39";
-            this.label39.Size = new System.Drawing.Size(137, 26);
+            this.label39.Size = new System.Drawing.Size(138, 26);
             this.label39.TabIndex = 1;
             this.label39.Text = "Deadline";
             this.label39.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -3804,7 +3792,7 @@
             this.label40.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label40.Location = new System.Drawing.Point(3, 101);
             this.label40.Name = "label40";
-            this.label40.Size = new System.Drawing.Size(137, 25);
+            this.label40.Size = new System.Drawing.Size(138, 25);
             this.label40.TabIndex = 2;
             this.label40.Text = "Requested sigma";
             this.label40.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -3814,7 +3802,7 @@
             this.label42.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label42.Location = new System.Drawing.Point(3, 50);
             this.label42.Name = "label42";
-            this.label42.Size = new System.Drawing.Size(137, 25);
+            this.label42.Size = new System.Drawing.Size(138, 25);
             this.label42.TabIndex = 5;
             this.label42.Text = "Responsible";
             this.label42.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -3824,9 +3812,9 @@
             this.cboxOrderResponsible.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cboxOrderResponsible.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxOrderResponsible.FormattingEnabled = true;
-            this.cboxOrderResponsible.Location = new System.Drawing.Point(146, 53);
+            this.cboxOrderResponsible.Location = new System.Drawing.Point(147, 53);
             this.cboxOrderResponsible.Name = "cboxOrderResponsible";
-            this.cboxOrderResponsible.Size = new System.Drawing.Size(283, 23);
+            this.cboxOrderResponsible.Size = new System.Drawing.Size(282, 23);
             this.cboxOrderResponsible.TabIndex = 6;
             // 
             // cboxOrderLaboratory
@@ -3834,9 +3822,9 @@
             this.cboxOrderLaboratory.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cboxOrderLaboratory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxOrderLaboratory.FormattingEnabled = true;
-            this.cboxOrderLaboratory.Location = new System.Drawing.Point(146, 28);
+            this.cboxOrderLaboratory.Location = new System.Drawing.Point(147, 28);
             this.cboxOrderLaboratory.Name = "cboxOrderLaboratory";
-            this.cboxOrderLaboratory.Size = new System.Drawing.Size(283, 23);
+            this.cboxOrderLaboratory.Size = new System.Drawing.Size(282, 23);
             this.cboxOrderLaboratory.TabIndex = 7;
             this.cboxOrderLaboratory.SelectedIndexChanged += new System.EventHandler(this.cboxOrderLaboratory_SelectedIndexChanged);
             // 
@@ -3850,9 +3838,9 @@
             "1",
             "2",
             "3"});
-            this.cboxOrderRequestedSigma.Location = new System.Drawing.Point(146, 104);
+            this.cboxOrderRequestedSigma.Location = new System.Drawing.Point(147, 104);
             this.cboxOrderRequestedSigma.Name = "cboxOrderRequestedSigma";
-            this.cboxOrderRequestedSigma.Size = new System.Drawing.Size(283, 23);
+            this.cboxOrderRequestedSigma.Size = new System.Drawing.Size(282, 23);
             this.cboxOrderRequestedSigma.TabIndex = 9;
             // 
             // label4
@@ -3860,7 +3848,7 @@
             this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label4.Location = new System.Drawing.Point(3, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(137, 25);
+            this.label4.Size = new System.Drawing.Size(138, 25);
             this.label4.TabIndex = 10;
             this.label4.Text = "Name";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -3868,10 +3856,10 @@
             // tbOrderName
             // 
             this.tbOrderName.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbOrderName.Location = new System.Drawing.Point(146, 3);
+            this.tbOrderName.Location = new System.Drawing.Point(147, 3);
             this.tbOrderName.Name = "tbOrderName";
             this.tbOrderName.ReadOnly = true;
-            this.tbOrderName.Size = new System.Drawing.Size(283, 21);
+            this.tbOrderName.Size = new System.Drawing.Size(282, 21);
             this.tbOrderName.TabIndex = 11;
             // 
             // panel30
@@ -3879,9 +3867,9 @@
             this.panel30.Controls.Add(this.tbOrderDeadline);
             this.panel30.Controls.Add(this.btnOrderSelectDeadline);
             this.panel30.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel30.Location = new System.Drawing.Point(146, 78);
+            this.panel30.Location = new System.Drawing.Point(147, 78);
             this.panel30.Name = "panel30";
-            this.panel30.Size = new System.Drawing.Size(283, 20);
+            this.panel30.Size = new System.Drawing.Size(282, 20);
             this.panel30.TabIndex = 14;
             // 
             // tbOrderDeadline
@@ -3891,7 +3879,7 @@
             this.tbOrderDeadline.Location = new System.Drawing.Point(0, 0);
             this.tbOrderDeadline.Name = "tbOrderDeadline";
             this.tbOrderDeadline.ReadOnly = true;
-            this.tbOrderDeadline.Size = new System.Drawing.Size(257, 21);
+            this.tbOrderDeadline.Size = new System.Drawing.Size(256, 21);
             this.tbOrderDeadline.TabIndex = 1;
             // 
             // btnOrderSelectDeadline
@@ -3900,7 +3888,7 @@
             this.btnOrderSelectDeadline.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.btnOrderSelectDeadline.Dock = System.Windows.Forms.DockStyle.Right;
             this.btnOrderSelectDeadline.InitialImage = null;
-            this.btnOrderSelectDeadline.Location = new System.Drawing.Point(257, 0);
+            this.btnOrderSelectDeadline.Location = new System.Drawing.Point(256, 0);
             this.btnOrderSelectDeadline.Name = "btnOrderSelectDeadline";
             this.btnOrderSelectDeadline.Size = new System.Drawing.Size(26, 20);
             this.btnOrderSelectDeadline.TabIndex = 2;
@@ -3913,7 +3901,7 @@
             this.label41.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.label41.Location = new System.Drawing.Point(3, 126);
             this.label41.Name = "label41";
-            this.label41.Size = new System.Drawing.Size(137, 100);
+            this.label41.Size = new System.Drawing.Size(138, 100);
             this.label41.TabIndex = 3;
             this.label41.Text = "Content comment";
             this.label41.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -3921,19 +3909,19 @@
             // tbOrderContentComment
             // 
             this.tbOrderContentComment.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbOrderContentComment.Location = new System.Drawing.Point(146, 129);
+            this.tbOrderContentComment.Location = new System.Drawing.Point(147, 129);
             this.tbOrderContentComment.Multiline = true;
             this.tbOrderContentComment.Name = "tbOrderContentComment";
             this.tbOrderContentComment.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.tbOrderContentComment.Size = new System.Drawing.Size(283, 94);
+            this.tbOrderContentComment.Size = new System.Drawing.Size(282, 94);
             this.tbOrderContentComment.TabIndex = 4;
             // 
             // button5
             // 
             this.button5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button5.Location = new System.Drawing.Point(146, 229);
+            this.button5.Location = new System.Drawing.Point(147, 229);
             this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(283, 26);
+            this.button5.Size = new System.Drawing.Size(282, 26);
             this.button5.TabIndex = 15;
             this.button5.Text = "Save details";
             this.button5.UseVisualStyleBackColor = true;
@@ -10106,7 +10094,6 @@
             this.toolStrip6.PerformLayout();
             this.toolsSample.ResumeLayout(false);
             this.toolsSample.PerformLayout();
-            this.panel7.ResumeLayout(false);
             this.tabOrder.ResumeLayout(false);
             this.tabsOrder.ResumeLayout(false);
             this.tabOrderInfo.ResumeLayout(false);
@@ -10605,9 +10592,6 @@
         private System.Windows.Forms.ToolStripLabel toolStripLabel9;
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.Label label26;
-        private System.Windows.Forms.Panel panel7;
-        private System.Windows.Forms.Button btnSampleClose;
-        private System.Windows.Forms.Button btnSampleSave;
         private System.Windows.Forms.Panel panel11;
         private System.Windows.Forms.Panel panel10;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
@@ -11416,6 +11400,8 @@
         private System.Windows.Forms.ToolStripMenuItem miBack;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator25;
         private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button btnSampleUpdate;
+        private System.Windows.Forms.Button btnSampleAddToOrder;
     }
 }
 

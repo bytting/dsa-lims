@@ -43,8 +43,6 @@ namespace DSA_lims
         private Guid selectedOrder = Guid.Empty;
         private Guid selectedSample = Guid.Empty;
 
-        private TabPage lastTab;
-
         public FormMain()
         {
             InitializeComponent();
@@ -62,8 +60,7 @@ namespace DSA_lims
                 tabs.Appearance = TabAppearance.FlatButtons;
                 tabs.ItemSize = new Size(0, 1);
                 tabs.SizeMode = TabSizeMode.Fixed;
-                tabs.SelectedTab = tabMenu;
-                lastTab = tabs.SelectedTab;
+                tabs.SelectedTab = tabMenu;                
 
                 tabsPrepAnal.Appearance = TabAppearance.FlatButtons;
                 tabsPrepAnal.ItemSize = new Size(0, 1);
@@ -300,15 +297,6 @@ namespace DSA_lims
             else if (tabs.SelectedTab == tabSample)
             {
                 miSample.Visible = true;
-
-                if (selectedSample == Guid.Empty)
-                {
-                    btnSampleSave.Text = "Save";
-                }
-                else
-                {
-                    btnSampleSave.Text = "Update";                    
-                }
             }
             else if (tabs.SelectedTab == tabOrder)
             {
@@ -442,158 +430,7 @@ namespace DSA_lims
         private void btnUserSettingsSave_Click(object sender, EventArgs e)
         {
             //
-        }        
-
-        private void btnSampleSave_Click(object sender, EventArgs e)
-        {
-            if(cboxSampleLaboratory.SelectedItem == null)
-            {
-                MessageBox.Show("Laboratory is mandatory");
-                return;
-            }
-
-            if (cboxSampleSampleType.SelectedItem == null)
-            {
-                MessageBox.Show("Sample type is mandatory");
-                return;
-            }
-
-            if (cboxSampleProject.SelectedItem == null)
-            {
-                MessageBox.Show("Main project is mandatory");
-                return;
-            }
-
-            if (cboxSampleSubProject.SelectedItem == null)
-            {
-                MessageBox.Show("Sub project is mandatory");
-                return;
-            }
-
-            SqlConnection conn = null;
-            SqlTransaction trans = null;
-
-            try
-            {
-                conn = DB.OpenConnection();                
-
-                if (selectedSample == Guid.Empty)
-                {
-                    // create new sample
-                    trans = conn.BeginTransaction();
-
-                    int nextSampleCount = DB.GetNextSampleCount(conn, trans);
-
-                    SqlCommand cmd = new SqlCommand("csp_insert_sample", conn, trans);
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@id", Guid.NewGuid());
-                    cmd.Parameters.AddWithValue("@number", nextSampleCount);
-                    cmd.Parameters.AddWithValue("@laboratory_id", Lemma<Guid, string>.IdParam(cboxSampleLaboratory.SelectedItem));
-                    cmd.Parameters.AddWithValue("@sample_type_id", Lemma<Guid, string>.IdParam(cboxSampleSampleType.SelectedItem));
-                    cmd.Parameters.AddWithValue("@sample_storage_id", Lemma<Guid, string>.IdParam(cboxSampleSampleStorage.SelectedItem));
-                    cmd.Parameters.AddWithValue("@sample_component_id", Lemma<Guid, string>.IdParam(cboxSampleSampleComponent.SelectedItem));
-                    cmd.Parameters.AddWithValue("@project_sub_id", Lemma<Guid, string>.IdParam(cboxSampleSubProject.SelectedItem));
-                    cmd.Parameters.AddWithValue("@station_id", Lemma<Guid, string>.IdParam(cboxSampleInfoStations.SelectedItem));
-                    cmd.Parameters.AddWithValue("@sampler_id", Lemma<Guid, string>.IdParam(cboxSampleInfoSampler.SelectedItem));
-                    cmd.Parameters.AddWithValue("@sampling_method_id", Lemma<Guid, string>.IdParam(cboxSampleInfoSamplingMeth.SelectedItem));
-                    cmd.Parameters.AddWithValue("@transform_from_id", DBNull.Value);
-                    cmd.Parameters.AddWithValue("@transform_to_id", DBNull.Value);
-                    cmd.Parameters.AddWithValue("@imported_from", DBNull.Value);
-                    cmd.Parameters.AddWithValue("@imported_from_id", DBNull.Value);
-                    cmd.Parameters.AddWithValue("@municipality_id", Lemma<Guid, string>.IdParam(cboxSampleMunicipalities.SelectedItem));
-                    cmd.Parameters.AddWithValue("@location_type", DB.MakeParam(typeof(string), cboxSampleInfoLocationTypes.Text));
-                    cmd.Parameters.AddWithValue("@location", DB.MakeParam(typeof(string), tbSampleLocation.Text.Trim()));
-                    cmd.Parameters.AddWithValue("@latitude", DB.MakeParam(typeof(double), tbSampleInfoLatitude.Text.Trim()));
-                    cmd.Parameters.AddWithValue("@longitude", DB.MakeParam(typeof(double), tbSampleInfoLongitude.Text.Trim()));
-                    cmd.Parameters.AddWithValue("@altitude", DB.MakeParam(typeof(double), tbSampleInfoAltitude.Text.Trim()));
-                    cmd.Parameters.AddWithValue("@sampling_date_from", new DateTime(dtSampleSamplingDateFrom.Value.Year, dtSampleSamplingDateFrom.Value.Month, dtSampleSamplingDateFrom.Value.Day, dtSampleSamplingTimeFrom.Value.Hour, dtSampleSamplingTimeFrom.Value.Minute, dtSampleSamplingTimeFrom.Value.Second));
-                    cmd.Parameters.AddWithValue("@use_sampling_date_to", cbSampleUseSamplingTimeTo.Checked ? 1 : 0);
-                    cmd.Parameters.AddWithValue("@sampling_date_to", new DateTime(dtSampleSamplingDateTo.Value.Year, dtSampleSamplingDateTo.Value.Month, dtSampleSamplingDateTo.Value.Day, dtSampleSamplingTimeTo.Value.Hour, dtSampleSamplingTimeTo.Value.Minute, dtSampleSamplingTimeTo.Value.Second));
-                    cmd.Parameters.AddWithValue("@reference_date", new DateTime(dtSampleReferenceDate.Value.Year, dtSampleReferenceDate.Value.Month, dtSampleReferenceDate.Value.Day, dtSampleReferenceTime.Value.Hour, dtSampleReferenceTime.Value.Minute, dtSampleReferenceTime.Value.Second));
-                    cmd.Parameters.AddWithValue("@external_id", DB.MakeParam(typeof(string), tbSampleExId.Text.Trim()));
-                    cmd.Parameters.AddWithValue("@wet_weight_g", DBNull.Value);
-                    cmd.Parameters.AddWithValue("@dry_weight_g", DBNull.Value);
-                    cmd.Parameters.AddWithValue("@volume_l", DBNull.Value);
-                    cmd.Parameters.AddWithValue("@lod_weight_start", DBNull.Value);
-                    cmd.Parameters.AddWithValue("@lod_weight_end", DBNull.Value);
-                    cmd.Parameters.AddWithValue("@lod_temperature", DBNull.Value);
-                    cmd.Parameters.AddWithValue("@confidential", cbSampleConfidential.Checked ? 1 : 0);
-                    cmd.Parameters.AddWithValue("@parameters", DBNull.Value);
-                    cmd.Parameters.AddWithValue("@instance_status_id", InstanceStatus.Active);
-                    cmd.Parameters.AddWithValue("@locked_by", DBNull.Value);
-                    cmd.Parameters.AddWithValue("@comment", tbSampleComment.Text.Trim());
-                    cmd.Parameters.AddWithValue("@create_date", DateTime.Now);
-                    cmd.Parameters.AddWithValue("@created_by", Common.Username);
-                    cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
-                    cmd.Parameters.AddWithValue("@updated_by", Common.Username);
-
-                    cmd.ExecuteNonQuery();
-
-                    trans.Commit();
-
-                    lblStatus.Text = StrUtils.makeStatusMessage("Sample " + nextSampleCount + " created");                        
-
-                    tbSamplesLookup.Text = nextSampleCount.ToString();
-                }
-                else
-                {
-                    // update selected sample
-                    SqlCommand cmd = new SqlCommand("select number from sample where id = @id", conn);
-                    cmd.CommandType = CommandType.Text;
-                    cmd.Parameters.AddWithValue("@id", selectedSample);
-                    object oNumber = cmd.ExecuteScalar();
-
-                    cmd.CommandText = "csp_update_sample";
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.Clear();
-                    cmd.Parameters.AddWithValue("@id", selectedSample);
-                    cmd.Parameters.AddWithValue("@laboratory_id", Lemma<Guid, string>.IdParam(cboxSampleLaboratory.SelectedItem));
-                    cmd.Parameters.AddWithValue("@sample_type_id", Lemma<Guid, string>.IdParam(cboxSampleSampleType.SelectedItem));
-                    cmd.Parameters.AddWithValue("@sample_storage_id", Lemma<Guid, string>.IdParam(cboxSampleSampleStorage.SelectedItem));
-                    cmd.Parameters.AddWithValue("@sample_component_id", Lemma<Guid, string>.IdParam(cboxSampleSampleComponent.SelectedItem));
-                    cmd.Parameters.AddWithValue("@project_sub_id", Lemma<Guid, string>.IdParam(cboxSampleSubProject.SelectedItem));
-                    cmd.Parameters.AddWithValue("@station_id", Lemma<Guid, string>.IdParam(cboxSampleInfoStations.SelectedItem));
-                    cmd.Parameters.AddWithValue("@sampler_id", Lemma<Guid, string>.IdParam(cboxSampleInfoSampler.SelectedItem));
-                    cmd.Parameters.AddWithValue("@sampling_method_id", Lemma<Guid, string>.IdParam(cboxSampleInfoSamplingMeth.SelectedItem));
-                    cmd.Parameters.AddWithValue("@municipality_id", Lemma<Guid, string>.IdParam(cboxSampleMunicipalities.SelectedItem));
-                    cmd.Parameters.AddWithValue("@location_type", DB.MakeParam(typeof(string), cboxSampleInfoLocationTypes.Text));
-                    cmd.Parameters.AddWithValue("@location", DB.MakeParam(typeof(string), tbSampleLocation.Text.Trim()));
-                    cmd.Parameters.AddWithValue("@latitude", DB.MakeParam(typeof(double), tbSampleInfoLatitude.Text.Trim()));
-                    cmd.Parameters.AddWithValue("@longitude", DB.MakeParam(typeof(double), tbSampleInfoLongitude.Text.Trim()));
-                    cmd.Parameters.AddWithValue("@altitude", DB.MakeParam(typeof(double), tbSampleInfoAltitude.Text.Trim()));
-                    cmd.Parameters.AddWithValue("@sampling_date_from", new DateTime(dtSampleSamplingDateFrom.Value.Year, dtSampleSamplingDateFrom.Value.Month, dtSampleSamplingDateFrom.Value.Day, dtSampleSamplingTimeFrom.Value.Hour, dtSampleSamplingTimeFrom.Value.Minute, dtSampleSamplingTimeFrom.Value.Second));
-                    cmd.Parameters.AddWithValue("@use_sampling_date_to", cbSampleUseSamplingTimeTo.Checked ? 1 : 0);
-                    cmd.Parameters.AddWithValue("@sampling_date_to", new DateTime(dtSampleSamplingDateTo.Value.Year, dtSampleSamplingDateTo.Value.Month, dtSampleSamplingDateTo.Value.Day, dtSampleSamplingTimeTo.Value.Hour, dtSampleSamplingTimeTo.Value.Minute, dtSampleSamplingTimeTo.Value.Second));
-                    cmd.Parameters.AddWithValue("@reference_date", new DateTime(dtSampleReferenceDate.Value.Year, dtSampleReferenceDate.Value.Month, dtSampleReferenceDate.Value.Day, dtSampleReferenceTime.Value.Hour, dtSampleReferenceTime.Value.Minute, dtSampleReferenceTime.Value.Second));
-                    cmd.Parameters.AddWithValue("@external_id", DB.MakeParam(typeof(string), tbSampleExId.Text.Trim()));
-                    cmd.Parameters.AddWithValue("@confidential", cbSampleConfidential.Checked ? 1 : 0);                        
-                    cmd.Parameters.AddWithValue("@instance_status_id", InstanceStatus.Active);                        
-                    cmd.Parameters.AddWithValue("@comment", tbSampleComment.Text.Trim());
-                    cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
-                    cmd.Parameters.AddWithValue("@updated_by", Common.Username);
-
-                    cmd.ExecuteNonQuery();
-
-                    lblStatus.Text = StrUtils.makeStatusMessage("Sample " + oNumber.ToString() + " updated");
-
-                    tbSamplesLookup.Text = oNumber.ToString();
-                }
-
-                UI.PopulateSamples(conn, gridSamples);
-
-                tabs.SelectedTab = tabSamples;
-            }
-            catch(Exception ex)
-            {
-                trans?.Rollback();
-                Common.Log.Error(ex);
-                MessageBox.Show(ex.Message);
-            }       
-            finally
-            {
-                conn?.Close();
-            }     
-        }                
+        }                        
 
         private void miNewLaboratory_Click(object sender, EventArgs e)
         {            
@@ -1443,12 +1280,23 @@ namespace DSA_lims
 
         private void miSamplesNew_Click(object sender, EventArgs e)
         {
-            // new sample
+            // new sample            
+            ClearSampleInfo();
             selectedSample = Guid.Empty;
 
-            ClearSampleInfo();
+            FormSampleNew form = new FormSampleNew(treeSampleTypes);
+            if (form.ShowDialog() != DialogResult.OK)
+                return;
+            
+            selectedSample = form.SampleId;
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                PopulateSample(conn, selectedSample);
+            }
 
             tabs.SelectedTab = tabSample;
+
+            lblStatus.Text = StrUtils.makeStatusMessage("Sample " + form.SampleNumber + " created successfully");
         }
 
         private void miSamplesImportExcel_Click(object sender, EventArgs e)
@@ -1721,18 +1569,12 @@ namespace DSA_lims
                     return;
                 }
 
-                int splitTest = Convert.ToInt32(DB.GetScalar(conn, "select count(transform_from_id) from sample where id in (" + sampleIdsCsv + ")", CommandType.Text));
-                if(splitTest > 0)
-                {
-                    MessageBox.Show("Cannot merge, one or more of these samples has already been splitted");
-                    return;
-                }
-
                 Func<string, int> nCheck = field => Convert.ToInt32(DB.GetScalar(conn, "select count(distinct(" + field + ")) from sample where id in(" + sampleIdsCsv + ")", CommandType.Text));
 
-                if ((nCheck("laboratory_id") & nCheck("project_sub_id") & nCheck("sample_type_id")) != 1)
+                // FIXME: Must select new sample type
+                if ((nCheck("laboratory_id") & nCheck("project_sub_id")) != 1)
                 {
-                    MessageBox.Show("All samples to be merged must have the same laboratory, project and sample type");
+                    MessageBox.Show("All samples to be merged must have the same laboratory and project");
                     return;
                 }
             }                
@@ -1878,12 +1720,7 @@ where preparation_id = @preparation_id
 
             treePrepAnal.ExpandAll();
         }
-
-        private void btnSampleClose_Click(object sender, EventArgs e)
-        {
-            tabs.SelectedTab = tabSamples;
-        }
-
+        
         private void btnPrepAnalClose_Click(object sender, EventArgs e)
         {
             tabs.SelectedTab = tabSamples;
@@ -2911,6 +2748,13 @@ order by name
                     UI.PopulateOrders(conn, InstanceStatus.Active, gridOrders);
                 }
             }
+            else if (e.TabPage == tabSamples)
+            {
+                using (SqlConnection conn = DB.OpenConnection())
+                {
+                    UI.PopulateSamples(conn, gridOrders);
+                }
+            }
         }
 
         private void tabs_Deselecting(object sender, TabControlCancelEventArgs e)
@@ -2933,16 +2777,92 @@ order by name
 
         private void miBack_Click(object sender, EventArgs e)
         {
-            tabs.SelectedTab = lastTab;
+            if (tabs.SelectedTab == tabSample)
+                tabs.SelectedTab = tabSamples;
+            else if (tabs.SelectedTab == tabOrder)
+                tabs.SelectedTab = tabOrders;
+            else tabs.SelectedTab = tabMenu;
         }
 
-        private void tabs_Deselected(object sender, TabControlEventArgs e)
+        private void btnSampleUpdate_Click(object sender, EventArgs e)
         {
-            if(e.TabPage == tabSamples)            
-                lastTab = tabSamples;
-            else if(e.TabPage == tabOrders)
-                lastTab = tabOrders;
-            else lastTab = tabMenu;
+            if (cboxSampleLaboratory.SelectedItem == null)
+            {
+                MessageBox.Show("Laboratory is mandatory");
+                return;
+            }
+
+            if (cboxSampleSampleType.SelectedItem == null)
+            {
+                MessageBox.Show("Sample type is mandatory");
+                return;
+            }
+
+            if (cboxSampleProject.SelectedItem == null)
+            {
+                MessageBox.Show("Main project is mandatory");
+                return;
+            }
+
+            if (cboxSampleSubProject.SelectedItem == null)
+            {
+                MessageBox.Show("Sub project is mandatory");
+                return;
+            }
+
+            SqlConnection conn = null;            
+
+            try
+            {
+                conn = DB.OpenConnection();
+
+                // update selected sample
+                SqlCommand cmd = new SqlCommand("select number from sample where id = @id", conn);
+                cmd.CommandType = CommandType.Text;
+                cmd.Parameters.AddWithValue("@id", selectedSample);
+                object oNumber = cmd.ExecuteScalar();
+
+                cmd.CommandText = "csp_update_sample";
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@id", selectedSample);
+                cmd.Parameters.AddWithValue("@laboratory_id", Lemma<Guid, string>.IdParam(cboxSampleLaboratory.SelectedItem));
+                cmd.Parameters.AddWithValue("@sample_type_id", Lemma<Guid, string>.IdParam(cboxSampleSampleType.SelectedItem));
+                cmd.Parameters.AddWithValue("@sample_storage_id", Lemma<Guid, string>.IdParam(cboxSampleSampleStorage.SelectedItem));
+                cmd.Parameters.AddWithValue("@sample_component_id", Lemma<Guid, string>.IdParam(cboxSampleSampleComponent.SelectedItem));
+                cmd.Parameters.AddWithValue("@project_sub_id", Lemma<Guid, string>.IdParam(cboxSampleSubProject.SelectedItem));
+                cmd.Parameters.AddWithValue("@station_id", Lemma<Guid, string>.IdParam(cboxSampleInfoStations.SelectedItem));
+                cmd.Parameters.AddWithValue("@sampler_id", Lemma<Guid, string>.IdParam(cboxSampleInfoSampler.SelectedItem));
+                cmd.Parameters.AddWithValue("@sampling_method_id", Lemma<Guid, string>.IdParam(cboxSampleInfoSamplingMeth.SelectedItem));
+                cmd.Parameters.AddWithValue("@municipality_id", Lemma<Guid, string>.IdParam(cboxSampleMunicipalities.SelectedItem));
+                cmd.Parameters.AddWithValue("@location_type", DB.MakeParam(typeof(string), cboxSampleInfoLocationTypes.Text));
+                cmd.Parameters.AddWithValue("@location", DB.MakeParam(typeof(string), tbSampleLocation.Text.Trim()));
+                cmd.Parameters.AddWithValue("@latitude", DB.MakeParam(typeof(double), tbSampleInfoLatitude.Text.Trim()));
+                cmd.Parameters.AddWithValue("@longitude", DB.MakeParam(typeof(double), tbSampleInfoLongitude.Text.Trim()));
+                cmd.Parameters.AddWithValue("@altitude", DB.MakeParam(typeof(double), tbSampleInfoAltitude.Text.Trim()));
+                cmd.Parameters.AddWithValue("@sampling_date_from", new DateTime(dtSampleSamplingDateFrom.Value.Year, dtSampleSamplingDateFrom.Value.Month, dtSampleSamplingDateFrom.Value.Day, dtSampleSamplingTimeFrom.Value.Hour, dtSampleSamplingTimeFrom.Value.Minute, dtSampleSamplingTimeFrom.Value.Second));
+                cmd.Parameters.AddWithValue("@use_sampling_date_to", cbSampleUseSamplingTimeTo.Checked ? 1 : 0);
+                cmd.Parameters.AddWithValue("@sampling_date_to", new DateTime(dtSampleSamplingDateTo.Value.Year, dtSampleSamplingDateTo.Value.Month, dtSampleSamplingDateTo.Value.Day, dtSampleSamplingTimeTo.Value.Hour, dtSampleSamplingTimeTo.Value.Minute, dtSampleSamplingTimeTo.Value.Second));
+                cmd.Parameters.AddWithValue("@reference_date", new DateTime(dtSampleReferenceDate.Value.Year, dtSampleReferenceDate.Value.Month, dtSampleReferenceDate.Value.Day, dtSampleReferenceTime.Value.Hour, dtSampleReferenceTime.Value.Minute, dtSampleReferenceTime.Value.Second));
+                cmd.Parameters.AddWithValue("@external_id", DB.MakeParam(typeof(string), tbSampleExId.Text.Trim()));
+                cmd.Parameters.AddWithValue("@confidential", cbSampleConfidential.Checked ? 1 : 0);
+                cmd.Parameters.AddWithValue("@comment", tbSampleComment.Text.Trim());
+                cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
+                cmd.Parameters.AddWithValue("@updated_by", Common.Username);
+
+                cmd.ExecuteNonQuery();
+
+                lblStatus.Text = StrUtils.makeStatusMessage("Sample " + oNumber.ToString() + " updated");
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn?.Close();
+            }
         }
     }    
 }

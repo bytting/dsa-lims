@@ -219,10 +219,9 @@
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
-            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.layoutSample = new System.Windows.Forms.TableLayoutPanel();
             this.dtSampleSamplingTimeTo = new System.Windows.Forms.DateTimePicker();
             this.dtSampleSamplingDateTo = new System.Windows.Forms.DateTimePicker();
-            this.label16 = new System.Windows.Forms.Label();
             this.cboxSampleInfoSamplingMeth = new System.Windows.Forms.ComboBox();
             this.label15 = new System.Windows.Forms.Label();
             this.cboxSampleInfoSampler = new System.Windows.Forms.ComboBox();
@@ -233,8 +232,6 @@
             this.tbSampleInfoLatitude = new System.Windows.Forms.TextBox();
             this.tbSampleInfoLongitude = new System.Windows.Forms.TextBox();
             this.tbSampleInfoAltitude = new System.Windows.Forms.TextBox();
-            this.label25 = new System.Windows.Forms.Label();
-            this.label26 = new System.Windows.Forms.Label();
             this.cboxSampleInfoStations = new System.Windows.Forms.ComboBox();
             this.label9 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
@@ -254,19 +251,14 @@
             this.btnSampleSelectSampleType = new System.Windows.Forms.Button();
             this.label14 = new System.Windows.Forms.Label();
             this.cboxSampleProject = new System.Windows.Forms.ComboBox();
-            this.label61 = new System.Windows.Forms.Label();
             this.cboxSampleSubProject = new System.Windows.Forms.ComboBox();
-            this.label62 = new System.Windows.Forms.Label();
             this.cboxSampleMunicipalities = new System.Windows.Forms.ComboBox();
             this.label63 = new System.Windows.Forms.Label();
             this.cboxSampleLaboratory = new System.Windows.Forms.ComboBox();
-            this.label5 = new System.Windows.Forms.Label();
             this.tbSampleExId = new System.Windows.Forms.TextBox();
-            this.label17 = new System.Windows.Forms.Label();
             this.cboxSampleSampleStorage = new System.Windows.Forms.ComboBox();
             this.cbSampleConfidential = new System.Windows.Forms.CheckBox();
             this.btnSampleUpdate = new System.Windows.Forms.Button();
-            this.btnSampleAddToOrder = new System.Windows.Forms.Button();
             this.tabSamplesParams = new System.Windows.Forms.TabPage();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.toolStrip6 = new System.Windows.Forms.ToolStrip();
@@ -894,6 +886,17 @@
             this.btnMenu = new System.Windows.Forms.ToolStripButton();
             this.lblCurrentTab = new System.Windows.Forms.ToolStripLabel();
             this.btnBack = new System.Windows.Forms.ToolStripButton();
+            this.panelSampleLatLonAlt = new System.Windows.Forms.Panel();
+            this.toolStrip11 = new System.Windows.Forms.ToolStrip();
+            this.btnSampleAddSampleToOrder = new System.Windows.Forms.ToolStripButton();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.panel7 = new System.Windows.Forms.Panel();
+            this.label17 = new System.Windows.Forms.Label();
+            this.panel13 = new System.Windows.Forms.Panel();
+            this.label20 = new System.Windows.Forms.Label();
+            this.panel23 = new System.Windows.Forms.Panel();
+            this.label21 = new System.Windows.Forms.Label();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tabs.SuspendLayout();
@@ -910,7 +913,7 @@
             this.panelSamplesAttachments.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridSampleAttachments)).BeginInit();
             this.toolsSampleSampInfoAttachments.SuspendLayout();
-            this.tableLayoutPanel2.SuspendLayout();
+            this.layoutSample.SuspendLayout();
             this.panel22.SuspendLayout();
             this.tabSamplesParams.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -1215,6 +1218,11 @@
             this.toolsSampleResRes.SuspendLayout();
             this.panel63.SuspendLayout();
             this.tools.SuspendLayout();
+            this.panelSampleLatLonAlt.SuspendLayout();
+            this.toolStrip11.SuspendLayout();
+            this.panel7.SuspendLayout();
+            this.panel13.SuspendLayout();
+            this.panel23.SuspendLayout();
             this.SuspendLayout();
             // 
             // menu
@@ -2777,8 +2785,9 @@
             // tabSamplesInfo
             // 
             this.tabSamplesInfo.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.tabSamplesInfo.Controls.Add(this.layoutSample);
+            this.tabSamplesInfo.Controls.Add(this.toolStrip11);
             this.tabSamplesInfo.Controls.Add(this.panel21);
-            this.tabSamplesInfo.Controls.Add(this.tableLayoutPanel2);
             this.tabSamplesInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.tabSamplesInfo.Location = new System.Drawing.Point(4, 24);
             this.tabSamplesInfo.Name = "tabSamplesInfo";
@@ -2789,23 +2798,23 @@
             // 
             // panel21
             // 
+            this.panel21.Controls.Add(this.panelSamplesAttachments);
             this.panel21.Controls.Add(this.tbSampleComment);
             this.panel21.Controls.Add(this.toolStrip3);
-            this.panel21.Controls.Add(this.panelSamplesAttachments);
-            this.panel21.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel21.Location = new System.Drawing.Point(3, 328);
+            this.panel21.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panel21.Location = new System.Drawing.Point(815, 3);
             this.panel21.Name = "panel21";
-            this.panel21.Size = new System.Drawing.Size(1127, 254);
+            this.panel21.Size = new System.Drawing.Size(315, 579);
             this.panel21.TabIndex = 1;
             // 
             // tbSampleComment
             // 
-            this.tbSampleComment.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbSampleComment.Dock = System.Windows.Forms.DockStyle.Top;
             this.tbSampleComment.Location = new System.Drawing.Point(0, 25);
             this.tbSampleComment.Multiline = true;
             this.tbSampleComment.Name = "tbSampleComment";
             this.tbSampleComment.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.tbSampleComment.Size = new System.Drawing.Size(639, 229);
+            this.tbSampleComment.Size = new System.Drawing.Size(315, 149);
             this.tbSampleComment.TabIndex = 17;
             // 
             // toolStrip3
@@ -2815,25 +2824,25 @@
             this.toolStripLabel61});
             this.toolStrip3.Location = new System.Drawing.Point(0, 0);
             this.toolStrip3.Name = "toolStrip3";
-            this.toolStrip3.Size = new System.Drawing.Size(639, 25);
+            this.toolStrip3.Size = new System.Drawing.Size(315, 25);
             this.toolStrip3.TabIndex = 18;
             this.toolStrip3.Text = "toolStrip3";
             // 
             // toolStripLabel61
             // 
-            this.toolStripLabel61.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.toolStripLabel61.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.toolStripLabel61.Name = "toolStripLabel61";
-            this.toolStripLabel61.Size = new System.Drawing.Size(62, 22);
+            this.toolStripLabel61.Size = new System.Drawing.Size(61, 22);
             this.toolStripLabel61.Text = "Comment";
             // 
             // panelSamplesAttachments
             // 
             this.panelSamplesAttachments.Controls.Add(this.gridSampleAttachments);
             this.panelSamplesAttachments.Controls.Add(this.toolsSampleSampInfoAttachments);
-            this.panelSamplesAttachments.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panelSamplesAttachments.Location = new System.Drawing.Point(639, 0);
+            this.panelSamplesAttachments.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelSamplesAttachments.Location = new System.Drawing.Point(0, 174);
             this.panelSamplesAttachments.Name = "panelSamplesAttachments";
-            this.panelSamplesAttachments.Size = new System.Drawing.Size(488, 254);
+            this.panelSamplesAttachments.Size = new System.Drawing.Size(315, 405);
             this.panelSamplesAttachments.TabIndex = 0;
             // 
             // gridSampleAttachments
@@ -2847,7 +2856,7 @@
             this.gridSampleAttachments.Location = new System.Drawing.Point(0, 25);
             this.gridSampleAttachments.Name = "gridSampleAttachments";
             this.gridSampleAttachments.ReadOnly = true;
-            this.gridSampleAttachments.Size = new System.Drawing.Size(488, 229);
+            this.gridSampleAttachments.Size = new System.Drawing.Size(315, 380);
             this.gridSampleAttachments.TabIndex = 1;
             // 
             // toolsSampleSampInfoAttachments
@@ -2861,7 +2870,7 @@
             this.toolStripButton3});
             this.toolsSampleSampInfoAttachments.Location = new System.Drawing.Point(0, 0);
             this.toolsSampleSampInfoAttachments.Name = "toolsSampleSampInfoAttachments";
-            this.toolsSampleSampInfoAttachments.Size = new System.Drawing.Size(488, 25);
+            this.toolsSampleSampInfoAttachments.Size = new System.Drawing.Size(315, 25);
             this.toolsSampleSampInfoAttachments.TabIndex = 0;
             this.toolsSampleSampInfoAttachments.Text = "toolStrip1";
             // 
@@ -2901,131 +2910,112 @@
             this.toolStripButton3.Size = new System.Drawing.Size(60, 22);
             this.toolStripButton3.Text = "Delete";
             // 
-            // tableLayoutPanel2
+            // layoutSample
             // 
-            this.tableLayoutPanel2.ColumnCount = 8;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
-            this.tableLayoutPanel2.Controls.Add(this.dtSampleSamplingTimeTo, 6, 8);
-            this.tableLayoutPanel2.Controls.Add(this.dtSampleSamplingDateTo, 5, 8);
-            this.tableLayoutPanel2.Controls.Add(this.label16, 6, 2);
-            this.tableLayoutPanel2.Controls.Add(this.cboxSampleInfoSamplingMeth, 7, 2);
-            this.tableLayoutPanel2.Controls.Add(this.label15, 4, 2);
-            this.tableLayoutPanel2.Controls.Add(this.cboxSampleInfoSampler, 5, 2);
-            this.tableLayoutPanel2.Controls.Add(this.label7, 0, 1);
-            this.tableLayoutPanel2.Controls.Add(this.label8, 0, 2);
-            this.tableLayoutPanel2.Controls.Add(this.cboxSampleSampleComponent, 1, 2);
-            this.tableLayoutPanel2.Controls.Add(this.label10, 2, 4);
-            this.tableLayoutPanel2.Controls.Add(this.tbSampleInfoLatitude, 3, 4);
-            this.tableLayoutPanel2.Controls.Add(this.tbSampleInfoLongitude, 5, 4);
-            this.tableLayoutPanel2.Controls.Add(this.tbSampleInfoAltitude, 7, 4);
-            this.tableLayoutPanel2.Controls.Add(this.label25, 4, 4);
-            this.tableLayoutPanel2.Controls.Add(this.label26, 6, 4);
-            this.tableLayoutPanel2.Controls.Add(this.cboxSampleInfoStations, 1, 4);
-            this.tableLayoutPanel2.Controls.Add(this.label9, 0, 4);
-            this.tableLayoutPanel2.Controls.Add(this.label11, 0, 8);
-            this.tableLayoutPanel2.Controls.Add(this.dtSampleSamplingDateFrom, 1, 8);
-            this.tableLayoutPanel2.Controls.Add(this.dtSampleSamplingTimeFrom, 2, 8);
-            this.tableLayoutPanel2.Controls.Add(this.label12, 0, 9);
-            this.tableLayoutPanel2.Controls.Add(this.dtSampleReferenceDate, 1, 9);
-            this.tableLayoutPanel2.Controls.Add(this.dtSampleReferenceTime, 2, 9);
-            this.tableLayoutPanel2.Controls.Add(this.label3, 0, 5);
-            this.tableLayoutPanel2.Controls.Add(this.cboxSampleCounties, 1, 5);
-            this.tableLayoutPanel2.Controls.Add(this.cboxSampleInfoLocationTypes, 1, 6);
-            this.tableLayoutPanel2.Controls.Add(this.label50, 0, 6);
-            this.tableLayoutPanel2.Controls.Add(this.cbSampleUseSamplingTimeTo, 3, 8);
-            this.tableLayoutPanel2.Controls.Add(this.tbSampleLocation, 2, 6);
-            this.tableLayoutPanel2.Controls.Add(this.panel22, 1, 1);
-            this.tableLayoutPanel2.Controls.Add(this.label14, 0, 3);
-            this.tableLayoutPanel2.Controls.Add(this.cboxSampleProject, 1, 3);
-            this.tableLayoutPanel2.Controls.Add(this.label61, 4, 3);
-            this.tableLayoutPanel2.Controls.Add(this.cboxSampleSubProject, 5, 3);
-            this.tableLayoutPanel2.Controls.Add(this.label62, 4, 5);
-            this.tableLayoutPanel2.Controls.Add(this.cboxSampleMunicipalities, 5, 5);
-            this.tableLayoutPanel2.Controls.Add(this.label63, 4, 6);
-            this.tableLayoutPanel2.Controls.Add(this.cboxSampleLaboratory, 5, 6);
-            this.tableLayoutPanel2.Controls.Add(this.label5, 4, 9);
-            this.tableLayoutPanel2.Controls.Add(this.tbSampleExId, 5, 9);
-            this.tableLayoutPanel2.Controls.Add(this.label17, 4, 10);
-            this.tableLayoutPanel2.Controls.Add(this.cboxSampleSampleStorage, 5, 10);
-            this.tableLayoutPanel2.Controls.Add(this.cbSampleConfidential, 1, 10);
-            this.tableLayoutPanel2.Controls.Add(this.btnSampleUpdate, 7, 11);
-            this.tableLayoutPanel2.Controls.Add(this.btnSampleAddToOrder, 1, 11);
-            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 3);
-            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 13;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 10F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 16F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(1127, 325);
-            this.tableLayoutPanel2.TabIndex = 0;
+            this.layoutSample.ColumnCount = 3;
+            this.layoutSample.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
+            this.layoutSample.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
+            this.layoutSample.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
+            this.layoutSample.Controls.Add(this.label8, 0, 2);
+            this.layoutSample.Controls.Add(this.cboxSampleSampleComponent, 1, 2);
+            this.layoutSample.Controls.Add(this.panel22, 1, 1);
+            this.layoutSample.Controls.Add(this.cboxSampleProject, 1, 4);
+            this.layoutSample.Controls.Add(this.label15, 0, 5);
+            this.layoutSample.Controls.Add(this.cboxSampleInfoSampler, 1, 5);
+            this.layoutSample.Controls.Add(this.label9, 0, 6);
+            this.layoutSample.Controls.Add(this.cboxSampleInfoStations, 1, 6);
+            this.layoutSample.Controls.Add(this.label10, 0, 7);
+            this.layoutSample.Controls.Add(this.label3, 0, 8);
+            this.layoutSample.Controls.Add(this.cboxSampleCounties, 1, 8);
+            this.layoutSample.Controls.Add(this.label50, 0, 9);
+            this.layoutSample.Controls.Add(this.cboxSampleInfoLocationTypes, 1, 9);
+            this.layoutSample.Controls.Add(this.label11, 0, 10);
+            this.layoutSample.Controls.Add(this.dtSampleSamplingDateFrom, 1, 10);
+            this.layoutSample.Controls.Add(this.dtSampleSamplingTimeFrom, 2, 10);
+            this.layoutSample.Controls.Add(this.cbSampleUseSamplingTimeTo, 0, 11);
+            this.layoutSample.Controls.Add(this.dtSampleSamplingDateTo, 1, 11);
+            this.layoutSample.Controls.Add(this.dtSampleSamplingTimeTo, 2, 11);
+            this.layoutSample.Controls.Add(this.label12, 0, 12);
+            this.layoutSample.Controls.Add(this.dtSampleReferenceDate, 1, 12);
+            this.layoutSample.Controls.Add(this.dtSampleReferenceTime, 2, 12);
+            this.layoutSample.Controls.Add(this.cboxSampleLaboratory, 1, 13);
+            this.layoutSample.Controls.Add(this.cbSampleConfidential, 2, 6);
+            this.layoutSample.Controls.Add(this.cboxSampleSubProject, 2, 4);
+            this.layoutSample.Controls.Add(this.cboxSampleInfoSamplingMeth, 2, 5);
+            this.layoutSample.Controls.Add(this.cboxSampleMunicipalities, 2, 8);
+            this.layoutSample.Controls.Add(this.tbSampleLocation, 2, 9);
+            this.layoutSample.Controls.Add(this.panelSampleLatLonAlt, 1, 7);
+            this.layoutSample.Controls.Add(this.label5, 0, 14);
+            this.layoutSample.Controls.Add(this.cboxSampleSampleStorage, 1, 14);
+            this.layoutSample.Controls.Add(this.label16, 0, 3);
+            this.layoutSample.Controls.Add(this.tbSampleExId, 1, 3);
+            this.layoutSample.Controls.Add(this.btnSampleUpdate, 2, 16);
+            this.layoutSample.Controls.Add(this.panel7, 0, 1);
+            this.layoutSample.Controls.Add(this.panel13, 0, 4);
+            this.layoutSample.Controls.Add(this.panel23, 0, 13);
+            this.layoutSample.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.layoutSample.Location = new System.Drawing.Point(3, 28);
+            this.layoutSample.Name = "layoutSample";
+            this.layoutSample.RowCount = 18;
+            this.layoutSample.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 10F));
+            this.layoutSample.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.layoutSample.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.layoutSample.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.layoutSample.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.layoutSample.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.layoutSample.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.layoutSample.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.layoutSample.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.layoutSample.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.layoutSample.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.layoutSample.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.layoutSample.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.layoutSample.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.layoutSample.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.layoutSample.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.layoutSample.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
+            this.layoutSample.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.layoutSample.Size = new System.Drawing.Size(812, 554);
+            this.layoutSample.TabIndex = 0;
             // 
             // dtSampleSamplingTimeTo
             // 
             this.dtSampleSamplingTimeTo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dtSampleSamplingTimeTo.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.dtSampleSamplingTimeTo.Location = new System.Drawing.Point(846, 197);
+            this.dtSampleSamplingTimeTo.Location = new System.Drawing.Point(489, 313);
             this.dtSampleSamplingTimeTo.Name = "dtSampleSamplingTimeTo";
             this.dtSampleSamplingTimeTo.ShowUpDown = true;
-            this.dtSampleSamplingTimeTo.Size = new System.Drawing.Size(106, 20);
+            this.dtSampleSamplingTimeTo.Size = new System.Drawing.Size(320, 20);
             this.dtSampleSamplingTimeTo.TabIndex = 1;
             // 
             // dtSampleSamplingDateTo
             // 
             this.dtSampleSamplingDateTo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dtSampleSamplingDateTo.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtSampleSamplingDateTo.Location = new System.Drawing.Point(677, 197);
+            this.dtSampleSamplingDateTo.Location = new System.Drawing.Point(165, 313);
             this.dtSampleSamplingDateTo.Name = "dtSampleSamplingDateTo";
-            this.dtSampleSamplingDateTo.Size = new System.Drawing.Size(163, 20);
+            this.dtSampleSamplingDateTo.Size = new System.Drawing.Size(318, 20);
             this.dtSampleSamplingDateTo.TabIndex = 2;
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label16.Location = new System.Drawing.Point(846, 38);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(106, 28);
-            this.label16.TabIndex = 0;
-            this.label16.Text = "Sampling method";
-            this.label16.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // cboxSampleInfoSamplingMeth
             // 
             this.cboxSampleInfoSamplingMeth.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cboxSampleInfoSamplingMeth.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxSampleInfoSamplingMeth.FormattingEnabled = true;
-            this.cboxSampleInfoSamplingMeth.Location = new System.Drawing.Point(958, 41);
+            this.cboxSampleInfoSamplingMeth.Location = new System.Drawing.Point(489, 133);
             this.cboxSampleInfoSamplingMeth.Name = "cboxSampleInfoSamplingMeth";
-            this.cboxSampleInfoSamplingMeth.Size = new System.Drawing.Size(166, 21);
+            this.cboxSampleInfoSamplingMeth.Size = new System.Drawing.Size(320, 21);
             this.cboxSampleInfoSamplingMeth.TabIndex = 1;
             // 
             // label15
             // 
             this.label15.AutoSize = true;
             this.label15.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label15.Location = new System.Drawing.Point(565, 38);
+            this.label15.Location = new System.Drawing.Point(3, 130);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(106, 28);
+            this.label15.Size = new System.Drawing.Size(156, 30);
             this.label15.TabIndex = 0;
-            this.label15.Text = "Sampler";
+            this.label15.Text = "Sampler / Sampling meth.";
             this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // cboxSampleInfoSampler
@@ -3033,19 +3023,18 @@
             this.cboxSampleInfoSampler.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cboxSampleInfoSampler.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxSampleInfoSampler.FormattingEnabled = true;
-            this.cboxSampleInfoSampler.Location = new System.Drawing.Point(677, 41);
+            this.cboxSampleInfoSampler.Location = new System.Drawing.Point(165, 133);
             this.cboxSampleInfoSampler.Name = "cboxSampleInfoSampler";
-            this.cboxSampleInfoSampler.Size = new System.Drawing.Size(163, 21);
+            this.cboxSampleInfoSampler.Size = new System.Drawing.Size(318, 21);
             this.cboxSampleInfoSampler.TabIndex = 1;
             // 
             // label7
             // 
-            this.label7.AutoSize = true;
-            this.label7.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label7.Dock = System.Windows.Forms.DockStyle.Right;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.label7.Location = new System.Drawing.Point(3, 10);
+            this.label7.Location = new System.Drawing.Point(36, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(106, 28);
+            this.label7.Size = new System.Drawing.Size(106, 24);
             this.label7.TabIndex = 0;
             this.label7.Text = "Sample type";
             this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -3055,23 +3044,22 @@
             this.label8.AutoSize = true;
             this.label8.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.label8.Location = new System.Drawing.Point(3, 38);
+            this.label8.Location = new System.Drawing.Point(3, 40);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(106, 28);
+            this.label8.Size = new System.Drawing.Size(156, 30);
             this.label8.TabIndex = 0;
             this.label8.Text = "Sample component";
             this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // cboxSampleSampleComponent
             // 
-            this.tableLayoutPanel2.SetColumnSpan(this.cboxSampleSampleComponent, 3);
             this.cboxSampleSampleComponent.DisplayMember = "Name";
             this.cboxSampleSampleComponent.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cboxSampleSampleComponent.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxSampleSampleComponent.FormattingEnabled = true;
-            this.cboxSampleSampleComponent.Location = new System.Drawing.Point(115, 41);
+            this.cboxSampleSampleComponent.Location = new System.Drawing.Point(165, 43);
             this.cboxSampleSampleComponent.Name = "cboxSampleSampleComponent";
-            this.cboxSampleSampleComponent.Size = new System.Drawing.Size(444, 21);
+            this.cboxSampleSampleComponent.Size = new System.Drawing.Size(318, 21);
             this.cboxSampleSampleComponent.TabIndex = 1;
             this.cboxSampleSampleComponent.ValueMember = "Id";
             // 
@@ -3079,67 +3067,45 @@
             // 
             this.label10.AutoSize = true;
             this.label10.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label10.Location = new System.Drawing.Point(284, 94);
+            this.label10.Location = new System.Drawing.Point(3, 190);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(106, 28);
+            this.label10.Size = new System.Drawing.Size(156, 30);
             this.label10.TabIndex = 7;
-            this.label10.Text = "Latitude";
+            this.label10.Text = "Lat / Lon / Alt";
             this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // tbSampleInfoLatitude
             // 
-            this.tbSampleInfoLatitude.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbSampleInfoLatitude.Location = new System.Drawing.Point(396, 97);
+            this.tbSampleInfoLatitude.Dock = System.Windows.Forms.DockStyle.Left;
+            this.tbSampleInfoLatitude.Location = new System.Drawing.Point(0, 0);
             this.tbSampleInfoLatitude.Name = "tbSampleInfoLatitude";
-            this.tbSampleInfoLatitude.Size = new System.Drawing.Size(163, 20);
+            this.tbSampleInfoLatitude.Size = new System.Drawing.Size(187, 20);
             this.tbSampleInfoLatitude.TabIndex = 8;
             // 
             // tbSampleInfoLongitude
             // 
             this.tbSampleInfoLongitude.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbSampleInfoLongitude.Location = new System.Drawing.Point(677, 97);
+            this.tbSampleInfoLongitude.Location = new System.Drawing.Point(187, 0);
             this.tbSampleInfoLongitude.Name = "tbSampleInfoLongitude";
-            this.tbSampleInfoLongitude.Size = new System.Drawing.Size(163, 20);
+            this.tbSampleInfoLongitude.Size = new System.Drawing.Size(259, 20);
             this.tbSampleInfoLongitude.TabIndex = 9;
             // 
             // tbSampleInfoAltitude
             // 
-            this.tbSampleInfoAltitude.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbSampleInfoAltitude.Location = new System.Drawing.Point(958, 97);
+            this.tbSampleInfoAltitude.Dock = System.Windows.Forms.DockStyle.Right;
+            this.tbSampleInfoAltitude.Location = new System.Drawing.Point(446, 0);
             this.tbSampleInfoAltitude.Name = "tbSampleInfoAltitude";
-            this.tbSampleInfoAltitude.Size = new System.Drawing.Size(166, 20);
+            this.tbSampleInfoAltitude.Size = new System.Drawing.Size(198, 20);
             this.tbSampleInfoAltitude.TabIndex = 10;
-            // 
-            // label25
-            // 
-            this.label25.AutoSize = true;
-            this.label25.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label25.Location = new System.Drawing.Point(565, 94);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(106, 28);
-            this.label25.TabIndex = 21;
-            this.label25.Text = "Longitude";
-            this.label25.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // label26
-            // 
-            this.label26.AutoSize = true;
-            this.label26.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label26.Location = new System.Drawing.Point(846, 94);
-            this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(106, 28);
-            this.label26.TabIndex = 22;
-            this.label26.Text = "Altitude";
-            this.label26.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // cboxSampleInfoStations
             // 
             this.cboxSampleInfoStations.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cboxSampleInfoStations.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxSampleInfoStations.FormattingEnabled = true;
-            this.cboxSampleInfoStations.Location = new System.Drawing.Point(115, 97);
+            this.cboxSampleInfoStations.Location = new System.Drawing.Point(165, 163);
             this.cboxSampleInfoStations.Name = "cboxSampleInfoStations";
-            this.cboxSampleInfoStations.Size = new System.Drawing.Size(163, 21);
+            this.cboxSampleInfoStations.Size = new System.Drawing.Size(318, 21);
             this.cboxSampleInfoStations.TabIndex = 1;
             this.cboxSampleInfoStations.SelectedIndexChanged += new System.EventHandler(this.cboxSampleInfoStations_SelectedIndexChanged);
             // 
@@ -3147,9 +3113,9 @@
             // 
             this.label9.AutoSize = true;
             this.label9.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label9.Location = new System.Drawing.Point(3, 94);
+            this.label9.Location = new System.Drawing.Point(3, 160);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(106, 28);
+            this.label9.Size = new System.Drawing.Size(156, 30);
             this.label9.TabIndex = 0;
             this.label9.Text = "Station";
             this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -3158,9 +3124,9 @@
             // 
             this.label11.AutoSize = true;
             this.label11.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label11.Location = new System.Drawing.Point(3, 194);
+            this.label11.Location = new System.Drawing.Point(3, 280);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(106, 28);
+            this.label11.Size = new System.Drawing.Size(156, 30);
             this.label11.TabIndex = 0;
             this.label11.Text = "Sampling time (From)";
             this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -3169,28 +3135,28 @@
             // 
             this.dtSampleSamplingDateFrom.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dtSampleSamplingDateFrom.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtSampleSamplingDateFrom.Location = new System.Drawing.Point(115, 197);
+            this.dtSampleSamplingDateFrom.Location = new System.Drawing.Point(165, 283);
             this.dtSampleSamplingDateFrom.Name = "dtSampleSamplingDateFrom";
-            this.dtSampleSamplingDateFrom.Size = new System.Drawing.Size(163, 20);
+            this.dtSampleSamplingDateFrom.Size = new System.Drawing.Size(318, 20);
             this.dtSampleSamplingDateFrom.TabIndex = 2;
             // 
             // dtSampleSamplingTimeFrom
             // 
             this.dtSampleSamplingTimeFrom.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dtSampleSamplingTimeFrom.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.dtSampleSamplingTimeFrom.Location = new System.Drawing.Point(284, 197);
+            this.dtSampleSamplingTimeFrom.Location = new System.Drawing.Point(489, 283);
             this.dtSampleSamplingTimeFrom.Name = "dtSampleSamplingTimeFrom";
             this.dtSampleSamplingTimeFrom.ShowUpDown = true;
-            this.dtSampleSamplingTimeFrom.Size = new System.Drawing.Size(106, 20);
+            this.dtSampleSamplingTimeFrom.Size = new System.Drawing.Size(320, 20);
             this.dtSampleSamplingTimeFrom.TabIndex = 1;
             // 
             // label12
             // 
             this.label12.AutoSize = true;
             this.label12.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label12.Location = new System.Drawing.Point(3, 222);
+            this.label12.Location = new System.Drawing.Point(3, 340);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(106, 28);
+            this.label12.Size = new System.Drawing.Size(156, 30);
             this.label12.TabIndex = 0;
             this.label12.Text = "Reference time";
             this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -3199,41 +3165,40 @@
             // 
             this.dtSampleReferenceDate.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dtSampleReferenceDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtSampleReferenceDate.Location = new System.Drawing.Point(115, 225);
+            this.dtSampleReferenceDate.Location = new System.Drawing.Point(165, 343);
             this.dtSampleReferenceDate.Name = "dtSampleReferenceDate";
-            this.dtSampleReferenceDate.Size = new System.Drawing.Size(163, 20);
+            this.dtSampleReferenceDate.Size = new System.Drawing.Size(318, 20);
             this.dtSampleReferenceDate.TabIndex = 2;
             // 
             // dtSampleReferenceTime
             // 
             this.dtSampleReferenceTime.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dtSampleReferenceTime.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.dtSampleReferenceTime.Location = new System.Drawing.Point(284, 225);
+            this.dtSampleReferenceTime.Location = new System.Drawing.Point(489, 343);
             this.dtSampleReferenceTime.Name = "dtSampleReferenceTime";
             this.dtSampleReferenceTime.ShowUpDown = true;
-            this.dtSampleReferenceTime.Size = new System.Drawing.Size(106, 20);
+            this.dtSampleReferenceTime.Size = new System.Drawing.Size(320, 20);
             this.dtSampleReferenceTime.TabIndex = 1;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label3.Location = new System.Drawing.Point(3, 122);
+            this.label3.Location = new System.Drawing.Point(3, 220);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(106, 28);
+            this.label3.Size = new System.Drawing.Size(156, 30);
             this.label3.TabIndex = 26;
-            this.label3.Text = "County";
+            this.label3.Text = "County / Municipality";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // cboxSampleCounties
             // 
-            this.tableLayoutPanel2.SetColumnSpan(this.cboxSampleCounties, 3);
             this.cboxSampleCounties.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cboxSampleCounties.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxSampleCounties.FormattingEnabled = true;
-            this.cboxSampleCounties.Location = new System.Drawing.Point(115, 125);
+            this.cboxSampleCounties.Location = new System.Drawing.Point(165, 223);
             this.cboxSampleCounties.Name = "cboxSampleCounties";
-            this.cboxSampleCounties.Size = new System.Drawing.Size(444, 21);
+            this.cboxSampleCounties.Size = new System.Drawing.Size(318, 21);
             this.cboxSampleCounties.TabIndex = 27;
             this.cboxSampleCounties.SelectedIndexChanged += new System.EventHandler(this.cboxSampleCounties_SelectedIndexChanged);
             // 
@@ -3242,54 +3207,53 @@
             this.cboxSampleInfoLocationTypes.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cboxSampleInfoLocationTypes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxSampleInfoLocationTypes.FormattingEnabled = true;
-            this.cboxSampleInfoLocationTypes.Location = new System.Drawing.Point(115, 153);
+            this.cboxSampleInfoLocationTypes.Location = new System.Drawing.Point(165, 253);
             this.cboxSampleInfoLocationTypes.Name = "cboxSampleInfoLocationTypes";
-            this.cboxSampleInfoLocationTypes.Size = new System.Drawing.Size(163, 21);
+            this.cboxSampleInfoLocationTypes.Size = new System.Drawing.Size(318, 21);
             this.cboxSampleInfoLocationTypes.TabIndex = 28;
             // 
             // label50
             // 
             this.label50.AutoSize = true;
             this.label50.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label50.Location = new System.Drawing.Point(3, 150);
+            this.label50.Location = new System.Drawing.Point(3, 250);
             this.label50.Name = "label50";
-            this.label50.Size = new System.Drawing.Size(106, 28);
+            this.label50.Size = new System.Drawing.Size(156, 30);
             this.label50.TabIndex = 29;
-            this.label50.Text = "Location type";
+            this.label50.Text = "Location";
             this.label50.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // cbSampleUseSamplingTimeTo
             // 
             this.cbSampleUseSamplingTimeTo.AutoSize = true;
             this.cbSampleUseSamplingTimeTo.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.tableLayoutPanel2.SetColumnSpan(this.cbSampleUseSamplingTimeTo, 2);
-            this.cbSampleUseSamplingTimeTo.Dock = System.Windows.Forms.DockStyle.Right;
-            this.cbSampleUseSamplingTimeTo.Location = new System.Drawing.Point(558, 197);
+            this.cbSampleUseSamplingTimeTo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cbSampleUseSamplingTimeTo.Location = new System.Drawing.Point(3, 313);
             this.cbSampleUseSamplingTimeTo.Name = "cbSampleUseSamplingTimeTo";
-            this.cbSampleUseSamplingTimeTo.Size = new System.Drawing.Size(113, 22);
+            this.cbSampleUseSamplingTimeTo.Size = new System.Drawing.Size(156, 24);
             this.cbSampleUseSamplingTimeTo.TabIndex = 3;
             this.cbSampleUseSamplingTimeTo.Text = "Sampling time (To)";
+            this.cbSampleUseSamplingTimeTo.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.cbSampleUseSamplingTimeTo.UseVisualStyleBackColor = true;
             this.cbSampleUseSamplingTimeTo.CheckedChanged += new System.EventHandler(this.cbSampleUseSamplingTimeTo_CheckedChanged);
             // 
             // tbSampleLocation
             // 
-            this.tableLayoutPanel2.SetColumnSpan(this.tbSampleLocation, 2);
             this.tbSampleLocation.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbSampleLocation.Location = new System.Drawing.Point(284, 153);
+            this.tbSampleLocation.Location = new System.Drawing.Point(489, 253);
             this.tbSampleLocation.Name = "tbSampleLocation";
-            this.tbSampleLocation.Size = new System.Drawing.Size(275, 20);
+            this.tbSampleLocation.Size = new System.Drawing.Size(320, 20);
             this.tbSampleLocation.TabIndex = 30;
             // 
             // panel22
             // 
-            this.tableLayoutPanel2.SetColumnSpan(this.panel22, 7);
+            this.layoutSample.SetColumnSpan(this.panel22, 2);
             this.panel22.Controls.Add(this.cboxSampleSampleType);
             this.panel22.Controls.Add(this.btnSampleSelectSampleType);
             this.panel22.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel22.Location = new System.Drawing.Point(115, 13);
+            this.panel22.Location = new System.Drawing.Point(165, 13);
             this.panel22.Name = "panel22";
-            this.panel22.Size = new System.Drawing.Size(1009, 22);
+            this.panel22.Size = new System.Drawing.Size(644, 24);
             this.panel22.TabIndex = 34;
             // 
             // cboxSampleSampleType
@@ -3301,7 +3265,7 @@
             this.cboxSampleSampleType.FormattingEnabled = true;
             this.cboxSampleSampleType.Location = new System.Drawing.Point(0, 0);
             this.cboxSampleSampleType.Name = "cboxSampleSampleType";
-            this.cboxSampleSampleType.Size = new System.Drawing.Size(987, 21);
+            this.cboxSampleSampleType.Size = new System.Drawing.Size(622, 21);
             this.cboxSampleSampleType.Sorted = true;
             this.cboxSampleSampleType.TabIndex = 2;
             this.cboxSampleSampleType.ValueMember = "Id";
@@ -3312,150 +3276,97 @@
             // 
             this.btnSampleSelectSampleType.Dock = System.Windows.Forms.DockStyle.Right;
             this.btnSampleSelectSampleType.Image = global::DSA_lims.Properties.Resources.tree_16;
-            this.btnSampleSelectSampleType.Location = new System.Drawing.Point(987, 0);
+            this.btnSampleSelectSampleType.Location = new System.Drawing.Point(622, 0);
             this.btnSampleSelectSampleType.Name = "btnSampleSelectSampleType";
-            this.btnSampleSelectSampleType.Size = new System.Drawing.Size(22, 22);
+            this.btnSampleSelectSampleType.Size = new System.Drawing.Size(22, 24);
             this.btnSampleSelectSampleType.TabIndex = 1;
             this.btnSampleSelectSampleType.UseVisualStyleBackColor = true;
             this.btnSampleSelectSampleType.Click += new System.EventHandler(this.btnSampleSelectSampleType_Click);
             // 
             // label14
             // 
-            this.label14.AutoSize = true;
-            this.label14.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label14.Location = new System.Drawing.Point(3, 66);
+            this.label14.Dock = System.Windows.Forms.DockStyle.Right;
+            this.label14.Location = new System.Drawing.Point(36, 0);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(106, 28);
+            this.label14.Size = new System.Drawing.Size(106, 24);
             this.label14.TabIndex = 35;
-            this.label14.Text = "Project";
+            this.label14.Text = "Main proj. / Sub proj.";
             this.label14.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // cboxSampleProject
             // 
-            this.tableLayoutPanel2.SetColumnSpan(this.cboxSampleProject, 3);
             this.cboxSampleProject.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cboxSampleProject.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxSampleProject.FormattingEnabled = true;
-            this.cboxSampleProject.Location = new System.Drawing.Point(115, 69);
+            this.cboxSampleProject.Location = new System.Drawing.Point(165, 103);
             this.cboxSampleProject.Name = "cboxSampleProject";
-            this.cboxSampleProject.Size = new System.Drawing.Size(444, 21);
+            this.cboxSampleProject.Size = new System.Drawing.Size(318, 21);
             this.cboxSampleProject.TabIndex = 36;
             this.cboxSampleProject.SelectedIndexChanged += new System.EventHandler(this.cboxSampleProject_SelectedIndexChanged);
             // 
-            // label61
-            // 
-            this.label61.AutoSize = true;
-            this.label61.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label61.Location = new System.Drawing.Point(565, 66);
-            this.label61.Name = "label61";
-            this.label61.Size = new System.Drawing.Size(106, 28);
-            this.label61.TabIndex = 37;
-            this.label61.Text = "Sub-Project";
-            this.label61.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
             // cboxSampleSubProject
             // 
-            this.tableLayoutPanel2.SetColumnSpan(this.cboxSampleSubProject, 3);
             this.cboxSampleSubProject.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cboxSampleSubProject.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxSampleSubProject.FormattingEnabled = true;
-            this.cboxSampleSubProject.Location = new System.Drawing.Point(677, 69);
+            this.cboxSampleSubProject.Location = new System.Drawing.Point(489, 103);
             this.cboxSampleSubProject.Name = "cboxSampleSubProject";
-            this.cboxSampleSubProject.Size = new System.Drawing.Size(447, 21);
+            this.cboxSampleSubProject.Size = new System.Drawing.Size(320, 21);
             this.cboxSampleSubProject.TabIndex = 38;
             this.cboxSampleSubProject.SelectedIndexChanged += new System.EventHandler(this.cboxSampleSubProject_SelectedIndexChanged);
             // 
-            // label62
-            // 
-            this.label62.AutoSize = true;
-            this.label62.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label62.Location = new System.Drawing.Point(565, 122);
-            this.label62.Name = "label62";
-            this.label62.Size = new System.Drawing.Size(106, 28);
-            this.label62.TabIndex = 39;
-            this.label62.Text = "Municipality";
-            this.label62.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
             // cboxSampleMunicipalities
             // 
-            this.tableLayoutPanel2.SetColumnSpan(this.cboxSampleMunicipalities, 3);
-            this.cboxSampleMunicipalities.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cboxSampleMunicipalities.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxSampleMunicipalities.FormattingEnabled = true;
-            this.cboxSampleMunicipalities.Location = new System.Drawing.Point(677, 125);
+            this.cboxSampleMunicipalities.Location = new System.Drawing.Point(489, 223);
             this.cboxSampleMunicipalities.Name = "cboxSampleMunicipalities";
-            this.cboxSampleMunicipalities.Size = new System.Drawing.Size(447, 21);
+            this.cboxSampleMunicipalities.Size = new System.Drawing.Size(320, 21);
             this.cboxSampleMunicipalities.TabIndex = 40;
             // 
             // label63
             // 
-            this.label63.AutoSize = true;
-            this.label63.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label63.Location = new System.Drawing.Point(565, 150);
+            this.label63.Dock = System.Windows.Forms.DockStyle.Right;
+            this.label63.Location = new System.Drawing.Point(36, 0);
             this.label63.Name = "label63";
-            this.label63.Size = new System.Drawing.Size(106, 28);
+            this.label63.Size = new System.Drawing.Size(106, 24);
             this.label63.TabIndex = 41;
             this.label63.Text = "Laboratory";
             this.label63.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // cboxSampleLaboratory
             // 
-            this.tableLayoutPanel2.SetColumnSpan(this.cboxSampleLaboratory, 3);
             this.cboxSampleLaboratory.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cboxSampleLaboratory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxSampleLaboratory.FormattingEnabled = true;
-            this.cboxSampleLaboratory.Location = new System.Drawing.Point(677, 153);
+            this.cboxSampleLaboratory.Location = new System.Drawing.Point(165, 373);
             this.cboxSampleLaboratory.Name = "cboxSampleLaboratory";
-            this.cboxSampleLaboratory.Size = new System.Drawing.Size(447, 21);
+            this.cboxSampleLaboratory.Size = new System.Drawing.Size(318, 21);
             this.cboxSampleLaboratory.TabIndex = 42;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label5.Location = new System.Drawing.Point(565, 222);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(106, 28);
-            this.label5.TabIndex = 31;
-            this.label5.Text = "Ex. Id";
-            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // tbSampleExId
             // 
-            this.tableLayoutPanel2.SetColumnSpan(this.tbSampleExId, 2);
             this.tbSampleExId.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbSampleExId.Location = new System.Drawing.Point(677, 225);
+            this.tbSampleExId.Location = new System.Drawing.Point(165, 73);
             this.tbSampleExId.Name = "tbSampleExId";
-            this.tbSampleExId.Size = new System.Drawing.Size(275, 20);
+            this.tbSampleExId.Size = new System.Drawing.Size(318, 20);
             this.tbSampleExId.TabIndex = 32;
             this.tbSampleExId.TextChanged += new System.EventHandler(this.tbSampleExId_TextChanged);
             // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label17.Location = new System.Drawing.Point(565, 250);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(106, 28);
-            this.label17.TabIndex = 43;
-            this.label17.Text = "Sample storage";
-            this.label17.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
             // cboxSampleSampleStorage
             // 
-            this.tableLayoutPanel2.SetColumnSpan(this.cboxSampleSampleStorage, 2);
             this.cboxSampleSampleStorage.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cboxSampleSampleStorage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxSampleSampleStorage.FormattingEnabled = true;
-            this.cboxSampleSampleStorage.Location = new System.Drawing.Point(677, 253);
+            this.cboxSampleSampleStorage.Location = new System.Drawing.Point(165, 403);
             this.cboxSampleSampleStorage.Name = "cboxSampleSampleStorage";
-            this.cboxSampleSampleStorage.Size = new System.Drawing.Size(275, 21);
+            this.cboxSampleSampleStorage.Size = new System.Drawing.Size(318, 21);
             this.cboxSampleSampleStorage.TabIndex = 44;
             // 
             // cbSampleConfidential
             // 
             this.cbSampleConfidential.AutoSize = true;
-            this.cbSampleConfidential.Location = new System.Drawing.Point(115, 253);
+            this.cbSampleConfidential.Location = new System.Drawing.Point(489, 163);
             this.cbSampleConfidential.Name = "cbSampleConfidential";
             this.cbSampleConfidential.Size = new System.Drawing.Size(121, 17);
             this.cbSampleConfidential.TabIndex = 45;
@@ -3464,24 +3375,14 @@
             // 
             // btnSampleUpdate
             // 
-            this.btnSampleUpdate.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnSampleUpdate.Location = new System.Drawing.Point(958, 281);
+            this.btnSampleUpdate.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnSampleUpdate.Location = new System.Drawing.Point(626, 463);
             this.btnSampleUpdate.Name = "btnSampleUpdate";
-            this.btnSampleUpdate.Size = new System.Drawing.Size(166, 26);
+            this.btnSampleUpdate.Size = new System.Drawing.Size(183, 26);
             this.btnSampleUpdate.TabIndex = 46;
-            this.btnSampleUpdate.Text = "Update sample";
+            this.btnSampleUpdate.Text = "Update sample info";
             this.btnSampleUpdate.UseVisualStyleBackColor = true;
             this.btnSampleUpdate.Click += new System.EventHandler(this.btnSampleUpdate_Click);
-            // 
-            // btnSampleAddToOrder
-            // 
-            this.btnSampleAddToOrder.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnSampleAddToOrder.Location = new System.Drawing.Point(115, 281);
-            this.btnSampleAddToOrder.Name = "btnSampleAddToOrder";
-            this.btnSampleAddToOrder.Size = new System.Drawing.Size(163, 26);
-            this.btnSampleAddToOrder.TabIndex = 47;
-            this.btnSampleAddToOrder.Text = "Add to order";
-            this.btnSampleAddToOrder.UseVisualStyleBackColor = true;
             // 
             // tabSamplesParams
             // 
@@ -10038,6 +9939,124 @@
             this.btnBack.ToolTipText = "Back";
             this.btnBack.Click += new System.EventHandler(this.miBack_Click);
             // 
+            // panelSampleLatLonAlt
+            // 
+            this.layoutSample.SetColumnSpan(this.panelSampleLatLonAlt, 2);
+            this.panelSampleLatLonAlt.Controls.Add(this.tbSampleInfoLongitude);
+            this.panelSampleLatLonAlt.Controls.Add(this.tbSampleInfoAltitude);
+            this.panelSampleLatLonAlt.Controls.Add(this.tbSampleInfoLatitude);
+            this.panelSampleLatLonAlt.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelSampleLatLonAlt.Location = new System.Drawing.Point(165, 193);
+            this.panelSampleLatLonAlt.Name = "panelSampleLatLonAlt";
+            this.panelSampleLatLonAlt.Size = new System.Drawing.Size(644, 24);
+            this.panelSampleLatLonAlt.TabIndex = 48;
+            this.panelSampleLatLonAlt.Resize += new System.EventHandler(this.panelSampleLatLonAlt_Resize);
+            // 
+            // toolStrip11
+            // 
+            this.toolStrip11.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStrip11.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnSampleAddSampleToOrder});
+            this.toolStrip11.Location = new System.Drawing.Point(3, 3);
+            this.toolStrip11.Name = "toolStrip11";
+            this.toolStrip11.Size = new System.Drawing.Size(812, 25);
+            this.toolStrip11.TabIndex = 2;
+            this.toolStrip11.Text = "toolStrip11";
+            // 
+            // btnSampleAddSampleToOrder
+            // 
+            this.btnSampleAddSampleToOrder.Image = global::DSA_lims.Properties.Resources._new;
+            this.btnSampleAddSampleToOrder.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSampleAddSampleToOrder.Name = "btnSampleAddSampleToOrder";
+            this.btnSampleAddSampleToOrder.Size = new System.Drawing.Size(135, 22);
+            this.btnSampleAddSampleToOrder.Text = "Add sample to order";
+            // 
+            // label5
+            // 
+            this.label5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label5.Location = new System.Drawing.Point(3, 400);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(156, 30);
+            this.label5.TabIndex = 49;
+            this.label5.Text = "Sample storage";
+            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label16
+            // 
+            this.label16.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label16.Location = new System.Drawing.Point(3, 70);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(156, 30);
+            this.label16.TabIndex = 50;
+            this.label16.Text = "External ID";
+            this.label16.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // panel7
+            // 
+            this.panel7.Controls.Add(this.label7);
+            this.panel7.Controls.Add(this.label17);
+            this.panel7.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel7.Location = new System.Drawing.Point(3, 13);
+            this.panel7.Name = "panel7";
+            this.panel7.Size = new System.Drawing.Size(156, 24);
+            this.panel7.TabIndex = 51;
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Dock = System.Windows.Forms.DockStyle.Right;
+            this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
+            this.label17.ForeColor = System.Drawing.Color.Red;
+            this.label17.Location = new System.Drawing.Point(142, 0);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(14, 17);
+            this.label17.TabIndex = 1;
+            this.label17.Text = "*";
+            // 
+            // panel13
+            // 
+            this.panel13.Controls.Add(this.label14);
+            this.panel13.Controls.Add(this.label20);
+            this.panel13.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel13.Location = new System.Drawing.Point(3, 103);
+            this.panel13.Name = "panel13";
+            this.panel13.Size = new System.Drawing.Size(156, 24);
+            this.panel13.TabIndex = 52;
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Dock = System.Windows.Forms.DockStyle.Right;
+            this.label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
+            this.label20.ForeColor = System.Drawing.Color.Red;
+            this.label20.Location = new System.Drawing.Point(142, 0);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(14, 17);
+            this.label20.TabIndex = 0;
+            this.label20.Text = "*";
+            // 
+            // panel23
+            // 
+            this.panel23.Controls.Add(this.label63);
+            this.panel23.Controls.Add(this.label21);
+            this.panel23.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel23.Location = new System.Drawing.Point(3, 373);
+            this.panel23.Name = "panel23";
+            this.panel23.Size = new System.Drawing.Size(156, 24);
+            this.panel23.TabIndex = 53;
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Dock = System.Windows.Forms.DockStyle.Right;
+            this.label21.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold);
+            this.label21.ForeColor = System.Drawing.Color.Red;
+            this.label21.Location = new System.Drawing.Point(142, 0);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(14, 17);
+            this.label21.TabIndex = 0;
+            this.label21.Text = "*";
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -10075,6 +10094,7 @@
             this.tabSample.PerformLayout();
             this.tabsSample.ResumeLayout(false);
             this.tabSamplesInfo.ResumeLayout(false);
+            this.tabSamplesInfo.PerformLayout();
             this.panel21.ResumeLayout(false);
             this.panel21.PerformLayout();
             this.toolStrip3.ResumeLayout(false);
@@ -10084,8 +10104,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.gridSampleAttachments)).EndInit();
             this.toolsSampleSampInfoAttachments.ResumeLayout(false);
             this.toolsSampleSampInfoAttachments.PerformLayout();
-            this.tableLayoutPanel2.ResumeLayout(false);
-            this.tableLayoutPanel2.PerformLayout();
+            this.layoutSample.ResumeLayout(false);
+            this.layoutSample.PerformLayout();
             this.panel22.ResumeLayout(false);
             this.tabSamplesParams.ResumeLayout(false);
             this.tabSamplesParams.PerformLayout();
@@ -10530,6 +10550,16 @@
             this.panel63.ResumeLayout(false);
             this.tools.ResumeLayout(false);
             this.tools.PerformLayout();
+            this.panelSampleLatLonAlt.ResumeLayout(false);
+            this.panelSampleLatLonAlt.PerformLayout();
+            this.toolStrip11.ResumeLayout(false);
+            this.toolStrip11.PerformLayout();
+            this.panel7.ResumeLayout(false);
+            this.panel7.PerformLayout();
+            this.panel13.ResumeLayout(false);
+            this.panel13.PerformLayout();
+            this.panel23.ResumeLayout(false);
+            this.panel23.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -10560,7 +10590,7 @@
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.ToolStripButton toolStripButton2;
         private System.Windows.Forms.ToolStripButton toolStripButton3;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+        private System.Windows.Forms.TableLayoutPanel layoutSample;
         private System.Windows.Forms.Button btnSampleSelectSampleType;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.ComboBox cboxSampleSampleType;
@@ -10584,14 +10614,11 @@
         private System.Windows.Forms.ComboBox cboxSampleInfoSampler;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.ComboBox cboxSampleInfoSamplingMeth;
-        private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.ToolStrip toolStrip6;
         private System.Windows.Forms.ToolStripButton toolStripButton9;
         private System.Windows.Forms.ToolStripButton toolStripButton10;
         private System.Windows.Forms.ToolStripLabel toolStripLabel9;
-        private System.Windows.Forms.Label label25;
-        private System.Windows.Forms.Label label26;
         private System.Windows.Forms.Panel panel11;
         private System.Windows.Forms.Panel panel10;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
@@ -10684,7 +10711,6 @@
         private System.Windows.Forms.ToolStripLabel lblSampleToolProject;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox tbOrderName;
-        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox tbSampleExId;
         private System.Windows.Forms.DataGridView gridSamples;
         private System.Windows.Forms.TableLayoutPanel layoutMenuSamples;
@@ -11104,9 +11130,7 @@
         private System.Windows.Forms.Panel panel22;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.ComboBox cboxSampleProject;
-        private System.Windows.Forms.Label label61;
         private System.Windows.Forms.ComboBox cboxSampleSubProject;
-        private System.Windows.Forms.Label label62;
         private System.Windows.Forms.ComboBox cboxSampleMunicipalities;
         private System.Windows.Forms.Label label63;
         private System.Windows.Forms.ComboBox cboxSampleLaboratory;
@@ -11299,7 +11323,6 @@
         private System.Windows.Forms.ToolStripMenuItem miSamplingMethodEdit;
         private System.Windows.Forms.ToolStripMenuItem miSamplingMethodDelete;
         private System.Windows.Forms.DataGridView gridMetaSamplingMeth;
-        private System.Windows.Forms.Label label17;
         private System.Windows.Forms.ComboBox cboxSampleSampleStorage;
         private System.Windows.Forms.CheckBox cbSampleConfidential;
         private System.Windows.Forms.Button button2;
@@ -11401,7 +11424,17 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator25;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button btnSampleUpdate;
-        private System.Windows.Forms.Button btnSampleAddToOrder;
+        private System.Windows.Forms.Panel panelSampleLatLonAlt;
+        private System.Windows.Forms.ToolStrip toolStrip11;
+        private System.Windows.Forms.ToolStripButton btnSampleAddSampleToOrder;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Panel panel7;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Panel panel13;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.Panel panel23;
+        private System.Windows.Forms.Label label21;
     }
 }
 

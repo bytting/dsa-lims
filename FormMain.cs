@@ -78,6 +78,8 @@ namespace DSA_lims
                 tbMenuLookup.Text = "";
                 ActiveControl = tbMenuLookup;
 
+                panelSampleLatLonAlt_Resize(sender, e);
+
                 r = new ResourceManager("DSA_lims.lang_" + CultureInfo.CurrentUICulture.TwoLetterISOLanguageName, Assembly.GetExecutingAssembly());
                 Common.Log.Info("Setting language " + CultureInfo.CurrentUICulture.TwoLetterISOLanguageName);
                 SetLanguageLabels(r);
@@ -2863,6 +2865,13 @@ order by name
             {
                 conn?.Close();
             }
+        }
+
+        private void panelSampleLatLonAlt_Resize(object sender, EventArgs e)
+        {
+            int w = panelSampleLatLonAlt.Width;
+            tbSampleInfoLatitude.Width = w / 3;
+            tbSampleInfoAltitude.Width = w / 3;
         }
     }    
 }

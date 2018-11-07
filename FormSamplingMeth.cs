@@ -48,7 +48,7 @@ namespace DSA_lims
         {
             InitializeComponent();
             Text = "Create sampling method";
-            cboxInstanceStatus.DataSource = Common.InstanceStatusList;
+            cboxInstanceStatus.DataSource = DB.GetInstanceStatusList();
             cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
         }
 
@@ -57,7 +57,7 @@ namespace DSA_lims
             InitializeComponent();
             p["id"] = smid;
             Text = "Update sampling method";
-            cboxInstanceStatus.DataSource = Common.InstanceStatusList;
+            cboxInstanceStatus.DataSource = DB.GetInstanceStatusList();
 
             using (SqlConnection conn = DB.OpenConnection())
             {

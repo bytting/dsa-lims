@@ -49,7 +49,7 @@ namespace DSA_lims
             InitializeComponent();
 
             Text = "DSA-Lims - New customer";
-            cboxInstanceStatus.DataSource = Common.InstanceStatusList;
+            cboxInstanceStatus.DataSource = DB.GetInstanceStatusList();
             cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
         }
 
@@ -59,7 +59,7 @@ namespace DSA_lims
 
             Text = "DSA-Lims - Edit customer";
             p["id"] = cid;
-            cboxInstanceStatus.DataSource = Common.InstanceStatusList;
+            cboxInstanceStatus.DataSource = DB.GetInstanceStatusList();
 
             using (SqlConnection conn = DB.OpenConnection())
             {

@@ -98,11 +98,14 @@ namespace DSA_lims
                     DB.LoadUniformActivityUnits(conn);
                     DB.LoadWorkflowStatus(conn);
                     DB.LoadLocationTypes(conn);                    
+                    
+                    cboxSamplesStatus.DataSource = DB.GetInstanceStatusList();
+                    cboxSampleInstanceStatus.DataSource = DB.GetInstanceStatusList();                    
+                    cboxSamplePrepUnit.DataSource = DB.GetPreparationUnitList();                    
+                    cboxSampleAnalWorkflowStatus.DataSource = DB.GetWorkflowStatusList();
+                    cboxSamplePrepWorkflowStatus.DataSource = DB.GetWorkflowStatusList();                    
+                    cboxSampleInfoLocationTypes.DataSource = DB.GetLocationTypeList();
 
-                    UI.PopulateInstanceStatus(cboxSamplesStatus, cboxSampleInstanceStatus);
-                    UI.PopulatePreparationUnits(cboxSamplePrepUnit);
-                    UI.PopulateWorkflowStatus(cboxSampleAnalWorkflowStatus, cboxSamplePrepWorkflowStatus);
-                    UI.PopulateLocationTypes(cboxSampleInfoLocationTypes);
                     UI.PopulateActivityUnits(conn, gridMetaUnitsActivity);
                     UI.PopulateActivityUnits(conn, cboxSampleAnalUnit);
                     UI.PopulateActivityUnitTypes(conn, cboxSampleAnalUnitType);
@@ -1291,10 +1294,8 @@ namespace DSA_lims
                 return;
             
             selectedSample = form.SampleId;            
-            using (SqlConnection conn = DB.OpenConnection())
-            {
+            using (SqlConnection conn = DB.OpenConnection())            
                 PopulateSample(conn, selectedSample);
-            }
 
             tabs.SelectedTab = tabSample;
 

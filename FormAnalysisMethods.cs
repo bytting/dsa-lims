@@ -46,7 +46,7 @@ namespace DSA_lims
         {
             InitializeComponent();
             Text = "Create analysis method";
-            cboxInstanceStatus.DataSource = Common.InstanceStatusList;
+            cboxInstanceStatus.DataSource = DB.GetInstanceStatusList();
             cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
         }
 
@@ -55,7 +55,7 @@ namespace DSA_lims
             InitializeComponent();
             p["id"] = amid;
             Text = "Update analysis method";
-            cboxInstanceStatus.DataSource = Common.InstanceStatusList;
+            cboxInstanceStatus.DataSource = DB.GetInstanceStatusList();
 
             using (SqlConnection conn = DB.OpenConnection())
             {

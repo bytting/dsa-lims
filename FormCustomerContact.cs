@@ -49,7 +49,7 @@ namespace DSA_lims
             p["customer_id"] = cid;
             Text = "DSA-Lims - Create customer contact";
             tbCustomer.Text = cname;
-            cboxInstanceStatus.DataSource = Common.InstanceStatusList;
+            cboxInstanceStatus.DataSource = DB.GetInstanceStatusList();
             cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
         }
 
@@ -60,7 +60,7 @@ namespace DSA_lims
             tbCustomer.Text = cname;
             p["id"] = contid;
             Text = "DSA-Lims - Update customer contact";
-            cboxInstanceStatus.DataSource = Common.InstanceStatusList;
+            cboxInstanceStatus.DataSource = DB.GetInstanceStatusList();
 
             using (SqlConnection conn = DB.OpenConnection())
             {

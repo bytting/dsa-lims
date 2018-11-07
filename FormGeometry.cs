@@ -49,7 +49,7 @@ namespace DSA_lims
             InitializeComponent();
             
             Text = "New geometry";
-            cboxInstanceStatus.DataSource = Common.InstanceStatusList;
+            cboxInstanceStatus.DataSource = DB.GetInstanceStatusList();
             cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
         }
 
@@ -59,7 +59,7 @@ namespace DSA_lims
             
             Text = "Edit geometry";
             p["id"] = gid;
-            cboxInstanceStatus.DataSource = Common.InstanceStatusList;
+            cboxInstanceStatus.DataSource = DB.GetInstanceStatusList();
 
             using (SqlConnection conn = DB.OpenConnection())
             {

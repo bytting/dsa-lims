@@ -48,7 +48,7 @@ namespace DSA_lims
         {
             InitializeComponent();            
             Text = "Create new main project";
-            cboxInstanceStatus.DataSource = Common.InstanceStatusList;
+            cboxInstanceStatus.DataSource = DB.GetInstanceStatusList();
             cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
         }
 
@@ -57,7 +57,7 @@ namespace DSA_lims
             InitializeComponent();            
             p["id"] = pid;
             Text = "Update main project";
-            cboxInstanceStatus.DataSource = Common.InstanceStatusList;
+            cboxInstanceStatus.DataSource = DB.GetInstanceStatusList();
 
             using (SqlConnection conn = DB.OpenConnection())
             {

@@ -27,6 +27,13 @@ namespace DSA_lims
 {
     public static class DB
     {
+        private static List<Lemma<int, string>> InstanceStatusList = new List<Lemma<int, string>>();
+        private static List<Lemma<int, string>> DecayTypeList = new List<Lemma<int, string>>();
+        private static List<Lemma<int, string>> PreparationUnitList = new List<Lemma<int, string>>();
+        private static List<Lemma<int, string>> UniformActivityUnitList = new List<Lemma<int, string>>();
+        private static List<Lemma<int, string>> WorkflowStatusList = new List<Lemma<int, string>>();
+        private static List<Lemma<int, string>> LocationTypeList = new List<Lemma<int, string>>();
+
         private static List<Guid> LockedSamples = new List<Guid>();
         private static List<Guid> LockedOrders = new List<Guid>();
 
@@ -125,18 +132,23 @@ namespace DSA_lims
 
             try
             {
-                Common.InstanceStatusList.Clear();
+                InstanceStatusList.Clear();
 
                 using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_instance_status", CommandType.StoredProcedure))
                 {
                     while (reader.Read())
-                        Common.InstanceStatusList.Add(new Lemma<int, string>(Convert.ToInt32(reader["id"]), reader["name"].ToString()));
+                        InstanceStatusList.Add(new Lemma<int, string>(Convert.ToInt32(reader["id"]), reader["name"].ToString()));
                 }
             }
             catch (Exception ex)
             {
                 Common.Log.Error(ex);
             }
+        }
+
+        public static List<Lemma<int, string>> GetInstanceStatusList()
+        {
+            return new List<Lemma<int, string>>(InstanceStatusList);
         }
 
         public static void LoadDecayTypes(SqlConnection conn)
@@ -145,18 +157,23 @@ namespace DSA_lims
 
             try
             {
-                Common.DecayTypeList.Clear();
+                DecayTypeList.Clear();
 
                 using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_decay_types", CommandType.StoredProcedure))
                 {
                     while (reader.Read())
-                        Common.DecayTypeList.Add(new Lemma<int, string>(Convert.ToInt32(reader["id"]), reader["name"].ToString()));
+                        DecayTypeList.Add(new Lemma<int, string>(Convert.ToInt32(reader["id"]), reader["name"].ToString()));
                 }
             }
             catch (Exception ex)
             {
                 Common.Log.Error(ex);
             }
+        }
+
+        public static List<Lemma<int, string>> GetDecayTypeList()
+        {
+            return new List<Lemma<int, string>>(DecayTypeList);
         }
 
         public static void LoadPreparationUnits(SqlConnection conn)
@@ -165,18 +182,23 @@ namespace DSA_lims
 
             try
             {
-                Common.PreparationUnitList.Clear();
+                PreparationUnitList.Clear();
 
                 using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_preparation_units", CommandType.StoredProcedure))
                 {
                     while (reader.Read())
-                        Common.PreparationUnitList.Add(new Lemma<int, string>(Convert.ToInt32(reader["id"]), reader["name"].ToString()));
+                        PreparationUnitList.Add(new Lemma<int, string>(Convert.ToInt32(reader["id"]), reader["name"].ToString()));
                 }
             }
             catch (Exception ex)
             {
                 Common.Log.Error(ex);
             }
+        }
+
+        public static List<Lemma<int, string>> GetPreparationUnitList()
+        {
+            return new List<Lemma<int, string>>(PreparationUnitList);
         }
 
         public static void LoadUniformActivityUnits(SqlConnection conn)
@@ -185,18 +207,23 @@ namespace DSA_lims
 
             try
             {
-                Common.UniformActivityUnitList.Clear();
+                UniformActivityUnitList.Clear();
 
                 using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_uniform_activity_units", CommandType.StoredProcedure))
                 {
                     while (reader.Read())
-                        Common.UniformActivityUnitList.Add(new Lemma<int, string>(Convert.ToInt32(reader["id"]), reader["name"].ToString()));
+                        UniformActivityUnitList.Add(new Lemma<int, string>(Convert.ToInt32(reader["id"]), reader["name"].ToString()));
                 }
             }
             catch (Exception ex)
             {
                 Common.Log.Error(ex);
             }
+        }
+
+        public static List<Lemma<int, string>> GetUniformActivityUnitList()
+        {
+            return new List<Lemma<int, string>>(UniformActivityUnitList);
         }
 
         public static void LoadWorkflowStatus(SqlConnection conn)
@@ -205,12 +232,12 @@ namespace DSA_lims
 
             try
             {
-                Common.WorkflowStatusList.Clear();
+                WorkflowStatusList.Clear();
 
                 using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_workflow_status", CommandType.StoredProcedure))
                 {
                     while (reader.Read())
-                        Common.WorkflowStatusList.Add(new Lemma<int, string>(Convert.ToInt32(reader["id"]), reader["name"].ToString()));
+                        WorkflowStatusList.Add(new Lemma<int, string>(Convert.ToInt32(reader["id"]), reader["name"].ToString()));
                 }
             }
             catch (Exception ex)
@@ -219,24 +246,34 @@ namespace DSA_lims
             }
         }
 
+        public static List<Lemma<int, string>> GetWorkflowStatusList()
+        {
+            return new List<Lemma<int, string>>(WorkflowStatusList);
+        }
+
         public static void LoadLocationTypes(SqlConnection conn)
         {
             Common.Log.Info("Loading location types");
 
             try
             {
-                Common.LocationTypeList.Clear();
+                LocationTypeList.Clear();
 
                 using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_location_types", CommandType.StoredProcedure))
                 {
                     while (reader.Read())
-                        Common.LocationTypeList.Add(new Lemma<int, string>(Convert.ToInt32(reader["id"]), reader["name"].ToString()));
+                        LocationTypeList.Add(new Lemma<int, string>(Convert.ToInt32(reader["id"]), reader["name"].ToString()));
                 }
             }
             catch (Exception ex)
             {
                 Common.Log.Error(ex);
             }
+        }
+
+        public static List<Lemma<int, string>> GetLocationTypeList()
+        {
+            return new List<Lemma<int, string>>(LocationTypeList);
         }
 
         public static int GetNextSampleCount(SqlConnection conn, SqlTransaction trans)

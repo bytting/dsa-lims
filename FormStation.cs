@@ -49,7 +49,7 @@ namespace DSA_lims
             InitializeComponent();
             // create new station            
             Text = "Create station";
-            cboxInstanceStatus.DataSource = Common.InstanceStatusList;
+            cboxInstanceStatus.DataSource = DB.GetInstanceStatusList();
             cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
         }
         public FormStation(Guid sid)
@@ -58,7 +58,7 @@ namespace DSA_lims
             // edit existing station            
             p["id"] = sid;
             Text = "Update station";
-            cboxInstanceStatus.DataSource = Common.InstanceStatusList;
+            cboxInstanceStatus.DataSource = DB.GetInstanceStatusList();
 
             using (SqlConnection conn = DB.OpenConnection())
             {

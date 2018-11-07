@@ -49,7 +49,7 @@ namespace DSA_lims
             InitializeComponent();            
             p["county_id"] = cid;
             Text = "Create municipality";
-            cboxInstanceStatus.DataSource = Common.InstanceStatusList;
+            cboxInstanceStatus.DataSource = DB.GetInstanceStatusList();
             cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
         }
 
@@ -59,7 +59,7 @@ namespace DSA_lims
             p["county_id"] = cid;
             p["id"] = mid;
             Text = "Update municipality";
-            cboxInstanceStatus.DataSource = Common.InstanceStatusList;
+            cboxInstanceStatus.DataSource = DB.GetInstanceStatusList();
 
             using (SqlConnection conn = DB.OpenConnection())
             {

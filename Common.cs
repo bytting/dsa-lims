@@ -28,13 +28,6 @@ namespace DSA_lims
     {
         public static ILog Log = null;
         public static DSASettings Settings = new DSASettings();
-        public static string Username { get; set; }        
-
-        public static List<Lemma<int, string>> InstanceStatusList = new List<Lemma<int, string>>();
-        public static List<Lemma<int, string>> DecayTypeList = new List<Lemma<int, string>>();
-        public static List<Lemma<int, string>> PreparationUnitList = new List<Lemma<int, string>>();
-        public static List<Lemma<int, string>> UniformActivityUnitList = new List<Lemma<int, string>>();
-        public static List<Lemma<int, string>> WorkflowStatusList = new List<Lemma<int, string>>();
-        public static List<Lemma<int, string>> LocationTypeList = new List<Lemma<int, string>>();        
+        public static string Username { get; set; }                
     }
 }

@@ -48,10 +48,10 @@ namespace DSA_lims
             InitializeComponent();
 
             // Create new nuclide            
-            cboxDecayTypes.DataSource = Common.DecayTypeList;
+            cboxDecayTypes.DataSource = DB.GetDecayTypeList();
             cboxDecayTypes.SelectedIndex = -1;
             Text = "New nuclide";
-            cboxInstanceStatus.DataSource = Common.InstanceStatusList;
+            cboxInstanceStatus.DataSource = DB.GetInstanceStatusList();
             cboxInstanceStatus.SelectedValue = InstanceStatus.Active;            
         }
 
@@ -60,11 +60,11 @@ namespace DSA_lims
             InitializeComponent();
 
             // Edit existing nuclide            
-            cboxDecayTypes.DataSource = Common.DecayTypeList;
+            cboxDecayTypes.DataSource = DB.GetDecayTypeList();
             cboxDecayTypes.SelectedIndex = -1;
             p["id"] = nid;
             Text = "Edit nuclide";
-            cboxInstanceStatus.DataSource = Common.InstanceStatusList;
+            cboxInstanceStatus.DataSource = DB.GetInstanceStatusList();
 
             using (SqlConnection conn = DB.OpenConnection())
             {

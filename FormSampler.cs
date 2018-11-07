@@ -47,7 +47,7 @@ namespace DSA_lims
         {
             InitializeComponent();            
             Text = "Create sampler";
-            cboxInstanceStatus.DataSource = Common.InstanceStatusList;
+            cboxInstanceStatus.DataSource = DB.GetInstanceStatusList();
             cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
         }
 
@@ -56,7 +56,7 @@ namespace DSA_lims
             InitializeComponent();            
             p["id"] = sid;
             Text = "Update sampler";
-            cboxInstanceStatus.DataSource = Common.InstanceStatusList;
+            cboxInstanceStatus.DataSource = DB.GetInstanceStatusList();
 
             using (SqlConnection conn = DB.OpenConnection())
             {

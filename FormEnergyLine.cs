@@ -52,7 +52,7 @@ namespace DSA_lims
 
             Text = "Create energy line";
             tbNuclide.Text = nname;
-            cboxInstanceStatus.DataSource = Common.InstanceStatusList;
+            cboxInstanceStatus.DataSource = DB.GetInstanceStatusList();
             cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
         }
 
@@ -66,7 +66,7 @@ namespace DSA_lims
 
             Text = "Update energy line";
             tbNuclide.Text = nname;
-            cboxInstanceStatus.DataSource = Common.InstanceStatusList;
+            cboxInstanceStatus.DataSource = DB.GetInstanceStatusList();
 
             using (SqlConnection conn = DB.OpenConnection())
             {

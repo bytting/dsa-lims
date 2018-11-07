@@ -49,7 +49,7 @@ namespace DSA_lims
                 UI.PopulateLaboratories(conn, InstanceStatus.Inactive, cboxLaboratory);
             }
 
-            cboxInstanceStatus.DataSource = Common.InstanceStatusList;
+            cboxInstanceStatus.DataSource = DB.GetInstanceStatusList();
             cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
         }
 
@@ -61,7 +61,7 @@ namespace DSA_lims
 
             tbUsername.ReadOnly = true;
 
-            cboxInstanceStatus.DataSource = Common.InstanceStatusList;
+            cboxInstanceStatus.DataSource = DB.GetInstanceStatusList();
 
             using (SqlConnection conn = DB.OpenConnection())
             {

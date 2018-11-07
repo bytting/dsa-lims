@@ -29,43 +29,7 @@ using System.Windows.Forms;
 namespace DSA_lims
 {
     public static partial class UI    
-    {
-        public static void PopulateInstanceStatus(params ComboBox[] cbn)
-        {
-            foreach (ComboBox cb in cbn)
-            {
-                cb.DataSource = new List<Lemma<int, string>>(Common.InstanceStatusList);
-                cb.SelectedIndex = -1;
-            }
-        }
-
-        public static void PopulatePreparationUnits(params ComboBox[] cbn)
-        {
-            foreach (ComboBox cb in cbn)
-            {
-                cb.DataSource = new List<Lemma<int, string>>(Common.PreparationUnitList);
-                cb.SelectedIndex = -1;
-            }
-        }        
-
-        public static void PopulateWorkflowStatus(params ComboBox[] cbn)
-        {
-            foreach(ComboBox cb in cbn)
-            {
-                cb.DataSource = new List<Lemma<int, string>>(Common.WorkflowStatusList);
-                cb.SelectedIndex = -1;
-            }            
-        }
-
-        public static void PopulateLocationTypes(params ComboBox[] cbn)
-        {
-            foreach (ComboBox cb in cbn)
-            {
-                cb.DataSource = new List<Lemma<int, string>>(Common.LocationTypeList);
-                cb.SelectedIndex = -1;
-            }
-        }
-
+    {        
         public static void PopulateActivityUnits(SqlConnection conn, DataGridView grid)
         {
             grid.DataSource = DB.GetDataTable(conn, "csp_select_activity_units_flat", CommandType.StoredProcedure);

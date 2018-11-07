@@ -50,7 +50,7 @@ namespace DSA_lims
             p["project_main_id"] = pid;            
             Text = "Create new sub project";
             tbMainProjectName.Text = pname;
-            cboxInstanceStatus.DataSource = Common.InstanceStatusList;
+            cboxInstanceStatus.DataSource = DB.GetInstanceStatusList();
             cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
         }
 
@@ -61,7 +61,7 @@ namespace DSA_lims
             p["project_main_id"] = pid;            
             Text = "Update sub project";
             tbMainProjectName.Text = pname;
-            cboxInstanceStatus.DataSource = Common.InstanceStatusList;
+            cboxInstanceStatus.DataSource = DB.GetInstanceStatusList();
 
             using (SqlConnection conn = DB.OpenConnection())
             {

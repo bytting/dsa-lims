@@ -49,7 +49,7 @@ namespace DSA_lims
         {
             InitializeComponent();     
             Text = "Create sample storage";
-            cboxInstanceStatus.DataSource = Common.InstanceStatusList;
+            cboxInstanceStatus.DataSource = DB.GetInstanceStatusList();
             cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
         }
 
@@ -58,7 +58,7 @@ namespace DSA_lims
             InitializeComponent();            
             p["id"] = ssid;
             Text = "Update sample storage";
-            cboxInstanceStatus.DataSource = Common.InstanceStatusList;
+            cboxInstanceStatus.DataSource = DB.GetInstanceStatusList();
 
             using (SqlConnection conn = DB.OpenConnection())
             {

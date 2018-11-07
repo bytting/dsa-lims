@@ -94,10 +94,10 @@ namespace DSA_lims
                     
                     cboxSamplesStatus.DataSource = DB.LoadIntList(conn, "csp_select_instance_status");
                     cboxSampleInstanceStatus.DataSource = DB.LoadIntList(conn, "csp_select_instance_status");
-                    cboxSamplePrepUnit.DataSource = DB.LoadIntList(conn, "csp_select_preparation_units");
+                    cboxSamplePrepUnit.DataSource = DB.LoadIntList(conn, "csp_select_preparation_units", true);
                     cboxSampleAnalWorkflowStatus.DataSource = DB.LoadIntList(conn, "csp_select_workflow_status");
                     cboxSamplePrepWorkflowStatus.DataSource = DB.LoadIntList(conn, "csp_select_workflow_status");
-                    cboxSampleInfoLocationTypes.DataSource = DB.LoadIntList(conn, "csp_select_location_types");
+                    cboxSampleInfoLocationTypes.DataSource = DB.LoadIntList(conn, "csp_select_location_types", true);
                     cboxPrepAnalAnalSigma.DataSource = DB.LoadSigma();
                     cboxOrderRequestedSigma.DataSource = DB.LoadSigma();
 
@@ -1231,8 +1231,7 @@ namespace DSA_lims
             if (form.ShowDialog() != DialogResult.OK)
                 return;
 
-            cboxSampleSampleType.SelectedIndex = cboxSampleSampleType.FindStringExact(
-                form.SelectedSampleTypeName + " -> " + form.SelectedSampleTypePath);
+            cboxSampleSampleType.SelectedValue = form.SelectedSampleTypeId;
         }
 
         private void cboxSampleProject_SelectedIndexChanged(object sender, EventArgs e)
@@ -1348,21 +1347,21 @@ namespace DSA_lims
 
         private void ClearSampleInfo()
         {
-            cboxSampleSampleType.SelectedIndex = -1;
-            cboxSampleSampleComponent.SelectedIndex = -1;
-            cboxSampleInfoSampler.SelectedIndex = -1;
-            cboxSampleInfoSamplingMeth.SelectedIndex = -1;
-            cboxSampleProject.SelectedIndex = -1;
-            cboxSampleSubProject.SelectedIndex = -1;
-            cboxSampleInfoStations.SelectedIndex = -1;
+            cboxSampleSampleType.SelectedValue = Guid.Empty;
+            cboxSampleSampleComponent.SelectedValue = Guid.Empty;
+            cboxSampleInfoSampler.SelectedValue = Guid.Empty;
+            cboxSampleInfoSamplingMeth.SelectedValue = Guid.Empty;
+            cboxSampleProject.SelectedValue = Guid.Empty;
+            cboxSampleSubProject.SelectedValue = Guid.Empty;
+            cboxSampleInfoStations.SelectedValue = Guid.Empty;
             tbSampleInfoLatitude.Text = "";
             tbSampleInfoLongitude.Text = "";
             tbSampleInfoAltitude.Text = "";
-            cboxSampleCounties.SelectedIndex = -1;
-            cboxSampleMunicipalities.SelectedIndex = -1;
-            cboxSampleInfoLocationTypes.SelectedIndex = -1;
+            cboxSampleCounties.SelectedValue = Guid.Empty;
+            cboxSampleMunicipalities.SelectedValue = Guid.Empty;
+            cboxSampleInfoLocationTypes.SelectedValue = -1;
             tbSampleLocation.Text = "";
-            cboxSampleLaboratory.SelectedIndex = -1;
+            cboxSampleLaboratory.SelectedValue = Guid.Empty;
             DateTime now = DateTime.Now;
             dtSampleSamplingDateFrom.Value = now;
             dtSampleSamplingTimeFrom.Value = new DateTime(now.Year, now.Month, now.Day, 12, 0, 0);
@@ -1376,7 +1375,7 @@ namespace DSA_lims
             dtSampleReferenceTime.Value = new DateTime(now.Year, now.Month, now.Day, 12, 0, 0);
             tbSampleExId.Text = "";
             cbSampleConfidential.Checked = false;
-            cboxSampleSampleStorage.SelectedIndex = -1;
+            cboxSampleSampleStorage.SelectedValue = Guid.Empty;
             tbSampleComment.Text = "";
             gridSampleAttachments.DataSource = null;
         }
@@ -2200,7 +2199,7 @@ order by name
             cboxOrderLaboratory.SelectedValue = Guid.Empty;
             cboxOrderResponsible.SelectedValue = Guid.Empty;
             tbOrderDeadline.Text = "";
-            cboxOrderRequestedSigma.SelectedIndex = -1;
+            cboxOrderRequestedSigma.SelectedValue = -1;
             tbOrderContentComment.Text = "";
             tbOrderCustomerAddress.Text = "";
             tbOrderCustomerEmail.Text = "";
@@ -2260,13 +2259,7 @@ order by name
 
                 tbOrderName.Text = map["name"].ToString();
                 cboxOrderLaboratory.SelectedValue = map["laboratory_id"];
-                cboxOrderResponsible.SelectedIndex = -1;
-                foreach (Lemma<string, string> l in cboxOrderResponsible.Items)
-                    if (l.Id == map["account_id"].ToString())
-                    {
-                        cboxOrderResponsible.SelectedItem = l;
-                        break;
-                    }
+                cboxOrderResponsible.SelectedValue = map["account_id"];
                 DateTime deadline = Convert.ToDateTime(map["deadline"]);
                 tbOrderDeadline.Text = deadline.ToString(StrUtils.DateFormatNorwegian);
                 cboxOrderRequestedSigma.SelectedItem = map["requested_sigma"];

@@ -100,17 +100,18 @@ namespace DSA_lims
             if (form.ShowDialog() != DialogResult.OK)
                 return;
 
-            cboxSampleType.SelectedIndex = cboxSampleType.FindStringExact(
-                form.SelectedSampleTypeName + " -> " + form.SelectedSampleTypePath);
+            cboxSampleType.SelectedValue = form.SelectedSampleTypeId;
         }
 
         private void cboxSampleType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            lblStatus.Text = "";            
-            cboxSampleComponent.Items.Clear();
+            lblStatus.Text = "";
 
             if (!StrUtils.IsValidGuid(cboxSampleType.SelectedValue))
-                return;            
+            {
+                cboxSampleComponent.DataSource = null;
+                return;
+            }
 
             Guid sampleTypeId = Guid.Parse(cboxSampleType.SelectedValue.ToString());
             TreeNode[] tnodes = TreeSampleTypes.Nodes.Find(sampleTypeId.ToString(), true);
@@ -119,25 +120,9 @@ namespace DSA_lims
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                AddSampleTypeComponents(conn, sampleTypeId, tnodes[0]);
+                UI.PopulateSampleComponentsAscending(conn, sampleTypeId, tnodes[0], cboxSampleComponent);
             }
-        }
-
-        private void AddSampleTypeComponents(SqlConnection conn, Guid sampleTypeId, TreeNode tnode)
-        {
-            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_sample_components_for_sample_type", CommandType.StoredProcedure,
-                    new SqlParameter("@sample_type_id", sampleTypeId)))
-            {
-                while (reader.Read())
-                    cboxSampleComponent.Items.Add(new Lemma<Guid, string>(new Guid(reader["id"].ToString()), reader["name"].ToString()));
-            }
-
-            if (tnode.Parent != null)
-            {
-                Guid parentId = new Guid(tnode.Parent.Name);
-                AddSampleTypeComponents(conn, parentId, tnode.Parent);
-            }
-        }
+        }        
 
         private bool CheckExistingSampleType()
         {
@@ -159,8 +144,8 @@ namespace DSA_lims
 
             if (String.IsNullOrEmpty(cboxSampleType.Text.Trim()))
             {                
-                cboxSampleType.SelectedItem = null;
-                cboxSampleComponent.Items.Clear();
+                cboxSampleType.SelectedValue = Guid.Empty;
+                cboxSampleComponent.DataSource = null;
                 return;
             }
 

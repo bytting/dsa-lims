@@ -126,11 +126,12 @@ namespace DSA_lims
             cmd.ExecuteNonQuery();
         }
 
-        public static List<Lemma<int, string>> LoadIntList(SqlConnection conn, string proc)
+        public static List<Lemma<int, string>> LoadIntList(SqlConnection conn, string proc, bool addEmptyEntry = false)
         {
             List<Lemma<int, string>> list = new List<Lemma<int, string>>();
 
-            list.Add(new Lemma<int, string>(-1, ""));
+            if(addEmptyEntry)
+                list.Add(new Lemma<int, string>(-1, ""));
 
             try
             {

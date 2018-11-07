@@ -115,8 +115,8 @@ namespace DSA_lims
         private void cbPrepsAlreadyExists_CheckedChanged(object sender, EventArgs e)
         {
             cboxPrepMethLaboratory.Enabled = cbPrepsAlreadyExists.Checked;
-            if (cbPrepsAlreadyExists.Checked == false)
-                cboxPrepMethLaboratory.SelectedIndex = -1;
+            if (!cbPrepsAlreadyExists.Checked)
+                cboxPrepMethLaboratory.SelectedValue = Guid.Empty;
         }
     }
 }

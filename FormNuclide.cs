@@ -52,7 +52,7 @@ namespace DSA_lims
             using (SqlConnection conn = DB.OpenConnection())
             {
                 cboxInstanceStatus.DataSource = DB.LoadIntList(conn, "csp_select_instance_status");
-                cboxDecayTypes.DataSource = DB.LoadIntList(conn, "csp_select_decay_types");
+                cboxDecayTypes.DataSource = DB.LoadIntList(conn, "csp_select_decay_types", true);
             }
             cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
             cboxDecayTypes.SelectedValue = -1;
@@ -69,7 +69,7 @@ namespace DSA_lims
             using (SqlConnection conn = DB.OpenConnection())
             {
                 cboxInstanceStatus.DataSource = DB.LoadIntList(conn, "csp_select_instance_status");
-                cboxDecayTypes.DataSource = DB.LoadIntList(conn, "csp_select_decay_types");
+                cboxDecayTypes.DataSource = DB.LoadIntList(conn, "csp_select_decay_types", true);
 
                 SqlCommand cmd = new SqlCommand("csp_select_nuclide", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
@@ -136,7 +136,7 @@ namespace DSA_lims
                 return;
             }                
 
-            if (cboxDecayTypes.SelectedIndex < 0)
+            if ((int)cboxDecayTypes.SelectedValue == -1)
             {
                 MessageBox.Show("Decay type is mandatory");
                 return;
@@ -196,7 +196,7 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@id", p["id"]);
                 cmd.Parameters.AddWithValue("@name", p["name"]);
                 cmd.Parameters.AddWithValue("@proton_count", p["proton_count"]);
-                cmd.Parameters.AddWithValue("@neutron_count", p["nautron_count"]);
+                cmd.Parameters.AddWithValue("@neutron_count", p["neutron_count"]);
                 cmd.Parameters.AddWithValue("@half_life_year", p["halflife"]);
                 cmd.Parameters.AddWithValue("@half_life_uncertainty", p["halflife_uncertainty"]);
                 cmd.Parameters.AddWithValue("@decay_type_id", p["decay_type_id"]);

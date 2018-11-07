@@ -165,8 +165,7 @@ namespace DSA_lims
             if (form.ShowDialog() != DialogResult.OK)
                 return;
 
-            cboxSampleType.SelectedIndex = cboxSampleType.FindStringExact(
-                form.SelectedSampleTypeName + " -> " + form.SelectedSampleTypePath);
+            cboxSampleType.SelectedValue = form.SelectedSampleTypeId;
         }
 
         private void cboxProjectMain_SelectedIndexChanged(object sender, EventArgs e)

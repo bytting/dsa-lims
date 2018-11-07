@@ -47,27 +47,30 @@ namespace DSA_lims
         {
             InitializeComponent();
 
-            // Create new nuclide            
-            cboxDecayTypes.DataSource = DB.GetDecayTypeList();
-            cboxDecayTypes.SelectedIndex = -1;
-            Text = "New nuclide";
-            cboxInstanceStatus.DataSource = DB.GetInstanceStatusList();
-            cboxInstanceStatus.SelectedValue = InstanceStatus.Active;            
+            // Create new nuclide                                    
+            Text = "New nuclide";            
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                cboxInstanceStatus.DataSource = DB.LoadIntList(conn, "csp_select_instance_status");
+                cboxDecayTypes.DataSource = DB.LoadIntList(conn, "csp_select_decay_types");
+            }
+            cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
+            cboxDecayTypes.SelectedValue = -1;
         }
 
         public FormNuclide(Guid nid)
         {
             InitializeComponent();
 
-            // Edit existing nuclide            
-            cboxDecayTypes.DataSource = DB.GetDecayTypeList();
-            cboxDecayTypes.SelectedIndex = -1;
+            // Edit existing nuclide
             p["id"] = nid;
             Text = "Edit nuclide";
-            cboxInstanceStatus.DataSource = DB.GetInstanceStatusList();
 
             using (SqlConnection conn = DB.OpenConnection())
             {
+                cboxInstanceStatus.DataSource = DB.LoadIntList(conn, "csp_select_instance_status");
+                cboxDecayTypes.DataSource = DB.LoadIntList(conn, "csp_select_decay_types");
+
                 SqlCommand cmd = new SqlCommand("csp_select_nuclide", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@ID", nid);
@@ -82,7 +85,7 @@ namespace DSA_lims
                     tbNumberOfNeutrons.Text = reader["neutron_count"].ToString();
                     tbHalflife.Text = reader["half_life_year"].ToString();
                     tbHalflifeUncertainty.Text = reader["half_life_uncertainty"].ToString();
-                    cboxDecayTypes.SelectedValue = Convert.ToInt32(reader["decay_type_id"]);
+                    cboxDecayTypes.SelectedValue = reader["decay_type_id"];
                     tbKXrayEnergy.Text = reader["kxray_energy"].ToString();
                     tbFluorescenceYield.Text = reader["fluorescence_yield"].ToString();
                     cboxInstanceStatus.SelectedValue = reader["instance_status_id"];

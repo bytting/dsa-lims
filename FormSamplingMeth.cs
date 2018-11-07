@@ -47,8 +47,11 @@ namespace DSA_lims
         public FormSamplingMeth()
         {
             InitializeComponent();
-            Text = "Create sampling method";
-            cboxInstanceStatus.DataSource = DB.GetInstanceStatusList();
+            Text = "Create sampling method";            
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                cboxInstanceStatus.DataSource = DB.LoadIntList(conn, "csp_select_instance_status");
+            }
             cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
         }
 
@@ -56,11 +59,12 @@ namespace DSA_lims
         {
             InitializeComponent();
             p["id"] = smid;
-            Text = "Update sampling method";
-            cboxInstanceStatus.DataSource = DB.GetInstanceStatusList();
+            Text = "Update sampling method";            
 
             using (SqlConnection conn = DB.OpenConnection())
             {
+                cboxInstanceStatus.DataSource = DB.LoadIntList(conn, "csp_select_instance_status");
+
                 SqlCommand cmd = new SqlCommand("csp_select_sampling_method", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@id", p["id"]);

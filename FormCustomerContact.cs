@@ -49,7 +49,10 @@ namespace DSA_lims
             p["customer_id"] = cid;
             Text = "DSA-Lims - Create customer contact";
             tbCustomer.Text = cname;
-            cboxInstanceStatus.DataSource = DB.GetInstanceStatusList();
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                cboxInstanceStatus.DataSource = DB.LoadIntList(conn, "csp_select_instance_status");
+            }
             cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
         }
 
@@ -59,11 +62,12 @@ namespace DSA_lims
             p["customer_id"] = cid;
             tbCustomer.Text = cname;
             p["id"] = contid;
-            Text = "DSA-Lims - Update customer contact";
-            cboxInstanceStatus.DataSource = DB.GetInstanceStatusList();
+            Text = "DSA-Lims - Update customer contact";            
 
             using (SqlConnection conn = DB.OpenConnection())
             {
+                cboxInstanceStatus.DataSource = DB.LoadIntList(conn, "csp_select_instance_status");
+
                 SqlCommand cmd = new SqlCommand("select name from customer where id = @id", conn);
                 cmd.CommandType = CommandType.Text;
                 cmd.Parameters.AddWithValue("@id", p["customer_id"]);

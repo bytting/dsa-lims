@@ -91,7 +91,7 @@ namespace DSA_lims
 
         private void btnOk_Click(object sender, EventArgs e)
         {
-            if(cboxComponents.SelectedItem == null)
+            if(!StrUtils.IsValidGuid(cboxComponents.SelectedValue))
             {
                 MessageBox.Show("Sample component is required");
                 return;
@@ -103,7 +103,7 @@ namespace DSA_lims
                 return;
             }
 
-            Lemma<Guid, string> comp = cboxComponents.SelectedItem as Lemma<Guid, string>;
+            Guid compId = Guid.Parse(cboxComponents.SelectedValue.ToString());
             int count = Convert.ToInt32(tbCount.Text.Trim());
 
             SqlConnection conn = null;
@@ -124,19 +124,19 @@ namespace DSA_lims
                     cmd.Parameters.Clear();
                     cmd.Parameters.AddWithValue("@id", Guid.NewGuid());
                     cmd.Parameters.AddWithValue("@number", nextSampleCount);
-                    cmd.Parameters.AddWithValue("@laboratory_id", map["laboratory_id"]);
-                    cmd.Parameters.AddWithValue("@sample_type_id", map["sample_type_id"]);
+                    cmd.Parameters.AddWithValue("@laboratory_id", DB.MakeParam(typeof(Guid), map["laboratory_id"]));
+                    cmd.Parameters.AddWithValue("@sample_type_id", DB.MakeParam(typeof(Guid), map["sample_type_id"]));
                     cmd.Parameters.AddWithValue("@sample_storage_id", DBNull.Value);
-                    cmd.Parameters.AddWithValue("@sample_component_id", comp.Id);
-                    cmd.Parameters.AddWithValue("@project_sub_id", map["project_sub_id"]);
-                    cmd.Parameters.AddWithValue("@station_id", map["station_id"]);
-                    cmd.Parameters.AddWithValue("@sampler_id", map["sampler_id"]);
-                    cmd.Parameters.AddWithValue("@sampling_method_id", map["sampling_method_id"]);
-                    cmd.Parameters.AddWithValue("@transform_from_id", map["id"]);
+                    cmd.Parameters.AddWithValue("@sample_component_id", DB.MakeParam(typeof(Guid), compId));
+                    cmd.Parameters.AddWithValue("@project_sub_id", DB.MakeParam(typeof(Guid), map["project_sub_id"]));
+                    cmd.Parameters.AddWithValue("@station_id", DB.MakeParam(typeof(Guid), map["station_id"]));
+                    cmd.Parameters.AddWithValue("@sampler_id", DB.MakeParam(typeof(Guid), map["sampler_id"]));
+                    cmd.Parameters.AddWithValue("@sampling_method_id", DB.MakeParam(typeof(Guid), map["sampling_method_id"]));
+                    cmd.Parameters.AddWithValue("@transform_from_id", DB.MakeParam(typeof(Guid), map["id"]));
                     cmd.Parameters.AddWithValue("@transform_to_id", DBNull.Value);
                     cmd.Parameters.AddWithValue("@imported_from", DBNull.Value);
                     cmd.Parameters.AddWithValue("@imported_from_id", DBNull.Value);
-                    cmd.Parameters.AddWithValue("@municipality_id", map["municipality_id"]);
+                    cmd.Parameters.AddWithValue("@municipality_id", DB.MakeParam(typeof(Guid), map["municipality_id"]));
                     cmd.Parameters.AddWithValue("@location_type", map["location_type"]);
                     cmd.Parameters.AddWithValue("@location", map["location"]);
                     cmd.Parameters.AddWithValue("@latitude", map["latitude"]);

@@ -42,10 +42,16 @@ namespace DSA_lims
         private void FormOrderNew_Load(object sender, EventArgs e)
         {
             using (SqlConnection conn = DB.OpenConnection())
-            {
-                UI.PopulateLaboratories(conn, InstanceStatus.Active, cboxLaboratory);
-                UI.PopulateSigma(cboxRequestedSigma);
-                UI.PopulateCustomers(conn, InstanceStatus.Active, cboxCustomer);
+            {                
+                UI.PopulateComboBoxes(conn, "csp_select_laboratories_short", new[] {
+                    new SqlParameter("@instance_status_level", InstanceStatus.Active)
+                }, cboxLaboratory);
+                
+                UI.PopulateComboBoxes(conn, "csp_select_customers", new[] {
+                    new SqlParameter("@instance_status_level", InstanceStatus.Active)
+                }, cboxCustomer);
+
+                cboxRequestedSigma.DataSource = DB.LoadSigma();
             }
         }
 
@@ -57,13 +63,13 @@ namespace DSA_lims
 
         private void btnCreate_Click(object sender, EventArgs e)
         {
-            if (cboxLaboratory.SelectedItem == null)
+            if (!StrUtils.IsValidGuid(cboxLaboratory.SelectedValue))
             {
                 MessageBox.Show("Laboratory is mandatory");
                 return;
             }
 
-            if (cboxResponsible.SelectedItem == null)
+            if (cboxResponsible.SelectedValue == null || cboxResponsible.SelectedValue.ToString() == String.Empty)
             {
                 MessageBox.Show("Responsible is mandatory");
                 return;
@@ -86,13 +92,16 @@ namespace DSA_lims
 
             try
             {
+                string customerName, customerAddress, customerEmail, customerPhone;
+                Guid custId = Guid.Parse(cboxCustomer.SelectedValue.ToString());
+                Guid labId = Guid.Parse(cboxLaboratory.SelectedValue.ToString());
+                string username = cboxResponsible.SelectedValue.ToString();
+
                 conn = DB.OpenConnection();
                 trans = conn.BeginTransaction();
-
-                string customerName, customerAddress, customerEmail, customerPhone;
-                Lemma<Guid, string> cust = cboxCustomer.SelectedItem as Lemma<Guid, string>;
+                
                 using (SqlDataReader reader = DB.GetDataReader(conn, trans, "select * from customer where id = @id", CommandType.Text, 
-                    new SqlParameter("@id", cust.Id)))
+                    new SqlParameter("@id", custId)))
                 {
                     reader.Read();
                     customerName = reader["name"].ToString();
@@ -100,10 +109,9 @@ namespace DSA_lims
                     customerEmail = reader["email"].ToString();
                     customerPhone = reader["phone"].ToString();
                 }
-
-                Lemma<Guid, string> lab = cboxLaboratory.SelectedItem as Lemma<Guid, string>;
-                string labPrefix = DB.GetOrderPrefix(conn, trans, lab.Id);
-                int orderCount = DB.GetNextOrderCount(conn, trans, lab.Id);
+                
+                string labPrefix = DB.GetOrderPrefix(conn, trans, labId);
+                int orderCount = DB.GetNextOrderCount(conn, trans, labId);
                 OrderName = labPrefix + "-" + DateTime.Now.ToString("yyyy") + "-" + orderCount;
 
                 SqlCommand cmd = new SqlCommand("csp_insert_assignment", conn, trans);
@@ -111,9 +119,8 @@ namespace DSA_lims
                 OrderId = Guid.NewGuid();
                 cmd.Parameters.AddWithValue("@id", OrderId);
                 cmd.Parameters.AddWithValue("@name", OrderName);
-                cmd.Parameters.AddWithValue("@laboratory_id", lab.Id);
-                Lemma<string, string> account = cboxResponsible.SelectedItem as Lemma<string, string>;
-                cmd.Parameters.AddWithValue("@account_id", account.Id);
+                cmd.Parameters.AddWithValue("@laboratory_id", DB.MakeParam(typeof(Guid), labId));                
+                cmd.Parameters.AddWithValue("@account_id", username);
                 cmd.Parameters.AddWithValue("@deadline", (DateTime)tbDeadline.Tag);
                 cmd.Parameters.AddWithValue("@requested_sigma", Convert.ToDouble(cboxRequestedSigma.Text));
                 cmd.Parameters.AddWithValue("@customer_name", customerName);
@@ -158,13 +165,13 @@ namespace DSA_lims
 
         private void cboxLaboratory_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cboxLaboratory.SelectedItem == null)
+            if (!StrUtils.IsValidGuid(cboxLaboratory.SelectedValue))
                 return;
 
-            Lemma<Guid, string> lab = cboxLaboratory.SelectedItem as Lemma<Guid, string>;
+            Guid labId = Guid.Parse(cboxLaboratory.SelectedValue.ToString());
             using (SqlConnection conn = DB.OpenConnection())
             {
-                UI.PopulateUsers(conn, lab.Id, InstanceStatus.Active, cboxResponsible);
+                UI.PopulateUsers(conn, labId, InstanceStatus.Active, cboxResponsible);
             }
         }
 

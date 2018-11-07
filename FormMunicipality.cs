@@ -49,7 +49,10 @@ namespace DSA_lims
             InitializeComponent();            
             p["county_id"] = cid;
             Text = "Create municipality";
-            cboxInstanceStatus.DataSource = DB.GetInstanceStatusList();
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                cboxInstanceStatus.DataSource = DB.LoadIntList(conn, "csp_select_instance_status");
+            }
             cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
         }
 
@@ -58,11 +61,12 @@ namespace DSA_lims
             InitializeComponent();
             p["county_id"] = cid;
             p["id"] = mid;
-            Text = "Update municipality";
-            cboxInstanceStatus.DataSource = DB.GetInstanceStatusList();
+            Text = "Update municipality";            
 
             using (SqlConnection conn = DB.OpenConnection())
             {
+                cboxInstanceStatus.DataSource = DB.LoadIntList(conn, "csp_select_instance_status");
+
                 SqlCommand cmd = new SqlCommand("select name from county where id = @id", conn);
                 cmd.CommandType = CommandType.Text;
                 cmd.Parameters.AddWithValue("@id", p["county_id"]);

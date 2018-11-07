@@ -128,13 +128,14 @@
             // 
             this.cboxSampleType.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.cboxSampleType.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.cboxSampleType.DisplayMember = "Name";
             this.cboxSampleType.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cboxSampleType.FormattingEnabled = true;
             this.cboxSampleType.Location = new System.Drawing.Point(0, 0);
             this.cboxSampleType.Name = "cboxSampleType";
             this.cboxSampleType.Size = new System.Drawing.Size(423, 21);
-            this.cboxSampleType.Sorted = true;
             this.cboxSampleType.TabIndex = 11;
+            this.cboxSampleType.ValueMember = "Id";
             this.cboxSampleType.SelectedIndexChanged += new System.EventHandler(this.cboxSampleType_SelectedIndexChanged);
             this.cboxSampleType.Leave += new System.EventHandler(this.cboxSampleType_Leave);
             // 
@@ -165,12 +166,14 @@
             // 
             // cboxSampleComponent
             // 
+            this.cboxSampleComponent.DisplayMember = "Name";
             this.cboxSampleComponent.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxSampleComponent.FormattingEnabled = true;
             this.cboxSampleComponent.Location = new System.Drawing.Point(148, 60);
             this.cboxSampleComponent.Name = "cboxSampleComponent";
             this.cboxSampleComponent.Size = new System.Drawing.Size(449, 21);
             this.cboxSampleComponent.TabIndex = 15;
+            this.cboxSampleComponent.ValueMember = "Id";
             // 
             // cbReturnToSender
             // 
@@ -184,12 +187,14 @@
             // 
             // cboxRequestedUnit
             // 
+            this.cboxRequestedUnit.DisplayMember = "Name";
             this.cboxRequestedUnit.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxRequestedUnit.FormattingEnabled = true;
             this.cboxRequestedUnit.Location = new System.Drawing.Point(148, 113);
             this.cboxRequestedUnit.Name = "cboxRequestedUnit";
             this.cboxRequestedUnit.Size = new System.Drawing.Size(222, 21);
             this.cboxRequestedUnit.TabIndex = 17;
+            this.cboxRequestedUnit.ValueMember = "Id";
             // 
             // label4
             // 
@@ -202,12 +207,14 @@
             // 
             // cboxRequestedUnitType
             // 
+            this.cboxRequestedUnitType.DisplayMember = "Name";
             this.cboxRequestedUnitType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxRequestedUnitType.FormattingEnabled = true;
             this.cboxRequestedUnitType.Location = new System.Drawing.Point(376, 113);
             this.cboxRequestedUnitType.Name = "cboxRequestedUnitType";
             this.cboxRequestedUnitType.Size = new System.Drawing.Size(221, 21);
             this.cboxRequestedUnitType.TabIndex = 19;
+            this.cboxRequestedUnitType.ValueMember = "Id";
             // 
             // tbComment
             // 

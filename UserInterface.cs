@@ -29,7 +29,22 @@ using System.Windows.Forms;
 namespace DSA_lims
 {
     public static partial class UI    
-    {        
+    {
+        public static void PopulateComboBoxes(SqlConnection conn, string proc, SqlParameter[] sqlpn, params ComboBox[] cbn)
+        {
+            List<Lemma<Guid, string>> list = new List<Lemma<Guid, string>>();
+            list.Add(new Lemma<Guid, string>(Guid.Empty, ""));
+
+            using (SqlDataReader reader = DB.GetDataReader(conn, proc, CommandType.StoredProcedure, sqlpn))
+            {
+                while (reader.Read())
+                    list.Add(new Lemma<Guid, string>(new Guid(reader["id"].ToString()), reader["name"].ToString()));
+            }
+
+            foreach (ComboBox cb in cbn)
+                cb.DataSource = new List<Lemma<Guid, string>>(list);
+        }
+
         public static void PopulateActivityUnits(SqlConnection conn, DataGridView grid)
         {
             grid.DataSource = DB.GetDataTable(conn, "csp_select_activity_units_flat", CommandType.StoredProcedure);
@@ -39,38 +54,6 @@ namespace DSA_lims
             grid.Columns["name"].HeaderText = "Unit name";
             grid.Columns["convert_factor"].HeaderText = "Conv. fact.";
             grid.Columns["uniform_activity_unit_name"].HeaderText = "Uniform unit";
-        }
-
-        public static void PopulateActivityUnits(SqlConnection conn, params ComboBox[] cbn)
-        {
-            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_activity_units_short", CommandType.StoredProcedure))
-            {
-                foreach (ComboBox cb in cbn)
-                    cb.Items.Clear();
-
-                while (reader.Read())
-                    foreach (ComboBox cb in cbn)
-                        cb.Items.Add(new Lemma<Guid, string>(new Guid(reader["id"].ToString()), reader["name"].ToString()));
-
-                foreach (ComboBox cb in cbn)
-                    cb.SelectedIndex = -1;
-            }
-        }
-
-        public static void PopulateActivityUnitTypes(SqlConnection conn, params ComboBox[] cbn)
-        {
-            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_activity_unit_types", CommandType.StoredProcedure))
-            {
-                foreach (ComboBox cb in cbn)
-                    cb.Items.Clear();
-
-                while (reader.Read())
-                    foreach (ComboBox cb in cbn)
-                        cb.Items.Add(new Lemma<int, string>(Convert.ToInt32(reader["id"]), reader["name"].ToString()));
-
-                foreach (ComboBox cb in cbn)
-                    cb.SelectedIndex = -1;
-            }
         }
 
         public static void PopulateProjectsMain(SqlConnection conn, DataGridView grid)
@@ -87,26 +70,9 @@ namespace DSA_lims
 
             grid.Columns["name"].HeaderText = "Name";
             grid.Columns["instance_status_name"].HeaderText = "Status";            
-        }
+        }        
 
-        public static void PopulateProjectsMain(SqlConnection conn, params ComboBox[] cbn)
-        {
-            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_projects_main_short", CommandType.StoredProcedure,
-                new SqlParameter("@instance_status_level", InstanceStatus.Deleted)))
-            {
-                foreach(ComboBox cb in cbn)
-                    cb.Items.Clear();
-
-                while (reader.Read())                
-                    foreach (ComboBox cb in cbn)
-                        cb.Items.Add(new Lemma<Guid, string>(new Guid(reader["id"].ToString()), reader["name"].ToString()));
-
-                foreach (ComboBox cb in cbn)
-                    cb.SelectedIndex = -1;
-            }
-        }
-
-        public static void PopulateProjectsSub(SqlConnection conn, DataGridView grid, Guid project_main_id)
+        public static void PopulateProjectsSub(SqlConnection conn, Guid project_main_id, DataGridView grid)
         {
             grid.DataSource = DB.GetDataTable(conn, "csp_select_projects_sub_flat", CommandType.StoredProcedure,            
                 new SqlParameter("@project_main_id", project_main_id),
@@ -123,24 +89,6 @@ namespace DSA_lims
 
             grid.Columns["name"].HeaderText = "Name";
             grid.Columns["instance_status_name"].HeaderText = "Status";
-        }
-
-        public static void PopulateProjectsSub(SqlConnection conn, Guid project_main_id, params ComboBox[] cbn)
-        {
-            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_projects_sub_short", CommandType.StoredProcedure,
-                new SqlParameter("@project_main_id", project_main_id),
-                new SqlParameter("@instance_status_level", InstanceStatus.Deleted)))
-            {
-                foreach (ComboBox cb in cbn)
-                    cb.Items.Clear();
-
-                while (reader.Read())
-                    foreach (ComboBox cb in cbn)
-                        cb.Items.Add(new Lemma<Guid, string>(new Guid(reader["id"].ToString()), reader["name"].ToString()));
-
-                foreach (ComboBox cb in cbn)
-                    cb.SelectedIndex = -1;
-            }
         }
 
         public static void PopulateLaboratories(SqlConnection conn, int instanceStatusLevel, DataGridView grid)
@@ -162,24 +110,7 @@ namespace DSA_lims
             grid.Columns["email"].HeaderText = "Email";
             grid.Columns["phone"].HeaderText = "Phone";
             grid.Columns["instance_status_name"].HeaderText = "Status";
-        }
-
-        public static void PopulateLaboratories(SqlConnection conn, int instanceStatusLevel, params ComboBox[] cbn)
-        {
-            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_laboratories_short", CommandType.StoredProcedure,
-                new SqlParameter("@instance_status_level", instanceStatusLevel)))
-            {
-                foreach(ComboBox cb in cbn)
-                    cb.Items.Clear();
-
-                while (reader.Read())
-                    foreach (ComboBox cb in cbn)
-                        cb.Items.Add(new Lemma<Guid, string>(new Guid(reader["id"].ToString()), reader["name"].ToString()));
-
-                foreach (ComboBox cb in cbn)
-                    cb.SelectedIndex = -1;
-            }
-        }
+        }        
 
         public static void PopulateUsers(SqlConnection conn, int instanceStatusLevel, DataGridView grid)
         {                        
@@ -201,20 +132,19 @@ namespace DSA_lims
 
         public static void PopulateUsers(SqlConnection conn, Guid laboratoryId, int instanceStatusLevel, params ComboBox[] cbn)
         {
+            List<Lemma<string, string>> users = new List<Lemma<string, string>>();
+            users.Add(new Lemma<string, string>(String.Empty, ""));
+
             using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_accounts_for_laboratory", CommandType.StoredProcedure,
                 new SqlParameter("@laboratory_id", laboratoryId),
                 new SqlParameter("@instance_status_level", instanceStatusLevel)))
             {
-                foreach (ComboBox cb in cbn)
-                    cb.Items.Clear();
-
                 while (reader.Read())
-                    foreach (ComboBox cb in cbn)
-                        cb.Items.Add(new Lemma<string, string>(reader["username"].ToString(), reader["fullname"].ToString()));
-
-                foreach (ComboBox cb in cbn)
-                    cb.SelectedIndex = -1;
+                    users.Add(new Lemma<string, string>(reader["username"].ToString(), reader["fullname"].ToString()));
             }
+
+            foreach (ComboBox cb in cbn)
+                cb.DataSource = new List<Lemma<string, string>>(users);
         }
 
         public static void PopulateNuclides(SqlConnection conn, DataGridView grid)
@@ -281,25 +211,8 @@ namespace DSA_lims
 
             grid.Columns["name"].HeaderText = "Name";
             grid.Columns["instance_status_name"].HeaderText = "Status";
-            // FIXME
-        }
-
-        public static void PopulateGeometries(SqlConnection conn, params ComboBox[] cbn)
-        {
-            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_preparation_geometries_short", CommandType.StoredProcedure,
-                new SqlParameter("@instance_status_level", InstanceStatus.Deleted)))
-            {
-                foreach (ComboBox cb in cbn)
-                    cb.Items.Clear();
-
-                while (reader.Read())
-                    foreach (ComboBox cb in cbn)
-                        cb.Items.Add(new Lemma<Guid, string>(new Guid(reader["id"].ToString()), reader["name"].ToString()));
-
-                foreach (ComboBox cb in cbn)
-                    cb.SelectedIndex = -1;
-            }
-        }
+            // FIXME 
+        }        
 
         public static void PopulateCounties(SqlConnection conn, DataGridView grid)
         {
@@ -315,24 +228,7 @@ namespace DSA_lims
             grid.Columns["name"].HeaderText = "Name";
             grid.Columns["county_number"].HeaderText = "Number";
             grid.Columns["instance_status_name"].HeaderText = "Status";
-        }
-
-        public static void PopulateCounties(SqlConnection conn, params ComboBox[] cbn)
-        {            
-            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_counties_short", CommandType.StoredProcedure,
-                new SqlParameter("@instance_status_level", InstanceStatus.Deleted)))
-            {
-                foreach (ComboBox cb in cbn)
-                    cb.Items.Clear();
-
-                while (reader.Read())
-                    foreach (ComboBox cb in cbn)
-                        cb.Items.Add(new Lemma<Guid, string>(new Guid(reader["id"].ToString()), reader["name"].ToString()));
-
-                foreach (ComboBox cb in cbn)
-                    cb.SelectedIndex = -1;
-            }                
-        }
+        }        
 
         public static void PopulateMunicipalities(SqlConnection conn, Guid cid, DataGridView grid)
         {            
@@ -350,25 +246,7 @@ namespace DSA_lims
             grid.Columns["name"].HeaderText = "Name";
             grid.Columns["municipality_number"].HeaderText = "Number";
             grid.Columns["instance_status_name"].HeaderText = "Status";
-        }
-
-        public static void PopulateMunicipalities(SqlConnection conn, Guid cid, params ComboBox[] cbn)
-        {
-            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_municipalities_for_county_short", CommandType.StoredProcedure,
-                new SqlParameter("@county_id", cid),
-                new SqlParameter("@instance_status_level", InstanceStatus.Active)))
-            {
-                foreach (ComboBox cb in cbn)
-                    cb.Items.Clear();
-
-                while (reader.Read())
-                    foreach (ComboBox cb in cbn)
-                        cb.Items.Add(new Lemma<Guid, string>(new Guid(reader["id"].ToString()), reader["name"].ToString()));
-
-                foreach (ComboBox cb in cbn)
-                    cb.SelectedIndex = -1;
-            }
-        }
+        }        
 
         public static void PopulateStations(SqlConnection conn, DataGridView grid)
         {
@@ -387,24 +265,7 @@ namespace DSA_lims
             grid.Columns["longitude"].HeaderText = "Longitude";
             grid.Columns["altitude"].HeaderText = "Altitude";
             grid.Columns["instance_status_name"].HeaderText = "Status";
-        }
-
-        public static void PopulateStations(SqlConnection conn, params ComboBox[] cbn)
-        {            
-            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_stations_short", CommandType.StoredProcedure,
-                new SqlParameter("@instance_status_level", InstanceStatus.Deleted)))
-            {
-                foreach (ComboBox cb in cbn)
-                    cb.Items.Clear();
-
-                while (reader.Read())
-                    foreach (ComboBox cb in cbn)
-                        cb.Items.Add(new Lemma<Guid, string>(new Guid(reader["id"].ToString()), reader["name"].ToString()));
-
-                foreach (ComboBox cb in cbn)
-                    cb.SelectedIndex = -1;
-            }
-        }
+        }        
 
         public static void PopulateSampleStorage(SqlConnection conn, DataGridView grid)
         {         
@@ -421,24 +282,7 @@ namespace DSA_lims
             grid.Columns["name"].HeaderText = "Name";
             grid.Columns["address"].HeaderText = "Address";
             grid.Columns["instance_status_name"].HeaderText = "Status";
-        }
-
-        public static void PopulateSampleStorage(SqlConnection conn, params ComboBox[] cbn)
-        {
-            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_sample_storages_short", CommandType.StoredProcedure,
-                new SqlParameter("@instance_status_level", InstanceStatus.Deleted)))
-            {
-                foreach (ComboBox cb in cbn)
-                    cb.Items.Clear();
-
-                while (reader.Read())
-                    foreach (ComboBox cb in cbn)
-                        cb.Items.Add(new Lemma<Guid, string>(new Guid(reader["id"].ToString()), reader["name"].ToString()));
-
-                foreach (ComboBox cb in cbn)
-                    cb.SelectedIndex = -1;
-            }
-        }
+        }        
 
         public static void PopulateSamplers(SqlConnection conn, DataGridView grid)
         {
@@ -457,24 +301,7 @@ namespace DSA_lims
             grid.Columns["email"].HeaderText = "Email";
             grid.Columns["phone"].HeaderText = "Phone";
             grid.Columns["instance_status_name"].HeaderText = "Status";
-        }
-
-        public static void PopulateSamplers(SqlConnection conn, params ComboBox[] cbn)
-        {            
-            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_samplers_short", CommandType.StoredProcedure,
-                new SqlParameter("@instance_status_level", InstanceStatus.Deleted)))
-            {
-                foreach (ComboBox cb in cbn)
-                    cb.Items.Clear();
-
-                while (reader.Read())
-                    foreach (ComboBox cb in cbn)
-                        cb.Items.Add(new Lemma<Guid, string>(new Guid(reader["id"].ToString()), reader["name"].ToString()));
-
-                foreach (ComboBox cb in cbn)
-                    cb.SelectedIndex = -1;
-            }                
-        }
+        }        
 
         public static void PopulateSamplingMethods(SqlConnection conn, DataGridView grid)
         {
@@ -490,24 +317,7 @@ namespace DSA_lims
 
             grid.Columns["name"].HeaderText = "Name";
             grid.Columns["instance_status_name"].HeaderText = "Status";
-        }
-
-        public static void PopulateSamplingMethods(SqlConnection conn, params ComboBox[] cbn)
-        {
-            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_sampling_methods_short", CommandType.StoredProcedure,
-                new SqlParameter("@instance_status_level", InstanceStatus.Deleted)))
-            {
-                foreach (ComboBox cb in cbn)
-                    cb.Items.Clear();
-
-                while (reader.Read())
-                    foreach (ComboBox cb in cbn)
-                        cb.Items.Add(new Lemma<Guid, string>(new Guid(reader["id"].ToString()), reader["name"].ToString()));
-
-                foreach (ComboBox cb in cbn)
-                    cb.SelectedIndex = -1;
-            }
-        }
+        }        
 
         public static void PopulateSamples(SqlConnection conn, DataGridView grid)
         {
@@ -549,29 +359,7 @@ namespace DSA_lims
             grid.Columns["description_link"].HeaderText = "Desc. link";
             grid.Columns["destructive"].HeaderText = "Destructive";
             grid.Columns["instance_status_name"].HeaderText = "Status";
-        }
-
-        public static void PopulatePreparationMethods(SqlConnection conn, params ComboBox[] cbn)
-        {
-            foreach (ComboBox cbox in cbn)
-                cbox.Items.Clear();
-
-            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_preparation_methods_short", CommandType.StoredProcedure, 
-                new SqlParameter("@instance_status_level", InstanceStatus.Active)))
-            {
-                while (reader.Read())
-                {
-                    foreach (ComboBox cbox in cbn)
-                    {
-                        Lemma<Guid, string> pm = new Lemma<Guid, string>(new Guid(reader["id"].ToString()), reader["name"].ToString());
-                        cbox.Items.Add(pm);
-                    }
-                }
-            }
-
-            foreach (ComboBox cbox in cbn)
-                cbox.SelectedIndex = -1;
-        }
+        }        
 
         public static void PopulateAnalysisMethods(SqlConnection conn, DataGridView grid)
         {
@@ -589,29 +377,7 @@ namespace DSA_lims
             grid.Columns["description_link"].HeaderText = "Desc. link";
             grid.Columns["specter_reference_regexp"].HeaderText = "Spec.Ref RegExp";
             grid.Columns["instance_status_name"].HeaderText = "Status";
-        }
-
-        public static void PopulateAnalysisMethods(SqlConnection conn, params ComboBox[] cbn)
-        {
-            foreach (ComboBox cbox in cbn)
-                cbox.Items.Clear();
-
-            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_analysis_methods_short", CommandType.StoredProcedure,
-                new SqlParameter("@instance_status_level", InstanceStatus.Active)))
-            {
-                while (reader.Read())
-                {
-                    foreach (ComboBox cbox in cbn)
-                    {
-                        Lemma<Guid, string> pm = new Lemma<Guid, string>(new Guid(reader["id"].ToString()), reader["name"].ToString());
-                        cbox.Items.Add(pm);
-                    }
-                }
-            }
-
-            foreach (ComboBox cbox in cbn)
-                cbox.SelectedIndex = -1;
-        }
+        }        
 
         private static void AddSampleTypeChildren(List<Lemma<Guid, Guid, string>> sampleTypeList, TreeNode tnode)
         {
@@ -660,31 +426,34 @@ namespace DSA_lims
             }
         }
 
-        private static void AddSampleTypeChildrenCB(TreeNodeCollection tnc, ComboBox cb)
+        private static void AddSampleTypeChildren(TreeNodeCollection tnc, List<Lemma<Guid, string>> list)
         {
             foreach (TreeNode tn in tnc)
             {
-                Lemma<Guid, string> st = new Lemma<Guid, string>(new Guid(tn.Name), tn.Text + " -> " + tn.ToolTipText);
-                cb.Items.Add(st);
-                AddSampleTypeChildrenCB(tn.Nodes, cb);
+                Lemma<Guid, string> st = new Lemma<Guid, string>(Guid.Parse(tn.Name), tn.Text + " -> " + tn.ToolTipText);
+                list.Add(st);
+                AddSampleTypeChildren(tn.Nodes, list);
             }
         }
 
         public static void PopulateSampleTypes(TreeView tree, params ComboBox[] cbn)
-        {
+        {    
             foreach (ComboBox cb in cbn)
-                cb.Items.Clear();
-
-            foreach (ComboBox cb in cbn)
-                AddSampleTypeChildrenCB(tree.Nodes, cb);
-
-            foreach (ComboBox cb in cbn)
-                cb.SelectedIndex = -1;            
+            {
+                List<Lemma<Guid, string>> sampleTypeList = new List<Lemma<Guid, string>>();
+                sampleTypeList.Add(new Lemma<Guid, string>(Guid.Empty, ""));
+                AddSampleTypeChildren(tree.Nodes, sampleTypeList);
+                sampleTypeList.Sort(delegate (Lemma<Guid, string> l1, Lemma<Guid, string> l2)
+                {
+                    return l1.Name.CompareTo(l2.Name);
+                });
+                cb.DataSource = sampleTypeList;
+            }            
         }
 
         public static void PopulateSampleTypePrepMeth(SqlConnection conn, TreeNode tnode, ListBox lb, ListBox lbInherited)
         {
-            Guid sampleTypeId = new Guid(tnode.Name);
+            Guid sampleTypeId = Guid.Parse(tnode.Name);
             string sampleTypeName = tnode.Text;
 
             string query = @"
@@ -739,26 +508,25 @@ order by name";
 
         public static void PopulateSampleComponentsAscending(SqlConnection conn, Guid sampleTypeId, TreeNode tnode, ComboBox cbox)
         {
-            cbox.Items.Clear();
-
-            AddSampleTypeComponentsAscending(conn, sampleTypeId, tnode, cbox);
-
-            cbox.SelectedIndex = -1;
+            List<Lemma<Guid, string>> comps = new List<Lemma<Guid, string>>();
+            comps.Add(new Lemma<Guid, string>(Guid.Empty, ""));
+            AddSampleTypeComponentsAscending(conn, sampleTypeId, tnode, comps);
+            cbox.DataSource = comps;
         }
 
-        private static void AddSampleTypeComponentsAscending(SqlConnection conn, Guid sampleTypeId, TreeNode tnode, ComboBox cbox)
+        private static void AddSampleTypeComponentsAscending(SqlConnection conn, Guid sampleTypeId, TreeNode tnode, List<Lemma<Guid, string>> comps)
         {
             using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_sample_components_for_sample_type", CommandType.StoredProcedure,
                     new SqlParameter("@sample_type_id", sampleTypeId)))
             {
                 while (reader.Read())
-                    cbox.Items.Add(new Lemma<Guid, string>(new Guid(reader["id"].ToString()), reader["name"].ToString()));
+                    comps.Add(new Lemma<Guid, string>(new Guid(reader["id"].ToString()), reader["name"].ToString()));
             }
 
             if (tnode.Parent != null)
             {
                 Guid parentId = new Guid(tnode.Parent.Name);
-                AddSampleTypeComponentsAscending(conn, parentId, tnode.Parent, cbox);
+                AddSampleTypeComponentsAscending(conn, parentId, tnode.Parent, comps);
             }
         }
 
@@ -790,33 +558,6 @@ order by name";
             }
         }
 
-        public static void PopulateSigma(params ComboBox[] cbs)
-        {
-            foreach (ComboBox cb in cbs)
-            {
-                cb.Items.Clear();
-                cb.Items.AddRange(new object[] { 1.0, 2.0, 3.0 });
-                cb.SelectedIndex = -1;
-            }
-        }
-
-        public static void PopulateCustomers(SqlConnection conn, int statusLevel, params ComboBox[] cbs)
-        {
-            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_customers", CommandType.StoredProcedure, 
-                new SqlParameter("@instance_status_level", statusLevel)))
-            {
-                foreach (ComboBox cb in cbs)
-                    cb.Items.Clear();
-
-                while (reader.Read())
-                    foreach (ComboBox cb in cbs)
-                        cb.Items.Add(new Lemma<Guid, string>(new Guid(reader["id"].ToString()), reader["name"].ToString()));
-
-                foreach (ComboBox cb in cbs)
-                    cb.SelectedIndex = -1;
-            }
-        }
-
         public static void PopulateCustomers(SqlConnection conn, int statusLevel, DataGridView grid)
         {
             grid.DataSource = DB.GetDataTable(conn, "csp_select_customers_flat", CommandType.StoredProcedure,
@@ -834,25 +575,7 @@ order by name";
             grid.Columns["email"].HeaderText = "Email";
             grid.Columns["phone"].HeaderText = "Phone";
             grid.Columns["instance_status_name"].HeaderText = "Status";
-        }
-
-        public static void PopulateCustomerContacts(SqlConnection conn, Guid customerId, int statusLevel, params ComboBox[] cbs)
-        {
-            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_customer_contacts_for_customer", CommandType.StoredProcedure,
-                new SqlParameter("@customer_id", customerId),
-                new SqlParameter("@instance_status_level", statusLevel)))
-            {
-                foreach (ComboBox cb in cbs)
-                    cb.Items.Clear();
-
-                while (reader.Read())
-                    foreach (ComboBox cb in cbs)
-                        cb.Items.Add(new Lemma<Guid, string>(new Guid(reader["id"].ToString()), reader["name"].ToString()));
-
-                foreach (ComboBox cb in cbs)
-                    cb.SelectedIndex = -1;
-            }
-        }
+        }        
 
         public static void PopulateCustomerContacts(SqlConnection conn, Guid customerId, int statusLevel, DataGridView grid)
         {

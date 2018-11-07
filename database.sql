@@ -335,14 +335,14 @@ go
 if OBJECT_ID('dbo.activity_unit_type', 'U') IS NOT NULL drop table activity_unit_type;
 
 create table activity_unit_type (
-	id int primary key NOT NULL,	
+	id uniqueidentifier primary key NOT NULL,	
 	name nvarchar(32) NOT NULL	
 )
 go
 
-insert into activity_unit_type values(1, 'Wet weight')
-insert into activity_unit_type values(2, 'Dry weight')
-insert into activity_unit_type values(3, 'Ash weight')
+insert into activity_unit_type values(NEWID(), 'Wet weight')
+insert into activity_unit_type values(NEWID(), 'Dry weight')
+insert into activity_unit_type values(NEWID(), 'Ash weight')
 go
 
 create proc csp_select_activity_unit_types
@@ -1407,7 +1407,7 @@ create table assignment_sample_type (
 	sample_component_id uniqueidentifier default NULL,	
 	sample_count int NOT NULL,
 	requested_activity_unit_id uniqueidentifier default NULL,
-	requested_activity_unit_type_id int default NULL,
+	requested_activity_unit_type_id uniqueidentifier default NULL,
 	return_to_sender bit default 0,
 	comment nvarchar(1000) default NULL,
 	create_date datetime NOT NULL,
@@ -1424,7 +1424,7 @@ create proc csp_insert_assignment_sample_type
 	@sample_component_id uniqueidentifier,	
 	@sample_count int,
 	@requested_activity_unit_id uniqueidentifier,
-	@requested_activity_unit_type_id int,
+	@requested_activity_unit_type_id uniqueidentifier,
 	@return_to_sender bit,
 	@comment nvarchar(1000),
 	@create_date datetime,

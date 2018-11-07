@@ -1,4 +1,23 @@
-﻿using System;
+﻿/*	
+	DSA Lims - Laboratory Information Management System
+    Copyright (C) 2018  Norwegian Radiation Protection Authority
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+// Authors: Dag Robole,
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -6,7 +25,6 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DSA_lims
@@ -24,9 +42,14 @@ namespace DSA_lims
             cboxPrepMethLaboratory.Enabled = false;
 
             using (SqlConnection conn = DB.OpenConnection())
-            {
-                UI.PopulateLaboratories(conn, InstanceStatus.Active, cboxPrepMethLaboratory);
-                UI.PopulatePreparationMethods(conn, cboxPreparationMethod);
+            {                
+                UI.PopulateComboBoxes(conn, "csp_select_laboratories_short", new[] {
+                    new SqlParameter("@instance_status_level", InstanceStatus.Active)
+                }, cboxPrepMethLaboratory);                
+
+                UI.PopulateComboBoxes(conn, "csp_select_preparation_methods_short", new[] {
+                    new SqlParameter("@instance_status_level", InstanceStatus.Active)
+                }, cboxPreparationMethod);
             }
         }
 
@@ -38,7 +61,7 @@ namespace DSA_lims
 
         private void btnOk_Click(object sender, EventArgs e)
         {
-            if (cboxPreparationMethod.SelectedItem == null)
+            if (!StrUtils.IsValidGuid(cboxPreparationMethod.SelectedValue))
             {
                 MessageBox.Show("Preparation method is mandatory");
                 return;
@@ -53,23 +76,23 @@ namespace DSA_lims
             try
             {
                 int cnt = Convert.ToInt32(tbCount.Text.Trim());
+                Guid prepMethId = Guid.Parse(cboxPreparationMethod.SelectedValue.ToString());                
 
                 using (SqlConnection conn = DB.OpenConnection())
-                {
-                    Lemma<Guid, string> prepMeth = cboxPreparationMethod.SelectedItem as Lemma<Guid, string>;
-                    Lemma<Guid, string> prepLab = cboxPrepMethLaboratory.SelectedItem as Lemma<Guid, string>;
-
+                {                    
                     SqlCommand cmd = new SqlCommand("csp_insert_assignment_preparation_method", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@id", Guid.NewGuid());
-                    cmd.Parameters.AddWithValue("@assignment_sample_type_id", OrderSampleTypeId);
-                    cmd.Parameters.AddWithValue("@preparation_method_id", prepMeth.Id);
+                    cmd.Parameters.AddWithValue("@assignment_sample_type_id", DB.MakeParam(typeof(Guid), OrderSampleTypeId));
+                    cmd.Parameters.AddWithValue("@preparation_method_id", DB.MakeParam(typeof(Guid), prepMethId));
                     cmd.Parameters.AddWithValue("@preparation_method_count", cnt);
 
-                    if (prepLab == null)
-                        cmd.Parameters.AddWithValue("@preparation_laboratory_id", DBNull.Value);
-                    else
-                        cmd.Parameters.AddWithValue("@preparation_laboratory_id", prepLab.Id);
+                    if (StrUtils.IsValidGuid(cboxPrepMethLaboratory.SelectedValue))
+                    {
+                        Guid prepLabId = Guid.Parse(cboxPrepMethLaboratory.SelectedValue.ToString());
+                        cmd.Parameters.AddWithValue("@preparation_laboratory_id", DB.MakeParam(typeof(Guid), prepLabId));
+                    }
+                    else cmd.Parameters.AddWithValue("@preparation_laboratory_id", DBNull.Value);
 
                     cmd.Parameters.AddWithValue("@comment", tbComment.Text);
                     cmd.Parameters.AddWithValue("@create_date", DateTime.Now);

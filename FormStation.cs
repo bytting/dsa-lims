@@ -48,8 +48,11 @@ namespace DSA_lims
         {
             InitializeComponent();
             // create new station            
-            Text = "Create station";
-            cboxInstanceStatus.DataSource = DB.GetInstanceStatusList();
+            Text = "Create station";            
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                cboxInstanceStatus.DataSource = DB.LoadIntList(conn, "csp_select_instance_status");
+            }
             cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
         }
         public FormStation(Guid sid)
@@ -58,10 +61,11 @@ namespace DSA_lims
             // edit existing station            
             p["id"] = sid;
             Text = "Update station";
-            cboxInstanceStatus.DataSource = DB.GetInstanceStatusList();
 
             using (SqlConnection conn = DB.OpenConnection())
             {
+                cboxInstanceStatus.DataSource = DB.LoadIntList(conn, "csp_select_instance_status");
+
                 SqlCommand cmd = new SqlCommand("csp_select_station", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@id", p["id"]);

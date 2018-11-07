@@ -52,7 +52,10 @@ namespace DSA_lims
 
             Text = "Create energy line";
             tbNuclide.Text = nname;
-            cboxInstanceStatus.DataSource = DB.GetInstanceStatusList();
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                cboxInstanceStatus.DataSource = DB.LoadIntList(conn, "csp_select_instance_status");
+            }
             cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
         }
 
@@ -66,10 +69,11 @@ namespace DSA_lims
 
             Text = "Update energy line";
             tbNuclide.Text = nname;
-            cboxInstanceStatus.DataSource = DB.GetInstanceStatusList();
 
             using (SqlConnection conn = DB.OpenConnection())
             {
+                cboxInstanceStatus.DataSource = DB.LoadIntList(conn, "csp_select_instance_status");
+
                 SqlCommand cmd = new SqlCommand("csp_select_nuclide_transmission", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@id", p["id"]);

@@ -39,5 +39,26 @@ namespace DSA_lims
         {
             return msg + ". See log for more details";
         }        
+
+        public static bool IsValidGuid(object id)
+        {
+            if (id == null)
+                return false;
+
+            Guid g;
+            try
+            {
+                g = Guid.Parse(id.ToString());
+            }
+            catch
+            {
+                return false;
+            }
+            
+            if (g == Guid.Empty)
+                return false;
+
+            return true;
+        }
     }
 }

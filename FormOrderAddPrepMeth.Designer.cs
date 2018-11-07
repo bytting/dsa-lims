@@ -86,12 +86,14 @@
             // 
             // cboxPreparationMethod
             // 
+            this.cboxPreparationMethod.DisplayMember = "Name";
             this.cboxPreparationMethod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxPreparationMethod.FormattingEnabled = true;
             this.cboxPreparationMethod.Location = new System.Drawing.Point(136, 90);
             this.cboxPreparationMethod.Name = "cboxPreparationMethod";
             this.cboxPreparationMethod.Size = new System.Drawing.Size(286, 21);
             this.cboxPreparationMethod.TabIndex = 9;
+            this.cboxPreparationMethod.ValueMember = "Id";
             // 
             // cbPrepsAlreadyExists
             // 
@@ -106,12 +108,14 @@
             // 
             // cboxPrepMethLaboratory
             // 
+            this.cboxPrepMethLaboratory.DisplayMember = "Name";
             this.cboxPrepMethLaboratory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxPrepMethLaboratory.FormattingEnabled = true;
             this.cboxPrepMethLaboratory.Location = new System.Drawing.Point(136, 49);
             this.cboxPrepMethLaboratory.Name = "cboxPrepMethLaboratory";
             this.cboxPrepMethLaboratory.Size = new System.Drawing.Size(286, 21);
             this.cboxPrepMethLaboratory.TabIndex = 11;
+            this.cboxPrepMethLaboratory.ValueMember = "Id";
             // 
             // tbComment
             // 

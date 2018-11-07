@@ -84,12 +84,14 @@
             // 
             // cboxAnalysisMethods
             // 
+            this.cboxAnalysisMethods.DisplayMember = "Name";
             this.cboxAnalysisMethods.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxAnalysisMethods.FormattingEnabled = true;
             this.cboxAnalysisMethods.Location = new System.Drawing.Point(112, 42);
             this.cboxAnalysisMethods.Name = "cboxAnalysisMethods";
             this.cboxAnalysisMethods.Size = new System.Drawing.Size(294, 21);
             this.cboxAnalysisMethods.TabIndex = 9;
+            this.cboxAnalysisMethods.ValueMember = "Id";
             // 
             // label2
             // 

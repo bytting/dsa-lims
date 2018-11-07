@@ -50,8 +50,10 @@ namespace DSA_lims
             SampleNumber = sampleNumber;
 
             using (SqlConnection conn = DB.OpenConnection())
-            {
-                UI.PopulateLaboratories(conn, InstanceStatus.Deleted, cboxLaboratory);
+            {                
+                UI.PopulateComboBoxes(conn, "csp_select_laboratories_short", new[] {
+                    new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
+                }, cboxLaboratory);
 
                 object o = DB.GetScalar(conn, "select sample_type_id from sample where id = @id", CommandType.Text, new SqlParameter("@id", SampleId));
                 if (o != null && o != DBNull.Value)
@@ -67,7 +69,7 @@ namespace DSA_lims
 
         private void btnOk_Click(object sender, EventArgs e)
         {
-            if(cboxLaboratory.SelectedItem == null)
+            if(!StrUtils.IsValidGuid(cboxLaboratory.SelectedValue))
             {
                 MessageBox.Show("You must select a laboratory first");
                 return;
@@ -93,8 +95,7 @@ namespace DSA_lims
                 return;
             }
 
-            Lemma<Guid, string> lab = cboxLaboratory.SelectedItem as Lemma<Guid, string>;
-            SelectedLaboratoryId = lab.Id;
+            SelectedLaboratoryId = Guid.Parse(cboxLaboratory.SelectedValue.ToString());
             SelectedOrderId = Guid.Parse(gridOrders.SelectedRows[0].Cells["id"].Value.ToString());
             SelectedOrderName = gridOrders.SelectedRows[0].Cells["name"].Value.ToString();
             SelectedOrderLineId = Guid.Parse(tnode.Name);
@@ -248,13 +249,13 @@ namespace DSA_lims
             gridOrders.DataSource = null;
             treeOrderLines.Nodes.Clear();
 
-            if (cboxLaboratory.SelectedItem == null)            
+            if (!StrUtils.IsValidGuid(cboxLaboratory.SelectedValue))
                 return;
 
-            Lemma<Guid, string> lab = cboxLaboratory.SelectedItem as Lemma<Guid, string>;
+            Guid labId = Guid.Parse(cboxLaboratory.SelectedValue.ToString());
             using (SqlConnection conn = DB.OpenConnection())
             {
-                UI.PopulateOrders(conn, InstanceStatus.Active, lab.Id, gridOrders);
+                UI.PopulateOrders(conn, InstanceStatus.Active, labId, gridOrders);
             }
         }
 

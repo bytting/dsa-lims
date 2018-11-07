@@ -48,8 +48,11 @@ namespace DSA_lims
         public FormSampleStorage()
         {
             InitializeComponent();     
-            Text = "Create sample storage";
-            cboxInstanceStatus.DataSource = DB.GetInstanceStatusList();
+            Text = "Create sample storage";            
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                cboxInstanceStatus.DataSource = DB.LoadIntList(conn, "csp_select_instance_status");
+            }
             cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
         }
 
@@ -58,10 +61,11 @@ namespace DSA_lims
             InitializeComponent();            
             p["id"] = ssid;
             Text = "Update sample storage";
-            cboxInstanceStatus.DataSource = DB.GetInstanceStatusList();
 
             using (SqlConnection conn = DB.OpenConnection())
             {
+                cboxInstanceStatus.DataSource = DB.LoadIntList(conn, "csp_select_instance_status");
+
                 SqlCommand cmd = new SqlCommand("csp_select_sample_storage", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@id", p["id"]);

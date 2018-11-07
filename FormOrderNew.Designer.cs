@@ -93,12 +93,14 @@
             // 
             // cboxLaboratory
             // 
+            this.cboxLaboratory.DisplayMember = "Name";
             this.cboxLaboratory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxLaboratory.FormattingEnabled = true;
             this.cboxLaboratory.Location = new System.Drawing.Point(138, 59);
             this.cboxLaboratory.Name = "cboxLaboratory";
             this.cboxLaboratory.Size = new System.Drawing.Size(270, 23);
             this.cboxLaboratory.TabIndex = 10;
+            this.cboxLaboratory.ValueMember = "Id";
             this.cboxLaboratory.SelectedIndexChanged += new System.EventHandler(this.cboxLaboratory_SelectedIndexChanged);
             // 
             // label2
@@ -112,12 +114,14 @@
             // 
             // cboxResponsible
             // 
+            this.cboxResponsible.DisplayMember = "Name";
             this.cboxResponsible.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxResponsible.FormattingEnabled = true;
             this.cboxResponsible.Location = new System.Drawing.Point(138, 97);
             this.cboxResponsible.Name = "cboxResponsible";
             this.cboxResponsible.Size = new System.Drawing.Size(270, 23);
             this.cboxResponsible.TabIndex = 12;
+            this.cboxResponsible.ValueMember = "Id";
             // 
             // label3
             // 
@@ -171,12 +175,14 @@
             // 
             // cboxRequestedSigma
             // 
+            this.cboxRequestedSigma.DisplayMember = "Name";
             this.cboxRequestedSigma.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxRequestedSigma.FormattingEnabled = true;
             this.cboxRequestedSigma.Location = new System.Drawing.Point(138, 173);
             this.cboxRequestedSigma.Name = "cboxRequestedSigma";
             this.cboxRequestedSigma.Size = new System.Drawing.Size(270, 23);
             this.cboxRequestedSigma.TabIndex = 17;
+            this.cboxRequestedSigma.ValueMember = "Id";
             // 
             // label5
             // 
@@ -189,12 +195,14 @@
             // 
             // cboxCustomer
             // 
+            this.cboxCustomer.DisplayMember = "Name";
             this.cboxCustomer.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxCustomer.FormattingEnabled = true;
             this.cboxCustomer.Location = new System.Drawing.Point(138, 211);
             this.cboxCustomer.Name = "cboxCustomer";
             this.cboxCustomer.Size = new System.Drawing.Size(270, 23);
             this.cboxCustomer.TabIndex = 19;
+            this.cboxCustomer.ValueMember = "Id";
             // 
             // label6
             // 

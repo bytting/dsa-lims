@@ -62,14 +62,6 @@ namespace DSA_lims
         {
             return Name.ToString();
         }
-
-        public static object IdParam(object o)
-        {
-            if (o == null)
-                return DBNull.Value;
-            else return (o as Lemma<I, N>).Id;
-
-        }
     }
 
     public class Lemma<I, PI, N>

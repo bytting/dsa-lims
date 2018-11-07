@@ -46,10 +46,13 @@ namespace DSA_lims
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                UI.PopulateLaboratories(conn, InstanceStatus.Inactive, cboxLaboratory);
-            }
+                cboxInstanceStatus.DataSource = DB.LoadIntList(conn, "csp_select_instance_status");
 
-            cboxInstanceStatus.DataSource = DB.GetInstanceStatusList();
+                UI.PopulateComboBoxes(conn, "csp_select_laboratories_short", new[] {
+                    new SqlParameter("@instance_status_level", InstanceStatus.Inactive)
+                }, cboxLaboratory);
+            }
+            
             cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
         }
 
@@ -61,11 +64,13 @@ namespace DSA_lims
 
             tbUsername.ReadOnly = true;
 
-            cboxInstanceStatus.DataSource = DB.GetInstanceStatusList();
-
             using (SqlConnection conn = DB.OpenConnection())
             {
-                UI.PopulateLaboratories(conn, InstanceStatus.Deleted, cboxLaboratory);
+                cboxInstanceStatus.DataSource = DB.LoadIntList(conn, "csp_select_instance_status");
+
+                UI.PopulateComboBoxes(conn, "csp_select_laboratories_short", new[] {
+                    new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
+                }, cboxLaboratory);
 
                 SqlCommand cmd = new SqlCommand("csp_select_account", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
@@ -109,9 +114,8 @@ namespace DSA_lims
 
             p["fullname"] = tbFullname.Text.Trim();
             p["email"] = tbEmail.Text.Trim();
-            p["phone"] = tbPhone.Text.Trim();
-            Lemma<Guid, string> lab = cboxLaboratory.SelectedItem as Lemma<Guid, string>;
-            p["laboratory_id"] = lab.Id;
+            p["phone"] = tbPhone.Text.Trim();            
+            p["laboratory_id"] = cboxLaboratory.SelectedValue;
             p["language_code"] = cboxLanguage.Text.Trim();
             p["instance_status_id"] = cboxInstanceStatus.SelectedValue;
 
@@ -147,7 +151,7 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@fullname", p["fullname"]);
                 cmd.Parameters.AddWithValue("@email", p["email"]);
                 cmd.Parameters.AddWithValue("@phone", p["phone"]);
-                cmd.Parameters.AddWithValue("@laboratory_id", p["laboratory_id"]);
+                cmd.Parameters.AddWithValue("@laboratory_id", DB.MakeParam(typeof(Guid), p["laboratory_id"]));
                 cmd.Parameters.AddWithValue("@language_code", p["language_code"]);
                 cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
                 cmd.Parameters.AddWithValue("@password_hash", "");
@@ -184,7 +188,7 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@fullname", p["fullname"]);
                 cmd.Parameters.AddWithValue("@email", p["email"]);
                 cmd.Parameters.AddWithValue("@phone", p["phone"]);                
-                cmd.Parameters.AddWithValue("@laboratory_id", p["laboratory_id"]);
+                cmd.Parameters.AddWithValue("@laboratory_id", DB.MakeParam(typeof(Guid), p["laboratory_id"]));
                 cmd.Parameters.AddWithValue("@language_code", p["language_code"]);
                 cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
                 cmd.Parameters.AddWithValue("@update_date", p["update_date"]);

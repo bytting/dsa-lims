@@ -46,8 +46,11 @@ namespace DSA_lims
         public FormSampler()
         {
             InitializeComponent();            
-            Text = "Create sampler";
-            cboxInstanceStatus.DataSource = DB.GetInstanceStatusList();
+            Text = "Create sampler";            
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                cboxInstanceStatus.DataSource = DB.LoadIntList(conn, "csp_select_instance_status");
+            }
             cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
         }
 
@@ -56,10 +59,11 @@ namespace DSA_lims
             InitializeComponent();            
             p["id"] = sid;
             Text = "Update sampler";
-            cboxInstanceStatus.DataSource = DB.GetInstanceStatusList();
 
             using (SqlConnection conn = DB.OpenConnection())
             {
+                cboxInstanceStatus.DataSource = DB.LoadIntList(conn, "csp_select_instance_status");
+
                 SqlCommand cmd = new SqlCommand("csp_select_sampler", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@id", p["id"]);

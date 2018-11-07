@@ -24,8 +24,8 @@ namespace DSA_lims
             UI.PopulateSampleTypes(TreeSampleTypes, cboxSampleType);
             using (SqlConnection conn = DB.OpenConnection())
             {
-                UI.PopulateActivityUnits(conn, cboxRequestedUnit);
-                UI.PopulateActivityUnitTypes(conn, cboxRequestedUnitType);
+                UI.PopulateComboBoxes(conn, "csp_select_activity_units_short", new SqlParameter[] { }, cboxRequestedUnit);
+                UI.PopulateComboBoxes(conn, "csp_select_activity_unit_types", new SqlParameter[] { }, cboxRequestedUnitType);
             }                
         }
 
@@ -45,7 +45,7 @@ namespace DSA_lims
             if (!CheckExistingSampleType())
                 return;
 
-            if(cboxSampleType.SelectedItem == null)
+            if(!StrUtils.IsValidGuid(cboxSampleType.SelectedValue))
             {
                 MessageBox.Show("Sample type is mandatory");
                 return;
@@ -59,39 +59,21 @@ namespace DSA_lims
 
             try
             {
+                Guid sampleTypeId = Guid.Parse(cboxSampleType.SelectedValue.ToString());
+                int count = Convert.ToInt32(tbNumSamples.Text);
+
                 using (SqlConnection conn = DB.OpenConnection())
                 {
-                    Lemma<Guid, string> sampleType = cboxSampleType.SelectedItem as Lemma<Guid, string>;
-                    Lemma<Guid, string> sampleComponent = cboxSampleComponent.SelectedItem as Lemma<Guid, string>;
-                    int count = Convert.ToInt32(tbNumSamples.Text);
-                    Lemma<Guid, string> activityUnit = cboxRequestedUnit.SelectedItem as Lemma<Guid, string>;
-                    Lemma<int, string> activityUnitType = cboxRequestedUnitType.SelectedItem as Lemma<int, string>;                    
-
                     SqlCommand cmd = new SqlCommand("csp_insert_assignment_sample_type", conn);
                     cmd.CommandType = CommandType.StoredProcedure;                    
                     cmd.Parameters.AddWithValue("@id", Guid.NewGuid());
                     cmd.Parameters.AddWithValue("@assignment_id", OrderId);
-                    cmd.Parameters.AddWithValue("@sample_type_id", sampleType.Id);
-
-                    if (sampleComponent == null)
-                        cmd.Parameters.AddWithValue("@sample_component_id", DBNull.Value);
-                    else
-                        cmd.Parameters.AddWithValue("@sample_component_id", sampleComponent.Id);
-
-                    cmd.Parameters.AddWithValue("@sample_count", count);
-
-                    if(activityUnit == null)
-                        cmd.Parameters.AddWithValue("@requested_activity_unit_id", DBNull.Value);
-                    else
-                        cmd.Parameters.AddWithValue("@requested_activity_unit_id", activityUnit.Id);
-
-                    if (activityUnitType == null)
-                        cmd.Parameters.AddWithValue("@requested_activity_unit_type_id", DBNull.Value);
-                    else
-                        cmd.Parameters.AddWithValue("@requested_activity_unit_type_id", activityUnitType.Id);
-
+                    cmd.Parameters.AddWithValue("@sample_type_id", DB.MakeParam(typeof(Guid), sampleTypeId));                    
+                    cmd.Parameters.AddWithValue("@sample_component_id", DB.MakeParam(typeof(Guid), cboxSampleComponent.SelectedValue));
+                    cmd.Parameters.AddWithValue("@sample_count", count);                    
+                    cmd.Parameters.AddWithValue("@requested_activity_unit_id", DB.MakeParam(typeof(Guid), cboxRequestedUnit.SelectedValue));                    
+                    cmd.Parameters.AddWithValue("@requested_activity_unit_type_id", DB.MakeParam(typeof(Guid), cboxRequestedUnitType.SelectedValue));
                     cmd.Parameters.AddWithValue("@return_to_sender", cbReturnToSender.Checked ? 1 : 0);
-
                     cmd.Parameters.AddWithValue("@comment", tbComment.Text);
                     cmd.Parameters.AddWithValue("@create_date", DateTime.Now);
                     cmd.Parameters.AddWithValue("@created_by", Common.Username);
@@ -127,20 +109,18 @@ namespace DSA_lims
             lblStatus.Text = "";            
             cboxSampleComponent.Items.Clear();
 
-            if (cboxSampleType.SelectedItem == null)            
+            if (!StrUtils.IsValidGuid(cboxSampleType.SelectedValue))
                 return;            
 
-            var sampleType = cboxSampleType.SelectedItem as Lemma<Guid, string>;
-            TreeNode[] tnodes = TreeSampleTypes.Nodes.Find(sampleType.Id.ToString(), true);
+            Guid sampleTypeId = Guid.Parse(cboxSampleType.SelectedValue.ToString());
+            TreeNode[] tnodes = TreeSampleTypes.Nodes.Find(sampleTypeId.ToString(), true);
             if (tnodes.Length < 1)
                 return;
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                AddSampleTypeComponents(conn, sampleType.Id, tnodes[0]);
+                AddSampleTypeComponents(conn, sampleTypeId, tnodes[0]);
             }
-
-            cboxSampleComponent.SelectedIndex = -1;
         }
 
         private void AddSampleTypeComponents(SqlConnection conn, Guid sampleTypeId, TreeNode tnode)
@@ -161,12 +141,10 @@ namespace DSA_lims
 
         private bool CheckExistingSampleType()
         {
-            Lemma<Guid, string> st = cboxSampleType.SelectedItem as Lemma<Guid, string>;
-            if (st == null)
+            if(!StrUtils.IsValidGuid(cboxSampleType.SelectedValue))
             {
-                cboxSampleType.Text = "";
-                cboxSampleType.SelectedItem = null;
-                cboxSampleComponent.Items.Clear();
+                cboxSampleType.SelectedItem = Guid.Empty;
+                cboxSampleComponent.DataSource = null;
 
                 lblStatus.Text = StrUtils.makeStatusMessage("You must select an existing sample type");
                 return false;

@@ -44,8 +44,12 @@ namespace DSA_lims
             UI.PopulateSampleTypes(TreeSampleTypes, cboxSampleType);
             using (SqlConnection conn = DB.OpenConnection())
             {
-                UI.PopulateProjectsMain(conn, cboxProjectMain);
-                UI.PopulateLaboratories(conn, InstanceStatus.Active, cboxLaboratory);
+                UI.PopulateComboBoxes(conn, "csp_select_projects_main_short", new[] {
+                    new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
+                }, cboxProjectMain);                
+                UI.PopulateComboBoxes(conn, "csp_select_laboratories_short", new[] {
+                    new SqlParameter("@instance_status_level", InstanceStatus.Active)
+                }, cboxLaboratory);
             }
         }
 
@@ -57,25 +61,25 @@ namespace DSA_lims
 
         private void btnCreate_Click(object sender, EventArgs e)
         {
-            if (cboxSampleType.SelectedItem == null)
+            if (cboxSampleType.SelectedValue == null)
             {
                 MessageBox.Show("Sample type is mandatory");
                 return;
             }
 
-            if (cboxProjectMain.SelectedItem == null)
+            if (cboxProjectMain.SelectedValue == null)
             {
                 MessageBox.Show("Main project is mandatory");
                 return;
             }
 
-            if (cboxProjectSub.SelectedItem == null)
+            if (cboxProjectSub.SelectedValue == null)
             {
                 MessageBox.Show("Sub project is mandatory");
                 return;
             }
 
-            if (cboxLaboratory.SelectedItem == null)
+            if (cboxLaboratory.SelectedValue == null)
             {
                 MessageBox.Show("Laboratory is mandatory");
                 return;
@@ -88,8 +92,7 @@ namespace DSA_lims
             {
                 conn = DB.OpenConnection();
                 trans = conn.BeginTransaction();
-
-                Lemma<Guid, string> lab = cboxLaboratory.SelectedItem as Lemma<Guid, string>;
+                
                 SampleNumber = DB.GetNextSampleCount(conn, trans);
 
                 SqlCommand cmd = new SqlCommand("csp_insert_sample", conn, trans);
@@ -97,11 +100,11 @@ namespace DSA_lims
                 SampleId = Guid.NewGuid();
                 cmd.Parameters.AddWithValue("@id", SampleId);
                 cmd.Parameters.AddWithValue("@number", SampleNumber);
-                cmd.Parameters.AddWithValue("@laboratory_id", Lemma<Guid, string>.IdParam(cboxLaboratory.SelectedItem));
-                cmd.Parameters.AddWithValue("@sample_type_id", Lemma<Guid, string>.IdParam(cboxSampleType.SelectedItem));
+                cmd.Parameters.AddWithValue("@laboratory_id", DB.MakeParam(typeof(Guid), cboxLaboratory.SelectedValue));
+                cmd.Parameters.AddWithValue("@sample_type_id", DB.MakeParam(typeof(Guid), cboxSampleType.SelectedValue));
                 cmd.Parameters.AddWithValue("@sample_storage_id", DBNull.Value);
-                cmd.Parameters.AddWithValue("@sample_component_id", Lemma<Guid, string>.IdParam(cboxSampleComponent.SelectedItem));
-                cmd.Parameters.AddWithValue("@project_sub_id", Lemma<Guid, string>.IdParam(cboxProjectSub.SelectedItem));
+                cmd.Parameters.AddWithValue("@sample_component_id", DB.MakeParam(typeof(Guid), cboxSampleComponent.SelectedValue));
+                cmd.Parameters.AddWithValue("@project_sub_id", DB.MakeParam(typeof(Guid), cboxProjectSub.SelectedValue));
                 cmd.Parameters.AddWithValue("@station_id", DBNull.Value);
                 cmd.Parameters.AddWithValue("@sampler_id", DBNull.Value);
                 cmd.Parameters.AddWithValue("@sampling_method_id", DBNull.Value);
@@ -168,53 +171,39 @@ namespace DSA_lims
 
         private void cboxProjectMain_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(cboxProjectMain.SelectedItem == null)
+            if(cboxProjectMain.SelectedValue == null)
             {
-                cboxProjectSub.SelectedIndex = -1;
+                cboxProjectSub.DataSource = null;
                 return;
             }
 
-            Lemma<Guid, string> projectMain = cboxProjectMain.SelectedItem as Lemma<Guid, string>;
+            Guid projectMainId = Guid.Parse(cboxProjectMain.SelectedValue.ToString());
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                UI.PopulateProjectsSub(conn, projectMain.Id, cboxProjectSub);
+                UI.PopulateComboBoxes(conn, "csp_select_projects_sub_short", new[] {
+                    new SqlParameter("@project_main_id", projectMainId),
+                    new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
+                }, cboxProjectSub);
             }
         }
 
         private void cboxSampleType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            cboxSampleComponent.Items.Clear();
-
-            if (cboxSampleType.SelectedItem == null)
+            if (cboxSampleType.SelectedValue == null)
+            {
+                cboxSampleComponent.DataSource = null;
                 return;
+            }
 
-            var sampleType = cboxSampleType.SelectedItem as Lemma<Guid, string>;
-            TreeNode[] tnodes = TreeSampleTypes.Nodes.Find(sampleType.Id.ToString(), true);
+            Guid sampleTypeId = Guid.Parse(cboxSampleType.SelectedValue.ToString());
+            TreeNode[] tnodes = TreeSampleTypes.Nodes.Find(sampleTypeId.ToString(), true);
             if (tnodes.Length < 1)
                 return;
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                AddSampleTypeComponents(conn, sampleType.Id, tnodes[0]);
-            }
-
-            cboxSampleComponent.SelectedIndex = -1;
-        }
-
-        private void AddSampleTypeComponents(SqlConnection conn, Guid sampleTypeId, TreeNode tnode)
-        {
-            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_sample_components_for_sample_type", CommandType.StoredProcedure,
-                    new SqlParameter("@sample_type_id", sampleTypeId)))
-            {
-                while (reader.Read())
-                    cboxSampleComponent.Items.Add(new Lemma<Guid, string>(new Guid(reader["id"].ToString()), reader["name"].ToString()));
-            }
-
-            if (tnode.Parent != null)
-            {
-                Guid parentId = new Guid(tnode.Parent.Name);
-                AddSampleTypeComponents(conn, parentId, tnode.Parent);
+                UI.PopulateSampleComponentsAscending(conn, sampleTypeId, tnodes[0], cboxSampleComponent);                
             }
         }
     }

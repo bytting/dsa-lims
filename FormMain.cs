@@ -91,50 +91,62 @@ namespace DSA_lims
                 using (SqlConnection conn = DB.OpenConnection())
                 {
                     Common.Username = "Admin"; // FIXME
-
-                    DB.LoadInstanceStatus(conn);
-                    DB.LoadDecayTypes(conn);
-                    DB.LoadPreparationUnits(conn);
-                    DB.LoadUniformActivityUnits(conn);
-                    DB.LoadWorkflowStatus(conn);
-                    DB.LoadLocationTypes(conn);                    
                     
-                    cboxSamplesStatus.DataSource = DB.GetInstanceStatusList();
-                    cboxSampleInstanceStatus.DataSource = DB.GetInstanceStatusList();                    
-                    cboxSamplePrepUnit.DataSource = DB.GetPreparationUnitList();                    
-                    cboxSampleAnalWorkflowStatus.DataSource = DB.GetWorkflowStatusList();
-                    cboxSamplePrepWorkflowStatus.DataSource = DB.GetWorkflowStatusList();                    
-                    cboxSampleInfoLocationTypes.DataSource = DB.GetLocationTypeList();
+                    cboxSamplesStatus.DataSource = DB.LoadIntList(conn, "csp_select_instance_status");
+                    cboxSampleInstanceStatus.DataSource = DB.LoadIntList(conn, "csp_select_instance_status");
+                    cboxSamplePrepUnit.DataSource = DB.LoadIntList(conn, "csp_select_preparation_units");
+                    cboxSampleAnalWorkflowStatus.DataSource = DB.LoadIntList(conn, "csp_select_workflow_status");
+                    cboxSamplePrepWorkflowStatus.DataSource = DB.LoadIntList(conn, "csp_select_workflow_status");
+                    cboxSampleInfoLocationTypes.DataSource = DB.LoadIntList(conn, "csp_select_location_types");
+                    cboxPrepAnalAnalSigma.DataSource = DB.LoadSigma();
+                    cboxOrderRequestedSigma.DataSource = DB.LoadSigma();
 
                     UI.PopulateActivityUnits(conn, gridMetaUnitsActivity);
-                    UI.PopulateActivityUnits(conn, cboxSampleAnalUnit);
-                    UI.PopulateActivityUnitTypes(conn, cboxSampleAnalUnitType);
-                    UI.PopulateProjectsMain(conn, gridProjectMain);
-                    UI.PopulateProjectsMain(conn, cboxSampleProject, cboxSamplesProjects);
-                    UI.PopulateLaboratories(conn, InstanceStatus.Deleted, gridMetaLab);
-                    UI.PopulateLaboratories(conn, InstanceStatus.Active, cboxSampleLaboratory, cboxOrderLaboratory);
+                    UI.PopulateComboBoxes(conn, "csp_select_activity_units_short", new SqlParameter[] { }, cboxSampleAnalUnit);
+                    UI.PopulateComboBoxes(conn, "csp_select_activity_unit_types", new SqlParameter[] { }, cboxSampleAnalUnitType);
+                    UI.PopulateProjectsMain(conn, gridProjectMain);                    
+                    UI.PopulateComboBoxes(conn, "csp_select_projects_main_short", new[] {
+                        new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
+                    }, cboxSampleProject, cboxSamplesProjects);
+                    UI.PopulateLaboratories(conn, InstanceStatus.Deleted, gridMetaLab);                    
+                    UI.PopulateComboBoxes(conn, "csp_select_laboratories_short", new[] {
+                        new SqlParameter("@instance_status_level", InstanceStatus.Active)
+                    }, cboxSampleLaboratory, cboxOrderLaboratory);
                     UI.PopulateUsers(conn, InstanceStatus.Deleted, gridMetaUsers);                    
                     UI.PopulateNuclides(conn, gridSysNuclides);
-                    UI.PopulateGeometries(conn, gridSysGeom);
-                    UI.PopulateGeometries(conn, cboxSamplePrepGeom);
-                    UI.PopulateCounties(conn, gridSysCounty);
-                    UI.PopulateCounties(conn, cboxSampleCounties);
-                    UI.PopulateStations(conn, gridMetaStation);
-                    UI.PopulateStations(conn, cboxSampleInfoStations);
-                    UI.PopulateSampleStorage(conn, gridMetaSampleStorage);
-                    UI.PopulateSampleStorage(conn, cboxSampleSampleStorage);
-                    UI.PopulateSamplers(conn, gridMetaSamplers);
-                    UI.PopulateSamplers(conn, cboxSampleInfoSampler);
-                    UI.PopulateSamplingMethods(conn, gridMetaSamplingMeth);
-                    UI.PopulateSamplingMethods(conn, cboxSampleInfoSamplingMeth);
+                    UI.PopulateGeometries(conn, gridSysGeom);                    
+                    UI.PopulateComboBoxes(conn, "csp_select_preparation_geometries_short", new[] {                    
+                        new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
+                    }, cboxSamplePrepGeom);
+                    UI.PopulateCounties(conn, gridSysCounty);                    
+                    UI.PopulateComboBoxes(conn, "csp_select_counties_short", new[] {
+                        new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
+                    }, cboxSampleCounties);
+                    UI.PopulateStations(conn, gridMetaStation);                    
+                    UI.PopulateComboBoxes(conn, "csp_select_stations_short", new[] {
+                        new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
+                    }, cboxSampleInfoStations);
+                    UI.PopulateSampleStorage(conn, gridMetaSampleStorage);                    
+                    UI.PopulateComboBoxes(conn, "csp_select_sample_storages_short", new[] {
+                        new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
+                    }, cboxSampleSampleStorage);
+                    UI.PopulateSamplers(conn, gridMetaSamplers);                    
+                    UI.PopulateComboBoxes(conn, "csp_select_samplers_short", new[] {
+                        new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
+                    }, cboxSampleInfoSampler);
+                    UI.PopulateSamplingMethods(conn, gridMetaSamplingMeth);                    
+                    UI.PopulateComboBoxes(conn, "csp_select_sampling_methods_short", new[] {
+                        new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
+                    }, cboxSampleInfoSamplingMeth);
                     UI.PopulateSamples(conn, gridSamples);
                     UI.PopulatePreparationMethods(conn, gridTypeRelPrepMeth);
                     UI.PopulateAnalysisMethods(conn, gridTypeRelAnalMeth);
                     UI.PopulateSampleTypes(conn, treeSampleTypes);
-                    UI.PopulateSampleTypes(treeSampleTypes, cboxSampleSampleType);
-                    UI.PopulateSigma(cboxPrepAnalAnalSigma, cboxOrderRequestedSigma);
-                    UI.PopulateCustomers(conn, InstanceStatus.Deleted, gridCustomers);
-                    UI.PopulateCustomers(conn, InstanceStatus.Active, cboxOrderCustomerName);
+                    UI.PopulateSampleTypes(treeSampleTypes, cboxSampleSampleType);                    
+                    UI.PopulateCustomers(conn, InstanceStatus.Deleted, gridCustomers);                    
+                    UI.PopulateComboBoxes(conn, "csp_select_customers", new[] {
+                        new SqlParameter("@instance_status_level", InstanceStatus.Active)
+                    }, cboxOrderCustomerName);
                     //UI.PopulateOrders(conn, InstanceStatus.Deleted, gridOrders);
                 }
                 
@@ -446,8 +458,10 @@ namespace DSA_lims
                     SetStatusMessage("Laboratory " + form.LaboratoryName + " created");
                     using (SqlConnection conn = DB.OpenConnection())
                     {                        
-                        UI.PopulateLaboratories(conn, InstanceStatus.Deleted, gridMetaLab);
-                        UI.PopulateLaboratories(conn, InstanceStatus.Active, cboxSampleLaboratory, cboxOrderLaboratory);
+                        UI.PopulateLaboratories(conn, InstanceStatus.Deleted, gridMetaLab);                        
+                        UI.PopulateComboBoxes(conn, "csp_select_laboratories_short", new[] {
+                            new SqlParameter("@instance_status_level", InstanceStatus.Active)
+                        }, cboxSampleLaboratory, cboxOrderLaboratory);
                     }
                     break;
                 case DialogResult.Abort:
@@ -516,7 +530,9 @@ namespace DSA_lims
                     using (SqlConnection conn = DB.OpenConnection())
                     {                        
                         UI.PopulateLaboratories(conn, InstanceStatus.Deleted, gridMetaLab);
-                        UI.PopulateLaboratories(conn, InstanceStatus.Active, cboxSampleLaboratory, cboxOrderLaboratory);
+                        UI.PopulateComboBoxes(conn, "csp_select_laboratories_short", new[] {
+                            new SqlParameter("@instance_status_level", InstanceStatus.Active)
+                        }, cboxSampleLaboratory, cboxOrderLaboratory);
                     }
                     break;
                 case DialogResult.Abort:
@@ -562,7 +578,9 @@ namespace DSA_lims
                     using (SqlConnection conn = DB.OpenConnection())
                     {
                         UI.PopulateProjectsMain(conn, gridProjectMain);
-                        UI.PopulateProjectsMain(conn, cboxSampleProject, cboxSamplesProjects);
+                        UI.PopulateComboBoxes(conn, "csp_select_projects_main_short", new[] {
+                            new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
+                        }, cboxSampleProject, cboxSamplesProjects);
                     }
                     break;
                 case DialogResult.Abort:
@@ -586,7 +604,9 @@ namespace DSA_lims
                     using (SqlConnection conn = DB.OpenConnection())
                     {
                         UI.PopulateProjectsMain(conn, gridProjectMain);
-                        UI.PopulateProjectsMain(conn, cboxSampleProject, cboxSamplesProjects);
+                        UI.PopulateComboBoxes(conn, "csp_select_projects_main_short", new[] {
+                            new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
+                        }, cboxSampleProject, cboxSamplesProjects);
                     }
                     break;
                 case DialogResult.Abort:
@@ -619,8 +639,11 @@ namespace DSA_lims
                     SetStatusMessage("Sub project " + form.ProjectSubName + " created");
                     using (SqlConnection conn = DB.OpenConnection())
                     {
-                        UI.PopulateProjectsSub(conn, gridProjectSub, pmid);
-                        UI.PopulateProjectsSub(conn, pmid, cboxSampleSubProject);
+                        UI.PopulateProjectsSub(conn, pmid, gridProjectSub);
+                        UI.PopulateComboBoxes(conn, "csp_select_projects_sub_short", new[] {
+                            new SqlParameter("@project_main_id", pmid),
+                            new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
+                        }, cboxSampleSubProject);
                     }
                     break;
                 case DialogResult.Abort:
@@ -649,8 +672,11 @@ namespace DSA_lims
                     SetStatusMessage("Project " + form.ProjectSubName + " updated");
                     using (SqlConnection conn = DB.OpenConnection())
                     {
-                        UI.PopulateProjectsSub(conn, gridProjectSub, pmid);
-                        UI.PopulateProjectsSub(conn, pmid, cboxSampleSubProject);
+                        UI.PopulateProjectsSub(conn, pmid, gridProjectSub);
+                        UI.PopulateComboBoxes(conn, "csp_select_projects_sub_short", new[] {
+                            new SqlParameter("@project_main_id", pmid),
+                            new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
+                        }, cboxSampleSubProject);
                     }
                     break;
                 case DialogResult.Abort:
@@ -873,8 +899,10 @@ namespace DSA_lims
                     SetStatusMessage("Geometry " + form.GeometryName + " created");
                     using (SqlConnection conn = DB.OpenConnection())
                     {
-                        UI.PopulateGeometries(conn, gridSysGeom);
-                        UI.PopulateGeometries(conn, cboxSamplePrepGeom);
+                        UI.PopulateGeometries(conn, gridSysGeom);                        
+                        UI.PopulateComboBoxes(conn, "csp_select_preparation_geometries_short", new[] {
+                            new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
+                        }, cboxSamplePrepGeom);
                     }
                     break;
                 case DialogResult.Abort:
@@ -1017,8 +1045,10 @@ namespace DSA_lims
                     SetStatusMessage("Station " + form.StationName + " created");
                     using (SqlConnection conn = DB.OpenConnection())
                     {
-                        UI.PopulateStations(conn, gridMetaStation);
-                        UI.PopulateStations(conn, cboxSampleInfoStations);
+                        UI.PopulateStations(conn, gridMetaStation);                        
+                        UI.PopulateComboBoxes(conn, "csp_select_stations_short", new[] {
+                            new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
+                        }, cboxSampleInfoStations);
                     }                        
                     break;
                 case DialogResult.Abort:
@@ -1042,8 +1072,10 @@ namespace DSA_lims
                     SetStatusMessage("Station " + form.StationName + " updated");
                     using (SqlConnection conn = DB.OpenConnection())
                     {
-                        UI.PopulateStations(conn, gridMetaStation);
-                        UI.PopulateStations(conn, cboxSampleInfoStations);
+                        UI.PopulateStations(conn, gridMetaStation);                        
+                        UI.PopulateComboBoxes(conn, "csp_select_stations_short", new[] {
+                            new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
+                        }, cboxSampleInfoStations);
                     }                        
                     break;
                 case DialogResult.Abort:
@@ -1109,8 +1141,10 @@ namespace DSA_lims
                     SetStatusMessage("Sampler " + form.SamplerName + " created");
                     using (SqlConnection conn = DB.OpenConnection())
                     {
-                        UI.PopulateSamplers(conn, gridMetaSamplers);
-                        UI.PopulateSamplers(conn, cboxSampleInfoSampler);
+                        UI.PopulateSamplers(conn, gridMetaSamplers);                        
+                        UI.PopulateComboBoxes(conn, "csp_select_samplers_short", new[] {
+                            new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
+                        }, cboxSampleInfoSampler);
                     }                        
                     break;
                 case DialogResult.Abort:
@@ -1134,8 +1168,10 @@ namespace DSA_lims
                     SetStatusMessage("Sampler " + form.SamplerName + " updated");
                     using (SqlConnection conn = DB.OpenConnection())
                     {
-                        UI.PopulateSamplers(conn, gridMetaSamplers);
-                        UI.PopulateSamplers(conn, cboxSampleInfoSampler);
+                        UI.PopulateSamplers(conn, gridMetaSamplers);                        
+                        UI.PopulateComboBoxes(conn, "csp_select_samplers_short", new[] {
+                            new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
+                        }, cboxSampleInfoSampler);
                     }                        
                     break;
                 case DialogResult.Abort:
@@ -1151,23 +1187,23 @@ namespace DSA_lims
 
         private void cboxSampleSampleType_SelectedIndexChanged(object sender, EventArgs e)
         {            
-            ClearStatusMessage();
-            cboxSampleSampleComponent.Items.Clear();
+            ClearStatusMessage();            
 
-            if (cboxSampleSampleType.SelectedItem == null)            
+            if (!StrUtils.IsValidGuid(cboxSampleSampleType.SelectedValue))
+            {
+                cboxSampleSampleComponent.DataSource = null;
                 return;
+            }
 
-            var sampleType = cboxSampleSampleType.SelectedItem as Lemma<Guid, string>;
-            TreeNode[] tnodes = treeSampleTypes.Nodes.Find(sampleType.Id.ToString(), true);
+            Guid sampleTypeId = Guid.Parse(cboxSampleSampleType.SelectedValue.ToString());
+            TreeNode[] tnodes = treeSampleTypes.Nodes.Find(sampleTypeId.ToString(), true);
             if (tnodes.Length < 1)
                 return;
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                UI.PopulateSampleComponentsAscending(conn, sampleType.Id, tnodes[0], cboxSampleSampleComponent);
+                UI.PopulateSampleComponentsAscending(conn, sampleTypeId, tnodes[0], cboxSampleSampleComponent);
             }
-
-            cboxSampleSampleComponent.SelectedIndex = -1;
         }        
 
         private void cboxSampleSampleType_Leave(object sender, EventArgs e)
@@ -1175,19 +1211,16 @@ namespace DSA_lims
             ClearStatusMessage();
 
             if (String.IsNullOrEmpty(cboxSampleSampleType.Text.Trim()))
-            {
-                cboxSampleSampleType.Text = "";
-                cboxSampleSampleType.SelectedItem = null;
-                cboxSampleSampleComponent.Items.Clear();
+            {                
+                cboxSampleSampleType.SelectedItem = Guid.Empty;
+                cboxSampleSampleComponent.DataSource = null;
                 return;
             }
 
-            Lemma<Guid, string> st = cboxSampleSampleType.SelectedItem as Lemma<Guid, string>;
-            if (st == null)
+            if(!StrUtils.IsValidGuid(cboxSampleSampleType.SelectedValue))
             {
-                cboxSampleSampleType.Text = "";
-                cboxSampleSampleType.SelectedItem = null;
-                cboxSampleSampleComponent.Items.Clear();
+                cboxSampleSampleType.SelectedValue = Guid.Empty;
+                cboxSampleSampleComponent.DataSource = null;
                 SetStatusMessage("You must select an existing sample type", StatusMessageType.Warning);
             }
         }
@@ -1204,39 +1237,40 @@ namespace DSA_lims
 
         private void cboxSampleProject_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cboxSampleProject.SelectedItem == null)
+            if (!StrUtils.IsValidGuid(cboxSampleProject.SelectedValue))
             {
                 lblSampleToolProject.Text = "";
                 lblSampleToolSubProject.Text = "";
                 return;
             }
 
-            Lemma<Guid, string> project = cboxSampleProject.SelectedItem as Lemma<Guid, string>;
+            Guid projectId = Guid.Parse(cboxSampleProject.SelectedValue.ToString());
             using (SqlConnection conn = DB.OpenConnection())
             {
-                UI.PopulateProjectsSub(conn, project.Id, cboxSampleSubProject);
+                UI.PopulateComboBoxes(conn, "csp_select_projects_sub_short", new[] {
+                    new SqlParameter("@project_main_id", projectId),
+                    new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
+                }, cboxSampleSubProject);
             }
 
-            lblSampleToolProject.Text = "[Project] " + project.Name;
+            lblSampleToolProject.Text = "[Project] " + cboxSampleProject.Text;
             lblSampleToolSubProject.Text = "";
         }
 
         private void cboxSampleSubProject_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cboxSampleSubProject.SelectedItem == null)
+            if (!StrUtils.IsValidGuid(cboxSampleSubProject.SelectedValue))
             {
                 lblSampleToolSubProject.Text = "";
                 return;
-            }                
+            }
 
-            Lemma<Guid, string> subProject = cboxSampleSubProject.SelectedItem as Lemma<Guid, string>;
-
-            lblSampleToolSubProject.Text = subProject.Name;
+            lblSampleToolSubProject.Text = cboxSampleSubProject.Text;
         }
 
         private void cboxSampleInfoStations_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(cboxSampleInfoStations.SelectedItem == null)
+            if(!StrUtils.IsValidGuid(cboxSampleInfoStations.SelectedValue))
             {
                 tbSampleInfoLatitude.Text = "";
                 tbSampleInfoLongitude.Text = "";
@@ -1244,12 +1278,12 @@ namespace DSA_lims
                 return;
             }
 
-            Lemma<Guid, string> station = cboxSampleInfoStations.SelectedItem as Lemma<Guid, string>;
+            Guid stationId = Guid.Parse(cboxSampleInfoStations.SelectedValue.ToString());
 
             using (SqlConnection conn = DB.OpenConnection())
             {
                 using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_station", CommandType.StoredProcedure, 
-                    new SqlParameter("@id", station.Id)))
+                    new SqlParameter("@id", stationId)))
                 {
                     reader.Read();
                     tbSampleInfoLatitude.Text = reader["latitude"].ToString();
@@ -1272,15 +1306,20 @@ namespace DSA_lims
 
         private void cboxSampleCounties_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(cboxSampleCounties.SelectedItem == null)
+            if(!StrUtils.IsValidGuid(cboxSampleCounties.SelectedValue))
             {
                 cboxSampleMunicipalities.DataSource = null;
                 return;
             }
 
-            Lemma<Guid, string> county = cboxSampleCounties.SelectedItem as Lemma<Guid, string>;
-            using (SqlConnection conn = DB.OpenConnection())            
-                UI.PopulateMunicipalities(conn, county.Id, cboxSampleMunicipalities);
+            Guid countyId = Guid.Parse(cboxSampleCounties.SelectedValue.ToString());
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                UI.PopulateComboBoxes(conn, "csp_select_municipalities_for_county_short", new[] {
+                    new SqlParameter("@county_id", countyId),
+                    new SqlParameter("@instance_status_level", InstanceStatus.Active)
+                }, cboxSampleMunicipalities);
+            }
         }        
 
         private void miSamplesNew_Click(object sender, EventArgs e)
@@ -1420,34 +1459,32 @@ namespace DSA_lims
                 map["update_date"] = reader["update_date"];
                 map["updated_by"] = reader["updated_by"];
             }
-
-            SetCboxItem(cboxSampleSampleType, map, "sample_type_id");
-            SetCboxItem(cboxSampleSampleComponent, map, "sample_component_id");
-            SetCboxItem(cboxSampleInfoSampler, map, "sampler_id");
-            SetCboxItem(cboxSampleInfoSamplingMeth, map, "sampling_method_id");
+            
+            cboxSampleSampleType.SelectedValue = map["sample_type_id"];
+            cboxSampleSampleComponent.SelectedValue = map["sample_component_id"];
+            cboxSampleInfoSampler.SelectedValue = map["sampler_id"];
+            cboxSampleInfoSamplingMeth.SelectedValue = map["sampling_method_id"];
 
             if (map["project_sub_id"] != DBNull.Value)
             {
-                object o = DB.GetScalar(conn, "select project_main_id from project_sub where id = @id", CommandType.Text, new SqlParameter("@id", map["project_sub_id"]));
-                Guid projectId = Guid.Parse(o.ToString());
-                SetCboxItem(cboxSampleProject, map, projectId);
-                SetCboxItem(cboxSampleSubProject, map, "project_sub_id");
+                object mpid = DB.GetScalar(conn, "select project_main_id from project_sub where id = @id", CommandType.Text, new SqlParameter("@id", map["project_sub_id"]));
+                cboxSampleProject.SelectedValue = mpid;
+                cboxSampleSubProject.SelectedValue = map["project_sub_id"];
             }
-
-            SetCboxItem(cboxSampleInfoStations, map, "station_id");
+            
+            cboxSampleInfoStations.SelectedValue = map["station_id"];
 
             if (map["municipality_id"] != DBNull.Value)
             {
-                object o = DB.GetScalar(conn, "select county_id from municipality where id = @id", CommandType.Text, new SqlParameter("@id", map["municipality_id"]));
-                Guid municipalityId = Guid.Parse(o.ToString());
-                SetCboxItem(cboxSampleCounties, map, municipalityId);
-                SetCboxItem(cboxSampleMunicipalities, map, "municipality_id");
+                object cid = DB.GetScalar(conn, "select county_id from municipality where id = @id", CommandType.Text, new SqlParameter("@id", map["municipality_id"]));
+                cboxSampleCounties.SelectedValue = cid;
+                cboxSampleMunicipalities.SelectedValue = map["municipality_id"];
             }
 
             cboxSampleInfoLocationTypes.Text = map["location_type"].ToString();
             tbSampleLocation.Text = map["location"].ToString();
 
-            SetCboxItem(cboxSampleLaboratory, map, "laboratory_id");
+            cboxSampleLaboratory.SelectedValue = map["laboratory_id"];
 
             DateTime samplingDateFrom = Convert.ToDateTime(map["sampling_date_from"]);
             DateTime samplingDateTo = Convert.ToDateTime(map["sampling_date_to"]);
@@ -1460,7 +1497,7 @@ namespace DSA_lims
             tbSampleExId.Text = map["external_id"].ToString();
             cbSampleConfidential.Checked = Convert.ToBoolean(map["confidential"]);
 
-            SetCboxItem(cboxSampleSampleStorage, map, "sample_storage_id");
+            cboxSampleSampleStorage.SelectedValue = map["sample_storage_id"];
 
             cboxSampleInstanceStatus.SelectedValue = map["instance_status_id"];
 
@@ -1468,31 +1505,6 @@ namespace DSA_lims
             lblSampleToolId.Text = "[Sample] " + map["number"].ToString();
             lblSampleToolLaboratory.Text = String.IsNullOrEmpty(cboxSampleLaboratory.Text) ? "" : "[Laboratory] " + cboxSampleLaboratory.Text;
         }
-
-        private void SetCboxItem(ComboBox cbox, Dictionary<string, object> map, string idField)
-        {
-            cbox.SelectedIndex = -1;
-
-            if (map[idField] != DBNull.Value)
-            {                
-                Guid id = Guid.Parse(map[idField].ToString());
-                SetCboxItem(cbox, map, id);
-            }
-        }
-
-        private void SetCboxItem(ComboBox cbox, Dictionary<string, object> map, Guid id)
-        {
-            cbox.SelectedIndex = -1;
-                        
-            foreach (Lemma<Guid, string> l in cbox.Items)
-            {
-                if (l.Id == id)
-                {
-                    cbox.SelectedItem = l;
-                    break;
-                }
-            }
-        }        
 
         private void cbSampleUseSamplingTimeTo_CheckedChanged(object sender, EventArgs e)
         {
@@ -1746,8 +1758,10 @@ where preparation_id = @preparation_id
                     SetStatusMessage("Sampling method " + form.SamplingMethodName + " created");
                     using (SqlConnection conn = DB.OpenConnection())
                     {
-                        UI.PopulateSamplingMethods(conn, gridMetaSamplingMeth);
-                        UI.PopulateSamplingMethods(conn, cboxSampleInfoSamplingMeth);
+                        UI.PopulateSamplingMethods(conn, gridMetaSamplingMeth);                        
+                        UI.PopulateComboBoxes(conn, "csp_select_sampling_methods_short", new[] {
+                            new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
+                        }, cboxSampleInfoSamplingMeth);
                     }
                     break;
                 case DialogResult.Abort:
@@ -1772,8 +1786,10 @@ where preparation_id = @preparation_id
                     SetStatusMessage("Sampling method " + form.SamplingMethodName + " updated");
                     using (SqlConnection conn = DB.OpenConnection())
                     {
-                        UI.PopulateSamplingMethods(conn, gridMetaSamplingMeth);
-                        UI.PopulateSamplingMethods(conn, cboxSampleInfoSamplingMeth);
+                        UI.PopulateSamplingMethods(conn, gridMetaSamplingMeth);                        
+                        UI.PopulateComboBoxes(conn, "csp_select_sampling_methods_short", new[] {
+                            new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
+                        }, cboxSampleInfoSamplingMeth);
                     }
                     break;
                 case DialogResult.Abort:
@@ -1789,15 +1805,20 @@ where preparation_id = @preparation_id
 
         private void cboxSamplesProjects_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cboxSamplesProjects.SelectedItem == null)
+            if (!StrUtils.IsValidGuid(cboxSamplesProjects.SelectedValue))
             {
-                cboxSamplesProjectsSub.Items.Clear();
+                cboxSamplesProjectsSub.DataSource = null;
                 return;
             }
 
-            Lemma<Guid, string> project = cboxSamplesProjects.SelectedItem as Lemma<Guid, string>;
+            Guid projectId = Guid.Parse(cboxSamplesProjects.SelectedValue.ToString());
             using (SqlConnection conn = DB.OpenConnection())
-                UI.PopulateProjectsSub(conn, project.Id, cboxSamplesProjectsSub);
+            {                
+                UI.PopulateComboBoxes(conn, "csp_select_projects_sub_short", new[] {
+                    new SqlParameter("@project_main_id", projectId),
+                    new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
+                }, cboxSamplesProjectsSub);
+            }
         }
 
         private void miPreparationMethodsNew_Click(object sender, EventArgs e)
@@ -2176,18 +2197,18 @@ order by name
         private void ClearOrderInfo()
         {
             tbOrderName.Text = "";
-            cboxOrderLaboratory.SelectedIndex = -1;
-            cboxOrderResponsible.SelectedIndex = -1;
+            cboxOrderLaboratory.SelectedValue = Guid.Empty;
+            cboxOrderResponsible.SelectedValue = Guid.Empty;
             tbOrderDeadline.Text = "";
             cboxOrderRequestedSigma.SelectedIndex = -1;
             tbOrderContentComment.Text = "";
             tbOrderCustomerAddress.Text = "";
             tbOrderCustomerEmail.Text = "";
             tbOrderCustomerPhone.Text = "";
-            cboxOrderCustomerName.SelectedIndex = -1;
+            cboxOrderCustomerName.SelectedValue = Guid.Empty;
             tbOrderContactEmail.Text = "";
             tbOrderContactPhone.Text = "";
-            cboxOrderContact.SelectedIndex = -1;
+            cboxOrderContact.SelectedValue = Guid.Empty;
             tbOrderReportComment.Text = "";
             // TODO
         }
@@ -2238,7 +2259,7 @@ order by name
                 }
 
                 tbOrderName.Text = map["name"].ToString();
-                SetCboxItem(cboxOrderLaboratory, map, "laboratory_id");
+                cboxOrderLaboratory.SelectedValue = map["laboratory_id"];
                 cboxOrderResponsible.SelectedIndex = -1;
                 foreach (Lemma<string, string> l in cboxOrderResponsible.Items)
                     if (l.Id == map["account_id"].ToString())
@@ -2477,8 +2498,10 @@ order by name
                     SetStatusMessage("Customer " + form.CustomerName + " created");
                     using (SqlConnection conn = DB.OpenConnection())
                     {
-                        UI.PopulateCustomers(conn, InstanceStatus.Deleted, gridCustomers);
-                        UI.PopulateCustomers(conn, InstanceStatus.Active, cboxOrderCustomerName);
+                        UI.PopulateCustomers(conn, InstanceStatus.Deleted, gridCustomers);                        
+                        UI.PopulateComboBoxes(conn, "csp_select_customers", new[] {
+                            new SqlParameter("@instance_status_level", InstanceStatus.Active)
+                        }, cboxOrderCustomerName);
                     }
                     break;
                 case DialogResult.Abort:
@@ -2503,8 +2526,10 @@ order by name
                     SetStatusMessage("Customer " + form.CustomerName + " updated");
                     using (SqlConnection conn = DB.OpenConnection())
                     {
-                        UI.PopulateCustomers(conn, InstanceStatus.Deleted, gridCustomers);
-                        UI.PopulateCustomers(conn, InstanceStatus.Active, cboxOrderCustomerName);
+                        UI.PopulateCustomers(conn, InstanceStatus.Deleted, gridCustomers);                        
+                        UI.PopulateComboBoxes(conn, "csp_select_customers", new[] {
+                            new SqlParameter("@instance_status_level", InstanceStatus.Active)
+                        }, cboxOrderCustomerName);
                     }
                     break;
                 case DialogResult.Abort:
@@ -2583,16 +2608,19 @@ order by name
 
         private void cboxOrderCustomerName_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(cboxOrderCustomerName.SelectedItem == null)
+            if(!StrUtils.IsValidGuid(cboxOrderCustomerName.SelectedValue))
             {
-                cboxOrderContact.Items.Clear();
+                cboxOrderContact.DataSource = null;
                 return;
             }
 
-            Lemma<Guid, string> c = cboxOrderCustomerName.SelectedItem as Lemma<Guid, string>;
+            Guid custId = Guid.Parse(cboxOrderCustomerName.SelectedValue.ToString());
             using (SqlConnection conn = DB.OpenConnection())
             {
-                UI.PopulateCustomerContacts(conn, c.Id, InstanceStatus.Active, cboxOrderContact);
+                UI.PopulateComboBoxes(conn, "csp_select_customer_contacts_for_customer", new[] {
+                    new SqlParameter("@customer_id", custId),
+                    new SqlParameter("@instance_status_level", InstanceStatus.Active)
+                }, cboxOrderContact);
             }
         }
 
@@ -2635,7 +2663,7 @@ order by name
 
             Guid pmid = new Guid(gridProjectMain.SelectedRows[0].Cells["id"].Value.ToString());
             using (SqlConnection conn = DB.OpenConnection())
-                UI.PopulateProjectsSub(conn, gridProjectSub, pmid);
+                UI.PopulateProjectsSub(conn, pmid, gridProjectSub);
         }
 
         private void gridTypeRelAnalMeth_SelectionChanged(object sender, EventArgs e)
@@ -2667,10 +2695,10 @@ order by name
             if (cboxOrderLaboratory.SelectedItem == null)
                 return;
 
-            Lemma<Guid, string> lab = cboxOrderLaboratory.SelectedItem as Lemma<Guid, string>;
+            Guid labId = Guid.Parse(cboxOrderLaboratory.SelectedValue.ToString());
             using (SqlConnection conn = DB.OpenConnection())
             {
-                UI.PopulateUsers(conn, lab.Id, InstanceStatus.Active, cboxOrderResponsible);
+                UI.PopulateUsers(conn, labId, InstanceStatus.Active, cboxOrderResponsible);
             }
         }
 
@@ -2777,7 +2805,7 @@ order by name
 
         private void miBack_Click(object sender, EventArgs e)
         {
-            if (tabs.SelectedTab == tabSample)
+            if (tabs.SelectedTab == tabSample || tabs.SelectedTab == tabPrepAnal)
                 tabs.SelectedTab = tabSamples;
             else if (tabs.SelectedTab == tabOrder)
                 tabs.SelectedTab = tabOrders;
@@ -2786,25 +2814,25 @@ order by name
 
         private void btnSampleUpdate_Click(object sender, EventArgs e)
         {
-            if (cboxSampleLaboratory.SelectedItem == null)
+            if (!StrUtils.IsValidGuid(cboxSampleLaboratory.SelectedValue))
             {
                 MessageBox.Show("Laboratory is mandatory");
                 return;
             }
 
-            if (cboxSampleSampleType.SelectedItem == null)
+            if (!StrUtils.IsValidGuid(cboxSampleSampleType.SelectedValue))
             {
                 MessageBox.Show("Sample type is mandatory");
                 return;
             }
 
-            if (cboxSampleProject.SelectedItem == null)
+            if (!StrUtils.IsValidGuid(cboxSampleProject.SelectedValue))
             {
                 MessageBox.Show("Main project is mandatory");
                 return;
             }
 
-            if (cboxSampleSubProject.SelectedItem == null)
+            if (!StrUtils.IsValidGuid(cboxSampleSubProject.SelectedValue))
             {
                 MessageBox.Show("Sub project is mandatory");
                 return;
@@ -2826,15 +2854,15 @@ order by name
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Clear();
                 cmd.Parameters.AddWithValue("@id", selectedSample);
-                cmd.Parameters.AddWithValue("@laboratory_id", Lemma<Guid, string>.IdParam(cboxSampleLaboratory.SelectedItem));
-                cmd.Parameters.AddWithValue("@sample_type_id", Lemma<Guid, string>.IdParam(cboxSampleSampleType.SelectedItem));
-                cmd.Parameters.AddWithValue("@sample_storage_id", Lemma<Guid, string>.IdParam(cboxSampleSampleStorage.SelectedItem));
-                cmd.Parameters.AddWithValue("@sample_component_id", Lemma<Guid, string>.IdParam(cboxSampleSampleComponent.SelectedItem));
-                cmd.Parameters.AddWithValue("@project_sub_id", Lemma<Guid, string>.IdParam(cboxSampleSubProject.SelectedItem));
-                cmd.Parameters.AddWithValue("@station_id", Lemma<Guid, string>.IdParam(cboxSampleInfoStations.SelectedItem));
-                cmd.Parameters.AddWithValue("@sampler_id", Lemma<Guid, string>.IdParam(cboxSampleInfoSampler.SelectedItem));
-                cmd.Parameters.AddWithValue("@sampling_method_id", Lemma<Guid, string>.IdParam(cboxSampleInfoSamplingMeth.SelectedItem));
-                cmd.Parameters.AddWithValue("@municipality_id", Lemma<Guid, string>.IdParam(cboxSampleMunicipalities.SelectedItem));
+                cmd.Parameters.AddWithValue("@laboratory_id", DB.MakeParam(typeof(Guid), cboxSampleLaboratory.SelectedValue));
+                cmd.Parameters.AddWithValue("@sample_type_id", DB.MakeParam(typeof(Guid), cboxSampleSampleType.SelectedValue));
+                cmd.Parameters.AddWithValue("@sample_storage_id", DB.MakeParam(typeof(Guid), cboxSampleSampleStorage.SelectedValue));
+                cmd.Parameters.AddWithValue("@sample_component_id", DB.MakeParam(typeof(Guid), cboxSampleSampleComponent.SelectedValue));
+                cmd.Parameters.AddWithValue("@project_sub_id", DB.MakeParam(typeof(Guid), cboxSampleSubProject.SelectedValue));
+                cmd.Parameters.AddWithValue("@station_id", DB.MakeParam(typeof(Guid), cboxSampleInfoStations.SelectedValue));
+                cmd.Parameters.AddWithValue("@sampler_id", DB.MakeParam(typeof(Guid), cboxSampleInfoSampler.SelectedValue));
+                cmd.Parameters.AddWithValue("@sampling_method_id", DB.MakeParam(typeof(Guid), cboxSampleInfoSamplingMeth.SelectedValue));
+                cmd.Parameters.AddWithValue("@municipality_id", DB.MakeParam(typeof(Guid), cboxSampleMunicipalities.SelectedValue));
                 cmd.Parameters.AddWithValue("@location_type", DB.MakeParam(typeof(string), cboxSampleInfoLocationTypes.Text));
                 cmd.Parameters.AddWithValue("@location", DB.MakeParam(typeof(string), tbSampleLocation.Text.Trim()));
                 cmd.Parameters.AddWithValue("@latitude", DB.MakeParam(typeof(double), tbSampleInfoLatitude.Text.Trim()));
@@ -2846,7 +2874,7 @@ order by name
                 cmd.Parameters.AddWithValue("@reference_date", new DateTime(dtSampleReferenceDate.Value.Year, dtSampleReferenceDate.Value.Month, dtSampleReferenceDate.Value.Day, dtSampleReferenceTime.Value.Hour, dtSampleReferenceTime.Value.Minute, dtSampleReferenceTime.Value.Second));
                 cmd.Parameters.AddWithValue("@external_id", DB.MakeParam(typeof(string), tbSampleExId.Text.Trim()));
                 cmd.Parameters.AddWithValue("@confidential", cbSampleConfidential.Checked ? 1 : 0);
-                cmd.Parameters.AddWithValue("@instance_status_id", Lemma<int, string>.IdParam(cboxSampleInstanceStatus.SelectedItem));
+                cmd.Parameters.AddWithValue("@instance_status_id", DB.MakeParam(typeof(int), cboxSampleInstanceStatus.SelectedValue));
                 cmd.Parameters.AddWithValue("@comment", tbSampleComment.Text.Trim());
                 cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
                 cmd.Parameters.AddWithValue("@updated_by", Common.Username);

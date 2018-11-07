@@ -101,12 +101,14 @@
             // 
             // cboxLaboratory
             // 
+            this.cboxLaboratory.DisplayMember = "Name";
             this.cboxLaboratory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxLaboratory.FormattingEnabled = true;
             this.cboxLaboratory.Location = new System.Drawing.Point(102, 27);
             this.cboxLaboratory.Name = "cboxLaboratory";
             this.cboxLaboratory.Size = new System.Drawing.Size(304, 23);
             this.cboxLaboratory.TabIndex = 9;
+            this.cboxLaboratory.ValueMember = "Id";
             this.cboxLaboratory.SelectedIndexChanged += new System.EventHandler(this.cboxLaboratory_SelectedIndexChanged);
             // 
             // gridOrders

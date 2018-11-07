@@ -77,8 +77,8 @@ namespace DSA_lims
                     SqlCommand cmd = new SqlCommand("csp_insert_assignment_analysis_method", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@id", Guid.NewGuid());
-                    cmd.Parameters.AddWithValue("@assignment_preparation_method_id", OrderPrepMethId);
-                    cmd.Parameters.AddWithValue("@analysis_method_id", analMethId);
+                    cmd.Parameters.AddWithValue("@assignment_preparation_method_id", DB.MakeParam(typeof(Guid), OrderPrepMethId));
+                    cmd.Parameters.AddWithValue("@analysis_method_id", DB.MakeParam(typeof(Guid), analMethId));
                     cmd.Parameters.AddWithValue("@analysis_method_count", cnt);
                     cmd.Parameters.AddWithValue("@comment", tbComment.Text);
                     cmd.Parameters.AddWithValue("@create_date", DateTime.Now);

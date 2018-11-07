@@ -165,7 +165,7 @@ namespace DSA_lims
                 cmd.CommandType = CommandType.StoredProcedure;
                 p["id"] = Guid.NewGuid();
                 cmd.Parameters.AddWithValue("@id", p["id"]);
-                cmd.Parameters.AddWithValue("@nuclide_id", p["nuclide_id"]);
+                cmd.Parameters.AddWithValue("@nuclide_id", DB.MakeParam(typeof(Guid), p["nuclide_id"]));
                 cmd.Parameters.AddWithValue("@transmission_from", p["transmission_from"]);
                 cmd.Parameters.AddWithValue("@transmission_to", p["transmission_to"]);
                 cmd.Parameters.AddWithValue("@energy", p["energy"]);

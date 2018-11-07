@@ -60,7 +60,7 @@ namespace DSA_lims
                 return;
             }
 
-            SelectedSampleTypeId = new Guid(treeSampleTypes.SelectedNode.Name);
+            SelectedSampleTypeId = Guid.Parse(treeSampleTypes.SelectedNode.Name);
             SelectedSampleTypeName = treeSampleTypes.SelectedNode.Text;
             SelectedSampleTypePath = treeSampleTypes.SelectedNode.ToolTipText;
 

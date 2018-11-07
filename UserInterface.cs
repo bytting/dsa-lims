@@ -38,7 +38,7 @@ namespace DSA_lims
             using (SqlDataReader reader = DB.GetDataReader(conn, proc, CommandType.StoredProcedure, sqlpn))
             {
                 while (reader.Read())
-                    list.Add(new Lemma<Guid, string>(new Guid(reader["id"].ToString()), reader["name"].ToString()));
+                    list.Add(new Lemma<Guid, string>(Guid.Parse(reader["id"].ToString()), reader["name"].ToString()));
             }
 
             foreach (ComboBox cb in cbn)
@@ -381,7 +381,7 @@ namespace DSA_lims
 
         private static void AddSampleTypeChildren(List<Lemma<Guid, Guid, string>> sampleTypeList, TreeNode tnode)
         {
-            List<Lemma<Guid, Guid, string>> children = sampleTypeList.FindAll(x => x.ParentId == new Guid(tnode.Name));
+            List<Lemma<Guid, Guid, string>> children = sampleTypeList.FindAll(x => x.ParentId == Guid.Parse(tnode.Name));
             foreach (Lemma<Guid, Guid, string> st in children)
             {
                 TreeNode n = tnode.Nodes.Add(st.Id.ToString(), st.Name);
@@ -402,8 +402,8 @@ namespace DSA_lims
                     while (reader.Read())
                     {
                         Lemma<Guid, Guid, string> sampleType = new Lemma<Guid, Guid, string>(
-                            new Guid(reader["id"].ToString()), 
-                            new Guid(reader["parent_id"].ToString()), 
+                            Guid.Parse(reader["id"].ToString()), 
+                            Guid.Parse(reader["parent_id"].ToString()), 
                             reader["name"].ToString());
 
                         sampleTypeList.Add(sampleType);
@@ -467,7 +467,7 @@ order by name";
             {
                 while (reader.Read())
                 {
-                    Lemma<Guid, string> st = new Lemma<Guid, string>(new Guid(reader["id"].ToString()), reader["name"].ToString());
+                    Lemma<Guid, string> st = new Lemma<Guid, string>(Guid.Parse(reader["id"].ToString()), reader["name"].ToString());
                     lb.Items.Add(st);
                 }
             }            
@@ -476,12 +476,12 @@ order by name";
             while (tnode.Parent != null)
             {
                 tnode = tnode.Parent;
-                sampleTypeId = new Guid(tnode.Name);
+                sampleTypeId = Guid.Parse(tnode.Name);
                 using (SqlDataReader reader = DB.GetDataReader(conn, query, CommandType.Text, new SqlParameter("@sample_type_id", sampleTypeId)))
                 {
                     while (reader.Read())
                     {
-                        Lemma<Guid, string> st = new Lemma<Guid, string>(new Guid(reader["id"].ToString()), reader["name"].ToString());
+                        Lemma<Guid, string> st = new Lemma<Guid, string>(Guid.Parse(reader["id"].ToString()), reader["name"].ToString());
                         lbInherited.Items.Add(st);
                     }
                 }
@@ -498,7 +498,7 @@ order by name";
                 while (reader.Read())
                 {
                     Lemma<Guid, string> sampleComponent = new Lemma<Guid, string>(
-                        new Guid(reader["id"].ToString()),
+                        Guid.Parse(reader["id"].ToString()),
                         reader["name"].ToString());
 
                     lb.Items.Add(sampleComponent);
@@ -520,12 +520,12 @@ order by name";
                     new SqlParameter("@sample_type_id", sampleTypeId)))
             {
                 while (reader.Read())
-                    comps.Add(new Lemma<Guid, string>(new Guid(reader["id"].ToString()), reader["name"].ToString()));
+                    comps.Add(new Lemma<Guid, string>(Guid.Parse(reader["id"].ToString()), reader["name"].ToString()));
             }
 
             if (tnode.Parent != null)
             {
-                Guid parentId = new Guid(tnode.Parent.Name);
+                Guid parentId = Guid.Parse(tnode.Parent.Name);
                 AddSampleTypeComponentsAscending(conn, parentId, tnode.Parent, comps);
             }
         }
@@ -538,7 +538,7 @@ order by name";
             {
                 while (reader.Read())
                 {
-                    Lemma<Guid, string> n = new Lemma<Guid, string>(new Guid(reader["id"].ToString()), reader["name"].ToString());
+                    Lemma<Guid, string> n = new Lemma<Guid, string>(Guid.Parse(reader["id"].ToString()), reader["name"].ToString());
                     lb.Items.Add(n);
                 }
             }
@@ -552,7 +552,7 @@ order by name";
             {
                 while (reader.Read())
                 {
-                    Lemma<Guid, string> n = new Lemma<Guid, string>(new Guid(reader["id"].ToString()), reader["name"].ToString());
+                    Lemma<Guid, string> n = new Lemma<Guid, string>(Guid.Parse(reader["id"].ToString()), reader["name"].ToString());
                     lb.Items.Add(n);
                 }
             }
@@ -694,7 +694,7 @@ order by create_date desc";
 
             foreach(TreeNode tnode in tree.Nodes)
             {
-                Guid orderSampleTypeId = new Guid(tnode.Name);
+                Guid orderSampleTypeId = Guid.Parse(tnode.Name);
 
                 using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_assignment_preparation_methods", CommandType.StoredProcedure, 
                     new SqlParameter("@assignment_sample_type_id", orderSampleTypeId)))
@@ -715,7 +715,7 @@ order by create_date desc";
             {
                 foreach (TreeNode tn in tnode.Nodes)
                 {
-                    Guid orderPrepMethId = new Guid(tn.Name);
+                    Guid orderPrepMethId = Guid.Parse(tn.Name);
 
                     using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_assignment_analysis_methods", CommandType.StoredProcedure,
                         new SqlParameter("@assignment_preparation_method_id", orderPrepMethId)))

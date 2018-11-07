@@ -136,7 +136,7 @@ namespace DSA_lims
                 cmd.CommandType = CommandType.StoredProcedure;
                 p["id"] = Guid.NewGuid();
                 cmd.Parameters.AddWithValue("@id", p["id"]);
-                cmd.Parameters.AddWithValue("@project_main_id", p["project_main_id"]);
+                cmd.Parameters.AddWithValue("@project_main_id", DB.MakeParam(typeof(Guid), p["project_main_id"]));
                 cmd.Parameters.AddWithValue("@name", p["name"]);
                 cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
                 cmd.Parameters.AddWithValue("@comment", p["comment"]);
@@ -180,7 +180,7 @@ namespace DSA_lims
                 SqlCommand cmd = new SqlCommand("csp_update_project_sub", connection, transaction);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@id", p["id"]);
-                cmd.Parameters.AddWithValue("@project_main_id", p["project_main_id"]);
+                cmd.Parameters.AddWithValue("@project_main_id", DB.MakeParam(typeof(Guid), p["project_main_id"]));
                 cmd.Parameters.AddWithValue("@name", p["name"]);
                 cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
                 cmd.Parameters.AddWithValue("@comment", p["comment"]);

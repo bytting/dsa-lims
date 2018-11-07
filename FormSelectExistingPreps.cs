@@ -39,8 +39,8 @@ where p.sample_id = @sample_id and p.laboratory_id = @laboratory_id
 order by p.create_date desc";
 
                 gridPreparations.DataSource = DB.GetDataTable(conn, query, CommandType.Text,
-                    new SqlParameter("@sample_id", SampleId),
-                    new SqlParameter("@laboratory_id", LaboratoryId));
+                    new SqlParameter("@sample_id", DB.MakeParam(typeof(Guid), SampleId)),
+                    new SqlParameter("@laboratory_id", DB.MakeParam(typeof(Guid), LaboratoryId)));
 
                 gridPreparations.Columns["id"].Visible = false;
             }
@@ -58,7 +58,7 @@ order by p.create_date desc";
 
             foreach (DataGridViewRow row in gridPreparations.SelectedRows)
             {
-                SelectedPreparationIds.Add(new Guid(row.Cells["id"].Value.ToString()));
+                SelectedPreparationIds.Add(Guid.Parse(row.Cells["id"].Value.ToString()));
             }
 
             DialogResult = DialogResult.OK;

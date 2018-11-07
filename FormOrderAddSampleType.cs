@@ -67,7 +67,7 @@ namespace DSA_lims
                     SqlCommand cmd = new SqlCommand("csp_insert_assignment_sample_type", conn);
                     cmd.CommandType = CommandType.StoredProcedure;                    
                     cmd.Parameters.AddWithValue("@id", Guid.NewGuid());
-                    cmd.Parameters.AddWithValue("@assignment_id", OrderId);
+                    cmd.Parameters.AddWithValue("@assignment_id", DB.MakeParam(typeof(Guid), OrderId));
                     cmd.Parameters.AddWithValue("@sample_type_id", DB.MakeParam(typeof(Guid), sampleTypeId));                    
                     cmd.Parameters.AddWithValue("@sample_component_id", DB.MakeParam(typeof(Guid), cboxSampleComponent.SelectedValue));
                     cmd.Parameters.AddWithValue("@sample_count", count);                    

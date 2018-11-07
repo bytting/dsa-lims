@@ -148,12 +148,12 @@ namespace DSA_lims
                             Guid newPrepId = Guid.NewGuid();
                             cmd.Parameters.Clear();
                             cmd.Parameters.AddWithValue("@id", newPrepId);
-                            cmd.Parameters.AddWithValue("@sample_id", sampleId);
+                            cmd.Parameters.AddWithValue("@sample_id", DB.MakeParam(typeof(Guid), sampleId));
                             cmd.Parameters.AddWithValue("@number", nextPrepNumber++);
-                            cmd.Parameters.AddWithValue("@assignment_id", orderId);
-                            cmd.Parameters.AddWithValue("@laboratory_id", labId);
+                            cmd.Parameters.AddWithValue("@assignment_id", DB.MakeParam(typeof(Guid), orderId));
+                            cmd.Parameters.AddWithValue("@laboratory_id", DB.MakeParam(typeof(Guid), labId));
                             cmd.Parameters.AddWithValue("@preparation_geometry_id", DBNull.Value);
-                            cmd.Parameters.AddWithValue("@preparation_method_id", prepMethId);
+                            cmd.Parameters.AddWithValue("@preparation_method_id", DB.MakeParam(typeof(Guid), prepMethId));
                             cmd.Parameters.AddWithValue("@workflow_status_id", 1);
                             cmd.Parameters.AddWithValue("@amount", DBNull.Value);
                             cmd.Parameters.AddWithValue("@prep_unit_id", DBNull.Value);
@@ -175,8 +175,8 @@ namespace DSA_lims
                 }
 
                 SqlCommand cmd2 = new SqlCommand("insert into sample_x_assignment_sample_type values(@sample_id, @assignment_sample_type_id)", connection, transaction);
-                cmd2.Parameters.AddWithValue("@sample_id", sampleId);
-                cmd2.Parameters.AddWithValue("@assignment_sample_type_id", orderLineId);
+                cmd2.Parameters.AddWithValue("@sample_id", DB.MakeParam(typeof(Guid), sampleId));
+                cmd2.Parameters.AddWithValue("@assignment_sample_type_id", DB.MakeParam(typeof(Guid), orderLineId));
                 cmd2.ExecuteNonQuery();
 
                 transaction.Commit();
@@ -219,10 +219,10 @@ namespace DSA_lims
                     cmd.Parameters.Clear();
                     cmd.Parameters.AddWithValue("@id", newAnalId);
                     cmd.Parameters.AddWithValue("@number", nextAnalNumber++);
-                    cmd.Parameters.AddWithValue("@assignment_id", orderId);
-                    cmd.Parameters.AddWithValue("@laboratory_id", labId);
-                    cmd.Parameters.AddWithValue("@preparation_id", prepId);
-                    cmd.Parameters.AddWithValue("@analysis_method_id", analMethId);
+                    cmd.Parameters.AddWithValue("@assignment_id", DB.MakeParam(typeof(Guid), orderId));
+                    cmd.Parameters.AddWithValue("@laboratory_id", DB.MakeParam(typeof(Guid), labId));
+                    cmd.Parameters.AddWithValue("@preparation_id", DB.MakeParam(typeof(Guid), prepId));
+                    cmd.Parameters.AddWithValue("@analysis_method_id", DB.MakeParam(typeof(Guid), analMethId));
                     cmd.Parameters.AddWithValue("@workflow_status_id", 1);
                     cmd.Parameters.AddWithValue("@specter_reference", DBNull.Value);
                     cmd.Parameters.AddWithValue("@activity_unit_id", DBNull.Value);
@@ -264,7 +264,7 @@ namespace DSA_lims
             if (gridOrders.SelectedRows.Count < 1)
                 return;
 
-            Guid oid = new Guid(gridOrders.SelectedRows[0].Cells["id"].Value.ToString());
+            Guid oid = Guid.Parse(gridOrders.SelectedRows[0].Cells["id"].Value.ToString());
             using (SqlConnection conn = DB.OpenConnection())
             {
                 UI.PopulateOrderContent(conn, oid, treeOrderLines, SampleTypeId, TreeSampleTypes, false);

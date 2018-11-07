@@ -103,7 +103,7 @@ namespace DSA_lims
                 cmd.CommandType = CommandType.StoredProcedure;
                 p["id"] = Guid.NewGuid();
                 cmd.Parameters.AddWithValue("@id", p["id"]);
-                cmd.Parameters.AddWithValue("@sample_type_id", p["sample_type_id"]);
+                cmd.Parameters.AddWithValue("@sample_type_id", DB.MakeParam(typeof(Guid), p["sample_type_id"]));
                 cmd.Parameters.AddWithValue("@name", p["name"]);
                 cmd.Parameters.AddWithValue("@create_date", p["create_date"]);
                 cmd.Parameters.AddWithValue("@created_by", p["created_by"]);

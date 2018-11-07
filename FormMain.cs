@@ -391,7 +391,7 @@ namespace DSA_lims
                 lbSampleTypesComponents.Items.Clear();
                 lbSampleTypesInheritedComponents.Items.Clear();
 
-                Guid sampleTypeId = new Guid(tnode.Name);
+                Guid sampleTypeId = Guid.Parse(tnode.Name);
 
                 using (SqlConnection conn = DB.OpenConnection())
                 {
@@ -416,12 +416,12 @@ namespace DSA_lims
                     new SqlParameter("@sample_type_id", sampleTypeId)))
             {
                 while (reader.Read())
-                    lb.Items.Add(new Lemma<Guid, string>(new Guid(reader["id"].ToString()), reader["name"].ToString()));
+                    lb.Items.Add(new Lemma<Guid, string>(Guid.Parse(reader["id"].ToString()), reader["name"].ToString()));
             }
 
             if (tnode.Parent != null)
             {
-                Guid parentId = new Guid(tnode.Parent.Name);
+                Guid parentId = Guid.Parse(tnode.Parent.Name);
                 AddSampleTypeComponents(conn, parentId, true, tnode.Parent);
             }
         }
@@ -520,7 +520,7 @@ namespace DSA_lims
                 return;
 
             DataGridViewRow row = gridMetaLab.SelectedRows[0];
-            Guid lid = new Guid(row.Cells[0].Value.ToString());
+            Guid lid = Guid.Parse(row.Cells[0].Value.ToString());
 
             FormLaboratory form = new FormLaboratory(lid);
             switch (form.ShowDialog())
@@ -594,7 +594,7 @@ namespace DSA_lims
             if (gridProjectMain.SelectedRows.Count < 1)
                 return;
 
-            Guid pmid = new Guid(gridProjectMain.SelectedRows[0].Cells["id"].Value.ToString());
+            Guid pmid = Guid.Parse(gridProjectMain.SelectedRows[0].Cells["id"].Value.ToString());
 
             FormProject form = new FormProject(pmid);
             switch (form.ShowDialog())
@@ -629,7 +629,7 @@ namespace DSA_lims
                 return;
             }
 
-            Guid pmid = new Guid(gridProjectMain.SelectedRows[0].Cells["id"].Value.ToString());
+            Guid pmid = Guid.Parse(gridProjectMain.SelectedRows[0].Cells["id"].Value.ToString());
             string pmname = gridProjectMain.SelectedRows[0].Cells["name"].Value.ToString();
             
             FormProjectSub form = new FormProjectSub(pmname, pmid);
@@ -661,9 +661,9 @@ namespace DSA_lims
             if (gridProjectSub.SelectedRows.Count < 1)
                 return;
 
-            Guid pmid = new Guid(gridProjectMain.SelectedRows[0].Cells["id"].Value.ToString());
+            Guid pmid = Guid.Parse(gridProjectMain.SelectedRows[0].Cells["id"].Value.ToString());
             string pmname = gridProjectMain.SelectedRows[0].Cells["name"].Value.ToString();
-            Guid psid = new Guid(gridProjectSub.SelectedRows[0].Cells["id"].Value.ToString());
+            Guid psid = Guid.Parse(gridProjectSub.SelectedRows[0].Cells["id"].Value.ToString());
 
             FormProjectSub form = new FormProjectSub(pmname, pmid, psid);
             switch (form.ShowDialog())
@@ -713,7 +713,7 @@ namespace DSA_lims
                 return;
             
             FormSampleType form = new FormSampleType(
-                new Guid(treeSampleTypes.SelectedNode.Name), 
+                Guid.Parse(treeSampleTypes.SelectedNode.Name), 
                 treeSampleTypes.SelectedNode.Text, 
                 treeSampleTypes.SelectedNode.ToolTipText, 
                 false);
@@ -741,7 +741,7 @@ namespace DSA_lims
                 return;
 
             FormSampleType form = new FormSampleType(
-                new Guid(treeSampleTypes.SelectedNode.Name),
+                Guid.Parse(treeSampleTypes.SelectedNode.Name),
                 treeSampleTypes.SelectedNode.Text,
                 treeSampleTypes.SelectedNode.ToolTipText,
                 true);
@@ -818,7 +818,7 @@ namespace DSA_lims
                 return;
 
             DataGridViewRow row = gridSysNuclides.SelectedRows[0];            
-            Guid nid = new Guid(row.Cells[0].Value.ToString());
+            Guid nid = Guid.Parse(row.Cells[0].Value.ToString());
 
             FormNuclide form = new FormNuclide(nid);
             switch (form.ShowDialog())
@@ -841,7 +841,7 @@ namespace DSA_lims
                 return;
 
             DataGridViewRow row = gridSysNuclides.SelectedRows[0];
-            Guid nid = new Guid(row.Cells[0].Value.ToString());
+            Guid nid = Guid.Parse(row.Cells[0].Value.ToString());
             string nname = row.Cells[1].Value.ToString();
 
             FormEnergyLine form = new FormEnergyLine(nid, nname);
@@ -865,11 +865,11 @@ namespace DSA_lims
                 return;
 
             DataGridViewRow row = gridSysNuclides.SelectedRows[0];
-            Guid nid = new Guid(row.Cells[0].Value.ToString());
+            Guid nid = Guid.Parse(row.Cells[0].Value.ToString());
             string nname = row.Cells[1].Value.ToString();
 
             DataGridViewRow row2 = gridSysNuclideTrans.SelectedRows[0];
-            Guid eid = new Guid(row2.Cells[0].Value.ToString());
+            Guid eid = Guid.Parse(row2.Cells[0].Value.ToString());
 
             FormEnergyLine form = new FormEnergyLine(nid, eid, nname);
             switch (form.ShowDialog())
@@ -917,7 +917,7 @@ namespace DSA_lims
                 return;
 
             DataGridViewRow row = gridSysGeom.SelectedRows[0];
-            Guid gid = new Guid(row.Cells[0].Value.ToString());
+            Guid gid = Guid.Parse(row.Cells[0].Value.ToString());
 
             FormGeometry form = new FormGeometry(gid);
             switch (form.ShowDialog())
@@ -960,7 +960,7 @@ namespace DSA_lims
                 return;
 
             DataGridViewRow row = gridSysCounty.SelectedRows[0];
-            Guid cid = new Guid(row.Cells[0].Value.ToString());
+            Guid cid = Guid.Parse(row.Cells[0].Value.ToString());
 
             FormCounty form = new FormCounty(cid);
             switch (form.ShowDialog())
@@ -987,7 +987,7 @@ namespace DSA_lims
                 return;
 
             DataGridViewRow row = gridSysCounty.SelectedRows[0];
-            Guid cid = new Guid(row.Cells[0].Value.ToString());
+            Guid cid = Guid.Parse(row.Cells[0].Value.ToString());
 
             FormMunicipality form = new FormMunicipality(cid);
             switch (form.ShowDialog())
@@ -1012,10 +1012,10 @@ namespace DSA_lims
                 return;
 
             DataGridViewRow row = gridSysCounty.SelectedRows[0];
-            Guid cid = new Guid(row.Cells[0].Value.ToString());            
+            Guid cid = Guid.Parse(row.Cells[0].Value.ToString());            
 
             row = gridSysMunicipality.SelectedRows[0];
-            Guid mid = new Guid(row.Cells[0].Value.ToString());            
+            Guid mid = Guid.Parse(row.Cells[0].Value.ToString());            
 
             FormMunicipality form = new FormMunicipality(cid, mid);
             switch (form.ShowDialog())
@@ -1063,7 +1063,7 @@ namespace DSA_lims
                 return;
 
             DataGridViewRow row = gridMetaStation.SelectedRows[0];
-            Guid sid = new Guid(row.Cells[0].Value.ToString());
+            Guid sid = Guid.Parse(row.Cells[0].Value.ToString());
 
             FormStation form = new FormStation(sid);
             switch (form.ShowDialog())
@@ -1111,7 +1111,7 @@ namespace DSA_lims
                 return;
 
             DataGridViewRow row = gridMetaSampleStorage.SelectedRows[0];
-            Guid ssid = new Guid(row.Cells[0].Value.ToString());
+            Guid ssid = Guid.Parse(row.Cells[0].Value.ToString());
 
             FormSampleStorage form = new FormSampleStorage(ssid);
             switch (form.ShowDialog())
@@ -1159,7 +1159,7 @@ namespace DSA_lims
                 return;
 
             DataGridViewRow row = gridMetaSamplers.SelectedRows[0];
-            Guid sid = new Guid(row.Cells[0].Value.ToString());
+            Guid sid = Guid.Parse(row.Cells[0].Value.ToString());
 
             FormSampler form = new FormSampler(sid);
             switch (form.ShowDialog())
@@ -1708,7 +1708,7 @@ where sample_id = @sample_id
                 
             foreach (TreeNode prepNode in sampleNode.Nodes)
             {
-                Guid prepId = new Guid(prepNode.Name);
+                Guid prepId = Guid.Parse(prepNode.Name);
                 query = @"
 select a.id as 'analysis_id', a.number as 'analysis_number', am.name as 'analysis_method_name', ass.name as 'assignment_name'
 from analysis a 
@@ -1776,7 +1776,7 @@ where preparation_id = @preparation_id
                 return;
 
             DataGridViewRow row = gridMetaSamplingMeth.SelectedRows[0];
-            Guid smid = new Guid(row.Cells[0].Value.ToString());
+            Guid smid = Guid.Parse(row.Cells[0].Value.ToString());
 
             FormSamplingMeth form = new FormSamplingMeth(smid);
             switch (form.ShowDialog())
@@ -1846,7 +1846,7 @@ where preparation_id = @preparation_id
                 return;
 
             DataGridViewRow row = gridTypeRelPrepMeth.SelectedRows[0];
-            Guid pmid = new Guid(row.Cells[0].Value.ToString());
+            Guid pmid = Guid.Parse(row.Cells[0].Value.ToString());
 
             FormPreparationMethod form = new FormPreparationMethod(pmid);
             switch (form.ShowDialog())
@@ -1895,7 +1895,7 @@ where preparation_id = @preparation_id
                 return;
 
             DataGridViewRow row = gridTypeRelAnalMeth.SelectedRows[0];
-            Guid amid = new Guid(row.Cells[0].Value.ToString());
+            Guid amid = Guid.Parse(row.Cells[0].Value.ToString());
 
             FormAnalysisMethods form = new FormAnalysisMethods(amid);
             switch (form.ShowDialog())
@@ -1933,7 +1933,7 @@ where preparation_id = @preparation_id
 
             FormSampTypeXPrepMeth form = new FormSampTypeXPrepMeth(
                 treeSampleTypes.SelectedNode.Text, 
-                new Guid(treeSampleTypes.SelectedNode.Name), 
+                Guid.Parse(treeSampleTypes.SelectedNode.Name), 
                 methodsAbove, 
                 methodsBelow);
 
@@ -1949,7 +1949,7 @@ where preparation_id = @preparation_id
         private List<Guid> GetPreparationMethodsForSampleType(TreeNode tnode, bool ascend)
         {
             List<Guid> existingMethods = new List<Guid>();
-            Guid sampleTypeId = new Guid(tnode.Name);
+            Guid sampleTypeId = Guid.Parse(tnode.Name);
             using (SqlConnection conn = DB.OpenConnection())
             {
                 SqlCommand cmd = new SqlCommand(@"
@@ -1958,11 +1958,11 @@ select pm.id, pm.name from preparation_method pm
     inner join sample_type st on stpm.sample_type_id = st.id and st.id = @sample_type_id
 order by name
 ", conn);
-                cmd.Parameters.AddWithValue("@sample_type_id", sampleTypeId);
+                cmd.Parameters.AddWithValue("@sample_type_id", DB.MakeParam(typeof(Guid), sampleTypeId));
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())                    
-                        existingMethods.Add(new Guid(reader["id"].ToString()));
+                        existingMethods.Add(Guid.Parse(reader["id"].ToString()));
                 }
 
                 if (ascend)
@@ -1970,14 +1970,14 @@ order by name
                     while (tnode.Parent != null)
                     {
                         tnode = tnode.Parent;
-                        sampleTypeId = new Guid(tnode.Name);
+                        sampleTypeId = Guid.Parse(tnode.Name);
 
                         cmd.Parameters.Clear();
-                        cmd.Parameters.AddWithValue("@sample_type_id", sampleTypeId);
+                        cmd.Parameters.AddWithValue("@sample_type_id", DB.MakeParam(typeof(Guid), sampleTypeId));
                         using (SqlDataReader reader = cmd.ExecuteReader())
                         {
                             while (reader.Read())
-                                existingMethods.Add(new Guid(reader["id"].ToString()));
+                                existingMethods.Add(Guid.Parse(reader["id"].ToString()));
                         }
                     }
                 }
@@ -2004,7 +2004,7 @@ order by name
             }
 
             // new sample component
-            Guid sampleTypeId = new Guid(treeSampleTypes.SelectedNode.Name);
+            Guid sampleTypeId = Guid.Parse(treeSampleTypes.SelectedNode.Name);
 
             FormSampleComponent form = new FormSampleComponent(sampleTypeId);
             switch (form.ShowDialog())
@@ -2037,7 +2037,7 @@ order by name
                 return;
             }
 
-            Guid sampleTypeId = new Guid(treeSampleTypes.SelectedNode.Name);
+            Guid sampleTypeId = Guid.Parse(treeSampleTypes.SelectedNode.Name);
 
             Lemma<Guid, string> sampleComponent = lbSampleTypesComponents.SelectedItems[0] as Lemma<Guid, string>;
 
@@ -2066,7 +2066,7 @@ order by name
                 return;
             }
 
-            Guid amid = new Guid(gridTypeRelAnalMeth.SelectedRows[0].Cells["id"].Value.ToString());
+            Guid amid = Guid.Parse(gridTypeRelAnalMeth.SelectedRows[0].Cells["id"].Value.ToString());
             string amname = gridTypeRelAnalMeth.SelectedRows[0].Cells["name"].Value.ToString();
 
             List<Guid> existingNuclides = GetNuclidesForAnalysisType(amid);
@@ -2091,7 +2091,7 @@ order by name
                     new SqlParameter("@analysis_method_id", amid)))
                 {
                     while (reader.Read())
-                        existingNuclides.Add(new Guid(reader["id"].ToString()));
+                        existingNuclides.Add(Guid.Parse(reader["id"].ToString()));
                 }
             }
 
@@ -2112,7 +2112,7 @@ order by name
                 return;
             }
 
-            Guid pmid = new Guid(gridTypeRelPrepMeth.SelectedRows[0].Cells["id"].Value.ToString());
+            Guid pmid = Guid.Parse(gridTypeRelPrepMeth.SelectedRows[0].Cells["id"].Value.ToString());
             string pmname = gridTypeRelPrepMeth.SelectedRows[0].Cells["name"].Value.ToString();
 
             List<Guid> existingAnalysisMethods = GetAnalysisMethodsForPreparationMethod(pmid);
@@ -2138,7 +2138,7 @@ order by name
                     new SqlParameter("@preparation_method_id", pmid)))
                 {
                     while (reader.Read())
-                        existingAnalysisMethods.Add(new Guid(reader["id"].ToString()));
+                        existingAnalysisMethods.Add(Guid.Parse(reader["id"].ToString()));
                 }
             }
 
@@ -2328,7 +2328,7 @@ order by name
                 return;
             }
 
-            Guid orderSampleTypeId = new Guid(tnode.Name);
+            Guid orderSampleTypeId = Guid.Parse(tnode.Name);
             FormOrderAddPrepMeth form = new FormOrderAddPrepMeth(orderSampleTypeId);
             if (form.ShowDialog() != DialogResult.OK)
                 return;
@@ -2361,7 +2361,7 @@ order by name
                 return;
             }
             
-            Guid orderPrepMethId = new Guid(tnode.Name);
+            Guid orderPrepMethId = Guid.Parse(tnode.Name);
             FormOrderAddAnalMeth form = new FormOrderAddAnalMeth(orderPrepMethId);
             if (form.ShowDialog() != DialogResult.OK)
                 return;
@@ -2510,7 +2510,7 @@ order by name
                 return;
 
             DataGridViewRow row = gridCustomers.SelectedRows[0];
-            Guid cid = new Guid(row.Cells["id"].Value.ToString());
+            Guid cid = Guid.Parse(row.Cells["id"].Value.ToString());
 
             FormCustomer form = new FormCustomer(cid);
             switch (form.ShowDialog())
@@ -2546,7 +2546,7 @@ order by name
             }                
 
             DataGridViewRow row = gridCustomers.SelectedRows[0];
-            Guid cid = new Guid(row.Cells["id"].Value.ToString());
+            Guid cid = Guid.Parse(row.Cells["id"].Value.ToString());
             string cname = row.Cells["name"].Value.ToString();
 
             FormCustomerContact form = new FormCustomerContact(cid, cname);
@@ -2572,11 +2572,11 @@ order by name
                 return;
 
             DataGridViewRow row = gridCustomers.SelectedRows[0];
-            Guid cid = new Guid(row.Cells["id"].Value.ToString());
+            Guid cid = Guid.Parse(row.Cells["id"].Value.ToString());
             string cname = row.Cells["name"].Value.ToString();
 
             row = gridCustomerContacts.SelectedRows[0];
-            Guid ccid = new Guid(row.Cells["id"].Value.ToString());
+            Guid ccid = Guid.Parse(row.Cells["id"].Value.ToString());
 
             FormCustomerContact form = new FormCustomerContact(cid, cname, ccid);
             switch (form.ShowDialog())
@@ -2622,7 +2622,7 @@ order by name
             if (gridCustomers.SelectedRows.Count < 1)
                 return;
 
-            Guid cid = new Guid(gridCustomers.SelectedRows[0].Cells["id"].Value.ToString());
+            Guid cid = Guid.Parse(gridCustomers.SelectedRows[0].Cells["id"].Value.ToString());
             using (SqlConnection conn = DB.OpenConnection())
             {
                 UI.PopulateCustomerContacts(conn, cid, InstanceStatus.Deleted, gridCustomerContacts);
@@ -2634,7 +2634,7 @@ order by name
             if (gridSysNuclides.SelectedRows.Count < 1)
                 return;
 
-            Guid nid = new Guid(gridSysNuclides.SelectedRows[0].Cells[0].Value.ToString());
+            Guid nid = Guid.Parse(gridSysNuclides.SelectedRows[0].Cells[0].Value.ToString());
             using (SqlConnection conn = DB.OpenConnection())
                 UI.PopulateEnergyLines(conn, nid, gridSysNuclideTrans);
         }
@@ -2644,7 +2644,7 @@ order by name
             if (gridSysCounty.SelectedRows.Count < 1)
                 return;
 
-            Guid cid = new Guid(gridSysCounty.SelectedRows[0].Cells["id"].Value.ToString());
+            Guid cid = Guid.Parse(gridSysCounty.SelectedRows[0].Cells["id"].Value.ToString());
             using (SqlConnection conn = DB.OpenConnection())
                 UI.PopulateMunicipalities(conn, cid, gridSysMunicipality);
         }
@@ -2654,7 +2654,7 @@ order by name
             if (gridProjectMain.SelectedRows.Count < 1)
                 return;
 
-            Guid pmid = new Guid(gridProjectMain.SelectedRows[0].Cells["id"].Value.ToString());
+            Guid pmid = Guid.Parse(gridProjectMain.SelectedRows[0].Cells["id"].Value.ToString());
             using (SqlConnection conn = DB.OpenConnection())
                 UI.PopulateProjectsSub(conn, pmid, gridProjectSub);
         }
@@ -2664,7 +2664,7 @@ order by name
             if (gridTypeRelAnalMeth.SelectedRows.Count < 1)
                 return;
 
-            Guid amid = new Guid(gridTypeRelAnalMeth.SelectedRows[0].Cells["id"].Value.ToString());
+            Guid amid = Guid.Parse(gridTypeRelAnalMeth.SelectedRows[0].Cells["id"].Value.ToString());
             using (SqlConnection conn = DB.OpenConnection())
             {
                 UI.PopulateAnalMethNuclides(conn, amid, lbTypRelAnalMethNuclides);
@@ -2676,7 +2676,7 @@ order by name
             if (gridTypeRelPrepMeth.SelectedRows.Count < 1)
                 return;
 
-            Guid pmid = new Guid(gridTypeRelPrepMeth.SelectedRows[0].Cells["id"].Value.ToString());
+            Guid pmid = Guid.Parse(gridTypeRelPrepMeth.SelectedRows[0].Cells["id"].Value.ToString());
             using (SqlConnection conn = DB.OpenConnection())
             {
                 UI.PopulatePrepMethAnalMeths(conn, pmid, lbTypRelPrepMethAnalMeth);

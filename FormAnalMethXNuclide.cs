@@ -61,7 +61,7 @@ namespace DSA_lims
 
                     while (reader.Read())
                     {
-                        var pm = new Lemma<Guid, string>(new Guid(reader["id"].ToString()), reader["name"].ToString());
+                        var pm = new Lemma<Guid, string>(Guid.Parse(reader["id"].ToString()), reader["name"].ToString());
                         lbNuclides.Items.Add(pm);
                     }
                 }
@@ -87,8 +87,8 @@ namespace DSA_lims
                         var selItem = item as Lemma<Guid, string>;
 
                         cmd.Parameters.Clear();
-                        cmd.Parameters.AddWithValue("@analysis_method_id", AnalysisMethodId);
-                        cmd.Parameters.AddWithValue("@nuclide_id", selItem.Id);
+                        cmd.Parameters.AddWithValue("@analysis_method_id", DB.MakeParam(typeof(Guid), AnalysisMethodId));
+                        cmd.Parameters.AddWithValue("@nuclide_id", DB.MakeParam(typeof(Guid), selItem.Id));
                         cmd.ExecuteNonQuery();
                     }
                 }

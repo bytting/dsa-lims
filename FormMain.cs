@@ -107,28 +107,20 @@ namespace DSA_lims
                     cboxPrepAnalAnalSigma.DataSource = DB.GetSigmaValues();
 
                     cboxOrderRequestedSigma.DataSource = DB.GetSigmaValues();
-                    
-                    UI.PopulateDataGrids(conn, "csp_select_activity_units_flat", new SqlParameter[] { }, gridMetaUnitsActivity);
 
-                    UI.HideDataGridColumns(new[] { "id" }, gridMetaUnitsActivity);
-
-                    UI.SetDataGridHeaders(new Dictionary<string, string> {
-                        { "name", "Unit name" },
-                        { "convert_factor", "Conv. fact." },
-                        { "uniform_activity_unit_name", "Uniform unit" }
-                    }, gridMetaUnitsActivity);
+                    UI.PopulateActivityUnits(conn, gridMetaUnitsActivity);
 
                     UI.PopulateComboBoxes(conn, "csp_select_activity_units_short", new SqlParameter[] { }, cboxSampleAnalUnit);
 
                     UI.PopulateComboBoxes(conn, "csp_select_activity_unit_types", new SqlParameter[] { }, cboxSampleAnalUnitType);
 
-                    UI.PopulateProjectsMain(conn, gridProjectMain);                    
+                    UI.PopulateProjectsMain(conn, gridProjectMain);
 
                     UI.PopulateComboBoxes(conn, "csp_select_projects_main_short", new[] {
                         new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
                     }, cboxSampleProject, cboxSamplesProjects);
 
-                    UI.PopulateLaboratories(conn, InstanceStatus.Deleted, gridMetaLab);                    
+                    UI.PopulateLaboratories(conn, InstanceStatus.Deleted, gridMetaLab);
 
                     UI.PopulateComboBoxes(conn, "csp_select_laboratories_short", new[] {
                         new SqlParameter("@instance_status_level", InstanceStatus.Active)
@@ -496,8 +488,9 @@ namespace DSA_lims
                 case DialogResult.OK:
                     SetStatusMessage("Laboratory " + form.LaboratoryName + " created");
                     using (SqlConnection conn = DB.OpenConnection())
-                    {                        
-                        UI.PopulateLaboratories(conn, InstanceStatus.Deleted, gridMetaLab);                        
+                    {
+                        UI.PopulateLaboratories(conn, InstanceStatus.Deleted, gridMetaLab);
+
                         UI.PopulateComboBoxes(conn, "csp_select_laboratories_short", new[] {
                             new SqlParameter("@instance_status_level", InstanceStatus.Active)
                         }, cboxSampleLaboratory, cboxOrderLaboratory);
@@ -617,6 +610,7 @@ namespace DSA_lims
                     using (SqlConnection conn = DB.OpenConnection())
                     {
                         UI.PopulateProjectsMain(conn, gridProjectMain);
+
                         UI.PopulateComboBoxes(conn, "csp_select_projects_main_short", new[] {
                             new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
                         }, cboxSampleProject, cboxSamplesProjects);
@@ -643,6 +637,7 @@ namespace DSA_lims
                     using (SqlConnection conn = DB.OpenConnection())
                     {
                         UI.PopulateProjectsMain(conn, gridProjectMain);
+
                         UI.PopulateComboBoxes(conn, "csp_select_projects_main_short", new[] {
                             new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
                         }, cboxSampleProject, cboxSamplesProjects);
@@ -679,6 +674,7 @@ namespace DSA_lims
                     using (SqlConnection conn = DB.OpenConnection())
                     {
                         UI.PopulateProjectsSub(conn, pmid, gridProjectSub);
+
                         UI.PopulateComboBoxes(conn, "csp_select_projects_sub_short", new[] {
                             new SqlParameter("@project_main_id", pmid),
                             new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
@@ -712,6 +708,7 @@ namespace DSA_lims
                     using (SqlConnection conn = DB.OpenConnection())
                     {
                         UI.PopulateProjectsSub(conn, pmid, gridProjectSub);
+
                         UI.PopulateComboBoxes(conn, "csp_select_projects_sub_short", new[] {
                             new SqlParameter("@project_main_id", pmid),
                             new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
@@ -2695,7 +2692,9 @@ order by name
 
             Guid pmid = Guid.Parse(gridProjectMain.SelectedRows[0].Cells["id"].Value.ToString());
             using (SqlConnection conn = DB.OpenConnection())
+            {
                 UI.PopulateProjectsSub(conn, pmid, gridProjectSub);
+            }
         }
 
         private void gridTypeRelAnalMeth_SelectionChanged(object sender, EventArgs e)

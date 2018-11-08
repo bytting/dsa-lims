@@ -45,23 +45,7 @@ namespace DSA_lims
                 cb.DataSource = new List<Lemma<Guid, string>>(list);
         }
 
-        public static void PopulateDataGrids(SqlConnection conn, string proc, SqlParameter[] sqlParams, params DataGridView[] grids)
-        {
-            Array.ForEach(grids, grid => grid.DataSource = DB.GetDataTable(conn, proc, CommandType.StoredProcedure, sqlParams));
-        }
-
-        public static void HideDataGridColumns(string[] hiddenColumns, params DataGridView[] grids)
-        {
-            Array.ForEach(grids, grid => Array.ForEach(hiddenColumns, column => grid.Columns[column].Visible = false));
-        }
-
-        public static void SetDataGridHeaders(Dictionary<string, string> headerTextCollection, params DataGridView[] grids)
-        {
-            foreach (KeyValuePair<string, string> pair in headerTextCollection)
-                Array.ForEach(grids, grid => grid.Columns[pair.Key].HeaderText = pair.Value);
-        }
-
-        /*public static void PopulateActivityUnits(SqlConnection conn, DataGridView grid)
+        public static void PopulateActivityUnits(SqlConnection conn, DataGridView grid)
         {
             grid.DataSource = DB.GetDataTable(conn, "csp_select_activity_units_flat", CommandType.StoredProcedure);
 
@@ -70,7 +54,7 @@ namespace DSA_lims
             grid.Columns["name"].HeaderText = "Unit name";
             grid.Columns["convert_factor"].HeaderText = "Conv. fact.";
             grid.Columns["uniform_activity_unit_name"].HeaderText = "Uniform unit";
-        }*/
+        }
 
         public static void PopulateProjectsMain(SqlConnection conn, DataGridView grid)
         {
@@ -86,7 +70,7 @@ namespace DSA_lims
 
             grid.Columns["name"].HeaderText = "Name";
             grid.Columns["instance_status_name"].HeaderText = "Status";            
-        }        
+        }
 
         public static void PopulateProjectsSub(SqlConnection conn, Guid project_main_id, DataGridView grid)
         {
@@ -126,7 +110,7 @@ namespace DSA_lims
             grid.Columns["email"].HeaderText = "Email";
             grid.Columns["phone"].HeaderText = "Phone";
             grid.Columns["instance_status_name"].HeaderText = "Status";
-        }        
+        }
 
         public static void PopulateUsers(SqlConnection conn, int instanceStatusLevel, DataGridView grid)
         {                        

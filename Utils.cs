@@ -23,7 +23,7 @@ using System.Text;
 
 namespace DSA_lims
 {
-    public static class StrUtils
+    public static class Utils
     {
         public static string DateTimeFormatISO = "yyyy-MM-dd HH:mm:ss";
         public static string DateFormatISO = "yyyy-MM-dd";
@@ -46,16 +46,7 @@ namespace DSA_lims
                 return false;
 
             Guid g;
-            try
-            {
-                g = Guid.Parse(id.ToString());
-            }
-            catch
-            {
-                return false;
-            }
-            
-            if (g == Guid.Empty)
+            if(!Guid.TryParse(id.ToString(), out g) || g == Guid.Empty)
                 return false;
 
             return true;

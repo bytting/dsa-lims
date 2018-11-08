@@ -51,7 +51,7 @@ namespace DSA_lims
             Text = "DSA-Lims - New customer";
             using (SqlConnection conn = DB.OpenConnection())
             {
-                cboxInstanceStatus.DataSource = DB.LoadIntList(conn, "csp_select_instance_status");
+                cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, "csp_select_instance_status");
             }            
             cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
         }
@@ -65,7 +65,7 @@ namespace DSA_lims
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                cboxInstanceStatus.DataSource = DB.LoadIntList(conn, "csp_select_instance_status");
+                cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, "csp_select_instance_status");
 
                 SqlCommand cmd = new SqlCommand("csp_select_customer", conn);
                 cmd.CommandType = CommandType.StoredProcedure;

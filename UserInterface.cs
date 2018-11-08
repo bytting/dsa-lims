@@ -30,12 +30,12 @@ namespace DSA_lims
 {
     public static partial class UI    
     {
-        public static void PopulateComboBoxes(SqlConnection conn, string proc, SqlParameter[] sqlpn, params ComboBox[] cbn)
+        public static void PopulateComboBoxes(SqlConnection conn, string procedure, SqlParameter[] sqlParams, params ComboBox[] cbn)
         {
             List<Lemma<Guid, string>> list = new List<Lemma<Guid, string>>();
             list.Add(new Lemma<Guid, string>(Guid.Empty, ""));
 
-            using (SqlDataReader reader = DB.GetDataReader(conn, proc, CommandType.StoredProcedure, sqlpn))
+            using (SqlDataReader reader = DB.GetDataReader(conn, procedure, CommandType.StoredProcedure, sqlParams))
             {
                 while (reader.Read())
                     list.Add(new Lemma<Guid, string>(Guid.Parse(reader["id"].ToString()), reader["name"].ToString()));
@@ -45,7 +45,23 @@ namespace DSA_lims
                 cb.DataSource = new List<Lemma<Guid, string>>(list);
         }
 
-        public static void PopulateActivityUnits(SqlConnection conn, DataGridView grid)
+        public static void PopulateDataGrids(SqlConnection conn, string proc, SqlParameter[] sqlParams, params DataGridView[] grids)
+        {
+            Array.ForEach(grids, grid => grid.DataSource = DB.GetDataTable(conn, proc, CommandType.StoredProcedure, sqlParams));
+        }
+
+        public static void HideDataGridColumns(string[] hiddenColumns, params DataGridView[] grids)
+        {
+            Array.ForEach(grids, grid => Array.ForEach(hiddenColumns, column => grid.Columns[column].Visible = false));
+        }
+
+        public static void SetDataGridHeaders(Dictionary<string, string> headerTextCollection, params DataGridView[] grids)
+        {
+            foreach (KeyValuePair<string, string> pair in headerTextCollection)
+                Array.ForEach(grids, grid => grid.Columns[pair.Key].HeaderText = pair.Value);
+        }
+
+        /*public static void PopulateActivityUnits(SqlConnection conn, DataGridView grid)
         {
             grid.DataSource = DB.GetDataTable(conn, "csp_select_activity_units_flat", CommandType.StoredProcedure);
 
@@ -54,7 +70,7 @@ namespace DSA_lims
             grid.Columns["name"].HeaderText = "Unit name";
             grid.Columns["convert_factor"].HeaderText = "Conv. fact.";
             grid.Columns["uniform_activity_unit_name"].HeaderText = "Uniform unit";
-        }
+        }*/
 
         public static void PopulateProjectsMain(SqlConnection conn, DataGridView grid)
         {
@@ -340,7 +356,7 @@ namespace DSA_lims
             grid.Columns["split_from"].HeaderText = "Split from";            
             grid.Columns["merge_from"].HeaderText = "Merge from";
 
-            grid.Columns["reference_date"].DefaultCellStyle.Format = StrUtils.DateTimeFormatNorwegian;
+            grid.Columns["reference_date"].DefaultCellStyle.Format = Utils.DateTimeFormatNorwegian;
         }
 
         public static void PopulatePreparationMethods(SqlConnection conn, DataGridView grid)
@@ -627,7 +643,7 @@ order by name";
             grid.Columns["instance_status_name"].HeaderText = "Status";
             grid.Columns["locked_by"].HeaderText = "Locked by";
 
-            grid.Columns["deadline"].DefaultCellStyle.Format = StrUtils.DateFormatNorwegian;
+            grid.Columns["deadline"].DefaultCellStyle.Format = Utils.DateFormatNorwegian;
         }
 
         public static void PopulateOrders(SqlConnection conn, int statusLevel, Guid laboratoryId, DataGridView grid)

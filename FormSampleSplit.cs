@@ -91,7 +91,7 @@ namespace DSA_lims
 
         private void btnOk_Click(object sender, EventArgs e)
         {
-            if(!StrUtils.IsValidGuid(cboxComponents.SelectedValue))
+            if(!Utils.IsValidGuid(cboxComponents.SelectedValue))
             {
                 MessageBox.Show("Sample component is required");
                 return;

@@ -61,25 +61,25 @@ namespace DSA_lims
 
         private void btnCreate_Click(object sender, EventArgs e)
         {
-            if (cboxSampleType.SelectedValue == null)
+            if (!Utils.IsValidGuid(cboxSampleType.SelectedValue))
             {
                 MessageBox.Show("Sample type is mandatory");
                 return;
             }
 
-            if (cboxProjectMain.SelectedValue == null)
+            if (!Utils.IsValidGuid(cboxProjectMain.SelectedValue))
             {
                 MessageBox.Show("Main project is mandatory");
                 return;
             }
 
-            if (cboxProjectSub.SelectedValue == null)
+            if (!Utils.IsValidGuid(cboxProjectSub.SelectedValue))
             {
                 MessageBox.Show("Sub project is mandatory");
                 return;
             }
 
-            if (cboxLaboratory.SelectedValue == null)
+            if (!Utils.IsValidGuid(cboxLaboratory.SelectedValue))
             {
                 MessageBox.Show("Laboratory is mandatory");
                 return;
@@ -170,7 +170,7 @@ namespace DSA_lims
 
         private void cboxProjectMain_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(cboxProjectMain.SelectedValue == null)
+            if(!Utils.IsValidGuid(cboxProjectMain.SelectedValue))
             {
                 cboxProjectSub.DataSource = null;
                 return;
@@ -189,7 +189,7 @@ namespace DSA_lims
 
         private void cboxSampleType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cboxSampleType.SelectedValue == null)
+            if (!Utils.IsValidGuid(cboxSampleType.SelectedValue))
             {
                 cboxSampleComponent.DataSource = null;
                 return;

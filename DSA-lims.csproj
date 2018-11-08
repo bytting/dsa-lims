@@ -301,7 +301,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Logger.cs" />
-    <Compile Include="StrUtils.cs" />
+    <Compile Include="Utils.cs" />
     <Compile Include="UserInterface.cs" />
     <EmbeddedResource Include="FormAccreditationRule.resx">
       <DependentUpon>FormAccreditationRule.cs</DependentUpon>

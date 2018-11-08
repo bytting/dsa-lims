@@ -61,7 +61,7 @@ namespace DSA_lims
 
         private void btnOk_Click(object sender, EventArgs e)
         {
-            if (!StrUtils.IsValidGuid(cboxPreparationMethod.SelectedValue))
+            if (!Utils.IsValidGuid(cboxPreparationMethod.SelectedValue))
             {
                 MessageBox.Show("Preparation method is mandatory");
                 return;
@@ -87,7 +87,7 @@ namespace DSA_lims
                     cmd.Parameters.AddWithValue("@preparation_method_id", DB.MakeParam(typeof(Guid), prepMethId));
                     cmd.Parameters.AddWithValue("@preparation_method_count", cnt);
 
-                    if (StrUtils.IsValidGuid(cboxPrepMethLaboratory.SelectedValue))
+                    if (Utils.IsValidGuid(cboxPrepMethLaboratory.SelectedValue))
                     {
                         Guid prepLabId = Guid.Parse(cboxPrepMethLaboratory.SelectedValue.ToString());
                         cmd.Parameters.AddWithValue("@preparation_laboratory_id", DB.MakeParam(typeof(Guid), prepLabId));

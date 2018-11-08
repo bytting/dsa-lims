@@ -45,7 +45,7 @@ namespace DSA_lims
             if (!CheckExistingSampleType())
                 return;
 
-            if(!StrUtils.IsValidGuid(cboxSampleType.SelectedValue))
+            if(!Utils.IsValidGuid(cboxSampleType.SelectedValue))
             {
                 MessageBox.Show("Sample type is mandatory");
                 return;
@@ -107,7 +107,7 @@ namespace DSA_lims
         {
             lblStatus.Text = "";
 
-            if (!StrUtils.IsValidGuid(cboxSampleType.SelectedValue))
+            if (!Utils.IsValidGuid(cboxSampleType.SelectedValue))
             {
                 cboxSampleComponent.DataSource = null;
                 return;
@@ -126,12 +126,12 @@ namespace DSA_lims
 
         private bool CheckExistingSampleType()
         {
-            if(!StrUtils.IsValidGuid(cboxSampleType.SelectedValue))
+            if(!Utils.IsValidGuid(cboxSampleType.SelectedValue))
             {
                 cboxSampleType.SelectedItem = Guid.Empty;
                 cboxSampleComponent.DataSource = null;
 
-                lblStatus.Text = StrUtils.makeStatusMessage("You must select an existing sample type");
+                lblStatus.Text = Utils.makeStatusMessage("You must select an existing sample type");
                 return false;
             }
 

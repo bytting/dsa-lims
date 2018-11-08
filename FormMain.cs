@@ -92,62 +92,101 @@ namespace DSA_lims
                 {
                     Common.Username = "Admin"; // FIXME
                     
-                    cboxSamplesStatus.DataSource = DB.LoadIntList(conn, "csp_select_instance_status");
-                    cboxSampleInstanceStatus.DataSource = DB.LoadIntList(conn, "csp_select_instance_status");
-                    cboxSamplePrepUnit.DataSource = DB.LoadIntList(conn, "csp_select_preparation_units", true);
-                    cboxSampleAnalWorkflowStatus.DataSource = DB.LoadIntList(conn, "csp_select_workflow_status");
-                    cboxSamplePrepWorkflowStatus.DataSource = DB.LoadIntList(conn, "csp_select_workflow_status");
-                    cboxSampleInfoLocationTypes.DataSource = DB.LoadIntList(conn, "csp_select_location_types", true);
-                    cboxPrepAnalAnalSigma.DataSource = DB.LoadSigma();
-                    cboxOrderRequestedSigma.DataSource = DB.LoadSigma();
+                    cboxSamplesStatus.DataSource = DB.GetIntLemmata(conn, "csp_select_instance_status");
 
-                    UI.PopulateActivityUnits(conn, gridMetaUnitsActivity);
+                    cboxSampleInstanceStatus.DataSource = DB.GetIntLemmata(conn, "csp_select_instance_status");
+
+                    cboxSamplePrepUnit.DataSource = DB.GetIntLemmata(conn, "csp_select_preparation_units", true);
+
+                    cboxSampleAnalWorkflowStatus.DataSource = DB.GetIntLemmata(conn, "csp_select_workflow_status");
+
+                    cboxSamplePrepWorkflowStatus.DataSource = DB.GetIntLemmata(conn, "csp_select_workflow_status");
+
+                    cboxSampleInfoLocationTypes.DataSource = DB.GetIntLemmata(conn, "csp_select_location_types", true);
+
+                    cboxPrepAnalAnalSigma.DataSource = DB.GetSigmaValues();
+
+                    cboxOrderRequestedSigma.DataSource = DB.GetSigmaValues();
+                    
+                    UI.PopulateDataGrids(conn, "csp_select_activity_units_flat", new SqlParameter[] { }, gridMetaUnitsActivity);
+
+                    UI.HideDataGridColumns(new[] { "id" }, gridMetaUnitsActivity);
+
+                    UI.SetDataGridHeaders(new Dictionary<string, string> {
+                        { "name", "Unit name" },
+                        { "convert_factor", "Conv. fact." },
+                        { "uniform_activity_unit_name", "Uniform unit" }
+                    }, gridMetaUnitsActivity);
+
                     UI.PopulateComboBoxes(conn, "csp_select_activity_units_short", new SqlParameter[] { }, cboxSampleAnalUnit);
+
                     UI.PopulateComboBoxes(conn, "csp_select_activity_unit_types", new SqlParameter[] { }, cboxSampleAnalUnitType);
+
                     UI.PopulateProjectsMain(conn, gridProjectMain);                    
+
                     UI.PopulateComboBoxes(conn, "csp_select_projects_main_short", new[] {
                         new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
                     }, cboxSampleProject, cboxSamplesProjects);
+
                     UI.PopulateLaboratories(conn, InstanceStatus.Deleted, gridMetaLab);                    
+
                     UI.PopulateComboBoxes(conn, "csp_select_laboratories_short", new[] {
                         new SqlParameter("@instance_status_level", InstanceStatus.Active)
                     }, cboxSampleLaboratory, cboxOrderLaboratory);
+
                     UI.PopulateUsers(conn, InstanceStatus.Deleted, gridMetaUsers);                    
+
                     UI.PopulateNuclides(conn, gridSysNuclides);
+
                     UI.PopulateGeometries(conn, gridSysGeom);                    
+
                     UI.PopulateComboBoxes(conn, "csp_select_preparation_geometries_short", new[] {                    
                         new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
                     }, cboxSamplePrepGeom);
+
                     UI.PopulateCounties(conn, gridSysCounty);                    
+
                     UI.PopulateComboBoxes(conn, "csp_select_counties_short", new[] {
                         new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
                     }, cboxSampleCounties);
+
                     UI.PopulateStations(conn, gridMetaStation);                    
+
                     UI.PopulateComboBoxes(conn, "csp_select_stations_short", new[] {
                         new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
                     }, cboxSampleInfoStations);
+
                     UI.PopulateSampleStorage(conn, gridMetaSampleStorage);                    
+
                     UI.PopulateComboBoxes(conn, "csp_select_sample_storages_short", new[] {
                         new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
                     }, cboxSampleSampleStorage);
+
                     UI.PopulateSamplers(conn, gridMetaSamplers);                    
+
                     UI.PopulateComboBoxes(conn, "csp_select_samplers_short", new[] {
                         new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
                     }, cboxSampleInfoSampler);
+
                     UI.PopulateSamplingMethods(conn, gridMetaSamplingMeth);                    
+
                     UI.PopulateComboBoxes(conn, "csp_select_sampling_methods_short", new[] {
                         new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
                     }, cboxSampleInfoSamplingMeth);
-                    UI.PopulateSamples(conn, gridSamples);
+
                     UI.PopulatePreparationMethods(conn, gridTypeRelPrepMeth);
+
                     UI.PopulateAnalysisMethods(conn, gridTypeRelAnalMeth);
+
                     UI.PopulateSampleTypes(conn, treeSampleTypes);
+
                     UI.PopulateSampleTypes(treeSampleTypes, cboxSampleSampleType);                    
+
                     UI.PopulateCustomers(conn, InstanceStatus.Deleted, gridCustomers);                    
+
                     UI.PopulateComboBoxes(conn, "csp_select_customers", new[] {
                         new SqlParameter("@instance_status_level", InstanceStatus.Active)
-                    }, cboxOrderCustomerName);
-                    //UI.PopulateOrders(conn, InstanceStatus.Deleted, gridOrders);
+                    }, cboxOrderCustomerName);                    
                 }
                 
                 HideMenuItems();
@@ -192,15 +231,15 @@ namespace DSA_lims
             switch(msgLevel)
             {
                 case StatusMessageType.Success:
-                    lblStatus.Text = StrUtils.makeStatusMessage(msg);
+                    lblStatus.Text = Utils.makeStatusMessage(msg);
                     lblStatus.ForeColor = SystemColors.ControlText;
                     break;
                 case StatusMessageType.Warning:
-                    lblStatus.Text = StrUtils.makeStatusMessage(msg);
+                    lblStatus.Text = Utils.makeStatusMessage(msg);
                     lblStatus.ForeColor = Color.OrangeRed;
                     break;
                 case StatusMessageType.Error:
-                    lblStatus.Text = StrUtils.makeErrorMessage(msg);
+                    lblStatus.Text = Utils.makeErrorMessage(msg);
                     lblStatus.ForeColor = Color.Red;
                     break;
             }            
@@ -1189,7 +1228,7 @@ namespace DSA_lims
         {            
             ClearStatusMessage();            
 
-            if (!StrUtils.IsValidGuid(cboxSampleSampleType.SelectedValue))
+            if (!Utils.IsValidGuid(cboxSampleSampleType.SelectedValue))
             {
                 cboxSampleSampleComponent.DataSource = null;
                 return;
@@ -1217,7 +1256,7 @@ namespace DSA_lims
                 return;
             }
 
-            if(!StrUtils.IsValidGuid(cboxSampleSampleType.SelectedValue))
+            if(!Utils.IsValidGuid(cboxSampleSampleType.SelectedValue))
             {
                 cboxSampleSampleType.SelectedValue = Guid.Empty;
                 cboxSampleSampleComponent.DataSource = null;
@@ -1236,7 +1275,7 @@ namespace DSA_lims
 
         private void cboxSampleProject_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (!StrUtils.IsValidGuid(cboxSampleProject.SelectedValue))
+            if (!Utils.IsValidGuid(cboxSampleProject.SelectedValue))
             {
                 lblSampleToolProject.Text = "";
                 lblSampleToolSubProject.Text = "";
@@ -1258,7 +1297,7 @@ namespace DSA_lims
 
         private void cboxSampleSubProject_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (!StrUtils.IsValidGuid(cboxSampleSubProject.SelectedValue))
+            if (!Utils.IsValidGuid(cboxSampleSubProject.SelectedValue))
             {
                 lblSampleToolSubProject.Text = "";
                 return;
@@ -1269,7 +1308,7 @@ namespace DSA_lims
 
         private void cboxSampleInfoStations_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(!StrUtils.IsValidGuid(cboxSampleInfoStations.SelectedValue))
+            if(!Utils.IsValidGuid(cboxSampleInfoStations.SelectedValue))
             {
                 tbSampleInfoLatitude.Text = "";
                 tbSampleInfoLongitude.Text = "";
@@ -1305,7 +1344,7 @@ namespace DSA_lims
 
         private void cboxSampleCounties_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(!StrUtils.IsValidGuid(cboxSampleCounties.SelectedValue))
+            if(!Utils.IsValidGuid(cboxSampleCounties.SelectedValue))
             {
                 cboxSampleMunicipalities.DataSource = null;
                 return;
@@ -1337,7 +1376,7 @@ namespace DSA_lims
 
             tabs.SelectedTab = tabSample;
 
-            lblStatus.Text = StrUtils.makeStatusMessage("Sample " + form.SampleNumber + " created successfully");
+            lblStatus.Text = Utils.makeStatusMessage("Sample " + form.SampleNumber + " created successfully");
         }
 
         private void miSamplesImportExcel_Click(object sender, EventArgs e)
@@ -1519,9 +1558,9 @@ namespace DSA_lims
         private void miSamplesSplit_Click(object sender, EventArgs e)
         {
             // split sample
-            if(gridSamples.SelectedRows.Count < 1)
+            if(gridSamples.SelectedRows.Count != 1)
             {
-                MessageBox.Show("You must select a sample first");
+                MessageBox.Show("You must select a single sample to split");
                 return;
             }
 
@@ -1538,7 +1577,7 @@ namespace DSA_lims
                 int mergeTest = Convert.ToInt32(DB.GetScalar(conn, "select count(transform_to_id) from sample where id = '" + sid.ToString() + "'", CommandType.Text));
                 if (mergeTest > 0)
                 {
-                    MessageBox.Show("Sample has already been merged");
+                    MessageBox.Show("Cannot split, sample has already been merged");
                     return;
                 }
             }   
@@ -1552,7 +1591,7 @@ namespace DSA_lims
                 UI.PopulateSamples(conn, gridSamples);
             }
 
-            lblStatus.Text = StrUtils.makeStatusMessage("Splitting sample successful");
+            lblStatus.Text = Utils.makeStatusMessage("Splitting sample successful");
         }
 
         private void miSamplesMerge_Click(object sender, EventArgs e)
@@ -1599,7 +1638,7 @@ namespace DSA_lims
                 UI.PopulateSamples(conn, gridSamples);
             }
 
-            lblStatus.Text = StrUtils.makeStatusMessage("Merging samples successful");
+            lblStatus.Text = Utils.makeStatusMessage("Merging samples successful");
         }
 
         private void miSamplesSetOrder_Click(object sender, EventArgs e)
@@ -1617,7 +1656,7 @@ namespace DSA_lims
 
             string sampleName = gridSamples.SelectedRows[0].Cells["number"].Value.ToString();
 
-            lblStatus.Text = StrUtils.makeStatusMessage("Successfully added sample " + sampleName + " to order " + form.SelectedOrderName);
+            lblStatus.Text = Utils.makeStatusMessage("Successfully added sample " + sampleName + " to order " + form.SelectedOrderName);
         }
 
         private void miSamplesSetProject_Click(object sender, EventArgs e)
@@ -1804,7 +1843,7 @@ where preparation_id = @preparation_id
 
         private void cboxSamplesProjects_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (!StrUtils.IsValidGuid(cboxSamplesProjects.SelectedValue))
+            if (!Utils.IsValidGuid(cboxSamplesProjects.SelectedValue))
             {
                 cboxSamplesProjectsSub.DataSource = null;
                 return;
@@ -2261,8 +2300,8 @@ order by name
                 cboxOrderLaboratory.SelectedValue = map["laboratory_id"];
                 cboxOrderResponsible.SelectedValue = map["account_id"];
                 DateTime deadline = Convert.ToDateTime(map["deadline"]);
-                tbOrderDeadline.Text = deadline.ToString(StrUtils.DateFormatNorwegian);
-                cboxOrderRequestedSigma.SelectedItem = map["requested_sigma"];
+                tbOrderDeadline.Text = deadline.ToString(Utils.DateFormatNorwegian);
+                cboxOrderRequestedSigma.SelectedValue = map["requested_sigma"];
                 tbOrderContentComment.Text = map["content_comment"].ToString();
                 cboxOrderCustomerName.Text = map["customer_name"].ToString();
                 tbOrderCustomerAddress.Text = map["customer_address"].ToString();
@@ -2478,7 +2517,7 @@ order by name
 
             DateTime selectedDate = form.SelectedDate;
             tbOrderDeadline.Tag = selectedDate;
-            tbOrderDeadline.Text = selectedDate.ToString(StrUtils.DateFormatNorwegian);
+            tbOrderDeadline.Text = selectedDate.ToString(Utils.DateFormatNorwegian);
         }
 
         private void miCustomersNew_Click(object sender, EventArgs e)
@@ -2601,7 +2640,7 @@ order by name
 
         private void cboxOrderCustomerName_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(!StrUtils.IsValidGuid(cboxOrderCustomerName.SelectedValue))
+            if(!Utils.IsValidGuid(cboxOrderCustomerName.SelectedValue))
             {
                 cboxOrderContact.DataSource = null;
                 return;
@@ -2807,25 +2846,25 @@ order by name
 
         private void btnSampleUpdate_Click(object sender, EventArgs e)
         {
-            if (!StrUtils.IsValidGuid(cboxSampleLaboratory.SelectedValue))
+            if (!Utils.IsValidGuid(cboxSampleLaboratory.SelectedValue))
             {
                 MessageBox.Show("Laboratory is mandatory");
                 return;
             }
 
-            if (!StrUtils.IsValidGuid(cboxSampleSampleType.SelectedValue))
+            if (!Utils.IsValidGuid(cboxSampleSampleType.SelectedValue))
             {
                 MessageBox.Show("Sample type is mandatory");
                 return;
             }
 
-            if (!StrUtils.IsValidGuid(cboxSampleProject.SelectedValue))
+            if (!Utils.IsValidGuid(cboxSampleProject.SelectedValue))
             {
                 MessageBox.Show("Main project is mandatory");
                 return;
             }
 
-            if (!StrUtils.IsValidGuid(cboxSampleSubProject.SelectedValue))
+            if (!Utils.IsValidGuid(cboxSampleSubProject.SelectedValue))
             {
                 MessageBox.Show("Sub project is mandatory");
                 return;
@@ -2874,7 +2913,7 @@ order by name
 
                 cmd.ExecuteNonQuery();
 
-                lblStatus.Text = StrUtils.makeStatusMessage("Sample " + oNumber.ToString() + " updated");
+                lblStatus.Text = Utils.makeStatusMessage("Sample " + oNumber.ToString() + " updated");
             }
             catch (Exception ex)
             {

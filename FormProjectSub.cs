@@ -52,7 +52,7 @@ namespace DSA_lims
             tbMainProjectName.Text = pname;
             using (SqlConnection conn = DB.OpenConnection())
             {
-                cboxInstanceStatus.DataSource = DB.LoadIntList(conn, "csp_select_instance_status");
+                cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, "csp_select_instance_status");
             }            
             cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
         }
@@ -67,7 +67,7 @@ namespace DSA_lims
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                cboxInstanceStatus.DataSource = DB.LoadIntList(conn, "csp_select_instance_status");
+                cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, "csp_select_instance_status");
 
                 SqlCommand cmd = new SqlCommand("csp_select_project_sub", conn);
                 cmd.CommandType = CommandType.StoredProcedure;

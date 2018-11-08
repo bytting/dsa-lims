@@ -51,8 +51,8 @@ namespace DSA_lims
             Text = "New nuclide";            
             using (SqlConnection conn = DB.OpenConnection())
             {
-                cboxInstanceStatus.DataSource = DB.LoadIntList(conn, "csp_select_instance_status");
-                cboxDecayTypes.DataSource = DB.LoadIntList(conn, "csp_select_decay_types", true);
+                cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, "csp_select_instance_status");
+                cboxDecayTypes.DataSource = DB.GetIntLemmata(conn, "csp_select_decay_types", true);
             }
             cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
             cboxDecayTypes.SelectedValue = -1;
@@ -68,8 +68,8 @@ namespace DSA_lims
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                cboxInstanceStatus.DataSource = DB.LoadIntList(conn, "csp_select_instance_status");
-                cboxDecayTypes.DataSource = DB.LoadIntList(conn, "csp_select_decay_types", true);
+                cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, "csp_select_instance_status");
+                cboxDecayTypes.DataSource = DB.GetIntLemmata(conn, "csp_select_decay_types", true);
 
                 SqlCommand cmd = new SqlCommand("csp_select_nuclide", conn);
                 cmd.CommandType = CommandType.StoredProcedure;

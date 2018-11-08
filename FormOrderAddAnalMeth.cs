@@ -55,7 +55,7 @@ namespace DSA_lims
 
         private void btnOk_Click(object sender, EventArgs e)
         {
-            if (!StrUtils.IsValidGuid(cboxAnalysisMethods.SelectedValue))
+            if (!Utils.IsValidGuid(cboxAnalysisMethods.SelectedValue))
             {
                 MessageBox.Show("Analysis method is mandatory");
                 return;

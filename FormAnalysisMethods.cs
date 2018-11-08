@@ -48,7 +48,7 @@ namespace DSA_lims
             Text = "Create analysis method";
             using (SqlConnection conn = DB.OpenConnection())
             {
-                cboxInstanceStatus.DataSource = DB.LoadIntList(conn, "csp_select_instance_status");
+                cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, "csp_select_instance_status");
             }
             cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
         }
@@ -61,7 +61,7 @@ namespace DSA_lims
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                cboxInstanceStatus.DataSource = DB.LoadIntList(conn, "csp_select_instance_status");
+                cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, "csp_select_instance_status");
 
                 SqlCommand cmd = new SqlCommand("csp_select_analysis_method", conn);
                 cmd.CommandType = CommandType.StoredProcedure;

@@ -69,7 +69,7 @@ namespace DSA_lims
 
         private void btnOk_Click(object sender, EventArgs e)
         {
-            if(!StrUtils.IsValidGuid(cboxLaboratory.SelectedValue))
+            if(!Utils.IsValidGuid(cboxLaboratory.SelectedValue))
             {
                 MessageBox.Show("You must select a laboratory first");
                 return;
@@ -249,7 +249,7 @@ namespace DSA_lims
             gridOrders.DataSource = null;
             treeOrderLines.Nodes.Clear();
 
-            if (!StrUtils.IsValidGuid(cboxLaboratory.SelectedValue))
+            if (!Utils.IsValidGuid(cboxLaboratory.SelectedValue))
                 return;
 
             Guid labId = Guid.Parse(cboxLaboratory.SelectedValue.ToString());

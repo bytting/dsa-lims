@@ -51,7 +51,7 @@ namespace DSA_lims
                     new SqlParameter("@instance_status_level", InstanceStatus.Active)
                 }, cboxCustomer);
 
-                cboxRequestedSigma.DataSource = DB.LoadSigma();
+                cboxRequestedSigma.DataSource = DB.GetSigmaValues();
             }
         }
 
@@ -63,13 +63,13 @@ namespace DSA_lims
 
         private void btnCreate_Click(object sender, EventArgs e)
         {
-            if (!StrUtils.IsValidGuid(cboxLaboratory.SelectedValue))
+            if (!Utils.IsValidGuid(cboxLaboratory.SelectedValue))
             {
                 MessageBox.Show("Laboratory is mandatory");
                 return;
             }
 
-            if (cboxResponsible.SelectedValue == null || cboxResponsible.SelectedValue.ToString() == String.Empty)
+            if (!Utils.IsValidGuid(cboxResponsible.SelectedValue))
             {
                 MessageBox.Show("Responsible is mandatory");
                 return;
@@ -81,7 +81,7 @@ namespace DSA_lims
                 return;
             }
 
-            if (cboxRequestedSigma.SelectedItem == null)
+            if (!Utils.IsValidGuid(cboxRequestedSigma.SelectedValue))
             {
                 MessageBox.Show("Requested sigma is mandatory");
                 return;
@@ -122,7 +122,7 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@laboratory_id", DB.MakeParam(typeof(Guid), labId));                
                 cmd.Parameters.AddWithValue("@account_id", username);
                 cmd.Parameters.AddWithValue("@deadline", (DateTime)tbDeadline.Tag);
-                cmd.Parameters.AddWithValue("@requested_sigma", Convert.ToDouble(cboxRequestedSigma.Text));
+                cmd.Parameters.AddWithValue("@requested_sigma", cboxRequestedSigma.SelectedValue);
                 cmd.Parameters.AddWithValue("@customer_name", customerName);
                 cmd.Parameters.AddWithValue("@customer_address", customerAddress);
                 cmd.Parameters.AddWithValue("@customer_email", customerEmail);
@@ -165,7 +165,7 @@ namespace DSA_lims
 
         private void cboxLaboratory_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (!StrUtils.IsValidGuid(cboxLaboratory.SelectedValue))
+            if (!Utils.IsValidGuid(cboxLaboratory.SelectedValue))
                 return;
 
             Guid labId = Guid.Parse(cboxLaboratory.SelectedValue.ToString());
@@ -183,7 +183,7 @@ namespace DSA_lims
 
             DateTime selectedDate = form.SelectedDate;
             tbDeadline.Tag = selectedDate;
-            tbDeadline.Text = selectedDate.ToString(StrUtils.DateFormatNorwegian);
+            tbDeadline.Text = selectedDate.ToString(Utils.DateFormatNorwegian);
         }
     }
 }

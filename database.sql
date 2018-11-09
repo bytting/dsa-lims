@@ -2069,8 +2069,8 @@ create table analysis (
 	analysis_method_id uniqueidentifier NOT NULL,	
 	workflow_status_id int default 1,
 	specter_reference nvarchar(256) default NULL,
-	activity_unit_id int default NULL,
-	activity_unit_type_id int default NULL,
+	activity_unit_id uniqueidentifier default NULL,
+	activity_unit_type_id uniqueidentifier default NULL,
 	sigma float default NULL,
 	nuclide_library nvarchar(256) default NULL,
 	mda_library nvarchar(256) default NULL,	
@@ -2092,8 +2092,8 @@ create proc csp_insert_analysis
 	@analysis_method_id uniqueidentifier,	
 	@workflow_status_id int,
 	@specter_reference nvarchar(256),
-	@activity_unit_id int,
-	@activity_unit_type_id int,
+	@activity_unit_id uniqueidentifier,
+	@activity_unit_type_id uniqueidentifier,
 	@sigma float,
 	@nuclide_library nvarchar(256),
 	@mda_library nvarchar(256),	
@@ -2125,6 +2125,39 @@ as
 		@update_date,
 		@updated_by
 	);
+go
+
+create proc csp_update_analysis
+	@id uniqueidentifier,
+	@workflow_status_id int,
+	@specter_reference nvarchar(256),
+	@activity_unit_id uniqueidentifier,
+	@activity_unit_type_id uniqueidentifier,
+	@sigma float,
+	@nuclide_library nvarchar(256),
+	@mda_library nvarchar(256),		
+	@comment nvarchar(1000),		
+	@update_date datetime,
+	@updated_by nvarchar(50)
+as 
+	update analysis set
+		workflow_status_id = @workflow_status_id,
+		specter_reference = @specter_reference,
+		activity_unit_id = @activity_unit_id,
+		activity_unit_type_id = @activity_unit_type_id,
+		sigma = @sigma,
+		nuclide_library = @nuclide_library,
+		mda_library = @mda_library,
+		comment = @comment,
+		update_date = @update_date,
+		updated_by = @updated_by
+	where id = @id
+go
+
+create proc csp_select_analysis
+	@id uniqueidentifier
+as
+	select * from analysis where id = @id
 go
 
 /*===========================================================================*/
@@ -3294,6 +3327,29 @@ as
 	where id = @id
 go
 
+create proc csp_update_sample_info
+	@id uniqueidentifier,	
+	@wet_weight_g float,	
+	@dry_weight_g float,
+	@volume_l float,
+	@lod_weight_start float,	
+	@lod_weight_end float,	
+	@lod_temperature float,
+	@update_date datetime,
+	@updated_by nvarchar(50)	
+as 		
+	update sample set		
+		wet_weight_g = @wet_weight_g,	
+		dry_weight_g = @dry_weight_g,
+		volume_l = @volume_l,
+		lod_weight_start = @lod_weight_start,	
+		lod_weight_end = @lod_weight_end,	
+		lod_temperature = @lod_temperature,
+		update_date = @update_date,
+		updated_by = @updated_by
+	where id = @id
+go
+
 create proc csp_select_sample
 	@id uniqueidentifier
 as
@@ -3422,6 +3478,20 @@ from sample s inner join sample_x_assignment_sample_type sxast on s.id = sxast.s
 	left outer join sample_component sc on s.sample_component_id = sc.id
 	inner join project_sub ps on s.project_sub_id = ps.id
 	inner join project_main pm on pm.id = ps.project_main_id
+go
+
+create proc csp_select_sample_info
+	@id uniqueidentifier	
+as 		
+	select
+		wet_weight_g,	
+		dry_weight_g,
+		volume_l,
+		lod_weight_start,	
+		lod_weight_end,	
+		lod_temperature		
+	from sample
+	where id = @id
 go
 
 /*===========================================================================*/

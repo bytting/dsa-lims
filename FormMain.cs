@@ -109,9 +109,9 @@ namespace DSA_lims
                     cboxOrderRequestedSigma.DataSource = DB.GetSigmaValues();
 
                     UI.PopulateActivityUnits(conn, gridMetaUnitsActivity);
-
+                    
                     UI.PopulateComboBoxes(conn, "csp_select_activity_units_short", new SqlParameter[] { }, cboxPrepAnalAnalUnit);
-
+                    
                     UI.PopulateComboBoxes(conn, "csp_select_activity_unit_types", new SqlParameter[] { }, cboxPrepAnalAnalUnitType);
 
                     UI.PopulateProjectsMain(conn, gridProjectMain);
@@ -2761,6 +2761,8 @@ order by name
             {
                 case 0:
                     ClearPrepAnalSample();
+                    Guid sid = Guid.Parse(e.Node.Name);
+                    PopulateSampleInfo(sid);
                     tabsPrepAnal.SelectedTab = tabPrepAnalSample;
                     break;
                 case 1:
@@ -2965,7 +2967,7 @@ order by name
         {
             if(!Utils.IsValidGuid(treePrepAnal.SelectedNode.Name))
             {
-                MessageBox.Show("No valid id found");
+                MessageBox.Show("No valid preparation ID found");
                 return;
             }
 
@@ -3021,13 +3023,85 @@ order by name
                     cboxPrepAnalPrepWorkflowStatus.SelectedValue = reader["workflow_status_id"];
                     tbPrepAnalPrepComment.Text = reader["comment"].ToString();
                 }
+            }                
+        }        
 
-                if (Utils.IsValidGuid(cboxPrepAnalPrepGeom.SelectedValue))
+        private void btnPrepAnalAnalUpdate_Click(object sender, EventArgs e)
+        {
+            if (!Utils.IsValidGuid(treePrepAnal.SelectedNode.Name))
+            {
+                MessageBox.Show("No valid analysis ID found");
+                return;
+            }
+
+            Guid aid = Guid.Parse(treePrepAnal.SelectedNode.Name);
+            SqlConnection conn = null;
+
+            try
+            {
+                conn = DB.OpenConnection();
+                SqlCommand cmd = new SqlCommand("csp_update_analysis", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@id", aid);
+                cmd.Parameters.AddWithValue("@workflow_status_id", cboxPrepAnalAnalWorkflowStatus.SelectedValue);
+                cmd.Parameters.AddWithValue("@specter_reference", tbPrepAnalAnalSpecRef.Text);
+                cmd.Parameters.AddWithValue("@activity_unit_id", DB.MakeParam(typeof(Guid), cboxPrepAnalAnalUnit.SelectedValue));
+                cmd.Parameters.AddWithValue("@activity_unit_type_id", DB.MakeParam(typeof(Guid), cboxPrepAnalAnalUnitType.SelectedValue));
+                cmd.Parameters.AddWithValue("@sigma", DB.MakeParam(typeof(int), cboxPrepAnalAnalSigma.SelectedValue));
+                cmd.Parameters.AddWithValue("@nuclide_library", tbPrepAnalAnalNuclLib.Text);
+                cmd.Parameters.AddWithValue("@mda_library", tbPrepAnalAnalMDALib.Text);
+                cmd.Parameters.AddWithValue("@comment", tbPrepAnalAnalComment.Text);
+                cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
+                cmd.Parameters.AddWithValue("@updated_by", Common.Username);
+
+                cmd.ExecuteNonQuery();
+
+                lblStatus.Text = Utils.makeStatusMessage("Analysis updated successfully");
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn?.Close();
+            }
+        }
+
+        private void PopulateAnalysis(Guid aid)
+        {
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_analysis", CommandType.StoredProcedure,
+                    new SqlParameter("@id", aid)))
                 {
-                    string fhInfo = "[";
-                    Guid geomId = Guid.Parse(cboxPrepAnalPrepGeom.SelectedValue.ToString());
+                    reader.Read();
 
-                    using (SqlDataReader reader = DB.GetDataReader(conn, "select min_fill_height_mm, max_fill_height_mm from preparation_geometry where id = @id", CommandType.Text, 
+                    cboxPrepAnalAnalUnit.SelectedValue = reader["activity_unit_id"];
+                    cboxPrepAnalAnalUnitType.SelectedValue = reader["activity_unit_type_id"];
+                    cboxPrepAnalAnalSigma.SelectedValue = reader["sigma"];
+                    tbPrepAnalAnalSpecRef.Text = reader["specter_reference"].ToString();
+                    tbPrepAnalAnalNuclLib.Text = reader["nuclide_library"].ToString();
+                    tbPrepAnalAnalMDALib.Text = reader["mda_library"].ToString();
+                    cboxPrepAnalAnalWorkflowStatus.SelectedValue = reader["workflow_status_id"];
+                    tbPrepAnalAnalComment.Text = reader["comment"].ToString();
+                }
+            }
+        }
+
+        private void cboxPrepAnalPrepGeom_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            lblPrepAnalPrepRange.Text = "";
+
+            if (Utils.IsValidGuid(cboxPrepAnalPrepGeom.SelectedValue))
+            {
+                string fhInfo = "[";
+                Guid geomId = Guid.Parse(cboxPrepAnalPrepGeom.SelectedValue.ToString());
+
+                using (SqlConnection conn = DB.OpenConnection())
+                {
+                    using (SqlDataReader reader = DB.GetDataReader(conn, "select min_fill_height_mm, max_fill_height_mm from preparation_geometry where id = @id", CommandType.Text,
                         new SqlParameter("@id", geomId)))
                     {
                         reader.Read();
@@ -3035,12 +3109,67 @@ order by name
                     }
                     lblPrepAnalPrepRange.Text = fhInfo;
                 }
-            }                
+            }
         }
 
-        private void PopulateAnalysis(Guid pid)
+        private void btnPrepAnalSampleUpdate_Click(object sender, EventArgs e)
         {
+            if (!Utils.IsValidGuid(treePrepAnal.SelectedNode.Name))
+            {
+                MessageBox.Show("No valid sample ID found");
+                return;
+            }
 
+            Guid sid = Guid.Parse(treePrepAnal.SelectedNode.Name);
+            SqlConnection conn = null;
+
+            try
+            {
+                conn = DB.OpenConnection();
+                SqlCommand cmd = new SqlCommand("csp_update_sample_info", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@id", sid);
+                cmd.Parameters.AddWithValue("@wet_weight_g", tbPrepAnalWetWeight.Text);
+                cmd.Parameters.AddWithValue("@dry_weight_g", tbPrepAnalDryWeight.Text);
+                cmd.Parameters.AddWithValue("@volume_l", tbPrepAnalVolume.Text);
+                cmd.Parameters.AddWithValue("@lod_weight_start", tbPrepAnalLODStartWeight.Text);
+                cmd.Parameters.AddWithValue("@lod_weight_end", tbPrepAnalLODEndWeight.Text);
+                cmd.Parameters.AddWithValue("@lod_temperature", tbPrepAnalLODTemp.Text);
+                cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
+                cmd.Parameters.AddWithValue("@updated_by", Common.Username);
+
+                cmd.ExecuteNonQuery();
+
+                lblStatus.Text = Utils.makeStatusMessage("Sample info updated successfully");
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn?.Close();
+            }
+        }
+
+        private void PopulateSampleInfo(Guid sid)
+        {
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_sample_info", CommandType.StoredProcedure,
+                    new SqlParameter("@id", sid)))
+                {
+                    reader.Read();
+
+                    tbPrepAnalWetWeight.Text = reader["wet_weight_g"].ToString();
+                    tbPrepAnalDryWeight.Text = reader["dry_weight_g"].ToString();
+                    tbPrepAnalVolume.Text = reader["volume_l"].ToString();
+                    tbPrepAnalLODStartWeight.Text = reader["lod_weight_start"].ToString();
+                    tbPrepAnalLODEndWeight.Text = reader["lod_weight_end"].ToString();
+                    tbPrepAnalLODTemp.Text = reader["lod_temperature"].ToString();
+                }
+            }
         }
     }    
 }

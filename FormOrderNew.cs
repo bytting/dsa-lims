@@ -69,7 +69,7 @@ namespace DSA_lims
                 return;
             }
 
-            if (!Utils.IsValidGuid(cboxResponsible.SelectedValue))
+            if (cboxResponsible.SelectedValue == null || String.IsNullOrEmpty(cboxResponsible.SelectedValue.ToString()))
             {
                 MessageBox.Show("Responsible is mandatory");
                 return;
@@ -81,7 +81,7 @@ namespace DSA_lims
                 return;
             }
 
-            if (!Utils.IsValidGuid(cboxRequestedSigma.SelectedValue))
+            if (cboxRequestedSigma.SelectedValue == null)
             {
                 MessageBox.Show("Requested sigma is mandatory");
                 return;

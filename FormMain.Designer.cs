@@ -899,6 +899,8 @@
             this.rPTToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel77 = new System.Windows.Forms.Panel();
             this.panel79 = new System.Windows.Forms.Panel();
+            this.panel80 = new System.Windows.Forms.Panel();
+            this.btnPrepAnalSampleUpdate = new System.Windows.Forms.Button();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tabs.SuspendLayout();
@@ -1223,6 +1225,7 @@
             this.panel9.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView9)).BeginInit();
             this.toolsSampleResRes.SuspendLayout();
+            this.panel80.SuspendLayout();
             this.SuspendLayout();
             // 
             // menu
@@ -8729,6 +8732,7 @@
             // 
             this.tabPrepAnalSample.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.tabPrepAnalSample.Controls.Add(this.splitContainer4);
+            this.tabPrepAnalSample.Controls.Add(this.panel80);
             this.tabPrepAnalSample.Controls.Add(this.toolStrip10);
             this.tabPrepAnalSample.Location = new System.Drawing.Point(4, 24);
             this.tabPrepAnalSample.Name = "tabPrepAnalSample";
@@ -8750,7 +8754,7 @@
             // splitContainer4.Panel2
             // 
             this.splitContainer4.Panel2.Controls.Add(this.groupBox3);
-            this.splitContainer4.Size = new System.Drawing.Size(696, 579);
+            this.splitContainer4.Size = new System.Drawing.Size(696, 551);
             this.splitContainer4.SplitterDistance = 339;
             this.splitContainer4.TabIndex = 2;
             // 
@@ -9328,6 +9332,7 @@
             this.cboxPrepAnalPrepGeom.Size = new System.Drawing.Size(258, 23);
             this.cboxPrepAnalPrepGeom.TabIndex = 4;
             this.cboxPrepAnalPrepGeom.ValueMember = "Id";
+            this.cboxPrepAnalPrepGeom.SelectedIndexChanged += new System.EventHandler(this.cboxPrepAnalPrepGeom_SelectedIndexChanged);
             // 
             // panel54
             // 
@@ -9580,6 +9585,7 @@
             this.btnPrepAnalAnalUpdate.TabIndex = 0;
             this.btnPrepAnalAnalUpdate.Text = "Update analysis info";
             this.btnPrepAnalAnalUpdate.UseVisualStyleBackColor = true;
+            this.btnPrepAnalAnalUpdate.Click += new System.EventHandler(this.btnPrepAnalAnalUpdate_Click);
             // 
             // panel49
             // 
@@ -10106,6 +10112,26 @@
             this.panel79.Size = new System.Drawing.Size(106, 28);
             this.panel79.TabIndex = 2;
             // 
+            // panel80
+            // 
+            this.panel80.Controls.Add(this.btnPrepAnalSampleUpdate);
+            this.panel80.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel80.Location = new System.Drawing.Point(3, 579);
+            this.panel80.Name = "panel80";
+            this.panel80.Size = new System.Drawing.Size(696, 28);
+            this.panel80.TabIndex = 4;
+            // 
+            // btnPrepAnalSampleUpdate
+            // 
+            this.btnPrepAnalSampleUpdate.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnPrepAnalSampleUpdate.Location = new System.Drawing.Point(523, 0);
+            this.btnPrepAnalSampleUpdate.Name = "btnPrepAnalSampleUpdate";
+            this.btnPrepAnalSampleUpdate.Size = new System.Drawing.Size(173, 28);
+            this.btnPrepAnalSampleUpdate.TabIndex = 0;
+            this.btnPrepAnalSampleUpdate.Text = "Update sample info";
+            this.btnPrepAnalSampleUpdate.UseVisualStyleBackColor = true;
+            this.btnPrepAnalSampleUpdate.Click += new System.EventHandler(this.btnPrepAnalSampleUpdate_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -10605,6 +10631,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView9)).EndInit();
             this.toolsSampleResRes.ResumeLayout(false);
             this.toolsSampleResRes.PerformLayout();
+            this.panel80.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -11482,6 +11509,8 @@
         private System.Windows.Forms.ToolStripButton toolStripButton18;
         private System.Windows.Forms.Panel panel77;
         private System.Windows.Forms.Panel panel79;
+        private System.Windows.Forms.Panel panel80;
+        private System.Windows.Forms.Button btnPrepAnalSampleUpdate;
     }
 }
 

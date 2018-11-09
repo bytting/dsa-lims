@@ -897,6 +897,8 @@
             this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
             this.lISToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rPTToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.panel77 = new System.Windows.Forms.Panel();
+            this.panel79 = new System.Windows.Forms.Panel();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tabs.SuspendLayout();
@@ -8731,7 +8733,7 @@
             this.tabPrepAnalSample.Location = new System.Drawing.Point(4, 24);
             this.tabPrepAnalSample.Name = "tabPrepAnalSample";
             this.tabPrepAnalSample.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPrepAnalSample.Size = new System.Drawing.Size(702, 580);
+            this.tabPrepAnalSample.Size = new System.Drawing.Size(702, 610);
             this.tabPrepAnalSample.TabIndex = 5;
             this.tabPrepAnalSample.Text = "Sample";
             // 
@@ -8748,7 +8750,7 @@
             // splitContainer4.Panel2
             // 
             this.splitContainer4.Panel2.Controls.Add(this.groupBox3);
-            this.splitContainer4.Size = new System.Drawing.Size(696, 549);
+            this.splitContainer4.Size = new System.Drawing.Size(696, 579);
             this.splitContainer4.SplitterDistance = 339;
             this.splitContainer4.TabIndex = 2;
             // 
@@ -9506,6 +9508,7 @@
             // panel24
             // 
             this.panel24.Controls.Add(this.btnPrepAnalPrepUpdate);
+            this.panel24.Controls.Add(this.panel77);
             this.panel24.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel24.Location = new System.Drawing.Point(0, 265);
             this.panel24.Name = "panel24";
@@ -9514,13 +9517,14 @@
             // 
             // btnPrepAnalPrepUpdate
             // 
-            this.btnPrepAnalPrepUpdate.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnPrepAnalPrepUpdate.Location = new System.Drawing.Point(251, 0);
+            this.btnPrepAnalPrepUpdate.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnPrepAnalPrepUpdate.Location = new System.Drawing.Point(113, 0);
             this.btnPrepAnalPrepUpdate.Name = "btnPrepAnalPrepUpdate";
-            this.btnPrepAnalPrepUpdate.Size = new System.Drawing.Size(120, 28);
+            this.btnPrepAnalPrepUpdate.Size = new System.Drawing.Size(258, 28);
             this.btnPrepAnalPrepUpdate.TabIndex = 0;
-            this.btnPrepAnalPrepUpdate.Text = "Update info";
+            this.btnPrepAnalPrepUpdate.Text = "Update preparation info";
             this.btnPrepAnalPrepUpdate.UseVisualStyleBackColor = true;
+            this.btnPrepAnalPrepUpdate.Click += new System.EventHandler(this.btnPrepAnalPrepUpdate_Click);
             // 
             // panel63
             // 
@@ -9528,7 +9532,7 @@
             this.panel63.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel63.Location = new System.Drawing.Point(3, 3);
             this.panel63.Name = "panel63";
-            this.panel63.Size = new System.Drawing.Size(696, 312);
+            this.panel63.Size = new System.Drawing.Size(696, 315);
             this.panel63.TabIndex = 2;
             // 
             // splitContainer21
@@ -9553,13 +9557,14 @@
             // splitContainer21.Panel2
             // 
             this.splitContainer21.Panel2.Controls.Add(this.panel8);
-            this.splitContainer21.Size = new System.Drawing.Size(696, 312);
+            this.splitContainer21.Size = new System.Drawing.Size(696, 315);
             this.splitContainer21.SplitterDistance = 366;
             this.splitContainer21.TabIndex = 5;
             // 
             // panel62
             // 
             this.panel62.Controls.Add(this.btnPrepAnalAnalUpdate);
+            this.panel62.Controls.Add(this.panel79);
             this.panel62.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel62.Location = new System.Drawing.Point(0, 282);
             this.panel62.Name = "panel62";
@@ -9568,12 +9573,12 @@
             // 
             // btnPrepAnalAnalUpdate
             // 
-            this.btnPrepAnalAnalUpdate.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnPrepAnalAnalUpdate.Location = new System.Drawing.Point(246, 0);
+            this.btnPrepAnalAnalUpdate.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnPrepAnalAnalUpdate.Location = new System.Drawing.Point(106, 0);
             this.btnPrepAnalAnalUpdate.Name = "btnPrepAnalAnalUpdate";
-            this.btnPrepAnalAnalUpdate.Size = new System.Drawing.Size(120, 28);
+            this.btnPrepAnalAnalUpdate.Size = new System.Drawing.Size(260, 28);
             this.btnPrepAnalAnalUpdate.TabIndex = 0;
-            this.btnPrepAnalAnalUpdate.Text = "Update info";
+            this.btnPrepAnalAnalUpdate.Text = "Update analysis info";
             this.btnPrepAnalAnalUpdate.UseVisualStyleBackColor = true;
             // 
             // panel49
@@ -9918,7 +9923,7 @@
             this.panel8.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel8.Location = new System.Drawing.Point(0, 0);
             this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(326, 312);
+            this.panel8.Size = new System.Drawing.Size(326, 315);
             this.panel8.TabIndex = 3;
             // 
             // dataGridView11
@@ -9932,7 +9937,7 @@
             this.dataGridView11.Location = new System.Drawing.Point(0, 25);
             this.dataGridView11.Name = "dataGridView11";
             this.dataGridView11.ReadOnly = true;
-            this.dataGridView11.Size = new System.Drawing.Size(326, 287);
+            this.dataGridView11.Size = new System.Drawing.Size(326, 290);
             this.dataGridView11.TabIndex = 1;
             // 
             // toolsSampleResAttachments
@@ -9990,9 +9995,9 @@
             // 
             this.panel76.Controls.Add(this.panel9);
             this.panel76.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel76.Location = new System.Drawing.Point(3, 315);
+            this.panel76.Location = new System.Drawing.Point(3, 318);
             this.panel76.Name = "panel76";
-            this.panel76.Size = new System.Drawing.Size(696, 292);
+            this.panel76.Size = new System.Drawing.Size(696, 289);
             this.panel76.TabIndex = 3;
             // 
             // panel9
@@ -10002,7 +10007,7 @@
             this.panel9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel9.Location = new System.Drawing.Point(0, 0);
             this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(696, 292);
+            this.panel9.Size = new System.Drawing.Size(696, 289);
             this.panel9.TabIndex = 4;
             // 
             // dataGridView9
@@ -10016,7 +10021,7 @@
             this.dataGridView9.Location = new System.Drawing.Point(0, 25);
             this.dataGridView9.Name = "dataGridView9";
             this.dataGridView9.ReadOnly = true;
-            this.dataGridView9.Size = new System.Drawing.Size(696, 267);
+            this.dataGridView9.Size = new System.Drawing.Size(696, 264);
             this.dataGridView9.TabIndex = 0;
             // 
             // toolsSampleResRes
@@ -10084,6 +10089,22 @@
             this.rPTToolStripMenuItem.Name = "rPTToolStripMenuItem";
             this.rPTToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
             this.rPTToolStripMenuItem.Text = "RPT (NaI)";
+            // 
+            // panel77
+            // 
+            this.panel77.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panel77.Location = new System.Drawing.Point(0, 0);
+            this.panel77.Name = "panel77";
+            this.panel77.Size = new System.Drawing.Size(113, 28);
+            this.panel77.TabIndex = 1;
+            // 
+            // panel79
+            // 
+            this.panel79.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panel79.Location = new System.Drawing.Point(0, 0);
+            this.panel79.Name = "panel79";
+            this.panel79.Size = new System.Drawing.Size(106, 28);
+            this.panel79.TabIndex = 2;
             // 
             // FormMain
             // 
@@ -11459,6 +11480,8 @@
         private System.Windows.Forms.ToolStripButton toolStripButton16;
         private System.Windows.Forms.ToolStripButton toolStripButton17;
         private System.Windows.Forms.ToolStripButton toolStripButton18;
+        private System.Windows.Forms.Panel panel77;
+        private System.Windows.Forms.Panel panel79;
     }
 }
 

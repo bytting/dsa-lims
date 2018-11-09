@@ -1895,6 +1895,35 @@ as
 	);
 go
 
+create proc csp_update_preparation
+	@id uniqueidentifier,
+	@preparation_geometry_id uniqueidentifier,
+	@workflow_status_id int,
+	@amount float,
+	@prep_unit_id int,
+	@fill_height_mm float,	
+	@comment nvarchar(1000),
+	@update_date datetime,
+	@updated_by nvarchar(50)
+as 
+	update preparation set								
+		preparation_geometry_id = @preparation_geometry_id,		
+		workflow_status_id = @workflow_status_id,
+		amount = @amount,
+		prep_unit_id = @prep_unit_id,
+		fill_height_mm = @fill_height_mm,	
+		comment = @comment,			
+		update_date = @update_date,
+		updated_by = @updated_by
+	where id = @id
+go
+
+create proc csp_select_preparation
+	@id uniqueidentifier
+as
+	select * from preparation where id = @id
+go
+
 /*===========================================================================*/
 /* tbl analysis_method */
 

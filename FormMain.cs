@@ -1400,6 +1400,7 @@ namespace DSA_lims
             cboxPrepAnalPrepUnit.SelectedValue = 0;
             cboxPrepAnalPrepWorkflowStatus.SelectedValue = WorkflowStatus.Construction;
             tbPrepAnalPrepComment.Text = "";
+            lblPrepAnalPrepRange.Text = "";
         }
 
         private void ClearPrepAnalAnalysis()
@@ -2764,10 +2765,14 @@ order by name
                     break;
                 case 1:
                     ClearPrepAnalPreparation();
+                    Guid pid = Guid.Parse(e.Node.Name);
+                    PopulatePreparation(pid);
                     tabsPrepAnal.SelectedTab = tabPrepAnalPreps;
                     break;
                 case 2:
                     ClearPrepAnalAnalysis();
+                    Guid aid = Guid.Parse(e.Node.Name);
+                    PopulateAnalysis(aid);
                     tabsPrepAnal.SelectedTab = tabPrepAnalAnalysis;
                     break;
             }
@@ -2954,6 +2959,88 @@ order by name
             int w = panelSampleLatLonAlt.Width;
             tbSampleInfoLatitude.Width = w / 3;
             tbSampleInfoAltitude.Width = w / 3;
+        }
+
+        private void btnPrepAnalPrepUpdate_Click(object sender, EventArgs e)
+        {
+            if(!Utils.IsValidGuid(treePrepAnal.SelectedNode.Name))
+            {
+                MessageBox.Show("No valid id found");
+                return;
+            }
+
+            Guid pid = Guid.Parse(treePrepAnal.SelectedNode.Name);
+            SqlConnection conn = null;
+
+            double amount = Convert.ToDouble(tbPrepAnalPrepAmount.Text);
+            double fillHeight = Convert.ToDouble(tbPrepAnalPrepFillHeight.Text);
+
+            try
+            {
+                conn = DB.OpenConnection();
+                SqlCommand cmd = new SqlCommand("csp_update_preparation", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@id", pid);
+                cmd.Parameters.AddWithValue("@preparation_geometry_id", DB.MakeParam(typeof(Guid), cboxPrepAnalPrepGeom.SelectedValue));
+                cmd.Parameters.AddWithValue("@workflow_status_id", cboxPrepAnalPrepWorkflowStatus.SelectedValue);
+                cmd.Parameters.AddWithValue("@amount", amount);
+                cmd.Parameters.AddWithValue("@prep_unit_id", cboxPrepAnalPrepUnit.SelectedValue);
+                cmd.Parameters.AddWithValue("@fill_height_mm", fillHeight);
+                cmd.Parameters.AddWithValue("@comment", tbPrepAnalPrepComment.Text);
+                cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
+                cmd.Parameters.AddWithValue("@updated_by", Common.Username);
+
+                cmd.ExecuteNonQuery();
+
+                lblStatus.Text = Utils.makeStatusMessage("Preparation updated successfully");
+            }
+            catch(Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn?.Close();
+            }
+        }
+
+        private void PopulatePreparation(Guid pid)
+        {
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_preparation", CommandType.StoredProcedure, 
+                    new SqlParameter("@id", pid)))
+                {
+                    reader.Read();
+
+                    cboxPrepAnalPrepGeom.SelectedValue = reader["preparation_geometry_id"];
+                    tbPrepAnalPrepFillHeight.Text = reader["fill_height_mm"].ToString();
+                    tbPrepAnalPrepAmount.Text = reader["amount"].ToString();
+                    cboxPrepAnalPrepUnit.SelectedValue = reader["prep_unit_id"];
+                    cboxPrepAnalPrepWorkflowStatus.SelectedValue = reader["workflow_status_id"];
+                    tbPrepAnalPrepComment.Text = reader["comment"].ToString();
+                }
+
+                if (Utils.IsValidGuid(cboxPrepAnalPrepGeom.SelectedValue))
+                {
+                    string fhInfo = "[";
+                    Guid geomId = Guid.Parse(cboxPrepAnalPrepGeom.SelectedValue.ToString());
+
+                    using (SqlDataReader reader = DB.GetDataReader(conn, "select min_fill_height_mm, max_fill_height_mm from preparation_geometry where id = @id", CommandType.Text, 
+                        new SqlParameter("@id", geomId)))
+                    {
+                        reader.Read();
+                        fhInfo += reader["min_fill_height_mm"] + ", " + reader["max_fill_height_mm"] + "]";
+                    }
+                    lblPrepAnalPrepRange.Text = fhInfo;
+                }
+            }                
+        }
+
+        private void PopulateAnalysis(Guid pid)
+        {
+
         }
     }    
 }

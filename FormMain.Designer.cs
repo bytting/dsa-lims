@@ -905,6 +905,7 @@
             this.tbPrepAnalInfoComment = new System.Windows.Forms.TextBox();
             this.toolStrip3 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel11 = new System.Windows.Forms.ToolStripLabel();
+            this.btnPrepAnalAnalImport = new System.Windows.Forms.ToolStripButton();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tabs.SuspendLayout();
@@ -10049,7 +10050,8 @@
             this.toolStripSeparator28,
             this.toolStripButton19,
             this.toolStripButton20,
-            this.toolStripDropDownButton1});
+            this.toolStripDropDownButton1,
+            this.btnPrepAnalAnalImport});
             this.toolsSampleResRes.Location = new System.Drawing.Point(0, 0);
             this.toolsSampleResRes.Name = "toolsSampleResRes";
             this.toolsSampleResRes.Size = new System.Drawing.Size(696, 25);
@@ -10098,13 +10100,13 @@
             // lISToolStripMenuItem
             // 
             this.lISToolStripMenuItem.Name = "lISToolStripMenuItem";
-            this.lISToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
+            this.lISToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.lISToolStripMenuItem.Text = "LIS (HPGe)";
             // 
             // rPTToolStripMenuItem
             // 
             this.rPTToolStripMenuItem.Name = "rPTToolStripMenuItem";
-            this.rPTToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
+            this.rPTToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.rPTToolStripMenuItem.Text = "RPT (NaI)";
             // 
             // panel77
@@ -10181,6 +10183,16 @@
             this.toolStripLabel11.Name = "toolStripLabel11";
             this.toolStripLabel11.Size = new System.Drawing.Size(75, 22);
             this.toolStripLabel11.Text = "Sample data";
+            // 
+            // btnPrepAnalAnalImport
+            // 
+            this.btnPrepAnalAnalImport.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnPrepAnalAnalImport.Image = ((System.Drawing.Image)(resources.GetObject("btnPrepAnalAnalImport.Image")));
+            this.btnPrepAnalAnalImport.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnPrepAnalAnalImport.Name = "btnPrepAnalAnalImport";
+            this.btnPrepAnalAnalImport.Size = new System.Drawing.Size(23, 22);
+            this.btnPrepAnalAnalImport.Text = "toolStripButton25";
+            this.btnPrepAnalAnalImport.Click += new System.EventHandler(this.btnPrepAnalAnalImport_Click);
             // 
             // FormMain
             // 
@@ -11569,6 +11581,7 @@
         private System.Windows.Forms.TextBox tbPrepAnalInfoComment;
         private System.Windows.Forms.ToolStrip toolStrip3;
         private System.Windows.Forms.ToolStripLabel toolStripLabel11;
+        private System.Windows.Forms.ToolStripButton btnPrepAnalAnalImport;
     }
 }
 

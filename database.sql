@@ -3484,14 +3484,24 @@ create proc csp_select_sample_info
 	@id uniqueidentifier	
 as 		
 	select
-		wet_weight_g,	
-		dry_weight_g,
-		volume_l,
-		lod_weight_start,	
-		lod_weight_end,	
-		lod_temperature		
-	from sample
-	where id = @id
+		sc.name as 'sample_component_name',
+		s.external_id,
+		pm.name + ' - ' + ps.name as 'project_name',
+		s.reference_date,
+		ss.name as 'sample_storage_name',
+		s.wet_weight_g,
+		s.dry_weight_g,
+		s.volume_l,
+		s.lod_weight_start,
+		s.lod_weight_end,
+		s.lod_temperature,
+		s.comment
+	from sample s		
+		inner join project_sub ps on s.project_sub_id = ps.id
+		inner join project_main pm on pm.id = ps.project_main_id
+		left outer join sample_component sc on s.sample_component_id = sc.id
+		left outer join sample_storage ss on s.sample_storage_id = ss.id
+	where s.id = @id
 go
 
 /*===========================================================================*/

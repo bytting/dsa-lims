@@ -1383,6 +1383,7 @@ namespace DSA_lims
 
         private void ClearPrepAnalSample()
         {
+            tbPrepAnalInfoComment.Text = "";
             tbPrepAnalDryWeight.Text = "";
             tbPrepAnalWetWeight.Text = "";
             tbPrepAnalVolume.Text = "";
@@ -2762,7 +2763,7 @@ order by name
                 case 0:
                     ClearPrepAnalSample();
                     Guid sid = Guid.Parse(e.Node.Name);
-                    PopulateSampleInfo(sid);
+                    PopulateSampleInfo(sid, e.Node);
                     tabsPrepAnal.SelectedTab = tabPrepAnalSample;
                     break;
                 case 1:
@@ -3140,7 +3141,7 @@ order by name
 
                 cmd.ExecuteNonQuery();
 
-                lblStatus.Text = Utils.makeStatusMessage("Sample info updated successfully");
+                lblStatus.Text = Utils.makeStatusMessage("Sample data updated successfully");
             }
             catch (Exception ex)
             {
@@ -3153,7 +3154,7 @@ order by name
             }
         }
 
-        private void PopulateSampleInfo(Guid sid)
+        private void PopulateSampleInfo(Guid sid, TreeNode tnode)
         {
             using (SqlConnection conn = DB.OpenConnection())
             {
@@ -3161,6 +3162,15 @@ order by name
                     new SqlParameter("@id", sid)))
                 {
                     reader.Read();
+
+                    DateTime refDate = Convert.ToDateTime(reader["reference_date"]);
+
+                    tnode.ToolTipText = "Component: " + reader["sample_component_name"].ToString() + Environment.NewLine
+                        + "External Id: " + reader["external_id"].ToString() + Environment.NewLine
+                        + "Project: " + reader["project_name"].ToString() + Environment.NewLine
+                        + "Reference date: " + refDate.ToString(Utils.DateFormatNorwegian);
+
+                    tbPrepAnalInfoComment.Text = reader["comment"].ToString();
 
                     tbPrepAnalWetWeight.Text = reader["wet_weight_g"].ToString();
                     tbPrepAnalDryWeight.Text = reader["dry_weight_g"].ToString();

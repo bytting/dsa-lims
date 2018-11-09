@@ -233,7 +233,6 @@
             this.dtSampleReferenceDate = new System.Windows.Forms.DateTimePicker();
             this.dtSampleReferenceTime = new System.Windows.Forms.DateTimePicker();
             this.cboxSampleLaboratory = new System.Windows.Forms.ComboBox();
-            this.cbSampleConfidential = new System.Windows.Forms.CheckBox();
             this.cboxSampleSubProject = new System.Windows.Forms.ComboBox();
             this.cboxSampleInfoSamplingMeth = new System.Windows.Forms.ComboBox();
             this.cboxSampleMunicipalities = new System.Windows.Forms.ComboBox();
@@ -246,7 +245,6 @@
             this.cboxSampleSampleStorage = new System.Windows.Forms.ComboBox();
             this.label16 = new System.Windows.Forms.Label();
             this.tbSampleExId = new System.Windows.Forms.TextBox();
-            this.btnSampleUpdate = new System.Windows.Forms.Button();
             this.panel7 = new System.Windows.Forms.Panel();
             this.label7 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
@@ -258,9 +256,21 @@
             this.label21 = new System.Windows.Forms.Label();
             this.label22 = new System.Windows.Forms.Label();
             this.cboxSampleInstanceStatus = new System.Windows.Forms.ComboBox();
+            this.tbSampleComment = new System.Windows.Forms.TextBox();
+            this.cbSampleConfidential = new System.Windows.Forms.CheckBox();
+            this.panel36 = new System.Windows.Forms.Panel();
+            this.btnSampleUpdate = new System.Windows.Forms.Button();
             this.toolStrip11 = new System.Windows.Forms.ToolStrip();
             this.btnSampleAddSampleToOrder = new System.Windows.Forms.ToolStripButton();
-            this.tbSampleComment = new System.Windows.Forms.TextBox();
+            this.panel21 = new System.Windows.Forms.Panel();
+            this.panelSamplesAttachments = new System.Windows.Forms.Panel();
+            this.gridSampleAttachments = new System.Windows.Forms.DataGridView();
+            this.toolsSampleSampInfoAttachments = new System.Windows.Forms.ToolStrip();
+            this.toolStripLabel18 = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripSeparator46 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
             this.tabSamplesParams = new System.Windows.Forms.TabPage();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.toolStrip6 = new System.Windows.Forms.ToolStrip();
@@ -471,9 +481,6 @@
             this.toolStripLabel22 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator57 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton97 = new System.Windows.Forms.ToolStripButton();
-            this.panel24 = new System.Windows.Forms.Panel();
-            this.btnSamplesClose = new System.Windows.Forms.Button();
-            this.btnSamplesOpen = new System.Windows.Forms.Button();
             this.tabProjects = new System.Windows.Forms.TabPage();
             this.splitProjects = new System.Windows.Forms.SplitContainer();
             this.gridProjectMain = new System.Windows.Forms.DataGridView();
@@ -759,32 +766,32 @@
             this.splitContainer4 = new System.Windows.Forms.SplitContainer();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.panel66 = new System.Windows.Forms.Panel();
-            this.textBox6 = new System.Windows.Forms.TextBox();
+            this.tbPrepAnalVolume = new System.Windows.Forms.TextBox();
             this.panel67 = new System.Windows.Forms.Panel();
             this.label46 = new System.Windows.Forms.Label();
             this.panel64 = new System.Windows.Forms.Panel();
-            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.tbPrepAnalDryWeight = new System.Windows.Forms.TextBox();
             this.panel65 = new System.Windows.Forms.Panel();
             this.label44 = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
-            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.tbPrepAnalWetWeight = new System.Windows.Forms.TextBox();
             this.panel26 = new System.Windows.Forms.Panel();
             this.label6 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.panel74 = new System.Windows.Forms.Panel();
-            this.textBox34 = new System.Windows.Forms.TextBox();
+            this.tbPrepAnalLODTemp = new System.Windows.Forms.TextBox();
             this.panel75 = new System.Windows.Forms.Panel();
             this.label68 = new System.Windows.Forms.Label();
             this.panel72 = new System.Windows.Forms.Panel();
-            this.textBox33 = new System.Windows.Forms.TextBox();
+            this.tbPrepAnalLODWater = new System.Windows.Forms.TextBox();
             this.panel73 = new System.Windows.Forms.Panel();
             this.label67 = new System.Windows.Forms.Label();
             this.panel70 = new System.Windows.Forms.Panel();
-            this.textBox32 = new System.Windows.Forms.TextBox();
+            this.tbPrepAnalLODEndWeight = new System.Windows.Forms.TextBox();
             this.panel71 = new System.Windows.Forms.Panel();
             this.label66 = new System.Windows.Forms.Label();
             this.panel68 = new System.Windows.Forms.Panel();
-            this.textBox20 = new System.Windows.Forms.TextBox();
+            this.tbPrepAnalLODStartWeight = new System.Windows.Forms.TextBox();
             this.panel69 = new System.Windows.Forms.Panel();
             this.label65 = new System.Windows.Forms.Label();
             this.toolStrip10 = new System.Windows.Forms.ToolStrip();
@@ -793,26 +800,26 @@
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel60 = new System.Windows.Forms.Panel();
-            this.textBox19 = new System.Windows.Forms.TextBox();
+            this.tbPrepAnalPrepComment = new System.Windows.Forms.TextBox();
             this.panel61 = new System.Windows.Forms.Panel();
             this.label31 = new System.Windows.Forms.Label();
             this.panel57 = new System.Windows.Forms.Panel();
-            this.cboxSamplePrepWorkflowStatus = new System.Windows.Forms.ComboBox();
+            this.cboxPrepAnalPrepWorkflowStatus = new System.Windows.Forms.ComboBox();
             this.panel58 = new System.Windows.Forms.Panel();
             this.label64 = new System.Windows.Forms.Label();
             this.panel55 = new System.Windows.Forms.Panel();
-            this.textBox17 = new System.Windows.Forms.TextBox();
+            this.tbPrepAnalPrepAmount = new System.Windows.Forms.TextBox();
             this.panel56 = new System.Windows.Forms.Panel();
             this.label29 = new System.Windows.Forms.Label();
-            this.cboxSamplePrepUnit = new System.Windows.Forms.ComboBox();
+            this.cboxPrepAnalPrepUnit = new System.Windows.Forms.ComboBox();
             this.panel52 = new System.Windows.Forms.Panel();
-            this.textBox16 = new System.Windows.Forms.TextBox();
+            this.tbPrepAnalPrepFillHeight = new System.Windows.Forms.TextBox();
             this.panel59 = new System.Windows.Forms.Panel();
-            this.lblSamplesPrepRange = new System.Windows.Forms.Label();
+            this.lblPrepAnalPrepRange = new System.Windows.Forms.Label();
             this.panel53 = new System.Windows.Forms.Panel();
             this.label28 = new System.Windows.Forms.Label();
             this.panel51 = new System.Windows.Forms.Panel();
-            this.cboxSamplePrepGeom = new System.Windows.Forms.ComboBox();
+            this.cboxPrepAnalPrepGeom = new System.Windows.Forms.ComboBox();
             this.panel54 = new System.Windows.Forms.Panel();
             this.label27 = new System.Windows.Forms.Label();
             this.toolsSamplePrepInfo = new System.Windows.Forms.ToolStrip();
@@ -827,26 +834,34 @@
             this.toolStripButton12 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton13 = new System.Windows.Forms.ToolStripButton();
             this.tabPrepAnalAnalysis = new System.Windows.Forms.TabPage();
-            this.splitContainer5 = new System.Windows.Forms.SplitContainer();
+            this.tools = new System.Windows.Forms.ToolStrip();
+            this.btnMenu = new System.Windows.Forms.ToolStripButton();
+            this.lblCurrentTab = new System.Windows.Forms.ToolStripLabel();
+            this.btnBack = new System.Windows.Forms.ToolStripButton();
+            this.panel24 = new System.Windows.Forms.Panel();
+            this.btnPrepAnalPrepUpdate = new System.Windows.Forms.Button();
+            this.panel63 = new System.Windows.Forms.Panel();
             this.splitContainer21 = new System.Windows.Forms.SplitContainer();
+            this.panel62 = new System.Windows.Forms.Panel();
+            this.btnPrepAnalAnalUpdate = new System.Windows.Forms.Button();
             this.panel49 = new System.Windows.Forms.Panel();
-            this.textBox31 = new System.Windows.Forms.TextBox();
+            this.tbPrepAnalAnalComment = new System.Windows.Forms.TextBox();
             this.panel50 = new System.Windows.Forms.Panel();
             this.label60 = new System.Windows.Forms.Label();
             this.panel47 = new System.Windows.Forms.Panel();
-            this.cboxSampleAnalWorkflowStatus = new System.Windows.Forms.ComboBox();
+            this.cboxPrepAnalAnalWorkflowStatus = new System.Windows.Forms.ComboBox();
             this.panel48 = new System.Windows.Forms.Panel();
             this.label55 = new System.Windows.Forms.Label();
             this.panel45 = new System.Windows.Forms.Panel();
-            this.textBox18 = new System.Windows.Forms.TextBox();
+            this.tbPrepAnalAnalMDALib = new System.Windows.Forms.TextBox();
             this.panel46 = new System.Windows.Forms.Panel();
             this.label59 = new System.Windows.Forms.Label();
             this.panel43 = new System.Windows.Forms.Panel();
-            this.textBox11 = new System.Windows.Forms.TextBox();
+            this.tbPrepAnalAnalNuclLib = new System.Windows.Forms.TextBox();
             this.panel44 = new System.Windows.Forms.Panel();
             this.label58 = new System.Windows.Forms.Label();
             this.panel41 = new System.Windows.Forms.Panel();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.tbPrepAnalAnalSpecRef = new System.Windows.Forms.TextBox();
             this.panel42 = new System.Windows.Forms.Panel();
             this.label54 = new System.Windows.Forms.Label();
             this.panel39 = new System.Windows.Forms.Panel();
@@ -854,11 +869,11 @@
             this.panel40 = new System.Windows.Forms.Panel();
             this.label53 = new System.Windows.Forms.Label();
             this.panel19 = new System.Windows.Forms.Panel();
-            this.cboxSampleAnalUnitType = new System.Windows.Forms.ComboBox();
+            this.cboxPrepAnalAnalUnitType = new System.Windows.Forms.ComboBox();
             this.panel28 = new System.Windows.Forms.Panel();
             this.label19 = new System.Windows.Forms.Label();
             this.panel37 = new System.Windows.Forms.Panel();
-            this.cboxSampleAnalUnit = new System.Windows.Forms.ComboBox();
+            this.cboxPrepAnalAnalUnit = new System.Windows.Forms.ComboBox();
             this.panel38 = new System.Windows.Forms.Panel();
             this.label51 = new System.Windows.Forms.Label();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
@@ -871,6 +886,7 @@
             this.toolStripButton16 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton17 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton18 = new System.Windows.Forms.ToolStripButton();
+            this.panel76 = new System.Windows.Forms.Panel();
             this.panel9 = new System.Windows.Forms.Panel();
             this.dataGridView9 = new System.Windows.Forms.DataGridView();
             this.toolsSampleResRes = new System.Windows.Forms.ToolStrip();
@@ -881,23 +897,6 @@
             this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
             this.lISToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rPTToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.panel63 = new System.Windows.Forms.Panel();
-            this.btnPrepAnalClose = new System.Windows.Forms.Button();
-            this.btnPrepAnalSave = new System.Windows.Forms.Button();
-            this.tools = new System.Windows.Forms.ToolStrip();
-            this.btnMenu = new System.Windows.Forms.ToolStripButton();
-            this.lblCurrentTab = new System.Windows.Forms.ToolStripLabel();
-            this.btnBack = new System.Windows.Forms.ToolStripButton();
-            this.panel36 = new System.Windows.Forms.Panel();
-            this.panelSamplesAttachments = new System.Windows.Forms.Panel();
-            this.toolsSampleSampInfoAttachments = new System.Windows.Forms.ToolStrip();
-            this.toolStripLabel18 = new System.Windows.Forms.ToolStripLabel();
-            this.toolStripSeparator46 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
-            this.gridSampleAttachments = new System.Windows.Forms.DataGridView();
-            this.panel21 = new System.Windows.Forms.Panel();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tabs.SuspendLayout();
@@ -915,7 +914,12 @@
             this.panel7.SuspendLayout();
             this.panel13.SuspendLayout();
             this.panel23.SuspendLayout();
+            this.panel36.SuspendLayout();
             this.toolStrip11.SuspendLayout();
+            this.panel21.SuspendLayout();
+            this.panelSamplesAttachments.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridSampleAttachments)).BeginInit();
+            this.toolsSampleSampInfoAttachments.SuspendLayout();
             this.tabSamplesParams.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.toolStrip6.SuspendLayout();
@@ -987,7 +991,6 @@
             this.toolsSamples.SuspendLayout();
             this.panel78.SuspendLayout();
             this.toolStrip8.SuspendLayout();
-            this.panel24.SuspendLayout();
             this.tabProjects.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitProjects)).BeginInit();
             this.splitProjects.Panel1.SuspendLayout();
@@ -1186,14 +1189,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView7)).BeginInit();
             this.toolsSampleAttachments.SuspendLayout();
             this.tabPrepAnalAnalysis.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer5)).BeginInit();
-            this.splitContainer5.Panel1.SuspendLayout();
-            this.splitContainer5.Panel2.SuspendLayout();
-            this.splitContainer5.SuspendLayout();
+            this.tools.SuspendLayout();
+            this.panel24.SuspendLayout();
+            this.panel63.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer21)).BeginInit();
             this.splitContainer21.Panel1.SuspendLayout();
             this.splitContainer21.Panel2.SuspendLayout();
             this.splitContainer21.SuspendLayout();
+            this.panel62.SuspendLayout();
             this.panel49.SuspendLayout();
             this.panel50.SuspendLayout();
             this.panel47.SuspendLayout();
@@ -1214,16 +1217,10 @@
             this.panel8.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView11)).BeginInit();
             this.toolsSampleResAttachments.SuspendLayout();
+            this.panel76.SuspendLayout();
             this.panel9.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView9)).BeginInit();
             this.toolsSampleResRes.SuspendLayout();
-            this.panel63.SuspendLayout();
-            this.tools.SuspendLayout();
-            this.panel36.SuspendLayout();
-            this.panelSamplesAttachments.SuspendLayout();
-            this.toolsSampleSampInfoAttachments.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gridSampleAttachments)).BeginInit();
-            this.panel21.SuspendLayout();
             this.SuspendLayout();
             // 
             // menu
@@ -2827,7 +2824,6 @@
             this.layoutSample.Controls.Add(this.dtSampleReferenceDate, 1, 12);
             this.layoutSample.Controls.Add(this.dtSampleReferenceTime, 2, 12);
             this.layoutSample.Controls.Add(this.cboxSampleLaboratory, 1, 13);
-            this.layoutSample.Controls.Add(this.cbSampleConfidential, 2, 6);
             this.layoutSample.Controls.Add(this.cboxSampleSubProject, 2, 4);
             this.layoutSample.Controls.Add(this.cboxSampleInfoSamplingMeth, 2, 5);
             this.layoutSample.Controls.Add(this.cboxSampleMunicipalities, 2, 8);
@@ -2843,6 +2839,7 @@
             this.layoutSample.Controls.Add(this.label22, 0, 15);
             this.layoutSample.Controls.Add(this.cboxSampleInstanceStatus, 1, 15);
             this.layoutSample.Controls.Add(this.tbSampleComment, 2, 13);
+            this.layoutSample.Controls.Add(this.cbSampleConfidential, 2, 3);
             this.layoutSample.Dock = System.Windows.Forms.DockStyle.Fill;
             this.layoutSample.Location = new System.Drawing.Point(3, 28);
             this.layoutSample.Name = "layoutSample";
@@ -3152,16 +3149,6 @@
             this.cboxSampleLaboratory.TabIndex = 42;
             this.cboxSampleLaboratory.ValueMember = "Id";
             // 
-            // cbSampleConfidential
-            // 
-            this.cbSampleConfidential.AutoSize = true;
-            this.cbSampleConfidential.Location = new System.Drawing.Point(484, 163);
-            this.cbSampleConfidential.Name = "cbSampleConfidential";
-            this.cbSampleConfidential.Size = new System.Drawing.Size(121, 17);
-            this.cbSampleConfidential.TabIndex = 45;
-            this.cbSampleConfidential.Text = "Excempt from public";
-            this.cbSampleConfidential.UseVisualStyleBackColor = true;
-            // 
             // cboxSampleSubProject
             // 
             this.cboxSampleSubProject.DisplayMember = "Name";
@@ -3284,17 +3271,6 @@
             this.tbSampleExId.TabIndex = 32;
             this.tbSampleExId.TextChanged += new System.EventHandler(this.tbSampleExId_TextChanged);
             // 
-            // btnSampleUpdate
-            // 
-            this.btnSampleUpdate.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnSampleUpdate.Location = new System.Drawing.Point(629, 0);
-            this.btnSampleUpdate.Name = "btnSampleUpdate";
-            this.btnSampleUpdate.Size = new System.Drawing.Size(183, 28);
-            this.btnSampleUpdate.TabIndex = 46;
-            this.btnSampleUpdate.Text = "Update sample info";
-            this.btnSampleUpdate.UseVisualStyleBackColor = true;
-            this.btnSampleUpdate.Click += new System.EventHandler(this.btnSampleUpdate_Click);
-            // 
             // panel7
             // 
             this.panel7.Controls.Add(this.label7);
@@ -3414,6 +3390,47 @@
             this.cboxSampleInstanceStatus.TabIndex = 55;
             this.cboxSampleInstanceStatus.ValueMember = "Id";
             // 
+            // tbSampleComment
+            // 
+            this.tbSampleComment.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbSampleComment.Location = new System.Drawing.Point(484, 373);
+            this.tbSampleComment.Multiline = true;
+            this.tbSampleComment.Name = "tbSampleComment";
+            this.layoutSample.SetRowSpan(this.tbSampleComment, 3);
+            this.tbSampleComment.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.tbSampleComment.Size = new System.Drawing.Size(325, 84);
+            this.tbSampleComment.TabIndex = 17;
+            // 
+            // cbSampleConfidential
+            // 
+            this.cbSampleConfidential.AutoSize = true;
+            this.cbSampleConfidential.Location = new System.Drawing.Point(484, 73);
+            this.cbSampleConfidential.Name = "cbSampleConfidential";
+            this.cbSampleConfidential.Size = new System.Drawing.Size(121, 17);
+            this.cbSampleConfidential.TabIndex = 45;
+            this.cbSampleConfidential.Text = "Excempt from public";
+            this.cbSampleConfidential.UseVisualStyleBackColor = true;
+            // 
+            // panel36
+            // 
+            this.panel36.Controls.Add(this.btnSampleUpdate);
+            this.panel36.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel36.Location = new System.Drawing.Point(3, 554);
+            this.panel36.Name = "panel36";
+            this.panel36.Size = new System.Drawing.Size(812, 28);
+            this.panel36.TabIndex = 3;
+            // 
+            // btnSampleUpdate
+            // 
+            this.btnSampleUpdate.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnSampleUpdate.Location = new System.Drawing.Point(629, 0);
+            this.btnSampleUpdate.Name = "btnSampleUpdate";
+            this.btnSampleUpdate.Size = new System.Drawing.Size(183, 28);
+            this.btnSampleUpdate.TabIndex = 46;
+            this.btnSampleUpdate.Text = "Update sample info";
+            this.btnSampleUpdate.UseVisualStyleBackColor = true;
+            this.btnSampleUpdate.Click += new System.EventHandler(this.btnSampleUpdate_Click);
+            // 
             // toolStrip11
             // 
             this.toolStrip11.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
@@ -3433,16 +3450,89 @@
             this.btnSampleAddSampleToOrder.Size = new System.Drawing.Size(135, 22);
             this.btnSampleAddSampleToOrder.Text = "Add sample to order";
             // 
-            // tbSampleComment
+            // panel21
             // 
-            this.tbSampleComment.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbSampleComment.Location = new System.Drawing.Point(484, 373);
-            this.tbSampleComment.Multiline = true;
-            this.tbSampleComment.Name = "tbSampleComment";
-            this.layoutSample.SetRowSpan(this.tbSampleComment, 3);
-            this.tbSampleComment.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.tbSampleComment.Size = new System.Drawing.Size(325, 84);
-            this.tbSampleComment.TabIndex = 17;
+            this.panel21.Controls.Add(this.panelSamplesAttachments);
+            this.panel21.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panel21.Location = new System.Drawing.Point(815, 3);
+            this.panel21.Name = "panel21";
+            this.panel21.Size = new System.Drawing.Size(315, 579);
+            this.panel21.TabIndex = 1;
+            // 
+            // panelSamplesAttachments
+            // 
+            this.panelSamplesAttachments.Controls.Add(this.gridSampleAttachments);
+            this.panelSamplesAttachments.Controls.Add(this.toolsSampleSampInfoAttachments);
+            this.panelSamplesAttachments.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelSamplesAttachments.Location = new System.Drawing.Point(0, 0);
+            this.panelSamplesAttachments.Name = "panelSamplesAttachments";
+            this.panelSamplesAttachments.Size = new System.Drawing.Size(315, 579);
+            this.panelSamplesAttachments.TabIndex = 0;
+            // 
+            // gridSampleAttachments
+            // 
+            this.gridSampleAttachments.AllowUserToAddRows = false;
+            this.gridSampleAttachments.AllowUserToDeleteRows = false;
+            this.gridSampleAttachments.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
+            this.gridSampleAttachments.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.gridSampleAttachments.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridSampleAttachments.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gridSampleAttachments.Location = new System.Drawing.Point(0, 25);
+            this.gridSampleAttachments.Name = "gridSampleAttachments";
+            this.gridSampleAttachments.ReadOnly = true;
+            this.gridSampleAttachments.Size = new System.Drawing.Size(315, 554);
+            this.gridSampleAttachments.TabIndex = 1;
+            // 
+            // toolsSampleSampInfoAttachments
+            // 
+            this.toolsSampleSampInfoAttachments.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolsSampleSampInfoAttachments.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripLabel18,
+            this.toolStripSeparator46,
+            this.toolStripButton1,
+            this.toolStripButton2,
+            this.toolStripButton3});
+            this.toolsSampleSampInfoAttachments.Location = new System.Drawing.Point(0, 0);
+            this.toolsSampleSampInfoAttachments.Name = "toolsSampleSampInfoAttachments";
+            this.toolsSampleSampInfoAttachments.Size = new System.Drawing.Size(315, 25);
+            this.toolsSampleSampInfoAttachments.TabIndex = 0;
+            this.toolsSampleSampInfoAttachments.Text = "toolStrip1";
+            // 
+            // toolStripLabel18
+            // 
+            this.toolStripLabel18.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.toolStripLabel18.Name = "toolStripLabel18";
+            this.toolStripLabel18.Size = new System.Drawing.Size(79, 22);
+            this.toolStripLabel18.Text = "Attachments";
+            // 
+            // toolStripSeparator46
+            // 
+            this.toolStripSeparator46.Name = "toolStripSeparator46";
+            this.toolStripSeparator46.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.Image = global::DSA_lims.Properties.Resources.scan;
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(52, 22);
+            this.toolStripButton1.Text = "Scan";
+            // 
+            // toolStripButton2
+            // 
+            this.toolStripButton2.Image = global::DSA_lims.Properties.Resources.projects;
+            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton2.Name = "toolStripButton2";
+            this.toolStripButton2.Size = new System.Drawing.Size(65, 22);
+            this.toolStripButton2.Text = "Browse";
+            // 
+            // toolStripButton3
+            // 
+            this.toolStripButton3.Image = global::DSA_lims.Properties.Resources.delete;
+            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton3.Name = "toolStripButton3";
+            this.toolStripButton3.Size = new System.Drawing.Size(60, 22);
+            this.toolStripButton3.Text = "Delete";
             // 
             // tabSamplesParams
             // 
@@ -5278,7 +5368,6 @@
             this.tabSamples.Controls.Add(this.toolsSamples);
             this.tabSamples.Controls.Add(this.panel78);
             this.tabSamples.Controls.Add(this.toolStrip8);
-            this.tabSamples.Controls.Add(this.panel24);
             this.tabSamples.Location = new System.Drawing.Point(4, 24);
             this.tabSamples.Name = "tabSamples";
             this.tabSamples.Padding = new System.Windows.Forms.Padding(3);
@@ -5301,7 +5390,7 @@
             this.gridSamples.ReadOnly = true;
             this.gridSamples.RowHeadersVisible = false;
             this.gridSamples.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridSamples.Size = new System.Drawing.Size(1141, 482);
+            this.gridSamples.Size = new System.Drawing.Size(1141, 512);
             this.gridSamples.TabIndex = 5;
             // 
             // toolsSamples
@@ -5642,37 +5731,6 @@
             this.toolStripButton97.Name = "toolStripButton97";
             this.toolStripButton97.Size = new System.Drawing.Size(101, 22);
             this.toolStripButton97.Text = "Clear all filters";
-            // 
-            // panel24
-            // 
-            this.panel24.Controls.Add(this.btnSamplesClose);
-            this.panel24.Controls.Add(this.btnSamplesOpen);
-            this.panel24.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel24.Location = new System.Drawing.Point(3, 611);
-            this.panel24.Name = "panel24";
-            this.panel24.Size = new System.Drawing.Size(1141, 30);
-            this.panel24.TabIndex = 2;
-            // 
-            // btnSamplesClose
-            // 
-            this.btnSamplesClose.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnSamplesClose.Location = new System.Drawing.Point(907, 0);
-            this.btnSamplesClose.Name = "btnSamplesClose";
-            this.btnSamplesClose.Size = new System.Drawing.Size(117, 30);
-            this.btnSamplesClose.TabIndex = 1;
-            this.btnSamplesClose.Text = "Close";
-            this.btnSamplesClose.UseVisualStyleBackColor = true;
-            this.btnSamplesClose.Click += new System.EventHandler(this.miMainMenuView_Click);
-            // 
-            // btnSamplesOpen
-            // 
-            this.btnSamplesOpen.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnSamplesOpen.Location = new System.Drawing.Point(1024, 0);
-            this.btnSamplesOpen.Name = "btnSamplesOpen";
-            this.btnSamplesOpen.Size = new System.Drawing.Size(117, 30);
-            this.btnSamplesOpen.TabIndex = 0;
-            this.btnSamplesOpen.Text = "Open";
-            this.btnSamplesOpen.UseVisualStyleBackColor = true;
             // 
             // tabProjects
             // 
@@ -8570,7 +8628,6 @@
             // 
             this.tabPrepAnal.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.tabPrepAnal.Controls.Add(this.splitContainer2);
-            this.tabPrepAnal.Controls.Add(this.panel63);
             this.tabPrepAnal.Location = new System.Drawing.Point(4, 24);
             this.tabPrepAnal.Name = "tabPrepAnal";
             this.tabPrepAnal.Padding = new System.Windows.Forms.Padding(3);
@@ -8592,7 +8649,7 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.tabsPrepAnal);
-            this.splitContainer2.Size = new System.Drawing.Size(1141, 608);
+            this.splitContainer2.Size = new System.Drawing.Size(1141, 638);
             this.splitContainer2.SplitterDistance = 427;
             this.splitContainer2.TabIndex = 4;
             // 
@@ -8604,7 +8661,7 @@
             this.panel31.Location = new System.Drawing.Point(0, 25);
             this.panel31.Name = "panel31";
             this.panel31.Padding = new System.Windows.Forms.Padding(12);
-            this.panel31.Size = new System.Drawing.Size(427, 583);
+            this.panel31.Size = new System.Drawing.Size(427, 613);
             this.panel31.TabIndex = 1;
             // 
             // treePrepAnal
@@ -8621,7 +8678,7 @@
             this.treePrepAnal.Name = "treePrepAnal";
             this.treePrepAnal.PathSeparator = "/";
             this.treePrepAnal.ShowRootLines = false;
-            this.treePrepAnal.Size = new System.Drawing.Size(403, 559);
+            this.treePrepAnal.Size = new System.Drawing.Size(403, 589);
             this.treePrepAnal.TabIndex = 0;
             this.treePrepAnal.DrawNode += new System.Windows.Forms.DrawTreeNodeEventHandler(this.treePrepAnal_DrawNode);
             this.treePrepAnal.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treePrepAnal_AfterSelect);
@@ -8663,7 +8720,7 @@
             this.tabsPrepAnal.Location = new System.Drawing.Point(0, 0);
             this.tabsPrepAnal.Name = "tabsPrepAnal";
             this.tabsPrepAnal.SelectedIndex = 0;
-            this.tabsPrepAnal.Size = new System.Drawing.Size(710, 608);
+            this.tabsPrepAnal.Size = new System.Drawing.Size(710, 638);
             this.tabsPrepAnal.TabIndex = 3;
             // 
             // tabPrepAnalSample
@@ -8712,7 +8769,7 @@
             // 
             // panel66
             // 
-            this.panel66.Controls.Add(this.textBox6);
+            this.panel66.Controls.Add(this.tbPrepAnalVolume);
             this.panel66.Controls.Add(this.panel67);
             this.panel66.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel66.Location = new System.Drawing.Point(6, 70);
@@ -8720,14 +8777,14 @@
             this.panel66.Size = new System.Drawing.Size(327, 25);
             this.panel66.TabIndex = 2;
             // 
-            // textBox6
+            // tbPrepAnalVolume
             // 
-            this.textBox6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox6.Location = new System.Drawing.Point(105, 0);
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(222, 21);
-            this.textBox6.TabIndex = 1;
+            this.tbPrepAnalVolume.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbPrepAnalVolume.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbPrepAnalVolume.Location = new System.Drawing.Point(105, 0);
+            this.tbPrepAnalVolume.Name = "tbPrepAnalVolume";
+            this.tbPrepAnalVolume.Size = new System.Drawing.Size(222, 21);
+            this.tbPrepAnalVolume.TabIndex = 1;
             // 
             // panel67
             // 
@@ -8751,7 +8808,7 @@
             // 
             // panel64
             // 
-            this.panel64.Controls.Add(this.textBox5);
+            this.panel64.Controls.Add(this.tbPrepAnalDryWeight);
             this.panel64.Controls.Add(this.panel65);
             this.panel64.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel64.Location = new System.Drawing.Point(6, 45);
@@ -8759,14 +8816,14 @@
             this.panel64.Size = new System.Drawing.Size(327, 25);
             this.panel64.TabIndex = 1;
             // 
-            // textBox5
+            // tbPrepAnalDryWeight
             // 
-            this.textBox5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox5.Location = new System.Drawing.Point(105, 0);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(222, 21);
-            this.textBox5.TabIndex = 1;
+            this.tbPrepAnalDryWeight.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbPrepAnalDryWeight.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbPrepAnalDryWeight.Location = new System.Drawing.Point(105, 0);
+            this.tbPrepAnalDryWeight.Name = "tbPrepAnalDryWeight";
+            this.tbPrepAnalDryWeight.Size = new System.Drawing.Size(222, 21);
+            this.tbPrepAnalDryWeight.TabIndex = 1;
             // 
             // panel65
             // 
@@ -8790,7 +8847,7 @@
             // 
             // panel4
             // 
-            this.panel4.Controls.Add(this.textBox4);
+            this.panel4.Controls.Add(this.tbPrepAnalWetWeight);
             this.panel4.Controls.Add(this.panel26);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel4.Location = new System.Drawing.Point(6, 20);
@@ -8798,14 +8855,14 @@
             this.panel4.Size = new System.Drawing.Size(327, 25);
             this.panel4.TabIndex = 0;
             // 
-            // textBox4
+            // tbPrepAnalWetWeight
             // 
-            this.textBox4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox4.Location = new System.Drawing.Point(105, 0);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(222, 21);
-            this.textBox4.TabIndex = 1;
+            this.tbPrepAnalWetWeight.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbPrepAnalWetWeight.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbPrepAnalWetWeight.Location = new System.Drawing.Point(105, 0);
+            this.tbPrepAnalWetWeight.Name = "tbPrepAnalWetWeight";
+            this.tbPrepAnalWetWeight.Size = new System.Drawing.Size(222, 21);
+            this.tbPrepAnalWetWeight.TabIndex = 1;
             // 
             // panel26
             // 
@@ -8845,7 +8902,7 @@
             // 
             // panel74
             // 
-            this.panel74.Controls.Add(this.textBox34);
+            this.panel74.Controls.Add(this.tbPrepAnalLODTemp);
             this.panel74.Controls.Add(this.panel75);
             this.panel74.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel74.Location = new System.Drawing.Point(6, 95);
@@ -8853,14 +8910,14 @@
             this.panel74.Size = new System.Drawing.Size(341, 25);
             this.panel74.TabIndex = 4;
             // 
-            // textBox34
+            // tbPrepAnalLODTemp
             // 
-            this.textBox34.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox34.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox34.Location = new System.Drawing.Point(105, 0);
-            this.textBox34.Name = "textBox34";
-            this.textBox34.Size = new System.Drawing.Size(236, 21);
-            this.textBox34.TabIndex = 1;
+            this.tbPrepAnalLODTemp.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbPrepAnalLODTemp.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbPrepAnalLODTemp.Location = new System.Drawing.Point(105, 0);
+            this.tbPrepAnalLODTemp.Name = "tbPrepAnalLODTemp";
+            this.tbPrepAnalLODTemp.Size = new System.Drawing.Size(236, 21);
+            this.tbPrepAnalLODTemp.TabIndex = 1;
             // 
             // panel75
             // 
@@ -8884,7 +8941,7 @@
             // 
             // panel72
             // 
-            this.panel72.Controls.Add(this.textBox33);
+            this.panel72.Controls.Add(this.tbPrepAnalLODWater);
             this.panel72.Controls.Add(this.panel73);
             this.panel72.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel72.Location = new System.Drawing.Point(6, 70);
@@ -8892,15 +8949,15 @@
             this.panel72.Size = new System.Drawing.Size(341, 25);
             this.panel72.TabIndex = 3;
             // 
-            // textBox33
+            // tbPrepAnalLODWater
             // 
-            this.textBox33.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox33.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox33.Location = new System.Drawing.Point(105, 0);
-            this.textBox33.Name = "textBox33";
-            this.textBox33.ReadOnly = true;
-            this.textBox33.Size = new System.Drawing.Size(236, 21);
-            this.textBox33.TabIndex = 1;
+            this.tbPrepAnalLODWater.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbPrepAnalLODWater.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbPrepAnalLODWater.Location = new System.Drawing.Point(105, 0);
+            this.tbPrepAnalLODWater.Name = "tbPrepAnalLODWater";
+            this.tbPrepAnalLODWater.ReadOnly = true;
+            this.tbPrepAnalLODWater.Size = new System.Drawing.Size(236, 21);
+            this.tbPrepAnalLODWater.TabIndex = 1;
             // 
             // panel73
             // 
@@ -8924,7 +8981,7 @@
             // 
             // panel70
             // 
-            this.panel70.Controls.Add(this.textBox32);
+            this.panel70.Controls.Add(this.tbPrepAnalLODEndWeight);
             this.panel70.Controls.Add(this.panel71);
             this.panel70.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel70.Location = new System.Drawing.Point(6, 45);
@@ -8932,14 +8989,14 @@
             this.panel70.Size = new System.Drawing.Size(341, 25);
             this.panel70.TabIndex = 2;
             // 
-            // textBox32
+            // tbPrepAnalLODEndWeight
             // 
-            this.textBox32.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox32.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox32.Location = new System.Drawing.Point(105, 0);
-            this.textBox32.Name = "textBox32";
-            this.textBox32.Size = new System.Drawing.Size(236, 21);
-            this.textBox32.TabIndex = 1;
+            this.tbPrepAnalLODEndWeight.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbPrepAnalLODEndWeight.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbPrepAnalLODEndWeight.Location = new System.Drawing.Point(105, 0);
+            this.tbPrepAnalLODEndWeight.Name = "tbPrepAnalLODEndWeight";
+            this.tbPrepAnalLODEndWeight.Size = new System.Drawing.Size(236, 21);
+            this.tbPrepAnalLODEndWeight.TabIndex = 1;
             // 
             // panel71
             // 
@@ -8963,7 +9020,7 @@
             // 
             // panel68
             // 
-            this.panel68.Controls.Add(this.textBox20);
+            this.panel68.Controls.Add(this.tbPrepAnalLODStartWeight);
             this.panel68.Controls.Add(this.panel69);
             this.panel68.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel68.Location = new System.Drawing.Point(6, 20);
@@ -8971,14 +9028,14 @@
             this.panel68.Size = new System.Drawing.Size(341, 25);
             this.panel68.TabIndex = 1;
             // 
-            // textBox20
+            // tbPrepAnalLODStartWeight
             // 
-            this.textBox20.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox20.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox20.Location = new System.Drawing.Point(105, 0);
-            this.textBox20.Name = "textBox20";
-            this.textBox20.Size = new System.Drawing.Size(236, 21);
-            this.textBox20.TabIndex = 1;
+            this.tbPrepAnalLODStartWeight.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbPrepAnalLODStartWeight.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbPrepAnalLODStartWeight.Location = new System.Drawing.Point(105, 0);
+            this.tbPrepAnalLODStartWeight.Name = "tbPrepAnalLODStartWeight";
+            this.tbPrepAnalLODStartWeight.Size = new System.Drawing.Size(236, 21);
+            this.tbPrepAnalLODStartWeight.TabIndex = 1;
             // 
             // panel69
             // 
@@ -9022,10 +9079,10 @@
             // 
             this.tabPrepAnalPreps.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.tabPrepAnalPreps.Controls.Add(this.splitContainer3);
-            this.tabPrepAnalPreps.Location = new System.Drawing.Point(4, 22);
+            this.tabPrepAnalPreps.Location = new System.Drawing.Point(4, 24);
             this.tabPrepAnalPreps.Name = "tabPrepAnalPreps";
             this.tabPrepAnalPreps.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPrepAnalPreps.Size = new System.Drawing.Size(702, 582);
+            this.tabPrepAnalPreps.Size = new System.Drawing.Size(702, 610);
             this.tabPrepAnalPreps.TabIndex = 3;
             this.tabPrepAnalPreps.Text = "Preparations";
             // 
@@ -9038,6 +9095,7 @@
             // splitContainer3.Panel1
             // 
             this.splitContainer3.Panel1.Controls.Add(this.panel1);
+            this.splitContainer3.Panel1.Controls.Add(this.panel24);
             // 
             // splitContainer3.Panel2
             // 
@@ -9057,28 +9115,28 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(371, 293);
+            this.panel1.Size = new System.Drawing.Size(371, 265);
             this.panel1.TabIndex = 0;
             // 
             // panel60
             // 
-            this.panel60.Controls.Add(this.textBox19);
+            this.panel60.Controls.Add(this.tbPrepAnalPrepComment);
             this.panel60.Controls.Add(this.panel61);
             this.panel60.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel60.Location = new System.Drawing.Point(0, 125);
             this.panel60.Name = "panel60";
-            this.panel60.Size = new System.Drawing.Size(371, 168);
+            this.panel60.Size = new System.Drawing.Size(371, 140);
             this.panel60.TabIndex = 7;
             // 
-            // textBox19
+            // tbPrepAnalPrepComment
             // 
-            this.textBox19.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox19.Location = new System.Drawing.Point(113, 0);
-            this.textBox19.Multiline = true;
-            this.textBox19.Name = "textBox19";
-            this.textBox19.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBox19.Size = new System.Drawing.Size(258, 168);
-            this.textBox19.TabIndex = 12;
+            this.tbPrepAnalPrepComment.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbPrepAnalPrepComment.Location = new System.Drawing.Point(113, 0);
+            this.tbPrepAnalPrepComment.Multiline = true;
+            this.tbPrepAnalPrepComment.Name = "tbPrepAnalPrepComment";
+            this.tbPrepAnalPrepComment.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.tbPrepAnalPrepComment.Size = new System.Drawing.Size(258, 140);
+            this.tbPrepAnalPrepComment.TabIndex = 12;
             // 
             // panel61
             // 
@@ -9086,7 +9144,7 @@
             this.panel61.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel61.Location = new System.Drawing.Point(0, 0);
             this.panel61.Name = "panel61";
-            this.panel61.Size = new System.Drawing.Size(113, 168);
+            this.panel61.Size = new System.Drawing.Size(113, 140);
             this.panel61.TabIndex = 5;
             // 
             // label31
@@ -9094,14 +9152,14 @@
             this.label31.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label31.Location = new System.Drawing.Point(0, 0);
             this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(113, 168);
+            this.label31.Size = new System.Drawing.Size(113, 140);
             this.label31.TabIndex = 11;
             this.label31.Text = "Comment";
             this.label31.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // panel57
             // 
-            this.panel57.Controls.Add(this.cboxSamplePrepWorkflowStatus);
+            this.panel57.Controls.Add(this.cboxPrepAnalPrepWorkflowStatus);
             this.panel57.Controls.Add(this.panel58);
             this.panel57.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel57.Location = new System.Drawing.Point(0, 100);
@@ -9109,15 +9167,17 @@
             this.panel57.Size = new System.Drawing.Size(371, 25);
             this.panel57.TabIndex = 6;
             // 
-            // cboxSamplePrepWorkflowStatus
+            // cboxPrepAnalPrepWorkflowStatus
             // 
-            this.cboxSamplePrepWorkflowStatus.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cboxSamplePrepWorkflowStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboxSamplePrepWorkflowStatus.FormattingEnabled = true;
-            this.cboxSamplePrepWorkflowStatus.Location = new System.Drawing.Point(113, 0);
-            this.cboxSamplePrepWorkflowStatus.Name = "cboxSamplePrepWorkflowStatus";
-            this.cboxSamplePrepWorkflowStatus.Size = new System.Drawing.Size(258, 23);
-            this.cboxSamplePrepWorkflowStatus.TabIndex = 6;
+            this.cboxPrepAnalPrepWorkflowStatus.DisplayMember = "Name";
+            this.cboxPrepAnalPrepWorkflowStatus.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cboxPrepAnalPrepWorkflowStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxPrepAnalPrepWorkflowStatus.FormattingEnabled = true;
+            this.cboxPrepAnalPrepWorkflowStatus.Location = new System.Drawing.Point(113, 0);
+            this.cboxPrepAnalPrepWorkflowStatus.Name = "cboxPrepAnalPrepWorkflowStatus";
+            this.cboxPrepAnalPrepWorkflowStatus.Size = new System.Drawing.Size(258, 23);
+            this.cboxPrepAnalPrepWorkflowStatus.TabIndex = 6;
+            this.cboxPrepAnalPrepWorkflowStatus.ValueMember = "Id";
             // 
             // panel58
             // 
@@ -9140,22 +9200,22 @@
             // 
             // panel55
             // 
-            this.panel55.Controls.Add(this.textBox17);
+            this.panel55.Controls.Add(this.tbPrepAnalPrepAmount);
             this.panel55.Controls.Add(this.panel56);
-            this.panel55.Controls.Add(this.cboxSamplePrepUnit);
+            this.panel55.Controls.Add(this.cboxPrepAnalPrepUnit);
             this.panel55.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel55.Location = new System.Drawing.Point(0, 75);
             this.panel55.Name = "panel55";
             this.panel55.Size = new System.Drawing.Size(371, 25);
             this.panel55.TabIndex = 5;
             // 
-            // textBox17
+            // tbPrepAnalPrepAmount
             // 
-            this.textBox17.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox17.Location = new System.Drawing.Point(113, 0);
-            this.textBox17.Name = "textBox17";
-            this.textBox17.Size = new System.Drawing.Size(138, 21);
-            this.textBox17.TabIndex = 7;
+            this.tbPrepAnalPrepAmount.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbPrepAnalPrepAmount.Location = new System.Drawing.Point(113, 0);
+            this.tbPrepAnalPrepAmount.Name = "tbPrepAnalPrepAmount";
+            this.tbPrepAnalPrepAmount.Size = new System.Drawing.Size(138, 21);
+            this.tbPrepAnalPrepAmount.TabIndex = 7;
             // 
             // panel56
             // 
@@ -9176,21 +9236,21 @@
             this.label29.Text = "Amount";
             this.label29.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // cboxSamplePrepUnit
+            // cboxPrepAnalPrepUnit
             // 
-            this.cboxSamplePrepUnit.DisplayMember = "Name";
-            this.cboxSamplePrepUnit.Dock = System.Windows.Forms.DockStyle.Right;
-            this.cboxSamplePrepUnit.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboxSamplePrepUnit.FormattingEnabled = true;
-            this.cboxSamplePrepUnit.Location = new System.Drawing.Point(251, 0);
-            this.cboxSamplePrepUnit.Name = "cboxSamplePrepUnit";
-            this.cboxSamplePrepUnit.Size = new System.Drawing.Size(120, 23);
-            this.cboxSamplePrepUnit.TabIndex = 8;
-            this.cboxSamplePrepUnit.ValueMember = "Id";
+            this.cboxPrepAnalPrepUnit.DisplayMember = "Name";
+            this.cboxPrepAnalPrepUnit.Dock = System.Windows.Forms.DockStyle.Right;
+            this.cboxPrepAnalPrepUnit.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxPrepAnalPrepUnit.FormattingEnabled = true;
+            this.cboxPrepAnalPrepUnit.Location = new System.Drawing.Point(251, 0);
+            this.cboxPrepAnalPrepUnit.Name = "cboxPrepAnalPrepUnit";
+            this.cboxPrepAnalPrepUnit.Size = new System.Drawing.Size(120, 23);
+            this.cboxPrepAnalPrepUnit.TabIndex = 8;
+            this.cboxPrepAnalPrepUnit.ValueMember = "Id";
             // 
             // panel52
             // 
-            this.panel52.Controls.Add(this.textBox16);
+            this.panel52.Controls.Add(this.tbPrepAnalPrepFillHeight);
             this.panel52.Controls.Add(this.panel59);
             this.panel52.Controls.Add(this.panel53);
             this.panel52.Dock = System.Windows.Forms.DockStyle.Top;
@@ -9199,32 +9259,32 @@
             this.panel52.Size = new System.Drawing.Size(371, 25);
             this.panel52.TabIndex = 4;
             // 
-            // textBox16
+            // tbPrepAnalPrepFillHeight
             // 
-            this.textBox16.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox16.Location = new System.Drawing.Point(113, 0);
-            this.textBox16.Name = "textBox16";
-            this.textBox16.Size = new System.Drawing.Size(138, 21);
-            this.textBox16.TabIndex = 5;
+            this.tbPrepAnalPrepFillHeight.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbPrepAnalPrepFillHeight.Location = new System.Drawing.Point(113, 0);
+            this.tbPrepAnalPrepFillHeight.Name = "tbPrepAnalPrepFillHeight";
+            this.tbPrepAnalPrepFillHeight.Size = new System.Drawing.Size(138, 21);
+            this.tbPrepAnalPrepFillHeight.TabIndex = 5;
             // 
             // panel59
             // 
-            this.panel59.Controls.Add(this.lblSamplesPrepRange);
+            this.panel59.Controls.Add(this.lblPrepAnalPrepRange);
             this.panel59.Dock = System.Windows.Forms.DockStyle.Right;
             this.panel59.Location = new System.Drawing.Point(251, 0);
             this.panel59.Name = "panel59";
             this.panel59.Size = new System.Drawing.Size(120, 25);
             this.panel59.TabIndex = 6;
             // 
-            // lblSamplesPrepRange
+            // lblPrepAnalPrepRange
             // 
-            this.lblSamplesPrepRange.AutoSize = true;
-            this.lblSamplesPrepRange.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblSamplesPrepRange.Location = new System.Drawing.Point(0, 0);
-            this.lblSamplesPrepRange.Name = "lblSamplesPrepRange";
-            this.lblSamplesPrepRange.Size = new System.Drawing.Size(16, 15);
-            this.lblSamplesPrepRange.TabIndex = 6;
-            this.lblSamplesPrepRange.Text = "[,]";
+            this.lblPrepAnalPrepRange.AutoSize = true;
+            this.lblPrepAnalPrepRange.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblPrepAnalPrepRange.Location = new System.Drawing.Point(0, 0);
+            this.lblPrepAnalPrepRange.Name = "lblPrepAnalPrepRange";
+            this.lblPrepAnalPrepRange.Size = new System.Drawing.Size(16, 15);
+            this.lblPrepAnalPrepRange.TabIndex = 6;
+            this.lblPrepAnalPrepRange.Text = "[,]";
             // 
             // panel53
             // 
@@ -9247,7 +9307,7 @@
             // 
             // panel51
             // 
-            this.panel51.Controls.Add(this.cboxSamplePrepGeom);
+            this.panel51.Controls.Add(this.cboxPrepAnalPrepGeom);
             this.panel51.Controls.Add(this.panel54);
             this.panel51.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel51.Location = new System.Drawing.Point(0, 25);
@@ -9255,15 +9315,17 @@
             this.panel51.Size = new System.Drawing.Size(371, 25);
             this.panel51.TabIndex = 3;
             // 
-            // cboxSamplePrepGeom
+            // cboxPrepAnalPrepGeom
             // 
-            this.cboxSamplePrepGeom.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cboxSamplePrepGeom.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboxSamplePrepGeom.FormattingEnabled = true;
-            this.cboxSamplePrepGeom.Location = new System.Drawing.Point(113, 0);
-            this.cboxSamplePrepGeom.Name = "cboxSamplePrepGeom";
-            this.cboxSamplePrepGeom.Size = new System.Drawing.Size(258, 23);
-            this.cboxSamplePrepGeom.TabIndex = 4;
+            this.cboxPrepAnalPrepGeom.DisplayMember = "Name";
+            this.cboxPrepAnalPrepGeom.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cboxPrepAnalPrepGeom.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxPrepAnalPrepGeom.FormattingEnabled = true;
+            this.cboxPrepAnalPrepGeom.Location = new System.Drawing.Point(113, 0);
+            this.cboxPrepAnalPrepGeom.Name = "cboxPrepAnalPrepGeom";
+            this.cboxPrepAnalPrepGeom.Size = new System.Drawing.Size(258, 23);
+            this.cboxPrepAnalPrepGeom.TabIndex = 4;
+            this.cboxPrepAnalPrepGeom.ValueMember = "Id";
             // 
             // panel54
             // 
@@ -9390,32 +9452,84 @@
             // tabPrepAnalAnalysis
             // 
             this.tabPrepAnalAnalysis.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.tabPrepAnalAnalysis.Controls.Add(this.splitContainer5);
-            this.tabPrepAnalAnalysis.Location = new System.Drawing.Point(4, 22);
+            this.tabPrepAnalAnalysis.Controls.Add(this.panel76);
+            this.tabPrepAnalAnalysis.Controls.Add(this.panel63);
+            this.tabPrepAnalAnalysis.Location = new System.Drawing.Point(4, 24);
             this.tabPrepAnalAnalysis.Name = "tabPrepAnalAnalysis";
             this.tabPrepAnalAnalysis.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPrepAnalAnalysis.Size = new System.Drawing.Size(702, 582);
+            this.tabPrepAnalAnalysis.Size = new System.Drawing.Size(702, 610);
             this.tabPrepAnalAnalysis.TabIndex = 4;
             this.tabPrepAnalAnalysis.Text = "Analyses";
             // 
-            // splitContainer5
+            // tools
             // 
-            this.splitContainer5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer5.Location = new System.Drawing.Point(3, 3);
-            this.splitContainer5.Name = "splitContainer5";
-            this.splitContainer5.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            this.tools.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.tools.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnMenu,
+            this.lblCurrentTab,
+            this.btnBack});
+            this.tools.Location = new System.Drawing.Point(0, 24);
+            this.tools.Name = "tools";
+            this.tools.Size = new System.Drawing.Size(1155, 25);
+            this.tools.TabIndex = 5;
+            this.tools.Text = "toolStrip29";
             // 
-            // splitContainer5.Panel1
+            // btnMenu
             // 
-            this.splitContainer5.Panel1.Controls.Add(this.splitContainer21);
+            this.btnMenu.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnMenu.Image = global::DSA_lims.Properties.Resources.menu;
+            this.btnMenu.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnMenu.Name = "btnMenu";
+            this.btnMenu.Size = new System.Drawing.Size(23, 22);
+            this.btnMenu.Text = "Menu";
+            this.btnMenu.Click += new System.EventHandler(this.miMainMenuView_Click);
             // 
-            // splitContainer5.Panel2
+            // lblCurrentTab
             // 
-            this.splitContainer5.Panel2.Controls.Add(this.panel9);
-            this.splitContainer5.Size = new System.Drawing.Size(696, 576);
-            this.splitContainer5.SplitterDistance = 296;
-            this.splitContainer5.SplitterWidth = 5;
-            this.splitContainer5.TabIndex = 1;
+            this.lblCurrentTab.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.lblCurrentTab.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.lblCurrentTab.Name = "lblCurrentTab";
+            this.lblCurrentTab.Size = new System.Drawing.Size(98, 22);
+            this.lblCurrentTab.Text = "<lblCurrentTab>";
+            // 
+            // btnBack
+            // 
+            this.btnBack.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnBack.Image = global::DSA_lims.Properties.Resources.left;
+            this.btnBack.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnBack.Name = "btnBack";
+            this.btnBack.Size = new System.Drawing.Size(23, 22);
+            this.btnBack.Text = "toolStripButton25";
+            this.btnBack.ToolTipText = "Back";
+            this.btnBack.Click += new System.EventHandler(this.miBack_Click);
+            // 
+            // panel24
+            // 
+            this.panel24.Controls.Add(this.btnPrepAnalPrepUpdate);
+            this.panel24.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel24.Location = new System.Drawing.Point(0, 265);
+            this.panel24.Name = "panel24";
+            this.panel24.Size = new System.Drawing.Size(371, 28);
+            this.panel24.TabIndex = 1;
+            // 
+            // btnPrepAnalPrepUpdate
+            // 
+            this.btnPrepAnalPrepUpdate.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnPrepAnalPrepUpdate.Location = new System.Drawing.Point(251, 0);
+            this.btnPrepAnalPrepUpdate.Name = "btnPrepAnalPrepUpdate";
+            this.btnPrepAnalPrepUpdate.Size = new System.Drawing.Size(120, 28);
+            this.btnPrepAnalPrepUpdate.TabIndex = 0;
+            this.btnPrepAnalPrepUpdate.Text = "Update info";
+            this.btnPrepAnalPrepUpdate.UseVisualStyleBackColor = true;
+            // 
+            // panel63
+            // 
+            this.panel63.Controls.Add(this.splitContainer21);
+            this.panel63.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel63.Location = new System.Drawing.Point(3, 3);
+            this.panel63.Name = "panel63";
+            this.panel63.Size = new System.Drawing.Size(696, 312);
+            this.panel63.TabIndex = 2;
             // 
             // splitContainer21
             // 
@@ -9425,6 +9539,7 @@
             // 
             // splitContainer21.Panel1
             // 
+            this.splitContainer21.Panel1.Controls.Add(this.panel62);
             this.splitContainer21.Panel1.Controls.Add(this.panel49);
             this.splitContainer21.Panel1.Controls.Add(this.panel47);
             this.splitContainer21.Panel1.Controls.Add(this.panel45);
@@ -9438,30 +9553,49 @@
             // splitContainer21.Panel2
             // 
             this.splitContainer21.Panel2.Controls.Add(this.panel8);
-            this.splitContainer21.Size = new System.Drawing.Size(696, 296);
-            this.splitContainer21.SplitterDistance = 367;
-            this.splitContainer21.TabIndex = 4;
+            this.splitContainer21.Size = new System.Drawing.Size(696, 312);
+            this.splitContainer21.SplitterDistance = 366;
+            this.splitContainer21.TabIndex = 5;
+            // 
+            // panel62
+            // 
+            this.panel62.Controls.Add(this.btnPrepAnalAnalUpdate);
+            this.panel62.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel62.Location = new System.Drawing.Point(0, 282);
+            this.panel62.Name = "panel62";
+            this.panel62.Size = new System.Drawing.Size(366, 28);
+            this.panel62.TabIndex = 9;
+            // 
+            // btnPrepAnalAnalUpdate
+            // 
+            this.btnPrepAnalAnalUpdate.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnPrepAnalAnalUpdate.Location = new System.Drawing.Point(246, 0);
+            this.btnPrepAnalAnalUpdate.Name = "btnPrepAnalAnalUpdate";
+            this.btnPrepAnalAnalUpdate.Size = new System.Drawing.Size(120, 28);
+            this.btnPrepAnalAnalUpdate.TabIndex = 0;
+            this.btnPrepAnalAnalUpdate.Text = "Update info";
+            this.btnPrepAnalAnalUpdate.UseVisualStyleBackColor = true;
             // 
             // panel49
             // 
-            this.panel49.Controls.Add(this.textBox31);
+            this.panel49.Controls.Add(this.tbPrepAnalAnalComment);
             this.panel49.Controls.Add(this.panel50);
-            this.panel49.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel49.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel49.Location = new System.Drawing.Point(0, 200);
             this.panel49.Name = "panel49";
-            this.panel49.Size = new System.Drawing.Size(367, 96);
+            this.panel49.Size = new System.Drawing.Size(366, 82);
             this.panel49.TabIndex = 7;
             // 
-            // textBox31
+            // tbPrepAnalAnalComment
             // 
-            this.textBox31.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox31.Location = new System.Drawing.Point(106, 0);
-            this.textBox31.MaxLength = 1000;
-            this.textBox31.Multiline = true;
-            this.textBox31.Name = "textBox31";
-            this.textBox31.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBox31.Size = new System.Drawing.Size(261, 96);
-            this.textBox31.TabIndex = 1;
+            this.tbPrepAnalAnalComment.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbPrepAnalAnalComment.Location = new System.Drawing.Point(106, 0);
+            this.tbPrepAnalAnalComment.MaxLength = 1000;
+            this.tbPrepAnalAnalComment.Multiline = true;
+            this.tbPrepAnalAnalComment.Name = "tbPrepAnalAnalComment";
+            this.tbPrepAnalAnalComment.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.tbPrepAnalAnalComment.Size = new System.Drawing.Size(260, 82);
+            this.tbPrepAnalAnalComment.TabIndex = 1;
             // 
             // panel50
             // 
@@ -9469,7 +9603,7 @@
             this.panel50.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel50.Location = new System.Drawing.Point(0, 0);
             this.panel50.Name = "panel50";
-            this.panel50.Size = new System.Drawing.Size(106, 96);
+            this.panel50.Size = new System.Drawing.Size(106, 82);
             this.panel50.TabIndex = 0;
             // 
             // label60
@@ -9477,32 +9611,32 @@
             this.label60.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label60.Location = new System.Drawing.Point(0, 0);
             this.label60.Name = "label60";
-            this.label60.Size = new System.Drawing.Size(106, 96);
+            this.label60.Size = new System.Drawing.Size(106, 82);
             this.label60.TabIndex = 0;
             this.label60.Text = "Comment";
             this.label60.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // panel47
             // 
-            this.panel47.Controls.Add(this.cboxSampleAnalWorkflowStatus);
+            this.panel47.Controls.Add(this.cboxPrepAnalAnalWorkflowStatus);
             this.panel47.Controls.Add(this.panel48);
             this.panel47.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel47.Location = new System.Drawing.Point(0, 175);
             this.panel47.Name = "panel47";
-            this.panel47.Size = new System.Drawing.Size(367, 25);
+            this.panel47.Size = new System.Drawing.Size(366, 25);
             this.panel47.TabIndex = 6;
             // 
-            // cboxSampleAnalWorkflowStatus
+            // cboxPrepAnalAnalWorkflowStatus
             // 
-            this.cboxSampleAnalWorkflowStatus.DisplayMember = "Name";
-            this.cboxSampleAnalWorkflowStatus.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cboxSampleAnalWorkflowStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboxSampleAnalWorkflowStatus.FormattingEnabled = true;
-            this.cboxSampleAnalWorkflowStatus.Location = new System.Drawing.Point(106, 0);
-            this.cboxSampleAnalWorkflowStatus.Name = "cboxSampleAnalWorkflowStatus";
-            this.cboxSampleAnalWorkflowStatus.Size = new System.Drawing.Size(261, 23);
-            this.cboxSampleAnalWorkflowStatus.TabIndex = 1;
-            this.cboxSampleAnalWorkflowStatus.ValueMember = "Id";
+            this.cboxPrepAnalAnalWorkflowStatus.DisplayMember = "Name";
+            this.cboxPrepAnalAnalWorkflowStatus.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cboxPrepAnalAnalWorkflowStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxPrepAnalAnalWorkflowStatus.FormattingEnabled = true;
+            this.cboxPrepAnalAnalWorkflowStatus.Location = new System.Drawing.Point(106, 0);
+            this.cboxPrepAnalAnalWorkflowStatus.Name = "cboxPrepAnalAnalWorkflowStatus";
+            this.cboxPrepAnalAnalWorkflowStatus.Size = new System.Drawing.Size(260, 23);
+            this.cboxPrepAnalAnalWorkflowStatus.TabIndex = 1;
+            this.cboxPrepAnalAnalWorkflowStatus.ValueMember = "Id";
             // 
             // panel48
             // 
@@ -9525,22 +9659,22 @@
             // 
             // panel45
             // 
-            this.panel45.Controls.Add(this.textBox18);
+            this.panel45.Controls.Add(this.tbPrepAnalAnalMDALib);
             this.panel45.Controls.Add(this.panel46);
             this.panel45.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel45.Location = new System.Drawing.Point(0, 150);
             this.panel45.Name = "panel45";
-            this.panel45.Size = new System.Drawing.Size(367, 25);
+            this.panel45.Size = new System.Drawing.Size(366, 25);
             this.panel45.TabIndex = 5;
             // 
-            // textBox18
+            // tbPrepAnalAnalMDALib
             // 
-            this.textBox18.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox18.Location = new System.Drawing.Point(106, 0);
-            this.textBox18.Name = "textBox18";
-            this.textBox18.ReadOnly = true;
-            this.textBox18.Size = new System.Drawing.Size(261, 21);
-            this.textBox18.TabIndex = 1;
+            this.tbPrepAnalAnalMDALib.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbPrepAnalAnalMDALib.Location = new System.Drawing.Point(106, 0);
+            this.tbPrepAnalAnalMDALib.Name = "tbPrepAnalAnalMDALib";
+            this.tbPrepAnalAnalMDALib.ReadOnly = true;
+            this.tbPrepAnalAnalMDALib.Size = new System.Drawing.Size(260, 21);
+            this.tbPrepAnalAnalMDALib.TabIndex = 1;
             // 
             // panel46
             // 
@@ -9563,22 +9697,22 @@
             // 
             // panel43
             // 
-            this.panel43.Controls.Add(this.textBox11);
+            this.panel43.Controls.Add(this.tbPrepAnalAnalNuclLib);
             this.panel43.Controls.Add(this.panel44);
             this.panel43.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel43.Location = new System.Drawing.Point(0, 125);
             this.panel43.Name = "panel43";
-            this.panel43.Size = new System.Drawing.Size(367, 25);
+            this.panel43.Size = new System.Drawing.Size(366, 25);
             this.panel43.TabIndex = 4;
             // 
-            // textBox11
+            // tbPrepAnalAnalNuclLib
             // 
-            this.textBox11.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox11.Location = new System.Drawing.Point(106, 0);
-            this.textBox11.Name = "textBox11";
-            this.textBox11.ReadOnly = true;
-            this.textBox11.Size = new System.Drawing.Size(261, 21);
-            this.textBox11.TabIndex = 1;
+            this.tbPrepAnalAnalNuclLib.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbPrepAnalAnalNuclLib.Location = new System.Drawing.Point(106, 0);
+            this.tbPrepAnalAnalNuclLib.Name = "tbPrepAnalAnalNuclLib";
+            this.tbPrepAnalAnalNuclLib.ReadOnly = true;
+            this.tbPrepAnalAnalNuclLib.Size = new System.Drawing.Size(260, 21);
+            this.tbPrepAnalAnalNuclLib.TabIndex = 1;
             // 
             // panel44
             // 
@@ -9601,21 +9735,21 @@
             // 
             // panel41
             // 
-            this.panel41.Controls.Add(this.textBox2);
+            this.panel41.Controls.Add(this.tbPrepAnalAnalSpecRef);
             this.panel41.Controls.Add(this.panel42);
             this.panel41.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel41.Location = new System.Drawing.Point(0, 100);
             this.panel41.Name = "panel41";
-            this.panel41.Size = new System.Drawing.Size(367, 25);
+            this.panel41.Size = new System.Drawing.Size(366, 25);
             this.panel41.TabIndex = 3;
             // 
-            // textBox2
+            // tbPrepAnalAnalSpecRef
             // 
-            this.textBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox2.Location = new System.Drawing.Point(106, 0);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(261, 21);
-            this.textBox2.TabIndex = 1;
+            this.tbPrepAnalAnalSpecRef.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbPrepAnalAnalSpecRef.Location = new System.Drawing.Point(106, 0);
+            this.tbPrepAnalAnalSpecRef.Name = "tbPrepAnalAnalSpecRef";
+            this.tbPrepAnalAnalSpecRef.Size = new System.Drawing.Size(260, 21);
+            this.tbPrepAnalAnalSpecRef.TabIndex = 1;
             // 
             // panel42
             // 
@@ -9643,7 +9777,7 @@
             this.panel39.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel39.Location = new System.Drawing.Point(0, 75);
             this.panel39.Name = "panel39";
-            this.panel39.Size = new System.Drawing.Size(367, 25);
+            this.panel39.Size = new System.Drawing.Size(366, 25);
             this.panel39.TabIndex = 2;
             // 
             // cboxPrepAnalAnalSigma
@@ -9654,7 +9788,7 @@
             this.cboxPrepAnalAnalSigma.FormattingEnabled = true;
             this.cboxPrepAnalAnalSigma.Location = new System.Drawing.Point(106, 0);
             this.cboxPrepAnalAnalSigma.Name = "cboxPrepAnalAnalSigma";
-            this.cboxPrepAnalAnalSigma.Size = new System.Drawing.Size(261, 23);
+            this.cboxPrepAnalAnalSigma.Size = new System.Drawing.Size(260, 23);
             this.cboxPrepAnalAnalSigma.TabIndex = 1;
             this.cboxPrepAnalAnalSigma.ValueMember = "Id";
             // 
@@ -9679,25 +9813,25 @@
             // 
             // panel19
             // 
-            this.panel19.Controls.Add(this.cboxSampleAnalUnitType);
+            this.panel19.Controls.Add(this.cboxPrepAnalAnalUnitType);
             this.panel19.Controls.Add(this.panel28);
             this.panel19.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel19.Location = new System.Drawing.Point(0, 50);
             this.panel19.Name = "panel19";
-            this.panel19.Size = new System.Drawing.Size(367, 25);
+            this.panel19.Size = new System.Drawing.Size(366, 25);
             this.panel19.TabIndex = 8;
             // 
-            // cboxSampleAnalUnitType
+            // cboxPrepAnalAnalUnitType
             // 
-            this.cboxSampleAnalUnitType.DisplayMember = "Name";
-            this.cboxSampleAnalUnitType.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cboxSampleAnalUnitType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboxSampleAnalUnitType.FormattingEnabled = true;
-            this.cboxSampleAnalUnitType.Location = new System.Drawing.Point(106, 0);
-            this.cboxSampleAnalUnitType.Name = "cboxSampleAnalUnitType";
-            this.cboxSampleAnalUnitType.Size = new System.Drawing.Size(261, 23);
-            this.cboxSampleAnalUnitType.TabIndex = 1;
-            this.cboxSampleAnalUnitType.ValueMember = "Id";
+            this.cboxPrepAnalAnalUnitType.DisplayMember = "Name";
+            this.cboxPrepAnalAnalUnitType.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cboxPrepAnalAnalUnitType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxPrepAnalAnalUnitType.FormattingEnabled = true;
+            this.cboxPrepAnalAnalUnitType.Location = new System.Drawing.Point(106, 0);
+            this.cboxPrepAnalAnalUnitType.Name = "cboxPrepAnalAnalUnitType";
+            this.cboxPrepAnalAnalUnitType.Size = new System.Drawing.Size(260, 23);
+            this.cboxPrepAnalAnalUnitType.TabIndex = 1;
+            this.cboxPrepAnalAnalUnitType.ValueMember = "Id";
             // 
             // panel28
             // 
@@ -9720,25 +9854,25 @@
             // 
             // panel37
             // 
-            this.panel37.Controls.Add(this.cboxSampleAnalUnit);
+            this.panel37.Controls.Add(this.cboxPrepAnalAnalUnit);
             this.panel37.Controls.Add(this.panel38);
             this.panel37.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel37.Location = new System.Drawing.Point(0, 25);
             this.panel37.Name = "panel37";
-            this.panel37.Size = new System.Drawing.Size(367, 25);
+            this.panel37.Size = new System.Drawing.Size(366, 25);
             this.panel37.TabIndex = 1;
             // 
-            // cboxSampleAnalUnit
+            // cboxPrepAnalAnalUnit
             // 
-            this.cboxSampleAnalUnit.DisplayMember = "name";
-            this.cboxSampleAnalUnit.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cboxSampleAnalUnit.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboxSampleAnalUnit.FormattingEnabled = true;
-            this.cboxSampleAnalUnit.Location = new System.Drawing.Point(106, 0);
-            this.cboxSampleAnalUnit.Name = "cboxSampleAnalUnit";
-            this.cboxSampleAnalUnit.Size = new System.Drawing.Size(261, 23);
-            this.cboxSampleAnalUnit.TabIndex = 1;
-            this.cboxSampleAnalUnit.ValueMember = "id";
+            this.cboxPrepAnalAnalUnit.DisplayMember = "name";
+            this.cboxPrepAnalAnalUnit.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cboxPrepAnalAnalUnit.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxPrepAnalAnalUnit.FormattingEnabled = true;
+            this.cboxPrepAnalAnalUnit.Location = new System.Drawing.Point(106, 0);
+            this.cboxPrepAnalAnalUnit.Name = "cboxPrepAnalAnalUnit";
+            this.cboxPrepAnalAnalUnit.Size = new System.Drawing.Size(260, 23);
+            this.cboxPrepAnalAnalUnit.TabIndex = 1;
+            this.cboxPrepAnalAnalUnit.ValueMember = "id";
             // 
             // panel38
             // 
@@ -9766,7 +9900,7 @@
             this.toolStripLabel59});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(367, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(366, 25);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -9784,7 +9918,7 @@
             this.panel8.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel8.Location = new System.Drawing.Point(0, 0);
             this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(325, 296);
+            this.panel8.Size = new System.Drawing.Size(326, 312);
             this.panel8.TabIndex = 3;
             // 
             // dataGridView11
@@ -9798,7 +9932,7 @@
             this.dataGridView11.Location = new System.Drawing.Point(0, 25);
             this.dataGridView11.Name = "dataGridView11";
             this.dataGridView11.ReadOnly = true;
-            this.dataGridView11.Size = new System.Drawing.Size(325, 271);
+            this.dataGridView11.Size = new System.Drawing.Size(326, 287);
             this.dataGridView11.TabIndex = 1;
             // 
             // toolsSampleResAttachments
@@ -9812,7 +9946,7 @@
             this.toolStripButton18});
             this.toolsSampleResAttachments.Location = new System.Drawing.Point(0, 0);
             this.toolsSampleResAttachments.Name = "toolsSampleResAttachments";
-            this.toolsSampleResAttachments.Size = new System.Drawing.Size(325, 25);
+            this.toolsSampleResAttachments.Size = new System.Drawing.Size(326, 25);
             this.toolsSampleResAttachments.TabIndex = 0;
             this.toolsSampleResAttachments.Text = "toolStrip11";
             // 
@@ -9852,6 +9986,15 @@
             this.toolStripButton18.Size = new System.Drawing.Size(60, 22);
             this.toolStripButton18.Text = "Delete";
             // 
+            // panel76
+            // 
+            this.panel76.Controls.Add(this.panel9);
+            this.panel76.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel76.Location = new System.Drawing.Point(3, 315);
+            this.panel76.Name = "panel76";
+            this.panel76.Size = new System.Drawing.Size(696, 292);
+            this.panel76.TabIndex = 3;
+            // 
             // panel9
             // 
             this.panel9.Controls.Add(this.dataGridView9);
@@ -9859,8 +10002,8 @@
             this.panel9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel9.Location = new System.Drawing.Point(0, 0);
             this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(696, 275);
-            this.panel9.TabIndex = 3;
+            this.panel9.Size = new System.Drawing.Size(696, 292);
+            this.panel9.TabIndex = 4;
             // 
             // dataGridView9
             // 
@@ -9873,7 +10016,7 @@
             this.dataGridView9.Location = new System.Drawing.Point(0, 25);
             this.dataGridView9.Name = "dataGridView9";
             this.dataGridView9.ReadOnly = true;
-            this.dataGridView9.Size = new System.Drawing.Size(696, 250);
+            this.dataGridView9.Size = new System.Drawing.Size(696, 267);
             this.dataGridView9.TabIndex = 0;
             // 
             // toolsSampleResRes
@@ -9942,173 +10085,6 @@
             this.rPTToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
             this.rPTToolStripMenuItem.Text = "RPT (NaI)";
             // 
-            // panel63
-            // 
-            this.panel63.Controls.Add(this.btnPrepAnalClose);
-            this.panel63.Controls.Add(this.btnPrepAnalSave);
-            this.panel63.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel63.Location = new System.Drawing.Point(3, 611);
-            this.panel63.Name = "panel63";
-            this.panel63.Size = new System.Drawing.Size(1141, 30);
-            this.panel63.TabIndex = 2;
-            // 
-            // btnPrepAnalClose
-            // 
-            this.btnPrepAnalClose.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnPrepAnalClose.Location = new System.Drawing.Point(907, 0);
-            this.btnPrepAnalClose.Name = "btnPrepAnalClose";
-            this.btnPrepAnalClose.Size = new System.Drawing.Size(117, 30);
-            this.btnPrepAnalClose.TabIndex = 1;
-            this.btnPrepAnalClose.Text = "Close";
-            this.btnPrepAnalClose.UseVisualStyleBackColor = true;
-            this.btnPrepAnalClose.Click += new System.EventHandler(this.btnPrepAnalClose_Click);
-            // 
-            // btnPrepAnalSave
-            // 
-            this.btnPrepAnalSave.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnPrepAnalSave.Location = new System.Drawing.Point(1024, 0);
-            this.btnPrepAnalSave.Name = "btnPrepAnalSave";
-            this.btnPrepAnalSave.Size = new System.Drawing.Size(117, 30);
-            this.btnPrepAnalSave.TabIndex = 0;
-            this.btnPrepAnalSave.Text = "Save";
-            this.btnPrepAnalSave.UseVisualStyleBackColor = true;
-            this.btnPrepAnalSave.Click += new System.EventHandler(this.btnPrepAnalSave_Click);
-            // 
-            // tools
-            // 
-            this.tools.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.tools.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnMenu,
-            this.lblCurrentTab,
-            this.btnBack});
-            this.tools.Location = new System.Drawing.Point(0, 24);
-            this.tools.Name = "tools";
-            this.tools.Size = new System.Drawing.Size(1155, 25);
-            this.tools.TabIndex = 5;
-            this.tools.Text = "toolStrip29";
-            // 
-            // btnMenu
-            // 
-            this.btnMenu.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnMenu.Image = global::DSA_lims.Properties.Resources.menu;
-            this.btnMenu.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnMenu.Name = "btnMenu";
-            this.btnMenu.Size = new System.Drawing.Size(23, 22);
-            this.btnMenu.Text = "Menu";
-            this.btnMenu.Click += new System.EventHandler(this.miMainMenuView_Click);
-            // 
-            // lblCurrentTab
-            // 
-            this.lblCurrentTab.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.lblCurrentTab.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.lblCurrentTab.Name = "lblCurrentTab";
-            this.lblCurrentTab.Size = new System.Drawing.Size(98, 22);
-            this.lblCurrentTab.Text = "<lblCurrentTab>";
-            // 
-            // btnBack
-            // 
-            this.btnBack.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnBack.Image = global::DSA_lims.Properties.Resources.left;
-            this.btnBack.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnBack.Name = "btnBack";
-            this.btnBack.Size = new System.Drawing.Size(23, 22);
-            this.btnBack.Text = "toolStripButton25";
-            this.btnBack.ToolTipText = "Back";
-            this.btnBack.Click += new System.EventHandler(this.miBack_Click);
-            // 
-            // panel36
-            // 
-            this.panel36.Controls.Add(this.btnSampleUpdate);
-            this.panel36.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel36.Location = new System.Drawing.Point(3, 554);
-            this.panel36.Name = "panel36";
-            this.panel36.Size = new System.Drawing.Size(812, 28);
-            this.panel36.TabIndex = 3;
-            // 
-            // panelSamplesAttachments
-            // 
-            this.panelSamplesAttachments.Controls.Add(this.gridSampleAttachments);
-            this.panelSamplesAttachments.Controls.Add(this.toolsSampleSampInfoAttachments);
-            this.panelSamplesAttachments.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelSamplesAttachments.Location = new System.Drawing.Point(0, 0);
-            this.panelSamplesAttachments.Name = "panelSamplesAttachments";
-            this.panelSamplesAttachments.Size = new System.Drawing.Size(315, 579);
-            this.panelSamplesAttachments.TabIndex = 0;
-            // 
-            // toolsSampleSampInfoAttachments
-            // 
-            this.toolsSampleSampInfoAttachments.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.toolsSampleSampInfoAttachments.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripLabel18,
-            this.toolStripSeparator46,
-            this.toolStripButton1,
-            this.toolStripButton2,
-            this.toolStripButton3});
-            this.toolsSampleSampInfoAttachments.Location = new System.Drawing.Point(0, 0);
-            this.toolsSampleSampInfoAttachments.Name = "toolsSampleSampInfoAttachments";
-            this.toolsSampleSampInfoAttachments.Size = new System.Drawing.Size(315, 25);
-            this.toolsSampleSampInfoAttachments.TabIndex = 0;
-            this.toolsSampleSampInfoAttachments.Text = "toolStrip1";
-            // 
-            // toolStripLabel18
-            // 
-            this.toolStripLabel18.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.toolStripLabel18.Name = "toolStripLabel18";
-            this.toolStripLabel18.Size = new System.Drawing.Size(79, 22);
-            this.toolStripLabel18.Text = "Attachments";
-            // 
-            // toolStripSeparator46
-            // 
-            this.toolStripSeparator46.Name = "toolStripSeparator46";
-            this.toolStripSeparator46.Size = new System.Drawing.Size(6, 25);
-            // 
-            // toolStripButton1
-            // 
-            this.toolStripButton1.Image = global::DSA_lims.Properties.Resources.scan;
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(52, 22);
-            this.toolStripButton1.Text = "Scan";
-            // 
-            // toolStripButton2
-            // 
-            this.toolStripButton2.Image = global::DSA_lims.Properties.Resources.projects;
-            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(65, 22);
-            this.toolStripButton2.Text = "Browse";
-            // 
-            // toolStripButton3
-            // 
-            this.toolStripButton3.Image = global::DSA_lims.Properties.Resources.delete;
-            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton3.Name = "toolStripButton3";
-            this.toolStripButton3.Size = new System.Drawing.Size(60, 22);
-            this.toolStripButton3.Text = "Delete";
-            // 
-            // gridSampleAttachments
-            // 
-            this.gridSampleAttachments.AllowUserToAddRows = false;
-            this.gridSampleAttachments.AllowUserToDeleteRows = false;
-            this.gridSampleAttachments.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
-            this.gridSampleAttachments.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.gridSampleAttachments.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gridSampleAttachments.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridSampleAttachments.Location = new System.Drawing.Point(0, 25);
-            this.gridSampleAttachments.Name = "gridSampleAttachments";
-            this.gridSampleAttachments.ReadOnly = true;
-            this.gridSampleAttachments.Size = new System.Drawing.Size(315, 554);
-            this.gridSampleAttachments.TabIndex = 1;
-            // 
-            // panel21
-            // 
-            this.panel21.Controls.Add(this.panelSamplesAttachments);
-            this.panel21.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel21.Location = new System.Drawing.Point(815, 3);
-            this.panel21.Name = "panel21";
-            this.panel21.Size = new System.Drawing.Size(315, 579);
-            this.panel21.TabIndex = 1;
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -10158,8 +10134,15 @@
             this.panel13.PerformLayout();
             this.panel23.ResumeLayout(false);
             this.panel23.PerformLayout();
+            this.panel36.ResumeLayout(false);
             this.toolStrip11.ResumeLayout(false);
             this.toolStrip11.PerformLayout();
+            this.panel21.ResumeLayout(false);
+            this.panelSamplesAttachments.ResumeLayout(false);
+            this.panelSamplesAttachments.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridSampleAttachments)).EndInit();
+            this.toolsSampleSampInfoAttachments.ResumeLayout(false);
+            this.toolsSampleSampInfoAttachments.PerformLayout();
             this.tabSamplesParams.ResumeLayout(false);
             this.tabSamplesParams.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
@@ -10273,7 +10256,6 @@
             this.panel78.PerformLayout();
             this.toolStrip8.ResumeLayout(false);
             this.toolStrip8.PerformLayout();
-            this.panel24.ResumeLayout(false);
             this.tabProjects.ResumeLayout(false);
             this.splitProjects.Panel1.ResumeLayout(false);
             this.splitProjects.Panel1.PerformLayout();
@@ -10559,15 +10541,16 @@
             this.toolsSampleAttachments.ResumeLayout(false);
             this.toolsSampleAttachments.PerformLayout();
             this.tabPrepAnalAnalysis.ResumeLayout(false);
-            this.splitContainer5.Panel1.ResumeLayout(false);
-            this.splitContainer5.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer5)).EndInit();
-            this.splitContainer5.ResumeLayout(false);
+            this.tools.ResumeLayout(false);
+            this.tools.PerformLayout();
+            this.panel24.ResumeLayout(false);
+            this.panel63.ResumeLayout(false);
             this.splitContainer21.Panel1.ResumeLayout(false);
             this.splitContainer21.Panel1.PerformLayout();
             this.splitContainer21.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer21)).EndInit();
             this.splitContainer21.ResumeLayout(false);
+            this.panel62.ResumeLayout(false);
             this.panel49.ResumeLayout(false);
             this.panel49.PerformLayout();
             this.panel50.ResumeLayout(false);
@@ -10595,21 +10578,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView11)).EndInit();
             this.toolsSampleResAttachments.ResumeLayout(false);
             this.toolsSampleResAttachments.PerformLayout();
+            this.panel76.ResumeLayout(false);
             this.panel9.ResumeLayout(false);
             this.panel9.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView9)).EndInit();
             this.toolsSampleResRes.ResumeLayout(false);
             this.toolsSampleResRes.PerformLayout();
-            this.panel63.ResumeLayout(false);
-            this.tools.ResumeLayout(false);
-            this.tools.PerformLayout();
-            this.panel36.ResumeLayout(false);
-            this.panelSamplesAttachments.ResumeLayout(false);
-            this.panelSamplesAttachments.PerformLayout();
-            this.toolsSampleSampInfoAttachments.ResumeLayout(false);
-            this.toolsSampleSampInfoAttachments.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gridSampleAttachments)).EndInit();
-            this.panel21.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -10741,9 +10715,6 @@
         private System.Windows.Forms.DataGridView gridOrders;
         private System.Windows.Forms.ToolStrip toolsOrders;
         private System.Windows.Forms.TabPage tabSamples;
-        private System.Windows.Forms.Panel panel24;
-        private System.Windows.Forms.Button btnSamplesClose;
-        private System.Windows.Forms.Button btnSamplesOpen;
         private System.Windows.Forms.TabPage tabProjects;
         private System.Windows.Forms.Panel panel25;
         private System.Windows.Forms.Button btnMainProjectsClose;
@@ -11211,9 +11182,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator47;
         private System.Windows.Forms.ToolStripButton toolStripButton96;
         private System.Windows.Forms.TabPage tabPrepAnal;
-        private System.Windows.Forms.Panel panel63;
-        private System.Windows.Forms.Button btnPrepAnalClose;
-        private System.Windows.Forms.Button btnPrepAnalSave;
         private System.Windows.Forms.ToolStrip toolStrip7;
         private System.Windows.Forms.TabControl tabsPrepAnal;
         private System.Windows.Forms.TabPage tabPrepAnalPreps;
@@ -11227,81 +11195,31 @@
         private System.Windows.Forms.ToolStripButton toolStripButton13;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel60;
-        private System.Windows.Forms.TextBox textBox19;
+        private System.Windows.Forms.TextBox tbPrepAnalPrepComment;
         private System.Windows.Forms.Panel panel61;
         private System.Windows.Forms.Label label31;
         private System.Windows.Forms.Panel panel57;
-        private System.Windows.Forms.ComboBox cboxSamplePrepWorkflowStatus;
+        private System.Windows.Forms.ComboBox cboxPrepAnalPrepWorkflowStatus;
         private System.Windows.Forms.Panel panel58;
         private System.Windows.Forms.Label label64;
         private System.Windows.Forms.Panel panel55;
-        private System.Windows.Forms.TextBox textBox17;
+        private System.Windows.Forms.TextBox tbPrepAnalPrepAmount;
         private System.Windows.Forms.Panel panel56;
         private System.Windows.Forms.Label label29;
-        private System.Windows.Forms.ComboBox cboxSamplePrepUnit;
+        private System.Windows.Forms.ComboBox cboxPrepAnalPrepUnit;
         private System.Windows.Forms.Panel panel52;
-        private System.Windows.Forms.TextBox textBox16;
+        private System.Windows.Forms.TextBox tbPrepAnalPrepFillHeight;
         private System.Windows.Forms.Panel panel59;
-        private System.Windows.Forms.Label lblSamplesPrepRange;
+        private System.Windows.Forms.Label lblPrepAnalPrepRange;
         private System.Windows.Forms.Panel panel53;
         private System.Windows.Forms.Label label28;
         private System.Windows.Forms.Panel panel51;
-        private System.Windows.Forms.ComboBox cboxSamplePrepGeom;
+        private System.Windows.Forms.ComboBox cboxPrepAnalPrepGeom;
         private System.Windows.Forms.Panel panel54;
         private System.Windows.Forms.Label label27;
         private System.Windows.Forms.ToolStrip toolsSamplePrepInfo;
         private System.Windows.Forms.ToolStripLabel toolStripLabel13;
         private System.Windows.Forms.TabPage tabPrepAnalAnalysis;
-        private System.Windows.Forms.Panel panel9;
-        private System.Windows.Forms.DataGridView dataGridView9;
-        private System.Windows.Forms.ToolStrip toolsSampleResRes;
-        private System.Windows.Forms.ToolStripLabel toolStripLabel7;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator28;
-        private System.Windows.Forms.ToolStripButton toolStripButton19;
-        private System.Windows.Forms.ToolStripButton toolStripButton20;
-        private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton1;
-        private System.Windows.Forms.ToolStripMenuItem lISToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem rPTToolStripMenuItem;
-        private System.Windows.Forms.SplitContainer splitContainer5;
-        private System.Windows.Forms.SplitContainer splitContainer21;
-        private System.Windows.Forms.Panel panel49;
-        private System.Windows.Forms.TextBox textBox31;
-        private System.Windows.Forms.Panel panel50;
-        private System.Windows.Forms.Label label60;
-        private System.Windows.Forms.Panel panel47;
-        private System.Windows.Forms.ComboBox cboxSampleAnalWorkflowStatus;
-        private System.Windows.Forms.Panel panel48;
-        private System.Windows.Forms.Label label55;
-        private System.Windows.Forms.Panel panel45;
-        private System.Windows.Forms.TextBox textBox18;
-        private System.Windows.Forms.Panel panel46;
-        private System.Windows.Forms.Label label59;
-        private System.Windows.Forms.Panel panel43;
-        private System.Windows.Forms.TextBox textBox11;
-        private System.Windows.Forms.Panel panel44;
-        private System.Windows.Forms.Label label58;
-        private System.Windows.Forms.Panel panel41;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.Panel panel42;
-        private System.Windows.Forms.Label label54;
-        private System.Windows.Forms.Panel panel39;
-        private System.Windows.Forms.ComboBox cboxPrepAnalAnalSigma;
-        private System.Windows.Forms.Panel panel40;
-        private System.Windows.Forms.Label label53;
-        private System.Windows.Forms.Panel panel37;
-        private System.Windows.Forms.ComboBox cboxSampleAnalUnit;
-        private System.Windows.Forms.Panel panel38;
-        private System.Windows.Forms.Label label51;
-        private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripLabel toolStripLabel59;
-        private System.Windows.Forms.Panel panel8;
-        private System.Windows.Forms.DataGridView dataGridView11;
-        private System.Windows.Forms.ToolStrip toolsSampleResAttachments;
-        private System.Windows.Forms.ToolStripLabel toolStripLabel1;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator27;
-        private System.Windows.Forms.ToolStripButton toolStripButton16;
-        private System.Windows.Forms.ToolStripButton toolStripButton17;
-        private System.Windows.Forms.ToolStripButton toolStripButton18;
         private System.Windows.Forms.ToolStripMenuItem miSamplesNew;
         private System.Windows.Forms.ToolStripMenuItem miSamplesImport;
         private System.Windows.Forms.ToolStripMenuItem miSamplesImportExcel;
@@ -11330,31 +11248,31 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Panel panel66;
-        private System.Windows.Forms.TextBox textBox6;
+        private System.Windows.Forms.TextBox tbPrepAnalVolume;
         private System.Windows.Forms.Panel panel67;
         private System.Windows.Forms.Label label46;
         private System.Windows.Forms.Panel panel64;
-        private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.TextBox tbPrepAnalDryWeight;
         private System.Windows.Forms.Panel panel65;
         private System.Windows.Forms.Label label44;
         private System.Windows.Forms.Panel panel4;
-        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.TextBox tbPrepAnalWetWeight;
         private System.Windows.Forms.Panel panel26;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Panel panel74;
-        private System.Windows.Forms.TextBox textBox34;
+        private System.Windows.Forms.TextBox tbPrepAnalLODTemp;
         private System.Windows.Forms.Panel panel75;
         private System.Windows.Forms.Label label68;
         private System.Windows.Forms.Panel panel72;
-        private System.Windows.Forms.TextBox textBox33;
+        private System.Windows.Forms.TextBox tbPrepAnalLODWater;
         private System.Windows.Forms.Panel panel73;
         private System.Windows.Forms.Label label67;
         private System.Windows.Forms.Panel panel70;
-        private System.Windows.Forms.TextBox textBox32;
+        private System.Windows.Forms.TextBox tbPrepAnalLODEndWeight;
         private System.Windows.Forms.Panel panel71;
         private System.Windows.Forms.Label label66;
         private System.Windows.Forms.Panel panel68;
-        private System.Windows.Forms.TextBox textBox20;
+        private System.Windows.Forms.TextBox tbPrepAnalLODStartWeight;
         private System.Windows.Forms.Panel panel69;
         private System.Windows.Forms.Label label65;
         private System.Windows.Forms.DataGridView dataGridView1;
@@ -11386,10 +11304,6 @@
         private System.Windows.Forms.ToolStripMenuItem sampleLabelToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sampleInfoForSelectedToolStripMenuItem;
         private System.Windows.Forms.ToolStripButton toolStripButton106;
-        private System.Windows.Forms.Panel panel19;
-        private System.Windows.Forms.ComboBox cboxSampleAnalUnitType;
-        private System.Windows.Forms.Panel panel28;
-        private System.Windows.Forms.Label label19;
         private System.Windows.Forms.ListBox lbTypeRelSampTypePrepMeth;
         private System.Windows.Forms.ListBox lbTypeRelSampTypeInheritedPrepMeth;
         private System.Windows.Forms.ToolStripMenuItem miTypeRelSampleTypes;
@@ -11486,6 +11400,65 @@
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.ToolStripButton toolStripButton2;
         private System.Windows.Forms.ToolStripButton toolStripButton3;
+        private System.Windows.Forms.Panel panel24;
+        private System.Windows.Forms.Button btnPrepAnalPrepUpdate;
+        private System.Windows.Forms.Panel panel76;
+        private System.Windows.Forms.Panel panel9;
+        private System.Windows.Forms.DataGridView dataGridView9;
+        private System.Windows.Forms.ToolStrip toolsSampleResRes;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel7;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator28;
+        private System.Windows.Forms.ToolStripButton toolStripButton19;
+        private System.Windows.Forms.ToolStripButton toolStripButton20;
+        private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton1;
+        private System.Windows.Forms.ToolStripMenuItem lISToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem rPTToolStripMenuItem;
+        private System.Windows.Forms.Panel panel63;
+        private System.Windows.Forms.SplitContainer splitContainer21;
+        private System.Windows.Forms.Panel panel62;
+        private System.Windows.Forms.Button btnPrepAnalAnalUpdate;
+        private System.Windows.Forms.Panel panel49;
+        private System.Windows.Forms.TextBox tbPrepAnalAnalComment;
+        private System.Windows.Forms.Panel panel50;
+        private System.Windows.Forms.Label label60;
+        private System.Windows.Forms.Panel panel47;
+        private System.Windows.Forms.ComboBox cboxPrepAnalAnalWorkflowStatus;
+        private System.Windows.Forms.Panel panel48;
+        private System.Windows.Forms.Label label55;
+        private System.Windows.Forms.Panel panel45;
+        private System.Windows.Forms.TextBox tbPrepAnalAnalMDALib;
+        private System.Windows.Forms.Panel panel46;
+        private System.Windows.Forms.Label label59;
+        private System.Windows.Forms.Panel panel43;
+        private System.Windows.Forms.TextBox tbPrepAnalAnalNuclLib;
+        private System.Windows.Forms.Panel panel44;
+        private System.Windows.Forms.Label label58;
+        private System.Windows.Forms.Panel panel41;
+        private System.Windows.Forms.TextBox tbPrepAnalAnalSpecRef;
+        private System.Windows.Forms.Panel panel42;
+        private System.Windows.Forms.Label label54;
+        private System.Windows.Forms.Panel panel39;
+        private System.Windows.Forms.ComboBox cboxPrepAnalAnalSigma;
+        private System.Windows.Forms.Panel panel40;
+        private System.Windows.Forms.Label label53;
+        private System.Windows.Forms.Panel panel19;
+        private System.Windows.Forms.ComboBox cboxPrepAnalAnalUnitType;
+        private System.Windows.Forms.Panel panel28;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Panel panel37;
+        private System.Windows.Forms.ComboBox cboxPrepAnalAnalUnit;
+        private System.Windows.Forms.Panel panel38;
+        private System.Windows.Forms.Label label51;
+        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel59;
+        private System.Windows.Forms.Panel panel8;
+        private System.Windows.Forms.DataGridView dataGridView11;
+        private System.Windows.Forms.ToolStrip toolsSampleResAttachments;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator27;
+        private System.Windows.Forms.ToolStripButton toolStripButton16;
+        private System.Windows.Forms.ToolStripButton toolStripButton17;
+        private System.Windows.Forms.ToolStripButton toolStripButton18;
     }
 }
 

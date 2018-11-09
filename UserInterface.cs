@@ -375,7 +375,7 @@ namespace DSA_lims
 
             grid.Columns["name"].HeaderText = "Name";
             grid.Columns["description_link"].HeaderText = "Desc. link";
-            grid.Columns["specter_reference_regexp"].HeaderText = "Spec.Ref RegExp";
+            grid.Columns["specter_reference_regexp"].HeaderText = "Spec.Ref RE";
             grid.Columns["instance_status_name"].HeaderText = "Status";
         }        
 

@@ -43,6 +43,13 @@ namespace DSA_lims
         public const int Deleted = 3;
     }
 
+    public static class WorkflowStatus
+    {
+        public const int Construction = 1;
+        public const int Complete = 2;
+        public const int Rejected = 3;
+    }
+
     public class Lemma<I, N>
     {
         public Lemma() {}

@@ -96,11 +96,11 @@ namespace DSA_lims
 
                     cboxSampleInstanceStatus.DataSource = DB.GetIntLemmata(conn, "csp_select_instance_status");
 
-                    cboxSamplePrepUnit.DataSource = DB.GetIntLemmata(conn, "csp_select_preparation_units", true);
+                    cboxPrepAnalPrepUnit.DataSource = DB.GetIntLemmata(conn, "csp_select_preparation_units", true);
 
-                    cboxSampleAnalWorkflowStatus.DataSource = DB.GetIntLemmata(conn, "csp_select_workflow_status");
+                    cboxPrepAnalAnalWorkflowStatus.DataSource = DB.GetIntLemmata(conn, "csp_select_workflow_status");
 
-                    cboxSamplePrepWorkflowStatus.DataSource = DB.GetIntLemmata(conn, "csp_select_workflow_status");
+                    cboxPrepAnalPrepWorkflowStatus.DataSource = DB.GetIntLemmata(conn, "csp_select_workflow_status");
 
                     cboxSampleInfoLocationTypes.DataSource = DB.GetIntLemmata(conn, "csp_select_location_types", true);
 
@@ -110,9 +110,9 @@ namespace DSA_lims
 
                     UI.PopulateActivityUnits(conn, gridMetaUnitsActivity);
 
-                    UI.PopulateComboBoxes(conn, "csp_select_activity_units_short", new SqlParameter[] { }, cboxSampleAnalUnit);
+                    UI.PopulateComboBoxes(conn, "csp_select_activity_units_short", new SqlParameter[] { }, cboxPrepAnalAnalUnit);
 
-                    UI.PopulateComboBoxes(conn, "csp_select_activity_unit_types", new SqlParameter[] { }, cboxSampleAnalUnitType);
+                    UI.PopulateComboBoxes(conn, "csp_select_activity_unit_types", new SqlParameter[] { }, cboxPrepAnalAnalUnitType);
 
                     UI.PopulateProjectsMain(conn, gridProjectMain);
 
@@ -134,7 +134,7 @@ namespace DSA_lims
 
                     UI.PopulateComboBoxes(conn, "csp_select_preparation_geometries_short", new[] {                    
                         new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
-                    }, cboxSamplePrepGeom);
+                    }, cboxPrepAnalPrepGeom);
 
                     UI.PopulateCounties(conn, gridSysCounty);                    
 
@@ -938,7 +938,7 @@ namespace DSA_lims
                         UI.PopulateGeometries(conn, gridSysGeom);                        
                         UI.PopulateComboBoxes(conn, "csp_select_preparation_geometries_short", new[] {
                             new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
-                        }, cboxSamplePrepGeom);
+                        }, cboxPrepAnalPrepGeom);
                     }
                     break;
                 case DialogResult.Abort:
@@ -1360,7 +1360,7 @@ namespace DSA_lims
         private void miSamplesNew_Click(object sender, EventArgs e)
         {
             // new sample            
-            ClearSampleInfo();
+            ClearSample();
             selectedSample = Guid.Empty;
 
             FormSampleNew form = new FormSampleNew(treeSampleTypes);
@@ -1381,7 +1381,40 @@ namespace DSA_lims
             // Import sample from excel
         }
 
-        private void ClearSampleInfo()
+        private void ClearPrepAnalSample()
+        {
+            tbPrepAnalDryWeight.Text = "";
+            tbPrepAnalWetWeight.Text = "";
+            tbPrepAnalVolume.Text = "";
+            tbPrepAnalLODStartWeight.Text = "";
+            tbPrepAnalLODEndWeight.Text = "";
+            tbPrepAnalLODWater.Text = "";
+            tbPrepAnalLODTemp.Text = "";
+        }
+
+        private void ClearPrepAnalPreparation()
+        {
+            cboxPrepAnalPrepGeom.SelectedValue = Guid.Empty;
+            tbPrepAnalPrepFillHeight.Text = "";
+            tbPrepAnalPrepAmount.Text = "";
+            cboxPrepAnalPrepUnit.SelectedValue = 0;
+            cboxPrepAnalPrepWorkflowStatus.SelectedValue = WorkflowStatus.Construction;
+            tbPrepAnalPrepComment.Text = "";
+        }
+
+        private void ClearPrepAnalAnalysis()
+        {
+            cboxPrepAnalAnalUnit.SelectedValue = Guid.Empty;
+            cboxPrepAnalAnalUnitType.SelectedValue = Guid.Empty;
+            cboxPrepAnalAnalSigma.SelectedValue = 0;
+            tbPrepAnalAnalSpecRef.Text = "";
+            tbPrepAnalAnalNuclLib.Text = "";
+            tbPrepAnalAnalMDALib.Text = "";
+            cboxPrepAnalAnalWorkflowStatus.SelectedValue = WorkflowStatus.Construction;
+            tbPrepAnalAnalComment.Text = "";
+        }
+
+        private void ClearSample()
         {
             cboxSampleSampleType.SelectedValue = Guid.Empty;
             cboxSampleSampleComponent.SelectedValue = Guid.Empty;
@@ -1428,7 +1461,7 @@ namespace DSA_lims
 
             selectedSample = Guid.Parse(gridSamples.SelectedRows[0].Cells["id"].Value.ToString());
 
-            ClearSampleInfo();
+            ClearSample();
 
             using (SqlConnection conn = DB.OpenConnection())
             {                
@@ -1679,15 +1712,9 @@ namespace DSA_lims
         private void miSamplesPrepAnal_Click(object sender, EventArgs e)
         {
             // go to sample prep/anal
-            if(gridSamples.SelectedRows.Count < 1)
+            if(gridSamples.SelectedRows.Count != 1)
             {
-                MessageBox.Show("You must select a sample first");
-                return;
-            }
-
-            if (gridSamples.SelectedRows.Count > 1)
-            {
-                MessageBox.Show("You must select a single sample");
+                MessageBox.Show("You must select a single sample first");
                 return;
             }
 
@@ -1697,6 +1724,10 @@ namespace DSA_lims
             {
                 PopulatePrepAnal(conn, selectedSample);
             }
+
+            ClearPrepAnalSample();
+            ClearPrepAnalPreparation();
+            ClearPrepAnalAnalysis();
 
             tabs.SelectedTab = tabPrepAnal;
         }
@@ -1766,16 +1797,6 @@ where preparation_id = @preparation_id
             }
 
             treePrepAnal.ExpandAll();
-        }
-        
-        private void btnPrepAnalClose_Click(object sender, EventArgs e)
-        {
-            tabs.SelectedTab = tabSamples;
-        }
-
-        private void btnPrepAnalSave_Click(object sender, EventArgs e)
-        {
-            tabs.SelectedTab = tabSamples;
         }
 
         private void miSamplesSetExcempt_Click(object sender, EventArgs e)
@@ -2737,13 +2758,16 @@ order by name
         {
             switch(e.Node.Level)
             {
-                case 0:                    
+                case 0:
+                    ClearPrepAnalSample();
                     tabsPrepAnal.SelectedTab = tabPrepAnalSample;
                     break;
-                case 1:                
+                case 1:
+                    ClearPrepAnalPreparation();
                     tabsPrepAnal.SelectedTab = tabPrepAnalPreps;
                     break;
-                case 2:                
+                case 2:
+                    ClearPrepAnalAnalysis();
                     tabsPrepAnal.SelectedTab = tabPrepAnalAnalysis;
                     break;
             }

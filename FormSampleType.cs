@@ -15,6 +15,7 @@ namespace DSA_lims
     public partial class FormSampleType : Form
     {
         private Dictionary<string, object> p = new Dictionary<string, object>();
+        private string SampleTypePath;
 
         public Guid SampleTypeId
         {
@@ -26,15 +27,16 @@ namespace DSA_lims
             get { return p.ContainsKey("name") ? p["name"].ToString() : String.Empty; }
         }
 
-        public FormSampleType(Guid sampleTypeId, string sampleTypeName, string sampleTypePath, bool edit)
+        public FormSampleType(TreeNode tnode, bool edit)
         {
             InitializeComponent();
 
-            if(edit)
+            if (edit)
             {
                 lblCurrent.Text = "Name";
-                tbCurrent.Text = sampleTypeName + " -> " + sampleTypePath;
-                p["id"] = sampleTypeId;
+                tbCurrent.Text = tnode.Text + " -> " + tnode.FullPath;
+                p["id"] = Guid.Parse(tnode.Name);
+                SampleTypePath = tnode.Parent.FullPath;
 
                 using (SqlConnection conn = DB.OpenConnection())
                 {
@@ -46,7 +48,7 @@ namespace DSA_lims
                         if (!reader.HasRows)
                             throw new Exception("Sample type with ID " + p["id"] + " was not found");
 
-                        reader.Read();                        
+                        reader.Read();
                         tbName.Text = reader["name"].ToString();
                         tbNameCommon.Text = reader["name_common"].ToString();
                         tbNameLatin.Text = reader["name_latin"].ToString();
@@ -61,10 +63,21 @@ namespace DSA_lims
             else
             {
                 lblCurrent.Text = "Parent name";
-                tbCurrent.Text = sampleTypeName + " -> " + sampleTypePath;
-                p["parent_id"] = sampleTypeId;
-            }            
-        }        
+
+                if (tnode == null)
+                {                    
+                    tbCurrent.Text = "";
+                    p["parent_id"] = Guid.Empty;
+                    SampleTypePath = "";
+                }
+                else
+                {                    
+                    tbCurrent.Text = tnode.Text + " -> " + tnode.FullPath;
+                    p["parent_id"] = Guid.Parse(tnode.Name);
+                    SampleTypePath = tnode.FullPath;
+                }
+            }
+        }                
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
@@ -81,6 +94,9 @@ namespace DSA_lims
             }
 
             p["name"] = tbName.Text.Trim();
+            if(String.IsNullOrEmpty(SampleTypePath))
+                p["path"] = p["name"];
+            else p["path"] = SampleTypePath + "/" + p["name"];
             p["name_common"] = tbNameCommon.Text.Trim();
             p["name_latin"] = tbNameLatin.Text.Trim();
 
@@ -100,11 +116,11 @@ namespace DSA_lims
             SqlTransaction transaction = null;
 
             try
-            {
+            {                                
                 p["create_date"] = DateTime.Now;
                 p["created_by"] = Common.Username;
                 p["update_date"] = DateTime.Now;
-                p["updated_by"] = Common.Username;
+                p["updated_by"] = Common.Username;                
 
                 connection = DB.OpenConnection();
                 transaction = connection.BeginTransaction();
@@ -113,8 +129,9 @@ namespace DSA_lims
                 cmd.CommandType = CommandType.StoredProcedure;
                 p["id"] = Guid.NewGuid();
                 cmd.Parameters.AddWithValue("@id", p["id"]);
-                cmd.Parameters.AddWithValue("@parent_id", DB.MakeParam(typeof(Guid), p["parent_id"]));
-                cmd.Parameters.AddWithValue("@name", p["name"]);                
+                cmd.Parameters.AddWithValue("@parent_id", p["parent_id"]);
+                cmd.Parameters.AddWithValue("@path", p["path"]);
+                cmd.Parameters.AddWithValue("@name", p["name"]);
                 cmd.Parameters.AddWithValue("@name_common", p["name_common"]);
                 cmd.Parameters.AddWithValue("@name_latin", p["name_latin"]);
                 cmd.Parameters.AddWithValue("@create_date", p["create_date"]);
@@ -157,7 +174,8 @@ namespace DSA_lims
                 SqlCommand cmd = new SqlCommand("csp_update_sample_type", connection, transaction);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@id", p["id"]);
-                cmd.Parameters.AddWithValue("@name", p["name"]);
+                cmd.Parameters.AddWithValue("@path", p["path"]);
+                cmd.Parameters.AddWithValue("@name", p["name"]);                
                 cmd.Parameters.AddWithValue("@name_common", p["name_common"]);
                 cmd.Parameters.AddWithValue("@name_latin", p["name_latin"]);
                 cmd.Parameters.AddWithValue("@update_date", p["update_date"]);

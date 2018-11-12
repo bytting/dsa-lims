@@ -2853,6 +2853,7 @@ if OBJECT_ID('dbo.sample_type', 'U') IS NOT NULL drop table sample_type;
 create table sample_type (
 	id uniqueidentifier primary key NOT NULL,
 	parent_id uniqueidentifier default NULL,	
+	path nvarchar(2000) NOT NULL,
 	name nvarchar(80) NOT NULL,
 	name_common nvarchar(80) default NULL,
 	name_latin nvarchar(80) default NULL,
@@ -2866,6 +2867,7 @@ go
 create proc csp_insert_sample_type
 	@id uniqueidentifier,	
 	@parent_id uniqueidentifier,		
+	@path nvarchar(2000),
 	@name nvarchar(80),
 	@name_common nvarchar(80),
 	@name_latin nvarchar(80),
@@ -2877,7 +2879,8 @@ as
 	insert into sample_type values (
 		@id,
 		@parent_id,
-		@name,		
+		@path,
+		@name,
 		@name_common,
 		@name_latin,
 		@create_date,
@@ -2889,6 +2892,7 @@ go
 
 create proc csp_update_sample_type
 	@id uniqueidentifier,		
+	@path nvarchar(2000),
 	@name nvarchar(80),
 	@name_common nvarchar(80),
 	@name_latin nvarchar(80),	
@@ -2896,7 +2900,8 @@ create proc csp_update_sample_type
 	@updated_by nvarchar(50)	
 as 
 	update sample_type set 
-		name = @name,		
+		path = @path,
+		name = @name,
 		name_common = @name_common,
 		name_latin = @name_latin,
 		update_date = @update_date,
@@ -3587,10 +3592,10 @@ create table analysis_result (
 	activity float default NULL,
 	activity_unit_id uniqueidentifier NOT NULL,
 	activity_uncertainty float NOT NULL,
-	activity_uncertainty_abs bit NOT NULL,		
+	activity_uncertainty_abs bit NOT NULL,
 	activity_approved bit default 0,
 	uniform_activity float default NULL,
-	uniform_activity_unit_id uniqueidentifier NOT NULL,		
+	uniform_activity_unit_id uniqueidentifier NOT NULL,
 	detection_limit float default NULL,
 	detection_limit_approved bit default 0,
 	instance_status_id int default 1,

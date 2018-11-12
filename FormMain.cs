@@ -745,14 +745,8 @@ namespace DSA_lims
         private void miSampleTypesNew_Click(object sender, EventArgs e)
         {
             // New sample type
-            if (treeSampleTypes.SelectedNode == null)
-                return;
-            
-            FormSampleType form = new FormSampleType(
-                Guid.Parse(treeSampleTypes.SelectedNode.Name), 
-                treeSampleTypes.SelectedNode.Text, 
-                treeSampleTypes.SelectedNode.ToolTipText, 
-                false);
+
+            FormSampleType form = new FormSampleType(treeSampleTypes.SelectedNode, false);
 
             switch (form.ShowDialog())
             {
@@ -774,13 +768,12 @@ namespace DSA_lims
         {
             // Edit sample type
             if (treeSampleTypes.SelectedNode == null)
+            {
+                MessageBox.Show("You must select a parent sample type");
                 return;
+            }
 
-            FormSampleType form = new FormSampleType(
-                Guid.Parse(treeSampleTypes.SelectedNode.Name),
-                treeSampleTypes.SelectedNode.Text,
-                treeSampleTypes.SelectedNode.ToolTipText,
-                true);
+            FormSampleType form = new FormSampleType(treeSampleTypes.SelectedNode, true);
 
             switch (form.ShowDialog())
             {

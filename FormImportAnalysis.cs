@@ -8,8 +8,12 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using IronPython.Hosting;
+//using IronPython.Runtime;
 using Microsoft.Scripting.Hosting;
 using Microsoft.Scripting;
+
+using PyDict = IronPython.Runtime.PythonDictionary;
+using PyList = IronPython.Runtime.List;
 
 namespace DSA_lims
 {
@@ -25,13 +29,10 @@ namespace DSA_lims
 
         private void FormImportAnalysis_Load(object sender, EventArgs e)
         {
-            //List<string> pluginNames = new List<string>();
+            List<Plugin> plugins = new List<Plugin>();
             string[] pluginPaths = Directory.GetFiles(Common.Settings.PluginDirectory, "*.py");
-            //Array.ForEach(pluginPaths, path => pluginNames.Add(path));
-
-            //foreach(string plugin in pluginPaths)
-              //  Path.GetFileNameWithoutExtension()
-            cboxPlugins.Items.AddRange(pluginPaths);
+            Array.ForEach(pluginPaths, path => plugins.Add(new Plugin(path, Path.GetFileNameWithoutExtension(path))));
+            cboxPlugins.Items.AddRange(plugins.ToArray());
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -48,38 +49,67 @@ namespace DSA_lims
                 return;
             }
 
+            tbInfo.Text = "";
+
+            Plugin plugin = cboxPlugins.SelectedItem as Plugin;            
+
             try
-            {
-                Analysis analysis = new Analysis();
+            {                
                 Scope = Engine.CreateScope();
-                Scope.SetVariable("analysis", analysis);
-                string code = File.ReadAllText(cboxPlugins.Text);
+                string code = File.ReadAllText(plugin.Path);
                 ScriptSource source = Engine.CreateScriptSourceFromString(code, SourceCodeKind.AutoDetect);
                 source.Execute(Scope);
-                var UpdatedAnalysis = Scope.GetVariable<Analysis>("analysis");
-                MessageBox.Show("sigma: " + UpdatedAnalysis.sigma);
-                foreach (KeyValuePair<string, string> kv in UpdatedAnalysis.found_nuclides)
-                    MessageBox.Show(kv.Key + " " + kv.Value);
+
+                string spectrum_reference = Scope.GetVariable("spectrum_reference");
+                tbInfo.Text += "spectrum_reference: " + spectrum_reference + Environment.NewLine;
+
+                double sigma = Scope.GetVariable("sigma");
+                tbInfo.Text += "sigma: " + sigma + Environment.NewLine;
+
+                PyDict identifiedIsotopes = Scope.GetVariable("identified_isotopes");
+                tbInfo.Text += "identified_isotopes:" + Environment.NewLine;
+                foreach (KeyValuePair<object, object> kv in identifiedIsotopes)
+                {
+                    tbInfo.Text += kv.Key.ToString() + " ";
+
+                    PyList lst = kv.Value as PyList;
+                    foreach (double d in lst)
+                        tbInfo.Text += d.ToString() + " ";
+
+                    tbInfo.Text += Environment.NewLine;
+                }
+
+                PyDict detectionLimits = Scope.GetVariable("detection_limits");
+                tbInfo.Text += "detection_limits:" + Environment.NewLine;
+                foreach (KeyValuePair<object, object> kv in detectionLimits)
+                {
+                    tbInfo.Text += kv.Key.ToString() + " " + kv.Value.ToString() + Environment.NewLine;
+                }
             }
             catch(Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
 
-            DialogResult = DialogResult.OK;
-            Close();
+            //DialogResult = DialogResult.OK;
+            //Close();
         }                
-    }
-
-    public class Analysis
-    {
-        public double sigma;
-        public Dictionary<string, string> found_nuclides = new Dictionary<string, string>();
     }
 
     public class Plugin
     {
+        public Plugin(string path, string name)
+        {
+            Path = path;
+            Name = name;
+        }
+
         public string Name { get; set; }
         public string Path { get; set; }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

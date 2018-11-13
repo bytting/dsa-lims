@@ -49,6 +49,12 @@ namespace DSA_lims
                 return;
             }
 
+            if (String.IsNullOrEmpty(tbFilename.Text))
+            {
+                MessageBox.Show("You must select a file to import first");
+                return;
+            }
+
             tbInfo.Text = "";
 
             Plugin plugin = cboxPlugins.SelectedItem as Plugin;            
@@ -56,15 +62,22 @@ namespace DSA_lims
             try
             {                
                 Scope = Engine.CreateScope();
+                Scope.SetVariable("filename", tbFilename.Text);
                 string code = File.ReadAllText(plugin.Path);
                 ScriptSource source = Engine.CreateScriptSourceFromString(code, SourceCodeKind.AutoDetect);
                 source.Execute(Scope);
 
-                string spectrum_reference = Scope.GetVariable("spectrum_reference");
-                tbInfo.Text += "spectrum_reference: " + spectrum_reference + Environment.NewLine;
+                string filename = Scope.GetVariable("filename");
+                tbInfo.Text += "filename: " + filename + Environment.NewLine;
 
-                double sigma = Scope.GetVariable("sigma");
-                tbInfo.Text += "sigma: " + sigma + Environment.NewLine;
+                string specref = Scope.GetVariable("spectrum_reference");
+                tbInfo.Text += "specref: " + specref + Environment.NewLine;
+
+                string nuclib = Scope.GetVariable("nuclide_library");
+                tbInfo.Text += "nuclib: " + nuclib + Environment.NewLine;
+
+                string detlimlib = Scope.GetVariable("detection_limit_lib");
+                tbInfo.Text += "detlimlib: " + detlimlib + Environment.NewLine;
 
                 PyDict identifiedIsotopes = Scope.GetVariable("identified_isotopes");
                 tbInfo.Text += "identified_isotopes:" + Environment.NewLine;
@@ -78,22 +91,25 @@ namespace DSA_lims
 
                     tbInfo.Text += Environment.NewLine;
                 }
-
-                PyDict detectionLimits = Scope.GetVariable("detection_limits");
-                tbInfo.Text += "detection_limits:" + Environment.NewLine;
-                foreach (KeyValuePair<object, object> kv in detectionLimits)
-                {
-                    tbInfo.Text += kv.Key.ToString() + " " + kv.Value.ToString() + Environment.NewLine;
-                }
             }
             catch(Exception ex)
             {
+                Common.Log.Error(ex);
                 MessageBox.Show(ex.Message);
             }
 
             //DialogResult = DialogResult.OK;
             //Close();
-        }                
+        }
+
+        private void btnBrowse_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            if (dialog.ShowDialog() != DialogResult.OK)
+                return;
+
+            tbFilename.Text = dialog.FileName;
+        }
     }
 
     public class Plugin

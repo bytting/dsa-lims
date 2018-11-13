@@ -35,8 +35,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.cboxPlugins = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.tbFilename = new System.Windows.Forms.TextBox();
+            this.btnBrowse = new System.Windows.Forms.Button();
             this.tbInfo = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -100,22 +100,23 @@
             this.label2.TabIndex = 11;
             this.label2.Text = "File to import";
             // 
-            // textBox1
+            // tbFilename
             // 
-            this.textBox1.Location = new System.Drawing.Point(107, 88);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(430, 20);
-            this.textBox1.TabIndex = 12;
+            this.tbFilename.Location = new System.Drawing.Point(107, 88);
+            this.tbFilename.Name = "tbFilename";
+            this.tbFilename.ReadOnly = true;
+            this.tbFilename.Size = new System.Drawing.Size(430, 20);
+            this.tbFilename.TabIndex = 12;
             // 
-            // button1
+            // btnBrowse
             // 
-            this.button1.Location = new System.Drawing.Point(543, 86);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(32, 23);
-            this.button1.TabIndex = 13;
-            this.button1.Text = "...";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnBrowse.Location = new System.Drawing.Point(543, 86);
+            this.btnBrowse.Name = "btnBrowse";
+            this.btnBrowse.Size = new System.Drawing.Size(32, 23);
+            this.btnBrowse.TabIndex = 13;
+            this.btnBrowse.Text = "...";
+            this.btnBrowse.UseVisualStyleBackColor = true;
+            this.btnBrowse.Click += new System.EventHandler(this.btnBrowse_Click);
             // 
             // tbInfo
             // 
@@ -132,8 +133,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(621, 578);
             this.Controls.Add(this.tbInfo);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.btnBrowse);
+            this.Controls.Add(this.tbFilename);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.cboxPlugins);
             this.Controls.Add(this.label1);
@@ -157,8 +158,8 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cboxPlugins;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TextBox tbFilename;
+        private System.Windows.Forms.Button btnBrowse;
         private System.Windows.Forms.TextBox tbInfo;
     }
 }

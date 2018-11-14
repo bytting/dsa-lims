@@ -379,13 +379,14 @@ namespace DSA_lims
             grid.Columns["instance_status_name"].HeaderText = "Status";
         }        
 
-        private static void AddSampleTypeChildren(List<Lemma<Guid, Guid, string>> sampleTypeList, TreeNode tnode)
+        private static void AddSampleTypeChildren(List<SampleTypeModel> sampleTypeList, TreeNode tnode)
         {
-            List<Lemma<Guid, Guid, string>> children = sampleTypeList.FindAll(x => x.ParentId == Guid.Parse(tnode.Name));
-            foreach (Lemma<Guid, Guid, string> st in children)
+            List<SampleTypeModel> children = sampleTypeList.FindAll(x => x.ParentId == Guid.Parse(tnode.Name));
+            foreach (SampleTypeModel st in children)
             {
                 TreeNode n = tnode.Nodes.Add(st.Id.ToString(), st.Name);
-                n.ToolTipText = n.FullPath;
+                n.ToolTipText = n.FullPath + Environment.NewLine + Environment.NewLine + "Common name: " + st.NameCommon + Environment.NewLine + "Latin name: " + st.NameLatin;
+                n.Tag = n.FullPath;
                 AddSampleTypeChildren(sampleTypeList, n);
             }
         }
@@ -395,30 +396,16 @@ namespace DSA_lims
             try
             {
                 tree.Nodes.Clear();
-                List<Lemma<Guid, Guid, string>> sampleTypeList = new List<Lemma<Guid, Guid, string>>();
-
-                using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_sample_types", CommandType.StoredProcedure))
-                {
-                    while (reader.Read())
-                    {
-                        Lemma<Guid, Guid, string> sampleType = new Lemma<Guid, Guid, string>(
-                            Guid.Parse(reader["id"].ToString()), 
-                            Guid.Parse(reader["parent_id"].ToString()), 
-                            reader["name"].ToString());
-
-                        sampleTypeList.Add(sampleType);
-                    }
-                }
-
-                List<Lemma<Guid, Guid, string>> roots = sampleTypeList.FindAll(x => x.ParentId == Guid.Empty);
-                foreach (Lemma<Guid, Guid, string> st in roots)
+                List<SampleTypeModel> roots = Common.SampleTypeList.FindAll(x => x.ParentId == Guid.Empty);
+                foreach (SampleTypeModel st in roots)
                 {
                     TreeNode n = tree.Nodes.Add(st.Id.ToString(), st.Name);
-                    n.ToolTipText = n.FullPath;
+                    n.ToolTipText = n.FullPath + Environment.NewLine + Environment.NewLine + "Common name: " + st.NameCommon + Environment.NewLine + "Latin name: " + st.NameLatin;
+                    n.Tag = n.FullPath;
                 }
 
                 foreach(TreeNode tnode in tree.Nodes)                
-                    AddSampleTypeChildren(sampleTypeList, tnode);
+                    AddSampleTypeChildren(Common.SampleTypeList, tnode);
             }
             catch (Exception ex)
             {
@@ -430,14 +417,14 @@ namespace DSA_lims
         {
             foreach (TreeNode tn in tnc)
             {
-                Lemma<Guid, string> st = new Lemma<Guid, string>(Guid.Parse(tn.Name), tn.Text + " -> " + tn.ToolTipText);
+                Lemma<Guid, string> st = new Lemma<Guid, string>(Guid.Parse(tn.Name), tn.Text + " -> " + tn.Tag.ToString());
                 list.Add(st);
                 AddSampleTypeChildren(tn.Nodes, list);
             }
         }
 
         public static void PopulateSampleTypes(TreeView tree, params ComboBox[] cbn)
-        {    
+        {
             foreach (ComboBox cb in cbn)
             {
                 List<Lemma<Guid, string>> sampleTypeList = new List<Lemma<Guid, string>>();
@@ -448,7 +435,7 @@ namespace DSA_lims
                     return l1.Name.CompareTo(l2.Name);
                 });
                 cb.DataSource = sampleTypeList;
-            }            
+            }
         }
 
         public static void PopulateSampleTypePrepMeth(SqlConnection conn, TreeNode tnode, ListBox lb, ListBox lbInherited)

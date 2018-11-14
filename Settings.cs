@@ -38,6 +38,5 @@ namespace DSA_lims
         }        
         
         public bool UseActiveDirectoryCredentials;
-        public string PluginDirectory = "C:\\dev\\dsa-lims-plugins"; // FIXME
     }
 }

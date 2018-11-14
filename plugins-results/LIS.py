@@ -1,4 +1,6 @@
 
+from datetime import datetime
+
 identified_isotopes = {}
 
 def read_isotopes(fp):
@@ -41,6 +43,12 @@ with open(filename) as fp:
 		if line.startswith("SPECTRUM NO"):
 			items = line.split()
 			spectrum_reference = ''.join(items[3:])
+
+		elif line.startswith("REFERENCE TIME"):
+			items = line.split()
+			date_part = ''.join(items[3:])
+			d = datetime.strptime(date_part, "%Y%m%d%H%M")
+			reference_time = d.strftime("%Y-%m-%d %H:%M")
 
 		elif line.startswith("NUCLIDE LIBRARY"):
 			items = line.split()

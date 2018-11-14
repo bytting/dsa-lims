@@ -69,20 +69,24 @@ namespace DSA_lims
         }
     }
 
-    public class Lemma<I, PI, N>
+    public class SampleTypeModel
     {
-        public Lemma() { }
+        public SampleTypeModel() { }
 
-        public Lemma(I id, PI parentId, N name)
+        public SampleTypeModel(Guid id, Guid parentId, string name, string name_common, string name_latin)
         {
             Id = id;
             ParentId = parentId;
             Name = name;
+            NameCommon = name_common;
+            NameLatin = name_latin;
         }
 
-        public I Id { get; set; }
-        public PI ParentId { get; set; }
-        public N Name { get; set; }
+        public Guid Id { get; set; }
+        public Guid ParentId { get; set; }
+        public string Name { get; set; }        
+        public string NameCommon { get; set; }
+        public string NameLatin { get; set; }
 
         public override string ToString()
         {

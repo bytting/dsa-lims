@@ -324,5 +324,25 @@ namespace DSA_lims
                 Common.Log.Error(ex);
             }
         }
+
+        public static void LoadSampleTypes(SqlConnection conn)
+        {
+            Common.SampleTypeList.Clear();            
+
+            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_sample_types", CommandType.StoredProcedure))
+            {
+                while (reader.Read())
+                {
+                    SampleTypeModel sampleType = new SampleTypeModel(
+                        Guid.Parse(reader["id"].ToString()),
+                        Guid.Parse(reader["parent_id"].ToString()),
+                        reader["name"].ToString(),
+                        reader["name_common"].ToString(),
+                        reader["name_latin"].ToString());
+
+                    Common.SampleTypeList.Add(sampleType);
+                }
+            }
+        }
     }
 }

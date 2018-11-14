@@ -30,7 +30,7 @@ namespace DSA_lims
         private void FormImportAnalysis_Load(object sender, EventArgs e)
         {
             List<Plugin> plugins = new List<Plugin>();
-            string[] pluginPaths = Directory.GetFiles(Common.Settings.PluginDirectory, "*.py");
+            string[] pluginPaths = Directory.GetFiles(DSAEnvironment.PluginDirectory, "*.py");
             Array.ForEach(pluginPaths, path => plugins.Add(new Plugin(path, Path.GetFileNameWithoutExtension(path))));
             cboxPlugins.Items.AddRange(plugins.ToArray());
         }
@@ -72,6 +72,9 @@ namespace DSA_lims
 
                 string specref = Scope.GetVariable("spectrum_reference");
                 tbInfo.Text += "specref: " + specref + Environment.NewLine;
+
+                string reftime = Scope.GetVariable("reference_time");
+                tbInfo.Text += "reftime: " + reftime + Environment.NewLine;
 
                 string nuclib = Scope.GetVariable("nuclide_library");
                 tbInfo.Text += "nuclib: " + nuclib + Environment.NewLine;

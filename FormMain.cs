@@ -40,6 +40,8 @@ namespace DSA_lims
     {
         private ResourceManager r = null;
 
+        private string InstallationDirectory;
+
         private Guid selectedOrder = Guid.Empty;
         private Guid selectedSample = Guid.Empty;
 
@@ -82,15 +84,23 @@ namespace DSA_lims
 
                 r = new ResourceManager("DSA_lims.lang_" + CultureInfo.CurrentUICulture.TwoLetterISOLanguageName, Assembly.GetExecutingAssembly());
                 Common.Log.Info("Setting language " + CultureInfo.CurrentUICulture.TwoLetterISOLanguageName);
-                SetLanguageLabels(r);
+                SetLanguageLabels(r);                                
 
                 Common.Log.Info("Loading settings file " + DSAEnvironment.SettingsFilename);
                 LoadSettings(DSAEnvironment.SettingsFilename);
                 cbMachineSettingsUseAD.Checked = Common.Settings.UseActiveDirectoryCredentials;
 
+                if (!Directory.Exists(DSAEnvironment.SettingsPath))
+                    Directory.CreateDirectory(DSAEnvironment.SettingsPath);
+
+                if (!Directory.Exists(DSAEnvironment.PluginDirectory))
+                    Directory.CreateDirectory(DSAEnvironment.PluginDirectory);
+
                 using (SqlConnection conn = DB.OpenConnection())
                 {
                     Common.Username = "Admin"; // FIXME
+
+                    DB.LoadSampleTypes(conn);
                     
                     cboxSamplesStatus.DataSource = DB.GetIntLemmata(conn, "csp_select_instance_status");
 
@@ -754,6 +764,7 @@ namespace DSA_lims
                     SetStatusMessage("Sample type " + form.SampleTypeName + " created");
                     using (SqlConnection conn = DB.OpenConnection())
                     {
+                        DB.LoadSampleTypes(conn);
                         UI.PopulateSampleTypes(conn, treeSampleTypes);
                         UI.PopulateSampleTypes(treeSampleTypes, cboxSampleSampleType);
                     }
@@ -781,6 +792,7 @@ namespace DSA_lims
                     SetStatusMessage("Sample type " + form.SampleTypeName + " updated");
                     using (SqlConnection conn = DB.OpenConnection())
                     {
+                        DB.LoadSampleTypes(conn);
                         UI.PopulateSampleTypes(conn, treeSampleTypes);
                         UI.PopulateSampleTypes(treeSampleTypes, cboxSampleSampleType);
                     }

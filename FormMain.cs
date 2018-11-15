@@ -40,7 +40,7 @@ namespace DSA_lims
     {
         private ResourceManager r = null;
 
-        private string InstallationDirectory;
+        private List<DSA.IAnalysisPlugin> plugins = new List<DSA.IAnalysisPlugin>();
 
         private Guid selectedOrder = Guid.Empty;
         private Guid selectedSample = Guid.Empty;
@@ -93,8 +93,8 @@ namespace DSA_lims
                 if (!Directory.Exists(DSAEnvironment.SettingsPath))
                     Directory.CreateDirectory(DSAEnvironment.SettingsPath);
 
-                if (!Directory.Exists(DSAEnvironment.PluginDirectory))
-                    Directory.CreateDirectory(DSAEnvironment.PluginDirectory);
+                if (!Directory.Exists(DSAEnvironment.AnalysisPluginDirectory))
+                    Directory.CreateDirectory(DSAEnvironment.AnalysisPluginDirectory);
 
                 using (SqlConnection conn = DB.OpenConnection())
                 {
@@ -193,6 +193,27 @@ namespace DSA_lims
                 
                 HideMenuItems();
 
+                // Load plugins
+                List<Type> pluginTypes = new List<Type>();
+
+                string[] pluginPaths = Directory.GetFiles(DSAEnvironment.AnalysisPluginDirectory, "*.dll");
+
+                foreach(string pluginFile in pluginPaths)
+                {
+                    Assembly a = Assembly.LoadFrom(pluginFile);
+                    pluginTypes.AddRange(GetTypesByInterface<DSA.IAnalysisPlugin>(a));
+                }
+                
+                foreach (Type pluginType in pluginTypes)
+                {
+                    DSA.IAnalysisPlugin plugin = Activator.CreateInstance(pluginType) as DSA.IAnalysisPlugin;
+                    plugins.Add(plugin);
+                }
+
+                plugins.ForEach(t => Common.Log.Info("Plugin loaded: " + t.PluginName));
+
+                plugins.ForEach(t => ddPrepAnalImport.DropDownItems.Add(t.PluginName, null, ddPrepAnalImport_OnClick));
+
                 Common.Log.Info("Application loaded successfully");
             }
             catch(Exception ex)
@@ -200,7 +221,41 @@ namespace DSA_lims
                 Common.Log.Fatal(ex.Message, ex);
                 Environment.Exit(1);
             }
-        }        
+        }
+
+        public static List<Type> GetTypesByInterface<T>(Assembly assembly)
+        {
+            if (!typeof(T).IsInterface)
+                throw new ArgumentException("T must be an interface");
+
+            return assembly.GetTypes()
+                .Where(x => x.GetInterface(typeof(T).Name) != null)
+                .ToList<Type>();
+        }
+
+        private void ddPrepAnalImport_OnClick(object sender, EventArgs e)
+        {
+            ToolStripItem ti = sender as ToolStripItem;
+            DSA.IAnalysisPlugin plugin = plugins.Find(x => x.PluginName == ti.Text);
+            if (plugin == null)
+            {
+                MessageBox.Show("Unable to find plugin " + ti.Text);
+                return;
+            }
+
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Filter = plugin.FileTypeFilter;
+            if (dialog.ShowDialog() != DialogResult.OK)
+                return;
+
+            DSA.AnalysisParameters parameters = new DSA.AnalysisParameters();
+            parameters.FileName = dialog.FileName;
+            parameters.PreparationGeometry = cboxPrepAnalPrepGeom.Text;
+            parameters.SampleName = treePrepAnal.Nodes.Count > 0 ? treePrepAnal.Nodes[0].Text : "";
+            parameters.SpectrumReferenceRegEx = "";
+            DSA.AnalysisResult analysisResult = plugin.Execute(parameters);
+            MessageBox.Show(analysisResult.SpectrumReference);
+        }
 
         private void FormMain_Shown(object sender, EventArgs e)
         {
@@ -3185,13 +3240,6 @@ order by name
                     tbPrepAnalLODTemp.Text = reader["lod_temperature"].ToString();
                 }
             }
-        }
-
-        private void btnPrepAnalAnalImport_Click(object sender, EventArgs e)
-        {
-            FormImportAnalysis form = new FormImportAnalysis();
-            if (form.ShowDialog() != DialogResult.OK)
-                return;
         }
     }    
 }

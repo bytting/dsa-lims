@@ -100,17 +100,17 @@
     <Compile Include="FormCustomerContact.Designer.cs">
       <DependentUpon>FormCustomerContact.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormEnergyLine.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormEnergyLine.Designer.cs">
-      <DependentUpon>FormEnergyLine.cs</DependentUpon>
-    </Compile>
     <Compile Include="FormGeometry.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FormGeometry.Designer.cs">
       <DependentUpon>FormGeometry.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormImportAnalysisLIS.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormImportAnalysisLIS.Designer.cs">
+      <DependentUpon>FormImportAnalysisLIS.cs</DependentUpon>
     </Compile>
     <Compile Include="FormLogin.cs">
       <SubType>Form</SubType>
@@ -324,11 +324,11 @@
     <EmbeddedResource Include="FormCustomerContact.resx">
       <DependentUpon>FormCustomerContact.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormEnergyLine.resx">
-      <DependentUpon>FormEnergyLine.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="FormGeometry.resx">
       <DependentUpon>FormGeometry.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormImportAnalysisLIS.resx">
+      <DependentUpon>FormImportAnalysisLIS.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormLogin.resx">
       <DependentUpon>FormLogin.cs</DependentUpon>
@@ -545,12 +545,6 @@
     <None Include="images\merge.png" />
     <None Include="images\split.png" />
     <None Include="images\tree_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="plugin-analysis-interface\plugin-analysis-interface.csproj">
-      <Project>{03c456f7-01c6-40b4-9866-74428a17235c}</Project>
-      <Name>plugin-analysis-interface</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

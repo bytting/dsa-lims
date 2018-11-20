@@ -381,6 +381,35 @@ as
 go
 
 /*===========================================================================*/
+/* tbl quantity_unit */
+
+if OBJECT_ID('dbo.quantity_unit', 'U') IS NOT NULL drop table quantity_unit;
+
+create table quantity_unit (
+	id int primary key NOT NULL,
+	name nvarchar(20) NOT NULL	
+)
+go
+
+insert into quantity_unit values(1, 'L')
+insert into quantity_unit values(2, 'cm2')
+insert into quantity_unit values(3, 'm3')
+insert into quantity_unit values(4, 'kg ww')
+insert into quantity_unit values(5, 'kg dw')
+insert into quantity_unit values(6, 'kg aw')
+insert into quantity_unit values(7, 'g ww')
+insert into quantity_unit values(8, 'g dw')
+insert into quantity_unit values(9, 'g aw')
+go
+
+create proc csp_select_quantity_units
+as 
+	select *
+	from quantity_unit
+	order by id
+go
+
+/*===========================================================================*/
 /* tbl accreditation_term */
 
 if OBJECT_ID('dbo.accreditation_term', 'U') IS NOT NULL drop table accreditation_term;
@@ -1845,6 +1874,8 @@ create table preparation (
 	workflow_status_id int default 1,
 	amount float default 0,
 	prep_unit_id int default 1,		
+	quantity float default 0,
+	quantity_unit_id int default 1,		
 	fill_height_mm float default 0,		
 	instance_status_id int default 1,
 	comment nvarchar(1000) default NULL,	
@@ -1866,6 +1897,8 @@ create proc csp_insert_preparation
 	@workflow_status_id int,
 	@amount float,
 	@prep_unit_id int,
+	@quantity float,
+	@quantity_unit_id int,
 	@fill_height_mm float,
 	@instance_status_id int,
 	@comment nvarchar(1000),	
@@ -1885,6 +1918,8 @@ as
 		@workflow_status_id,
 		@amount,
 		@prep_unit_id,
+		@quantity,
+		@quantity_unit_id,
 		@fill_height_mm,
 		@instance_status_id,
 		@comment,	
@@ -1901,6 +1936,8 @@ create proc csp_update_preparation
 	@workflow_status_id int,
 	@amount float,
 	@prep_unit_id int,
+	@quantity float,
+	@quantity_unit_id int,
 	@fill_height_mm float,	
 	@comment nvarchar(1000),
 	@update_date datetime,
@@ -1911,6 +1948,8 @@ as
 		workflow_status_id = @workflow_status_id,
 		amount = @amount,
 		prep_unit_id = @prep_unit_id,
+		quantity = @quantity,
+		quantity_unit_id = @quantity_unit_id,
 		fill_height_mm = @fill_height_mm,	
 		comment = @comment,			
 		update_date = @update_date,
@@ -2161,51 +2200,15 @@ as
 go
 
 /*===========================================================================*/
-/* tbl decay_type */
-
-if OBJECT_ID('dbo.decay_type', 'U') IS NOT NULL drop table decay_type;
-
-create table decay_type (
-	id int primary key NOT NULL,
-	name nvarchar(16) unique NOT NULL
-)
-go
-
-insert into decay_type (id, name) values(1, 'EC')
-insert into decay_type (id, name) values(2, 'B+')
-insert into decay_type (id, name) values(3, 'B-')
-go
-
-create proc csp_select_decay_types	
-as 
-	select * 
-	from decay_type 
-	order by name
-go
-
-create proc csp_select_decay_type
-	@id int
-as 
-	select * 
-	from decay_type 
-	where id = @id
-go
-
-/*===========================================================================*/
 /* tbl nuclide */
 
 if OBJECT_ID('dbo.nuclide', 'U') IS NOT NULL drop table nuclide;
 
 create table nuclide (
 	id uniqueidentifier primary key NOT NULL,
-	name nvarchar(16) unique NOT NULL,
-	proton_count int NOT NULL,
-	neutron_count int NOT NULL,
+	name nvarchar(20) unique NOT NULL,
 	half_life_year float NOT NULL,
-	half_life_uncertainty float NOT NULL,
-	decay_type_id int NOT NULL,
-	kxray_energy float NOT NULL,
-	fluorescence_yield float NOT NULL,	
+	half_life_year_uncertainty float NOT NULL,
 	instance_status_id int default 1,
 	comment nvarchar(1000) NOT NULL,
 	create_date datetime NOT NULL,
@@ -2217,14 +2220,9 @@ go
 
 create proc csp_insert_nuclide
 	@id uniqueidentifier,
-	@name nvarchar(16),
-	@proton_count int,
-	@neutron_count int,
+	@name nvarchar(20),	
 	@half_life_year float,
-	@half_life_uncertainty float,
-	@decay_type_id int,
-	@kxray_energy float,
-	@fluorescence_yield float,
+	@half_life_year_uncertainty float,
 	@instance_status_id int,
 	@comment nvarchar(1000),
 	@create_date datetime,
@@ -2234,14 +2232,9 @@ create proc csp_insert_nuclide
 as 
 	insert into nuclide values (
 		@id, 
-		@name, 
-		@proton_count, 
-		@neutron_count, 
+		@name, 		
 		@half_life_year, 
-		@half_life_uncertainty, 
-		@decay_type_id, 
-		@kxray_energy,
-		@fluorescence_yield,
+		@half_life_year_uncertainty,
 		@instance_status_id,
 		@comment,
 		@create_date,
@@ -2253,28 +2246,18 @@ go
 
 create proc csp_update_nuclide
 	@id uniqueidentifier,
-	@name nvarchar(16),
-	@proton_count int,
-	@neutron_count int,
+	@name nvarchar(20),	
 	@half_life_year float,
-	@half_life_uncertainty float,
-	@decay_type_id int,
-	@kxray_energy float,
-	@fluorescence_yield float,
+	@half_life_year_uncertainty float,
 	@instance_status_id int,
 	@comment nvarchar(1000),	
 	@update_date datetime,
 	@updated_by nvarchar(50)
 as 
 	update nuclide set
-		name = @name, 
-		proton_count = @proton_count, 
-		neutron_count = @neutron_count, 
+		name = @name, 		
 		half_life_year = @half_life_year, 
-		half_life_uncertainty = @half_life_uncertainty, 
-		decay_type_id = @decay_type_id, 
-		kxray_energy = @kxray_energy,
-		fluorescence_yield = @fluorescence_yield,
+		half_life_year_uncertainty = @half_life_year_uncertainty,
 		instance_status_id = @instance_status_id,
 		comment = @comment,		
 		update_date = @update_date,
@@ -2296,22 +2279,17 @@ create proc csp_select_nuclides_flat
 as
 	select 
 		n.id,
-		n.name,
-		n.proton_count, 
-		n.neutron_count, 
+		n.name,	
 		n.half_life_year, 
-		n.half_life_uncertainty, 
-		dt.name as 'decay_type_name', 
-		n.kxray_energy,
-		n.fluorescence_yield,
+		n.half_life_year_uncertainty,
 		st.name as 'instance_status_name',
 		n.comment,
 		n.create_date,
 		n.created_by,
 		n.update_date,
 		n.updated_by
-	from nuclide n, decay_type dt, instance_status st
-	where n.decay_type_id = dt.id and n.instance_status_id = st.id and n.instance_status_id <= @instance_status_level
+	from nuclide n, instance_status st
+	where n.instance_status_id = st.id and n.instance_status_id <= @instance_status_level
 	order by n.name
 go
 
@@ -2327,187 +2305,7 @@ as
 	select n.id, n.name 
 	from nuclide n inner join analysis_method_x_nuclide amn on amn.nuclide_id = n.id 
 		and amn.analysis_method_id = @analysis_method_id    
-order by name
-go
-
-/*===========================================================================*/
-/* tbl nuclide_transmission */
-
-if OBJECT_ID('dbo.nuclide_transmission', 'U') IS NOT NULL drop table nuclide_transmission;
-
-create table nuclide_transmission (
-	id uniqueidentifier primary key NOT NULL,
-	nuclide_id uniqueidentifier NOT NULL,
-	transmission_from int NOT NULL,
-	transmission_to int NOT NULL,
-	energy float NOT NULL,
-	energy_uncertainty float NOT NULL,
-	intensity float NOT NULL,
-	intensity_uncertainty float NOT NULL,
-	probability_of_decay float NOT NULL,
-	probability_of_decay_uncertainty float NOT NULL,
-	total_internal_conversion float NOT NULL,
-	kshell_conversion float NOT NULL,	
-	instance_status_id int default 1,
-	comment nvarchar(1000) NOT NULL,
-	create_date datetime NOT NULL,
-	created_by nvarchar(50) NOT NULL,
-	update_date datetime NOT NULL,
-	updated_by nvarchar(50) NOT NULL
-)
-go
-
-create proc csp_insert_nuclide_transmission
-	@id uniqueidentifier,
-	@nuclide_id uniqueidentifier,
-	@transmission_from int,
-	@transmission_to int,
-	@energy float,
-	@energy_uncertainty float,
-	@intensity float,
-	@intensity_uncertainty float,
-	@probability_of_decay float,
-	@probability_of_decay_uncertainty float,
-	@total_internal_conversion float,
-	@kshell_conversion float,
-	@instance_status_id int,
-	@comment nvarchar(1000),
-	@create_date datetime,
-	@created_by nvarchar(50),
-	@update_date datetime,
-	@updated_by nvarchar(50)	
-as 
-	insert into nuclide_transmission values (
-		@id,
-		@nuclide_id,
-		@transmission_from,
-		@transmission_to,
-		@energy,
-		@energy_uncertainty,
-		@intensity,
-		@intensity_uncertainty,
-		@probability_of_decay,
-		@probability_of_decay_uncertainty,
-		@total_internal_conversion,
-		@kshell_conversion,
-		@instance_status_id,
-		@comment,
-		@create_date,
-		@created_by,
-		@update_date,
-		@updated_by
-	);
-go
-
-create proc csp_update_nuclide_transmission
-	@id uniqueidentifier,	
-	@transmission_from int,
-	@transmission_to int,
-	@energy float,
-	@energy_uncertainty float,
-	@intensity float,
-	@intensity_uncertainty float,
-	@probability_of_decay float,
-	@probability_of_decay_uncertainty float,
-	@total_internal_conversion float,
-	@kshell_conversion float,
-	@instance_status_id int,
-	@comment nvarchar(1000),
-	@update_date datetime,
-	@updated_by nvarchar(50)
-as 
-	update nuclide_transmission set 
-		transmission_from = @transmission_from,
-		transmission_to = @transmission_to,
-		energy = @energy,
-		energy_uncertainty = @energy_uncertainty,
-		intensity = @intensity,
-		intensity_uncertainty = @intensity_uncertainty,
-		probability_of_decay = @probability_of_decay,
-		probability_of_decay_uncertainty = @probability_of_decay_uncertainty,
-		total_internal_conversion = @total_internal_conversion,
-		kshell_conversion = @kshell_conversion,
-		instance_status_id = @instance_status_id,
-		comment = @comment,
-		update_date = @update_date,
-		updated_by = @updated_by
-	where id = @id
-go
-
-create proc csp_select_nuclide_transmissions
-as 
-	select * from nuclide_transmission order by transmission_from
-go
-
-create proc csp_select_nuclide_transmissions_flat
-	@instance_status_level int
-as 
-	select 
-		nt.id,
-		n.name as 'nuclide_name',
-		nt.transmission_from,
-		nt.transmission_to,
-		nt.energy,
-		nt.energy_uncertainty,
-		nt.intensity,
-		nt.intensity_uncertainty,
-		nt.probability_of_decay,
-		nt.probability_of_decay_uncertainty,
-		nt.total_internal_conversion,
-		nt.kshell_conversion,
-		st.name as 'instance_status_name',
-		nt.comment,
-		nt.create_date,
-		nt.created_by,
-		nt.update_date,
-		nt.updated_by
-	from nuclide_transmission nt, nuclide n, instance_status st
-	where nt.nuclide_id = n.id and nt.instance_status_id = st.id and nt.instance_status_id <= @instance_status_level
-	order by n.name, nt.transmission_from
-go
-
-create proc csp_select_nuclide_transmissions_for_nuclide
-	@nuclide_id uniqueidentifier,
-	@instance_status_level int
-as 
-	select *
-	from nuclide_transmission
-	where nuclide_id = @nuclide_id and instance_status_id <= @instance_status_level
-	order by transmission_from
-go
-
-create proc csp_select_nuclide_transmissions_for_nuclide_flat
-	@nuclide_id uniqueidentifier,
-	@instance_status_level int
-as 
-	select 
-		nt.id,	
-		n.name as 'nuclide_name',
-		nt.transmission_from,
-		nt.transmission_to,
-		nt.energy,
-		nt.energy_uncertainty,
-		nt.intensity,
-		nt.intensity_uncertainty,
-		nt.probability_of_decay,
-		nt.probability_of_decay_uncertainty,
-		nt.total_internal_conversion,
-		nt.kshell_conversion,
-		st.name as 'instance_status_name',
-		nt.comment,	
-		nt.create_date,
-		nt.created_by,
-		nt.update_date,
-		nt.updated_by
-	from nuclide_transmission nt, nuclide n, instance_status st
-	where nt.nuclide_id = @nuclide_id and nt.nuclide_id = n.id and nt.instance_status_id = st.id and nt.instance_status_id <= @instance_status_level
-	order by transmission_from
-go
-
-create proc csp_select_nuclide_transmission
-	@id uniqueidentifier
-as 
-	select * from nuclide_transmission where id = @id
+	order by name
 go
 
 /*===========================================================================*/
@@ -3587,15 +3385,13 @@ if OBJECT_ID('dbo.analysis_result', 'U') IS NOT NULL drop table analysis_result;
 create table analysis_result (
 	id uniqueidentifier primary key NOT NULL,
 	analysis_id uniqueidentifier NOT NULL,
-	nuclide_id uniqueidentifier NOT NULL,	
-	workflow_status_id int default 1,
-	activity float default NULL,
-	activity_unit_id uniqueidentifier NOT NULL,
+	nuclide_id uniqueidentifier NOT NULL,
+	activity float default NULL,	
 	activity_uncertainty float NOT NULL,
 	activity_uncertainty_abs bit NOT NULL,
 	activity_approved bit default 0,
 	uniform_activity float default NULL,
-	uniform_activity_unit_id uniqueidentifier NOT NULL,
+	uniform_activity_unit_id int default NULL,
 	detection_limit float default NULL,
 	detection_limit_approved bit default 0,
 	instance_status_id int default 1,
@@ -3604,6 +3400,26 @@ create table analysis_result (
 	update_date datetime NOT NULL,
 	updated_by nvarchar(50) NOT NULL	
 )
+go
+
+create proc csp_select_analysis_results_for_analysis_informative_flat
+	@analysis_id uniqueidentifier
+as
+	select
+		ar.id,
+		n.name as 'nuclide_name',
+		ar.activity,	
+		ar.activity_uncertainty,
+		ar.activity_uncertainty_abs,
+		ar.activity_approved,
+		ar.uniform_activity,
+		ua.name as 'uniform_activity_name',
+		ar.detection_limit,
+		ar.detection_limit_approved
+	from analysis_result ar 
+		inner join nuclide n on n.id = ar.nuclide_id
+		left outer join	uniform_activity_unit ua on ua.id = ar.uniform_activity_unit_id
+	where ar.analysis_id = @analysis_id
 go
 
 /*===========================================================================*/

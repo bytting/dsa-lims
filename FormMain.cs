@@ -40,10 +40,8 @@ namespace DSA_lims
     {
         private ResourceManager r = null;
 
-        private List<DSA.IAnalysisPlugin> plugins = new List<DSA.IAnalysisPlugin>();
-
-        private Guid selectedOrder = Guid.Empty;
-        private Guid selectedSample = Guid.Empty;
+        private Guid selectedOrderId = Guid.Empty;
+        private Guid selectedSampleId = Guid.Empty;        
 
         public FormMain()
         {
@@ -106,7 +104,9 @@ namespace DSA_lims
 
                     cboxSampleInstanceStatus.DataSource = DB.GetIntLemmata(conn, "csp_select_instance_status");
 
-                    cboxPrepAnalPrepUnit.DataSource = DB.GetIntLemmata(conn, "csp_select_preparation_units", true);
+                    cboxPrepAnalPrepAmountUnit.DataSource = DB.GetIntLemmata(conn, "csp_select_preparation_units", true);
+
+                    cboxPrepAnalPrepQuantityUnit.DataSource = DB.GetIntLemmata(conn, "csp_select_quantity_units", true);
 
                     cboxPrepAnalAnalWorkflowStatus.DataSource = DB.GetIntLemmata(conn, "csp_select_workflow_status");
 
@@ -193,27 +193,6 @@ namespace DSA_lims
                 
                 HideMenuItems();
 
-                // Load plugins
-                List<Type> pluginTypes = new List<Type>();
-
-                string[] pluginPaths = Directory.GetFiles(DSAEnvironment.AnalysisPluginDirectory, "*.dll");
-
-                foreach(string pluginFile in pluginPaths)
-                {
-                    Assembly a = Assembly.LoadFrom(pluginFile);
-                    pluginTypes.AddRange(GetTypesByInterface<DSA.IAnalysisPlugin>(a));
-                }
-                
-                foreach (Type pluginType in pluginTypes)
-                {
-                    DSA.IAnalysisPlugin plugin = Activator.CreateInstance(pluginType) as DSA.IAnalysisPlugin;
-                    plugins.Add(plugin);
-                }
-
-                plugins.ForEach(t => Common.Log.Info("Plugin loaded: " + t.PluginName));
-
-                plugins.ForEach(t => ddPrepAnalImport.DropDownItems.Add(t.PluginName, null, ddPrepAnalImport_OnClick));
-
                 Common.Log.Info("Application loaded successfully");
             }
             catch(Exception ex)
@@ -221,40 +200,6 @@ namespace DSA_lims
                 Common.Log.Fatal(ex.Message, ex);
                 Environment.Exit(1);
             }
-        }
-
-        public static List<Type> GetTypesByInterface<T>(Assembly assembly)
-        {
-            if (!typeof(T).IsInterface)
-                throw new ArgumentException("T must be an interface");
-
-            return assembly.GetTypes()
-                .Where(x => x.GetInterface(typeof(T).Name) != null)
-                .ToList<Type>();
-        }
-
-        private void ddPrepAnalImport_OnClick(object sender, EventArgs e)
-        {
-            ToolStripItem ti = sender as ToolStripItem;
-            DSA.IAnalysisPlugin plugin = plugins.Find(x => x.PluginName == ti.Text);
-            if (plugin == null)
-            {
-                MessageBox.Show("Unable to find plugin " + ti.Text);
-                return;
-            }
-
-            OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Filter = plugin.FileTypeFilter;
-            if (dialog.ShowDialog() != DialogResult.OK)
-                return;
-
-            DSA.AnalysisParameters parameters = new DSA.AnalysisParameters();
-            parameters.FileName = dialog.FileName;
-            parameters.PreparationGeometry = cboxPrepAnalPrepGeom.Text;
-            parameters.SampleName = treePrepAnal.Nodes.Count > 0 ? treePrepAnal.Nodes[0].Text : "";
-            parameters.SpectrumReferenceRegEx = "";
-            DSA.AnalysisResult analysisResult = plugin.Execute(parameters);
-            MessageBox.Show(analysisResult.SpectrumReference);
         }
 
         private void FormMain_Shown(object sender, EventArgs e)
@@ -930,62 +875,6 @@ namespace DSA_lims
             }                        
         }
 
-        private void miEnergyLineNew_Click(object sender, EventArgs e)
-        {
-            // new energy line
-            if (gridSysNuclides.SelectedRows.Count < 1)
-                return;
-
-            DataGridViewRow row = gridSysNuclides.SelectedRows[0];
-            Guid nid = Guid.Parse(row.Cells[0].Value.ToString());
-            string nname = row.Cells[1].Value.ToString();
-
-            FormEnergyLine form = new FormEnergyLine(nid, nname);
-            switch (form.ShowDialog())
-            {
-                case DialogResult.OK:
-                    SetStatusMessage("Energy line for " + nname + " created");
-                    using (SqlConnection conn = DB.OpenConnection())
-                        UI.PopulateEnergyLines(conn, nid, gridSysNuclideTrans);
-                    break;
-                case DialogResult.Abort:
-                    SetStatusMessage("Create energy line failed", StatusMessageType.Error);
-                    break;
-            }                        
-        }
-
-        private void miEnergyLineEdit_Click(object sender, EventArgs e)
-        {
-            // edit energy line
-            if (gridSysNuclides.SelectedRows.Count < 1)
-                return;
-
-            DataGridViewRow row = gridSysNuclides.SelectedRows[0];
-            Guid nid = Guid.Parse(row.Cells[0].Value.ToString());
-            string nname = row.Cells[1].Value.ToString();
-
-            DataGridViewRow row2 = gridSysNuclideTrans.SelectedRows[0];
-            Guid eid = Guid.Parse(row2.Cells[0].Value.ToString());
-
-            FormEnergyLine form = new FormEnergyLine(nid, eid, nname);
-            switch (form.ShowDialog())
-            {
-                case DialogResult.OK:
-                    SetStatusMessage("Energy line for " + nname + " updated");
-                    using (SqlConnection conn = DB.OpenConnection())
-                        UI.PopulateEnergyLines(conn, nid, gridSysNuclideTrans);
-                    break;
-                case DialogResult.Abort:
-                    SetStatusMessage("Update energy line failed", StatusMessageType.Error);
-                    break;
-            }                        
-        }
-
-        private void miEnergyLineDelete_Click(object sender, EventArgs e)
-        {
-            // delete energy line
-        }        
-
         private void miNewGeometry_Click(object sender, EventArgs e)
         {         
             FormGeometry form = new FormGeometry();
@@ -1421,15 +1310,18 @@ namespace DSA_lims
         {
             // new sample            
             ClearSample();
-            selectedSample = Guid.Empty;
+            selectedSampleId = Guid.Empty;
 
             FormSampleNew form = new FormSampleNew(treeSampleTypes);
             if (form.ShowDialog() != DialogResult.OK)
                 return;
-            
-            selectedSample = form.SampleId;            
-            using (SqlConnection conn = DB.OpenConnection())            
-                PopulateSample(conn, selectedSample);
+
+            selectedSampleId = form.SampleId;
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                PopulateSample(conn, selectedSampleId);
+            }
 
             tabs.SelectedTab = tabSample;
 
@@ -1458,7 +1350,7 @@ namespace DSA_lims
             cboxPrepAnalPrepGeom.SelectedValue = Guid.Empty;
             tbPrepAnalPrepFillHeight.Text = "";
             tbPrepAnalPrepAmount.Text = "";
-            cboxPrepAnalPrepUnit.SelectedValue = 0;
+            cboxPrepAnalPrepAmountUnit.SelectedValue = 0;
             cboxPrepAnalPrepWorkflowStatus.SelectedValue = WorkflowStatus.Construction;
             tbPrepAnalPrepComment.Text = "";
             lblPrepAnalPrepRange.Text = "";
@@ -1521,13 +1413,13 @@ namespace DSA_lims
                 return;
             }
 
-            selectedSample = Guid.Parse(gridSamples.SelectedRows[0].Cells["id"].Value.ToString());
+            selectedSampleId = Guid.Parse(gridSamples.SelectedRows[0].Cells["id"].Value.ToString());
 
             ClearSample();
 
             using (SqlConnection conn = DB.OpenConnection())
             {                
-                PopulateSample(conn, selectedSample);
+                PopulateSample(conn, selectedSampleId);
             }
 
             tabs.SelectedTab = tabSample;
@@ -1780,11 +1672,11 @@ namespace DSA_lims
                 return;
             }
 
-            selectedSample = Guid.Parse(gridSamples.SelectedRows[0].Cells["id"].Value.ToString());
+            selectedSampleId = Guid.Parse(gridSamples.SelectedRows[0].Cells["id"].Value.ToString());
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                PopulatePrepAnal(conn, selectedSample);
+                PopulatePrepAnal(conn, selectedSampleId);
             }
 
             ClearPrepAnalSample();
@@ -2278,15 +2170,15 @@ order by name
         {
             // create new order
             ClearOrderInfo();
-            selectedOrder = Guid.Empty;
+            selectedOrderId = Guid.Empty;
 
             FormOrderNew form = new FormOrderNew();
             if (form.ShowDialog() != DialogResult.OK)
                 return;
 
-            selectedOrder = form.OrderId;
+            selectedOrderId = form.OrderId;
             tbOrderName.Text = form.OrderName;
-            PopulateOrder(selectedOrder);
+            PopulateOrder(selectedOrderId);
 
             tabs.SelectedTab = tabOrder;
         }
@@ -2301,8 +2193,8 @@ order by name
             }
 
             ClearOrderInfo();
-            selectedOrder = Guid.Parse(gridOrders.SelectedRows[0].Cells["id"].Value.ToString());
-            PopulateOrder(selectedOrder);                        
+            selectedOrderId = Guid.Parse(gridOrders.SelectedRows[0].Cells["id"].Value.ToString());
+            PopulateOrder(selectedOrderId);                        
             
             tabs.SelectedTab = tabOrder;
         }
@@ -2394,7 +2286,7 @@ order by name
                 tbOrderReportComment.Text = map["report_comment"].ToString();
                 // TODO
 
-                UI.PopulateOrderContent(conn, selectedOrder, treeOrderContent, Guid.Empty, treeSampleTypes, true);
+                UI.PopulateOrderContent(conn, selectedOrderId, treeOrderContent, Guid.Empty, treeSampleTypes, true);
 
                 gridOrderSamples.DataSource = DB.GetDataTable(
                     conn, 
@@ -2416,13 +2308,13 @@ order by name
         private void miOrderAddSampleType_Click(object sender, EventArgs e)
         {
             // add sample type to order
-            FormOrderAddSampleType form = new FormOrderAddSampleType(selectedOrder, treeSampleTypes);
+            FormOrderAddSampleType form = new FormOrderAddSampleType(selectedOrderId, treeSampleTypes);
             if (form.ShowDialog() != DialogResult.OK)
                 return;
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                UI.PopulateOrderContent(conn, selectedOrder, treeOrderContent, Guid.Empty, treeSampleTypes, true);
+                UI.PopulateOrderContent(conn, selectedOrderId, treeOrderContent, Guid.Empty, treeSampleTypes, true);
             }
         }
 
@@ -2454,7 +2346,7 @@ order by name
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                UI.PopulateOrderContent(conn, selectedOrder, treeOrderContent, Guid.Empty, treeSampleTypes, true);
+                UI.PopulateOrderContent(conn, selectedOrderId, treeOrderContent, Guid.Empty, treeSampleTypes, true);
             }
         }
 
@@ -2487,7 +2379,7 @@ order by name
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                UI.PopulateOrderContent(conn, selectedOrder, treeOrderContent, Guid.Empty, treeSampleTypes, true);
+                UI.PopulateOrderContent(conn, selectedOrderId, treeOrderContent, Guid.Empty, treeSampleTypes, true);
             }
         }
 
@@ -2746,17 +2638,7 @@ order by name
             {
                 UI.PopulateCustomerContacts(conn, cid, InstanceStatus.Deleted, gridCustomerContacts);
             }
-        }
-
-        private void gridSysNuclides_SelectionChanged(object sender, EventArgs e)
-        {
-            if (gridSysNuclides.SelectedRows.Count < 1)
-                return;
-
-            Guid nid = Guid.Parse(gridSysNuclides.SelectedRows[0].Cells[0].Value.ToString());
-            using (SqlConnection conn = DB.OpenConnection())
-                UI.PopulateEnergyLines(conn, nid, gridSysNuclideTrans);
-        }
+        }        
 
         private void gridSysCounty_SelectionChanged(object sender, EventArgs e)
         {
@@ -2870,22 +2752,22 @@ order by name
 
         private void tabs_Selecting(object sender, TabControlCancelEventArgs e)
         {
-            if ((e.TabPage == tabSample || e.TabPage == tabPrepAnal) && selectedSample != Guid.Empty)
+            if ((e.TabPage == tabSample || e.TabPage == tabPrepAnal) && selectedSampleId != Guid.Empty)
             {
                 using (SqlConnection conn = DB.OpenConnection())
                 {
-                    if (!DB.LockSample(conn, selectedSample))
+                    if (!DB.LockSample(conn, selectedSampleId))
                     {
                         MessageBox.Show("Unable to lock sample");
                         e.Cancel = true;
                     }
                 }
             }
-            else if (e.TabPage == tabOrder && selectedOrder != Guid.Empty)
+            else if (e.TabPage == tabOrder && selectedOrderId != Guid.Empty)
             {
                 using (SqlConnection conn = DB.OpenConnection())
                 {
-                    if (!DB.LockOrder(conn, selectedOrder))
+                    if (!DB.LockOrder(conn, selectedOrderId))
                     {
                         MessageBox.Show("Unable to lock order");
                         e.Cancel = true;
@@ -2970,13 +2852,13 @@ order by name
                 // update selected sample
                 SqlCommand cmd = new SqlCommand("select number from sample where id = @id", conn);
                 cmd.CommandType = CommandType.Text;
-                cmd.Parameters.AddWithValue("@id", selectedSample);
+                cmd.Parameters.AddWithValue("@id", selectedSampleId);
                 object oNumber = cmd.ExecuteScalar();
 
                 cmd.CommandText = "csp_update_sample";
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Clear();
-                cmd.Parameters.AddWithValue("@id", selectedSample);
+                cmd.Parameters.AddWithValue("@id", selectedSampleId);
                 cmd.Parameters.AddWithValue("@laboratory_id", DB.MakeParam(typeof(Guid), cboxSampleLaboratory.SelectedValue));
                 cmd.Parameters.AddWithValue("@sample_type_id", DB.MakeParam(typeof(Guid), cboxSampleSampleType.SelectedValue));
                 cmd.Parameters.AddWithValue("@sample_storage_id", DB.MakeParam(typeof(Guid), cboxSampleSampleStorage.SelectedValue));
@@ -3036,6 +2918,7 @@ order by name
             SqlConnection conn = null;
 
             double amount = Convert.ToDouble(tbPrepAnalPrepAmount.Text);
+            double quantity = Convert.ToDouble(tbPrepAnalPrepQuantity.Text);
             double fillHeight = Convert.ToDouble(tbPrepAnalPrepFillHeight.Text);
 
             try
@@ -3047,7 +2930,9 @@ order by name
                 cmd.Parameters.AddWithValue("@preparation_geometry_id", DB.MakeParam(typeof(Guid), cboxPrepAnalPrepGeom.SelectedValue));
                 cmd.Parameters.AddWithValue("@workflow_status_id", cboxPrepAnalPrepWorkflowStatus.SelectedValue);
                 cmd.Parameters.AddWithValue("@amount", amount);
-                cmd.Parameters.AddWithValue("@prep_unit_id", cboxPrepAnalPrepUnit.SelectedValue);
+                cmd.Parameters.AddWithValue("@prep_unit_id", cboxPrepAnalPrepAmountUnit.SelectedValue);
+                cmd.Parameters.AddWithValue("@quantity", quantity);
+                cmd.Parameters.AddWithValue("@quantity_unit_id", cboxPrepAnalPrepQuantityUnit.SelectedValue);
                 cmd.Parameters.AddWithValue("@fill_height_mm", fillHeight);
                 cmd.Parameters.AddWithValue("@comment", tbPrepAnalPrepComment.Text);
                 cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
@@ -3080,7 +2965,9 @@ order by name
                     cboxPrepAnalPrepGeom.SelectedValue = reader["preparation_geometry_id"];
                     tbPrepAnalPrepFillHeight.Text = reader["fill_height_mm"].ToString();
                     tbPrepAnalPrepAmount.Text = reader["amount"].ToString();
-                    cboxPrepAnalPrepUnit.SelectedValue = reader["prep_unit_id"];
+                    cboxPrepAnalPrepAmountUnit.SelectedValue = reader["prep_unit_id"];
+                    tbPrepAnalPrepQuantity.Text = reader["quantity"].ToString();
+                    cboxPrepAnalPrepQuantityUnit.SelectedValue = reader["quantity_unit_id"];
                     cboxPrepAnalPrepWorkflowStatus.SelectedValue = reader["workflow_status_id"];
                     tbPrepAnalPrepComment.Text = reader["comment"].ToString();
                 }
@@ -3148,6 +3035,8 @@ order by name
                     cboxPrepAnalAnalWorkflowStatus.SelectedValue = reader["workflow_status_id"];
                     tbPrepAnalAnalComment.Text = reader["comment"].ToString();
                 }
+
+                UI.PopulateAnalysisResults(conn, aid, gridPrepAnalResults);
             }
         }
 
@@ -3239,6 +3128,123 @@ order by name
                     tbPrepAnalLODEndWeight.Text = reader["lod_weight_end"].ToString();
                     tbPrepAnalLODTemp.Text = reader["lod_temperature"].ToString();
                 }
+            }
+        }
+
+        private void miImportLISFile_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Filter = "LIS files (*.lis)|*.lis";
+            if (dialog.ShowDialog() != DialogResult.OK)
+                return;
+
+            AnalysisParameters analysisParameters = new AnalysisParameters();
+            analysisParameters.FileName = dialog.FileName;
+            analysisParameters.PreparationGeometry = cboxPrepAnalPrepGeom.Text;
+            analysisParameters.SampleName = treePrepAnal.Nodes.Count > 0 ? treePrepAnal.Nodes[0].Text : "";
+            analysisParameters.SpectrumReferenceRegEx = ""; // FIXME
+            AnalysisResult analysisResult = new AnalysisResult();
+            FormImportAnalysisLIS form = new FormImportAnalysisLIS(analysisParameters, analysisResult);
+            if (form.ShowDialog() != DialogResult.OK)
+                return;
+
+            Guid aid = Guid.Parse(treePrepAnal.SelectedNode.Name);
+            SqlConnection connection = null;
+            SqlTransaction transaction = null;
+
+            try
+            {
+                connection = DB.OpenConnection();
+                transaction = connection.BeginTransaction();                
+
+                SqlCommand cmd = new SqlCommand(@"
+update analysis set 
+    specter_reference = @specter_reference,
+    nuclide_library = @nuclide_library,
+    mda_library = @mda_library,
+    sigma = @sigma,    
+    update_date = @update_date,
+    updated_by = @updated_by
+where id = @id
+", connection, transaction);
+                cmd.Parameters.AddWithValue("@id", aid);
+                cmd.Parameters.AddWithValue("@specter_reference", analysisResult.SpectrumName);
+                cmd.Parameters.AddWithValue("@nuclide_library", analysisResult.NuclideLibrary);
+                cmd.Parameters.AddWithValue("@mda_library", analysisResult.DetLimLib);
+                cmd.Parameters.AddWithValue("@sigma", analysisResult.Sigma);
+                cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
+                cmd.Parameters.AddWithValue("@updated_by", Common.Username);
+
+                cmd.ExecuteNonQuery();
+
+                cmd.CommandText = @"
+insert into analysis_result values(
+    @id,
+    @analysis_id,
+    @nuclide_id,
+    @activity,
+    @activity_uncertainty,
+    @activity_uncertainty_abs,
+    @activity_approved,
+    @uniform_activity,
+    @uniform_activity_unit_id,
+    @detection_limit, 
+    @detection_limit_approved,
+    @instance_status_id,
+    @create_date,
+    @created_by,
+    @update_date,
+    @updated_by)";
+
+                foreach (AnalysisResult.Isotop iso in analysisResult.Isotopes)
+                {                    
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.AddWithValue("@id", Guid.NewGuid());
+                    cmd.Parameters.AddWithValue("@analysis_id", aid);
+                    object o = DB.GetScalar(connection, transaction, "select id from nuclide where name = '" + iso.NuclideName + "'", CommandType.Text);
+                    if(o == null || o == DBNull.Value)
+                    {
+                        Common.Log.Warn("Unregistered nuclide: " + iso.NuclideName);
+                        continue;
+                    }                    
+                    cmd.Parameters.AddWithValue("@nuclide_id", Guid.Parse(o.ToString()));
+                    cmd.Parameters.AddWithValue("@activity", iso.Activity);
+                    cmd.Parameters.AddWithValue("@activity_uncertainty", iso.Uncertainty * 2.0);
+                    cmd.Parameters.AddWithValue("@activity_uncertainty_abs", 0); // FIXME
+                    cmd.Parameters.AddWithValue("@activity_approved", iso.ApprovedRES);                    
+                    double uAct;
+                    int uActUnitId;
+                    Guid analUnitId = Guid.Parse(cboxPrepAnalAnalUnit.SelectedValue.ToString());
+                    DB.GetUniformActivity(connection, transaction, iso.Activity, analUnitId, out uAct, out uActUnitId);
+                    cmd.Parameters.AddWithValue("@uniform_activity", uAct);
+                    cmd.Parameters.AddWithValue("@uniform_activity_unit_id", uActUnitId);
+                    cmd.Parameters.AddWithValue("@detection_limit", iso.MDA);
+                    cmd.Parameters.AddWithValue("@detection_limit_approved", iso.ApprovedMDA);
+                    cmd.Parameters.AddWithValue("@instance_status_id", InstanceStatus.Active);
+                    cmd.Parameters.AddWithValue("@create_date", DateTime.Now);
+                    cmd.Parameters.AddWithValue("@created_by", Common.Username);
+                    cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
+                    cmd.Parameters.AddWithValue("@updated_by", Common.Username);
+
+                    cmd.ExecuteNonQuery();
+                }
+
+                transaction.Commit();
+            }
+            catch(Exception ex)
+            {
+                transaction?.Rollback();
+                Common.Log.Error(ex);
+                MessageBox.Show(Utils.makeErrorMessage(ex.Message));
+            }
+            finally
+            {
+                connection?.Close();
+            }
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                UI.PopulateAnalysisResults(conn, aid, gridPrepAnalResults);
             }
         }
     }    

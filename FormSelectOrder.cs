@@ -157,6 +157,8 @@ namespace DSA_lims
                             cmd.Parameters.AddWithValue("@workflow_status_id", 1);
                             cmd.Parameters.AddWithValue("@amount", DBNull.Value);
                             cmd.Parameters.AddWithValue("@prep_unit_id", DBNull.Value);
+                            cmd.Parameters.AddWithValue("@quantity", DBNull.Value);
+                            cmd.Parameters.AddWithValue("@quantity_unit_id", DBNull.Value);
                             cmd.Parameters.AddWithValue("@fill_height_mm", DBNull.Value);
                             cmd.Parameters.AddWithValue("@instance_status_id", InstanceStatus.Active);
                             cmd.Parameters.AddWithValue("@comment", DBNull.Value);

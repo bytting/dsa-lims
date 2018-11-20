@@ -160,40 +160,8 @@ namespace DSA_lims
             grid.Columns["update_date"].Visible = false;
 
             grid.Columns["name"].HeaderText = "Name";
-            grid.Columns["proton_count"].HeaderText = "Protons";
-            grid.Columns["neutron_count"].HeaderText = "Neutrons";
             grid.Columns["half_life_year"].HeaderText = "T 1/2 (Years)";
-            grid.Columns["half_life_uncertainty"].HeaderText = "T 1/2 Unc. (Years)";
-            grid.Columns["decay_type_name"].HeaderText = "Decay type";
-            grid.Columns["kxray_energy"].HeaderText = "KXray Energy";
-            grid.Columns["fluorescence_yield"].HeaderText = "Fluorescence Yield";
-            grid.Columns["instance_status_name"].HeaderText = "Status";
-        }
-
-        public static void PopulateEnergyLines(SqlConnection conn, Guid nid, DataGridView grid)
-        {            
-            grid.DataSource = DB.GetDataTable(conn, "csp_select_nuclide_transmissions_for_nuclide_flat", CommandType.StoredProcedure,
-                new SqlParameter("@nuclide_id", nid),
-                new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
-
-            grid.Columns["id"].Visible = false;
-            grid.Columns["nuclide_name"].Visible = false;
-            grid.Columns["comment"].Visible = false;
-            grid.Columns["created_by"].Visible = false;
-            grid.Columns["create_date"].Visible = false;
-            grid.Columns["updated_by"].Visible = false;
-            grid.Columns["update_date"].Visible = false;
-
-            grid.Columns["transmission_from"].HeaderText = "Tr. from";
-            grid.Columns["transmission_to"].HeaderText = "Tr. to";
-            grid.Columns["energy"].HeaderText = "Energy";
-            grid.Columns["energy_uncertainty"].HeaderText = "Energy Unc.";
-            grid.Columns["intensity"].HeaderText = "Intensity";
-            grid.Columns["intensity_uncertainty"].HeaderText = "Intensity Unc.";
-            grid.Columns["probability_of_decay"].HeaderText = "POD";
-            grid.Columns["probability_of_decay_uncertainty"].HeaderText = "POD Unc.";
-            grid.Columns["total_internal_conversion"].HeaderText = "TIC conv.";
-            grid.Columns["kshell_conversion"].HeaderText = "KShell conv.";
+            grid.Columns["half_life_year_uncertainty"].HeaderText = "T 1/2 Unc. (Years)";
             grid.Columns["instance_status_name"].HeaderText = "Status";
         }
 
@@ -718,6 +686,24 @@ order by create_date desc";
             }
 
             tree.ExpandAll();
+        }
+
+        public static void PopulateAnalysisResults(SqlConnection conn, Guid analysisId, DataGridView grid)
+        {
+            grid.DataSource = DB.GetDataTable(conn, "csp_select_analysis_results_for_analysis_informative_flat", CommandType.StoredProcedure,
+                    new SqlParameter("@analysis_id", analysisId));
+
+            grid.Columns["id"].Visible = false;
+
+            grid.Columns["nuclide_name"].HeaderText = "Nucl.";
+            grid.Columns["activity"].HeaderText = "Act.";
+            grid.Columns["activity_uncertainty"].HeaderText = "Unc.";
+            grid.Columns["activity_uncertainty_abs"].HeaderText = "Unc.Abs";
+            grid.Columns["activity_approved"].HeaderText = "Act.Appr.";
+            grid.Columns["uniform_activity"].HeaderText = "uAct.";
+            grid.Columns["uniform_activity_name"].HeaderText = "uActU.";
+            grid.Columns["detection_limit"].HeaderText = "Det.Lim.";
+            grid.Columns["detection_limit_approved"].HeaderText = "Det.Lim.Appr.";
         }
     }
 }

@@ -5,8 +5,6 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DSA-lims", "DSA-lims.csproj", "{E94F7E03-71DA-4DD2-858F-41C3C09EA6CB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "plugin-analysis-interface", "plugin-analysis-interface\plugin-analysis-interface.csproj", "{03C456F7-01C6-40B4-9866-74428A17235C}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{E94F7E03-71DA-4DD2-858F-41C3C09EA6CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E94F7E03-71DA-4DD2-858F-41C3C09EA6CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E94F7E03-71DA-4DD2-858F-41C3C09EA6CB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{03C456F7-01C6-40B4-9866-74428A17235C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{03C456F7-01C6-40B4-9866-74428A17235C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{03C456F7-01C6-40B4-9866-74428A17235C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{03C456F7-01C6-40B4-9866-74428A17235C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -52,10 +52,8 @@ namespace DSA_lims
             using (SqlConnection conn = DB.OpenConnection())
             {
                 cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, "csp_select_instance_status");
-                cboxDecayTypes.DataSource = DB.GetIntLemmata(conn, "csp_select_decay_types", true);
             }
             cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
-            cboxDecayTypes.SelectedValue = -1;
         }
 
         public FormNuclide(Guid nid)
@@ -69,7 +67,6 @@ namespace DSA_lims
             using (SqlConnection conn = DB.OpenConnection())
             {
                 cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, "csp_select_instance_status");
-                cboxDecayTypes.DataSource = DB.GetIntLemmata(conn, "csp_select_decay_types", true);
 
                 SqlCommand cmd = new SqlCommand("csp_select_nuclide", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
@@ -81,13 +78,8 @@ namespace DSA_lims
 
                     reader.Read();
                     tbName.Text = reader["name"].ToString();
-                    tbNumberOfProtons.Text = reader["proton_count"].ToString();
-                    tbNumberOfNeutrons.Text = reader["neutron_count"].ToString();
                     tbHalflife.Text = reader["half_life_year"].ToString();
-                    tbHalflifeUncertainty.Text = reader["half_life_uncertainty"].ToString();
-                    cboxDecayTypes.SelectedValue = reader["decay_type_id"];
-                    tbKXrayEnergy.Text = reader["kxray_energy"].ToString();
-                    tbFluorescenceYield.Text = reader["fluorescence_yield"].ToString();
+                    tbHalflifeUncertainty.Text = reader["half_life_year_uncertainty"].ToString();
                     cboxInstanceStatus.SelectedValue = reader["instance_status_id"];
                     tbComment.Text = reader["comment"].ToString();
                     p["create_date"] = reader["create_date"];
@@ -110,19 +102,7 @@ namespace DSA_lims
             {
                 MessageBox.Show("Nuclide name is mandatory");
                 return;
-            }                
-
-            if (String.IsNullOrEmpty(tbNumberOfProtons.Text.Trim()))
-            {
-                MessageBox.Show("Number of protons is mandatory");
-                return;
-            }                
-
-            if (String.IsNullOrEmpty(tbNumberOfNeutrons.Text.Trim()))
-            {
-                MessageBox.Show("Number of neutrons is mandatory");
-                return;
-            }                
+            }
 
             if (String.IsNullOrEmpty(tbHalflife.Text.Trim()))
             {
@@ -134,34 +114,11 @@ namespace DSA_lims
             {
                 MessageBox.Show("Halflife uncertainty is mandatory");
                 return;
-            }                
-
-            if ((int)cboxDecayTypes.SelectedValue == -1)
-            {
-                MessageBox.Show("Decay type is mandatory");
-                return;
-            }                
-
-            if (String.IsNullOrEmpty(tbKXrayEnergy.Text.Trim()))
-            {
-                MessageBox.Show("KXray energy is mandatory");
-                return;
-            }                
-
-            if (String.IsNullOrEmpty(tbFluorescenceYield.Text.Trim()))
-            {
-                MessageBox.Show("Fluorescence yield is mandatory");
-                return;
             }
 
-            p["name"] = tbName.Text.Trim();
-            p["proton_count"] = Convert.ToInt32(tbNumberOfProtons.Text.Trim());
-            p["neutron_count"] = Convert.ToInt32(tbNumberOfNeutrons.Text.Trim());
+            p["name"] = tbName.Text.Trim();            
             p["halflife"] = Convert.ToDouble(tbHalflife.Text.Trim());
             p["halflife_uncertainty"] = Convert.ToDouble(tbHalflifeUncertainty.Text.Trim());
-            p["decay_type_id"] = Convert.ToInt32(cboxDecayTypes.SelectedValue);
-            p["xray_energy"] = Convert.ToDouble(tbKXrayEnergy.Text.Trim());
-            p["fluorescence_yield"] = Convert.ToDouble(tbFluorescenceYield.Text.Trim());
             p["instance_status_id"] = cboxInstanceStatus.SelectedValue;
             p["comment"] = tbComment.Text.Trim();
 
@@ -194,14 +151,9 @@ namespace DSA_lims
                 cmd.CommandType = CommandType.StoredProcedure;
                 p["id"] = Guid.NewGuid();
                 cmd.Parameters.AddWithValue("@id", p["id"]);
-                cmd.Parameters.AddWithValue("@name", p["name"]);
-                cmd.Parameters.AddWithValue("@proton_count", p["proton_count"]);
-                cmd.Parameters.AddWithValue("@neutron_count", p["neutron_count"]);
+                cmd.Parameters.AddWithValue("@name", p["name"]);                
                 cmd.Parameters.AddWithValue("@half_life_year", p["halflife"]);
-                cmd.Parameters.AddWithValue("@half_life_uncertainty", p["halflife_uncertainty"]);
-                cmd.Parameters.AddWithValue("@decay_type_id", p["decay_type_id"]);
-                cmd.Parameters.AddWithValue("@kxray_energy", p["xray_energy"]);
-                cmd.Parameters.AddWithValue("@fluorescence_yield", p["fluorescence_yield"]);
+                cmd.Parameters.AddWithValue("@half_life_year_uncertainty", p["halflife_uncertainty"]);
                 cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
                 cmd.Parameters.AddWithValue("@comment", p["comment"]);
                 cmd.Parameters.AddWithValue("@create_date", p["create_date"]);
@@ -244,14 +196,9 @@ namespace DSA_lims
                 SqlCommand cmd = new SqlCommand("csp_update_nuclide", connection, transaction);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@id", p["id"]);
-                cmd.Parameters.AddWithValue("@name", p["name"]);
-                cmd.Parameters.AddWithValue("@proton_count", p["proton_count"]);
-                cmd.Parameters.AddWithValue("@neutron_count", p["neutron_count"]);
+                cmd.Parameters.AddWithValue("@name", p["name"]);                
                 cmd.Parameters.AddWithValue("@half_life_year", p["halflife"]);
-                cmd.Parameters.AddWithValue("@half_life_uncertainty", p["halflife_uncertainty"]);
-                cmd.Parameters.AddWithValue("@decay_type_id", p["decay_type_id"]);
-                cmd.Parameters.AddWithValue("@kxray_energy", p["xray_energy"]);
-                cmd.Parameters.AddWithValue("@fluorescence_yield", p["fluorescence_yield"]);
+                cmd.Parameters.AddWithValue("@half_life_year_uncertainty", p["halflife_uncertainty"]);
                 cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
                 cmd.Parameters.AddWithValue("@comment", p["comment"]);
                 cmd.Parameters.AddWithValue("@update_date", p["update_date"]);

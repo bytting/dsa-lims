@@ -18,6 +18,7 @@
 // Authors: Dag Robole,
 
 using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace DSA_lims
@@ -91,6 +92,43 @@ namespace DSA_lims
         public override string ToString()
         {
             return Name.ToString();
+        }
+    }
+
+    public class AnalysisParameters
+    {
+        public string FileName { get; set; }
+        public string SampleName { get; set; }
+        public string PreparationGeometry { get; set; }
+        public string SpectrumReferenceRegEx { get; set; }
+    }    
+
+    public class AnalysisResult
+    {
+        public string SpectrumName, SampleName, SamplePlace, Geometry, Unit, ReferenceTime, NuclideLibrary, DetLimLib;
+        public double Height, Weight, Volume, Density, SampleQuantity;
+        public int Sigma, MDAFactor;        
+        public List<Isotop> Isotopes = new List<Isotop>();
+
+        public void Clear()
+        {
+            SpectrumName = SampleName = SamplePlace = Geometry = Unit = ReferenceTime = NuclideLibrary = DetLimLib = String.Empty;
+            Height = Weight = Volume = Density = SampleQuantity = 0.0;
+            Sigma = MDAFactor = 0;            
+            Isotopes.Clear();
+        }
+
+        public class Isotop
+        {
+            public string NuclideName { get; set; }
+            public double ConfidenceValue { get; set; }
+            public double Activity { get; set; }
+            public double Uncertainty { get; set; }
+            public double MDA { get; set; }
+            public bool ApprovedRES { get; set; }
+            public bool ApprovedMDA { get; set; }
+            public bool Accredited { get; set; }
+            public bool Reportable { get; set; }
         }
     }    
 }

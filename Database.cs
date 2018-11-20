@@ -106,12 +106,19 @@ namespace DSA_lims
             return GetDataReader(conn, null, query, queryType, parameters);
         }
 
-        public static object GetScalar(SqlConnection conn, string query, CommandType queryType, params SqlParameter[] parameters)
+        public static object GetScalar(SqlConnection conn, SqlTransaction trans, string query, CommandType queryType, params SqlParameter[] parameters)
         {
             SqlCommand cmd = new SqlCommand(query, conn);
+            if (trans != null)
+                cmd.Transaction = trans;
             cmd.CommandType = queryType;
             cmd.Parameters.AddRange(parameters);
             return cmd.ExecuteScalar();
+        }
+
+        public static object GetScalar(SqlConnection conn, string query, CommandType queryType, params SqlParameter[] parameters)
+        {
+            return GetScalar(conn, null, query, queryType, parameters);
         }
 
         public static void AddAuditMessage(SqlConnection conn, SqlTransaction trans, string tbl, Guid id, AuditOperationType op, string msg)
@@ -343,6 +350,29 @@ namespace DSA_lims
                     Common.SampleTypeList.Add(sampleType);
                 }
             }
+        }
+
+        public static bool GetUniformActivity(SqlConnection conn, SqlTransaction trans, double activity, Guid activityUnitId, out double uActivity, out int uActivityUnitId)
+        {
+            SqlCommand cmd = new SqlCommand("select convert_factor, uniform_activity_unit_id from activity_unit where id = @id", conn, trans);
+            cmd.CommandType = CommandType.Text;
+            cmd.Parameters.AddWithValue("@id", activityUnitId);
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                if (!reader.HasRows)
+                {
+                    uActivity = 0d;
+                    uActivityUnitId = 0;
+                    return false;
+                }
+
+                reader.Read();
+                double convFactor = Convert.ToDouble(reader["convert_factor"]);
+                uActivityUnitId = Convert.ToInt32(reader["uniform_activity_unit_id"]);
+                uActivity = activity / convFactor;
+            }            
+
+            return true;
         }
     }
 }

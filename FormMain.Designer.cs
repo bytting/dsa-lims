@@ -9028,10 +9028,10 @@
             // 
             this.tabPrepAnalPreps.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.tabPrepAnalPreps.Controls.Add(this.splitContainer3);
-            this.tabPrepAnalPreps.Location = new System.Drawing.Point(4, 22);
+            this.tabPrepAnalPreps.Location = new System.Drawing.Point(4, 24);
             this.tabPrepAnalPreps.Name = "tabPrepAnalPreps";
             this.tabPrepAnalPreps.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPrepAnalPreps.Size = new System.Drawing.Size(752, 612);
+            this.tabPrepAnalPreps.Size = new System.Drawing.Size(752, 610);
             this.tabPrepAnalPreps.TabIndex = 3;
             this.tabPrepAnalPreps.Text = "Preparations";
             // 
@@ -9234,7 +9234,7 @@
             this.label64.Name = "label64";
             this.label64.Size = new System.Drawing.Size(113, 25);
             this.label64.TabIndex = 0;
-            this.label64.Text = "Quantity";
+            this.label64.Text = "Sample quant.";
             this.label64.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // panel55
@@ -9272,7 +9272,7 @@
             this.label29.Name = "label29";
             this.label29.Size = new System.Drawing.Size(113, 25);
             this.label29.TabIndex = 2;
-            this.label29.Text = "Amount";
+            this.label29.Text = "Prep. amount";
             this.label29.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // cboxPrepAnalPrepAmountUnit
@@ -10037,7 +10037,7 @@
             // miImportLISFile2
             // 
             this.miImportLISFile2.Name = "miImportLISFile2";
-            this.miImportLISFile2.Size = new System.Drawing.Size(152, 22);
+            this.miImportLISFile2.Size = new System.Drawing.Size(147, 22);
             this.miImportLISFile2.Text = "Import LIS file";
             this.miImportLISFile2.Click += new System.EventHandler(this.miImportLISFile_Click);
             // 

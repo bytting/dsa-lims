@@ -159,6 +159,7 @@ namespace DSA_lims
             grid.Columns["updated_by"].Visible = false;
             grid.Columns["update_date"].Visible = false;
 
+            grid.Columns["zas"].HeaderText = "Id (ZAS)";
             grid.Columns["name"].HeaderText = "Name";
             grid.Columns["protons"].HeaderText = "Protons";
             grid.Columns["neutrons"].HeaderText = "Neutrons";
@@ -180,6 +181,8 @@ namespace DSA_lims
             grid.Columns["update_date"].Visible = false;
 
             grid.Columns["name"].HeaderText = "Name";
+            grid.Columns["min_fill_height_mm"].HeaderText = "Min Fillh. (mm)";
+            grid.Columns["max_fill_height_mm"].HeaderText = "Max Fillh. (mm)";
             grid.Columns["instance_status_name"].HeaderText = "Status";
             // FIXME 
         }        

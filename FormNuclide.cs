@@ -82,7 +82,6 @@ namespace DSA_lims
                     tbNeutrons.Text = reader["neutrons"].ToString();
                     cbMetaStable.Checked = Convert.ToBoolean(reader["meta_stable"]);
                     tbHalflife.Text = reader["half_life_year"].ToString();
-                    tbHalflifeUncertainty.Text = reader["half_life_year_uncertainty"].ToString();
                     cboxInstanceStatus.SelectedValue = reader["instance_status_id"];
                     tbComment.Text = reader["comment"].ToString();
                     p["create_date"] = reader["create_date"];
@@ -111,12 +110,6 @@ namespace DSA_lims
             {
                 MessageBox.Show("Halflife is mandatory");
                 return;
-            }                
-
-            if (String.IsNullOrEmpty(tbHalflifeUncertainty.Text.Trim()))
-            {
-                MessageBox.Show("Halflife uncertainty is mandatory");
-                return;
             }
 
             int protons = Convert.ToInt32(tbProtons.Text);
@@ -125,12 +118,11 @@ namespace DSA_lims
             int zas = (protons * 10000000) + ((neutrons + protons) * 10000) + meta;
 
             p["zas"] = zas;
-            p["name"] = tbName.Text.Trim();
+            p["name"] = tbName.Text.Trim().ToUpper();
             p["protons"] = protons;
             p["neutrons"] = neutrons;
             p["meta_stable"] = meta;
             p["halflife"] = Convert.ToDouble(tbHalflife.Text.Trim());
-            p["halflife_uncertainty"] = Convert.ToDouble(tbHalflifeUncertainty.Text.Trim());
             p["instance_status_id"] = cboxInstanceStatus.SelectedValue;
             p["comment"] = tbComment.Text.Trim();
 
@@ -168,8 +160,7 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@protons", p["protons"]);
                 cmd.Parameters.AddWithValue("@neutrons", p["neutrons"]);
                 cmd.Parameters.AddWithValue("@meta_stable", p["meta_stable"]);
-                cmd.Parameters.AddWithValue("@half_life_year", p["halflife"]);
-                cmd.Parameters.AddWithValue("@half_life_year_uncertainty", p["halflife_uncertainty"]);
+                cmd.Parameters.AddWithValue("@half_life_year", p["halflife"]);                
                 cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
                 cmd.Parameters.AddWithValue("@comment", p["comment"]);
                 cmd.Parameters.AddWithValue("@create_date", p["create_date"]);
@@ -218,7 +209,6 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@neutrons", p["neutrons"]);
                 cmd.Parameters.AddWithValue("@meta_stable", p["meta_stable"]);
                 cmd.Parameters.AddWithValue("@half_life_year", p["halflife"]);
-                cmd.Parameters.AddWithValue("@half_life_year_uncertainty", p["halflife_uncertainty"]);
                 cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
                 cmd.Parameters.AddWithValue("@comment", p["comment"]);
                 cmd.Parameters.AddWithValue("@update_date", p["update_date"]);

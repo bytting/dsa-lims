@@ -34,11 +34,9 @@
             this.btnOk = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.tbName = new System.Windows.Forms.TextBox();
             this.tbHalflife = new System.Windows.Forms.TextBox();
-            this.tbHalflifeUncertainty = new System.Windows.Forms.TextBox();
             this.tbComment = new System.Windows.Forms.TextBox();
             this.cboxInstanceStatus = new System.Windows.Forms.ComboBox();
             this.label10 = new System.Windows.Forms.Label();
@@ -55,7 +53,7 @@
             this.panel1.Controls.Add(this.btnCancel);
             this.panel1.Controls.Add(this.btnOk);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 370);
+            this.panel1.Location = new System.Drawing.Point(0, 343);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(476, 28);
             this.panel1.TabIndex = 0;
@@ -100,19 +98,10 @@
             this.label4.TabIndex = 4;
             this.label4.Text = "Halflife (Years)";
             // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(29, 154);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(63, 13);
-            this.label5.TabIndex = 5;
-            this.label5.Text = "Halflife unc.";
-            // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(28, 208);
+            this.label9.Location = new System.Drawing.Point(28, 183);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(51, 13);
             this.label9.TabIndex = 9;
@@ -132,16 +121,9 @@
             this.tbHalflife.Size = new System.Drawing.Size(271, 20);
             this.tbHalflife.TabIndex = 13;
             // 
-            // tbHalflifeUncertainty
-            // 
-            this.tbHalflifeUncertainty.Location = new System.Drawing.Point(175, 151);
-            this.tbHalflifeUncertainty.Name = "tbHalflifeUncertainty";
-            this.tbHalflifeUncertainty.Size = new System.Drawing.Size(271, 20);
-            this.tbHalflifeUncertainty.TabIndex = 14;
-            // 
             // tbComment
             // 
-            this.tbComment.Location = new System.Drawing.Point(175, 205);
+            this.tbComment.Location = new System.Drawing.Point(175, 180);
             this.tbComment.MaxLength = 1000;
             this.tbComment.Multiline = true;
             this.tbComment.Name = "tbComment";
@@ -154,7 +136,7 @@
             this.cboxInstanceStatus.DisplayMember = "Name";
             this.cboxInstanceStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxInstanceStatus.FormattingEnabled = true;
-            this.cboxInstanceStatus.Location = new System.Drawing.Point(175, 178);
+            this.cboxInstanceStatus.Location = new System.Drawing.Point(175, 153);
             this.cboxInstanceStatus.Name = "cboxInstanceStatus";
             this.cboxInstanceStatus.Size = new System.Drawing.Size(271, 21);
             this.cboxInstanceStatus.TabIndex = 19;
@@ -163,7 +145,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(28, 181);
+            this.label10.Location = new System.Drawing.Point(28, 156);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(37, 13);
             this.label10.TabIndex = 20;
@@ -215,7 +197,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(476, 398);
+            this.ClientSize = new System.Drawing.Size(476, 371);
             this.Controls.Add(this.cbMetaStable);
             this.Controls.Add(this.tbNeutrons);
             this.Controls.Add(this.tbProtons);
@@ -224,11 +206,9 @@
             this.Controls.Add(this.label10);
             this.Controls.Add(this.cboxInstanceStatus);
             this.Controls.Add(this.tbComment);
-            this.Controls.Add(this.tbHalflifeUncertainty);
             this.Controls.Add(this.tbHalflife);
             this.Controls.Add(this.tbName);
             this.Controls.Add(this.label9);
-            this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.panel1);
@@ -252,11 +232,9 @@
         private System.Windows.Forms.Button btnOk;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox tbName;
         private System.Windows.Forms.TextBox tbHalflife;
-        private System.Windows.Forms.TextBox tbHalflifeUncertainty;
         private System.Windows.Forms.TextBox tbComment;
         private System.Windows.Forms.ComboBox cboxInstanceStatus;
         private System.Windows.Forms.Label label10;

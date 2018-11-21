@@ -160,8 +160,10 @@ namespace DSA_lims
             grid.Columns["update_date"].Visible = false;
 
             grid.Columns["name"].HeaderText = "Name";
+            grid.Columns["protons"].HeaderText = "Protons";
+            grid.Columns["neutrons"].HeaderText = "Neutrons";
+            grid.Columns["meta_stable"].HeaderText = "Meta stable";
             grid.Columns["half_life_year"].HeaderText = "T 1/2 (Years)";
-            grid.Columns["half_life_year_uncertainty"].HeaderText = "T 1/2 Unc. (Years)";
             grid.Columns["instance_status_name"].HeaderText = "Status";
         }
 

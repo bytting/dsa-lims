@@ -76,8 +76,11 @@ namespace DSA_lims
                     if(!reader.HasRows)                    
                         throw new Exception("Nuclide with ID " + p["id"] + " was not found");                    
 
-                    reader.Read();
+                    reader.Read();                    
                     tbName.Text = reader["name"].ToString();
+                    tbProtons.Text = reader["protons"].ToString();
+                    tbNeutrons.Text = reader["neutrons"].ToString();
+                    cbMetaStable.Checked = Convert.ToBoolean(reader["meta_stable"]);
                     tbHalflife.Text = reader["half_life_year"].ToString();
                     tbHalflifeUncertainty.Text = reader["half_life_year_uncertainty"].ToString();
                     cboxInstanceStatus.SelectedValue = reader["instance_status_id"];
@@ -116,7 +119,16 @@ namespace DSA_lims
                 return;
             }
 
-            p["name"] = tbName.Text.Trim();            
+            int protons = Convert.ToInt32(tbProtons.Text);
+            int neutrons = Convert.ToInt32(tbNeutrons.Text);
+            int meta = cbMetaStable.Checked ? 1 : 0;
+            int zas = (protons * 10000000) + ((neutrons + protons) * 10000) + meta;
+
+            p["zas"] = zas;
+            p["name"] = tbName.Text.Trim();
+            p["protons"] = protons;
+            p["neutrons"] = neutrons;
+            p["meta_stable"] = meta;
             p["halflife"] = Convert.ToDouble(tbHalflife.Text.Trim());
             p["halflife_uncertainty"] = Convert.ToDouble(tbHalflifeUncertainty.Text.Trim());
             p["instance_status_id"] = cboxInstanceStatus.SelectedValue;
@@ -151,7 +163,11 @@ namespace DSA_lims
                 cmd.CommandType = CommandType.StoredProcedure;
                 p["id"] = Guid.NewGuid();
                 cmd.Parameters.AddWithValue("@id", p["id"]);
-                cmd.Parameters.AddWithValue("@name", p["name"]);                
+                cmd.Parameters.AddWithValue("@zas", p["zas"]);
+                cmd.Parameters.AddWithValue("@name", p["name"]);
+                cmd.Parameters.AddWithValue("@protons", p["protons"]);
+                cmd.Parameters.AddWithValue("@neutrons", p["neutrons"]);
+                cmd.Parameters.AddWithValue("@meta_stable", p["meta_stable"]);
                 cmd.Parameters.AddWithValue("@half_life_year", p["halflife"]);
                 cmd.Parameters.AddWithValue("@half_life_year_uncertainty", p["halflife_uncertainty"]);
                 cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
@@ -196,7 +212,11 @@ namespace DSA_lims
                 SqlCommand cmd = new SqlCommand("csp_update_nuclide", connection, transaction);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@id", p["id"]);
-                cmd.Parameters.AddWithValue("@name", p["name"]);                
+                cmd.Parameters.AddWithValue("@zas", p["zas"]);
+                cmd.Parameters.AddWithValue("@name", p["name"]);
+                cmd.Parameters.AddWithValue("@protons", p["protons"]);
+                cmd.Parameters.AddWithValue("@neutrons", p["neutrons"]);
+                cmd.Parameters.AddWithValue("@meta_stable", p["meta_stable"]);
                 cmd.Parameters.AddWithValue("@half_life_year", p["halflife"]);
                 cmd.Parameters.AddWithValue("@half_life_year_uncertainty", p["halflife_uncertainty"]);
                 cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);

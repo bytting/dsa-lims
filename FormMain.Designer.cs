@@ -727,6 +727,12 @@
             this.toolStripButton72 = new System.Windows.Forms.ToolStripButton();
             this.tabSysNuclides = new System.Windows.Forms.TabPage();
             this.gridSysNuclides = new System.Windows.Forms.DataGridView();
+            this.toolsSysNuclides = new System.Windows.Forms.ToolStrip();
+            this.toolStripLabel41 = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnSysNuclideNew = new System.Windows.Forms.ToolStripButton();
+            this.btnSysNuclideEdit = new System.Windows.Forms.ToolStripButton();
+            this.btnSysNuclideDelete = new System.Windows.Forms.ToolStripButton();
             this.tabSysGeometries = new System.Windows.Forms.TabPage();
             this.panel6 = new System.Windows.Forms.Panel();
             this.gridSysGeom = new System.Windows.Forms.DataGridView();
@@ -898,12 +904,6 @@
             this.btnMenu = new System.Windows.Forms.ToolStripButton();
             this.lblCurrentTab = new System.Windows.Forms.ToolStripLabel();
             this.btnBack = new System.Windows.Forms.ToolStripButton();
-            this.toolsSysNuclides = new System.Windows.Forms.ToolStrip();
-            this.toolStripLabel41 = new System.Windows.Forms.ToolStripLabel();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnSysNuclideNew = new System.Windows.Forms.ToolStripButton();
-            this.btnSysNuclideEdit = new System.Windows.Forms.ToolStripButton();
-            this.btnSysNuclideDelete = new System.Windows.Forms.ToolStripButton();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tabs.SuspendLayout();
@@ -1133,6 +1133,7 @@
             this.toolsSysAccredRules.SuspendLayout();
             this.tabSysNuclides.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridSysNuclides)).BeginInit();
+            this.toolsSysNuclides.SuspendLayout();
             this.tabSysGeometries.SuspendLayout();
             this.panel6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridSysGeom)).BeginInit();
@@ -1228,7 +1229,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView11)).BeginInit();
             this.toolsSampleResAttachments.SuspendLayout();
             this.tools.SuspendLayout();
-            this.toolsSysNuclides.SuspendLayout();
             this.SuspendLayout();
             // 
             // menu
@@ -2234,21 +2234,21 @@
             // miNuclidesNew
             // 
             this.miNuclidesNew.Name = "miNuclidesNew";
-            this.miNuclidesNew.Size = new System.Drawing.Size(152, 22);
+            this.miNuclidesNew.Size = new System.Drawing.Size(149, 22);
             this.miNuclidesNew.Text = "&New nuclide";
             this.miNuclidesNew.Click += new System.EventHandler(this.miNuclidesNew_Click);
             // 
             // miNuclidesEdit
             // 
             this.miNuclidesEdit.Name = "miNuclidesEdit";
-            this.miNuclidesEdit.Size = new System.Drawing.Size(152, 22);
+            this.miNuclidesEdit.Size = new System.Drawing.Size(149, 22);
             this.miNuclidesEdit.Text = "&Edit nuclide";
             this.miNuclidesEdit.Click += new System.EventHandler(this.miNuclidesEdit_Click);
             // 
             // miNuclidesDelete
             // 
             this.miNuclidesDelete.Name = "miNuclidesDelete";
-            this.miNuclidesDelete.Size = new System.Drawing.Size(152, 22);
+            this.miNuclidesDelete.Size = new System.Drawing.Size(149, 22);
             this.miNuclidesDelete.Text = "&Delete nuclide";
             // 
             // miMunicipalities
@@ -8361,6 +8361,59 @@
             this.gridSysNuclides.Size = new System.Drawing.Size(1127, 579);
             this.gridSysNuclides.TabIndex = 1;
             // 
+            // toolsSysNuclides
+            // 
+            this.toolsSysNuclides.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolsSysNuclides.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripLabel41,
+            this.toolStripSeparator3,
+            this.btnSysNuclideNew,
+            this.btnSysNuclideEdit,
+            this.btnSysNuclideDelete});
+            this.toolsSysNuclides.Location = new System.Drawing.Point(3, 3);
+            this.toolsSysNuclides.Name = "toolsSysNuclides";
+            this.toolsSysNuclides.Size = new System.Drawing.Size(1127, 25);
+            this.toolsSysNuclides.TabIndex = 3;
+            this.toolsSysNuclides.Text = "toolStrip48";
+            // 
+            // toolStripLabel41
+            // 
+            this.toolStripLabel41.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.toolStripLabel41.Name = "toolStripLabel41";
+            this.toolStripLabel41.Size = new System.Drawing.Size(54, 22);
+            this.toolStripLabel41.Text = "Nuclides";
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
+            // 
+            // btnSysNuclideNew
+            // 
+            this.btnSysNuclideNew.Image = global::DSA_lims.Properties.Resources._new;
+            this.btnSysNuclideNew.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSysNuclideNew.Name = "btnSysNuclideNew";
+            this.btnSysNuclideNew.Size = new System.Drawing.Size(51, 22);
+            this.btnSysNuclideNew.Text = "New";
+            this.btnSysNuclideNew.Click += new System.EventHandler(this.miNuclidesNew_Click);
+            // 
+            // btnSysNuclideEdit
+            // 
+            this.btnSysNuclideEdit.Image = global::DSA_lims.Properties.Resources.edit;
+            this.btnSysNuclideEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSysNuclideEdit.Name = "btnSysNuclideEdit";
+            this.btnSysNuclideEdit.Size = new System.Drawing.Size(47, 22);
+            this.btnSysNuclideEdit.Text = "Edit";
+            this.btnSysNuclideEdit.Click += new System.EventHandler(this.miNuclidesEdit_Click);
+            // 
+            // btnSysNuclideDelete
+            // 
+            this.btnSysNuclideDelete.Image = global::DSA_lims.Properties.Resources.delete;
+            this.btnSysNuclideDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSysNuclideDelete.Name = "btnSysNuclideDelete";
+            this.btnSysNuclideDelete.Size = new System.Drawing.Size(60, 22);
+            this.btnSysNuclideDelete.Text = "Delete";
+            // 
             // tabSysGeometries
             // 
             this.tabSysGeometries.BackColor = System.Drawing.SystemColors.ButtonFace;
@@ -9470,10 +9523,10 @@
             this.tabPrepAnalAnalysis.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.tabPrepAnalAnalysis.Controls.Add(this.panel76);
             this.tabPrepAnalAnalysis.Controls.Add(this.panel63);
-            this.tabPrepAnalAnalysis.Location = new System.Drawing.Point(4, 22);
+            this.tabPrepAnalAnalysis.Location = new System.Drawing.Point(4, 24);
             this.tabPrepAnalAnalysis.Name = "tabPrepAnalAnalysis";
             this.tabPrepAnalAnalysis.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPrepAnalAnalysis.Size = new System.Drawing.Size(752, 612);
+            this.tabPrepAnalAnalysis.Size = new System.Drawing.Size(752, 610);
             this.tabPrepAnalAnalysis.TabIndex = 4;
             this.tabPrepAnalAnalysis.Text = "Analyses";
             // 
@@ -9483,7 +9536,7 @@
             this.panel76.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel76.Location = new System.Drawing.Point(3, 318);
             this.panel76.Name = "panel76";
-            this.panel76.Size = new System.Drawing.Size(746, 291);
+            this.panel76.Size = new System.Drawing.Size(746, 289);
             this.panel76.TabIndex = 3;
             // 
             // panel9
@@ -9493,7 +9546,7 @@
             this.panel9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel9.Location = new System.Drawing.Point(0, 0);
             this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(746, 291);
+            this.panel9.Size = new System.Drawing.Size(746, 289);
             this.panel9.TabIndex = 4;
             // 
             // gridPrepAnalResults
@@ -9510,7 +9563,7 @@
             this.gridPrepAnalResults.Name = "gridPrepAnalResults";
             this.gridPrepAnalResults.ReadOnly = true;
             this.gridPrepAnalResults.RowHeadersVisible = false;
-            this.gridPrepAnalResults.Size = new System.Drawing.Size(746, 266);
+            this.gridPrepAnalResults.Size = new System.Drawing.Size(746, 264);
             this.gridPrepAnalResults.TabIndex = 0;
             // 
             // toolsSampleResRes
@@ -9984,7 +10037,7 @@
             // miImportLISFile2
             // 
             this.miImportLISFile2.Name = "miImportLISFile2";
-            this.miImportLISFile2.Size = new System.Drawing.Size(147, 22);
+            this.miImportLISFile2.Size = new System.Drawing.Size(152, 22);
             this.miImportLISFile2.Text = "Import LIS file";
             this.miImportLISFile2.Click += new System.EventHandler(this.miImportLISFile_Click);
             // 
@@ -10112,59 +10165,6 @@
             this.btnBack.Text = "toolStripButton25";
             this.btnBack.ToolTipText = "Back";
             this.btnBack.Click += new System.EventHandler(this.miBack_Click);
-            // 
-            // toolsSysNuclides
-            // 
-            this.toolsSysNuclides.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.toolsSysNuclides.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripLabel41,
-            this.toolStripSeparator3,
-            this.btnSysNuclideNew,
-            this.btnSysNuclideEdit,
-            this.btnSysNuclideDelete});
-            this.toolsSysNuclides.Location = new System.Drawing.Point(3, 3);
-            this.toolsSysNuclides.Name = "toolsSysNuclides";
-            this.toolsSysNuclides.Size = new System.Drawing.Size(1127, 25);
-            this.toolsSysNuclides.TabIndex = 3;
-            this.toolsSysNuclides.Text = "toolStrip48";
-            // 
-            // toolStripLabel41
-            // 
-            this.toolStripLabel41.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.toolStripLabel41.Name = "toolStripLabel41";
-            this.toolStripLabel41.Size = new System.Drawing.Size(54, 22);
-            this.toolStripLabel41.Text = "Nuclides";
-            // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
-            // 
-            // btnSysNuclideNew
-            // 
-            this.btnSysNuclideNew.Image = global::DSA_lims.Properties.Resources._new;
-            this.btnSysNuclideNew.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSysNuclideNew.Name = "btnSysNuclideNew";
-            this.btnSysNuclideNew.Size = new System.Drawing.Size(51, 22);
-            this.btnSysNuclideNew.Text = "New";
-            this.btnSysNuclideNew.Click += new System.EventHandler(this.miNuclidesNew_Click);
-            // 
-            // btnSysNuclideEdit
-            // 
-            this.btnSysNuclideEdit.Image = global::DSA_lims.Properties.Resources.edit;
-            this.btnSysNuclideEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSysNuclideEdit.Name = "btnSysNuclideEdit";
-            this.btnSysNuclideEdit.Size = new System.Drawing.Size(47, 22);
-            this.btnSysNuclideEdit.Text = "Edit";
-            this.btnSysNuclideEdit.Click += new System.EventHandler(this.miNuclidesEdit_Click);
-            // 
-            // btnSysNuclideDelete
-            // 
-            this.btnSysNuclideDelete.Image = global::DSA_lims.Properties.Resources.delete;
-            this.btnSysNuclideDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSysNuclideDelete.Name = "btnSysNuclideDelete";
-            this.btnSysNuclideDelete.Size = new System.Drawing.Size(60, 22);
-            this.btnSysNuclideDelete.Text = "Delete";
             // 
             // FormMain
             // 
@@ -10535,6 +10535,8 @@
             this.tabSysNuclides.ResumeLayout(false);
             this.tabSysNuclides.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridSysNuclides)).EndInit();
+            this.toolsSysNuclides.ResumeLayout(false);
+            this.toolsSysNuclides.PerformLayout();
             this.tabSysGeometries.ResumeLayout(false);
             this.tabSysGeometries.PerformLayout();
             this.panel6.ResumeLayout(false);
@@ -10666,8 +10668,6 @@
             this.toolsSampleResAttachments.PerformLayout();
             this.tools.ResumeLayout(false);
             this.tools.PerformLayout();
-            this.toolsSysNuclides.ResumeLayout(false);
-            this.toolsSysNuclides.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 

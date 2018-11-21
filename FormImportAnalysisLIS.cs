@@ -54,6 +54,11 @@ namespace DSA_lims
                 tbLIMSPrepGeom.Text = parameters.PreparationGeometry;
 
                 LoadLIS(parameters.FileName);
+                foreach(AnalysisResult.Isotop isotop in result.Isotopes)
+                {
+                    if (isotop.MDA == 0.0)
+                        isotop.ApprovedMDA = false;
+                }
                 
                 PopulateUI();
             }
@@ -90,7 +95,10 @@ namespace DSA_lims
             grid.Columns["Activity"].ReadOnly = true;
             grid.Columns["Uncertainty"].ReadOnly = true;
             grid.Columns["MDA"].ReadOnly = true;
-    }
+
+            grid.Columns["Uncertainty"].HeaderText = "Uncertainty (2σ)";
+            grid.Columns["MDA"].HeaderText = "MDA (95%)";
+        }
 
         private int GetFirstPositiveNumber(string line)
         {
@@ -215,10 +223,11 @@ namespace DSA_lims
                 if (items.Length == 5)
                 {
                     AnalysisResult.Isotop isotop = new AnalysisResult.Isotop();
+                    isotop.ApprovedMDA = true;
                     isotop.NuclideName = items[1].Trim();
                     isotop.ConfidenceValue = Convert.ToDouble(items[2].Trim(), CultureInfo.InvariantCulture);
                     isotop.Activity = Convert.ToDouble(items[3].Trim(), CultureInfo.InvariantCulture);
-                    isotop.Uncertainty = Convert.ToDouble(items[4].Trim(), CultureInfo.InvariantCulture);
+                    isotop.Uncertainty = Convert.ToDouble(items[4].Trim(), CultureInfo.InvariantCulture) * 2.0;
                     result.Isotopes.Add(isotop);
                 }
             }
@@ -245,10 +254,25 @@ namespace DSA_lims
                 if (items[0].Trim().StartsWith("Bq"))
                     continue;
 
-                AnalysisResult.Isotop iso = result.Isotopes.Find(i => i.NuclideName == items[0].Trim());
-                if (iso != null)
+                AnalysisResult.Isotop isotop = result.Isotopes.Find(i => i.NuclideName == items[0].Trim());
+                if (isotop != null)
                 {
-                    iso.MDA = Convert.ToDouble(items[1].Trim(), CultureInfo.InvariantCulture);
+                    isotop.MDA = Convert.ToDouble(items[1].Trim(), CultureInfo.InvariantCulture);
+                }
+                else
+                {
+                    isotop = new AnalysisResult.Isotop();
+                    isotop.ApprovedMDA = true;
+                    isotop.NuclideName = items[0].Trim();
+                    isotop.Activity = 0.0;
+                    isotop.ConfidenceValue = 0.0;
+                    isotop.Uncertainty = 0.0;
+                    string s = items[1].Trim();
+                    if (s != "Infinity")
+                    {
+                        isotop.MDA = Convert.ToDouble(items[1].Trim(), CultureInfo.InvariantCulture);
+                        result.Isotopes.Add(isotop);
+                    }
                 }
             }
         }

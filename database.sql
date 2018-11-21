@@ -2206,9 +2206,12 @@ if OBJECT_ID('dbo.nuclide', 'U') IS NOT NULL drop table nuclide;
 
 create table nuclide (
 	id uniqueidentifier primary key NOT NULL,
-	name nvarchar(20) unique NOT NULL,
+	zas int NOT NULL,
+	name nvarchar(32) unique NOT NULL,
+	protons int NOT NULL,
+	neutrons int NOT NULL,
+	meta_stable bit NOT NULL,
 	half_life_year float NOT NULL,
-	half_life_year_uncertainty float NOT NULL,
 	instance_status_id int default 1,
 	comment nvarchar(1000) NOT NULL,
 	create_date datetime NOT NULL,
@@ -2220,9 +2223,12 @@ go
 
 create proc csp_insert_nuclide
 	@id uniqueidentifier,
-	@name nvarchar(20),	
+	@zas int,	
+	@name nvarchar(32),	
+	@protons int,
+	@neutrons int,
+	@meta_stable bit,
 	@half_life_year float,
-	@half_life_year_uncertainty float,
 	@instance_status_id int,
 	@comment nvarchar(1000),
 	@create_date datetime,
@@ -2232,9 +2238,12 @@ create proc csp_insert_nuclide
 as 
 	insert into nuclide values (
 		@id, 
-		@name, 		
-		@half_life_year, 
-		@half_life_year_uncertainty,
+		@zas,
+		@name, 
+		@protons,
+		@neutrons,
+		@meta_stable,
+		@half_life_year, 	
 		@instance_status_id,
 		@comment,
 		@create_date,
@@ -2246,18 +2255,24 @@ go
 
 create proc csp_update_nuclide
 	@id uniqueidentifier,
-	@name nvarchar(20),	
-	@half_life_year float,
-	@half_life_year_uncertainty float,
+	@zas int,	
+	@name nvarchar(32),	
+	@protons int,
+	@neutrons int,
+	@meta_stable bit,
+	@half_life_year float,	
 	@instance_status_id int,
 	@comment nvarchar(1000),	
 	@update_date datetime,
 	@updated_by nvarchar(50)
 as 
 	update nuclide set
-		name = @name, 		
-		half_life_year = @half_life_year, 
-		half_life_year_uncertainty = @half_life_year_uncertainty,
+		zas = @zas,
+		name = @name, 				
+		protons = @protons,
+		neutrons = @neutrons,
+		meta_stable = @meta_stable,
+		half_life_year = @half_life_year, 	
 		instance_status_id = @instance_status_id,
 		comment = @comment,		
 		update_date = @update_date,
@@ -2279,9 +2294,12 @@ create proc csp_select_nuclides_flat
 as
 	select 
 		n.id,
+		n.zas,	
 		n.name,	
-		n.half_life_year, 
-		n.half_life_year_uncertainty,
+		n.protons,
+		n.neutrons,
+		n.meta_stable,
+		n.half_life_year,
 		st.name as 'instance_status_name',
 		n.comment,
 		n.create_date,

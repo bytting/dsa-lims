@@ -3209,7 +3209,7 @@ insert into analysis_result values(
                     }                    
                     cmd.Parameters.AddWithValue("@nuclide_id", Guid.Parse(o.ToString()));
                     cmd.Parameters.AddWithValue("@activity", iso.Activity);
-                    cmd.Parameters.AddWithValue("@activity_uncertainty", iso.Uncertainty * 2.0);
+                    cmd.Parameters.AddWithValue("@activity_uncertainty", iso.Uncertainty);
                     cmd.Parameters.AddWithValue("@activity_uncertainty_abs", 0); // FIXME
                     cmd.Parameters.AddWithValue("@activity_approved", iso.ApprovedRES);                    
                     double uAct;

@@ -74,6 +74,21 @@ namespace DSA_lims
                 lblSampleToolProject.Text = "";
                 lblSampleToolSubProject.Text = "";
                 lblSampleToolLaboratory.Text = "";
+                                
+                tbMenuLookup.KeyPress += CustomEvents.Integer_KeyPress;
+                tbSamplesLookup.KeyPress += CustomEvents.Integer_KeyPress;
+                tbSampleInfoLatitude.KeyPress += CustomEvents.Numeric_KeyPress;
+                tbSampleInfoLongitude.KeyPress += CustomEvents.Numeric_KeyPress;
+                tbSampleInfoAltitude.KeyPress += CustomEvents.Numeric_KeyPress;
+                tbPrepAnalWetWeight.KeyPress += CustomEvents.Numeric_KeyPress;
+                tbPrepAnalDryWeight.KeyPress += CustomEvents.Numeric_KeyPress;
+                tbPrepAnalVolume.KeyPress += CustomEvents.Numeric_KeyPress;
+                tbPrepAnalLODStartWeight.KeyPress += CustomEvents.Numeric_KeyPress;
+                tbPrepAnalLODEndWeight.KeyPress += CustomEvents.Numeric_KeyPress;
+                tbPrepAnalLODWater.KeyPress += CustomEvents.Numeric_KeyPress;
+                tbPrepAnalPrepFillHeight.KeyPress += CustomEvents.Numeric_KeyPress;
+                tbPrepAnalPrepAmount.KeyPress += CustomEvents.Numeric_KeyPress;
+                tbPrepAnalPrepQuantity.KeyPress += CustomEvents.Numeric_KeyPress;
 
                 tbMenuLookup.Text = "";
                 ActiveControl = tbMenuLookup;
@@ -197,7 +212,8 @@ namespace DSA_lims
             }
             catch(Exception ex)
             {
-                Common.Log.Fatal(ex.Message, ex);
+                Common.Log.Fatal(ex);
+                MessageBox.Show(ex.Message);
                 Environment.Exit(1);
             }
         }
@@ -3075,6 +3091,14 @@ order by name
 
             try
             {
+                double lodStart = String.IsNullOrEmpty(tbPrepAnalLODStartWeight.Text) ? 0 : Convert.ToDouble(tbPrepAnalLODStartWeight.Text);
+                double lodEnd = String.IsNullOrEmpty(tbPrepAnalLODEndWeight.Text) ? 0 : Convert.ToDouble(tbPrepAnalLODEndWeight.Text);
+                if(lodStart < lodEnd)
+                {
+                    MessageBox.Show("LOD start weight can not be smaller than end weight");
+                    return;
+                }
+
                 conn = DB.OpenConnection();
                 SqlCommand cmd = new SqlCommand("csp_update_sample_info", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
@@ -3082,8 +3106,8 @@ order by name
                 cmd.Parameters.AddWithValue("@wet_weight_g", tbPrepAnalWetWeight.Text);
                 cmd.Parameters.AddWithValue("@dry_weight_g", tbPrepAnalDryWeight.Text);
                 cmd.Parameters.AddWithValue("@volume_l", tbPrepAnalVolume.Text);
-                cmd.Parameters.AddWithValue("@lod_weight_start", tbPrepAnalLODStartWeight.Text);
-                cmd.Parameters.AddWithValue("@lod_weight_end", tbPrepAnalLODEndWeight.Text);
+                cmd.Parameters.AddWithValue("@lod_weight_start", lodStart);
+                cmd.Parameters.AddWithValue("@lod_weight_end", lodEnd);
                 cmd.Parameters.AddWithValue("@lod_temperature", tbPrepAnalLODTemp.Text);
                 cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
                 cmd.Parameters.AddWithValue("@updated_by", Common.Username);
@@ -3121,12 +3145,19 @@ order by name
 
                     tbPrepAnalInfoComment.Text = reader["comment"].ToString();
 
-                    tbPrepAnalWetWeight.Text = reader["wet_weight_g"].ToString();
-                    tbPrepAnalDryWeight.Text = reader["dry_weight_g"].ToString();
-                    tbPrepAnalVolume.Text = reader["volume_l"].ToString();
-                    tbPrepAnalLODStartWeight.Text = reader["lod_weight_start"].ToString();
-                    tbPrepAnalLODEndWeight.Text = reader["lod_weight_end"].ToString();
-                    tbPrepAnalLODTemp.Text = reader["lod_temperature"].ToString();
+                    double wetWeight = Convert.ToDouble(reader["wet_weight_g"]);
+                    double dryWeight = Convert.ToDouble(reader["dry_weight_g"]);
+                    double volume = Convert.ToDouble(reader["volume_l"]);
+                    tbPrepAnalWetWeight.Text = wetWeight == 0.0 ? "" : wetWeight.ToString();
+                    tbPrepAnalDryWeight.Text = dryWeight == 0.0 ? "" : dryWeight.ToString();
+                    tbPrepAnalVolume.Text = volume == 0.0 ? "" : volume.ToString(); 
+
+                    double lodStart = Convert.ToDouble(reader["lod_weight_start"]);
+                    double lodEnd = Convert.ToDouble(reader["lod_weight_end"]);
+                    double lodTemp = Convert.ToDouble(reader["lod_temperature"]);
+                    tbPrepAnalLODStartWeight.Text = lodStart == 0.0 ? "" : reader["lod_weight_start"].ToString();
+                    tbPrepAnalLODEndWeight.Text = lodEnd == 0.0 ? "" : reader["lod_weight_end"].ToString();
+                    tbPrepAnalLODTemp.Text = lodTemp == 0.0 ? "" : reader["lod_temperature"].ToString();
                 }
             }
         }
@@ -3246,6 +3277,36 @@ insert into analysis_result values(
             {
                 UI.PopulateAnalysisResults(conn, aid, gridPrepAnalResults);
             }
+        }
+
+        private void tbPrepAnalLODStartWeight_TextChanged(object sender, EventArgs e)
+        {
+            CalculateLODPercent();
+        }
+
+        private void CalculateLODPercent()
+        {
+            string startWeight = tbPrepAnalLODStartWeight.Text.Trim();
+            string endWeight = tbPrepAnalLODEndWeight.Text.Trim();
+
+            if (String.IsNullOrEmpty(startWeight) || String.IsNullOrEmpty(endWeight))
+            {
+                tbPrepAnalLODWater.Text = "";
+                return;
+            }
+
+            double sw = Convert.ToDouble(startWeight);
+            double ew = Convert.ToDouble(endWeight);
+
+            if(sw < ew)
+            {
+                tbPrepAnalLODWater.Text = "";
+                return;
+            }
+
+            double delta = sw - ew;
+            double precent = (delta / sw) * 100.0;
+            tbPrepAnalLODWater.Text = precent.ToString("0.0#");
         }
     }    
 }

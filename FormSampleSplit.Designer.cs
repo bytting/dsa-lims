@@ -196,6 +196,7 @@
             this.Name = "FormSampleSplit";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "DSA-Lims - Split sample";
+            this.Load += new System.EventHandler(this.FormSampleSplit_Load);
             this.panel1.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();

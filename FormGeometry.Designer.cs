@@ -187,6 +187,7 @@
             this.Name = "FormGeometry";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "FormGeometry";
+            this.Load += new System.EventHandler(this.FormGeometry_Load);
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();

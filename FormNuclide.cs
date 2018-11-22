@@ -92,6 +92,12 @@ namespace DSA_lims
             }            
         }
 
+        private void FormNuclide_Load(object sender, EventArgs e)
+        {
+            tbProtons.KeyPress += CustomEvents.Integer_KeyPress;
+            tbNeutrons.KeyPress += CustomEvents.Integer_KeyPress;
+        }
+
         private void btnCancel_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;
@@ -231,6 +237,6 @@ namespace DSA_lims
             }
 
             return true;
-        }
+        }        
     }
 }

@@ -89,6 +89,13 @@ namespace DSA_lims
             }
         }
 
+        private void FormStation_Load(object sender, EventArgs e)
+        {
+            tbLatitude.KeyPress += CustomEvents.Numeric_KeyPress;
+            tbLongitude.KeyPress += CustomEvents.Numeric_KeyPress;
+            tbAltitude.KeyPress += CustomEvents.Numeric_KeyPress;
+        }
+
         private void btnCancel_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;
@@ -229,6 +236,6 @@ namespace DSA_lims
             }
 
             return true;
-        }
+        }        
     }
 }

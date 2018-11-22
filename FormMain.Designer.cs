@@ -8908,6 +8908,7 @@
             this.tbPrepAnalLODEndWeight.Name = "tbPrepAnalLODEndWeight";
             this.tbPrepAnalLODEndWeight.Size = new System.Drawing.Size(250, 21);
             this.tbPrepAnalLODEndWeight.TabIndex = 1;
+            this.tbPrepAnalLODEndWeight.TextChanged += new System.EventHandler(this.tbPrepAnalLODStartWeight_TextChanged);
             // 
             // panel71
             // 
@@ -8947,6 +8948,7 @@
             this.tbPrepAnalLODStartWeight.Name = "tbPrepAnalLODStartWeight";
             this.tbPrepAnalLODStartWeight.Size = new System.Drawing.Size(250, 21);
             this.tbPrepAnalLODStartWeight.TabIndex = 1;
+            this.tbPrepAnalLODStartWeight.TextChanged += new System.EventHandler(this.tbPrepAnalLODStartWeight_TextChanged);
             // 
             // panel69
             // 

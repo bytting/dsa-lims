@@ -47,7 +47,7 @@ namespace DSA_lims
         public FormGeometry()
         {
             InitializeComponent();
-            
+
             Text = "New geometry";
             using (SqlConnection conn = DB.OpenConnection())
             {
@@ -87,6 +87,12 @@ namespace DSA_lims
                     p["updated_by"] = reader["updated_by"];
                 }
             }
+        }
+
+        private void FormGeometry_Load(object sender, EventArgs e)
+        {
+            tbMinFillHeight.KeyPress += CustomEvents.Numeric_KeyPress;
+            tbMaxFillHeight.KeyPress += CustomEvents.Numeric_KeyPress;
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -220,6 +226,6 @@ namespace DSA_lims
             }
 
             return true;
-        }
+        }        
     }
 }

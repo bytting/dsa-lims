@@ -205,7 +205,7 @@ namespace DSA_lims
                 }
                 else
                 {
-                    trans.Commit();
+                    trans.Commit(); 
 
                     if(o.ToString().ToLower() == Common.Username.ToLower())
                     {

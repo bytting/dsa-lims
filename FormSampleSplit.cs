@@ -83,6 +83,11 @@ namespace DSA_lims
             }
         }
 
+        private void FormSampleSplit_Load(object sender, EventArgs e)
+        {
+            tbCount.KeyPress += CustomEvents.Integer_KeyPress;
+        }
+
         private void btnCancel_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;
@@ -181,6 +186,6 @@ namespace DSA_lims
 
             DialogResult = DialogResult.OK;
             Close();
-        }
+        }        
     }
 }

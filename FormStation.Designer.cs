@@ -176,7 +176,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(25, 132);
+            this.label6.Location = new System.Drawing.Point(22, 132);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(37, 13);
             this.label6.TabIndex = 20;
@@ -207,6 +207,7 @@
             this.Name = "FormStation";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "FormStation";
+            this.Load += new System.EventHandler(this.FormStation_Load);
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();

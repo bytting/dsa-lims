@@ -46,7 +46,10 @@ namespace DSA_lims
                 return false;
 
             Guid g;
-            if(!Guid.TryParse(id.ToString(), out g) || g == Guid.Empty)
+            if(!Guid.TryParse(id.ToString(), out g))
+                return false;
+
+            if (g == Guid.Empty)
                 return false;
 
             return true;

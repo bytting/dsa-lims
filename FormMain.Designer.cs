@@ -747,7 +747,7 @@
             this.panel31 = new System.Windows.Forms.Panel();
             this.treePrepAnal = new System.Windows.Forms.TreeView();
             this.toolStrip7 = new System.Windows.Forms.ToolStrip();
-            this.toolStripButton14 = new System.Windows.Forms.ToolStripButton();
+            this.btnPrepAnalAddPrep = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton15 = new System.Windows.Forms.ToolStripButton();
             this.tabsPrepAnal = new System.Windows.Forms.TabControl();
             this.tabPrepAnalSample = new System.Windows.Forms.TabPage();
@@ -8572,7 +8572,7 @@
             // 
             this.toolStrip7.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStrip7.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButton14,
+            this.btnPrepAnalAddPrep,
             this.toolStripButton15});
             this.toolStrip7.Location = new System.Drawing.Point(0, 0);
             this.toolStrip7.Name = "toolStrip7";
@@ -8580,13 +8580,14 @@
             this.toolStrip7.TabIndex = 0;
             this.toolStrip7.Text = "toolStrip7";
             // 
-            // toolStripButton14
+            // btnPrepAnalAddPrep
             // 
-            this.toolStripButton14.Image = global::DSA_lims.Properties.Resources._new;
-            this.toolStripButton14.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton14.Name = "toolStripButton14";
-            this.toolStripButton14.Size = new System.Drawing.Size(113, 22);
-            this.toolStripButton14.Text = "Add preparation";
+            this.btnPrepAnalAddPrep.Image = global::DSA_lims.Properties.Resources._new;
+            this.btnPrepAnalAddPrep.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnPrepAnalAddPrep.Name = "btnPrepAnalAddPrep";
+            this.btnPrepAnalAddPrep.Size = new System.Drawing.Size(113, 22);
+            this.btnPrepAnalAddPrep.Text = "Add preparation";
+            this.btnPrepAnalAddPrep.Click += new System.EventHandler(this.btnPrepAnalAddPrep_Click);
             // 
             // toolStripButton15
             // 
@@ -11431,7 +11432,7 @@
         private System.Windows.Forms.Panel panel31;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ToolStripButton toolStripButton8;
-        private System.Windows.Forms.ToolStripButton toolStripButton14;
+        private System.Windows.Forms.ToolStripButton btnPrepAnalAddPrep;
         private System.Windows.Forms.ToolStripButton toolStripButton15;
         private System.Windows.Forms.ToolStrip toolStrip10;
         private System.Windows.Forms.ToolStripLabel toolStripLabel6;

@@ -332,6 +332,19 @@ namespace DSA_lims
             }
         }
 
+        public static int GetNextPreparationNumber(SqlConnection conn, SqlTransaction trans, Guid sampleId)
+        {
+            SqlCommand cmd = new SqlCommand("select max(number) from preparation where sample_id = @sample_id", conn);
+            cmd.Transaction = trans;
+            cmd.CommandType = CommandType.Text;
+            cmd.Parameters.AddWithValue("@sample_id", sampleId);
+            object o = cmd.ExecuteScalar();
+            if (o == null || o == DBNull.Value)
+                return 1;
+
+            return Convert.ToInt32(o);
+        }
+
         public static void LoadSampleTypes(SqlConnection conn)
         {
             Common.SampleTypeList.Clear();            

@@ -112,6 +112,7 @@ namespace DSA_lims
                 using (SqlConnection conn = DB.OpenConnection())
                 {
                     Common.Username = "Admin"; // FIXME
+                    Common.LabId = Guid.Parse("8D8EBB13-3A31-4CB9-8BAF-5989F175D433"); // FIXME
 
                     DB.LoadSampleTypes(conn);
                     
@@ -1730,15 +1731,16 @@ from preparation p
 inner join preparation_method pm on pm.id = p.preparation_method_id
 left outer join assignment a on a.id = p.assignment_id
 where sample_id = @sample_id
+order by p.number
 ";
             using (SqlDataReader reader = DB.GetDataReader(conn, query, CommandType.Text,
                 new SqlParameter("@sample_id", sampleId)))
             {
                 while (reader.Read())
                 {
-                    string txt = reader["preparation_number"].ToString() 
-                        + " - " + reader["preparation_method_name"].ToString() + ", " 
-                        + reader["assignment_name"].ToString();
+                    string txt = reader["preparation_number"].ToString() + " - " + reader["preparation_method_name"].ToString();
+                    if(!String.IsNullOrEmpty(reader["assignment_name"].ToString()))
+                        txt += ", " + reader["assignment_name"].ToString();
                     TreeNode prepNode = sampleNode.Nodes.Add(reader["preparation_id"].ToString(), txt);
                 }
             }
@@ -1752,6 +1754,7 @@ from analysis a
 inner join analysis_method am on am.id = a.analysis_method_id
 left outer join assignment ass on ass.id = a.assignment_id
 where preparation_id = @preparation_id
+order by a.number
 ";
                 using (SqlDataReader reader = DB.GetDataReader(conn, query, CommandType.Text,
                     new SqlParameter("@preparation_id", prepId)))
@@ -2933,9 +2936,9 @@ order by name
             Guid pid = Guid.Parse(treePrepAnal.SelectedNode.Name);
             SqlConnection conn = null;
 
-            double amount = Convert.ToDouble(tbPrepAnalPrepAmount.Text);
-            double quantity = Convert.ToDouble(tbPrepAnalPrepQuantity.Text);
-            double fillHeight = Convert.ToDouble(tbPrepAnalPrepFillHeight.Text);
+            double amount = String.IsNullOrEmpty(tbPrepAnalPrepAmount.Text) ? 0 : Convert.ToDouble(tbPrepAnalPrepAmount.Text);
+            double quantity = String.IsNullOrEmpty(tbPrepAnalPrepQuantity.Text) ? 0 : Convert.ToDouble(tbPrepAnalPrepQuantity.Text);
+            double fillHeight = String.IsNullOrEmpty(tbPrepAnalPrepFillHeight.Text) ? 0 : Convert.ToDouble(tbPrepAnalPrepFillHeight.Text);
 
             try
             {
@@ -2946,9 +2949,9 @@ order by name
                 cmd.Parameters.AddWithValue("@preparation_geometry_id", DB.MakeParam(typeof(Guid), cboxPrepAnalPrepGeom.SelectedValue));
                 cmd.Parameters.AddWithValue("@workflow_status_id", cboxPrepAnalPrepWorkflowStatus.SelectedValue);
                 cmd.Parameters.AddWithValue("@amount", amount);
-                cmd.Parameters.AddWithValue("@prep_unit_id", cboxPrepAnalPrepAmountUnit.SelectedValue);
+                cmd.Parameters.AddWithValue("@prep_unit_id", DB.MakeParam(typeof(Guid), cboxPrepAnalPrepAmountUnit.SelectedValue));
                 cmd.Parameters.AddWithValue("@quantity", quantity);
-                cmd.Parameters.AddWithValue("@quantity_unit_id", cboxPrepAnalPrepQuantityUnit.SelectedValue);
+                cmd.Parameters.AddWithValue("@quantity_unit_id", DB.MakeParam(typeof(Guid), cboxPrepAnalPrepQuantityUnit.SelectedValue));
                 cmd.Parameters.AddWithValue("@fill_height_mm", fillHeight);
                 cmd.Parameters.AddWithValue("@comment", tbPrepAnalPrepComment.Text);
                 cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
@@ -3307,6 +3310,18 @@ insert into analysis_result values(
             double delta = sw - ew;
             double precent = (delta / sw) * 100.0;
             tbPrepAnalLODWater.Text = precent.ToString("0.0#");
+        }
+
+        private void btnPrepAnalAddPrep_Click(object sender, EventArgs e)
+        {
+            FormPrepAnalAddPrep form = new FormPrepAnalAddPrep(selectedSampleId);
+            if (form.ShowDialog() != DialogResult.OK)
+                return;
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                PopulatePrepAnal(conn, selectedSampleId);
+            }
         }
     }    
 }

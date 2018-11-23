@@ -167,6 +167,12 @@
     <Compile Include="FormOrderNew.Designer.cs">
       <DependentUpon>FormOrderNew.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormPrepAnalAddAnal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormPrepAnalAddAnal.Designer.cs">
+      <DependentUpon>FormPrepAnalAddAnal.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormPrepAnalAddPrep.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -366,6 +372,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormOrderNew.resx">
       <DependentUpon>FormOrderNew.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormPrepAnalAddAnal.resx">
+      <DependentUpon>FormPrepAnalAddAnal.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormPrepAnalAddPrep.resx">
       <DependentUpon>FormPrepAnalAddPrep.cs</DependentUpon>

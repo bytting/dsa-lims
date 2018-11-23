@@ -342,7 +342,20 @@ namespace DSA_lims
             if (o == null || o == DBNull.Value)
                 return 1;
 
-            return Convert.ToInt32(o);
+            return Convert.ToInt32(o) + 1;
+        }
+
+        public static int GetNextAnalysisNumber(SqlConnection conn, SqlTransaction trans, Guid prepId)
+        {
+            SqlCommand cmd = new SqlCommand("select max(number) from analysis where preparation_id = @prep_id", conn);
+            cmd.Transaction = trans;
+            cmd.CommandType = CommandType.Text;
+            cmd.Parameters.AddWithValue("@prep_id", prepId);
+            object o = cmd.ExecuteScalar();
+            if (o == null || o == DBNull.Value)
+                return 1;
+
+            return Convert.ToInt32(o) + 1;
         }
 
         public static void LoadSampleTypes(SqlConnection conn)

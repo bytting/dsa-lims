@@ -748,7 +748,7 @@
             this.treePrepAnal = new System.Windows.Forms.TreeView();
             this.toolStrip7 = new System.Windows.Forms.ToolStrip();
             this.btnPrepAnalAddPrep = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton15 = new System.Windows.Forms.ToolStripButton();
+            this.btnPrepAnalAddAnal = new System.Windows.Forms.ToolStripButton();
             this.tabsPrepAnal = new System.Windows.Forms.TabControl();
             this.tabPrepAnalSample = new System.Windows.Forms.TabPage();
             this.splitContainer4 = new System.Windows.Forms.SplitContainer();
@@ -8573,7 +8573,7 @@
             this.toolStrip7.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStrip7.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnPrepAnalAddPrep,
-            this.toolStripButton15});
+            this.btnPrepAnalAddAnal});
             this.toolStrip7.Location = new System.Drawing.Point(0, 0);
             this.toolStrip7.Name = "toolStrip7";
             this.toolStrip7.Size = new System.Drawing.Size(377, 25);
@@ -8589,13 +8589,14 @@
             this.btnPrepAnalAddPrep.Text = "Add preparation";
             this.btnPrepAnalAddPrep.Click += new System.EventHandler(this.btnPrepAnalAddPrep_Click);
             // 
-            // toolStripButton15
+            // btnPrepAnalAddAnal
             // 
-            this.toolStripButton15.Image = global::DSA_lims.Properties.Resources._new;
-            this.toolStripButton15.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton15.Name = "toolStripButton15";
-            this.toolStripButton15.Size = new System.Drawing.Size(93, 22);
-            this.toolStripButton15.Text = "Add analysis";
+            this.btnPrepAnalAddAnal.Image = global::DSA_lims.Properties.Resources._new;
+            this.btnPrepAnalAddAnal.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnPrepAnalAddAnal.Name = "btnPrepAnalAddAnal";
+            this.btnPrepAnalAddAnal.Size = new System.Drawing.Size(93, 22);
+            this.btnPrepAnalAddAnal.Text = "Add analysis";
+            this.btnPrepAnalAddAnal.Click += new System.EventHandler(this.btnPrepAnalAddAnal_Click);
             // 
             // tabsPrepAnal
             // 
@@ -9526,10 +9527,10 @@
             this.tabPrepAnalAnalysis.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.tabPrepAnalAnalysis.Controls.Add(this.panel76);
             this.tabPrepAnalAnalysis.Controls.Add(this.panel63);
-            this.tabPrepAnalAnalysis.Location = new System.Drawing.Point(4, 24);
+            this.tabPrepAnalAnalysis.Location = new System.Drawing.Point(4, 22);
             this.tabPrepAnalAnalysis.Name = "tabPrepAnalAnalysis";
             this.tabPrepAnalAnalysis.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPrepAnalAnalysis.Size = new System.Drawing.Size(752, 610);
+            this.tabPrepAnalAnalysis.Size = new System.Drawing.Size(752, 612);
             this.tabPrepAnalAnalysis.TabIndex = 4;
             this.tabPrepAnalAnalysis.Text = "Analyses";
             // 
@@ -9539,7 +9540,7 @@
             this.panel76.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel76.Location = new System.Drawing.Point(3, 318);
             this.panel76.Name = "panel76";
-            this.panel76.Size = new System.Drawing.Size(746, 289);
+            this.panel76.Size = new System.Drawing.Size(746, 291);
             this.panel76.TabIndex = 3;
             // 
             // panel9
@@ -9549,7 +9550,7 @@
             this.panel9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel9.Location = new System.Drawing.Point(0, 0);
             this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(746, 289);
+            this.panel9.Size = new System.Drawing.Size(746, 291);
             this.panel9.TabIndex = 4;
             // 
             // gridPrepAnalResults
@@ -9566,7 +9567,7 @@
             this.gridPrepAnalResults.Name = "gridPrepAnalResults";
             this.gridPrepAnalResults.ReadOnly = true;
             this.gridPrepAnalResults.RowHeadersVisible = false;
-            this.gridPrepAnalResults.Size = new System.Drawing.Size(746, 264);
+            this.gridPrepAnalResults.Size = new System.Drawing.Size(746, 266);
             this.gridPrepAnalResults.TabIndex = 0;
             // 
             // toolsSampleResRes
@@ -11433,7 +11434,7 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ToolStripButton toolStripButton8;
         private System.Windows.Forms.ToolStripButton btnPrepAnalAddPrep;
-        private System.Windows.Forms.ToolStripButton toolStripButton15;
+        private System.Windows.Forms.ToolStripButton btnPrepAnalAddAnal;
         private System.Windows.Forms.ToolStrip toolStrip10;
         private System.Windows.Forms.ToolStripLabel toolStripLabel6;
         private System.Windows.Forms.ToolStripButton btnBack;

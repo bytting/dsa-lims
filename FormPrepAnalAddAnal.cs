@@ -29,26 +29,26 @@ using System.Windows.Forms;
 
 namespace DSA_lims
 {
-    public partial class FormPrepAnalAddPrep : Form
+    public partial class FormPrepAnalAddAnal : Form
     {
-        Guid SampleId = Guid.Empty;
+        private Guid PrepId = Guid.Empty;
 
-        public FormPrepAnalAddPrep(Guid sampleId)
+        public FormPrepAnalAddAnal(Guid prepId)
         {
             InitializeComponent();
 
-            SampleId = sampleId;
+            PrepId = prepId;
 
             tbCount.KeyPress += CustomEvents.Integer_KeyPress;
         }
 
-        private void FormPrepAnalAddPrep_Load(object sender, EventArgs e)
+        private void FormPrepAnalAddAnal_Load(object sender, EventArgs e)
         {
             using (SqlConnection conn = DB.OpenConnection())
             {
-                UI.PopulateComboBoxes(conn, "csp_select_preparation_methods_short", new[] {
+                UI.PopulateComboBoxes(conn, "csp_select_analysis_methods_short", new[] {
                     new SqlParameter("instance_status_level", InstanceStatus.Active)
-                }, cboxPrepMethods);
+                }, cboxAnalMethods);
             }
 
             tbCount.Text = "1";
@@ -62,13 +62,13 @@ namespace DSA_lims
 
         private void btnOk_Click(object sender, EventArgs e)
         {
-            if (!Utils.IsValidGuid(cboxPrepMethods.SelectedValue))
+            if (!Utils.IsValidGuid(cboxAnalMethods.SelectedValue))
             {
                 MessageBox.Show("Preparation method is mandatory");
                 return;
             }
 
-            if(String.IsNullOrEmpty(tbCount.Text.Trim()))
+            if (String.IsNullOrEmpty(tbCount.Text.Trim()))
             {
                 MessageBox.Show("Count is mandatory");
                 return;
@@ -84,28 +84,28 @@ namespace DSA_lims
                 connection = DB.OpenConnection();
                 transaction = connection.BeginTransaction();
 
-                int nextPrepNumber = DB.GetNextPreparationNumber(connection, transaction, SampleId);
+                int nextAnalNumber = DB.GetNextAnalysisNumber(connection, transaction, PrepId);
 
-                SqlCommand cmd = new SqlCommand("csp_insert_preparation", connection, transaction);
+                SqlCommand cmd = new SqlCommand("csp_insert_analysis", connection, transaction);
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 while (count > 0)
                 {
-                    Guid newPrepId = Guid.NewGuid();
+                    Guid newAnalId = Guid.NewGuid();
                     cmd.Parameters.Clear();
-                    cmd.Parameters.AddWithValue("@id", newPrepId);
-                    cmd.Parameters.AddWithValue("@sample_id", DB.MakeParam(typeof(Guid), SampleId));
-                    cmd.Parameters.AddWithValue("@number", nextPrepNumber++);
+                    cmd.Parameters.AddWithValue("@id", newAnalId);
+                    cmd.Parameters.AddWithValue("@number", nextAnalNumber++);
                     cmd.Parameters.AddWithValue("@assignment_id", DBNull.Value);
                     cmd.Parameters.AddWithValue("@laboratory_id", Common.LabId);
-                    cmd.Parameters.AddWithValue("@preparation_geometry_id", DBNull.Value);
-                    cmd.Parameters.AddWithValue("@preparation_method_id", DB.MakeParam(typeof(Guid), cboxPrepMethods.SelectedValue));
+                    cmd.Parameters.AddWithValue("@preparation_id", PrepId);
+                    cmd.Parameters.AddWithValue("@analysis_method_id", DB.MakeParam(typeof(Guid), cboxAnalMethods.SelectedValue));
                     cmd.Parameters.AddWithValue("@workflow_status_id", 1);
-                    cmd.Parameters.AddWithValue("@amount", DBNull.Value);
-                    cmd.Parameters.AddWithValue("@prep_unit_id", DBNull.Value);
-                    cmd.Parameters.AddWithValue("@quantity", DBNull.Value);
-                    cmd.Parameters.AddWithValue("@quantity_unit_id", DBNull.Value);
-                    cmd.Parameters.AddWithValue("@fill_height_mm", DBNull.Value);
+                    cmd.Parameters.AddWithValue("@specter_reference", DBNull.Value);
+                    cmd.Parameters.AddWithValue("@activity_unit_id", DBNull.Value);
+                    cmd.Parameters.AddWithValue("@activity_unit_type_id", DBNull.Value);
+                    cmd.Parameters.AddWithValue("@sigma", DBNull.Value);
+                    cmd.Parameters.AddWithValue("@nuclide_library", DBNull.Value);
+                    cmd.Parameters.AddWithValue("@mda_library", DBNull.Value);
                     cmd.Parameters.AddWithValue("@instance_status_id", InstanceStatus.Active);
                     cmd.Parameters.AddWithValue("@comment", DBNull.Value);
                     cmd.Parameters.AddWithValue("@create_date", DateTime.Now);

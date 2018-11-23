@@ -1761,9 +1761,9 @@ order by a.number
                 {
                     while (reader.Read())
                     {
-                        string txt = reader["analysis_number"].ToString() + " - " 
-                            + reader["analysis_method_name"].ToString() + ", " 
-                            + reader["assignment_name"].ToString();
+                        string txt = reader["analysis_number"].ToString() + " - " + reader["analysis_method_name"].ToString();
+                        if(!String.IsNullOrEmpty(reader["assignment_name"].ToString()))
+                            txt += ", " + reader["assignment_name"].ToString();
                         TreeNode analNode = prepNode.Nodes.Add(reader["analysis_id"].ToString(), txt);
                     }
                 }
@@ -2719,7 +2719,9 @@ order by name
 
         private void treePrepAnal_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            switch(e.Node.Level)
+            btnPrepAnalAddAnal.Enabled = false;
+
+            switch (e.Node.Level)
             {
                 case 0:
                     ClearPrepAnalSample();
@@ -2731,6 +2733,7 @@ order by name
                     ClearPrepAnalPreparation();
                     Guid pid = Guid.Parse(e.Node.Name);
                     PopulatePreparation(pid);
+                    btnPrepAnalAddAnal.Enabled = true;
                     tabsPrepAnal.SelectedTab = tabPrepAnalPreps;
                     break;
                 case 2:
@@ -2936,10 +2939,6 @@ order by name
             Guid pid = Guid.Parse(treePrepAnal.SelectedNode.Name);
             SqlConnection conn = null;
 
-            double amount = String.IsNullOrEmpty(tbPrepAnalPrepAmount.Text) ? 0 : Convert.ToDouble(tbPrepAnalPrepAmount.Text);
-            double quantity = String.IsNullOrEmpty(tbPrepAnalPrepQuantity.Text) ? 0 : Convert.ToDouble(tbPrepAnalPrepQuantity.Text);
-            double fillHeight = String.IsNullOrEmpty(tbPrepAnalPrepFillHeight.Text) ? 0 : Convert.ToDouble(tbPrepAnalPrepFillHeight.Text);
-
             try
             {
                 conn = DB.OpenConnection();
@@ -2948,11 +2947,11 @@ order by name
                 cmd.Parameters.AddWithValue("@id", pid);
                 cmd.Parameters.AddWithValue("@preparation_geometry_id", DB.MakeParam(typeof(Guid), cboxPrepAnalPrepGeom.SelectedValue));
                 cmd.Parameters.AddWithValue("@workflow_status_id", cboxPrepAnalPrepWorkflowStatus.SelectedValue);
-                cmd.Parameters.AddWithValue("@amount", amount);
+                cmd.Parameters.AddWithValue("@amount", DB.MakeParam(typeof(double), tbPrepAnalPrepAmount.Text));
                 cmd.Parameters.AddWithValue("@prep_unit_id", DB.MakeParam(typeof(Guid), cboxPrepAnalPrepAmountUnit.SelectedValue));
-                cmd.Parameters.AddWithValue("@quantity", quantity);
+                cmd.Parameters.AddWithValue("@quantity", DB.MakeParam(typeof(double), tbPrepAnalPrepQuantity.Text));
                 cmd.Parameters.AddWithValue("@quantity_unit_id", DB.MakeParam(typeof(Guid), cboxPrepAnalPrepQuantityUnit.SelectedValue));
-                cmd.Parameters.AddWithValue("@fill_height_mm", fillHeight);
+                cmd.Parameters.AddWithValue("@fill_height_mm", DB.MakeParam(typeof(double), tbPrepAnalPrepFillHeight.Text));
                 cmd.Parameters.AddWithValue("@comment", tbPrepAnalPrepComment.Text);
                 cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
                 cmd.Parameters.AddWithValue("@updated_by", Common.Username);
@@ -3092,26 +3091,29 @@ order by name
             Guid sid = Guid.Parse(treePrepAnal.SelectedNode.Name);
             SqlConnection conn = null;
 
-            try
+            if(!String.IsNullOrEmpty(tbPrepAnalLODStartWeight.Text) && !String.IsNullOrEmpty(tbPrepAnalLODEndWeight.Text))
             {
-                double lodStart = String.IsNullOrEmpty(tbPrepAnalLODStartWeight.Text) ? 0 : Convert.ToDouble(tbPrepAnalLODStartWeight.Text);
-                double lodEnd = String.IsNullOrEmpty(tbPrepAnalLODEndWeight.Text) ? 0 : Convert.ToDouble(tbPrepAnalLODEndWeight.Text);
-                if(lodStart < lodEnd)
+                double lodStart = Convert.ToDouble(tbPrepAnalLODStartWeight.Text);
+                double lodEnd = Convert.ToDouble(tbPrepAnalLODEndWeight.Text);
+                if (lodStart < lodEnd)
                 {
-                    MessageBox.Show("LOD start weight can not be smaller than end weight");
+                    MessageBox.Show("LOD start weight cannot be smaller than end weight");
                     return;
                 }
+            }
 
+            try
+            {
                 conn = DB.OpenConnection();
                 SqlCommand cmd = new SqlCommand("csp_update_sample_info", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@id", sid);
-                cmd.Parameters.AddWithValue("@wet_weight_g", tbPrepAnalWetWeight.Text);
-                cmd.Parameters.AddWithValue("@dry_weight_g", tbPrepAnalDryWeight.Text);
-                cmd.Parameters.AddWithValue("@volume_l", tbPrepAnalVolume.Text);
-                cmd.Parameters.AddWithValue("@lod_weight_start", lodStart);
-                cmd.Parameters.AddWithValue("@lod_weight_end", lodEnd);
-                cmd.Parameters.AddWithValue("@lod_temperature", tbPrepAnalLODTemp.Text);
+                cmd.Parameters.AddWithValue("@wet_weight_g", DB.MakeParam(typeof(double), tbPrepAnalWetWeight.Text));
+                cmd.Parameters.AddWithValue("@dry_weight_g", DB.MakeParam(typeof(double), tbPrepAnalDryWeight.Text));
+                cmd.Parameters.AddWithValue("@volume_l", DB.MakeParam(typeof(double), tbPrepAnalVolume.Text));
+                cmd.Parameters.AddWithValue("@lod_weight_start", DB.MakeParam(typeof(double), tbPrepAnalLODStartWeight.Text));
+                cmd.Parameters.AddWithValue("@lod_weight_end", DB.MakeParam(typeof(double), tbPrepAnalLODEndWeight.Text));
+                cmd.Parameters.AddWithValue("@lod_temperature", DB.MakeParam(typeof(double), tbPrepAnalLODTemp.Text));
                 cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
                 cmd.Parameters.AddWithValue("@updated_by", Common.Username);
 
@@ -3146,21 +3148,13 @@ order by name
                         + "Project: " + reader["project_name"].ToString() + Environment.NewLine
                         + "Reference date: " + refDate.ToString(Utils.DateFormatNorwegian);
 
-                    tbPrepAnalInfoComment.Text = reader["comment"].ToString();
-
-                    double wetWeight = Convert.ToDouble(reader["wet_weight_g"]);
-                    double dryWeight = Convert.ToDouble(reader["dry_weight_g"]);
-                    double volume = Convert.ToDouble(reader["volume_l"]);
-                    tbPrepAnalWetWeight.Text = wetWeight == 0.0 ? "" : wetWeight.ToString();
-                    tbPrepAnalDryWeight.Text = dryWeight == 0.0 ? "" : dryWeight.ToString();
-                    tbPrepAnalVolume.Text = volume == 0.0 ? "" : volume.ToString(); 
-
-                    double lodStart = Convert.ToDouble(reader["lod_weight_start"]);
-                    double lodEnd = Convert.ToDouble(reader["lod_weight_end"]);
-                    double lodTemp = Convert.ToDouble(reader["lod_temperature"]);
-                    tbPrepAnalLODStartWeight.Text = lodStart == 0.0 ? "" : reader["lod_weight_start"].ToString();
-                    tbPrepAnalLODEndWeight.Text = lodEnd == 0.0 ? "" : reader["lod_weight_end"].ToString();
-                    tbPrepAnalLODTemp.Text = lodTemp == 0.0 ? "" : reader["lod_temperature"].ToString();
+                    tbPrepAnalInfoComment.Text = reader["comment"].ToString();                    
+                    tbPrepAnalWetWeight.Text = reader["wet_weight_g"].ToString();
+                    tbPrepAnalDryWeight.Text = reader["dry_weight_g"].ToString();
+                    tbPrepAnalVolume.Text = reader["volume_l"].ToString();
+                    tbPrepAnalLODStartWeight.Text = reader["lod_weight_start"].ToString();
+                    tbPrepAnalLODEndWeight.Text = reader["lod_weight_end"].ToString();
+                    tbPrepAnalLODTemp.Text = reader["lod_temperature"].ToString();
                 }
             }
         }
@@ -3315,6 +3309,23 @@ insert into analysis_result values(
         private void btnPrepAnalAddPrep_Click(object sender, EventArgs e)
         {
             FormPrepAnalAddPrep form = new FormPrepAnalAddPrep(selectedSampleId);
+            if (form.ShowDialog() != DialogResult.OK)
+                return;
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                PopulatePrepAnal(conn, selectedSampleId);
+            }
+        }
+
+        private void btnPrepAnalAddAnal_Click(object sender, EventArgs e)
+        {
+            if (!Utils.IsValidGuid(treePrepAnal.SelectedNode.Name))
+                return;
+
+            Guid prepId = Guid.Parse(treePrepAnal.SelectedNode.Name);
+
+            FormPrepAnalAddAnal form = new FormPrepAnalAddAnal(prepId);
             if (form.ShowDialog() != DialogResult.OK)
                 return;
 

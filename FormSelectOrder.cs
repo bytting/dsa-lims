@@ -33,7 +33,8 @@ namespace DSA_lims
     {
         private TreeView TreeSampleTypes = null;
         private Guid SampleId = Guid.Empty;
-        private string SampleNumber = String.Empty;
+        private int SampleNumber = 0;
+        public int SelectedSampleNumber { get { return SampleNumber; } }
         private Guid SampleTypeId = Guid.Empty;
 
         public Guid SelectedLaboratoryId = Guid.Empty;
@@ -41,16 +42,16 @@ namespace DSA_lims
         public string SelectedOrderName = String.Empty;
         public Guid SelectedOrderLineId = Guid.Empty;
 
-        public FormSelectOrder(TreeView treeSampleTypes, Guid sampId, string sampleNumber)
+        public FormSelectOrder(TreeView treeSampleTypes, Guid sampId)
         {
             InitializeComponent();
 
             TreeSampleTypes = treeSampleTypes;
             SampleId = sampId;
-            SampleNumber = sampleNumber;
 
             using (SqlConnection conn = DB.OpenConnection())
-            {                
+            {
+                SampleNumber = DB.GetSampleNumber(conn, SampleId);     
                 UI.PopulateComboBoxes(conn, "csp_select_laboratories_short", new[] {
                     new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
                 }, cboxLaboratory);
@@ -115,8 +116,8 @@ namespace DSA_lims
             {
                 connection = DB.OpenConnection();
                 transaction = connection.BeginTransaction();
-            
-                int nextPrepNumber = 1;
+
+                int nextPrepNumber = DB.GetNextPreparationNumber(connection, transaction, sampleId);
 
                 foreach (TreeNode tnode in tnodes)
                 {
@@ -198,7 +199,7 @@ namespace DSA_lims
         {
             Guid analMethId = Guid.Empty;
             int analCount = 0;
-            int nextAnalNumber = 1;
+            int nextAnalNumber = DB.GetNextAnalysisNumber(conn, trans, prepId);
 
             foreach (TreeNode tnode in tnodes)
             {

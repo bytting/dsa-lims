@@ -332,6 +332,18 @@ namespace DSA_lims
             }
         }
 
+        public static int GetSampleNumber(SqlConnection conn, Guid sampleId)
+        {
+            SqlCommand cmd = new SqlCommand("select number from sample where id = @sample_id", conn);
+            cmd.CommandType = CommandType.Text;
+            cmd.Parameters.AddWithValue("@sample_id", sampleId);
+            object o = cmd.ExecuteScalar();
+            if (o == null || o == DBNull.Value)
+                throw new Exception("Requested sample number not found for id: " + sampleId.ToString());
+
+            return Convert.ToInt32(o);
+        }
+
         public static int GetNextPreparationNumber(SqlConnection conn, SqlTransaction trans, Guid sampleId)
         {
             SqlCommand cmd = new SqlCommand("select max(number) from preparation where sample_id = @sample_id", conn);

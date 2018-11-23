@@ -1649,9 +1649,8 @@ namespace DSA_lims
                 return;
 
             Guid sampleId = Guid.Parse(gridSamples.SelectedRows[0].Cells["id"].Value.ToString());
-            string sampleNumber = gridSamples.SelectedRows[0].Cells["number"].Value.ToString();
 
-            FormSelectOrder form = new FormSelectOrder(treeSampleTypes, sampleId, sampleNumber);
+            FormSelectOrder form = new FormSelectOrder(treeSampleTypes, sampleId);
             if (form.ShowDialog() != DialogResult.OK)
                 return;
 
@@ -3240,10 +3239,13 @@ insert into analysis_result values(
                     cmd.Parameters.AddWithValue("@activity_uncertainty", iso.Uncertainty);
                     cmd.Parameters.AddWithValue("@activity_uncertainty_abs", 0); // FIXME
                     cmd.Parameters.AddWithValue("@activity_approved", iso.ApprovedRES);                    
-                    double uAct;
-                    int uActUnitId;
-                    Guid analUnitId = Guid.Parse(cboxPrepAnalAnalUnit.SelectedValue.ToString());
-                    DB.GetUniformActivity(connection, transaction, iso.Activity, analUnitId, out uAct, out uActUnitId);
+                    double uAct = -1.0;
+                    int uActUnitId = -1;
+                    if(Utils.IsValidGuid(cboxPrepAnalAnalUnit.SelectedValue))
+                    {
+                        Guid analUnitId = Guid.Parse(cboxPrepAnalAnalUnit.SelectedValue.ToString());
+                        DB.GetUniformActivity(connection, transaction, iso.Activity, analUnitId, out uAct, out uActUnitId);
+                    }                    
                     cmd.Parameters.AddWithValue("@uniform_activity", uAct);
                     cmd.Parameters.AddWithValue("@uniform_activity_unit_id", uActUnitId);
                     cmd.Parameters.AddWithValue("@detection_limit", iso.MDA);
@@ -3333,6 +3335,15 @@ insert into analysis_result values(
             {
                 PopulatePrepAnal(conn, selectedSampleId);
             }
+        }
+
+        private void btnSampleAddSampleToOrder_Click(object sender, EventArgs e)
+        {            
+            FormSelectOrder form = new FormSelectOrder(treeSampleTypes, selectedSampleId);
+            if (form.ShowDialog() != DialogResult.OK)
+                return;
+
+            lblStatus.Text = Utils.makeStatusMessage("Successfully added sample " + form.SelectedSampleNumber.ToString() + " to order " + form.SelectedOrderName);
         }
     }    
 }

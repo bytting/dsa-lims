@@ -1405,14 +1405,8 @@ namespace DSA_lims
             cboxSampleLaboratory.SelectedValue = Guid.Empty;
             DateTime now = DateTime.Now;
             tbSampleSamplingDateFrom.Text = "";
-            cbSampleUseSamplingTimeTo.Checked = false;
-            dtSampleSamplingDateTo.Value = now;
-            dtSampleSamplingTimeTo.Value = new DateTime(now.Year, now.Month, now.Day, 12, 0, 0);
-            cbSampleUseSamplingTimeTo.Checked = false;
-            dtSampleSamplingDateTo.Enabled = false;
-            dtSampleSamplingTimeTo.Enabled = false;
-            dtSampleReferenceDate.Value = now;
-            dtSampleReferenceTime.Value = new DateTime(now.Year, now.Month, now.Day, 12, 0, 0);
+            tbSampleSamplingDateTo.Text = "";
+            tbSampleReferenceDate.Text = "";
             tbSampleExId.Text = "";
             cbSampleConfidential.Checked = false;
             cboxSampleSampleStorage.SelectedValue = Guid.Empty;
@@ -1537,12 +1531,29 @@ namespace DSA_lims
                 tbSampleSamplingDateFrom.Tag = samplingDateFrom;
             }
 
-            DateTime samplingDateTo = Convert.ToDateTime(map["sampling_date_to"]);
-            cbSampleUseSamplingTimeTo.Checked = Convert.ToBoolean(map["use_sampling_date_to"]);
-            dtSampleSamplingDateTo.Value = dtSampleSamplingTimeTo.Value = samplingDateTo;
+            if (map["sampling_date_to"] == DBNull.Value)
+            {
+                tbSampleSamplingDateTo.Text = "";
+                tbSampleSamplingDateTo.Tag = null;
+            }
+            else
+            {
+                DateTime samplingDateTo = Convert.ToDateTime(map["sampling_date_to"]);
+                tbSampleSamplingDateTo.Text = samplingDateTo.ToString(Utils.DateTimeFormatNorwegian);
+                tbSampleSamplingDateTo.Tag = samplingDateTo;
+            }
 
-            DateTime referenceDate = Convert.ToDateTime(map["reference_date"]);
-            dtSampleReferenceDate.Value = dtSampleReferenceTime.Value = referenceDate;
+            if (map["reference_date"] == DBNull.Value)
+            {
+                tbSampleReferenceDate.Text = "";
+                tbSampleReferenceDate.Tag = null;
+            }
+            else
+            {
+                DateTime referenceDate = Convert.ToDateTime(map["reference_date"]);
+                tbSampleReferenceDate.Text = referenceDate.ToString(Utils.DateTimeFormatNorwegian);
+                tbSampleReferenceDate.Tag = referenceDate;
+            }
 
             tbSampleExId.Text = map["external_id"].ToString();
             cbSampleConfidential.Checked = Convert.ToBoolean(map["confidential"]);
@@ -1554,12 +1565,6 @@ namespace DSA_lims
             tbSampleComment.Text = map["comment"].ToString();
             lblSampleToolId.Text = "[Sample] " + map["number"].ToString();
             lblSampleToolLaboratory.Text = String.IsNullOrEmpty(cboxSampleLaboratory.Text) ? "" : "[Laboratory] " + cboxSampleLaboratory.Text;
-        }
-
-        private void cbSampleUseSamplingTimeTo_CheckedChanged(object sender, EventArgs e)
-        {
-            dtSampleSamplingDateTo.Enabled = cbSampleUseSamplingTimeTo.Checked;
-            dtSampleSamplingTimeTo.Enabled = cbSampleUseSamplingTimeTo.Checked;
         }
 
         private void miSamplesDelete_Click(object sender, EventArgs e)
@@ -2922,9 +2927,9 @@ order by name
                 cmd.Parameters.AddWithValue("@longitude", DB.MakeParam(typeof(double), tbSampleInfoLongitude.Text.Trim()));
                 cmd.Parameters.AddWithValue("@altitude", DB.MakeParam(typeof(double), tbSampleInfoAltitude.Text.Trim()));
                 cmd.Parameters.AddWithValue("@sampling_date_from", DB.MakeParam(typeof(DateTime), tbSampleSamplingDateFrom.Tag));
-                cmd.Parameters.AddWithValue("@use_sampling_date_to", cbSampleUseSamplingTimeTo.Checked ? 1 : 0);
-                cmd.Parameters.AddWithValue("@sampling_date_to", new DateTime(dtSampleSamplingDateTo.Value.Year, dtSampleSamplingDateTo.Value.Month, dtSampleSamplingDateTo.Value.Day, dtSampleSamplingTimeTo.Value.Hour, dtSampleSamplingTimeTo.Value.Minute, dtSampleSamplingTimeTo.Value.Second));
-                cmd.Parameters.AddWithValue("@reference_date", new DateTime(dtSampleReferenceDate.Value.Year, dtSampleReferenceDate.Value.Month, dtSampleReferenceDate.Value.Day, dtSampleReferenceTime.Value.Hour, dtSampleReferenceTime.Value.Minute, dtSampleReferenceTime.Value.Second));
+                cmd.Parameters.AddWithValue("@use_sampling_date_to", 0); // FIXME
+                cmd.Parameters.AddWithValue("@sampling_date_to", DB.MakeParam(typeof(DateTime), tbSampleSamplingDateTo.Tag));
+                cmd.Parameters.AddWithValue("@reference_date", DB.MakeParam(typeof(DateTime), tbSampleReferenceDate.Tag));
                 cmd.Parameters.AddWithValue("@external_id", DB.MakeParam(typeof(string), tbSampleExId.Text.Trim()));
                 cmd.Parameters.AddWithValue("@confidential", cbSampleConfidential.Checked ? 1 : 0);
                 cmd.Parameters.AddWithValue("@instance_status_id", DB.MakeParam(typeof(int), cboxSampleInstanceStatus.SelectedValue));
@@ -3401,6 +3406,46 @@ insert into analysis_result values(
         {
             tbSampleSamplingDateFrom.Text = "";
             tbSampleSamplingDateFrom.Tag = null;
+        }
+
+        private void btnSampleSamplingDateToClear_Click(object sender, EventArgs e)
+        {
+            tbSampleSamplingDateTo.Text = "";
+            tbSampleSamplingDateTo.Tag = null;
+        }
+
+        private void btnSampleSamplingDateTo_Click(object sender, EventArgs e)
+        {
+            FormSelectDateTime form = new FormSelectDateTime();
+            if (form.ShowDialog() != DialogResult.OK)
+                return;
+
+            tbSampleSamplingDateTo.Text = form.SelectedDateTime.ToString(Utils.DateTimeFormatNorwegian);
+            tbSampleSamplingDateTo.Tag = form.SelectedDateTime;
+        }
+
+        private void btnSampleReferenceDateClear_Click(object sender, EventArgs e)
+        {
+            tbSampleReferenceDate.Text = "";
+            tbSampleReferenceDate.Tag = null;
+        }
+
+        private void btnSampleReferenceDate_Click(object sender, EventArgs e)
+        {
+            FormSelectDateTime form = new FormSelectDateTime();
+            if (form.ShowDialog() != DialogResult.OK)
+                return;
+
+            tbSampleReferenceDate.Text = form.SelectedDateTime.ToString(Utils.DateTimeFormatNorwegian);
+            tbSampleReferenceDate.Tag = form.SelectedDateTime;
+        }
+
+        private void cboxSampleLaboratory_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(!Utils.IsValidGuid(cboxSampleLaboratory.SelectedValue))            
+                lblSampleToolLaboratory.Text = "";
+            else            
+                lblSampleToolLaboratory.Text = "[Laboratory] " + cboxSampleLaboratory.Text;
         }
     }    
 }

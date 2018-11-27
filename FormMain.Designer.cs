@@ -220,11 +220,6 @@
             this.label50 = new System.Windows.Forms.Label();
             this.cboxSampleInfoLocationTypes = new System.Windows.Forms.ComboBox();
             this.label11 = new System.Windows.Forms.Label();
-            this.cbSampleUseSamplingTimeTo = new System.Windows.Forms.CheckBox();
-            this.dtSampleSamplingDateTo = new System.Windows.Forms.DateTimePicker();
-            this.dtSampleSamplingTimeTo = new System.Windows.Forms.DateTimePicker();
-            this.dtSampleReferenceDate = new System.Windows.Forms.DateTimePicker();
-            this.dtSampleReferenceTime = new System.Windows.Forms.DateTimePicker();
             this.cboxSampleLaboratory = new System.Windows.Forms.ComboBox();
             this.cboxSampleSubProject = new System.Windows.Forms.ComboBox();
             this.cboxSampleInfoSamplingMeth = new System.Windows.Forms.ComboBox();
@@ -908,6 +903,15 @@
             this.btnMenu = new System.Windows.Forms.ToolStripButton();
             this.lblCurrentTab = new System.Windows.Forms.ToolStripLabel();
             this.btnBack = new System.Windows.Forms.ToolStripButton();
+            this.panel88 = new System.Windows.Forms.Panel();
+            this.btnSampleSamplingDateTo = new System.Windows.Forms.PictureBox();
+            this.btnSampleSamplingDateToClear = new System.Windows.Forms.PictureBox();
+            this.tbSampleSamplingDateTo = new System.Windows.Forms.TextBox();
+            this.label26 = new System.Windows.Forms.Label();
+            this.panel89 = new System.Windows.Forms.Panel();
+            this.btnSampleReferenceDate = new System.Windows.Forms.PictureBox();
+            this.btnSampleReferenceDateClear = new System.Windows.Forms.PictureBox();
+            this.tbSampleReferenceDate = new System.Windows.Forms.TextBox();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tabs.SuspendLayout();
@@ -1237,6 +1241,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView11)).BeginInit();
             this.toolsSampleResAttachments.SuspendLayout();
             this.tools.SuspendLayout();
+            this.panel88.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.btnSampleSamplingDateTo)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnSampleSamplingDateToClear)).BeginInit();
+            this.panel89.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.btnSampleReferenceDate)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnSampleReferenceDateClear)).BeginInit();
             this.SuspendLayout();
             // 
             // menu
@@ -2801,11 +2811,6 @@
             this.layoutSample.Controls.Add(this.label50, 0, 9);
             this.layoutSample.Controls.Add(this.cboxSampleInfoLocationTypes, 1, 9);
             this.layoutSample.Controls.Add(this.label11, 0, 10);
-            this.layoutSample.Controls.Add(this.cbSampleUseSamplingTimeTo, 0, 11);
-            this.layoutSample.Controls.Add(this.dtSampleSamplingDateTo, 1, 11);
-            this.layoutSample.Controls.Add(this.dtSampleSamplingTimeTo, 2, 11);
-            this.layoutSample.Controls.Add(this.dtSampleReferenceDate, 1, 12);
-            this.layoutSample.Controls.Add(this.dtSampleReferenceTime, 2, 12);
             this.layoutSample.Controls.Add(this.cboxSampleLaboratory, 1, 13);
             this.layoutSample.Controls.Add(this.cboxSampleSubProject, 2, 4);
             this.layoutSample.Controls.Add(this.cboxSampleInfoSamplingMeth, 2, 5);
@@ -2821,14 +2826,17 @@
             this.layoutSample.Controls.Add(this.panel23, 0, 13);
             this.layoutSample.Controls.Add(this.label22, 0, 15);
             this.layoutSample.Controls.Add(this.cboxSampleInstanceStatus, 1, 15);
-            this.layoutSample.Controls.Add(this.tbSampleComment, 2, 13);
             this.layoutSample.Controls.Add(this.cbSampleConfidential, 2, 3);
             this.layoutSample.Controls.Add(this.panel86, 0, 12);
             this.layoutSample.Controls.Add(this.panel87, 1, 10);
+            this.layoutSample.Controls.Add(this.panel88, 1, 11);
+            this.layoutSample.Controls.Add(this.label26, 0, 11);
+            this.layoutSample.Controls.Add(this.panel89, 1, 12);
+            this.layoutSample.Controls.Add(this.tbSampleComment, 2, 10);
             this.layoutSample.Dock = System.Windows.Forms.DockStyle.Fill;
             this.layoutSample.Location = new System.Drawing.Point(3, 28);
             this.layoutSample.Name = "layoutSample";
-            this.layoutSample.RowCount = 18;
+            this.layoutSample.RowCount = 17;
             this.layoutSample.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 10F));
             this.layoutSample.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.layoutSample.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
@@ -2845,8 +2853,8 @@
             this.layoutSample.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.layoutSample.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.layoutSample.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.layoutSample.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
             this.layoutSample.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.layoutSample.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.layoutSample.Size = new System.Drawing.Size(812, 526);
             this.layoutSample.TabIndex = 0;
             // 
@@ -3037,60 +3045,8 @@
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(144, 30);
             this.label11.TabIndex = 0;
-            this.label11.Text = "Sampling time (From)";
+            this.label11.Text = "Sampling time from";
             this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // cbSampleUseSamplingTimeTo
-            // 
-            this.cbSampleUseSamplingTimeTo.AutoSize = true;
-            this.cbSampleUseSamplingTimeTo.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.cbSampleUseSamplingTimeTo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cbSampleUseSamplingTimeTo.Location = new System.Drawing.Point(3, 313);
-            this.cbSampleUseSamplingTimeTo.Name = "cbSampleUseSamplingTimeTo";
-            this.cbSampleUseSamplingTimeTo.Size = new System.Drawing.Size(144, 24);
-            this.cbSampleUseSamplingTimeTo.TabIndex = 3;
-            this.cbSampleUseSamplingTimeTo.Text = "Sampling time (To)";
-            this.cbSampleUseSamplingTimeTo.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.cbSampleUseSamplingTimeTo.UseVisualStyleBackColor = true;
-            this.cbSampleUseSamplingTimeTo.CheckedChanged += new System.EventHandler(this.cbSampleUseSamplingTimeTo_CheckedChanged);
-            // 
-            // dtSampleSamplingDateTo
-            // 
-            this.dtSampleSamplingDateTo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dtSampleSamplingDateTo.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtSampleSamplingDateTo.Location = new System.Drawing.Point(153, 313);
-            this.dtSampleSamplingDateTo.Name = "dtSampleSamplingDateTo";
-            this.dtSampleSamplingDateTo.Size = new System.Drawing.Size(325, 20);
-            this.dtSampleSamplingDateTo.TabIndex = 2;
-            // 
-            // dtSampleSamplingTimeTo
-            // 
-            this.dtSampleSamplingTimeTo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dtSampleSamplingTimeTo.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.dtSampleSamplingTimeTo.Location = new System.Drawing.Point(484, 313);
-            this.dtSampleSamplingTimeTo.Name = "dtSampleSamplingTimeTo";
-            this.dtSampleSamplingTimeTo.ShowUpDown = true;
-            this.dtSampleSamplingTimeTo.Size = new System.Drawing.Size(325, 20);
-            this.dtSampleSamplingTimeTo.TabIndex = 1;
-            // 
-            // dtSampleReferenceDate
-            // 
-            this.dtSampleReferenceDate.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dtSampleReferenceDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtSampleReferenceDate.Location = new System.Drawing.Point(153, 343);
-            this.dtSampleReferenceDate.Name = "dtSampleReferenceDate";
-            this.dtSampleReferenceDate.Size = new System.Drawing.Size(325, 20);
-            this.dtSampleReferenceDate.TabIndex = 2;
-            // 
-            // dtSampleReferenceTime
-            // 
-            this.dtSampleReferenceTime.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dtSampleReferenceTime.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.dtSampleReferenceTime.Location = new System.Drawing.Point(484, 343);
-            this.dtSampleReferenceTime.Name = "dtSampleReferenceTime";
-            this.dtSampleReferenceTime.ShowUpDown = true;
-            this.dtSampleReferenceTime.Size = new System.Drawing.Size(325, 20);
-            this.dtSampleReferenceTime.TabIndex = 1;
             // 
             // cboxSampleLaboratory
             // 
@@ -3103,6 +3059,7 @@
             this.cboxSampleLaboratory.Size = new System.Drawing.Size(325, 21);
             this.cboxSampleLaboratory.TabIndex = 42;
             this.cboxSampleLaboratory.ValueMember = "Id";
+            this.cboxSampleLaboratory.SelectedIndexChanged += new System.EventHandler(this.cboxSampleLaboratory_SelectedIndexChanged);
             // 
             // cboxSampleSubProject
             // 
@@ -3349,12 +3306,12 @@
             // tbSampleComment
             // 
             this.tbSampleComment.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbSampleComment.Location = new System.Drawing.Point(484, 373);
+            this.tbSampleComment.Location = new System.Drawing.Point(484, 283);
             this.tbSampleComment.Multiline = true;
             this.tbSampleComment.Name = "tbSampleComment";
-            this.layoutSample.SetRowSpan(this.tbSampleComment, 3);
+            this.layoutSample.SetRowSpan(this.tbSampleComment, 6);
             this.tbSampleComment.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.tbSampleComment.Size = new System.Drawing.Size(325, 84);
+            this.tbSampleComment.Size = new System.Drawing.Size(325, 174);
             this.tbSampleComment.TabIndex = 17;
             // 
             // cbSampleConfidential
@@ -10245,6 +10202,106 @@
             this.btnBack.ToolTipText = "Back";
             this.btnBack.Click += new System.EventHandler(this.miBack_Click);
             // 
+            // panel88
+            // 
+            this.panel88.Controls.Add(this.tbSampleSamplingDateTo);
+            this.panel88.Controls.Add(this.btnSampleSamplingDateToClear);
+            this.panel88.Controls.Add(this.btnSampleSamplingDateTo);
+            this.panel88.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel88.Location = new System.Drawing.Point(153, 313);
+            this.panel88.Name = "panel88";
+            this.panel88.Size = new System.Drawing.Size(325, 24);
+            this.panel88.TabIndex = 58;
+            // 
+            // btnSampleSamplingDateTo
+            // 
+            this.btnSampleSamplingDateTo.BackgroundImage = global::DSA_lims.Properties.Resources.datetime_16;
+            this.btnSampleSamplingDateTo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnSampleSamplingDateTo.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnSampleSamplingDateTo.Location = new System.Drawing.Point(301, 0);
+            this.btnSampleSamplingDateTo.Name = "btnSampleSamplingDateTo";
+            this.btnSampleSamplingDateTo.Size = new System.Drawing.Size(24, 24);
+            this.btnSampleSamplingDateTo.TabIndex = 0;
+            this.btnSampleSamplingDateTo.TabStop = false;
+            this.btnSampleSamplingDateTo.Click += new System.EventHandler(this.btnSampleSamplingDateTo_Click);
+            // 
+            // btnSampleSamplingDateToClear
+            // 
+            this.btnSampleSamplingDateToClear.BackgroundImage = global::DSA_lims.Properties.Resources.clear_16;
+            this.btnSampleSamplingDateToClear.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnSampleSamplingDateToClear.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnSampleSamplingDateToClear.Location = new System.Drawing.Point(277, 0);
+            this.btnSampleSamplingDateToClear.Name = "btnSampleSamplingDateToClear";
+            this.btnSampleSamplingDateToClear.Size = new System.Drawing.Size(24, 24);
+            this.btnSampleSamplingDateToClear.TabIndex = 1;
+            this.btnSampleSamplingDateToClear.TabStop = false;
+            this.btnSampleSamplingDateToClear.Click += new System.EventHandler(this.btnSampleSamplingDateToClear_Click);
+            // 
+            // tbSampleSamplingDateTo
+            // 
+            this.tbSampleSamplingDateTo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbSampleSamplingDateTo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+            this.tbSampleSamplingDateTo.Location = new System.Drawing.Point(0, 0);
+            this.tbSampleSamplingDateTo.Name = "tbSampleSamplingDateTo";
+            this.tbSampleSamplingDateTo.ReadOnly = true;
+            this.tbSampleSamplingDateTo.Size = new System.Drawing.Size(277, 21);
+            this.tbSampleSamplingDateTo.TabIndex = 2;
+            // 
+            // label26
+            // 
+            this.label26.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label26.Location = new System.Drawing.Point(3, 310);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(144, 30);
+            this.label26.TabIndex = 59;
+            this.label26.Text = "Sampling time to";
+            this.label26.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // panel89
+            // 
+            this.panel89.Controls.Add(this.tbSampleReferenceDate);
+            this.panel89.Controls.Add(this.btnSampleReferenceDateClear);
+            this.panel89.Controls.Add(this.btnSampleReferenceDate);
+            this.panel89.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel89.Location = new System.Drawing.Point(153, 343);
+            this.panel89.Name = "panel89";
+            this.panel89.Size = new System.Drawing.Size(325, 24);
+            this.panel89.TabIndex = 60;
+            // 
+            // btnSampleReferenceDate
+            // 
+            this.btnSampleReferenceDate.BackgroundImage = global::DSA_lims.Properties.Resources.datetime_16;
+            this.btnSampleReferenceDate.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnSampleReferenceDate.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnSampleReferenceDate.Location = new System.Drawing.Point(301, 0);
+            this.btnSampleReferenceDate.Name = "btnSampleReferenceDate";
+            this.btnSampleReferenceDate.Size = new System.Drawing.Size(24, 24);
+            this.btnSampleReferenceDate.TabIndex = 0;
+            this.btnSampleReferenceDate.TabStop = false;
+            this.btnSampleReferenceDate.Click += new System.EventHandler(this.btnSampleReferenceDate_Click);
+            // 
+            // btnSampleReferenceDateClear
+            // 
+            this.btnSampleReferenceDateClear.BackgroundImage = global::DSA_lims.Properties.Resources.clear_16;
+            this.btnSampleReferenceDateClear.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnSampleReferenceDateClear.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnSampleReferenceDateClear.Location = new System.Drawing.Point(277, 0);
+            this.btnSampleReferenceDateClear.Name = "btnSampleReferenceDateClear";
+            this.btnSampleReferenceDateClear.Size = new System.Drawing.Size(24, 24);
+            this.btnSampleReferenceDateClear.TabIndex = 1;
+            this.btnSampleReferenceDateClear.TabStop = false;
+            this.btnSampleReferenceDateClear.Click += new System.EventHandler(this.btnSampleReferenceDateClear_Click);
+            // 
+            // tbSampleReferenceDate
+            // 
+            this.tbSampleReferenceDate.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbSampleReferenceDate.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+            this.tbSampleReferenceDate.Location = new System.Drawing.Point(0, 0);
+            this.tbSampleReferenceDate.Name = "tbSampleReferenceDate";
+            this.tbSampleReferenceDate.ReadOnly = true;
+            this.tbSampleReferenceDate.Size = new System.Drawing.Size(277, 21);
+            this.tbSampleReferenceDate.TabIndex = 2;
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -10753,6 +10810,14 @@
             this.toolsSampleResAttachments.PerformLayout();
             this.tools.ResumeLayout(false);
             this.tools.PerformLayout();
+            this.panel88.ResumeLayout(false);
+            this.panel88.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.btnSampleSamplingDateTo)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnSampleSamplingDateToClear)).EndInit();
+            this.panel89.ResumeLayout(false);
+            this.panel89.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.btnSampleReferenceDate)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnSampleReferenceDateClear)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -10789,11 +10854,6 @@
         private System.Windows.Forms.TextBox tbSampleInfoLongitude;
         private System.Windows.Forms.TextBox tbSampleInfoAltitude;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.DateTimePicker dtSampleSamplingDateTo;
-        private System.Windows.Forms.DateTimePicker dtSampleSamplingTimeTo;
-        private System.Windows.Forms.CheckBox cbSampleUseSamplingTimeTo;
-        private System.Windows.Forms.DateTimePicker dtSampleReferenceDate;
-        private System.Windows.Forms.DateTimePicker dtSampleReferenceTime;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.TextBox tbSampleComment;
         private System.Windows.Forms.ComboBox cboxSampleInfoSampler;
@@ -11639,6 +11699,15 @@
         private System.Windows.Forms.PictureBox btnSampleSamplingDateFrom;
         private System.Windows.Forms.PictureBox btnSampleSamplingDateFromClear;
         private System.Windows.Forms.TextBox tbSampleSamplingDateFrom;
+        private System.Windows.Forms.Panel panel88;
+        private System.Windows.Forms.PictureBox btnSampleSamplingDateToClear;
+        private System.Windows.Forms.PictureBox btnSampleSamplingDateTo;
+        private System.Windows.Forms.TextBox tbSampleSamplingDateTo;
+        private System.Windows.Forms.Label label26;
+        private System.Windows.Forms.Panel panel89;
+        private System.Windows.Forms.PictureBox btnSampleReferenceDateClear;
+        private System.Windows.Forms.PictureBox btnSampleReferenceDate;
+        private System.Windows.Forms.TextBox tbSampleReferenceDate;
     }
 }
 

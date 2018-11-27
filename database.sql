@@ -1371,6 +1371,29 @@ as
 	);
 go
 
+create proc csp_update_assignment_details
+	@id uniqueidentifier,
+	@laboratory_id uniqueidentifier,
+	@account_id nvarchar(50),
+	@deadline datetime,
+	@requested_sigma float,
+	@content_comment nvarchar(1000),
+	@instance_status_id int,
+	@update_date datetime,
+	@updated_by nvarchar(50)	
+as 		
+	update assignment set
+		laboratory_id = @laboratory_id,
+		account_id = @account_id,
+		deadline = @deadline,
+		requested_sigma = @requested_sigma,
+		content_comment = @content_comment,
+		instance_status_id = @instance_status_id,
+		update_date = @update_date,
+		updated_by = @updated_by
+	where id = @id
+go
+
 create proc csp_select_assignment
 	@id uniqueidentifier
 as

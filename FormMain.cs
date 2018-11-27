@@ -2238,7 +2238,7 @@ order by name
             // edit existing order
             if(gridOrders.SelectedRows.Count < 1)
             {
-                MessageBox.Show("You must select an order forst");
+                MessageBox.Show("You must select an order first");
                 return;
             }
 
@@ -2323,6 +2323,7 @@ order by name
                 cboxOrderResponsible.SelectedValue = map["account_id"];
                 DateTime deadline = Convert.ToDateTime(map["deadline"]);
                 tbOrderDeadline.Text = deadline.ToString(Utils.DateFormatNorwegian);
+                tbOrderDeadline.Tag = deadline;
                 cboxOrderRequestedSigma.SelectedValue = map["requested_sigma"];
                 tbOrderContentComment.Text = map["content_comment"].ToString();
                 cboxOrderCustomerName.Text = map["customer_name"].ToString();
@@ -2441,25 +2442,25 @@ order by name
         private void miOrderSave_Click(object sender, EventArgs e)
         {
             // save order
-            /*if(cboxOrderLaboratory.SelectedItem == null)
+            if(!Utils.IsValidGuid(cboxOrderLaboratory.SelectedValue))
             {
                 MessageBox.Show("Laboratory is mandatory");
                 return;
             }
 
-            if (cboxOrderResponsible.SelectedItem == null)
+            if (cboxOrderResponsible.SelectedValue == null || String.IsNullOrEmpty(cboxOrderResponsible.SelectedValue.ToString()))
             {
                 MessageBox.Show("Responsible is mandatory");
                 return;
             }
 
-            if (String.IsNullOrEmpty(tbOrderDeadline.Text))
+            if (tbOrderDeadline.Tag == null)
             {
                 MessageBox.Show("Deadline is mandatory");
                 return;
             }
 
-            if (cboxOrderRequestedSigma.SelectedIndex < 0)
+            if (cboxOrderRequestedSigma.SelectedValue == null)
             {
                 MessageBox.Show("Requested sigma is mandatory");
                 return;
@@ -2473,48 +2474,25 @@ order by name
                 conn = DB.OpenConnection();
                 trans = conn.BeginTransaction();                
 
-                Lemma<Guid, string> lab = cboxOrderLaboratory.SelectedItem as Lemma<Guid, string>;
-                string labPrefix = DB.GetOrderPrefix(conn, trans, lab.Id);
-                int orderCount = DB.GetNextOrderCount(conn, trans, lab.Id);
-                string orderName = labPrefix + "-" + DateTime.Now.ToString("yyyy") + "-" + orderCount;
+                Guid labId = Guid.Parse(cboxOrderLaboratory.SelectedValue.ToString());
 
-                SqlCommand cmd = new SqlCommand("csp_insert_assignment", conn, trans);
-                cmd.CommandType = CommandType.StoredProcedure;
-                Guid newGuid = Guid.NewGuid();
-                cmd.Parameters.AddWithValue("@id", newGuid);
-                cmd.Parameters.AddWithValue("@name", orderName);
-                cmd.Parameters.AddWithValue("@laboratory_id", lab.Id);
-                Lemma<string, string> account = cboxOrderResponsible.SelectedItem as Lemma<string, string>;
-                cmd.Parameters.AddWithValue("@account_id", account.Id);
-                cmd.Parameters.AddWithValue("@deadline", (DateTime)tbOrderDeadline.Tag);
-                cmd.Parameters.AddWithValue("@requested_sigma", Convert.ToDouble(cboxOrderRequestedSigma.Text));
-                cmd.Parameters.AddWithValue("@customer_name", cboxOrderCustomerName.Text);
-                cmd.Parameters.AddWithValue("@customer_address", tbOrderCustomerAddress.Text.Trim());
-                cmd.Parameters.AddWithValue("@customer_email", tbOrderCustomerEmail.Text.Trim());
-                cmd.Parameters.AddWithValue("@customer_phone", tbOrderCustomerPhone.Text.Trim());
-                cmd.Parameters.AddWithValue("@customer_contact_name", cboxOrderContact.Text);                    
-                cmd.Parameters.AddWithValue("@customer_contact_email", tbOrderContactEmail.Text.Trim());
-                cmd.Parameters.AddWithValue("@customer_contact_phone", tbOrderContactPhone.Text.Trim());
-                cmd.Parameters.AddWithValue("@approved_customer", 0);
-                cmd.Parameters.AddWithValue("@approved_laboratory", 0);
+                SqlCommand cmd = new SqlCommand("csp_update_assignment_details", conn, trans);
+                cmd.CommandType = CommandType.StoredProcedure;                
+                cmd.Parameters.AddWithValue("@id", selectedOrderId);                
+                cmd.Parameters.AddWithValue("@laboratory_id", labId);
+                cmd.Parameters.AddWithValue("@account_id", DB.MakeParam(typeof(String), cboxOrderResponsible.SelectedValue));
+                cmd.Parameters.AddWithValue("@deadline", DB.MakeParam(typeof(DateTime), tbOrderDeadline.Tag));
+                cmd.Parameters.AddWithValue("@requested_sigma", Convert.ToDouble(cboxOrderRequestedSigma.SelectedValue));                
                 cmd.Parameters.AddWithValue("@content_comment", tbOrderContentComment.Text);
-                cmd.Parameters.AddWithValue("@report_comment", tbOrderReportComment.Text);
-                cmd.Parameters.AddWithValue("@closed_date", DBNull.Value);
-                cmd.Parameters.AddWithValue("@closed_by", DBNull.Value);
-                cmd.Parameters.AddWithValue("@instance_status_id", InstanceStatus.Active);
-                cmd.Parameters.AddWithValue("@locked_by", DBNull.Value);
-                cmd.Parameters.AddWithValue("@create_date", DateTime.Now);
-                cmd.Parameters.AddWithValue("@created_by", Common.Username);
+                cmd.Parameters.AddWithValue("@instance_status_id", InstanceStatus.Active); // FIXME
                 cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
                 cmd.Parameters.AddWithValue("@updated_by", Common.Username);
 
                 cmd.ExecuteNonQuery();
 
                 trans.Commit();
-
-                selectedOrder = newGuid;                
-                lblStatus.Text = StrUtils.makeStatusMessage("Order " + orderName + " created");
-                tbOrderName.Text = orderName;
+                
+                lblStatus.Text = Utils.makeStatusMessage("Order " + tbOrderName.Text + " updated");
 
                 UI.PopulateOrders(conn, InstanceStatus.Deleted, gridOrders);
                 tabs.SelectedTab = tabOrders;
@@ -2528,7 +2506,7 @@ order by name
             finally
             {
                 conn?.Close();
-            }*/
+            }
         }
 
         private void btnOrderSelectDeadline_Click(object sender, EventArgs e)
@@ -3446,6 +3424,12 @@ insert into analysis_result values(
                 lblSampleToolLaboratory.Text = "";
             else            
                 lblSampleToolLaboratory.Text = "[Laboratory] " + cboxSampleLaboratory.Text;
+        }
+
+        private void btnOrderClearDeadline_Click(object sender, EventArgs e)
+        {
+            tbOrderDeadline.Text = "";
+            tbOrderDeadline.Tag = null;
         }
     }    
 }

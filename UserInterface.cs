@@ -148,7 +148,11 @@ namespace DSA_lims
             }
 
             foreach (ComboBox cb in cbn)
+            {
                 cb.DataSource = new List<Lemma<string, string>>(users);
+                cb.DisplayMember = "Name";
+                cb.ValueMember = "Id";
+            }
         }
 
         public static void PopulateNuclides(SqlConnection conn, DataGridView grid)

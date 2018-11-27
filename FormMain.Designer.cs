@@ -912,6 +912,7 @@
             this.btnSampleReferenceDate = new System.Windows.Forms.PictureBox();
             this.btnSampleReferenceDateClear = new System.Windows.Forms.PictureBox();
             this.tbSampleReferenceDate = new System.Windows.Forms.TextBox();
+            this.btnOrderClearDeadline = new System.Windows.Forms.PictureBox();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tabs.SuspendLayout();
@@ -1247,6 +1248,7 @@
             this.panel89.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.btnSampleReferenceDate)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnSampleReferenceDateClear)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnOrderClearDeadline)).BeginInit();
             this.SuspendLayout();
             // 
             // menu
@@ -3707,9 +3709,9 @@
             this.panel12.Controls.Add(this.dataGridView12);
             this.panel12.Controls.Add(this.toolsOrderAttachments);
             this.panel12.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel12.Location = new System.Drawing.Point(0, 295);
+            this.panel12.Location = new System.Drawing.Point(0, 314);
             this.panel12.Name = "panel12";
-            this.panel12.Size = new System.Drawing.Size(432, 309);
+            this.panel12.Size = new System.Drawing.Size(432, 290);
             this.panel12.TabIndex = 1;
             // 
             // dataGridView12
@@ -3723,7 +3725,7 @@
             this.dataGridView12.Location = new System.Drawing.Point(0, 25);
             this.dataGridView12.Name = "dataGridView12";
             this.dataGridView12.ReadOnly = true;
-            this.dataGridView12.Size = new System.Drawing.Size(432, 284);
+            this.dataGridView12.Size = new System.Drawing.Size(432, 265);
             this.dataGridView12.TabIndex = 1;
             // 
             // toolsOrderAttachments
@@ -3799,23 +3801,23 @@
             this.tableLayoutPanel6.Location = new System.Drawing.Point(0, 25);
             this.tableLayoutPanel6.Name = "tableLayoutPanel6";
             this.tableLayoutPanel6.RowCount = 8;
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 100F));
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
+            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel6.Size = new System.Drawing.Size(432, 270);
+            this.tableLayoutPanel6.Size = new System.Drawing.Size(432, 289);
             this.tableLayoutPanel6.TabIndex = 1;
             // 
             // label38
             // 
             this.label38.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label38.Location = new System.Drawing.Point(3, 25);
+            this.label38.Location = new System.Drawing.Point(3, 30);
             this.label38.Name = "label38";
-            this.label38.Size = new System.Drawing.Size(138, 25);
+            this.label38.Size = new System.Drawing.Size(137, 30);
             this.label38.TabIndex = 0;
             this.label38.Text = "Laboratory";
             this.label38.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -3823,9 +3825,9 @@
             // label39
             // 
             this.label39.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label39.Location = new System.Drawing.Point(3, 75);
+            this.label39.Location = new System.Drawing.Point(3, 90);
             this.label39.Name = "label39";
-            this.label39.Size = new System.Drawing.Size(138, 27);
+            this.label39.Size = new System.Drawing.Size(137, 30);
             this.label39.TabIndex = 1;
             this.label39.Text = "Deadline";
             this.label39.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -3833,9 +3835,9 @@
             // label40
             // 
             this.label40.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label40.Location = new System.Drawing.Point(3, 102);
+            this.label40.Location = new System.Drawing.Point(3, 120);
             this.label40.Name = "label40";
-            this.label40.Size = new System.Drawing.Size(138, 25);
+            this.label40.Size = new System.Drawing.Size(137, 30);
             this.label40.TabIndex = 2;
             this.label40.Text = "Requested sigma";
             this.label40.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -3843,9 +3845,9 @@
             // label42
             // 
             this.label42.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label42.Location = new System.Drawing.Point(3, 50);
+            this.label42.Location = new System.Drawing.Point(3, 60);
             this.label42.Name = "label42";
-            this.label42.Size = new System.Drawing.Size(138, 25);
+            this.label42.Size = new System.Drawing.Size(137, 30);
             this.label42.TabIndex = 5;
             this.label42.Text = "Responsible";
             this.label42.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -3856,9 +3858,9 @@
             this.cboxOrderResponsible.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cboxOrderResponsible.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxOrderResponsible.FormattingEnabled = true;
-            this.cboxOrderResponsible.Location = new System.Drawing.Point(147, 53);
+            this.cboxOrderResponsible.Location = new System.Drawing.Point(146, 63);
             this.cboxOrderResponsible.Name = "cboxOrderResponsible";
-            this.cboxOrderResponsible.Size = new System.Drawing.Size(282, 23);
+            this.cboxOrderResponsible.Size = new System.Drawing.Size(283, 23);
             this.cboxOrderResponsible.TabIndex = 6;
             this.cboxOrderResponsible.ValueMember = "Id";
             // 
@@ -3868,9 +3870,9 @@
             this.cboxOrderLaboratory.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cboxOrderLaboratory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxOrderLaboratory.FormattingEnabled = true;
-            this.cboxOrderLaboratory.Location = new System.Drawing.Point(147, 28);
+            this.cboxOrderLaboratory.Location = new System.Drawing.Point(146, 33);
             this.cboxOrderLaboratory.Name = "cboxOrderLaboratory";
-            this.cboxOrderLaboratory.Size = new System.Drawing.Size(282, 23);
+            this.cboxOrderLaboratory.Size = new System.Drawing.Size(283, 23);
             this.cboxOrderLaboratory.TabIndex = 7;
             this.cboxOrderLaboratory.ValueMember = "Id";
             this.cboxOrderLaboratory.SelectedIndexChanged += new System.EventHandler(this.cboxOrderLaboratory_SelectedIndexChanged);
@@ -3886,9 +3888,9 @@
             "1",
             "2",
             "3"});
-            this.cboxOrderRequestedSigma.Location = new System.Drawing.Point(147, 105);
+            this.cboxOrderRequestedSigma.Location = new System.Drawing.Point(146, 123);
             this.cboxOrderRequestedSigma.Name = "cboxOrderRequestedSigma";
-            this.cboxOrderRequestedSigma.Size = new System.Drawing.Size(282, 23);
+            this.cboxOrderRequestedSigma.Size = new System.Drawing.Size(283, 23);
             this.cboxOrderRequestedSigma.TabIndex = 9;
             this.cboxOrderRequestedSigma.ValueMember = "Id";
             // 
@@ -3897,7 +3899,7 @@
             this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label4.Location = new System.Drawing.Point(3, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(138, 25);
+            this.label4.Size = new System.Drawing.Size(137, 30);
             this.label4.TabIndex = 10;
             this.label4.Text = "Name";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -3905,20 +3907,21 @@
             // tbOrderName
             // 
             this.tbOrderName.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbOrderName.Location = new System.Drawing.Point(147, 3);
+            this.tbOrderName.Location = new System.Drawing.Point(146, 3);
             this.tbOrderName.Name = "tbOrderName";
             this.tbOrderName.ReadOnly = true;
-            this.tbOrderName.Size = new System.Drawing.Size(282, 21);
+            this.tbOrderName.Size = new System.Drawing.Size(283, 21);
             this.tbOrderName.TabIndex = 11;
             // 
             // panel30
             // 
             this.panel30.Controls.Add(this.tbOrderDeadline);
+            this.panel30.Controls.Add(this.btnOrderClearDeadline);
             this.panel30.Controls.Add(this.btnOrderSelectDeadline);
             this.panel30.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel30.Location = new System.Drawing.Point(147, 78);
+            this.panel30.Location = new System.Drawing.Point(146, 93);
             this.panel30.Name = "panel30";
-            this.panel30.Size = new System.Drawing.Size(282, 21);
+            this.panel30.Size = new System.Drawing.Size(283, 24);
             this.panel30.TabIndex = 14;
             // 
             // tbOrderDeadline
@@ -3928,7 +3931,7 @@
             this.tbOrderDeadline.Location = new System.Drawing.Point(0, 0);
             this.tbOrderDeadline.Name = "tbOrderDeadline";
             this.tbOrderDeadline.ReadOnly = true;
-            this.tbOrderDeadline.Size = new System.Drawing.Size(256, 21);
+            this.tbOrderDeadline.Size = new System.Drawing.Size(235, 21);
             this.tbOrderDeadline.TabIndex = 1;
             // 
             // btnOrderSelectDeadline
@@ -3937,9 +3940,9 @@
             this.btnOrderSelectDeadline.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.btnOrderSelectDeadline.Dock = System.Windows.Forms.DockStyle.Right;
             this.btnOrderSelectDeadline.InitialImage = null;
-            this.btnOrderSelectDeadline.Location = new System.Drawing.Point(256, 0);
+            this.btnOrderSelectDeadline.Location = new System.Drawing.Point(259, 0);
             this.btnOrderSelectDeadline.Name = "btnOrderSelectDeadline";
-            this.btnOrderSelectDeadline.Size = new System.Drawing.Size(26, 21);
+            this.btnOrderSelectDeadline.Size = new System.Drawing.Size(24, 24);
             this.btnOrderSelectDeadline.TabIndex = 2;
             this.btnOrderSelectDeadline.TabStop = false;
             this.btnOrderSelectDeadline.Click += new System.EventHandler(this.btnOrderSelectDeadline_Click);
@@ -3948,9 +3951,9 @@
             // 
             this.label41.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label41.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.label41.Location = new System.Drawing.Point(3, 127);
+            this.label41.Location = new System.Drawing.Point(3, 150);
             this.label41.Name = "label41";
-            this.label41.Size = new System.Drawing.Size(138, 100);
+            this.label41.Size = new System.Drawing.Size(137, 100);
             this.label41.TabIndex = 3;
             this.label41.Text = "Content comment";
             this.label41.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -3958,19 +3961,19 @@
             // tbOrderContentComment
             // 
             this.tbOrderContentComment.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbOrderContentComment.Location = new System.Drawing.Point(147, 130);
+            this.tbOrderContentComment.Location = new System.Drawing.Point(146, 153);
             this.tbOrderContentComment.Multiline = true;
             this.tbOrderContentComment.Name = "tbOrderContentComment";
             this.tbOrderContentComment.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.tbOrderContentComment.Size = new System.Drawing.Size(282, 94);
+            this.tbOrderContentComment.Size = new System.Drawing.Size(283, 94);
             this.tbOrderContentComment.TabIndex = 4;
             // 
             // button5
             // 
             this.button5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button5.Location = new System.Drawing.Point(147, 230);
+            this.button5.Location = new System.Drawing.Point(146, 253);
             this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(282, 26);
+            this.button5.Size = new System.Drawing.Size(283, 24);
             this.button5.TabIndex = 15;
             this.button5.Text = "Save details";
             this.button5.UseVisualStyleBackColor = true;
@@ -10302,6 +10305,18 @@
             this.tbSampleReferenceDate.Size = new System.Drawing.Size(277, 21);
             this.tbSampleReferenceDate.TabIndex = 2;
             // 
+            // btnOrderClearDeadline
+            // 
+            this.btnOrderClearDeadline.BackgroundImage = global::DSA_lims.Properties.Resources.clear_16;
+            this.btnOrderClearDeadline.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnOrderClearDeadline.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnOrderClearDeadline.Location = new System.Drawing.Point(235, 0);
+            this.btnOrderClearDeadline.Name = "btnOrderClearDeadline";
+            this.btnOrderClearDeadline.Size = new System.Drawing.Size(24, 24);
+            this.btnOrderClearDeadline.TabIndex = 3;
+            this.btnOrderClearDeadline.TabStop = false;
+            this.btnOrderClearDeadline.Click += new System.EventHandler(this.btnOrderClearDeadline_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -10818,6 +10833,7 @@
             this.panel89.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.btnSampleReferenceDate)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnSampleReferenceDateClear)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnOrderClearDeadline)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -11708,6 +11724,7 @@
         private System.Windows.Forms.PictureBox btnSampleReferenceDateClear;
         private System.Windows.Forms.PictureBox btnSampleReferenceDate;
         private System.Windows.Forms.TextBox tbSampleReferenceDate;
+        private System.Windows.Forms.PictureBox btnOrderClearDeadline;
     }
 }
 

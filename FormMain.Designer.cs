@@ -9561,10 +9561,10 @@
             this.tabPrepAnalAnalysis.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.tabPrepAnalAnalysis.Controls.Add(this.panel76);
             this.tabPrepAnalAnalysis.Controls.Add(this.panel63);
-            this.tabPrepAnalAnalysis.Location = new System.Drawing.Point(4, 22);
+            this.tabPrepAnalAnalysis.Location = new System.Drawing.Point(4, 24);
             this.tabPrepAnalAnalysis.Name = "tabPrepAnalAnalysis";
             this.tabPrepAnalAnalysis.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPrepAnalAnalysis.Size = new System.Drawing.Size(753, 603);
+            this.tabPrepAnalAnalysis.Size = new System.Drawing.Size(753, 610);
             this.tabPrepAnalAnalysis.TabIndex = 4;
             this.tabPrepAnalAnalysis.Text = "Analyses";
             // 
@@ -9574,7 +9574,7 @@
             this.panel76.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel76.Location = new System.Drawing.Point(3, 318);
             this.panel76.Name = "panel76";
-            this.panel76.Size = new System.Drawing.Size(747, 282);
+            this.panel76.Size = new System.Drawing.Size(747, 289);
             this.panel76.TabIndex = 3;
             // 
             // panel9
@@ -9584,7 +9584,7 @@
             this.panel9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel9.Location = new System.Drawing.Point(0, 0);
             this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(747, 282);
+            this.panel9.Size = new System.Drawing.Size(747, 289);
             this.panel9.TabIndex = 4;
             // 
             // gridPrepAnalResults
@@ -9601,7 +9601,7 @@
             this.gridPrepAnalResults.Name = "gridPrepAnalResults";
             this.gridPrepAnalResults.ReadOnly = true;
             this.gridPrepAnalResults.RowHeadersVisible = false;
-            this.gridPrepAnalResults.Size = new System.Drawing.Size(747, 257);
+            this.gridPrepAnalResults.Size = new System.Drawing.Size(747, 264);
             this.gridPrepAnalResults.TabIndex = 0;
             // 
             // toolsSampleResRes
@@ -10087,6 +10087,7 @@
             this.btnPrepAnalClearAnal.Name = "btnPrepAnalClearAnal";
             this.btnPrepAnalClearAnal.Size = new System.Drawing.Size(98, 22);
             this.btnPrepAnalClearAnal.Text = "Clear analysis";
+            this.btnPrepAnalClearAnal.Click += new System.EventHandler(this.btnPrepAnalClearAnal_Click);
             // 
             // panel8
             // 

@@ -3184,29 +3184,45 @@ where p.id = @pid
 
         private void miImportLISFile_Click(object sender, EventArgs e)
         {
-            OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Filter = "LIS files (*.lis)|*.lis";
-            if (dialog.ShowDialog() != DialogResult.OK)
-                return;
-
-            AnalysisParameters analysisParameters = new AnalysisParameters();
-            analysisParameters.FileName = dialog.FileName;
-            analysisParameters.PreparationGeometry = cboxPrepAnalPrepGeom.Text;
-            analysisParameters.SampleName = treePrepAnal.Nodes.Count > 0 ? treePrepAnal.Nodes[0].Text : "";
-            analysisParameters.SpectrumReferenceRegEx = ""; // FIXME
-            AnalysisResult analysisResult = new AnalysisResult();
-            FormImportAnalysisLIS form = new FormImportAnalysisLIS(analysisParameters, analysisResult);
-            if (form.ShowDialog() != DialogResult.OK)
-                return;
-
             Guid aid = Guid.Parse(treePrepAnal.SelectedNode.Name);
+            bool doClearAnalysis = false;
             SqlConnection connection = null;
             SqlTransaction transaction = null;
 
             try
             {
                 connection = DB.OpenConnection();
-                transaction = connection.BeginTransaction();                
+                transaction = connection.BeginTransaction();
+
+                object oCount = DB.GetScalar(connection, transaction, "select count(*) from analysis_result where analysis_id = @aid", CommandType.Text, new SqlParameter("@aid", aid));
+                if (oCount != null && oCount != DBNull.Value)
+                {
+                    int cnt = Convert.ToInt32(oCount);
+                    if (cnt > 0)
+                    {
+                        if (MessageBox.Show("There are already analysis results on this analysis, are you sure you want to replace them?", "Question", MessageBoxButtons.YesNo) == DialogResult.No)
+                            return;
+                        doClearAnalysis = true;
+                    }
+                }
+
+                OpenFileDialog dialog = new OpenFileDialog();
+                dialog.Filter = "LIS files (*.lis)|*.lis";
+                if (dialog.ShowDialog() != DialogResult.OK)
+                    return;
+
+                AnalysisParameters analysisParameters = new AnalysisParameters();
+                analysisParameters.FileName = dialog.FileName;
+                analysisParameters.PreparationGeometry = cboxPrepAnalPrepGeom.Text;
+                analysisParameters.SampleName = treePrepAnal.Nodes.Count > 0 ? treePrepAnal.Nodes[0].Text : "";
+                analysisParameters.SpectrumReferenceRegEx = ""; // FIXME
+                AnalysisResult analysisResult = new AnalysisResult();
+                FormImportAnalysisLIS form = new FormImportAnalysisLIS(analysisParameters, analysisResult);
+                if (form.ShowDialog() != DialogResult.OK)
+                    return;
+
+                if(doClearAnalysis)
+                    ClearAnalysisResults(connection, transaction, aid);
 
                 SqlCommand cmd = new SqlCommand(@"
 update analysis set 
@@ -3252,13 +3268,13 @@ insert into analysis_result values(
                     cmd.Parameters.Clear();
                     cmd.Parameters.AddWithValue("@id", Guid.NewGuid());
                     cmd.Parameters.AddWithValue("@analysis_id", aid);
-                    object o = DB.GetScalar(connection, transaction, "select id from nuclide where name = '" + iso.NuclideName + "'", CommandType.Text);
-                    if(o == null || o == DBNull.Value)
+                    object oNuclId = DB.GetScalar(connection, transaction, "select id from nuclide where name = '" + iso.NuclideName + "'", CommandType.Text);
+                    if(oNuclId == null || oNuclId == DBNull.Value)
                     {
                         Common.Log.Warn("Unregistered nuclide: " + iso.NuclideName);
                         continue;
                     }                    
-                    cmd.Parameters.AddWithValue("@nuclide_id", Guid.Parse(o.ToString()));
+                    cmd.Parameters.AddWithValue("@nuclide_id", DB.MakeParam(typeof(Guid), oNuclId));
                     cmd.Parameters.AddWithValue("@activity", iso.Activity);
                     cmd.Parameters.AddWithValue("@activity_uncertainty", iso.Uncertainty);
                     cmd.Parameters.AddWithValue("@activity_uncertainty_abs", 0); // FIXME
@@ -3430,6 +3446,30 @@ insert into analysis_result values(
         {
             tbOrderDeadline.Text = "";
             tbOrderDeadline.Tag = null;
+        }
+
+        private void btnPrepAnalClearAnal_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Are you sure you want to delete all results from this analysis?", "Question", MessageBoxButtons.YesNo) == DialogResult.No)
+                return;
+
+            Guid aid = Guid.Parse(treePrepAnal.SelectedNode.Name);            
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                ClearAnalysisResults(conn, null, aid);
+                UI.PopulateAnalysisResults(conn, aid, gridPrepAnalResults);
+            }
+        }
+
+        private void ClearAnalysisResults(SqlConnection conn, SqlTransaction trans, Guid analysisId)
+        {                        
+            SqlCommand cmd = new SqlCommand("delete from analysis_result where analysis_id = @aid", conn);
+            if (trans != null)
+                cmd.Transaction = trans;
+
+            cmd.Parameters.AddWithValue("@aid", analysisId);
+            cmd.ExecuteNonQuery();
         }
     }    
 }

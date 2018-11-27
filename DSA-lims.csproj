@@ -263,6 +263,12 @@
     <Compile Include="FormSelectDate.Designer.cs">
       <DependentUpon>FormSelectDate.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormSelectDateTime.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSelectDateTime.Designer.cs">
+      <DependentUpon>FormSelectDateTime.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormSelectExistingPreps.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -421,6 +427,9 @@
     <EmbeddedResource Include="FormSelectDate.resx">
       <DependentUpon>FormSelectDate.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormSelectDateTime.resx">
+      <DependentUpon>FormSelectDateTime.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormSelectExistingPreps.resx">
       <DependentUpon>FormSelectExistingPreps.cs</DependentUpon>
     </EmbeddedResource>
@@ -555,6 +564,8 @@
   <ItemGroup>
     <Content Include="comments.txt" />
     <Content Include="database.sql" />
+    <None Include="images\clear_16.png" />
+    <None Include="images\clear.png" />
     <None Include="images\left.png" />
     <None Include="images\datetime_16.png" />
     <None Include="images\datetime_32.png" />

@@ -1369,6 +1369,7 @@ namespace DSA_lims
             tbPrepAnalPrepAmount.Text = "";
             cboxPrepAnalPrepAmountUnit.SelectedValue = 0;
             cboxPrepAnalPrepWorkflowStatus.SelectedValue = WorkflowStatus.Construction;
+            tbPrepAnalPrepReqUnit.Text = "";
             tbPrepAnalPrepComment.Text = "";
             lblPrepAnalPrepRange.Text = "";
         }
@@ -1403,8 +1404,7 @@ namespace DSA_lims
             tbSampleLocation.Text = "";
             cboxSampleLaboratory.SelectedValue = Guid.Empty;
             DateTime now = DateTime.Now;
-            dtSampleSamplingDateFrom.Value = now;
-            dtSampleSamplingTimeFrom.Value = new DateTime(now.Year, now.Month, now.Day, 12, 0, 0);
+            tbSampleSamplingDateFrom.Text = "";
             cbSampleUseSamplingTimeTo.Checked = false;
             dtSampleSamplingDateTo.Value = now;
             dtSampleSamplingTimeTo.Value = new DateTime(now.Year, now.Month, now.Day, 12, 0, 0);
@@ -1525,12 +1525,23 @@ namespace DSA_lims
 
             cboxSampleLaboratory.SelectedValue = map["laboratory_id"];
 
-            DateTime samplingDateFrom = Convert.ToDateTime(map["sampling_date_from"]);
+            if(map["sampling_date_from"] == DBNull.Value)
+            {
+                tbSampleSamplingDateFrom.Text = "";
+                tbSampleSamplingDateFrom.Tag = null;
+            }   
+            else
+            {
+                DateTime samplingDateFrom = Convert.ToDateTime(map["sampling_date_from"]);
+                tbSampleSamplingDateFrom.Text = samplingDateFrom.ToString(Utils.DateTimeFormatNorwegian);
+                tbSampleSamplingDateFrom.Tag = samplingDateFrom;
+            }
+
             DateTime samplingDateTo = Convert.ToDateTime(map["sampling_date_to"]);
-            DateTime referenceDate = Convert.ToDateTime(map["reference_date"]);
-            dtSampleSamplingDateFrom.Value = dtSampleSamplingTimeFrom.Value = samplingDateFrom;
             cbSampleUseSamplingTimeTo.Checked = Convert.ToBoolean(map["use_sampling_date_to"]);
             dtSampleSamplingDateTo.Value = dtSampleSamplingTimeTo.Value = samplingDateTo;
+
+            DateTime referenceDate = Convert.ToDateTime(map["reference_date"]);
             dtSampleReferenceDate.Value = dtSampleReferenceTime.Value = referenceDate;
 
             tbSampleExId.Text = map["external_id"].ToString();
@@ -1649,14 +1660,30 @@ namespace DSA_lims
                 return;
 
             Guid sampleId = Guid.Parse(gridSamples.SelectedRows[0].Cells["id"].Value.ToString());
-
-            FormSelectOrder form = new FormSelectOrder(treeSampleTypes, sampleId);
-            if (form.ShowDialog() != DialogResult.OK)
-                return;
-
             string sampleName = gridSamples.SelectedRows[0].Cells["number"].Value.ToString();
 
-            lblStatus.Text = Utils.makeStatusMessage("Successfully added sample " + sampleName + " to order " + form.SelectedOrderName);
+            bool hasLock = false;
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                hasLock = DB.LockSample(conn, sampleId);
+            }
+
+            if (!hasLock)
+            {
+                MessageBox.Show("Sample " + sampleName + " is already locked by someone else");
+                return;
+            }
+
+            FormSelectOrder form = new FormSelectOrder(treeSampleTypes, sampleId);
+            if (form.ShowDialog() == DialogResult.OK)
+            {
+                lblStatus.Text = Utils.makeStatusMessage("Successfully added sample " + sampleName + " to order " + form.SelectedOrderName);
+            }
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                DB.UnlockSamples(conn);
+            }
         }
 
         private void miSamplesSetProject_Click(object sender, EventArgs e)
@@ -2894,7 +2921,7 @@ order by name
                 cmd.Parameters.AddWithValue("@latitude", DB.MakeParam(typeof(double), tbSampleInfoLatitude.Text.Trim()));
                 cmd.Parameters.AddWithValue("@longitude", DB.MakeParam(typeof(double), tbSampleInfoLongitude.Text.Trim()));
                 cmd.Parameters.AddWithValue("@altitude", DB.MakeParam(typeof(double), tbSampleInfoAltitude.Text.Trim()));
-                cmd.Parameters.AddWithValue("@sampling_date_from", new DateTime(dtSampleSamplingDateFrom.Value.Year, dtSampleSamplingDateFrom.Value.Month, dtSampleSamplingDateFrom.Value.Day, dtSampleSamplingTimeFrom.Value.Hour, dtSampleSamplingTimeFrom.Value.Minute, dtSampleSamplingTimeFrom.Value.Second));
+                cmd.Parameters.AddWithValue("@sampling_date_from", DB.MakeParam(typeof(DateTime), tbSampleSamplingDateFrom.Tag));
                 cmd.Parameters.AddWithValue("@use_sampling_date_to", cbSampleUseSamplingTimeTo.Checked ? 1 : 0);
                 cmd.Parameters.AddWithValue("@sampling_date_to", new DateTime(dtSampleSamplingDateTo.Value.Year, dtSampleSamplingDateTo.Value.Month, dtSampleSamplingDateTo.Value.Day, dtSampleSamplingTimeTo.Value.Hour, dtSampleSamplingTimeTo.Value.Minute, dtSampleSamplingTimeTo.Value.Second));
                 cmd.Parameters.AddWithValue("@reference_date", new DateTime(dtSampleReferenceDate.Value.Year, dtSampleReferenceDate.Value.Month, dtSampleReferenceDate.Value.Day, dtSampleReferenceTime.Value.Hour, dtSampleReferenceTime.Value.Minute, dtSampleReferenceTime.Value.Second));
@@ -2988,6 +3015,20 @@ order by name
                     cboxPrepAnalPrepWorkflowStatus.SelectedValue = reader["workflow_status_id"];
                     tbPrepAnalPrepComment.Text = reader["comment"].ToString();
                 }
+
+                string query = @"
+select au.name + ', ' + aut.name from preparation p
+    inner join sample s on p.sample_id = s.id
+    inner join sample_x_assignment_sample_type sxast on sxast.sample_id = s.id
+    inner join assignment_sample_type ast on sxast.assignment_sample_type_id = ast.id
+    inner join assignment a on a.id = p.assignment_id
+    inner join activity_unit au on au.id = ast.requested_activity_unit_id
+    inner join activity_unit_type aut on aut.id = ast.requested_activity_unit_type_id
+where p.id = @pid
+";
+                object o = DB.GetScalar(conn, query, CommandType.Text, new SqlParameter("@pid", pid));
+                if(o != null && o != DBNull.Value)
+                    tbPrepAnalPrepReqUnit.Text = o.ToString();
             }                
         }        
 
@@ -3344,6 +3385,22 @@ insert into analysis_result values(
                 return;
 
             lblStatus.Text = Utils.makeStatusMessage("Successfully added sample " + form.SelectedSampleNumber.ToString() + " to order " + form.SelectedOrderName);
+        }
+
+        private void btnSampleSamplingDateFrom_Click(object sender, EventArgs e)
+        {
+            FormSelectDateTime form = new FormSelectDateTime();
+            if (form.ShowDialog() != DialogResult.OK)
+                return;
+
+            tbSampleSamplingDateFrom.Text = form.SelectedDateTime.ToString(Utils.DateTimeFormatNorwegian);
+            tbSampleSamplingDateFrom.Tag = form.SelectedDateTime;
+        }
+
+        private void btnSampleSamplingDateFromClear_Click(object sender, EventArgs e)
+        {
+            tbSampleSamplingDateFrom.Text = "";
+            tbSampleSamplingDateFrom.Tag = null;
         }
     }    
 }

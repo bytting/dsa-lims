@@ -101,6 +101,26 @@ namespace DSA_lims
             SelectedOrderName = gridOrders.SelectedRows[0].Cells["name"].Value.ToString();
             SelectedOrderLineId = Guid.Parse(tnode.Name);
 
+            string query = "select count(*) from sample_x_assignment_sample_type sxast where sxast.sample_id = @sid and sxast.assignment_sample_type_id = @astid";
+            object o = null;
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                o = DB.GetScalar(conn, query, CommandType.Text, new[] {
+                    new SqlParameter("@sid", SampleId),
+                    new SqlParameter("@astid", SelectedOrderLineId)
+                });
+            }
+
+            if(o != null || o != DBNull.Value)
+            {
+                int cnt = Convert.ToInt32(o);
+                if(cnt > 0)
+                {
+                    MessageBox.Show("This sample is already added to this order");
+                    return;
+                }
+            }
+
             GenerateOrderPreparations(SampleId, SelectedLaboratoryId, SelectedOrderId, SelectedOrderLineId, tnode.Nodes);
 
             DialogResult = DialogResult.OK;

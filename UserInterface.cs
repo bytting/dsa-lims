@@ -42,7 +42,11 @@ namespace DSA_lims
             }
 
             foreach (ComboBox cb in cbn)
+            {
                 cb.DataSource = new List<Lemma<Guid, string>>(list);
+                cb.DisplayMember = "Name";
+                cb.ValueMember = "Id";
+            }
         }
 
         public static void PopulateActivityUnits(SqlConnection conn, DataGridView grid)

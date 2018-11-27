@@ -18,31 +18,36 @@
 // Authors: Dag Robole,
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Drawing;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
 namespace DSA_lims
 {
-    public partial class FormSelectDate : Form
+    public partial class FormSelectDateTime : Form
     {
         private DateTime mDate = new DateTime();
+        private DateTime mTime = new DateTime();
 
-        public DateTime SelectedDate 
-        { 
-            get { return mDate; }
+        public DateTime SelectedDateTime
+        {
+            get { return new DateTime(mDate.Year, mDate.Month, mDate.Day, mTime.Hour, mTime.Minute, mTime.Second); }
         }
 
-        public FormSelectDate()
+        public FormSelectDateTime()
         {
             InitializeComponent();
         }
 
-        private void FormSelectDate_Load(object sender, EventArgs e)
+        private void FormSelectDateTime_Load(object sender, EventArgs e)
         {
             DateTime now = DateTime.Now;
-            dtSelectDate.Value = new DateTime(now.Year, now.Month, now.Day, 12, 0, 0);
+            dtDate.Value = now;
+            dtTime.Value = new DateTime(now.Year, now.Month, now.Day, 12, 0, 0);
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -53,7 +58,8 @@ namespace DSA_lims
 
         private void btnOk_Click(object sender, EventArgs e)
         {
-            mDate = dtSelectDate.Value;
+            mDate = dtDate.Value;
+            mTime = dtTime.Value;
             DialogResult = DialogResult.OK;
             Close();
         }        

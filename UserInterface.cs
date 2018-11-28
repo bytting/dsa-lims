@@ -613,7 +613,7 @@ order by name";
         public static void PopulateOrders(SqlConnection conn, int statusLevel, Guid laboratoryId, DataGridView grid)
         {
             string query = @"
-select id, name, customer_name, customer_contact_name 
+select id, name, customer_name, customer_contact
 from assignment a 
 where laboratory_id = @laboratory_id and instance_status_id <= @instance_status_level 
 order by create_date desc";
@@ -626,7 +626,7 @@ order by create_date desc";
 
             grid.Columns["name"].HeaderText = "Name";
             grid.Columns["customer_name"].HeaderText = "Customer";
-            grid.Columns["customer_contact_name"].HeaderText = "Customer contact";
+            grid.Columns["customer_contact"].HeaderText = "Customer contact";
         }
 
         public static void PopulateOrderContent(SqlConnection conn, Guid selectedOrder, TreeView tree, Guid sampleTypeId, TreeView treeSampleTypes, bool useCommentToolTips)

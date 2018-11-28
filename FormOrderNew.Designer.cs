@@ -43,11 +43,15 @@
             this.label4 = new System.Windows.Forms.Label();
             this.cboxRequestedSigma = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.cboxCustomer = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
+            this.panelCustomer = new System.Windows.Forms.Panel();
+            this.tbCustomer = new System.Windows.Forms.TextBox();
+            this.btnSelectCustomer = new System.Windows.Forms.PictureBox();
             this.panel1.SuspendLayout();
             this.panelDeadline.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.btnSelectDeadline)).BeginInit();
+            this.panelCustomer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.btnSelectCustomer)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -138,7 +142,7 @@
             this.panelDeadline.Controls.Add(this.btnSelectDeadline);
             this.panelDeadline.Location = new System.Drawing.Point(138, 117);
             this.panelDeadline.Name = "panelDeadline";
-            this.panelDeadline.Size = new System.Drawing.Size(270, 23);
+            this.panelDeadline.Size = new System.Drawing.Size(270, 24);
             this.panelDeadline.TabIndex = 15;
             // 
             // tbDeadline
@@ -159,7 +163,7 @@
             this.btnSelectDeadline.InitialImage = null;
             this.btnSelectDeadline.Location = new System.Drawing.Point(244, 0);
             this.btnSelectDeadline.Name = "btnSelectDeadline";
-            this.btnSelectDeadline.Size = new System.Drawing.Size(26, 23);
+            this.btnSelectDeadline.Size = new System.Drawing.Size(26, 24);
             this.btnSelectDeadline.TabIndex = 2;
             this.btnSelectDeadline.TabStop = false;
             this.btnSelectDeadline.Click += new System.EventHandler(this.btnSelectDeadline_Click);
@@ -193,17 +197,6 @@
             this.label5.TabIndex = 18;
             this.label5.Text = "Customer";
             // 
-            // cboxCustomer
-            // 
-            this.cboxCustomer.DisplayMember = "Name";
-            this.cboxCustomer.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboxCustomer.FormattingEnabled = true;
-            this.cboxCustomer.Location = new System.Drawing.Point(138, 176);
-            this.cboxCustomer.Name = "cboxCustomer";
-            this.cboxCustomer.Size = new System.Drawing.Size(270, 23);
-            this.cboxCustomer.TabIndex = 19;
-            this.cboxCustomer.ValueMember = "Id";
-            // 
             // label6
             // 
             this.label6.AutoSize = true;
@@ -214,13 +207,43 @@
             this.label6.TabIndex = 20;
             this.label6.Text = "Create new order...";
             // 
+            // panelCustomer
+            // 
+            this.panelCustomer.Controls.Add(this.tbCustomer);
+            this.panelCustomer.Controls.Add(this.btnSelectCustomer);
+            this.panelCustomer.Location = new System.Drawing.Point(138, 175);
+            this.panelCustomer.Name = "panelCustomer";
+            this.panelCustomer.Size = new System.Drawing.Size(270, 24);
+            this.panelCustomer.TabIndex = 21;
+            // 
+            // tbCustomer
+            // 
+            this.tbCustomer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbCustomer.Location = new System.Drawing.Point(0, 0);
+            this.tbCustomer.Name = "tbCustomer";
+            this.tbCustomer.ReadOnly = true;
+            this.tbCustomer.Size = new System.Drawing.Size(246, 21);
+            this.tbCustomer.TabIndex = 1;
+            // 
+            // btnSelectCustomer
+            // 
+            this.btnSelectCustomer.BackgroundImage = global::DSA_lims.Properties.Resources.user_16;
+            this.btnSelectCustomer.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnSelectCustomer.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnSelectCustomer.Location = new System.Drawing.Point(246, 0);
+            this.btnSelectCustomer.Name = "btnSelectCustomer";
+            this.btnSelectCustomer.Size = new System.Drawing.Size(24, 24);
+            this.btnSelectCustomer.TabIndex = 0;
+            this.btnSelectCustomer.TabStop = false;
+            this.btnSelectCustomer.Click += new System.EventHandler(this.btnSelectCustomer_Click);
+            // 
             // FormOrderNew
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(436, 262);
+            this.Controls.Add(this.panelCustomer);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.cboxCustomer);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.cboxRequestedSigma);
             this.Controls.Add(this.label4);
@@ -244,6 +267,9 @@
             this.panelDeadline.ResumeLayout(false);
             this.panelDeadline.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.btnSelectDeadline)).EndInit();
+            this.panelCustomer.ResumeLayout(false);
+            this.panelCustomer.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.btnSelectCustomer)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -265,7 +291,9 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox cboxRequestedSigma;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.ComboBox cboxCustomer;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Panel panelCustomer;
+        private System.Windows.Forms.PictureBox btnSelectCustomer;
+        private System.Windows.Forms.TextBox tbCustomer;
     }
 }

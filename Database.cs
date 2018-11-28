@@ -162,11 +162,25 @@ namespace DSA_lims
             return new List<Lemma<double?, string>>
             {
                 new Lemma<double?, string>(null, ""),
-                new Lemma<double?, string>(1.0, "1"),
-                new Lemma<double?, string>(2.0, "2"),
-                new Lemma<double?, string>(3.0, "3")
+                new Lemma<double?, string>(1.0, "1 (68.3%)"),
+                new Lemma<double?, string>(1.96, "1.96 (95%)"),
+                new Lemma<double?, string>(2.0, "2 (95.5%)"),
+                new Lemma<double?, string>(3.0, "3 (99.9%)")
             };
                 
+        }
+
+        public static List<Lemma<double?, string>> GetSigmaMDAValues()
+        {
+            return new List<Lemma<double?, string>>
+            {
+                new Lemma<double?, string>(null, ""),
+                new Lemma<double?, string>(1.0, "1 (84.1%)"),
+                new Lemma<double?, string>(1.645, "1.645 (95%)"),
+                new Lemma<double?, string>(2.0, "2 (97.2%)"),
+                new Lemma<double?, string>(3.0, "3 (99.95%)")
+            };
+
         }
 
         public static int GetNextSampleCount(SqlConnection conn, SqlTransaction trans)

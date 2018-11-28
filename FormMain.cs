@@ -133,6 +133,7 @@ namespace DSA_lims
                     cboxPrepAnalAnalSigma.DataSource = DB.GetSigmaValues();
 
                     cboxOrderRequestedSigma.DataSource = DB.GetSigmaValues();
+                    cboxOrderRequestedSigmaMDA.DataSource = DB.GetSigmaMDAValues();
 
                     UI.PopulatePreparationUnits(conn, gridMetaUnitPrepUnits);
 
@@ -2323,16 +2324,21 @@ order by name
                 tbOrderDeadline.Text = deadline.ToString(Utils.DateFormatNorwegian);
                 tbOrderDeadline.Tag = deadline;
                 cboxOrderRequestedSigma.SelectedValue = map["requested_sigma"];
+                CustomerModel cust = new CustomerModel();
+                cust.Name = map["customer_name"].ToString();
+                cust.Contact = map["customer_contact"].ToString();
+                cust.Address = map["customer_address"].ToString();
+                cust.Email = map["customer_email"].ToString();
+                cust.Phone = map["customer_phone"].ToString();
+                tbOrderCustomer.Text = cust.Name;
+                tbOrderCustomer.Tag = cust;
+                tbOrderCustomerName.Text = cust.Name;
+                tbOrderCustomerContact.Text = cust.Contact;
+                tbOrderCustomerAddress.Text = cust.Address;
+                tbOrderCustomerEmail.Text = cust.Email;
+                tbOrderCustomerPhone.Text = cust.Phone;
                 tbOrderContentComment.Text = map["content_comment"].ToString();
-                tbOrderCustomer.Text = map["customer_name"].ToString();
-                tbOrderCustomerName.Text = map["customer_name"].ToString();
-                tbOrderCustomerContact.Text = map["customer_contact"].ToString();
-                tbOrderCustomerAddress.Text = map["customer_address"].ToString();
-                tbOrderCustomerEmail.Text = map["customer_email"].ToString();
-                tbOrderCustomerPhone.Text = map["customer_phone"].ToString();
-
-                tbOrderReportComment.Text = map["report_comment"].ToString();
-                // TODO
+                tbOrderReportComment.Text = map["report_comment"].ToString();                
 
                 UI.PopulateOrderContent(conn, selectedOrderId, treeOrderContent, Guid.Empty, treeSampleTypes, true);
 
@@ -2464,6 +2470,12 @@ order by name
                 return;
             }
 
+            if (tbOrderCustomer.Tag == null)
+            {
+                MessageBox.Show("Customer is mandatory");
+                return;
+            }
+
             SqlConnection conn = null;
             SqlTransaction trans = null;
 
@@ -2473,6 +2485,7 @@ order by name
                 trans = conn.BeginTransaction();                
 
                 Guid labId = Guid.Parse(cboxOrderLaboratory.SelectedValue.ToString());
+                CustomerModel cust = (CustomerModel)tbOrderCustomer.Tag;
 
                 SqlCommand cmd = new SqlCommand("csp_update_assignment_details", conn, trans);
                 cmd.CommandType = CommandType.StoredProcedure;                
@@ -2481,7 +2494,12 @@ order by name
                 cmd.Parameters.AddWithValue("@account_id", DB.MakeParam(typeof(String), cboxOrderResponsible.SelectedValue));
                 cmd.Parameters.AddWithValue("@deadline", DB.MakeParam(typeof(DateTime), tbOrderDeadline.Tag));
                 cmd.Parameters.AddWithValue("@requested_sigma", DB.MakeParam(typeof(double), cboxOrderRequestedSigma.SelectedValue));
-                cmd.Parameters.AddWithValue("@content_comment", tbOrderContentComment.Text);
+                cmd.Parameters.AddWithValue("@customer_name", DB.MakeParam(typeof(string), cust.Name));
+                cmd.Parameters.AddWithValue("@customer_contact", DB.MakeParam(typeof(string), cust.Contact));
+                cmd.Parameters.AddWithValue("@customer_address", DB.MakeParam(typeof(string), cust.Address));
+                cmd.Parameters.AddWithValue("@customer_email", DB.MakeParam(typeof(string), cust.Email));
+                cmd.Parameters.AddWithValue("@customer_phone", DB.MakeParam(typeof(string), cust.Phone));
+                cmd.Parameters.AddWithValue("@content_comment", DB.MakeParam(typeof(string), tbOrderContentComment.Text));
                 cmd.Parameters.AddWithValue("@instance_status_id", InstanceStatus.Active); // FIXME
                 cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
                 cmd.Parameters.AddWithValue("@updated_by", Common.Username);
@@ -3369,6 +3387,23 @@ insert into analysis_result values(
 
             cmd.Parameters.AddWithValue("@aid", analysisId);
             cmd.ExecuteNonQuery();
+        }
+
+        private void btnOrderSelectCustomer_Click(object sender, EventArgs e)
+        {
+            FormSelectCustomer form = new FormSelectCustomer();
+            if (form.ShowDialog() != DialogResult.OK)
+                return;
+
+            CustomerModel c = form.SelectedCustomer;
+            tbOrderCustomer.Text = c.Name;
+            tbOrderCustomer.Tag = c;
+
+            tbOrderCustomerName.Text = c.Name;
+            tbOrderCustomerContact.Text = c.Contact;
+            tbOrderCustomerAddress.Text = c.Address;
+            tbOrderCustomerEmail.Text = c.Email;
+            tbOrderCustomerPhone.Text = c.Phone;
         }
     }    
 }

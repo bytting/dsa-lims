@@ -51,10 +51,6 @@ namespace DSA_lims
                 {
                     cboxLaboratory.SelectedValue = Common.LabId;
                 }
-                
-                UI.PopulateComboBoxes(conn, "csp_select_customers", new[] {
-                    new SqlParameter("@instance_status_level", InstanceStatus.Active)
-                }, cboxCustomer);
 
                 cboxRequestedSigma.DataSource = DB.GetSigmaValues();
             }
@@ -93,36 +89,22 @@ namespace DSA_lims
                 return;
             }
 
+            if(tbCustomer.Tag == null)
+            {
+                MessageBox.Show("Customer is mandatory");
+                return;
+            }
+
             SqlConnection conn = null;
             SqlTransaction trans = null;
 
             try
             {
-                string customerName = null, 
-                    customerContact = null, 
-                    customerAddress = null, 
-                    customerEmail = null, 
-                    customerPhone = null;
-                Guid custId = Guid.Empty;                
+                CustomerModel cust = (CustomerModel)tbCustomer.Tag;
                 Guid labId = Guid.Parse(cboxLaboratory.SelectedValue.ToString());
 
                 conn = DB.OpenConnection();
                 trans = conn.BeginTransaction();
-
-                if (Utils.IsValidGuid(cboxCustomer.SelectedValue))
-                {
-                    custId = Guid.Parse(cboxCustomer.SelectedValue.ToString());
-                    using (SqlDataReader reader = DB.GetDataReader(conn, trans, "select * from customer where id = @id", CommandType.Text,
-                        new SqlParameter("@id", custId)))
-                    {
-                        reader.Read();
-                        customerName = reader["name"].ToString();
-                        customerContact = reader["contact"].ToString();
-                        customerAddress = reader["address"].ToString();
-                        customerEmail = reader["email"].ToString();
-                        customerPhone = reader["phone"].ToString();
-                    }
-                }
                 
                 string labPrefix = DB.GetOrderPrefix(conn, trans, labId);
                 int orderCount = DB.GetNextOrderCount(conn, trans, labId);
@@ -134,14 +116,14 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@id", OrderId);
                 cmd.Parameters.AddWithValue("@name", OrderName);
                 cmd.Parameters.AddWithValue("@laboratory_id", DB.MakeParam(typeof(Guid), labId));
-                cmd.Parameters.AddWithValue("@account_id", DB.MakeParam(typeof(String), cboxResponsible.SelectedValue));
+                cmd.Parameters.AddWithValue("@account_id", DB.MakeParam(typeof(string), cboxResponsible.SelectedValue));
                 cmd.Parameters.AddWithValue("@deadline", (DateTime)tbDeadline.Tag);
                 cmd.Parameters.AddWithValue("@requested_sigma", DB.MakeParam(typeof(double), cboxRequestedSigma.SelectedValue));
-                cmd.Parameters.AddWithValue("@customer_name", DB.MakeParam(typeof(String), customerName));
-                cmd.Parameters.AddWithValue("@customer_contact", DB.MakeParam(typeof(String), customerContact));
-                cmd.Parameters.AddWithValue("@customer_address", DB.MakeParam(typeof(String), customerAddress));
-                cmd.Parameters.AddWithValue("@customer_email", DB.MakeParam(typeof(String), customerEmail));
-                cmd.Parameters.AddWithValue("@customer_phone", DB.MakeParam(typeof(String), customerPhone));
+                cmd.Parameters.AddWithValue("@customer_name", DB.MakeParam(typeof(string), cust.Name));
+                cmd.Parameters.AddWithValue("@customer_contact", DB.MakeParam(typeof(string), cust.Contact));
+                cmd.Parameters.AddWithValue("@customer_address", DB.MakeParam(typeof(string), cust.Address));
+                cmd.Parameters.AddWithValue("@customer_email", DB.MakeParam(typeof(string), cust.Email));
+                cmd.Parameters.AddWithValue("@customer_phone", DB.MakeParam(typeof(string), cust.Phone));
                 cmd.Parameters.AddWithValue("@approved_customer", 0);
                 cmd.Parameters.AddWithValue("@approved_laboratory", 0);
                 cmd.Parameters.AddWithValue("@content_comment", DBNull.Value);
@@ -196,6 +178,16 @@ namespace DSA_lims
             DateTime selectedDate = form.SelectedDate;
             tbDeadline.Tag = selectedDate;
             tbDeadline.Text = selectedDate.ToString(Utils.DateFormatNorwegian);
+        }
+
+        private void btnSelectCustomer_Click(object sender, EventArgs e)
+        {
+            FormSelectCustomer form = new FormSelectCustomer();
+            if (form.ShowDialog() != DialogResult.OK)
+                return;
+
+            tbCustomer.Text = form.SelectedCustomer.Name;
+            tbCustomer.Tag = form.SelectedCustomer;
         }
     }
 }

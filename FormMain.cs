@@ -2448,7 +2448,7 @@ order by name
                 return;
             }
 
-            if (cboxOrderResponsible.SelectedValue == null || String.IsNullOrEmpty(cboxOrderResponsible.SelectedValue.ToString()))
+            if (cboxOrderResponsible.SelectedValue == null)
             {
                 MessageBox.Show("Responsible is mandatory");
                 return;

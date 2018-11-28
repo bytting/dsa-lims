@@ -3274,7 +3274,7 @@ as
 	order by s.create_date
 go
 
-create proc csp_select_samples_informative_flat
+create proc csp_select_samples_informative
 	@instance_status_level int
 as
 	select
@@ -3443,7 +3443,7 @@ create table analysis_result (
 )
 go
 
-create proc csp_select_analysis_results_for_analysis_informative_flat
+create proc csp_select_analysis_results_for_analysis_informative
 	@analysis_id uniqueidentifier
 as
 	select

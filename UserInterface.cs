@@ -56,7 +56,7 @@ namespace DSA_lims
             grid.Columns["id"].Visible = false;
 
             grid.Columns["name"].HeaderText = "Unit name";
-            grid.Columns["convert_factor"].HeaderText = "Conv. fact.";
+            grid.Columns["convert_factor"].HeaderText = "Conv.fact.";
             grid.Columns["uniform_activity_unit_name"].HeaderText = "Uniform unit";
         }
 
@@ -137,7 +137,7 @@ namespace DSA_lims
         public static void PopulateUsers(SqlConnection conn, Guid laboratoryId, int instanceStatusLevel, params ComboBox[] cbn)
         {
             List<Lemma<string, string>> users = new List<Lemma<string, string>>();
-            users.Add(new Lemma<string, string>(String.Empty, ""));
+            users.Add(new Lemma<string, string>(null, ""));
 
             using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_accounts_for_laboratory", CommandType.StoredProcedure,
                 new SqlParameter("@laboratory_id", laboratoryId),
@@ -302,7 +302,7 @@ namespace DSA_lims
 
         public static void PopulateSamples(SqlConnection conn, DataGridView grid)
         {
-            grid.DataSource = DB.GetDataTable(conn, "csp_select_samples_informative_flat", CommandType.StoredProcedure,
+            grid.DataSource = DB.GetDataTable(conn, "csp_select_samples_informative", CommandType.StoredProcedure,
                 new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
 
             grid.Columns["id"].Visible = false;
@@ -416,6 +416,8 @@ namespace DSA_lims
                     return l1.Name.CompareTo(l2.Name);
                 });
                 cb.DataSource = sampleTypeList;
+                cb.DisplayMember = "Name";
+                cb.ValueMember = "Id";
             }
         }
 
@@ -480,6 +482,8 @@ order by name";
             comps.Add(new Lemma<Guid, string>(Guid.Empty, ""));
             AddSampleTypeComponentsAscending(conn, sampleTypeId, tnode, comps);
             cbox.DataSource = comps;
+            cbox.DisplayMember = "Name";
+            cbox.ValueMember = "Id";
         }
 
         private static void AddSampleTypeComponentsAscending(SqlConnection conn, Guid sampleTypeId, TreeNode tnode, List<Lemma<Guid, string>> comps)
@@ -703,7 +707,7 @@ order by create_date desc";
 
         public static void PopulateAnalysisResults(SqlConnection conn, Guid analysisId, DataGridView grid)
         {
-            grid.DataSource = DB.GetDataTable(conn, "csp_select_analysis_results_for_analysis_informative_flat", CommandType.StoredProcedure,
+            grid.DataSource = DB.GetDataTable(conn, "csp_select_analysis_results_for_analysis_informative", CommandType.StoredProcedure,
                     new SqlParameter("@analysis_id", analysisId));
 
             grid.Columns["id"].Visible = false;

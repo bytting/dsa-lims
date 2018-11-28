@@ -69,7 +69,7 @@ namespace DSA_lims
                 return;
             }
 
-            if (cboxResponsible.SelectedValue == null || String.IsNullOrEmpty(cboxResponsible.SelectedValue.ToString()))
+            if (cboxResponsible.SelectedValue == null)
             {
                 MessageBox.Show("Responsible is mandatory");
                 return;
@@ -95,7 +95,6 @@ namespace DSA_lims
                 string customerName, customerAddress, customerEmail, customerPhone;
                 Guid custId = Guid.Parse(cboxCustomer.SelectedValue.ToString());
                 Guid labId = Guid.Parse(cboxLaboratory.SelectedValue.ToString());
-                string username = cboxResponsible.SelectedValue.ToString();
 
                 conn = DB.OpenConnection();
                 trans = conn.BeginTransaction();
@@ -119,10 +118,10 @@ namespace DSA_lims
                 OrderId = Guid.NewGuid();
                 cmd.Parameters.AddWithValue("@id", OrderId);
                 cmd.Parameters.AddWithValue("@name", OrderName);
-                cmd.Parameters.AddWithValue("@laboratory_id", DB.MakeParam(typeof(Guid), labId));                
-                cmd.Parameters.AddWithValue("@account_id", username);
+                cmd.Parameters.AddWithValue("@laboratory_id", DB.MakeParam(typeof(Guid), labId));
+                cmd.Parameters.AddWithValue("@account_id", DB.MakeParam(typeof(String), cboxResponsible.SelectedValue));
                 cmd.Parameters.AddWithValue("@deadline", (DateTime)tbDeadline.Tag);
-                cmd.Parameters.AddWithValue("@requested_sigma", cboxRequestedSigma.SelectedValue);
+                cmd.Parameters.AddWithValue("@requested_sigma", DB.MakeParam(typeof(double), cboxRequestedSigma.SelectedValue));
                 cmd.Parameters.AddWithValue("@customer_name", customerName);
                 cmd.Parameters.AddWithValue("@customer_address", customerAddress);
                 cmd.Parameters.AddWithValue("@customer_email", customerEmail);

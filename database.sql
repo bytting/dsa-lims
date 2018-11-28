@@ -700,6 +700,7 @@ if OBJECT_ID('dbo.customer', 'U') IS NOT NULL drop table customer;
 create table customer (
 	id uniqueidentifier primary key NOT NULL,
 	name nvarchar(256) unique NOT NULL,
+	contact nvarchar(256) default NULL,
 	address nvarchar(256) default NULL,
 	email nvarchar(80) default NULL,
 	phone nvarchar(80) default NULL,	
@@ -715,6 +716,7 @@ go
 create proc csp_insert_customer
 	@id uniqueidentifier,
 	@name nvarchar(256),
+	@contact nvarchar(256),
 	@address nvarchar(256),
 	@email nvarchar(80),
 	@phone nvarchar(80),
@@ -728,6 +730,7 @@ as
 	insert into customer values (
 		@id,
 		@name,
+		@contact,
 		@address,
 		@email,
 		@phone,
@@ -743,6 +746,7 @@ go
 create proc csp_update_customer
 	@id uniqueidentifier,
 	@name nvarchar(256),
+	@contact nvarchar(256),
 	@address nvarchar(256),
 	@email nvarchar(80),
 	@phone nvarchar(80),
@@ -753,6 +757,7 @@ create proc csp_update_customer
 as 
 	update customer set 
 		name = @name,
+		contact = @contact,
 		address = @address,
 		email = @email,
 		phone = @phone,
@@ -786,6 +791,7 @@ as
 	select
 		c.id,
 		c.name,
+		c.contact,
 		c.address,
 		c.email,
 		c.phone,
@@ -797,107 +803,6 @@ as
 		c.updated_by
 	from customer c, instance_status stat
 	where c.instance_status_id = stat.id and c.instance_status_id <= @instance_status_level
-	order by name
-go
-
-/*===========================================================================*/
-/* tbl customer_contact */
-
-if OBJECT_ID('dbo.customer_contact', 'U') IS NOT NULL drop table customer_contact;
-
-create table customer_contact (
-	id uniqueidentifier primary key NOT NULL,
-	customer_id uniqueidentifier NOT NULL,
-	name nvarchar(256) NOT NULL,
-	email nvarchar(80) default NULL,
-	phone nvarchar(80) default NULL,	
-	instance_status_id int default 1,
-	create_date datetime NOT NULL,
-	created_by nvarchar(50) NOT NULL,
-	update_date datetime NOT NULL,
-	updated_by nvarchar(50) NOT NULL
-)
-go
-
-create proc csp_insert_customer_contact
-	@id uniqueidentifier,
-	@customer_id uniqueidentifier,
-	@name nvarchar(256),
-	@email nvarchar(80),
-	@phone nvarchar(80),
-	@instance_status_id int,
-	@create_date datetime,
-	@created_by nvarchar(50),
-	@update_date datetime,
-	@updated_by nvarchar(50)
-as 
-	insert into customer_contact values (
-		@id,
-		@customer_id,
-		@name,	
-		@email,
-		@phone,
-		@instance_status_id,		
-		@create_date,
-		@created_by,
-		@update_date,
-		@updated_by
-	);
-go
-
-create proc csp_update_customer_contact
-	@id uniqueidentifier,	
-	@name nvarchar(256),	
-	@email nvarchar(80),
-	@phone nvarchar(80),
-	@instance_status_id int,
-	@update_date datetime,
-	@updated_by nvarchar(50)
-as 
-	update customer_contact set 
-		name = @name,	
-		email = @email,
-		phone = @phone,
-		instance_status_id = @instance_status_id,		
-		update_date = @update_date,
-		updated_by = @updated_by
-	where id = @id
-go
-
-create proc csp_select_customer_contact
-	@id uniqueidentifier
-as 
-	select *
-	from customer_contact
-	where id = @id
-go
-
-create proc csp_select_customer_contacts_for_customer
-	@customer_id uniqueidentifier,
-	@instance_status_level int
-as 
-	select *
-	from customer_contact
-	where customer_id = @customer_id and instance_status_id <= @instance_status_level
-	order by name
-go
-
-create proc csp_select_customer_contacts_for_customer_flat
-	@customer_id uniqueidentifier,
-	@instance_status_level int
-as 
-	select
-		cc.id,
-		cc.name,
-		cc.email,
-		cc.phone,
-		stat.name as 'instance_status_name',
-		cc.create_date,
-		cc.created_by,
-		cc.update_date,
-		cc.updated_by
-	from customer_contact cc, instance_status stat
-	where cc.customer_id = @customer_id and cc.instance_status_id = stat.id and cc.instance_status_id <= @instance_status_level
 	order by name
 go
 
@@ -1292,12 +1197,10 @@ create table assignment (
 	deadline datetime NOT NULL,
 	requested_sigma float default NULL,
 	customer_name nvarchar(256) default NULL,
+	customer_contact nvarchar(256) default NULL,
 	customer_address nvarchar(256) default NULL,
 	customer_email nvarchar(80) default NULL,
 	customer_phone nvarchar(80) default NULL,
-	customer_contact_name nvarchar(256) default NULL,	
-	customer_contact_email nvarchar(80) default NULL,
-	customer_contact_phone nvarchar(80) default NULL,	
 	approved_customer bit default 0,
 	approved_laboratory bit default 0,	
 	content_comment nvarchar(1000) default NULL,
@@ -1321,12 +1224,10 @@ create proc csp_insert_assignment
 	@deadline datetime,
 	@requested_sigma float,	
 	@customer_name nvarchar(256),
+	@customer_contact nvarchar(256),
 	@customer_address nvarchar(256),
 	@customer_email nvarchar(80),
 	@customer_phone nvarchar(80),
-	@customer_contact_name nvarchar(256),	
-	@customer_contact_email nvarchar(80),
-	@customer_contact_phone nvarchar(80),	
 	@approved_customer bit,
 	@approved_laboratory bit,	
 	@content_comment nvarchar(1000),
@@ -1348,12 +1249,10 @@ as
 		@deadline,
 		@requested_sigma,	
 		@customer_name,
+		@customer_contact,
 		@customer_address,
 		@customer_email,
 		@customer_phone,
-		@customer_contact_name,	
-		@customer_contact_email,
-		@customer_contact_phone,	
 		@approved_customer,
 		@approved_laboratory,	
 		@content_comment,
@@ -1413,18 +1312,16 @@ create proc csp_select_assignments_flat
 as
 	select		
 		a.id,
-		a.name,
+		a.name,		
 		l.name as 'laboratory_name',
 		acc.fullname as 'account_name',
 		a.deadline,
 		a.requested_sigma,	
 		a.customer_name,
+		a.customer_contact,
 		a.customer_address,
 		a.customer_email,
 		a.customer_phone,
-		a.customer_contact_name,	
-		a.customer_contact_email,
-		a.customer_contact_phone,	
 		a.approved_customer,
 		a.approved_laboratory,	
 		a.content_comment,

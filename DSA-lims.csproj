@@ -95,12 +95,6 @@
     <Compile Include="FormCustomer.Designer.cs">
       <DependentUpon>FormCustomer.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormCustomerContact.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormCustomerContact.Designer.cs">
-      <DependentUpon>FormCustomerContact.cs</DependentUpon>
-    </Compile>
     <Compile Include="FormGeometry.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -340,9 +334,6 @@
     <EmbeddedResource Include="FormCustomer.resx">
       <DependentUpon>FormCustomer.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormCustomerContact.resx">
-      <DependentUpon>FormCustomerContact.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="FormGeometry.resx">
       <DependentUpon>FormGeometry.cs</DependentUpon>
     </EmbeddedResource>
@@ -564,6 +555,7 @@
   <ItemGroup>
     <Content Include="comments.txt" />
     <Content Include="database.sql" />
+    <None Include="images\user_16.png" />
     <None Include="images\clear_16.png" />
     <None Include="images\clear.png" />
     <None Include="images\left.png" />

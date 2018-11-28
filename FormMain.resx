@@ -123,11 +123,50 @@
   <metadata name="status.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>707, 17</value>
   </metadata>
+  <metadata name="toolsSample.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>310, 134</value>
+  </metadata>
+  <metadata name="toolStrip9.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>782, 368</value>
+  </metadata>
+  <metadata name="toolsOrders.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>576, 173</value>
+  </metadata>
+  <metadata name="toolsSamples.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>957, 17</value>
+  </metadata>
+  <metadata name="toolStrip8.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>677, 368</value>
+  </metadata>
+  <metadata name="toolsCust.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>620, 212</value>
+  </metadata>
+  <metadata name="toolsAuditLog.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>1081, 17</value>
+  </metadata>
+  <metadata name="toolsLog.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>345, 56</value>
+  </metadata>
+  <metadata name="toolsUserSettings.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>1104, 56</value>
+  </metadata>
+  <metadata name="toolsMachSettings.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>847, 56</value>
+  </metadata>
+  <metadata name="toolStrip11.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>999, 368</value>
+  </metadata>
   <metadata name="toolStrip11.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>999, 368</value>
   </metadata>
   <metadata name="toolsSampleSampInfoAttachments.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>444, 56</value>
+  </metadata>
+  <metadata name="toolsSampleSampInfoAttachments.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>444, 56</value>
+  </metadata>
+  <metadata name="toolStrip6.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>999, 56</value>
   </metadata>
   <metadata name="toolStrip6.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>999, 56</value>
@@ -143,6 +182,213 @@
   </metadata>
   <metadata name="toolsOrderContent.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>564, 95</value>
+  </metadata>
+  <metadata name="toolsOrderAttachments.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>1036, 95</value>
+  </metadata>
+  <metadata name="toolsOrderStatus.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>201, 56</value>
+  </metadata>
+  <metadata name="toolsOrderStatus.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>201, 56</value>
+  </metadata>
+  <metadata name="toolsOrderSamples.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>164, 95</value>
+  </metadata>
+  <metadata name="toolsOrderSamples.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>164, 95</value>
+  </metadata>
+  <metadata name="toolsMetaStations.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>160, 134</value>
+  </metadata>
+  <metadata name="toolsMetaStations.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>160, 134</value>
+  </metadata>
+  <metadata name="toolsMetaSampStorage.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>974, 134</value>
+  </metadata>
+  <metadata name="toolsMetaSampStorage.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>974, 134</value>
+  </metadata>
+  <metadata name="toolsMetaUnits.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>340, 17</value>
+  </metadata>
+  <metadata name="toolStrip13.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>534, 407</value>
+  </metadata>
+  <metadata name="toolStrip2.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>1044, 290</value>
+  </metadata>
+  <metadata name="toolStrip12.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>422, 407</value>
+  </metadata>
+  <metadata name="toolsMetaSamplers.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>223, 251</value>
+  </metadata>
+  <metadata name="toolsMetaSamplers.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>223, 251</value>
+  </metadata>
+  <metadata name="toolsMetaSampMeth.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>791, 17</value>
+  </metadata>
+  <metadata name="toolsMetaSampMeth.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>791, 17</value>
+  </metadata>
+  <metadata name="toolStrip9.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>782, 368</value>
+  </metadata>
+  <metadata name="toolsOrders.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>576, 173</value>
+  </metadata>
+  <metadata name="toolsSamples.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>957, 17</value>
+  </metadata>
+  <metadata name="toolStrip8.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>677, 368</value>
+  </metadata>
+  <metadata name="toolStrip4.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>122, 329</value>
+  </metadata>
+  <metadata name="toolStrip5.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>227, 329</value>
+  </metadata>
+  <metadata name="toolsProjUsers.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>906, 95</value>
+  </metadata>
+  <metadata name="toolsProjAttachments.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>216, 173</value>
+  </metadata>
+  <metadata name="toolsTypeRelSamp.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>691, 173</value>
+  </metadata>
+  <metadata name="toolsTypeRelSampComp.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>959, 173</value>
+  </metadata>
+  <metadata name="toolsTypeRelSampCompInherit.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 212</value>
+  </metadata>
+  <metadata name="toolsTypeRelSampPara.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>444, 212</value>
+  </metadata>
+  <metadata name="toolsTypeRelSampParaInherit.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>896, 212</value>
+  </metadata>
+  <metadata name="toolsTypeRelSampPrepMeth.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 251</value>
+  </metadata>
+  <metadata name="toolsTypeRelSampAnalMeth.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>594, 134</value>
+  </metadata>
+  <metadata name="toolsTypeRelPrepMeth.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>799, 134</value>
+  </metadata>
+  <metadata name="toolsTypeRelPrepAnalMeth.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 173</value>
+  </metadata>
+  <metadata name="toolsTypeRelAnalMeth.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>722, 212</value>
+  </metadata>
+  <metadata name="toolsTypeRelNuclides.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>172, 17</value>
+  </metadata>
+  <metadata name="toolsAuditLog.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>1081, 17</value>
+  </metadata>
+  <metadata name="toolsLog.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>345, 56</value>
+  </metadata>
+  <metadata name="toolsUserSettings.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>1104, 56</value>
+  </metadata>
+  <metadata name="toolsMachSettings.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>847, 56</value>
+  </metadata>
+  <metadata name="toolsSysLab.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>843, 173</value>
+  </metadata>
+  <metadata name="toolsSysLabPrepMeth.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>613, 290</value>
+  </metadata>
+  <metadata name="toolsSysLabAnalMeth.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>379, 251</value>
+  </metadata>
+  <metadata name="toolsSysUsers.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>548, 251</value>
+  </metadata>
+  <metadata name="toolsSysUsersRoles.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <metadata name="toolsSysUsersAnalMeth.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>674, 251</value>
+  </metadata>
+  <metadata name="toolsSysCounties.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>853, 251</value>
+  </metadata>
+  <metadata name="toolsSysMunicipalities.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>997, 251</value>
+  </metadata>
+  <metadata name="toolsSysAccredRules.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 290</value>
+  </metadata>
+  <metadata name="toolsSysAccredRules.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 290</value>
+  </metadata>
+  <metadata name="toolsSysNuclides.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>279, 407</value>
+  </metadata>
+  <metadata name="toolsSysNuclides.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>279, 407</value>
+  </metadata>
+  <metadata name="toolsSysGeom.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>484, 290</value>
+  </metadata>
+  <metadata name="toolsSysGeom.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>484, 290</value>
+  </metadata>
+  <metadata name="toolStrip7.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>332, 329</value>
+  </metadata>
+  <metadata name="toolStrip3.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>174, 407</value>
+  </metadata>
+  <metadata name="toolStrip10.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>887, 368</value>
+  </metadata>
+  <metadata name="toolStrip3.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>174, 407</value>
+  </metadata>
+  <metadata name="toolStrip10.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>887, 368</value>
+  </metadata>
+  <metadata name="toolsSamplePrepInfo.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>769, 329</value>
+  </metadata>
+  <metadata name="toolsSampleAttachments.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>581, 329</value>
+  </metadata>
+  <metadata name="toolsSamplePrepInfo.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>769, 329</value>
+  </metadata>
+  <metadata name="toolsSampleAttachments.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>581, 329</value>
+  </metadata>
+  <metadata name="toolsSampleResRes.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 407</value>
+  </metadata>
+  <metadata name="toolsSampleResRes.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 407</value>
+  </metadata>
+  <metadata name="toolStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>1111, 368</value>
+  </metadata>
+  <metadata name="toolsSampleResAttachments.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>1216, 368</value>
+  </metadata>
+  <metadata name="toolsSampleResAttachments.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>1216, 368</value>
+  </metadata>
+  <metadata name="tools.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>1209, 17</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="btnOrderAddSampleType.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -301,66 +547,6 @@
         hsySmZbf5GkNDyV4MsXjSZqry2VmzK7swY6IiIiIiIiIiIiMwd3dH5R4FGb8DMIGAAAAAElFTkSuQmCC
 </value>
   </data>
-  <metadata name="toolsOrderCustomer.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>684, 56</value>
-  </metadata>
-  <metadata name="toolsOrderStatus.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>201, 56</value>
-  </metadata>
-  <metadata name="toolsOrderSamples.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>164, 95</value>
-  </metadata>
-  <metadata name="toolsMetaStations.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>160, 134</value>
-  </metadata>
-  <metadata name="toolsMetaSampStorage.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>974, 134</value>
-  </metadata>
-  <metadata name="toolsMetaUnits.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>340, 17</value>
-  </metadata>
-  <metadata name="toolStrip13.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>534, 407</value>
-  </metadata>
-  <metadata name="toolStrip2.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>1044, 290</value>
-  </metadata>
-  <metadata name="toolStrip12.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>422, 407</value>
-  </metadata>
-  <metadata name="toolsMetaSamplers.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>223, 251</value>
-  </metadata>
-  <metadata name="toolsMetaSampMeth.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>791, 17</value>
-  </metadata>
-  <metadata name="toolStrip9.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>782, 368</value>
-  </metadata>
-  <metadata name="toolsOrders.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>576, 173</value>
-  </metadata>
-  <metadata name="toolsSamples.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>957, 17</value>
-  </metadata>
-  <metadata name="toolStrip8.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>677, 368</value>
-  </metadata>
-  <metadata name="toolStrip4.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>122, 329</value>
-  </metadata>
-  <metadata name="toolStrip5.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>227, 329</value>
-  </metadata>
-  <metadata name="toolsProjUsers.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>906, 95</value>
-  </metadata>
-  <metadata name="toolsProjAttachments.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>216, 173</value>
-  </metadata>
-  <metadata name="toolsCust.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>620, 212</value>
-  </metadata>
   <data name="btnCustomersNew.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
@@ -442,195 +628,6 @@
         hsySmZbf5GkNDyV4MsXjSZqry2VmzK7swY6IiIiIiIiIiIiMwd3dH5R4FGb8DMIGAAAAAElFTkSuQmCC
 </value>
   </data>
-  <metadata name="toolsCustContacts.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>474, 17</value>
-  </metadata>
-  <data name="toolStripButton36.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAASLSURBVHhe7ZsxjhVXEEUHswEiB8TswBEbQMiEtpC8AnKv
-        wxsgd8AOkFgJgRdAhJAIyGzXkW3ZHmqYP/R7fbv1zpGONJpp/a5/q+Z3/+7XVyIiIiIiIiIiIiKb+aZ8
-        VD4tf9Q7SWZkR4an4n75rHxVfij/0E2SIVmSKdkelnslk/u27N6IbpdsyZisD8XD8nXZFa3jJWsyPwSP
-        y3dlV6jOk8zJPsqT8lPZFajzJXt6EIHps/l56cHunwQcf/zYP470YrdzAs5APeE7nvRkl28HfA3pCtC8
-        9GYqXIjwe/5xpTdTLxZxNarb8U2+L1+WL8rnJROqt0tWZEZ2ZNhle5P0aBpckux22vmmfFDKNsiQLLuM
-        O+nRFLgpcem1fabW5o+DLC/9JKBHU24gcWeq22EnH10yFjLtsu6kV8Ph9mS3s06OXzIWMu2y7qRXw+Hk
-        pNtZJycxMhYy7bLupFfDucsATClgceL5OwBZHIDFcQAWxwFYHAdgcRyAxXEAFscBWBwHYHEcgIF8W/5c
-        /vq3/MzvjowDMIifyo/l9Zr5HX87Kg7AAL4vfy+7mpG/sc0RcQA2wiKJ38qu3v/KNkd8ItcB2Mh3ZVdr
-        J9seDQdgIz+UXa2dbHs0HICNWP9GDDBLvH4DzBKv3wCzxOs3wCzx+g0wS7x+A8wSr98As8TrN8As8foN
-        MEu8fgPMEq/fALPE6zfALPH6DTBLvH4DzBKvP1UAq3NYoME9el73a/2l7GrtZNvuNS6VWql55MoiXrer
-        tZNth5MogPV5lyzjOqrUPmqN4XIDwArdLy3gPIu8hxGrjZcaANbod0u3zyrvZetzB0sNAA9qdK97ZnlP
-        W1hqAHhap3vdM8t72oIDcHIdgDvgIeBzlhoATwI/Z6kBAL8G/p/lBgC8EPQvSw4AeCn4L3jdrtZOth1O
-        vICNWP9GDDBLvH4DzBKv3wCzxOs3wCzx+g0wS7x+A8wSr98As8TrN8As8foNMEu8fgPMEq/fALPE6zfA
-        LPH6DTBLvH4DzBKv/+wBco++q7WTbY+GA7ARFmh0tXay7dFwADbC6pxLlpexzciVPKNwAAbA+rwvLTTl
-        b6PW8I3GARgEK3S7Jef8bsTq3Vk4AANhjT4PavC0DvLz1nX7s3EAFscBWBwHYHEcgMVxABbHAVgcB2Bx
-        HIDFcQAWxwFYnFMNwPNSxkKmXdadUwbgadntrPNFKWMh0y7rTno1nEdlt7POl6WMhUy7rDvp1XBYJPGh
-        7HZ43fflg1LGQJZk2mV9XXo0bUHLq7Lbaeeb0iHYDhmSZZdxJz2axrOy2+lNMrV8dHH84iSGkxO9XbIi
-        M7K79D//H+nRNO6Xb8tux5qX3tCjqTCh3c41L72Zzr3yddkVoDnpCb3ZhYflu7IrRPeXXtCTXXlcfiq7
-        gnQ/6QG9iPCkdAhykj09iML0eTjYXzKP/edfh+OPJ4b7Sda7H/NvgzNQvoZ4nWCeZEvGu53tfw1ciOBq
-        FJckL713oDdLhmRJptMv8oyGmxLcmeL2JJOrl0tmZHfEJ5VFRERERERERETkRFxd/Qlyn90D/RjQ8wAA
-        AABJRU5ErkJggg==
-</value>
-  </data>
-  <data name="toolStripButton38.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        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
-        AABJRU5ErkJggg==
-</value>
-  </data>
-  <data name="toolStripButton86.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAS9SURBVHhe7ZxBihRZFEVL3YBjoXtkL8INiCD0qHELrskd
-        uIAGwZW4AAVH4syhvgMVkCQvKyIj/osfWf8cOCAW5g/fvZXxI4LMOxEREREREREREZHNPA1fhm/C//Qq
-        mRmzY4Y3xbPwbfgx/Bn+1k0yQ2bJTJntYXkS0twvYfYf0e0yW2bMrA/Fi/BTmB20tpdZM/ND8Cr8HmYH
-        qnUyc2bfldfhrzA7QK2X2ZNBF2if4feXDHZ/J+D849v+cSSL3fYE7EDd8B1PMtnl6oDLkOwAtL9kUwo3
-        IrzOP65kU3qziLtR2cKX/BF+CN+H70IaqvMyK2bG7JhhNttLklEZ3JLMFs38HD4PZRvMkFlmM84koxJ4
-        KLH03j6tNfx2MMul7wRkVPIAiSdT2YKZvHVJW5hpNutMsmoOjyezxTI5f0lbmGk260yyag6bk2yxTDYx
-        0hZmms06k6yac00BSg5gcLrP3wL0xQIMjgUYHAswOBZgcCzA4FiAwbEAg2MBBscCDI4FGBwLMDgWYHAs
-        wOBYgDP+Dv+9lz/vzd7rW4B7/gr/D8/X5O/4WTW91rcAAQP+FmZrIj/7J6yC155bv6oEFiDIfvPO/RpW
-        lIDX5LWzNU/lGCsYvgCcZ7O1MluXYGn4kxV7guELwGYrW+uSrUpwbfjIsbbGAoTZWg+5tQRrwkcLELbm
-        mlPAqWtLsDZ89BQQVrBkE5h5bQm2hO8mMKwqwNxl4EMuLcGW8L0MvLeqALAloLkSVL72VizACRVBHTl8
-        sABntAzs6OGDBUhoEdwthA8W4AJbAuTr1dZ+3d2e4YMFeIAtJVjj3uGDBZhhrxL0CB8swAKqS9ArfLAA
-        C6kqQc/wwQJcQesS9A4fLMCVtCrBEcIHC7ACgtvyreb82yOEDxZgBRagIbdWAILzFNCQWypAq/Anj1AC
-        C7CQ1uFP9i6BBVhAVfiTPUtgAWaoDn+yVwkswAPsFf5kjxJYgAtsCZ/LvLWXiXuXwAIkbAl/CrDFa+yB
-        BTijZXC3UAILcEJFYEcvgQW4pzKoI5fAAgR+MGSZj7YAfjRsmY+yAH44NF8r81EWwI+H52tlWoBwa/gT
-        a0pgAcLWXHMKaBX+xLUl8BQQVrBkE9g6/ImlJXATGFYVYO4ykJ9VhD/Ba8+t72VgWFUAYMDZOwF/VzX8
-        U3qtbwHO4DzLZgsrzrlz7L2+BRgcCzA4FmBwLMDgWIDBsQCDYwEGxwIMjgUYHAswOBZgcCzA4FiAwbEA
-        g2MBBuemCvAulLYw02zWmSUFeBNmi2W+D6UtzDSbdSZZNedlmC2W+SGUtjDTbNaZZNWcp+HPMFvw3B/h
-        81DawCyZaTbrc8mIrEr4GGaLZn4OLcF2mCGzzGacSUZlvA2zRS9Ja3nr4vzFJobNic7LrJgZs1v6mz9J
-        RmU8C7+E2cLaX7Iho1JoaLa49pdsynkSfgqzA9B+kgnZ7MKLcMu3cGtbyYJMduVV+CvMDkj3kwzIoguv
-        Q0vQT2ZPBl2hfZ4O9peZd/vNP4fzjxvD/WTWu5/z52AHymWI9wnqZLbMeLfd/hq4EcHdKG5JLn12oJdl
-        hsySmZbf5GkNDyV4MsXjSZqry2VmzK7swY6IiIiIiIiIiIiMwd3dH5R4FGb8DMIGAAAAAElFTkSuQmCC
-</value>
-  </data>
-  <metadata name="toolsTypeRelSamp.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>691, 173</value>
-  </metadata>
-  <metadata name="toolsTypeRelSampComp.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>959, 173</value>
-  </metadata>
-  <metadata name="toolsTypeRelSampCompInherit.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 212</value>
-  </metadata>
-  <metadata name="toolsTypeRelSampPara.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>444, 212</value>
-  </metadata>
-  <metadata name="toolsTypeRelSampParaInherit.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>896, 212</value>
-  </metadata>
-  <metadata name="toolsTypeRelSampPrepMeth.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 251</value>
-  </metadata>
-  <metadata name="toolsTypeRelSampAnalMeth.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>594, 134</value>
-  </metadata>
-  <metadata name="toolsTypeRelPrepMeth.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>799, 134</value>
-  </metadata>
-  <metadata name="toolsTypeRelPrepAnalMeth.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 173</value>
-  </metadata>
-  <metadata name="toolsTypeRelAnalMeth.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>722, 212</value>
-  </metadata>
-  <metadata name="toolsTypeRelNuclides.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>172, 17</value>
-  </metadata>
-  <metadata name="toolsAuditLog.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>1081, 17</value>
-  </metadata>
-  <metadata name="toolsLog.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>345, 56</value>
-  </metadata>
-  <metadata name="toolsUserSettings.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>1104, 56</value>
-  </metadata>
-  <metadata name="toolsMachSettings.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>847, 56</value>
-  </metadata>
-  <metadata name="toolsSysLab.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>843, 173</value>
-  </metadata>
-  <metadata name="toolsSysLabPrepMeth.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>613, 290</value>
-  </metadata>
-  <metadata name="toolsSysLabAnalMeth.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>379, 251</value>
-  </metadata>
-  <metadata name="toolsSysUsers.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>548, 251</value>
-  </metadata>
-  <metadata name="toolsSysUsersRoles.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
-  <metadata name="toolsSysUsersAnalMeth.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>674, 251</value>
-  </metadata>
-  <metadata name="toolsSysCounties.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>853, 251</value>
-  </metadata>
-  <metadata name="toolsSysMunicipalities.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>997, 251</value>
-  </metadata>
-  <metadata name="toolsSysAccredRules.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 290</value>
-  </metadata>
-  <metadata name="toolsSysNuclides.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>279, 407</value>
-  </metadata>
-  <metadata name="toolsSysGeom.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>484, 290</value>
-  </metadata>
-  <metadata name="toolStrip7.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>332, 329</value>
-  </metadata>
-  <metadata name="toolStrip3.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>174, 407</value>
-  </metadata>
-  <metadata name="toolStrip10.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>887, 368</value>
-  </metadata>
-  <metadata name="toolsSamplePrepInfo.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>769, 329</value>
-  </metadata>
-  <metadata name="toolsSampleAttachments.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>581, 329</value>
-  </metadata>
-  <metadata name="toolsSampleResRes.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 407</value>
-  </metadata>
-  <metadata name="toolStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>1111, 368</value>
-  </metadata>
-  <metadata name="toolsSampleResAttachments.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>1216, 368</value>
-  </metadata>
-  <metadata name="tools.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>1209, 17</value>
-  </metadata>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>74</value>
   </metadata>

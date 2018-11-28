@@ -77,6 +77,7 @@ namespace DSA_lims
 
                     reader.Read();
                     tbName.Text = reader["name"].ToString();
+                    tbContact.Text = reader["contact"].ToString();
                     tbAddress.Text = reader["address"].ToString();
                     tbEmail.Text = reader["email"].ToString();
                     tbPhone.Text = reader["phone"].ToString();
@@ -105,6 +106,7 @@ namespace DSA_lims
             }
 
             p["name"] = tbName.Text.Trim();
+            p["contact"] = tbContact.Text.Trim();
             p["address"] = tbAddress.Text.Trim();
             p["email"] = tbEmail.Text.Trim();
             p["phone"] = tbPhone.Text.Trim();
@@ -141,6 +143,7 @@ namespace DSA_lims
                 p["id"] = Guid.NewGuid();
                 cmd.Parameters.AddWithValue("@id", p["id"]);
                 cmd.Parameters.AddWithValue("@name", p["name"]);
+                cmd.Parameters.AddWithValue("@contact", p["contact"]);
                 cmd.Parameters.AddWithValue("@address", p["address"]);
                 cmd.Parameters.AddWithValue("@email", p["email"]);
                 cmd.Parameters.AddWithValue("@phone", p["phone"]);
@@ -187,6 +190,7 @@ namespace DSA_lims
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@id", p["id"]);
                 cmd.Parameters.AddWithValue("@name", p["name"]);
+                cmd.Parameters.AddWithValue("@contact", p["contact"]);
                 cmd.Parameters.AddWithValue("@address", p["address"]);
                 cmd.Parameters.AddWithValue("@email", p["email"]);
                 cmd.Parameters.AddWithValue("@phone", p["phone"]);

@@ -206,11 +206,7 @@ namespace DSA_lims
 
                     UI.PopulateSampleTypes(treeSampleTypes, cboxSampleSampleType);                    
 
-                    UI.PopulateCustomers(conn, InstanceStatus.Deleted, gridCustomers);                    
-
-                    UI.PopulateComboBoxes(conn, "csp_select_customers", new[] {
-                        new SqlParameter("@instance_status_level", InstanceStatus.Active)
-                    }, cboxOrderCustomerName);                    
+                    UI.PopulateCustomers(conn, InstanceStatus.Deleted, gridCustomers);
                 }
                 
                 HideMenuItems();
@@ -2250,7 +2246,7 @@ order by name
 
             ClearOrderInfo();
             selectedOrderId = Guid.Parse(gridOrders.SelectedRows[0].Cells["id"].Value.ToString());
-            PopulateOrder(selectedOrderId);                        
+            PopulateOrder(selectedOrderId);
             
             tabs.SelectedTab = tabOrder;
         }
@@ -2268,13 +2264,11 @@ order by name
             tbOrderDeadline.Text = "";
             cboxOrderRequestedSigma.SelectedValue = -1;
             tbOrderContentComment.Text = "";
+            tbOrderCustomerName.Text = "";
+            tbOrderCustomerContact.Text = "";
             tbOrderCustomerAddress.Text = "";
             tbOrderCustomerEmail.Text = "";
-            tbOrderCustomerPhone.Text = "";
-            cboxOrderCustomerName.SelectedValue = Guid.Empty;
-            tbOrderContactEmail.Text = "";
-            tbOrderContactPhone.Text = "";
-            cboxOrderContact.SelectedValue = Guid.Empty;
+            tbOrderCustomerPhone.Text = "";            
             tbOrderReportComment.Text = "";
             // TODO
         }
@@ -2304,12 +2298,10 @@ order by name
                     map["deadline"] = reader["deadline"];
                     map["requested_sigma"] = reader["requested_sigma"];
                     map["customer_name"] = reader["customer_name"];
+                    map["customer_contact"] = reader["customer_contact"];
                     map["customer_address"] = reader["customer_address"];
                     map["customer_email"] = reader["customer_email"];
-                    map["customer_phone"] = reader["customer_phone"];
-                    map["customer_contact_name"] = reader["customer_contact_name"];
-                    map["customer_contact_email"] = reader["customer_contact_email"];
-                    map["customer_contact_phone"] = reader["customer_contact_phone"];
+                    map["customer_phone"] = reader["customer_phone"];                    
                     map["approved_customer"] = reader["approved_customer"];
                     map["approved_laboratory"] = reader["approved_laboratory"];
                     map["content_comment"] = reader["content_comment"];
@@ -2332,13 +2324,12 @@ order by name
                 tbOrderDeadline.Tag = deadline;
                 cboxOrderRequestedSigma.SelectedValue = map["requested_sigma"];
                 tbOrderContentComment.Text = map["content_comment"].ToString();
-                cboxOrderCustomerName.Text = map["customer_name"].ToString();
+                tbOrderCustomer.Text = map["customer_name"].ToString();
+                tbOrderCustomerName.Text = map["customer_name"].ToString();
+                tbOrderCustomerContact.Text = map["customer_contact"].ToString();
                 tbOrderCustomerAddress.Text = map["customer_address"].ToString();
                 tbOrderCustomerEmail.Text = map["customer_email"].ToString();
                 tbOrderCustomerPhone.Text = map["customer_phone"].ToString();
-                cboxOrderContact.Text = map["customer_contact_name"].ToString();
-                tbOrderContactEmail.Text = map["customer_contact_email"].ToString();
-                tbOrderContactPhone.Text = map["customer_contact_phone"].ToString();
 
                 tbOrderReportComment.Text = map["report_comment"].ToString();
                 // TODO
@@ -2466,9 +2457,10 @@ order by name
                 return;
             }
 
-            if (cboxOrderRequestedSigma.SelectedValue == null)
+            DateTime dl = (DateTime)tbOrderDeadline.Tag;
+            if (dl < DateTime.Now)
             {
-                MessageBox.Show("Requested sigma is mandatory");
+                MessageBox.Show("Deadline can not be in the past");
                 return;
             }
 
@@ -2488,7 +2480,7 @@ order by name
                 cmd.Parameters.AddWithValue("@laboratory_id", labId);
                 cmd.Parameters.AddWithValue("@account_id", DB.MakeParam(typeof(String), cboxOrderResponsible.SelectedValue));
                 cmd.Parameters.AddWithValue("@deadline", DB.MakeParam(typeof(DateTime), tbOrderDeadline.Tag));
-                cmd.Parameters.AddWithValue("@requested_sigma", Convert.ToDouble(cboxOrderRequestedSigma.SelectedValue));                
+                cmd.Parameters.AddWithValue("@requested_sigma", DB.MakeParam(typeof(double), cboxOrderRequestedSigma.SelectedValue));
                 cmd.Parameters.AddWithValue("@content_comment", tbOrderContentComment.Text);
                 cmd.Parameters.AddWithValue("@instance_status_id", InstanceStatus.Active); // FIXME
                 cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
@@ -2536,10 +2528,7 @@ order by name
                     SetStatusMessage("Customer " + form.CustomerName + " created");
                     using (SqlConnection conn = DB.OpenConnection())
                     {
-                        UI.PopulateCustomers(conn, InstanceStatus.Deleted, gridCustomers);                        
-                        UI.PopulateComboBoxes(conn, "csp_select_customers", new[] {
-                            new SqlParameter("@instance_status_level", InstanceStatus.Active)
-                        }, cboxOrderCustomerName);
+                        UI.PopulateCustomers(conn, InstanceStatus.Deleted, gridCustomers);
                     }
                     break;
                 case DialogResult.Abort:
@@ -2564,10 +2553,7 @@ order by name
                     SetStatusMessage("Customer " + form.CustomerName + " updated");
                     using (SqlConnection conn = DB.OpenConnection())
                     {
-                        UI.PopulateCustomers(conn, InstanceStatus.Deleted, gridCustomers);                        
-                        UI.PopulateComboBoxes(conn, "csp_select_customers", new[] {
-                            new SqlParameter("@instance_status_level", InstanceStatus.Active)
-                        }, cboxOrderCustomerName);
+                        UI.PopulateCustomers(conn, InstanceStatus.Deleted, gridCustomers);
                     }
                     break;
                 case DialogResult.Abort:
@@ -2579,99 +2565,6 @@ order by name
         private void miCustomersDelete_Click(object sender, EventArgs e)
         {
             // delete customer
-        }
-
-        private void miCustomerContactNew_Click(object sender, EventArgs e)
-        {
-            // new customer contact
-            if (gridCustomers.SelectedRows.Count < 1)
-            {
-                MessageBox.Show("You must select a customer first");
-                return;
-            }                
-
-            DataGridViewRow row = gridCustomers.SelectedRows[0];
-            Guid cid = Guid.Parse(row.Cells["id"].Value.ToString());
-            string cname = row.Cells["name"].Value.ToString();
-
-            FormCustomerContact form = new FormCustomerContact(cid, cname);
-            switch (form.ShowDialog())
-            {
-                case DialogResult.OK:
-                    SetStatusMessage("Customer contact " + form.ContactName + " created");
-                    using (SqlConnection conn = DB.OpenConnection())
-                    {
-                        UI.PopulateCustomerContacts(conn, cid, InstanceStatus.Deleted, gridCustomerContacts);
-                    }
-                    break;
-                case DialogResult.Abort:
-                    SetStatusMessage("Create customer contact failed", StatusMessageType.Error);
-                    break;
-            }
-        }
-
-        private void miCustomerContactEdit_Click(object sender, EventArgs e)
-        {
-            // edit customer contact            
-            if (gridCustomers.SelectedRows.Count < 1 || gridCustomerContacts.SelectedRows.Count < 1)
-                return;
-
-            DataGridViewRow row = gridCustomers.SelectedRows[0];
-            Guid cid = Guid.Parse(row.Cells["id"].Value.ToString());
-            string cname = row.Cells["name"].Value.ToString();
-
-            row = gridCustomerContacts.SelectedRows[0];
-            Guid ccid = Guid.Parse(row.Cells["id"].Value.ToString());
-
-            FormCustomerContact form = new FormCustomerContact(cid, cname, ccid);
-            switch (form.ShowDialog())
-            {
-                case DialogResult.OK:
-                    SetStatusMessage("Customer contact " + form.ContactName + " updated");
-                    using (SqlConnection conn = DB.OpenConnection())
-                    {
-                        UI.PopulateCustomerContacts(conn, cid, InstanceStatus.Deleted, gridCustomerContacts);
-                    }
-                    break;
-                case DialogResult.Abort:
-                    SetStatusMessage("Update customer contact failed", StatusMessageType.Error);
-                    break;
-            }
-        }
-
-        private void miCustomerContactDelete_Click(object sender, EventArgs e)
-        {
-            // delete customer contact
-        }        
-
-        private void cboxOrderCustomerName_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if(!Utils.IsValidGuid(cboxOrderCustomerName.SelectedValue))
-            {
-                cboxOrderContact.DataSource = null;
-                return;
-            }
-
-            Guid custId = Guid.Parse(cboxOrderCustomerName.SelectedValue.ToString());
-            using (SqlConnection conn = DB.OpenConnection())
-            {
-                UI.PopulateComboBoxes(conn, "csp_select_customer_contacts_for_customer", new[] {
-                    new SqlParameter("@customer_id", custId),
-                    new SqlParameter("@instance_status_level", InstanceStatus.Active)
-                }, cboxOrderContact);
-            }
-        }
-
-        private void gridCustomers_SelectionChanged(object sender, EventArgs e)
-        {
-            if (gridCustomers.SelectedRows.Count < 1)
-                return;
-
-            Guid cid = Guid.Parse(gridCustomers.SelectedRows[0].Cells["id"].Value.ToString());
-            using (SqlConnection conn = DB.OpenConnection())
-            {
-                UI.PopulateCustomerContacts(conn, cid, InstanceStatus.Deleted, gridCustomerContacts);
-            }
         }        
 
         private void gridSysCounty_SelectionChanged(object sender, EventArgs e)

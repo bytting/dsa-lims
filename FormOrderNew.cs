@@ -46,6 +46,11 @@ namespace DSA_lims
                 UI.PopulateComboBoxes(conn, "csp_select_laboratories_short", new[] {
                     new SqlParameter("@instance_status_level", InstanceStatus.Active)
                 }, cboxLaboratory);
+
+                if(Utils.IsValidGuid(Common.LabId))
+                {
+                    cboxLaboratory.SelectedValue = Common.LabId;
+                }
                 
                 UI.PopulateComboBoxes(conn, "csp_select_customers", new[] {
                     new SqlParameter("@instance_status_level", InstanceStatus.Active)
@@ -75,15 +80,16 @@ namespace DSA_lims
                 return;
             }
 
-            if (String.IsNullOrEmpty(tbDeadline.Text))
+            if (tbDeadline.Tag == null)
             {
                 MessageBox.Show("Deadline is mandatory");
                 return;
-            }
+            }            
 
-            if (cboxRequestedSigma.SelectedValue == null)
+            DateTime dl = (DateTime)tbDeadline.Tag;
+            if(dl < DateTime.Now)
             {
-                MessageBox.Show("Requested sigma is mandatory");
+                MessageBox.Show("Deadline can not be in the past");
                 return;
             }
 
@@ -92,21 +98,30 @@ namespace DSA_lims
 
             try
             {
-                string customerName, customerAddress, customerEmail, customerPhone;
-                Guid custId = Guid.Parse(cboxCustomer.SelectedValue.ToString());
+                string customerName = null, 
+                    customerContact = null, 
+                    customerAddress = null, 
+                    customerEmail = null, 
+                    customerPhone = null;
+                Guid custId = Guid.Empty;                
                 Guid labId = Guid.Parse(cboxLaboratory.SelectedValue.ToString());
 
                 conn = DB.OpenConnection();
                 trans = conn.BeginTransaction();
-                
-                using (SqlDataReader reader = DB.GetDataReader(conn, trans, "select * from customer where id = @id", CommandType.Text, 
-                    new SqlParameter("@id", custId)))
+
+                if (Utils.IsValidGuid(cboxCustomer.SelectedValue))
                 {
-                    reader.Read();
-                    customerName = reader["name"].ToString();
-                    customerAddress = reader["address"].ToString();
-                    customerEmail = reader["email"].ToString();
-                    customerPhone = reader["phone"].ToString();
+                    custId = Guid.Parse(cboxCustomer.SelectedValue.ToString());
+                    using (SqlDataReader reader = DB.GetDataReader(conn, trans, "select * from customer where id = @id", CommandType.Text,
+                        new SqlParameter("@id", custId)))
+                    {
+                        reader.Read();
+                        customerName = reader["name"].ToString();
+                        customerContact = reader["contact"].ToString();
+                        customerAddress = reader["address"].ToString();
+                        customerEmail = reader["email"].ToString();
+                        customerPhone = reader["phone"].ToString();
+                    }
                 }
                 
                 string labPrefix = DB.GetOrderPrefix(conn, trans, labId);
@@ -122,13 +137,11 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@account_id", DB.MakeParam(typeof(String), cboxResponsible.SelectedValue));
                 cmd.Parameters.AddWithValue("@deadline", (DateTime)tbDeadline.Tag);
                 cmd.Parameters.AddWithValue("@requested_sigma", DB.MakeParam(typeof(double), cboxRequestedSigma.SelectedValue));
-                cmd.Parameters.AddWithValue("@customer_name", customerName);
-                cmd.Parameters.AddWithValue("@customer_address", customerAddress);
-                cmd.Parameters.AddWithValue("@customer_email", customerEmail);
-                cmd.Parameters.AddWithValue("@customer_phone", customerPhone);
-                cmd.Parameters.AddWithValue("@customer_contact_name", DBNull.Value);
-                cmd.Parameters.AddWithValue("@customer_contact_email", DBNull.Value);
-                cmd.Parameters.AddWithValue("@customer_contact_phone", DBNull.Value);
+                cmd.Parameters.AddWithValue("@customer_name", DB.MakeParam(typeof(String), customerName));
+                cmd.Parameters.AddWithValue("@customer_contact", DB.MakeParam(typeof(String), customerContact));
+                cmd.Parameters.AddWithValue("@customer_address", DB.MakeParam(typeof(String), customerAddress));
+                cmd.Parameters.AddWithValue("@customer_email", DB.MakeParam(typeof(String), customerEmail));
+                cmd.Parameters.AddWithValue("@customer_phone", DB.MakeParam(typeof(String), customerPhone));
                 cmd.Parameters.AddWithValue("@approved_customer", 0);
                 cmd.Parameters.AddWithValue("@approved_laboratory", 0);
                 cmd.Parameters.AddWithValue("@content_comment", DBNull.Value);

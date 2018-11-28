@@ -570,25 +570,8 @@ order by name";
             grid.Columns["update_date"].Visible = false;
 
             grid.Columns["name"].HeaderText = "Name";
+            grid.Columns["contact"].HeaderText = "Contact";
             grid.Columns["address"].HeaderText = "Address";
-            grid.Columns["email"].HeaderText = "Email";
-            grid.Columns["phone"].HeaderText = "Phone";
-            grid.Columns["instance_status_name"].HeaderText = "Status";
-        }        
-
-        public static void PopulateCustomerContacts(SqlConnection conn, Guid customerId, int statusLevel, DataGridView grid)
-        {
-            grid.DataSource = DB.GetDataTable(conn, "csp_select_customer_contacts_for_customer_flat", CommandType.StoredProcedure,
-                new SqlParameter("@customer_id", customerId), 
-                new SqlParameter("@instance_status_level", statusLevel));
-
-            grid.Columns["id"].Visible = false;
-            grid.Columns["created_by"].Visible = false;
-            grid.Columns["create_date"].Visible = false;
-            grid.Columns["updated_by"].Visible = false;
-            grid.Columns["update_date"].Visible = false;
-
-            grid.Columns["name"].HeaderText = "Name";            
             grid.Columns["email"].HeaderText = "Email";
             grid.Columns["phone"].HeaderText = "Phone";
             grid.Columns["instance_status_name"].HeaderText = "Status";
@@ -600,11 +583,10 @@ order by name";
                 new SqlParameter("@instance_status_level", statusLevel));
 
             grid.Columns["id"].Visible = false;
+            grid.Columns["customer_contact"].Visible = false;
             grid.Columns["customer_address"].Visible = false;
             grid.Columns["customer_email"].Visible = false;
             grid.Columns["customer_phone"].Visible = false;
-            grid.Columns["customer_contact_email"].Visible = false;
-            grid.Columns["customer_contact_phone"].Visible = false;
             grid.Columns["content_comment"].Visible = false;
             grid.Columns["report_comment"].Visible = false;
             grid.Columns["created_by"].Visible = false;
@@ -618,7 +600,6 @@ order by name";
             grid.Columns["requested_sigma"].HeaderText = "Req.Sigma";
             grid.Columns["deadline"].HeaderText = "Deadline";
             grid.Columns["customer_name"].HeaderText = "Customer";
-            grid.Columns["customer_contact_name"].HeaderText = "Customer contact";
             grid.Columns["approved_customer"].HeaderText = "Appr.Cust";
             grid.Columns["approved_laboratory"].HeaderText = "Appr.Lab";
             grid.Columns["closed_date"].HeaderText = "Closed at";

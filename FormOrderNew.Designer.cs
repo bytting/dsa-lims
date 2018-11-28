@@ -55,7 +55,7 @@
             this.panel1.Controls.Add(this.btnCancel);
             this.panel1.Controls.Add(this.btnCreate);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 280);
+            this.panel1.Location = new System.Drawing.Point(0, 234);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(436, 28);
             this.panel1.TabIndex = 8;
@@ -106,7 +106,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(27, 100);
+            this.label2.Location = new System.Drawing.Point(27, 91);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(76, 15);
             this.label2.TabIndex = 11;
@@ -117,7 +117,7 @@
             this.cboxResponsible.DisplayMember = "Name";
             this.cboxResponsible.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxResponsible.FormattingEnabled = true;
-            this.cboxResponsible.Location = new System.Drawing.Point(138, 97);
+            this.cboxResponsible.Location = new System.Drawing.Point(138, 88);
             this.cboxResponsible.Name = "cboxResponsible";
             this.cboxResponsible.Size = new System.Drawing.Size(270, 23);
             this.cboxResponsible.TabIndex = 12;
@@ -126,7 +126,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(27, 138);
+            this.label3.Location = new System.Drawing.Point(27, 120);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(57, 15);
             this.label3.TabIndex = 13;
@@ -136,7 +136,7 @@
             // 
             this.panelDeadline.Controls.Add(this.tbDeadline);
             this.panelDeadline.Controls.Add(this.btnSelectDeadline);
-            this.panelDeadline.Location = new System.Drawing.Point(138, 135);
+            this.panelDeadline.Location = new System.Drawing.Point(138, 117);
             this.panelDeadline.Name = "panelDeadline";
             this.panelDeadline.Size = new System.Drawing.Size(270, 23);
             this.panelDeadline.TabIndex = 15;
@@ -167,7 +167,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(27, 176);
+            this.label4.Location = new System.Drawing.Point(27, 149);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(104, 15);
             this.label4.TabIndex = 16;
@@ -178,7 +178,7 @@
             this.cboxRequestedSigma.DisplayMember = "Name";
             this.cboxRequestedSigma.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxRequestedSigma.FormattingEnabled = true;
-            this.cboxRequestedSigma.Location = new System.Drawing.Point(138, 173);
+            this.cboxRequestedSigma.Location = new System.Drawing.Point(138, 146);
             this.cboxRequestedSigma.Name = "cboxRequestedSigma";
             this.cboxRequestedSigma.Size = new System.Drawing.Size(270, 23);
             this.cboxRequestedSigma.TabIndex = 17;
@@ -187,7 +187,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(27, 214);
+            this.label5.Location = new System.Drawing.Point(27, 179);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(60, 15);
             this.label5.TabIndex = 18;
@@ -198,7 +198,7 @@
             this.cboxCustomer.DisplayMember = "Name";
             this.cboxCustomer.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxCustomer.FormattingEnabled = true;
-            this.cboxCustomer.Location = new System.Drawing.Point(138, 211);
+            this.cboxCustomer.Location = new System.Drawing.Point(138, 176);
             this.cboxCustomer.Name = "cboxCustomer";
             this.cboxCustomer.Size = new System.Drawing.Size(270, 23);
             this.cboxCustomer.TabIndex = 19;
@@ -218,7 +218,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(436, 308);
+            this.ClientSize = new System.Drawing.Size(436, 262);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.cboxCustomer);
             this.Controls.Add(this.label5);

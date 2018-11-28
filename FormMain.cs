@@ -134,8 +134,14 @@ namespace DSA_lims
 
                     cboxOrderRequestedSigma.DataSource = DB.GetSigmaValues();
 
-                    UI.PopulateActivityUnits(conn, gridMetaUnitsActivity);
-                    
+                    UI.PopulatePreparationUnits(conn, gridMetaUnitPrepUnits);
+
+                    UI.PopulateActivityUnits(conn, gridMetaUnitActivityUnits);
+
+                    UI.PopulateQuantityUnits(conn, gridMetaUnitQuantUnits);
+
+                    UI.PopulateActivityUnitTypes(conn, gridMetaUnitActivityUnitTypes);
+
                     UI.PopulateComboBoxes(conn, "csp_select_activity_units_short", new SqlParameter[] { }, cboxPrepAnalAnalUnit);
                     
                     UI.PopulateComboBoxes(conn, "csp_select_activity_unit_types", new SqlParameter[] { }, cboxPrepAnalAnalUnitType);

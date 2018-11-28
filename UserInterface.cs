@@ -49,6 +49,15 @@ namespace DSA_lims
             }
         }
 
+        public static void PopulatePreparationUnits(SqlConnection conn, DataGridView grid)
+        {
+            grid.DataSource = DB.GetDataTable(conn, "csp_select_preparation_units", CommandType.StoredProcedure);
+
+            grid.Columns["id"].Visible = false;
+
+            grid.Columns["name"].HeaderText = "Name";
+        }
+
         public static void PopulateActivityUnits(SqlConnection conn, DataGridView grid)
         {
             grid.DataSource = DB.GetDataTable(conn, "csp_select_activity_units_flat", CommandType.StoredProcedure);
@@ -58,6 +67,24 @@ namespace DSA_lims
             grid.Columns["name"].HeaderText = "Unit name";
             grid.Columns["convert_factor"].HeaderText = "Conv.fact.";
             grid.Columns["uniform_activity_unit_name"].HeaderText = "Uniform unit";
+        }
+
+        public static void PopulateQuantityUnits(SqlConnection conn, DataGridView grid)
+        {
+            grid.DataSource = DB.GetDataTable(conn, "csp_select_quantity_units", CommandType.StoredProcedure);
+
+            grid.Columns["id"].Visible = false;
+
+            grid.Columns["name"].HeaderText = "Name";
+        }
+
+        public static void PopulateActivityUnitTypes(SqlConnection conn, DataGridView grid)
+        {
+            grid.DataSource = DB.GetDataTable(conn, "csp_select_activity_unit_types", CommandType.StoredProcedure);
+
+            grid.Columns["id"].Visible = false;
+
+            grid.Columns["name"].HeaderText = "Name";
         }
 
         public static void PopulateProjectsMain(SqlConnection conn, DataGridView grid)

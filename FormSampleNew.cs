@@ -50,6 +50,11 @@ namespace DSA_lims
                 UI.PopulateComboBoxes(conn, "csp_select_laboratories_short", new[] {
                     new SqlParameter("@instance_status_level", InstanceStatus.Active)
                 }, cboxLaboratory);
+
+                if(Utils.IsValidGuid(Common.LabId))
+                {
+                    cboxLaboratory.SelectedValue = Common.LabId;
+                }
             }
         }
 

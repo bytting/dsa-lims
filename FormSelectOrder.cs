@@ -56,6 +56,11 @@ namespace DSA_lims
                     new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
                 }, cboxLaboratory);
 
+                if (Utils.IsValidGuid(Common.LabId))
+                {
+                    cboxLaboratory.SelectedValue = Common.LabId;
+                }
+
                 object o = DB.GetScalar(conn, "select sample_type_id from sample where id = @id", CommandType.Text, new SqlParameter("@id", SampleId));
                 if (o != null && o != DBNull.Value)
                     SampleTypeId = Guid.Parse(o.ToString());

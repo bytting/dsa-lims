@@ -270,7 +270,7 @@ create proc csp_select_preparation_units
 as 
 	select *
 	from preparation_unit
-	order by id
+	order by name
 go
 
 /*===========================================================================*/
@@ -347,11 +347,9 @@ go
 
 create proc csp_select_activity_unit_types
 as 
-	select 
-		id,	
-		name		
+	select *		
 	from activity_unit_type
-	order by id
+	order by name
 go
 
 /*===========================================================================*/
@@ -406,7 +404,7 @@ create proc csp_select_quantity_units
 as 
 	select *
 	from quantity_unit
-	order by id
+	order by name
 go
 
 /*===========================================================================*/

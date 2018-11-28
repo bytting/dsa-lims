@@ -181,24 +181,16 @@
             this.tabs = new System.Windows.Forms.TabControl();
             this.tabMenu = new System.Windows.Forms.TabPage();
             this.layoutMenu = new System.Windows.Forms.TableLayoutPanel();
-            this.layoutMenuSamples = new System.Windows.Forms.TableLayoutPanel();
             this.btnMenuNewSample = new System.Windows.Forms.Button();
             this.button8 = new System.Windows.Forms.Button();
             this.lblMenuSamples = new System.Windows.Forms.Label();
             this.tbMenuLookup = new System.Windows.Forms.TextBox();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.layoutMenuOrders = new System.Windows.Forms.TableLayoutPanel();
             this.btnOrders = new System.Windows.Forms.Button();
             this.lblMenuOrders = new System.Windows.Forms.Label();
             this.btnMenuNewOrder = new System.Windows.Forms.Button();
-            this.button17 = new System.Windows.Forms.Button();
-            this.button18 = new System.Windows.Forms.Button();
-            this.layoutMenuBottom = new System.Windows.Forms.TableLayoutPanel();
             this.btnMenuProjects = new System.Windows.Forms.Button();
             this.btnMenuCustomer = new System.Windows.Forms.Button();
             this.btnMenuMetadata = new System.Windows.Forms.Button();
-            this.btnMenuTypeRel = new System.Windows.Forms.Button();
             this.btnMenuSearch = new System.Windows.Forms.Button();
             this.tabSample = new System.Windows.Forms.TabPage();
             this.tabsSample = new System.Windows.Forms.TabControl();
@@ -915,9 +907,6 @@
             this.tabs.SuspendLayout();
             this.tabMenu.SuspendLayout();
             this.layoutMenu.SuspendLayout();
-            this.layoutMenuSamples.SuspendLayout();
-            this.layoutMenuOrders.SuspendLayout();
-            this.layoutMenuBottom.SuspendLayout();
             this.tabSample.SuspendLayout();
             this.tabsSample.SuspendLayout();
             this.tabSamplesInfo.SuspendLayout();
@@ -2451,53 +2440,43 @@
             // 
             // layoutMenu
             // 
-            this.layoutMenu.ColumnCount = 2;
-            this.layoutMenu.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.layoutMenu.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.layoutMenu.Controls.Add(this.layoutMenuSamples, 0, 0);
-            this.layoutMenu.Controls.Add(this.layoutMenuOrders, 1, 0);
-            this.layoutMenu.Controls.Add(this.layoutMenuBottom, 0, 1);
+            this.layoutMenu.ColumnCount = 4;
+            this.layoutMenu.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.layoutMenu.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.layoutMenu.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.layoutMenu.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.layoutMenu.Controls.Add(this.btnMenuSearch, 3, 2);
+            this.layoutMenu.Controls.Add(this.btnMenuMetadata, 2, 2);
+            this.layoutMenu.Controls.Add(this.btnMenuCustomer, 1, 2);
+            this.layoutMenu.Controls.Add(this.btnMenuProjects, 0, 2);
+            this.layoutMenu.Controls.Add(this.btnMenuNewSample, 0, 1);
+            this.layoutMenu.Controls.Add(this.button8, 1, 1);
+            this.layoutMenu.Controls.Add(this.lblMenuSamples, 0, 0);
+            this.layoutMenu.Controls.Add(this.tbMenuLookup, 1, 0);
+            this.layoutMenu.Controls.Add(this.lblMenuOrders, 2, 0);
+            this.layoutMenu.Controls.Add(this.btnMenuNewOrder, 2, 1);
+            this.layoutMenu.Controls.Add(this.btnOrders, 3, 1);
             this.layoutMenu.Dock = System.Windows.Forms.DockStyle.Fill;
             this.layoutMenu.Location = new System.Drawing.Point(3, 3);
+            this.layoutMenu.Margin = new System.Windows.Forms.Padding(9);
             this.layoutMenu.Name = "layoutMenu";
-            this.layoutMenu.RowCount = 2;
-            this.layoutMenu.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 70F));
-            this.layoutMenu.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 30F));
+            this.layoutMenu.RowCount = 3;
+            this.layoutMenu.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
+            this.layoutMenu.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.layoutMenu.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.layoutMenu.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.layoutMenu.Size = new System.Drawing.Size(1141, 638);
-            this.layoutMenu.TabIndex = 0;
-            // 
-            // layoutMenuSamples
-            // 
-            this.layoutMenuSamples.ColumnCount = 2;
-            this.layoutMenuSamples.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.layoutMenuSamples.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.layoutMenuSamples.Controls.Add(this.btnMenuNewSample, 0, 1);
-            this.layoutMenuSamples.Controls.Add(this.button8, 1, 1);
-            this.layoutMenuSamples.Controls.Add(this.lblMenuSamples, 0, 0);
-            this.layoutMenuSamples.Controls.Add(this.tbMenuLookup, 1, 0);
-            this.layoutMenuSamples.Controls.Add(this.button2, 0, 2);
-            this.layoutMenuSamples.Controls.Add(this.button4, 1, 2);
-            this.layoutMenuSamples.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.layoutMenuSamples.Location = new System.Drawing.Point(9, 9);
-            this.layoutMenuSamples.Margin = new System.Windows.Forms.Padding(9);
-            this.layoutMenuSamples.Name = "layoutMenuSamples";
-            this.layoutMenuSamples.RowCount = 3;
-            this.layoutMenuSamples.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-            this.layoutMenuSamples.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.layoutMenuSamples.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.layoutMenuSamples.Size = new System.Drawing.Size(552, 428);
-            this.layoutMenuSamples.TabIndex = 5;
+            this.layoutMenu.TabIndex = 5;
             // 
             // btnMenuNewSample
             // 
             this.btnMenuNewSample.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnMenuNewSample.Font = new System.Drawing.Font("Arial", 13F, System.Drawing.FontStyle.Bold);
+            this.btnMenuNewSample.Font = new System.Drawing.Font("Arial", 16F, System.Drawing.FontStyle.Bold);
             this.btnMenuNewSample.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.btnMenuNewSample.Image = global::DSA_lims.Properties.Resources.new_gray;
-            this.btnMenuNewSample.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnMenuNewSample.Location = new System.Drawing.Point(3, 35);
             this.btnMenuNewSample.Name = "btnMenuNewSample";
-            this.btnMenuNewSample.Size = new System.Drawing.Size(270, 192);
+            this.btnMenuNewSample.Size = new System.Drawing.Size(279, 297);
             this.btnMenuNewSample.TabIndex = 0;
             this.btnMenuNewSample.Text = "New sample";
             this.btnMenuNewSample.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -2507,15 +2486,14 @@
             // button8
             // 
             this.button8.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button8.Font = new System.Drawing.Font("Arial", 13F, System.Drawing.FontStyle.Bold);
+            this.button8.Font = new System.Drawing.Font("Arial", 16F, System.Drawing.FontStyle.Bold);
             this.button8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.button8.Image = global::DSA_lims.Properties.Resources.edit_gray;
-            this.button8.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.button8.Location = new System.Drawing.Point(279, 35);
+            this.button8.Location = new System.Drawing.Point(288, 35);
             this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(270, 192);
+            this.button8.Size = new System.Drawing.Size(279, 297);
             this.button8.TabIndex = 1;
-            this.button8.Text = "View / Edit samples";
+            this.button8.Text = "Samples";
             this.button8.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.button8.UseVisualStyleBackColor = true;
             this.button8.Click += new System.EventHandler(this.btnSamples_Click);
@@ -2528,7 +2506,7 @@
             this.lblMenuSamples.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
             this.lblMenuSamples.Location = new System.Drawing.Point(3, 0);
             this.lblMenuSamples.Name = "lblMenuSamples";
-            this.lblMenuSamples.Size = new System.Drawing.Size(270, 32);
+            this.lblMenuSamples.Size = new System.Drawing.Size(279, 32);
             this.lblMenuSamples.TabIndex = 4;
             this.lblMenuSamples.Text = "Samples";
             this.lblMenuSamples.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -2539,65 +2517,23 @@
             this.tbMenuLookup.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.tbMenuLookup.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.tbMenuLookup.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbMenuLookup.Location = new System.Drawing.Point(279, 10);
+            this.tbMenuLookup.Location = new System.Drawing.Point(288, 10);
             this.tbMenuLookup.MaxLength = 128;
             this.tbMenuLookup.Name = "tbMenuLookup";
-            this.tbMenuLookup.Size = new System.Drawing.Size(270, 19);
+            this.tbMenuLookup.Size = new System.Drawing.Size(279, 19);
             this.tbMenuLookup.TabIndex = 5;
-            // 
-            // button2
-            // 
-            this.button2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button2.Font = new System.Drawing.Font("Arial", 13F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(3, 233);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(270, 192);
-            this.button2.TabIndex = 6;
-            this.button2.UseVisualStyleBackColor = true;
-            // 
-            // button4
-            // 
-            this.button4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button4.Font = new System.Drawing.Font("Arial", 13F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button4.Location = new System.Drawing.Point(279, 233);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(270, 192);
-            this.button4.TabIndex = 7;
-            this.button4.UseVisualStyleBackColor = true;
-            // 
-            // layoutMenuOrders
-            // 
-            this.layoutMenuOrders.ColumnCount = 2;
-            this.layoutMenuOrders.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.layoutMenuOrders.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.layoutMenuOrders.Controls.Add(this.btnOrders, 1, 1);
-            this.layoutMenuOrders.Controls.Add(this.lblMenuOrders, 0, 0);
-            this.layoutMenuOrders.Controls.Add(this.btnMenuNewOrder, 0, 1);
-            this.layoutMenuOrders.Controls.Add(this.button17, 0, 2);
-            this.layoutMenuOrders.Controls.Add(this.button18, 1, 2);
-            this.layoutMenuOrders.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.layoutMenuOrders.Location = new System.Drawing.Point(579, 9);
-            this.layoutMenuOrders.Margin = new System.Windows.Forms.Padding(9);
-            this.layoutMenuOrders.Name = "layoutMenuOrders";
-            this.layoutMenuOrders.RowCount = 3;
-            this.layoutMenuOrders.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-            this.layoutMenuOrders.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.layoutMenuOrders.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.layoutMenuOrders.Size = new System.Drawing.Size(553, 428);
-            this.layoutMenuOrders.TabIndex = 6;
             // 
             // btnOrders
             // 
             this.btnOrders.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnOrders.Font = new System.Drawing.Font("Arial", 13F, System.Drawing.FontStyle.Bold);
+            this.btnOrders.Font = new System.Drawing.Font("Arial", 16F, System.Drawing.FontStyle.Bold);
             this.btnOrders.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.btnOrders.Image = global::DSA_lims.Properties.Resources.edit_gray;
-            this.btnOrders.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnOrders.Location = new System.Drawing.Point(279, 35);
+            this.btnOrders.Location = new System.Drawing.Point(858, 35);
             this.btnOrders.Name = "btnOrders";
-            this.btnOrders.Size = new System.Drawing.Size(271, 192);
+            this.btnOrders.Size = new System.Drawing.Size(280, 297);
             this.btnOrders.TabIndex = 0;
-            this.btnOrders.Text = "View / Edit orders";
+            this.btnOrders.Text = "Orders";
             this.btnOrders.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btnOrders.UseVisualStyleBackColor = true;
             this.btnOrders.Click += new System.EventHandler(this.btnOrders_Click);
@@ -2608,9 +2544,9 @@
             this.lblMenuOrders.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblMenuOrders.Font = new System.Drawing.Font("Arial", 18F, System.Drawing.FontStyle.Bold);
             this.lblMenuOrders.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.lblMenuOrders.Location = new System.Drawing.Point(3, 0);
+            this.lblMenuOrders.Location = new System.Drawing.Point(573, 0);
             this.lblMenuOrders.Name = "lblMenuOrders";
-            this.lblMenuOrders.Size = new System.Drawing.Size(270, 32);
+            this.lblMenuOrders.Size = new System.Drawing.Size(279, 32);
             this.lblMenuOrders.TabIndex = 1;
             this.lblMenuOrders.Text = "Orders";
             this.lblMenuOrders.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -2618,77 +2554,27 @@
             // btnMenuNewOrder
             // 
             this.btnMenuNewOrder.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnMenuNewOrder.Font = new System.Drawing.Font("Arial", 13F, System.Drawing.FontStyle.Bold);
+            this.btnMenuNewOrder.Font = new System.Drawing.Font("Arial", 16F, System.Drawing.FontStyle.Bold);
             this.btnMenuNewOrder.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.btnMenuNewOrder.Image = global::DSA_lims.Properties.Resources.new_gray;
-            this.btnMenuNewOrder.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnMenuNewOrder.Location = new System.Drawing.Point(3, 35);
+            this.btnMenuNewOrder.Location = new System.Drawing.Point(573, 35);
             this.btnMenuNewOrder.Name = "btnMenuNewOrder";
-            this.btnMenuNewOrder.Size = new System.Drawing.Size(270, 192);
+            this.btnMenuNewOrder.Size = new System.Drawing.Size(279, 297);
             this.btnMenuNewOrder.TabIndex = 2;
             this.btnMenuNewOrder.Text = "New order";
             this.btnMenuNewOrder.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btnMenuNewOrder.UseVisualStyleBackColor = true;
             this.btnMenuNewOrder.Click += new System.EventHandler(this.miOrdersNew_Click);
             // 
-            // button17
-            // 
-            this.button17.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button17.Font = new System.Drawing.Font("Arial", 13F, System.Drawing.FontStyle.Bold);
-            this.button17.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.button17.Location = new System.Drawing.Point(3, 233);
-            this.button17.Name = "button17";
-            this.button17.Size = new System.Drawing.Size(270, 192);
-            this.button17.TabIndex = 3;
-            this.button17.UseVisualStyleBackColor = true;
-            // 
-            // button18
-            // 
-            this.button18.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button18.Font = new System.Drawing.Font("Arial", 13F, System.Drawing.FontStyle.Bold);
-            this.button18.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.button18.Location = new System.Drawing.Point(279, 233);
-            this.button18.Name = "button18";
-            this.button18.Size = new System.Drawing.Size(271, 192);
-            this.button18.TabIndex = 4;
-            this.button18.UseVisualStyleBackColor = true;
-            // 
-            // layoutMenuBottom
-            // 
-            this.layoutMenuBottom.ColumnCount = 5;
-            this.layoutMenu.SetColumnSpan(this.layoutMenuBottom, 2);
-            this.layoutMenuBottom.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.layoutMenuBottom.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.layoutMenuBottom.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.layoutMenuBottom.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.layoutMenuBottom.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.layoutMenuBottom.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.layoutMenuBottom.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.layoutMenuBottom.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.layoutMenuBottom.Controls.Add(this.btnMenuProjects, 0, 0);
-            this.layoutMenuBottom.Controls.Add(this.btnMenuCustomer, 1, 0);
-            this.layoutMenuBottom.Controls.Add(this.btnMenuMetadata, 2, 0);
-            this.layoutMenuBottom.Controls.Add(this.btnMenuTypeRel, 3, 0);
-            this.layoutMenuBottom.Controls.Add(this.btnMenuSearch, 4, 0);
-            this.layoutMenuBottom.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.layoutMenuBottom.Location = new System.Drawing.Point(9, 455);
-            this.layoutMenuBottom.Margin = new System.Windows.Forms.Padding(9);
-            this.layoutMenuBottom.Name = "layoutMenuBottom";
-            this.layoutMenuBottom.RowCount = 1;
-            this.layoutMenuBottom.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.layoutMenuBottom.Size = new System.Drawing.Size(1123, 174);
-            this.layoutMenuBottom.TabIndex = 7;
-            // 
             // btnMenuProjects
             // 
             this.btnMenuProjects.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnMenuProjects.Font = new System.Drawing.Font("Arial", 11F, System.Drawing.FontStyle.Bold);
+            this.btnMenuProjects.Font = new System.Drawing.Font("Arial", 16F, System.Drawing.FontStyle.Bold);
             this.btnMenuProjects.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.btnMenuProjects.Image = global::DSA_lims.Properties.Resources.projects_gray;
-            this.btnMenuProjects.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnMenuProjects.Location = new System.Drawing.Point(3, 3);
+            this.btnMenuProjects.Location = new System.Drawing.Point(3, 338);
             this.btnMenuProjects.Name = "btnMenuProjects";
-            this.btnMenuProjects.Size = new System.Drawing.Size(218, 168);
+            this.btnMenuProjects.Size = new System.Drawing.Size(279, 297);
             this.btnMenuProjects.TabIndex = 2;
             this.btnMenuProjects.Text = "Projects";
             this.btnMenuProjects.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -2698,12 +2584,11 @@
             // btnMenuCustomer
             // 
             this.btnMenuCustomer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnMenuCustomer.Font = new System.Drawing.Font("Arial", 11F, System.Drawing.FontStyle.Bold);
+            this.btnMenuCustomer.Font = new System.Drawing.Font("Arial", 16F, System.Drawing.FontStyle.Bold);
             this.btnMenuCustomer.Image = global::DSA_lims.Properties.Resources.users_gray;
-            this.btnMenuCustomer.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnMenuCustomer.Location = new System.Drawing.Point(227, 3);
+            this.btnMenuCustomer.Location = new System.Drawing.Point(288, 338);
             this.btnMenuCustomer.Name = "btnMenuCustomer";
-            this.btnMenuCustomer.Size = new System.Drawing.Size(218, 168);
+            this.btnMenuCustomer.Size = new System.Drawing.Size(279, 297);
             this.btnMenuCustomer.TabIndex = 4;
             this.btnMenuCustomer.Text = "Customers";
             this.btnMenuCustomer.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -2713,42 +2598,25 @@
             // btnMenuMetadata
             // 
             this.btnMenuMetadata.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnMenuMetadata.Font = new System.Drawing.Font("Arial", 11F, System.Drawing.FontStyle.Bold);
+            this.btnMenuMetadata.Font = new System.Drawing.Font("Arial", 16F, System.Drawing.FontStyle.Bold);
             this.btnMenuMetadata.Image = global::DSA_lims.Properties.Resources.drawer_gray;
-            this.btnMenuMetadata.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnMenuMetadata.Location = new System.Drawing.Point(451, 3);
+            this.btnMenuMetadata.Location = new System.Drawing.Point(573, 338);
             this.btnMenuMetadata.Name = "btnMenuMetadata";
-            this.btnMenuMetadata.Size = new System.Drawing.Size(218, 168);
+            this.btnMenuMetadata.Size = new System.Drawing.Size(279, 297);
             this.btnMenuMetadata.TabIndex = 9;
             this.btnMenuMetadata.Text = "Metadata";
             this.btnMenuMetadata.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btnMenuMetadata.UseVisualStyleBackColor = true;
             this.btnMenuMetadata.Click += new System.EventHandler(this.miMetadataView_Click);
             // 
-            // btnMenuTypeRel
-            // 
-            this.btnMenuTypeRel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnMenuTypeRel.Font = new System.Drawing.Font("Arial", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnMenuTypeRel.Image = global::DSA_lims.Properties.Resources.connection_gray;
-            this.btnMenuTypeRel.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnMenuTypeRel.Location = new System.Drawing.Point(675, 3);
-            this.btnMenuTypeRel.Name = "btnMenuTypeRel";
-            this.btnMenuTypeRel.Size = new System.Drawing.Size(218, 168);
-            this.btnMenuTypeRel.TabIndex = 10;
-            this.btnMenuTypeRel.Text = "Types and Relations";
-            this.btnMenuTypeRel.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnMenuTypeRel.UseVisualStyleBackColor = true;
-            this.btnMenuTypeRel.Click += new System.EventHandler(this.miTypeRelationsView_Click);
-            // 
             // btnMenuSearch
             // 
             this.btnMenuSearch.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnMenuSearch.Font = new System.Drawing.Font("Arial", 11F, System.Drawing.FontStyle.Bold);
+            this.btnMenuSearch.Font = new System.Drawing.Font("Arial", 16F, System.Drawing.FontStyle.Bold);
             this.btnMenuSearch.Image = global::DSA_lims.Properties.Resources.search_gray;
-            this.btnMenuSearch.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnMenuSearch.Location = new System.Drawing.Point(899, 3);
+            this.btnMenuSearch.Location = new System.Drawing.Point(858, 338);
             this.btnMenuSearch.Name = "btnMenuSearch";
-            this.btnMenuSearch.Size = new System.Drawing.Size(221, 168);
+            this.btnMenuSearch.Size = new System.Drawing.Size(280, 297);
             this.btnMenuSearch.TabIndex = 5;
             this.btnMenuSearch.Text = "Search";
             this.btnMenuSearch.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -10330,11 +10198,7 @@
             this.tabs.ResumeLayout(false);
             this.tabMenu.ResumeLayout(false);
             this.layoutMenu.ResumeLayout(false);
-            this.layoutMenuSamples.ResumeLayout(false);
-            this.layoutMenuSamples.PerformLayout();
-            this.layoutMenuOrders.ResumeLayout(false);
-            this.layoutMenuOrders.PerformLayout();
-            this.layoutMenuBottom.ResumeLayout(false);
+            this.layoutMenu.PerformLayout();
             this.tabSample.ResumeLayout(false);
             this.tabSample.PerformLayout();
             this.tabsSample.ResumeLayout(false);
@@ -10843,7 +10707,6 @@
         private System.Windows.Forms.TabPage tabMenu;
         private System.Windows.Forms.TabPage tabSample;
         private System.Windows.Forms.TabPage tabOrder;
-        private System.Windows.Forms.TableLayoutPanel layoutMenu;
         private System.Windows.Forms.Button btnOrders;
         private System.Windows.Forms.TabPage tabSearch;
         private System.Windows.Forms.ToolStripMenuItem miHelp;
@@ -10958,16 +10821,12 @@
         private System.Windows.Forms.TextBox tbOrderName;
         private System.Windows.Forms.TextBox tbSampleExId;
         private System.Windows.Forms.DataGridView gridSamples;
-        private System.Windows.Forms.TableLayoutPanel layoutMenuSamples;
+        private System.Windows.Forms.TableLayoutPanel layoutMenu;
         private System.Windows.Forms.Button btnMenuNewSample;
         private System.Windows.Forms.Button button8;
         private System.Windows.Forms.Label lblMenuSamples;
-        private System.Windows.Forms.TableLayoutPanel layoutMenuOrders;
         private System.Windows.Forms.Label lblMenuOrders;
         private System.Windows.Forms.Button btnMenuNewOrder;
-        private System.Windows.Forms.Button button17;
-        private System.Windows.Forms.Button button18;
-        private System.Windows.Forms.TableLayoutPanel layoutMenuBottom;
         private System.Windows.Forms.Button btnMenuProjects;
         private System.Windows.Forms.DataGridView dataGridView3;
         private System.Windows.Forms.ToolStrip toolsProjAttachments;
@@ -11063,7 +10922,6 @@
         private System.Windows.Forms.TabControl tabsMeta;
         private System.Windows.Forms.TabPage tabMetaStations;
         private System.Windows.Forms.TabPage tabMetaSampleStorage;
-        private System.Windows.Forms.Button btnMenuTypeRel;
         private System.Windows.Forms.TabPage tabAuditLog;
         private System.Windows.Forms.Panel panel32;
         private System.Windows.Forms.Label label57;
@@ -11477,8 +11335,6 @@
         private System.Windows.Forms.DataGridView gridMetaSamplingMeth;
         private System.Windows.Forms.ComboBox cboxSampleSampleStorage;
         private System.Windows.Forms.CheckBox cbSampleConfidential;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Panel panel78;
         private System.Windows.Forms.ToolStrip toolStrip8;
         private System.Windows.Forms.ToolStripLabel toolStripLabel22;

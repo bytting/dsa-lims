@@ -21,17 +21,17 @@
 create database dsa_lims
 go
 
-USE dsa_lims
+use dsa_lims
 go
 
 /*===========================================================================*/
 /* tbl instance_status */
 
-if OBJECT_ID('dbo.instance_status', 'U') IS NOT NULL drop table instance_status;
+if OBJECT_ID('dbo.instance_status', 'U') is not null drop table instance_status;
 
 create table instance_status (
-	id int primary key NOT NULL,
-	name nvarchar(20) NOT NULL	
+	id int primary key not null,
+	name nvarchar(20) not null	
 )
 go
 
@@ -50,11 +50,11 @@ go
 /*===========================================================================*/
 /* tbl workflow_status */
 
-if OBJECT_ID('dbo.workflow_status', 'U') IS NOT NULL drop table workflow_status;
+if OBJECT_ID('dbo.workflow_status', 'U') is not null drop table workflow_status;
 
 create table workflow_status (
-	id int primary key NOT NULL,
-	name nvarchar(20) NOT NULL	
+	id int primary key not null,
+	name nvarchar(20) not null	
 )
 go
 
@@ -73,15 +73,15 @@ go
 /*===========================================================================*/
 /* tbl audit_log */
 
-if OBJECT_ID('dbo.audit_log', 'U') IS NOT NULL drop table audit_log;
+if OBJECT_ID('dbo.audit_log', 'U') is not null drop table audit_log;
 
 create table audit_log (
-	id uniqueidentifier primary key NOT NULL,
-	source_table nvarchar(50) NOT NULL,
-	source_id uniqueidentifier NOT NULL,	
-	operation nvarchar(50) NOT NULL,
-	value nvarchar(max) NOT NULL,
-	create_date datetime NOT NULL
+	id uniqueidentifier primary key not null,
+	source_table nvarchar(50) not null,
+	source_id uniqueidentifier not null,	
+	operation nvarchar(50) not null,
+	value nvarchar(max) not null,
+	create_date datetime not null
 )
 go
 
@@ -99,10 +99,10 @@ go
 /*===========================================================================*/
 /* tbl counters */
 
-if OBJECT_ID('dbo.counters', 'U') IS NOT NULL drop table counters;
+if OBJECT_ID('dbo.counters', 'U') is not null drop table counters;
 
 create table counters (	
-	name nvarchar(50) primary key NOT NULL,
+	name nvarchar(50) primary key not null,
 	value int default 1	
 )
 go
@@ -111,48 +111,136 @@ insert into counters (name) values('sample_counter')
 go
 
 /*===========================================================================*/
-/* tbl roles */
+/* tbl person */
 
-if OBJECT_ID('dbo.roles', 'U') IS NOT NULL drop table roles;
+if OBJECT_ID('dbo.person', 'U') is not null drop table person;
 
-create table roles (	
-	id int primary key NOT NULL,
-	name nvarchar(64) unique NOT NULL
+create table person (
+	id uniqueidentifier primary key not null,
+	name nvarchar(128) not null,	
+	email nvarchar(80) default null,
+	phone nvarchar(80) default null,
+	address nvarchar(1000) default null,
+	create_date datetime not null,
+	update_date datetime not null
 )
 go
 
-insert into roles (id, name) values(1, 'Administrator')
-insert into roles (id, name) values(2, 'Laboratory Manager')
-insert into roles (id, name) values(3, 'Laboratory Operator')
-insert into roles (id, name) values(4, 'Order Manager')
-insert into roles (id, name) values(5, 'Order Operator')
-insert into roles (id, name) values(6, 'Sample Operator')
+create proc csp_insert_person
+	@id uniqueidentifier,
+	@name nvarchar(128),
+	@email nvarchar(80),
+	@phone nvarchar(80),
+	@address nvarchar(1000),
+	@create_date datetime,	
+	@update_date datetime
+as 
+	insert into person values (
+		@id,
+		@name,		
+		@email,
+		@phone,
+		@address,
+		@create_date,
+		@update_date
+	);
+go
+
+create proc csp_update_person
+	@id uniqueidentifier,
+	@name nvarchar(128),	
+	@email nvarchar(80),
+	@phone nvarchar(80),
+	@address nvarchar(1000),
+	@update_date datetime
+as 
+	update person set
+		name = @name,
+		email = @email,
+		phone = @phone,
+		address = @address,
+		update_date = @update_date
+	where id = @id
+go
+
+create proc csp_select_person
+	@id uniqueidentifier
+as 
+	select * 
+	from person
+	where id = @id
+go
+
+create proc csp_select_persons
+as 
+	select * 
+	from person	
+	order by name
+go
+
+create proc csp_select_persons_short
+as 
+	select 
+		id, 
+		name
+	from person	
+	order by name
+go
+
+/*===========================================================================*/
+/* tbl role */
+
+if OBJECT_ID('dbo.role', 'U') is not null drop table role;
+
+create table role (	
+	id uniqueidentifier primary key not null,
+	name nvarchar(80) not null	
+)
+go
+
+insert into role values(NEWID(), 'LIMS Administrator')
+insert into role values(NEWID(), 'Laboratory Administrator')
+insert into role values(NEWID(), 'Laboratory Operator')
+insert into role values(NEWID(), 'Order Administrator')
+insert into role values(NEWID(), 'Order Operator')
+insert into role values(NEWID(), 'Sample Registration')
+insert into role values(NEWID(), 'Spectator')
+
+go
+
+/*===========================================================================*/
+/* tbl account_x_role */
+
+if OBJECT_ID('dbo.account_x_role', 'U') is not null drop table account_x_role;
+
+create table account_x_role (	
+	account_id uniqueidentifier not null,
+	role_id uniqueidentifier not null
+)
 go
 
 /*===========================================================================*/
 /* tbl account */
 
-if OBJECT_ID('dbo.account', 'U') IS NOT NULL drop table account;
+if OBJECT_ID('dbo.account', 'U') is not null drop table account;
 
 create table account (	
-	username nvarchar(50) primary key NOT NULL,		
-	fullname nvarchar(128) NOT NULL,
-	email nvarchar(80) default NULL,
-	phone nvarchar(80) default NULL,
-	laboratory_id uniqueidentifier default NULL,
+	id uniqueidentifier primary key not null,
+	username nvarchar(50) unique not null,
+	person_id uniqueidentifier not null,
+	laboratory_id uniqueidentifier default null,	
 	language_code nvarchar(8) default 'en',
 	instance_status_id int default 1,
-	password_hash nchar(64) NOT NULL,
-	create_date datetime NOT NULL,	
-	update_date datetime NOT NULL
+	password_hash nchar(64) not null,
+	create_date datetime not null,	
+	update_date datetime not null
 )
 go
 
 create proc csp_insert_account
+	@id uniqueidentifier,
 	@username nvarchar(50),
-	@fullname nvarchar(128),
-	@email nvarchar(80),
-	@phone nvarchar(80),
+	@person_id uniqueidentifier,
 	@laboratory_id uniqueidentifier,
 	@language_code nvarchar(8),
 	@instance_status_id int,
@@ -161,10 +249,9 @@ create proc csp_insert_account
 	@update_date datetime
 as 
 	insert into account values (
+		@id,		
 		@username,
-		@fullname,
-		@email,
-		@phone,
+		@person_id,
 		@laboratory_id,
 		@language_code,
 		@instance_status_id,
@@ -175,350 +262,132 @@ as
 go
 
 create proc csp_update_account
-	@username nvarchar(50),
-	@fullname nvarchar(128),
-	@email nvarchar(80),
-	@phone nvarchar(80),
+	@id uniqueidentifier,
 	@laboratory_id uniqueidentifier,
 	@language_code nvarchar(8),
 	@instance_status_id int,	
 	@update_date datetime
 as 
 	update account set
-		fullname = @fullname,
-		email = @email,
-		phone = @phone,
 		laboratory_id = @laboratory_id,
 		language_code = @language_code,
 		instance_status_id = @instance_status_id,
 		update_date = @update_date
-	where username = @username
+	where id = @id
+go
+
+create view cv_account
+as
+	select		
+		a.*,
+		p.name,
+		p.email,
+		p.phone,
+		p.address		
+	from account a
+		inner join person p on a.person_id = p.id
 go
 
 create proc csp_select_account
-	@username nvarchar(50)
+	@id uniqueidentifier
 as 
-	select * from account 
-	where username = @username
+	select * 
+	from cv_account
+	where id = @id
 go
 
 create proc csp_select_accounts
 	@instance_status_level int
 as 
-	select * from account 
+	select * 
+	from cv_account
 	where instance_status_id <= @instance_status_level
-	order by username
+	order by name
 go
 
 create proc csp_select_accounts_short
 	@instance_status_level int
 as 
-	select username, fullname 
-	from account 
+	select
+		id,
+		name 
+	from cv_account
 	where instance_status_id <= @instance_status_level
-	order by username
+	order by name
 go
 
 create proc csp_select_accounts_flat
 	@instance_status_level int
 as 
-	select 
-		a.username,			
-		a.fullname,
-		a.email,
-		a.phone,
+	select 		
+		av.name,
+		av.email,
+		av.phone,
+		av.address,
+		av.username,
 		l.name as 'laboratory_name',
-		a.language_code,
+		av.language_code,
 		st.name as 'instance_status_name',
-		a.password_hash,
-		a.create_date,	
-		a.update_date
-	from account a 
-		left outer join laboratory l on a.laboratory_id = l.id 
-		inner join instance_status st on a.instance_status_id = st.id 
-	where a.instance_status_id <= @instance_status_level
-	order by username
+		av.create_date,	
+		av.update_date
+	from cv_account av
+		left outer join laboratory l on av.laboratory_id = l.id 
+		inner join instance_status st on av.instance_status_id = st.id 
+	where av.instance_status_id <= @instance_status_level
+	order by av.name
 go
 
 create proc csp_select_accounts_for_laboratory
 	@laboratory_id uniqueidentifier,
 	@instance_status_level int
 as 
-	select * from account 
+	select * 
+	from cv_account 
 	where laboratory_id = @laboratory_id and instance_status_id <= @instance_status_level
-	order by username
-go
-
-/*===========================================================================*/
-/* tbl preparation_unit */
-
-if OBJECT_ID('dbo.preparation_unit', 'U') IS NOT NULL drop table preparation_unit;
-
-create table preparation_unit (
-	id int primary key NOT NULL,
-	name nvarchar(20) NOT NULL	
-)
-go
-
-insert into preparation_unit values(1, 'Wet weight (g)')
-insert into preparation_unit values(2, 'Dry weight (g)')
-insert into preparation_unit values(3, 'Ash weight (g)')
-insert into preparation_unit values(4, 'Volume (L)')
-go
-
-create proc csp_select_preparation_units
-as 
-	select *
-	from preparation_unit
 	order by name
 go
 
 /*===========================================================================*/
-/* tbl activity_unit */
+/* tbl company */
 
-if OBJECT_ID('dbo.activity_unit', 'U') IS NOT NULL drop table activity_unit;
+if OBJECT_ID('dbo.company', 'U') is not null drop table company;
 
-create table activity_unit (
-	id uniqueidentifier primary key NOT NULL,	
-	name nvarchar(20) NOT NULL,
-	convert_factor float default NULL,
-	uniform_activity_unit_id int default NULL
-)
-go
-
-insert into activity_unit values(NEWID(), 'Bq', 1.0, 1)
-insert into activity_unit values(NEWID(), 'Bq/g', 1.0, 2)
-insert into activity_unit values(NEWID(), 'Bq/kg', 0.001, 2)
-insert into activity_unit values(NEWID(), 'Bq/m2', 1.0, 3)
-insert into activity_unit values(NEWID(), 'Bq/m3', 1.0, 4)
-insert into activity_unit values(NEWID(), 'Bq/l', 1000.0, 4)
-insert into activity_unit values(NEWID(), 'mBq/g', 1000.0, 2)
-insert into activity_unit values(NEWID(), 'mBq/l', 1.0, 4)
-insert into activity_unit values(NEWID(), 'Bq/filter', 1.0, 1)
-go
-
-create proc csp_select_activity_units
-as 
-	select 
-		id,	
-		name,
-		convert_factor,
-		uniform_activity_unit_id
-	from activity_unit
-	order by name
-go
-
-create proc csp_select_activity_units_short
-as 
-	select 
-		id,	
-		name
-	from activity_unit
-	order by name
-go
-
-create proc csp_select_activity_units_flat
-as 
-	select 
-		au.id,	
-		au.name,
-		au.convert_factor,
-		uau.name as 'uniform_activity_unit_name'
-	from activity_unit au, uniform_activity_unit uau 
-	where au.uniform_activity_unit_id = uau.id
-	order by au.name
-go
-
-/*===========================================================================*/
-/* tbl activity_unit_type */
-
-if OBJECT_ID('dbo.activity_unit_type', 'U') IS NOT NULL drop table activity_unit_type;
-
-create table activity_unit_type (
-	id uniqueidentifier primary key NOT NULL,	
-	name nvarchar(32) NOT NULL	
-)
-go
-
-insert into activity_unit_type values(NEWID(), 'Wet weight')
-insert into activity_unit_type values(NEWID(), 'Dry weight')
-insert into activity_unit_type values(NEWID(), 'Ash weight')
-go
-
-create proc csp_select_activity_unit_types
-as 
-	select *		
-	from activity_unit_type
-	order by name
-go
-
-/*===========================================================================*/
-/* tbl uniform_activity_unit */
-
-if OBJECT_ID('dbo.uniform_activity_unit', 'U') IS NOT NULL drop table uniform_activity_unit;
-
-create table uniform_activity_unit (
-	id int primary key NOT NULL,
-	name nvarchar(20) NOT NULL	
-)
-go
-
-insert into uniform_activity_unit values(1, 'Bq')
-insert into uniform_activity_unit values(2, 'Bq/g')
-insert into uniform_activity_unit values(3, 'Bq/m2')
-insert into uniform_activity_unit values(4, 'Bq/m3')
-go
-
-create proc csp_select_uniform_activity_units
-as 
-	select 
-		id,	
-		name		
-	from uniform_activity_unit
-	order by name
-go
-
-/*===========================================================================*/
-/* tbl quantity_unit */
-
-if OBJECT_ID('dbo.quantity_unit', 'U') IS NOT NULL drop table quantity_unit;
-
-create table quantity_unit (
-	id int primary key NOT NULL,
-	name nvarchar(20) NOT NULL	
-)
-go
-
-insert into quantity_unit values(1, 'L')
-insert into quantity_unit values(2, 'cm2')
-insert into quantity_unit values(3, 'm3')
-insert into quantity_unit values(4, 'kg ww')
-insert into quantity_unit values(5, 'kg dw')
-insert into quantity_unit values(6, 'kg aw')
-insert into quantity_unit values(7, 'g ww')
-insert into quantity_unit values(8, 'g dw')
-insert into quantity_unit values(9, 'g aw')
-go
-
-create proc csp_select_quantity_units
-as 
-	select *
-	from quantity_unit
-	order by name
-go
-
-/*===========================================================================*/
-/* tbl accreditation_term */
-
-if OBJECT_ID('dbo.accreditation_term', 'U') IS NOT NULL drop table accreditation_term;
-
-create table accreditation_term (
-	id uniqueidentifier primary key NOT NULL,	
-	density_min float default NULL,
-	density_max float default NULL,
-	dry_weight_min float default NULL,
-	dry_weight_max float default NULL,
-	wet_weight_min float default NULL,
-	wet_weight_max float default NULL,
-	volume_min float default NULL,
-	volume_max float default NULL,
-	fill_height_min float default NULL,
-	fill_height_max float default NULL,
+create table company (
+	id uniqueidentifier primary key not null,
+	name nvarchar(128) not null,
+	email nvarchar(80) default null,
+	phone nvarchar(80) default null,
+	address nvarchar(1000) default null,
 	instance_status_id int default 1,
-	create_date datetime NOT NULL,
-	created_by nvarchar(50) NOT NULL,
-	update_date datetime NOT NULL,
-	updated_by nvarchar(50) NOT NULL
+	comment nvarchar(1000) default null,
+	create_date datetime not null,
+	created_by nvarchar(50) not null,
+	update_date datetime not null,
+	updated_by nvarchar(50) not null
 )
 go
 
-/*===========================================================================*/
-/* tbl accreditation_term_x_laboratory */
-
-if OBJECT_ID('dbo.accreditation_term_x_laboratory', 'U') IS NOT NULL drop table accreditation_term_x_laboratory;
-
-create table accreditation_term_x_laboratory (
-	accreditation_term_id uniqueidentifier NOT NULL,
-	laboratory_id uniqueidentifier NOT NULL
-)
-go
-
-/*===========================================================================*/
-/* tbl accreditation_term_x_sample_type */
-
-if OBJECT_ID('dbo.accreditation_term_x_sample_type', 'U') IS NOT NULL drop table accreditation_term_x_sample_type;
-
-create table accreditation_term_x_sample_type (
-	accreditation_term_id uniqueidentifier NOT NULL,
-	sample_type_id uniqueidentifier NOT NULL
-)
-go
-
-/*===========================================================================*/
-/* tbl accreditation_term_x_preparation_method */
-
-if OBJECT_ID('dbo.accreditation_term_x_preparation_method', 'U') IS NOT NULL drop table accreditation_term_x_preparation_method;
-
-create table accreditation_term_x_preparation_method (
-	accreditation_term_id uniqueidentifier NOT NULL,
-	preparation_method_id uniqueidentifier NOT NULL
-)
-go
-
-/*===========================================================================*/
-/* tbl accreditation_term_x_analysis_method */
-
-if OBJECT_ID('dbo.accreditation_term_x_analysis_method', 'U') IS NOT NULL drop table accreditation_term_x_analysis_method;
-
-create table accreditation_term_x_analysis_method (
-	accreditation_term_id uniqueidentifier NOT NULL,
-	analysis_method_id uniqueidentifier NOT NULL
-)
-go
-
-/*===========================================================================*/
-/* tbl accreditation_term_x_nuclide */
-
-if OBJECT_ID('dbo.accreditation_term_x_nuclide', 'U') IS NOT NULL drop table accreditation_term_x_nuclide;
-
-create table accreditation_term_x_nuclide (
-	accreditation_term_id uniqueidentifier NOT NULL,
-	nuclide_id uniqueidentifier NOT NULL
-)
-go
-
-/*===========================================================================*/
-/* tbl county */
-
-if OBJECT_ID('dbo.county', 'U') IS NOT NULL drop table county;
-
-create table county (
-	id uniqueidentifier primary key NOT NULL,	
-	name nvarchar(128) unique NOT NULL,
-	county_number int NOT NULL,	
-	instance_status_id int default 1,
-	create_date datetime NOT NULL,
-	created_by nvarchar(50) NOT NULL,
-	update_date datetime NOT NULL,
-	updated_by nvarchar(50) NOT NULL
-)
-go
-
-create proc csp_insert_county
+create proc csp_insert_company
 	@id uniqueidentifier,
-	@name nvarchar(80),
-	@county_number int,	
+	@name nvarchar(128),
+	@email nvarchar(80),
+	@phone nvarchar(80),
+	@address nvarchar(1000),
 	@instance_status_id int,
+	@comment nvarchar(1000),
 	@create_date datetime,
 	@created_by nvarchar(50),
 	@update_date datetime,
-	@updated_by nvarchar(50)	
+	@updated_by nvarchar(50)
 as 
-	insert into county values (
-		@id,		
-		@name,		
-		@county_number,		
+	insert into company values (
+		@id,
+		@name,
+		@email,
+		@phone,
+		@address,
 		@instance_status_id,
+		@comment,
 		@create_date,
 		@created_by,
 		@update_date,
@@ -526,200 +395,100 @@ as
 	);
 go
 
-create proc csp_update_county
+create proc csp_update_company
 	@id uniqueidentifier,
-	@name nvarchar(80),
-	@county_number int,	
+	@name nvarchar(128),
+	@email nvarchar(80),
+	@phone nvarchar(80),
+	@address nvarchar(1000),
 	@instance_status_id int,
+	@comment nvarchar(1000),	
 	@update_date datetime,
-	@updated_by nvarchar(50)	
+	@updated_by nvarchar(50)
 as 
-	update county set 
+	update company set 
 		name = @name,
-		county_number = @county_number,		
-		instance_status_id = @instance_status_id,		
+		email = @email,
+		phone = @phone,
+		address = @address,
+		instance_status_id = @instance_status_id,
+		comment = @comment,
 		update_date = @update_date,
 		updated_by = @updated_by
 	where id = @id
 go
 
-create proc csp_select_county
+create proc csp_select_company
 	@id uniqueidentifier
 as 
-	select * from county where id = @id
-go
-
-create proc csp_select_counties
-	@instance_status_level int
-as
 	select * 
-	from county 
+	from company
+	where id = @id
+go
+
+create proc csp_select_companies
+	@instance_status_level int
+as 
+	select * 
+	from company
 	where instance_status_id <= @instance_status_level
 	order by name
 go
 
-create proc csp_select_counties_short
+create proc csp_select_companies_short
 	@instance_status_level int
-as
-	select
-		id,
-		name
-	from county 
-	where instance_status_id <= @instance_status_level
-	order by name
-go
-
-create proc csp_select_counties_flat
-	@instance_status_level int
-as
+as 
 	select 
+		id, 
+		name 
+	from company
+	where instance_status_id <= @instance_status_level
+	order by name
+go
+
+create proc csp_select_companies_flat
+	@instance_status_level int
+as 
+	select 		
 		c.id,
 		c.name,
-		c.county_number, 	
-		st.name as 'instance_status_name',	
+		c.email,
+		c.phone,
+		c.address,
+		st.name as 'instance_status_name',
+		c.comment,	
 		c.create_date,
 		c.created_by,
 		c.update_date,
 		c.updated_by
-	from county c, instance_status st
-	where c.instance_status_id = st.id
+	from company c
+		inner join instance_status st on c.instance_status_id = st.id 
+			and c.instance_status_id <= @instance_status_level
 	order by c.name
-go
-
-/*===========================================================================*/
-/* tbl municipality */
-
-if OBJECT_ID('dbo.municipality', 'U') IS NOT NULL drop table municipality;
-
-create table municipality (
-	id uniqueidentifier primary key NOT NULL,
-	county_id uniqueidentifier NOT NULL,
-	name nvarchar(128) NOT NULL,
-	municipality_number int NOT NULL,		
-	instance_status_id int default 1,
-	create_date datetime NOT NULL,
-	created_by nvarchar(50) NOT NULL,
-	update_date datetime NOT NULL,
-	updated_by nvarchar(50) NOT NULL
-)
-go
-
-create proc csp_insert_municipality
-	@id uniqueidentifier,
-	@county_id uniqueidentifier,
-	@name nvarchar(80),
-	@municipality_number int,	
-	@instance_status_id int,
-	@create_date datetime,
-	@created_by nvarchar(50),
-	@update_date datetime,
-	@updated_by nvarchar(50)	
-as 
-	insert into municipality values (
-		@id,		
-		@county_id,
-		@name,		
-		@municipality_number,		
-		@instance_status_id,
-		@create_date,
-		@created_by,
-		@update_date,
-		@updated_by
-	);
-go
-
-create proc csp_update_municipality
-	@id uniqueidentifier,
-	@name nvarchar(80),
-	@municipality_number int,	
-	@instance_status_id int,
-	@update_date datetime,
-	@updated_by nvarchar(50)	
-as 
-	update municipality set 
-		name = @name,
-		municipality_number = @municipality_number,		
-		instance_status_id = @instance_status_id,		
-		update_date = @update_date,
-		updated_by = @updated_by
-	where id = @id
-go
-
-create proc csp_select_municipality
-	@id uniqueidentifier
-as 
-	select * from municipality where id = @id
-go
-
-create proc csp_select_municipalities_for_county
-	@county_id uniqueidentifier,
-	@instance_status_level int
-as 
-	select *
-	from municipality
-	where county_id = @county_id and instance_status_id <= @instance_status_level
-	order by name
-go
-
-create proc csp_select_municipalities_for_county_short
-	@county_id uniqueidentifier,
-	@instance_status_level int
-as 
-	select
-		id,
-		name
-	from municipality
-	where county_id = @county_id and instance_status_id <= @instance_status_level
-	order by name
-go
-
-create proc csp_select_municipalities_for_county_flat
-	@county_id uniqueidentifier,
-	@instance_status_level int
-as 
-	select 
-		m.id,	
-		c.name as 'county_name',
-		m.name,
-		m.municipality_number,
-		st.name as 'instance_status_name',
-		m.create_date,
-		m.created_by,
-		m.update_date,
-		m.updated_by
-	from municipality m, county c, instance_status st
-	where m.county_id = @county_id and m.county_id = c.id and m.instance_status_id = st.id and m.instance_status_id <= @instance_status_level
-	order by m.name
 go
 
 /*===========================================================================*/
 /* tbl customer */
 
-if OBJECT_ID('dbo.customer', 'U') IS NOT NULL drop table customer;
+if OBJECT_ID('dbo.customer', 'U') is not null drop table customer;
 
 create table customer (
-	id uniqueidentifier primary key NOT NULL,
-	name nvarchar(256) unique NOT NULL,
-	contact nvarchar(256) default NULL,
-	address nvarchar(256) default NULL,
-	email nvarchar(80) default NULL,
-	phone nvarchar(80) default NULL,	
+	id uniqueidentifier primary key not null,
+	person_id uniqueidentifier not null,
+	company_id uniqueidentifier default null,
 	instance_status_id int default 1,
-	comment nvarchar(1000) default NULL,
-	create_date datetime NOT NULL,
-	created_by nvarchar(50) NOT NULL,
-	update_date datetime NOT NULL,
-	updated_by nvarchar(50) NOT NULL
+	comment nvarchar(1000) default null,
+	create_date datetime not null,
+	created_by nvarchar(50) not null,
+	update_date datetime not null,
+	updated_by nvarchar(50) not null
 )
 go
 
 create proc csp_insert_customer
 	@id uniqueidentifier,
-	@name nvarchar(256),
-	@contact nvarchar(256),
-	@address nvarchar(256),
-	@email nvarchar(80),
-	@phone nvarchar(80),
+	@person_id uniqueidentifier,
+	@company_id uniqueidentifier,
 	@instance_status_id int,
 	@comment nvarchar(1000),
 	@create_date datetime,
@@ -729,11 +498,8 @@ create proc csp_insert_customer
 as 
 	insert into customer values (
 		@id,
-		@name,
-		@contact,
-		@address,
-		@email,
-		@phone,
+		@person_id,
+		@company_id,
 		@instance_status_id,
 		@comment,
 		@create_date,
@@ -744,43 +510,66 @@ as
 go
 
 create proc csp_update_customer
-	@id uniqueidentifier,
-	@name nvarchar(256),
-	@contact nvarchar(256),
-	@address nvarchar(256),
-	@email nvarchar(80),
-	@phone nvarchar(80),
+	@id uniqueidentifier,	
+	@company_id uniqueidentifier,
 	@instance_status_id int,
 	@comment nvarchar(1000),
 	@update_date datetime,
 	@updated_by nvarchar(50)
 as 
 	update customer set 
-		name = @name,
-		contact = @contact,
-		address = @address,
-		email = @email,
-		phone = @phone,
+		company_id = @company_id,
 		instance_status_id = @instance_status_id,
-		comment = @comment,		
+		comment = @comment,
 		update_date = @update_date,
 		updated_by = @updated_by
-	where id = @id
+	where customer_id = @customer_id
+go
+
+create view cv_customer
+as
+	select
+		p.name,
+		p.email,
+		p.phone,
+		p.address,
+		c.id,
+		c.person_id,		
+		c.company_id,
+		c.instance_status_id,
+		c.comment,
+		c.create_date,	
+		c.created_by,
+		c.update_date,
+		c.updated_by
+	from customer c 
+		inner join person p on c.person_id = p.id		
 go
 
 create proc csp_select_customer
-	@id uniqueidentifier
+	@customer_id uniqueidentifier
 as 
 	select *
-	from customer
-	where id = @id
+	from cv_customer
+	where customer_id = @customer_id
 go
 
 create proc csp_select_customers
 	@instance_status_level int
 as 
 	select *
-	from customer
+	from cv_customer
+	where instance_status_id <= @instance_status_level
+	order by name
+go
+
+create proc csp_select_customers_short
+	@instance_status_level int
+as 
+	select 
+		id, 
+		name
+	from cv_customer
 	where instance_status_id <= @instance_status_level
 	order by name
 go
@@ -789,49 +578,36 @@ create proc csp_select_customers_flat
 	@instance_status_level int
 as 
 	select
-		c.id,
-		c.name,
-		c.contact,
-		c.address,
-		c.email,
-		c.phone,
-		stat.name as 'instance_status_name',
-		c.comment,
-		c.create_date,
-		c.created_by,
-		c.update_date,
-		c.updated_by
-	from customer c, instance_status stat
-	where c.instance_status_id = stat.id and c.instance_status_id <= @instance_status_level
-	order by name
+		cv.*,		
+		st.name as 'instance_status_name'
+	from cv_customer cv 
+		inner join instance_status st on cv.instance_status_id = st.id 
+			and cv.instance_status_id <= @instance_status_level
+	order by cv.name
 go
 
 /*===========================================================================*/
 /* tbl sampler */
 
-if OBJECT_ID('dbo.sampler', 'U') IS NOT NULL drop table sampler;
+if OBJECT_ID('dbo.sampler', 'U') is not null drop table sampler;
 
 create table sampler (
-	id uniqueidentifier primary key NOT NULL,
-	name nvarchar(256) NOT NULL,
-	address nvarchar(256) default NULL,
-	email nvarchar(80) default NULL,
-	phone nvarchar(80) default NULL,	
+	id uniqueidentifier primary key not null,
+	person_id uniqueidentifier not null,
+	company_id uniqueidentifier default null,
 	instance_status_id int default 1,
-	comment nvarchar(1000) default NULL,
-	create_date datetime NOT NULL,
-	created_by nvarchar(50) NOT NULL,
-	update_date datetime NOT NULL,
-	updated_by nvarchar(50) NOT NULL
+	comment nvarchar(1000) default null,
+	create_date datetime not null,
+	created_by nvarchar(50) not null,
+	update_date datetime not null,
+	updated_by nvarchar(50) not null
 )
 go
 
 create proc csp_insert_sampler
 	@id uniqueidentifier,
-	@name nvarchar(256),
-	@address nvarchar(256),
-	@email nvarchar(80),
-	@phone nvarchar(80),
+	@person_id uniqueidentifier,
+	@company_id uniqueidentifier,
 	@instance_status_id int,
 	@comment nvarchar(1000),
 	@create_date datetime,
@@ -841,10 +617,8 @@ create proc csp_insert_sampler
 as 
 	insert into sampler values (
 		@id,
-		@name,
-		@address,
-		@email,
-		@phone,
+		@person_id,
+		@company_id,
 		@instance_status_id,
 		@comment,
 		@create_date,
@@ -855,33 +629,55 @@ as
 go
 
 create proc csp_update_sampler
-	@id uniqueidentifier,
-	@name nvarchar(256),
-	@address nvarchar(256),
-	@email nvarchar(80),
-	@phone nvarchar(80),
+	@id uniqueidentifier,	
+	@company_id uniqueidentifier,
 	@instance_status_id int,
 	@comment nvarchar(1000),
 	@update_date datetime,
 	@updated_by nvarchar(50)
 as 
 	update sampler set 
-		name = @name,
-		address = @address,
-		email = @email,
-		phone = @phone,
+		company_id = @company_id,
 		instance_status_id = @instance_status_id,
-		comment = @comment,	
+		comment = @comment,
 		update_date = @update_date,
 		updated_by = @updated_by
+	where id = @id
+go
+
+create view cv_sampler
+as
+	select
+		p.name,
+		p.email,
+		p.phone,
+		p.address,
+		s.id,
+		s.person_id,		
+		s.company_id,
+		s.instance_status_id,
+		s.comment,
+		s.create_date,	
+		s.created_by,
+		s.update_date,
+		s.updated_by
+	from sampler s 
+		inner join person p on s.person_id = p.id		
+go
+
+create proc csp_select_sampler
+	@id uniqueidentifier
+as 
+	select *
+	from cv_sampler
 	where id = @id
 go
 
 create proc csp_select_samplers
 	@instance_status_level int
 as 
-	select * 
-	from sampler 
+	select *
+	from cv_sampler
 	where instance_status_id <= @instance_status_level
 	order by name
 go
@@ -892,7 +688,7 @@ as
 	select
 		id,
 		name
-	from sampler 
+	from cv_sampler
 	where instance_status_id <= @instance_status_level
 	order by name
 go
@@ -900,43 +696,29 @@ go
 create proc csp_select_samplers_flat
 	@instance_status_level int
 as 
-	select 
-		s.id,
-		s.name,
-		s.address,
-		s.email,
-		s.phone,	
-		st.name as 'instance_status_name',
-		s.comment,
-		s.create_date,
-		s.created_by,
-		s.update_date,
-		s.updated_by
-	 from sampler s, instance_status st
-	 where s.instance_status_id = st.id and s.instance_status_id <= @instance_status_level
-	 order by s.name
-go
-
-create proc csp_select_sampler
-	@id uniqueidentifier
-as 
-	select * from sampler where id = @id
+	select
+		sv.*,		
+		st.name as 'instance_status_name'
+	from cv_sampler sv 
+		inner join instance_status st on sv.instance_status_id = st.id 
+			and sv.instance_status_id <= @instance_status_level
+	order by sv.name
 go
 
 /*===========================================================================*/
 /* tbl sampling_method */
 
-if OBJECT_ID('dbo.sampling_method', 'U') IS NOT NULL drop table sampling_method;
+if OBJECT_ID('dbo.sampling_method', 'U') is not null drop table sampling_method;
 
 create table sampling_method (
-	id uniqueidentifier primary key NOT NULL,
-	name nvarchar(256) NOT NULL,
+	id uniqueidentifier primary key not null,
+	name nvarchar(256) not null,
 	instance_status_id int default 1,
-	comment nvarchar(1000) default NULL,
-	create_date datetime NOT NULL,
-	created_by nvarchar(50) NOT NULL,
-	update_date datetime NOT NULL,
-	updated_by nvarchar(50) NOT NULL
+	comment nvarchar(1000) default null,
+	create_date datetime not null,
+	created_by nvarchar(50) not null,
+	update_date datetime not null,
+	updated_by nvarchar(50) not null
 )
 go
 
@@ -1025,22 +807,22 @@ go
 /*===========================================================================*/
 /* tbl laboratory */
 
-if OBJECT_ID('dbo.laboratory', 'U') IS NOT NULL drop table laboratory;
+if OBJECT_ID('dbo.laboratory', 'U') is not null drop table laboratory;
 
 create table laboratory (
-	id uniqueidentifier primary key NOT NULL,
-	name nvarchar(256) unique NOT NULL,
-	name_prefix nvarchar(8) unique NOT NULL,
-	address nvarchar(256) default NULL,
-	email nvarchar(80) default NULL,
-	phone nvarchar(80) default NULL,
+	id uniqueidentifier primary key not null,
+	name nvarchar(256) unique not null,
+	name_prefix nvarchar(8) unique not null,
+	address nvarchar(256) default null,
+	email nvarchar(80) default null,
+	phone nvarchar(80) default null,
 	assignment_counter int default 1,
 	instance_status_id int default 1,
-	comment nvarchar(1000) NOT NULL,		
-	create_date datetime NOT NULL,
-	created_by nvarchar(50) NOT NULL,
-	update_date datetime NOT NULL,
-	updated_by nvarchar(50) NOT NULL
+	comment nvarchar(1000) not null,		
+	create_date datetime not null,
+	created_by nvarchar(50) not null,
+	update_date datetime not null,
+	updated_by nvarchar(50) not null
 )
 go
 
@@ -1160,13 +942,452 @@ as
 go
 
 /*===========================================================================*/
+/* tbl preparation_unit */
+
+if OBJECT_ID('dbo.preparation_unit', 'U') is not null drop table preparation_unit;
+
+create table preparation_unit (
+	id int primary key not null,
+	name nvarchar(20) not null	
+)
+go
+
+insert into preparation_unit values(1, 'Wet weight (g)')
+insert into preparation_unit values(2, 'Dry weight (g)')
+insert into preparation_unit values(3, 'Ash weight (g)')
+insert into preparation_unit values(4, 'Volume (L)')
+go
+
+create proc csp_select_preparation_units
+as 
+	select *
+	from preparation_unit
+	order by name
+go
+
+/*===========================================================================*/
+/* tbl activity_unit */
+
+if OBJECT_ID('dbo.activity_unit', 'U') is not null drop table activity_unit;
+
+create table activity_unit (
+	id uniqueidentifier primary key not null,
+	name nvarchar(20) not null,
+	convert_factor float default null,
+	uniform_activity_unit_id int default null
+)
+go
+
+insert into activity_unit values(NEWID(), 'Bq', 1.0, 1)
+insert into activity_unit values(NEWID(), 'Bq/g', 1.0, 2)
+insert into activity_unit values(NEWID(), 'Bq/kg', 0.001, 2)
+insert into activity_unit values(NEWID(), 'Bq/m2', 1.0, 3)
+insert into activity_unit values(NEWID(), 'Bq/m3', 1.0, 4)
+insert into activity_unit values(NEWID(), 'Bq/l', 1000.0, 4)
+insert into activity_unit values(NEWID(), 'mBq/g', 1000.0, 2)
+insert into activity_unit values(NEWID(), 'mBq/l', 1.0, 4)
+insert into activity_unit values(NEWID(), 'Bq/filter', 1.0, 1)
+go
+
+create proc csp_select_activity_units
+as 
+	select *
+	from activity_unit
+	order by name
+go
+
+create proc csp_select_activity_units_short
+as 
+	select 
+		id,	
+		name
+	from activity_unit
+	order by name
+go
+
+create proc csp_select_activity_units_flat
+as 
+	select 
+		au.id,	
+		au.name,
+		au.convert_factor,
+		uau.name as 'uniform_activity_unit_name'
+	from activity_unit au, uniform_activity_unit uau 
+	where au.uniform_activity_unit_id = uau.id
+	order by au.name
+go
+
+/*===========================================================================*/
+/* tbl activity_unit_type */
+
+if OBJECT_ID('dbo.activity_unit_type', 'U') is not null drop table activity_unit_type;
+
+create table activity_unit_type (
+	id uniqueidentifier primary key not null,	
+	name nvarchar(32) not null	
+)
+go
+
+insert into activity_unit_type values(NEWID(), 'Wet weight')
+insert into activity_unit_type values(NEWID(), 'Dry weight')
+insert into activity_unit_type values(NEWID(), 'Ash weight')
+go
+
+create proc csp_select_activity_unit_types
+as 
+	select *		
+	from activity_unit_type
+	order by name
+go
+
+/*===========================================================================*/
+/* tbl uniform_activity_unit */
+
+if OBJECT_ID('dbo.uniform_activity_unit', 'U') is not null drop table uniform_activity_unit;
+
+create table uniform_activity_unit (
+	id int primary key not null,
+	name nvarchar(20) not null	
+)
+go
+
+insert into uniform_activity_unit values(1, 'Bq')
+insert into uniform_activity_unit values(2, 'Bq/g')
+insert into uniform_activity_unit values(3, 'Bq/m2')
+insert into uniform_activity_unit values(4, 'Bq/m3')
+go
+
+create proc csp_select_uniform_activity_units
+as 
+	select *
+	from uniform_activity_unit
+	order by name
+go
+
+/*===========================================================================*/
+/* tbl quantity_unit */
+
+if OBJECT_ID('dbo.quantity_unit', 'U') is not null drop table quantity_unit;
+
+create table quantity_unit (
+	id int primary key not null,
+	name nvarchar(20) not null	
+)
+go
+
+insert into quantity_unit values(1, 'L')
+insert into quantity_unit values(2, 'cm2')
+insert into quantity_unit values(3, 'm3')
+insert into quantity_unit values(4, 'kg ww')
+insert into quantity_unit values(5, 'kg dw')
+insert into quantity_unit values(6, 'kg aw')
+insert into quantity_unit values(7, 'g ww')
+insert into quantity_unit values(8, 'g dw')
+insert into quantity_unit values(9, 'g aw')
+go
+
+create proc csp_select_quantity_units
+as 
+	select *
+	from quantity_unit
+	order by name
+go
+
+/*===========================================================================*/
+/* tbl accreditation_term */
+
+if OBJECT_ID('dbo.accreditation_term', 'U') is not null drop table accreditation_term;
+
+create table accreditation_term (
+	id uniqueidentifier primary key not null,	
+	density_min float default null,
+	density_max float default null,
+	dry_weight_min float default null,
+	dry_weight_max float default null,
+	wet_weight_min float default null,
+	wet_weight_max float default null,
+	ash_weight_min float default null,
+	ash_weight_max float default null,
+	volume_min float default null,
+	volume_max float default null,
+	fill_height_min float default null,
+	fill_height_max float default null,
+	instance_status_id int default 1,
+	create_date datetime not null,
+	created_by nvarchar(50) not null,
+	update_date datetime not null,
+	updated_by nvarchar(50) not null
+)
+go
+
+/*===========================================================================*/
+/* tbl accreditation_term_x_laboratory */
+
+if OBJECT_ID('dbo.accreditation_term_x_laboratory', 'U') is not null drop table accreditation_term_x_laboratory;
+
+create table accreditation_term_x_laboratory (
+	accreditation_term_id uniqueidentifier not null,
+	laboratory_id uniqueidentifier not null
+)
+go
+
+/*===========================================================================*/
+/* tbl accreditation_term_x_sample_type */
+
+if OBJECT_ID('dbo.accreditation_term_x_sample_type', 'U') is not null drop table accreditation_term_x_sample_type;
+
+create table accreditation_term_x_sample_type (
+	accreditation_term_id uniqueidentifier not null,
+	sample_type_id uniqueidentifier not null
+)
+go
+
+/*===========================================================================*/
+/* tbl accreditation_term_x_preparation_method */
+
+if OBJECT_ID('dbo.accreditation_term_x_preparation_method', 'U') is not null drop table accreditation_term_x_preparation_method;
+
+create table accreditation_term_x_preparation_method (
+	accreditation_term_id uniqueidentifier not null,
+	preparation_method_id uniqueidentifier not null
+)
+go
+
+/*===========================================================================*/
+/* tbl accreditation_term_x_analysis_method */
+
+if OBJECT_ID('dbo.accreditation_term_x_analysis_method', 'U') is not null drop table accreditation_term_x_analysis_method;
+
+create table accreditation_term_x_analysis_method (
+	accreditation_term_id uniqueidentifier not null,
+	analysis_method_id uniqueidentifier not null
+)
+go
+
+/*===========================================================================*/
+/* tbl accreditation_term_x_nuclide */
+
+if OBJECT_ID('dbo.accreditation_term_x_nuclide', 'U') is not null drop table accreditation_term_x_nuclide;
+
+create table accreditation_term_x_nuclide (
+	accreditation_term_id uniqueidentifier not null,
+	nuclide_id uniqueidentifier not null
+)
+go
+
+/*===========================================================================*/
+/* tbl county */
+
+if OBJECT_ID('dbo.county', 'U') is not null drop table county;
+
+create table county (
+	id uniqueidentifier primary key not null,	
+	name nvarchar(128) unique not null,
+	county_number int not null,	
+	instance_status_id int default 1,
+	create_date datetime not null,
+	created_by nvarchar(50) not null,
+	update_date datetime not null,
+	updated_by nvarchar(50) not null
+)
+go
+
+create proc csp_insert_county
+	@id uniqueidentifier,
+	@name nvarchar(80),
+	@county_number int,	
+	@instance_status_id int,
+	@create_date datetime,
+	@created_by nvarchar(50),
+	@update_date datetime,
+	@updated_by nvarchar(50)	
+as 
+	insert into county values (
+		@id,		
+		@name,		
+		@county_number,		
+		@instance_status_id,
+		@create_date,
+		@created_by,
+		@update_date,
+		@updated_by
+	);
+go
+
+create proc csp_update_county
+	@id uniqueidentifier,
+	@name nvarchar(80),
+	@county_number int,	
+	@instance_status_id int,
+	@update_date datetime,
+	@updated_by nvarchar(50)	
+as 
+	update county set 
+		name = @name,
+		county_number = @county_number,		
+		instance_status_id = @instance_status_id,		
+		update_date = @update_date,
+		updated_by = @updated_by
+	where id = @id
+go
+
+create proc csp_select_county
+	@id uniqueidentifier
+as 
+	select * from county where id = @id
+go
+
+create proc csp_select_counties
+	@instance_status_level int
+as
+	select * 
+	from county 
+	where instance_status_id <= @instance_status_level
+	order by name
+go
+
+create proc csp_select_counties_short
+	@instance_status_level int
+as
+	select
+		id,
+		name
+	from county 
+	where instance_status_id <= @instance_status_level
+	order by name
+go
+
+create proc csp_select_counties_flat
+	@instance_status_level int
+as
+	select 
+		c.id,
+		c.name,
+		c.county_number, 	
+		st.name as 'instance_status_name',	
+		c.create_date,
+		c.created_by,
+		c.update_date,
+		c.updated_by
+	from county c, instance_status st
+	where c.instance_status_id = st.id
+	order by c.name
+go
+
+/*===========================================================================*/
+/* tbl municipality */
+
+if OBJECT_ID('dbo.municipality', 'U') is not null drop table municipality;
+
+create table municipality (
+	id uniqueidentifier primary key not null,
+	county_id uniqueidentifier not null,
+	name nvarchar(128) not null,
+	municipality_number int not null,		
+	instance_status_id int default 1,
+	create_date datetime not null,
+	created_by nvarchar(50) not null,
+	update_date datetime not null,
+	updated_by nvarchar(50) not null
+)
+go
+
+create proc csp_insert_municipality
+	@id uniqueidentifier,
+	@county_id uniqueidentifier,
+	@name nvarchar(80),
+	@municipality_number int,	
+	@instance_status_id int,
+	@create_date datetime,
+	@created_by nvarchar(50),
+	@update_date datetime,
+	@updated_by nvarchar(50)	
+as 
+	insert into municipality values (
+		@id,		
+		@county_id,
+		@name,		
+		@municipality_number,		
+		@instance_status_id,
+		@create_date,
+		@created_by,
+		@update_date,
+		@updated_by
+	);
+go
+
+create proc csp_update_municipality
+	@id uniqueidentifier,
+	@name nvarchar(80),
+	@municipality_number int,	
+	@instance_status_id int,
+	@update_date datetime,
+	@updated_by nvarchar(50)	
+as 
+	update municipality set 
+		name = @name,
+		municipality_number = @municipality_number,		
+		instance_status_id = @instance_status_id,		
+		update_date = @update_date,
+		updated_by = @updated_by
+	where id = @id
+go
+
+create proc csp_select_municipality
+	@id uniqueidentifier
+as 
+	select * from municipality where id = @id
+go
+
+create proc csp_select_municipalities_for_county
+	@county_id uniqueidentifier,
+	@instance_status_level int
+as 
+	select *
+	from municipality
+	where county_id = @county_id and instance_status_id <= @instance_status_level
+	order by name
+go
+
+create proc csp_select_municipalities_for_county_short
+	@county_id uniqueidentifier,
+	@instance_status_level int
+as 
+	select
+		id,
+		name
+	from municipality
+	where county_id = @county_id and instance_status_id <= @instance_status_level
+	order by name
+go
+
+create proc csp_select_municipalities_for_county_flat
+	@county_id uniqueidentifier,
+	@instance_status_level int
+as 
+	select 
+		m.id,	
+		c.name as 'county_name',
+		m.name,
+		m.municipality_number,
+		st.name as 'instance_status_name',
+		m.create_date,
+		m.created_by,
+		m.update_date,
+		m.updated_by
+	from municipality m, county c, instance_status st
+	where m.county_id = @county_id and m.county_id = c.id and m.instance_status_id = st.id and m.instance_status_id <= @instance_status_level
+	order by m.name
+go
+
+/*===========================================================================*/
 /* tbl location_type */
 
-if OBJECT_ID('dbo.location_type', 'U') IS NOT NULL drop table location_type;
+if OBJECT_ID('dbo.location_type', 'U') is not null drop table location_type;
 
 create table location_type (
-	id int primary key NOT NULL,
-	name nvarchar(32) NOT NULL	
+	id int primary key not null,
+	name nvarchar(32) not null	
 )
 go
 
@@ -1187,32 +1408,32 @@ go
 /*===========================================================================*/
 /* tbl assignment */
 
-if OBJECT_ID('dbo.assignment', 'U') IS NOT NULL drop table assignment;
+if OBJECT_ID('dbo.assignment', 'U') is not null drop table assignment;
 
 create table assignment (
-	id uniqueidentifier primary key NOT NULL,
-	name nvarchar(80) NOT NULL,	
-	laboratory_id uniqueidentifier NOT NULL,
-	account_id nvarchar(50) NOT NULL,
-	deadline datetime NOT NULL,
-	requested_sigma float default NULL,
-	customer_name nvarchar(256) default NULL,
-	customer_contact nvarchar(256) default NULL,
-	customer_address nvarchar(256) default NULL,
-	customer_email nvarchar(80) default NULL,
-	customer_phone nvarchar(80) default NULL,
+	id uniqueidentifier primary key not null,
+	name nvarchar(80) not null,	
+	laboratory_id uniqueidentifier not null,
+	account_id nvarchar(50) not null,
+	deadline datetime not null,
+	requested_sigma float default null,
+	customer_name nvarchar(256) default null,
+	customer_contact nvarchar(256) default null,
+	customer_address nvarchar(256) default null,
+	customer_email nvarchar(80) default null,
+	customer_phone nvarchar(80) default null,
 	approved_customer bit default 0,
 	approved_laboratory bit default 0,	
-	content_comment nvarchar(1000) default NULL,
-	report_comment nvarchar(1000) default NULL,		
-	closed_date datetime default NULL,
-	closed_by nvarchar(50) default NULL,
+	content_comment nvarchar(1000) default null,
+	report_comment nvarchar(1000) default null,		
+	closed_date datetime default null,
+	closed_by nvarchar(50) default null,
 	instance_status_id int default 1,
-	locked_by nvarchar(50) default NULL,
-	create_date datetime NOT NULL,
-	created_by nvarchar(50) NOT NULL,
-	update_date datetime NOT NULL,
-	updated_by nvarchar(50) NOT NULL
+	locked_by nvarchar(50) default null,
+	create_date datetime not null,
+	created_by nvarchar(50) not null,
+	update_date datetime not null,
+	updated_by nvarchar(50) not null
 )
 go
 
@@ -1355,22 +1576,22 @@ go
 /*===========================================================================*/
 /* tbl assignment_sample_type */
 
-if OBJECT_ID('dbo.assignment_sample_type', 'U') IS NOT NULL drop table assignment_sample_type;
+if OBJECT_ID('dbo.assignment_sample_type', 'U') is not null drop table assignment_sample_type;
 
 create table assignment_sample_type (
-	id uniqueidentifier primary key NOT NULL,	
-	assignment_id uniqueidentifier NOT NULL,	
-	sample_type_id uniqueidentifier NOT NULL,	
-	sample_component_id uniqueidentifier default NULL,	
-	sample_count int NOT NULL,
-	requested_activity_unit_id uniqueidentifier default NULL,
-	requested_activity_unit_type_id uniqueidentifier default NULL,
+	id uniqueidentifier primary key not null,	
+	assignment_id uniqueidentifier not null,	
+	sample_type_id uniqueidentifier not null,	
+	sample_component_id uniqueidentifier default null,	
+	sample_count int not null,
+	requested_activity_unit_id uniqueidentifier default null,
+	requested_activity_unit_type_id uniqueidentifier default null,
 	return_to_sender bit default 0,
-	comment nvarchar(1000) default NULL,
-	create_date datetime NOT NULL,
-	created_by nvarchar(50) NOT NULL,
-	update_date datetime NOT NULL,
-	updated_by nvarchar(50) NOT NULL
+	comment nvarchar(1000) default null,
+	create_date datetime not null,
+	created_by nvarchar(50) not null,
+	update_date datetime not null,
+	updated_by nvarchar(50) not null
 )
 go
 
@@ -1442,19 +1663,19 @@ go
 /*===========================================================================*/
 /* tbl assignment_preparation_method */
 
-if OBJECT_ID('dbo.assignment_preparation_method', 'U') IS NOT NULL drop table assignment_preparation_method;
+if OBJECT_ID('dbo.assignment_preparation_method', 'U') is not null drop table assignment_preparation_method;
 
 create table assignment_preparation_method (
-	id uniqueidentifier primary key NOT NULL,		
-	assignment_sample_type_id uniqueidentifier NOT NULL,				
-	preparation_method_id uniqueidentifier default NULL,
-	preparation_method_count int NOT NULL,
-	preparation_laboratory_id uniqueidentifier default NULL,
-	comment nvarchar(1000) default NULL,
-	create_date datetime NOT NULL,
-	created_by nvarchar(50) NOT NULL,
-	update_date datetime NOT NULL,
-	updated_by nvarchar(50) NOT NULL
+	id uniqueidentifier primary key not null,		
+	assignment_sample_type_id uniqueidentifier not null,				
+	preparation_method_id uniqueidentifier default null,
+	preparation_method_count int not null,
+	preparation_laboratory_id uniqueidentifier default null,
+	comment nvarchar(1000) default null,
+	create_date datetime not null,
+	created_by nvarchar(50) not null,
+	update_date datetime not null,
+	updated_by nvarchar(50) not null
 )
 go
 
@@ -1503,18 +1724,18 @@ go
 /*===========================================================================*/
 /* tbl assignment_analysis_method */
 
-if OBJECT_ID('dbo.assignment_analysis_method', 'U') IS NOT NULL drop table assignment_analysis_method;
+if OBJECT_ID('dbo.assignment_analysis_method', 'U') is not null drop table assignment_analysis_method;
 
 create table assignment_analysis_method (
-	id uniqueidentifier primary key NOT NULL,		
-	assignment_preparation_method_id uniqueidentifier NOT NULL,				
-	analysis_method_id uniqueidentifier default NULL,
-	analysis_method_count int NOT NULL,
-	comment nvarchar(1000) default NULL,
-	create_date datetime NOT NULL,
-	created_by nvarchar(50) NOT NULL,
-	update_date datetime NOT NULL,
-	updated_by nvarchar(50) NOT NULL
+	id uniqueidentifier primary key not null,		
+	assignment_preparation_method_id uniqueidentifier not null,				
+	analysis_method_id uniqueidentifier default null,
+	analysis_method_count int not null,
+	comment nvarchar(1000) default null,
+	create_date datetime not null,
+	created_by nvarchar(50) not null,
+	update_date datetime not null,
+	updated_by nvarchar(50) not null
 )
 go
 
@@ -1558,19 +1779,19 @@ go
 /*===========================================================================*/
 /* tbl preparation_geometry */
 
-if OBJECT_ID('dbo.preparation_geometry', 'U') IS NOT NULL drop table preparation_geometry;
+if OBJECT_ID('dbo.preparation_geometry', 'U') is not null drop table preparation_geometry;
 
 create table preparation_geometry (
-	id uniqueidentifier primary key NOT NULL,
-	name nvarchar(80) NOT NULL,
+	id uniqueidentifier primary key not null,
+	name nvarchar(80) not null,
 	min_fill_height_mm float default 0,
 	max_fill_height_mm float default 0,	
 	instance_status_id int default 1,
-	comment nvarchar(1000) default NULL,
-	create_date datetime NOT NULL,
-	created_by nvarchar(50) NOT NULL,
-	update_date datetime NOT NULL,
-	updated_by nvarchar(50) NOT NULL
+	comment nvarchar(1000) default null,
+	create_date datetime not null,
+	created_by nvarchar(50) not null,
+	update_date datetime not null,
+	updated_by nvarchar(50) not null
 )
 go
 
@@ -1669,19 +1890,19 @@ go
 /*===========================================================================*/
 /* tbl preparation_method */
 
-if OBJECT_ID('dbo.preparation_method', 'U') IS NOT NULL drop table preparation_method;
+if OBJECT_ID('dbo.preparation_method', 'U') is not null drop table preparation_method;
 
 create table preparation_method (
-	id uniqueidentifier primary key NOT NULL,
-	name nvarchar(80) NOT NULL,
-	description_link nvarchar(1024) default NULL,
+	id uniqueidentifier primary key not null,
+	name nvarchar(80) not null,
+	description_link nvarchar(1024) default null,
 	destructive bit default 0,	
 	instance_status_id int default 1,
-	comment nvarchar(1000) default NULL,
-	create_date datetime NOT NULL,
-	created_by nvarchar(50) NOT NULL,
-	update_date datetime NOT NULL,
-	updated_by nvarchar(50) NOT NULL
+	comment nvarchar(1000) default null,
+	create_date datetime not null,
+	created_by nvarchar(50) not null,
+	update_date datetime not null,
+	updated_by nvarchar(50) not null
 )
 go
 
@@ -1778,27 +1999,27 @@ go
 /*===========================================================================*/
 /* tbl laboratory_x_preparation_method */
 
-if OBJECT_ID('dbo.laboratory_x_preparation_method', 'U') IS NOT NULL drop table laboratory_x_preparation_method;
+if OBJECT_ID('dbo.laboratory_x_preparation_method', 'U') is not null drop table laboratory_x_preparation_method;
 
 create table laboratory_x_preparation_method (
-	laboratory_id uniqueidentifier NOT NULL,
-	preparation_method_id uniqueidentifier NOT NULL
+	laboratory_id uniqueidentifier not null,
+	preparation_method_id uniqueidentifier not null
 )
 go
 
 /*===========================================================================*/
 /* tbl preparation */
 
-if OBJECT_ID('dbo.preparation', 'U') IS NOT NULL drop table preparation;
+if OBJECT_ID('dbo.preparation', 'U') is not null drop table preparation;
 
 create table preparation (
-	id uniqueidentifier primary key NOT NULL,
-	sample_id uniqueidentifier NOT NULL,
-	number int NOT NULL,
-	assignment_id uniqueidentifier default NULL,
-	laboratory_id uniqueidentifier NOT NULL,
-	preparation_geometry_id uniqueidentifier default NULL,
-	preparation_method_id uniqueidentifier NOT NULL,
+	id uniqueidentifier primary key not null,
+	sample_id uniqueidentifier not null,
+	number int not null,
+	assignment_id uniqueidentifier default null,
+	laboratory_id uniqueidentifier not null,
+	preparation_geometry_id uniqueidentifier default null,
+	preparation_method_id uniqueidentifier not null,
 	workflow_status_id int default 1,
 	amount float default 0,
 	prep_unit_id int default 1,		
@@ -1806,11 +2027,11 @@ create table preparation (
 	quantity_unit_id int default 1,		
 	fill_height_mm float default 0,		
 	instance_status_id int default 1,
-	comment nvarchar(1000) default NULL,	
-	create_date datetime NOT NULL,
-	created_by nvarchar(50) NOT NULL,
-	update_date datetime NOT NULL,
-	updated_by nvarchar(50) NOT NULL
+	comment nvarchar(1000) default null,	
+	create_date datetime not null,
+	created_by nvarchar(50) not null,
+	update_date datetime not null,
+	updated_by nvarchar(50) not null
 )
 go
 
@@ -1894,19 +2115,19 @@ go
 /*===========================================================================*/
 /* tbl analysis_method */
 
-if OBJECT_ID('dbo.analysis_method', 'U') IS NOT NULL drop table analysis_method;
+if OBJECT_ID('dbo.analysis_method', 'U') is not null drop table analysis_method;
 
 create table analysis_method (
-	id uniqueidentifier primary key NOT NULL,
-	name nvarchar(32) NOT NULL,
-	description_link nvarchar(1024) default NULL,
-	specter_reference_regexp nvarchar(256) default NULL,	
+	id uniqueidentifier primary key not null,
+	name nvarchar(32) not null,
+	description_link nvarchar(1024) default null,
+	specter_reference_regexp nvarchar(256) default null,	
 	instance_status_id int default 1,
-	comment nvarchar(1000) default NULL,
-	create_date datetime NOT NULL,
-	created_by nvarchar(50) NOT NULL,
-	update_date datetime NOT NULL,
-	updated_by nvarchar(50) NOT NULL
+	comment nvarchar(1000) default null,
+	create_date datetime not null,
+	created_by nvarchar(50) not null,
+	update_date datetime not null,
+	updated_by nvarchar(50) not null
 )
 go
 
@@ -2003,50 +2224,50 @@ go
 /*===========================================================================*/
 /* tbl laboratory_x_analysis_method */
 
-if OBJECT_ID('dbo.laboratory_x_analysis_method', 'U') IS NOT NULL drop table laboratory_x_analysis_method;
+if OBJECT_ID('dbo.laboratory_x_analysis_method', 'U') is not null drop table laboratory_x_analysis_method;
 
 create table laboratory_x_analysis_method (
-	laboratory_id uniqueidentifier NOT NULL,
-	analysis_method_id uniqueidentifier NOT NULL
+	laboratory_id uniqueidentifier not null,
+	analysis_method_id uniqueidentifier not null
 )
 go
 
 /*===========================================================================*/
 /* tbl account_x_analysis_method */
 
-if OBJECT_ID('dbo.account_x_analysis_method', 'U') IS NOT NULL drop table account_x_analysis_method;
+if OBJECT_ID('dbo.account_x_analysis_method', 'U') is not null drop table account_x_analysis_method;
 
 create table account_x_analysis_method (
-	account_id uniqueidentifier NOT NULL,
-	analysis_method_id uniqueidentifier NOT NULL
+	account_id uniqueidentifier not null,
+	analysis_method_id uniqueidentifier not null
 )
 go
 
 /*===========================================================================*/
 /* tbl analysis */
 
-if OBJECT_ID('dbo.analysis', 'U') IS NOT NULL drop table analysis;
+if OBJECT_ID('dbo.analysis', 'U') is not null drop table analysis;
 
 create table analysis (
-	id uniqueidentifier primary key NOT NULL,
-	number int NOT NULL,
-	assignment_id uniqueidentifier default NULL,
-	laboratory_id uniqueidentifier NOT NULL,
-	preparation_id uniqueidentifier NOT NULL,
-	analysis_method_id uniqueidentifier NOT NULL,	
+	id uniqueidentifier primary key not null,
+	number int not null,
+	assignment_id uniqueidentifier default null,
+	laboratory_id uniqueidentifier not null,
+	preparation_id uniqueidentifier not null,
+	analysis_method_id uniqueidentifier not null,	
 	workflow_status_id int default 1,
-	specter_reference nvarchar(256) default NULL,
-	activity_unit_id uniqueidentifier default NULL,
-	activity_unit_type_id uniqueidentifier default NULL,
-	sigma float default NULL,
-	nuclide_library nvarchar(256) default NULL,
-	mda_library nvarchar(256) default NULL,	
+	specter_reference nvarchar(256) default null,
+	activity_unit_id uniqueidentifier default null,
+	activity_unit_type_id uniqueidentifier default null,
+	sigma float default null,
+	nuclide_library nvarchar(256) default null,
+	mda_library nvarchar(256) default null,	
 	instance_status_id int default 1,
-	comment nvarchar(1000) default NULL,	
-	create_date datetime NOT NULL,
-	created_by nvarchar(50) NOT NULL,
-	update_date datetime NOT NULL,
-	updated_by nvarchar(50) NOT NULL
+	comment nvarchar(1000) default null,	
+	create_date datetime not null,
+	created_by nvarchar(50) not null,
+	update_date datetime not null,
+	updated_by nvarchar(50) not null
 )
 go
 
@@ -2130,22 +2351,22 @@ go
 /*===========================================================================*/
 /* tbl nuclide */
 
-if OBJECT_ID('dbo.nuclide', 'U') IS NOT NULL drop table nuclide;
+if OBJECT_ID('dbo.nuclide', 'U') is not null drop table nuclide;
 
 create table nuclide (
-	id uniqueidentifier primary key NOT NULL,
-	zas int NOT NULL,
-	name nvarchar(32) unique NOT NULL,
-	protons int NOT NULL,
-	neutrons int NOT NULL,
-	meta_stable bit NOT NULL,
-	half_life_year float NOT NULL,
+	id uniqueidentifier primary key not null,
+	zas int not null,
+	name nvarchar(32) unique not null,
+	protons int not null,
+	neutrons int not null,
+	meta_stable bit not null,
+	half_life_year float not null,
 	instance_status_id int default 1,
-	comment nvarchar(1000) NOT NULL,
-	create_date datetime NOT NULL,
-	created_by nvarchar(50) NOT NULL,
-	update_date datetime NOT NULL,
-	updated_by nvarchar(50) NOT NULL
+	comment nvarchar(1000) not null,
+	create_date datetime not null,
+	created_by nvarchar(50) not null,
+	update_date datetime not null,
+	updated_by nvarchar(50) not null
 )
 go
 
@@ -2257,17 +2478,17 @@ go
 /*===========================================================================*/
 /* tbl project_main */
 
-if OBJECT_ID('dbo.project_main', 'U') IS NOT NULL drop table project_main;
+if OBJECT_ID('dbo.project_main', 'U') is not null drop table project_main;
 
 create table project_main (
-	id uniqueidentifier primary key NOT NULL,
-	name nvarchar(256) NOT NULL,
+	id uniqueidentifier primary key not null,
+	name nvarchar(256) not null,
 	instance_status_id int default 1,
-	comment nvarchar(1000) default NULL,		
-	create_date datetime NOT NULL,
-	created_by nvarchar(50) NOT NULL,
-	update_date datetime NOT NULL,
-	updated_by nvarchar(50) NOT NULL
+	comment nvarchar(1000) default null,		
+	create_date datetime not null,
+	created_by nvarchar(50) not null,
+	update_date datetime not null,
+	updated_by nvarchar(50) not null
 )
 go
 
@@ -2356,18 +2577,18 @@ go
 /*===========================================================================*/
 /* tbl project_sub */
 
-if OBJECT_ID('dbo.project_sub', 'U') IS NOT NULL drop table project_sub;
+if OBJECT_ID('dbo.project_sub', 'U') is not null drop table project_sub;
 
 create table project_sub (
-	id uniqueidentifier primary key NOT NULL,
-	project_main_id uniqueidentifier NOT NULL,
-	name nvarchar(256) NOT NULL,
+	id uniqueidentifier primary key not null,
+	project_main_id uniqueidentifier not null,
+	name nvarchar(256) not null,
 	instance_status_id int default 1,
-	comment nvarchar(1000) default NULL,		
-	create_date datetime NOT NULL,
-	created_by nvarchar(50) NOT NULL,
-	update_date datetime NOT NULL,
-	updated_by nvarchar(50) NOT NULL
+	comment nvarchar(1000) default null,		
+	create_date datetime not null,
+	created_by nvarchar(50) not null,
+	update_date datetime not null,
+	updated_by nvarchar(50) not null
 )
 go
 
@@ -2464,31 +2685,31 @@ go
 /*===========================================================================*/
 /* tbl project_sub_x_account */
 
-if OBJECT_ID('dbo.project_sub_x_account', 'U') IS NOT NULL drop table project_sub_x_account;
+if OBJECT_ID('dbo.project_sub_x_account', 'U') is not null drop table project_sub_x_account;
 
 create table project_sub_x_account (
-	project_sub_id uniqueidentifier NOT NULL,
-	account_id uniqueidentifier NOT NULL
+	project_sub_id uniqueidentifier not null,
+	account_id uniqueidentifier not null
 )
 go
 
 /*===========================================================================*/
 /* tbl station */
 
-if OBJECT_ID('dbo.station', 'U') IS NOT NULL drop table station;
+if OBJECT_ID('dbo.station', 'U') is not null drop table station;
 
 create table station (
-	id uniqueidentifier primary key NOT NULL,
-	name nvarchar(128) unique NOT NULL,
+	id uniqueidentifier primary key not null,
+	name nvarchar(128) unique not null,
 	latitude float default 0,
 	longitude float default 0,
 	altitude float default 0,	
 	instance_status_id int default 1,
-	comment nvarchar(1000) default NULL,
-	create_date datetime NOT NULL,
-	created_by nvarchar(50) NOT NULL,
-	update_date datetime NOT NULL,
-	updated_by nvarchar(50) NOT NULL
+	comment nvarchar(1000) default null,
+	create_date datetime not null,
+	created_by nvarchar(50) not null,
+	update_date datetime not null,
+	updated_by nvarchar(50) not null
 )
 go
 
@@ -2592,19 +2813,19 @@ go
 /*===========================================================================*/
 /* tbl sample_type */
 
-if OBJECT_ID('dbo.sample_type', 'U') IS NOT NULL drop table sample_type;
+if OBJECT_ID('dbo.sample_type', 'U') is not null drop table sample_type;
 
 create table sample_type (
-	id uniqueidentifier primary key NOT NULL,
-	parent_id uniqueidentifier default NULL,	
-	path nvarchar(2000) NOT NULL,
-	name nvarchar(80) NOT NULL,
-	name_common nvarchar(80) default NULL,
-	name_latin nvarchar(80) default NULL,
-	create_date datetime NOT NULL,
-	created_by nvarchar(50) NOT NULL,
-	update_date datetime NOT NULL,
-	updated_by nvarchar(50) NOT NULL
+	id uniqueidentifier primary key not null,
+	parent_id uniqueidentifier default null,	
+	path nvarchar(2000) not null,
+	name nvarchar(80) not null,
+	name_common nvarchar(80) default null,
+	name_latin nvarchar(80) default null,
+	create_date datetime not null,
+	created_by nvarchar(50) not null,
+	update_date datetime not null,
+	updated_by nvarchar(50) not null
 )
 go
 
@@ -2680,18 +2901,18 @@ go
 /*===========================================================================*/
 /* tbl sample_storage */
 
-if OBJECT_ID('dbo.sample_storage', 'U') IS NOT NULL drop table sample_storage;
+if OBJECT_ID('dbo.sample_storage', 'U') is not null drop table sample_storage;
 
 create table sample_storage (
-	id uniqueidentifier primary key NOT NULL,
-	name nvarchar(256) unique NOT NULL,
-	address nvarchar(1000) default NULL,	
+	id uniqueidentifier primary key not null,
+	name nvarchar(256) unique not null,
+	address nvarchar(1000) default null,	
 	instance_status_id int default 1,
-	comment nvarchar(1000) default NULL,
-	create_date datetime NOT NULL,
-	created_by nvarchar(50) NOT NULL,
-	update_date datetime NOT NULL,
-	updated_by nvarchar(50) NOT NULL
+	comment nvarchar(1000) default null,
+	create_date datetime not null,
+	created_by nvarchar(50) not null,
+	update_date datetime not null,
+	updated_by nvarchar(50) not null
 )
 go
 
@@ -2783,16 +3004,16 @@ go
 /*===========================================================================*/
 /* tbl sample_component */
 
-if OBJECT_ID('dbo.sample_component', 'U') IS NOT NULL drop table sample_component;
+if OBJECT_ID('dbo.sample_component', 'U') is not null drop table sample_component;
 
 create table sample_component (
-	id uniqueidentifier primary key NOT NULL,
-	sample_type_id uniqueidentifier NOT NULL,
-	name nvarchar(80) NOT NULL,
-	create_date datetime NOT NULL,
-	created_by nvarchar(50) NOT NULL,
-	update_date datetime NOT NULL,
-	updated_by nvarchar(50) NOT NULL
+	id uniqueidentifier primary key not null,
+	sample_type_id uniqueidentifier not null,
+	name nvarchar(80) not null,
+	create_date datetime not null,
+	created_by nvarchar(50) not null,
+	update_date datetime not null,
+	updated_by nvarchar(50) not null
 )
 go
 
@@ -2852,17 +3073,17 @@ go
 /*===========================================================================*/
 /* tbl sample_parameter */
 
-if OBJECT_ID('dbo.sample_parameter', 'U') IS NOT NULL drop table sample_parameter;
+if OBJECT_ID('dbo.sample_parameter', 'U') is not null drop table sample_parameter;
 
 create table sample_parameter (
-	id uniqueidentifier primary key NOT NULL,
-	sample_type_id uniqueidentifier NOT NULL,	
-	name nvarchar(80) NOT NULL,
-	type nvarchar(30) NOT NULL,			
-	create_date datetime NOT NULL,
-	created_by nvarchar(50) NOT NULL,
-	update_date datetime NOT NULL,
-	updated_by nvarchar(50) NOT NULL
+	id uniqueidentifier primary key not null,
+	sample_type_id uniqueidentifier not null,	
+	name nvarchar(80) not null,
+	type nvarchar(30) not null,			
+	create_date datetime not null,
+	created_by nvarchar(50) not null,
+	update_date datetime not null,
+	updated_by nvarchar(50) not null
 )
 go
 
@@ -2881,49 +3102,49 @@ go
 /*===========================================================================*/
 /* tbl sample */
 
-if OBJECT_ID('dbo.sample', 'U') IS NOT NULL drop table sample;
+if OBJECT_ID('dbo.sample', 'U') is not null drop table sample;
 
 create table sample (
-	id uniqueidentifier primary key NOT NULL,
-	number int unique NOT NULL,	
-	laboratory_id uniqueidentifier NOT NULL,	
-	sample_type_id uniqueidentifier NOT NULL,	
-	sample_storage_id uniqueidentifier default NULL,
-	sample_component_id uniqueidentifier default NULL,
-	project_sub_id uniqueidentifier NOT NULL,
-	station_id uniqueidentifier default NULL,
-	sampler_id uniqueidentifier default NULL,
-	sampling_method_id uniqueidentifier default NULL,
-	transform_from_id uniqueidentifier default NULL,	
-	transform_to_id uniqueidentifier default NULL,		
-	imported_from nvarchar(128) default NULL,
-	imported_from_id nvarchar(128) default NULL,		
-	municipality_id uniqueidentifier default NULL,
-	location_type nvarchar(50) default NULL,
-	location nvarchar(128) default NULL,		
+	id uniqueidentifier primary key not null,
+	number int unique not null,	
+	laboratory_id uniqueidentifier not null,	
+	sample_type_id uniqueidentifier not null,	
+	sample_storage_id uniqueidentifier default null,
+	sample_component_id uniqueidentifier default null,
+	project_sub_id uniqueidentifier not null,
+	station_id uniqueidentifier default null,
+	sampler_id uniqueidentifier default null,
+	sampling_method_id uniqueidentifier default null,
+	transform_from_id uniqueidentifier default null,	
+	transform_to_id uniqueidentifier default null,		
+	imported_from nvarchar(128) default null,
+	imported_from_id nvarchar(128) default null,		
+	municipality_id uniqueidentifier default null,
+	location_type nvarchar(50) default null,
+	location nvarchar(128) default null,		
 	latitude float default 0,
 	longitude float default 0,
 	altitude float default 0,
-	sampling_date_from datetime default NULL,
+	sampling_date_from datetime default null,
 	use_sampling_date_to bit default 0,
-	sampling_date_to datetime default NULL,
-	reference_date datetime default NULL,
-	external_id nvarchar(128) default NULL,
-	wet_weight_g float default NULL,	
-	dry_weight_g float default NULL,
-	volume_l float default NULL,
-	lod_weight_start float default NULL,	
-	lod_weight_end float default NULL,	
-	lod_temperature float default NULL,
+	sampling_date_to datetime default null,
+	reference_date datetime default null,
+	external_id nvarchar(128) default null,
+	wet_weight_g float default null,	
+	dry_weight_g float default null,
+	volume_l float default null,
+	lod_weight_start float default null,	
+	lod_weight_end float default null,	
+	lod_temperature float default null,
 	confidential bit default 0,	
-	parameters nvarchar(4000) default NULL,
+	parameters nvarchar(4000) default null,
 	instance_status_id int default 1,
-	locked_by nvarchar(50) default NULL,
-	comment nvarchar(1000) default NULL,	
-	create_date datetime NOT NULL,
-	created_by nvarchar(50) NOT NULL,
-	update_date datetime NOT NULL,
-	updated_by nvarchar(50) NOT NULL
+	locked_by nvarchar(50) default null,
+	comment nvarchar(1000) default null,	
+	create_date datetime not null,
+	created_by nvarchar(50) not null,
+	update_date datetime not null,
+	updated_by nvarchar(50) not null
 )
 go
 
@@ -3256,11 +3477,11 @@ go
 /*===========================================================================*/
 /* tbl sample_x_assignment_sample_type */
 
-if OBJECT_ID('dbo.sample_x_assignment_sample_type', 'U') IS NOT NULL drop table sample_x_assignment_sample_type;
+if OBJECT_ID('dbo.sample_x_assignment_sample_type', 'U') is not null drop table sample_x_assignment_sample_type;
 
 create table sample_x_assignment_sample_type (
-	sample_id uniqueidentifier NOT NULL,
-	assignment_sample_type_id uniqueidentifier NOT NULL
+	sample_id uniqueidentifier not null,
+	assignment_sample_type_id uniqueidentifier not null
 )
 go
 
@@ -3275,11 +3496,11 @@ go
 /*===========================================================================*/
 /* tbl sample_type_x_preparation_method */
 
-if OBJECT_ID('dbo.sample_type_x_preparation_method', 'U') IS NOT NULL drop table sample_type_x_preparation_method;
+if OBJECT_ID('dbo.sample_type_x_preparation_method', 'U') is not null drop table sample_type_x_preparation_method;
 
 create table sample_type_x_preparation_method (
-	sample_type_id uniqueidentifier NOT NULL,
-	preparation_method_id uniqueidentifier NOT NULL
+	sample_type_id uniqueidentifier not null,
+	preparation_method_id uniqueidentifier not null
 )
 go
 
@@ -3295,11 +3516,11 @@ go
 /*===========================================================================*/
 /* tbl preparation_method_x_analysis_method */
 
-if OBJECT_ID('dbo.preparation_method_x_analysis_method', 'U') IS NOT NULL drop table preparation_method_x_analysis_method;
+if OBJECT_ID('dbo.preparation_method_x_analysis_method', 'U') is not null drop table preparation_method_x_analysis_method;
 
 create table preparation_method_x_analysis_method (	
-	preparation_method_id uniqueidentifier NOT NULL,
-	analysis_method_id uniqueidentifier NOT NULL
+	preparation_method_id uniqueidentifier not null,
+	analysis_method_id uniqueidentifier not null
 )
 go
 
@@ -3315,36 +3536,36 @@ go
 /*===========================================================================*/
 /* tbl analysis_method_x_nuclide */
 
-if OBJECT_ID('dbo.analysis_method_x_nuclide', 'U') IS NOT NULL drop table analysis_method_x_nuclide;
+if OBJECT_ID('dbo.analysis_method_x_nuclide', 'U') is not null drop table analysis_method_x_nuclide;
 
 create table analysis_method_x_nuclide (		
-	analysis_method_id uniqueidentifier NOT NULL,
-	nuclide_id uniqueidentifier NOT NULL
+	analysis_method_id uniqueidentifier not null,
+	nuclide_id uniqueidentifier not null
 )
 go
 
 /*===========================================================================*/
 /* tbl analysis_result */
 
-if OBJECT_ID('dbo.analysis_result', 'U') IS NOT NULL drop table analysis_result;
+if OBJECT_ID('dbo.analysis_result', 'U') is not null drop table analysis_result;
 
 create table analysis_result (
-	id uniqueidentifier primary key NOT NULL,
-	analysis_id uniqueidentifier NOT NULL,
-	nuclide_id uniqueidentifier NOT NULL,
-	activity float default NULL,	
-	activity_uncertainty float NOT NULL,
-	activity_uncertainty_abs bit NOT NULL,
+	id uniqueidentifier primary key not null,
+	analysis_id uniqueidentifier not null,
+	nuclide_id uniqueidentifier not null,
+	activity float default null,	
+	activity_uncertainty float not null,
+	activity_uncertainty_abs bit not null,
 	activity_approved bit default 0,
-	uniform_activity float default NULL,
-	uniform_activity_unit_id int default NULL,
-	detection_limit float default NULL,
+	uniform_activity float default null,
+	uniform_activity_unit_id int default null,
+	detection_limit float default null,
 	detection_limit_approved bit default 0,
 	instance_status_id int default 1,
-	create_date datetime NOT NULL,
-	created_by nvarchar(50) NOT NULL,
-	update_date datetime NOT NULL,
-	updated_by nvarchar(50) NOT NULL	
+	create_date datetime not null,
+	created_by nvarchar(50) not null,
+	update_date datetime not null,
+	updated_by nvarchar(50) not null	
 )
 go
 
@@ -3371,17 +3592,17 @@ go
 /*===========================================================================*/
 /* tbl attachment */
 
-if OBJECT_ID('dbo.attachment', 'U') IS NOT NULL drop table attachment;
+if OBJECT_ID('dbo.attachment', 'U') is not null drop table attachment;
 
 create table attachment (
-	id uniqueidentifier primary key NOT NULL,
-	source_table nvarchar(80) NOT NULL,
-	source_id uniqueidentifier NOT NULL,
-	name nvarchar(256) NOT NULL,
-	comment nvarchar(1000) default NULL,
-	file_extension nvarchar(16) NOT NULL,
-	value varbinary(max) NOT NULL,
-	create_date datetime NOT NULL,
-	created_by nvarchar(50) NOT NULL	
+	id uniqueidentifier primary key not null,
+	source_table nvarchar(80) not null,
+	source_id uniqueidentifier not null,
+	name nvarchar(256) not null,
+	comment nvarchar(1000) default null,
+	file_extension nvarchar(16) not null,
+	value varbinary(max) not null,
+	create_date datetime not null,
+	created_by nvarchar(50) not null	
 )
 go

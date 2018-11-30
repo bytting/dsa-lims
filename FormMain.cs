@@ -135,6 +135,10 @@ namespace DSA_lims
                     cboxOrderRequestedSigma.DataSource = DB.GetSigmaValues();
                     cboxOrderRequestedSigmaMDA.DataSource = DB.GetSigmaMDAValues();
 
+                    UI.PopulatePersons(conn, gridSysPers);
+
+                    UI.PopulateCompanies(conn, gridMetaCompanies);
+
                     UI.PopulatePreparationUnits(conn, gridMetaUnitPrepUnits);
 
                     UI.PopulateActivityUnits(conn, gridMetaUnitActivityUnits);
@@ -1147,7 +1151,7 @@ namespace DSA_lims
                     using (SqlConnection conn = DB.OpenConnection())
                     {
                         UI.PopulateSamplers(conn, gridMetaSamplers);                        
-                        UI.PopulateComboBoxes(conn, "csp_select_samplers_short", new[] {
+                        UI.PopulateComboBoxes(conn, "csp_select_samplers", new[] {
                             new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
                         }, cboxSampleInfoSampler);
                     }                        
@@ -1174,7 +1178,7 @@ namespace DSA_lims
                     using (SqlConnection conn = DB.OpenConnection())
                     {
                         UI.PopulateSamplers(conn, gridMetaSamplers);                        
-                        UI.PopulateComboBoxes(conn, "csp_select_samplers_short", new[] {
+                        UI.PopulateComboBoxes(conn, "csp_select_samplers", new[] {
                             new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
                         }, cboxSampleInfoSampler);
                     }                        
@@ -3404,6 +3408,106 @@ insert into analysis_result values(
             tbOrderCustomerAddress.Text = c.Address;
             tbOrderCustomerEmail.Text = c.Email;
             tbOrderCustomerPhone.Text = c.Phone;
+        }
+
+        private void miPersonNew_Click(object sender, EventArgs e)
+        {
+            // new person
+            FormPerson form = new FormPerson();
+            switch (form.ShowDialog())
+            {
+                case DialogResult.OK:
+                    SetStatusMessage("Person " + form.PersonName + " created");
+                    using (SqlConnection conn = DB.OpenConnection())
+                    {
+                        UI.PopulatePersons(conn, gridSysPers);
+                    }
+                    break;
+                case DialogResult.Abort:
+                    SetStatusMessage("Create person failed", StatusMessageType.Error);
+                    break;
+            }
+        }
+
+        private void miPersonEdit_Click(object sender, EventArgs e)
+        {
+            // edit person
+            if(gridSysPers.SelectedRows.Count < 1)
+            {
+                MessageBox.Show("You must select a person first");
+                return;
+            }
+
+            Guid pid = Guid.Parse(gridSysPers.SelectedRows[0].Cells["id"].Value.ToString());
+            FormPerson form = new FormPerson(pid);
+            switch (form.ShowDialog())
+            {
+                case DialogResult.OK:
+                    SetStatusMessage("Person " + form.PersonName + " updated");
+                    using (SqlConnection conn = DB.OpenConnection())
+                    {
+                        UI.PopulatePersons(conn, gridSysPers);
+                    }
+                    break;
+                case DialogResult.Abort:
+                    SetStatusMessage("Update person failed", StatusMessageType.Error);
+                    break;
+            }
+        }
+
+        private void miPersonDelete_Click(object sender, EventArgs e)
+        {
+            // delete person
+        }
+
+        private void miCompanyNew_Click(object sender, EventArgs e)
+        {
+            // new company
+            FormCompany form = new FormCompany();
+            switch (form.ShowDialog())
+            {
+                case DialogResult.OK:
+                    SetStatusMessage("Company " + form.CompName + " created");
+                    using (SqlConnection conn = DB.OpenConnection())
+                    {
+                        UI.PopulateCompanies(conn, gridMetaCompanies);
+                    }
+                    break;
+                case DialogResult.Abort:
+                    SetStatusMessage("Create company failed", StatusMessageType.Error);
+                    break;
+            }
+        }
+
+        private void miCompanyEdit_Click(object sender, EventArgs e)
+        {
+            // edit company
+            if (gridMetaCompanies.SelectedRows.Count < 1)
+            {
+                MessageBox.Show("You must select a company first");
+                return;
+            }
+
+            Guid cid = Guid.Parse(gridMetaCompanies.SelectedRows[0].Cells["id"].Value.ToString());
+            FormCompany form = new FormCompany(cid);
+            switch (form.ShowDialog())
+            {
+                case DialogResult.OK:
+                    SetStatusMessage("Company " + form.CompName + " updated");
+                    using (SqlConnection conn = DB.OpenConnection())
+                    {
+                        UI.PopulateCompanies(conn, gridMetaCompanies);
+                    }
+                    break;
+                case DialogResult.Abort:
+                    SetStatusMessage("Update company failed", StatusMessageType.Error);
+                    break;
+            }
+        }
+
+        private void miCompanyDelete_Click(object sender, EventArgs e)
+        {
+            // delete company
         }
     }    
 }

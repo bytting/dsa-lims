@@ -1,22 +1,4 @@
-﻿/*	
-	DSA Lims - Laboratory Information Management System
-    Copyright (C) 2018  Norwegian Radiation Protection Authority
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
-// Authors: Dag Robole,
-
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -25,65 +7,61 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
-using Newtonsoft.Json;
 
 namespace DSA_lims
 {
-    public partial class FormCustomer : Form
+    public partial class FormCompany : Form
     {
         private Dictionary<string, object> p = new Dictionary<string, object>();
 
-        public Guid CustomerId
+        public Guid CompId
         {
             get { return p.ContainsKey("id") ? (Guid)p["id"] : Guid.Empty; }
         }
 
-        public string CustomerName
+        public string CompName
         {
             get { return p.ContainsKey("name") ? p["name"].ToString() : String.Empty; }
         }
 
-        public FormCustomer()
+        public FormCompany()
         {
             InitializeComponent();
 
-            Text = "DSA-Lims - New customer";
+            Text = "New company";
             using (SqlConnection conn = DB.OpenConnection())
             {
-                UI.PopulateComboBoxes(conn, "csp_select_persons_short", new SqlParameter[] {}, cboxPerson);
-
-                UI.PopulateComboBoxes(conn, "csp_select_companies_short", new[] {
-                    new SqlParameter("instance_status_level", InstanceStatus.Active)
-                }, cboxCompany);
-
                 cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, "csp_select_instance_status");
-            }            
+            }
             cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
         }
 
-        public FormCustomer(Guid customerId)
+        public FormCompany(Guid cid)
         {
             InitializeComponent();
 
-            Text = "DSA-Lims - Edit customer";
-            p["id"] = customerId;            
+            Text = "Edit company";            
+            p["id"] = cid;
 
             using (SqlConnection conn = DB.OpenConnection())
             {
                 cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, "csp_select_instance_status");
 
-                SqlCommand cmd = new SqlCommand("csp_select_customer", conn);
+                SqlCommand cmd = new SqlCommand("csp_select_company", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@id", p["id"]);
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
                     if (!reader.HasRows)
-                        throw new Exception("Customer with ID " + p["id"] + " was not found");
+                        throw new Exception("Company with ID " + p["id"] + " was not found");
 
                     reader.Read();
-                    cboxPerson.SelectedValue = Guid.Parse(reader["person_id"].ToString());
-                    cboxCompany.SelectedValue = Guid.Parse(reader["company_id"].ToString());
+                    tbName.Text = reader["name"].ToString();
+                    tbEmail.Text = reader["email"].ToString();
+                    tbPhone.Text = reader["phone"].ToString();
+                    tbAddress.Text = reader["address"].ToString();
                     cboxInstanceStatus.SelectedValue = reader["instance_status_id"];
                     tbComment.Text = reader["comment"].ToString();
                     p["create_date"] = reader["create_date"];
@@ -102,28 +80,30 @@ namespace DSA_lims
 
         private void btnOk_Click(object sender, EventArgs e)
         {
-            if (!Utils.IsValidGuid(cboxPerson.SelectedValue))
+            if (String.IsNullOrEmpty(tbName.Text.Trim()))
             {
-                MessageBox.Show("Person is mandatory");
+                MessageBox.Show("Company name is mandatory");
                 return;
-            }
+            }            
 
-            p["person_id"] = cboxPerson.SelectedValue;
-            p["company_id"] = cboxCompany.SelectedValue;
+            p["name"] = tbName.Text.Trim();
+            p["email"] = tbEmail.Text.Trim();
+            p["phone"] = tbPhone.Text.Trim();
+            p["address"] = tbAddress.Text.Trim();            
             p["instance_status_id"] = cboxInstanceStatus.SelectedValue;
             p["comment"] = tbComment.Text.Trim();
 
             bool success;
             if (!p.ContainsKey("id"))
-                success = InsertCustomer();
+                success = InsertCompany();
             else
-                success = UpdateCustomer();
+                success = UpdateCompany();
 
             DialogResult = success ? DialogResult.OK : DialogResult.Abort;
             Close();
         }
 
-        private bool InsertCustomer()
+        private bool InsertCompany()
         {
             SqlConnection connection = null;
             SqlTransaction transaction = null;
@@ -138,12 +118,14 @@ namespace DSA_lims
                 connection = DB.OpenConnection();
                 transaction = connection.BeginTransaction();
 
-                SqlCommand cmd = new SqlCommand("csp_insert_customer", connection, transaction);
+                SqlCommand cmd = new SqlCommand("csp_insert_company", connection, transaction);
                 cmd.CommandType = CommandType.StoredProcedure;
                 p["id"] = Guid.NewGuid();
-                cmd.Parameters.AddWithValue("@customer_id", p["id"]);
-                cmd.Parameters.AddWithValue("@person_id", p["person_id"]);
-                cmd.Parameters.AddWithValue("@company_id", p["company_id"]);
+                cmd.Parameters.AddWithValue("@id", p["id"]);
+                cmd.Parameters.AddWithValue("@name", p["name"]);
+                cmd.Parameters.AddWithValue("@email", p["email"]);
+                cmd.Parameters.AddWithValue("@phone", p["phone"]);
+                cmd.Parameters.AddWithValue("@address", p["address"]);
                 cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
                 cmd.Parameters.AddWithValue("@comment", p["comment"]);
                 cmd.Parameters.AddWithValue("@create_date", p["create_date"]);
@@ -152,7 +134,7 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@updated_by", p["updated_by"]);
                 cmd.ExecuteNonQuery();
 
-                DB.AddAuditMessage(connection, transaction, "customer", (Guid)p["id"], AuditOperationType.Insert, JsonConvert.SerializeObject(p));
+                DB.AddAuditMessage(connection, transaction, "company", (Guid)p["id"], AuditOperationType.Insert, JsonConvert.SerializeObject(p));
 
                 transaction.Commit();
             }
@@ -170,7 +152,7 @@ namespace DSA_lims
             return true;
         }
 
-        private bool UpdateCustomer()
+        private bool UpdateCompany()
         {
             SqlConnection connection = null;
             SqlTransaction transaction = null;
@@ -183,17 +165,20 @@ namespace DSA_lims
                 connection = DB.OpenConnection();
                 transaction = connection.BeginTransaction();
 
-                SqlCommand cmd = new SqlCommand("csp_update_customer", connection, transaction);
+                SqlCommand cmd = new SqlCommand("csp_update_company", connection, transaction);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@id", p["id"]);
-                cmd.Parameters.AddWithValue("@company_id", p["company_id"]);
+                cmd.Parameters.AddWithValue("@name", p["name"]);
+                cmd.Parameters.AddWithValue("@email", p["email"]);
+                cmd.Parameters.AddWithValue("@phone", p["phone"]);
+                cmd.Parameters.AddWithValue("@address", p["address"]);
                 cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
                 cmd.Parameters.AddWithValue("@comment", p["comment"]);
                 cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
                 cmd.Parameters.AddWithValue("@updated_by", p["updated_by"]);
                 cmd.ExecuteNonQuery();
 
-                DB.AddAuditMessage(connection, transaction, "customer", (Guid)p["id"], AuditOperationType.Update, JsonConvert.SerializeObject(p));
+                DB.AddAuditMessage(connection, transaction, "company", (Guid)p["id"], AuditOperationType.Update, JsonConvert.SerializeObject(p));
 
                 transaction.Commit();
             }

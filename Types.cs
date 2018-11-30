@@ -35,7 +35,7 @@ namespace DSA_lims
         Insert,
         Update,
         Delete
-    }    
+    }
 
     public static class InstanceStatus
     {

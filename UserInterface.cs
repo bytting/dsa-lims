@@ -147,18 +147,6 @@ namespace DSA_lims
         {                        
             grid.DataSource = DB.GetDataTable(conn, "csp_select_accounts_flat", CommandType.StoredProcedure,
                 new SqlParameter("@instance_status_level", instanceStatusLevel));
-
-            grid.Columns["password_hash"].Visible = false;
-            grid.Columns["create_date"].Visible = false;
-            grid.Columns["update_date"].Visible = false;
-        
-            grid.Columns["username"].HeaderText = "Username";
-            grid.Columns["fullname"].HeaderText = "Name";
-            grid.Columns["email"].HeaderText = "Email";
-            grid.Columns["phone"].HeaderText = "Phone";
-            grid.Columns["laboratory_name"].HeaderText = "Laboratory";
-            grid.Columns["language_code"].HeaderText = "Language";
-            grid.Columns["instance_status_name"].HeaderText = "Status";
         }
 
         public static void PopulateUsers(SqlConnection conn, Guid laboratoryId, int instanceStatusLevel, params ComboBox[] cbn)
@@ -296,19 +284,6 @@ namespace DSA_lims
         {
             grid.DataSource = DB.GetDataTable(conn, "csp_select_samplers_flat", CommandType.StoredProcedure,
                 new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
-        
-            grid.Columns["id"].Visible = false;
-            grid.Columns["comment"].Visible = false;
-            grid.Columns["created_by"].Visible = false;
-            grid.Columns["create_date"].Visible = false;
-            grid.Columns["updated_by"].Visible = false;
-            grid.Columns["update_date"].Visible = false;
-
-            grid.Columns["name"].HeaderText = "Name";
-            grid.Columns["address"].HeaderText = "Address";
-            grid.Columns["email"].HeaderText = "Email";
-            grid.Columns["phone"].HeaderText = "Phone";
-            grid.Columns["instance_status_name"].HeaderText = "Status";
         }        
 
         public static void PopulateSamplingMethods(SqlConnection conn, DataGridView grid)
@@ -561,20 +536,6 @@ order by name";
         {
             grid.DataSource = DB.GetDataTable(conn, "csp_select_customers_flat", CommandType.StoredProcedure,
                 new SqlParameter("@instance_status_level", statusLevel));
-
-            grid.Columns["id"].Visible = false;
-            grid.Columns["comment"].Visible = false;
-            grid.Columns["created_by"].Visible = false;
-            grid.Columns["create_date"].Visible = false;
-            grid.Columns["updated_by"].Visible = false;
-            grid.Columns["update_date"].Visible = false;
-
-            grid.Columns["name"].HeaderText = "Name";
-            grid.Columns["contact"].HeaderText = "Contact";
-            grid.Columns["address"].HeaderText = "Address";
-            grid.Columns["email"].HeaderText = "Email";
-            grid.Columns["phone"].HeaderText = "Phone";
-            grid.Columns["instance_status_name"].HeaderText = "Status";
         }
 
         public static void PopulateOrders(SqlConnection conn, int statusLevel, DataGridView grid)
@@ -729,6 +690,35 @@ order by create_date desc";
             grid.Columns["uniform_activity_name"].HeaderText = "uActU.";
             grid.Columns["detection_limit"].HeaderText = "Det.Lim.";
             grid.Columns["detection_limit_approved"].HeaderText = "Det.Lim.Appr.";
+        }
+
+        public static void PopulatePersons(SqlConnection conn, DataGridView grid)
+        {
+            grid.DataSource = DB.GetDataTable(conn, "csp_select_persons", CommandType.StoredProcedure);
+
+            grid.Columns["id"].Visible = false;
+            grid.Columns["create_date"].Visible = false;
+            grid.Columns["update_date"].Visible = false;
+
+            grid.Columns["name"].HeaderText = "Name";            
+            grid.Columns["email"].HeaderText = "Email";
+            grid.Columns["phone"].HeaderText = "Phone";
+            grid.Columns["address"].HeaderText = "Address";            
+        }
+
+        public static void PopulateCompanies(SqlConnection conn, DataGridView grid)
+        {
+            grid.DataSource = DB.GetDataTable(conn, "csp_select_companies_flat", CommandType.StoredProcedure, 
+                new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
+
+            grid.Columns["id"].Visible = false;
+            grid.Columns["create_date"].Visible = false;
+            grid.Columns["update_date"].Visible = false;
+
+            grid.Columns["name"].HeaderText = "Name";
+            grid.Columns["email"].HeaderText = "Email";
+            grid.Columns["phone"].HeaderText = "Phone";
+            grid.Columns["address"].HeaderText = "Address";
         }
     }
 }

@@ -45,10 +45,17 @@ namespace DSA_lims
 
         public FormSampler()
         {
-            InitializeComponent();            
-            Text = "Create sampler";            
+            InitializeComponent();
+
+            Text = "DSA-Lims - Add sampler";
             using (SqlConnection conn = DB.OpenConnection())
             {
+                UI.PopulateComboBoxes(conn, "csp_select_persons_short", new SqlParameter[] { }, cboxPersons);
+
+                UI.PopulateComboBoxes(conn, "csp_select_companies_short", new[] {
+                    new SqlParameter("instance_status_level", InstanceStatus.Active)
+                }, cboxCompanies);
+
                 cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, "csp_select_instance_status");
             }
             cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
@@ -58,7 +65,7 @@ namespace DSA_lims
         {
             InitializeComponent();            
             p["id"] = sid;
-            Text = "Update sampler";
+            Text = "DSA-Lims - Edit sampler";
 
             using (SqlConnection conn = DB.OpenConnection())
             {
@@ -73,10 +80,8 @@ namespace DSA_lims
                         throw new Exception("Sampler with ID " + p["id"] + " was not found");
 
                     reader.Read();
-                    tbName.Text = reader["name"].ToString();
-                    tbAddress.Text = reader["address"].ToString();
-                    tbEmail.Text = reader["email"].ToString();
-                    tbPhone.Text = reader["phone"].ToString();
+                    cboxPersons.SelectedValue = reader["person_id"];
+                    cboxCompanies.SelectedValue = reader["company_id"];
                     cboxInstanceStatus.SelectedValue = reader["instance_status_id"];
                     tbComment.Text = reader["comment"].ToString();
                     p["create_date"] = reader["create_date"];
@@ -95,16 +100,14 @@ namespace DSA_lims
 
         private void btnOk_Click(object sender, EventArgs e)
         {
-            if (String.IsNullOrEmpty(tbName.Text.Trim()))
+            if (!Utils.IsValidGuid(cboxPersons.SelectedValue))
             {
-                MessageBox.Show("Name is mandatory");
+                MessageBox.Show("Person is mandatory");
                 return;
             }
 
-            p["name"] = tbName.Text.Trim();
-            p["address"] = tbAddress.Text.Trim();
-            p["email"] = tbEmail.Text.Trim();
-            p["phone"] = tbPhone.Text.Trim();
+            p["person_id"] = cboxPersons.SelectedValue;
+            p["company_id"] = cboxCompanies.SelectedValue;
             p["instance_status_id"] = cboxInstanceStatus.SelectedValue;
             p["comment"] = tbComment.Text.Trim();
 
@@ -137,10 +140,8 @@ namespace DSA_lims
                 cmd.CommandType = CommandType.StoredProcedure;
                 p["id"] = Guid.NewGuid();
                 cmd.Parameters.AddWithValue("@id", p["id"]);
-                cmd.Parameters.AddWithValue("@name", p["name"]);
-                cmd.Parameters.AddWithValue("@address", p["address"]);
-                cmd.Parameters.AddWithValue("@email", p["email"]);
-                cmd.Parameters.AddWithValue("@phone", p["phone"]);
+                cmd.Parameters.AddWithValue("@person_id", p["person_id"]);
+                cmd.Parameters.AddWithValue("@company_id", p["company_id"]);
                 cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
                 cmd.Parameters.AddWithValue("@comment", p["comment"]);
                 cmd.Parameters.AddWithValue("@create_date", p["create_date"]);
@@ -183,10 +184,8 @@ namespace DSA_lims
                 SqlCommand cmd = new SqlCommand("csp_update_sampler", connection, transaction);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@id", p["id"]);
-                cmd.Parameters.AddWithValue("@name", p["name"]);
-                cmd.Parameters.AddWithValue("@address", p["address"]);
-                cmd.Parameters.AddWithValue("@email", p["email"]);
-                cmd.Parameters.AddWithValue("@phone", p["phone"]);
+                cmd.Parameters.AddWithValue("@person_id", p["person_id"]);
+                cmd.Parameters.AddWithValue("@company_id", p["company_id"]);
                 cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
                 cmd.Parameters.AddWithValue("@comment", p["comment"]);
                 cmd.Parameters.AddWithValue("@update_date", p["update_date"]);

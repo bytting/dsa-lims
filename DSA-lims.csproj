@@ -83,6 +83,12 @@
     <Compile Include="FormAnalysisMethods.Designer.cs">
       <DependentUpon>FormAnalysisMethods.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormCompany.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormCompany.Designer.cs">
+      <DependentUpon>FormCompany.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormCounty.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -160,6 +166,12 @@
     </Compile>
     <Compile Include="FormOrderNew.Designer.cs">
       <DependentUpon>FormOrderNew.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormPerson.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormPerson.Designer.cs">
+      <DependentUpon>FormPerson.cs</DependentUpon>
     </Compile>
     <Compile Include="FormPrepAnalAddAnal.cs">
       <SubType>Form</SubType>
@@ -334,6 +346,9 @@
     <EmbeddedResource Include="FormAnalysisMethods.resx">
       <DependentUpon>FormAnalysisMethods.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormCompany.resx">
+      <DependentUpon>FormCompany.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormCounty.resx">
       <DependentUpon>FormCounty.cs</DependentUpon>
     </EmbeddedResource>
@@ -375,6 +390,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormOrderNew.resx">
       <DependentUpon>FormOrderNew.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormPerson.resx">
+      <DependentUpon>FormPerson.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormPrepAnalAddAnal.resx">
       <DependentUpon>FormPrepAnalAddAnal.cs</DependentUpon>

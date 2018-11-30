@@ -69,6 +69,12 @@ namespace DSA_lims
 
             using (SqlConnection conn = DB.OpenConnection())
             {
+                UI.PopulateComboBoxes(conn, "csp_select_persons_short", new SqlParameter[] { }, cboxPersons);
+
+                UI.PopulateComboBoxes(conn, "csp_select_companies_short", new[] {
+                    new SqlParameter("instance_status_level", InstanceStatus.Active)
+                }, cboxCompanies);
+
                 cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, "csp_select_instance_status");
 
                 SqlCommand cmd = new SqlCommand("csp_select_sampler", conn);
@@ -140,8 +146,8 @@ namespace DSA_lims
                 cmd.CommandType = CommandType.StoredProcedure;
                 p["id"] = Guid.NewGuid();
                 cmd.Parameters.AddWithValue("@id", p["id"]);
-                cmd.Parameters.AddWithValue("@person_id", p["person_id"]);
-                cmd.Parameters.AddWithValue("@company_id", p["company_id"]);
+                cmd.Parameters.AddWithValue("@person_id", DB.MakeParam(typeof(Guid), p["person_id"]));
+                cmd.Parameters.AddWithValue("@company_id", DB.MakeParam(typeof(Guid), p["company_id"]));
                 cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
                 cmd.Parameters.AddWithValue("@comment", p["comment"]);
                 cmd.Parameters.AddWithValue("@create_date", p["create_date"]);
@@ -183,9 +189,8 @@ namespace DSA_lims
 
                 SqlCommand cmd = new SqlCommand("csp_update_sampler", connection, transaction);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@id", p["id"]);
-                cmd.Parameters.AddWithValue("@person_id", p["person_id"]);
-                cmd.Parameters.AddWithValue("@company_id", p["company_id"]);
+                cmd.Parameters.AddWithValue("@id", p["id"]);                
+                cmd.Parameters.AddWithValue("@company_id", DB.MakeParam(typeof(Guid), p["company_id"]));
                 cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
                 cmd.Parameters.AddWithValue("@comment", p["comment"]);
                 cmd.Parameters.AddWithValue("@update_date", p["update_date"]);

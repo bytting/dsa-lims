@@ -38,22 +38,22 @@
             this.label45 = new System.Windows.Forms.Label();
             this.label46 = new System.Windows.Forms.Label();
             this.label47 = new System.Windows.Forms.Label();
-            this.label48 = new System.Windows.Forms.Label();
-            this.cboxLaboratory = new System.Windows.Forms.ComboBox();
             this.tbUsername = new System.Windows.Forms.TextBox();
             this.tbFullname = new System.Windows.Forms.TextBox();
             this.tbEmail = new System.Windows.Forms.TextBox();
             this.tbPhone = new System.Windows.Forms.TextBox();
-            this.cboxInstanceStatus = new System.Windows.Forms.ComboBox();
+            this.label48 = new System.Windows.Forms.Label();
+            this.cboxLaboratory = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.cboxLanguage = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.cboxInstanceStatus = new System.Windows.Forms.ComboBox();
             this.lbRoles = new System.Windows.Forms.ListBox();
             this.toolStrip25 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel5 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.btnAddRole = new System.Windows.Forms.ToolStripButton();
             this.btnRemoveRole = new System.Windows.Forms.ToolStripButton();
-            this.label1 = new System.Windows.Forms.Label();
-            this.cboxLanguage = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -192,28 +192,6 @@
             this.label47.Text = "Phone";
             this.label47.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // label48
-            // 
-            this.label48.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label48.Location = new System.Drawing.Point(3, 146);
-            this.label48.Name = "label48";
-            this.label48.Size = new System.Drawing.Size(74, 26);
-            this.label48.TabIndex = 4;
-            this.label48.Text = "Laboratory";
-            this.label48.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // cboxLaboratory
-            // 
-            this.cboxLaboratory.DisplayMember = "Name";
-            this.cboxLaboratory.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cboxLaboratory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboxLaboratory.FormattingEnabled = true;
-            this.cboxLaboratory.Location = new System.Drawing.Point(83, 149);
-            this.cboxLaboratory.Name = "cboxLaboratory";
-            this.cboxLaboratory.Size = new System.Drawing.Size(317, 21);
-            this.cboxLaboratory.TabIndex = 5;
-            this.cboxLaboratory.ValueMember = "Id";
-            // 
             // tbUsername
             // 
             this.tbUsername.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -247,6 +225,63 @@
             this.tbPhone.Size = new System.Drawing.Size(317, 20);
             this.tbPhone.TabIndex = 13;
             // 
+            // label48
+            // 
+            this.label48.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label48.Location = new System.Drawing.Point(3, 146);
+            this.label48.Name = "label48";
+            this.label48.Size = new System.Drawing.Size(74, 26);
+            this.label48.TabIndex = 4;
+            this.label48.Text = "Laboratory";
+            this.label48.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // cboxLaboratory
+            // 
+            this.cboxLaboratory.DisplayMember = "Name";
+            this.cboxLaboratory.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cboxLaboratory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxLaboratory.FormattingEnabled = true;
+            this.cboxLaboratory.Location = new System.Drawing.Point(83, 149);
+            this.cboxLaboratory.Name = "cboxLaboratory";
+            this.cboxLaboratory.Size = new System.Drawing.Size(317, 21);
+            this.cboxLaboratory.TabIndex = 5;
+            this.cboxLaboratory.ValueMember = "Id";
+            // 
+            // label1
+            // 
+            this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label1.Location = new System.Drawing.Point(3, 120);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(74, 26);
+            this.label1.TabIndex = 18;
+            this.label1.Text = "Language";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // cboxLanguage
+            // 
+            this.cboxLanguage.DisplayMember = "Name";
+            this.cboxLanguage.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cboxLanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxLanguage.FormattingEnabled = true;
+            this.cboxLanguage.Items.AddRange(new object[] {
+            "nb",
+            "en"});
+            this.cboxLanguage.Location = new System.Drawing.Point(83, 123);
+            this.cboxLanguage.Name = "cboxLanguage";
+            this.cboxLanguage.Size = new System.Drawing.Size(317, 21);
+            this.cboxLanguage.TabIndex = 19;
+            this.cboxLanguage.ValueMember = "Id";
+            // 
+            // label2
+            // 
+            this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label2.Location = new System.Drawing.Point(3, 172);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(74, 26);
+            this.label2.TabIndex = 17;
+            this.label2.Text = "Status";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // cboxInstanceStatus
             // 
             this.cboxInstanceStatus.DisplayMember = "Name";
@@ -258,16 +293,6 @@
             this.cboxInstanceStatus.Size = new System.Drawing.Size(317, 21);
             this.cboxInstanceStatus.TabIndex = 16;
             this.cboxInstanceStatus.ValueMember = "Id";
-            // 
-            // label2
-            // 
-            this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label2.Location = new System.Drawing.Point(3, 172);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(74, 26);
-            this.label2.TabIndex = 17;
-            this.label2.Text = "Status";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // lbRoles
             // 
@@ -319,29 +344,6 @@
             this.btnRemoveRole.Name = "btnRemoveRole";
             this.btnRemoveRole.Size = new System.Drawing.Size(70, 22);
             this.btnRemoveRole.Text = "Remove";
-            // 
-            // label1
-            // 
-            this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label1.Location = new System.Drawing.Point(3, 120);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(74, 26);
-            this.label1.TabIndex = 18;
-            this.label1.Text = "Language";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // cboxLanguage
-            // 
-            this.cboxLanguage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cboxLanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboxLanguage.FormattingEnabled = true;
-            this.cboxLanguage.Items.AddRange(new object[] {
-            "nb",
-            "en"});
-            this.cboxLanguage.Location = new System.Drawing.Point(83, 123);
-            this.cboxLanguage.Name = "cboxLanguage";
-            this.cboxLanguage.Size = new System.Drawing.Size(317, 21);
-            this.cboxLanguage.TabIndex = 19;
             // 
             // FormUser
             // 

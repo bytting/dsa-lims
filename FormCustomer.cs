@@ -67,10 +67,16 @@ namespace DSA_lims
             InitializeComponent();
 
             Text = "DSA-Lims - Edit customer";
-            p["id"] = customerId;            
+            p["id"] = customerId;
 
             using (SqlConnection conn = DB.OpenConnection())
             {
+                UI.PopulateComboBoxes(conn, "csp_select_persons_short", new SqlParameter[] { }, cboxPerson);
+
+                UI.PopulateComboBoxes(conn, "csp_select_companies_short", new[] {
+                    new SqlParameter("instance_status_level", InstanceStatus.Active)
+                }, cboxCompany);
+
                 cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, "csp_select_instance_status");
 
                 SqlCommand cmd = new SqlCommand("csp_select_customer", conn);
@@ -82,8 +88,8 @@ namespace DSA_lims
                         throw new Exception("Customer with ID " + p["id"] + " was not found");
 
                     reader.Read();
-                    cboxPerson.SelectedValue = Guid.Parse(reader["person_id"].ToString());
-                    cboxCompany.SelectedValue = Guid.Parse(reader["company_id"].ToString());
+                    cboxPerson.SelectedValue = reader["person_id"];
+                    cboxCompany.SelectedValue = reader["company_id"];
                     cboxInstanceStatus.SelectedValue = reader["instance_status_id"];
                     tbComment.Text = reader["comment"].ToString();
                     p["create_date"] = reader["create_date"];
@@ -92,6 +98,10 @@ namespace DSA_lims
                     p["updated_by"] = reader["updated_by"];
                 }
             }
+        }
+
+        private void FormCustomer_Load(object sender, EventArgs e)
+        {            
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -141,9 +151,9 @@ namespace DSA_lims
                 SqlCommand cmd = new SqlCommand("csp_insert_customer", connection, transaction);
                 cmd.CommandType = CommandType.StoredProcedure;
                 p["id"] = Guid.NewGuid();
-                cmd.Parameters.AddWithValue("@customer_id", p["id"]);
-                cmd.Parameters.AddWithValue("@person_id", p["person_id"]);
-                cmd.Parameters.AddWithValue("@company_id", p["company_id"]);
+                cmd.Parameters.AddWithValue("@id", p["id"]);
+                cmd.Parameters.AddWithValue("@person_id", DB.MakeParam(typeof(Guid), p["person_id"]));
+                cmd.Parameters.AddWithValue("@company_id", DB.MakeParam(typeof(Guid), p["company_id"]));
                 cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
                 cmd.Parameters.AddWithValue("@comment", p["comment"]);
                 cmd.Parameters.AddWithValue("@create_date", p["create_date"]);
@@ -186,7 +196,7 @@ namespace DSA_lims
                 SqlCommand cmd = new SqlCommand("csp_update_customer", connection, transaction);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@id", p["id"]);
-                cmd.Parameters.AddWithValue("@company_id", p["company_id"]);
+                cmd.Parameters.AddWithValue("@company_id", DB.MakeParam(typeof(Guid), p["company_id"]));
                 cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
                 cmd.Parameters.AddWithValue("@comment", p["comment"]);
                 cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
@@ -209,6 +219,6 @@ namespace DSA_lims
             }
 
             return true;
-        }
+        }        
     }
 }

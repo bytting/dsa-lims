@@ -523,7 +523,7 @@ as
 		comment = @comment,
 		update_date = @update_date,
 		updated_by = @updated_by
-	where customer_id = @customer_id
+	where id = @id
 go
 
 create view cv_customer
@@ -547,11 +547,11 @@ as
 go
 
 create proc csp_select_customer
-	@customer_id uniqueidentifier
+	@id uniqueidentifier
 as 
 	select *
 	from cv_customer
-	where customer_id = @customer_id
+	where id = @id
 go
 
 create proc csp_select_customers

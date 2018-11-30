@@ -586,7 +586,7 @@ namespace DSA_lims
                 return;
 
             DataGridViewRow row = gridMetaLab.SelectedRows[0];
-            Guid lid = Guid.Parse(row.Cells[0].Value.ToString());
+            Guid lid = Guid.Parse(row.Cells["id"].Value.ToString());
 
             FormLaboratory form = new FormLaboratory(lid);
             switch (form.ShowDialog())
@@ -883,7 +883,7 @@ namespace DSA_lims
                 return;
 
             DataGridViewRow row = gridSysNuclides.SelectedRows[0];            
-            Guid nid = Guid.Parse(row.Cells[0].Value.ToString());
+            Guid nid = Guid.Parse(row.Cells["id"].Value.ToString());
 
             FormNuclide form = new FormNuclide(nid);
             switch (form.ShowDialog())
@@ -926,7 +926,7 @@ namespace DSA_lims
                 return;
 
             DataGridViewRow row = gridSysGeom.SelectedRows[0];
-            Guid gid = Guid.Parse(row.Cells[0].Value.ToString());
+            Guid gid = Guid.Parse(row.Cells["id"].Value.ToString());
 
             FormGeometry form = new FormGeometry(gid);
             switch (form.ShowDialog())
@@ -969,7 +969,7 @@ namespace DSA_lims
                 return;
 
             DataGridViewRow row = gridSysCounty.SelectedRows[0];
-            Guid cid = Guid.Parse(row.Cells[0].Value.ToString());
+            Guid cid = Guid.Parse(row.Cells["id"].Value.ToString());
 
             FormCounty form = new FormCounty(cid);
             switch (form.ShowDialog())
@@ -996,7 +996,7 @@ namespace DSA_lims
                 return;
 
             DataGridViewRow row = gridSysCounty.SelectedRows[0];
-            Guid cid = Guid.Parse(row.Cells[0].Value.ToString());
+            Guid cid = Guid.Parse(row.Cells["id"].Value.ToString());
 
             FormMunicipality form = new FormMunicipality(cid);
             switch (form.ShowDialog())
@@ -1021,10 +1021,10 @@ namespace DSA_lims
                 return;
 
             DataGridViewRow row = gridSysCounty.SelectedRows[0];
-            Guid cid = Guid.Parse(row.Cells[0].Value.ToString());            
+            Guid cid = Guid.Parse(row.Cells["id"].Value.ToString());            
 
             row = gridSysMunicipality.SelectedRows[0];
-            Guid mid = Guid.Parse(row.Cells[0].Value.ToString());            
+            Guid mid = Guid.Parse(row.Cells["id"].Value.ToString());            
 
             FormMunicipality form = new FormMunicipality(cid, mid);
             switch (form.ShowDialog())
@@ -1072,7 +1072,7 @@ namespace DSA_lims
                 return;
 
             DataGridViewRow row = gridMetaStation.SelectedRows[0];
-            Guid sid = Guid.Parse(row.Cells[0].Value.ToString());
+            Guid sid = Guid.Parse(row.Cells["id"].Value.ToString());
 
             FormStation form = new FormStation(sid);
             switch (form.ShowDialog())
@@ -1120,7 +1120,7 @@ namespace DSA_lims
                 return;
 
             DataGridViewRow row = gridMetaSampleStorage.SelectedRows[0];
-            Guid ssid = Guid.Parse(row.Cells[0].Value.ToString());
+            Guid ssid = Guid.Parse(row.Cells["id"].Value.ToString());
 
             FormSampleStorage form = new FormSampleStorage(ssid);
             switch (form.ShowDialog())
@@ -1150,7 +1150,8 @@ namespace DSA_lims
                     SetStatusMessage("Sampler " + form.SamplerName + " created");
                     using (SqlConnection conn = DB.OpenConnection())
                     {
-                        UI.PopulateSamplers(conn, gridMetaSamplers);                        
+                        UI.PopulateSamplers(conn, gridMetaSamplers);
+
                         UI.PopulateComboBoxes(conn, "csp_select_samplers", new[] {
                             new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
                         }, cboxSampleInfoSampler);
@@ -1163,12 +1164,15 @@ namespace DSA_lims
         }
 
         private void miSamplerEdit_Click(object sender, EventArgs e)
-        {        
+        {
             if (gridMetaSamplers.SelectedRows.Count < 1)
+            {
+                MessageBox.Show("You must select a sampler first");
                 return;
+            }
 
             DataGridViewRow row = gridMetaSamplers.SelectedRows[0];
-            Guid sid = Guid.Parse(row.Cells[0].Value.ToString());
+            Guid sid = Guid.Parse(row.Cells["id"].Value.ToString());
 
             FormSampler form = new FormSampler(sid);
             switch (form.ShowDialog())
@@ -1844,7 +1848,7 @@ order by a.number
                 return;
 
             DataGridViewRow row = gridMetaSamplingMeth.SelectedRows[0];
-            Guid smid = Guid.Parse(row.Cells[0].Value.ToString());
+            Guid smid = Guid.Parse(row.Cells["id"].Value.ToString());
 
             FormSamplingMeth form = new FormSamplingMeth(smid);
             switch (form.ShowDialog())
@@ -1914,7 +1918,7 @@ order by a.number
                 return;
 
             DataGridViewRow row = gridTypeRelPrepMeth.SelectedRows[0];
-            Guid pmid = Guid.Parse(row.Cells[0].Value.ToString());
+            Guid pmid = Guid.Parse(row.Cells["id"].Value.ToString());
 
             FormPreparationMethod form = new FormPreparationMethod(pmid);
             switch (form.ShowDialog())
@@ -1963,7 +1967,7 @@ order by a.number
                 return;
 
             DataGridViewRow row = gridTypeRelAnalMeth.SelectedRows[0];
-            Guid amid = Guid.Parse(row.Cells[0].Value.ToString());
+            Guid amid = Guid.Parse(row.Cells["id"].Value.ToString());
 
             FormAnalysisMethods form = new FormAnalysisMethods(amid);
             switch (form.ShowDialog())
@@ -2563,7 +2567,10 @@ order by name
         {
             // edit customer
             if (gridCustomers.SelectedRows.Count < 1)
+            {
+                MessageBox.Show("You must select a customer first");
                 return;
+            }
 
             DataGridViewRow row = gridCustomers.SelectedRows[0];
             Guid cid = Guid.Parse(row.Cells["id"].Value.ToString());

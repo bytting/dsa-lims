@@ -125,12 +125,14 @@
             // 
             // cboxCompany
             // 
+            this.cboxCompany.DisplayMember = "Name";
             this.cboxCompany.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxCompany.FormattingEnabled = true;
             this.cboxCompany.Location = new System.Drawing.Point(92, 61);
             this.cboxCompany.Name = "cboxCompany";
             this.cboxCompany.Size = new System.Drawing.Size(263, 21);
             this.cboxCompany.TabIndex = 23;
+            this.cboxCompany.ValueMember = "Id";
             // 
             // label9
             // 
@@ -143,12 +145,14 @@
             // 
             // cboxPerson
             // 
+            this.cboxPerson.DisplayMember = "Name";
             this.cboxPerson.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxPerson.FormattingEnabled = true;
             this.cboxPerson.Location = new System.Drawing.Point(92, 32);
             this.cboxPerson.Name = "cboxPerson";
             this.cboxPerson.Size = new System.Drawing.Size(263, 21);
             this.cboxPerson.TabIndex = 25;
+            this.cboxPerson.ValueMember = "Id";
             // 
             // FormCustomer
             // 
@@ -169,6 +173,7 @@
             this.Name = "FormCustomer";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "DSA-Lims - Customer";
+            this.Load += new System.EventHandler(this.FormCustomer_Load);
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();

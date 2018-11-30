@@ -572,11 +572,45 @@ namespace DSA_lims
         private void miNewUser_Click(object sender, EventArgs e)
         {
             // New user
+            FormUser form = new FormUser();
+            if (form.ShowDialog() != DialogResult.OK)
+                return;
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                UI.PopulateUsers(conn, InstanceStatus.Deleted, gridMetaUsers);
+            }
         }
+
+        private void miEditUser_Click(object sender, EventArgs e)
+        {
+            // edit user
+            if (gridMetaUsers.SelectedRows.Count < 1)
+            {
+                MessageBox.Show("You must select a user first");
+                return;
+            }
+
+            Guid uid = Guid.Parse(gridMetaUsers.SelectedRows[0].Cells["id"].Value.ToString());
+
+            FormUser form = new FormUser(uid);
+            if (form.ShowDialog() != DialogResult.OK)
+                return;
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                UI.PopulateUsers(conn, InstanceStatus.Deleted, gridMetaUsers);
+            }
+        }        
 
         private void miDeleteUser_Click(object sender, EventArgs e)
         {
             // Delete user
+        }
+
+        private void miResetPass_Click(object sender, EventArgs e)
+        {
+            // reset password
         }
 
         private void miEditLaboratory_Click(object sender, EventArgs e)
@@ -605,33 +639,7 @@ namespace DSA_lims
                     SetStatusMessage("Update laboratory failed", StatusMessageType.Error);                    
                     break;
             }                        
-        }
-
-        private void miEditUser_Click(object sender, EventArgs e)
-        {
-            // edit user
-            if(gridMetaUsers.SelectedRows.Count < 1)
-            {
-                MessageBox.Show("You must select a user first");
-                return;
-            }
-            
-            string uname = gridMetaUsers.SelectedRows[0].Cells["username"].Value.ToString();
-
-            FormUser form = new FormUser(uname);
-            if (form.ShowDialog() != DialogResult.OK)
-                return;
-
-            using (SqlConnection conn = DB.OpenConnection())
-            {
-                UI.PopulateUsers(conn, InstanceStatus.Deleted, gridMetaUsers);
-            }
-        }
-
-        private void miResetPass_Click(object sender, EventArgs e)
-        {
-            // reset password
-        }
+        }        
 
         private void miProjectsNew_Click(object sender, EventArgs e)
         {
@@ -2273,11 +2281,10 @@ order by name
             tbOrderDeadline.Text = "";
             cboxOrderRequestedSigma.SelectedValue = -1;
             tbOrderContentComment.Text = "";
-            tbOrderCustomerName.Text = "";
-            tbOrderCustomerContact.Text = "";
-            tbOrderCustomerAddress.Text = "";
+            tbOrderCustomerName.Text = "";                        
             tbOrderCustomerEmail.Text = "";
-            tbOrderCustomerPhone.Text = "";            
+            tbOrderCustomerPhone.Text = "";
+            tbOrderCustomerAddress.Text = "";
             tbOrderReportComment.Text = "";
             // TODO
         }
@@ -2306,11 +2313,10 @@ order by name
                     map["account_id"] = reader["account_id"];
                     map["deadline"] = reader["deadline"];
                     map["requested_sigma"] = reader["requested_sigma"];
-                    map["customer_name"] = reader["customer_name"];
-                    map["customer_contact"] = reader["customer_contact"];
-                    map["customer_address"] = reader["customer_address"];
+                    map["customer_name"] = reader["customer_name"];                                        
                     map["customer_email"] = reader["customer_email"];
-                    map["customer_phone"] = reader["customer_phone"];                    
+                    map["customer_phone"] = reader["customer_phone"];
+                    map["customer_address"] = reader["customer_address"];
                     map["approved_customer"] = reader["approved_customer"];
                     map["approved_laboratory"] = reader["approved_laboratory"];
                     map["content_comment"] = reader["content_comment"];
@@ -2327,24 +2333,23 @@ order by name
 
                 tbOrderName.Text = map["name"].ToString();
                 cboxOrderLaboratory.SelectedValue = map["laboratory_id"];
-                cboxOrderResponsible.SelectedValue = map["account_id"];
+                Guid accId = Guid.Parse(map["account_id"].ToString());
+                cboxOrderResponsible.SelectedValue = accId;                
                 DateTime deadline = Convert.ToDateTime(map["deadline"]);
                 tbOrderDeadline.Text = deadline.ToString(Utils.DateFormatNorwegian);
                 tbOrderDeadline.Tag = deadline;
                 cboxOrderRequestedSigma.SelectedValue = map["requested_sigma"];
                 CustomerModel cust = new CustomerModel();
-                cust.Name = map["customer_name"].ToString();
-                cust.Contact = map["customer_contact"].ToString();
-                cust.Address = map["customer_address"].ToString();
+                cust.Name = map["customer_name"].ToString();                
                 cust.Email = map["customer_email"].ToString();
                 cust.Phone = map["customer_phone"].ToString();
+                cust.Address = map["customer_address"].ToString();
                 tbOrderCustomer.Text = cust.Name;
                 tbOrderCustomer.Tag = cust;
-                tbOrderCustomerName.Text = cust.Name;
-                tbOrderCustomerContact.Text = cust.Contact;
-                tbOrderCustomerAddress.Text = cust.Address;
+                tbOrderCustomerName.Text = cust.Name;                                
                 tbOrderCustomerEmail.Text = cust.Email;
                 tbOrderCustomerPhone.Text = cust.Phone;
+                tbOrderCustomerAddress.Text = cust.Address;
                 tbOrderContentComment.Text = map["content_comment"].ToString();
                 tbOrderReportComment.Text = map["report_comment"].ToString();                
 
@@ -2502,11 +2507,10 @@ order by name
                 cmd.Parameters.AddWithValue("@account_id", DB.MakeParam(typeof(String), cboxOrderResponsible.SelectedValue));
                 cmd.Parameters.AddWithValue("@deadline", DB.MakeParam(typeof(DateTime), tbOrderDeadline.Tag));
                 cmd.Parameters.AddWithValue("@requested_sigma", DB.MakeParam(typeof(double), cboxOrderRequestedSigma.SelectedValue));
-                cmd.Parameters.AddWithValue("@customer_name", DB.MakeParam(typeof(string), cust.Name));
-                cmd.Parameters.AddWithValue("@customer_contact", DB.MakeParam(typeof(string), cust.Contact));
-                cmd.Parameters.AddWithValue("@customer_address", DB.MakeParam(typeof(string), cust.Address));
+                cmd.Parameters.AddWithValue("@customer_name", DB.MakeParam(typeof(string), cust.Name));                                
                 cmd.Parameters.AddWithValue("@customer_email", DB.MakeParam(typeof(string), cust.Email));
                 cmd.Parameters.AddWithValue("@customer_phone", DB.MakeParam(typeof(string), cust.Phone));
+                cmd.Parameters.AddWithValue("@customer_address", DB.MakeParam(typeof(string), cust.Address));
                 cmd.Parameters.AddWithValue("@content_comment", DB.MakeParam(typeof(string), tbOrderContentComment.Text));
                 cmd.Parameters.AddWithValue("@instance_status_id", InstanceStatus.Active); // FIXME
                 cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
@@ -2644,13 +2648,19 @@ order by name
 
         private void cboxOrderLaboratory_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cboxOrderLaboratory.SelectedItem == null)
+            if (!Utils.IsValidGuid(cboxOrderLaboratory.SelectedValue))
+            {
+                cboxOrderResponsible.SelectedValue = Guid.Empty;
                 return;
+            }
 
             Guid labId = Guid.Parse(cboxOrderLaboratory.SelectedValue.ToString());
             using (SqlConnection conn = DB.OpenConnection())
             {
-                UI.PopulateUsers(conn, labId, InstanceStatus.Active, cboxOrderResponsible);
+                UI.PopulateComboBoxes(conn, "csp_select_accounts_for_laboratory", new[] {
+                    new SqlParameter("@laboratory_id", labId),
+                    new SqlParameter("@instance_status_level", InstanceStatus.Active)
+                }, cboxOrderResponsible);
             }
         }
 
@@ -3410,11 +3420,10 @@ insert into analysis_result values(
             tbOrderCustomer.Text = c.Name;
             tbOrderCustomer.Tag = c;
 
-            tbOrderCustomerName.Text = c.Name;
-            tbOrderCustomerContact.Text = c.Contact;
-            tbOrderCustomerAddress.Text = c.Address;
+            tbOrderCustomerName.Text = c.Name;                        
             tbOrderCustomerEmail.Text = c.Email;
             tbOrderCustomerPhone.Text = c.Phone;
+            tbOrderCustomerAddress.Text = c.Address;
         }
 
         private void miPersonNew_Click(object sender, EventArgs e)

@@ -340,11 +340,9 @@
             this.tbOrderCustomerPhone = new System.Windows.Forms.TextBox();
             this.tbOrderCustomerEmail = new System.Windows.Forms.TextBox();
             this.tbOrderCustomerAddress = new System.Windows.Forms.TextBox();
-            this.tbOrderCustomerContact = new System.Windows.Forms.TextBox();
             this.label70 = new System.Windows.Forms.Label();
             this.label69 = new System.Windows.Forms.Label();
             this.label62 = new System.Windows.Forms.Label();
-            this.label61 = new System.Windows.Forms.Label();
             this.tbOrderCustomerName = new System.Windows.Forms.TextBox();
             this.label56 = new System.Windows.Forms.Label();
             this.checkBox2 = new System.Windows.Forms.CheckBox();
@@ -4229,7 +4227,7 @@
             this.tabOrderStatus.Location = new System.Drawing.Point(4, 24);
             this.tabOrderStatus.Name = "tabOrderStatus";
             this.tabOrderStatus.Padding = new System.Windows.Forms.Padding(3);
-            this.tabOrderStatus.Size = new System.Drawing.Size(1133, 610);
+            this.tabOrderStatus.Size = new System.Drawing.Size(1114, 598);
             this.tabOrderStatus.TabIndex = 2;
             this.tabOrderStatus.Text = "Status";
             // 
@@ -4240,7 +4238,7 @@
             this.panel11.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel11.Location = new System.Drawing.Point(3, 3);
             this.panel11.Name = "panel11";
-            this.panel11.Size = new System.Drawing.Size(1127, 604);
+            this.panel11.Size = new System.Drawing.Size(1108, 592);
             this.panel11.TabIndex = 2;
             // 
             // tableLayoutPanel7
@@ -4250,14 +4248,6 @@
             this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel7.Controls.Add(this.tbOrderCustomerPhone, 3, 4);
-            this.tableLayoutPanel7.Controls.Add(this.tbOrderCustomerEmail, 3, 3);
-            this.tableLayoutPanel7.Controls.Add(this.tbOrderCustomerAddress, 3, 2);
-            this.tableLayoutPanel7.Controls.Add(this.tbOrderCustomerContact, 3, 1);
-            this.tableLayoutPanel7.Controls.Add(this.label70, 2, 4);
-            this.tableLayoutPanel7.Controls.Add(this.label69, 2, 3);
-            this.tableLayoutPanel7.Controls.Add(this.label62, 2, 2);
-            this.tableLayoutPanel7.Controls.Add(this.label61, 2, 1);
             this.tableLayoutPanel7.Controls.Add(this.tbOrderCustomerName, 3, 0);
             this.tableLayoutPanel7.Controls.Add(this.label56, 2, 0);
             this.tableLayoutPanel7.Controls.Add(this.checkBox2, 0, 1);
@@ -4268,6 +4258,12 @@
             this.tableLayoutPanel7.Controls.Add(this.label43, 0, 4);
             this.tableLayoutPanel7.Controls.Add(this.comboBox1, 0, 11);
             this.tableLayoutPanel7.Controls.Add(this.textBox30, 1, 11);
+            this.tableLayoutPanel7.Controls.Add(this.label69, 2, 1);
+            this.tableLayoutPanel7.Controls.Add(this.label62, 2, 3);
+            this.tableLayoutPanel7.Controls.Add(this.label70, 2, 2);
+            this.tableLayoutPanel7.Controls.Add(this.tbOrderCustomerEmail, 3, 1);
+            this.tableLayoutPanel7.Controls.Add(this.tbOrderCustomerAddress, 3, 3);
+            this.tableLayoutPanel7.Controls.Add(this.tbOrderCustomerPhone, 3, 2);
             this.tableLayoutPanel7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel7.Location = new System.Drawing.Point(0, 25);
             this.tableLayoutPanel7.Name = "tableLayoutPanel7";
@@ -4285,51 +4281,42 @@
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel7.Size = new System.Drawing.Size(1127, 579);
+            this.tableLayoutPanel7.Size = new System.Drawing.Size(1108, 567);
             this.tableLayoutPanel7.TabIndex = 2;
             // 
             // tbOrderCustomerPhone
             // 
             this.tbOrderCustomerPhone.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbOrderCustomerPhone.Location = new System.Drawing.Point(846, 123);
+            this.tbOrderCustomerPhone.Location = new System.Drawing.Point(834, 63);
             this.tbOrderCustomerPhone.Name = "tbOrderCustomerPhone";
             this.tbOrderCustomerPhone.ReadOnly = true;
-            this.tbOrderCustomerPhone.Size = new System.Drawing.Size(278, 21);
+            this.tbOrderCustomerPhone.Size = new System.Drawing.Size(271, 21);
             this.tbOrderCustomerPhone.TabIndex = 17;
             // 
             // tbOrderCustomerEmail
             // 
             this.tbOrderCustomerEmail.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbOrderCustomerEmail.Location = new System.Drawing.Point(846, 93);
+            this.tbOrderCustomerEmail.Location = new System.Drawing.Point(834, 33);
             this.tbOrderCustomerEmail.Name = "tbOrderCustomerEmail";
             this.tbOrderCustomerEmail.ReadOnly = true;
-            this.tbOrderCustomerEmail.Size = new System.Drawing.Size(278, 21);
+            this.tbOrderCustomerEmail.Size = new System.Drawing.Size(271, 21);
             this.tbOrderCustomerEmail.TabIndex = 16;
             // 
             // tbOrderCustomerAddress
             // 
             this.tbOrderCustomerAddress.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbOrderCustomerAddress.Location = new System.Drawing.Point(846, 63);
+            this.tbOrderCustomerAddress.Location = new System.Drawing.Point(834, 93);
             this.tbOrderCustomerAddress.Name = "tbOrderCustomerAddress";
             this.tbOrderCustomerAddress.ReadOnly = true;
-            this.tbOrderCustomerAddress.Size = new System.Drawing.Size(278, 21);
+            this.tbOrderCustomerAddress.Size = new System.Drawing.Size(271, 21);
             this.tbOrderCustomerAddress.TabIndex = 15;
-            // 
-            // tbOrderCustomerContact
-            // 
-            this.tbOrderCustomerContact.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbOrderCustomerContact.Location = new System.Drawing.Point(846, 33);
-            this.tbOrderCustomerContact.Name = "tbOrderCustomerContact";
-            this.tbOrderCustomerContact.ReadOnly = true;
-            this.tbOrderCustomerContact.Size = new System.Drawing.Size(278, 21);
-            this.tbOrderCustomerContact.TabIndex = 14;
             // 
             // label70
             // 
             this.label70.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label70.Location = new System.Drawing.Point(565, 120);
+            this.label70.Location = new System.Drawing.Point(557, 60);
             this.label70.Name = "label70";
-            this.label70.Size = new System.Drawing.Size(275, 30);
+            this.label70.Size = new System.Drawing.Size(271, 30);
             this.label70.TabIndex = 4;
             this.label70.Text = "Customer phone";
             this.label70.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -4337,9 +4324,9 @@
             // label69
             // 
             this.label69.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label69.Location = new System.Drawing.Point(565, 90);
+            this.label69.Location = new System.Drawing.Point(557, 30);
             this.label69.Name = "label69";
-            this.label69.Size = new System.Drawing.Size(275, 30);
+            this.label69.Size = new System.Drawing.Size(271, 30);
             this.label69.TabIndex = 3;
             this.label69.Text = "Customer email";
             this.label69.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -4347,38 +4334,28 @@
             // label62
             // 
             this.label62.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label62.Location = new System.Drawing.Point(565, 60);
+            this.label62.Location = new System.Drawing.Point(557, 90);
             this.label62.Name = "label62";
-            this.label62.Size = new System.Drawing.Size(275, 30);
+            this.label62.Size = new System.Drawing.Size(271, 30);
             this.label62.TabIndex = 2;
             this.label62.Text = "Customer address";
             this.label62.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // label61
-            // 
-            this.label61.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label61.Location = new System.Drawing.Point(565, 30);
-            this.label61.Name = "label61";
-            this.label61.Size = new System.Drawing.Size(275, 30);
-            this.label61.TabIndex = 1;
-            this.label61.Text = "Customer contact";
-            this.label61.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
             // tbOrderCustomerName
             // 
             this.tbOrderCustomerName.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbOrderCustomerName.Location = new System.Drawing.Point(846, 3);
+            this.tbOrderCustomerName.Location = new System.Drawing.Point(834, 3);
             this.tbOrderCustomerName.Name = "tbOrderCustomerName";
             this.tbOrderCustomerName.ReadOnly = true;
-            this.tbOrderCustomerName.Size = new System.Drawing.Size(278, 21);
+            this.tbOrderCustomerName.Size = new System.Drawing.Size(271, 21);
             this.tbOrderCustomerName.TabIndex = 18;
             // 
             // label56
             // 
             this.label56.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label56.Location = new System.Drawing.Point(565, 0);
+            this.label56.Location = new System.Drawing.Point(557, 0);
             this.label56.Name = "label56";
-            this.label56.Size = new System.Drawing.Size(275, 30);
+            this.label56.Size = new System.Drawing.Size(271, 30);
             this.label56.TabIndex = 0;
             this.label56.Text = "Customer name";
             this.label56.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -4390,7 +4367,7 @@
             this.checkBox2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.checkBox2.Location = new System.Drawing.Point(3, 33);
             this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(275, 24);
+            this.checkBox2.Size = new System.Drawing.Size(271, 24);
             this.checkBox2.TabIndex = 0;
             this.checkBox2.Text = "Approved by customer";
             this.checkBox2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -4403,7 +4380,7 @@
             this.checkBox3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.checkBox3.Location = new System.Drawing.Point(3, 63);
             this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(275, 24);
+            this.checkBox3.Size = new System.Drawing.Size(271, 24);
             this.checkBox3.TabIndex = 1;
             this.checkBox3.Text = "Approved by laboratory";
             this.checkBox3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -4412,19 +4389,19 @@
             // textBox22
             // 
             this.textBox22.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox22.Location = new System.Drawing.Point(284, 33);
+            this.textBox22.Location = new System.Drawing.Point(280, 33);
             this.textBox22.Name = "textBox22";
             this.textBox22.ReadOnly = true;
-            this.textBox22.Size = new System.Drawing.Size(275, 21);
+            this.textBox22.Size = new System.Drawing.Size(271, 21);
             this.textBox22.TabIndex = 1;
             // 
             // textBox23
             // 
             this.textBox23.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox23.Location = new System.Drawing.Point(284, 63);
+            this.textBox23.Location = new System.Drawing.Point(280, 63);
             this.textBox23.Name = "textBox23";
             this.textBox23.ReadOnly = true;
-            this.textBox23.Size = new System.Drawing.Size(275, 21);
+            this.textBox23.Size = new System.Drawing.Size(271, 21);
             this.textBox23.TabIndex = 2;
             // 
             // tbOrderReportComment
@@ -4436,7 +4413,7 @@
             this.tbOrderReportComment.Name = "tbOrderReportComment";
             this.tableLayoutPanel7.SetRowSpan(this.tbOrderReportComment, 5);
             this.tbOrderReportComment.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.tbOrderReportComment.Size = new System.Drawing.Size(1121, 134);
+            this.tbOrderReportComment.Size = new System.Drawing.Size(1102, 134);
             this.tbOrderReportComment.TabIndex = 8;
             // 
             // label43
@@ -4457,16 +4434,16 @@
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Location = new System.Drawing.Point(3, 323);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(275, 23);
+            this.comboBox1.Size = new System.Drawing.Size(271, 23);
             this.comboBox1.TabIndex = 19;
             // 
             // textBox30
             // 
             this.textBox30.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox30.Location = new System.Drawing.Point(284, 323);
+            this.textBox30.Location = new System.Drawing.Point(280, 323);
             this.textBox30.Name = "textBox30";
             this.textBox30.ReadOnly = true;
-            this.textBox30.Size = new System.Drawing.Size(275, 21);
+            this.textBox30.Size = new System.Drawing.Size(271, 21);
             this.textBox30.TabIndex = 4;
             // 
             // toolsOrderStatus
@@ -4476,7 +4453,7 @@
             this.toolStripLabel17});
             this.toolsOrderStatus.Location = new System.Drawing.Point(0, 0);
             this.toolsOrderStatus.Name = "toolsOrderStatus";
-            this.toolsOrderStatus.Size = new System.Drawing.Size(1127, 25);
+            this.toolsOrderStatus.Size = new System.Drawing.Size(1108, 25);
             this.toolsOrderStatus.TabIndex = 0;
             this.toolsOrderStatus.Text = "toolStrip18";
             // 
@@ -11547,11 +11524,9 @@
         private System.Windows.Forms.Label label35;
         private System.Windows.Forms.ComboBox cboxOrderRequestedSigmaMDA;
         private System.Windows.Forms.Label label56;
-        private System.Windows.Forms.Label label61;
         private System.Windows.Forms.Label label62;
         private System.Windows.Forms.Label label69;
         private System.Windows.Forms.Label label70;
-        private System.Windows.Forms.TextBox tbOrderCustomerContact;
         private System.Windows.Forms.TextBox tbOrderCustomerAddress;
         private System.Windows.Forms.TextBox tbOrderCustomerEmail;
         private System.Windows.Forms.TextBox tbOrderCustomerPhone;

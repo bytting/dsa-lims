@@ -70,7 +70,7 @@ namespace DSA_lims
                 return;
             }
 
-            if (cboxResponsible.SelectedValue == null)
+            if (!Utils.IsValidGuid(cboxResponsible.SelectedValue))
             {
                 MessageBox.Show("Responsible is mandatory");
                 return;
@@ -116,14 +116,13 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@id", OrderId);
                 cmd.Parameters.AddWithValue("@name", OrderName);
                 cmd.Parameters.AddWithValue("@laboratory_id", DB.MakeParam(typeof(Guid), labId));
-                cmd.Parameters.AddWithValue("@account_id", DB.MakeParam(typeof(string), cboxResponsible.SelectedValue));
+                cmd.Parameters.AddWithValue("@account_id", DB.MakeParam(typeof(Guid), cboxResponsible.SelectedValue));
                 cmd.Parameters.AddWithValue("@deadline", (DateTime)tbDeadline.Tag);
                 cmd.Parameters.AddWithValue("@requested_sigma", DB.MakeParam(typeof(double), cboxRequestedSigma.SelectedValue));
-                cmd.Parameters.AddWithValue("@customer_name", DB.MakeParam(typeof(string), cust.Name));
-                cmd.Parameters.AddWithValue("@customer_contact", DB.MakeParam(typeof(string), cust.Contact));
-                cmd.Parameters.AddWithValue("@customer_address", DB.MakeParam(typeof(string), cust.Address));
+                cmd.Parameters.AddWithValue("@customer_name", DB.MakeParam(typeof(string), cust.Name));                                
                 cmd.Parameters.AddWithValue("@customer_email", DB.MakeParam(typeof(string), cust.Email));
                 cmd.Parameters.AddWithValue("@customer_phone", DB.MakeParam(typeof(string), cust.Phone));
+                cmd.Parameters.AddWithValue("@customer_address", DB.MakeParam(typeof(string), cust.Address));
                 cmd.Parameters.AddWithValue("@approved_customer", 0);
                 cmd.Parameters.AddWithValue("@approved_laboratory", 0);
                 cmd.Parameters.AddWithValue("@content_comment", DBNull.Value);
@@ -160,12 +159,18 @@ namespace DSA_lims
         private void cboxLaboratory_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (!Utils.IsValidGuid(cboxLaboratory.SelectedValue))
+            {
+                cboxResponsible.SelectedValue = Guid.Empty;
                 return;
+            }
 
             Guid labId = Guid.Parse(cboxLaboratory.SelectedValue.ToString());
             using (SqlConnection conn = DB.OpenConnection())
             {
-                UI.PopulateUsers(conn, labId, InstanceStatus.Active, cboxResponsible);
+                UI.PopulateComboBoxes(conn, "csp_select_accounts_for_laboratory", new[] {
+                    new SqlParameter("@laboratory_id", labId),
+                    new SqlParameter("@instance_status_level", InstanceStatus.Active)
+                }, cboxResponsible);
             }
         }
 

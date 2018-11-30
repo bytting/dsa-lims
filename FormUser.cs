@@ -31,7 +31,12 @@ namespace DSA_lims
 {
     public partial class FormUser : Form
     {
-        private Dictionary<string, object> p = new Dictionary<string, object>();        
+        private Dictionary<string, object> p = new Dictionary<string, object>();
+
+        public Guid UserId
+        {
+            get { return p.ContainsKey("id") ? (Guid)p["id"] : Guid.Empty; }
+        }
 
         public string UserName
         {
@@ -42,11 +47,15 @@ namespace DSA_lims
         {
             InitializeComponent();
 
+            Text = "DSA-Lims - Create user";
+
             tbUsername.ReadOnly = false;
 
             using (SqlConnection conn = DB.OpenConnection())
             {
                 cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, "csp_select_instance_status");
+
+                UI.PopulateComboBoxes(conn, "csp_select_persons_short", new SqlParameter[] { },  cboxPersons);
 
                 UI.PopulateComboBoxes(conn, "csp_select_laboratories_short", new[] {
                     new SqlParameter("@instance_status_level", InstanceStatus.Inactive)
@@ -56,11 +65,13 @@ namespace DSA_lims
             cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
         }
 
-        public FormUser(string uname)
+        public FormUser(Guid uid)
         {
             InitializeComponent();
-    
-            p["username"] = uname;            
+
+            Text = "DSA-Lims - Edit user";
+
+            p["id"] = uid;
 
             tbUsername.ReadOnly = true;
 
@@ -68,28 +79,24 @@ namespace DSA_lims
             {
                 cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, "csp_select_instance_status");
 
+                UI.PopulateComboBoxes(conn, "csp_select_persons_short", new SqlParameter[] { }, cboxPersons);
+
                 UI.PopulateComboBoxes(conn, "csp_select_laboratories_short", new[] {
                     new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
                 }, cboxLaboratory);
 
                 SqlCommand cmd = new SqlCommand("csp_select_account", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@username", p["username"]);
+                cmd.Parameters.AddWithValue("@id", p["id"]);
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
                     if (!reader.HasRows)
-                        throw new Exception("Account with username " + p["username"] + " was not found");
+                        throw new Exception("Account with id " + p["id"] + " was not found");
 
                     reader.Read();
                     tbUsername.Text = reader["username"].ToString();
-                    tbFullname.Text = reader["fullname"].ToString();
-                    tbEmail.Text = reader["email"].ToString();
-                    tbPhone.Text = reader["phone"].ToString();
-                    foreach (Lemma<Guid, string> lab in cboxLaboratory.Items)
-                    {
-                        if(lab.Id.ToString() == reader["laboratory_id"].ToString())
-                            cboxLaboratory.SelectedItem = lab;
-                    }
+                    cboxPersons.SelectedValue = reader["person_id"];
+                    cboxLaboratory.SelectedValue = reader["laboratory_id"];
                     cboxLanguage.Text = reader["language_code"].ToString();
                     cboxInstanceStatus.SelectedValue = reader["instance_status_id"];
                     p["create_date"] = reader["create_date"];
@@ -112,23 +119,23 @@ namespace DSA_lims
                 return;
             }
 
-            p["fullname"] = tbFullname.Text.Trim();
-            p["email"] = tbEmail.Text.Trim();
-            p["phone"] = tbPhone.Text.Trim();            
+            if(!Utils.IsValidGuid(cboxPersons.SelectedValue))
+            {
+                MessageBox.Show("Person is mandatory");
+                return;
+            }
+
+            p["person_id"] = cboxPersons.SelectedValue;
+            p["username"] = tbUsername.Text;
             p["laboratory_id"] = cboxLaboratory.SelectedValue;
             p["language_code"] = cboxLanguage.Text.Trim();
             p["instance_status_id"] = cboxInstanceStatus.SelectedValue;
 
             bool success;
-            if (!p.ContainsKey("username"))
-            {
-                p["username"] = tbUsername.Text.Trim();
-                success = InsertAccount();
-            }
-            else
-            {
-                success = UpdateAccount();
-            }
+            if (!p.ContainsKey("id"))            
+                success = InsertAccount();            
+            else            
+                success = UpdateAccount();            
 
             DialogResult = success ? DialogResult.OK : DialogResult.Abort;
             Close();
@@ -147,10 +154,10 @@ namespace DSA_lims
 
                 SqlCommand cmd = new SqlCommand("csp_insert_account", connection);
                 cmd.CommandType = CommandType.StoredProcedure;
+                p["id"] = Guid.NewGuid();                
+                cmd.Parameters.AddWithValue("@id", p["id"]);
                 cmd.Parameters.AddWithValue("@username", p["username"]);
-                cmd.Parameters.AddWithValue("@fullname", p["fullname"]);
-                cmd.Parameters.AddWithValue("@email", p["email"]);
-                cmd.Parameters.AddWithValue("@phone", p["phone"]);
+                cmd.Parameters.AddWithValue("@person_id", DB.MakeParam(typeof(Guid), p["person_id"]));
                 cmd.Parameters.AddWithValue("@laboratory_id", DB.MakeParam(typeof(Guid), p["laboratory_id"]));
                 cmd.Parameters.AddWithValue("@language_code", p["language_code"]);
                 cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
@@ -184,10 +191,7 @@ namespace DSA_lims
 
                 SqlCommand cmd = new SqlCommand("csp_update_account", connection);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@username", p["username"]);
-                cmd.Parameters.AddWithValue("@fullname", p["fullname"]);
-                cmd.Parameters.AddWithValue("@email", p["email"]);
-                cmd.Parameters.AddWithValue("@phone", p["phone"]);                
+                cmd.Parameters.AddWithValue("@id", p["id"]);
                 cmd.Parameters.AddWithValue("@laboratory_id", DB.MakeParam(typeof(Guid), p["laboratory_id"]));
                 cmd.Parameters.AddWithValue("@language_code", p["language_code"]);
                 cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);

@@ -319,7 +319,8 @@ go
 create proc csp_select_accounts_flat
 	@instance_status_level int
 as 
-	select 		
+	select
+		av.id,
 		av.name,
 		av.email,
 		av.phone,
@@ -1417,11 +1418,10 @@ create table assignment (
 	account_id nvarchar(50) not null,
 	deadline datetime not null,
 	requested_sigma float default null,
-	customer_name nvarchar(256) default null,
-	customer_contact nvarchar(256) default null,
-	customer_address nvarchar(256) default null,
+	customer_name nvarchar(256) default null,		
 	customer_email nvarchar(80) default null,
 	customer_phone nvarchar(80) default null,
+	customer_address nvarchar(256) default null,
 	approved_customer bit default 0,
 	approved_laboratory bit default 0,	
 	content_comment nvarchar(1000) default null,
@@ -1444,11 +1444,10 @@ create proc csp_insert_assignment
 	@account_id nvarchar(50),
 	@deadline datetime,
 	@requested_sigma float,	
-	@customer_name nvarchar(256),
-	@customer_contact nvarchar(256),
-	@customer_address nvarchar(256),
+	@customer_name nvarchar(256),		
 	@customer_email nvarchar(80),
 	@customer_phone nvarchar(80),
+	@customer_address nvarchar(256),
 	@approved_customer bit,
 	@approved_laboratory bit,	
 	@content_comment nvarchar(1000),
@@ -1469,11 +1468,10 @@ as
 		@account_id,
 		@deadline,
 		@requested_sigma,	
-		@customer_name,
-		@customer_contact,
-		@customer_address,
+		@customer_name,			
 		@customer_email,
 		@customer_phone,
+		@customer_address,
 		@approved_customer,
 		@approved_laboratory,	
 		@content_comment,
@@ -1495,11 +1493,10 @@ create proc csp_update_assignment_details
 	@account_id nvarchar(50),
 	@deadline datetime,
 	@requested_sigma float,
-	@customer_name nvarchar(256),
-	@customer_contact nvarchar(256),
-	@customer_address nvarchar(256),
+	@customer_name nvarchar(256),		
 	@customer_email nvarchar(80),
 	@customer_phone nvarchar(80),
+	@customer_address nvarchar(256),
 	@content_comment nvarchar(1000),
 	@instance_status_id int,
 	@update_date datetime,
@@ -1510,11 +1507,10 @@ as
 		account_id = @account_id,
 		deadline = @deadline,
 		requested_sigma = @requested_sigma,
-		customer_name = @customer_name,
-		customer_contact = @customer_contact,
-		customer_address = @customer_address,
+		customer_name = @customer_name,				
 		customer_email = @customer_email,
 		customer_phone = @customer_phone,
+		customer_address = @customer_address,
 		content_comment = @content_comment,
 		instance_status_id = @instance_status_id,
 		update_date = @update_date,
@@ -1545,14 +1541,13 @@ as
 		a.id,
 		a.name,		
 		l.name as 'laboratory_name',
-		acc.fullname as 'account_name',
+		va.name as 'account_name',
 		a.deadline,
 		a.requested_sigma,	
-		a.customer_name,
-		a.customer_contact,
-		a.customer_address,
+		a.customer_name,				
 		a.customer_email,
 		a.customer_phone,
+		a.customer_address,
 		a.approved_customer,
 		a.approved_laboratory,	
 		a.content_comment,
@@ -1566,8 +1561,8 @@ as
 		a.update_date,
 		a.updated_by		
 	from assignment a 		
-		inner join laboratory l on a.laboratory_id = l.id
-		inner join account acc on a.account_id = acc.username
+		left outer join laboratory l on a.laboratory_id = l.id
+		left outer join cv_account va on a.account_id = va.id
 		inner join instance_status insta on a.instance_status_id = insta.id
 	where a.instance_status_id <= @instance_status_level
 	order by a.create_date desc

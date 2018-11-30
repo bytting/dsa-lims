@@ -60,12 +60,12 @@ namespace DSA_lims
                 MessageBox.Show("You must select a customer first");
                 return;
             }
-            
-            SelectedCustomer.Name = gridCustomers.SelectedRows[0].Cells["name"].Value.ToString();
-            SelectedCustomer.Contact = gridCustomers.SelectedRows[0].Cells["contact"].Value.ToString();
-            SelectedCustomer.Address = gridCustomers.SelectedRows[0].Cells["address"].Value.ToString();
+
+            SelectedCustomer.Id = Guid.Parse(gridCustomers.SelectedRows[0].Cells["id"].Value.ToString());
+            SelectedCustomer.Name = gridCustomers.SelectedRows[0].Cells["name"].Value.ToString();                        
             SelectedCustomer.Email = gridCustomers.SelectedRows[0].Cells["email"].Value.ToString();            
             SelectedCustomer.Phone = gridCustomers.SelectedRows[0].Cells["phone"].Value.ToString();
+            SelectedCustomer.Address = gridCustomers.SelectedRows[0].Cells["address"].Value.ToString();
 
             DialogResult = DialogResult.OK;
             Close();

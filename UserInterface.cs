@@ -149,27 +149,6 @@ namespace DSA_lims
                 new SqlParameter("@instance_status_level", instanceStatusLevel));
         }
 
-        public static void PopulateUsers(SqlConnection conn, Guid laboratoryId, int instanceStatusLevel, params ComboBox[] cbn)
-        {
-            List<Lemma<string, string>> users = new List<Lemma<string, string>>();
-            users.Add(new Lemma<string, string>(null, ""));
-
-            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_accounts_for_laboratory", CommandType.StoredProcedure,
-                new SqlParameter("@laboratory_id", laboratoryId),
-                new SqlParameter("@instance_status_level", instanceStatusLevel)))
-            {
-                while (reader.Read())
-                    users.Add(new Lemma<string, string>(reader["username"].ToString(), reader["fullname"].ToString()));
-            }
-
-            foreach (ComboBox cb in cbn)
-            {
-                cb.DataSource = new List<Lemma<string, string>>(users);
-                cb.DisplayMember = "Name";
-                cb.ValueMember = "Id";
-            }
-        }
-
         public static void PopulateNuclides(SqlConnection conn, DataGridView grid)
         {                        
             grid.DataSource = DB.GetDataTable(conn, "csp_select_nuclides_flat", CommandType.StoredProcedure,
@@ -543,11 +522,10 @@ order by name";
             grid.DataSource = DB.GetDataTable(conn, "csp_select_assignments_flat", CommandType.StoredProcedure,
                 new SqlParameter("@instance_status_level", statusLevel));
 
-            grid.Columns["id"].Visible = false;
-            grid.Columns["customer_contact"].Visible = false;
-            grid.Columns["customer_address"].Visible = false;
+            grid.Columns["id"].Visible = false;                        
             grid.Columns["customer_email"].Visible = false;
             grid.Columns["customer_phone"].Visible = false;
+            grid.Columns["customer_address"].Visible = false;
             grid.Columns["content_comment"].Visible = false;
             grid.Columns["report_comment"].Visible = false;
             grid.Columns["created_by"].Visible = false;

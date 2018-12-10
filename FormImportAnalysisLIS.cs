@@ -98,6 +98,27 @@ namespace DSA_lims
 
             grid.Columns["Uncertainty"].HeaderText = "Uncertainty (2σ)";
             grid.Columns["MDA"].HeaderText = "MDA (95%)";
+
+            foreach(DataGridViewRow row in grid.Rows)
+            {
+                string nuclName = row.Cells["NuclideName"].Value.ToString().ToUpper();
+                if (!parameters.AllNuclides.Contains(nuclName))
+                {
+                    row.DefaultCellStyle.BackColor = Color.Tomato;
+                    foreach (DataGridViewCell cell in row.Cells)
+                        cell.ReadOnly = true;
+                }
+                else if (!parameters.AnalMethNuclides.Contains(nuclName))
+                {
+                    row.DefaultCellStyle.BackColor = Color.Yellow;
+                    foreach (DataGridViewCell cell in row.Cells)
+                        cell.ReadOnly = true;
+                }
+                else
+                {
+                    row.DefaultCellStyle.BackColor = Color.LightGreen;
+                }
+            }
         }
 
         private int GetFirstPositiveNumber(string line)
@@ -224,7 +245,7 @@ namespace DSA_lims
                 {
                     AnalysisResult.Isotop isotop = new AnalysisResult.Isotop();
                     isotop.ApprovedMDA = true;
-                    isotop.NuclideName = items[1].Trim();
+                    isotop.NuclideName = items[1].Trim().ToUpper();
                     isotop.ConfidenceValue = Convert.ToDouble(items[2].Trim(), CultureInfo.InvariantCulture);
                     isotop.Activity = Convert.ToDouble(items[3].Trim(), CultureInfo.InvariantCulture);
                     isotop.Uncertainty = Convert.ToDouble(items[4].Trim(), CultureInfo.InvariantCulture) * 2.0;
@@ -263,7 +284,7 @@ namespace DSA_lims
                 {
                     isotop = new AnalysisResult.Isotop();
                     isotop.ApprovedMDA = true;
-                    isotop.NuclideName = items[0].Trim();
+                    isotop.NuclideName = items[0].Trim().ToUpper();
                     isotop.Activity = 0.0;
                     isotop.ConfidenceValue = 0.0;
                     isotop.Uncertainty = 0.0;
@@ -289,7 +310,10 @@ namespace DSA_lims
         }
 
         private void btnOk_Click(object sender, EventArgs e)
-        {    
+        {
+            result.Isotopes.RemoveAll(x => parameters.AllNuclides.Contains(x.NuclideName) == false);
+            result.Isotopes.RemoveAll(x => parameters.AnalMethNuclides.Contains(x.NuclideName) == false);
+
             DialogResult = DialogResult.OK;
             Close();
         }        

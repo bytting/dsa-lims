@@ -42,7 +42,8 @@ namespace DSA_lims
         private ResourceManager r = null;
 
         private Guid selectedOrderId = Guid.Empty;
-        private Guid selectedSampleId = Guid.Empty;        
+        private Guid selectedSampleId = Guid.Empty;
+        private Guid selectedAnalysisMethodId = Guid.Empty;
 
         public FormMain()
         {
@@ -3017,6 +3018,7 @@ where p.id = @pid
                     tbPrepAnalAnalMDALib.Text = reader["mda_library"].ToString();
                     cboxPrepAnalAnalWorkflowStatus.SelectedValue = reader["workflow_status_id"];
                     tbPrepAnalAnalComment.Text = reader["comment"].ToString();
+                    selectedAnalysisMethodId = Guid.Parse(reader["analysis_method_id"].ToString());
                 }
 
                 UI.PopulateAnalysisResults(conn, aid, gridPrepAnalResults);
@@ -3158,6 +3160,9 @@ where p.id = @pid
                 analysisParameters.PreparationGeometry = cboxPrepAnalPrepGeom.Text;
                 analysisParameters.SampleName = treePrepAnal.Nodes.Count > 0 ? treePrepAnal.Nodes[0].Text : "";
                 analysisParameters.SpectrumReferenceRegEx = ""; // FIXME
+                analysisParameters.AllNuclides = DB.GetNuclideNames(connection, transaction);
+                analysisParameters.AnalMethNuclides = DB.GetNuclideNamesForAnalysisMethod(connection, transaction, selectedAnalysisMethodId);
+
                 AnalysisResult analysisResult = new AnalysisResult();
                 FormImportAnalysisLIS form = new FormImportAnalysisLIS(analysisParameters, analysisResult);
                 if (form.ShowDialog() != DialogResult.OK)

@@ -358,7 +358,8 @@ namespace DSA_lims
         public static int GetNextPreparationNumber(SqlConnection conn, SqlTransaction trans, Guid sampleId)
         {
             SqlCommand cmd = new SqlCommand("select max(number) from preparation where sample_id = @sample_id", conn);
-            cmd.Transaction = trans;
+            if(trans != null)
+                cmd.Transaction = trans;
             cmd.CommandType = CommandType.Text;
             cmd.Parameters.AddWithValue("@sample_id", sampleId);
             object o = cmd.ExecuteScalar();
@@ -371,7 +372,8 @@ namespace DSA_lims
         public static int GetNextAnalysisNumber(SqlConnection conn, SqlTransaction trans, Guid prepId)
         {
             SqlCommand cmd = new SqlCommand("select max(number) from analysis where preparation_id = @prep_id", conn);
-            cmd.Transaction = trans;
+            if(trans != null)
+                cmd.Transaction = trans;
             cmd.CommandType = CommandType.Text;
             cmd.Parameters.AddWithValue("@prep_id", prepId);
             object o = cmd.ExecuteScalar();
@@ -422,6 +424,46 @@ namespace DSA_lims
             }            
 
             return true;
+        }
+
+        public static List<string> GetNuclideNames(SqlConnection conn, SqlTransaction trans)
+        {
+            List<string> names = new List<string>();
+            SqlCommand cmd = new SqlCommand("select name from nuclide order by name", conn);
+            if (trans != null)
+                cmd.Transaction = trans;
+            cmd.CommandType = CommandType.Text;
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    names.Add(reader["name"].ToString());
+                }
+            }
+            return names;
+        }
+
+        public static List<string> GetNuclideNamesForAnalysisMethod(SqlConnection conn, SqlTransaction trans, Guid analysisMethodId)
+        {
+            List<string> names = new List<string>();
+            SqlCommand cmd = new SqlCommand(@"
+select n.name 
+from nuclide n, analysis_method_x_nuclide amxn
+where amxn.nuclide_id = n.id and amxn.analysis_method_id = @aid
+order by name
+", conn);
+            cmd.CommandType = CommandType.Text;
+            cmd.Parameters.AddWithValue("@aid", analysisMethodId);
+            if (trans != null)
+                cmd.Transaction = trans;            
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    names.Add(reader["name"].ToString());
+                }
+            }
+            return names;
         }
     }
 }

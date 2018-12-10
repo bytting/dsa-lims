@@ -2385,14 +2385,14 @@
             // miLogView
             // 
             this.miLogView.Name = "miLogView";
-            this.miLogView.Size = new System.Drawing.Size(152, 22);
+            this.miLogView.Size = new System.Drawing.Size(107, 22);
             this.miLogView.Text = "&Log";
             this.miLogView.Click += new System.EventHandler(this.miLogView_Click);
             // 
             // menuItemAbout
             // 
             this.menuItemAbout.Name = "menuItemAbout";
-            this.menuItemAbout.Size = new System.Drawing.Size(152, 22);
+            this.menuItemAbout.Size = new System.Drawing.Size(107, 22);
             this.menuItemAbout.Text = "&About";
             // 
             // status
@@ -9458,10 +9458,10 @@
             this.tabPrepAnalAnalysis.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.tabPrepAnalAnalysis.Controls.Add(this.panel76);
             this.tabPrepAnalAnalysis.Controls.Add(this.panel63);
-            this.tabPrepAnalAnalysis.Location = new System.Drawing.Point(4, 22);
+            this.tabPrepAnalAnalysis.Location = new System.Drawing.Point(4, 24);
             this.tabPrepAnalAnalysis.Name = "tabPrepAnalAnalysis";
             this.tabPrepAnalAnalysis.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPrepAnalAnalysis.Size = new System.Drawing.Size(734, 600);
+            this.tabPrepAnalAnalysis.Size = new System.Drawing.Size(734, 598);
             this.tabPrepAnalAnalysis.TabIndex = 4;
             this.tabPrepAnalAnalysis.Text = "Analyses";
             // 
@@ -9471,7 +9471,7 @@
             this.panel76.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel76.Location = new System.Drawing.Point(3, 318);
             this.panel76.Name = "panel76";
-            this.panel76.Size = new System.Drawing.Size(728, 279);
+            this.panel76.Size = new System.Drawing.Size(728, 277);
             this.panel76.TabIndex = 3;
             // 
             // panel9
@@ -9481,7 +9481,7 @@
             this.panel9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel9.Location = new System.Drawing.Point(0, 0);
             this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(728, 279);
+            this.panel9.Size = new System.Drawing.Size(728, 277);
             this.panel9.TabIndex = 4;
             // 
             // gridPrepAnalResults
@@ -9498,7 +9498,7 @@
             this.gridPrepAnalResults.Name = "gridPrepAnalResults";
             this.gridPrepAnalResults.ReadOnly = true;
             this.gridPrepAnalResults.RowHeadersVisible = false;
-            this.gridPrepAnalResults.Size = new System.Drawing.Size(728, 254);
+            this.gridPrepAnalResults.Size = new System.Drawing.Size(728, 252);
             this.gridPrepAnalResults.TabIndex = 0;
             // 
             // toolsSampleResRes
@@ -9973,7 +9973,7 @@
             // miImportLISFile2
             // 
             this.miImportLISFile2.Name = "miImportLISFile2";
-            this.miImportLISFile2.Size = new System.Drawing.Size(147, 22);
+            this.miImportLISFile2.Size = new System.Drawing.Size(152, 22);
             this.miImportLISFile2.Text = "Import LIS file";
             this.miImportLISFile2.Click += new System.EventHandler(this.miImportLISFile_Click);
             // 

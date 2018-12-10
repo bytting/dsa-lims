@@ -168,6 +168,8 @@ namespace DSA_lims
             grid.Columns["meta_stable"].HeaderText = "Meta stable";
             grid.Columns["half_life_year"].HeaderText = "T 1/2 (Years)";
             grid.Columns["instance_status_name"].HeaderText = "Status";
+
+            grid.Columns["half_life_year"].DefaultCellStyle.Format = "E5";
         }
 
         public static void PopulateGeometries(SqlConnection conn, DataGridView grid)

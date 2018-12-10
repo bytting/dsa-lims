@@ -110,6 +110,8 @@ namespace DSA_lims
         public string SampleName { get; set; }
         public string PreparationGeometry { get; set; }
         public string SpectrumReferenceRegEx { get; set; }
+        public List<string> AllNuclides { get; set; }
+        public List<string> AnalMethNuclides { get; set; }
     }    
 
     public class AnalysisResult

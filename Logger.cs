@@ -18,10 +18,8 @@
 // Authors: Dag Robole,
 
 using System;
-using System.IO;
 using System.Collections.Generic;
 using System.Text;
-using System.Windows.Forms;
 using log4net;
 using log4net.Core;
 using log4net.Appender;
@@ -32,13 +30,16 @@ namespace DSA_lims
 {    
     public static class DSALogger
     {
-        private static bool initialized = false;        
+        private static bool initialized = false;
+        private static string mLogFile;
+        public static string LogFile { get { return mLogFile; } }
 
-        public static ILog CreateLogger(RichTextBox tb)
+        public static ILog CreateLogger(string logFile)
         {
             if(initialized)            
                 throw new Exception("Logger is already created");
 
+            mLogFile = logFile;
             Hierarchy hierarchy = (Hierarchy)LogManager.GetRepository();
 
             PatternLayout patternLayout = new PatternLayout();
@@ -47,20 +48,14 @@ namespace DSA_lims
 
             RollingFileAppender roller = new RollingFileAppender();
             roller.AppendToFile = false;
-            roller.File = DSAEnvironment.SettingsPath + Path.DirectorySeparatorChar + "dsa-lims.log";
+            roller.File = LogFile;
             roller.Layout = patternLayout;
             roller.MaxSizeRollBackups = 3;
             roller.MaximumFileSize = "10MB";
             roller.RollingStyle = RollingFileAppender.RollingMode.Size;
             roller.StaticLogFileName = true;
             roller.ActivateOptions();
-            hierarchy.Root.AddAppender(roller);
-
-            TextBoxAppender textBoxAppender = new TextBoxAppender(tb);
-            textBoxAppender.Threshold = Level.All;
-            textBoxAppender.Layout = patternLayout;
-            textBoxAppender.ActivateOptions();
-            hierarchy.Root.AddAppender(textBoxAppender);
+            hierarchy.Root.AddAppender(roller);            
 
             hierarchy.Root.Level = Level.All;
             hierarchy.Configured = true;
@@ -68,23 +63,5 @@ namespace DSA_lims
             initialized = true;
             return LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         }        
-    }
-
-    public class TextBoxAppender : AppenderSkeleton
-    {
-        private RichTextBox mTextBox;
-
-        public TextBoxAppender(RichTextBox tb)
-        {
-            mTextBox = tb;
-        }
-
-        protected override void Append(LoggingEvent loggingEvent)
-        {
-            mTextBox.BeginInvoke((MethodInvoker)delegate
-            {
-                mTextBox.Text += RenderLoggingEvent(loggingEvent);
-            });
-        }
     }
 }

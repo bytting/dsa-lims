@@ -33,6 +33,7 @@ using System.Data.SqlClient;
 using log4net;
 using System.IO;
 using System.Xml.Serialization;
+using System.Diagnostics;
 
 namespace DSA_lims
 {
@@ -55,7 +56,7 @@ namespace DSA_lims
         {
             try
             {
-                Common.Log = DSALogger.CreateLogger(tbLog);
+                Common.Log = DSALogger.CreateLogger(DSAEnvironment.SettingsPath + Path.DirectorySeparatorChar + "dsa-lims.log");
 
                 tabs.Appearance = TabAppearance.FlatButtons;
                 tabs.ItemSize = new Size(0, 1);
@@ -281,7 +282,7 @@ namespace DSA_lims
         {
             miSample.Visible = miOrder.Visible = miSearch.Visible = miMeta.Visible = miOrders.Visible 
                 = miSamples.Visible = miProjects.Visible = miCustomers.Visible = miTypeRelations.Visible 
-                = miAuditLog.Visible = miLog.Visible = miSys.Visible = false;
+                = miAuditLog.Visible = miSys.Visible = false;
         }
 
         private void HideMetaMenuItems()
@@ -418,11 +419,7 @@ namespace DSA_lims
             else if (tabs.SelectedTab == tabAuditLog)
             {
                 miAuditLog.Visible = true;
-            }
-            else if (tabs.SelectedTab == tabLog)
-            {
-                miLog.Visible = true;
-            }
+            }            
             else if (tabs.SelectedTab == tabSysdata)
             {
                 miSys.Visible = true;
@@ -847,7 +844,9 @@ namespace DSA_lims
 
         private void miLogView_Click(object sender, EventArgs e)
         {
-            tabs.SelectedTab = tabLog;
+            string tempFileName = Path.GetTempFileName() + ".txt";
+            File.Copy(DSALogger.LogFile, tempFileName, true);
+            Process.Start(tempFileName);
         }
 
         private void miAuditLogView_Click(object sender, EventArgs e)
@@ -872,7 +871,8 @@ namespace DSA_lims
 
         private void miCustomersView_Click(object sender, EventArgs e)
         {
-            tabs.SelectedTab = tabCustomers;
+            tabs.SelectedTab = tabMetadata;
+            tabsMeta.SelectedTab = tabCustomers;
         }
 
         private void miProjectsView_Click(object sender, EventArgs e)

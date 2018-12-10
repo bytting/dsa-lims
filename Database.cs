@@ -26,18 +26,15 @@ using System.Text;
 namespace DSA_lims
 {
     public static class DB
-    {
+    {        
         private static List<Guid> LockedSamples = new List<Guid>();
         private static List<Guid> LockedOrders = new List<Guid>();
 
-        public static string GetConnectionString()
-        {
-            return Properties.Settings.Default.DSADB;
-        }
+        public static string ConnectionString { get; set; }
 
         public static SqlConnection OpenConnection()
         {
-            SqlConnection connection = new SqlConnection(GetConnectionString());
+            SqlConnection connection = new SqlConnection(ConnectionString);
             connection.Open();
             return connection;
         }

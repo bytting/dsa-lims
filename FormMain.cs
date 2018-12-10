@@ -56,7 +56,17 @@ namespace DSA_lims
         {
             try
             {
+                if (!Directory.Exists(DSAEnvironment.SettingsPath))
+                    Directory.CreateDirectory(DSAEnvironment.SettingsPath);
+
                 Common.Log = DSALogger.CreateLogger(DSAEnvironment.SettingsPath + Path.DirectorySeparatorChar + "dsa-lims.log");
+
+                Common.Log.Info("Loading settings file " + DSAEnvironment.SettingsFilename);
+                LoadSettings(DSAEnvironment.SettingsFilename);                
+
+                ShowLogin();
+
+                DB.ConnectionString = Common.Settings.ConnectionString;
 
                 tabs.Appearance = TabAppearance.FlatButtons;
                 tabs.ItemSize = new Size(0, 1);
@@ -75,7 +85,9 @@ namespace DSA_lims
                 lblSampleToolProject.Text = "";
                 lblSampleToolSubProject.Text = "";
                 lblSampleToolLaboratory.Text = "";
-                                
+
+                cbMachineSettingsUseAD.Checked = Common.Settings.UseActiveDirectoryCredentials;
+
                 tbMenuLookup.KeyPress += CustomEvents.Integer_KeyPress;
                 tbSamplesLookup.KeyPress += CustomEvents.Integer_KeyPress;
                 tbSampleInfoLatitude.KeyPress += CustomEvents.Numeric_KeyPress;
@@ -98,17 +110,7 @@ namespace DSA_lims
 
                 r = new ResourceManager("DSA_lims.lang_" + CultureInfo.CurrentUICulture.TwoLetterISOLanguageName, Assembly.GetExecutingAssembly());
                 Common.Log.Info("Setting language " + CultureInfo.CurrentUICulture.TwoLetterISOLanguageName);
-                SetLanguageLabels(r);                                
-
-                Common.Log.Info("Loading settings file " + DSAEnvironment.SettingsFilename);
-                LoadSettings(DSAEnvironment.SettingsFilename);
-                cbMachineSettingsUseAD.Checked = Common.Settings.UseActiveDirectoryCredentials;
-
-                if (!Directory.Exists(DSAEnvironment.SettingsPath))
-                    Directory.CreateDirectory(DSAEnvironment.SettingsPath);
-
-                if (!Directory.Exists(DSAEnvironment.AnalysisPluginDirectory))
-                    Directory.CreateDirectory(DSAEnvironment.AnalysisPluginDirectory);
+                SetLanguageLabels(r);
 
                 using (SqlConnection conn = DB.OpenConnection())
                 {
@@ -241,6 +243,8 @@ namespace DSA_lims
                 DB.UnlockSamples(conn);
                 DB.UnlockOrders(conn);
             }
+
+            SaveSettings(DSAEnvironment.SettingsFilename);
         }
 
         private void FormMain_FormClosed(object sender, FormClosedEventArgs e)

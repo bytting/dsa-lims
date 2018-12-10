@@ -20,6 +20,8 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -27,45 +29,51 @@ using System.Windows.Forms;
 
 namespace DSA_lims
 {
-    public partial class FormLogin : Form
+    public partial class FormConnectionString : Form
     {
-        private DSASettings settings = null;        
+        private string mConnectionString;
+        public string ConnectionString { get { return mConnectionString; } }
 
-        public FormLogin(DSASettings s)
+        public FormConnectionString(string currentConnString)
         {
             InitializeComponent();
-            settings = s;
-        }
 
-        private void FormLogin_Load(object sender, EventArgs e)
-        {
-            cbUseAD.Checked = settings.UseActiveDirectoryCredentials;
+            tbConnectionString.Text = currentConnString;
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
-        {
-            miExit_Click(sender, e);
-        }
-
-        private void btnOk_Click(object sender, EventArgs e)
-        {            
-            DialogResult = DialogResult.OK;
-            Close();
-        }
-
-        private void miExit_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;
             Close();
         }
 
-        private void miSetConnString_Click(object sender, EventArgs e)
+        private void btnOk_Click(object sender, EventArgs e)
         {
-            FormConnectionString form = new FormConnectionString(settings.ConnectionString);
-            if (form.ShowDialog() != DialogResult.OK)
+            if(String.IsNullOrEmpty(tbConnectionString.Text.Trim()))
+            {
+                MessageBox.Show("Database connection string is mandatory");
                 return;
+            }
 
-            settings.ConnectionString = form.ConnectionString;
+            SqlConnection conn = null;
+            try
+            {
+                conn = new SqlConnection(tbConnectionString.Text.Trim());
+                conn.Open();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Connection string does not appear to be valid: " + ex.Message);
+                return;
+            }
+            finally
+            {
+                conn?.Close();
+            }
+
+            mConnectionString = tbConnectionString.Text.Trim();
+            DialogResult = DialogResult.OK;
+            Close();
         }
     }
 }

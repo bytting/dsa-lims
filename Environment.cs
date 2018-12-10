@@ -32,8 +32,5 @@ namespace DSA_lims
 
         // Settings filename
         public static string SettingsFilename = SettingsPath + Path.DirectorySeparatorChar + "settings.xml";
-
-        public static string AnalysisPluginDirectory = SettingsPath + Path.DirectorySeparatorChar + "analysis-plugins";
-        public static string SamplePluginDirectory = SettingsPath + Path.DirectorySeparatorChar + "sample-plugins";
     }
 }

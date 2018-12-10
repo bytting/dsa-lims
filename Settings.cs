@@ -37,6 +37,7 @@ namespace DSA_lims
             UseActiveDirectoryCredentials = true;
         }        
         
-        public bool UseActiveDirectoryCredentials;
+        public bool UseActiveDirectoryCredentials { get; set; }
+        public string ConnectionString { get; set; }
     }
 }

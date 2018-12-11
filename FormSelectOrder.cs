@@ -301,7 +301,7 @@ where sxast.sample_id = @sid";
             Guid oid = Guid.Parse(gridOrders.SelectedRows[0].Cells["id"].Value.ToString());
             using (SqlConnection conn = DB.OpenConnection())
             {
-                UI.PopulateOrderContent2(conn, oid, treeOrderLines, SampleTypeId, TreeSampleTypes, false);
+                UI.PopulateOrderContentForSampleTypeName(conn, oid, treeOrderLines, SampleTypeId, TreeSampleTypes, false);
             }
         }        
 

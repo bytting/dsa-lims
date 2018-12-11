@@ -147,6 +147,16 @@ namespace DSA_lims
         {                        
             grid.DataSource = DB.GetDataTable(conn, "csp_select_accounts_flat", CommandType.StoredProcedure,
                 new SqlParameter("@instance_status_level", instanceStatusLevel));
+
+            grid.Columns["id"].Visible = false;            
+            grid.Columns["create_date"].Visible = false;            
+            grid.Columns["update_date"].Visible = false;
+
+            grid.Columns["name"].HeaderText = "Name";
+            grid.Columns["email"].HeaderText = "Email";
+            grid.Columns["phone"].HeaderText = "Phone";
+            grid.Columns["address"].HeaderText = "Address";
+            grid.Columns["instance_status_name"].HeaderText = "Status";
         }
 
         public static void PopulateNuclides(SqlConnection conn, DataGridView grid)
@@ -265,6 +275,22 @@ namespace DSA_lims
         {
             grid.DataSource = DB.GetDataTable(conn, "csp_select_samplers_flat", CommandType.StoredProcedure,
                 new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
+
+            grid.Columns["id"].Visible = false;
+            grid.Columns["person_id"].Visible = false;
+            grid.Columns["company_id"].Visible = false;
+            grid.Columns["instance_status_id"].Visible = false;
+            grid.Columns["comment"].Visible = false;
+            grid.Columns["created_by"].Visible = false;
+            grid.Columns["create_date"].Visible = false;
+            grid.Columns["updated_by"].Visible = false;
+            grid.Columns["update_date"].Visible = false;
+
+            grid.Columns["name"].HeaderText = "Name";
+            grid.Columns["email"].HeaderText = "Email";
+            grid.Columns["phone"].HeaderText = "Phone";
+            grid.Columns["address"].HeaderText = "Address";
+            grid.Columns["instance_status_name"].HeaderText = "Status";
         }        
 
         public static void PopulateSamplingMethods(SqlConnection conn, DataGridView grid)
@@ -517,6 +543,22 @@ order by name";
         {
             grid.DataSource = DB.GetDataTable(conn, "csp_select_customers_flat", CommandType.StoredProcedure,
                 new SqlParameter("@instance_status_level", statusLevel));
+
+            grid.Columns["id"].Visible = false;
+            grid.Columns["person_id"].Visible = false;
+            grid.Columns["company_id"].Visible = false;
+            grid.Columns["comment"].Visible = false;
+            grid.Columns["instance_status_id"].Visible = false;
+            grid.Columns["create_date"].Visible = false;
+            grid.Columns["created_by"].Visible = false;
+            grid.Columns["update_date"].Visible = false;
+            grid.Columns["updated_by"].Visible = false;
+
+            grid.Columns["name"].HeaderText = "Name";
+            grid.Columns["email"].HeaderText = "Email";
+            grid.Columns["phone"].HeaderText = "Phone";
+            grid.Columns["address"].HeaderText = "Address";
+            grid.Columns["instance_status_name"].HeaderText = "Status";
         }
 
         public static void PopulateOrders(SqlConnection conn, int statusLevel, DataGridView grid)
@@ -654,7 +696,7 @@ order by create_date desc";
             tree.ExpandAll();
         }
 
-        public static void PopulateOrderContent2(SqlConnection conn, Guid selectedOrder, TreeView tree, Guid sampleTypeId, TreeView treeSampleTypes, bool useCommentToolTips)
+        public static void PopulateOrderContentForSampleTypeName(SqlConnection conn, Guid selectedOrder, TreeView tree, Guid sampleTypeId, TreeView treeSampleTypes, bool useCommentToolTips)
         {
             tree.Nodes.Clear();
 
@@ -667,7 +709,7 @@ order by create_date desc";
                 object o = cmd.ExecuteScalar();
                 string sampleTypeName = o.ToString();
 
-                astReader = DB.GetDataReader(conn, "csp_select_assignment_sample_types_for_sample_type2", CommandType.StoredProcedure,
+                astReader = DB.GetDataReader(conn, "csp_select_assignment_sample_types_for_sample_name", CommandType.StoredProcedure,
                     new SqlParameter("@assignment_id", selectedOrder),
                     new SqlParameter("@sample_type_name", sampleTypeName));
 
@@ -774,13 +816,17 @@ order by create_date desc";
                 new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
 
             grid.Columns["id"].Visible = false;
+            grid.Columns["comment"].Visible = false;
             grid.Columns["create_date"].Visible = false;
+            grid.Columns["created_by"].Visible = false;
             grid.Columns["update_date"].Visible = false;
+            grid.Columns["updated_by"].Visible = false;
 
             grid.Columns["name"].HeaderText = "Name";
             grid.Columns["email"].HeaderText = "Email";
             grid.Columns["phone"].HeaderText = "Phone";
             grid.Columns["address"].HeaderText = "Address";
+            grid.Columns["instance_status_name"].HeaderText = "Status";
         }
     }
 }

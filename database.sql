@@ -1661,7 +1661,7 @@ from assignment_sample_type ast
 	order by st.name
 go
 
-create proc csp_select_assignment_sample_types_for_sample_type2
+create proc csp_select_assignment_sample_types_for_sample_name
 	@assignment_id uniqueidentifier,
 	@sample_type_name nvarchar(256)
 as

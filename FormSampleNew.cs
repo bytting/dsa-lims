@@ -123,9 +123,9 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@latitude", DBNull.Value);
                 cmd.Parameters.AddWithValue("@longitude", DBNull.Value);
                 cmd.Parameters.AddWithValue("@altitude", DBNull.Value);
-                cmd.Parameters.AddWithValue("@sampling_date_from", DateTime.Now);
+                cmd.Parameters.AddWithValue("@sampling_date_from", DBNull.Value);
                 cmd.Parameters.AddWithValue("@use_sampling_date_to", 0);
-                cmd.Parameters.AddWithValue("@sampling_date_to", DateTime.Now);
+                cmd.Parameters.AddWithValue("@sampling_date_to", DBNull.Value);
                 cmd.Parameters.AddWithValue("@reference_date", DateTime.Now);
                 cmd.Parameters.AddWithValue("@external_id", DBNull.Value);
                 cmd.Parameters.AddWithValue("@wet_weight_g", DBNull.Value);

@@ -166,7 +166,7 @@ namespace DSA_lims
                             cmd.Parameters.AddWithValue("@id", adminId);
                             cmd.Parameters.AddWithValue("@username", "LIMSAdministrator");
                             cmd.Parameters.AddWithValue("@person_id", personId);
-                            cmd.Parameters.AddWithValue("@laboratory_id", Guid.Empty);
+                            cmd.Parameters.AddWithValue("@laboratory_id", DBNull.Value);
                             cmd.Parameters.AddWithValue("@language_code", "en");
                             cmd.Parameters.AddWithValue("@instance_status_id", 1);
                             cmd.Parameters.AddWithValue("@password_hash", passwordHash);
@@ -205,7 +205,7 @@ namespace DSA_lims
                             reader.Read();
 
                             mUserId = Guid.Parse(reader["id"].ToString());
-                            mLabId = Guid.Parse(reader["laboratory_id"].ToString());
+                            mLabId = Utils.IsValidGuid(reader["laboratory_id"]) ? Guid.Parse(reader["laboratory_id"].ToString()) : Guid.Empty;
                         }
                     }
 
@@ -232,24 +232,18 @@ namespace DSA_lims
 
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
-                    if (!reader.HasRows)
-                    {
-                        MessageBox.Show("Authentication failed");
+                    if (!reader.HasRows)                    
                         return false;
-                    }
 
                     reader.Read();
 
                     userId = Guid.Parse(reader["id"].ToString());
-                    labId = Guid.Parse(reader["laboratory_id"].ToString());
+                    labId = Utils.IsValidGuid(reader["laboratory_id"]) ? Guid.Parse(reader["laboratory_id"].ToString()) : Guid.Empty;
                     hash2 = reader.GetSqlBinary(2).Value;
                 }
 
-                if (!Utils.PasswordHashEqual(hash1, hash2))
-                {
-                    MessageBox.Show("Authentication failed");
+                if (!Utils.PasswordHashEqual(hash1, hash2))                
                     return false;
-                }
 
                 mUserId = userId;
                 mUserName = username;

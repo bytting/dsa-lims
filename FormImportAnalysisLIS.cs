@@ -237,7 +237,7 @@ namespace DSA_lims
 
                 if (line.StartsWith("NR"))
                 {
-                    result.Sigma = GetFirstPositiveNumber(line);
+                    result.SigmaAct = GetFirstPositiveNumber(line);
                 }
 
                 string[] items = line.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);

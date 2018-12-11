@@ -47,6 +47,8 @@
             this.panelCustomer = new System.Windows.Forms.Panel();
             this.tbCustomer = new System.Windows.Forms.TextBox();
             this.btnSelectCustomer = new System.Windows.Forms.PictureBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.cboxRequestedSigmaMDA = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
             this.panelDeadline.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.btnSelectDeadline)).BeginInit();
@@ -59,7 +61,7 @@
             this.panel1.Controls.Add(this.btnCancel);
             this.panel1.Controls.Add(this.btnCreate);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 234);
+            this.panel1.Location = new System.Drawing.Point(0, 260);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(436, 28);
             this.panel1.TabIndex = 8;
@@ -173,9 +175,9 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(27, 149);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(104, 15);
+            this.label4.Size = new System.Drawing.Size(91, 15);
             this.label4.TabIndex = 16;
-            this.label4.Text = "Requested sigma";
+            this.label4.Text = "Req.Sigma.Act.";
             // 
             // cboxRequestedSigma
             // 
@@ -191,7 +193,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(27, 179);
+            this.label5.Location = new System.Drawing.Point(27, 206);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(60, 15);
             this.label5.TabIndex = 18;
@@ -211,7 +213,7 @@
             // 
             this.panelCustomer.Controls.Add(this.tbCustomer);
             this.panelCustomer.Controls.Add(this.btnSelectCustomer);
-            this.panelCustomer.Location = new System.Drawing.Point(138, 175);
+            this.panelCustomer.Location = new System.Drawing.Point(138, 203);
             this.panelCustomer.Name = "panelCustomer";
             this.panelCustomer.Size = new System.Drawing.Size(270, 24);
             this.panelCustomer.TabIndex = 21;
@@ -237,11 +239,33 @@
             this.btnSelectCustomer.TabStop = false;
             this.btnSelectCustomer.Click += new System.EventHandler(this.btnSelectCustomer_Click);
             // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(27, 178);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(99, 15);
+            this.label7.TabIndex = 22;
+            this.label7.Text = "Req.Sigma MDA";
+            // 
+            // cboxRequestedSigmaMDA
+            // 
+            this.cboxRequestedSigmaMDA.DisplayMember = "Name";
+            this.cboxRequestedSigmaMDA.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxRequestedSigmaMDA.FormattingEnabled = true;
+            this.cboxRequestedSigmaMDA.Location = new System.Drawing.Point(138, 175);
+            this.cboxRequestedSigmaMDA.Name = "cboxRequestedSigmaMDA";
+            this.cboxRequestedSigmaMDA.Size = new System.Drawing.Size(270, 23);
+            this.cboxRequestedSigmaMDA.TabIndex = 23;
+            this.cboxRequestedSigmaMDA.ValueMember = "Id";
+            // 
             // FormOrderNew
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(436, 262);
+            this.ClientSize = new System.Drawing.Size(436, 288);
+            this.Controls.Add(this.cboxRequestedSigmaMDA);
+            this.Controls.Add(this.label7);
             this.Controls.Add(this.panelCustomer);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
@@ -295,5 +319,7 @@
         private System.Windows.Forms.Panel panelCustomer;
         private System.Windows.Forms.PictureBox btnSelectCustomer;
         private System.Windows.Forms.TextBox tbCustomer;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.ComboBox cboxRequestedSigmaMDA;
     }
 }

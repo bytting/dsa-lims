@@ -118,14 +118,14 @@ namespace DSA_lims
     {
         public string SpectrumName, SampleName, SamplePlace, Geometry, Unit, ReferenceTime, NuclideLibrary, DetLimLib;
         public double Height, Weight, Volume, Density, SampleQuantity;
-        public int Sigma, MDAFactor;        
+        public double SigmaAct, SigmaMDA, MDAFactor;        
         public List<Isotop> Isotopes = new List<Isotop>();
 
         public void Clear()
         {
             SpectrumName = SampleName = SamplePlace = Geometry = Unit = ReferenceTime = NuclideLibrary = DetLimLib = String.Empty;
-            Height = Weight = Volume = Density = SampleQuantity = 0.0;
-            Sigma = MDAFactor = 0;            
+            Height = Weight = Volume = Density = SampleQuantity = 0d;
+            SigmaAct = SigmaMDA = MDAFactor = 0d;            
             Isotopes.Clear();
         }
 

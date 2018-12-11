@@ -163,8 +163,7 @@ namespace DSA_lims
                 new Lemma<double?, string>(1.96, "1.96 (95%)"),
                 new Lemma<double?, string>(2.0, "2 (95.5%)"),
                 new Lemma<double?, string>(3.0, "3 (99.9%)")
-            };
-                
+            };  
         }
 
         public static List<Lemma<double?, string>> GetSigmaMDAValues()
@@ -177,7 +176,6 @@ namespace DSA_lims
                 new Lemma<double?, string>(2.0, "2 (97.2%)"),
                 new Lemma<double?, string>(3.0, "3 (99.95%)")
             };
-
         }
 
         public static int GetNextSampleCount(SqlConnection conn, SqlTransaction trans)

@@ -53,6 +53,7 @@ namespace DSA_lims
                 }
 
                 cboxRequestedSigma.DataSource = DB.GetSigmaValues();
+                cboxRequestedSigmaMDA.DataSource = DB.GetSigmaMDAValues();
             }
         }
 
@@ -118,7 +119,8 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@laboratory_id", DB.MakeParam(typeof(Guid), labId));
                 cmd.Parameters.AddWithValue("@account_id", DB.MakeParam(typeof(Guid), cboxResponsible.SelectedValue));
                 cmd.Parameters.AddWithValue("@deadline", (DateTime)tbDeadline.Tag);
-                cmd.Parameters.AddWithValue("@requested_sigma", DB.MakeParam(typeof(double), cboxRequestedSigma.SelectedValue));
+                cmd.Parameters.AddWithValue("@requested_sigma_act", DB.MakeParam(typeof(double), cboxRequestedSigma.SelectedValue));
+                cmd.Parameters.AddWithValue("@requested_sigma_mda", DB.MakeParam(typeof(double), cboxRequestedSigmaMDA.SelectedValue));
                 cmd.Parameters.AddWithValue("@customer_name", DB.MakeParam(typeof(string), cust.Name));                                
                 cmd.Parameters.AddWithValue("@customer_email", DB.MakeParam(typeof(string), cust.Email));
                 cmd.Parameters.AddWithValue("@customer_phone", DB.MakeParam(typeof(string), cust.Phone));

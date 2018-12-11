@@ -134,7 +134,8 @@ namespace DSA_lims
 
                     cboxSampleInfoLocationTypes.DataSource = DB.GetIntLemmata(conn, "csp_select_location_types", true);
 
-                    cboxPrepAnalAnalSigma.DataSource = DB.GetSigmaValues();
+                    cboxPrepAnalAnalSigmaAct.DataSource = DB.GetSigmaValues();
+                    cboxPrepAnalAnalSigmaMDA.DataSource = DB.GetSigmaMDAValues();
 
                     cboxOrderRequestedSigma.DataSource = DB.GetSigmaValues();
                     cboxOrderRequestedSigmaMDA.DataSource = DB.GetSigmaMDAValues();
@@ -1402,7 +1403,7 @@ namespace DSA_lims
         {
             cboxPrepAnalAnalUnit.SelectedValue = Guid.Empty;
             cboxPrepAnalAnalUnitType.SelectedValue = Guid.Empty;
-            cboxPrepAnalAnalSigma.SelectedValue = 0;
+            cboxPrepAnalAnalSigmaAct.SelectedValue = 0;
             tbPrepAnalAnalSpecRef.Text = "";
             tbPrepAnalAnalNuclLib.Text = "";
             tbPrepAnalAnalMDALib.Text = "";
@@ -2317,7 +2318,8 @@ order by name
                     map["laboratory_id"] = reader["laboratory_id"];
                     map["account_id"] = reader["account_id"];
                     map["deadline"] = reader["deadline"];
-                    map["requested_sigma"] = reader["requested_sigma"];
+                    map["requested_sigma_act"] = reader["requested_sigma_act"];
+                    map["requested_sigma_mda"] = reader["requested_sigma_mda"];
                     map["customer_name"] = reader["customer_name"];                                        
                     map["customer_email"] = reader["customer_email"];
                     map["customer_phone"] = reader["customer_phone"];
@@ -2343,7 +2345,8 @@ order by name
                 DateTime deadline = Convert.ToDateTime(map["deadline"]);
                 tbOrderDeadline.Text = deadline.ToString(Utils.DateFormatNorwegian);
                 tbOrderDeadline.Tag = deadline;
-                cboxOrderRequestedSigma.SelectedValue = map["requested_sigma"];
+                cboxOrderRequestedSigma.SelectedValue = map["requested_sigma_act"];
+                cboxOrderRequestedSigmaMDA.SelectedValue = map["requested_sigma_mda"];
                 CustomerModel cust = new CustomerModel();
                 cust.Name = map["customer_name"].ToString();                
                 cust.Email = map["customer_email"].ToString();
@@ -2511,7 +2514,8 @@ order by name
                 cmd.Parameters.AddWithValue("@laboratory_id", labId);
                 cmd.Parameters.AddWithValue("@account_id", DB.MakeParam(typeof(String), cboxOrderResponsible.SelectedValue));
                 cmd.Parameters.AddWithValue("@deadline", DB.MakeParam(typeof(DateTime), tbOrderDeadline.Tag));
-                cmd.Parameters.AddWithValue("@requested_sigma", DB.MakeParam(typeof(double), cboxOrderRequestedSigma.SelectedValue));
+                cmd.Parameters.AddWithValue("@requested_sigma_act", DB.MakeParam(typeof(double), cboxOrderRequestedSigma.SelectedValue));
+                cmd.Parameters.AddWithValue("@requested_sigma_mda", DB.MakeParam(typeof(double), cboxOrderRequestedSigmaMDA.SelectedValue));
                 cmd.Parameters.AddWithValue("@customer_name", DB.MakeParam(typeof(string), cust.Name));                                
                 cmd.Parameters.AddWithValue("@customer_email", DB.MakeParam(typeof(string), cust.Email));
                 cmd.Parameters.AddWithValue("@customer_phone", DB.MakeParam(typeof(string), cust.Phone));
@@ -2979,7 +2983,8 @@ where p.id = @pid
                 cmd.Parameters.AddWithValue("@specter_reference", tbPrepAnalAnalSpecRef.Text);
                 cmd.Parameters.AddWithValue("@activity_unit_id", DB.MakeParam(typeof(Guid), cboxPrepAnalAnalUnit.SelectedValue));
                 cmd.Parameters.AddWithValue("@activity_unit_type_id", DB.MakeParam(typeof(Guid), cboxPrepAnalAnalUnitType.SelectedValue));
-                cmd.Parameters.AddWithValue("@sigma", DB.MakeParam(typeof(int), cboxPrepAnalAnalSigma.SelectedValue));
+                cmd.Parameters.AddWithValue("@sigma_act", DB.MakeParam(typeof(int), cboxPrepAnalAnalSigmaAct.SelectedValue));
+                cmd.Parameters.AddWithValue("@sigma_mda", DB.MakeParam(typeof(int), cboxPrepAnalAnalSigmaMDA.SelectedValue));
                 cmd.Parameters.AddWithValue("@nuclide_library", tbPrepAnalAnalNuclLib.Text);
                 cmd.Parameters.AddWithValue("@mda_library", tbPrepAnalAnalMDALib.Text);
                 cmd.Parameters.AddWithValue("@comment", tbPrepAnalAnalComment.Text);
@@ -3012,7 +3017,8 @@ where p.id = @pid
 
                     cboxPrepAnalAnalUnit.SelectedValue = reader["activity_unit_id"];
                     cboxPrepAnalAnalUnitType.SelectedValue = reader["activity_unit_type_id"];
-                    cboxPrepAnalAnalSigma.SelectedValue = reader["sigma"];
+                    cboxPrepAnalAnalSigmaAct.SelectedValue = reader["sigma_act"];
+                    cboxPrepAnalAnalSigmaMDA.SelectedValue = reader["sigma_mda"];
                     tbPrepAnalAnalSpecRef.Text = reader["specter_reference"].ToString();
                     tbPrepAnalAnalNuclLib.Text = reader["nuclide_library"].ToString();
                     tbPrepAnalAnalMDALib.Text = reader["mda_library"].ToString();
@@ -3176,7 +3182,8 @@ update analysis set
     specter_reference = @specter_reference,
     nuclide_library = @nuclide_library,
     mda_library = @mda_library,
-    sigma = @sigma,    
+    sigma_act = @sigma_act,
+    sigma_mda = @sigma_mda,
     update_date = @update_date,
     updated_by = @updated_by
 where id = @id
@@ -3185,7 +3192,8 @@ where id = @id
                 cmd.Parameters.AddWithValue("@specter_reference", analysisResult.SpectrumName);
                 cmd.Parameters.AddWithValue("@nuclide_library", analysisResult.NuclideLibrary);
                 cmd.Parameters.AddWithValue("@mda_library", analysisResult.DetLimLib);
-                cmd.Parameters.AddWithValue("@sigma", analysisResult.Sigma);
+                cmd.Parameters.AddWithValue("@sigma_act", analysisResult.SigmaAct);
+                cmd.Parameters.AddWithValue("@sigma_mda", analysisResult.SigmaMDA);
                 cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
                 cmd.Parameters.AddWithValue("@updated_by", Common.Username);
 
@@ -3197,13 +3205,14 @@ insert into analysis_result values(
     @analysis_id,
     @nuclide_id,
     @activity,
-    @activity_uncertainty,
     @activity_uncertainty_abs,
     @activity_approved,
     @uniform_activity,
     @uniform_activity_unit_id,
     @detection_limit, 
     @detection_limit_approved,
+    @accredited,
+    @reportable,
     @instance_status_id,
     @create_date,
     @created_by,
@@ -3223,8 +3232,7 @@ insert into analysis_result values(
                     }                    
                     cmd.Parameters.AddWithValue("@nuclide_id", DB.MakeParam(typeof(Guid), oNuclId));
                     cmd.Parameters.AddWithValue("@activity", iso.Activity);
-                    cmd.Parameters.AddWithValue("@activity_uncertainty", iso.Uncertainty);
-                    cmd.Parameters.AddWithValue("@activity_uncertainty_abs", 0); // FIXME
+                    cmd.Parameters.AddWithValue("@activity_uncertainty_abs", iso.Uncertainty);
                     cmd.Parameters.AddWithValue("@activity_approved", iso.ApprovedRES);                    
                     double uAct = -1.0;
                     int uActUnitId = -1;
@@ -3237,6 +3245,8 @@ insert into analysis_result values(
                     cmd.Parameters.AddWithValue("@uniform_activity_unit_id", uActUnitId);
                     cmd.Parameters.AddWithValue("@detection_limit", iso.MDA);
                     cmd.Parameters.AddWithValue("@detection_limit_approved", iso.ApprovedMDA);
+                    cmd.Parameters.AddWithValue("@accredited", iso.Accredited);
+                    cmd.Parameters.AddWithValue("@reportable", iso.Reportable);
                     cmd.Parameters.AddWithValue("@instance_status_id", InstanceStatus.Active);
                     cmd.Parameters.AddWithValue("@create_date", DateTime.Now);
                     cmd.Parameters.AddWithValue("@created_by", Common.Username);

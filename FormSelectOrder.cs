@@ -255,7 +255,8 @@ namespace DSA_lims
                     cmd.Parameters.AddWithValue("@specter_reference", DBNull.Value);
                     cmd.Parameters.AddWithValue("@activity_unit_id", DBNull.Value);
                     cmd.Parameters.AddWithValue("@activity_unit_type_id", DBNull.Value);
-                    cmd.Parameters.AddWithValue("@sigma", DBNull.Value);
+                    cmd.Parameters.AddWithValue("@sigma_act", DBNull.Value);
+                    cmd.Parameters.AddWithValue("@sigma_mda", DBNull.Value);
                     cmd.Parameters.AddWithValue("@nuclide_library", DBNull.Value);
                     cmd.Parameters.AddWithValue("@mda_library", DBNull.Value);
                     cmd.Parameters.AddWithValue("@instance_status_id", InstanceStatus.Active);

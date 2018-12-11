@@ -538,7 +538,8 @@ order by name";
             grid.Columns["name"].HeaderText = "Name";
             grid.Columns["laboratory_name"].HeaderText = "Laboratory";
             grid.Columns["account_name"].HeaderText = "Responsible";
-            grid.Columns["requested_sigma"].HeaderText = "Req.Sigma";
+            grid.Columns["requested_sigma_act"].HeaderText = "Req.Sig.Act.";
+            grid.Columns["requested_sigma_mda"].HeaderText = "Req.Sig.MDA";
             grid.Columns["deadline"].HeaderText = "Deadline";
             grid.Columns["customer_name"].HeaderText = "Customer";
             grid.Columns["approved_customer"].HeaderText = "Appr.Cust";
@@ -659,16 +660,17 @@ order by create_date desc";
                     new SqlParameter("@analysis_id", analysisId));
 
             grid.Columns["id"].Visible = false;
+            grid.Columns["uniform_activity"].Visible = false;
+            grid.Columns["uniform_activity_name"].Visible = false;
 
             grid.Columns["nuclide_name"].HeaderText = "Nucl.";
             grid.Columns["activity"].HeaderText = "Act.";
-            grid.Columns["activity_uncertainty"].HeaderText = "Unc.";
-            grid.Columns["activity_uncertainty_abs"].HeaderText = "Unc.Abs";
+            grid.Columns["activity_uncertainty_abs"].HeaderText = "Unc.Abs.";
             grid.Columns["activity_approved"].HeaderText = "Act.Appr.";
-            grid.Columns["uniform_activity"].HeaderText = "uAct.";
-            grid.Columns["uniform_activity_name"].HeaderText = "uActU.";
             grid.Columns["detection_limit"].HeaderText = "Det.Lim.";
             grid.Columns["detection_limit_approved"].HeaderText = "Det.Lim.Appr.";
+            grid.Columns["accredited"].HeaderText = "Accredited";
+            grid.Columns["reportable"].HeaderText = "Reportable";
         }
 
         public static void PopulatePersons(SqlConnection conn, DataGridView grid)

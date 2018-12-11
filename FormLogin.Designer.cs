@@ -51,7 +51,7 @@
             this.panel1.Controls.Add(this.btnCancel);
             this.panel1.Controls.Add(this.btnOk);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 190);
+            this.panel1.Location = new System.Drawing.Point(0, 170);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(398, 28);
             this.panel1.TabIndex = 1;
@@ -90,7 +90,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(31, 86);
+            this.label2.Location = new System.Drawing.Point(31, 74);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(61, 15);
             this.label2.TabIndex = 3;
@@ -106,7 +106,7 @@
             // 
             // tbPassword
             // 
-            this.tbPassword.Location = new System.Drawing.Point(117, 83);
+            this.tbPassword.Location = new System.Drawing.Point(117, 71);
             this.tbPassword.Name = "tbPassword";
             this.tbPassword.PasswordChar = '*';
             this.tbPassword.Size = new System.Drawing.Size(245, 21);
@@ -116,7 +116,7 @@
             // cbUseAD
             // 
             this.cbUseAD.AutoSize = true;
-            this.cbUseAD.Location = new System.Drawing.Point(117, 128);
+            this.cbUseAD.Location = new System.Drawing.Point(117, 116);
             this.cbUseAD.Name = "cbUseAD";
             this.cbUseAD.Size = new System.Drawing.Size(216, 19);
             this.cbUseAD.TabIndex = 2;
@@ -166,7 +166,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(398, 218);
+            this.ClientSize = new System.Drawing.Size(398, 198);
             this.Controls.Add(this.cbUseAD);
             this.Controls.Add(this.tbPassword);
             this.Controls.Add(this.tbUsername);

@@ -106,13 +106,18 @@ namespace DSA_lims
             SelectedOrderName = gridOrders.SelectedRows[0].Cells["name"].Value.ToString();
             SelectedOrderLineId = Guid.Parse(tnode.Name);
 
-            string query = "select count(*) from sample_x_assignment_sample_type sxast where sxast.sample_id = @sid and sxast.assignment_sample_type_id = @astid";
+            string query = @"
+select count(*) 
+from sample_x_assignment_sample_type sxast 
+    inner join assignment_sample_type ast on ast.id = sxast.assignment_sample_type_id
+    inner join assignment a on a.id = ast.assignment_id and a.id = @aid
+where sxast.sample_id = @sid";
             object o = null;
             using (SqlConnection conn = DB.OpenConnection())
             {
                 o = DB.GetScalar(conn, query, CommandType.Text, new[] {
                     new SqlParameter("@sid", SampleId),
-                    new SqlParameter("@astid", SelectedOrderLineId)
+                    new SqlParameter("@aid", SelectedOrderId)
                 });
             }
 
@@ -296,7 +301,7 @@ namespace DSA_lims
             Guid oid = Guid.Parse(gridOrders.SelectedRows[0].Cells["id"].Value.ToString());
             using (SqlConnection conn = DB.OpenConnection())
             {
-                UI.PopulateOrderContent(conn, oid, treeOrderLines, SampleTypeId, TreeSampleTypes, false);
+                UI.PopulateOrderContent2(conn, oid, treeOrderLines, SampleTypeId, TreeSampleTypes, false);
             }
         }        
 

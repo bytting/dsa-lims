@@ -1661,6 +1661,25 @@ from assignment_sample_type ast
 	order by st.name
 go
 
+create proc csp_select_assignment_sample_types_for_sample_type2
+	@assignment_id uniqueidentifier,
+	@sample_type_name nvarchar(256)
+as
+	select
+		ast.id as 'id', 
+		ast.sample_type_id as 'sample_type_id', 
+		ast.sample_count as 'sample_count',
+		st.name as 'sample_type_name', 	
+		sc.name as 'sample_component_name',
+		ast.comment as 'sample_comment'
+	from assignment_sample_type ast
+		inner join sample_type st on ast.sample_type_id = st.id 
+			and ast.assignment_id = @assignment_id
+			and @sample_type_name like st.path + '%'
+		left outer join sample_component sc on ast.sample_component_id = sc.id
+	order by st.name
+go
+
 /*===========================================================================*/
 /* tbl assignment_preparation_method */
 

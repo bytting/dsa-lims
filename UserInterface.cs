@@ -654,6 +654,87 @@ order by create_date desc";
             tree.ExpandAll();
         }
 
+        public static void PopulateOrderContent2(SqlConnection conn, Guid selectedOrder, TreeView tree, Guid sampleTypeId, TreeView treeSampleTypes, bool useCommentToolTips)
+        {
+            tree.Nodes.Clear();
+
+            SqlDataReader astReader = null;
+
+            try
+            {
+                SqlCommand cmd = new SqlCommand("select path from sample_type where id = @id", conn);
+                cmd.Parameters.AddWithValue("@id", sampleTypeId);
+                object o = cmd.ExecuteScalar();
+                string sampleTypeName = o.ToString();
+
+                astReader = DB.GetDataReader(conn, "csp_select_assignment_sample_types_for_sample_type2", CommandType.StoredProcedure,
+                    new SqlParameter("@assignment_id", selectedOrder),
+                    new SqlParameter("@sample_type_name", sampleTypeName));
+
+                while (astReader.Read())
+                {
+                    string txt = astReader["sample_count"].ToString() + ", " + astReader["sample_type_name"].ToString();
+                    if (astReader["sample_component_name"] != DBNull.Value)
+                        txt += ", " + astReader["sample_component_name"].ToString();
+                    TreeNode[] nodes = treeSampleTypes.Nodes.Find(astReader["sample_type_id"].ToString(), true);
+                    if (nodes.Length > 0)
+                        txt += " (" + nodes[0].FullPath + ")";
+
+                    TreeNode tnode = tree.Nodes.Add(astReader["id"].ToString(), txt);
+                    tnode.ToolTipText = useCommentToolTips ? astReader["sample_comment"].ToString() : "";
+                    tnode.NodeFont = new Font(tree.Font.FontFamily, tree.Font.Size, FontStyle.Bold);
+                }
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+            }
+            finally
+            {
+                astReader?.Close();
+            }
+
+            foreach (TreeNode tnode in tree.Nodes)
+            {
+                Guid orderSampleTypeId = Guid.Parse(tnode.Name);
+
+                using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_assignment_preparation_methods", CommandType.StoredProcedure,
+                    new SqlParameter("@assignment_sample_type_id", orderSampleTypeId)))
+                {
+                    while (reader.Read())
+                    {
+                        string txt = reader["count"].ToString() + ", " + reader["preparation_method_name"].ToString();
+                        if (reader["preparation_laboratory_id"] != DBNull.Value)
+                            txt += " (" + reader["preparation_laboratory_name"].ToString() + ")";
+
+                        TreeNode tn = tnode.Nodes.Add(reader["id"].ToString(), txt);
+                        tn.ToolTipText = useCommentToolTips ? reader["comment"].ToString() : "";
+                    }
+                }
+            }
+
+            foreach (TreeNode tnode in tree.Nodes)
+            {
+                foreach (TreeNode tn in tnode.Nodes)
+                {
+                    Guid orderPrepMethId = Guid.Parse(tn.Name);
+
+                    using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_assignment_analysis_methods", CommandType.StoredProcedure,
+                        new SqlParameter("@assignment_preparation_method_id", orderPrepMethId)))
+                    {
+                        while (reader.Read())
+                        {
+                            string txt = reader["count"].ToString() + ", " + reader["analysis_method_name"].ToString();
+                            TreeNode tn2 = tn.Nodes.Add(reader["id"].ToString(), txt);
+                            tn2.ToolTipText = useCommentToolTips ? reader["comment"].ToString() : "";
+                        }
+                    }
+                }
+            }
+
+            tree.ExpandAll();
+        }
+
         public static void PopulateAnalysisResults(SqlConnection conn, Guid analysisId, DataGridView grid)
         {
             grid.DataSource = DB.GetDataTable(conn, "csp_select_analysis_results_for_analysis_informative", CommandType.StoredProcedure,

@@ -181,7 +181,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FormLogin";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "DSA Lims - Login";
             this.Load += new System.EventHandler(this.FormLogin_Load);
             this.panel1.ResumeLayout(false);

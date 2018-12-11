@@ -62,14 +62,23 @@ namespace DSA_lims
             string username = tbUsername.Text.Trim();
             string password = tbPassword.Text.Trim();
 
-            bool valid = false;
-
             try
             {
-
                 if (cbUseAD.Checked)
                 {
-                    valid = ValidateADUser(username, password);
+                    if(!ValidateADUser(username, password))
+                    {
+                        if(username.ToLower() != "administrator")
+                        {
+                            MessageBox.Show("Authentication failed");                            
+                        }
+                        else
+                        {
+                            tbUsername.Text = "";
+                            tbPassword.Text = "";
+                        }
+                        return;
+                    }
                 }
                 else
                 {
@@ -85,14 +94,12 @@ namespace DSA_lims
                         return;
                     }
 
-                    valid = ValidateLimsUser(username, password);
-                }
-
-                if (!valid)
-                {
-                    MessageBox.Show("Authentication failed");
-                    return;
-                }
+                    if (!ValidateLimsUser(username, password))
+                    {
+                        MessageBox.Show("Authentication failed");
+                        return;
+                    }
+                }                
 
                 settings.UseActiveDirectoryCredentials = cbUseAD.Checked;
 
@@ -112,28 +119,99 @@ namespace DSA_lims
                 if(!pc.ValidateCredentials(username, password))
                     return false;
 
-                using (SqlConnection conn = new SqlConnection(settings.ConnectionString))
+                if (username.ToLower() == "administrator")
                 {
-                    conn.Open();
+                    FormCreateLIMSAdministrator form = new FormCreateLIMSAdministrator();
+                    if (form.ShowDialog() != DialogResult.OK)
+                        return false;
 
-                    SqlCommand cmd = new SqlCommand("select id, laboratory_id from account where username = @username", conn);
-                    cmd.CommandType = System.Data.CommandType.Text;
-                    cmd.Parameters.AddWithValue("@username", username);
-
-                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    using (SqlConnection conn = new SqlConnection(settings.ConnectionString))
                     {
-                        if (!reader.HasRows)
-                            return false;
+                        conn.Open();
 
-                        reader.Read();
+                        Guid personId = Guid.Empty;
+                        Guid adminId = Guid.Empty;
+                        SqlCommand cmd = new SqlCommand("select id from person where name = 'LIMSAdministrator'", conn);
+                        cmd.CommandType = System.Data.CommandType.Text;
+                        object o = cmd.ExecuteScalar();
+                        if (o == null || o == DBNull.Value)
+                        {
+                            personId = Guid.NewGuid();
+                            cmd.CommandText = "insert into person values(@id, @name, @email, @phone, @address, @create_date, @update_date)";
+                            cmd.Parameters.AddWithValue("@id", personId);
+                            cmd.Parameters.AddWithValue("@name", "LIMSAdministrator");
+                            cmd.Parameters.AddWithValue("@email", DBNull.Value);
+                            cmd.Parameters.AddWithValue("@phone", DBNull.Value);
+                            cmd.Parameters.AddWithValue("@address", DBNull.Value);
+                            cmd.Parameters.AddWithValue("@create_date", DateTime.Now);
+                            cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
+                            cmd.ExecuteNonQuery();
+                        }
+                        else
+                        {
+                            personId = Guid.Parse(o.ToString());
+                        }
 
-                        mUserId = Guid.Parse(reader["id"].ToString());
-                        mLabId = Guid.Parse(reader["laboratory_id"].ToString());
+                        byte[] passwordHash = Utils.MakePasswordHash(form.SelectedPassword, "LIMSAdministrator");
+
+                        cmd = new SqlCommand("select id from account where person_id = @pid", conn);
+                        cmd.Parameters.Clear();
+                        cmd.Parameters.AddWithValue("@pid", personId);
+                        o = cmd.ExecuteScalar();
+                        if (o == null || o == DBNull.Value)
+                        {
+                            adminId = Guid.NewGuid();
+                            cmd.CommandText = "insert into account values(@id, @username, @person_id, @laboratory_id, @language_code, @instance_status_id, @password_hash, @create_date, @update_date)";
+                            cmd.Parameters.Clear();
+                            cmd.Parameters.AddWithValue("@id", adminId);
+                            cmd.Parameters.AddWithValue("@username", "LIMSAdministrator");
+                            cmd.Parameters.AddWithValue("@person_id", personId);
+                            cmd.Parameters.AddWithValue("@laboratory_id", Guid.Empty);
+                            cmd.Parameters.AddWithValue("@language_code", "en");
+                            cmd.Parameters.AddWithValue("@instance_status_id", 1);
+                            cmd.Parameters.AddWithValue("@password_hash", passwordHash);
+                            cmd.Parameters.AddWithValue("@create_date", DateTime.Now);
+                            cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
+                        }
+                        else
+                        {
+                            adminId = Guid.Parse(o.ToString());
+                            cmd.CommandText = "update account set password_hash = @password_hash, update_date = @update_date where id = @id";
+                            cmd.Parameters.Clear();
+                            cmd.Parameters.AddWithValue("@id", adminId);                            
+                            cmd.Parameters.AddWithValue("@password_hash", passwordHash);
+                            cmd.Parameters.AddWithValue("@update_date", DateTime.Now);                            
+                        }
+                        cmd.ExecuteNonQuery();
                     }
-                }
-            }
 
-            return true;
+                    return false;
+                }
+                else
+                {
+                    using (SqlConnection conn = new SqlConnection(settings.ConnectionString))
+                    {
+                        conn.Open();
+
+                        SqlCommand cmd = new SqlCommand("select id, laboratory_id from account where username = @username", conn);
+                        cmd.CommandType = System.Data.CommandType.Text;
+                        cmd.Parameters.AddWithValue("@username", username);
+
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (!reader.HasRows)
+                                return false;
+
+                            reader.Read();
+
+                            mUserId = Guid.Parse(reader["id"].ToString());
+                            mLabId = Guid.Parse(reader["laboratory_id"].ToString());
+                        }
+                    }
+
+                    return true;
+                }
+            }            
         }
 
         private bool ValidateLimsUser(string username, string password)

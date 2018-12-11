@@ -102,6 +102,12 @@
     <Compile Include="FormCounty.Designer.cs">
       <DependentUpon>FormCounty.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormCreateLIMSAdministrator.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormCreateLIMSAdministrator.Designer.cs">
+      <DependentUpon>FormCreateLIMSAdministrator.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormCustomer.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -361,6 +367,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormCounty.resx">
       <DependentUpon>FormCounty.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormCreateLIMSAdministrator.resx">
+      <DependentUpon>FormCreateLIMSAdministrator.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormCustomer.resx">
       <DependentUpon>FormCustomer.cs</DependentUpon>

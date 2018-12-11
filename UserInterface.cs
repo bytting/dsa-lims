@@ -709,7 +709,7 @@ order by create_date desc";
                 object o = cmd.ExecuteScalar();
                 string sampleTypeName = o.ToString();
 
-                astReader = DB.GetDataReader(conn, "csp_select_assignment_sample_types_for_sample_name", CommandType.StoredProcedure,
+                astReader = DB.GetDataReader(conn, "csp_select_assignment_sample_types_for_sample_type_name", CommandType.StoredProcedure,
                     new SqlParameter("@assignment_id", selectedOrder),
                     new SqlParameter("@sample_type_name", sampleTypeName));
 

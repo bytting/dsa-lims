@@ -19,12 +19,15 @@
 
 using System;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace DSA_lims
 {
     public static class Utils
     {
+        public static int MIN_PASSWORD_LENGTH { get { return 8; } }
+
         public static string DateTimeFormatISO = "yyyy-MM-dd HH:mm:ss";
         public static string DateFormatISO = "yyyy-MM-dd";
         public static string DateTimeFormatNorwegian = "dd.MM.yyyy HH:mm:ss";
@@ -50,6 +53,22 @@ namespace DSA_lims
                 return false;
 
             return true;
+        }
+
+        public static byte[] MakePasswordHash(string password, string username)
+        {
+            return MakePasswordHash(Encoding.UTF8.GetBytes(password), Encoding.UTF8.GetBytes(username.Substring(0, 3)));
+        }
+
+        private static byte[] MakePasswordHash(byte[] value, byte[] salt)
+        {
+            byte[] saltedValue = value.Concat(salt).ToArray();
+            return new SHA256Managed().ComputeHash(saltedValue);
+        }
+
+        public static bool PasswordHashEqual(byte[] hash1, byte[] hash2)
+        {
+            return hash1.SequenceEqual(hash2);
         }
     }
 }

@@ -43,6 +43,10 @@
             this.cboxPersons = new System.Windows.Forms.ComboBox();
             this.label45 = new System.Windows.Forms.Label();
             this.label44 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.tbPassword1 = new System.Windows.Forms.TextBox();
+            this.tbPassword2 = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel8.SuspendLayout();
             this.SuspendLayout();
@@ -52,7 +56,7 @@
             this.panel1.Controls.Add(this.btnCancel);
             this.panel1.Controls.Add(this.btnOk);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 208);
+            this.panel1.Location = new System.Drawing.Point(0, 266);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(441, 28);
             this.panel1.TabIndex = 1;
@@ -86,36 +90,40 @@
             this.tableLayoutPanel8.ColumnCount = 2;
             this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 80F));
-            this.tableLayoutPanel8.Controls.Add(this.label48, 0, 4);
-            this.tableLayoutPanel8.Controls.Add(this.cboxLaboratory, 1, 4);
-            this.tableLayoutPanel8.Controls.Add(this.label1, 0, 3);
-            this.tableLayoutPanel8.Controls.Add(this.cboxLanguage, 1, 3);
-            this.tableLayoutPanel8.Controls.Add(this.label2, 0, 5);
-            this.tableLayoutPanel8.Controls.Add(this.cboxInstanceStatus, 1, 5);
+            this.tableLayoutPanel8.Controls.Add(this.label48, 0, 6);
+            this.tableLayoutPanel8.Controls.Add(this.cboxLaboratory, 1, 6);
+            this.tableLayoutPanel8.Controls.Add(this.label1, 0, 5);
+            this.tableLayoutPanel8.Controls.Add(this.cboxLanguage, 1, 5);
+            this.tableLayoutPanel8.Controls.Add(this.label2, 0, 7);
+            this.tableLayoutPanel8.Controls.Add(this.cboxInstanceStatus, 1, 7);
             this.tableLayoutPanel8.Controls.Add(this.tbUsername, 1, 2);
             this.tableLayoutPanel8.Controls.Add(this.cboxPersons, 1, 1);
             this.tableLayoutPanel8.Controls.Add(this.label45, 0, 2);
             this.tableLayoutPanel8.Controls.Add(this.label44, 0, 1);
+            this.tableLayoutPanel8.Controls.Add(this.label3, 0, 3);
+            this.tableLayoutPanel8.Controls.Add(this.label4, 0, 4);
+            this.tableLayoutPanel8.Controls.Add(this.tbPassword1, 1, 3);
+            this.tableLayoutPanel8.Controls.Add(this.tbPassword2, 1, 4);
             this.tableLayoutPanel8.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel8.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel8.Name = "tableLayoutPanel8";
-            this.tableLayoutPanel8.RowCount = 7;
+            this.tableLayoutPanel8.RowCount = 9;
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 16F));
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel8.Size = new System.Drawing.Size(441, 208);
+            this.tableLayoutPanel8.Size = new System.Drawing.Size(441, 266);
             this.tableLayoutPanel8.TabIndex = 3;
             // 
             // label48
             // 
             this.label48.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label48.Location = new System.Drawing.Point(3, 106);
+            this.label48.Location = new System.Drawing.Point(3, 166);
             this.label48.Name = "label48";
             this.label48.Size = new System.Drawing.Size(82, 30);
             this.label48.TabIndex = 4;
@@ -128,7 +136,7 @@
             this.cboxLaboratory.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cboxLaboratory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxLaboratory.FormattingEnabled = true;
-            this.cboxLaboratory.Location = new System.Drawing.Point(91, 109);
+            this.cboxLaboratory.Location = new System.Drawing.Point(91, 169);
             this.cboxLaboratory.Name = "cboxLaboratory";
             this.cboxLaboratory.Size = new System.Drawing.Size(347, 21);
             this.cboxLaboratory.TabIndex = 5;
@@ -137,7 +145,7 @@
             // label1
             // 
             this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label1.Location = new System.Drawing.Point(3, 76);
+            this.label1.Location = new System.Drawing.Point(3, 136);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(82, 30);
             this.label1.TabIndex = 18;
@@ -153,7 +161,7 @@
             this.cboxLanguage.Items.AddRange(new object[] {
             "nb",
             "en"});
-            this.cboxLanguage.Location = new System.Drawing.Point(91, 79);
+            this.cboxLanguage.Location = new System.Drawing.Point(91, 139);
             this.cboxLanguage.Name = "cboxLanguage";
             this.cboxLanguage.Size = new System.Drawing.Size(347, 21);
             this.cboxLanguage.TabIndex = 19;
@@ -162,7 +170,7 @@
             // label2
             // 
             this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label2.Location = new System.Drawing.Point(3, 136);
+            this.label2.Location = new System.Drawing.Point(3, 196);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(82, 30);
             this.label2.TabIndex = 17;
@@ -175,7 +183,7 @@
             this.cboxInstanceStatus.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cboxInstanceStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxInstanceStatus.FormattingEnabled = true;
-            this.cboxInstanceStatus.Location = new System.Drawing.Point(91, 139);
+            this.cboxInstanceStatus.Location = new System.Drawing.Point(91, 199);
             this.cboxInstanceStatus.Name = "cboxInstanceStatus";
             this.cboxInstanceStatus.Size = new System.Drawing.Size(347, 21);
             this.cboxInstanceStatus.TabIndex = 16;
@@ -220,11 +228,51 @@
             this.label44.Text = "Person";
             this.label44.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // label3
+            // 
+            this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label3.Location = new System.Drawing.Point(3, 76);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(82, 30);
+            this.label3.TabIndex = 21;
+            this.label3.Text = "Password";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label4
+            // 
+            this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label4.Location = new System.Drawing.Point(3, 106);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(82, 30);
+            this.label4.TabIndex = 22;
+            this.label4.Text = "Password";
+            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // tbPassword1
+            // 
+            this.tbPassword1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbPassword1.Enabled = false;
+            this.tbPassword1.Location = new System.Drawing.Point(91, 79);
+            this.tbPassword1.Name = "tbPassword1";
+            this.tbPassword1.PasswordChar = '*';
+            this.tbPassword1.Size = new System.Drawing.Size(347, 20);
+            this.tbPassword1.TabIndex = 23;
+            // 
+            // tbPassword2
+            // 
+            this.tbPassword2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbPassword2.Enabled = false;
+            this.tbPassword2.Location = new System.Drawing.Point(91, 109);
+            this.tbPassword2.Name = "tbPassword2";
+            this.tbPassword2.PasswordChar = '*';
+            this.tbPassword2.Size = new System.Drawing.Size(347, 20);
+            this.tbPassword2.TabIndex = 24;
+            // 
             // FormUser
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(441, 236);
+            this.ClientSize = new System.Drawing.Size(441, 294);
             this.Controls.Add(this.tableLayoutPanel8);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -257,5 +305,9 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cboxLanguage;
         private System.Windows.Forms.ComboBox cboxPersons;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox tbPassword1;
+        private System.Windows.Forms.TextBox tbPassword2;
     }
 }

@@ -63,11 +63,11 @@ namespace DSA_lims
                 Common.Log = DSALogger.CreateLogger(DSAEnvironment.SettingsPath + Path.DirectorySeparatorChar + "dsa-lims.log");
 
                 Common.Log.Info("Loading settings file " + DSAEnvironment.SettingsFilename);
-                LoadSettings(DSAEnvironment.SettingsFilename);                
-
-                ShowLogin();
+                LoadSettings(DSAEnvironment.SettingsFilename);
 
                 DB.ConnectionString = Common.Settings.ConnectionString;
+
+                ShowLogin();
 
                 tabs.Appearance = TabAppearance.FlatButtons;
                 tabs.ItemSize = new Size(0, 1);
@@ -115,8 +115,8 @@ namespace DSA_lims
 
                 using (SqlConnection conn = DB.OpenConnection())
                 {
-                    Common.Username = "Admin"; // FIXME
-                    Common.LabId = Guid.Parse("8D8EBB13-3A31-4CB9-8BAF-5989F175D433"); // FIXME
+                    //Common.Username = "Admin"; // FIXME
+                    //Common.LabId = Guid.Parse("8D8EBB13-3A31-4CB9-8BAF-5989F175D433"); // FIXME
 
                     DB.LoadSampleTypes(conn);
                     
@@ -322,9 +322,17 @@ namespace DSA_lims
 
         private void ShowLogin()
         {
+            Common.UserId = Guid.Empty;
+            Common.Username = String.Empty;                        
+            Common.LabId = Guid.Empty;
+
             FormLogin formLogin = new FormLogin(Common.Settings);
-            if (formLogin.ShowDialog() != DialogResult.OK)
-                Close();
+            if (formLogin.ShowDialog() != DialogResult.OK)            
+                Close();                            
+
+            Common.UserId = formLogin.UserId;
+            Common.Username = formLogin.UserName;
+            Common.LabId = formLogin.LabId;
         }
 
         public void SaveSettings(string settingsFilename)

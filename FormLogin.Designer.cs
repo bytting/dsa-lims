@@ -101,7 +101,8 @@
             this.tbUsername.Location = new System.Drawing.Point(117, 44);
             this.tbUsername.Name = "tbUsername";
             this.tbUsername.Size = new System.Drawing.Size(245, 21);
-            this.tbUsername.TabIndex = 1;
+            this.tbUsername.TabIndex = 0;
+            this.tbUsername.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbUsername_KeyPress);
             // 
             // tbPassword
             // 
@@ -109,7 +110,8 @@
             this.tbPassword.Name = "tbPassword";
             this.tbPassword.PasswordChar = '*';
             this.tbPassword.Size = new System.Drawing.Size(245, 21);
-            this.tbPassword.TabIndex = 2;
+            this.tbPassword.TabIndex = 1;
+            this.tbPassword.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbPassword_KeyPress);
             // 
             // cbUseAD
             // 
@@ -117,7 +119,7 @@
             this.cbUseAD.Location = new System.Drawing.Point(117, 128);
             this.cbUseAD.Name = "cbUseAD";
             this.cbUseAD.Size = new System.Drawing.Size(216, 19);
-            this.cbUseAD.TabIndex = 5;
+            this.cbUseAD.TabIndex = 2;
             this.cbUseAD.Text = "Use Active Directory to authenticate";
             this.cbUseAD.UseVisualStyleBackColor = true;
             // 

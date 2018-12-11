@@ -50,6 +50,8 @@ namespace DSA_lims
             Text = "DSA-Lims - Create user";
 
             tbUsername.ReadOnly = false;
+            tbPassword1.Enabled = true;
+            tbPassword2.Enabled = true;
 
             using (SqlConnection conn = DB.OpenConnection())
             {
@@ -74,6 +76,8 @@ namespace DSA_lims
             p["id"] = uid;
 
             tbUsername.ReadOnly = true;
+            tbPassword1.Enabled = false;
+            tbPassword2.Enabled = false;
 
             using (SqlConnection conn = DB.OpenConnection())
             {
@@ -119,7 +123,13 @@ namespace DSA_lims
                 return;
             }
 
-            if(!Utils.IsValidGuid(cboxPersons.SelectedValue))
+            if (tbUsername.Text.Length < 3)
+            {
+                MessageBox.Show("Username must be at least 3 characters long");
+                return;
+            }
+
+            if (!Utils.IsValidGuid(cboxPersons.SelectedValue))
             {
                 MessageBox.Show("Person is mandatory");
                 return;
@@ -132,10 +142,28 @@ namespace DSA_lims
             p["instance_status_id"] = cboxInstanceStatus.SelectedValue;
 
             bool success;
-            if (!p.ContainsKey("id"))            
-                success = InsertAccount();            
-            else            
-                success = UpdateAccount();            
+            if (!p.ContainsKey("id"))
+            {
+                if (tbPassword1.Text.Length < Utils.MIN_PASSWORD_LENGTH)
+                {
+                    MessageBox.Show("Password must be at least 8 characters long");
+                    return;
+                }
+
+                if (tbPassword1.Text.CompareTo(tbPassword2.Text) != 0)
+                {
+                    MessageBox.Show("Passwords are not equal");
+                    return;
+                }
+
+                p["password_hash"] = Utils.MakePasswordHash(tbPassword1.Text.Trim(), tbUsername.Text.Trim());
+
+                success = InsertAccount();
+            }
+            else
+            {
+                success = UpdateAccount();
+            }
 
             DialogResult = success ? DialogResult.OK : DialogResult.Abort;
             Close();
@@ -148,7 +176,7 @@ namespace DSA_lims
             try
             {
                 p["create_date"] = DateTime.Now;                
-                p["update_date"] = DateTime.Now;
+                p["update_date"] = DateTime.Now;                
 
                 connection = DB.OpenConnection();
 
@@ -161,7 +189,7 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@laboratory_id", DB.MakeParam(typeof(Guid), p["laboratory_id"]));
                 cmd.Parameters.AddWithValue("@language_code", p["language_code"]);
                 cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
-                cmd.Parameters.AddWithValue("@password_hash", "");
+                cmd.Parameters.AddWithValue("@password_hash", p["password_hash"]);
                 cmd.Parameters.AddWithValue("@create_date", p["create_date"]);                
                 cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
                 cmd.ExecuteNonQuery();

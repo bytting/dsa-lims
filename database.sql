@@ -231,7 +231,7 @@ create table account (
 	laboratory_id uniqueidentifier default null,	
 	language_code nvarchar(8) default 'en',
 	instance_status_id int default 1,
-	password_hash nchar(64) not null,
+	password_hash binary(32) not null,
 	create_date datetime not null,	
 	update_date datetime not null
 )
@@ -244,7 +244,7 @@ create proc csp_insert_account
 	@laboratory_id uniqueidentifier,
 	@language_code nvarchar(8),
 	@instance_status_id int,
-	@password_hash nchar(64),
+	@password_hash binary(32),
 	@create_date datetime,	
 	@update_date datetime
 as 

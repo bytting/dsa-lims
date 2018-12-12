@@ -121,7 +121,7 @@ where sxast.sample_id = @sid";
                 });
             }
 
-            if(o != null || o != DBNull.Value)
+            if(o != null && o != DBNull.Value)
             {
                 int cnt = Convert.ToInt32(o);
                 if(cnt > 0)

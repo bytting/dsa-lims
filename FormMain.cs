@@ -115,9 +115,6 @@ namespace DSA_lims
 
                 using (SqlConnection conn = DB.OpenConnection())
                 {
-                    //Common.Username = "Admin"; // FIXME
-                    //Common.LabId = Guid.Parse("8D8EBB13-3A31-4CB9-8BAF-5989F175D433"); // FIXME
-
                     DB.LoadSampleTypes(conn);
                     
                     cboxSamplesStatus.DataSource = DB.GetIntLemmata(conn, "csp_select_instance_status");
@@ -3551,6 +3548,95 @@ insert into analysis_result values(
         private void miCompanyDelete_Click(object sender, EventArgs e)
         {
             // delete company
+        }
+
+        private void treeOrderContent_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            lbOrderConnectedItems.DataSource = null;
+            string query = "";
+            Guid orderSampleTypeId = Guid.Empty;
+            Guid orderPrepMethId = Guid.Empty;
+            Guid orderAnalMethId = Guid.Empty;
+
+            switch (e.Node.Level)
+            {
+                case 0:
+                    query = @"
+select     
+    s.number as 'Name'
+from sample s
+	inner join sample_x_assignment_sample_type sxast on s.id = sxast.sample_id
+	inner join assignment_sample_type ast on ast.id = sxast.assignment_sample_type_id and ast.id = @astid
+	inner join assignment a on a.id = ast.assignment_id
+where a.id = @aid
+order by s.number
+";
+                    orderSampleTypeId = Guid.Parse(e.Node.Name);
+                    using (SqlConnection conn = DB.OpenConnection())
+                    {
+                        lbOrderConnectedItems.DataSource = DB.GetDataTable(conn, query, CommandType.Text, new[] {
+                            new SqlParameter("@aid", selectedOrderId),
+                            new SqlParameter("@astid", orderSampleTypeId)
+                        });                        
+                    }
+                    lbOrderConnectedItems.DisplayMember = "Name";
+                    break;
+
+                case 1:
+                    query = @"
+select convert(nvarchar(50), s.number) + '/' + convert(nvarchar(50), p.number) as 'Name'
+from preparation p
+	inner join sample s on p.sample_id = s.id
+	inner join sample_x_assignment_sample_type sxast on s.id = sxast.sample_id
+	inner join assignment_sample_type ast on ast.id = sxast.assignment_sample_type_id and ast.id = @astid
+	inner join assignment_preparation_method apm on apm.assignment_sample_type_id = ast.id and apm.id = @apmid
+	inner join assignment a on a.id = ast.assignment_id and a.id = @aid
+where p.assignment_id = @aid and p.workflow_status_id = 2
+order by s.number, p.number
+";
+                    orderSampleTypeId = Guid.Parse(e.Node.Parent.Name);
+                    orderPrepMethId = Guid.Parse(e.Node.Name);
+                    using (SqlConnection conn = DB.OpenConnection())
+                    {
+                        lbOrderConnectedItems.DataSource = DB.GetDataTable(conn, query, CommandType.Text, new[] {
+                            new SqlParameter("@aid", selectedOrderId),
+                            new SqlParameter("@astid", orderSampleTypeId),
+                            new SqlParameter("@apmid", orderPrepMethId)
+                        });
+                    }
+                    lbOrderConnectedItems.DisplayMember = "Name";
+                    break;
+
+                case 2:
+                    query = @"
+select
+	convert(nvarchar(50), s.number) + '/' + convert(nvarchar(50), p.number) + '/' + convert(nvarchar(50), anal.number) as 'Name'	
+from analysis anal
+	inner join preparation p on anal.preparation_id = p.id and p.assignment_id = @aid
+	inner join sample s on p.sample_id = s.id
+	inner join sample_x_assignment_sample_type sxast on s.id = sxast.sample_id
+	inner join assignment_sample_type ast on ast.id = sxast.assignment_sample_type_id and ast.id = @astid
+	inner join assignment_preparation_method apm on apm.assignment_sample_type_id = ast.id and apm.id = @apmid
+	inner join assignment_analysis_method aam on aam.assignment_preparation_method_id = apm.id and aam.id = @aamid
+	inner join assignment a on a.id = ast.assignment_id and a.id = @aid
+where anal.assignment_id = @aid and p.workflow_status_id = 2 and anal.workflow_status_id = 2
+order by s.number, p.number
+";
+                    orderSampleTypeId = Guid.Parse(e.Node.Parent.Parent.Name);
+                    orderPrepMethId = Guid.Parse(e.Node.Parent.Name);
+                    orderAnalMethId = Guid.Parse(e.Node.Name);
+                    using (SqlConnection conn = DB.OpenConnection())
+                    {
+                        lbOrderConnectedItems.DataSource = DB.GetDataTable(conn, query, CommandType.Text, new[] {
+                            new SqlParameter("@aid", selectedOrderId),
+                            new SqlParameter("@astid", orderSampleTypeId),
+                            new SqlParameter("@apmid", orderPrepMethId),
+                            new SqlParameter("@aamid", orderAnalMethId),
+                        });
+                    }
+                    lbOrderConnectedItems.DisplayMember = "Name";
+                    break;
+            }
         }
     }    
 }

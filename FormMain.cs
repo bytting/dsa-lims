@@ -2368,20 +2368,7 @@ order by name
 
                 UI.PopulateOrderContent(conn, selectedOrderId, treeOrderContent, Guid.Empty, treeSampleTypes, true);
 
-                gridOrderSamples.DataSource = DB.GetDataTable(
-                    conn, 
-                    "csp_select_samples_for_assignment_flat", 
-                    CommandType.StoredProcedure, 
-                    new SqlParameter("@assignment_id", id));
-
-                gridOrderSamples.Columns["id"].Visible = false;
-
-                gridOrderSamples.Columns["number"].HeaderText = "Sample";
-                gridOrderSamples.Columns["external_id"].HeaderText = "Ex.Id";
-                gridOrderSamples.Columns["laboratory_name"].HeaderText = "Laboratory";
-                gridOrderSamples.Columns["sample_type_name"].HeaderText = "Sample type";
-                gridOrderSamples.Columns["sample_component_name"].HeaderText = "Sample component";
-                gridOrderSamples.Columns["project_name"].HeaderText = "Project";
+                gridOrderConnectedItems.DataSource = null;
             }
         }
 
@@ -3552,7 +3539,7 @@ insert into analysis_result values(
 
         private void treeOrderContent_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            lbOrderConnectedItems.DataSource = null;
+            gridOrderConnectedItems.DataSource = null;
             string query = "";
             Guid orderSampleTypeId = Guid.Empty;
             Guid orderPrepMethId = Guid.Empty;
@@ -3562,55 +3549,68 @@ insert into analysis_result values(
             {
                 case 0:
                     query = @"
-select     
-    s.number as 'Name'
+select s.id, s.number as 'Connected samples', st.name as 'Type', sc.name as 'Comp.', sa.name as 'Sampler'
 from sample s
 	inner join sample_x_assignment_sample_type sxast on s.id = sxast.sample_id
 	inner join assignment_sample_type ast on ast.id = sxast.assignment_sample_type_id and ast.id = @astid
 	inner join assignment a on a.id = ast.assignment_id
+    inner join sample_type st on st.id = s.sample_type_id
+    left outer join sample_component sc on sc.id = s.sample_component_id
+    left outer join cv_sampler sa on sa.id = s.sampler_id
 where a.id = @aid
 order by s.number
 ";
                     orderSampleTypeId = Guid.Parse(e.Node.Name);
                     using (SqlConnection conn = DB.OpenConnection())
                     {
-                        lbOrderConnectedItems.DataSource = DB.GetDataTable(conn, query, CommandType.Text, new[] {
+                        gridOrderConnectedItems.DataSource = DB.GetDataTable(conn, query, CommandType.Text, new[] {
                             new SqlParameter("@aid", selectedOrderId),
                             new SqlParameter("@astid", orderSampleTypeId)
-                        });                        
+                        });
+                        gridOrderConnectedItems.Columns["id"].Visible = false;
                     }
-                    lbOrderConnectedItems.DisplayMember = "Name";
                     break;
 
                 case 1:
                     query = @"
-select convert(nvarchar(50), s.number) + '/' + convert(nvarchar(50), p.number) as 'Name'
+select 
+    p.id, 
+    convert(nvarchar(50), s.number) + '/' + convert(nvarchar(50), p.number) as 'Preparations',
+    pm.name as 'Method',
+    pg.name as 'Geometry',
+    ws.name as 'Status'
 from preparation p
 	inner join sample s on p.sample_id = s.id
 	inner join sample_x_assignment_sample_type sxast on s.id = sxast.sample_id
 	inner join assignment_sample_type ast on ast.id = sxast.assignment_sample_type_id and ast.id = @astid
 	inner join assignment_preparation_method apm on apm.assignment_sample_type_id = ast.id and apm.id = @apmid
 	inner join assignment a on a.id = ast.assignment_id and a.id = @aid
-where p.assignment_id = @aid and p.workflow_status_id = 2
+    inner join preparation_method pm on pm.id = p.preparation_method_id
+    left outer join preparation_geometry pg on pg.id = p.preparation_geometry_id
+    inner join workflow_status ws on ws.id = p.workflow_status_id
+where p.assignment_id = @aid
 order by s.number, p.number
 ";
                     orderSampleTypeId = Guid.Parse(e.Node.Parent.Name);
                     orderPrepMethId = Guid.Parse(e.Node.Name);
                     using (SqlConnection conn = DB.OpenConnection())
                     {
-                        lbOrderConnectedItems.DataSource = DB.GetDataTable(conn, query, CommandType.Text, new[] {
+                        gridOrderConnectedItems.DataSource = DB.GetDataTable(conn, query, CommandType.Text, new[] {
                             new SqlParameter("@aid", selectedOrderId),
                             new SqlParameter("@astid", orderSampleTypeId),
                             new SqlParameter("@apmid", orderPrepMethId)
                         });
+                        gridOrderConnectedItems.Columns["id"].Visible = false;
                     }
-                    lbOrderConnectedItems.DisplayMember = "Name";
                     break;
 
                 case 2:
                     query = @"
 select
-	convert(nvarchar(50), s.number) + '/' + convert(nvarchar(50), p.number) + '/' + convert(nvarchar(50), anal.number) as 'Name'	
+	convert(nvarchar(50), s.number) + '/' + convert(nvarchar(50), p.number) + '/' + convert(nvarchar(50), anal.number) as 'Analyses',
+    am.name as 'Method',
+    anal.specter_reference as 'Spec.ref.',
+    ws.name as 'Status'
 from analysis anal
 	inner join preparation p on anal.preparation_id = p.id and p.assignment_id = @aid
 	inner join sample s on p.sample_id = s.id
@@ -3619,7 +3619,9 @@ from analysis anal
 	inner join assignment_preparation_method apm on apm.assignment_sample_type_id = ast.id and apm.id = @apmid
 	inner join assignment_analysis_method aam on aam.assignment_preparation_method_id = apm.id and aam.id = @aamid
 	inner join assignment a on a.id = ast.assignment_id and a.id = @aid
-where anal.assignment_id = @aid and p.workflow_status_id = 2 and anal.workflow_status_id = 2
+    left outer join analysis_method am on am.id = anal.analysis_method_id
+    inner join workflow_status ws on ws.id = p.workflow_status_id
+where anal.assignment_id = @aid
 order by s.number, p.number
 ";
                     orderSampleTypeId = Guid.Parse(e.Node.Parent.Parent.Name);
@@ -3627,16 +3629,70 @@ order by s.number, p.number
                     orderAnalMethId = Guid.Parse(e.Node.Name);
                     using (SqlConnection conn = DB.OpenConnection())
                     {
-                        lbOrderConnectedItems.DataSource = DB.GetDataTable(conn, query, CommandType.Text, new[] {
+                        gridOrderConnectedItems.DataSource = DB.GetDataTable(conn, query, CommandType.Text, new[] {
                             new SqlParameter("@aid", selectedOrderId),
                             new SqlParameter("@astid", orderSampleTypeId),
                             new SqlParameter("@apmid", orderPrepMethId),
                             new SqlParameter("@aamid", orderAnalMethId),
                         });
                     }
-                    lbOrderConnectedItems.DisplayMember = "Name";
                     break;
             }
+        }        
+
+        private void miTypeRelSampleTypesExportSampTypeList_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog dialog = new SaveFileDialog();            
+            dialog.Filter = "TXT files (*.txt)|*.txt";
+            if (dialog.ShowDialog() != DialogResult.OK)
+                return;
+
+            List<string> stList = new List<string>();
+            AddSampleTypesToList(treeSampleTypes.Nodes, stList);
+
+            stList.Sort(delegate (string s1, string s2) { return s1.CompareTo(s2); });
+
+            using (TextWriter writer = File.CreateText(dialog.FileName))
+            {
+                foreach (string s in stList)
+                    writer.WriteLine(s);
+            }
+        }
+
+        private void AddSampleTypesToList(TreeNodeCollection nodes, List<string> list)
+        {
+            foreach (TreeNode tn in nodes)
+            {
+                list.Add(tn.Text + " -> " + tn.Tag.ToString());
+                AddSampleTypesToList(tn.Nodes, list);
+            }
+        }
+
+        private void btnPrepAnalEditResult_Click(object sender, EventArgs e)
+        {
+            if(gridPrepAnalResults.SelectedRows.Count < 1)
+            {
+                MessageBox.Show("You must select a result first");
+                return;
+            }
+
+            List<string> nuclides = null;
+            Guid resultId = Guid.Parse(gridPrepAnalResults.SelectedRows[0].Cells["id"].Value.ToString());
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                nuclides = DB.GetNuclideNames(conn, null);                
+            }
+            List<string> existingNuclides = new List<string>();
+            foreach (DataGridViewRow row in gridPrepAnalResults.Rows)
+            {
+                string nucl = row.Cells["nuclide_name"].Value.ToString();
+                existingNuclides.Add(nucl);
+            }
+            nuclides.RemoveAll(x => existingNuclides.Contains(x));
+            FormPrepAnalResult form = new FormPrepAnalResult(resultId, nuclides);
+            if (form.ShowDialog() != DialogResult.OK)
+                return;
+
         }
     }    
 }

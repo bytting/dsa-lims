@@ -27,6 +27,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_4C29A00540ED417A872ED04F9E793514"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_4C8D5A0706174251879A60002EB8B611"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -35,12 +41,6 @@
         {
         "MsmKey" = "8:_6514E10D389E79C4B67BB6CAF59CAD1C"
         "OwnerKey" = "8:_4C8D5A0706174251879A60002EB8B611"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_3EFFFC940CEE304D2A05D228BC805678"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -61,6 +61,12 @@
         "OwnerKey" = "8:_6514E10D389E79C4B67BB6CAF59CAD1C"
         "MsmSig" = "8:_UNDEFINED"
         }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_3EFFFC940CEE304D2A05D228BC805678"
+        "MsmSig" = "8:_UNDEFINED"
+        }
     }
     "Configurations"
     {
@@ -79,6 +85,14 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
         "Release"
         {
@@ -95,6 +109,22 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.5"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.5 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.5"
+                    }
+                }
+            }
         }
     }
     "Deployable"
@@ -186,6 +216,26 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_4C29A00540ED417A872ED04F9E793514"
+            {
+            "SourcePath" = "8:..\\images\\dsa-lims.ico"
+            "TargetName" = "8:dsa-lims.ico"
+            "Tag" = "8:"
+            "Folder" = "8:_08CB8F1274844D339DD99D41392C2B71"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_6514E10D389E79C4B67BB6CAF59CAD1C"
             {
             "AssemblyRegister" = "3:1"
@@ -272,22 +322,22 @@
         "Product"
         {
         "Name" = "8:Microsoft Visual Studio"
-        "ProductName" = "8:setup-vs"
+        "ProductName" = "8:DSA-Lims"
         "ProductCode" = "8:{94DC8D17-48DE-4066-9ACF-D0BF759350EB}"
-        "PackageCode" = "8:{FB03DC4A-45BD-4C75-9C6F-09C637639ED0}"
+        "PackageCode" = "8:{48E1B2C2-800C-43E8-B207-7C3DA5325889}"
         "UpgradeCode" = "8:{C99D9B1F-BD8A-45EF-A29B-B2CDA6B54230}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
         "DetectNewerInstalledVersion" = "11:TRUE"
-        "InstallAllUsers" = "11:FALSE"
+        "InstallAllUsers" = "11:TRUE"
         "ProductVersion" = "8:1.0.0"
-        "Manufacturer" = "8:Default Company Name"
+        "Manufacturer" = "8:DSA"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
-        "Title" = "8:setup-vs"
+        "Title" = "8:DSA-Lims Setup"
         "Subject" = "8:"
-        "ARPCONTACT" = "8:Default Company Name"
+        "ARPCONTACT" = "8:DSA"
         "Keywords" = "8:"
         "ARPCOMMENTS" = "8:"
         "ARPURLINFOABOUT" = "8:"
@@ -394,6 +444,20 @@
         }
         "Shortcut"
         {
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_DCC3FD7FA1D345C3868C66383699F25D"
+            {
+            "Name" = "8:DSA-Lims"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_4C8D5A0706174251879A60002EB8B611"
+            "Folder" = "8:_1BDE938A708146D48912B35156377531"
+            "WorkingFolder" = "8:_08CB8F1274844D339DD99D41392C2B71"
+            "Icon" = "8:_4C29A00540ED417A872ED04F9E793514"
+            "Feature" = "8:"
+            }
         }
         "UserInterface"
         {
@@ -795,7 +859,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_4C8D5A0706174251879A60002EB8B611"
             {
-            "SourcePath" = "8:..\\obj\\Debug\\DSA-lims.exe"
+            "SourcePath" = "8:..\\obj\\Release\\DSA-lims.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_08CB8F1274844D339DD99D41392C2B71"

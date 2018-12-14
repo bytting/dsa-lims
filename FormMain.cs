@@ -69,6 +69,8 @@ namespace DSA_lims
 
                 ShowLogin();
 
+                DB.ConnectionString = Common.Settings.ConnectionString;
+
                 tabs.Appearance = TabAppearance.FlatButtons;
                 tabs.ItemSize = new Size(0, 1);
                 tabs.SizeMode = TabSizeMode.Fixed;

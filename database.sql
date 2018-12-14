@@ -3416,7 +3416,7 @@ as
 		inner join project_sub ps on s.project_sub_id = ps.id
 		inner join project_main pm on pm.id = ps.project_main_id
 		left outer join station sta on s.station_id = sta.id
-		left outer join sampler sa on s.sampler_id = sa.id
+		left outer join cv_sampler sa on s.sampler_id = sa.id
 		left outer join sampling_method sm on s.sampling_method_id = sm.id
 		left outer join municipality mun on s.municipality_id = mun.id
 		left outer join county co on mun.county_id = co.id

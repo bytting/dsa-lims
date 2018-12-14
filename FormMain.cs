@@ -3622,7 +3622,7 @@ from analysis anal
 	inner join assignment_analysis_method aam on aam.assignment_preparation_method_id = apm.id and aam.id = @aamid
 	inner join assignment a on a.id = ast.assignment_id and a.id = @aid
     left outer join analysis_method am on am.id = anal.analysis_method_id
-    inner join workflow_status ws on ws.id = p.workflow_status_id
+    inner join workflow_status ws on ws.id = anal.workflow_status_id
 where anal.assignment_id = @aid
 order by s.number, p.number
 ";

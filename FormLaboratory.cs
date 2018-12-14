@@ -46,7 +46,8 @@ namespace DSA_lims
 
         public FormLaboratory()
         {
-            InitializeComponent();            
+            InitializeComponent(); 
+                       
             Text = "Create laboratory";
             using (SqlConnection conn = DB.OpenConnection())
             {

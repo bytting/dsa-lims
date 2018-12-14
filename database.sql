@@ -3595,6 +3595,85 @@ create table analysis_result (
 )
 go
 
+create proc csp_insert_analysis_result
+	@id uniqueidentifier,
+	@analysis_id uniqueidentifier,
+	@nuclide_id uniqueidentifier,
+	@activity float,	
+	@activity_uncertainty_abs float,
+	@activity_approved bit,
+	@uniform_activity float,
+	@uniform_activity_unit_id int,
+	@detection_limit float,
+	@detection_limit_approved bit,
+	@accredited bit,
+	@reportable bit,
+	@instance_status_id int,
+	@create_date datetime,
+	@created_by nvarchar(50),
+	@update_date datetime,
+	@updated_by nvarchar(50)
+as 
+	insert into analysis_result values (		
+		@id,
+		@analysis_id,
+		@nuclide_id,
+		@activity,	
+		@activity_uncertainty_abs,
+		@activity_approved,
+		@uniform_activity,
+		@uniform_activity_unit_id,
+		@detection_limit,
+		@detection_limit_approved,
+		@accredited,
+		@reportable,
+		@instance_status_id,
+		@create_date,
+		@created_by,
+		@update_date,
+		@updated_by
+	);
+go
+
+create proc csp_update_analysis_result	
+	@id uniqueidentifier,	
+	@activity float,	
+	@activity_uncertainty_abs float,
+	@activity_approved bit,
+	@uniform_activity float,
+	@uniform_activity_unit_id int,
+	@detection_limit float,
+	@detection_limit_approved bit,
+	@accredited bit,
+	@reportable bit,
+	@instance_status_id int,	
+	@update_date datetime,
+	@updated_by nvarchar(50)
+as 
+	update analysis_result set 
+		activity = @activity,	
+		activity_uncertainty_abs = @activity_uncertainty_abs,
+		activity_approved = @activity_approved,
+		uniform_activity = @uniform_activity,
+		uniform_activity_unit_id = @uniform_activity_unit_id,
+		detection_limit = @detection_limit,
+		detection_limit_approved = @detection_limit_approved,
+		accredited = @accredited,
+		reportable = @reportable,
+		instance_status_id = @instance_status_id,
+		update_date = @update_date,
+		updated_by = @updated_by
+	where id = @id
+go
+
+create proc csp_select_analysis_result
+	@id uniqueidentifier
+as
+	select *		
+	from analysis_result		
+	where id = @id
+go
+
 create proc csp_select_analysis_results_for_analysis_informative
 	@analysis_id uniqueidentifier
 as

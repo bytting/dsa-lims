@@ -9550,6 +9550,7 @@
             this.btnPrepAnalAddResult.Name = "btnPrepAnalAddResult";
             this.btnPrepAnalAddResult.Size = new System.Drawing.Size(49, 22);
             this.btnPrepAnalAddResult.Text = "Add";
+            this.btnPrepAnalAddResult.Click += new System.EventHandler(this.btnPrepAnalAddResult_Click);
             // 
             // btnPrepAnalEditResult
             // 
@@ -9659,7 +9660,7 @@
             this.label60.Size = new System.Drawing.Size(93, 30);
             this.label60.TabIndex = 0;
             this.label60.Text = "Comment";
-            this.label60.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.label60.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // cboxPrepAnalAnalWorkflowStatus
             // 
@@ -9681,7 +9682,7 @@
             this.label55.Size = new System.Drawing.Size(93, 30);
             this.label55.TabIndex = 0;
             this.label55.Text = "Workflow status";
-            this.label55.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.label55.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // tbPrepAnalAnalMDALib
             // 
@@ -9700,7 +9701,7 @@
             this.label59.Size = new System.Drawing.Size(93, 30);
             this.label59.TabIndex = 0;
             this.label59.Text = "MDA lib.";
-            this.label59.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.label59.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // tbPrepAnalAnalNuclLib
             // 
@@ -9719,7 +9720,7 @@
             this.label58.Size = new System.Drawing.Size(93, 30);
             this.label58.TabIndex = 0;
             this.label58.Text = "Nucl. lib.";
-            this.label58.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.label58.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // cboxPrepAnalAnalSigmaAct
             // 
@@ -9741,7 +9742,7 @@
             this.label53.Size = new System.Drawing.Size(93, 30);
             this.label53.TabIndex = 0;
             this.label53.Text = "Sigma Act.";
-            this.label53.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.label53.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // cboxPrepAnalAnalUnitType
             // 
@@ -9763,7 +9764,7 @@
             this.label19.Size = new System.Drawing.Size(93, 30);
             this.label19.TabIndex = 0;
             this.label19.Text = "Unit type";
-            this.label19.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.label19.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // cboxPrepAnalAnalUnit
             // 
@@ -9785,7 +9786,7 @@
             this.label51.Size = new System.Drawing.Size(93, 30);
             this.label51.TabIndex = 0;
             this.label51.Text = "Unit";
-            this.label51.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.label51.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // btnPrepAnalAnalUpdate
             // 
@@ -9807,7 +9808,7 @@
             this.label54.Size = new System.Drawing.Size(93, 30);
             this.label54.TabIndex = 0;
             this.label54.Text = "Spec. ref.";
-            this.label54.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.label54.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // tbPrepAnalAnalSpecRef
             // 
@@ -9825,7 +9826,7 @@
             this.label1.Size = new System.Drawing.Size(93, 30);
             this.label1.TabIndex = 2;
             this.label1.Text = "Sigma MDA";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // cboxPrepAnalAnalSigmaMDA
             // 

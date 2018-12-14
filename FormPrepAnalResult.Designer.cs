@@ -34,16 +34,16 @@
             this.btnOk = new System.Windows.Forms.Button();
             this.cboxNuclides = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.tbActivity = new System.Windows.Forms.TextBox();
+            this.tbUncertainty = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.cbActivityApproved = new System.Windows.Forms.CheckBox();
+            this.tbDetectionLimit = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.checkBox3 = new System.Windows.Forms.CheckBox();
-            this.checkBox4 = new System.Windows.Forms.CheckBox();
+            this.cbDetectionLimitApproved = new System.Windows.Forms.CheckBox();
+            this.cbAccredited = new System.Windows.Forms.CheckBox();
+            this.cbReportable = new System.Windows.Forms.CheckBox();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -99,19 +99,19 @@
             this.label1.TabIndex = 10;
             this.label1.Text = "Nuclide";
             // 
-            // textBox1
+            // tbActivity
             // 
-            this.textBox1.Location = new System.Drawing.Point(117, 57);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(194, 20);
-            this.textBox1.TabIndex = 11;
+            this.tbActivity.Location = new System.Drawing.Point(117, 57);
+            this.tbActivity.Name = "tbActivity";
+            this.tbActivity.Size = new System.Drawing.Size(194, 20);
+            this.tbActivity.TabIndex = 11;
             // 
-            // textBox2
+            // tbUncertainty
             // 
-            this.textBox2.Location = new System.Drawing.Point(117, 83);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(194, 20);
-            this.textBox2.TabIndex = 12;
+            this.tbUncertainty.Location = new System.Drawing.Point(117, 83);
+            this.tbUncertainty.Name = "tbUncertainty";
+            this.tbUncertainty.Size = new System.Drawing.Size(194, 20);
+            this.tbUncertainty.TabIndex = 12;
             // 
             // label2
             // 
@@ -129,24 +129,24 @@
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(85, 13);
             this.label3.TabIndex = 14;
-            this.label3.Text = "Activity Unc.Abs";
+            this.label3.Text = "Uncertainty Abs.";
             // 
-            // checkBox1
+            // cbActivityApproved
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(117, 109);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(108, 17);
-            this.checkBox1.TabIndex = 15;
-            this.checkBox1.Text = "Activity approved";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.cbActivityApproved.AutoSize = true;
+            this.cbActivityApproved.Location = new System.Drawing.Point(117, 109);
+            this.cbActivityApproved.Name = "cbActivityApproved";
+            this.cbActivityApproved.Size = new System.Drawing.Size(108, 17);
+            this.cbActivityApproved.TabIndex = 15;
+            this.cbActivityApproved.Text = "Activity approved";
+            this.cbActivityApproved.UseVisualStyleBackColor = true;
             // 
-            // textBox3
+            // tbDetectionLimit
             // 
-            this.textBox3.Location = new System.Drawing.Point(117, 132);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(194, 20);
-            this.textBox3.TabIndex = 16;
+            this.tbDetectionLimit.Location = new System.Drawing.Point(117, 132);
+            this.tbDetectionLimit.Name = "tbDetectionLimit";
+            this.tbDetectionLimit.Size = new System.Drawing.Size(194, 20);
+            this.tbDetectionLimit.TabIndex = 16;
             // 
             // label4
             // 
@@ -157,51 +157,51 @@
             this.label4.TabIndex = 17;
             this.label4.Text = "Detection limit";
             // 
-            // checkBox2
+            // cbDetectionLimitApproved
             // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(117, 158);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(140, 17);
-            this.checkBox2.TabIndex = 18;
-            this.checkBox2.Text = "Detection limit approved";
-            this.checkBox2.UseVisualStyleBackColor = true;
+            this.cbDetectionLimitApproved.AutoSize = true;
+            this.cbDetectionLimitApproved.Location = new System.Drawing.Point(117, 158);
+            this.cbDetectionLimitApproved.Name = "cbDetectionLimitApproved";
+            this.cbDetectionLimitApproved.Size = new System.Drawing.Size(140, 17);
+            this.cbDetectionLimitApproved.TabIndex = 18;
+            this.cbDetectionLimitApproved.Text = "Detection limit approved";
+            this.cbDetectionLimitApproved.UseVisualStyleBackColor = true;
             // 
-            // checkBox3
+            // cbAccredited
             // 
-            this.checkBox3.AutoSize = true;
-            this.checkBox3.Location = new System.Drawing.Point(117, 181);
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(77, 17);
-            this.checkBox3.TabIndex = 19;
-            this.checkBox3.Text = "Accredited";
-            this.checkBox3.UseVisualStyleBackColor = true;
+            this.cbAccredited.AutoSize = true;
+            this.cbAccredited.Location = new System.Drawing.Point(117, 181);
+            this.cbAccredited.Name = "cbAccredited";
+            this.cbAccredited.Size = new System.Drawing.Size(77, 17);
+            this.cbAccredited.TabIndex = 19;
+            this.cbAccredited.Text = "Accredited";
+            this.cbAccredited.UseVisualStyleBackColor = true;
             // 
-            // checkBox4
+            // cbReportable
             // 
-            this.checkBox4.AutoSize = true;
-            this.checkBox4.Location = new System.Drawing.Point(117, 204);
-            this.checkBox4.Name = "checkBox4";
-            this.checkBox4.Size = new System.Drawing.Size(78, 17);
-            this.checkBox4.TabIndex = 20;
-            this.checkBox4.Text = "Reportable";
-            this.checkBox4.UseVisualStyleBackColor = true;
+            this.cbReportable.AutoSize = true;
+            this.cbReportable.Location = new System.Drawing.Point(117, 204);
+            this.cbReportable.Name = "cbReportable";
+            this.cbReportable.Size = new System.Drawing.Size(78, 17);
+            this.cbReportable.TabIndex = 20;
+            this.cbReportable.Text = "Reportable";
+            this.cbReportable.UseVisualStyleBackColor = true;
             // 
             // FormPrepAnalResult
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(350, 289);
-            this.Controls.Add(this.checkBox4);
-            this.Controls.Add(this.checkBox3);
-            this.Controls.Add(this.checkBox2);
+            this.Controls.Add(this.cbReportable);
+            this.Controls.Add(this.cbAccredited);
+            this.Controls.Add(this.cbDetectionLimitApproved);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.textBox3);
-            this.Controls.Add(this.checkBox1);
+            this.Controls.Add(this.tbDetectionLimit);
+            this.Controls.Add(this.cbActivityApproved);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.tbUncertainty);
+            this.Controls.Add(this.tbActivity);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.cboxNuclides);
             this.Controls.Add(this.panel1);
@@ -212,6 +212,7 @@
             this.Name = "FormPrepAnalResult";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "DSA-Lims - Result";
+            this.Load += new System.EventHandler(this.FormPrepAnalResult_Load);
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -225,15 +226,15 @@
         private System.Windows.Forms.Button btnOk;
         private System.Windows.Forms.ComboBox cboxNuclides;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox tbActivity;
+        private System.Windows.Forms.TextBox tbUncertainty;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.CheckBox cbActivityApproved;
+        private System.Windows.Forms.TextBox tbDetectionLimit;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.CheckBox checkBox2;
-        private System.Windows.Forms.CheckBox checkBox3;
-        private System.Windows.Forms.CheckBox checkBox4;
+        private System.Windows.Forms.CheckBox cbDetectionLimitApproved;
+        private System.Windows.Forms.CheckBox cbAccredited;
+        private System.Windows.Forms.CheckBox cbReportable;
     }
 }

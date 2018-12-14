@@ -3676,11 +3676,40 @@ order by s.number, p.number
                 return;
             }
 
-            List<string> nuclides = null;
+            if (!Utils.IsValidGuid(cboxPrepAnalAnalUnit.SelectedValue))
+            {
+                MessageBox.Show("You must save a unit first");
+                return;
+            }
+
+            Guid unitId = Guid.Parse(cboxPrepAnalAnalUnit.SelectedValue.ToString());
             Guid resultId = Guid.Parse(gridPrepAnalResults.SelectedRows[0].Cells["id"].Value.ToString());
+            string nuclName = gridPrepAnalResults.SelectedRows[0].Cells["nuclide_name"].Value.ToString();            
+            FormPrepAnalResult form = new FormPrepAnalResult(resultId, unitId, nuclName);
+            if (form.ShowDialog() != DialogResult.OK)
+                return;
+
+            Guid analId = Guid.Parse(treePrepAnal.SelectedNode.Name);
             using (SqlConnection conn = DB.OpenConnection())
             {
-                nuclides = DB.GetNuclideNames(conn, null);                
+                UI.PopulateAnalysisResults(conn, analId, gridPrepAnalResults);
+            }
+        }
+
+        private void btnPrepAnalAddResult_Click(object sender, EventArgs e)
+        {
+            if(!Utils.IsValidGuid(cboxPrepAnalAnalUnit.SelectedValue))
+            {
+                MessageBox.Show("You must save a unit first");
+                return;
+            }
+
+            Guid unitId = Guid.Parse(cboxPrepAnalAnalUnit.SelectedValue.ToString());
+            Guid analId = Guid.Parse(treePrepAnal.SelectedNode.Name);
+            List<string> nuclides = null;
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                nuclides = DB.GetNuclideNamesForAnalysisMethod(conn, null, selectedAnalysisMethodId);
             }
             List<string> existingNuclides = new List<string>();
             foreach (DataGridViewRow row in gridPrepAnalResults.Rows)
@@ -3689,10 +3718,14 @@ order by s.number, p.number
                 existingNuclides.Add(nucl);
             }
             nuclides.RemoveAll(x => existingNuclides.Contains(x));
-            FormPrepAnalResult form = new FormPrepAnalResult(resultId, nuclides);
+            FormPrepAnalResult form = new FormPrepAnalResult(analId, unitId, nuclides);
             if (form.ShowDialog() != DialogResult.OK)
                 return;
-
+            
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                UI.PopulateAnalysisResults(conn, analId, gridPrepAnalResults);
+            }
         }
     }    
 }

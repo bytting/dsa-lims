@@ -427,6 +427,7 @@ namespace DSA_lims
         public static List<string> GetNuclideNames(SqlConnection conn, SqlTransaction trans)
         {
             List<string> names = new List<string>();
+            names.Add("");
             SqlCommand cmd = new SqlCommand("select name from nuclide order by name", conn);
             if (trans != null)
                 cmd.Transaction = trans;
@@ -444,6 +445,7 @@ namespace DSA_lims
         public static List<string> GetNuclideNamesForAnalysisMethod(SqlConnection conn, SqlTransaction trans, Guid analysisMethodId)
         {
             List<string> names = new List<string>();
+            names.Add("");
             SqlCommand cmd = new SqlCommand(@"
 select n.name 
 from nuclide n, analysis_method_x_nuclide amxn

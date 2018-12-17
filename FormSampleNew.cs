@@ -45,8 +45,9 @@ namespace DSA_lims
             using (SqlConnection conn = DB.OpenConnection())
             {
                 UI.PopulateComboBoxes(conn, "csp_select_projects_main_short", new[] {
-                    new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
-                }, cboxProjectMain);                
+                    new SqlParameter("@instance_status_level", InstanceStatus.Active)
+                }, cboxProjectMain);
+
                 UI.PopulateComboBoxes(conn, "csp_select_laboratories_short", new[] {
                     new SqlParameter("@instance_status_level", InstanceStatus.Active)
                 }, cboxLaboratory);
@@ -187,7 +188,7 @@ namespace DSA_lims
             {
                 UI.PopulateComboBoxes(conn, "csp_select_projects_sub_short", new[] {
                     new SqlParameter("@project_main_id", DB.MakeParam(typeof(Guid), projectMainId)),
-                    new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
+                    new SqlParameter("@instance_status_level", InstanceStatus.Active)
                 }, cboxProjectSub);
             }
         }

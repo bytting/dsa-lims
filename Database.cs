@@ -131,19 +131,19 @@ namespace DSA_lims
             cmd.ExecuteNonQuery();
         }
 
-        public static List<Lemma<int, string>> GetIntLemmata(SqlConnection conn, string proc, bool addEmptyEntry = false)
+        public static List<Lemma<int?, string>> GetIntLemmata(SqlConnection conn, string proc, bool addEmptyEntry = false)
         {
-            List<Lemma<int, string>> list = new List<Lemma<int, string>>();
+            List<Lemma<int?, string>> list = new List<Lemma<int?, string>>();
 
             if(addEmptyEntry)
-                list.Add(new Lemma<int, string>(0, ""));
+                list.Add(new Lemma<int?, string>(null, ""));
 
             try
             {
                 using (SqlDataReader reader = DB.GetDataReader(conn, proc, CommandType.StoredProcedure))
                 {
                     while (reader.Read())
-                        list.Add(new Lemma<int, string>(Convert.ToInt32(reader["id"]), reader["name"].ToString()));
+                        list.Add(new Lemma<int?, string>(Convert.ToInt32(reader["id"]), reader["name"].ToString()));
                 }
             }
             catch (Exception ex)

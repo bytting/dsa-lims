@@ -610,6 +610,7 @@
   <ItemGroup>
     <Content Include="comments.txt" />
     <Content Include="database.sql" />
+    <None Include="images\right.png" />
     <None Include="images\user_16.png" />
     <None Include="images\clear_16.png" />
     <None Include="images\clear.png" />

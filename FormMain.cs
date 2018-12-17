@@ -159,12 +159,12 @@ namespace DSA_lims
 
                     UI.PopulateComboBoxes(conn, "csp_select_projects_main_short", new[] {
                         new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
-                    }, cboxSampleProject, cboxSamplesProjects);
+                    }, cboxSamplesProjects, cboxSampleProject);
 
                     UI.PopulateLaboratories(conn, InstanceStatus.Deleted, gridMetaLab);
 
                     UI.PopulateComboBoxes(conn, "csp_select_laboratories_short", new[] {
-                        new SqlParameter("@instance_status_level", InstanceStatus.Active)
+                        new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
                     }, cboxSampleLaboratory, cboxOrderLaboratory);
 
                     UI.PopulateUsers(conn, InstanceStatus.Deleted, gridMetaUsers);                    
@@ -665,7 +665,7 @@ namespace DSA_lims
 
                         UI.PopulateComboBoxes(conn, "csp_select_projects_main_short", new[] {
                             new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
-                        }, cboxSampleProject, cboxSamplesProjects);
+                        }, cboxSamplesProjects, cboxSampleProject);
                     }
                     break;
                 case DialogResult.Abort:
@@ -692,7 +692,7 @@ namespace DSA_lims
 
                         UI.PopulateComboBoxes(conn, "csp_select_projects_main_short", new[] {
                             new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
-                        }, cboxSampleProject, cboxSamplesProjects);
+                        }, cboxSamplesProjects, cboxSampleProject);
                     }
                     break;
                 case DialogResult.Abort:
@@ -976,7 +976,13 @@ namespace DSA_lims
                 case DialogResult.OK:
                     SetStatusMessage("County " + form.CountyName + " created");
                     using (SqlConnection conn = DB.OpenConnection())
+                    {
                         UI.PopulateCounties(conn, gridSysCounty);
+
+                        UI.PopulateComboBoxes(conn, "csp_select_counties_short", new[] {
+                            new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
+                        }, cboxSampleCounties);
+                    }
                     break;
                 case DialogResult.Abort:
                     SetStatusMessage("Create county failed", StatusMessageType.Error);
@@ -998,7 +1004,13 @@ namespace DSA_lims
                 case DialogResult.OK:
                     SetStatusMessage("County " + form.CountyName + " updated");
                     using (SqlConnection conn = DB.OpenConnection())
+                    {
                         UI.PopulateCounties(conn, gridSysCounty);
+
+                        UI.PopulateComboBoxes(conn, "csp_select_counties_short", new[] {
+                            new SqlParameter("@instance_status_level", InstanceStatus.Active)
+                        }, cboxSampleCounties);
+                    }
                     break;
                 case DialogResult.Abort:
                     SetStatusMessage("Create county failed", StatusMessageType.Error);
@@ -1127,7 +1139,13 @@ namespace DSA_lims
                 case DialogResult.OK:
                     SetStatusMessage("Sample storage " + form.SampleStorageName + " created");
                     using (SqlConnection conn = DB.OpenConnection())
+                    {
                         UI.PopulateSampleStorage(conn, gridMetaSampleStorage);
+
+                        UI.PopulateComboBoxes(conn, "csp_select_sample_storages_short", new[] {
+                            new SqlParameter("@instance_status_level", InstanceStatus.Active)
+                        }, cboxSampleSampleStorage);
+                    }
                     break;
                 case DialogResult.Abort:
                     SetStatusMessage("Create sample storage failed", StatusMessageType.Error);
@@ -1149,7 +1167,13 @@ namespace DSA_lims
                 case DialogResult.OK:
                     SetStatusMessage("Sample storage " + form.SampleStorageName + " updated");
                     using (SqlConnection conn = DB.OpenConnection())
+                    {
                         UI.PopulateSampleStorage(conn, gridMetaSampleStorage);
+
+                        UI.PopulateComboBoxes(conn, "csp_select_sample_storages_short", new[] {
+                            new SqlParameter("@instance_status_level", InstanceStatus.Active)
+                        }, cboxSampleSampleStorage);
+                    }
                     break;
                 case DialogResult.Abort:
                     SetStatusMessage("Update sample storage failed", StatusMessageType.Error);
@@ -1274,6 +1298,7 @@ namespace DSA_lims
             {
                 lblSampleToolProject.Text = "";
                 lblSampleToolSubProject.Text = "";
+                cboxSampleSubProject.DataSource = null;
                 return;
             }
 
@@ -1851,6 +1876,7 @@ order by a.number
                     using (SqlConnection conn = DB.OpenConnection())
                     {
                         UI.PopulateSamplingMethods(conn, gridMetaSamplingMeth);                        
+
                         UI.PopulateComboBoxes(conn, "csp_select_sampling_methods_short", new[] {
                             new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
                         }, cboxSampleInfoSamplingMeth);
@@ -1878,7 +1904,8 @@ order by a.number
                     SetStatusMessage("Sampling method " + form.SamplingMethodName + " updated");
                     using (SqlConnection conn = DB.OpenConnection())
                     {
-                        UI.PopulateSamplingMethods(conn, gridMetaSamplingMeth);                        
+                        UI.PopulateSamplingMethods(conn, gridMetaSamplingMeth);
+                                              
                         UI.PopulateComboBoxes(conn, "csp_select_sampling_methods_short", new[] {
                             new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
                         }, cboxSampleInfoSamplingMeth);
@@ -2896,11 +2923,11 @@ order by name
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@id", pid);
                 cmd.Parameters.AddWithValue("@preparation_geometry_id", DB.MakeParam(typeof(Guid), cboxPrepAnalPrepGeom.SelectedValue));
-                cmd.Parameters.AddWithValue("@workflow_status_id", cboxPrepAnalPrepWorkflowStatus.SelectedValue);
+                cmd.Parameters.AddWithValue("@workflow_status_id", DB.MakeParam(typeof(int), cboxPrepAnalPrepWorkflowStatus.SelectedValue));
                 cmd.Parameters.AddWithValue("@amount", DB.MakeParam(typeof(double), tbPrepAnalPrepAmount.Text));
-                cmd.Parameters.AddWithValue("@prep_unit_id", DB.MakeParam(typeof(Guid), cboxPrepAnalPrepAmountUnit.SelectedValue));
+                cmd.Parameters.AddWithValue("@prep_unit_id", DB.MakeParam(typeof(int), cboxPrepAnalPrepAmountUnit.SelectedValue));
                 cmd.Parameters.AddWithValue("@quantity", DB.MakeParam(typeof(double), tbPrepAnalPrepQuantity.Text));
-                cmd.Parameters.AddWithValue("@quantity_unit_id", DB.MakeParam(typeof(Guid), cboxPrepAnalPrepQuantityUnit.SelectedValue));
+                cmd.Parameters.AddWithValue("@quantity_unit_id", DB.MakeParam(typeof(int), cboxPrepAnalPrepQuantityUnit.SelectedValue));
                 cmd.Parameters.AddWithValue("@fill_height_mm", DB.MakeParam(typeof(double), tbPrepAnalPrepFillHeight.Text));
                 cmd.Parameters.AddWithValue("@comment", tbPrepAnalPrepComment.Text);
                 cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
@@ -2937,7 +2964,7 @@ order by name
                     tbPrepAnalPrepQuantity.Text = reader["quantity"].ToString();
                     cboxPrepAnalPrepQuantityUnit.SelectedValue = reader["quantity_unit_id"];
                     cboxPrepAnalPrepWorkflowStatus.SelectedValue = reader["workflow_status_id"];
-                    tbPrepAnalPrepComment.Text = reader["comment"].ToString();
+                    tbPrepAnalPrepComment.Text = reader["comment"].ToString();                    
                 }
 
                 string query = @"
@@ -2946,8 +2973,8 @@ select au.name + ', ' + aut.name from preparation p
     inner join sample_x_assignment_sample_type sxast on sxast.sample_id = s.id
     inner join assignment_sample_type ast on sxast.assignment_sample_type_id = ast.id
     inner join assignment a on a.id = p.assignment_id
-    inner join activity_unit au on au.id = ast.requested_activity_unit_id
-    inner join activity_unit_type aut on aut.id = ast.requested_activity_unit_type_id
+    left outer join activity_unit au on au.id = ast.requested_activity_unit_id
+    left outer join activity_unit_type aut on aut.id = ast.requested_activity_unit_type_id
 where p.id = @pid
 ";
                 object o = DB.GetScalar(conn, query, CommandType.Text, new SqlParameter("@pid", pid));
@@ -2973,7 +3000,7 @@ where p.id = @pid
                 SqlCommand cmd = new SqlCommand("csp_update_analysis", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@id", aid);
-                cmd.Parameters.AddWithValue("@workflow_status_id", cboxPrepAnalAnalWorkflowStatus.SelectedValue);
+                cmd.Parameters.AddWithValue("@workflow_status_id", DB.MakeParam(typeof(int), cboxPrepAnalAnalWorkflowStatus.SelectedValue));
                 cmd.Parameters.AddWithValue("@specter_reference", tbPrepAnalAnalSpecRef.Text);
                 cmd.Parameters.AddWithValue("@activity_unit_id", DB.MakeParam(typeof(Guid), cboxPrepAnalAnalUnit.SelectedValue));
                 cmd.Parameters.AddWithValue("@activity_unit_type_id", DB.MakeParam(typeof(Guid), cboxPrepAnalAnalUnitType.SelectedValue));
@@ -3546,12 +3573,34 @@ insert into analysis_result values(
             Guid orderSampleTypeId = Guid.Empty;
             Guid orderPrepMethId = Guid.Empty;
             Guid orderAnalMethId = Guid.Empty;
+            
+            miOrderAddPrepMeth.Enabled = false;
+            btnOrderAddPrepMeth.Enabled = false;
+            miOrderAddAnalMeth.Enabled = false;
+            btnOrderAddAnalMeth.Enabled = false;
+
+            miOrderEditPrepMeth.Enabled = false;
+            btnOrderEditPrepMeth.Enabled = false;
+            miOrderEditAnalMeth.Enabled = false;
+            btnOrderEditAnalMeth.Enabled = false;
+
+            miOrderRemPrepMeth.Enabled = false;
+            btnOrderDelPrepMeth.Enabled = false;
+            miOrderRemAnalMeth.Enabled = false;
+            btnOrderDelAnalMeth.Enabled = false;
 
             switch (e.Node.Level)
             {
                 case 0:
+                    miOrderAddPrepMeth.Enabled = true;
+                    btnOrderAddPrepMeth.Enabled = true;
+                    miOrderEditPrepMeth.Enabled = true;
+                    btnOrderEditPrepMeth.Enabled = true;
+                    miOrderRemPrepMeth.Enabled = true;
+                    btnOrderDelPrepMeth.Enabled = true;
+
                     query = @"
-select s.id, s.number as 'Connected samples', st.name as 'Type', sc.name as 'Comp.', sa.name as 'Sampler'
+select s.id, s.number as 'Samples', st.name as 'Type', sc.name as 'Comp.', sa.name as 'Sampler'
 from sample s
 	inner join sample_x_assignment_sample_type sxast on s.id = sxast.sample_id
 	inner join assignment_sample_type ast on ast.id = sxast.assignment_sample_type_id and ast.id = @astid
@@ -3573,7 +3622,14 @@ order by s.number
                     }
                     break;
 
-                case 1:
+                case 1:                    
+                    miOrderAddAnalMeth.Enabled = true;
+                    btnOrderAddAnalMeth.Enabled = true;
+                    miOrderEditAnalMeth.Enabled = true;
+                    btnOrderEditAnalMeth.Enabled = true;
+                    miOrderRemAnalMeth.Enabled = true;
+                    btnOrderDelAnalMeth.Enabled = true;
+
                     query = @"
 select 
     p.id, 
@@ -3728,6 +3784,33 @@ order by s.number, p.number
             {
                 UI.PopulateAnalysisResults(conn, analId, gridPrepAnalResults);
             }
+        }
+
+        private void cboxSampleInfoLocationTypes_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(cboxSampleInfoLocationTypes.SelectedValue == null)
+            {
+                tbSampleLocation.Text = "";
+                tbSampleLocation.Enabled = false;
+            }
+            else
+            {
+                tbSampleLocation.Enabled = true;
+            }
+        }
+
+        private void btnSampleGoToPrepAnal_Click(object sender, EventArgs e)
+        {
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                PopulatePrepAnal(conn, selectedSampleId);
+            }
+
+            ClearPrepAnalSample();
+            ClearPrepAnalPreparation();
+            ClearPrepAnalAnalysis();
+
+            tabs.SelectedTab = tabPrepAnal;
         }
     }    
 }

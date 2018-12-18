@@ -787,6 +787,6 @@ order by create_date desc";
             grid.Columns["phone"].HeaderText = "Phone";
             grid.Columns["address"].HeaderText = "Address";
             grid.Columns["instance_status_name"].HeaderText = "Status";
-        }
+        }        
     }
 }

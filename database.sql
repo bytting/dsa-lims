@@ -71,6 +71,54 @@ as
 go
 
 /*===========================================================================*/
+/* tbl sigma_values */
+
+if OBJECT_ID('dbo.sigma_values', 'U') is not null drop table sigma_values;
+
+create table sigma_values (
+	value float not null,
+	name nvarchar(20) not null	
+)
+go
+
+insert into sigma_values values(1.0, '1 (68.3%)')
+insert into sigma_values values(1.96, '1.96 (95%)')
+insert into sigma_values values(2.0, '2 (95.5%)')
+insert into sigma_values values(3.0, '3 (99.9%)')
+go
+
+create proc csp_select_sigma_values
+as 
+	select * 
+	from sigma_values
+	order by value
+go
+
+/*===========================================================================*/
+/* tbl sigma_mda_values */
+
+if OBJECT_ID('dbo.sigma_mda_values', 'U') is not null drop table sigma_mda_values;
+
+create table sigma_mda_values (
+	value float not null,
+	name nvarchar(20) not null	
+)
+go
+
+insert into sigma_mda_values values(1.0, '1 (84.1%)')
+insert into sigma_mda_values values(1.645, '1.645 (95%)')
+insert into sigma_mda_values values(2.0, '2 (97.2%)')
+insert into sigma_mda_values values(3.0, '3 (99.95%)')
+go
+
+create proc csp_select_sigma_mda_values
+as 
+	select * 
+	from sigma_mda_values
+	order by value
+go
+
+/*===========================================================================*/
 /* tbl audit_log */
 
 if OBJECT_ID('dbo.audit_log', 'U') is not null drop table audit_log;

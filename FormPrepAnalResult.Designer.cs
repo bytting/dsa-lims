@@ -44,6 +44,10 @@
             this.cbDetectionLimitApproved = new System.Windows.Forms.CheckBox();
             this.cbAccredited = new System.Windows.Forms.CheckBox();
             this.cbReportable = new System.Windows.Forms.CheckBox();
+            this.cboxSigmaActivity = new System.Windows.Forms.ComboBox();
+            this.cboxSigmaMDA = new System.Windows.Forms.ComboBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -52,15 +56,15 @@
             this.panel1.Controls.Add(this.btnCancel);
             this.panel1.Controls.Add(this.btnOk);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 261);
+            this.panel1.Location = new System.Drawing.Point(0, 310);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(350, 28);
+            this.panel1.Size = new System.Drawing.Size(348, 28);
             this.panel1.TabIndex = 8;
             // 
             // btnCancel
             // 
             this.btnCancel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnCancel.Location = new System.Drawing.Point(150, 0);
+            this.btnCancel.Location = new System.Drawing.Point(148, 0);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(100, 28);
             this.btnCancel.TabIndex = 1;
@@ -71,7 +75,7 @@
             // btnOk
             // 
             this.btnOk.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnOk.Location = new System.Drawing.Point(250, 0);
+            this.btnOk.Location = new System.Drawing.Point(248, 0);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(100, 28);
             this.btnOk.TabIndex = 0;
@@ -134,7 +138,7 @@
             // cbActivityApproved
             // 
             this.cbActivityApproved.AutoSize = true;
-            this.cbActivityApproved.Location = new System.Drawing.Point(117, 109);
+            this.cbActivityApproved.Location = new System.Drawing.Point(117, 201);
             this.cbActivityApproved.Name = "cbActivityApproved";
             this.cbActivityApproved.Size = new System.Drawing.Size(108, 17);
             this.cbActivityApproved.TabIndex = 15;
@@ -143,7 +147,7 @@
             // 
             // tbDetectionLimit
             // 
-            this.tbDetectionLimit.Location = new System.Drawing.Point(117, 132);
+            this.tbDetectionLimit.Location = new System.Drawing.Point(117, 109);
             this.tbDetectionLimit.Name = "tbDetectionLimit";
             this.tbDetectionLimit.Size = new System.Drawing.Size(194, 20);
             this.tbDetectionLimit.TabIndex = 16;
@@ -151,7 +155,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(26, 135);
+            this.label4.Location = new System.Drawing.Point(26, 112);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(73, 13);
             this.label4.TabIndex = 17;
@@ -160,7 +164,7 @@
             // cbDetectionLimitApproved
             // 
             this.cbDetectionLimitApproved.AutoSize = true;
-            this.cbDetectionLimitApproved.Location = new System.Drawing.Point(117, 158);
+            this.cbDetectionLimitApproved.Location = new System.Drawing.Point(117, 224);
             this.cbDetectionLimitApproved.Name = "cbDetectionLimitApproved";
             this.cbDetectionLimitApproved.Size = new System.Drawing.Size(140, 17);
             this.cbDetectionLimitApproved.TabIndex = 18;
@@ -170,7 +174,7 @@
             // cbAccredited
             // 
             this.cbAccredited.AutoSize = true;
-            this.cbAccredited.Location = new System.Drawing.Point(117, 181);
+            this.cbAccredited.Location = new System.Drawing.Point(117, 247);
             this.cbAccredited.Name = "cbAccredited";
             this.cbAccredited.Size = new System.Drawing.Size(77, 17);
             this.cbAccredited.TabIndex = 19;
@@ -180,18 +184,62 @@
             // cbReportable
             // 
             this.cbReportable.AutoSize = true;
-            this.cbReportable.Location = new System.Drawing.Point(117, 204);
+            this.cbReportable.Location = new System.Drawing.Point(117, 270);
             this.cbReportable.Name = "cbReportable";
             this.cbReportable.Size = new System.Drawing.Size(78, 17);
             this.cbReportable.TabIndex = 20;
             this.cbReportable.Text = "Reportable";
             this.cbReportable.UseVisualStyleBackColor = true;
             // 
+            // cboxSigmaActivity
+            // 
+            this.cboxSigmaActivity.DisplayMember = "Name";
+            this.cboxSigmaActivity.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxSigmaActivity.FormattingEnabled = true;
+            this.cboxSigmaActivity.Location = new System.Drawing.Point(117, 135);
+            this.cboxSigmaActivity.Name = "cboxSigmaActivity";
+            this.cboxSigmaActivity.Size = new System.Drawing.Size(194, 21);
+            this.cboxSigmaActivity.TabIndex = 21;
+            this.cboxSigmaActivity.ValueMember = "Id";
+            // 
+            // cboxSigmaMDA
+            // 
+            this.cboxSigmaMDA.DisplayMember = "Name";
+            this.cboxSigmaMDA.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxSigmaMDA.FormattingEnabled = true;
+            this.cboxSigmaMDA.Location = new System.Drawing.Point(117, 162);
+            this.cboxSigmaMDA.Name = "cboxSigmaMDA";
+            this.cboxSigmaMDA.Size = new System.Drawing.Size(194, 21);
+            this.cboxSigmaMDA.TabIndex = 22;
+            this.cboxSigmaMDA.ValueMember = "Id";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(26, 138);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(58, 13);
+            this.label5.TabIndex = 23;
+            this.label5.Text = "Sigma Act.";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(26, 165);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(63, 13);
+            this.label6.TabIndex = 24;
+            this.label6.Text = "Sigma MDA";
+            // 
             // FormPrepAnalResult
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(350, 289);
+            this.ClientSize = new System.Drawing.Size(348, 338);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.cboxSigmaMDA);
+            this.Controls.Add(this.cboxSigmaActivity);
             this.Controls.Add(this.cbReportable);
             this.Controls.Add(this.cbAccredited);
             this.Controls.Add(this.cbDetectionLimitApproved);
@@ -236,5 +284,9 @@
         private System.Windows.Forms.CheckBox cbDetectionLimitApproved;
         private System.Windows.Forms.CheckBox cbAccredited;
         private System.Windows.Forms.CheckBox cbReportable;
+        private System.Windows.Forms.ComboBox cboxSigmaActivity;
+        private System.Windows.Forms.ComboBox cboxSigmaMDA;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label6;
     }
 }

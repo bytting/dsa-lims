@@ -136,11 +136,8 @@ namespace DSA_lims
 
                     cboxSampleInfoLocationTypes.DataSource = DB.GetIntLemmata(conn, "csp_select_location_types", true);
 
-                    cboxPrepAnalAnalSigmaAct.DataSource = DB.GetSigmaValues();
-                    cboxPrepAnalAnalSigmaMDA.DataSource = DB.GetSigmaMDAValues();
-
-                    cboxOrderRequestedSigma.DataSource = DB.GetSigmaValues();
-                    cboxOrderRequestedSigmaMDA.DataSource = DB.GetSigmaMDAValues();
+                    cboxOrderRequestedSigma.DataSource = DB.GetSigmaValues(conn);
+                    cboxOrderRequestedSigmaMDA.DataSource = DB.GetSigmaMDAValues(conn);
 
                     UI.PopulatePersons(conn, gridSysPers);
 
@@ -230,7 +227,7 @@ namespace DSA_lims
                 Common.Log.Fatal(ex);
                 MessageBox.Show(ex.Message);
                 Environment.Exit(1);
-            }
+            }            
         }
 
         private void FormMain_Shown(object sender, EventArgs e)
@@ -1438,7 +1435,6 @@ namespace DSA_lims
         {
             cboxPrepAnalAnalUnit.SelectedValue = Guid.Empty;
             cboxPrepAnalAnalUnitType.SelectedValue = Guid.Empty;
-            cboxPrepAnalAnalSigmaAct.SelectedValue = 0;
             tbPrepAnalAnalSpecRef.Text = "";
             tbPrepAnalAnalNuclLib.Text = "";
             tbPrepAnalAnalMDALib.Text = "";
@@ -3014,8 +3010,8 @@ where p.id = @pid
                 cmd.Parameters.AddWithValue("@specter_reference", tbPrepAnalAnalSpecRef.Text);
                 cmd.Parameters.AddWithValue("@activity_unit_id", DB.MakeParam(typeof(Guid), cboxPrepAnalAnalUnit.SelectedValue));
                 cmd.Parameters.AddWithValue("@activity_unit_type_id", DB.MakeParam(typeof(Guid), cboxPrepAnalAnalUnitType.SelectedValue));
-                cmd.Parameters.AddWithValue("@sigma_act", DB.MakeParam(typeof(int), cboxPrepAnalAnalSigmaAct.SelectedValue));
-                cmd.Parameters.AddWithValue("@sigma_mda", DB.MakeParam(typeof(int), cboxPrepAnalAnalSigmaMDA.SelectedValue));
+                cmd.Parameters.AddWithValue("@sigma_act", DBNull.Value); // FIXME
+                cmd.Parameters.AddWithValue("@sigma_mda", DBNull.Value); // FIXME
                 cmd.Parameters.AddWithValue("@nuclide_library", tbPrepAnalAnalNuclLib.Text);
                 cmd.Parameters.AddWithValue("@mda_library", tbPrepAnalAnalMDALib.Text);
                 cmd.Parameters.AddWithValue("@comment", tbPrepAnalAnalComment.Text);
@@ -3048,8 +3044,6 @@ where p.id = @pid
 
                     cboxPrepAnalAnalUnit.SelectedValue = reader["activity_unit_id"];
                     cboxPrepAnalAnalUnitType.SelectedValue = reader["activity_unit_type_id"];
-                    cboxPrepAnalAnalSigmaAct.SelectedValue = reader["sigma_act"];
-                    cboxPrepAnalAnalSigmaMDA.SelectedValue = reader["sigma_mda"];
                     tbPrepAnalAnalSpecRef.Text = reader["specter_reference"].ToString();
                     tbPrepAnalAnalNuclLib.Text = reader["nuclide_library"].ToString();
                     tbPrepAnalAnalMDALib.Text = reader["mda_library"].ToString();

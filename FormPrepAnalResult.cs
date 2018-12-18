@@ -49,6 +49,11 @@ namespace DSA_lims
             cboxNuclides.Text = "";
             p["analysis_id"] = analId;
             mUnitId = unitId;
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                cboxSigmaActivity.DataSource = DB.GetSigmaValues(conn);
+                cboxSigmaMDA.DataSource = DB.GetSigmaMDAValues(conn);
+            }
         }
 
         public FormPrepAnalResult(Guid resultId, Guid unitId, string nuclideName)
@@ -60,10 +65,13 @@ namespace DSA_lims
             mUnitId = unitId;
             cboxNuclides.Items.Add(nuclideName);
             cboxNuclides.Text = nuclideName;
-            cboxNuclides.Enabled = false;
+            cboxNuclides.Enabled = false;            
 
             using (SqlConnection conn = DB.OpenConnection())
             {
+                cboxSigmaActivity.DataSource = DB.GetSigmaValues(conn);
+                cboxSigmaMDA.DataSource = DB.GetSigmaMDAValues(conn);
+
                 SqlDataReader reader = DB.GetDataReader(conn, "csp_select_analysis_result", CommandType.StoredProcedure, new SqlParameter("@id", resultId));
                 if(reader.HasRows)
                 {

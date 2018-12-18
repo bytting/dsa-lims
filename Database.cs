@@ -118,6 +118,34 @@ namespace DSA_lims
             return GetScalar(conn, null, query, queryType, parameters);
         }
 
+        public static List<Lemma<double?, string>> GetSigmaValues(SqlConnection conn)
+        {
+            List<Lemma<double?, string>> lst = new List<Lemma<double?, string>>();
+            lst.Add(new Lemma<double?, string>(null, ""));
+
+            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_sigma_values", CommandType.StoredProcedure, new SqlParameter[] { }))
+            {
+                while(reader.Read())
+                    lst.Add(new Lemma<double?, string>(reader.GetDouble(0), reader.GetString(1)));
+            }
+
+            return lst;
+        }
+
+        public static List<Lemma<double?, string>> GetSigmaMDAValues(SqlConnection conn)
+        {
+            List<Lemma<double?, string>> lst = new List<Lemma<double?, string>>();
+            lst.Add(new Lemma<double?, string>(null, ""));
+
+            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_sigma_mda_values", CommandType.StoredProcedure, new SqlParameter[] { }))
+            {
+                while (reader.Read())
+                    lst.Add(new Lemma<double?, string>(reader.GetDouble(0), reader.GetString(1)));
+            }
+
+            return lst;
+        }
+
         public static void AddAuditMessage(SqlConnection conn, SqlTransaction trans, string tbl, Guid id, AuditOperationType op, string msg)
         {
             SqlCommand cmd = new SqlCommand("csp_insert_audit_message", conn, trans);
@@ -152,30 +180,6 @@ namespace DSA_lims
             }
 
             return list;
-        }
-
-        public static List<Lemma<double?, string>> GetSigmaValues()
-        {
-            return new List<Lemma<double?, string>>
-            {
-                new Lemma<double?, string>(null, ""),
-                new Lemma<double?, string>(1.0, "1 (68.3%)"),
-                new Lemma<double?, string>(1.96, "1.96 (95%)"),
-                new Lemma<double?, string>(2.0, "2 (95.5%)"),
-                new Lemma<double?, string>(3.0, "3 (99.9%)")
-            };  
-        }
-
-        public static List<Lemma<double?, string>> GetSigmaMDAValues()
-        {
-            return new List<Lemma<double?, string>>
-            {
-                new Lemma<double?, string>(null, ""),
-                new Lemma<double?, string>(1.0, "1 (84.1%)"),
-                new Lemma<double?, string>(1.645, "1.645 (95%)"),
-                new Lemma<double?, string>(2.0, "2 (97.2%)"),
-                new Lemma<double?, string>(3.0, "3 (99.95%)")
-            };
         }
 
         public static int GetNextSampleCount(SqlConnection conn, SqlTransaction trans)

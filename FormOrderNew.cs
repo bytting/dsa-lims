@@ -52,8 +52,8 @@ namespace DSA_lims
                     cboxLaboratory.SelectedValue = Common.LabId;
                 }
 
-                cboxRequestedSigma.DataSource = DB.GetSigmaValues();
-                cboxRequestedSigmaMDA.DataSource = DB.GetSigmaMDAValues();
+                cboxRequestedSigma.DataSource = DB.GetSigmaValues(conn);
+                cboxRequestedSigmaMDA.DataSource = DB.GetSigmaMDAValues(conn);
             }
         }
 

@@ -46,6 +46,7 @@ namespace DSA_lims
         private Guid selectedAnalysisMethodId = Guid.Empty;
 
         private bool populateSamplesDisabled = false;
+        private bool populateOrdersDisabled = false;
 
         public FormMain()
         {
@@ -2264,12 +2265,7 @@ order by name
         private void miTypeRelPrepMethRemAnalMeth_Click(object sender, EventArgs e)
         {
             // remove analysis methods to preparation method
-        }        
-
-        private void miOrdersClearAllFilters_Click(object sender, EventArgs e)
-        {
-            // clear all order filters
-        }        
+        }                        
 
         private void miOrdersNew_Click(object sender, EventArgs e)
         {
@@ -2547,9 +2543,6 @@ order by name
                 trans.Commit();
                 
                 lblStatus.Text = Utils.makeStatusMessage("Order " + tbOrderName.Text + " updated");
-
-                UI.PopulateOrders(conn, InstanceStatus.Deleted, gridOrders);
-                tabs.SelectedTab = tabOrders;
             }
             catch (Exception ex)
             {
@@ -2561,6 +2554,9 @@ order by name
             {
                 conn?.Close();
             }
+
+            PopulateOrders();
+            tabs.SelectedTab = tabOrders;
         }
 
         private void btnOrderSelectDeadline_Click(object sender, EventArgs e)
@@ -2773,7 +2769,12 @@ order by name
             {
                 using (SqlConnection conn = DB.OpenConnection())
                 {
-                    UI.PopulateOrders(conn, InstanceStatus.Active, gridOrders);
+                    UI.PopulateComboBoxes(conn, "csp_select_laboratories_short", new[] {
+                        new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
+                    }, cboxOrdersLaboratory);
+
+                    if (Common.LabId != Guid.Empty)
+                        cboxOrdersLaboratory.SelectedValue = Common.LabId;
                 }
             }
             else if (e.TabPage == tabSamples)
@@ -3958,6 +3959,96 @@ select
             cboxSamplesLaboratory.SelectedValue = Guid.Empty;
             populateSamplesDisabled = false;
             PopulateSamples();
+        }
+
+        private void PopulateOrders()
+        {
+            if (populateOrdersDisabled)
+                return;
+
+            string query = @"
+select		
+		a.id,
+		a.name,		
+		l.name as 'laboratory_name',
+		va.name as 'account_name',
+		a.deadline,
+		a.requested_sigma_act,
+		a.requested_sigma_mda,
+		a.customer_name,						
+		a.approved_customer,
+		a.approved_laboratory,			
+		a.closed_date,
+		a.closed_by,
+		insta.name as 'instance_status_name',
+		a.locked_by		
+	from assignment a 		
+		left outer join laboratory l on a.laboratory_id = l.id
+		left outer join cv_account va on a.account_id = va.id
+		inner join instance_status insta on a.instance_status_id = insta.id
+	where 1 = 1
+";
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                SqlDataAdapter adapter = new SqlDataAdapter("", conn);
+
+                if (Utils.IsValidGuid(cboxOrdersLaboratory.SelectedValue))
+                {
+                    query += " and l.id = @laboratory_id";
+                    adapter.SelectCommand.Parameters.AddWithValue("@laboratory_id", DB.MakeParam(typeof(Guid), cboxOrdersLaboratory.SelectedValue));
+                }
+
+                query += " order by a.create_date desc";
+
+                adapter.SelectCommand.CommandText = query;
+                adapter.SelectCommand.CommandType = CommandType.Text;
+                DataTable dt = new DataTable();
+                adapter.Fill(dt);
+                gridOrders.DataSource = dt;
+
+                gridOrders.Columns["id"].Visible = false;
+
+                gridOrders.Columns["name"].HeaderText = "Name";
+                gridOrders.Columns["laboratory_name"].HeaderText = "Laboratory";
+                gridOrders.Columns["account_name"].HeaderText = "Responsible";
+                gridOrders.Columns["requested_sigma_act"].HeaderText = "Req.Sig.Act.";
+                gridOrders.Columns["requested_sigma_mda"].HeaderText = "Req.Sig.MDA";
+                gridOrders.Columns["deadline"].HeaderText = "Deadline";
+                gridOrders.Columns["customer_name"].HeaderText = "Customer";
+                gridOrders.Columns["approved_customer"].HeaderText = "Appr.Cust";
+                gridOrders.Columns["approved_laboratory"].HeaderText = "Appr.Lab";
+                gridOrders.Columns["closed_date"].HeaderText = "Closed at";
+                gridOrders.Columns["closed_by"].HeaderText = "Closed by";
+                gridOrders.Columns["instance_status_name"].HeaderText = "Status";
+                gridOrders.Columns["locked_by"].HeaderText = "Locked by";
+
+                gridOrders.Columns["deadline"].DefaultCellStyle.Format = Utils.DateFormatNorwegian;
+            }
+        }
+
+        private void cboxOrdersLaboratory_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            PopulateOrders();
+        }
+
+        private void cboxOrdersYear_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            PopulateOrders();
+        }
+
+        private void cboxOrdersStatus_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            PopulateOrders();
+        }
+
+        private void miOrdersClearAllFilters_Click(object sender, EventArgs e)
+        {
+            populateOrdersDisabled = true;
+            cboxOrdersLaboratory.SelectedValue = Guid.Empty;
+            cboxOrdersYear.SelectedValue = null;
+            cboxOrdersStatus.SelectedValue = Guid.Empty;
+            populateOrdersDisabled = false;
+            PopulateOrders();
         }
     }    
 }

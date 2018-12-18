@@ -561,7 +561,7 @@ order by name";
             grid.Columns["instance_status_name"].HeaderText = "Status";
         }
 
-        public static void PopulateOrders(SqlConnection conn, int statusLevel, DataGridView grid)
+        /*public static void PopulateOrders(SqlConnection conn, int statusLevel, DataGridView grid)
         {
             grid.DataSource = DB.GetDataTable(conn, "csp_select_assignments_flat", CommandType.StoredProcedure,
                 new SqlParameter("@instance_status_level", statusLevel));
@@ -592,7 +592,7 @@ order by name";
             grid.Columns["locked_by"].HeaderText = "Locked by";
 
             grid.Columns["deadline"].DefaultCellStyle.Format = Utils.DateFormatNorwegian;
-        }
+        }*/
 
         public static void PopulateOrders(SqlConnection conn, int statusLevel, Guid laboratoryId, DataGridView grid)
         {

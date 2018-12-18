@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.menu = new System.Windows.Forms.MenuStrip();
             this.miFile = new System.Windows.Forms.ToolStripMenuItem();
@@ -468,8 +468,7 @@
             this.btnOrdersDelete = new System.Windows.Forms.ToolStripButton();
             this.panel2 = new System.Windows.Forms.Panel();
             this.label52 = new System.Windows.Forms.Label();
-            this.cbxOrdersFilterClosed = new System.Windows.Forms.CheckBox();
-            this.cboxOrdersFilterYear = new System.Windows.Forms.ComboBox();
+            this.cboxOrdersYear = new System.Windows.Forms.ComboBox();
             this.toolsOrders = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel30 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator63 = new System.Windows.Forms.ToolStripSeparator();
@@ -900,6 +899,10 @@
             this.btnMenu = new System.Windows.Forms.ToolStripButton();
             this.lblCurrentTab = new System.Windows.Forms.ToolStripLabel();
             this.btnBack = new System.Windows.Forms.ToolStripButton();
+            this.cboxOrdersStatus = new System.Windows.Forms.ComboBox();
+            this.label33 = new System.Windows.Forms.Label();
+            this.label36 = new System.Windows.Forms.Label();
+            this.cboxOrdersLaboratory = new System.Windows.Forms.ComboBox();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tabs.SuspendLayout();
@@ -1256,19 +1259,19 @@
             // miLogout
             // 
             this.miLogout.Name = "miLogout";
-            this.miLogout.Size = new System.Drawing.Size(112, 22);
+            this.miLogout.Size = new System.Drawing.Size(152, 22);
             this.miLogout.Text = "&Logout";
             this.miLogout.Click += new System.EventHandler(this.miLogout_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(109, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(149, 6);
             // 
             // miExit
             // 
             this.miExit.Name = "miExit";
-            this.miExit.Size = new System.Drawing.Size(112, 22);
+            this.miExit.Size = new System.Drawing.Size(152, 22);
             this.miExit.Text = "E&xit";
             this.miExit.Click += new System.EventHandler(this.miExit_Click);
             // 
@@ -4317,14 +4320,14 @@
             this.gridOrderConnectedItems.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.gridOrderConnectedItems.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
             this.gridOrderConnectedItems.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.ButtonFace;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.gridOrderConnectedItems.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.ButtonFace;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.gridOrderConnectedItems.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
             this.gridOrderConnectedItems.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridOrderConnectedItems.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gridOrderConnectedItems.GridColor = System.Drawing.SystemColors.ButtonFace;
@@ -5550,13 +5553,13 @@
             this.gridOrders.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.gridOrders.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridOrders.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridOrders.Location = new System.Drawing.Point(3, 116);
+            this.gridOrders.Location = new System.Drawing.Point(3, 113);
             this.gridOrders.MultiSelect = false;
             this.gridOrders.Name = "gridOrders";
             this.gridOrders.ReadOnly = true;
             this.gridOrders.RowHeadersVisible = false;
             this.gridOrders.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridOrders.Size = new System.Drawing.Size(1122, 513);
+            this.gridOrders.Size = new System.Drawing.Size(1122, 516);
             this.gridOrders.TabIndex = 2;
             // 
             // toolStrip9
@@ -5568,7 +5571,7 @@
             this.btnOrdersNew,
             this.btnOrdersEdit,
             this.btnOrdersDelete});
-            this.toolStrip9.Location = new System.Drawing.Point(3, 91);
+            this.toolStrip9.Location = new System.Drawing.Point(3, 88);
             this.toolStrip9.Name = "toolStrip9";
             this.toolStrip9.Size = new System.Drawing.Size(1122, 25);
             this.toolStrip9.TabIndex = 4;
@@ -5615,42 +5618,37 @@
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.cboxOrdersLaboratory);
+            this.panel2.Controls.Add(this.label36);
+            this.panel2.Controls.Add(this.label33);
+            this.panel2.Controls.Add(this.cboxOrdersStatus);
             this.panel2.Controls.Add(this.label52);
-            this.panel2.Controls.Add(this.cbxOrdersFilterClosed);
-            this.panel2.Controls.Add(this.cboxOrdersFilterYear);
+            this.panel2.Controls.Add(this.cboxOrdersYear);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel2.Location = new System.Drawing.Point(3, 28);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1122, 63);
+            this.panel2.Size = new System.Drawing.Size(1122, 60);
             this.panel2.TabIndex = 3;
             // 
             // label52
             // 
             this.label52.AutoSize = true;
             this.label52.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label52.Location = new System.Drawing.Point(24, 24);
+            this.label52.Location = new System.Drawing.Point(275, 23);
             this.label52.Name = "label52";
             this.label52.Size = new System.Drawing.Size(33, 13);
             this.label52.TabIndex = 3;
             this.label52.Text = "Year";
             // 
-            // cbxOrdersFilterClosed
+            // cboxOrdersYear
             // 
-            this.cbxOrdersFilterClosed.AutoSize = true;
-            this.cbxOrdersFilterClosed.Location = new System.Drawing.Point(233, 22);
-            this.cbxOrdersFilterClosed.Name = "cbxOrdersFilterClosed";
-            this.cbxOrdersFilterClosed.Size = new System.Drawing.Size(138, 19);
-            this.cbxOrdersFilterClosed.TabIndex = 2;
-            this.cbxOrdersFilterClosed.Text = "Show Closed Orders";
-            this.cbxOrdersFilterClosed.UseVisualStyleBackColor = true;
-            // 
-            // cboxOrdersFilterYear
-            // 
-            this.cboxOrdersFilterYear.FormattingEnabled = true;
-            this.cboxOrdersFilterYear.Location = new System.Drawing.Point(70, 20);
-            this.cboxOrdersFilterYear.Name = "cboxOrdersFilterYear";
-            this.cboxOrdersFilterYear.Size = new System.Drawing.Size(140, 23);
-            this.cboxOrdersFilterYear.TabIndex = 0;
+            this.cboxOrdersYear.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxOrdersYear.FormattingEnabled = true;
+            this.cboxOrdersYear.Location = new System.Drawing.Point(314, 18);
+            this.cboxOrdersYear.Name = "cboxOrdersYear";
+            this.cboxOrdersYear.Size = new System.Drawing.Size(140, 23);
+            this.cboxOrdersYear.TabIndex = 0;
+            this.cboxOrdersYear.SelectedIndexChanged += new System.EventHandler(this.cboxOrdersYear_SelectedIndexChanged);
             // 
             // toolsOrders
             // 
@@ -5682,8 +5680,8 @@
             this.btnOrdersClearAllFilters.Image = global::DSA_lims.Properties.Resources.trash;
             this.btnOrdersClearAllFilters.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnOrdersClearAllFilters.Name = "btnOrdersClearAllFilters";
-            this.btnOrdersClearAllFilters.Size = new System.Drawing.Size(69, 22);
-            this.btnOrdersClearAllFilters.Text = "Clear all";
+            this.btnOrdersClearAllFilters.Size = new System.Drawing.Size(101, 22);
+            this.btnOrdersClearAllFilters.Text = "Clear all filters";
             this.btnOrdersClearAllFilters.Click += new System.EventHandler(this.miOrdersClearAllFilters_Click);
             // 
             // tabSamples
@@ -10158,6 +10156,46 @@
             this.btnBack.ToolTipText = "Back";
             this.btnBack.Click += new System.EventHandler(this.miBack_Click);
             // 
+            // cboxOrdersStatus
+            // 
+            this.cboxOrdersStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxOrdersStatus.FormattingEnabled = true;
+            this.cboxOrdersStatus.Location = new System.Drawing.Point(532, 18);
+            this.cboxOrdersStatus.Name = "cboxOrdersStatus";
+            this.cboxOrdersStatus.Size = new System.Drawing.Size(149, 23);
+            this.cboxOrdersStatus.TabIndex = 4;
+            this.cboxOrdersStatus.SelectedIndexChanged += new System.EventHandler(this.cboxOrdersStatus_SelectedIndexChanged);
+            // 
+            // label33
+            // 
+            this.label33.AutoSize = true;
+            this.label33.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label33.Location = new System.Drawing.Point(479, 21);
+            this.label33.Name = "label33";
+            this.label33.Size = new System.Drawing.Size(47, 15);
+            this.label33.TabIndex = 5;
+            this.label33.Text = "Status";
+            // 
+            // label36
+            // 
+            this.label36.AutoSize = true;
+            this.label36.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label36.Location = new System.Drawing.Point(11, 21);
+            this.label36.Name = "label36";
+            this.label36.Size = new System.Drawing.Size(75, 15);
+            this.label36.TabIndex = 6;
+            this.label36.Text = "Laboratory";
+            // 
+            // cboxOrdersLaboratory
+            // 
+            this.cboxOrdersLaboratory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxOrdersLaboratory.FormattingEnabled = true;
+            this.cboxOrdersLaboratory.Location = new System.Drawing.Point(92, 18);
+            this.cboxOrdersLaboratory.Name = "cboxOrdersLaboratory";
+            this.cboxOrdersLaboratory.Size = new System.Drawing.Size(153, 23);
+            this.cboxOrdersLaboratory.TabIndex = 7;
+            this.cboxOrdersLaboratory.SelectedIndexChanged += new System.EventHandler(this.cboxOrdersLaboratory_SelectedIndexChanged);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -10768,7 +10806,7 @@
         private System.Windows.Forms.ToolStripButton toolStripButton4;
         private System.Windows.Forms.ToolStripButton toolStripButton6;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.ComboBox cboxOrdersFilterYear;
+        private System.Windows.Forms.ComboBox cboxOrdersYear;
         private System.Windows.Forms.Button btnMenuCustomer;
         private System.Windows.Forms.Button btnMenuSearch;
         private System.Windows.Forms.Button btnMenuMetadata;
@@ -10777,7 +10815,6 @@
         private System.Windows.Forms.ToolStripLabel lblCurrentTab;
         private System.Windows.Forms.TextBox tbMenuLookup;
         private System.Windows.Forms.Label label52;
-        private System.Windows.Forms.CheckBox cbxOrdersFilterClosed;
         private System.Windows.Forms.TabPage tabTypeRel;
         private System.Windows.Forms.SplitContainer splitContainer12;
         private System.Windows.Forms.ToolStrip toolsTypeRelSamp;
@@ -11528,6 +11565,10 @@
         private System.Windows.Forms.ToolStripButton toolStripButton7;
         private System.Windows.Forms.Label label32;
         private System.Windows.Forms.ComboBox cboxSamplesLaboratory;
+        private System.Windows.Forms.ComboBox cboxOrdersLaboratory;
+        private System.Windows.Forms.Label label36;
+        private System.Windows.Forms.Label label33;
+        private System.Windows.Forms.ComboBox cboxOrdersStatus;
     }
 }
 

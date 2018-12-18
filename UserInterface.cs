@@ -309,7 +309,7 @@ namespace DSA_lims
             grid.Columns["instance_status_name"].HeaderText = "Status";
         }        
 
-        public static void PopulateSamples(SqlConnection conn, DataGridView grid)
+        /*public static void PopulateSamples(SqlConnection conn, DataGridView grid)
         {
             grid.DataSource = DB.GetDataTable(conn, "csp_select_samples_informative", CommandType.StoredProcedure,
                 new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
@@ -331,7 +331,7 @@ namespace DSA_lims
             grid.Columns["merge_from"].HeaderText = "Merge from";
 
             grid.Columns["reference_date"].DefaultCellStyle.Format = Utils.DateTimeFormatNorwegian;
-        }
+        }*/
 
         public static void PopulatePreparationMethods(SqlConnection conn, DataGridView grid)
         {

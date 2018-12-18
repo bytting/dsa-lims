@@ -1539,6 +1539,15 @@ as
 	where instance_status_id <= @instance_status_level
 go
 
+create proc csp_select_assignments_for_laboratory_short
+	@lab_id uniqueidentifier,
+	@instance_status_level int
+as
+	select id, name
+	from assignment
+	where instance_status_id <= @instance_status_level and laboratory_id = @lab_id
+go
+
 create proc csp_select_assignments_flat
 	@instance_status_level int
 as

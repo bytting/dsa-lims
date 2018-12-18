@@ -45,6 +45,8 @@ namespace DSA_lims
         private Guid selectedSampleId = Guid.Empty;
         private Guid selectedAnalysisMethodId = Guid.Empty;
 
+        private bool populateSamplesDisabled = false;
+
         public FormMain()
         {
             InitializeComponent();
@@ -310,7 +312,7 @@ namespace DSA_lims
         }        
 
         private void miLogout_Click(object sender, EventArgs e)
-        {
+        {            
             ShowLogin();
         }
 
@@ -1659,11 +1661,8 @@ namespace DSA_lims
             FormSampleSplit form = new FormSampleSplit(sid, treeSampleTypes);
             if (form.ShowDialog() != DialogResult.OK)
                 return;
-
-            using (SqlConnection conn = DB.OpenConnection())
-            {
-                UI.PopulateSamples(conn, gridSamples);
-            }
+            
+            PopulateSamples();
 
             lblStatus.Text = Utils.makeStatusMessage("Splitting sample successful");
         }
@@ -1706,11 +1705,8 @@ namespace DSA_lims
             FormSampleMerge form = new FormSampleMerge(sampleIdsCsv);
             if (form.ShowDialog() != DialogResult.OK)
                 return;
-
-            using (SqlConnection conn = DB.OpenConnection())
-            {
-                UI.PopulateSamples(conn, gridSamples);
-            }
+            
+            PopulateSamples();
 
             lblStatus.Text = Utils.makeStatusMessage("Merging samples successful");
         }
@@ -2784,7 +2780,17 @@ order by name
             {
                 using (SqlConnection conn = DB.OpenConnection())
                 {
-                    UI.PopulateSamples(conn, gridSamples);
+                    UI.PopulateComboBoxes(conn, "csp_select_assignments_for_laboratory_short", new[] {
+                        new SqlParameter("@lab_id", Common.LabId),
+                        new SqlParameter("@instance_status_level", InstanceStatus.Deleted) },
+                    cboxSamplesOrders);
+
+                    UI.PopulateComboBoxes(conn, "csp_select_laboratories_short", new[] {
+                        new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
+                    }, cboxSamplesLaboratory);
+
+                    if (Common.LabId != Guid.Empty)
+                        cboxSamplesLaboratory.SelectedValue = Common.LabId;
                 }
             }
         }
@@ -3811,6 +3817,147 @@ order by s.number, p.number
             ClearPrepAnalAnalysis();
 
             tabs.SelectedTab = tabPrepAnal;
+        }
+
+        private void tbSamplesLookup_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == Convert.ToChar(Keys.Enter))
+            {
+                int snum = Convert.ToInt32(tbSamplesLookup.Text);
+                foreach (DataGridViewRow row in gridSamples.Rows)
+                {
+                    int num = Convert.ToInt32(row.Cells["number"].Value);
+                    row.Selected = (num == snum);
+                }
+                tbSamplesLookup.Text = "";
+                e.Handled = true;
+                return;
+            }
+        }
+
+        private void PopulateSamples()
+        {
+            if (populateSamplesDisabled)
+                return;
+
+            string query = @"
+select
+		s.id,	
+		s.number,
+		s.external_id,
+		l.name as 'laboratory_name',
+		st.name as 'sample_type_name',	
+		sc.name as 'sample_component_name',        
+		pm.name + ' - ' + ps.name as 'project_name',
+		ss.name as 'sample_storage_name',
+		s.reference_date,
+		insta.name as 'instance_status_name',
+		s.locked_by,
+		(select number from sample where id = s.transform_from_id) as 'split_from',
+		(select number from sample where id = s.transform_to_id) as 'merge_to',
+		(select convert(varchar(80), number) + ', ' as 'data()' from sample where transform_to_id = s.id for XML PATH('')) as 'merge_from'
+	from sample s 
+		left outer join laboratory l on s.laboratory_id = l.id
+		left outer join sample_type st on s.sample_type_id = st.id
+		left outer join sample_storage ss on s.sample_storage_id = ss.id
+		left outer join sample_component sc on s.sample_component_id = sc.id
+		inner join project_sub ps on s.project_sub_id = ps.id
+		inner join project_main pm on pm.id = ps.project_main_id
+		inner join instance_status insta on s.instance_status_id = insta.id
+        left outer join sample_x_assignment_sample_type sxast on sxast.sample_id = s.id
+        left outer join assignment_sample_type ast on ast.id = sxast.assignment_sample_type_id
+        left outer join assignment a on a.id = ast.assignment_id
+	where 
+        s.instance_status_id = @instance_status_level
+";
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                SqlDataAdapter adapter = new SqlDataAdapter("", conn);
+
+                if (Utils.IsValidGuid(cboxSamplesProjects.SelectedValue))
+                {
+                    query += " and pm.id = @project_id";
+                    adapter.SelectCommand.Parameters.AddWithValue("@project_id", DB.MakeParam(typeof(Guid), cboxSamplesProjects.SelectedValue));
+                }
+
+                if (Utils.IsValidGuid(cboxSamplesProjectsSub.SelectedValue))
+                {
+                    query += " and ps.id = @project_sub_id";
+                    adapter.SelectCommand.Parameters.AddWithValue("@project_sub_id", DB.MakeParam(typeof(Guid), cboxSamplesProjectsSub.SelectedValue));
+                }
+
+                if (Utils.IsValidGuid(cboxSamplesOrders.SelectedValue))
+                {
+                    query += " and a.id = @assignment_id";
+                    adapter.SelectCommand.Parameters.AddWithValue("@assignment_id", DB.MakeParam(typeof(Guid), cboxSamplesOrders.SelectedValue));
+                }
+
+                if (Utils.IsValidGuid(cboxSamplesLaboratory.SelectedValue))
+                {
+                    query += " and l.id = @lab_id";
+                    adapter.SelectCommand.Parameters.AddWithValue("@lab_id", DB.MakeParam(typeof(Guid), cboxSamplesLaboratory.SelectedValue));
+                }
+
+                query += " order by s.number desc";
+                
+                adapter.SelectCommand.CommandText = query;
+                adapter.SelectCommand.CommandType = CommandType.Text;
+                adapter.SelectCommand.Parameters.AddWithValue("@instance_status_level", DB.MakeParam(typeof(int), cboxSamplesStatus.SelectedValue));
+                DataTable dt = new DataTable();
+                adapter.Fill(dt);
+                gridSamples.DataSource = dt;
+
+                gridSamples.Columns["id"].Visible = false;
+                gridSamples.Columns["merge_to"].Visible = false;
+
+                gridSamples.Columns["number"].HeaderText = "Sample number";
+                gridSamples.Columns["external_id"].HeaderText = "Ex.Id";
+                gridSamples.Columns["laboratory_name"].HeaderText = "Laboratory";
+                gridSamples.Columns["sample_type_name"].HeaderText = "Type";
+                gridSamples.Columns["sample_component_name"].HeaderText = "Component";
+                gridSamples.Columns["project_name"].HeaderText = "Project";
+                gridSamples.Columns["sample_storage_name"].HeaderText = "Storage";
+                gridSamples.Columns["reference_date"].HeaderText = "Ref.date";
+                gridSamples.Columns["instance_status_name"].HeaderText = "Status";
+                gridSamples.Columns["locked_by"].HeaderText = "Locked by";
+                gridSamples.Columns["split_from"].HeaderText = "Split from";
+                gridSamples.Columns["merge_from"].HeaderText = "Merge from";
+
+                gridSamples.Columns["reference_date"].DefaultCellStyle.Format = Utils.DateTimeFormatNorwegian;
+            }
+        }
+
+        private void cboxSamplesProjectsSub_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            PopulateSamples();
+        }
+
+        private void cboxSamplesOrders_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            PopulateSamples();
+        }
+
+        private void cboxSamplesStatus_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            PopulateSamples();
+        }
+
+        private void cboxSamplesLaboratory_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            PopulateSamples();
+        }
+
+        private void btnSamplesClearFilters_Click(object sender, EventArgs e)
+        {
+            populateSamplesDisabled = true;
+            tbSamplesLookup.Text = "";
+            cboxSamplesProjects.SelectedValue = Guid.Empty;
+            cboxSamplesProjectsSub.SelectedValue = Guid.Empty;
+            cboxSamplesOrders.SelectedValue = Guid.Empty;
+            cboxSamplesStatus.SelectedValue = 1;
+            cboxSamplesLaboratory.SelectedValue = Guid.Empty;
+            populateSamplesDisabled = false;
+            PopulateSamples();
         }
     }    
 }

@@ -121,7 +121,8 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@deadline", (DateTime)tbDeadline.Tag);
                 cmd.Parameters.AddWithValue("@requested_sigma_act", DB.MakeParam(typeof(double), cboxRequestedSigma.SelectedValue));
                 cmd.Parameters.AddWithValue("@requested_sigma_mda", DB.MakeParam(typeof(double), cboxRequestedSigmaMDA.SelectedValue));
-                cmd.Parameters.AddWithValue("@customer_name", DB.MakeParam(typeof(string), cust.Name));                                
+                cmd.Parameters.AddWithValue("@customer_name", DB.MakeParam(typeof(string), cust.Name));
+                cmd.Parameters.AddWithValue("@customer_company", DB.MakeParam(typeof(string), cust.Company));
                 cmd.Parameters.AddWithValue("@customer_email", DB.MakeParam(typeof(string), cust.Email));
                 cmd.Parameters.AddWithValue("@customer_phone", DB.MakeParam(typeof(string), cust.Phone));
                 cmd.Parameters.AddWithValue("@customer_address", DB.MakeParam(typeof(string), cust.Address));

@@ -62,10 +62,11 @@ namespace DSA_lims
             }
 
             SelectedCustomer.Id = Guid.Parse(gridCustomers.SelectedRows[0].Cells["id"].Value.ToString());
-            SelectedCustomer.Name = gridCustomers.SelectedRows[0].Cells["name"].Value.ToString();                        
-            SelectedCustomer.Email = gridCustomers.SelectedRows[0].Cells["email"].Value.ToString();            
-            SelectedCustomer.Phone = gridCustomers.SelectedRows[0].Cells["phone"].Value.ToString();
-            SelectedCustomer.Address = gridCustomers.SelectedRows[0].Cells["address"].Value.ToString();
+            SelectedCustomer.Name = gridCustomers.SelectedRows[0].Cells["person_name"].Value.ToString();
+            SelectedCustomer.Company = gridCustomers.SelectedRows[0].Cells["company_name"].Value.ToString();
+            SelectedCustomer.Email = gridCustomers.SelectedRows[0].Cells["company_email"].Value.ToString();            
+            SelectedCustomer.Phone = gridCustomers.SelectedRows[0].Cells["company_phone"].Value.ToString();
+            SelectedCustomer.Address = gridCustomers.SelectedRows[0].Cells["company_address"].Value.ToString();
 
             DialogResult = DialogResult.OK;
             Close();

@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.menu = new System.Windows.Forms.MenuStrip();
             this.miFile = new System.Windows.Forms.ToolStripMenuItem();
@@ -903,6 +903,10 @@
             this.label33 = new System.Windows.Forms.Label();
             this.label36 = new System.Windows.Forms.Label();
             this.cboxOrdersLaboratory = new System.Windows.Forms.ComboBox();
+            this.label37 = new System.Windows.Forms.Label();
+            this.label61 = new System.Windows.Forms.Label();
+            this.tbOrderCustomerCompany = new System.Windows.Forms.TextBox();
+            this.label71 = new System.Windows.Forms.Label();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tabs.SuspendLayout();
@@ -1692,33 +1696,33 @@
             // miOrdersNew
             // 
             this.miOrdersNew.Name = "miOrdersNew";
-            this.miOrdersNew.Size = new System.Drawing.Size(148, 22);
+            this.miOrdersNew.Size = new System.Drawing.Size(152, 22);
             this.miOrdersNew.Text = "&New order";
             this.miOrdersNew.Click += new System.EventHandler(this.miOrdersNew_Click);
             // 
             // miOrdersEdit
             // 
             this.miOrdersEdit.Name = "miOrdersEdit";
-            this.miOrdersEdit.Size = new System.Drawing.Size(148, 22);
+            this.miOrdersEdit.Size = new System.Drawing.Size(152, 22);
             this.miOrdersEdit.Text = "&Edit order";
             this.miOrdersEdit.Click += new System.EventHandler(this.miOrdersEdit_Click);
             // 
             // miOrdersDelete
             // 
             this.miOrdersDelete.Name = "miOrdersDelete";
-            this.miOrdersDelete.Size = new System.Drawing.Size(148, 22);
+            this.miOrdersDelete.Size = new System.Drawing.Size(152, 22);
             this.miOrdersDelete.Text = "&Delete order";
             this.miOrdersDelete.Click += new System.EventHandler(this.miOrdersDelete_Click);
             // 
             // toolStripSeparator65
             // 
             this.toolStripSeparator65.Name = "toolStripSeparator65";
-            this.toolStripSeparator65.Size = new System.Drawing.Size(145, 6);
+            this.toolStripSeparator65.Size = new System.Drawing.Size(149, 6);
             // 
             // miOrdersClearAllFilters
             // 
             this.miOrdersClearAllFilters.Name = "miOrdersClearAllFilters";
-            this.miOrdersClearAllFilters.Size = new System.Drawing.Size(148, 22);
+            this.miOrdersClearAllFilters.Size = new System.Drawing.Size(152, 22);
             this.miOrdersClearAllFilters.Text = "&Clear all filters";
             this.miOrdersClearAllFilters.Click += new System.EventHandler(this.miOrdersClearAllFilters_Click);
             // 
@@ -4320,14 +4324,14 @@
             this.gridOrderConnectedItems.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.gridOrderConnectedItems.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
             this.gridOrderConnectedItems.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.ButtonFace;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.gridOrderConnectedItems.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.ButtonFace;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.gridOrderConnectedItems.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.gridOrderConnectedItems.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridOrderConnectedItems.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gridOrderConnectedItems.GridColor = System.Drawing.SystemColors.ButtonFace;
@@ -4401,26 +4405,31 @@
             this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel7.Controls.Add(this.tbOrderCustomerName, 3, 0);
-            this.tableLayoutPanel7.Controls.Add(this.label56, 2, 0);
             this.tableLayoutPanel7.Controls.Add(this.checkBox2, 0, 1);
             this.tableLayoutPanel7.Controls.Add(this.checkBox3, 0, 2);
             this.tableLayoutPanel7.Controls.Add(this.textBox22, 1, 1);
             this.tableLayoutPanel7.Controls.Add(this.textBox23, 1, 2);
-            this.tableLayoutPanel7.Controls.Add(this.cboxOrderStatus, 0, 7);
-            this.tableLayoutPanel7.Controls.Add(this.textBox30, 1, 7);
-            this.tableLayoutPanel7.Controls.Add(this.label69, 2, 1);
-            this.tableLayoutPanel7.Controls.Add(this.label62, 2, 3);
-            this.tableLayoutPanel7.Controls.Add(this.label70, 2, 2);
-            this.tableLayoutPanel7.Controls.Add(this.tbOrderCustomerEmail, 3, 1);
-            this.tableLayoutPanel7.Controls.Add(this.tbOrderCustomerAddress, 3, 3);
-            this.tableLayoutPanel7.Controls.Add(this.tbOrderCustomerPhone, 3, 2);
-            this.tableLayoutPanel7.Controls.Add(this.tbOrderReportComment, 0, 5);
-            this.tableLayoutPanel7.Controls.Add(this.label43, 0, 4);
+            this.tableLayoutPanel7.Controls.Add(this.cboxOrderStatus, 0, 8);
+            this.tableLayoutPanel7.Controls.Add(this.textBox30, 1, 8);
+            this.tableLayoutPanel7.Controls.Add(this.tbOrderReportComment, 0, 6);
+            this.tableLayoutPanel7.Controls.Add(this.label62, 2, 5);
+            this.tableLayoutPanel7.Controls.Add(this.tbOrderCustomerAddress, 3, 5);
+            this.tableLayoutPanel7.Controls.Add(this.label70, 2, 4);
+            this.tableLayoutPanel7.Controls.Add(this.tbOrderCustomerPhone, 3, 4);
+            this.tableLayoutPanel7.Controls.Add(this.label69, 2, 3);
+            this.tableLayoutPanel7.Controls.Add(this.tbOrderCustomerEmail, 3, 3);
+            this.tableLayoutPanel7.Controls.Add(this.label37, 2, 2);
+            this.tableLayoutPanel7.Controls.Add(this.label56, 2, 1);
+            this.tableLayoutPanel7.Controls.Add(this.tbOrderCustomerName, 3, 1);
+            this.tableLayoutPanel7.Controls.Add(this.label61, 2, 0);
+            this.tableLayoutPanel7.Controls.Add(this.tbOrderCustomerCompany, 3, 2);
+            this.tableLayoutPanel7.Controls.Add(this.label43, 0, 5);
+            this.tableLayoutPanel7.Controls.Add(this.label71, 0, 7);
             this.tableLayoutPanel7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel7.Location = new System.Drawing.Point(0, 25);
             this.tableLayoutPanel7.Name = "tableLayoutPanel7";
-            this.tableLayoutPanel7.RowCount = 9;
+            this.tableLayoutPanel7.RowCount = 10;
+            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
@@ -4436,7 +4445,7 @@
             // tbOrderCustomerName
             // 
             this.tbOrderCustomerName.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbOrderCustomerName.Location = new System.Drawing.Point(834, 3);
+            this.tbOrderCustomerName.Location = new System.Drawing.Point(834, 33);
             this.tbOrderCustomerName.Name = "tbOrderCustomerName";
             this.tbOrderCustomerName.ReadOnly = true;
             this.tbOrderCustomerName.Size = new System.Drawing.Size(271, 21);
@@ -4445,11 +4454,11 @@
             // label56
             // 
             this.label56.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label56.Location = new System.Drawing.Point(557, 0);
+            this.label56.Location = new System.Drawing.Point(557, 30);
             this.label56.Name = "label56";
             this.label56.Size = new System.Drawing.Size(271, 30);
             this.label56.TabIndex = 0;
-            this.label56.Text = "Customer name";
+            this.label56.Text = "Name";
             this.label56.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // checkBox2
@@ -4501,7 +4510,7 @@
             this.cboxOrderStatus.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cboxOrderStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxOrderStatus.FormattingEnabled = true;
-            this.cboxOrderStatus.Location = new System.Drawing.Point(3, 333);
+            this.cboxOrderStatus.Location = new System.Drawing.Point(3, 363);
             this.cboxOrderStatus.Name = "cboxOrderStatus";
             this.cboxOrderStatus.Size = new System.Drawing.Size(271, 23);
             this.cboxOrderStatus.TabIndex = 19;
@@ -4509,7 +4518,7 @@
             // textBox30
             // 
             this.textBox30.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox30.Location = new System.Drawing.Point(280, 333);
+            this.textBox30.Location = new System.Drawing.Point(280, 363);
             this.textBox30.Name = "textBox30";
             this.textBox30.ReadOnly = true;
             this.textBox30.Size = new System.Drawing.Size(271, 21);
@@ -4518,37 +4527,37 @@
             // label69
             // 
             this.label69.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label69.Location = new System.Drawing.Point(557, 30);
+            this.label69.Location = new System.Drawing.Point(557, 90);
             this.label69.Name = "label69";
             this.label69.Size = new System.Drawing.Size(271, 30);
             this.label69.TabIndex = 3;
-            this.label69.Text = "Customer email";
+            this.label69.Text = "Email";
             this.label69.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // label62
             // 
             this.label62.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label62.Location = new System.Drawing.Point(557, 90);
+            this.label62.Location = new System.Drawing.Point(557, 150);
             this.label62.Name = "label62";
             this.label62.Size = new System.Drawing.Size(271, 30);
             this.label62.TabIndex = 2;
-            this.label62.Text = "Customer address";
+            this.label62.Text = "Address";
             this.label62.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // label70
             // 
             this.label70.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label70.Location = new System.Drawing.Point(557, 60);
+            this.label70.Location = new System.Drawing.Point(557, 120);
             this.label70.Name = "label70";
             this.label70.Size = new System.Drawing.Size(271, 30);
             this.label70.TabIndex = 4;
-            this.label70.Text = "Customer phone";
+            this.label70.Text = "Phone";
             this.label70.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // tbOrderCustomerEmail
             // 
             this.tbOrderCustomerEmail.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbOrderCustomerEmail.Location = new System.Drawing.Point(834, 33);
+            this.tbOrderCustomerEmail.Location = new System.Drawing.Point(834, 93);
             this.tbOrderCustomerEmail.Name = "tbOrderCustomerEmail";
             this.tbOrderCustomerEmail.ReadOnly = true;
             this.tbOrderCustomerEmail.Size = new System.Drawing.Size(271, 21);
@@ -4557,7 +4566,7 @@
             // tbOrderCustomerAddress
             // 
             this.tbOrderCustomerAddress.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbOrderCustomerAddress.Location = new System.Drawing.Point(834, 93);
+            this.tbOrderCustomerAddress.Location = new System.Drawing.Point(834, 153);
             this.tbOrderCustomerAddress.Name = "tbOrderCustomerAddress";
             this.tbOrderCustomerAddress.ReadOnly = true;
             this.tbOrderCustomerAddress.Size = new System.Drawing.Size(271, 21);
@@ -4566,7 +4575,7 @@
             // tbOrderCustomerPhone
             // 
             this.tbOrderCustomerPhone.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbOrderCustomerPhone.Location = new System.Drawing.Point(834, 63);
+            this.tbOrderCustomerPhone.Location = new System.Drawing.Point(834, 123);
             this.tbOrderCustomerPhone.Name = "tbOrderCustomerPhone";
             this.tbOrderCustomerPhone.ReadOnly = true;
             this.tbOrderCustomerPhone.Size = new System.Drawing.Size(271, 21);
@@ -4574,20 +4583,20 @@
             // 
             // tbOrderReportComment
             // 
-            this.tableLayoutPanel7.SetColumnSpan(this.tbOrderReportComment, 4);
+            this.tableLayoutPanel7.SetColumnSpan(this.tbOrderReportComment, 2);
             this.tbOrderReportComment.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbOrderReportComment.Location = new System.Drawing.Point(3, 153);
+            this.tbOrderReportComment.Location = new System.Drawing.Point(3, 183);
             this.tbOrderReportComment.Multiline = true;
             this.tbOrderReportComment.Name = "tbOrderReportComment";
             this.tbOrderReportComment.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.tbOrderReportComment.Size = new System.Drawing.Size(1102, 144);
+            this.tbOrderReportComment.Size = new System.Drawing.Size(548, 144);
             this.tbOrderReportComment.TabIndex = 8;
             // 
             // label43
             // 
             this.label43.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label43.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
-            this.label43.Location = new System.Drawing.Point(3, 120);
+            this.label43.Location = new System.Drawing.Point(3, 150);
             this.label43.Name = "label43";
             this.label43.Size = new System.Drawing.Size(271, 30);
             this.label43.TabIndex = 7;
@@ -10196,6 +10205,47 @@
             this.cboxOrdersLaboratory.TabIndex = 7;
             this.cboxOrdersLaboratory.SelectedIndexChanged += new System.EventHandler(this.cboxOrdersLaboratory_SelectedIndexChanged);
             // 
+            // label37
+            // 
+            this.label37.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label37.Location = new System.Drawing.Point(557, 60);
+            this.label37.Name = "label37";
+            this.label37.Size = new System.Drawing.Size(271, 30);
+            this.label37.TabIndex = 20;
+            this.label37.Text = "Company";
+            this.label37.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label61
+            // 
+            this.label61.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label61.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label61.Location = new System.Drawing.Point(557, 0);
+            this.label61.Name = "label61";
+            this.label61.Size = new System.Drawing.Size(271, 30);
+            this.label61.TabIndex = 21;
+            this.label61.Text = "Customer";
+            this.label61.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // tbOrderCustomerCompany
+            // 
+            this.tbOrderCustomerCompany.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbOrderCustomerCompany.Location = new System.Drawing.Point(834, 63);
+            this.tbOrderCustomerCompany.Name = "tbOrderCustomerCompany";
+            this.tbOrderCustomerCompany.ReadOnly = true;
+            this.tbOrderCustomerCompany.Size = new System.Drawing.Size(271, 21);
+            this.tbOrderCustomerCompany.TabIndex = 22;
+            // 
+            // label71
+            // 
+            this.label71.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label71.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label71.Location = new System.Drawing.Point(3, 330);
+            this.label71.Name = "label71";
+            this.label71.Size = new System.Drawing.Size(271, 30);
+            this.label71.TabIndex = 23;
+            this.label71.Text = "Current status";
+            this.label71.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -11569,6 +11619,10 @@
         private System.Windows.Forms.Label label36;
         private System.Windows.Forms.Label label33;
         private System.Windows.Forms.ComboBox cboxOrdersStatus;
+        private System.Windows.Forms.Label label37;
+        private System.Windows.Forms.Label label61;
+        private System.Windows.Forms.TextBox tbOrderCustomerCompany;
+        private System.Windows.Forms.Label label71;
     }
 }
 

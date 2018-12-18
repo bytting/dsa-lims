@@ -1445,7 +1445,8 @@ create table assignment (
 	deadline datetime not null,
 	requested_sigma_act float default null,
 	requested_sigma_mda float default null,
-	customer_name nvarchar(256) default null,		
+	customer_name nvarchar(80) default null,
+	customer_company nvarchar(80) default null,
 	customer_email nvarchar(80) default null,
 	customer_phone nvarchar(80) default null,
 	customer_address nvarchar(256) default null,
@@ -1472,7 +1473,8 @@ create proc csp_insert_assignment
 	@deadline datetime,
 	@requested_sigma_act float,	
 	@requested_sigma_mda float,	
-	@customer_name nvarchar(256),		
+	@customer_name nvarchar(80),
+	@customer_company nvarchar(80),
 	@customer_email nvarchar(80),
 	@customer_phone nvarchar(80),
 	@customer_address nvarchar(256),
@@ -1497,7 +1499,8 @@ as
 		@deadline,
 		@requested_sigma_act,
 		@requested_sigma_mda,
-		@customer_name,			
+		@customer_name,
+		@customer_company,
 		@customer_email,
 		@customer_phone,
 		@customer_address,
@@ -1523,7 +1526,8 @@ create proc csp_update_assignment_details
 	@deadline datetime,
 	@requested_sigma_act float,
 	@requested_sigma_mda float,
-	@customer_name nvarchar(256),		
+	@customer_name nvarchar(80),
+	@customer_company nvarchar(80),
 	@customer_email nvarchar(80),
 	@customer_phone nvarchar(80),
 	@customer_address nvarchar(256),
@@ -1538,7 +1542,8 @@ as
 		deadline = @deadline,
 		requested_sigma_act = @requested_sigma_act,
 		requested_sigma_mda = @requested_sigma_mda,
-		customer_name = @customer_name,				
+		customer_name = @customer_name,
+		customer_company = @customer_company,
 		customer_email = @customer_email,
 		customer_phone = @customer_phone,
 		customer_address = @customer_address,
@@ -1565,6 +1570,15 @@ as
 	where instance_status_id <= @instance_status_level
 go
 
+create proc csp_select_assignments_short
+	@instance_status_level int
+as
+	select id, name
+	from assignment
+	where instance_status_id <= @instance_status_level
+	order by name
+go
+
 create proc csp_select_assignments_for_laboratory_short
 	@lab_id uniqueidentifier,
 	@instance_status_level int
@@ -1585,7 +1599,8 @@ as
 		a.deadline,
 		a.requested_sigma_act,
 		a.requested_sigma_mda,
-		a.customer_name,				
+		a.customer_name,
+		a.customer_company,
 		a.customer_email,
 		a.customer_phone,
 		a.customer_address,

@@ -2346,7 +2346,8 @@ order by name
                     map["deadline"] = reader["deadline"];
                     map["requested_sigma_act"] = reader["requested_sigma_act"];
                     map["requested_sigma_mda"] = reader["requested_sigma_mda"];
-                    map["customer_name"] = reader["customer_name"];                                        
+                    map["customer_name"] = reader["customer_name"];
+                    map["customer_company"] = reader["customer_company"];
                     map["customer_email"] = reader["customer_email"];
                     map["customer_phone"] = reader["customer_phone"];
                     map["customer_address"] = reader["customer_address"];
@@ -2374,13 +2375,15 @@ order by name
                 cboxOrderRequestedSigma.SelectedValue = map["requested_sigma_act"];
                 cboxOrderRequestedSigmaMDA.SelectedValue = map["requested_sigma_mda"];
                 CustomerModel cust = new CustomerModel();
-                cust.Name = map["customer_name"].ToString();                
+                cust.Name = map["customer_name"].ToString();
+                cust.Company = map["customer_company"].ToString();
                 cust.Email = map["customer_email"].ToString();
                 cust.Phone = map["customer_phone"].ToString();
                 cust.Address = map["customer_address"].ToString();
                 tbOrderCustomer.Text = cust.Name;
                 tbOrderCustomer.Tag = cust;
-                tbOrderCustomerName.Text = cust.Name;                                
+                tbOrderCustomerName.Text = cust.Name;
+                tbOrderCustomerCompany.Text = cust.Company;
                 tbOrderCustomerEmail.Text = cust.Email;
                 tbOrderCustomerPhone.Text = cust.Phone;
                 tbOrderCustomerAddress.Text = cust.Address;
@@ -2529,7 +2532,8 @@ order by name
                 cmd.Parameters.AddWithValue("@deadline", DB.MakeParam(typeof(DateTime), tbOrderDeadline.Tag));
                 cmd.Parameters.AddWithValue("@requested_sigma_act", DB.MakeParam(typeof(double), cboxOrderRequestedSigma.SelectedValue));
                 cmd.Parameters.AddWithValue("@requested_sigma_mda", DB.MakeParam(typeof(double), cboxOrderRequestedSigmaMDA.SelectedValue));
-                cmd.Parameters.AddWithValue("@customer_name", DB.MakeParam(typeof(string), cust.Name));                                
+                cmd.Parameters.AddWithValue("@customer_name", DB.MakeParam(typeof(string), cust.Name));
+                cmd.Parameters.AddWithValue("@customer_company", DB.MakeParam(typeof(string), cust.Company));
                 cmd.Parameters.AddWithValue("@customer_email", DB.MakeParam(typeof(string), cust.Email));
                 cmd.Parameters.AddWithValue("@customer_phone", DB.MakeParam(typeof(string), cust.Phone));
                 cmd.Parameters.AddWithValue("@customer_address", DB.MakeParam(typeof(string), cust.Address));
@@ -2781,10 +2785,9 @@ order by name
             {
                 using (SqlConnection conn = DB.OpenConnection())
                 {
-                    UI.PopulateComboBoxes(conn, "csp_select_assignments_for_laboratory_short", new[] {
-                        new SqlParameter("@lab_id", Common.LabId),
-                        new SqlParameter("@instance_status_level", InstanceStatus.Deleted) },
-                    cboxSamplesOrders);
+                    UI.PopulateComboBoxes(conn, "csp_select_assignments_short", new[] {
+                        new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
+                    }, cboxSamplesOrders);
 
                     UI.PopulateComboBoxes(conn, "csp_select_laboratories_short", new[] {
                         new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
@@ -3607,7 +3610,7 @@ insert into analysis_result values(
                     btnOrderDelPrepMeth.Enabled = true;
 
                     query = @"
-select s.id, s.number as 'Samples', st.name as 'Type', sc.name as 'Comp.', sa.name as 'Sampler'
+select s.id, s.number as 'Samples', st.name as 'Type', sc.name as 'Comp.', sa.person_name as 'Sampler'
 from sample s
 	inner join sample_x_assignment_sample_type sxast on s.id = sxast.sample_id
 	inner join assignment_sample_type ast on ast.id = sxast.assignment_sample_type_id and ast.id = @astid
@@ -3974,8 +3977,9 @@ select
 		va.name as 'account_name',
 		a.deadline,
 		a.requested_sigma_act,
-		a.requested_sigma_mda,
-		a.customer_name,						
+		a.requested_sigma_mda,        
+		a.customer_name,
+        a.customer_company,
 		a.approved_customer,
 		a.approved_laboratory,			
 		a.closed_date,
@@ -4013,8 +4017,9 @@ select
                 gridOrders.Columns["account_name"].HeaderText = "Responsible";
                 gridOrders.Columns["requested_sigma_act"].HeaderText = "Req.Sig.Act.";
                 gridOrders.Columns["requested_sigma_mda"].HeaderText = "Req.Sig.MDA";
-                gridOrders.Columns["deadline"].HeaderText = "Deadline";
+                gridOrders.Columns["deadline"].HeaderText = "Deadline";                
                 gridOrders.Columns["customer_name"].HeaderText = "Customer";
+                gridOrders.Columns["customer_company"].HeaderText = "Cust.Company";
                 gridOrders.Columns["approved_customer"].HeaderText = "Appr.Cust";
                 gridOrders.Columns["approved_laboratory"].HeaderText = "Appr.Lab";
                 gridOrders.Columns["closed_date"].HeaderText = "Closed at";

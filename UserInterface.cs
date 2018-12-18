@@ -277,19 +277,15 @@ namespace DSA_lims
                 new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
 
             grid.Columns["id"].Visible = false;
-            grid.Columns["person_id"].Visible = false;
-            grid.Columns["company_id"].Visible = false;
-            grid.Columns["instance_status_id"].Visible = false;
-            grid.Columns["comment"].Visible = false;
-            grid.Columns["created_by"].Visible = false;
-            grid.Columns["create_date"].Visible = false;
-            grid.Columns["updated_by"].Visible = false;
-            grid.Columns["update_date"].Visible = false;
 
-            grid.Columns["name"].HeaderText = "Name";
-            grid.Columns["email"].HeaderText = "Email";
-            grid.Columns["phone"].HeaderText = "Phone";
-            grid.Columns["address"].HeaderText = "Address";
+            grid.Columns["person_name"].HeaderText = "Sampl.Name";
+            grid.Columns["person_email"].HeaderText = "Sampl.Email";
+            grid.Columns["person_phone"].HeaderText = "Sampl.Phone";
+            grid.Columns["person_address"].HeaderText = "Sampl.Address";
+            grid.Columns["company_name"].HeaderText = "Comp.Name";
+            grid.Columns["company_email"].HeaderText = "Comp.Email";
+            grid.Columns["company_phone"].HeaderText = "Comp.Phone";
+            grid.Columns["company_address"].HeaderText = "Comp.Address";
             grid.Columns["instance_status_name"].HeaderText = "Status";
         }        
 
@@ -545,54 +541,17 @@ order by name";
                 new SqlParameter("@instance_status_level", statusLevel));
 
             grid.Columns["id"].Visible = false;
-            grid.Columns["person_id"].Visible = false;
-            grid.Columns["company_id"].Visible = false;
-            grid.Columns["comment"].Visible = false;
-            grid.Columns["instance_status_id"].Visible = false;
-            grid.Columns["create_date"].Visible = false;
-            grid.Columns["created_by"].Visible = false;
-            grid.Columns["update_date"].Visible = false;
-            grid.Columns["updated_by"].Visible = false;
 
-            grid.Columns["name"].HeaderText = "Name";
-            grid.Columns["email"].HeaderText = "Email";
-            grid.Columns["phone"].HeaderText = "Phone";
-            grid.Columns["address"].HeaderText = "Address";
+            grid.Columns["person_name"].HeaderText = "Cont.Name";
+            grid.Columns["person_email"].HeaderText = "Cont.Email";
+            grid.Columns["person_phone"].HeaderText = "Cont.Phone";
+            grid.Columns["person_address"].HeaderText = "Cont.Address";
+            grid.Columns["company_name"].HeaderText = "Comp.Name";
+            grid.Columns["company_email"].HeaderText = "Comp.Email";
+            grid.Columns["company_phone"].HeaderText = "Comp.Phone";
+            grid.Columns["company_address"].HeaderText = "Comp.Address";
             grid.Columns["instance_status_name"].HeaderText = "Status";
         }
-
-        /*public static void PopulateOrders(SqlConnection conn, int statusLevel, DataGridView grid)
-        {
-            grid.DataSource = DB.GetDataTable(conn, "csp_select_assignments_flat", CommandType.StoredProcedure,
-                new SqlParameter("@instance_status_level", statusLevel));
-
-            grid.Columns["id"].Visible = false;                        
-            grid.Columns["customer_email"].Visible = false;
-            grid.Columns["customer_phone"].Visible = false;
-            grid.Columns["customer_address"].Visible = false;
-            grid.Columns["content_comment"].Visible = false;
-            grid.Columns["report_comment"].Visible = false;
-            grid.Columns["created_by"].Visible = false;
-            grid.Columns["create_date"].Visible = false;
-            grid.Columns["updated_by"].Visible = false;
-            grid.Columns["update_date"].Visible = false;
-
-            grid.Columns["name"].HeaderText = "Name";
-            grid.Columns["laboratory_name"].HeaderText = "Laboratory";
-            grid.Columns["account_name"].HeaderText = "Responsible";
-            grid.Columns["requested_sigma_act"].HeaderText = "Req.Sig.Act.";
-            grid.Columns["requested_sigma_mda"].HeaderText = "Req.Sig.MDA";
-            grid.Columns["deadline"].HeaderText = "Deadline";
-            grid.Columns["customer_name"].HeaderText = "Customer";
-            grid.Columns["approved_customer"].HeaderText = "Appr.Cust";
-            grid.Columns["approved_laboratory"].HeaderText = "Appr.Lab";
-            grid.Columns["closed_date"].HeaderText = "Closed at";
-            grid.Columns["closed_by"].HeaderText = "Closed by";
-            grid.Columns["instance_status_name"].HeaderText = "Status";
-            grid.Columns["locked_by"].HeaderText = "Locked by";
-
-            grid.Columns["deadline"].DefaultCellStyle.Format = Utils.DateFormatNorwegian;
-        }*/
 
         public static void PopulateOrders(SqlConnection conn, int statusLevel, Guid laboratoryId, DataGridView grid)
         {

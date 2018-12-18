@@ -530,13 +530,17 @@ go
 create view cv_customer
 as
 	select
-		p.name,
-		p.email,
-		p.phone,
-		p.address,
 		c.id,
-		c.person_id,		
+		c.person_id,
 		c.company_id,
+		p.name as 'person_name',
+		p.email as 'person_email',
+		p.phone as 'person_phone',
+		p.address as 'person_address',
+		co.name as 'company_name',
+		co.email as 'company_email',
+		co.phone as 'company_phone',
+		co.address as 'company_address',						
 		c.instance_status_id,
 		c.comment,
 		c.create_date,	
@@ -544,7 +548,8 @@ as
 		c.update_date,
 		c.updated_by
 	from customer c 
-		inner join person p on c.person_id = p.id		
+		inner join person p on c.person_id = p.id
+		left outer join company co on c.company_id = co.id
 go
 
 create proc csp_select_customer
@@ -561,7 +566,7 @@ as
 	select *
 	from cv_customer
 	where instance_status_id <= @instance_status_level
-	order by name
+	order by person_name
 go
 
 create proc csp_select_customers_short
@@ -569,22 +574,30 @@ create proc csp_select_customers_short
 as 
 	select 
 		id, 
-		name
+		person_name as 'name'
 	from cv_customer
 	where instance_status_id <= @instance_status_level
-	order by name
+	order by person_name
 go
 
 create proc csp_select_customers_flat
 	@instance_status_level int
 as 
-	select
-		cv.*,		
+	select		
+		cv.id,
+		cv.person_name,
+		cv.person_email,
+		cv.person_phone,
+		cv.person_address,		
+		cv.company_name,
+		cv.company_email,
+		cv.company_phone,
+		cv.company_address,		
 		st.name as 'instance_status_name'
 	from cv_customer cv 
 		inner join instance_status st on cv.instance_status_id = st.id 
 			and cv.instance_status_id <= @instance_status_level
-	order by cv.name
+	order by cv.person_name
 go
 
 /*===========================================================================*/
@@ -649,13 +662,17 @@ go
 create view cv_sampler
 as
 	select
-		p.name,
-		p.email,
-		p.phone,
-		p.address,
 		s.id,
 		s.person_id,		
 		s.company_id,
+		p.name as 'person_name',
+		p.email as 'person_email',
+		p.phone as 'person_phone',
+		p.address as 'person_address',
+		co.name as 'company_name',
+		co.email as 'company_email',
+		co.phone as 'company_phone',
+		co.address as 'company_address',
 		s.instance_status_id,
 		s.comment,
 		s.create_date,	
@@ -663,7 +680,8 @@ as
 		s.update_date,
 		s.updated_by
 	from sampler s 
-		inner join person p on s.person_id = p.id		
+		inner join person p on s.person_id = p.id
+		left outer join company co on s.company_id = co.id
 go
 
 create proc csp_select_sampler
@@ -680,7 +698,7 @@ as
 	select *
 	from cv_sampler
 	where instance_status_id <= @instance_status_level
-	order by name
+	order by person_name
 go
 
 create proc csp_select_samplers_short
@@ -688,22 +706,30 @@ create proc csp_select_samplers_short
 as 
 	select
 		id,
-		name
+		person_name as 'name'
 	from cv_sampler
 	where instance_status_id <= @instance_status_level
-	order by name
+	order by person_name
 go
 
 create proc csp_select_samplers_flat
 	@instance_status_level int
 as 
 	select
-		sv.*,		
+		sv.id,
+		sv.person_name,
+		sv.person_email,
+		sv.person_phone,
+		sv.person_address,
+		sv.company_name,
+		sv.company_email,
+		sv.company_phone,
+		sv.company_address,
 		st.name as 'instance_status_name'
 	from cv_sampler sv 
 		inner join instance_status st on sv.instance_status_id = st.id 
 			and sv.instance_status_id <= @instance_status_level
-	order by sv.name
+	order by sv.person_name
 go
 
 /*===========================================================================*/

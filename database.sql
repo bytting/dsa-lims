@@ -1610,6 +1610,26 @@ as
 	where id = @id
 go
 
+create proc csp_select_assignment_informative
+	@id uniqueidentifier
+as
+	select
+		ass.name,
+		lab.name as 'laboratory_name',
+		acc.name as 'responsible_name',
+		ass.customer_name,
+		ass.customer_company,
+		ass.customer_email,
+		ass.customer_phone,
+		ass.customer_address,	
+		ass.report_comment,		
+		ass.create_date
+	from assignment ass
+		inner join laboratory lab on lab.id = ass.laboratory_id
+		inner join cv_account acc on ass.account_id = acc.id
+	where ass.id = @id
+go
+
 create proc csp_select_assignments
 	@instance_status_level int
 as

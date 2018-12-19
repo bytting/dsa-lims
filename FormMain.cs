@@ -2389,6 +2389,32 @@ order by name
                 UI.PopulateOrderContent(conn, selectedOrderId, treeOrderContent, Guid.Empty, treeSampleTypes, true);
 
                 gridOrderConnectedItems.DataSource = null;
+
+                // Populate assigned grid
+
+                string query = @"
+select
+    convert(nvarchar(50), s.number) + '/' + convert(nvarchar(50), p.number) + CASE WHEN a.number is null then '' else '/' + convert(nvarchar(50), a.number) end as 'Name',
+    l.name as 'Prep.Lab',
+    pm.name as 'Prep.Meth',
+    (select name from workflow_status where id = p.workflow_status_id) as 'Prep.Status',    
+    am.name as 'Analysis.Meth',
+    (select name from workflow_status where id = a.workflow_status_id) as 'Analysis Status'
+from assignment ass
+    inner join assignment_sample_type ast on ast.assignment_id = ass.id
+    inner join sample_x_assignment_sample_type sxast on sxast.assignment_sample_type_id = ast.id
+    inner join sample s on s.id = sxast.sample_id
+	inner join preparation p on p.sample_id = s.id
+    left outer join preparation_method pm on pm.id = p.preparation_method_id
+    left outer join laboratory l on l.id = p.laboratory_id
+    left outer join analysis a on a.preparation_id = p.id
+    left outer join analysis_method am on am.id = a.analysis_method_id
+where ass.id = @aid
+order by s.number, p.number, a.number
+";                                
+                gridOrderAssigned.DataSource = DB.GetDataTable(conn, query, CommandType.Text, new[] {
+                        new SqlParameter("@aid", id)                        
+                    });
             }
         }
 
@@ -3646,7 +3672,7 @@ from preparation p
 	inner join sample_x_assignment_sample_type sxast on s.id = sxast.sample_id
 	inner join assignment_sample_type ast on ast.id = sxast.assignment_sample_type_id and ast.id = @astid
 	inner join assignment_preparation_method apm on apm.assignment_sample_type_id = ast.id and apm.id = @apmid
-	inner join assignment a on a.id = ast.assignment_id and a.id = @aid
+	inner join assignment a on a.id = ast.assignment_id
     inner join preparation_method pm on pm.id = p.preparation_method_id
     left outer join preparation_geometry pg on pg.id = p.preparation_geometry_id
     inner join workflow_status ws on ws.id = p.workflow_status_id
@@ -4048,6 +4074,12 @@ select
             cboxOrdersStatus.SelectedValue = Guid.Empty;
             populateOrdersDisabled = false;
             PopulateOrders();
+        }
+
+        private void btnOrderCreateReport_Click(object sender, EventArgs e)
+        {
+            FormCreateOrderReport form = new FormCreateOrderReport(selectedOrderId);
+            form.ShowDialog();
         }
     }    
 }

@@ -136,6 +136,8 @@ namespace DSA_lims
 
                     cboxPrepAnalPrepWorkflowStatus.DataSource = DB.GetIntLemmata(conn, "csp_select_workflow_status");
 
+                    cboxOrderStatus.DataSource = DB.GetIntLemmata(conn, "csp_select_workflow_status");
+
                     cboxSampleInfoLocationTypes.DataSource = DB.GetIntLemmata(conn, "csp_select_location_types", true);
 
                     cboxOrderRequestedSigma.DataSource = DB.GetSigmaValues(conn);
@@ -2311,10 +2313,7 @@ order by name
             tbOrderDeadline.Text = "";
             cboxOrderRequestedSigma.SelectedValue = -1;
             tbOrderContentComment.Text = "";
-            tbOrderCustomerName.Text = "";                        
-            tbOrderCustomerEmail.Text = "";
-            tbOrderCustomerPhone.Text = "";
-            tbOrderCustomerAddress.Text = "";
+            tbOrderCustomerInfo.Text = "";
             tbOrderReportComment.Text = "";
             // TODO
         }
@@ -2350,11 +2349,14 @@ order by name
                     map["customer_phone"] = reader["customer_phone"];
                     map["customer_address"] = reader["customer_address"];
                     map["approved_customer"] = reader["approved_customer"];
+                    map["approved_customer_by"] = reader["approved_customer_by"];
                     map["approved_laboratory"] = reader["approved_laboratory"];
+                    map["approved_laboratory_by"] = reader["approved_laboratory_by"];
                     map["content_comment"] = reader["content_comment"];
                     map["report_comment"] = reader["report_comment"];
-                    map["closed_date"] = reader["closed_date"];
-                    map["closed_by"] = reader["closed_by"];
+                    map["workflow_status_id"] = reader["workflow_status_id"];
+                    map["last_workflow_status_date"] = reader["last_workflow_status_date"];
+                    map["last_workflow_status_by"] = reader["last_workflow_status_by"];
                     map["instance_status_id"] = reader["instance_status_id"];
                     map["locked_by"] = reader["locked_by"];
                     map["create_date"] = reader["create_date"];
@@ -2380,13 +2382,20 @@ order by name
                 cust.Address = map["customer_address"].ToString();
                 tbOrderCustomer.Text = cust.Name;
                 tbOrderCustomer.Tag = cust;
-                tbOrderCustomerName.Text = cust.Name;
-                tbOrderCustomerCompany.Text = cust.Company;
-                tbOrderCustomerEmail.Text = cust.Email;
-                tbOrderCustomerPhone.Text = cust.Phone;
-                tbOrderCustomerAddress.Text = cust.Address;
+                tbOrderCustomerInfo.Text = 
+                    cust.Name + Environment.NewLine + 
+                    cust.Company + Environment.NewLine + Environment.NewLine +
+                    cust.Email + Environment.NewLine + 
+                    cust.Phone + Environment.NewLine + Environment.NewLine +
+                    cust.Address;
                 tbOrderContentComment.Text = map["content_comment"].ToString();
-                tbOrderReportComment.Text = map["report_comment"].ToString();                
+                tbOrderReportComment.Text = map["report_comment"].ToString();
+                cbOrderApprovedCustomer.Checked = Convert.ToBoolean(map["approved_customer"]);
+                tbOrderApprovedCustomerBy.Text = map["approved_customer_by"].ToString();
+                cbOrderApprovedLaboratory.Checked = Convert.ToBoolean(map["approved_laboratory"]);
+                tbOrderApprovedLaboratoryBy.Text = map["approved_laboratory_by"].ToString();
+                cboxOrderStatus.SelectedValue = map["workflow_status_id"];
+                tbOrderLastWorkflowStatusBy.Text = map["last_workflow_status_by"].ToString();
 
                 UI.PopulateOrderContent(conn, selectedOrderId, treeOrderContent, Guid.Empty, treeSampleTypes, true);
 
@@ -3491,11 +3500,12 @@ insert into analysis_result values(
             CustomerModel c = form.SelectedCustomer;
             tbOrderCustomer.Text = c.Name;
             tbOrderCustomer.Tag = c;
-
-            tbOrderCustomerName.Text = c.Name;                        
-            tbOrderCustomerEmail.Text = c.Email;
-            tbOrderCustomerPhone.Text = c.Phone;
-            tbOrderCustomerAddress.Text = c.Address;
+            tbOrderCustomerInfo.Text = 
+                c.Name + Environment.NewLine + 
+                c.Company + Environment.NewLine + Environment.NewLine + 
+                c.Email + Environment.NewLine + 
+                c.Phone + Environment.NewLine + Environment.NewLine + 
+                c.Address;
         }
 
         private void miPersonNew_Click(object sender, EventArgs e)
@@ -3942,14 +3952,12 @@ select
         a.customer_company,
 		a.approved_customer,
 		a.approved_laboratory,			
-		a.closed_date,
-		a.closed_by,
-		insta.name as 'instance_status_name',
+        wf.name as 'workflow_status',
 		a.locked_by		
 	from assignment a 		
 		left outer join laboratory l on a.laboratory_id = l.id
 		left outer join cv_account va on a.account_id = va.id
-		inner join instance_status insta on a.instance_status_id = insta.id
+        inner join workflow_status wf on a.workflow_status_id = wf.id
 	where 1 = 1
 ";
             using (SqlConnection conn = DB.OpenConnection())
@@ -3982,9 +3990,7 @@ select
                 gridOrders.Columns["customer_company"].HeaderText = "Cust.Company";
                 gridOrders.Columns["approved_customer"].HeaderText = "Appr.Cust";
                 gridOrders.Columns["approved_laboratory"].HeaderText = "Appr.Lab";
-                gridOrders.Columns["closed_date"].HeaderText = "Closed at";
-                gridOrders.Columns["closed_by"].HeaderText = "Closed by";
-                gridOrders.Columns["instance_status_name"].HeaderText = "Status";
+                gridOrders.Columns["workflow_status"].HeaderText = "Status";                
                 gridOrders.Columns["locked_by"].HeaderText = "Locked by";
 
                 gridOrders.Columns["deadline"].DefaultCellStyle.Format = Utils.DateFormatNorwegian;
@@ -4025,6 +4031,117 @@ select
         private void layoutPrepAnalAnal_Resize(object sender, EventArgs e)
         {
             cboxPrepAnalAnalUnitType.Width = panelPrepAnalAnalUnit.Width / 2;
+        }
+
+        private void btnOrderSaveStatus_Click(object sender, EventArgs e)
+        {
+            SqlConnection conn = null;
+            try
+            {
+                conn = DB.OpenConnection();
+
+                string query = @"
+update assignment set
+    workflow_status_id = @workflow_status_id, 
+    last_workflow_status_date = @last_workflow_status_date, 
+    last_workflow_status_by = @last_workflow_status_by
+";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@workflow_status_id", DB.MakeParam(typeof(int), cboxOrderStatus.SelectedValue));
+                cmd.Parameters.AddWithValue("@last_workflow_status_date", DateTime.Now);
+                cmd.Parameters.AddWithValue("@last_workflow_status_by", Common.Username);
+                cmd.ExecuteNonQuery();
+
+                tbOrderLastWorkflowStatusBy.Text = Common.Username;
+
+                SetStatusMessage("Order status saved for " + tbOrderName.Text, StatusMessageType.Success);
+            }
+            catch(Exception ex)
+            {
+                Common.Log.Error(ex);
+            }
+            finally
+            {
+                conn?.Close();
+            }
+        }
+
+        private void btnOrderSaveApprovedCustomer_Click(object sender, EventArgs e)
+        {
+            SqlConnection conn = null;
+            try
+            {
+                conn = DB.OpenConnection();
+
+                string query = "update assignment set approved_customer = @approved_customer, approved_customer_by = @approved_customer_by";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@approved_customer", cbOrderApprovedCustomer.Checked);
+                cmd.Parameters.AddWithValue("@approved_customer_by", Common.Username);
+                cmd.ExecuteNonQuery();
+
+                tbOrderApprovedCustomerBy.Text = Common.Username;
+
+                SetStatusMessage("Approvement by customer updated for " + tbOrderName.Text, StatusMessageType.Success);
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+            }
+            finally
+            {
+                conn?.Close();
+            }
+        }
+
+        private void btnOrderSaveApprovedLaboratory_Click(object sender, EventArgs e)
+        {
+            SqlConnection conn = null;
+            try
+            {
+                conn = DB.OpenConnection();
+
+                string query = "update assignment set approved_laboratory = @approved_laboratory, approved_laboratory_by = @approved_laboratory_by";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@approved_laboratory", cbOrderApprovedLaboratory.Checked);
+                cmd.Parameters.AddWithValue("@approved_laboratory_by", Common.Username);
+                cmd.ExecuteNonQuery();
+
+                tbOrderApprovedLaboratoryBy.Text = Common.Username;
+
+                SetStatusMessage("Approvement by laboratory updated for " + tbOrderName.Text, StatusMessageType.Success);
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+            }
+            finally
+            {
+                conn?.Close();
+            }
+        }
+
+        private void btnOrderSaveReportComment_Click(object sender, EventArgs e)
+        {
+            SqlConnection conn = null;
+            try
+            {
+                conn = DB.OpenConnection();
+
+                string query = "update assignment set report_comment = @report_comment";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@report_comment", tbOrderReportComment.Text.Trim());
+                cmd.ExecuteNonQuery();
+
+                SetStatusMessage("Report comment updated for " + tbOrderName.Text, StatusMessageType.Success);
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+            }
+            finally
+            {
+                conn?.Close();
+            }
         }
     }    
 }

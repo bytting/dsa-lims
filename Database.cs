@@ -287,7 +287,7 @@ namespace DSA_lims
             {
                 cmd.CommandText = "update laboratory set last_assignment_counter_year = @year, assignment_counter = 1";
                 cmd.CommandType = CommandType.Text;
-                cmd.Parameters.AddWithValue("@year", DateTime.Now.Year);
+                cmd.Parameters.AddWithValue("@year", currentYear);
                 cmd.ExecuteNonQuery();
             }
 

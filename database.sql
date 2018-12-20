@@ -327,11 +327,19 @@ go
 create view cv_account
 as
 	select		
-		a.*,
+		a.id,
+		a.person_id,
 		p.name,
 		p.email,
 		p.phone,
-		p.address		
+		p.address,
+		a.username,
+		a.laboratory_id,
+		a.language_code,
+		a.instance_status_id,
+		a.password_hash,
+		a.create_date,	
+		a.update_date
 	from account a
 		inner join person p on a.person_id = p.id
 go
@@ -358,7 +366,7 @@ create proc csp_select_accounts_short
 as 
 	select
 		id,
-		name 
+		name
 	from cv_account
 	where instance_status_id <= @instance_status_level
 	order by name
@@ -1502,11 +1510,14 @@ create table assignment (
 	customer_phone nvarchar(80) default null,
 	customer_address nvarchar(256) default null,
 	approved_customer bit default 0,
+	approved_customer_by nvarchar(50) default null,
 	approved_laboratory bit default 0,	
+	approved_laboratory_by nvarchar(50) default null,
 	content_comment nvarchar(1000) default null,
-	report_comment nvarchar(1000) default null,		
-	closed_date datetime default null,
-	closed_by nvarchar(50) default null,
+	report_comment nvarchar(1000) default null,
+	workflow_status_id int default 1,
+	last_workflow_status_date datetime default null,
+	last_workflow_status_by nvarchar(50) default null,
 	instance_status_id int default 1,
 	locked_by nvarchar(50) default null,
 	create_date datetime not null,
@@ -1530,17 +1541,20 @@ create proc csp_insert_assignment
 	@customer_phone nvarchar(80),
 	@customer_address nvarchar(256),
 	@approved_customer bit,
+	@approved_customer_by nvarchar(50),
 	@approved_laboratory bit,	
+	@approved_laboratory_by nvarchar(50),
 	@content_comment nvarchar(1000),
 	@report_comment nvarchar(1000),		
-	@closed_date datetime,
-	@closed_by nvarchar(50),
+	@workflow_status_id int,
+	@last_workflow_status_date datetime,
+	@last_workflow_status_by nvarchar(50),
 	@instance_status_id int,
 	@locked_by nvarchar(50),
 	@create_date datetime,
 	@created_by nvarchar(50),
 	@update_date datetime,
-	@updated_by nvarchar(50)	
+	@updated_by nvarchar(50)
 as 		
 	insert into assignment values (
 		@id,
@@ -1556,11 +1570,14 @@ as
 		@customer_phone,
 		@customer_address,
 		@approved_customer,
+		@approved_customer_by,
 		@approved_laboratory,	
+		@approved_laboratory_by,
 		@content_comment,
 		@report_comment,		
-		@closed_date,
-		@closed_by,
+		@workflow_status_id,
+		@last_workflow_status_date,
+		@last_workflow_status_by,
 		@instance_status_id,
 		@locked_by,
 		@create_date,
@@ -1676,11 +1693,14 @@ as
 		a.customer_phone,
 		a.customer_address,
 		a.approved_customer,
+		a.approved_customer_by,
 		a.approved_laboratory,	
+		a.approved_laboratory_by,	
 		a.content_comment,
 		a.report_comment,		
-		a.closed_date,
-		a.closed_by,
+		a.workflow_status_id,
+		a.last_workflow_status_date,
+		a.last_workflow_status_by,
 		insta.name as 'instance_status_name',
 		a.locked_by,
 		a.create_date,

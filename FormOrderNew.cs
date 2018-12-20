@@ -127,11 +127,14 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@customer_phone", DB.MakeParam(typeof(string), cust.Phone));
                 cmd.Parameters.AddWithValue("@customer_address", DB.MakeParam(typeof(string), cust.Address));
                 cmd.Parameters.AddWithValue("@approved_customer", 0);
+                cmd.Parameters.AddWithValue("@approved_customer_by", DBNull.Value);
                 cmd.Parameters.AddWithValue("@approved_laboratory", 0);
+                cmd.Parameters.AddWithValue("@approved_laboratory_by", DBNull.Value);
                 cmd.Parameters.AddWithValue("@content_comment", DBNull.Value);
                 cmd.Parameters.AddWithValue("@report_comment", DBNull.Value);
-                cmd.Parameters.AddWithValue("@closed_date", DBNull.Value);
-                cmd.Parameters.AddWithValue("@closed_by", DBNull.Value);
+                cmd.Parameters.AddWithValue("@workflow_status_id", 1);
+                cmd.Parameters.AddWithValue("@last_workflow_status_date", DBNull.Value);
+                cmd.Parameters.AddWithValue("@last_workflow_status_by", DBNull.Value);
                 cmd.Parameters.AddWithValue("@instance_status_id", InstanceStatus.Active);
                 cmd.Parameters.AddWithValue("@locked_by", DBNull.Value);
                 cmd.Parameters.AddWithValue("@create_date", DateTime.Now);

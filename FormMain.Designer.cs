@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.menu = new System.Windows.Forms.MenuStrip();
             this.miFile = new System.Windows.Forms.ToolStripMenuItem();
@@ -355,24 +355,15 @@
             this.tabOrderStatus = new System.Windows.Forms.TabPage();
             this.panel11 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.checkBox3 = new System.Windows.Forms.CheckBox();
-            this.textBox22 = new System.Windows.Forms.TextBox();
-            this.textBox23 = new System.Windows.Forms.TextBox();
+            this.cbOrderApprovedCustomer = new System.Windows.Forms.CheckBox();
+            this.cbOrderApprovedLaboratory = new System.Windows.Forms.CheckBox();
+            this.tbOrderApprovedCustomerBy = new System.Windows.Forms.TextBox();
+            this.tbOrderApprovedLaboratoryBy = new System.Windows.Forms.TextBox();
             this.cboxOrderStatus = new System.Windows.Forms.ComboBox();
-            this.textBox30 = new System.Windows.Forms.TextBox();
+            this.tbOrderLastWorkflowStatusBy = new System.Windows.Forms.TextBox();
             this.tbOrderReportComment = new System.Windows.Forms.TextBox();
-            this.label62 = new System.Windows.Forms.Label();
-            this.tbOrderCustomerAddress = new System.Windows.Forms.TextBox();
-            this.label70 = new System.Windows.Forms.Label();
-            this.tbOrderCustomerPhone = new System.Windows.Forms.TextBox();
-            this.label69 = new System.Windows.Forms.Label();
-            this.tbOrderCustomerEmail = new System.Windows.Forms.TextBox();
-            this.label37 = new System.Windows.Forms.Label();
-            this.label56 = new System.Windows.Forms.Label();
-            this.tbOrderCustomerName = new System.Windows.Forms.TextBox();
+            this.tbOrderCustomerInfo = new System.Windows.Forms.TextBox();
             this.label61 = new System.Windows.Forms.Label();
-            this.tbOrderCustomerCompany = new System.Windows.Forms.TextBox();
             this.label43 = new System.Windows.Forms.Label();
             this.label71 = new System.Windows.Forms.Label();
             this.toolsOrderStatus = new System.Windows.Forms.ToolStrip();
@@ -908,6 +899,10 @@
             this.btnMenu = new System.Windows.Forms.ToolStripButton();
             this.lblCurrentTab = new System.Windows.Forms.ToolStripLabel();
             this.btnBack = new System.Windows.Forms.ToolStripButton();
+            this.btnOrderSaveStatus = new System.Windows.Forms.Button();
+            this.btnOrderSaveApprovedCustomer = new System.Windows.Forms.Button();
+            this.btnOrderSaveApprovedLaboratory = new System.Windows.Forms.Button();
+            this.btnOrderSaveReportComment = new System.Windows.Forms.Button();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tabs.SuspendLayout();
@@ -4329,14 +4324,14 @@
             this.gridOrderConnectedItems.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.gridOrderConnectedItems.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
             this.gridOrderConnectedItems.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.ButtonFace;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.gridOrderConnectedItems.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.ButtonFace;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.gridOrderConnectedItems.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle8;
             this.gridOrderConnectedItems.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridOrderConnectedItems.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gridOrderConnectedItems.GridColor = System.Drawing.SystemColors.ButtonFace;
@@ -4391,7 +4386,7 @@
             this.tabOrderStatus.Padding = new System.Windows.Forms.Padding(3);
             this.tabOrderStatus.Size = new System.Drawing.Size(1114, 598);
             this.tabOrderStatus.TabIndex = 2;
-            this.tabOrderStatus.Text = "Status";
+            this.tabOrderStatus.Text = "Order status";
             // 
             // panel11
             // 
@@ -4410,32 +4405,26 @@
             this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel7.Controls.Add(this.checkBox2, 0, 1);
-            this.tableLayoutPanel7.Controls.Add(this.checkBox3, 0, 2);
-            this.tableLayoutPanel7.Controls.Add(this.textBox22, 1, 1);
-            this.tableLayoutPanel7.Controls.Add(this.textBox23, 1, 2);
+            this.tableLayoutPanel7.Controls.Add(this.cbOrderApprovedCustomer, 0, 1);
+            this.tableLayoutPanel7.Controls.Add(this.cbOrderApprovedLaboratory, 0, 2);
+            this.tableLayoutPanel7.Controls.Add(this.tbOrderApprovedCustomerBy, 1, 1);
+            this.tableLayoutPanel7.Controls.Add(this.tbOrderApprovedLaboratoryBy, 1, 2);
             this.tableLayoutPanel7.Controls.Add(this.cboxOrderStatus, 0, 8);
-            this.tableLayoutPanel7.Controls.Add(this.textBox30, 1, 8);
-            this.tableLayoutPanel7.Controls.Add(this.tbOrderReportComment, 0, 6);
-            this.tableLayoutPanel7.Controls.Add(this.label62, 2, 5);
-            this.tableLayoutPanel7.Controls.Add(this.tbOrderCustomerAddress, 3, 5);
-            this.tableLayoutPanel7.Controls.Add(this.label70, 2, 4);
-            this.tableLayoutPanel7.Controls.Add(this.tbOrderCustomerPhone, 3, 4);
-            this.tableLayoutPanel7.Controls.Add(this.label69, 2, 3);
-            this.tableLayoutPanel7.Controls.Add(this.tbOrderCustomerEmail, 3, 3);
-            this.tableLayoutPanel7.Controls.Add(this.label37, 2, 2);
-            this.tableLayoutPanel7.Controls.Add(this.label56, 2, 1);
-            this.tableLayoutPanel7.Controls.Add(this.tbOrderCustomerName, 3, 1);
-            this.tableLayoutPanel7.Controls.Add(this.label61, 2, 0);
-            this.tableLayoutPanel7.Controls.Add(this.tbOrderCustomerCompany, 3, 2);
-            this.tableLayoutPanel7.Controls.Add(this.label43, 0, 5);
+            this.tableLayoutPanel7.Controls.Add(this.tbOrderLastWorkflowStatusBy, 1, 8);
+            this.tableLayoutPanel7.Controls.Add(this.tbOrderReportComment, 0, 5);
+            this.tableLayoutPanel7.Controls.Add(this.label43, 0, 4);
             this.tableLayoutPanel7.Controls.Add(this.label71, 0, 7);
+            this.tableLayoutPanel7.Controls.Add(this.btnOrderSaveStatus, 2, 8);
+            this.tableLayoutPanel7.Controls.Add(this.btnOrderSaveApprovedCustomer, 2, 1);
+            this.tableLayoutPanel7.Controls.Add(this.btnOrderSaveApprovedLaboratory, 2, 2);
+            this.tableLayoutPanel7.Controls.Add(this.tbOrderCustomerInfo, 3, 5);
+            this.tableLayoutPanel7.Controls.Add(this.label61, 3, 4);
+            this.tableLayoutPanel7.Controls.Add(this.btnOrderSaveReportComment, 2, 6);
             this.tableLayoutPanel7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel7.Location = new System.Drawing.Point(0, 25);
             this.tableLayoutPanel7.Name = "tableLayoutPanel7";
             this.tableLayoutPanel7.RowCount = 10;
-            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 16F));
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
@@ -4443,211 +4432,129 @@
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 150F));
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel7.Size = new System.Drawing.Size(1108, 567);
             this.tableLayoutPanel7.TabIndex = 2;
             // 
-            // checkBox2
+            // cbOrderApprovedCustomer
             // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.checkBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.checkBox2.Location = new System.Drawing.Point(3, 33);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(271, 24);
-            this.checkBox2.TabIndex = 0;
-            this.checkBox2.Text = "Approved by customer";
-            this.checkBox2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.checkBox2.UseVisualStyleBackColor = true;
+            this.cbOrderApprovedCustomer.AutoSize = true;
+            this.cbOrderApprovedCustomer.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cbOrderApprovedCustomer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cbOrderApprovedCustomer.Location = new System.Drawing.Point(3, 19);
+            this.cbOrderApprovedCustomer.Name = "cbOrderApprovedCustomer";
+            this.cbOrderApprovedCustomer.Size = new System.Drawing.Size(271, 24);
+            this.cbOrderApprovedCustomer.TabIndex = 0;
+            this.cbOrderApprovedCustomer.Text = "Approved by customer";
+            this.cbOrderApprovedCustomer.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cbOrderApprovedCustomer.UseVisualStyleBackColor = true;
             // 
-            // checkBox3
+            // cbOrderApprovedLaboratory
             // 
-            this.checkBox3.AutoSize = true;
-            this.checkBox3.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.checkBox3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.checkBox3.Location = new System.Drawing.Point(3, 63);
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(271, 24);
-            this.checkBox3.TabIndex = 1;
-            this.checkBox3.Text = "Approved by laboratory";
-            this.checkBox3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.checkBox3.UseVisualStyleBackColor = true;
+            this.cbOrderApprovedLaboratory.AutoSize = true;
+            this.cbOrderApprovedLaboratory.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cbOrderApprovedLaboratory.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cbOrderApprovedLaboratory.Location = new System.Drawing.Point(3, 49);
+            this.cbOrderApprovedLaboratory.Name = "cbOrderApprovedLaboratory";
+            this.cbOrderApprovedLaboratory.Size = new System.Drawing.Size(271, 24);
+            this.cbOrderApprovedLaboratory.TabIndex = 1;
+            this.cbOrderApprovedLaboratory.Text = "Approved by laboratory";
+            this.cbOrderApprovedLaboratory.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cbOrderApprovedLaboratory.UseVisualStyleBackColor = true;
             // 
-            // textBox22
+            // tbOrderApprovedCustomerBy
             // 
-            this.textBox22.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox22.Location = new System.Drawing.Point(280, 33);
-            this.textBox22.Name = "textBox22";
-            this.textBox22.ReadOnly = true;
-            this.textBox22.Size = new System.Drawing.Size(271, 21);
-            this.textBox22.TabIndex = 1;
+            this.tbOrderApprovedCustomerBy.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbOrderApprovedCustomerBy.Location = new System.Drawing.Point(280, 19);
+            this.tbOrderApprovedCustomerBy.Name = "tbOrderApprovedCustomerBy";
+            this.tbOrderApprovedCustomerBy.ReadOnly = true;
+            this.tbOrderApprovedCustomerBy.Size = new System.Drawing.Size(271, 21);
+            this.tbOrderApprovedCustomerBy.TabIndex = 1;
             // 
-            // textBox23
+            // tbOrderApprovedLaboratoryBy
             // 
-            this.textBox23.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox23.Location = new System.Drawing.Point(280, 63);
-            this.textBox23.Name = "textBox23";
-            this.textBox23.ReadOnly = true;
-            this.textBox23.Size = new System.Drawing.Size(271, 21);
-            this.textBox23.TabIndex = 2;
+            this.tbOrderApprovedLaboratoryBy.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbOrderApprovedLaboratoryBy.Location = new System.Drawing.Point(280, 49);
+            this.tbOrderApprovedLaboratoryBy.Name = "tbOrderApprovedLaboratoryBy";
+            this.tbOrderApprovedLaboratoryBy.ReadOnly = true;
+            this.tbOrderApprovedLaboratoryBy.Size = new System.Drawing.Size(271, 21);
+            this.tbOrderApprovedLaboratoryBy.TabIndex = 2;
             // 
             // cboxOrderStatus
             // 
+            this.cboxOrderStatus.DisplayMember = "Name";
             this.cboxOrderStatus.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cboxOrderStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxOrderStatus.FormattingEnabled = true;
-            this.cboxOrderStatus.Location = new System.Drawing.Point(3, 363);
+            this.cboxOrderStatus.Location = new System.Drawing.Point(3, 349);
             this.cboxOrderStatus.Name = "cboxOrderStatus";
             this.cboxOrderStatus.Size = new System.Drawing.Size(271, 23);
             this.cboxOrderStatus.TabIndex = 19;
+            this.cboxOrderStatus.ValueMember = "Id";
             // 
-            // textBox30
+            // tbOrderLastWorkflowStatusBy
             // 
-            this.textBox30.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox30.Location = new System.Drawing.Point(280, 363);
-            this.textBox30.Name = "textBox30";
-            this.textBox30.ReadOnly = true;
-            this.textBox30.Size = new System.Drawing.Size(271, 21);
-            this.textBox30.TabIndex = 4;
+            this.tbOrderLastWorkflowStatusBy.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbOrderLastWorkflowStatusBy.Location = new System.Drawing.Point(280, 349);
+            this.tbOrderLastWorkflowStatusBy.Name = "tbOrderLastWorkflowStatusBy";
+            this.tbOrderLastWorkflowStatusBy.ReadOnly = true;
+            this.tbOrderLastWorkflowStatusBy.Size = new System.Drawing.Size(271, 21);
+            this.tbOrderLastWorkflowStatusBy.TabIndex = 4;
             // 
             // tbOrderReportComment
             // 
-            this.tableLayoutPanel7.SetColumnSpan(this.tbOrderReportComment, 2);
+            this.tableLayoutPanel7.SetColumnSpan(this.tbOrderReportComment, 3);
             this.tbOrderReportComment.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbOrderReportComment.Location = new System.Drawing.Point(3, 183);
+            this.tbOrderReportComment.Location = new System.Drawing.Point(3, 139);
             this.tbOrderReportComment.Multiline = true;
             this.tbOrderReportComment.Name = "tbOrderReportComment";
             this.tbOrderReportComment.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.tbOrderReportComment.Size = new System.Drawing.Size(548, 144);
+            this.tbOrderReportComment.Size = new System.Drawing.Size(825, 144);
             this.tbOrderReportComment.TabIndex = 8;
             // 
-            // label62
+            // tbOrderCustomerInfo
             // 
-            this.label62.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label62.Location = new System.Drawing.Point(557, 150);
-            this.label62.Name = "label62";
-            this.label62.Size = new System.Drawing.Size(271, 30);
-            this.label62.TabIndex = 2;
-            this.label62.Text = "Address";
-            this.label62.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // tbOrderCustomerAddress
-            // 
-            this.tbOrderCustomerAddress.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbOrderCustomerAddress.Location = new System.Drawing.Point(834, 153);
-            this.tbOrderCustomerAddress.Name = "tbOrderCustomerAddress";
-            this.tbOrderCustomerAddress.ReadOnly = true;
-            this.tbOrderCustomerAddress.Size = new System.Drawing.Size(271, 21);
-            this.tbOrderCustomerAddress.TabIndex = 15;
-            // 
-            // label70
-            // 
-            this.label70.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label70.Location = new System.Drawing.Point(557, 120);
-            this.label70.Name = "label70";
-            this.label70.Size = new System.Drawing.Size(271, 30);
-            this.label70.TabIndex = 4;
-            this.label70.Text = "Phone";
-            this.label70.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // tbOrderCustomerPhone
-            // 
-            this.tbOrderCustomerPhone.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbOrderCustomerPhone.Location = new System.Drawing.Point(834, 123);
-            this.tbOrderCustomerPhone.Name = "tbOrderCustomerPhone";
-            this.tbOrderCustomerPhone.ReadOnly = true;
-            this.tbOrderCustomerPhone.Size = new System.Drawing.Size(271, 21);
-            this.tbOrderCustomerPhone.TabIndex = 17;
-            // 
-            // label69
-            // 
-            this.label69.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label69.Location = new System.Drawing.Point(557, 90);
-            this.label69.Name = "label69";
-            this.label69.Size = new System.Drawing.Size(271, 30);
-            this.label69.TabIndex = 3;
-            this.label69.Text = "Email";
-            this.label69.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // tbOrderCustomerEmail
-            // 
-            this.tbOrderCustomerEmail.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbOrderCustomerEmail.Location = new System.Drawing.Point(834, 93);
-            this.tbOrderCustomerEmail.Name = "tbOrderCustomerEmail";
-            this.tbOrderCustomerEmail.ReadOnly = true;
-            this.tbOrderCustomerEmail.Size = new System.Drawing.Size(271, 21);
-            this.tbOrderCustomerEmail.TabIndex = 16;
-            // 
-            // label37
-            // 
-            this.label37.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label37.Location = new System.Drawing.Point(557, 60);
-            this.label37.Name = "label37";
-            this.label37.Size = new System.Drawing.Size(271, 30);
-            this.label37.TabIndex = 20;
-            this.label37.Text = "Company";
-            this.label37.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // label56
-            // 
-            this.label56.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label56.Location = new System.Drawing.Point(557, 30);
-            this.label56.Name = "label56";
-            this.label56.Size = new System.Drawing.Size(271, 30);
-            this.label56.TabIndex = 0;
-            this.label56.Text = "Name";
-            this.label56.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // tbOrderCustomerName
-            // 
-            this.tbOrderCustomerName.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbOrderCustomerName.Location = new System.Drawing.Point(834, 33);
-            this.tbOrderCustomerName.Name = "tbOrderCustomerName";
-            this.tbOrderCustomerName.ReadOnly = true;
-            this.tbOrderCustomerName.Size = new System.Drawing.Size(271, 21);
-            this.tbOrderCustomerName.TabIndex = 18;
+            this.tbOrderCustomerInfo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbOrderCustomerInfo.Location = new System.Drawing.Point(834, 139);
+            this.tbOrderCustomerInfo.Multiline = true;
+            this.tbOrderCustomerInfo.Name = "tbOrderCustomerInfo";
+            this.tbOrderCustomerInfo.ReadOnly = true;
+            this.tbOrderCustomerInfo.Size = new System.Drawing.Size(271, 144);
+            this.tbOrderCustomerInfo.TabIndex = 18;
             // 
             // label61
             // 
             this.label61.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label61.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label61.Location = new System.Drawing.Point(557, 0);
+            this.label61.Location = new System.Drawing.Point(834, 106);
             this.label61.Name = "label61";
             this.label61.Size = new System.Drawing.Size(271, 30);
             this.label61.TabIndex = 21;
             this.label61.Text = "Customer";
-            this.label61.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // tbOrderCustomerCompany
-            // 
-            this.tbOrderCustomerCompany.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbOrderCustomerCompany.Location = new System.Drawing.Point(834, 63);
-            this.tbOrderCustomerCompany.Name = "tbOrderCustomerCompany";
-            this.tbOrderCustomerCompany.ReadOnly = true;
-            this.tbOrderCustomerCompany.Size = new System.Drawing.Size(271, 21);
-            this.tbOrderCustomerCompany.TabIndex = 22;
+            this.label61.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // label43
             // 
             this.label43.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label43.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
-            this.label43.Location = new System.Drawing.Point(3, 150);
+            this.label43.Location = new System.Drawing.Point(3, 106);
             this.label43.Name = "label43";
             this.label43.Size = new System.Drawing.Size(271, 30);
             this.label43.TabIndex = 7;
             this.label43.Text = "Report comment";
-            this.label43.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            this.label43.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // label71
             // 
             this.label71.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label71.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label71.Location = new System.Drawing.Point(3, 330);
+            this.label71.Location = new System.Drawing.Point(3, 316);
             this.label71.Name = "label71";
             this.label71.Size = new System.Drawing.Size(271, 30);
             this.label71.TabIndex = 23;
             this.label71.Text = "Current status";
-            this.label71.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            this.label71.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // toolsOrderStatus
             // 
@@ -4692,7 +4599,7 @@
             this.tabOrderAssigned.Padding = new System.Windows.Forms.Padding(3);
             this.tabOrderAssigned.Size = new System.Drawing.Size(1114, 598);
             this.tabOrderAssigned.TabIndex = 3;
-            this.tabOrderAssigned.Text = "Assigned";
+            this.tabOrderAssigned.Text = "All units assigned to order";
             // 
             // gridOrderAssigned
             // 
@@ -10255,6 +10162,50 @@
             this.btnBack.ToolTipText = "Back";
             this.btnBack.Click += new System.EventHandler(this.miBack_Click);
             // 
+            // btnOrderSaveStatus
+            // 
+            this.btnOrderSaveStatus.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnOrderSaveStatus.Location = new System.Drawing.Point(557, 349);
+            this.btnOrderSaveStatus.Name = "btnOrderSaveStatus";
+            this.btnOrderSaveStatus.Size = new System.Drawing.Size(271, 24);
+            this.btnOrderSaveStatus.TabIndex = 24;
+            this.btnOrderSaveStatus.Text = "Save current status";
+            this.btnOrderSaveStatus.UseVisualStyleBackColor = true;
+            this.btnOrderSaveStatus.Click += new System.EventHandler(this.btnOrderSaveStatus_Click);
+            // 
+            // btnOrderSaveApprovedCustomer
+            // 
+            this.btnOrderSaveApprovedCustomer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnOrderSaveApprovedCustomer.Location = new System.Drawing.Point(557, 19);
+            this.btnOrderSaveApprovedCustomer.Name = "btnOrderSaveApprovedCustomer";
+            this.btnOrderSaveApprovedCustomer.Size = new System.Drawing.Size(271, 24);
+            this.btnOrderSaveApprovedCustomer.TabIndex = 25;
+            this.btnOrderSaveApprovedCustomer.Text = "Save approval by customer";
+            this.btnOrderSaveApprovedCustomer.UseVisualStyleBackColor = true;
+            this.btnOrderSaveApprovedCustomer.Click += new System.EventHandler(this.btnOrderSaveApprovedCustomer_Click);
+            // 
+            // btnOrderSaveApprovedLaboratory
+            // 
+            this.btnOrderSaveApprovedLaboratory.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnOrderSaveApprovedLaboratory.Location = new System.Drawing.Point(557, 49);
+            this.btnOrderSaveApprovedLaboratory.Name = "btnOrderSaveApprovedLaboratory";
+            this.btnOrderSaveApprovedLaboratory.Size = new System.Drawing.Size(271, 24);
+            this.btnOrderSaveApprovedLaboratory.TabIndex = 26;
+            this.btnOrderSaveApprovedLaboratory.Text = "Save approval by laboratory";
+            this.btnOrderSaveApprovedLaboratory.UseVisualStyleBackColor = true;
+            this.btnOrderSaveApprovedLaboratory.Click += new System.EventHandler(this.btnOrderSaveApprovedLaboratory_Click);
+            // 
+            // btnOrderSaveReportComment
+            // 
+            this.btnOrderSaveReportComment.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnOrderSaveReportComment.Location = new System.Drawing.Point(557, 289);
+            this.btnOrderSaveReportComment.Name = "btnOrderSaveReportComment";
+            this.btnOrderSaveReportComment.Size = new System.Drawing.Size(271, 24);
+            this.btnOrderSaveReportComment.TabIndex = 27;
+            this.btnOrderSaveReportComment.Text = "Save report comment";
+            this.btnOrderSaveReportComment.UseVisualStyleBackColor = true;
+            this.btnOrderSaveReportComment.Click += new System.EventHandler(this.btnOrderSaveReportComment_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -10799,14 +10750,14 @@
         private System.Windows.Forms.Panel panel11;
         private System.Windows.Forms.ToolStrip toolsOrderStatus;
         private System.Windows.Forms.ToolStripLabel toolStripLabel17;
-        private System.Windows.Forms.CheckBox checkBox3;
-        private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.CheckBox cbOrderApprovedLaboratory;
+        private System.Windows.Forms.CheckBox cbOrderApprovedCustomer;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel7;
-        private System.Windows.Forms.TextBox textBox22;
-        private System.Windows.Forms.TextBox textBox23;
+        private System.Windows.Forms.TextBox tbOrderApprovedCustomerBy;
+        private System.Windows.Forms.TextBox tbOrderApprovedLaboratoryBy;
         private System.Windows.Forms.Label label43;
         private System.Windows.Forms.TextBox tbOrderReportComment;
-        private System.Windows.Forms.TextBox textBox30;
+        private System.Windows.Forms.TextBox tbOrderLastWorkflowStatusBy;
         private System.Windows.Forms.Panel panel17;
         private System.Windows.Forms.Button btnSearchClose;
         private System.Windows.Forms.TabPage tabMetadata;
@@ -11536,14 +11487,7 @@
         private System.Windows.Forms.TextBox tbOrderCustomer;
         private System.Windows.Forms.Label label35;
         private System.Windows.Forms.ComboBox cboxOrderRequestedSigmaMDA;
-        private System.Windows.Forms.Label label56;
-        private System.Windows.Forms.Label label62;
-        private System.Windows.Forms.Label label69;
-        private System.Windows.Forms.Label label70;
-        private System.Windows.Forms.TextBox tbOrderCustomerAddress;
-        private System.Windows.Forms.TextBox tbOrderCustomerEmail;
-        private System.Windows.Forms.TextBox tbOrderCustomerPhone;
-        private System.Windows.Forms.TextBox tbOrderCustomerName;
+        private System.Windows.Forms.TextBox tbOrderCustomerInfo;
         private System.Windows.Forms.ComboBox cboxOrderStatus;
         private System.Windows.Forms.TabPage tabSysPers;
         private System.Windows.Forms.ToolStrip toolStrip14;
@@ -11626,9 +11570,7 @@
         private System.Windows.Forms.Label label36;
         private System.Windows.Forms.Label label33;
         private System.Windows.Forms.ComboBox cboxOrdersStatus;
-        private System.Windows.Forms.Label label37;
         private System.Windows.Forms.Label label61;
-        private System.Windows.Forms.TextBox tbOrderCustomerCompany;
         private System.Windows.Forms.Label label71;
         private System.Windows.Forms.ToolStripLabel toolStripLabel57;
         private System.Windows.Forms.Panel panelPrepAnalAnalUnit;
@@ -11636,6 +11578,10 @@
         private System.Windows.Forms.ToolStripButton btnOrderCreateReport;
         private System.Windows.Forms.TabPage tabOrderAssigned;
         private System.Windows.Forms.DataGridView gridOrderAssigned;
+        private System.Windows.Forms.Button btnOrderSaveStatus;
+        private System.Windows.Forms.Button btnOrderSaveApprovedCustomer;
+        private System.Windows.Forms.Button btnOrderSaveApprovedLaboratory;
+        private System.Windows.Forms.Button btnOrderSaveReportComment;
     }
 }
 

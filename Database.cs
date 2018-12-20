@@ -269,13 +269,37 @@ namespace DSA_lims
 
         public static int GetNextOrderCount(SqlConnection conn, SqlTransaction trans, Guid labId)
         {
+            object o = GetScalar(conn, trans, "select last_assignment_counter_year from laboratory where id = @id", CommandType.Text, new[] {
+                new SqlParameter("@id", labId)
+            });
+
+            if (o == null || o == DBNull.Value)
+                throw new Exception("GetNextOrderCount: Unable to get last assignment counter year from database for lab id: " + labId.ToString());
+
+            int storedYear = Convert.ToInt32(o);
+            int currentYear = DateTime.Now.Year;
+
+            if (currentYear < storedYear - 50 || currentYear > storedYear + 50)            
+                throw new Exception("GetNextOrderCount: Client date appears to be out of sync, aborting");
+
+            SqlCommand cmd = new SqlCommand("", conn, trans);
+            if (storedYear < currentYear)
+            {
+                cmd.CommandText = "update laboratory set last_assignment_counter_year = @year, assignment_counter = 1";
+                cmd.CommandType = CommandType.Text;
+                cmd.Parameters.AddWithValue("@year", DateTime.Now.Year);
+                cmd.ExecuteNonQuery();
+            }
+
             SqlParameter nextNumber = new SqlParameter("@current_count", SqlDbType.Int) { Direction = ParameterDirection.Output };
 
-            SqlCommand cmd = new SqlCommand("csp_increment_assignment_counter", conn, trans);
+            cmd.CommandText = "csp_increment_assignment_counter";
             cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Clear();
             cmd.Parameters.AddWithValue("@laboratory_id", labId);
             cmd.Parameters.Add(nextNumber);
             cmd.ExecuteNonQuery();
+
             return Convert.ToInt32(nextNumber.Value);
         }
 

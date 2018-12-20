@@ -137,7 +137,8 @@ namespace DSA_lims
 
             try
             {
-                p["assignment_counter"] = 1;
+                p["last_assignment_counter_year"] = DateTime.Now.Year;
+                p["assignment_counter"] = 1;                
                 p["create_date"] = DateTime.Now;
                 p["created_by"] = Common.Username;
                 p["update_date"] = DateTime.Now;
@@ -155,7 +156,8 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@address", p["address"]);
                 cmd.Parameters.AddWithValue("@email", p["email"]);
                 cmd.Parameters.AddWithValue("@phone", p["phone"]);
-                cmd.Parameters.AddWithValue("@assignment_counter", p["assignment_counter"]);
+                cmd.Parameters.AddWithValue("@last_assignment_counter_year", p["last_assignment_counter_year"]);
+                cmd.Parameters.AddWithValue("@assignment_counter", p["assignment_counter"]);                
                 cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
                 cmd.Parameters.AddWithValue("@comment", p["comment"]);
                 cmd.Parameters.AddWithValue("@create_date", p["create_date"]);

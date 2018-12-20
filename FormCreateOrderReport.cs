@@ -105,11 +105,13 @@ namespace DSA_lims
             topCursor -= lineSpace * 2;
             cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, "Oppdrag: " + OrderName, leftCursor, topCursor, 0);
             topCursor -= lineSpace;
-            cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, "Oppdragsgiver: " + CustomerName + ", " + CustomerCompany, leftCursor, topCursor, 0);
+            string cust = CustomerName;
+            if (!String.IsNullOrEmpty(CustomerCompany)) cust += ", " + CustomerCompany;
+            cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, "Oppdragsgiver: " + cust, leftCursor, topCursor, 0);
             topCursor -= lineSpace;
             cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, CustomerAddress, leftCursor, topCursor, 0);
             topCursor -= lineSpace;
-            cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, "Laboratorie/Kontaktperson: " + LaboratoryName + "/" + ResponsibleName, leftCursor, topCursor, 0);            
+            cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, "Laboratorie/Kontaktperson: " + LaboratoryName + " / " + ResponsibleName, leftCursor, topCursor, 0);            
             topCursor -= lineSpace * 6;
             cb.SetFontAndSize(baseFontBold, fontSizeHeader);
             cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, "Måleresultater", leftCursor, topCursor, 0);
@@ -176,7 +178,6 @@ order by s.number, p.number, a.number
 
             SaveFileDialog dialog = new SaveFileDialog();
             dialog.Filter = "PDF files (*.pdf)|*.pdf";
-            dialog.InitialDirectory = "C:\\test";
             if (dialog.ShowDialog() != DialogResult.OK)
                 return;
 

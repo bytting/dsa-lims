@@ -74,7 +74,7 @@ namespace DSA_lims
                     return DBNull.Value;
 
                 return g;
-            }
+            }            
             else return o.ToString();
         }
 
@@ -278,9 +278,6 @@ namespace DSA_lims
 
             int storedYear = Convert.ToInt32(o);
             int currentYear = DateTime.Now.Year;
-
-            if (currentYear < storedYear - 50 || currentYear > storedYear + 50)            
-                throw new Exception("GetNextOrderCount: Client date appears to be out of sync, aborting");
 
             SqlCommand cmd = new SqlCommand("", conn, trans);
             if (storedYear < currentYear)
@@ -492,6 +489,18 @@ order by name
                 }
             }
             return names;
+        }
+
+        public static string GetAccountNameFromUsername(SqlConnection conn, string username)
+        {
+            object o = DB.GetScalar(conn, "select name + ' (' + email + ')' as 'name' from cv_account where username = @username", CommandType.Text, new[] {
+                new SqlParameter("@username", username)
+            });
+
+            if (o == null || o == DBNull.Value)
+                return "";
+
+            return o.ToString();
         }
     }
 }

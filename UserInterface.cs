@@ -787,6 +787,40 @@ order by create_date desc";
             grid.Columns["phone"].HeaderText = "Phone";
             grid.Columns["address"].HeaderText = "Address";
             grid.Columns["instance_status_name"].HeaderText = "Status";
-        }        
+        }
+
+        public static void PopulateOrderYears(SqlConnection conn, ComboBox cbox)
+        {
+            cbox.Items.Clear();
+
+            List<string> years = new List<string>();
+            years.Add("");
+
+            using (SqlDataReader reader = DB.GetDataReader(conn, "select distinct year(create_date) as 'year' from assignment order by year", CommandType.Text))
+            {
+                while(reader.Read())
+                {
+                    years.Add(reader["year"].ToString());
+                }
+            }
+            cbox.DataSource = years;
+        }
+
+        public static void PopulateOrderWorkflowStatus(SqlConnection conn, ComboBox cbox)
+        {
+            cbox.Items.Clear();
+
+            List<Lemma<int?, string>> stats = new List<Lemma<int?, string>>();
+            stats.Add(new Lemma<int?, string>(null, ""));
+
+            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_workflow_status", CommandType.StoredProcedure))
+            {
+                while (reader.Read())
+                {
+                    stats.Add(new Lemma<int?, string>(Convert.ToInt32(reader["id"]), reader["name"].ToString()));
+                }
+            }
+            cbox.DataSource = stats;
+        }
     }
 }

@@ -230,7 +230,7 @@ create proc csp_select_persons_short
 as 
 	select 
 		id, 
-		name
+		name + ' (' + email + ')' as 'name'
 	from person	
 	order by name
 go
@@ -366,7 +366,7 @@ create proc csp_select_accounts_short
 as 
 	select
 		id,
-		name
+		name + ' (' + email + ')' as name
 	from cv_account
 	where instance_status_id <= @instance_status_level
 	order by name
@@ -630,7 +630,7 @@ create proc csp_select_customers_short
 as 
 	select 
 		id, 
-		person_name as 'name'
+		person_name + ' (' + person_email + ')' as 'name'
 	from cv_customer
 	where instance_status_id <= @instance_status_level
 	order by person_name
@@ -762,7 +762,7 @@ create proc csp_select_samplers_short
 as 
 	select
 		id,
-		person_name as 'name'
+		person_name + ' (' + person_email + ')' as 'name'
 	from cv_sampler
 	where instance_status_id <= @instance_status_level
 	order by person_name
@@ -902,7 +902,9 @@ create table laboratory (
 	last_assignment_counter_year int default 2000,
 	assignment_counter int default 1,
 	instance_status_id int default 1,
-	comment nvarchar(1000) not null,		
+	comment nvarchar(1000) not null,
+	laboratory_logo varbinary(max) default null,
+	accredited_logo varbinary(max) default null,
 	create_date datetime not null,
 	created_by nvarchar(50) not null,
 	update_date datetime not null,
@@ -921,6 +923,8 @@ create proc csp_insert_laboratory
 	@assignment_counter int,
 	@instance_status_id int,
 	@comment nvarchar(1000),	
+	@laboratory_logo varbinary(max),
+	@accredited_logo varbinary(max),
 	@create_date datetime,
 	@created_by nvarchar(50),
 	@update_date datetime,
@@ -937,6 +941,8 @@ as
 		@last_assignment_counter_year,
 		@instance_status_id,
 		@comment,		
+		@laboratory_logo,
+		@accredited_logo,
 		@create_date,
 		@created_by,
 		@update_date,
@@ -952,7 +958,9 @@ create proc csp_update_laboratory
 	@email nvarchar(80),
 	@phone nvarchar(80),	
 	@instance_status_id int,
-	@comment nvarchar(1000),		
+	@comment nvarchar(1000),
+	@laboratory_logo varbinary(max),
+	@accredited_logo varbinary(max),
 	@update_date datetime,
 	@updated_by nvarchar(50)
 as 
@@ -965,6 +973,8 @@ as
 		phone = @phone,	
 		instance_status_id = @instance_status_id,
 		comment = @comment,
+		laboratory_logo = @laboratory_logo,
+		accredited_logo = @accredited_logo,
 		update_date = @update_date,
 		updated_by = @updated_by
 	where id = @id

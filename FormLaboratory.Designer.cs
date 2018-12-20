@@ -46,7 +46,13 @@
             this.label6 = new System.Windows.Forms.Label();
             this.cboxInstanceStatus = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
+            this.picLaboratoryLogo = new System.Windows.Forms.PictureBox();
+            this.picAccreditedLogo = new System.Windows.Forms.PictureBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picLaboratoryLogo)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picAccreditedLogo)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -54,16 +60,16 @@
             this.panel1.Controls.Add(this.btnCancel);
             this.panel1.Controls.Add(this.btnOk);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 350);
+            this.panel1.Location = new System.Drawing.Point(0, 486);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(411, 30);
+            this.panel1.Size = new System.Drawing.Size(420, 30);
             this.panel1.TabIndex = 0;
             // 
             // btnCancel
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnCancel.Location = new System.Drawing.Point(211, 0);
+            this.btnCancel.Location = new System.Drawing.Point(220, 0);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(100, 30);
             this.btnCancel.TabIndex = 1;
@@ -75,7 +81,7 @@
             // 
             this.btnOk.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnOk.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnOk.Location = new System.Drawing.Point(311, 0);
+            this.btnOk.Location = new System.Drawing.Point(320, 0);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(100, 30);
             this.btnOk.TabIndex = 0;
@@ -97,7 +103,7 @@
             this.tbName.Location = new System.Drawing.Point(132, 26);
             this.tbName.MaxLength = 256;
             this.tbName.Name = "tbName";
-            this.tbName.Size = new System.Drawing.Size(247, 20);
+            this.tbName.Size = new System.Drawing.Size(260, 20);
             this.tbName.TabIndex = 2;
             // 
             // label2
@@ -139,46 +145,46 @@
             // tbPrefix
             // 
             this.tbPrefix.Location = new System.Drawing.Point(132, 52);
-            this.tbPrefix.MaxLength = 1;
+            this.tbPrefix.MaxLength = 4;
             this.tbPrefix.Name = "tbPrefix";
-            this.tbPrefix.Size = new System.Drawing.Size(247, 20);
+            this.tbPrefix.Size = new System.Drawing.Size(260, 20);
             this.tbPrefix.TabIndex = 8;
             // 
             // tbAddress
             // 
             this.tbAddress.Location = new System.Drawing.Point(132, 78);
             this.tbAddress.Name = "tbAddress";
-            this.tbAddress.Size = new System.Drawing.Size(247, 20);
+            this.tbAddress.Size = new System.Drawing.Size(260, 20);
             this.tbAddress.TabIndex = 9;
             // 
             // tbEmail
             // 
             this.tbEmail.Location = new System.Drawing.Point(132, 104);
             this.tbEmail.Name = "tbEmail";
-            this.tbEmail.Size = new System.Drawing.Size(247, 20);
+            this.tbEmail.Size = new System.Drawing.Size(260, 20);
             this.tbEmail.TabIndex = 10;
             // 
             // tbPhone
             // 
             this.tbPhone.Location = new System.Drawing.Point(132, 130);
             this.tbPhone.Name = "tbPhone";
-            this.tbPhone.Size = new System.Drawing.Size(247, 20);
+            this.tbPhone.Size = new System.Drawing.Size(260, 20);
             this.tbPhone.TabIndex = 11;
             // 
             // tbComment
             // 
-            this.tbComment.Location = new System.Drawing.Point(132, 196);
+            this.tbComment.Location = new System.Drawing.Point(132, 184);
             this.tbComment.MaxLength = 1000;
             this.tbComment.Multiline = true;
             this.tbComment.Name = "tbComment";
             this.tbComment.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.tbComment.Size = new System.Drawing.Size(247, 125);
+            this.tbComment.Size = new System.Drawing.Size(260, 102);
             this.tbComment.TabIndex = 12;
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(24, 199);
+            this.label6.Location = new System.Drawing.Point(25, 187);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(51, 13);
             this.label6.TabIndex = 13;
@@ -191,7 +197,7 @@
             this.cboxInstanceStatus.FormattingEnabled = true;
             this.cboxInstanceStatus.Location = new System.Drawing.Point(132, 157);
             this.cboxInstanceStatus.Name = "cboxInstanceStatus";
-            this.cboxInstanceStatus.Size = new System.Drawing.Size(247, 21);
+            this.cboxInstanceStatus.Size = new System.Drawing.Size(260, 21);
             this.cboxInstanceStatus.TabIndex = 14;
             this.cboxInstanceStatus.ValueMember = "Id";
             // 
@@ -204,11 +210,51 @@
             this.label7.TabIndex = 15;
             this.label7.Text = "Status";
             // 
+            // picLaboratoryLogo
+            // 
+            this.picLaboratoryLogo.BackColor = System.Drawing.SystemColors.Info;
+            this.picLaboratoryLogo.Location = new System.Drawing.Point(130, 327);
+            this.picLaboratoryLogo.Name = "picLaboratoryLogo";
+            this.picLaboratoryLogo.Size = new System.Drawing.Size(128, 128);
+            this.picLaboratoryLogo.TabIndex = 16;
+            this.picLaboratoryLogo.TabStop = false;
+            // 
+            // picAccreditedLogo
+            // 
+            this.picAccreditedLogo.BackColor = System.Drawing.SystemColors.Info;
+            this.picAccreditedLogo.Location = new System.Drawing.Point(264, 327);
+            this.picAccreditedLogo.Name = "picAccreditedLogo";
+            this.picAccreditedLogo.Size = new System.Drawing.Size(128, 128);
+            this.picAccreditedLogo.TabIndex = 17;
+            this.picAccreditedLogo.TabStop = false;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(129, 311);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(80, 13);
+            this.label8.TabIndex = 18;
+            this.label8.Text = "Laboratory logo";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(261, 311);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(81, 13);
+            this.label9.TabIndex = 19;
+            this.label9.Text = "Accredited logo";
+            // 
             // FormLaboratory
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(411, 380);
+            this.ClientSize = new System.Drawing.Size(420, 516);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.picAccreditedLogo);
+            this.Controls.Add(this.picLaboratoryLogo);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.cboxInstanceStatus);
             this.Controls.Add(this.label6);
@@ -232,6 +278,8 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "DSA-Lims - Laboratory";
             this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.picLaboratoryLogo)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picAccreditedLogo)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -256,5 +304,9 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ComboBox cboxInstanceStatus;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.PictureBox picLaboratoryLogo;
+        private System.Windows.Forms.PictureBox picAccreditedLogo;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label9;
     }
 }

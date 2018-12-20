@@ -220,6 +220,10 @@ namespace DSA_lims
                     UI.PopulateSampleTypes(treeSampleTypes, cboxSampleSampleType);                    
 
                     UI.PopulateCustomers(conn, InstanceStatus.Deleted, gridCustomers);
+
+                    UI.PopulateOrderYears(conn, cboxOrdersYear);
+
+                    UI.PopulateOrderWorkflowStatus(conn, cboxOrdersWorkflowStatus);
                 }
                 
                 HideMenuItems();
@@ -1493,6 +1497,7 @@ namespace DSA_lims
                 PopulateSample(conn, selectedSampleId);
             }
 
+            tabsSample.SelectedTab = tabSamplesInfo;
             tabs.SelectedTab = tabSample;
         }
 
@@ -2296,7 +2301,8 @@ order by name
             ClearOrderInfo();
             selectedOrderId = Guid.Parse(gridOrders.SelectedRows[0].Cells["id"].Value.ToString());
             PopulateOrder(selectedOrderId);
-            
+
+            tabsOrder.SelectedTab = tabOrderInfo;
             tabs.SelectedTab = tabOrder;
         }
 
@@ -2391,11 +2397,11 @@ order by name
                 tbOrderContentComment.Text = map["content_comment"].ToString();
                 tbOrderReportComment.Text = map["report_comment"].ToString();
                 cbOrderApprovedCustomer.Checked = Convert.ToBoolean(map["approved_customer"]);
-                tbOrderApprovedCustomerBy.Text = map["approved_customer_by"].ToString();
+                tbOrderApprovedCustomerBy.Text = DB.GetAccountNameFromUsername(conn, map["approved_customer_by"].ToString());
                 cbOrderApprovedLaboratory.Checked = Convert.ToBoolean(map["approved_laboratory"]);
-                tbOrderApprovedLaboratoryBy.Text = map["approved_laboratory_by"].ToString();
+                tbOrderApprovedLaboratoryBy.Text = DB.GetAccountNameFromUsername(conn, map["approved_laboratory_by"].ToString());
                 cboxOrderStatus.SelectedValue = map["workflow_status_id"];
-                tbOrderLastWorkflowStatusBy.Text = map["last_workflow_status_by"].ToString();
+                tbOrderLastWorkflowStatusBy.Text = DB.GetAccountNameFromUsername(conn, map["last_workflow_status_by"].ToString());
 
                 UI.PopulateOrderContent(conn, selectedOrderId, treeOrderContent, Guid.Empty, treeSampleTypes, true);
 
@@ -3970,6 +3976,18 @@ select
                     adapter.SelectCommand.Parameters.AddWithValue("@laboratory_id", DB.MakeParam(typeof(Guid), cboxOrdersLaboratory.SelectedValue));
                 }
 
+                if (!String.IsNullOrEmpty(cboxOrdersYear.Text))
+                {
+                    query += " and year(a.create_date) = @year";
+                    adapter.SelectCommand.Parameters.AddWithValue("@year", Convert.ToInt32(cboxOrdersYear.Text));
+                }
+
+                if (cboxOrdersWorkflowStatus.SelectedValue != null)
+                {
+                    query += " and a.workflow_status_id = @workflow_status_id";
+                    adapter.SelectCommand.Parameters.AddWithValue("@workflow_status_id", cboxOrdersWorkflowStatus.SelectedValue);
+                }
+
                 query += " order by a.create_date desc";
 
                 adapter.SelectCommand.CommandText = query;
@@ -4017,7 +4035,7 @@ select
             populateOrdersDisabled = true;
             cboxOrdersLaboratory.SelectedValue = Guid.Empty;
             cboxOrdersYear.SelectedValue = null;
-            cboxOrdersStatus.SelectedValue = Guid.Empty;
+            cboxOrdersWorkflowStatus.SelectedValue = Guid.Empty;
             populateOrdersDisabled = false;
             PopulateOrders();
         }
@@ -4045,14 +4063,16 @@ update assignment set
     workflow_status_id = @workflow_status_id, 
     last_workflow_status_date = @last_workflow_status_date, 
     last_workflow_status_by = @last_workflow_status_by
+where id = @id
 ";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@workflow_status_id", DB.MakeParam(typeof(int), cboxOrderStatus.SelectedValue));
                 cmd.Parameters.AddWithValue("@last_workflow_status_date", DateTime.Now);
                 cmd.Parameters.AddWithValue("@last_workflow_status_by", Common.Username);
+                cmd.Parameters.AddWithValue("@id", selectedOrderId);
                 cmd.ExecuteNonQuery();
 
-                tbOrderLastWorkflowStatusBy.Text = Common.Username;
+                tbOrderLastWorkflowStatusBy.Text = DB.GetAccountNameFromUsername(conn, Common.Username);
 
                 SetStatusMessage("Order status saved for " + tbOrderName.Text, StatusMessageType.Success);
             }
@@ -4073,13 +4093,14 @@ update assignment set
             {
                 conn = DB.OpenConnection();
 
-                string query = "update assignment set approved_customer = @approved_customer, approved_customer_by = @approved_customer_by";
+                string query = "update assignment set approved_customer = @approved_customer, approved_customer_by = @approved_customer_by where id = @id";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@approved_customer", cbOrderApprovedCustomer.Checked);
                 cmd.Parameters.AddWithValue("@approved_customer_by", Common.Username);
+                cmd.Parameters.AddWithValue("@id", selectedOrderId);
                 cmd.ExecuteNonQuery();
 
-                tbOrderApprovedCustomerBy.Text = Common.Username;
+                tbOrderApprovedCustomerBy.Text = DB.GetAccountNameFromUsername(conn, Common.Username);
 
                 SetStatusMessage("Approvement by customer updated for " + tbOrderName.Text, StatusMessageType.Success);
             }
@@ -4100,13 +4121,14 @@ update assignment set
             {
                 conn = DB.OpenConnection();
 
-                string query = "update assignment set approved_laboratory = @approved_laboratory, approved_laboratory_by = @approved_laboratory_by";
+                string query = "update assignment set approved_laboratory = @approved_laboratory, approved_laboratory_by = @approved_laboratory_by where id = @id";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@approved_laboratory", cbOrderApprovedLaboratory.Checked);
                 cmd.Parameters.AddWithValue("@approved_laboratory_by", Common.Username);
+                cmd.Parameters.AddWithValue("@id", selectedOrderId);
                 cmd.ExecuteNonQuery();
 
-                tbOrderApprovedLaboratoryBy.Text = Common.Username;
+                tbOrderApprovedLaboratoryBy.Text = DB.GetAccountNameFromUsername(conn, Common.Username);
 
                 SetStatusMessage("Approvement by laboratory updated for " + tbOrderName.Text, StatusMessageType.Success);
             }
@@ -4127,9 +4149,10 @@ update assignment set
             {
                 conn = DB.OpenConnection();
 
-                string query = "update assignment set report_comment = @report_comment";
+                string query = "update assignment set report_comment = @report_comment where id = @id";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@report_comment", tbOrderReportComment.Text.Trim());
+                cmd.Parameters.AddWithValue("@id", selectedOrderId);
                 cmd.ExecuteNonQuery();
 
                 SetStatusMessage("Report comment updated for " + tbOrderName.Text, StatusMessageType.Success);

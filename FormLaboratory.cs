@@ -119,6 +119,8 @@ namespace DSA_lims
             p["phone"] = tbPhone.Text.Trim();
             p["instance_status_id"] = cboxInstanceStatus.SelectedValue;
             p["comment"] = tbComment.Text.Trim();
+            p["laboratory_logo"] = null; // FIXME
+            p["accredited_logo"] = null; // FIXME
 
             bool success;
             if (!p.ContainsKey("id"))
@@ -160,6 +162,17 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@assignment_counter", p["assignment_counter"]);                
                 cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
                 cmd.Parameters.AddWithValue("@comment", p["comment"]);
+
+                if(p["laboratory_logo"] == null)
+                    cmd.Parameters.Add("@laboratory_logo", SqlDbType.VarBinary, -1).Value = DBNull.Value;
+                else
+                    cmd.Parameters.Add("@laboratory_logo", SqlDbType.VarBinary, -1).Value = p["laboratory_logo"];
+
+                if (p["accredited_logo"] == null)
+                    cmd.Parameters.Add("@accredited_logo", SqlDbType.VarBinary, -1).Value = DBNull.Value;
+                else
+                    cmd.Parameters.Add("@accredited_logo", SqlDbType.VarBinary, -1).Value = p["accredited_logo"];
+
                 cmd.Parameters.AddWithValue("@create_date", p["create_date"]);
                 cmd.Parameters.AddWithValue("@created_by", p["created_by"]);
                 cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
@@ -207,6 +220,17 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@phone", p["phone"]);
                 cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
                 cmd.Parameters.AddWithValue("@comment", p["comment"]);
+
+                if (p["laboratory_logo"] == null)
+                    cmd.Parameters.Add("@laboratory_logo", SqlDbType.VarBinary, -1).Value = DBNull.Value;
+                else
+                    cmd.Parameters.Add("@laboratory_logo", SqlDbType.VarBinary, -1).Value = p["laboratory_logo"];
+
+                if (p["accredited_logo"] == null)
+                    cmd.Parameters.Add("@accredited_logo", SqlDbType.VarBinary, -1).Value = DBNull.Value;
+                else
+                    cmd.Parameters.Add("@accredited_logo", SqlDbType.VarBinary, -1).Value = p["accredited_logo"];
+
                 cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
                 cmd.Parameters.AddWithValue("@updated_by", p["updated_by"]);
                 cmd.ExecuteNonQuery();

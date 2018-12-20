@@ -362,10 +362,14 @@
             this.cboxOrderStatus = new System.Windows.Forms.ComboBox();
             this.tbOrderLastWorkflowStatusBy = new System.Windows.Forms.TextBox();
             this.tbOrderReportComment = new System.Windows.Forms.TextBox();
-            this.tbOrderCustomerInfo = new System.Windows.Forms.TextBox();
-            this.label61 = new System.Windows.Forms.Label();
             this.label43 = new System.Windows.Forms.Label();
             this.label71 = new System.Windows.Forms.Label();
+            this.btnOrderSaveStatus = new System.Windows.Forms.Button();
+            this.btnOrderSaveApprovedCustomer = new System.Windows.Forms.Button();
+            this.btnOrderSaveApprovedLaboratory = new System.Windows.Forms.Button();
+            this.tbOrderCustomerInfo = new System.Windows.Forms.TextBox();
+            this.label61 = new System.Windows.Forms.Label();
+            this.btnOrderSaveReportComment = new System.Windows.Forms.Button();
             this.toolsOrderStatus = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel17 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
@@ -469,7 +473,7 @@
             this.cboxOrdersLaboratory = new System.Windows.Forms.ComboBox();
             this.label36 = new System.Windows.Forms.Label();
             this.label33 = new System.Windows.Forms.Label();
-            this.cboxOrdersStatus = new System.Windows.Forms.ComboBox();
+            this.cboxOrdersWorkflowStatus = new System.Windows.Forms.ComboBox();
             this.label52 = new System.Windows.Forms.Label();
             this.cboxOrdersYear = new System.Windows.Forms.ComboBox();
             this.toolsOrders = new System.Windows.Forms.ToolStrip();
@@ -899,10 +903,6 @@
             this.btnMenu = new System.Windows.Forms.ToolStripButton();
             this.lblCurrentTab = new System.Windows.Forms.ToolStripLabel();
             this.btnBack = new System.Windows.Forms.ToolStripButton();
-            this.btnOrderSaveStatus = new System.Windows.Forms.Button();
-            this.btnOrderSaveApprovedCustomer = new System.Windows.Forms.Button();
-            this.btnOrderSaveApprovedLaboratory = new System.Windows.Forms.Button();
-            this.btnOrderSaveReportComment = new System.Windows.Forms.Button();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tabs.SuspendLayout();
@@ -4513,27 +4513,6 @@
             this.tbOrderReportComment.Size = new System.Drawing.Size(825, 144);
             this.tbOrderReportComment.TabIndex = 8;
             // 
-            // tbOrderCustomerInfo
-            // 
-            this.tbOrderCustomerInfo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbOrderCustomerInfo.Location = new System.Drawing.Point(834, 139);
-            this.tbOrderCustomerInfo.Multiline = true;
-            this.tbOrderCustomerInfo.Name = "tbOrderCustomerInfo";
-            this.tbOrderCustomerInfo.ReadOnly = true;
-            this.tbOrderCustomerInfo.Size = new System.Drawing.Size(271, 144);
-            this.tbOrderCustomerInfo.TabIndex = 18;
-            // 
-            // label61
-            // 
-            this.label61.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label61.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label61.Location = new System.Drawing.Point(834, 106);
-            this.label61.Name = "label61";
-            this.label61.Size = new System.Drawing.Size(271, 30);
-            this.label61.TabIndex = 21;
-            this.label61.Text = "Customer";
-            this.label61.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
             // label43
             // 
             this.label43.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -4555,6 +4534,71 @@
             this.label71.TabIndex = 23;
             this.label71.Text = "Current status";
             this.label71.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // btnOrderSaveStatus
+            // 
+            this.btnOrderSaveStatus.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnOrderSaveStatus.Location = new System.Drawing.Point(557, 349);
+            this.btnOrderSaveStatus.Name = "btnOrderSaveStatus";
+            this.btnOrderSaveStatus.Size = new System.Drawing.Size(271, 24);
+            this.btnOrderSaveStatus.TabIndex = 24;
+            this.btnOrderSaveStatus.Text = "Save current status";
+            this.btnOrderSaveStatus.UseVisualStyleBackColor = true;
+            this.btnOrderSaveStatus.Click += new System.EventHandler(this.btnOrderSaveStatus_Click);
+            // 
+            // btnOrderSaveApprovedCustomer
+            // 
+            this.btnOrderSaveApprovedCustomer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnOrderSaveApprovedCustomer.Location = new System.Drawing.Point(557, 19);
+            this.btnOrderSaveApprovedCustomer.Name = "btnOrderSaveApprovedCustomer";
+            this.btnOrderSaveApprovedCustomer.Size = new System.Drawing.Size(271, 24);
+            this.btnOrderSaveApprovedCustomer.TabIndex = 25;
+            this.btnOrderSaveApprovedCustomer.Text = "Save approval by customer";
+            this.btnOrderSaveApprovedCustomer.UseVisualStyleBackColor = true;
+            this.btnOrderSaveApprovedCustomer.Click += new System.EventHandler(this.btnOrderSaveApprovedCustomer_Click);
+            // 
+            // btnOrderSaveApprovedLaboratory
+            // 
+            this.btnOrderSaveApprovedLaboratory.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnOrderSaveApprovedLaboratory.Location = new System.Drawing.Point(557, 49);
+            this.btnOrderSaveApprovedLaboratory.Name = "btnOrderSaveApprovedLaboratory";
+            this.btnOrderSaveApprovedLaboratory.Size = new System.Drawing.Size(271, 24);
+            this.btnOrderSaveApprovedLaboratory.TabIndex = 26;
+            this.btnOrderSaveApprovedLaboratory.Text = "Save approval by laboratory";
+            this.btnOrderSaveApprovedLaboratory.UseVisualStyleBackColor = true;
+            this.btnOrderSaveApprovedLaboratory.Click += new System.EventHandler(this.btnOrderSaveApprovedLaboratory_Click);
+            // 
+            // tbOrderCustomerInfo
+            // 
+            this.tbOrderCustomerInfo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbOrderCustomerInfo.Location = new System.Drawing.Point(834, 139);
+            this.tbOrderCustomerInfo.Multiline = true;
+            this.tbOrderCustomerInfo.Name = "tbOrderCustomerInfo";
+            this.tbOrderCustomerInfo.ReadOnly = true;
+            this.tbOrderCustomerInfo.Size = new System.Drawing.Size(271, 144);
+            this.tbOrderCustomerInfo.TabIndex = 18;
+            // 
+            // label61
+            // 
+            this.label61.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label61.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label61.Location = new System.Drawing.Point(834, 106);
+            this.label61.Name = "label61";
+            this.label61.Size = new System.Drawing.Size(271, 30);
+            this.label61.TabIndex = 21;
+            this.label61.Text = "Customer";
+            this.label61.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // btnOrderSaveReportComment
+            // 
+            this.btnOrderSaveReportComment.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnOrderSaveReportComment.Location = new System.Drawing.Point(557, 289);
+            this.btnOrderSaveReportComment.Name = "btnOrderSaveReportComment";
+            this.btnOrderSaveReportComment.Size = new System.Drawing.Size(271, 24);
+            this.btnOrderSaveReportComment.TabIndex = 27;
+            this.btnOrderSaveReportComment.Text = "Save report comment";
+            this.btnOrderSaveReportComment.UseVisualStyleBackColor = true;
+            this.btnOrderSaveReportComment.Click += new System.EventHandler(this.btnOrderSaveReportComment_Click);
             // 
             // toolsOrderStatus
             // 
@@ -5629,7 +5673,7 @@
             this.panel2.Controls.Add(this.cboxOrdersLaboratory);
             this.panel2.Controls.Add(this.label36);
             this.panel2.Controls.Add(this.label33);
-            this.panel2.Controls.Add(this.cboxOrdersStatus);
+            this.panel2.Controls.Add(this.cboxOrdersWorkflowStatus);
             this.panel2.Controls.Add(this.label52);
             this.panel2.Controls.Add(this.cboxOrdersYear);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
@@ -5640,12 +5684,14 @@
             // 
             // cboxOrdersLaboratory
             // 
+            this.cboxOrdersLaboratory.DisplayMember = "Name";
             this.cboxOrdersLaboratory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxOrdersLaboratory.FormattingEnabled = true;
             this.cboxOrdersLaboratory.Location = new System.Drawing.Point(92, 18);
             this.cboxOrdersLaboratory.Name = "cboxOrdersLaboratory";
             this.cboxOrdersLaboratory.Size = new System.Drawing.Size(153, 23);
             this.cboxOrdersLaboratory.TabIndex = 7;
+            this.cboxOrdersLaboratory.ValueMember = "Id";
             this.cboxOrdersLaboratory.SelectedIndexChanged += new System.EventHandler(this.cboxOrdersLaboratory_SelectedIndexChanged);
             // 
             // label36
@@ -5668,15 +5714,17 @@
             this.label33.TabIndex = 5;
             this.label33.Text = "Status";
             // 
-            // cboxOrdersStatus
+            // cboxOrdersWorkflowStatus
             // 
-            this.cboxOrdersStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboxOrdersStatus.FormattingEnabled = true;
-            this.cboxOrdersStatus.Location = new System.Drawing.Point(532, 18);
-            this.cboxOrdersStatus.Name = "cboxOrdersStatus";
-            this.cboxOrdersStatus.Size = new System.Drawing.Size(149, 23);
-            this.cboxOrdersStatus.TabIndex = 4;
-            this.cboxOrdersStatus.SelectedIndexChanged += new System.EventHandler(this.cboxOrdersStatus_SelectedIndexChanged);
+            this.cboxOrdersWorkflowStatus.DisplayMember = "Name";
+            this.cboxOrdersWorkflowStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxOrdersWorkflowStatus.FormattingEnabled = true;
+            this.cboxOrdersWorkflowStatus.Location = new System.Drawing.Point(532, 18);
+            this.cboxOrdersWorkflowStatus.Name = "cboxOrdersWorkflowStatus";
+            this.cboxOrdersWorkflowStatus.Size = new System.Drawing.Size(149, 23);
+            this.cboxOrdersWorkflowStatus.TabIndex = 4;
+            this.cboxOrdersWorkflowStatus.ValueMember = "Id";
+            this.cboxOrdersWorkflowStatus.SelectedIndexChanged += new System.EventHandler(this.cboxOrdersStatus_SelectedIndexChanged);
             // 
             // label52
             // 
@@ -9669,10 +9717,10 @@
             this.tabPrepAnalAnalysis.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.tabPrepAnalAnalysis.Controls.Add(this.panel76);
             this.tabPrepAnalAnalysis.Controls.Add(this.panel63);
-            this.tabPrepAnalAnalysis.Location = new System.Drawing.Point(4, 24);
+            this.tabPrepAnalAnalysis.Location = new System.Drawing.Point(4, 22);
             this.tabPrepAnalAnalysis.Name = "tabPrepAnalAnalysis";
             this.tabPrepAnalAnalysis.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPrepAnalAnalysis.Size = new System.Drawing.Size(759, 598);
+            this.tabPrepAnalAnalysis.Size = new System.Drawing.Size(759, 600);
             this.tabPrepAnalAnalysis.TabIndex = 4;
             this.tabPrepAnalAnalysis.Text = "Analyses";
             // 
@@ -9682,7 +9730,7 @@
             this.panel76.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel76.Location = new System.Drawing.Point(3, 287);
             this.panel76.Name = "panel76";
-            this.panel76.Size = new System.Drawing.Size(753, 308);
+            this.panel76.Size = new System.Drawing.Size(753, 310);
             this.panel76.TabIndex = 3;
             // 
             // panel9
@@ -9692,7 +9740,7 @@
             this.panel9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel9.Location = new System.Drawing.Point(0, 0);
             this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(753, 308);
+            this.panel9.Size = new System.Drawing.Size(753, 310);
             this.panel9.TabIndex = 4;
             // 
             // gridPrepAnalResults
@@ -9711,7 +9759,7 @@
             this.gridPrepAnalResults.ReadOnly = true;
             this.gridPrepAnalResults.RowHeadersVisible = false;
             this.gridPrepAnalResults.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridPrepAnalResults.Size = new System.Drawing.Size(753, 283);
+            this.gridPrepAnalResults.Size = new System.Drawing.Size(753, 285);
             this.gridPrepAnalResults.TabIndex = 0;
             // 
             // toolsSampleResRes
@@ -10161,50 +10209,6 @@
             this.btnBack.Text = "toolStripButton25";
             this.btnBack.ToolTipText = "Back";
             this.btnBack.Click += new System.EventHandler(this.miBack_Click);
-            // 
-            // btnOrderSaveStatus
-            // 
-            this.btnOrderSaveStatus.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnOrderSaveStatus.Location = new System.Drawing.Point(557, 349);
-            this.btnOrderSaveStatus.Name = "btnOrderSaveStatus";
-            this.btnOrderSaveStatus.Size = new System.Drawing.Size(271, 24);
-            this.btnOrderSaveStatus.TabIndex = 24;
-            this.btnOrderSaveStatus.Text = "Save current status";
-            this.btnOrderSaveStatus.UseVisualStyleBackColor = true;
-            this.btnOrderSaveStatus.Click += new System.EventHandler(this.btnOrderSaveStatus_Click);
-            // 
-            // btnOrderSaveApprovedCustomer
-            // 
-            this.btnOrderSaveApprovedCustomer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnOrderSaveApprovedCustomer.Location = new System.Drawing.Point(557, 19);
-            this.btnOrderSaveApprovedCustomer.Name = "btnOrderSaveApprovedCustomer";
-            this.btnOrderSaveApprovedCustomer.Size = new System.Drawing.Size(271, 24);
-            this.btnOrderSaveApprovedCustomer.TabIndex = 25;
-            this.btnOrderSaveApprovedCustomer.Text = "Save approval by customer";
-            this.btnOrderSaveApprovedCustomer.UseVisualStyleBackColor = true;
-            this.btnOrderSaveApprovedCustomer.Click += new System.EventHandler(this.btnOrderSaveApprovedCustomer_Click);
-            // 
-            // btnOrderSaveApprovedLaboratory
-            // 
-            this.btnOrderSaveApprovedLaboratory.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnOrderSaveApprovedLaboratory.Location = new System.Drawing.Point(557, 49);
-            this.btnOrderSaveApprovedLaboratory.Name = "btnOrderSaveApprovedLaboratory";
-            this.btnOrderSaveApprovedLaboratory.Size = new System.Drawing.Size(271, 24);
-            this.btnOrderSaveApprovedLaboratory.TabIndex = 26;
-            this.btnOrderSaveApprovedLaboratory.Text = "Save approval by laboratory";
-            this.btnOrderSaveApprovedLaboratory.UseVisualStyleBackColor = true;
-            this.btnOrderSaveApprovedLaboratory.Click += new System.EventHandler(this.btnOrderSaveApprovedLaboratory_Click);
-            // 
-            // btnOrderSaveReportComment
-            // 
-            this.btnOrderSaveReportComment.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnOrderSaveReportComment.Location = new System.Drawing.Point(557, 289);
-            this.btnOrderSaveReportComment.Name = "btnOrderSaveReportComment";
-            this.btnOrderSaveReportComment.Size = new System.Drawing.Size(271, 24);
-            this.btnOrderSaveReportComment.TabIndex = 27;
-            this.btnOrderSaveReportComment.Text = "Save report comment";
-            this.btnOrderSaveReportComment.UseVisualStyleBackColor = true;
-            this.btnOrderSaveReportComment.Click += new System.EventHandler(this.btnOrderSaveReportComment_Click);
             // 
             // FormMain
             // 
@@ -11569,7 +11573,7 @@
         private System.Windows.Forms.ComboBox cboxOrdersLaboratory;
         private System.Windows.Forms.Label label36;
         private System.Windows.Forms.Label label33;
-        private System.Windows.Forms.ComboBox cboxOrdersStatus;
+        private System.Windows.Forms.ComboBox cboxOrdersWorkflowStatus;
         private System.Windows.Forms.Label label61;
         private System.Windows.Forms.Label label71;
         private System.Windows.Forms.ToolStripLabel toolStripLabel57;

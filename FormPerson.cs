@@ -98,6 +98,12 @@ namespace DSA_lims
                 return;
             }
 
+            if (String.IsNullOrEmpty(tbEmail.Text.Trim()))
+            {
+                MessageBox.Show("Email is mandatory");
+                return;
+            }
+
             p["name"] = tbName.Text.Trim();            
             p["email"] = tbEmail.Text.Trim();
             p["phone"] = tbPhone.Text.Trim();

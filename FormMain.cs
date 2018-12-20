@@ -52,6 +52,8 @@ namespace DSA_lims
         {
             InitializeComponent();
 
+            SqlServerTypes.Utilities.LoadNativeAssemblies(AppDomain.CurrentDomain.BaseDirectory);
+
             Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo("en");
             Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo("en");
         }        
@@ -3597,12 +3599,8 @@ insert into analysis_result values(
         }
 
         private void treeOrderContent_AfterSelect(object sender, TreeViewEventArgs e)
-        {
-            gridOrderConnectedItems.DataSource = null;
-            string query = "";
+        {            
             Guid orderSampleTypeId = Guid.Empty;
-            Guid orderPrepMethId = Guid.Empty;
-            Guid orderAnalMethId = Guid.Empty;
             
             miOrderAddPrepMeth.Enabled = false;
             btnOrderAddPrepMeth.Enabled = false;
@@ -3629,27 +3627,7 @@ insert into analysis_result values(
                     miOrderRemPrepMeth.Enabled = true;
                     btnOrderDelPrepMeth.Enabled = true;
 
-                    query = @"
-select s.id, s.number as 'Samples', st.name as 'Type', sc.name as 'Comp.', sa.person_name as 'Sampler'
-from sample s
-	inner join sample_x_assignment_sample_type sxast on s.id = sxast.sample_id
-	inner join assignment_sample_type ast on ast.id = sxast.assignment_sample_type_id and ast.id = @astid
-	inner join assignment a on a.id = ast.assignment_id
-    inner join sample_type st on st.id = s.sample_type_id
-    left outer join sample_component sc on sc.id = s.sample_component_id
-    left outer join cv_sampler sa on sa.id = s.sampler_id
-where a.id = @aid
-order by s.number
-";
                     orderSampleTypeId = Guid.Parse(e.Node.Name);
-                    using (SqlConnection conn = DB.OpenConnection())
-                    {
-                        gridOrderConnectedItems.DataSource = DB.GetDataTable(conn, query, CommandType.Text, new[] {
-                            new SqlParameter("@aid", selectedOrderId),
-                            new SqlParameter("@astid", orderSampleTypeId)
-                        });
-                        gridOrderConnectedItems.Columns["id"].Visible = false;
-                    }
                     break;
 
                 case 1:                    
@@ -3660,71 +3638,33 @@ order by s.number
                     miOrderRemAnalMeth.Enabled = true;
                     btnOrderDelAnalMeth.Enabled = true;
 
-                    query = @"
-select 
-    p.id, 
-    convert(nvarchar(50), s.number) + '/' + convert(nvarchar(50), p.number) as 'Preparations',
-    pm.name as 'Method',
-    pg.name as 'Geometry',
-    ws.name as 'Status'
-from preparation p
-	inner join sample s on p.sample_id = s.id
-	inner join sample_x_assignment_sample_type sxast on s.id = sxast.sample_id
-	inner join assignment_sample_type ast on ast.id = sxast.assignment_sample_type_id and ast.id = @astid
-	inner join assignment_preparation_method apm on apm.assignment_sample_type_id = ast.id and apm.id = @apmid
-	inner join assignment a on a.id = ast.assignment_id
-    inner join preparation_method pm on pm.id = p.preparation_method_id
-    left outer join preparation_geometry pg on pg.id = p.preparation_geometry_id
-    inner join workflow_status ws on ws.id = p.workflow_status_id
-where p.assignment_id = @aid
-order by s.number, p.number
-";
                     orderSampleTypeId = Guid.Parse(e.Node.Parent.Name);
-                    orderPrepMethId = Guid.Parse(e.Node.Name);
-                    using (SqlConnection conn = DB.OpenConnection())
-                    {
-                        gridOrderConnectedItems.DataSource = DB.GetDataTable(conn, query, CommandType.Text, new[] {
-                            new SqlParameter("@aid", selectedOrderId),
-                            new SqlParameter("@astid", orderSampleTypeId),
-                            new SqlParameter("@apmid", orderPrepMethId)
-                        });
-                        gridOrderConnectedItems.Columns["id"].Visible = false;
-                    }
                     break;
 
                 case 2:
-                    query = @"
-select
-	convert(nvarchar(50), s.number) + '/' + convert(nvarchar(50), p.number) + '/' + convert(nvarchar(50), anal.number) as 'Analyses',
-    am.name as 'Method',
-    anal.specter_reference as 'Spec.ref.',
-    ws.name as 'Status'
-from analysis anal
-	inner join preparation p on anal.preparation_id = p.id and p.assignment_id = @aid
-	inner join sample s on p.sample_id = s.id
+                    orderSampleTypeId = Guid.Parse(e.Node.Parent.Parent.Name);
+                    break;
+            }
+
+            string query = @"
+select s.id, s.number as 'Name', st.name as 'Type', sc.name as 'Comp.', sa.person_name as 'Sampler'
+from sample s
 	inner join sample_x_assignment_sample_type sxast on s.id = sxast.sample_id
 	inner join assignment_sample_type ast on ast.id = sxast.assignment_sample_type_id and ast.id = @astid
-	inner join assignment_preparation_method apm on apm.assignment_sample_type_id = ast.id and apm.id = @apmid
-	inner join assignment_analysis_method aam on aam.assignment_preparation_method_id = apm.id and aam.id = @aamid
-	inner join assignment a on a.id = ast.assignment_id and a.id = @aid
-    left outer join analysis_method am on am.id = anal.analysis_method_id
-    inner join workflow_status ws on ws.id = anal.workflow_status_id
-where anal.assignment_id = @aid
-order by s.number, p.number
-";
-                    orderSampleTypeId = Guid.Parse(e.Node.Parent.Parent.Name);
-                    orderPrepMethId = Guid.Parse(e.Node.Parent.Name);
-                    orderAnalMethId = Guid.Parse(e.Node.Name);
-                    using (SqlConnection conn = DB.OpenConnection())
-                    {
-                        gridOrderConnectedItems.DataSource = DB.GetDataTable(conn, query, CommandType.Text, new[] {
+	inner join assignment a on a.id = ast.assignment_id
+    inner join sample_type st on st.id = s.sample_type_id
+    left outer join sample_component sc on sc.id = s.sample_component_id
+    left outer join cv_sampler sa on sa.id = s.sampler_id
+where a.id = @aid
+order by s.number
+";            
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                gridOrderConnectedItems.DataSource = DB.GetDataTable(conn, query, CommandType.Text, new[] {
                             new SqlParameter("@aid", selectedOrderId),
-                            new SqlParameter("@astid", orderSampleTypeId),
-                            new SqlParameter("@apmid", orderPrepMethId),
-                            new SqlParameter("@aamid", orderAnalMethId),
+                            new SqlParameter("@astid", orderSampleTypeId)
                         });
-                    }
-                    break;
+                gridOrderConnectedItems.Columns["id"].Visible = false;
             }
         }        
 
@@ -4080,6 +4020,11 @@ select
         {
             FormCreateOrderReport form = new FormCreateOrderReport(selectedOrderId);
             form.ShowDialog();
+        }
+
+        private void layoutPrepAnalAnal_Resize(object sender, EventArgs e)
+        {
+            cboxPrepAnalAnalUnitType.Width = panelPrepAnalAnalUnit.Width / 2;
         }
     }    
 }

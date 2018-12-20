@@ -36,8 +36,6 @@ using PdfPTable = iTextSharp.text.pdf.PdfPTable;
 using PdfColumnText = iTextSharp.text.pdf.ColumnText;
 using PdfPCell = iTextSharp.text.pdf.PdfPCell;
 using PdfParagraph = iTextSharp.text.Paragraph;
-using PdfChapter = iTextSharp.text.Chapter;
-using PdfSection = iTextSharp.text.Section;
 using PdfChunk = iTextSharp.text.Chunk;
 using PdfFontFactory = iTextSharp.text.FontFactory;
 using System.IO;

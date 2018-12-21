@@ -275,6 +275,12 @@
     <Compile Include="FormReportViewer.Designer.cs">
       <DependentUpon>FormReportViewer.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormResetPassword.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormResetPassword.Designer.cs">
+      <DependentUpon>FormResetPassword.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormSampleComponent.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -497,6 +503,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormReportViewer.resx">
       <DependentUpon>FormReportViewer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormResetPassword.resx">
+      <DependentUpon>FormResetPassword.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormSampleComponent.resx">
       <DependentUpon>FormSampleComponent.cs</DependentUpon>

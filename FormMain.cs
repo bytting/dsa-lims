@@ -646,7 +646,19 @@ namespace DSA_lims
 
         private void miResetPass_Click(object sender, EventArgs e)
         {
-            // reset password
+            if(gridMetaUsers.SelectedRows.Count < 1)
+            {
+                MessageBox.Show("You must select a user first");
+                return;
+            }
+
+            Guid userId = Guid.Parse(gridMetaUsers.SelectedRows[0].Cells["id"].Value.ToString());
+            string username = gridMetaUsers.SelectedRows[0].Cells["username"].Value.ToString();
+            FormResetPassword form = new FormResetPassword(userId, username);
+            if(form.ShowDialog() == DialogResult.OK)
+            {
+                SetStatusMessage("Password updated for user " + username, StatusMessageType.Success);
+            }
         }
 
         private void miEditLaboratory_Click(object sender, EventArgs e)

@@ -57,7 +57,7 @@ namespace DSA_lims
 
         public static byte[] MakePasswordHash(string password, string username)
         {
-            return MakePasswordHash(Encoding.UTF8.GetBytes(password), Encoding.UTF8.GetBytes(username.Substring(0, 3)));
+            return MakePasswordHash(Encoding.UTF8.GetBytes(password), Encoding.UTF8.GetBytes(username.ToUpper().Substring(0, 3)));
         }
 
         private static byte[] MakePasswordHash(byte[] value, byte[] salt)

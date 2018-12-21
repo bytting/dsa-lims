@@ -246,7 +246,6 @@ create table role (
 )
 go
 
-insert into role values(NEWID(), 'LIMS Administrator')
 insert into role values(NEWID(), 'Laboratory Administrator')
 insert into role values(NEWID(), 'Laboratory Operator')
 insert into role values(NEWID(), 'Order Administrator')

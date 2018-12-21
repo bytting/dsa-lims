@@ -226,9 +226,9 @@ namespace DSA_lims
                 conn = new SqlConnection(settings.ConnectionString);
                 conn.Open();
 
-                SqlCommand cmd = new SqlCommand("select id, laboratory_id, password_hash from account where username = @username", conn);
+                SqlCommand cmd = new SqlCommand("select id, laboratory_id, password_hash from account where upper(username) = @username", conn);
                 cmd.CommandType = System.Data.CommandType.Text;
-                cmd.Parameters.AddWithValue("@username", username);
+                cmd.Parameters.AddWithValue("@username", username.ToUpper());
 
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {

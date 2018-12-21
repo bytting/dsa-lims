@@ -791,8 +791,6 @@ order by create_date desc";
 
         public static void PopulateOrderYears(SqlConnection conn, ComboBox cbox)
         {
-            cbox.Items.Clear();
-
             List<string> years = new List<string>();
             years.Add("");
 
@@ -808,19 +806,39 @@ order by create_date desc";
 
         public static void PopulateOrderWorkflowStatus(SqlConnection conn, ComboBox cbox)
         {
-            cbox.Items.Clear();
-
-            List<Lemma<int?, string>> stats = new List<Lemma<int?, string>>();
-            stats.Add(new Lemma<int?, string>(null, ""));
+            List<Lemma<int, string>> stats = new List<Lemma<int, string>>();
+            stats.Add(new Lemma<int, string>(0, ""));
 
             using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_workflow_status", CommandType.StoredProcedure))
             {
                 while (reader.Read())
                 {
-                    stats.Add(new Lemma<int?, string>(Convert.ToInt32(reader["id"]), reader["name"].ToString()));
+                    stats.Add(new Lemma<int, string>(Convert.ToInt32(reader["id"]), reader["name"].ToString()));
                 }
             }
             cbox.DataSource = stats;
+        }
+
+        public static void PopulateRoles(SqlConnection conn, Guid userId, ListBox lb)
+        {
+            List<Lemma<Guid, string>> roles = new List<Lemma<Guid, string>>();
+
+            string query = @"
+select id, name 
+from role r
+    inner join account_x_role axr on axr.role_id = r.id and axr.account_id = @account_id
+";
+            using (SqlDataReader reader = DB.GetDataReader(conn, query, CommandType.Text, new[] {
+                new SqlParameter("@account_id", userId)
+            }))
+            {
+                while (reader.Read())
+                {
+                    roles.Add(new Lemma<Guid, string>(Guid.Parse(reader["id"].ToString()), reader["name"].ToString()));
+                }
+            }
+
+            lb.DataSource = roles;
         }
     }
 }

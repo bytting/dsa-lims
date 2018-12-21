@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.menu = new System.Windows.Forms.MenuStrip();
             this.miFile = new System.Windows.Forms.ToolStripMenuItem();
@@ -698,12 +698,12 @@
             this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
             this.btnMetaUsersResetPass = new System.Windows.Forms.ToolStripButton();
             this.splitContainer18 = new System.Windows.Forms.SplitContainer();
-            this.listBox6 = new System.Windows.Forms.ListBox();
+            this.lbSysUsersRoles = new System.Windows.Forms.ListBox();
             this.toolsSysUsersRoles = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel28 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator12 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButton56 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton57 = new System.Windows.Forms.ToolStripButton();
+            this.btnSysUsersAddRoles = new System.Windows.Forms.ToolStripButton();
+            this.btnSysUsersRemRoles = new System.Windows.Forms.ToolStripButton();
             this.listBox7 = new System.Windows.Forms.ListBox();
             this.toolsSysUsersAnalMeth = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel29 = new System.Windows.Forms.ToolStripLabel();
@@ -4324,14 +4324,14 @@
             this.gridOrderConnectedItems.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.gridOrderConnectedItems.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
             this.gridOrderConnectedItems.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.ButtonFace;
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.gridOrderConnectedItems.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.ButtonFace;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.gridOrderConnectedItems.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.gridOrderConnectedItems.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridOrderConnectedItems.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gridOrderConnectedItems.GridColor = System.Drawing.SystemColors.ButtonFace;
@@ -7983,6 +7983,7 @@
             this.gridMetaUsers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.gridMetaUsers.Size = new System.Drawing.Size(648, 567);
             this.gridMetaUsers.TabIndex = 0;
+            this.gridMetaUsers.SelectionChanged += new System.EventHandler(this.gridMetaUsers_SelectionChanged);
             // 
             // toolsSysUsers
             // 
@@ -8063,7 +8064,7 @@
             // 
             // splitContainer18.Panel1
             // 
-            this.splitContainer18.Panel1.Controls.Add(this.listBox6);
+            this.splitContainer18.Panel1.Controls.Add(this.lbSysUsersRoles);
             this.splitContainer18.Panel1.Controls.Add(this.toolsSysUsersRoles);
             // 
             // splitContainer18.Panel2
@@ -8075,15 +8076,16 @@
             this.splitContainer18.SplitterWidth = 3;
             this.splitContainer18.TabIndex = 3;
             // 
-            // listBox6
+            // lbSysUsersRoles
             // 
-            this.listBox6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listBox6.FormattingEnabled = true;
-            this.listBox6.ItemHeight = 15;
-            this.listBox6.Location = new System.Drawing.Point(0, 25);
-            this.listBox6.Name = "listBox6";
-            this.listBox6.Size = new System.Drawing.Size(457, 251);
-            this.listBox6.TabIndex = 1;
+            this.lbSysUsersRoles.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lbSysUsersRoles.FormattingEnabled = true;
+            this.lbSysUsersRoles.ItemHeight = 15;
+            this.lbSysUsersRoles.Location = new System.Drawing.Point(0, 25);
+            this.lbSysUsersRoles.Name = "lbSysUsersRoles";
+            this.lbSysUsersRoles.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+            this.lbSysUsersRoles.Size = new System.Drawing.Size(457, 251);
+            this.lbSysUsersRoles.TabIndex = 1;
             // 
             // toolsSysUsersRoles
             // 
@@ -8091,8 +8093,8 @@
             this.toolsSysUsersRoles.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripLabel28,
             this.toolStripSeparator12,
-            this.toolStripButton56,
-            this.toolStripButton57});
+            this.btnSysUsersAddRoles,
+            this.btnSysUsersRemRoles});
             this.toolsSysUsersRoles.Location = new System.Drawing.Point(0, 0);
             this.toolsSysUsersRoles.Name = "toolsSysUsersRoles";
             this.toolsSysUsersRoles.Size = new System.Drawing.Size(457, 25);
@@ -8111,21 +8113,23 @@
             this.toolStripSeparator12.Name = "toolStripSeparator12";
             this.toolStripSeparator12.Size = new System.Drawing.Size(6, 25);
             // 
-            // toolStripButton56
+            // btnSysUsersAddRoles
             // 
-            this.toolStripButton56.Image = global::DSA_lims.Properties.Resources._new;
-            this.toolStripButton56.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton56.Name = "toolStripButton56";
-            this.toolStripButton56.Size = new System.Drawing.Size(49, 22);
-            this.toolStripButton56.Text = "Add";
+            this.btnSysUsersAddRoles.Image = global::DSA_lims.Properties.Resources._new;
+            this.btnSysUsersAddRoles.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSysUsersAddRoles.Name = "btnSysUsersAddRoles";
+            this.btnSysUsersAddRoles.Size = new System.Drawing.Size(49, 22);
+            this.btnSysUsersAddRoles.Text = "Add";
+            this.btnSysUsersAddRoles.Click += new System.EventHandler(this.btnSysUsersAddRoles_Click);
             // 
-            // toolStripButton57
+            // btnSysUsersRemRoles
             // 
-            this.toolStripButton57.Image = global::DSA_lims.Properties.Resources.delete;
-            this.toolStripButton57.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton57.Name = "toolStripButton57";
-            this.toolStripButton57.Size = new System.Drawing.Size(70, 22);
-            this.toolStripButton57.Text = "Remove";
+            this.btnSysUsersRemRoles.Image = global::DSA_lims.Properties.Resources.delete;
+            this.btnSysUsersRemRoles.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSysUsersRemRoles.Name = "btnSysUsersRemRoles";
+            this.btnSysUsersRemRoles.Size = new System.Drawing.Size(70, 22);
+            this.btnSysUsersRemRoles.Text = "Remove";
+            this.btnSysUsersRemRoles.Click += new System.EventHandler(this.btnSysUsersRemRoles_Click);
             // 
             // listBox7
             // 
@@ -11518,12 +11522,12 @@
         private System.Windows.Forms.ToolStripMenuItem miCompanyEdit;
         private System.Windows.Forms.ToolStripMenuItem miCompanyDelete;
         private System.Windows.Forms.SplitContainer splitContainer18;
-        private System.Windows.Forms.ListBox listBox6;
+        private System.Windows.Forms.ListBox lbSysUsersRoles;
         private System.Windows.Forms.ToolStrip toolsSysUsersRoles;
         private System.Windows.Forms.ToolStripLabel toolStripLabel28;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator12;
-        private System.Windows.Forms.ToolStripButton toolStripButton56;
-        private System.Windows.Forms.ToolStripButton toolStripButton57;
+        private System.Windows.Forms.ToolStripButton btnSysUsersAddRoles;
+        private System.Windows.Forms.ToolStripButton btnSysUsersRemRoles;
         private System.Windows.Forms.ListBox listBox7;
         private System.Windows.Forms.ToolStrip toolsSysUsersAnalMeth;
         private System.Windows.Forms.ToolStripLabel toolStripLabel29;

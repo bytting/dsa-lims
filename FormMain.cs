@@ -3982,10 +3982,11 @@ select
                     adapter.SelectCommand.Parameters.AddWithValue("@year", Convert.ToInt32(cboxOrdersYear.Text));
                 }
 
-                if (cboxOrdersWorkflowStatus.SelectedValue != null)
+                int wstat = Convert.ToInt32(cboxOrdersWorkflowStatus.SelectedValue);
+                if (wstat != 0)
                 {
                     query += " and a.workflow_status_id = @workflow_status_id";
-                    adapter.SelectCommand.Parameters.AddWithValue("@workflow_status_id", cboxOrdersWorkflowStatus.SelectedValue);
+                    adapter.SelectCommand.Parameters.AddWithValue("@workflow_status_id", wstat);
                 }
 
                 query += " order by a.create_date desc";
@@ -4034,8 +4035,8 @@ select
         {
             populateOrdersDisabled = true;
             cboxOrdersLaboratory.SelectedValue = Guid.Empty;
-            cboxOrdersYear.SelectedValue = null;
-            cboxOrdersWorkflowStatus.SelectedValue = Guid.Empty;
+            cboxOrdersYear.Text = "";
+            cboxOrdersWorkflowStatus.SelectedValue = 0;
             populateOrdersDisabled = false;
             PopulateOrders();
         }
@@ -4164,6 +4165,86 @@ where id = @id
             finally
             {
                 conn?.Close();
+            }
+        }
+
+        private void btnSysUsersAddRoles_Click(object sender, EventArgs e)
+        {
+            if(Common.Username.ToUpper() != "LIMSADMINISTRATOR")
+            {
+                MessageBox.Show("You must log in as LIMSAdministrator to manage roles");
+                return;
+            }
+
+            if(gridMetaUsers.SelectedRows.Count < 1)
+            {
+                MessageBox.Show("You must select a user first");
+                return;
+            }
+
+            Guid userId = Guid.Parse(gridMetaUsers.SelectedRows[0].Cells["id"].Value.ToString());
+            List<Guid> existingRoles = new List<Guid>();
+            foreach (Lemma<Guid, string> l in lbSysUsersRoles.Items)
+                existingRoles.Add(l.Id);
+
+            FormAccountXRoles form = new FormAccountXRoles(userId, existingRoles);
+            if (form.ShowDialog() != DialogResult.OK)
+                return;
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                UI.PopulateRoles(conn, userId, lbSysUsersRoles);
+            }
+        }
+
+        private void gridMetaUsers_SelectionChanged(object sender, EventArgs e)
+        {
+            if (gridMetaUsers.SelectedRows.Count < 1)
+                return;
+
+            Guid uid = Guid.Parse(gridMetaUsers.SelectedRows[0].Cells["id"].Value.ToString());
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                UI.PopulateRoles(conn, uid, lbSysUsersRoles);
+            }
+        }
+
+        private void btnSysUsersRemRoles_Click(object sender, EventArgs e)
+        {
+            if (Common.Username.ToUpper() != "LIMSADMINISTRATOR")
+            {
+                MessageBox.Show("You must log in as LIMSAdministrator to manage roles");
+                return;
+            }
+
+            if (gridMetaUsers.SelectedRows.Count < 1)
+            {
+                MessageBox.Show("You must select a user first");
+                return;
+            }
+
+            Guid userId = Guid.Parse(gridMetaUsers.SelectedRows[0].Cells["id"].Value.ToString());
+
+            if (lbSysUsersRoles.SelectedItems.Count < 1)
+            {
+                MessageBox.Show("You must select one or more roles first");
+                return;
+            }
+
+            string query = "delete from account_x_role where account_id = @account_id and role_id = @role_id";
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                SqlCommand cmd = new SqlCommand(query, conn);
+                foreach(Lemma<Guid, string> l in lbSysUsersRoles.SelectedItems)
+                {
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.AddWithValue("@account_id", userId);
+                    cmd.Parameters.AddWithValue("@role_id", l.Id);
+                    cmd.ExecuteNonQuery();
+                }
+
+                UI.PopulateRoles(conn, userId, lbSysUsersRoles);
             }
         }
     }    

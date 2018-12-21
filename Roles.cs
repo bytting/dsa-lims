@@ -19,22 +19,33 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
-using log4net;
 
 namespace DSA_lims
 {
-    public static class Common
-    {
-        public static ILog Log = null;
+    public static class Role
+    {        
+        public const string LaboratoryAdministrator = "Laboratory Administrator";
+        public const string LaboratoryOperator = "Laboratory Operator";
+        public const string OrderAdministrator = "Order Administrator";
+        public const string OrderOperator = "Order Operator";
+        public const string SampleRegistration = "Sample Registration";
+        public const string Spectator = "Spectator";
+    }
 
-        public static DSASettings Settings = new DSASettings();
+    public static class Roles
+    {        
+        public static List<string> UserRoles = new List<string>();
 
-        public static Guid UserId { get; set; }
-        public static string Username { get; set; }        
+        public static bool UserHasRole(string roleName)
+        {
+            return UserRoles.Exists(x => x == roleName.ToUpper());
+        }
 
-        public static Guid LabId { get; set; }
-
-        public static List<SampleTypeModel> SampleTypeList = new List<SampleTypeModel>();
+        public static bool UserIsAdmin()
+        {
+            return Common.Username.ToUpper() == "LIMSADMINISTRATOR";
+        }
     }
 }

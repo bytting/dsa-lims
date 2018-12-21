@@ -502,5 +502,25 @@ order by name
 
             return o.ToString();
         }
+
+        public static void LoadUserRoles(SqlConnection conn, Guid userId, ref List<string> userRoles)
+        {
+            userRoles.Clear();
+
+            string query = @"
+select r.name 
+from role r
+    inner join account_x_role axr on axr.role_id = r.id and axr.account_id = @account_id
+";
+            using (SqlDataReader reader = DB.GetDataReader(conn, query, CommandType.Text, new[] {
+                new SqlParameter("@account_id", userId)
+            }))
+            {
+                while(reader.Read())
+                {
+                    userRoles.Add(reader["name"].ToString().ToUpper());
+                }
+            }
+        }
     }
 }

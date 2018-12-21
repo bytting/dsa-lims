@@ -393,6 +393,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>lang_nb.resx</DependentUpon>
     </Compile>
+    <Compile Include="Roles.cs" />
     <Compile Include="SqlServerTypes\Loader.cs" />
     <Compile Include="Types.cs" />
     <Compile Include="Program.cs" />

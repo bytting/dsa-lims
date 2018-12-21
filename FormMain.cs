@@ -328,18 +328,31 @@ namespace DSA_lims
         }
 
         private void ShowLogin()
-        {
+        {            
             Common.UserId = Guid.Empty;
-            Common.Username = String.Empty;                        
+            Common.Username = String.Empty;
             Common.LabId = Guid.Empty;
+            Roles.UserRoles.Clear();            
 
             FormLogin formLogin = new FormLogin(Common.Settings);
-            if (formLogin.ShowDialog() != DialogResult.OK)            
-                Close();                            
+            if (formLogin.ShowDialog() != DialogResult.OK)
+            {
+                Application.Exit();
+            }
 
             Common.UserId = formLogin.UserId;
             Common.Username = formLogin.UserName;
             Common.LabId = formLogin.LabId;
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                DB.LoadUserRoles(conn, Common.UserId, ref Roles.UserRoles);
+            }
+
+            if (tabs.SelectedTab != tabMenu)
+                tabs.SelectedTab = tabMenu;
+            else
+                tabs_SelectedIndexChanged(null, null);
         }
 
         public void SaveSettings(string settingsFilename)
@@ -397,6 +410,11 @@ namespace DSA_lims
             {
                 tbMenuLookup.Text = "";
                 ActiveControl = tbMenuLookup;
+                if (!Roles.UserIsAdmin() && !Roles.UserHasRole(Role.OrderAdministrator) && !Roles.UserHasRole(Role.OrderOperator))
+                {                    
+                    btnMenuNewOrder.Enabled = false;
+                    btnOrders.Enabled = false;
+                }
             }
             else if (tabs.SelectedTab == tabSample)
             {
@@ -4117,6 +4135,12 @@ where id = @id
 
         private void btnOrderSaveApprovedLaboratory_Click(object sender, EventArgs e)
         {
+            if(!Roles.UserIsAdmin() && !Roles.UserHasRole(Role.OrderAdministrator))
+            {
+                MessageBox.Show("You are not authorized to approve orders");
+                return;
+            }
+
             SqlConnection conn = null;
             try
             {
@@ -4170,7 +4194,7 @@ where id = @id
 
         private void btnSysUsersAddRoles_Click(object sender, EventArgs e)
         {
-            if(Common.Username.ToUpper() != "LIMSADMINISTRATOR")
+            if(!Roles.UserIsAdmin())
             {
                 MessageBox.Show("You must log in as LIMSAdministrator to manage roles");
                 return;
@@ -4211,7 +4235,7 @@ where id = @id
 
         private void btnSysUsersRemRoles_Click(object sender, EventArgs e)
         {
-            if (Common.Username.ToUpper() != "LIMSADMINISTRATOR")
+            if (!Roles.UserIsAdmin())
             {
                 MessageBox.Show("You must log in as LIMSAdministrator to manage roles");
                 return;

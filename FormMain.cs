@@ -351,8 +351,8 @@ namespace DSA_lims
 
             if (tabs.SelectedTab != tabMenu)
                 tabs.SelectedTab = tabMenu;
-            else
-                tabs_SelectedIndexChanged(null, null);
+            
+            tabs_SelectedIndexChanged(null, null);
         }
 
         public void SaveSettings(string settingsFilename)

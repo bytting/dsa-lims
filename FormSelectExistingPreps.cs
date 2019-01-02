@@ -36,7 +36,7 @@ from preparation p
     inner join preparation_method pm on pm.id = p.preparation_method_id
     left outer join preparation_geometry pg on pg.id = p.preparation_geometry_id
 where p.sample_id = @sample_id and p.laboratory_id = @laboratory_id 
-order by p.create_date desc";
+order by p.number";
 
                 gridPreparations.DataSource = DB.GetDataTable(conn, query, CommandType.Text,
                     new SqlParameter("@sample_id", DB.MakeParam(typeof(Guid), SampleId)),

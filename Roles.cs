@@ -39,8 +39,9 @@ namespace DSA_lims
         public static List<string> UserRoles = new List<string>();
 
         public static bool HasAccess(params string[] roleNames)
-        {            
-            return IsAdmin() || UserRoles.Intersect(roleNames).Any();
+        {
+            string[] roles = Array.ConvertAll(roleNames, x => x.ToUpper());
+            return IsAdmin() || UserRoles.Intersect(roles).Any();
         }
 
         public static bool IsAdmin()

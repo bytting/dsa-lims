@@ -75,13 +75,13 @@ namespace DSA_lims
 
         private void btnOk_Click(object sender, EventArgs e)
         {
-            if(!Utils.IsValidGuid(cboxLaboratory.SelectedValue))
+            if (!Utils.IsValidGuid(cboxLaboratory.SelectedValue))
             {
                 MessageBox.Show("You must select a laboratory first");
                 return;
             }
 
-            if(gridOrders.SelectedRows.Count < 1)
+            if (gridOrders.SelectedRows.Count < 1)
             {
                 MessageBox.Show("You must select a order first");
                 return;
@@ -95,7 +95,7 @@ namespace DSA_lims
 
             TreeNode tnode = treeOrderLines.SelectedNode;
 
-            if(tnode.Level != 0)
+            if (tnode.Level != 0)
             {
                 MessageBox.Show("You must select a top level order line for this sample");
                 return;
@@ -119,18 +119,46 @@ where sxast.sample_id = @sid";
                     new SqlParameter("@sid", SampleId),
                     new SqlParameter("@aid", SelectedOrderId)
                 });
-            }
 
-            if(o != null && o != DBNull.Value)
-            {
-                int cnt = Convert.ToInt32(o);
-                if(cnt > 0)
+                if (o != null && o != DBNull.Value)
                 {
-                    MessageBox.Show("This sample is already added to this order");
-                    return;
+                    int cnt = Convert.ToInt32(o);
+                    if (cnt > 0)
+                    {
+                        MessageBox.Show("This sample is already added to this order");
+                        return;
+                    }
+                }
+
+                foreach (TreeNode tn in tnode.Nodes)
+                {
+                    Guid prepMethLineId = Guid.Parse(tn.Name);
+
+                    o = DB.GetScalar(conn, "select preparation_laboratory_id from assignment_preparation_method where id = @id", CommandType.Text,
+                        new SqlParameter("@id", prepMethLineId));
+                    if (o != null && o != DBNull.Value)
+                    {
+                        if (tn.Tag == null)
+                        {
+                            MessageBox.Show("You must select external preparations");
+                            return;
+                        }
+                        else
+                        {
+                            o = DB.GetScalar(conn, "select preparation_method_count from assignment_preparation_method where id = @id", CommandType.Text,
+                                new SqlParameter("@id", prepMethLineId));
+                            int cnt = Convert.ToInt32(o);
+                            List<Guid> prepList = tn.Tag as List<Guid>;
+                            if (prepList.Count != cnt)
+                            {
+                                MessageBox.Show("Wrong number of external preparations");
+                                return;
+                            }
+                        }
+                    }
                 }
             }
-
+         
             GenerateOrderPreparations(SampleId, SelectedLaboratoryId, SelectedOrderId, SelectedOrderLineId, tnode.Nodes);
 
             DialogResult = DialogResult.OK;

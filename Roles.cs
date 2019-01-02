@@ -38,12 +38,12 @@ namespace DSA_lims
     {        
         public static List<string> UserRoles = new List<string>();
 
-        public static bool UserHasRole(string roleName)
-        {
-            return UserRoles.Exists(x => x == roleName.ToUpper());
+        public static bool HasAccess(params string[] roleNames)
+        {            
+            return IsAdmin() || UserRoles.Intersect(roleNames).Any();
         }
 
-        public static bool UserIsAdmin()
+        public static bool IsAdmin()
         {
             return Common.Username.ToUpper() == "LIMSADMINISTRATOR";
         }

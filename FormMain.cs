@@ -410,7 +410,7 @@ namespace DSA_lims
             {
                 tbMenuLookup.Text = "";
                 ActiveControl = tbMenuLookup;
-                if (!Roles.UserIsAdmin() && !Roles.UserHasRole(Role.OrderAdministrator) && !Roles.UserHasRole(Role.OrderOperator))
+                if (!Roles.HasAccess(Role.OrderAdministrator, Role.OrderOperator))
                 {                    
                     btnMenuNewOrder.Enabled = false;
                     btnOrders.Enabled = false;
@@ -4147,7 +4147,7 @@ where id = @id
 
         private void btnOrderSaveApprovedLaboratory_Click(object sender, EventArgs e)
         {
-            if(!Roles.UserIsAdmin() && !Roles.UserHasRole(Role.OrderAdministrator))
+            if(!Roles.HasAccess(Role.OrderAdministrator))
             {
                 MessageBox.Show("You are not authorized to approve orders");
                 return;
@@ -4206,7 +4206,7 @@ where id = @id
 
         private void btnSysUsersAddRoles_Click(object sender, EventArgs e)
         {
-            if(!Roles.UserIsAdmin())
+            if(!Roles.IsAdmin())
             {
                 MessageBox.Show("You must log in as LIMSAdministrator to manage roles");
                 return;
@@ -4239,6 +4239,18 @@ where id = @id
                 return;
 
             Guid uid = Guid.Parse(gridMetaUsers.SelectedRows[0].Cells["id"].Value.ToString());
+
+            if(Roles.IsAdmin() || uid == Common.UserId)
+            {
+                miResetPass.Enabled = true;
+                btnMetaUsersResetPass.Enabled = true;
+            }
+            else
+            {
+                miResetPass.Enabled = false;
+                btnMetaUsersResetPass.Enabled = false;
+            }
+
             using (SqlConnection conn = DB.OpenConnection())
             {
                 UI.PopulateRoles(conn, uid, lbSysUsersRoles);
@@ -4247,7 +4259,7 @@ where id = @id
 
         private void btnSysUsersRemRoles_Click(object sender, EventArgs e)
         {
-            if (!Roles.UserIsAdmin())
+            if (!Roles.IsAdmin())
             {
                 MessageBox.Show("You must log in as LIMSAdministrator to manage roles");
                 return;

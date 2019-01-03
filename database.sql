@@ -3529,7 +3529,7 @@ as
 		pm.name as 'project_main_name',
 		ps.name as 'project_sub_name',
 		sta.name as 'station_name',
-		sa.name as 'sampler_name',
+		sa.person_name as 'sampler_name',
 		sm.name as 'sampling_method_name',
 		(select number from sample where id = s.transform_from_id) as 'split_parent',	
 		(select number from sample where id = s.transform_to_id) as 'merge_child',

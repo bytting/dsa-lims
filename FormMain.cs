@@ -3212,12 +3212,18 @@ where p.id = @pid
                 {
                     reader.Read();
 
-                    DateTime refDate = Convert.ToDateTime(reader["reference_date"]);
+                    string refDateStr = "";
+                    object o = reader["reference_date"];
+                    if(o != null && o != DBNull.Value)
+                    {
+                        DateTime refDate = Convert.ToDateTime(reader["reference_date"]);
+                        refDateStr = refDate.ToString(Utils.DateFormatNorwegian);
+                    }                        
 
                     tnode.ToolTipText = "Component: " + reader["sample_component_name"].ToString() + Environment.NewLine
                         + "External Id: " + reader["external_id"].ToString() + Environment.NewLine
                         + "Project: " + reader["project_name"].ToString() + Environment.NewLine
-                        + "Reference date: " + refDate.ToString(Utils.DateFormatNorwegian);
+                        + "Reference date: " + refDateStr;
 
                     tbPrepAnalInfoComment.Text = reader["comment"].ToString();                    
                     tbPrepAnalWetWeight.Text = reader["wet_weight_g"].ToString();
@@ -3447,20 +3453,20 @@ insert into analysis_result values(
             if (form.ShowDialog() != DialogResult.OK)
                 return;
 
-            tbSampleSamplingDateFrom.Text = form.SelectedDateTime.ToString(Utils.DateTimeFormatNorwegian);
             tbSampleSamplingDateFrom.Tag = form.SelectedDateTime;
+            tbSampleSamplingDateFrom.Text = form.SelectedDateTime.ToString(Utils.DateTimeFormatNorwegian);            
         }
 
         private void btnSampleSamplingDateFromClear_Click(object sender, EventArgs e)
-        {
-            tbSampleSamplingDateFrom.Text = "";
+        {            
             tbSampleSamplingDateFrom.Tag = null;
+            tbSampleSamplingDateFrom.Text = "";
         }
 
         private void btnSampleSamplingDateToClear_Click(object sender, EventArgs e)
-        {
-            tbSampleSamplingDateTo.Text = "";
+        {            
             tbSampleSamplingDateTo.Tag = null;
+            tbSampleSamplingDateTo.Text = "";
         }
 
         private void btnSampleSamplingDateTo_Click(object sender, EventArgs e)
@@ -3469,14 +3475,14 @@ insert into analysis_result values(
             if (form.ShowDialog() != DialogResult.OK)
                 return;
 
-            tbSampleSamplingDateTo.Text = form.SelectedDateTime.ToString(Utils.DateTimeFormatNorwegian);
             tbSampleSamplingDateTo.Tag = form.SelectedDateTime;
+            tbSampleSamplingDateTo.Text = form.SelectedDateTime.ToString(Utils.DateTimeFormatNorwegian);            
         }
 
         private void btnSampleReferenceDateClear_Click(object sender, EventArgs e)
-        {
-            tbSampleReferenceDate.Text = "";
+        {            
             tbSampleReferenceDate.Tag = null;
+            tbSampleReferenceDate.Text = "";
         }
 
         private void btnSampleReferenceDate_Click(object sender, EventArgs e)
@@ -3485,8 +3491,8 @@ insert into analysis_result values(
             if (form.ShowDialog() != DialogResult.OK)
                 return;
 
-            tbSampleReferenceDate.Text = form.SelectedDateTime.ToString(Utils.DateTimeFormatNorwegian);
             tbSampleReferenceDate.Tag = form.SelectedDateTime;
+            tbSampleReferenceDate.Text = form.SelectedDateTime.ToString(Utils.DateTimeFormatNorwegian);            
         }
 
         private void cboxSampleLaboratory_SelectedIndexChanged(object sender, EventArgs e)
@@ -4294,6 +4300,38 @@ where id = @id
 
                 UI.PopulateRoles(conn, userId, lbSysUsersRoles);
             }
+        }
+
+        private void tbSampleSamplingDateFrom_TextChanged(object sender, EventArgs e)
+        {
+            if(String.IsNullOrEmpty(tbSampleSamplingDateFrom.Text))            
+                return;
+
+            if (tbSampleSamplingDateTo.Tag == null)
+            {
+                DateTime sdf = (DateTime)tbSampleSamplingDateFrom.Tag;
+                tbSampleReferenceDate.Tag = sdf;
+                tbSampleReferenceDate.Text = sdf.ToString(Utils.DateTimeFormatNorwegian);
+            }
+            else
+            {
+                DateTime sdf = (DateTime)tbSampleSamplingDateFrom.Tag;
+                DateTime sdt = (DateTime)tbSampleSamplingDateTo.Tag;
+                long addTicks = (sdt.Ticks - sdf.Ticks) / 2;
+                DateTime rd = new DateTime(sdf.Ticks + addTicks);
+                tbSampleReferenceDate.Tag = rd;
+                tbSampleReferenceDate.Text = rd.ToString(Utils.DateTimeFormatNorwegian);
+            }
+        }
+
+        private void tbSampleSamplingDateTo_TextChanged(object sender, EventArgs e)
+        {
+            //
+        }
+
+        private void tbSampleReferenceDate_TextChanged(object sender, EventArgs e)
+        {
+            //
         }
     }    
 }

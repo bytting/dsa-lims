@@ -4302,20 +4302,41 @@ where id = @id
             }
         }
 
+        DateTime CurrentDate()
+        {
+            DateTime n = DateTime.Now;
+            return new DateTime(n.Year, n.Month, n.Day, 23, 59, 59);
+        }
+
         private void tbSampleSamplingDateFrom_TextChanged(object sender, EventArgs e)
         {
-            if(String.IsNullOrEmpty(tbSampleSamplingDateFrom.Text))            
+            if (String.IsNullOrEmpty(tbSampleSamplingDateFrom.Text))
+            {
+                if (tbSampleSamplingDateTo.Tag != null)
+                {
+                    DateTime sdt = (DateTime)tbSampleSamplingDateTo.Tag;
+                    tbSampleReferenceDate.Tag = sdt;
+                    tbSampleReferenceDate.Text = sdt.ToString(Utils.DateTimeFormatNorwegian);
+                }
                 return;
+            }
+
+            DateTime sdf = (DateTime)tbSampleSamplingDateFrom.Tag;
+            if(sdf > CurrentDate())
+            {
+                MessageBox.Show("Sampling time from must be earlier than current time");
+                tbSampleSamplingDateFrom.Tag = null;
+                tbSampleSamplingDateFrom.Text = "";
+                return;
+            }
 
             if (tbSampleSamplingDateTo.Tag == null)
-            {
-                DateTime sdf = (DateTime)tbSampleSamplingDateFrom.Tag;
+            {            
                 tbSampleReferenceDate.Tag = sdf;
                 tbSampleReferenceDate.Text = sdf.ToString(Utils.DateTimeFormatNorwegian);
             }
             else
-            {
-                DateTime sdf = (DateTime)tbSampleSamplingDateFrom.Tag;
+            {                
                 DateTime sdt = (DateTime)tbSampleSamplingDateTo.Tag;
                 long addTicks = (sdt.Ticks - sdf.Ticks) / 2;
                 DateTime rd = new DateTime(sdf.Ticks + addTicks);
@@ -4326,7 +4347,39 @@ where id = @id
 
         private void tbSampleSamplingDateTo_TextChanged(object sender, EventArgs e)
         {
-            //
+            if (String.IsNullOrEmpty(tbSampleSamplingDateTo.Text))
+            {
+                if (tbSampleSamplingDateFrom.Tag != null)
+                {
+                    DateTime sdf = (DateTime)tbSampleSamplingDateFrom.Tag;
+                    tbSampleReferenceDate.Tag = sdf;
+                    tbSampleReferenceDate.Text = sdf.ToString(Utils.DateTimeFormatNorwegian);
+                }
+                return;
+            }
+
+            DateTime sdt = (DateTime)tbSampleSamplingDateTo.Tag;
+            if (sdt > CurrentDate())
+            {
+                MessageBox.Show("Sampling time to must be earlier than current time");
+                tbSampleSamplingDateTo.Tag = null;
+                tbSampleSamplingDateTo.Text = "";
+                return;
+            }
+
+            if (tbSampleSamplingDateFrom.Tag == null)
+            {                
+                tbSampleReferenceDate.Tag = sdt;
+                tbSampleReferenceDate.Text = sdt.ToString(Utils.DateTimeFormatNorwegian);
+            }
+            else
+            {
+                DateTime sdf = (DateTime)tbSampleSamplingDateFrom.Tag;
+                long addTicks = (sdt.Ticks - sdf.Ticks) / 2;
+                DateTime rd = new DateTime(sdf.Ticks + addTicks);
+                tbSampleReferenceDate.Tag = rd;
+                tbSampleReferenceDate.Text = rd.ToString(Utils.DateTimeFormatNorwegian);
+            }
         }
 
         private void tbSampleReferenceDate_TextChanged(object sender, EventArgs e)

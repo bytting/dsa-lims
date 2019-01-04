@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.menu = new System.Windows.Forms.MenuStrip();
             this.miFile = new System.Windows.Forms.ToolStripMenuItem();
@@ -196,7 +196,7 @@
             this.btnMenuCustomer = new System.Windows.Forms.Button();
             this.btnMenuProjects = new System.Windows.Forms.Button();
             this.btnMenuNewSample = new System.Windows.Forms.Button();
-            this.button8 = new System.Windows.Forms.Button();
+            this.btnMenuSamples = new System.Windows.Forms.Button();
             this.lblMenuSamples = new System.Windows.Forms.Label();
             this.tbMenuLookup = new System.Windows.Forms.TextBox();
             this.lblMenuOrders = new System.Windows.Forms.Label();
@@ -1761,7 +1761,7 @@
             // miSamplesImportExcel
             // 
             this.miSamplesImportExcel.Name = "miSamplesImportExcel";
-            this.miSamplesImportExcel.Size = new System.Drawing.Size(100, 22);
+            this.miSamplesImportExcel.Size = new System.Drawing.Size(152, 22);
             this.miSamplesImportExcel.Text = "Excel";
             this.miSamplesImportExcel.Click += new System.EventHandler(this.miSamplesImportExcel_Click);
             // 
@@ -2509,7 +2509,7 @@
             this.layoutMenu.Controls.Add(this.btnMenuCustomer, 1, 2);
             this.layoutMenu.Controls.Add(this.btnMenuProjects, 0, 2);
             this.layoutMenu.Controls.Add(this.btnMenuNewSample, 0, 1);
-            this.layoutMenu.Controls.Add(this.button8, 1, 1);
+            this.layoutMenu.Controls.Add(this.btnMenuSamples, 1, 1);
             this.layoutMenu.Controls.Add(this.lblMenuSamples, 0, 0);
             this.layoutMenu.Controls.Add(this.tbMenuLookup, 1, 0);
             this.layoutMenu.Controls.Add(this.lblMenuOrders, 2, 0);
@@ -2604,21 +2604,21 @@
             this.btnMenuNewSample.UseVisualStyleBackColor = true;
             this.btnMenuNewSample.Click += new System.EventHandler(this.miSamplesNew_Click);
             // 
-            // button8
+            // btnMenuSamples
             // 
-            this.button8.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.button8.Font = new System.Drawing.Font("Arial", 16F, System.Drawing.FontStyle.Bold);
-            this.button8.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.button8.Image = global::DSA_lims.Properties.Resources.drawer_gray;
-            this.button8.Location = new System.Drawing.Point(281, 33);
-            this.button8.Margin = new System.Windows.Forms.Padding(1);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(278, 295);
-            this.button8.TabIndex = 1;
-            this.button8.Text = "Samples";
-            this.button8.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.button8.UseVisualStyleBackColor = true;
-            this.button8.Click += new System.EventHandler(this.btnSamples_Click);
+            this.btnMenuSamples.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnMenuSamples.Font = new System.Drawing.Font("Arial", 16F, System.Drawing.FontStyle.Bold);
+            this.btnMenuSamples.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.btnMenuSamples.Image = global::DSA_lims.Properties.Resources.drawer_gray;
+            this.btnMenuSamples.Location = new System.Drawing.Point(281, 33);
+            this.btnMenuSamples.Margin = new System.Windows.Forms.Padding(1);
+            this.btnMenuSamples.Name = "btnMenuSamples";
+            this.btnMenuSamples.Size = new System.Drawing.Size(278, 295);
+            this.btnMenuSamples.TabIndex = 1;
+            this.btnMenuSamples.Text = "Samples";
+            this.btnMenuSamples.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnMenuSamples.UseVisualStyleBackColor = true;
+            this.btnMenuSamples.Click += new System.EventHandler(this.btnSamples_Click);
             // 
             // lblMenuSamples
             // 
@@ -4328,14 +4328,14 @@
             this.gridOrderConnectedItems.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.gridOrderConnectedItems.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
             this.gridOrderConnectedItems.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.ButtonFace;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.gridOrderConnectedItems.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.ButtonFace;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.gridOrderConnectedItems.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.gridOrderConnectedItems.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridOrderConnectedItems.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gridOrderConnectedItems.GridColor = System.Drawing.SystemColors.ButtonFace;
@@ -10820,7 +10820,7 @@
         private System.Windows.Forms.DataGridView gridSamples;
         private System.Windows.Forms.TableLayoutPanel layoutMenu;
         private System.Windows.Forms.Button btnMenuNewSample;
-        private System.Windows.Forms.Button button8;
+        private System.Windows.Forms.Button btnMenuSamples;
         private System.Windows.Forms.Label lblMenuSamples;
         private System.Windows.Forms.Label lblMenuOrders;
         private System.Windows.Forms.Button btnMenuNewOrder;

@@ -40,7 +40,7 @@ namespace DSA_lims
 
         public string SamplerName
         {
-            get { return p.ContainsKey("name") ? p["name"].ToString() : String.Empty; }
+            get { return p.ContainsKey("person_name") ? p["person_name"].ToString() : String.Empty; }
         }
 
         public FormSampler()
@@ -89,7 +89,7 @@ namespace DSA_lims
                     cboxPersons.SelectedValue = reader["person_id"];
                     cboxCompanies.SelectedValue = reader["company_id"];
                     cboxInstanceStatus.SelectedValue = reader["instance_status_id"];
-                    tbComment.Text = reader["comment"].ToString();
+                    tbComment.Text = reader["comment"].ToString();            
                     p["create_date"] = reader["create_date"];
                     p["created_by"] = reader["created_by"];
                     p["update_date"] = reader["update_date"];
@@ -113,6 +113,7 @@ namespace DSA_lims
             }
 
             p["person_id"] = cboxPersons.SelectedValue;
+            p["person_name"] = cboxPersons.Text;
             p["company_id"] = cboxCompanies.SelectedValue;
             p["instance_status_id"] = cboxInstanceStatus.SelectedValue;
             p["comment"] = tbComment.Text.Trim();

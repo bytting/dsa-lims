@@ -188,6 +188,13 @@ namespace DSA_lims
                 return;
 
             DateTime selectedDate = form.SelectedDate;
+
+            if(selectedDate < Common.CurrentDate(false))
+            {
+                MessageBox.Show("Deadline can not be in the past");
+                return;
+            }
+
             tbDeadline.Tag = selectedDate;
             tbDeadline.Text = selectedDate.ToString(Utils.DateFormatNorwegian);
         }

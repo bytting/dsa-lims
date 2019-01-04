@@ -410,10 +410,25 @@ namespace DSA_lims
             {
                 tbMenuLookup.Text = "";
                 ActiveControl = tbMenuLookup;
+
                 if (!Roles.HasAccess(Role.OrderAdministrator, Role.OrderOperator))
                 {                    
-                    btnMenuNewOrder.Enabled = false;
-                    btnOrders.Enabled = false;
+                    btnMenuNewOrder.Enabled = btnOrders.Enabled = false;
+                }
+                else
+                {
+                    btnMenuNewOrder.Enabled = btnOrders.Enabled = true;
+                }
+
+                if (!Roles.HasAccess(Role.SampleRegistration))
+                {
+                    miSamplesNew.Enabled = miSamplesImport.Enabled = miSamplesEdit.Enabled = miSamplesDelete.Enabled = false;
+                    btnMenuSamples.Enabled = btnMenuNewSample.Enabled = false;
+                }
+                else
+                {
+                    miSamplesNew.Enabled = miSamplesImport.Enabled = miSamplesEdit.Enabled = miSamplesDelete.Enabled = true;
+                    btnMenuSamples.Enabled = btnMenuNewSample.Enabled = true;
                 }
             }
             else if (tabs.SelectedTab == tabSample)
@@ -1235,7 +1250,7 @@ namespace DSA_lims
                     {
                         UI.PopulateSamplers(conn, gridMetaSamplers);
 
-                        UI.PopulateComboBoxes(conn, "csp_select_samplers", new[] {
+                        UI.PopulateComboBoxes(conn, "csp_select_samplers_short", new[] {
                             new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
                         }, cboxSampleInfoSampler);
                     }                        
@@ -1265,7 +1280,8 @@ namespace DSA_lims
                     using (SqlConnection conn = DB.OpenConnection())
                     {
                         UI.PopulateSamplers(conn, gridMetaSamplers);                        
-                        UI.PopulateComboBoxes(conn, "csp_select_samplers", new[] {
+
+                        UI.PopulateComboBoxes(conn, "csp_select_samplers_short", new[] {
                             new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
                         }, cboxSampleInfoSampler);
                     }                        
@@ -4300,13 +4316,7 @@ where id = @id
 
                 UI.PopulateRoles(conn, userId, lbSysUsersRoles);
             }
-        }
-
-        DateTime CurrentDate()
-        {
-            DateTime n = DateTime.Now;
-            return new DateTime(n.Year, n.Month, n.Day, 23, 59, 59);
-        }
+        }        
 
         private void tbSampleSamplingDateFrom_TextChanged(object sender, EventArgs e)
         {
@@ -4322,7 +4332,7 @@ where id = @id
             }
 
             DateTime sdf = (DateTime)tbSampleSamplingDateFrom.Tag;
-            if(sdf > CurrentDate())
+            if(sdf > Common.CurrentDate(true))
             {
                 MessageBox.Show("Sampling time from must be earlier than current time");
                 tbSampleSamplingDateFrom.Tag = null;
@@ -4359,7 +4369,7 @@ where id = @id
             }
 
             DateTime sdt = (DateTime)tbSampleSamplingDateTo.Tag;
-            if (sdt > CurrentDate())
+            if (sdt > Common.CurrentDate(true))
             {
                 MessageBox.Show("Sampling time to must be earlier than current time");
                 tbSampleSamplingDateTo.Tag = null;

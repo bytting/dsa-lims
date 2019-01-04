@@ -50,15 +50,15 @@
             this.panel1.Controls.Add(this.btnCancel);
             this.panel1.Controls.Add(this.btnCreate);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 202);
+            this.panel1.Location = new System.Drawing.Point(0, 155);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(690, 28);
+            this.panel1.Size = new System.Drawing.Size(637, 28);
             this.panel1.TabIndex = 9;
             // 
             // btnCancel
             // 
             this.btnCancel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnCancel.Location = new System.Drawing.Point(456, 0);
+            this.btnCancel.Location = new System.Drawing.Point(403, 0);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(117, 28);
             this.btnCancel.TabIndex = 1;
@@ -69,7 +69,7 @@
             // btnCreate
             // 
             this.btnCreate.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnCreate.Location = new System.Drawing.Point(573, 0);
+            this.btnCreate.Location = new System.Drawing.Point(520, 0);
             this.btnCreate.Name = "btnCreate";
             this.btnCreate.Size = new System.Drawing.Size(117, 28);
             this.btnCreate.TabIndex = 0;
@@ -80,7 +80,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(27, 43);
+            this.label1.Location = new System.Drawing.Point(22, 28);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(65, 13);
             this.label1.TabIndex = 10;
@@ -92,9 +92,9 @@
             this.cboxSampleType.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.cboxSampleType.DisplayMember = "Name";
             this.cboxSampleType.FormattingEnabled = true;
-            this.cboxSampleType.Location = new System.Drawing.Point(127, 39);
+            this.cboxSampleType.Location = new System.Drawing.Point(128, 24);
             this.cboxSampleType.Name = "cboxSampleType";
-            this.cboxSampleType.Size = new System.Drawing.Size(492, 21);
+            this.cboxSampleType.Size = new System.Drawing.Size(448, 21);
             this.cboxSampleType.TabIndex = 11;
             this.cboxSampleType.ValueMember = "Id";
             this.cboxSampleType.SelectedIndexChanged += new System.EventHandler(this.cboxSampleType_SelectedIndexChanged);
@@ -102,16 +102,16 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(27, 97);
+            this.label2.Location = new System.Drawing.Point(22, 82);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(40, 13);
+            this.label2.Size = new System.Drawing.Size(100, 13);
             this.label2.TabIndex = 12;
-            this.label2.Text = "Project";
+            this.label2.Text = "Project/Sub-Project";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(27, 126);
+            this.label3.Location = new System.Drawing.Point(22, 111);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(57, 13);
             this.label3.TabIndex = 13;
@@ -122,9 +122,9 @@
             this.cboxLaboratory.DisplayMember = "Name";
             this.cboxLaboratory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxLaboratory.FormattingEnabled = true;
-            this.cboxLaboratory.Location = new System.Drawing.Point(127, 123);
+            this.cboxLaboratory.Location = new System.Drawing.Point(128, 108);
             this.cboxLaboratory.Name = "cboxLaboratory";
-            this.cboxLaboratory.Size = new System.Drawing.Size(269, 21);
+            this.cboxLaboratory.Size = new System.Drawing.Size(234, 21);
             this.cboxLaboratory.TabIndex = 14;
             this.cboxLaboratory.ValueMember = "Id";
             // 
@@ -133,9 +133,9 @@
             this.cboxProjectMain.DisplayMember = "Name";
             this.cboxProjectMain.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxProjectMain.FormattingEnabled = true;
-            this.cboxProjectMain.Location = new System.Drawing.Point(127, 94);
+            this.cboxProjectMain.Location = new System.Drawing.Point(128, 79);
             this.cboxProjectMain.Name = "cboxProjectMain";
-            this.cboxProjectMain.Size = new System.Drawing.Size(269, 21);
+            this.cboxProjectMain.Size = new System.Drawing.Size(234, 21);
             this.cboxProjectMain.TabIndex = 15;
             this.cboxProjectMain.ValueMember = "Id";
             this.cboxProjectMain.SelectedIndexChanged += new System.EventHandler(this.cboxProjectMain_SelectedIndexChanged);
@@ -145,15 +145,15 @@
             this.cboxProjectSub.DisplayMember = "Name";
             this.cboxProjectSub.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxProjectSub.FormattingEnabled = true;
-            this.cboxProjectSub.Location = new System.Drawing.Point(402, 94);
+            this.cboxProjectSub.Location = new System.Drawing.Point(368, 79);
             this.cboxProjectSub.Name = "cboxProjectSub";
-            this.cboxProjectSub.Size = new System.Drawing.Size(258, 21);
+            this.cboxProjectSub.Size = new System.Drawing.Size(244, 21);
             this.cboxProjectSub.TabIndex = 16;
             this.cboxProjectSub.ValueMember = "Id";
             // 
             // btnSelectSampleType
             // 
-            this.btnSelectSampleType.Location = new System.Drawing.Point(625, 38);
+            this.btnSelectSampleType.Location = new System.Drawing.Point(577, 23);
             this.btnSelectSampleType.Name = "btnSelectSampleType";
             this.btnSelectSampleType.Size = new System.Drawing.Size(35, 23);
             this.btnSelectSampleType.TabIndex = 17;
@@ -164,7 +164,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(27, 68);
+            this.label4.Location = new System.Drawing.Point(22, 53);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(98, 13);
             this.label4.TabIndex = 18;
@@ -175,9 +175,9 @@
             this.cboxSampleComponent.DisplayMember = "Name";
             this.cboxSampleComponent.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxSampleComponent.FormattingEnabled = true;
-            this.cboxSampleComponent.Location = new System.Drawing.Point(127, 65);
+            this.cboxSampleComponent.Location = new System.Drawing.Point(128, 50);
             this.cboxSampleComponent.Name = "cboxSampleComponent";
-            this.cboxSampleComponent.Size = new System.Drawing.Size(269, 21);
+            this.cboxSampleComponent.Size = new System.Drawing.Size(234, 21);
             this.cboxSampleComponent.TabIndex = 19;
             this.cboxSampleComponent.ValueMember = "Id";
             // 
@@ -185,7 +185,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(690, 230);
+            this.ClientSize = new System.Drawing.Size(637, 183);
             this.Controls.Add(this.cboxSampleComponent);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.btnSelectSampleType);

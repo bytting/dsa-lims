@@ -36,5 +36,15 @@ namespace DSA_lims
         public static Guid LabId { get; set; }
 
         public static List<SampleTypeModel> SampleTypeList = new List<SampleTypeModel>();
+
+        public static DateTime CurrentDate(bool inclusive)
+        {
+            DateTime n = DateTime.Now;
+
+            if (inclusive)            
+                return new DateTime(n.Year, n.Month, n.Day, 23, 59, 59);            
+            else            
+                return new DateTime(n.Year, n.Month, n.Day, 0, 0, 1);            
+        }
     }
 }

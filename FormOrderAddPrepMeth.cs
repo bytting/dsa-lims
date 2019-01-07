@@ -37,6 +37,8 @@ namespace DSA_lims
         {
             InitializeComponent();
 
+            tbCount.KeyPress += CustomEvents.Integer_KeyPress;
+
             OrderSampleTypeId = orderSampleTypeId;
             cbPrepsAlreadyExists.Checked = false;
             cboxPrepMethLaboratory.Enabled = false;

@@ -19,6 +19,8 @@ namespace DSA_lims
         {
             InitializeComponent();
 
+            tbNumSamples.KeyPress += CustomEvents.Integer_KeyPress;
+
             OrderId = orderId;
             TreeSampleTypes = treeSampleTypes;
             UI.PopulateSampleTypes(TreeSampleTypes, cboxSampleType);

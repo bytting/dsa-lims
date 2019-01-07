@@ -1761,7 +1761,7 @@
             // miSamplesImportExcel
             // 
             this.miSamplesImportExcel.Name = "miSamplesImportExcel";
-            this.miSamplesImportExcel.Size = new System.Drawing.Size(152, 22);
+            this.miSamplesImportExcel.Size = new System.Drawing.Size(100, 22);
             this.miSamplesImportExcel.Text = "Excel";
             this.miSamplesImportExcel.Click += new System.EventHandler(this.miSamplesImportExcel_Click);
             // 

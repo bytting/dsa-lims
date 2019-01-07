@@ -38,6 +38,8 @@ namespace DSA_lims
         {
             InitializeComponent();
 
+            tbCount.KeyPress += CustomEvents.Integer_KeyPress;
+
             OrderPrepMethId = orderPrepMethId;
             using (SqlConnection conn = DB.OpenConnection())
             {                

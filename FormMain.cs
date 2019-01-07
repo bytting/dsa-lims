@@ -1632,38 +1632,38 @@ namespace DSA_lims
 
             if(map["sampling_date_from"] == DBNull.Value)
             {
-                tbSampleSamplingDateFrom.Text = "";
                 tbSampleSamplingDateFrom.Tag = null;
+                tbSampleSamplingDateFrom.Text = "";                
             }   
             else
             {
                 DateTime samplingDateFrom = Convert.ToDateTime(map["sampling_date_from"]);
-                tbSampleSamplingDateFrom.Text = samplingDateFrom.ToString(Utils.DateTimeFormatNorwegian);
                 tbSampleSamplingDateFrom.Tag = samplingDateFrom;
+                tbSampleSamplingDateFrom.Text = samplingDateFrom.ToString(Utils.DateTimeFormatNorwegian);                
             }
 
             if (map["sampling_date_to"] == DBNull.Value)
             {
-                tbSampleSamplingDateTo.Text = "";
                 tbSampleSamplingDateTo.Tag = null;
+                tbSampleSamplingDateTo.Text = "";                
             }
             else
             {
                 DateTime samplingDateTo = Convert.ToDateTime(map["sampling_date_to"]);
-                tbSampleSamplingDateTo.Text = samplingDateTo.ToString(Utils.DateTimeFormatNorwegian);
                 tbSampleSamplingDateTo.Tag = samplingDateTo;
+                tbSampleSamplingDateTo.Text = samplingDateTo.ToString(Utils.DateTimeFormatNorwegian);                
             }
 
             if (map["reference_date"] == DBNull.Value)
             {
-                tbSampleReferenceDate.Text = "";
                 tbSampleReferenceDate.Tag = null;
+                tbSampleReferenceDate.Text = "";                
             }
             else
             {
                 DateTime referenceDate = Convert.ToDateTime(map["reference_date"]);
-                tbSampleReferenceDate.Text = referenceDate.ToString(Utils.DateTimeFormatNorwegian);
                 tbSampleReferenceDate.Tag = referenceDate;
+                tbSampleReferenceDate.Text = referenceDate.ToString(Utils.DateTimeFormatNorwegian);                
             }
 
             tbSampleExId.Text = map["external_id"].ToString();
@@ -4348,6 +4348,13 @@ where id = @id
             else
             {                
                 DateTime sdt = (DateTime)tbSampleSamplingDateTo.Tag;
+                if (sdf > sdt)
+                {
+                    MessageBox.Show("Sampling time to must be later than sampling date from");
+                    tbSampleSamplingDateFrom.Tag = null;
+                    tbSampleSamplingDateFrom.Text = "";
+                    return;
+                }
                 long addTicks = (sdt.Ticks - sdf.Ticks) / 2;
                 DateTime rd = new DateTime(sdf.Ticks + addTicks);
                 tbSampleReferenceDate.Tag = rd;
@@ -4385,6 +4392,13 @@ where id = @id
             else
             {
                 DateTime sdf = (DateTime)tbSampleSamplingDateFrom.Tag;
+                if(sdf > sdt)
+                {
+                    MessageBox.Show("Sampling time to must be later than sampling date from");
+                    tbSampleSamplingDateTo.Tag = null;
+                    tbSampleSamplingDateTo.Text = "";
+                    return;
+                }
                 long addTicks = (sdt.Ticks - sdf.Ticks) / 2;
                 DateTime rd = new DateTime(sdf.Ticks + addTicks);
                 tbSampleReferenceDate.Tag = rd;

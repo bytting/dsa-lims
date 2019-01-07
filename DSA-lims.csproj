@@ -69,6 +69,10 @@
       <HintPath>packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="NTwain, Version=3.0.0.0, Culture=neutral, PublicKeyToken=f9f7e0c5169536c8, processorArchitecture=MSIL">
+      <HintPath>packages\NTwain.3.6.0\lib\net40-client\NTwain.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System">
       <Private>True</Private>
     </Reference>
@@ -369,6 +373,12 @@
     <Compile Include="FormSampTypeXPrepMeth.Designer.cs">
       <DependentUpon>FormSampTypeXPrepMeth.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormScan.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormScan.designer.cs">
+      <DependentUpon>FormScan.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormSelectCustomer.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -571,6 +581,9 @@
     <EmbeddedResource Include="FormSampTypeXPrepMeth.resx">
       <DependentUpon>FormSampTypeXPrepMeth.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormScan.resx">
+      <DependentUpon>FormScan.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormSelectCustomer.resx">
       <DependentUpon>FormSelectCustomer.cs</DependentUpon>
     </EmbeddedResource>
@@ -714,6 +727,7 @@
   <ItemGroup>
     <Content Include="comments.txt" />
     <Content Include="database.sql" />
+    <None Include="images\dsa_logo_64.png" />
     <Content Include="SqlServerTypes\readme.htm" />
     <Content Include="SqlServerTypes\x64\msvcr120.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

@@ -42,5 +42,10 @@ namespace DSA_lims
         public string LabelPrinterName { get; set; }
         public string LabelPrinterPaperName { get; set; }
         public bool LabelPrinterLandscape { get; set; }
+
+        public string ScannerName { get; set; }
+        public bool ScannerDuplex { get; set; }
+        public string ScannerFlipType { get; set; }
+        public string ScannerPixelType { get; set; }
     }
 }

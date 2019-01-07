@@ -840,5 +840,18 @@ from role r
 
             lb.DataSource = roles;
         }
+
+        public static void PopulateAttachments(SqlConnection conn, string sourceTable, Guid sampleId, DataGridView grid)
+        {
+            string query = "select id, name, file_extension from attachment where source_table = @source_table and source_id = @source_id order by create_date desc";
+            grid.DataSource = DB.GetDataTable(conn, query, CommandType.Text, new[] {
+                new SqlParameter("@source_table", sourceTable),
+                new SqlParameter("@source_id", sampleId)
+            });
+
+            grid.Columns["id"].Visible = false;            
+            grid.Columns["name"].HeaderText = "Name";
+            grid.Columns["file_extension"].HeaderText = "Ext.";
+        }
     }
 }

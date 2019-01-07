@@ -113,8 +113,7 @@ namespace DSA_lims
                 tbPrepAnalPrepAmount.KeyPress += CustomEvents.Numeric_KeyPress;
                 tbPrepAnalPrepQuantity.KeyPress += CustomEvents.Numeric_KeyPress;
 
-                tbMenuLookup.Text = "";
-                ActiveControl = tbMenuLookup;
+                tbMenuLookup.Text = "";                
 
                 panelSampleLatLonAlt_Resize(sender, e);
 
@@ -122,6 +121,7 @@ namespace DSA_lims
                 Common.Log.Info("Setting language " + CultureInfo.CurrentUICulture.TwoLetterISOLanguageName);
                 SetLanguageLabels(r);
 
+                populateSamplesDisabled = true;
                 using (SqlConnection conn = DB.OpenConnection())
                 {
                     DB.LoadSampleTypes(conn);
@@ -227,8 +227,10 @@ namespace DSA_lims
 
                     UI.PopulateOrderWorkflowStatus(conn, cboxOrdersWorkflowStatus);
                 }
-                
+                populateSamplesDisabled = false;
                 HideMenuItems();
+
+                ActiveControl = tbMenuLookup;
 
                 Common.Log.Info("Application loaded successfully");
             }
@@ -1697,6 +1699,9 @@ namespace DSA_lims
             tbSampleComment.Text = map["comment"].ToString();
             lblSampleToolId.Text = "[Sample] " + map["number"].ToString();
             lblSampleToolLaboratory.Text = String.IsNullOrEmpty(cboxSampleLaboratory.Text) ? "" : "[Laboratory] " + cboxSampleLaboratory.Text;
+
+            // Show attachments
+            UI.PopulateAttachments(conn, "sample", sampleId, gridSampleAttachments);
         }
 
         private void miSamplesDelete_Click(object sender, EventArgs e)
@@ -3883,16 +3888,23 @@ order by s.number
 
         private void tbSamplesLookup_KeyPress(object sender, KeyPressEventArgs e)
         {
+            if (String.IsNullOrEmpty(tbSamplesLookup.Text))
+                return;
+
             if (e.KeyChar == Convert.ToChar(Keys.Enter))
             {
                 int snum = Convert.ToInt32(tbSamplesLookup.Text);
-                foreach (DataGridViewRow row in gridSamples.Rows)
+                if(gridSamples.SelectedRows.Count == 1)
                 {
-                    int num = Convert.ToInt32(row.Cells["number"].Value);
-                    row.Selected = (num == snum);
+                    int selNum = Convert.ToInt32(gridSamples.SelectedRows[0].Cells["number"].Value);
+                    if (snum == selNum)
+                        miSamplesPrepAnal_Click(sender, e);
+                    else
+                        PopulateSamplesSingle(snum);
                 }
-                tbSamplesLookup.Text = "";
+                
                 e.Handled = true;
+                tbSamplesLookup.Text = "";
                 return;
             }
         }
@@ -3987,6 +3999,77 @@ select
 
                 gridSamples.Columns["reference_date"].DefaultCellStyle.Format = Utils.DateTimeFormatNorwegian;
             }
+
+            ActiveControl = tbSamplesLookup;
+        }
+
+        private void PopulateSamplesSingle(int sampleNumber)
+        {
+            cboxSamplesProjects.SelectedValue = Guid.Empty;
+            cboxSamplesProjectsSub.SelectedValue = Guid.Empty;
+            cboxSamplesOrders.SelectedValue = Guid.Empty;
+            cboxSamplesLaboratory.SelectedValue = Guid.Empty;            
+
+            string query = @"
+select
+		s.id,	
+		s.number,
+		s.external_id,
+		l.name as 'laboratory_name',
+		st.name as 'sample_type_name',	
+		sc.name as 'sample_component_name',        
+		pm.name + ' - ' + ps.name as 'project_name',
+		ss.name as 'sample_storage_name',
+		s.reference_date,
+		insta.name as 'instance_status_name',
+		s.locked_by,
+		(select number from sample where id = s.transform_from_id) as 'split_from',
+		(select number from sample where id = s.transform_to_id) as 'merge_to',
+		(select convert(varchar(80), number) + ', ' as 'data()' from sample where transform_to_id = s.id for XML PATH('')) as 'merge_from'
+	from sample s 
+		left outer join laboratory l on s.laboratory_id = l.id
+		left outer join sample_type st on s.sample_type_id = st.id
+		left outer join sample_storage ss on s.sample_storage_id = ss.id
+		left outer join sample_component sc on s.sample_component_id = sc.id
+		inner join project_sub ps on s.project_sub_id = ps.id
+		inner join project_main pm on pm.id = ps.project_main_id
+		inner join instance_status insta on s.instance_status_id = insta.id
+        left outer join sample_x_assignment_sample_type sxast on sxast.sample_id = s.id
+        left outer join assignment_sample_type ast on ast.id = sxast.assignment_sample_type_id
+        left outer join assignment a on a.id = ast.assignment_id	
+where s.number = @sample_number
+";
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                SqlDataAdapter adapter = new SqlDataAdapter(query, conn);                
+
+                adapter.SelectCommand.CommandText = query;
+                adapter.SelectCommand.CommandType = CommandType.Text;
+                adapter.SelectCommand.Parameters.AddWithValue("@sample_number", sampleNumber);
+                DataTable dt = new DataTable();
+                adapter.Fill(dt);
+                gridSamples.DataSource = dt;
+
+                gridSamples.Columns["id"].Visible = false;
+                gridSamples.Columns["merge_to"].Visible = false;
+
+                gridSamples.Columns["number"].HeaderText = "Sample number";
+                gridSamples.Columns["external_id"].HeaderText = "Ex.Id";
+                gridSamples.Columns["laboratory_name"].HeaderText = "Laboratory";
+                gridSamples.Columns["sample_type_name"].HeaderText = "Type";
+                gridSamples.Columns["sample_component_name"].HeaderText = "Component";
+                gridSamples.Columns["project_name"].HeaderText = "Project";
+                gridSamples.Columns["sample_storage_name"].HeaderText = "Storage";
+                gridSamples.Columns["reference_date"].HeaderText = "Ref.date";
+                gridSamples.Columns["instance_status_name"].HeaderText = "Status";
+                gridSamples.Columns["locked_by"].HeaderText = "Locked by";
+                gridSamples.Columns["split_from"].HeaderText = "Split from";
+                gridSamples.Columns["merge_from"].HeaderText = "Merge from";
+
+                gridSamples.Columns["reference_date"].DefaultCellStyle.Format = Utils.DateTimeFormatNorwegian;
+            }
+
+            ActiveControl = tbSamplesLookup;
         }
 
         private void cboxSamplesProjectsSub_SelectedIndexChanged(object sender, EventArgs e)
@@ -4462,6 +4545,91 @@ where id = @id
             );
 
             form.ShowDialog();
+        }
+
+        private void tbMenuLookup_KeyPress(object sender, KeyPressEventArgs e)
+        {            
+            if (String.IsNullOrEmpty(tbMenuLookup.Text))            
+                return;            
+
+            if (e.KeyChar == Convert.ToChar(Keys.Enter))
+            {
+                int snum = Convert.ToInt32(tbMenuLookup.Text);                
+                tabs.SelectedTab = tabSamples;
+                PopulateSamplesSingle(snum);                
+                tbMenuLookup.Text = "";
+                e.Handled = true;
+                return;
+            }
+        }
+
+        private void gridSamples_SelectionChanged(object sender, EventArgs e)
+        {
+            ActiveControl = tbSamplesLookup;
+        }
+
+        private void btnSampleScanAttachment_Click(object sender, EventArgs e)
+        {
+            FormScan form = new FormScan(Common.Settings);
+            if (form.ShowDialog() != DialogResult.OK)
+                return;
+                        
+            AddAttachment("sample", selectedSampleId, form.DocumentName, form.PdfData);
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                UI.PopulateAttachments(conn, "sample", selectedSampleId, gridSampleAttachments);
+            }
+        }
+
+        private void AddAttachment(string sourceTable, Guid sourceId, string docName, byte[] data)
+        {
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                SqlCommand cmd = new SqlCommand("insert into attachment values(@id, @source_table, @source_id, @name, @comment, @file_extension, @value, @create_date, @created_by)", conn);
+                cmd.Parameters.AddWithValue("@id", Guid.NewGuid());
+                cmd.Parameters.AddWithValue("@source_table", sourceTable);
+                cmd.Parameters.AddWithValue("@source_id", sourceId);
+                cmd.Parameters.AddWithValue("@name", docName);
+                cmd.Parameters.AddWithValue("@comment", DBNull.Value);
+                cmd.Parameters.AddWithValue("@file_extension", "PDF");
+                cmd.Parameters.AddWithValue("@value", data);
+                cmd.Parameters.AddWithValue("@create_date", DateTime.Now);
+                cmd.Parameters.AddWithValue("@created_by", Common.Username);
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        private void gridSampleAttachments_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            Guid id = Guid.Parse(gridSampleAttachments.Rows[e.RowIndex].Cells["id"].Value.ToString());
+            string fname = gridSampleAttachments.Rows[e.RowIndex].Cells["name"].Value.ToString();
+            string ext = gridSampleAttachments.Rows[e.RowIndex].Cells["file_extension"].Value.ToString();
+
+            string pathname = Path.GetTempPath() + "\\" + fname + "." + ext;
+            if (File.Exists(pathname))
+                try { File.Delete(pathname); } catch { }
+
+            byte[] data = null;
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                SqlCommand cmd = new SqlCommand("Select value from attachment where id = @id", conn);
+                cmd.Parameters.AddWithValue("@id", id);
+                data = (byte[])cmd.ExecuteScalar();
+            }
+                        
+            if (data != null)
+            {
+                try
+                {
+                    File.WriteAllBytes(pathname, data);
+                    Process.Start(pathname);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
         }
     }    
 }

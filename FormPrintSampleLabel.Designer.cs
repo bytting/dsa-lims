@@ -37,6 +37,10 @@
             this.cboxPaperSizes = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.cbLandscape = new System.Windows.Forms.CheckBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.tbReplications = new System.Windows.Forms.TextBox();
+            this.tbCopies = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -119,11 +123,49 @@
             this.cbLandscape.Text = "Landscape";
             this.cbLandscape.UseVisualStyleBackColor = true;
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(30, 211);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(112, 13);
+            this.label3.TabIndex = 12;
+            this.label3.Text = "Number of replications";
+            // 
+            // tbReplications
+            // 
+            this.tbReplications.Location = new System.Drawing.Point(33, 227);
+            this.tbReplications.MaxLength = 3;
+            this.tbReplications.Name = "tbReplications";
+            this.tbReplications.Size = new System.Drawing.Size(111, 20);
+            this.tbReplications.TabIndex = 13;
+            // 
+            // tbCopies
+            // 
+            this.tbCopies.Location = new System.Drawing.Point(33, 179);
+            this.tbCopies.MaxLength = 3;
+            this.tbCopies.Name = "tbCopies";
+            this.tbCopies.Size = new System.Drawing.Size(111, 20);
+            this.tbCopies.TabIndex = 14;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(32, 163);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(90, 13);
+            this.label4.TabIndex = 15;
+            this.label4.Text = "Number of copies";
+            // 
             // FormPrintSampleLabel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(403, 334);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.tbCopies);
+            this.Controls.Add(this.tbReplications);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.cbLandscape);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.cboxPaperSizes);
@@ -154,5 +196,9 @@
         private System.Windows.Forms.ComboBox cboxPaperSizes;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.CheckBox cbLandscape;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox tbReplications;
+        private System.Windows.Forms.TextBox tbCopies;
+        private System.Windows.Forms.Label label4;
     }
 }

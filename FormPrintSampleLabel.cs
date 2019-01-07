@@ -21,6 +21,8 @@ namespace DSA_lims
         string mLaboratory;
         string mSampleType;
 
+        string samplePart;
+
         PrintDocument printDocument = new PrintDocument();
 
         public FormPrintSampleLabel(
@@ -33,6 +35,12 @@ namespace DSA_lims
             string sampleType)
         {
             InitializeComponent();
+
+            tbCopies.Text = "1";            
+            tbCopies.KeyPress += CustomEvents.Integer_KeyPress;
+
+            tbReplications.Text = "1";
+            tbReplications.KeyPress += CustomEvents.Integer_KeyPress;
 
             mSettings = s;
             mSampleNumber = sampleNumber;
@@ -80,12 +88,45 @@ namespace DSA_lims
                 return;
             }
 
+            if (String.IsNullOrEmpty(tbCopies.Text))
+            {
+                MessageBox.Show("Number of copies must be a positive number");
+                return;
+            }
+
+            int copies = Convert.ToInt32(tbCopies.Text);
+            if (copies < 1)
+            {
+                MessageBox.Show("Number of copies must be a positive number");
+                return;
+            }
+
+            if (String.IsNullOrEmpty(tbReplications.Text))
+            {
+                MessageBox.Show("Number of repliactions must be a positive number");
+                return;
+            }            
+
+            int reps = Convert.ToInt32(tbReplications.Text);
+            if(reps < 1)
+            {
+                MessageBox.Show("Number of repliactions must be a positive number");
+                return;
+            }
+
             PaperSize paperSize = cboxPaperSizes.SelectedItem as PaperSize;            
             printDocument.DefaultPageSettings.Landscape = cbLandscape.Checked;            
             printDocument.DefaultPageSettings.PaperSize = paperSize;
 
             printDocument.PrintPage += PrintDocument_PrintPage;
-            printDocument.Print();
+            for (int c = 0; c < copies; c++)
+            {
+                for (int r = 1; r <= reps; r++)
+                {                    
+                    samplePart = r.ToString() + "/" + reps.ToString();
+                    printDocument.Print();
+                }
+            }
 
             mSettings.LabelPrinterName = cboxPrinters.Text;
             mSettings.LabelPrinterPaperName = paperSize.PaperName;
@@ -97,23 +138,22 @@ namespace DSA_lims
 
         private void PrintDocument_PrintPage(object sender, PrintPageEventArgs e)
         {
-            Font font = new Font("Free 3 of 9", 36);
-            Font font2 = new Font("Calibri", 11);
+            Font font = new Font("Free 3 of 9", 38);
+            Font font2 = new Font("Arial", 11);
             
             e.Graphics.DrawString("ID: " + mSampleNumber, font2, Brushes.Black, 5, 1);
-            e.Graphics.DrawString(mExternalSampleId, font2, Brushes.Black, 110, 1);
+            e.Graphics.DrawString(mExternalSampleId, font2, Brushes.Black, 90, 1);            
             e.Graphics.DrawString("Sample type: " + mSampleType, font2, Brushes.Black, 5, 15);
             e.Graphics.DrawString("Main project: " + mProjectMain, font2, Brushes.Black, 5, 30);
             e.Graphics.DrawString("Sub project: " + mProjectSub, font2, Brushes.Black, 5, 45);
-            e.Graphics.DrawString("Laboratory: " + mLaboratory, font2, Brushes.Black, 5, 60);            
+            e.Graphics.DrawString("Laboratory: " + mLaboratory, font2, Brushes.Black, 5, 60);
+            e.Graphics.DrawString("Batch: " + samplePart, font2, Brushes.Black, 220, 60);
             e.Graphics.DrawString("*" + mSampleNumber + "*", font, Brushes.Black, 5, 80);
-            /*if (samplePart != "1/1")
-                e.Graphics.DrawString("Reps: " + samplePart, font2, Brushes.Black, 150, 1);
 
-            int x = 140, y = 75, width = 150, height = 44;
-            e.Graphics.DrawImage(Properties.Resources.logo, x, y, width, height);
-            int u = 230, t = 5, width1 = 52, height1 = 46;
-            e.Graphics.DrawImage(Properties.Resources.Symbol, u, t, width1, height1);*/
+            Image img = Properties.Resources.dsa_logo_64;            
+            e.Graphics.DrawImage(img, 150f, 80f, (float)img.Width / 1.2f, (float)img.Height/1.2f);
+            //int u = 230, t = 5, width1 = 52, height1 = 46;
+            //e.Graphics.DrawImage(Properties.Resources.Symbol, u, t, width1, height1);
         }
 
         private void cboxPrinters_SelectedIndexChanged(object sender, EventArgs e)

@@ -39,5 +39,8 @@ namespace DSA_lims
         
         public bool UseActiveDirectoryCredentials { get; set; }
         public string ConnectionString { get; set; }
+        public string LabelPrinterName { get; set; }
+        public string LabelPrinterPaperName { get; set; }
+        public bool LabelPrinterLandscape { get; set; }
     }
 }

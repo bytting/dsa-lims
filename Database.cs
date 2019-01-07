@@ -522,5 +522,17 @@ from role r
                 }
             }
         }
-    }
+
+        public static bool SampleHasRequiredFields(SqlConnection conn, Guid sampleId)
+        {
+            object o = DB.GetScalar(conn, "select reference_date from sample where id = @id", CommandType.Text, new[] {
+                new SqlParameter("@id", sampleId)
+            });
+
+            if (o == null || o == DBNull.Value)
+                return false;
+
+            return true;
+        }
+    }    
 }

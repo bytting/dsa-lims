@@ -3504,6 +3504,7 @@
             this.btnSamplePrintSampleLabel.Name = "btnSamplePrintSampleLabel";
             this.btnSamplePrintSampleLabel.Size = new System.Drawing.Size(121, 22);
             this.btnSamplePrintSampleLabel.Text = "Print sample label";
+            this.btnSamplePrintSampleLabel.Click += new System.EventHandler(this.btnSamplePrintSampleLabel_Click);
             // 
             // panel21
             // 

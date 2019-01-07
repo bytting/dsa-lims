@@ -48,6 +48,8 @@ namespace DSA_lims
         private bool populateSamplesDisabled = false;
         private bool populateOrdersDisabled = false;
 
+        private int editingSampleNumber;
+
         public FormMain()
         {
             InitializeComponent();
@@ -1603,7 +1605,9 @@ namespace DSA_lims
                 map["update_date"] = reader["update_date"];
                 map["updated_by"] = reader["updated_by"];
             }
-            
+
+            editingSampleNumber = Convert.ToInt32(map["number"]);
+
             cboxSampleSampleType.SelectedValue = map["sample_type_id"];
             cboxSampleSampleComponent.SelectedValue = map["sample_component_id"];
             cboxSampleInfoSampler.SelectedValue = map["sampler_id"];
@@ -1615,8 +1619,17 @@ namespace DSA_lims
                 cboxSampleProject.SelectedValue = mpid;
                 cboxSampleSubProject.SelectedValue = map["project_sub_id"];
             }
-            
-            cboxSampleInfoStations.SelectedValue = map["station_id"];
+
+            if (!Utils.IsValidGuid(map["station_id"]))
+            {
+                if (map["latitude"] != DBNull.Value)
+                    tbSampleInfoLatitude.Text = map["latitude"].ToString();
+                if (map["longitude"] != DBNull.Value)
+                    tbSampleInfoLongitude.Text = map["longitude"].ToString();
+                if (map["altitude"] != DBNull.Value)
+                    tbSampleInfoAltitude.Text = map["altitude"].ToString();
+            }
+            else cboxSampleInfoStations.SelectedValue = map["station_id"];
 
             if (map["municipality_id"] != DBNull.Value)
             {
@@ -1630,7 +1643,11 @@ namespace DSA_lims
 
             cboxSampleLaboratory.SelectedValue = map["laboratory_id"];
 
-            if(map["sampling_date_from"] == DBNull.Value)
+            tbSampleSamplingDateFrom.TextChanged -= tbSampleSamplingDateFrom_TextChanged;
+            tbSampleSamplingDateTo.TextChanged -= tbSampleSamplingDateTo_TextChanged;
+            tbSampleReferenceDate.TextChanged -= tbSampleReferenceDate_TextChanged;
+
+            if (map["sampling_date_from"] == DBNull.Value)
             {
                 tbSampleSamplingDateFrom.Tag = null;
                 tbSampleSamplingDateFrom.Text = "";                
@@ -1640,7 +1657,7 @@ namespace DSA_lims
                 DateTime samplingDateFrom = Convert.ToDateTime(map["sampling_date_from"]);
                 tbSampleSamplingDateFrom.Tag = samplingDateFrom;
                 tbSampleSamplingDateFrom.Text = samplingDateFrom.ToString(Utils.DateTimeFormatNorwegian);                
-            }
+            }            
 
             if (map["sampling_date_to"] == DBNull.Value)
             {
@@ -1665,6 +1682,10 @@ namespace DSA_lims
                 tbSampleReferenceDate.Tag = referenceDate;
                 tbSampleReferenceDate.Text = referenceDate.ToString(Utils.DateTimeFormatNorwegian);                
             }
+
+            tbSampleSamplingDateFrom.TextChanged += tbSampleSamplingDateFrom_TextChanged;
+            tbSampleSamplingDateTo.TextChanged += tbSampleSamplingDateTo_TextChanged;
+            tbSampleReferenceDate.TextChanged += tbSampleReferenceDate_TextChanged;
 
             tbSampleExId.Text = map["external_id"].ToString();
             cbSampleConfidential.Checked = Convert.ToBoolean(map["confidential"]);
@@ -1829,7 +1850,8 @@ namespace DSA_lims
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                PopulatePrepAnal(conn, selectedSampleId);
+                if (!PopulatePrepAnal(conn, selectedSampleId))
+                    return;
             }
 
             ClearPrepAnalSample();
@@ -1839,8 +1861,14 @@ namespace DSA_lims
             tabs.SelectedTab = tabPrepAnal;
         }
 
-        private void PopulatePrepAnal(SqlConnection conn, Guid sampleId)
+        private bool PopulatePrepAnal(SqlConnection conn, Guid sampleId)
         {
+            if(!DB.SampleHasRequiredFields(conn, sampleId))
+            {
+                MessageBox.Show("This sample is not complete yet");
+                return false;
+            }
+
             treePrepAnal.Nodes.Clear();
             
             TreeNode sampleNode = null;
@@ -1906,6 +1934,7 @@ order by a.number
             }
 
             treePrepAnal.ExpandAll();
+            return true;
         }
 
         private void miSamplesSetExcempt_Click(object sender, EventArgs e)
@@ -2886,7 +2915,7 @@ order by s.number, p.number, a.number
 
         private void tabs_Deselecting(object sender, TabControlCancelEventArgs e)
         {
-            if(e.TabPage == tabSample || e.TabPage == tabPrepAnal)
+            if (e.TabPage == tabSample || e.TabPage == tabPrepAnal)
             {
                 using (SqlConnection conn = DB.OpenConnection())
                 {
@@ -3841,7 +3870,8 @@ order by s.number
         {
             using (SqlConnection conn = DB.OpenConnection())
             {
-                PopulatePrepAnal(conn, selectedSampleId);
+                if (!PopulatePrepAnal(conn, selectedSampleId))
+                    return;
             }
 
             ClearPrepAnalSample();
@@ -4409,6 +4439,29 @@ where id = @id
         private void tbSampleReferenceDate_TextChanged(object sender, EventArgs e)
         {
             //
+        }
+
+        private void btnSamplePrintSampleLabel_Click(object sender, EventArgs e)
+        {
+            string sampleType = cboxSampleSampleType.Text;
+            if(String.IsNullOrEmpty(sampleType))
+            {
+                MessageBox.Show("Missing sample type");
+                return;
+            }
+
+            string sampleTypeShort = sampleType.Split(new string[] { " -> " }, StringSplitOptions.RemoveEmptyEntries)[0];
+            FormPrintSampleLabel form = new FormPrintSampleLabel(
+                Common.Settings,
+                editingSampleNumber.ToString(),
+                lblSampleToolExId.Text,
+                cboxSampleProject.Text,
+                cboxSampleSubProject.Text, 
+                cboxSampleLaboratory.Text, 
+                sampleTypeShort
+            );
+
+            form.ShowDialog();
         }
     }    
 }

@@ -1587,8 +1587,7 @@ namespace DSA_lims
                 map["latitude"] = reader["latitude"];
                 map["longitude"] = reader["longitude"];
                 map["altitude"] = reader["altitude"];
-                map["sampling_date_from"] = reader["sampling_date_from"];
-                map["use_sampling_date_to"] = reader["use_sampling_date_to"];
+                map["sampling_date_from"] = reader["sampling_date_from"];                
                 map["sampling_date_to"] = reader["sampling_date_to"];
                 map["reference_date"] = reader["reference_date"];
                 map["external_id"] = reader["external_id"];
@@ -3001,8 +3000,7 @@ order by s.number, p.number, a.number
                 cmd.Parameters.AddWithValue("@latitude", DB.MakeParam(typeof(double), tbSampleInfoLatitude.Text.Trim()));
                 cmd.Parameters.AddWithValue("@longitude", DB.MakeParam(typeof(double), tbSampleInfoLongitude.Text.Trim()));
                 cmd.Parameters.AddWithValue("@altitude", DB.MakeParam(typeof(double), tbSampleInfoAltitude.Text.Trim()));
-                cmd.Parameters.AddWithValue("@sampling_date_from", DB.MakeParam(typeof(DateTime), tbSampleSamplingDateFrom.Tag));
-                cmd.Parameters.AddWithValue("@use_sampling_date_to", 0); // FIXME
+                cmd.Parameters.AddWithValue("@sampling_date_from", DB.MakeParam(typeof(DateTime), tbSampleSamplingDateFrom.Tag));                
                 cmd.Parameters.AddWithValue("@sampling_date_to", DB.MakeParam(typeof(DateTime), tbSampleSamplingDateTo.Tag));
                 cmd.Parameters.AddWithValue("@reference_date", DB.MakeParam(typeof(DateTime), tbSampleReferenceDate.Tag));
                 cmd.Parameters.AddWithValue("@external_id", DB.MakeParam(typeof(string), tbSampleExId.Text.Trim()));

@@ -69,8 +69,7 @@ namespace DSA_lims
                     map["latitude"] = reader["latitude"];
                     map["longitude"] = reader["longitude"];
                     map["altitude"] = reader["altitude"];
-                    map["sampling_date_from"] = reader["sampling_date_from"];
-                    map["use_sampling_date_to"] = reader["use_sampling_date_to"];
+                    map["sampling_date_from"] = reader["sampling_date_from"];                    
                     map["sampling_date_to"] = reader["sampling_date_to"];
                     map["reference_date"] = reader["reference_date"];
                     map["external_id"] = reader["external_id"];
@@ -102,8 +101,7 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@latitude", map["latitude"]);
                 cmd.Parameters.AddWithValue("@longitude", map["longitude"]);
                 cmd.Parameters.AddWithValue("@altitude", map["altitude"]);
-                cmd.Parameters.AddWithValue("@sampling_date_from", map["sampling_date_from"]);
-                cmd.Parameters.AddWithValue("@use_sampling_date_to", map["use_sampling_date_to"]);
+                cmd.Parameters.AddWithValue("@sampling_date_from", map["sampling_date_from"]);                
                 cmd.Parameters.AddWithValue("@sampling_date_to", map["sampling_date_to"]);
                 cmd.Parameters.AddWithValue("@reference_date", map["reference_date"]);
                 cmd.Parameters.AddWithValue("@external_id", map["external_id"]);

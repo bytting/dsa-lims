@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormScan));
             this.tblScan = new System.Windows.Forms.TableLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
             this.cboxScanner = new System.Windows.Forms.ComboBox();
@@ -65,31 +66,32 @@
             this.tblScan.Location = new System.Drawing.Point(0, 0);
             this.tblScan.Name = "tblScan";
             this.tblScan.RowCount = 7;
-            this.tblScan.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tblScan.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-            this.tblScan.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-            this.tblScan.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-            this.tblScan.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-            this.tblScan.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
+            this.tblScan.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 8F));
+            this.tblScan.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tblScan.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tblScan.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tblScan.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tblScan.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tblScan.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tblScan.Size = new System.Drawing.Size(438, 203);
+            this.tblScan.Size = new System.Drawing.Size(438, 183);
             this.tblScan.TabIndex = 0;
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(3, 20);
+            this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label1.Location = new System.Drawing.Point(3, 8);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(99, 15);
+            this.label1.Size = new System.Drawing.Size(103, 30);
             this.label1.TabIndex = 0;
             this.label1.Text = "Choose scanner";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // cboxScanner
             // 
             this.cboxScanner.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cboxScanner.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxScanner.FormattingEnabled = true;
-            this.cboxScanner.Location = new System.Drawing.Point(112, 23);
+            this.cboxScanner.Location = new System.Drawing.Point(112, 11);
             this.cboxScanner.Name = "cboxScanner";
             this.cboxScanner.Size = new System.Drawing.Size(323, 23);
             this.cboxScanner.TabIndex = 1;
@@ -97,38 +99,40 @@
             // cbDuplex
             // 
             this.cbDuplex.AutoSize = true;
-            this.cbDuplex.Location = new System.Drawing.Point(112, 55);
+            this.cbDuplex.Location = new System.Drawing.Point(112, 41);
             this.cbDuplex.Name = "cbDuplex";
-            this.cbDuplex.Size = new System.Drawing.Size(115, 19);
+            this.cbDuplex.Size = new System.Drawing.Size(113, 19);
             this.cbDuplex.TabIndex = 2;
             this.cbDuplex.Text = "Scan both sides";
             this.cbDuplex.UseVisualStyleBackColor = true;
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(3, 148);
+            this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label2.Location = new System.Drawing.Point(3, 128);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(99, 15);
+            this.label2.Size = new System.Drawing.Size(103, 30);
             this.label2.TabIndex = 3;
             this.label2.Text = "Document name";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // tbFileName
             // 
             this.tbFileName.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbFileName.Location = new System.Drawing.Point(112, 151);
+            this.tbFileName.Location = new System.Drawing.Point(112, 131);
             this.tbFileName.Name = "tbFileName";
             this.tbFileName.Size = new System.Drawing.Size(323, 21);
             this.tbFileName.TabIndex = 4;
             // 
             // label3
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(3, 84);
+            this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label3.Location = new System.Drawing.Point(3, 68);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(52, 15);
+            this.label3.Size = new System.Drawing.Size(103, 30);
             this.label3.TabIndex = 7;
             this.label3.Text = "Flip type";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // cboxFlipType
             // 
@@ -138,7 +142,7 @@
             this.cboxFlipType.Items.AddRange(new object[] {
             "Book",
             "Fanfold"});
-            this.cboxFlipType.Location = new System.Drawing.Point(112, 87);
+            this.cboxFlipType.Location = new System.Drawing.Point(112, 71);
             this.cboxFlipType.Name = "cboxFlipType";
             this.cboxFlipType.Size = new System.Drawing.Size(323, 23);
             this.cboxFlipType.TabIndex = 6;
@@ -151,19 +155,20 @@
             this.cboxPixelType.Items.AddRange(new object[] {
             "Color",
             "Black and White"});
-            this.cboxPixelType.Location = new System.Drawing.Point(112, 119);
+            this.cboxPixelType.Location = new System.Drawing.Point(112, 101);
             this.cboxPixelType.Name = "cboxPixelType";
             this.cboxPixelType.Size = new System.Drawing.Size(323, 23);
             this.cboxPixelType.TabIndex = 5;
             // 
             // label4
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(3, 116);
+            this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label4.Location = new System.Drawing.Point(3, 98);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(58, 15);
+            this.label4.Size = new System.Drawing.Size(103, 30);
             this.label4.TabIndex = 8;
             this.label4.Text = "Pixel type";
+            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // panel1
             // 
@@ -172,7 +177,7 @@
             this.panel1.Controls.Add(this.btnCancel);
             this.panel1.Controls.Add(this.btnStore);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 203);
+            this.panel1.Location = new System.Drawing.Point(0, 183);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(438, 30);
             this.panel1.TabIndex = 1;
@@ -227,15 +232,17 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(438, 233);
-            this.ControlBox = false;
+            this.ClientSize = new System.Drawing.Size(438, 213);
             this.Controls.Add(this.tblScan);
             this.Controls.Add(this.panel1);
-            this.Font = new System.Drawing.Font("Arial", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "FormScan";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Scanning";
+            this.Text = "DSA-Lims - Scanning";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormScan_FormClosing);
             this.Load += new System.EventHandler(this.FormScan_Load);
             this.tblScan.ResumeLayout(false);

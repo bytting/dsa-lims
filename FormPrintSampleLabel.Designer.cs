@@ -116,6 +116,8 @@
             // cbLandscape
             // 
             this.cbLandscape.AutoSize = true;
+            this.cbLandscape.Checked = true;
+            this.cbLandscape.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbLandscape.Location = new System.Drawing.Point(33, 132);
             this.cbLandscape.Name = "cbLandscape";
             this.cbLandscape.Size = new System.Drawing.Size(79, 17);

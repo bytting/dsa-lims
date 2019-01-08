@@ -61,7 +61,7 @@ namespace DSA_lims
 
         private void FormPrintSampleLabel_Load(object sender, EventArgs e)
         {
-            fontLabel = new Font("Arial", 11);
+            fontLabel = new Font("Arial", 10);
 
             string InstallationDirectory = Path.GetDirectoryName(Environment.GetCommandLineArgs()[0]);
             string fontFileName = InstallationDirectory + Path.DirectorySeparatorChar + "free3of9.ttf";
@@ -167,8 +167,8 @@ namespace DSA_lims
 
             if (Common.LabLogo != null)
             {
-                Image img = Utils.CropImageToHeight(Common.LabLogo, 60);
-                e.Graphics.DrawImage(img, 150f, 80f, (float)img.Width, (float)img.Height);
+                Image img = Utils.CropImageToHeight(Common.LabLogo, 50);
+                e.Graphics.DrawImage(img, 170f, 80f);
             }
         }
 

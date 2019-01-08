@@ -336,6 +336,8 @@ namespace DSA_lims
             Common.UserId = Guid.Empty;
             Common.Username = String.Empty;
             Common.LabId = Guid.Empty;
+            Common.LabLogo = null;
+            Common.LabAccredLogo = null;
             Roles.UserRoles.Clear();            
 
             FormLogin formLogin = new FormLogin(Common.Settings);
@@ -351,6 +353,23 @@ namespace DSA_lims
             using (SqlConnection conn = DB.OpenConnection())
             {
                 DB.LoadUserRoles(conn, Common.UserId, ref Roles.UserRoles);
+
+                if(Common.LabId != Guid.Empty)
+                {
+                    using (SqlDataReader reader = DB.GetDataReader(conn, "select laboratory_logo, accredited_logo from laboratory where id = @id", 
+                        CommandType.Text, new SqlParameter("@id", Common.LabId)))
+                    {
+                        if (reader.HasRows)
+                        {
+                            reader.Read();
+
+                            if(!reader.IsDBNull(0))
+                                Common.LabLogo = Image.FromStream(new MemoryStream((byte[])reader["laboratory_logo"]));
+                            if (!reader.IsDBNull(1))
+                                Common.LabAccredLogo = Image.FromStream(new MemoryStream((byte[])reader["accredited_logo"]));
+                        }
+                    }
+                }
             }
 
             if (tabs.SelectedTab != tabMenu)

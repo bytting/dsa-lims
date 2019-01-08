@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Drawing.Printing;
+using System.Drawing.Text;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +15,10 @@ namespace DSA_lims
 {
     public partial class FormPrintSampleLabel : Form
     {
+        PrivateFontCollection privateFonts = new PrivateFontCollection();
+        Font fontBarcode = null;
+        Font fontLabel = null;
+
         DSASettings mSettings = null;
         string mSampleNumber;
         string mExternalSampleId;
@@ -55,6 +61,17 @@ namespace DSA_lims
 
         private void FormPrintSampleLabel_Load(object sender, EventArgs e)
         {
+            fontLabel = new Font("Arial", 11);
+
+            string InstallationDirectory = Path.GetDirectoryName(Environment.GetCommandLineArgs()[0]);
+            string fontFileName = InstallationDirectory + Path.DirectorySeparatorChar + "free3of9.ttf";
+            if (File.Exists(fontFileName))
+            {
+                privateFonts.AddFontFile(InstallationDirectory + Path.DirectorySeparatorChar + "free3of9.ttf");
+                fontBarcode = new Font(privateFonts.Families[0], 38, FontStyle.Regular);
+            }
+            else fontBarcode = fontLabel;
+
             cboxPrinters.SelectedIndexChanged -= cboxPrinters_SelectedIndexChanged;
 
             foreach (string p in PrinterSettings.InstalledPrinters)            
@@ -137,23 +154,22 @@ namespace DSA_lims
         }
 
         private void PrintDocument_PrintPage(object sender, PrintPageEventArgs e)
-        {
-            Font font = new Font("Free 3 of 9", 38);
-            Font font2 = new Font("Arial", 11);
+        {            
             
-            e.Graphics.DrawString("ID: " + mSampleNumber, font2, Brushes.Black, 5, 1);
-            e.Graphics.DrawString(mExternalSampleId, font2, Brushes.Black, 90, 1);            
-            e.Graphics.DrawString("Sample type: " + mSampleType, font2, Brushes.Black, 5, 15);
-            e.Graphics.DrawString("Main project: " + mProjectMain, font2, Brushes.Black, 5, 30);
-            e.Graphics.DrawString("Sub project: " + mProjectSub, font2, Brushes.Black, 5, 45);
-            e.Graphics.DrawString("Laboratory: " + mLaboratory, font2, Brushes.Black, 5, 60);
-            e.Graphics.DrawString("Batch: " + samplePart, font2, Brushes.Black, 220, 60);
-            e.Graphics.DrawString("*" + mSampleNumber + "*", font, Brushes.Black, 5, 80);
+            e.Graphics.DrawString("ID: " + mSampleNumber, fontLabel, Brushes.Black, 5, 1);
+            e.Graphics.DrawString(mExternalSampleId, fontLabel, Brushes.Black, 90, 1);            
+            e.Graphics.DrawString("Sample type: " + mSampleType, fontLabel, Brushes.Black, 5, 15);
+            e.Graphics.DrawString("Main project: " + mProjectMain, fontLabel, Brushes.Black, 5, 30);
+            e.Graphics.DrawString("Sub project: " + mProjectSub, fontLabel, Brushes.Black, 5, 45);
+            e.Graphics.DrawString("Laboratory: " + mLaboratory, fontLabel, Brushes.Black, 5, 60);
+            e.Graphics.DrawString("Batch: " + samplePart, fontLabel, Brushes.Black, 220, 60);
+            e.Graphics.DrawString("*" + mSampleNumber + "*", fontBarcode, Brushes.Black, 5, 80);
 
-            Image img = Properties.Resources.dsa_logo_64;            
-            e.Graphics.DrawImage(img, 150f, 80f, (float)img.Width / 1.2f, (float)img.Height/1.2f);
-            //int u = 230, t = 5, width1 = 52, height1 = 46;
-            //e.Graphics.DrawImage(Properties.Resources.Symbol, u, t, width1, height1);
+            if (Common.LabLogo != null)
+            {
+                Image img = Utils.CropImageToHeight(Common.LabLogo, 60);
+                e.Graphics.DrawImage(img, 150f, 80f, (float)img.Width, (float)img.Height);
+            }
         }
 
         private void cboxPrinters_SelectedIndexChanged(object sender, EventArgs e)

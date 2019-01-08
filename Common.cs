@@ -21,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using log4net;
+using System.Drawing;
 
 namespace DSA_lims
 {
@@ -34,6 +35,8 @@ namespace DSA_lims
         public static string Username { get; set; }        
 
         public static Guid LabId { get; set; }
+        public static Image LabLogo { get; set; }
+        public static Image LabAccredLogo { get; set; }
 
         public static List<SampleTypeModel> SampleTypeList = new List<SampleTypeModel>();
 

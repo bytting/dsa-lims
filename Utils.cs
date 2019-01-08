@@ -18,6 +18,7 @@
 // Authors: Dag Robole,
 
 using System;
+using System.Drawing;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -69,6 +70,34 @@ namespace DSA_lims
         public static bool PasswordHashEqual(byte[] hash1, byte[] hash2)
         {
             return hash1.SequenceEqual(hash2);
+        }
+
+        public static Image CropImageToHeight(Image img, int height)
+        {
+            if (img.Height <= height)
+                return img;
+
+            double w = img.Width;
+            double h = img.Height;
+            double scaleFactor = (double)height / h;
+            w = w * scaleFactor;
+            h = h * scaleFactor;
+
+            return (Image)(new Bitmap(img, (int)w, (int)h));
+        }
+
+        public static Image CropImageToWidth(Image img, int width)
+        {
+            if (img.Width <= width)
+                return img;
+
+            double w = img.Width;
+            double h = img.Height;
+            double scaleFactor = (double)width / w;
+            w = w * scaleFactor;
+            h = h * scaleFactor;
+
+            return (Image)(new Bitmap(img, (int)w, (int)h));
         }
     }
 }

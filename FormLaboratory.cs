@@ -18,6 +18,7 @@
 // Authors: Dag Robole,
 
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -49,6 +50,9 @@ namespace DSA_lims
             InitializeComponent(); 
                        
             Text = "Create laboratory";
+            lblLaboratoryLogoSize.Text = "";
+            lblAccreditedLogoSize.Text = "";
+
             using (SqlConnection conn = DB.OpenConnection())
             {
                 cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, "csp_select_instance_status");
@@ -60,7 +64,9 @@ namespace DSA_lims
         {
             InitializeComponent();            
             p["id"] = lid;
-            Text = "Update laboratory";            
+            Text = "Update laboratory";
+            lblLaboratoryLogoSize.Text = "";
+            lblAccreditedLogoSize.Text = "";
 
             using (SqlConnection conn = DB.OpenConnection())
             {
@@ -82,6 +88,28 @@ namespace DSA_lims
                     tbPhone.Text = reader["phone"].ToString();
                     cboxInstanceStatus.SelectedValue = reader["instance_status_id"];
                     tbComment.Text = reader["comment"].ToString();
+
+                    if (reader["laboratory_logo"] != null && reader["laboratory_logo"] != DBNull.Value)
+                    {
+                        p["laboratory_logo"] = (byte[])reader["laboratory_logo"];
+                        picLaboratoryLogo.Image = Image.FromStream(new MemoryStream((byte[])p["laboratory_logo"]));
+                        lblLaboratoryLogoSize.Text = picLaboratoryLogo.Image.Width.ToString() + " x " + picLaboratoryLogo.Image.Height.ToString();
+                    }
+                    else
+                    {
+                        p["laboratory_logo"] = picLaboratoryLogo.Image = null;
+                    }
+
+                    if (reader["accredited_logo"] != null && reader["accredited_logo"] != DBNull.Value)
+                    {
+                        p["accredited_logo"] = (byte[])reader["accredited_logo"];
+                        picAccreditedLogo.Image = Image.FromStream(new MemoryStream((byte[])p["accredited_logo"]));
+                        lblAccreditedLogoSize.Text = picAccreditedLogo.Image.Width.ToString() + " x " + picAccreditedLogo.Image.Height.ToString();
+                    }
+                    else
+                    {
+                        p["accredited_logo"] = picAccreditedLogo.Image = null;
+                    }
 
                     p["assignment_counter"] = reader["assignment_counter"];
                     p["create_date"] = reader["create_date"];
@@ -118,9 +146,7 @@ namespace DSA_lims
             p["email"] = tbEmail.Text.Trim();
             p["phone"] = tbPhone.Text.Trim();
             p["instance_status_id"] = cboxInstanceStatus.SelectedValue;
-            p["comment"] = tbComment.Text.Trim();
-            p["laboratory_logo"] = null; // FIXME
-            p["accredited_logo"] = null; // FIXME
+            p["comment"] = tbComment.Text.Trim();                        
 
             bool success;
             if (!p.ContainsKey("id"))
@@ -251,6 +277,30 @@ namespace DSA_lims
             }
 
             return true;
+        }
+
+        private void picLaboratoryLogo_DoubleClick(object sender, EventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Filter = "Image Files(*.BMP; *.JPG; *.GIF; *.PNG)| *.BMP; *.JPG; *.GIF; *.PNG | All files(*.*) | *.*";
+            if (dialog.ShowDialog() == DialogResult.Cancel)
+                return;
+            
+            p["laboratory_logo"] = File.ReadAllBytes(dialog.FileName);
+            picLaboratoryLogo.Image = Image.FromStream(new MemoryStream((byte[])p["laboratory_logo"]));
+            lblLaboratoryLogoSize.Text = picLaboratoryLogo.Image.Width.ToString() + " x " + picLaboratoryLogo.Image.Height.ToString();
+        }
+
+        private void picAccreditedLogo_DoubleClick(object sender, EventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Filter = "Image Files(*.BMP; *.JPG; *.GIF; *.PNG)| *.BMP; *.JPG; *.GIF; *.PNG | All files(*.*) | *.*";
+            if (dialog.ShowDialog() == DialogResult.Cancel)
+                return;
+
+            p["accredited_logo"] = File.ReadAllBytes(dialog.FileName);
+            picAccreditedLogo.Image = Image.FromStream(new MemoryStream((byte[])p["accredited_logo"]));
+            lblAccreditedLogoSize.Text = picAccreditedLogo.Image.Width.ToString() + " x " + picAccreditedLogo.Image.Height.ToString();
         }
     }
 }

@@ -50,7 +50,7 @@
             this.cboxPrinters.FormattingEnabled = true;
             this.cboxPrinters.Location = new System.Drawing.Point(33, 44);
             this.cboxPrinters.Name = "cboxPrinters";
-            this.cboxPrinters.Size = new System.Drawing.Size(339, 21);
+            this.cboxPrinters.Size = new System.Drawing.Size(288, 21);
             this.cboxPrinters.TabIndex = 0;
             this.cboxPrinters.SelectedIndexChanged += new System.EventHandler(this.cboxPrinters_SelectedIndexChanged);
             // 
@@ -68,15 +68,15 @@
             this.panel1.Controls.Add(this.btnCancel);
             this.panel1.Controls.Add(this.btnOk);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 306);
+            this.panel1.Location = new System.Drawing.Point(0, 236);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(403, 28);
+            this.panel1.Size = new System.Drawing.Size(348, 28);
             this.panel1.TabIndex = 8;
             // 
             // btnCancel
             // 
             this.btnCancel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnCancel.Location = new System.Drawing.Point(203, 0);
+            this.btnCancel.Location = new System.Drawing.Point(148, 0);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(100, 28);
             this.btnCancel.TabIndex = 1;
@@ -87,7 +87,7 @@
             // btnOk
             // 
             this.btnOk.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnOk.Location = new System.Drawing.Point(303, 0);
+            this.btnOk.Location = new System.Drawing.Point(248, 0);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(100, 28);
             this.btnOk.TabIndex = 0;
@@ -101,7 +101,7 @@
             this.cboxPaperSizes.FormattingEnabled = true;
             this.cboxPaperSizes.Location = new System.Drawing.Point(33, 95);
             this.cboxPaperSizes.Name = "cboxPaperSizes";
-            this.cboxPaperSizes.Size = new System.Drawing.Size(339, 21);
+            this.cboxPaperSizes.Size = new System.Drawing.Size(288, 21);
             this.cboxPaperSizes.TabIndex = 9;
             // 
             // label2
@@ -128,7 +128,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(30, 211);
+            this.label3.Location = new System.Drawing.Point(183, 163);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(112, 13);
             this.label3.TabIndex = 12;
@@ -136,10 +136,10 @@
             // 
             // tbReplications
             // 
-            this.tbReplications.Location = new System.Drawing.Point(33, 227);
+            this.tbReplications.Location = new System.Drawing.Point(184, 179);
             this.tbReplications.MaxLength = 3;
             this.tbReplications.Name = "tbReplications";
-            this.tbReplications.Size = new System.Drawing.Size(111, 20);
+            this.tbReplications.Size = new System.Drawing.Size(137, 20);
             this.tbReplications.TabIndex = 13;
             // 
             // tbCopies
@@ -147,13 +147,13 @@
             this.tbCopies.Location = new System.Drawing.Point(33, 179);
             this.tbCopies.MaxLength = 3;
             this.tbCopies.Name = "tbCopies";
-            this.tbCopies.Size = new System.Drawing.Size(111, 20);
+            this.tbCopies.Size = new System.Drawing.Size(144, 20);
             this.tbCopies.TabIndex = 14;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(32, 163);
+            this.label4.Location = new System.Drawing.Point(30, 163);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(90, 13);
             this.label4.TabIndex = 15;
@@ -163,7 +163,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(403, 334);
+            this.ClientSize = new System.Drawing.Size(348, 264);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.tbCopies);
             this.Controls.Add(this.tbReplications);

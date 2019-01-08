@@ -534,5 +534,19 @@ from role r
 
             return true;
         }
+
+        public static void AddAttachment(SqlConnection conn, string sourceTable, Guid sourceId, string docName, string docExtension, byte[] data)
+        {            
+            SqlCommand cmd = new SqlCommand("insert into attachment values(@id, @source_table, @source_id, @label, @file_extension, @content, @create_date, @created_by)", conn);
+            cmd.Parameters.AddWithValue("@id", Guid.NewGuid());
+            cmd.Parameters.AddWithValue("@source_table", sourceTable);
+            cmd.Parameters.AddWithValue("@source_id", sourceId);
+            cmd.Parameters.AddWithValue("@label", docName);            
+            cmd.Parameters.AddWithValue("@file_extension", docExtension);
+            cmd.Parameters.AddWithValue("@content", data);
+            cmd.Parameters.AddWithValue("@create_date", DateTime.Now);
+            cmd.Parameters.AddWithValue("@created_by", Common.Username);
+            cmd.ExecuteNonQuery();
+        }
     }    
 }

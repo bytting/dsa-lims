@@ -4570,38 +4570,20 @@ where id = @id
         {
             FormScan form = new FormScan(Common.Settings);
             if (form.ShowDialog() != DialogResult.OK)
-                return;
-                        
-            AddAttachment("sample", selectedSampleId, form.DocumentName, form.PdfData);
+                return;            
 
             using (SqlConnection conn = DB.OpenConnection())
             {
+                DB.AddAttachment(conn, "sample", selectedSampleId, form.DocumentName, "pdf", form.PdfData);
+
                 UI.PopulateAttachments(conn, "sample", selectedSampleId, gridSampleAttachments);
             }
-        }
-
-        private void AddAttachment(string sourceTable, Guid sourceId, string docName, byte[] data)
-        {
-            using (SqlConnection conn = DB.OpenConnection())
-            {
-                SqlCommand cmd = new SqlCommand("insert into attachment values(@id, @source_table, @source_id, @name, @comment, @file_extension, @value, @create_date, @created_by)", conn);
-                cmd.Parameters.AddWithValue("@id", Guid.NewGuid());
-                cmd.Parameters.AddWithValue("@source_table", sourceTable);
-                cmd.Parameters.AddWithValue("@source_id", sourceId);
-                cmd.Parameters.AddWithValue("@name", docName);
-                cmd.Parameters.AddWithValue("@comment", DBNull.Value);
-                cmd.Parameters.AddWithValue("@file_extension", "PDF");
-                cmd.Parameters.AddWithValue("@value", data);
-                cmd.Parameters.AddWithValue("@create_date", DateTime.Now);
-                cmd.Parameters.AddWithValue("@created_by", Common.Username);
-                cmd.ExecuteNonQuery();
-            }
-        }
+        }        
 
         private void gridSampleAttachments_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             Guid id = Guid.Parse(gridSampleAttachments.Rows[e.RowIndex].Cells["id"].Value.ToString());
-            string fname = gridSampleAttachments.Rows[e.RowIndex].Cells["name"].Value.ToString();
+            string fname = gridSampleAttachments.Rows[e.RowIndex].Cells["label"].Value.ToString();
             string ext = gridSampleAttachments.Rows[e.RowIndex].Cells["file_extension"].Value.ToString();
 
             string pathname = Path.GetTempPath() + "\\" + fname + "." + ext;
@@ -4611,7 +4593,7 @@ where id = @id
             byte[] data = null;
             using (SqlConnection conn = DB.OpenConnection())
             {
-                SqlCommand cmd = new SqlCommand("Select value from attachment where id = @id", conn);
+                SqlCommand cmd = new SqlCommand("select content from attachment where id = @id", conn);
                 cmd.Parameters.AddWithValue("@id", id);
                 data = (byte[])cmd.ExecuteScalar();
             }

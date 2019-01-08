@@ -3853,9 +3853,8 @@ create table attachment (
 	source_table nvarchar(80) not null,
 	source_id uniqueidentifier not null,
 	name nvarchar(256) not null,
-	comment nvarchar(1000) default null,
 	file_extension nvarchar(16) not null,
-	value varbinary(max) not null,
+	content varbinary(max) not null,
 	create_date datetime not null,
 	created_by nvarchar(50) not null	
 )

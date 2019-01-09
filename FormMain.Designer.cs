@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.menu = new System.Windows.Forms.MenuStrip();
             this.miFile = new System.Windows.Forms.ToolStripMenuItem();
@@ -903,6 +903,12 @@
             this.btnMenu = new System.Windows.Forms.ToolStripButton();
             this.lblCurrentTab = new System.Windows.Forms.ToolStripLabel();
             this.btnBack = new System.Windows.Forms.ToolStripButton();
+            this.gridOrderAssignedAnalyses = new System.Windows.Forms.DataGridView();
+            this.splitContainer8 = new System.Windows.Forms.SplitContainer();
+            this.toolStrip17 = new System.Windows.Forms.ToolStrip();
+            this.toolStripLabel58 = new System.Windows.Forms.ToolStripLabel();
+            this.toolStrip18 = new System.Windows.Forms.ToolStrip();
+            this.toolStripLabel61 = new System.Windows.Forms.ToolStripLabel();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tabs.SuspendLayout();
@@ -1223,6 +1229,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.gridPrepAnalAnalAttachments)).BeginInit();
             this.toolsSampleResAttachments.SuspendLayout();
             this.tools.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridOrderAssignedAnalyses)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer8)).BeginInit();
+            this.splitContainer8.Panel1.SuspendLayout();
+            this.splitContainer8.Panel2.SuspendLayout();
+            this.splitContainer8.SuspendLayout();
+            this.toolStrip17.SuspendLayout();
+            this.toolStrip18.SuspendLayout();
             this.SuspendLayout();
             // 
             // menu
@@ -4351,14 +4364,14 @@
             this.gridOrderConnectedItems.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.gridOrderConnectedItems.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
             this.gridOrderConnectedItems.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.ButtonFace;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.gridOrderConnectedItems.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.ButtonFace;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.gridOrderConnectedItems.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
             this.gridOrderConnectedItems.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridOrderConnectedItems.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gridOrderConnectedItems.GridColor = System.Drawing.SystemColors.ButtonFace;
@@ -4443,9 +4456,9 @@
             this.tableLayoutPanel7.Controls.Add(this.btnOrderSaveStatus, 2, 8);
             this.tableLayoutPanel7.Controls.Add(this.btnOrderSaveApprovedCustomer, 2, 1);
             this.tableLayoutPanel7.Controls.Add(this.btnOrderSaveApprovedLaboratory, 2, 2);
-            this.tableLayoutPanel7.Controls.Add(this.btnOrderSaveReportComment, 2, 6);
             this.tableLayoutPanel7.Controls.Add(this.tbOrderCustomerInfo, 2, 5);
             this.tableLayoutPanel7.Controls.Add(this.label61, 2, 4);
+            this.tableLayoutPanel7.Controls.Add(this.btnOrderSaveReportComment, 1, 6);
             this.tableLayoutPanel7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel7.Location = new System.Drawing.Point(0, 25);
             this.tableLayoutPanel7.Name = "tableLayoutPanel7";
@@ -4481,6 +4494,7 @@
             this.cbOrderApprovedLaboratory.AutoSize = true;
             this.cbOrderApprovedLaboratory.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.cbOrderApprovedLaboratory.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cbOrderApprovedLaboratory.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbOrderApprovedLaboratory.Location = new System.Drawing.Point(3, 49);
             this.cbOrderApprovedLaboratory.Name = "cbOrderApprovedLaboratory";
             this.cbOrderApprovedLaboratory.Size = new System.Drawing.Size(271, 24);
@@ -4618,8 +4632,8 @@
             // 
             // btnOrderSaveReportComment
             // 
-            this.btnOrderSaveReportComment.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnOrderSaveReportComment.Location = new System.Drawing.Point(834, 289);
+            this.btnOrderSaveReportComment.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnOrderSaveReportComment.Location = new System.Drawing.Point(557, 289);
             this.btnOrderSaveReportComment.Name = "btnOrderSaveReportComment";
             this.btnOrderSaveReportComment.Size = new System.Drawing.Size(271, 24);
             this.btnOrderSaveReportComment.TabIndex = 27;
@@ -4664,7 +4678,7 @@
             // tabOrderAssigned
             // 
             this.tabOrderAssigned.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.tabOrderAssigned.Controls.Add(this.gridOrderAssigned);
+            this.tabOrderAssigned.Controls.Add(this.splitContainer8);
             this.tabOrderAssigned.Location = new System.Drawing.Point(4, 24);
             this.tabOrderAssigned.Name = "tabOrderAssigned";
             this.tabOrderAssigned.Padding = new System.Windows.Forms.Padding(3);
@@ -4682,13 +4696,13 @@
             this.gridOrderAssigned.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.gridOrderAssigned.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridOrderAssigned.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridOrderAssigned.Location = new System.Drawing.Point(3, 3);
+            this.gridOrderAssigned.Location = new System.Drawing.Point(0, 25);
             this.gridOrderAssigned.MultiSelect = false;
             this.gridOrderAssigned.Name = "gridOrderAssigned";
             this.gridOrderAssigned.ReadOnly = true;
             this.gridOrderAssigned.RowHeadersVisible = false;
             this.gridOrderAssigned.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridOrderAssigned.Size = new System.Drawing.Size(1108, 592);
+            this.gridOrderAssigned.Size = new System.Drawing.Size(1108, 270);
             this.gridOrderAssigned.TabIndex = 0;
             // 
             // tabSearch
@@ -10270,6 +10284,81 @@
             this.btnBack.ToolTipText = "Back";
             this.btnBack.Click += new System.EventHandler(this.miBack_Click);
             // 
+            // gridOrderAssignedAnalyses
+            // 
+            this.gridOrderAssignedAnalyses.AllowUserToAddRows = false;
+            this.gridOrderAssignedAnalyses.AllowUserToDeleteRows = false;
+            this.gridOrderAssignedAnalyses.AllowUserToResizeRows = false;
+            this.gridOrderAssignedAnalyses.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.gridOrderAssignedAnalyses.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
+            this.gridOrderAssignedAnalyses.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.gridOrderAssignedAnalyses.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridOrderAssignedAnalyses.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gridOrderAssignedAnalyses.Location = new System.Drawing.Point(0, 25);
+            this.gridOrderAssignedAnalyses.MultiSelect = false;
+            this.gridOrderAssignedAnalyses.Name = "gridOrderAssignedAnalyses";
+            this.gridOrderAssignedAnalyses.ReadOnly = true;
+            this.gridOrderAssignedAnalyses.RowHeadersVisible = false;
+            this.gridOrderAssignedAnalyses.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.gridOrderAssignedAnalyses.Size = new System.Drawing.Size(1108, 268);
+            this.gridOrderAssignedAnalyses.TabIndex = 1;
+            // 
+            // splitContainer8
+            // 
+            this.splitContainer8.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer8.Location = new System.Drawing.Point(3, 3);
+            this.splitContainer8.Name = "splitContainer8";
+            this.splitContainer8.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer8.Panel1
+            // 
+            this.splitContainer8.Panel1.Controls.Add(this.gridOrderAssigned);
+            this.splitContainer8.Panel1.Controls.Add(this.toolStrip17);
+            // 
+            // splitContainer8.Panel2
+            // 
+            this.splitContainer8.Panel2.Controls.Add(this.gridOrderAssignedAnalyses);
+            this.splitContainer8.Panel2.Controls.Add(this.toolStrip18);
+            this.splitContainer8.Size = new System.Drawing.Size(1108, 592);
+            this.splitContainer8.SplitterDistance = 295;
+            this.splitContainer8.TabIndex = 2;
+            // 
+            // toolStrip17
+            // 
+            this.toolStrip17.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStrip17.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripLabel58});
+            this.toolStrip17.Location = new System.Drawing.Point(0, 0);
+            this.toolStrip17.Name = "toolStrip17";
+            this.toolStrip17.Size = new System.Drawing.Size(1108, 25);
+            this.toolStrip17.TabIndex = 1;
+            this.toolStrip17.Text = "toolStrip17";
+            // 
+            // toolStripLabel58
+            // 
+            this.toolStripLabel58.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.toolStripLabel58.Name = "toolStripLabel58";
+            this.toolStripLabel58.Size = new System.Drawing.Size(259, 22);
+            this.toolStripLabel58.Text = "Preparations and analyses connected to order";
+            // 
+            // toolStrip18
+            // 
+            this.toolStrip18.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStrip18.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripLabel61});
+            this.toolStrip18.Location = new System.Drawing.Point(0, 0);
+            this.toolStrip18.Name = "toolStrip18";
+            this.toolStrip18.Size = new System.Drawing.Size(1108, 25);
+            this.toolStrip18.TabIndex = 2;
+            this.toolStrip18.Text = "toolStrip18";
+            // 
+            // toolStripLabel61
+            // 
+            this.toolStripLabel61.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.toolStripLabel61.Name = "toolStripLabel61";
+            this.toolStripLabel61.Size = new System.Drawing.Size(164, 22);
+            this.toolStripLabel61.Text = "Analysis results on this order";
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -10766,6 +10855,17 @@
             this.toolsSampleResAttachments.PerformLayout();
             this.tools.ResumeLayout(false);
             this.tools.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridOrderAssignedAnalyses)).EndInit();
+            this.splitContainer8.Panel1.ResumeLayout(false);
+            this.splitContainer8.Panel1.PerformLayout();
+            this.splitContainer8.Panel2.ResumeLayout(false);
+            this.splitContainer8.Panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer8)).EndInit();
+            this.splitContainer8.ResumeLayout(false);
+            this.toolStrip17.ResumeLayout(false);
+            this.toolStrip17.PerformLayout();
+            this.toolStrip18.ResumeLayout(false);
+            this.toolStrip18.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -11646,6 +11746,12 @@
         private System.Windows.Forms.Button btnOrderSaveApprovedCustomer;
         private System.Windows.Forms.Button btnOrderSaveApprovedLaboratory;
         private System.Windows.Forms.Button btnOrderSaveReportComment;
+        private System.Windows.Forms.DataGridView gridOrderAssignedAnalyses;
+        private System.Windows.Forms.SplitContainer splitContainer8;
+        private System.Windows.Forms.ToolStrip toolStrip17;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel58;
+        private System.Windows.Forms.ToolStrip toolStrip18;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel61;
     }
 }
 

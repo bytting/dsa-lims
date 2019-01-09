@@ -122,6 +122,8 @@ namespace DSA_lims
                 SetLanguageLabels(r);
 
                 populateSamplesDisabled = true;
+                populateOrdersDisabled = true;
+
                 using (SqlConnection conn = DB.OpenConnection())
                 {
                     DB.LoadSampleTypes(conn);
@@ -227,7 +229,10 @@ namespace DSA_lims
 
                     UI.PopulateOrderWorkflowStatus(conn, cboxOrdersWorkflowStatus);
                 }
+
                 populateSamplesDisabled = false;
+                populateOrdersDisabled = false;
+
                 HideMenuItems();
 
                 ActiveControl = tbMenuLookup;
@@ -2503,6 +2508,9 @@ order by name
 
                 UI.PopulateOrderContent(conn, id, treeOrderContent, Guid.Empty, treeSampleTypes, true);
 
+                // Show attachments
+                UI.PopulateAttachments(conn, "assignment", id, gridOrderAttachments);
+
                 gridOrderConnectedItems.DataSource = null;
 
                 // Populate assigned grid
@@ -2528,11 +2536,29 @@ where ass.id = @aid
 order by s.number, p.number, a.number
 ";                                
                 gridOrderAssigned.DataSource = DB.GetDataTable(conn, query, CommandType.Text, new[] {
-                        new SqlParameter("@aid", id)                        
-                    });
+                    new SqlParameter("@aid", id)
+                });
 
-                // Show attachments
-                UI.PopulateAttachments(conn, "assignment", id, gridOrderAttachments);
+                query = @"
+select 
+    convert(nvarchar(50), s.number) + '/' + convert(nvarchar(50), p.number) + '/' + convert(nvarchar(50), a.number) as 'Analysis',
+    n.name as 'Nuclide', 
+    ar.activity as 'Activity',
+    ar.activity_uncertainty_abs as 'Act.unc.',
+    ar.detection_limit as 'Det.lim.',
+    ar.accredited as 'Accredited',
+    ar.reportable as 'Reportable'
+from analysis_result ar
+    inner join nuclide n on ar.nuclide_id = n.id
+    inner join analysis a on ar.analysis_id = a.id
+    inner join preparation p on a.preparation_id = p.id
+    inner join sample s on p.sample_id = s.id
+where a.assignment_id = @aid
+order by s.number, p.number, a.number, n.name
+";
+                gridOrderAssignedAnalyses.DataSource = DB.GetDataTable(conn, query, CommandType.Text, new[] {
+                    new SqlParameter("@aid", id)
+                });
             }            
         }
 

@@ -21,7 +21,9 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -841,17 +843,59 @@ from role r
             lb.DataSource = roles;
         }
 
-        public static void PopulateAttachments(SqlConnection conn, string sourceTable, Guid sampleId, DataGridView grid)
+        public static void PopulateAttachments(SqlConnection conn, string sourceTable, Guid id, DataGridView grid)
         {
             string query = "select id, label, file_extension from attachment where source_table = @source_table and source_id = @source_id order by create_date desc";
             grid.DataSource = DB.GetDataTable(conn, query, CommandType.Text, new[] {
                 new SqlParameter("@source_table", sourceTable),
-                new SqlParameter("@source_id", sampleId)
+                new SqlParameter("@source_id", id)
             });
 
             grid.Columns["id"].Visible = false;            
             grid.Columns["label"].HeaderText = "Name";
             grid.Columns["file_extension"].HeaderText = "Type";
+        }
+
+        public static void ShowAttachment(SqlConnection conn, int gridIndex, DataGridView grid)
+        {
+            if (gridIndex >= grid.Rows.Count)
+                return;
+
+            Guid id = Guid.Parse(grid.Rows[gridIndex].Cells["id"].Value.ToString());
+            string fname = grid.Rows[gridIndex].Cells["label"].Value.ToString();
+            string ext = grid.Rows[gridIndex].Cells["file_extension"].Value.ToString();
+
+            string pathname = Path.GetTempPath() + "\\" + fname + "." + ext;
+            if (File.Exists(pathname))
+            {
+                try
+                {
+                    File.Delete(pathname);
+                }
+                catch
+                {
+                    MessageBox.Show("File is already open");
+                    return;
+                }
+            }
+
+            byte[] data = null;
+            SqlCommand cmd = new SqlCommand("select content from attachment where id = @id", conn);
+            cmd.Parameters.AddWithValue("@id", id);
+            data = (byte[])cmd.ExecuteScalar();            
+
+            if (data != null)
+            {
+                try
+                {
+                    File.WriteAllBytes(pathname, data);
+                    Process.Start(pathname);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
         }
     }
 }

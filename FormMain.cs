@@ -2501,7 +2501,7 @@ order by name
                 cboxOrderStatus.SelectedValue = map["workflow_status_id"];
                 tbOrderLastWorkflowStatusBy.Text = DB.GetAccountNameFromUsername(conn, map["last_workflow_status_by"].ToString());
 
-                UI.PopulateOrderContent(conn, selectedOrderId, treeOrderContent, Guid.Empty, treeSampleTypes, true);
+                UI.PopulateOrderContent(conn, id, treeOrderContent, Guid.Empty, treeSampleTypes, true);
 
                 gridOrderConnectedItems.DataSource = null;
 
@@ -2530,7 +2530,10 @@ order by s.number, p.number, a.number
                 gridOrderAssigned.DataSource = DB.GetDataTable(conn, query, CommandType.Text, new[] {
                         new SqlParameter("@aid", id)                        
                     });
-            }
+
+                // Show attachments
+                UI.PopulateAttachments(conn, "assignment", id, gridOrderAttachments);
+            }            
         }
 
         private void miOrderAddSampleType_Click(object sender, EventArgs e)
@@ -4597,37 +4600,28 @@ where id = @id
 
                 UI.PopulateAttachments(conn, "sample", selectedSampleId, gridSampleAttachments);
             }
-        }        
+        }
 
-        private void gridSampleAttachments_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        private void gridAttachments_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            Guid id = Guid.Parse(gridSampleAttachments.Rows[e.RowIndex].Cells["id"].Value.ToString());
-            string fname = gridSampleAttachments.Rows[e.RowIndex].Cells["label"].Value.ToString();
-            string ext = gridSampleAttachments.Rows[e.RowIndex].Cells["file_extension"].Value.ToString();
-
-            string pathname = Path.GetTempPath() + "\\" + fname + "." + ext;
-            if (File.Exists(pathname))
-                try { File.Delete(pathname); } catch { }
-
-            byte[] data = null;
+            DataGridView grid = sender as DataGridView;
             using (SqlConnection conn = DB.OpenConnection())
             {
-                SqlCommand cmd = new SqlCommand("select content from attachment where id = @id", conn);
-                cmd.Parameters.AddWithValue("@id", id);
-                data = (byte[])cmd.ExecuteScalar();
+                UI.ShowAttachment(conn, e.RowIndex, grid);
             }
-                        
-            if (data != null)
+        }
+
+        private void btnOrderScanAttachment_Click(object sender, EventArgs e)
+        {
+            FormScan form = new FormScan(Common.Settings);
+            if (form.ShowDialog() != DialogResult.OK)
+                return;
+
+            using (SqlConnection conn = DB.OpenConnection())
             {
-                try
-                {
-                    File.WriteAllBytes(pathname, data);
-                    Process.Start(pathname);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
+                DB.AddAttachment(conn, "assignment", selectedOrderId, form.DocumentName, "pdf", form.PdfData);
+
+                UI.PopulateAttachments(conn, "assignment", selectedOrderId, gridOrderAttachments);
             }
         }
     }    

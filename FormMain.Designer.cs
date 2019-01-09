@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.menu = new System.Windows.Forms.MenuStrip();
             this.miFile = new System.Windows.Forms.ToolStripMenuItem();
@@ -297,11 +297,11 @@
             this.tabOrderInfo = new System.Windows.Forms.TabPage();
             this.splitContainer7 = new System.Windows.Forms.SplitContainer();
             this.panel12 = new System.Windows.Forms.Panel();
-            this.dataGridView12 = new System.Windows.Forms.DataGridView();
+            this.gridOrderAttachments = new System.Windows.Forms.DataGridView();
             this.toolsOrderAttachments = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel4 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator29 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButton22 = new System.Windows.Forms.ToolStripButton();
+            this.btnOrderScanAttachment = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton21 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton23 = new System.Windows.Forms.ToolStripButton();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
@@ -945,7 +945,7 @@
             this.splitContainer7.Panel2.SuspendLayout();
             this.splitContainer7.SuspendLayout();
             this.panel12.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView12)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridOrderAttachments)).BeginInit();
             this.toolsOrderAttachments.SuspendLayout();
             this.tableLayoutPanel6.SuspendLayout();
             this.panel30.SuspendLayout();
@@ -3544,7 +3544,7 @@
             this.gridSampleAttachments.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.gridSampleAttachments.Size = new System.Drawing.Size(315, 542);
             this.gridSampleAttachments.TabIndex = 1;
-            this.gridSampleAttachments.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridSampleAttachments_CellDoubleClick);
+            this.gridSampleAttachments.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridAttachments_CellDoubleClick);
             // 
             // toolsSampleSampInfoAttachments
             // 
@@ -3774,7 +3774,7 @@
             // 
             // panel12
             // 
-            this.panel12.Controls.Add(this.dataGridView12);
+            this.panel12.Controls.Add(this.gridOrderAttachments);
             this.panel12.Controls.Add(this.toolsOrderAttachments);
             this.panel12.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel12.Location = new System.Drawing.Point(0, 382);
@@ -3782,19 +3782,25 @@
             this.panel12.Size = new System.Drawing.Size(357, 210);
             this.panel12.TabIndex = 1;
             // 
-            // dataGridView12
+            // gridOrderAttachments
             // 
-            this.dataGridView12.AllowUserToAddRows = false;
-            this.dataGridView12.AllowUserToDeleteRows = false;
-            this.dataGridView12.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
-            this.dataGridView12.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dataGridView12.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView12.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView12.Location = new System.Drawing.Point(0, 25);
-            this.dataGridView12.Name = "dataGridView12";
-            this.dataGridView12.ReadOnly = true;
-            this.dataGridView12.Size = new System.Drawing.Size(357, 185);
-            this.dataGridView12.TabIndex = 1;
+            this.gridOrderAttachments.AllowUserToAddRows = false;
+            this.gridOrderAttachments.AllowUserToDeleteRows = false;
+            this.gridOrderAttachments.AllowUserToResizeRows = false;
+            this.gridOrderAttachments.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.gridOrderAttachments.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
+            this.gridOrderAttachments.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.gridOrderAttachments.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridOrderAttachments.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gridOrderAttachments.Location = new System.Drawing.Point(0, 25);
+            this.gridOrderAttachments.MultiSelect = false;
+            this.gridOrderAttachments.Name = "gridOrderAttachments";
+            this.gridOrderAttachments.ReadOnly = true;
+            this.gridOrderAttachments.RowHeadersVisible = false;
+            this.gridOrderAttachments.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.gridOrderAttachments.Size = new System.Drawing.Size(357, 185);
+            this.gridOrderAttachments.TabIndex = 1;
+            this.gridOrderAttachments.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridAttachments_CellDoubleClick);
             // 
             // toolsOrderAttachments
             // 
@@ -3802,7 +3808,7 @@
             this.toolsOrderAttachments.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripLabel4,
             this.toolStripSeparator29,
-            this.toolStripButton22,
+            this.btnOrderScanAttachment,
             this.toolStripButton21,
             this.toolStripButton23});
             this.toolsOrderAttachments.Location = new System.Drawing.Point(0, 0);
@@ -3823,13 +3829,14 @@
             this.toolStripSeparator29.Name = "toolStripSeparator29";
             this.toolStripSeparator29.Size = new System.Drawing.Size(6, 25);
             // 
-            // toolStripButton22
+            // btnOrderScanAttachment
             // 
-            this.toolStripButton22.Image = global::DSA_lims.Properties.Resources.scan;
-            this.toolStripButton22.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton22.Name = "toolStripButton22";
-            this.toolStripButton22.Size = new System.Drawing.Size(52, 22);
-            this.toolStripButton22.Text = "Scan";
+            this.btnOrderScanAttachment.Image = global::DSA_lims.Properties.Resources.scan;
+            this.btnOrderScanAttachment.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnOrderScanAttachment.Name = "btnOrderScanAttachment";
+            this.btnOrderScanAttachment.Size = new System.Drawing.Size(52, 22);
+            this.btnOrderScanAttachment.Text = "Scan";
+            this.btnOrderScanAttachment.Click += new System.EventHandler(this.btnOrderScanAttachment_Click);
             // 
             // toolStripButton21
             // 
@@ -4337,14 +4344,14 @@
             this.gridOrderConnectedItems.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.gridOrderConnectedItems.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
             this.gridOrderConnectedItems.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.ButtonFace;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.gridOrderConnectedItems.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.ButtonFace;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.gridOrderConnectedItems.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.gridOrderConnectedItems.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridOrderConnectedItems.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gridOrderConnectedItems.GridColor = System.Drawing.SystemColors.ButtonFace;
@@ -10315,7 +10322,7 @@
             this.splitContainer7.ResumeLayout(false);
             this.panel12.ResumeLayout(false);
             this.panel12.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView12)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridOrderAttachments)).EndInit();
             this.toolsOrderAttachments.ResumeLayout(false);
             this.toolsOrderAttachments.PerformLayout();
             this.tableLayoutPanel6.ResumeLayout(false);
@@ -10803,11 +10810,11 @@
         private System.Windows.Forms.ToolStrip toolsOrderContent;
         private System.Windows.Forms.ToolStripLabel toolStripLabel8;
         private System.Windows.Forms.Panel panel12;
-        private System.Windows.Forms.DataGridView dataGridView12;
+        private System.Windows.Forms.DataGridView gridOrderAttachments;
         private System.Windows.Forms.ToolStrip toolsOrderAttachments;
         private System.Windows.Forms.ToolStripLabel toolStripLabel4;
         private System.Windows.Forms.ToolStripButton toolStripButton21;
-        private System.Windows.Forms.ToolStripButton toolStripButton22;
+        private System.Windows.Forms.ToolStripButton btnOrderScanAttachment;
         private System.Windows.Forms.ToolStripButton toolStripButton23;
         private System.Windows.Forms.TabPage tabOrderStatus;
         private System.Windows.Forms.ToolStrip toolsSample;

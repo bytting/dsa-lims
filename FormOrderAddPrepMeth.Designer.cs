@@ -139,6 +139,7 @@
             // tbCount
             // 
             this.tbCount.Location = new System.Drawing.Point(136, 118);
+            this.tbCount.MaxLength = 32;
             this.tbCount.Name = "tbCount";
             this.tbCount.Size = new System.Drawing.Size(286, 20);
             this.tbCount.TabIndex = 14;

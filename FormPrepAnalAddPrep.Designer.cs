@@ -44,7 +44,7 @@
             this.panel1.Controls.Add(this.btnCancel);
             this.panel1.Controls.Add(this.btnOk);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 159);
+            this.panel1.Location = new System.Drawing.Point(0, 120);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(429, 28);
             this.panel1.TabIndex = 1;
@@ -103,6 +103,7 @@
             // tbCount
             // 
             this.tbCount.Location = new System.Drawing.Point(147, 62);
+            this.tbCount.MaxLength = 4;
             this.tbCount.Name = "tbCount";
             this.tbCount.Size = new System.Drawing.Size(249, 20);
             this.tbCount.TabIndex = 5;
@@ -111,7 +112,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(429, 187);
+            this.ClientSize = new System.Drawing.Size(429, 148);
             this.Controls.Add(this.tbCount);
             this.Controls.Add(this.cboxPrepMethods);
             this.Controls.Add(this.label2);

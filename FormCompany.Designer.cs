@@ -82,6 +82,7 @@
             // tbName
             // 
             this.tbName.Location = new System.Drawing.Point(87, 28);
+            this.tbName.MaxLength = 128;
             this.tbName.Name = "tbName";
             this.tbName.Size = new System.Drawing.Size(246, 20);
             this.tbName.TabIndex = 8;
@@ -89,6 +90,7 @@
             // tbEmail
             // 
             this.tbEmail.Location = new System.Drawing.Point(87, 54);
+            this.tbEmail.MaxLength = 80;
             this.tbEmail.Name = "tbEmail";
             this.tbEmail.Size = new System.Drawing.Size(246, 20);
             this.tbEmail.TabIndex = 9;
@@ -96,6 +98,7 @@
             // tbPhone
             // 
             this.tbPhone.Location = new System.Drawing.Point(87, 80);
+            this.tbPhone.MaxLength = 80;
             this.tbPhone.Name = "tbPhone";
             this.tbPhone.Size = new System.Drawing.Size(246, 20);
             this.tbPhone.TabIndex = 10;
@@ -103,6 +106,7 @@
             // tbComment
             // 
             this.tbComment.Location = new System.Drawing.Point(87, 198);
+            this.tbComment.MaxLength = 1000;
             this.tbComment.Multiline = true;
             this.tbComment.Name = "tbComment";
             this.tbComment.ScrollBars = System.Windows.Forms.ScrollBars.Both;
@@ -168,6 +172,7 @@
             // tbAddress
             // 
             this.tbAddress.Location = new System.Drawing.Point(87, 106);
+            this.tbAddress.MaxLength = 1000;
             this.tbAddress.Multiline = true;
             this.tbAddress.Name = "tbAddress";
             this.tbAddress.ScrollBars = System.Windows.Forms.ScrollBars.Both;

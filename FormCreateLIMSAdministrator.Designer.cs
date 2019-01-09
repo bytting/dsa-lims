@@ -52,6 +52,7 @@
             // tbPassword1
             // 
             this.tbPassword1.Location = new System.Drawing.Point(95, 68);
+            this.tbPassword1.MaxLength = 1000;
             this.tbPassword1.Name = "tbPassword1";
             this.tbPassword1.PasswordChar = '*';
             this.tbPassword1.Size = new System.Drawing.Size(251, 20);
@@ -60,6 +61,7 @@
             // tbPassword2
             // 
             this.tbPassword2.Location = new System.Drawing.Point(95, 94);
+            this.tbPassword2.MaxLength = 1000;
             this.tbPassword2.Name = "tbPassword2";
             this.tbPassword2.PasswordChar = '*';
             this.tbPassword2.Size = new System.Drawing.Size(251, 20);

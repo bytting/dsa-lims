@@ -1523,7 +1523,7 @@ create table assignment (
 	approved_laboratory bit default 0,	
 	approved_laboratory_by nvarchar(50) default null,
 	content_comment nvarchar(1000) default null,
-	report_comment nvarchar(1000) default null,
+	report_comment nvarchar(4000) default null,
 	workflow_status_id int default 1,
 	last_workflow_status_date datetime default null,
 	last_workflow_status_by nvarchar(50) default null,

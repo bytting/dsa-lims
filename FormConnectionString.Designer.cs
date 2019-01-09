@@ -81,6 +81,7 @@
             // tbConnectionString
             // 
             this.tbConnectionString.Location = new System.Drawing.Point(38, 57);
+            this.tbConnectionString.MaxLength = 4000;
             this.tbConnectionString.Name = "tbConnectionString";
             this.tbConnectionString.Size = new System.Drawing.Size(400, 20);
             this.tbConnectionString.TabIndex = 4;

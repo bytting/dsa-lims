@@ -99,6 +99,7 @@
             // tbUsername
             // 
             this.tbUsername.Location = new System.Drawing.Point(117, 44);
+            this.tbUsername.MaxLength = 80;
             this.tbUsername.Name = "tbUsername";
             this.tbUsername.Size = new System.Drawing.Size(245, 21);
             this.tbUsername.TabIndex = 0;
@@ -108,6 +109,7 @@
             // tbPassword
             // 
             this.tbPassword.Location = new System.Drawing.Point(117, 71);
+            this.tbPassword.MaxLength = 1000;
             this.tbPassword.Name = "tbPassword";
             this.tbPassword.PasswordChar = '*';
             this.tbPassword.Size = new System.Drawing.Size(245, 21);

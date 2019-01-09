@@ -151,7 +151,7 @@
             // tbPrefix
             // 
             this.tbPrefix.Location = new System.Drawing.Point(114, 52);
-            this.tbPrefix.MaxLength = 4;
+            this.tbPrefix.MaxLength = 8;
             this.tbPrefix.Name = "tbPrefix";
             this.tbPrefix.Size = new System.Drawing.Size(260, 20);
             this.tbPrefix.TabIndex = 8;
@@ -159,6 +159,7 @@
             // tbAddress
             // 
             this.tbAddress.Location = new System.Drawing.Point(114, 78);
+            this.tbAddress.MaxLength = 256;
             this.tbAddress.Name = "tbAddress";
             this.tbAddress.Size = new System.Drawing.Size(260, 20);
             this.tbAddress.TabIndex = 9;
@@ -166,6 +167,7 @@
             // tbEmail
             // 
             this.tbEmail.Location = new System.Drawing.Point(114, 104);
+            this.tbEmail.MaxLength = 80;
             this.tbEmail.Name = "tbEmail";
             this.tbEmail.Size = new System.Drawing.Size(260, 20);
             this.tbEmail.TabIndex = 10;
@@ -173,6 +175,7 @@
             // tbPhone
             // 
             this.tbPhone.Location = new System.Drawing.Point(114, 130);
+            this.tbPhone.MaxLength = 80;
             this.tbPhone.Name = "tbPhone";
             this.tbPhone.Size = new System.Drawing.Size(260, 20);
             this.tbPhone.TabIndex = 11;

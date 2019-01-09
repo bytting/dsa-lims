@@ -46,7 +46,7 @@
             this.panel1.Controls.Add(this.btnCancel);
             this.panel1.Controls.Add(this.btnOk);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 238);
+            this.panel1.Location = new System.Drawing.Point(0, 224);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(350, 30);
             this.panel1.TabIndex = 2;
@@ -78,7 +78,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(23, 90);
+            this.label1.Location = new System.Drawing.Point(23, 79);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(51, 13);
             this.label1.TabIndex = 4;
@@ -96,13 +96,14 @@
             // tbName
             // 
             this.tbName.Location = new System.Drawing.Point(84, 22);
+            this.tbName.MaxLength = 256;
             this.tbName.Name = "tbName";
             this.tbName.Size = new System.Drawing.Size(235, 20);
             this.tbName.TabIndex = 6;
             // 
             // tbComment
             // 
-            this.tbComment.Location = new System.Drawing.Point(84, 87);
+            this.tbComment.Location = new System.Drawing.Point(84, 76);
             this.tbComment.MaxLength = 1000;
             this.tbComment.Multiline = true;
             this.tbComment.Name = "tbComment";
@@ -134,7 +135,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(350, 268);
+            this.ClientSize = new System.Drawing.Size(350, 254);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.cboxInstanceStatus);
             this.Controls.Add(this.tbComment);

@@ -55,13 +55,13 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel1.Location = new System.Drawing.Point(0, 343);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(476, 28);
+            this.panel1.Size = new System.Drawing.Size(419, 28);
             this.panel1.TabIndex = 0;
             // 
             // btnCancel
             // 
             this.btnCancel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnCancel.Location = new System.Drawing.Point(276, 0);
+            this.btnCancel.Location = new System.Drawing.Point(219, 0);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(100, 28);
             this.btnCancel.TabIndex = 1;
@@ -72,7 +72,7 @@
             // btnOk
             // 
             this.btnOk.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnOk.Location = new System.Drawing.Point(376, 0);
+            this.btnOk.Location = new System.Drawing.Point(319, 0);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(100, 28);
             this.btnOk.TabIndex = 0;
@@ -109,21 +109,23 @@
             // 
             // tbName
             // 
-            this.tbName.Location = new System.Drawing.Point(175, 27);
+            this.tbName.Location = new System.Drawing.Point(116, 30);
+            this.tbName.MaxLength = 32;
             this.tbName.Name = "tbName";
             this.tbName.Size = new System.Drawing.Size(271, 20);
             this.tbName.TabIndex = 10;
             // 
             // tbHalflife
             // 
-            this.tbHalflife.Location = new System.Drawing.Point(175, 125);
+            this.tbHalflife.Location = new System.Drawing.Point(116, 128);
+            this.tbHalflife.MaxLength = 32;
             this.tbHalflife.Name = "tbHalflife";
             this.tbHalflife.Size = new System.Drawing.Size(271, 20);
             this.tbHalflife.TabIndex = 13;
             // 
             // tbComment
             // 
-            this.tbComment.Location = new System.Drawing.Point(175, 180);
+            this.tbComment.Location = new System.Drawing.Point(116, 183);
             this.tbComment.MaxLength = 1000;
             this.tbComment.Multiline = true;
             this.tbComment.Name = "tbComment";
@@ -136,7 +138,7 @@
             this.cboxInstanceStatus.DisplayMember = "Name";
             this.cboxInstanceStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxInstanceStatus.FormattingEnabled = true;
-            this.cboxInstanceStatus.Location = new System.Drawing.Point(175, 153);
+            this.cboxInstanceStatus.Location = new System.Drawing.Point(116, 156);
             this.cboxInstanceStatus.Name = "cboxInstanceStatus";
             this.cboxInstanceStatus.Size = new System.Drawing.Size(271, 21);
             this.cboxInstanceStatus.TabIndex = 19;
@@ -171,14 +173,16 @@
             // 
             // tbProtons
             // 
-            this.tbProtons.Location = new System.Drawing.Point(175, 53);
+            this.tbProtons.Location = new System.Drawing.Point(116, 56);
+            this.tbProtons.MaxLength = 32;
             this.tbProtons.Name = "tbProtons";
             this.tbProtons.Size = new System.Drawing.Size(271, 20);
             this.tbProtons.TabIndex = 23;
             // 
             // tbNeutrons
             // 
-            this.tbNeutrons.Location = new System.Drawing.Point(175, 79);
+            this.tbNeutrons.Location = new System.Drawing.Point(116, 82);
+            this.tbNeutrons.MaxLength = 32;
             this.tbNeutrons.Name = "tbNeutrons";
             this.tbNeutrons.Size = new System.Drawing.Size(271, 20);
             this.tbNeutrons.TabIndex = 24;
@@ -186,7 +190,7 @@
             // cbMetaStable
             // 
             this.cbMetaStable.AutoSize = true;
-            this.cbMetaStable.Location = new System.Drawing.Point(175, 105);
+            this.cbMetaStable.Location = new System.Drawing.Point(116, 108);
             this.cbMetaStable.Name = "cbMetaStable";
             this.cbMetaStable.Size = new System.Drawing.Size(81, 17);
             this.cbMetaStable.TabIndex = 25;
@@ -197,7 +201,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(476, 371);
+            this.ClientSize = new System.Drawing.Size(419, 371);
             this.Controls.Add(this.cbMetaStable);
             this.Controls.Add(this.tbNeutrons);
             this.Controls.Add(this.tbProtons);

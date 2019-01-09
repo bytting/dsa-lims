@@ -46,7 +46,7 @@
             this.panel1.Controls.Add(this.btnCancel);
             this.panel1.Controls.Add(this.btnOk);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 140);
+            this.panel1.Location = new System.Drawing.Point(0, 124);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(341, 30);
             this.panel1.TabIndex = 7;
@@ -75,26 +75,26 @@
             // 
             // tbPassword1
             // 
-            this.tbPassword1.Location = new System.Drawing.Point(105, 56);
-            this.tbPassword1.MaxLength = 80;
+            this.tbPassword1.Location = new System.Drawing.Point(96, 49);
+            this.tbPassword1.MaxLength = 1000;
             this.tbPassword1.Name = "tbPassword1";
             this.tbPassword1.PasswordChar = '*';
-            this.tbPassword1.Size = new System.Drawing.Size(190, 20);
+            this.tbPassword1.Size = new System.Drawing.Size(211, 20);
             this.tbPassword1.TabIndex = 8;
             // 
             // tbPassword2
             // 
-            this.tbPassword2.Location = new System.Drawing.Point(105, 82);
-            this.tbPassword2.MaxLength = 80;
+            this.tbPassword2.Location = new System.Drawing.Point(96, 75);
+            this.tbPassword2.MaxLength = 1000;
             this.tbPassword2.Name = "tbPassword2";
             this.tbPassword2.PasswordChar = '*';
-            this.tbPassword2.Size = new System.Drawing.Size(190, 20);
+            this.tbPassword2.Size = new System.Drawing.Size(211, 20);
             this.tbPassword2.TabIndex = 9;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(36, 59);
+            this.label1.Location = new System.Drawing.Point(27, 52);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(53, 13);
             this.label1.TabIndex = 10;
@@ -103,7 +103,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(36, 85);
+            this.label2.Location = new System.Drawing.Point(27, 78);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(53, 13);
             this.label2.TabIndex = 11;
@@ -112,7 +112,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(36, 33);
+            this.label3.Location = new System.Drawing.Point(27, 26);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(29, 13);
             this.label3.TabIndex = 12;
@@ -120,17 +120,17 @@
             // 
             // tbUsername
             // 
-            this.tbUsername.Location = new System.Drawing.Point(105, 30);
+            this.tbUsername.Location = new System.Drawing.Point(96, 23);
             this.tbUsername.Name = "tbUsername";
             this.tbUsername.ReadOnly = true;
-            this.tbUsername.Size = new System.Drawing.Size(190, 20);
+            this.tbUsername.Size = new System.Drawing.Size(211, 20);
             this.tbUsername.TabIndex = 13;
             // 
             // FormResetPassword
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(341, 170);
+            this.ClientSize = new System.Drawing.Size(341, 154);
             this.Controls.Add(this.tbUsername);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);

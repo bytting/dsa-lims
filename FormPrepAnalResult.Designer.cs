@@ -58,13 +58,13 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel1.Location = new System.Drawing.Point(0, 310);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(348, 28);
+            this.panel1.Size = new System.Drawing.Size(386, 28);
             this.panel1.TabIndex = 8;
             // 
             // btnCancel
             // 
             this.btnCancel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnCancel.Location = new System.Drawing.Point(148, 0);
+            this.btnCancel.Location = new System.Drawing.Point(186, 0);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(100, 28);
             this.btnCancel.TabIndex = 1;
@@ -75,7 +75,7 @@
             // btnOk
             // 
             this.btnOk.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnOk.Location = new System.Drawing.Point(248, 0);
+            this.btnOk.Location = new System.Drawing.Point(286, 0);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(100, 28);
             this.btnOk.TabIndex = 0;
@@ -90,7 +90,7 @@
             this.cboxNuclides.FormattingEnabled = true;
             this.cboxNuclides.Location = new System.Drawing.Point(117, 28);
             this.cboxNuclides.Name = "cboxNuclides";
-            this.cboxNuclides.Size = new System.Drawing.Size(194, 21);
+            this.cboxNuclides.Size = new System.Drawing.Size(233, 21);
             this.cboxNuclides.TabIndex = 9;
             this.cboxNuclides.ValueMember = "Id";
             // 
@@ -106,15 +106,17 @@
             // tbActivity
             // 
             this.tbActivity.Location = new System.Drawing.Point(117, 57);
+            this.tbActivity.MaxLength = 32;
             this.tbActivity.Name = "tbActivity";
-            this.tbActivity.Size = new System.Drawing.Size(194, 20);
+            this.tbActivity.Size = new System.Drawing.Size(233, 20);
             this.tbActivity.TabIndex = 11;
             // 
             // tbUncertainty
             // 
             this.tbUncertainty.Location = new System.Drawing.Point(117, 83);
+            this.tbUncertainty.MaxLength = 32;
             this.tbUncertainty.Name = "tbUncertainty";
-            this.tbUncertainty.Size = new System.Drawing.Size(194, 20);
+            this.tbUncertainty.Size = new System.Drawing.Size(233, 20);
             this.tbUncertainty.TabIndex = 12;
             // 
             // label2
@@ -148,8 +150,9 @@
             // tbDetectionLimit
             // 
             this.tbDetectionLimit.Location = new System.Drawing.Point(117, 109);
+            this.tbDetectionLimit.MaxLength = 32;
             this.tbDetectionLimit.Name = "tbDetectionLimit";
-            this.tbDetectionLimit.Size = new System.Drawing.Size(194, 20);
+            this.tbDetectionLimit.Size = new System.Drawing.Size(233, 20);
             this.tbDetectionLimit.TabIndex = 16;
             // 
             // label4
@@ -198,7 +201,7 @@
             this.cboxSigmaActivity.FormattingEnabled = true;
             this.cboxSigmaActivity.Location = new System.Drawing.Point(117, 135);
             this.cboxSigmaActivity.Name = "cboxSigmaActivity";
-            this.cboxSigmaActivity.Size = new System.Drawing.Size(194, 21);
+            this.cboxSigmaActivity.Size = new System.Drawing.Size(233, 21);
             this.cboxSigmaActivity.TabIndex = 21;
             this.cboxSigmaActivity.ValueMember = "Id";
             // 
@@ -209,7 +212,7 @@
             this.cboxSigmaMDA.FormattingEnabled = true;
             this.cboxSigmaMDA.Location = new System.Drawing.Point(117, 162);
             this.cboxSigmaMDA.Name = "cboxSigmaMDA";
-            this.cboxSigmaMDA.Size = new System.Drawing.Size(194, 21);
+            this.cboxSigmaMDA.Size = new System.Drawing.Size(233, 21);
             this.cboxSigmaMDA.TabIndex = 22;
             this.cboxSigmaMDA.ValueMember = "Id";
             // 
@@ -235,7 +238,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(348, 338);
+            this.ClientSize = new System.Drawing.Size(386, 338);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.cboxSigmaMDA);

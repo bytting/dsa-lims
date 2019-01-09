@@ -50,15 +50,15 @@
             this.panel1.Controls.Add(this.btnCancel);
             this.panel1.Controls.Add(this.btnOk);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 198);
+            this.panel1.Location = new System.Drawing.Point(0, 182);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(514, 28);
+            this.panel1.Size = new System.Drawing.Size(481, 28);
             this.panel1.TabIndex = 8;
             // 
             // btnCancel
             // 
             this.btnCancel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnCancel.Location = new System.Drawing.Point(314, 0);
+            this.btnCancel.Location = new System.Drawing.Point(281, 0);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(100, 28);
             this.btnCancel.TabIndex = 1;
@@ -69,7 +69,7 @@
             // btnOk
             // 
             this.btnOk.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnOk.Location = new System.Drawing.Point(414, 0);
+            this.btnOk.Location = new System.Drawing.Point(381, 0);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(100, 28);
             this.btnOk.TabIndex = 0;
@@ -82,7 +82,7 @@
             this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label1.Location = new System.Drawing.Point(3, 16);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(122, 26);
+            this.label1.Size = new System.Drawing.Size(114, 26);
             this.label1.TabIndex = 9;
             this.label1.Text = "Sample number";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -90,10 +90,10 @@
             // tbSampleNumber
             // 
             this.tbSampleNumber.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbSampleNumber.Location = new System.Drawing.Point(131, 19);
+            this.tbSampleNumber.Location = new System.Drawing.Point(123, 19);
             this.tbSampleNumber.Name = "tbSampleNumber";
             this.tbSampleNumber.ReadOnly = true;
-            this.tbSampleNumber.Size = new System.Drawing.Size(380, 20);
+            this.tbSampleNumber.Size = new System.Drawing.Size(355, 20);
             this.tbSampleNumber.TabIndex = 10;
             // 
             // label2
@@ -101,7 +101,7 @@
             this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label2.Location = new System.Drawing.Point(3, 42);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(122, 26);
+            this.label2.Size = new System.Drawing.Size(114, 26);
             this.label2.TabIndex = 2;
             this.label2.Text = "Sample type";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -109,10 +109,10 @@
             // tbSampleType
             // 
             this.tbSampleType.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbSampleType.Location = new System.Drawing.Point(131, 45);
+            this.tbSampleType.Location = new System.Drawing.Point(123, 45);
             this.tbSampleType.Name = "tbSampleType";
             this.tbSampleType.ReadOnly = true;
-            this.tbSampleType.Size = new System.Drawing.Size(380, 20);
+            this.tbSampleType.Size = new System.Drawing.Size(355, 20);
             this.tbSampleType.TabIndex = 1;
             // 
             // tableLayoutPanel1
@@ -139,7 +139,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(514, 198);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(481, 182);
             this.tableLayoutPanel1.TabIndex = 11;
             // 
             // label3
@@ -147,7 +147,7 @@
             this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label3.Location = new System.Drawing.Point(3, 94);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(122, 26);
+            this.label3.Size = new System.Drawing.Size(114, 26);
             this.label3.TabIndex = 11;
             this.label3.Text = "Split into";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -157,7 +157,7 @@
             this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label4.Location = new System.Drawing.Point(3, 120);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(122, 26);
+            this.label4.Size = new System.Drawing.Size(114, 26);
             this.label4.TabIndex = 12;
             this.label4.Text = "Count";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -168,25 +168,26 @@
             this.cboxComponents.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cboxComponents.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxComponents.FormattingEnabled = true;
-            this.cboxComponents.Location = new System.Drawing.Point(131, 97);
+            this.cboxComponents.Location = new System.Drawing.Point(123, 97);
             this.cboxComponents.Name = "cboxComponents";
-            this.cboxComponents.Size = new System.Drawing.Size(380, 21);
+            this.cboxComponents.Size = new System.Drawing.Size(355, 21);
             this.cboxComponents.TabIndex = 13;
             this.cboxComponents.ValueMember = "Id";
             // 
             // tbCount
             // 
             this.tbCount.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbCount.Location = new System.Drawing.Point(131, 123);
+            this.tbCount.Location = new System.Drawing.Point(123, 123);
+            this.tbCount.MaxLength = 4;
             this.tbCount.Name = "tbCount";
-            this.tbCount.Size = new System.Drawing.Size(380, 20);
+            this.tbCount.Size = new System.Drawing.Size(355, 20);
             this.tbCount.TabIndex = 14;
             // 
             // FormSampleSplit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(514, 226);
+            this.ClientSize = new System.Drawing.Size(481, 210);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;

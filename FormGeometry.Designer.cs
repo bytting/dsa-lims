@@ -116,6 +116,7 @@
             // tbName
             // 
             this.tbName.Location = new System.Drawing.Point(152, 34);
+            this.tbName.MaxLength = 80;
             this.tbName.Name = "tbName";
             this.tbName.Size = new System.Drawing.Size(213, 20);
             this.tbName.TabIndex = 7;
@@ -123,6 +124,7 @@
             // tbMinFillHeight
             // 
             this.tbMinFillHeight.Location = new System.Drawing.Point(152, 62);
+            this.tbMinFillHeight.MaxLength = 32;
             this.tbMinFillHeight.Name = "tbMinFillHeight";
             this.tbMinFillHeight.Size = new System.Drawing.Size(213, 20);
             this.tbMinFillHeight.TabIndex = 8;
@@ -130,6 +132,7 @@
             // tbMaxFillHeight
             // 
             this.tbMaxFillHeight.Location = new System.Drawing.Point(152, 90);
+            this.tbMaxFillHeight.MaxLength = 32;
             this.tbMaxFillHeight.Name = "tbMaxFillHeight";
             this.tbMaxFillHeight.Size = new System.Drawing.Size(213, 20);
             this.tbMaxFillHeight.TabIndex = 9;

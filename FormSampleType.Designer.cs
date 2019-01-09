@@ -48,15 +48,15 @@
             this.panel1.Controls.Add(this.btnCancel);
             this.panel1.Controls.Add(this.btnOk);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 260);
+            this.panel1.Location = new System.Drawing.Point(0, 153);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(430, 30);
+            this.panel1.Size = new System.Drawing.Size(371, 30);
             this.panel1.TabIndex = 7;
             // 
             // btnCancel
             // 
             this.btnCancel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnCancel.Location = new System.Drawing.Point(230, 0);
+            this.btnCancel.Location = new System.Drawing.Point(171, 0);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(100, 30);
             this.btnCancel.TabIndex = 1;
@@ -67,7 +67,7 @@
             // btnOk
             // 
             this.btnOk.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnOk.Location = new System.Drawing.Point(330, 0);
+            this.btnOk.Location = new System.Drawing.Point(271, 0);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(100, 30);
             this.btnOk.TabIndex = 0;
@@ -78,7 +78,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(24, 63);
+            this.label1.Location = new System.Drawing.Point(21, 50);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(35, 13);
             this.label1.TabIndex = 8;
@@ -87,7 +87,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(24, 92);
+            this.label2.Location = new System.Drawing.Point(21, 76);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(77, 13);
             this.label2.TabIndex = 9;
@@ -96,7 +96,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(24, 121);
+            this.label3.Location = new System.Drawing.Point(21, 102);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(59, 13);
             this.label3.TabIndex = 10;
@@ -105,7 +105,7 @@
             // lblCurrent
             // 
             this.lblCurrent.AutoSize = true;
-            this.lblCurrent.Location = new System.Drawing.Point(24, 34);
+            this.lblCurrent.Location = new System.Drawing.Point(21, 24);
             this.lblCurrent.Name = "lblCurrent";
             this.lblCurrent.Size = new System.Drawing.Size(67, 13);
             this.lblCurrent.TabIndex = 11;
@@ -113,38 +113,41 @@
             // 
             // tbCurrent
             // 
-            this.tbCurrent.Location = new System.Drawing.Point(107, 31);
+            this.tbCurrent.Location = new System.Drawing.Point(104, 21);
             this.tbCurrent.Name = "tbCurrent";
             this.tbCurrent.ReadOnly = true;
-            this.tbCurrent.Size = new System.Drawing.Size(282, 20);
+            this.tbCurrent.Size = new System.Drawing.Size(239, 20);
             this.tbCurrent.TabIndex = 12;
             // 
             // tbName
             // 
-            this.tbName.Location = new System.Drawing.Point(107, 59);
+            this.tbName.Location = new System.Drawing.Point(104, 47);
+            this.tbName.MaxLength = 80;
             this.tbName.Name = "tbName";
-            this.tbName.Size = new System.Drawing.Size(282, 20);
+            this.tbName.Size = new System.Drawing.Size(239, 20);
             this.tbName.TabIndex = 13;
             // 
             // tbNameCommon
             // 
-            this.tbNameCommon.Location = new System.Drawing.Point(107, 89);
+            this.tbNameCommon.Location = new System.Drawing.Point(104, 73);
+            this.tbNameCommon.MaxLength = 80;
             this.tbNameCommon.Name = "tbNameCommon";
-            this.tbNameCommon.Size = new System.Drawing.Size(282, 20);
+            this.tbNameCommon.Size = new System.Drawing.Size(239, 20);
             this.tbNameCommon.TabIndex = 14;
             // 
             // tbNameLatin
             // 
-            this.tbNameLatin.Location = new System.Drawing.Point(107, 118);
+            this.tbNameLatin.Location = new System.Drawing.Point(104, 99);
+            this.tbNameLatin.MaxLength = 80;
             this.tbNameLatin.Name = "tbNameLatin";
-            this.tbNameLatin.Size = new System.Drawing.Size(282, 20);
+            this.tbNameLatin.Size = new System.Drawing.Size(239, 20);
             this.tbNameLatin.TabIndex = 15;
             // 
             // FormSampleType
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(430, 290);
+            this.ClientSize = new System.Drawing.Size(371, 183);
             this.Controls.Add(this.tbNameLatin);
             this.Controls.Add(this.tbNameCommon);
             this.Controls.Add(this.tbName);

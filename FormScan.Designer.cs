@@ -73,7 +73,7 @@
             this.tblScan.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tblScan.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tblScan.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tblScan.Size = new System.Drawing.Size(438, 183);
+            this.tblScan.Size = new System.Drawing.Size(438, 182);
             this.tblScan.TabIndex = 0;
             // 
             // label1
@@ -120,6 +120,7 @@
             // 
             this.tbFileName.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbFileName.Location = new System.Drawing.Point(112, 131);
+            this.tbFileName.MaxLength = 256;
             this.tbFileName.Name = "tbFileName";
             this.tbFileName.Size = new System.Drawing.Size(323, 21);
             this.tbFileName.TabIndex = 4;
@@ -177,9 +178,9 @@
             this.panel1.Controls.Add(this.btnCancel);
             this.panel1.Controls.Add(this.btnStore);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 183);
+            this.panel1.Location = new System.Drawing.Point(0, 182);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(438, 30);
+            this.panel1.Size = new System.Drawing.Size(438, 28);
             this.panel1.TabIndex = 1;
             // 
             // btnPreview
@@ -188,7 +189,7 @@
             this.btnPreview.Enabled = false;
             this.btnPreview.Location = new System.Drawing.Point(90, 0);
             this.btnPreview.Name = "btnPreview";
-            this.btnPreview.Size = new System.Drawing.Size(90, 30);
+            this.btnPreview.Size = new System.Drawing.Size(90, 28);
             this.btnPreview.TabIndex = 2;
             this.btnPreview.Text = "Preview";
             this.btnPreview.UseVisualStyleBackColor = true;
@@ -199,7 +200,7 @@
             this.btnScan.Dock = System.Windows.Forms.DockStyle.Left;
             this.btnScan.Location = new System.Drawing.Point(0, 0);
             this.btnScan.Name = "btnScan";
-            this.btnScan.Size = new System.Drawing.Size(90, 30);
+            this.btnScan.Size = new System.Drawing.Size(90, 28);
             this.btnScan.TabIndex = 0;
             this.btnScan.Text = "Scan";
             this.btnScan.UseVisualStyleBackColor = true;
@@ -210,7 +211,7 @@
             this.btnCancel.Dock = System.Windows.Forms.DockStyle.Right;
             this.btnCancel.Location = new System.Drawing.Point(258, 0);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(90, 30);
+            this.btnCancel.Size = new System.Drawing.Size(90, 28);
             this.btnCancel.TabIndex = 1;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
@@ -222,7 +223,7 @@
             this.btnStore.Enabled = false;
             this.btnStore.Location = new System.Drawing.Point(348, 0);
             this.btnStore.Name = "btnStore";
-            this.btnStore.Size = new System.Drawing.Size(90, 30);
+            this.btnStore.Size = new System.Drawing.Size(90, 28);
             this.btnStore.TabIndex = 3;
             this.btnStore.Text = "Store";
             this.btnStore.UseVisualStyleBackColor = true;
@@ -232,7 +233,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(438, 213);
+            this.ClientSize = new System.Drawing.Size(438, 210);
             this.Controls.Add(this.tblScan);
             this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));

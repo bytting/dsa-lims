@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.menu = new System.Windows.Forms.MenuStrip();
             this.miFile = new System.Windows.Forms.ToolStripMenuItem();
@@ -2640,7 +2640,7 @@
             this.tbMenuLookup.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.tbMenuLookup.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbMenuLookup.Location = new System.Drawing.Point(283, 10);
-            this.tbMenuLookup.MaxLength = 9;
+            this.tbMenuLookup.MaxLength = 32;
             this.tbMenuLookup.Name = "tbMenuLookup";
             this.tbMenuLookup.Size = new System.Drawing.Size(274, 19);
             this.tbMenuLookup.TabIndex = 5;
@@ -3043,6 +3043,7 @@
             // 
             this.tbSampleLocation.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbSampleLocation.Location = new System.Drawing.Point(474, 253);
+            this.tbSampleLocation.MaxLength = 128;
             this.tbSampleLocation.Name = "tbSampleLocation";
             this.tbSampleLocation.Size = new System.Drawing.Size(316, 20);
             this.tbSampleLocation.TabIndex = 30;
@@ -3064,6 +3065,7 @@
             // 
             this.tbSampleInfoLongitude.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbSampleInfoLongitude.Location = new System.Drawing.Point(187, 0);
+            this.tbSampleInfoLongitude.MaxLength = 32;
             this.tbSampleInfoLongitude.Name = "tbSampleInfoLongitude";
             this.tbSampleInfoLongitude.Size = new System.Drawing.Size(252, 20);
             this.tbSampleInfoLongitude.TabIndex = 9;
@@ -3072,6 +3074,7 @@
             // 
             this.tbSampleInfoAltitude.Dock = System.Windows.Forms.DockStyle.Right;
             this.tbSampleInfoAltitude.Location = new System.Drawing.Point(439, 0);
+            this.tbSampleInfoAltitude.MaxLength = 32;
             this.tbSampleInfoAltitude.Name = "tbSampleInfoAltitude";
             this.tbSampleInfoAltitude.Size = new System.Drawing.Size(198, 20);
             this.tbSampleInfoAltitude.TabIndex = 10;
@@ -3080,6 +3083,7 @@
             // 
             this.tbSampleInfoLatitude.Dock = System.Windows.Forms.DockStyle.Left;
             this.tbSampleInfoLatitude.Location = new System.Drawing.Point(0, 0);
+            this.tbSampleInfoLatitude.MaxLength = 32;
             this.tbSampleInfoLatitude.Name = "tbSampleInfoLatitude";
             this.tbSampleInfoLatitude.Size = new System.Drawing.Size(187, 20);
             this.tbSampleInfoLatitude.TabIndex = 8;
@@ -3120,6 +3124,7 @@
             // 
             this.tbSampleExId.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbSampleExId.Location = new System.Drawing.Point(153, 73);
+            this.tbSampleExId.MaxLength = 128;
             this.tbSampleExId.Name = "tbSampleExId";
             this.tbSampleExId.Size = new System.Drawing.Size(315, 20);
             this.tbSampleExId.TabIndex = 32;
@@ -3439,6 +3444,7 @@
             // 
             this.tbSampleComment.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbSampleComment.Location = new System.Drawing.Point(474, 283);
+            this.tbSampleComment.MaxLength = 1000;
             this.tbSampleComment.Multiline = true;
             this.tbSampleComment.Name = "tbSampleComment";
             this.layoutSample.SetRowSpan(this.tbSampleComment, 6);
@@ -4056,6 +4062,7 @@
             // 
             this.tbOrderContentComment.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbOrderContentComment.Location = new System.Drawing.Point(122, 213);
+            this.tbOrderContentComment.MaxLength = 1000;
             this.tbOrderContentComment.Multiline = true;
             this.tbOrderContentComment.Name = "tbOrderContentComment";
             this.tbOrderContentComment.ScrollBars = System.Windows.Forms.ScrollBars.Both;
@@ -4344,14 +4351,14 @@
             this.gridOrderConnectedItems.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.gridOrderConnectedItems.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
             this.gridOrderConnectedItems.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.ButtonFace;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.gridOrderConnectedItems.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle13.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            dataGridViewCellStyle13.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle13.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle13.SelectionBackColor = System.Drawing.SystemColors.ButtonFace;
+            dataGridViewCellStyle13.SelectionForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.gridOrderConnectedItems.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle13;
             this.gridOrderConnectedItems.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridOrderConnectedItems.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gridOrderConnectedItems.GridColor = System.Drawing.SystemColors.ButtonFace;
@@ -4527,6 +4534,7 @@
             this.tableLayoutPanel7.SetColumnSpan(this.tbOrderReportComment, 3);
             this.tbOrderReportComment.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbOrderReportComment.Location = new System.Drawing.Point(3, 139);
+            this.tbOrderReportComment.MaxLength = 4000;
             this.tbOrderReportComment.Multiline = true;
             this.tbOrderReportComment.Name = "tbOrderReportComment";
             this.tbOrderReportComment.ScrollBars = System.Windows.Forms.ScrollBars.Both;
@@ -6169,7 +6177,7 @@
             // 
             this.tbSamplesLookup.BackColor = System.Drawing.SystemColors.Window;
             this.tbSamplesLookup.Location = new System.Drawing.Point(80, 9);
-            this.tbSamplesLookup.MaxLength = 9;
+            this.tbSamplesLookup.MaxLength = 32;
             this.tbSamplesLookup.Name = "tbSamplesLookup";
             this.tbSamplesLookup.Size = new System.Drawing.Size(164, 21);
             this.tbSamplesLookup.TabIndex = 6;
@@ -9311,6 +9319,7 @@
             // 
             this.tbPrepAnalPrepComment.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbPrepAnalPrepComment.Location = new System.Drawing.Point(113, 0);
+            this.tbPrepAnalPrepComment.MaxLength = 1000;
             this.tbPrepAnalPrepComment.Multiline = true;
             this.tbPrepAnalPrepComment.Name = "tbPrepAnalPrepComment";
             this.tbPrepAnalPrepComment.ScrollBars = System.Windows.Forms.ScrollBars.Both;
@@ -9430,6 +9439,7 @@
             // 
             this.tbPrepAnalPrepQuantity.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbPrepAnalPrepQuantity.Location = new System.Drawing.Point(113, 0);
+            this.tbPrepAnalPrepQuantity.MaxLength = 32;
             this.tbPrepAnalPrepQuantity.Name = "tbPrepAnalPrepQuantity";
             this.tbPrepAnalPrepQuantity.Size = new System.Drawing.Size(192, 21);
             this.tbPrepAnalPrepQuantity.TabIndex = 6;
@@ -9480,6 +9490,7 @@
             // 
             this.tbPrepAnalPrepAmount.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbPrepAnalPrepAmount.Location = new System.Drawing.Point(113, 0);
+            this.tbPrepAnalPrepAmount.MaxLength = 32;
             this.tbPrepAnalPrepAmount.Name = "tbPrepAnalPrepAmount";
             this.tbPrepAnalPrepAmount.Size = new System.Drawing.Size(192, 21);
             this.tbPrepAnalPrepAmount.TabIndex = 7;
@@ -9530,6 +9541,7 @@
             // 
             this.tbPrepAnalPrepFillHeight.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbPrepAnalPrepFillHeight.Location = new System.Drawing.Point(113, 0);
+            this.tbPrepAnalPrepFillHeight.MaxLength = 32;
             this.tbPrepAnalPrepFillHeight.Name = "tbPrepAnalPrepFillHeight";
             this.tbPrepAnalPrepFillHeight.Size = new System.Drawing.Size(191, 21);
             this.tbPrepAnalPrepFillHeight.TabIndex = 5;
@@ -9989,6 +10001,7 @@
             // 
             this.tbPrepAnalAnalSpecRef.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbPrepAnalAnalSpecRef.Location = new System.Drawing.Point(108, 33);
+            this.tbPrepAnalAnalSpecRef.MaxLength = 256;
             this.tbPrepAnalAnalSpecRef.Name = "tbPrepAnalAnalSpecRef";
             this.tbPrepAnalAnalSpecRef.Size = new System.Drawing.Size(311, 21);
             this.tbPrepAnalAnalSpecRef.TabIndex = 1;

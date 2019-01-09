@@ -48,7 +48,7 @@
             this.panel1.Controls.Add(this.btnCancel);
             this.panel1.Controls.Add(this.btnOk);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 289);
+            this.panel1.Location = new System.Drawing.Point(0, 259);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(336, 30);
             this.panel1.TabIndex = 8;
@@ -96,7 +96,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(20, 125);
+            this.label3.Location = new System.Drawing.Point(20, 112);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(51, 13);
             this.label3.TabIndex = 11;
@@ -104,26 +104,28 @@
             // 
             // tbName
             // 
-            this.tbName.Location = new System.Drawing.Point(105, 28);
+            this.tbName.Location = new System.Drawing.Point(89, 28);
+            this.tbName.MaxLength = 256;
             this.tbName.Name = "tbName";
-            this.tbName.Size = new System.Drawing.Size(201, 20);
+            this.tbName.Size = new System.Drawing.Size(221, 20);
             this.tbName.TabIndex = 13;
             // 
             // tbAddress
             // 
-            this.tbAddress.Location = new System.Drawing.Point(105, 55);
+            this.tbAddress.Location = new System.Drawing.Point(89, 55);
+            this.tbAddress.MaxLength = 1000;
             this.tbAddress.Name = "tbAddress";
-            this.tbAddress.Size = new System.Drawing.Size(201, 20);
+            this.tbAddress.Size = new System.Drawing.Size(221, 20);
             this.tbAddress.TabIndex = 14;
             // 
             // tbComment
             // 
-            this.tbComment.Location = new System.Drawing.Point(105, 122);
+            this.tbComment.Location = new System.Drawing.Point(89, 109);
             this.tbComment.MaxLength = 1000;
             this.tbComment.Multiline = true;
             this.tbComment.Name = "tbComment";
             this.tbComment.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.tbComment.Size = new System.Drawing.Size(201, 137);
+            this.tbComment.Size = new System.Drawing.Size(221, 124);
             this.tbComment.TabIndex = 15;
             // 
             // cboxInstanceStatus
@@ -131,9 +133,9 @@
             this.cboxInstanceStatus.DisplayMember = "Name";
             this.cboxInstanceStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxInstanceStatus.FormattingEnabled = true;
-            this.cboxInstanceStatus.Location = new System.Drawing.Point(105, 82);
+            this.cboxInstanceStatus.Location = new System.Drawing.Point(89, 82);
             this.cboxInstanceStatus.Name = "cboxInstanceStatus";
-            this.cboxInstanceStatus.Size = new System.Drawing.Size(201, 21);
+            this.cboxInstanceStatus.Size = new System.Drawing.Size(221, 21);
             this.cboxInstanceStatus.TabIndex = 16;
             this.cboxInstanceStatus.ValueMember = "Id";
             // 
@@ -150,7 +152,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(336, 319);
+            this.ClientSize = new System.Drawing.Size(336, 289);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.cboxInstanceStatus);
             this.Controls.Add(this.tbComment);

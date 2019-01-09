@@ -48,15 +48,15 @@
             this.panel1.Controls.Add(this.btnCancel);
             this.panel1.Controls.Add(this.btnOk);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 283);
+            this.panel1.Location = new System.Drawing.Point(0, 253);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(394, 28);
+            this.panel1.Size = new System.Drawing.Size(388, 28);
             this.panel1.TabIndex = 9;
             // 
             // btnCancel
             // 
             this.btnCancel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnCancel.Location = new System.Drawing.Point(194, 0);
+            this.btnCancel.Location = new System.Drawing.Point(188, 0);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(100, 28);
             this.btnCancel.TabIndex = 1;
@@ -67,7 +67,7 @@
             // btnOk
             // 
             this.btnOk.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnOk.Location = new System.Drawing.Point(294, 0);
+            this.btnOk.Location = new System.Drawing.Point(288, 0);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(100, 28);
             this.btnOk.TabIndex = 0;
@@ -105,10 +105,11 @@
             // tbComment
             // 
             this.tbComment.Location = new System.Drawing.Point(95, 108);
+            this.tbComment.MaxLength = 1000;
             this.tbComment.Multiline = true;
             this.tbComment.Name = "tbComment";
             this.tbComment.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.tbComment.Size = new System.Drawing.Size(262, 139);
+            this.tbComment.Size = new System.Drawing.Size(262, 120);
             this.tbComment.TabIndex = 16;
             // 
             // cboxInstanceStatus
@@ -153,7 +154,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(394, 311);
+            this.ClientSize = new System.Drawing.Size(388, 281);
             this.Controls.Add(this.cboxCompanies);
             this.Controls.Add(this.cboxPersons);
             this.Controls.Add(this.label6);

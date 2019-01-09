@@ -56,15 +56,15 @@
             this.panel1.Controls.Add(this.btnCancel);
             this.panel1.Controls.Add(this.btnOk);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 266);
+            this.panel1.Location = new System.Drawing.Point(0, 250);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(441, 28);
+            this.panel1.Size = new System.Drawing.Size(390, 28);
             this.panel1.TabIndex = 1;
             // 
             // btnCancel
             // 
             this.btnCancel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnCancel.Location = new System.Drawing.Point(241, 0);
+            this.btnCancel.Location = new System.Drawing.Point(190, 0);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(100, 28);
             this.btnCancel.TabIndex = 1;
@@ -75,7 +75,7 @@
             // btnOk
             // 
             this.btnOk.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnOk.Location = new System.Drawing.Point(341, 0);
+            this.btnOk.Location = new System.Drawing.Point(290, 0);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(100, 28);
             this.btnOk.TabIndex = 0;
@@ -115,7 +115,7 @@
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel8.Size = new System.Drawing.Size(441, 266);
+            this.tableLayoutPanel8.Size = new System.Drawing.Size(390, 250);
             this.tableLayoutPanel8.TabIndex = 3;
             // 
             // label48
@@ -123,7 +123,7 @@
             this.label48.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label48.Location = new System.Drawing.Point(3, 166);
             this.label48.Name = "label48";
-            this.label48.Size = new System.Drawing.Size(82, 30);
+            this.label48.Size = new System.Drawing.Size(72, 30);
             this.label48.TabIndex = 4;
             this.label48.Text = "Laboratory";
             this.label48.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -134,9 +134,9 @@
             this.cboxLaboratory.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cboxLaboratory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxLaboratory.FormattingEnabled = true;
-            this.cboxLaboratory.Location = new System.Drawing.Point(91, 169);
+            this.cboxLaboratory.Location = new System.Drawing.Point(81, 169);
             this.cboxLaboratory.Name = "cboxLaboratory";
-            this.cboxLaboratory.Size = new System.Drawing.Size(347, 21);
+            this.cboxLaboratory.Size = new System.Drawing.Size(306, 21);
             this.cboxLaboratory.TabIndex = 5;
             this.cboxLaboratory.ValueMember = "Id";
             // 
@@ -145,7 +145,7 @@
             this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label1.Location = new System.Drawing.Point(3, 136);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(82, 30);
+            this.label1.Size = new System.Drawing.Size(72, 30);
             this.label1.TabIndex = 18;
             this.label1.Text = "Language";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -159,9 +159,9 @@
             this.cboxLanguage.Items.AddRange(new object[] {
             "nb",
             "en"});
-            this.cboxLanguage.Location = new System.Drawing.Point(91, 139);
+            this.cboxLanguage.Location = new System.Drawing.Point(81, 139);
             this.cboxLanguage.Name = "cboxLanguage";
-            this.cboxLanguage.Size = new System.Drawing.Size(347, 21);
+            this.cboxLanguage.Size = new System.Drawing.Size(306, 21);
             this.cboxLanguage.TabIndex = 19;
             this.cboxLanguage.ValueMember = "Id";
             // 
@@ -170,7 +170,7 @@
             this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label2.Location = new System.Drawing.Point(3, 196);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(82, 30);
+            this.label2.Size = new System.Drawing.Size(72, 30);
             this.label2.TabIndex = 17;
             this.label2.Text = "Status";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -181,19 +181,19 @@
             this.cboxInstanceStatus.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cboxInstanceStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxInstanceStatus.FormattingEnabled = true;
-            this.cboxInstanceStatus.Location = new System.Drawing.Point(91, 199);
+            this.cboxInstanceStatus.Location = new System.Drawing.Point(81, 199);
             this.cboxInstanceStatus.Name = "cboxInstanceStatus";
-            this.cboxInstanceStatus.Size = new System.Drawing.Size(347, 21);
+            this.cboxInstanceStatus.Size = new System.Drawing.Size(306, 21);
             this.cboxInstanceStatus.TabIndex = 16;
             this.cboxInstanceStatus.ValueMember = "Id";
             // 
             // tbUsername
             // 
             this.tbUsername.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbUsername.Location = new System.Drawing.Point(91, 49);
+            this.tbUsername.Location = new System.Drawing.Point(81, 49);
             this.tbUsername.Name = "tbUsername";
             this.tbUsername.ReadOnly = true;
-            this.tbUsername.Size = new System.Drawing.Size(347, 20);
+            this.tbUsername.Size = new System.Drawing.Size(306, 20);
             this.tbUsername.TabIndex = 10;
             // 
             // cboxPersons
@@ -201,9 +201,9 @@
             this.cboxPersons.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cboxPersons.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxPersons.FormattingEnabled = true;
-            this.cboxPersons.Location = new System.Drawing.Point(91, 19);
+            this.cboxPersons.Location = new System.Drawing.Point(81, 19);
             this.cboxPersons.Name = "cboxPersons";
-            this.cboxPersons.Size = new System.Drawing.Size(347, 21);
+            this.cboxPersons.Size = new System.Drawing.Size(306, 21);
             this.cboxPersons.TabIndex = 20;
             // 
             // label45
@@ -211,7 +211,7 @@
             this.label45.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label45.Location = new System.Drawing.Point(3, 46);
             this.label45.Name = "label45";
-            this.label45.Size = new System.Drawing.Size(82, 30);
+            this.label45.Size = new System.Drawing.Size(72, 30);
             this.label45.TabIndex = 1;
             this.label45.Text = "Username";
             this.label45.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -221,7 +221,7 @@
             this.label44.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label44.Location = new System.Drawing.Point(3, 16);
             this.label44.Name = "label44";
-            this.label44.Size = new System.Drawing.Size(82, 30);
+            this.label44.Size = new System.Drawing.Size(72, 30);
             this.label44.TabIndex = 0;
             this.label44.Text = "Person";
             this.label44.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -231,7 +231,7 @@
             this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label3.Location = new System.Drawing.Point(3, 76);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(82, 30);
+            this.label3.Size = new System.Drawing.Size(72, 30);
             this.label3.TabIndex = 21;
             this.label3.Text = "Password";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -241,7 +241,7 @@
             this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label4.Location = new System.Drawing.Point(3, 106);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(82, 30);
+            this.label4.Size = new System.Drawing.Size(72, 30);
             this.label4.TabIndex = 22;
             this.label4.Text = "Password";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -250,27 +250,29 @@
             // 
             this.tbPassword1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbPassword1.Enabled = false;
-            this.tbPassword1.Location = new System.Drawing.Point(91, 79);
+            this.tbPassword1.Location = new System.Drawing.Point(81, 79);
+            this.tbPassword1.MaxLength = 1000;
             this.tbPassword1.Name = "tbPassword1";
             this.tbPassword1.PasswordChar = '*';
-            this.tbPassword1.Size = new System.Drawing.Size(347, 20);
+            this.tbPassword1.Size = new System.Drawing.Size(306, 20);
             this.tbPassword1.TabIndex = 23;
             // 
             // tbPassword2
             // 
             this.tbPassword2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbPassword2.Enabled = false;
-            this.tbPassword2.Location = new System.Drawing.Point(91, 109);
+            this.tbPassword2.Location = new System.Drawing.Point(81, 109);
+            this.tbPassword2.MaxLength = 1000;
             this.tbPassword2.Name = "tbPassword2";
             this.tbPassword2.PasswordChar = '*';
-            this.tbPassword2.Size = new System.Drawing.Size(347, 20);
+            this.tbPassword2.Size = new System.Drawing.Size(306, 20);
             this.tbPassword2.TabIndex = 24;
             // 
             // FormUser
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(441, 294);
+            this.ClientSize = new System.Drawing.Size(390, 278);
             this.Controls.Add(this.tableLayoutPanel8);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;

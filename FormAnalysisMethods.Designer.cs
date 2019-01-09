@@ -80,6 +80,7 @@
             // tbDescriptionLink
             // 
             this.tbDescriptionLink.Location = new System.Drawing.Point(133, 52);
+            this.tbDescriptionLink.MaxLength = 1024;
             this.tbDescriptionLink.Name = "tbDescriptionLink";
             this.tbDescriptionLink.Size = new System.Drawing.Size(220, 20);
             this.tbDescriptionLink.TabIndex = 36;
@@ -87,6 +88,7 @@
             // tbName
             // 
             this.tbName.Location = new System.Drawing.Point(133, 24);
+            this.tbName.MaxLength = 32;
             this.tbName.Name = "tbName";
             this.tbName.Size = new System.Drawing.Size(220, 20);
             this.tbName.TabIndex = 35;
@@ -94,6 +96,7 @@
             // tbComment
             // 
             this.tbComment.Location = new System.Drawing.Point(133, 132);
+            this.tbComment.MaxLength = 1000;
             this.tbComment.Multiline = true;
             this.tbComment.Name = "tbComment";
             this.tbComment.ScrollBars = System.Windows.Forms.ScrollBars.Both;
@@ -159,6 +162,7 @@
             // tbSpecRefRegExp
             // 
             this.tbSpecRefRegExp.Location = new System.Drawing.Point(133, 79);
+            this.tbSpecRefRegExp.MaxLength = 256;
             this.tbSpecRefRegExp.Name = "tbSpecRefRegExp";
             this.tbSpecRefRegExp.Size = new System.Drawing.Size(220, 20);
             this.tbSpecRefRegExp.TabIndex = 38;

@@ -18,11 +18,11 @@
 // Authors: Dag Robole,
 
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
+using System.Data.SqlClient;
 using System.Text;
 using System.Windows.Forms;
 using PdfDocument = iTextSharp.text.Document;
@@ -38,8 +38,7 @@ using PdfPCell = iTextSharp.text.pdf.PdfPCell;
 using PdfParagraph = iTextSharp.text.Paragraph;
 using PdfChunk = iTextSharp.text.Chunk;
 using PdfFontFactory = iTextSharp.text.FontFactory;
-using System.IO;
-using System.Data.SqlClient;
+using PdfImage = iTextSharp.text.Image;
 
 namespace DSA_lims
 {
@@ -47,6 +46,7 @@ namespace DSA_lims
     {
         private Guid mAssignmentId = Guid.Empty;
         private string OrderName, LaboratoryName, ResponsibleName, CustomerName, CustomerCompany, CustomerAddress;
+        private PdfImage labLogo = null, accredLogo = null;
 
         public FormCreateOrderReport(Guid assignmentId)
         {
@@ -55,20 +55,35 @@ namespace DSA_lims
             mAssignmentId = assignmentId;
             using (SqlConnection conn = DB.OpenConnection())
             {
-                SqlDataReader reader = DB.GetDataReader(conn, "csp_select_assignment_informative", CommandType.StoredProcedure, new[] {
-                    new SqlParameter("@id", mAssignmentId)
-                });
-
-                if(reader.HasRows)
+                using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_assignment_informative", CommandType.StoredProcedure, new SqlParameter("@id", mAssignmentId)))
                 {
-                    reader.Read();
-                    OrderName = reader["name"].ToString();
-                    LaboratoryName = reader["laboratory_name"].ToString();
-                    ResponsibleName = reader["responsible_name"].ToString();
-                    CustomerName = reader["customer_name"].ToString();
-                    CustomerCompany = reader["customer_company"].ToString();
-                    CustomerAddress = reader["customer_address"].ToString();
-                }                
+                    if (reader.HasRows)
+                    {
+                        reader.Read();
+                        OrderName = reader["name"].ToString();
+                        LaboratoryName = reader["laboratory_name"].ToString();
+                        ResponsibleName = reader["responsible_name"].ToString();
+                        CustomerName = reader["customer_name"].ToString();
+                        CustomerCompany = reader["customer_company"].ToString();
+                        CustomerAddress = reader["customer_address"].ToString();
+                    }
+                }
+
+                Guid labId = (Guid)DB.GetScalar(conn, "select laboratory_id from assignment where id = @id", CommandType.Text, new SqlParameter("@id", mAssignmentId));
+
+                using (SqlDataReader reader = DB.GetDataReader(conn, "select laboratory_logo, accredited_logo from laboratory where id = @id", CommandType.Text, new SqlParameter("@id", labId)))
+                {
+                    if (reader.HasRows)
+                    {
+                        reader.Read();
+
+                        if (reader["laboratory_logo"] != null && reader["laboratory_logo"] != DBNull.Value)
+                            labLogo = PdfImage.GetInstance((byte[])reader["laboratory_logo"]);
+
+                        if (reader["accredited_logo"] != null && reader["accredited_logo"] != DBNull.Value)
+                            accredLogo = PdfImage.GetInstance((byte[])reader["accredited_logo"]);
+                    }
+                }
             }
         }
 
@@ -78,13 +93,26 @@ namespace DSA_lims
             Close();
         }
 
+        private void CropImageToHeight(PdfImage img, float height)
+        {
+            if (img.Height <= height)
+                return;
+
+            float w = img.Width;
+            float h = img.Height;
+            float scaleFactor = height / h;
+            w = w * scaleFactor;
+            h = h * scaleFactor;
+            img.ScaleAbsolute(w, h);
+        }
+
         private void btnOk_Click(object sender, EventArgs e)
         {
             MemoryStream ms = new MemoryStream();
             PdfDocument document = new PdfDocument();
             PdfWriter writer = PdfWriter.GetInstance(document, ms);
 
-            document.Open();
+            document.Open();            
 
             PdfContentByte cb = writer.DirectContent;
 
@@ -95,7 +123,27 @@ namespace DSA_lims
             PdfBaseFont baseFontItalic = PdfBaseFont.CreateFont(PdfBaseFont.TIMES_ITALIC, PdfBaseFont.CP1252, PdfBaseFont.NOT_EMBEDDED);
             float fontSize = 11, fontSizeSmall = 9, fontSizeTiny = 7, fontSizeHeader = 13;
             float margin = 50;
-            float leftCursor = margin, topCursor = document.Top , lineSpace = 13;
+            float leftCursor = margin, topCursor = document.Top - margin, lineSpace = 13;
+            bool hasLogos = false;
+
+            if (labLogo != null)
+            {
+                CropImageToHeight(labLogo, 64f);
+                labLogo.SetAbsolutePosition(leftCursor, topCursor);
+                document.Add(labLogo);
+                hasLogos = true;                
+            }
+
+            if (accredLogo != null)
+            {
+                CropImageToHeight(accredLogo, 64f);
+                accredLogo.SetAbsolutePosition(document.PageSize.Width - accredLogo.ScaledWidth - margin, topCursor);
+                document.Add(accredLogo);
+                hasLogos = true;
+            }
+
+            if(hasLogos)
+                topCursor -= labLogo.ScaledHeight;
 
             cb.SetFontAndSize(baseFont, fontSizeHeader);
             cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, "FORENKLET MÅLERAPPORT", leftCursor, topCursor, 0);

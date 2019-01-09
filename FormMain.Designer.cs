@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.menu = new System.Windows.Forms.MenuStrip();
             this.miFile = new System.Windows.Forms.ToolStripMenuItem();
@@ -4351,14 +4351,14 @@
             this.gridOrderConnectedItems.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.gridOrderConnectedItems.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
             this.gridOrderConnectedItems.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle13.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            dataGridViewCellStyle13.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle13.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle13.SelectionBackColor = System.Drawing.SystemColors.ButtonFace;
-            dataGridViewCellStyle13.SelectionForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.gridOrderConnectedItems.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle13;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.ButtonFace;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.gridOrderConnectedItems.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.gridOrderConnectedItems.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridOrderConnectedItems.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gridOrderConnectedItems.GridColor = System.Drawing.SystemColors.ButtonFace;
@@ -4427,10 +4427,9 @@
             // 
             // tableLayoutPanel7
             // 
-            this.tableLayoutPanel7.ColumnCount = 4;
+            this.tableLayoutPanel7.ColumnCount = 3;
             this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel7.Controls.Add(this.cbOrderApprovedCustomer, 0, 1);
             this.tableLayoutPanel7.Controls.Add(this.cbOrderApprovedLaboratory, 0, 2);
@@ -4444,9 +4443,9 @@
             this.tableLayoutPanel7.Controls.Add(this.btnOrderSaveStatus, 2, 8);
             this.tableLayoutPanel7.Controls.Add(this.btnOrderSaveApprovedCustomer, 2, 1);
             this.tableLayoutPanel7.Controls.Add(this.btnOrderSaveApprovedLaboratory, 2, 2);
-            this.tableLayoutPanel7.Controls.Add(this.tbOrderCustomerInfo, 3, 5);
-            this.tableLayoutPanel7.Controls.Add(this.label61, 3, 4);
             this.tableLayoutPanel7.Controls.Add(this.btnOrderSaveReportComment, 2, 6);
+            this.tableLayoutPanel7.Controls.Add(this.tbOrderCustomerInfo, 2, 5);
+            this.tableLayoutPanel7.Controls.Add(this.label61, 2, 4);
             this.tableLayoutPanel7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel7.Location = new System.Drawing.Point(0, 25);
             this.tableLayoutPanel7.Name = "tableLayoutPanel7";
@@ -4496,7 +4495,7 @@
             this.tbOrderApprovedCustomerBy.Location = new System.Drawing.Point(280, 19);
             this.tbOrderApprovedCustomerBy.Name = "tbOrderApprovedCustomerBy";
             this.tbOrderApprovedCustomerBy.ReadOnly = true;
-            this.tbOrderApprovedCustomerBy.Size = new System.Drawing.Size(271, 21);
+            this.tbOrderApprovedCustomerBy.Size = new System.Drawing.Size(548, 21);
             this.tbOrderApprovedCustomerBy.TabIndex = 1;
             // 
             // tbOrderApprovedLaboratoryBy
@@ -4505,7 +4504,7 @@
             this.tbOrderApprovedLaboratoryBy.Location = new System.Drawing.Point(280, 49);
             this.tbOrderApprovedLaboratoryBy.Name = "tbOrderApprovedLaboratoryBy";
             this.tbOrderApprovedLaboratoryBy.ReadOnly = true;
-            this.tbOrderApprovedLaboratoryBy.Size = new System.Drawing.Size(271, 21);
+            this.tbOrderApprovedLaboratoryBy.Size = new System.Drawing.Size(548, 21);
             this.tbOrderApprovedLaboratoryBy.TabIndex = 2;
             // 
             // cboxOrderStatus
@@ -4526,12 +4525,12 @@
             this.tbOrderLastWorkflowStatusBy.Location = new System.Drawing.Point(280, 349);
             this.tbOrderLastWorkflowStatusBy.Name = "tbOrderLastWorkflowStatusBy";
             this.tbOrderLastWorkflowStatusBy.ReadOnly = true;
-            this.tbOrderLastWorkflowStatusBy.Size = new System.Drawing.Size(271, 21);
+            this.tbOrderLastWorkflowStatusBy.Size = new System.Drawing.Size(548, 21);
             this.tbOrderLastWorkflowStatusBy.TabIndex = 4;
             // 
             // tbOrderReportComment
             // 
-            this.tableLayoutPanel7.SetColumnSpan(this.tbOrderReportComment, 3);
+            this.tableLayoutPanel7.SetColumnSpan(this.tbOrderReportComment, 2);
             this.tbOrderReportComment.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbOrderReportComment.Location = new System.Drawing.Point(3, 139);
             this.tbOrderReportComment.MaxLength = 4000;
@@ -4566,7 +4565,7 @@
             // btnOrderSaveStatus
             // 
             this.btnOrderSaveStatus.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnOrderSaveStatus.Location = new System.Drawing.Point(557, 349);
+            this.btnOrderSaveStatus.Location = new System.Drawing.Point(834, 349);
             this.btnOrderSaveStatus.Name = "btnOrderSaveStatus";
             this.btnOrderSaveStatus.Size = new System.Drawing.Size(271, 24);
             this.btnOrderSaveStatus.TabIndex = 24;
@@ -4577,7 +4576,7 @@
             // btnOrderSaveApprovedCustomer
             // 
             this.btnOrderSaveApprovedCustomer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnOrderSaveApprovedCustomer.Location = new System.Drawing.Point(557, 19);
+            this.btnOrderSaveApprovedCustomer.Location = new System.Drawing.Point(834, 19);
             this.btnOrderSaveApprovedCustomer.Name = "btnOrderSaveApprovedCustomer";
             this.btnOrderSaveApprovedCustomer.Size = new System.Drawing.Size(271, 24);
             this.btnOrderSaveApprovedCustomer.TabIndex = 25;
@@ -4588,7 +4587,7 @@
             // btnOrderSaveApprovedLaboratory
             // 
             this.btnOrderSaveApprovedLaboratory.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnOrderSaveApprovedLaboratory.Location = new System.Drawing.Point(557, 49);
+            this.btnOrderSaveApprovedLaboratory.Location = new System.Drawing.Point(834, 49);
             this.btnOrderSaveApprovedLaboratory.Name = "btnOrderSaveApprovedLaboratory";
             this.btnOrderSaveApprovedLaboratory.Size = new System.Drawing.Size(271, 24);
             this.btnOrderSaveApprovedLaboratory.TabIndex = 26;
@@ -4620,7 +4619,7 @@
             // btnOrderSaveReportComment
             // 
             this.btnOrderSaveReportComment.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnOrderSaveReportComment.Location = new System.Drawing.Point(557, 289);
+            this.btnOrderSaveReportComment.Location = new System.Drawing.Point(834, 289);
             this.btnOrderSaveReportComment.Name = "btnOrderSaveReportComment";
             this.btnOrderSaveReportComment.Size = new System.Drawing.Size(271, 24);
             this.btnOrderSaveReportComment.TabIndex = 27;

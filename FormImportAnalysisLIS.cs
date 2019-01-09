@@ -311,6 +311,17 @@ namespace DSA_lims
 
         private void btnOk_Click(object sender, EventArgs e)
         {
+            foreach(AnalysisResult.Isotop iso in result.Isotopes)
+            {
+                bool approved = iso.ApprovedRES || iso.ApprovedMDA;
+                bool prop = iso.Accredited || iso.Reportable;
+                if(prop && !approved)
+                {
+                    MessageBox.Show("Nuclide " + iso.NuclideName + ": Can not set accredited or reportable on nuclide that is not approved");
+                    return;
+                }
+            }
+
             result.Isotopes.RemoveAll(x => parameters.AllNuclides.Contains(x.NuclideName) == false);
             result.Isotopes.RemoveAll(x => parameters.AnalMethNuclides.Contains(x.NuclideName) == false);
 

@@ -851,7 +851,7 @@ from role r
                 new SqlParameter("@source_id", id)
             });
 
-            grid.Columns["id"].Visible = false;            
+            grid.Columns["id"].Visible = false;
             grid.Columns["label"].HeaderText = "Name";
             grid.Columns["file_extension"].HeaderText = "Type";
         }

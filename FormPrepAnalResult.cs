@@ -128,6 +128,13 @@ namespace DSA_lims
                 }
             }
 
+            bool approved = cbActivityApproved.Checked || cbDetectionLimitApproved.Checked;
+            if (!approved && (cbAccredited.Checked || cbReportable.Checked))
+            {                
+                MessageBox.Show("Activity or MDA must be approved before setting accredited and reportable");
+                return;
+            }
+
             p["activity"] = Convert.ToDouble(tbActivity.Text);
             p["activity_uncertainty_abs"] = Convert.ToDouble(tbUncertainty.Text);
             p["activity_approved"] = cbActivityApproved.Checked;

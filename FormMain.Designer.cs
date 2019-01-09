@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.menu = new System.Windows.Forms.MenuStrip();
             this.miFile = new System.Windows.Forms.ToolStripMenuItem();
@@ -546,11 +546,11 @@
             this.toolStripSeparator31 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton24 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton26 = new System.Windows.Forms.ToolStripButton();
-            this.dataGridView3 = new System.Windows.Forms.DataGridView();
+            this.gridProjectAttachments = new System.Windows.Forms.DataGridView();
             this.toolsProjAttachments = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel3 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator32 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
+            this.btnProjectScanAttachment = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton5 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton6 = new System.Windows.Forms.ToolStripButton();
             this.tabTypeRel = new System.Windows.Forms.TabPage();
@@ -849,11 +849,11 @@
             this.btnPrepAnalPrepUpdate = new System.Windows.Forms.Button();
             this.panel77 = new System.Windows.Forms.Panel();
             this.panel5 = new System.Windows.Forms.Panel();
-            this.dataGridView7 = new System.Windows.Forms.DataGridView();
+            this.gridPrepAnalPrepAttachments = new System.Windows.Forms.DataGridView();
             this.toolsSampleAttachments = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel10 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator26 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButton11 = new System.Windows.Forms.ToolStripButton();
+            this.btnPrepAnalPrepScanAttachment = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton12 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton13 = new System.Windows.Forms.ToolStripButton();
             this.tabPrepAnalAnalysis = new System.Windows.Forms.TabPage();
@@ -892,11 +892,11 @@
             this.miImportLISFile2 = new System.Windows.Forms.ToolStripMenuItem();
             this.btnPrepAnalClearAnal = new System.Windows.Forms.ToolStripButton();
             this.panel8 = new System.Windows.Forms.Panel();
-            this.dataGridView11 = new System.Windows.Forms.DataGridView();
+            this.gridPrepAnalAnalAttachments = new System.Windows.Forms.DataGridView();
             this.toolsSampleResAttachments = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator27 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButton16 = new System.Windows.Forms.ToolStripButton();
+            this.btnPrepAnalAnalScanAttachment = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton17 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton18 = new System.Windows.Forms.ToolStripButton();
             this.tools = new System.Windows.Forms.ToolStrip();
@@ -1039,7 +1039,7 @@
             this.splitContainer25.Panel2.SuspendLayout();
             this.splitContainer25.SuspendLayout();
             this.toolsProjUsers.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridProjectAttachments)).BeginInit();
             this.toolsProjAttachments.SuspendLayout();
             this.tabTypeRel.SuspendLayout();
             this.tabControl2.SuspendLayout();
@@ -1204,7 +1204,7 @@
             this.toolsSamplePrepInfo.SuspendLayout();
             this.panel24.SuspendLayout();
             this.panel5.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView7)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridPrepAnalPrepAttachments)).BeginInit();
             this.toolsSampleAttachments.SuspendLayout();
             this.tabPrepAnalAnalysis.SuspendLayout();
             this.panel76.SuspendLayout();
@@ -1220,7 +1220,7 @@
             this.panelPrepAnalAnalUnit.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.panel8.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView11)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridPrepAnalAnalAttachments)).BeginInit();
             this.toolsSampleResAttachments.SuspendLayout();
             this.tools.SuspendLayout();
             this.SuspendLayout();
@@ -4344,14 +4344,14 @@
             this.gridOrderConnectedItems.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.gridOrderConnectedItems.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
             this.gridOrderConnectedItems.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.ButtonFace;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.gridOrderConnectedItems.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.ButtonFace;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.gridOrderConnectedItems.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
             this.gridOrderConnectedItems.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridOrderConnectedItems.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gridOrderConnectedItems.GridColor = System.Drawing.SystemColors.ButtonFace;
@@ -6340,6 +6340,7 @@
             this.gridProjectSub.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.gridProjectSub.Size = new System.Drawing.Size(384, 601);
             this.gridProjectSub.TabIndex = 1;
+            this.gridProjectSub.SelectionChanged += new System.EventHandler(this.gridProjectSub_SelectionChanged);
             // 
             // toolStrip5
             // 
@@ -6414,7 +6415,7 @@
             // 
             // splitContainer25.Panel2
             // 
-            this.splitContainer25.Panel2.Controls.Add(this.dataGridView3);
+            this.splitContainer25.Panel2.Controls.Add(this.gridProjectAttachments);
             this.splitContainer25.Panel2.Controls.Add(this.toolsProjAttachments);
             this.splitContainer25.Size = new System.Drawing.Size(359, 626);
             this.splitContainer25.SplitterDistance = 325;
@@ -6475,19 +6476,24 @@
             this.toolStripButton26.Size = new System.Drawing.Size(70, 22);
             this.toolStripButton26.Text = "Remove";
             // 
-            // dataGridView3
+            // gridProjectAttachments
             // 
-            this.dataGridView3.AllowUserToAddRows = false;
-            this.dataGridView3.AllowUserToDeleteRows = false;
-            this.dataGridView3.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
-            this.dataGridView3.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dataGridView3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView3.Location = new System.Drawing.Point(0, 25);
-            this.dataGridView3.Name = "dataGridView3";
-            this.dataGridView3.ReadOnly = true;
-            this.dataGridView3.Size = new System.Drawing.Size(359, 273);
-            this.dataGridView3.TabIndex = 1;
+            this.gridProjectAttachments.AllowUserToAddRows = false;
+            this.gridProjectAttachments.AllowUserToDeleteRows = false;
+            this.gridProjectAttachments.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.gridProjectAttachments.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
+            this.gridProjectAttachments.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.gridProjectAttachments.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridProjectAttachments.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gridProjectAttachments.Location = new System.Drawing.Point(0, 25);
+            this.gridProjectAttachments.MultiSelect = false;
+            this.gridProjectAttachments.Name = "gridProjectAttachments";
+            this.gridProjectAttachments.ReadOnly = true;
+            this.gridProjectAttachments.RowHeadersVisible = false;
+            this.gridProjectAttachments.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.gridProjectAttachments.Size = new System.Drawing.Size(359, 273);
+            this.gridProjectAttachments.TabIndex = 1;
+            this.gridProjectAttachments.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridAttachments_CellDoubleClick);
             // 
             // toolsProjAttachments
             // 
@@ -6495,7 +6501,7 @@
             this.toolsProjAttachments.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripLabel3,
             this.toolStripSeparator32,
-            this.toolStripButton4,
+            this.btnProjectScanAttachment,
             this.toolStripButton5,
             this.toolStripButton6});
             this.toolsProjAttachments.Location = new System.Drawing.Point(0, 0);
@@ -6516,13 +6522,14 @@
             this.toolStripSeparator32.Name = "toolStripSeparator32";
             this.toolStripSeparator32.Size = new System.Drawing.Size(6, 25);
             // 
-            // toolStripButton4
+            // btnProjectScanAttachment
             // 
-            this.toolStripButton4.Image = global::DSA_lims.Properties.Resources.scan;
-            this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton4.Name = "toolStripButton4";
-            this.toolStripButton4.Size = new System.Drawing.Size(52, 22);
-            this.toolStripButton4.Text = "Scan";
+            this.btnProjectScanAttachment.Image = global::DSA_lims.Properties.Resources.scan;
+            this.btnProjectScanAttachment.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnProjectScanAttachment.Name = "btnProjectScanAttachment";
+            this.btnProjectScanAttachment.Size = new System.Drawing.Size(52, 22);
+            this.btnProjectScanAttachment.Text = "Scan";
+            this.btnProjectScanAttachment.Click += new System.EventHandler(this.btnProjectScanAttachment_Click);
             // 
             // toolStripButton5
             // 
@@ -9248,10 +9255,10 @@
             // 
             this.tabPrepAnalPreps.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.tabPrepAnalPreps.Controls.Add(this.splitContainer3);
-            this.tabPrepAnalPreps.Location = new System.Drawing.Point(4, 22);
+            this.tabPrepAnalPreps.Location = new System.Drawing.Point(4, 24);
             this.tabPrepAnalPreps.Name = "tabPrepAnalPreps";
             this.tabPrepAnalPreps.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPrepAnalPreps.Size = new System.Drawing.Size(759, 600);
+            this.tabPrepAnalPreps.Size = new System.Drawing.Size(759, 598);
             this.tabPrepAnalPreps.TabIndex = 3;
             this.tabPrepAnalPreps.Text = "Preparations";
             // 
@@ -9666,7 +9673,7 @@
             // 
             // panel5
             // 
-            this.panel5.Controls.Add(this.dataGridView7);
+            this.panel5.Controls.Add(this.gridPrepAnalPrepAttachments);
             this.panel5.Controls.Add(this.toolsSampleAttachments);
             this.panel5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel5.Location = new System.Drawing.Point(0, 0);
@@ -9674,19 +9681,25 @@
             this.panel5.Size = new System.Drawing.Size(326, 332);
             this.panel5.TabIndex = 1;
             // 
-            // dataGridView7
+            // gridPrepAnalPrepAttachments
             // 
-            this.dataGridView7.AllowUserToAddRows = false;
-            this.dataGridView7.AllowUserToDeleteRows = false;
-            this.dataGridView7.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
-            this.dataGridView7.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dataGridView7.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView7.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView7.Location = new System.Drawing.Point(0, 25);
-            this.dataGridView7.Name = "dataGridView7";
-            this.dataGridView7.ReadOnly = true;
-            this.dataGridView7.Size = new System.Drawing.Size(326, 307);
-            this.dataGridView7.TabIndex = 1;
+            this.gridPrepAnalPrepAttachments.AllowUserToAddRows = false;
+            this.gridPrepAnalPrepAttachments.AllowUserToDeleteRows = false;
+            this.gridPrepAnalPrepAttachments.AllowUserToResizeRows = false;
+            this.gridPrepAnalPrepAttachments.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.gridPrepAnalPrepAttachments.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
+            this.gridPrepAnalPrepAttachments.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.gridPrepAnalPrepAttachments.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridPrepAnalPrepAttachments.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gridPrepAnalPrepAttachments.Location = new System.Drawing.Point(0, 25);
+            this.gridPrepAnalPrepAttachments.MultiSelect = false;
+            this.gridPrepAnalPrepAttachments.Name = "gridPrepAnalPrepAttachments";
+            this.gridPrepAnalPrepAttachments.ReadOnly = true;
+            this.gridPrepAnalPrepAttachments.RowHeadersVisible = false;
+            this.gridPrepAnalPrepAttachments.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.gridPrepAnalPrepAttachments.Size = new System.Drawing.Size(326, 307);
+            this.gridPrepAnalPrepAttachments.TabIndex = 1;
+            this.gridPrepAnalPrepAttachments.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridAttachments_CellDoubleClick);
             // 
             // toolsSampleAttachments
             // 
@@ -9694,7 +9707,7 @@
             this.toolsSampleAttachments.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripLabel10,
             this.toolStripSeparator26,
-            this.toolStripButton11,
+            this.btnPrepAnalPrepScanAttachment,
             this.toolStripButton12,
             this.toolStripButton13});
             this.toolsSampleAttachments.Location = new System.Drawing.Point(0, 0);
@@ -9715,13 +9728,14 @@
             this.toolStripSeparator26.Name = "toolStripSeparator26";
             this.toolStripSeparator26.Size = new System.Drawing.Size(6, 25);
             // 
-            // toolStripButton11
+            // btnPrepAnalPrepScanAttachment
             // 
-            this.toolStripButton11.Image = global::DSA_lims.Properties.Resources.scan;
-            this.toolStripButton11.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton11.Name = "toolStripButton11";
-            this.toolStripButton11.Size = new System.Drawing.Size(52, 22);
-            this.toolStripButton11.Text = "Scan";
+            this.btnPrepAnalPrepScanAttachment.Image = global::DSA_lims.Properties.Resources.scan;
+            this.btnPrepAnalPrepScanAttachment.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnPrepAnalPrepScanAttachment.Name = "btnPrepAnalPrepScanAttachment";
+            this.btnPrepAnalPrepScanAttachment.Size = new System.Drawing.Size(52, 22);
+            this.btnPrepAnalPrepScanAttachment.Text = "Scan";
+            this.btnPrepAnalPrepScanAttachment.Click += new System.EventHandler(this.btnPrepAnalPrepScanAttachment_Click);
             // 
             // toolStripButton12
             // 
@@ -9744,10 +9758,10 @@
             this.tabPrepAnalAnalysis.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.tabPrepAnalAnalysis.Controls.Add(this.panel76);
             this.tabPrepAnalAnalysis.Controls.Add(this.panel63);
-            this.tabPrepAnalAnalysis.Location = new System.Drawing.Point(4, 22);
+            this.tabPrepAnalAnalysis.Location = new System.Drawing.Point(4, 24);
             this.tabPrepAnalAnalysis.Name = "tabPrepAnalAnalysis";
             this.tabPrepAnalAnalysis.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPrepAnalAnalysis.Size = new System.Drawing.Size(759, 600);
+            this.tabPrepAnalAnalysis.Size = new System.Drawing.Size(759, 598);
             this.tabPrepAnalAnalysis.TabIndex = 4;
             this.tabPrepAnalAnalysis.Text = "Analyses";
             // 
@@ -9757,7 +9771,7 @@
             this.panel76.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel76.Location = new System.Drawing.Point(3, 287);
             this.panel76.Name = "panel76";
-            this.panel76.Size = new System.Drawing.Size(753, 310);
+            this.panel76.Size = new System.Drawing.Size(753, 308);
             this.panel76.TabIndex = 3;
             // 
             // panel9
@@ -9767,7 +9781,7 @@
             this.panel9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel9.Location = new System.Drawing.Point(0, 0);
             this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(753, 310);
+            this.panel9.Size = new System.Drawing.Size(753, 308);
             this.panel9.TabIndex = 4;
             // 
             // gridPrepAnalResults
@@ -9786,7 +9800,7 @@
             this.gridPrepAnalResults.ReadOnly = true;
             this.gridPrepAnalResults.RowHeadersVisible = false;
             this.gridPrepAnalResults.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridPrepAnalResults.Size = new System.Drawing.Size(753, 285);
+            this.gridPrepAnalResults.Size = new System.Drawing.Size(753, 283);
             this.gridPrepAnalResults.TabIndex = 0;
             // 
             // toolsSampleResRes
@@ -10122,7 +10136,7 @@
             // 
             // panel8
             // 
-            this.panel8.Controls.Add(this.dataGridView11);
+            this.panel8.Controls.Add(this.gridPrepAnalAnalAttachments);
             this.panel8.Controls.Add(this.toolsSampleResAttachments);
             this.panel8.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel8.Location = new System.Drawing.Point(0, 0);
@@ -10130,19 +10144,25 @@
             this.panel8.Size = new System.Drawing.Size(328, 284);
             this.panel8.TabIndex = 3;
             // 
-            // dataGridView11
+            // gridPrepAnalAnalAttachments
             // 
-            this.dataGridView11.AllowUserToAddRows = false;
-            this.dataGridView11.AllowUserToDeleteRows = false;
-            this.dataGridView11.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
-            this.dataGridView11.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dataGridView11.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView11.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView11.Location = new System.Drawing.Point(0, 25);
-            this.dataGridView11.Name = "dataGridView11";
-            this.dataGridView11.ReadOnly = true;
-            this.dataGridView11.Size = new System.Drawing.Size(328, 259);
-            this.dataGridView11.TabIndex = 1;
+            this.gridPrepAnalAnalAttachments.AllowUserToAddRows = false;
+            this.gridPrepAnalAnalAttachments.AllowUserToDeleteRows = false;
+            this.gridPrepAnalAnalAttachments.AllowUserToResizeRows = false;
+            this.gridPrepAnalAnalAttachments.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.gridPrepAnalAnalAttachments.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
+            this.gridPrepAnalAnalAttachments.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.gridPrepAnalAnalAttachments.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridPrepAnalAnalAttachments.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gridPrepAnalAnalAttachments.Location = new System.Drawing.Point(0, 25);
+            this.gridPrepAnalAnalAttachments.MultiSelect = false;
+            this.gridPrepAnalAnalAttachments.Name = "gridPrepAnalAnalAttachments";
+            this.gridPrepAnalAnalAttachments.ReadOnly = true;
+            this.gridPrepAnalAnalAttachments.RowHeadersVisible = false;
+            this.gridPrepAnalAnalAttachments.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.gridPrepAnalAnalAttachments.Size = new System.Drawing.Size(328, 259);
+            this.gridPrepAnalAnalAttachments.TabIndex = 1;
+            this.gridPrepAnalAnalAttachments.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridAttachments_CellDoubleClick);
             // 
             // toolsSampleResAttachments
             // 
@@ -10150,7 +10170,7 @@
             this.toolsSampleResAttachments.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripLabel1,
             this.toolStripSeparator27,
-            this.toolStripButton16,
+            this.btnPrepAnalAnalScanAttachment,
             this.toolStripButton17,
             this.toolStripButton18});
             this.toolsSampleResAttachments.Location = new System.Drawing.Point(0, 0);
@@ -10171,13 +10191,14 @@
             this.toolStripSeparator27.Name = "toolStripSeparator27";
             this.toolStripSeparator27.Size = new System.Drawing.Size(6, 25);
             // 
-            // toolStripButton16
+            // btnPrepAnalAnalScanAttachment
             // 
-            this.toolStripButton16.Image = global::DSA_lims.Properties.Resources.scan;
-            this.toolStripButton16.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton16.Name = "toolStripButton16";
-            this.toolStripButton16.Size = new System.Drawing.Size(52, 22);
-            this.toolStripButton16.Text = "Scan";
+            this.btnPrepAnalAnalScanAttachment.Image = global::DSA_lims.Properties.Resources.scan;
+            this.btnPrepAnalAnalScanAttachment.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnPrepAnalAnalScanAttachment.Name = "btnPrepAnalAnalScanAttachment";
+            this.btnPrepAnalAnalScanAttachment.Size = new System.Drawing.Size(52, 22);
+            this.btnPrepAnalAnalScanAttachment.Text = "Scan";
+            this.btnPrepAnalAnalScanAttachment.Click += new System.EventHandler(this.btnPrepAnalAnalScanAttachment_Click);
             // 
             // toolStripButton17
             // 
@@ -10463,7 +10484,7 @@
             this.splitContainer25.ResumeLayout(false);
             this.toolsProjUsers.ResumeLayout(false);
             this.toolsProjUsers.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridProjectAttachments)).EndInit();
             this.toolsProjAttachments.ResumeLayout(false);
             this.toolsProjAttachments.PerformLayout();
             this.tabTypeRel.ResumeLayout(false);
@@ -10705,7 +10726,7 @@
             this.panel24.ResumeLayout(false);
             this.panel5.ResumeLayout(false);
             this.panel5.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView7)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridPrepAnalPrepAttachments)).EndInit();
             this.toolsSampleAttachments.ResumeLayout(false);
             this.toolsSampleAttachments.PerformLayout();
             this.tabPrepAnalAnalysis.ResumeLayout(false);
@@ -10728,7 +10749,7 @@
             this.toolStrip1.PerformLayout();
             this.panel8.ResumeLayout(false);
             this.panel8.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView11)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridPrepAnalAnalAttachments)).EndInit();
             this.toolsSampleResAttachments.ResumeLayout(false);
             this.toolsSampleResAttachments.PerformLayout();
             this.tools.ResumeLayout(false);
@@ -10843,11 +10864,11 @@
         private System.Windows.Forms.Label lblMenuOrders;
         private System.Windows.Forms.Button btnMenuNewOrder;
         private System.Windows.Forms.Button btnMenuProjects;
-        private System.Windows.Forms.DataGridView dataGridView3;
+        private System.Windows.Forms.DataGridView gridProjectAttachments;
         private System.Windows.Forms.ToolStrip toolsProjAttachments;
         private System.Windows.Forms.ToolStripLabel toolStripLabel3;
         private System.Windows.Forms.ToolStripButton toolStripButton5;
-        private System.Windows.Forms.ToolStripButton toolStripButton4;
+        private System.Windows.Forms.ToolStripButton btnProjectScanAttachment;
         private System.Windows.Forms.ToolStripButton toolStripButton6;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.ComboBox cboxOrdersYear;
@@ -11209,11 +11230,11 @@
         private System.Windows.Forms.TabControl tabsPrepAnal;
         private System.Windows.Forms.TabPage tabPrepAnalPreps;
         private System.Windows.Forms.Panel panel5;
-        private System.Windows.Forms.DataGridView dataGridView7;
+        private System.Windows.Forms.DataGridView gridPrepAnalPrepAttachments;
         private System.Windows.Forms.ToolStrip toolsSampleAttachments;
         private System.Windows.Forms.ToolStripLabel toolStripLabel10;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator26;
-        private System.Windows.Forms.ToolStripButton toolStripButton11;
+        private System.Windows.Forms.ToolStripButton btnPrepAnalPrepScanAttachment;
         private System.Windows.Forms.ToolStripButton toolStripButton12;
         private System.Windows.Forms.ToolStripButton toolStripButton13;
         private System.Windows.Forms.Panel panel1;
@@ -11441,11 +11462,11 @@
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripLabel toolStripLabel59;
         private System.Windows.Forms.Panel panel8;
-        private System.Windows.Forms.DataGridView dataGridView11;
+        private System.Windows.Forms.DataGridView gridPrepAnalAnalAttachments;
         private System.Windows.Forms.ToolStrip toolsSampleResAttachments;
         private System.Windows.Forms.ToolStripLabel toolStripLabel1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator27;
-        private System.Windows.Forms.ToolStripButton toolStripButton16;
+        private System.Windows.Forms.ToolStripButton btnPrepAnalAnalScanAttachment;
         private System.Windows.Forms.ToolStripButton toolStripButton17;
         private System.Windows.Forms.ToolStripButton toolStripButton18;
         private System.Windows.Forms.Panel panel77;

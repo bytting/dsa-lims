@@ -3129,6 +3129,8 @@ where p.id = @pid
                 object o = DB.GetScalar(conn, query, CommandType.Text, new SqlParameter("@pid", pid));
                 if(o != null && o != DBNull.Value)
                     tbPrepAnalPrepReqUnit.Text = o.ToString();
+
+                UI.PopulateAttachments(conn, "preparation", pid, gridPrepAnalPrepAttachments);
             }                
         }        
 
@@ -3196,6 +3198,8 @@ where p.id = @pid
                 }
 
                 UI.PopulateAnalysisResults(conn, aid, gridPrepAnalResults);
+
+                UI.PopulateAttachments(conn, "analysis", aid, gridPrepAnalAnalAttachments);
             }
         }
 
@@ -4588,6 +4592,15 @@ where id = @id
             ActiveControl = tbSamplesLookup;
         }
 
+        private void gridAttachments_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            DataGridView grid = sender as DataGridView;
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                UI.ShowAttachment(conn, e.RowIndex, grid);
+            }
+        }
+
         private void btnSampleScanAttachment_Click(object sender, EventArgs e)
         {
             FormScan form = new FormScan(Common.Settings);
@@ -4600,16 +4613,7 @@ where id = @id
 
                 UI.PopulateAttachments(conn, "sample", selectedSampleId, gridSampleAttachments);
             }
-        }
-
-        private void gridAttachments_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            DataGridView grid = sender as DataGridView;
-            using (SqlConnection conn = DB.OpenConnection())
-            {
-                UI.ShowAttachment(conn, e.RowIndex, grid);
-            }
-        }
+        }        
 
         private void btnOrderScanAttachment_Click(object sender, EventArgs e)
         {
@@ -4622,6 +4626,73 @@ where id = @id
                 DB.AddAttachment(conn, "assignment", selectedOrderId, form.DocumentName, "pdf", form.PdfData);
 
                 UI.PopulateAttachments(conn, "assignment", selectedOrderId, gridOrderAttachments);
+            }
+        }
+
+        private void btnPrepAnalPrepScanAttachment_Click(object sender, EventArgs e)
+        {
+            Guid prepId = Guid.Parse(treePrepAnal.SelectedNode.Name);
+
+            FormScan form = new FormScan(Common.Settings);
+            if (form.ShowDialog() != DialogResult.OK)
+                return;            
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                DB.AddAttachment(conn, "preparation", prepId, form.DocumentName, "pdf", form.PdfData);
+
+                UI.PopulateAttachments(conn, "preparation", prepId, gridPrepAnalPrepAttachments);
+            }
+        }
+
+        private void btnPrepAnalAnalScanAttachment_Click(object sender, EventArgs e)
+        {
+            Guid analId = Guid.Parse(treePrepAnal.SelectedNode.Name);
+
+            FormScan form = new FormScan(Common.Settings);
+            if (form.ShowDialog() != DialogResult.OK)
+                return;            
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                DB.AddAttachment(conn, "analysis", analId, form.DocumentName, "pdf", form.PdfData);
+
+                UI.PopulateAttachments(conn, "analysis", analId, gridPrepAnalAnalAttachments);
+            }
+        }
+
+        private void btnProjectScanAttachment_Click(object sender, EventArgs e)
+        {
+            if(gridProjectSub.SelectedRows.Count < 1)
+            {
+                MessageBox.Show("No sub-project selected");
+                return;
+            }
+
+            Guid psid = Guid.Parse(gridProjectSub.SelectedRows[0].Cells["id"].Value.ToString());
+
+            FormScan form = new FormScan(Common.Settings);
+            if (form.ShowDialog() != DialogResult.OK)
+                return;
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                DB.AddAttachment(conn, "project_sub", psid, form.DocumentName, "pdf", form.PdfData);
+
+                UI.PopulateAttachments(conn, "project_sub", psid, gridProjectAttachments);
+            }
+        }
+
+        private void gridProjectSub_SelectionChanged(object sender, EventArgs e)
+        {
+            if (gridProjectSub.SelectedRows.Count < 1)
+                return;
+
+            Guid psid = Guid.Parse(gridProjectSub.SelectedRows[0].Cells["id"].Value.ToString());
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                UI.PopulateAttachments(conn, "project_sub", psid, gridProjectAttachments);
             }
         }
     }    

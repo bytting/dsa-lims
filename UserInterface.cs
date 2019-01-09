@@ -858,7 +858,7 @@ from role r
 
         public static void ShowAttachment(SqlConnection conn, int gridIndex, DataGridView grid)
         {
-            if (gridIndex >= grid.Rows.Count)
+            if (gridIndex < 0 || gridIndex >= grid.Rows.Count)
                 return;
 
             Guid id = Guid.Parse(grid.Rows[gridIndex].Cells["id"].Value.ToString());

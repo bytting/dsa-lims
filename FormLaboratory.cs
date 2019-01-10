@@ -53,6 +53,9 @@ namespace DSA_lims
             lblLaboratoryLogoSize.Text = "";
             lblAccreditedLogoSize.Text = "";
 
+            p["laboratory_logo"] = null;
+            p["accredited_logo"] = null;
+
             using (SqlConnection conn = DB.OpenConnection())
             {
                 cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, "csp_select_instance_status");

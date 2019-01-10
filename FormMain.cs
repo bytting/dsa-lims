@@ -2452,11 +2452,14 @@ order by name
                     map["deadline"] = reader["deadline"];
                     map["requested_sigma_act"] = reader["requested_sigma_act"];
                     map["requested_sigma_mda"] = reader["requested_sigma_mda"];
-                    map["customer_name"] = reader["customer_name"];
-                    map["customer_company"] = reader["customer_company"];
-                    map["customer_email"] = reader["customer_email"];
-                    map["customer_phone"] = reader["customer_phone"];
-                    map["customer_address"] = reader["customer_address"];
+                    map["customer_company_name"] = reader["customer_company_name"];
+                    map["customer_company_email"] = reader["customer_company_email"];
+                    map["customer_company_phone"] = reader["customer_company_phone"];
+                    map["customer_company_address"] = reader["customer_company_address"];
+                    map["customer_contact_name"] = reader["customer_contact_name"];
+                    map["customer_contact_email"] = reader["customer_contact_email"];
+                    map["customer_contact_phone"] = reader["customer_contact_phone"];
+                    map["customer_contact_address"] = reader["customer_contact_address"];
                     map["approved_customer"] = reader["approved_customer"];
                     map["approved_customer_by"] = reader["approved_customer_by"];
                     map["approved_laboratory"] = reader["approved_laboratory"];
@@ -2484,19 +2487,22 @@ order by name
                 cboxOrderRequestedSigma.SelectedValue = map["requested_sigma_act"];
                 cboxOrderRequestedSigmaMDA.SelectedValue = map["requested_sigma_mda"];
                 CustomerModel cust = new CustomerModel();
-                cust.Name = map["customer_name"].ToString();
-                cust.Company = map["customer_company"].ToString();
-                cust.Email = map["customer_email"].ToString();
-                cust.Phone = map["customer_phone"].ToString();
-                cust.Address = map["customer_address"].ToString();
-                tbOrderCustomer.Text = cust.Name;
+                cust.CompanyName = map["customer_company_name"].ToString();
+                cust.CompanyEmail = map["customer_company_email"].ToString();
+                cust.CompanyPhone = map["customer_company_phone"].ToString();
+                cust.CompanyAddress = map["customer_company_address"].ToString();
+                cust.ContactName = map["customer_contact_name"].ToString();
+                cust.ContactEmail = map["customer_contact_email"].ToString();
+                cust.ContactPhone = map["customer_contact_phone"].ToString();
+                cust.ContactAddress = map["customer_contact_address"].ToString();
+                tbOrderCustomer.Text = cust.ContactName;
                 tbOrderCustomer.Tag = cust;
                 tbOrderCustomerInfo.Text = 
-                    cust.Name + Environment.NewLine + 
-                    cust.Company + Environment.NewLine + Environment.NewLine +
-                    cust.Email + Environment.NewLine + 
-                    cust.Phone + Environment.NewLine + Environment.NewLine +
-                    cust.Address;
+                    cust.ContactName + Environment.NewLine + 
+                    cust.CompanyName + Environment.NewLine + Environment.NewLine +
+                    cust.ContactEmail + Environment.NewLine + 
+                    cust.ContactPhone + Environment.NewLine + Environment.NewLine +
+                    cust.ContactAddress;
                 tbOrderContentComment.Text = map["content_comment"].ToString();
                 tbOrderReportComment.Text = map["report_comment"].ToString();
                 cbOrderApprovedCustomer.Checked = Convert.ToBoolean(map["approved_customer"]);
@@ -2696,11 +2702,14 @@ order by s.number, p.number, a.number, n.name
                 cmd.Parameters.AddWithValue("@deadline", DB.MakeParam(typeof(DateTime), tbOrderDeadline.Tag));
                 cmd.Parameters.AddWithValue("@requested_sigma_act", DB.MakeParam(typeof(double), cboxOrderRequestedSigma.SelectedValue));
                 cmd.Parameters.AddWithValue("@requested_sigma_mda", DB.MakeParam(typeof(double), cboxOrderRequestedSigmaMDA.SelectedValue));
-                cmd.Parameters.AddWithValue("@customer_name", DB.MakeParam(typeof(string), cust.Name));
-                cmd.Parameters.AddWithValue("@customer_company", DB.MakeParam(typeof(string), cust.Company));
-                cmd.Parameters.AddWithValue("@customer_email", DB.MakeParam(typeof(string), cust.Email));
-                cmd.Parameters.AddWithValue("@customer_phone", DB.MakeParam(typeof(string), cust.Phone));
-                cmd.Parameters.AddWithValue("@customer_address", DB.MakeParam(typeof(string), cust.Address));
+                cmd.Parameters.AddWithValue("@customer_company_name", DB.MakeParam(typeof(string), cust.CompanyName));
+                cmd.Parameters.AddWithValue("@customer_company_email", DB.MakeParam(typeof(string), cust.CompanyEmail));
+                cmd.Parameters.AddWithValue("@customer_company_phone", DB.MakeParam(typeof(string), cust.CompanyPhone));
+                cmd.Parameters.AddWithValue("@customer_company_address", DB.MakeParam(typeof(string), cust.CompanyAddress));
+                cmd.Parameters.AddWithValue("@customer_contact_name", DB.MakeParam(typeof(string), cust.ContactName));
+                cmd.Parameters.AddWithValue("@customer_contact_email", DB.MakeParam(typeof(string), cust.ContactEmail));
+                cmd.Parameters.AddWithValue("@customer_contact_phone", DB.MakeParam(typeof(string), cust.ContactPhone));
+                cmd.Parameters.AddWithValue("@customer_contact_address", DB.MakeParam(typeof(string), cust.ContactAddress));
                 cmd.Parameters.AddWithValue("@content_comment", DB.MakeParam(typeof(string), tbOrderContentComment.Text));
                 cmd.Parameters.AddWithValue("@instance_status_id", InstanceStatus.Active); // FIXME
                 cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
@@ -3638,14 +3647,14 @@ insert into analysis_result values(
                 return;
 
             CustomerModel c = form.SelectedCustomer;
-            tbOrderCustomer.Text = c.Name;
+            tbOrderCustomer.Text = c.ContactName;
             tbOrderCustomer.Tag = c;
             tbOrderCustomerInfo.Text = 
-                c.Name + Environment.NewLine + 
-                c.Company + Environment.NewLine + Environment.NewLine + 
-                c.Email + Environment.NewLine + 
-                c.Phone + Environment.NewLine + Environment.NewLine + 
-                c.Address;
+                c.ContactName + Environment.NewLine + 
+                c.CompanyName + Environment.NewLine + Environment.NewLine + 
+                c.ContactEmail + Environment.NewLine + 
+                c.ContactPhone + Environment.NewLine + Environment.NewLine + 
+                c.ContactAddress;
         }
 
         private void miPersonNew_Click(object sender, EventArgs e)
@@ -4146,8 +4155,8 @@ select
 		a.deadline,
 		a.requested_sigma_act,
 		a.requested_sigma_mda,        
-		a.customer_name,
-        a.customer_company,
+		a.customer_contact_name,
+        a.customer_company_name,
 		a.approved_customer,
 		a.approved_laboratory,			
         wf.name as 'workflow_status',
@@ -4197,8 +4206,8 @@ select
                 gridOrders.Columns["requested_sigma_act"].HeaderText = "Req.Sig.Act.";
                 gridOrders.Columns["requested_sigma_mda"].HeaderText = "Req.Sig.MDA";
                 gridOrders.Columns["deadline"].HeaderText = "Deadline";                
-                gridOrders.Columns["customer_name"].HeaderText = "Customer";
-                gridOrders.Columns["customer_company"].HeaderText = "Cust.Company";
+                gridOrders.Columns["customer_contact_name"].HeaderText = "Contact";
+                gridOrders.Columns["customer_company_name"].HeaderText = "Company";
                 gridOrders.Columns["approved_customer"].HeaderText = "Appr.Cust";
                 gridOrders.Columns["approved_laboratory"].HeaderText = "Appr.Lab";
                 gridOrders.Columns["workflow_status"].HeaderText = "Status";                

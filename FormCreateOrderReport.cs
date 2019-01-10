@@ -63,9 +63,9 @@ namespace DSA_lims
                         OrderName = reader["name"].ToString();
                         LaboratoryName = reader["laboratory_name"].ToString();
                         ResponsibleName = reader["responsible_name"].ToString();
-                        CustomerName = reader["customer_name"].ToString();
-                        CustomerCompany = reader["customer_company"].ToString();
-                        CustomerAddress = reader["customer_address"].ToString();
+                        CustomerName = reader["customer_contact_name"].ToString();
+                        CustomerCompany = reader["customer_company_name"].ToString();
+                        CustomerAddress = reader["customer_contact_address"].ToString();
                     }
                 }
 

@@ -558,7 +558,7 @@ order by name";
         public static void PopulateOrders(SqlConnection conn, int statusLevel, Guid laboratoryId, DataGridView grid)
         {
             string query = @"
-select id, name, customer_name, customer_company
+select id, name, customer_contact_name, customer_company_name
 from assignment a 
 where laboratory_id = @laboratory_id and instance_status_id <= @instance_status_level 
 order by create_date desc";
@@ -570,8 +570,8 @@ order by create_date desc";
             grid.Columns["id"].Visible = false;            
 
             grid.Columns["name"].HeaderText = "Name";            
-            grid.Columns["customer_name"].HeaderText = "Customer";
-            grid.Columns["customer_company"].HeaderText = "Cust.Company";
+            grid.Columns["customer_contact_name"].HeaderText = "Customer";
+            grid.Columns["customer_company_name"].HeaderText = "Company";
         }
 
         public static void PopulateOrderContent(SqlConnection conn, Guid selectedOrder, TreeView tree, Guid sampleTypeId, TreeView treeSampleTypes, bool useCommentToolTips)
@@ -845,14 +845,14 @@ from role r
 
         public static void PopulateAttachments(SqlConnection conn, string sourceTable, Guid id, DataGridView grid)
         {
-            string query = "select id, label, file_extension from attachment where source_table = @source_table and source_id = @source_id order by create_date desc";
+            string query = "select id, name, file_extension from attachment where source_table = @source_table and source_id = @source_id order by create_date desc";
             grid.DataSource = DB.GetDataTable(conn, query, CommandType.Text, new[] {
                 new SqlParameter("@source_table", sourceTable),
                 new SqlParameter("@source_id", id)
             });
 
             grid.Columns["id"].Visible = false;
-            grid.Columns["label"].HeaderText = "Name";
+            grid.Columns["name"].HeaderText = "Name";
             grid.Columns["file_extension"].HeaderText = "Type";
         }
 

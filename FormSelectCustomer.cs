@@ -61,12 +61,15 @@ namespace DSA_lims
                 return;
             }
 
-            SelectedCustomer.Id = Guid.Parse(gridCustomers.SelectedRows[0].Cells["id"].Value.ToString());
-            SelectedCustomer.Name = gridCustomers.SelectedRows[0].Cells["person_name"].Value.ToString();
-            SelectedCustomer.Company = gridCustomers.SelectedRows[0].Cells["company_name"].Value.ToString();
-            SelectedCustomer.Email = gridCustomers.SelectedRows[0].Cells["company_email"].Value.ToString();            
-            SelectedCustomer.Phone = gridCustomers.SelectedRows[0].Cells["company_phone"].Value.ToString();
-            SelectedCustomer.Address = gridCustomers.SelectedRows[0].Cells["company_address"].Value.ToString();
+            SelectedCustomer.Id = Guid.Parse(gridCustomers.SelectedRows[0].Cells["id"].Value.ToString());            
+            SelectedCustomer.CompanyName = gridCustomers.SelectedRows[0].Cells["company_name"].Value.ToString();
+            SelectedCustomer.CompanyEmail = gridCustomers.SelectedRows[0].Cells["company_email"].Value.ToString();            
+            SelectedCustomer.CompanyPhone = gridCustomers.SelectedRows[0].Cells["company_phone"].Value.ToString();
+            SelectedCustomer.CompanyAddress = gridCustomers.SelectedRows[0].Cells["company_address"].Value.ToString();
+            SelectedCustomer.ContactName = gridCustomers.SelectedRows[0].Cells["person_name"].Value.ToString();
+            SelectedCustomer.ContactEmail = gridCustomers.SelectedRows[0].Cells["person_email"].Value.ToString();
+            SelectedCustomer.ContactPhone = gridCustomers.SelectedRows[0].Cells["person_phone"].Value.ToString();
+            SelectedCustomer.ContactAddress = gridCustomers.SelectedRows[0].Cells["person_address"].Value.ToString();
 
             DialogResult = DialogResult.OK;
             Close();

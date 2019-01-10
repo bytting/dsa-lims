@@ -98,11 +98,14 @@ namespace DSA_lims
     public class CustomerModel
     {
         public Guid Id { get; set; }
-        public string Name { get; set; }
-        public string Company { get; set; }        
-        public string Email { get; set; }
-        public string Phone { get; set; }
-        public string Address { get; set; }
+        public string CompanyName { get; set; }        
+        public string CompanyEmail { get; set; }
+        public string CompanyPhone { get; set; }
+        public string CompanyAddress { get; set; }
+        public string ContactName { get; set; }
+        public string ContactEmail { get; set; }
+        public string ContactPhone { get; set; }
+        public string ContactAddress { get; set; }
     }
 
     public class AnalysisParameters

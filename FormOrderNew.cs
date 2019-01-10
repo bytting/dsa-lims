@@ -121,17 +121,21 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@deadline", (DateTime)tbDeadline.Tag);
                 cmd.Parameters.AddWithValue("@requested_sigma_act", DB.MakeParam(typeof(double), cboxRequestedSigma.SelectedValue));
                 cmd.Parameters.AddWithValue("@requested_sigma_mda", DB.MakeParam(typeof(double), cboxRequestedSigmaMDA.SelectedValue));
-                cmd.Parameters.AddWithValue("@customer_name", DB.MakeParam(typeof(string), cust.Name));
-                cmd.Parameters.AddWithValue("@customer_company", DB.MakeParam(typeof(string), cust.Company));
-                cmd.Parameters.AddWithValue("@customer_email", DB.MakeParam(typeof(string), cust.Email));
-                cmd.Parameters.AddWithValue("@customer_phone", DB.MakeParam(typeof(string), cust.Phone));
-                cmd.Parameters.AddWithValue("@customer_address", DB.MakeParam(typeof(string), cust.Address));
+                cmd.Parameters.AddWithValue("@customer_company_name", DB.MakeParam(typeof(string), cust.CompanyName));
+                cmd.Parameters.AddWithValue("@customer_company_email", DB.MakeParam(typeof(string), cust.CompanyEmail));
+                cmd.Parameters.AddWithValue("@customer_company_phone", DB.MakeParam(typeof(string), cust.CompanyPhone));
+                cmd.Parameters.AddWithValue("@customer_company_address", DB.MakeParam(typeof(string), cust.CompanyAddress));
+                cmd.Parameters.AddWithValue("@customer_contact_name", DB.MakeParam(typeof(string), cust.ContactName));
+                cmd.Parameters.AddWithValue("@customer_contact_email", DB.MakeParam(typeof(string), cust.ContactEmail));
+                cmd.Parameters.AddWithValue("@customer_contact_phone", DB.MakeParam(typeof(string), cust.ContactPhone));
+                cmd.Parameters.AddWithValue("@customer_contact_address", DB.MakeParam(typeof(string), cust.ContactAddress));
                 cmd.Parameters.AddWithValue("@approved_customer", 0);
                 cmd.Parameters.AddWithValue("@approved_customer_by", DBNull.Value);
                 cmd.Parameters.AddWithValue("@approved_laboratory", 0);
                 cmd.Parameters.AddWithValue("@approved_laboratory_by", DBNull.Value);
                 cmd.Parameters.AddWithValue("@content_comment", DBNull.Value);
                 cmd.Parameters.AddWithValue("@report_comment", DBNull.Value);
+                cmd.Parameters.AddWithValue("@audit_comment", DBNull.Value);
                 cmd.Parameters.AddWithValue("@workflow_status_id", 1);
                 cmd.Parameters.AddWithValue("@last_workflow_status_date", DBNull.Value);
                 cmd.Parameters.AddWithValue("@last_workflow_status_by", DBNull.Value);
@@ -205,7 +209,7 @@ namespace DSA_lims
             if (form.ShowDialog() != DialogResult.OK)
                 return;
 
-            tbCustomer.Text = form.SelectedCustomer.Name;
+            tbCustomer.Text = form.SelectedCustomer.ContactName;
             tbCustomer.Tag = form.SelectedCustomer;
         }
     }

@@ -2511,13 +2511,11 @@ order by name
                 // Show attachments
                 UI.PopulateAttachments(conn, "assignment", id, gridOrderAttachments);
 
-                gridOrderConnectedItems.DataSource = null;
-
                 // Populate assigned grid
 
                 string query = @"
 select
-    convert(nvarchar(50), s.number) + '/' + convert(nvarchar(50), p.number) + CASE WHEN a.number is null then '' else '/' + convert(nvarchar(50), a.number) end as 'Name',
+    convert(nvarchar(50), s.number) + '/' + convert(nvarchar(50), p.number) + case when a.number is null then '' else '/' + convert(nvarchar(50), a.number) end as 'Name',
     l.name as 'Prep.Lab',
     pm.name as 'Prep.Meth',
     (select name from workflow_status where id = p.workflow_status_id) as 'Prep.Status',    
@@ -3796,27 +3794,6 @@ insert into analysis_result values(
                 case 2:
                     orderSampleTypeId = Guid.Parse(e.Node.Parent.Parent.Name);
                     break;
-            }
-
-            string query = @"
-select s.id, s.number as 'Name', st.name as 'Type', sc.name as 'Comp.', sa.person_name as 'Sampler'
-from sample s
-	inner join sample_x_assignment_sample_type sxast on s.id = sxast.sample_id
-	inner join assignment_sample_type ast on ast.id = sxast.assignment_sample_type_id and ast.id = @astid
-	inner join assignment a on a.id = ast.assignment_id
-    inner join sample_type st on st.id = s.sample_type_id
-    left outer join sample_component sc on sc.id = s.sample_component_id
-    left outer join cv_sampler sa on sa.id = s.sampler_id
-where a.id = @aid
-order by s.number
-";            
-            using (SqlConnection conn = DB.OpenConnection())
-            {
-                gridOrderConnectedItems.DataSource = DB.GetDataTable(conn, query, CommandType.Text, new[] {
-                            new SqlParameter("@aid", selectedOrderId),
-                            new SqlParameter("@astid", orderSampleTypeId)
-                        });
-                gridOrderConnectedItems.Columns["id"].Visible = false;
             }
         }        
 

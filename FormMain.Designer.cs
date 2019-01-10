@@ -4438,7 +4438,7 @@
             this.tableLayoutPanel7.SetColumnSpan(this.tbOrderReportComment, 2);
             this.tbOrderReportComment.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbOrderReportComment.Location = new System.Drawing.Point(3, 139);
-            this.tbOrderReportComment.MaxLength = 4000;
+            this.tbOrderReportComment.MaxLength = 1000;
             this.tbOrderReportComment.Multiline = true;
             this.tbOrderReportComment.Name = "tbOrderReportComment";
             this.tbOrderReportComment.ScrollBars = System.Windows.Forms.ScrollBars.Both;

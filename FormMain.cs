@@ -4251,6 +4251,33 @@ select
             {
                 conn = DB.OpenConnection();
 
+                if((int)cboxOrderStatus.SelectedValue == 2)
+                {
+                    int nReqSamples, nReqPreparations, nReqAnalyses;
+                    DB.GetOrderRequiredInventory(conn, selectedOrderId, out nReqSamples, out nReqPreparations, out nReqAnalyses);
+
+                    int nCurrSamples, nCurrPreparations, nCurrAnalyses;
+                    DB.GetOrderCurrentInventory(conn, selectedOrderId, out nCurrSamples, out nCurrPreparations, out nCurrAnalyses);
+
+                    if(nCurrSamples != nReqSamples)
+                    {
+                        MessageBox.Show("This order is not complete. Wrong number of samples: " + nCurrSamples + "/" + nReqSamples);
+                        return;
+                    }
+
+                    if (nCurrPreparations != nReqPreparations)
+                    {
+                        MessageBox.Show("This order is not complete. Wrong number of preparations: " + nCurrPreparations + "/" + nReqPreparations);
+                        return;
+                    }
+
+                    if (nCurrAnalyses != nReqAnalyses)
+                    {
+                        MessageBox.Show("This order is not complete. Wrong number of analyses: " + nCurrAnalyses + "/" + nReqAnalyses);
+                        return;
+                    }
+                }
+
                 string query = @"
 update assignment set
     workflow_status_id = @workflow_status_id, 
@@ -4286,6 +4313,17 @@ where id = @id
             {
                 conn = DB.OpenConnection();
 
+                if (cbOrderApprovedCustomer.Checked)
+                {
+                    int nSamples, nPreparations, nAnalyses;
+                    DB.GetOrderRequiredInventory(conn, selectedOrderId, out nSamples, out nPreparations, out nAnalyses);
+                    if (nPreparations < 1)
+                    {
+                        MessageBox.Show("Can not approve an order without any preparations");
+                        return;
+                    }
+                }
+
                 string query = "update assignment set approved_customer = @approved_customer, approved_customer_by = @approved_customer_by where id = @id";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@approved_customer", cbOrderApprovedCustomer.Checked);
@@ -4319,6 +4357,17 @@ where id = @id
             try
             {
                 conn = DB.OpenConnection();
+
+                if (cbOrderApprovedLaboratory.Checked)
+                {
+                    int nSamples, nPreparations, nAnalyses;
+                    DB.GetOrderRequiredInventory(conn, selectedOrderId, out nSamples, out nPreparations, out nAnalyses);
+                    if (nPreparations < 1)
+                    {
+                        MessageBox.Show("Can not approve an order without any preparations");
+                        return;
+                    }
+                }
 
                 string query = "update assignment set approved_laboratory = @approved_laboratory, approved_laboratory_by = @approved_laboratory_by where id = @id";
                 SqlCommand cmd = new SqlCommand(query, conn);

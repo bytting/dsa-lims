@@ -1523,7 +1523,8 @@ create table assignment (
 	approved_laboratory bit default 0,	
 	approved_laboratory_by nvarchar(50) default null,
 	content_comment nvarchar(1000) default null,
-	report_comment nvarchar(4000) default null,
+	report_comment nvarchar(1000) default null,
+	audit_comment nvarchar(4000) default null,
 	workflow_status_id int default 1,
 	last_workflow_status_date datetime default null,
 	last_workflow_status_by nvarchar(50) default null,
@@ -1555,7 +1556,8 @@ create proc csp_insert_assignment
 	@approved_laboratory bit,	
 	@approved_laboratory_by nvarchar(50),
 	@content_comment nvarchar(1000),
-	@report_comment nvarchar(1000),		
+	@report_comment nvarchar(1000),	
+	@audit_comment nvarchar(4000),	
 	@workflow_status_id int,
 	@last_workflow_status_date datetime,
 	@last_workflow_status_by nvarchar(50),
@@ -1585,7 +1587,8 @@ as
 		@approved_laboratory,	
 		@approved_laboratory_by,
 		@content_comment,
-		@report_comment,		
+		@report_comment,
+		@audit_comment,
 		@workflow_status_id,
 		@last_workflow_status_date,
 		@last_workflow_status_by,
@@ -1631,6 +1634,16 @@ as
 		instance_status_id = @instance_status_id,
 		update_date = @update_date,
 		updated_by = @updated_by
+	where id = @id
+go
+
+create proc csp_update_assignment_analysis_report
+	@id uniqueidentifier,	
+	@audit_comment_stub nvarchar(100)
+as 		
+	update assignment set		
+		audit_comment = audit_comment + CHAR(13) + CHAR(10) + @audit_comment_stub,
+		analysis_report_version = @analysis_report_version + 1
 	where id = @id
 go
 
@@ -1710,6 +1723,7 @@ as
 		a.approved_laboratory_by,	
 		a.content_comment,
 		a.report_comment,		
+		a.audit_comment,		
 		a.workflow_status_id,
 		a.last_workflow_status_date,
 		a.last_workflow_status_by,

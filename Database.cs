@@ -548,5 +548,97 @@ from role r
             cmd.Parameters.AddWithValue("@created_by", Common.Username);
             cmd.ExecuteNonQuery();
         }
+
+        public static void GetOrderRequiredInventory(SqlConnection conn, Guid assignmentId, out int nSamples, out int nPreparations, out int nAnalyses)
+        {
+            nSamples = nPreparations = nAnalyses = 0;
+
+            string query = @"
+select 
+	sum(ast.sample_count) as 'nsamples', 
+	sum(apm.preparation_method_count * ast.sample_count) as 'npreparations', 
+	sum(aam.analysis_method_count * apm.preparation_method_count * ast.sample_count) as 'nanalyses'
+from assignment a
+	inner join assignment_sample_type ast on ast.assignment_id = a.id
+	inner join assignment_preparation_method apm on apm.assignment_sample_type_id = ast.id
+	left outer join assignment_analysis_method aam on aam.assignment_preparation_method_id = apm.id
+where a.id = @aid
+";           
+             
+            using (SqlDataReader reader = DB.GetDataReader(conn, query, CommandType.Text, new SqlParameter("@aid", assignmentId)))
+            {
+                if(reader.HasRows)
+                {
+                    reader.Read();
+
+                    nSamples = Convert.ToInt32(reader["nsamples"]);
+                    nPreparations = Convert.ToInt32(reader["npreparations"]);
+                    nAnalyses = Convert.ToInt32(reader["nanalyses"]);
+                }
+            }
+        }
+
+        public static void GetOrderCurrentInventory(SqlConnection conn, Guid assignmentId, out int nSamples, out int nPreparations, out int nAnalyses)
+        {
+            nSamples = nPreparations = nAnalyses = 0;
+
+            string query = @"
+select
+	(
+		select count(*)
+		from sample s
+			inner join sample_x_assignment_sample_type sxast on sxast.sample_id = s.id
+			inner join assignment_sample_type ast on sxast.assignment_sample_type_id = ast.id
+			inner join assignment a on ast.assignment_id = a.id
+		where a.id = @aid
+	) as 'nsamples',
+	(
+		select count(*) from preparation p where p.assignment_id = @aid
+	) as 'npreparations',
+	(
+		select count(*) from analysis a where a.assignment_id = @aid
+	) as 'nanalyses'
+";
+
+            using (SqlDataReader reader = DB.GetDataReader(conn, query, CommandType.Text, new SqlParameter("@aid", assignmentId)))
+            {
+                if (reader.HasRows)
+                {
+                    reader.Read();
+
+                    nSamples = Convert.ToInt32(reader["nsamples"]);
+                    nPreparations = Convert.ToInt32(reader["npreparations"]);
+                    nAnalyses = Convert.ToInt32(reader["nanalyses"]);
+                }
+            }
+        }
+
+        public static int GetAvailableSamplesOnAssignmentSampleType(SqlConnection conn, Guid astId)
+        {
+            int n = 0;
+            string query = @"
+select
+(
+	select ast.sample_count from assignment_sample_type ast where ast.id = @ast_id
+) as 'available_sample_count',
+(
+	select count(*) from sample s
+		inner join sample_x_assignment_sample_type sxast on sxast.sample_id = s.id
+		inner join assignment_sample_type ast on sxast.assignment_sample_type_id = ast.id and ast.id = @ast_id
+) as 'current_sample_count'
+";
+            using (SqlDataReader reader = DB.GetDataReader(conn, query, CommandType.Text, new SqlParameter("@ast_id", astId)))
+            {
+                if(reader.HasRows)
+                {
+                    reader.Read();
+                    int nAvailSamples = Convert.ToInt32(reader["available_sample_count"]);
+                    int nCurrSamples = Convert.ToInt32(reader["current_sample_count"]);
+                    n = nAvailSamples - nCurrSamples;
+                }
+            }
+
+            return n < 0 ? 0 : n;
+        }
     }    
 }

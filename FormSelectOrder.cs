@@ -115,6 +115,13 @@ where sxast.sample_id = @sid";
             object o = null;
             using (SqlConnection conn = DB.OpenConnection())
             {
+                int nAvail = DB.GetAvailableSamplesOnAssignmentSampleType(conn, SelectedOrderLineId);
+                if(nAvail == 0)
+                {
+                    MessageBox.Show("This order line if already full");
+                    return;
+                }
+
                 o = DB.GetScalar(conn, query, CommandType.Text, new[] {
                     new SqlParameter("@sid", SampleId),
                     new SqlParameter("@aid", SelectedOrderId)

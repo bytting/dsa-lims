@@ -97,24 +97,34 @@ namespace DSA_lims
 
         private void FormMain_Load(object sender, EventArgs e)
         {
-            if (!Directory.Exists(DSAEnvironment.SettingsPath))
-                Directory.CreateDirectory(DSAEnvironment.SettingsPath);
+            try
+            {
+                if (!Directory.Exists(DSAEnvironment.SettingsPath))
+                    Directory.CreateDirectory(DSAEnvironment.SettingsPath);
 
-            Common.Log = DSALogger.CreateLogger(DSAEnvironment.SettingsPath + Path.DirectorySeparatorChar + "dsa-lims.log");
+                Common.Log = DSALogger.CreateLogger(DSAEnvironment.SettingsPath + Path.DirectorySeparatorChar + "dsa-lims.log");
 
-            Common.Log.Info("Loading settings file " + DSAEnvironment.SettingsFilename);
-            LoadSettings(DSAEnvironment.SettingsFilename);
+                Common.Log.Info("Loading settings file " + DSAEnvironment.SettingsFilename);
+                LoadSettings(DSAEnvironment.SettingsFilename);
 
-            DB.ConnectionString = Common.Settings.ConnectionString;
+                DB.ConnectionString = Common.Settings.ConnectionString;
 
-            r = new ResourceManager("DSA_lims.lang_" + CultureInfo.CurrentUICulture.TwoLetterISOLanguageName, Assembly.GetExecutingAssembly());
-            Common.Log.Info("Setting language " + CultureInfo.CurrentUICulture.TwoLetterISOLanguageName);
-            SetLanguageLabels(r);
+                r = new ResourceManager("DSA_lims.lang_" + CultureInfo.CurrentUICulture.TwoLetterISOLanguageName, Assembly.GetExecutingAssembly());
+                Common.Log.Info("Setting language " + CultureInfo.CurrentUICulture.TwoLetterISOLanguageName);
+                SetLanguageLabels(r);
 
-            panelSampleLatLonAlt_Resize(sender, e);
+                panelSampleLatLonAlt_Resize(sender, e);
+            }
+            catch (Exception ex)
+            {
+                if(Common.Log != null)
+                    Common.Log.Fatal(ex);
+                MessageBox.Show(ex.Message);
+                Environment.Exit(1);
+            }
         }
 
-        private void InitializeUI()
+        private bool InitializeUI()
         {
             try
             {
@@ -239,19 +249,24 @@ namespace DSA_lims
                 ActiveControl = tbMenuLookup;
 
                 Common.Log.Info("Application initialized successfully");
+                return true;
             }
             catch (Exception ex)
             {
                 Common.Log.Fatal(ex);
                 MessageBox.Show(ex.Message);
-                Environment.Exit(1);
+                return false;
             }
         }
 
         private void FormMain_Shown(object sender, EventArgs e)
         {
-            ShowLogin();
-            InitializeUI();
+            bool initialized = false;
+            while(!initialized)
+            {
+                ShowLogin();
+                initialized = InitializeUI();
+            }            
         }
 
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
@@ -329,9 +344,13 @@ namespace DSA_lims
         }        
 
         private void miLogout_Click(object sender, EventArgs e)
-        {            
-            ShowLogin();
-            InitializeUI();
+        {
+            bool initialized = false;
+            while (!initialized)
+            {
+                ShowLogin();
+                initialized = InitializeUI();
+            }
         }
 
         private void miExit_Click(object sender, EventArgs e)

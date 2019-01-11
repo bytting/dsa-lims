@@ -4277,7 +4277,7 @@ insert into analysis_result values(
                 return;
 
             string query = @"
-select
+select distinct
 		s.id,	
 		s.number,
 		s.external_id,

@@ -336,7 +336,7 @@ where sxast.sample_id = @sid";
             Guid oid = Guid.Parse(gridOrders.SelectedRows[0].Cells["id"].Value.ToString());
             using (SqlConnection conn = DB.OpenConnection())
             {
-                UI.PopulateOrderContentForSampleTypeName(conn, oid, treeOrderLines, SampleTypeId, TreeSampleTypes, false);
+                UI.PopulateOrderContentForSampleTypeName(conn, oid, treeOrderLines, SampleTypeId, TreeSampleTypes, true);
             }
         }        
 
@@ -397,11 +397,11 @@ where sxast.sample_id = @sid";
         }
 
         private void UpdateCurrentPreparations(TreeNode tnode)
-        {
-            tnode.ToolTipText = "";
-
+        {            
             if (tnode.Level != 1 || tnode.Tag == null)
                 return;
+
+            tnode.ToolTipText = "";
 
             List<Guid> prepList = tnode.Tag as List<Guid>;
             string query = "select number from preparation where id in (" 

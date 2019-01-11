@@ -2857,6 +2857,10 @@ order by s.number, p.number, a.number, n.name
                 gridOrderAssignedAnalyses.DataSource = DB.GetDataTable(conn, query, CommandType.Text, new[] {
                     new SqlParameter("@aid", id)
                 });
+
+                gridOrderAssignedAnalyses.Columns["Activity"].DefaultCellStyle.Format = "0.###E+0";
+                gridOrderAssignedAnalyses.Columns["Act.unc."].DefaultCellStyle.Format = "0.###E+0";
+                gridOrderAssignedAnalyses.Columns["Det.lim."].DefaultCellStyle.Format = "0.###E+0";
             }            
         }
 

@@ -9756,10 +9756,10 @@
             this.tabPrepAnalAnalysis.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.tabPrepAnalAnalysis.Controls.Add(this.panel76);
             this.tabPrepAnalAnalysis.Controls.Add(this.panel63);
-            this.tabPrepAnalAnalysis.Location = new System.Drawing.Point(4, 22);
+            this.tabPrepAnalAnalysis.Location = new System.Drawing.Point(4, 24);
             this.tabPrepAnalAnalysis.Name = "tabPrepAnalAnalysis";
             this.tabPrepAnalAnalysis.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPrepAnalAnalysis.Size = new System.Drawing.Size(759, 600);
+            this.tabPrepAnalAnalysis.Size = new System.Drawing.Size(759, 598);
             this.tabPrepAnalAnalysis.TabIndex = 4;
             this.tabPrepAnalAnalysis.Text = "Analyses";
             // 
@@ -9769,7 +9769,7 @@
             this.panel76.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel76.Location = new System.Drawing.Point(3, 287);
             this.panel76.Name = "panel76";
-            this.panel76.Size = new System.Drawing.Size(753, 310);
+            this.panel76.Size = new System.Drawing.Size(753, 308);
             this.panel76.TabIndex = 3;
             // 
             // panel9
@@ -9779,7 +9779,7 @@
             this.panel9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel9.Location = new System.Drawing.Point(0, 0);
             this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(753, 310);
+            this.panel9.Size = new System.Drawing.Size(753, 308);
             this.panel9.TabIndex = 4;
             // 
             // gridPrepAnalResults
@@ -9798,7 +9798,7 @@
             this.gridPrepAnalResults.ReadOnly = true;
             this.gridPrepAnalResults.RowHeadersVisible = false;
             this.gridPrepAnalResults.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridPrepAnalResults.Size = new System.Drawing.Size(753, 285);
+            this.gridPrepAnalResults.Size = new System.Drawing.Size(753, 283);
             this.gridPrepAnalResults.TabIndex = 0;
             // 
             // toolsSampleResRes

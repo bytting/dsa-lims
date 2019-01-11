@@ -1670,6 +1670,49 @@ as
 	where id = @id
 go
 
+create proc csp_select_assignment_flat
+	@id uniqueidentifier
+as
+	select		
+		a.id,
+		a.name,		
+		l.name as 'laboratory_name',
+		va.name as 'account_name',
+		a.deadline,
+		a.requested_sigma_act,
+		a.requested_sigma_mda,
+		a.customer_company_name,		
+		a.customer_company_email,
+		a.customer_company_phone,
+		a.customer_company_address,
+		a.customer_contact_name,		
+		a.customer_contact_email,
+		a.customer_contact_phone,
+		a.customer_contact_address,
+		a.approved_customer,
+		a.approved_customer_by,
+		a.approved_laboratory,	
+		a.approved_laboratory_by,	
+		a.content_comment,
+		a.report_comment,		
+		a.audit_comment,		
+		a.workflow_status_id,
+		a.last_workflow_status_date,
+		a.last_workflow_status_by,
+		a.analysis_report_version,
+		insta.name as 'instance_status_name',
+		a.locked_by,
+		a.create_date,
+		a.created_by,
+		a.update_date,
+		a.updated_by		
+	from assignment a 		
+		left outer join laboratory l on a.laboratory_id = l.id
+		left outer join cv_account va on a.account_id = va.id
+		inner join instance_status insta on a.instance_status_id = insta.id
+	where a.id = @id	
+go
+
 create proc csp_select_assignment_informative
 	@id uniqueidentifier
 as

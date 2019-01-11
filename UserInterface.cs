@@ -760,6 +760,10 @@ order by create_date desc";
             grid.Columns["detection_limit_approved"].HeaderText = "Det.Lim.Appr.";
             grid.Columns["accredited"].HeaderText = "Accredited";
             grid.Columns["reportable"].HeaderText = "Reportable";
+
+            grid.Columns["activity"].DefaultCellStyle.Format = "0.###E+0";
+            grid.Columns["activity_uncertainty_abs"].DefaultCellStyle.Format = "0.###E+0";
+            grid.Columns["detection_limit"].DefaultCellStyle.Format = "0.###E+0";
         }
 
         public static void PopulatePersons(SqlConnection conn, DataGridView grid)

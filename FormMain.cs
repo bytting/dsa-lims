@@ -1852,7 +1852,7 @@ namespace DSA_lims
             tbSampleSamplingDateTo.TextChanged -= tbSampleSamplingDateTo_TextChanged;
             tbSampleReferenceDate.TextChanged -= tbSampleReferenceDate_TextChanged;
 
-            if (map["sampling_date_from"] == DBNull.Value)
+            if (!DB.IsValidField(map["sampling_date_from"]))
             {
                 tbSampleSamplingDateFrom.Tag = null;
                 tbSampleSamplingDateFrom.Text = "";                
@@ -1864,7 +1864,7 @@ namespace DSA_lims
                 tbSampleSamplingDateFrom.Text = samplingDateFrom.ToString(Utils.DateTimeFormatNorwegian);                
             }            
 
-            if (map["sampling_date_to"] == DBNull.Value)
+            if (!DB.IsValidField(map["sampling_date_to"]))
             {
                 tbSampleSamplingDateTo.Tag = null;
                 tbSampleSamplingDateTo.Text = "";                
@@ -1876,7 +1876,7 @@ namespace DSA_lims
                 tbSampleSamplingDateTo.Text = samplingDateTo.ToString(Utils.DateTimeFormatNorwegian);                
             }
 
-            if (map["reference_date"] == DBNull.Value)
+            if (!DB.IsValidField(map["reference_date"]))
             {
                 tbSampleReferenceDate.Tag = null;
                 tbSampleReferenceDate.Text = "";                
@@ -3750,7 +3750,7 @@ insert into analysis_result values(
                     cmd.Parameters.AddWithValue("@id", Guid.NewGuid());
                     cmd.Parameters.AddWithValue("@analysis_id", aid);
                     object oNuclId = DB.GetScalar(connection, transaction, "select id from nuclide where name = '" + iso.NuclideName + "'", CommandType.Text);
-                    if(oNuclId == null || oNuclId == DBNull.Value)
+                    if(!DB.IsValidField(oNuclId))
                     {
                         Common.Log.Warn("Unregistered nuclide: " + iso.NuclideName);
                         continue;

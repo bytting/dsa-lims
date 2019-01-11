@@ -134,7 +134,7 @@ namespace DSA_lims
                         SqlCommand cmd = new SqlCommand("select id from person where name = 'LIMSAdministrator'", conn);
                         cmd.CommandType = System.Data.CommandType.Text;
                         object o = cmd.ExecuteScalar();
-                        if (o == null || o == DBNull.Value)
+                        if (!DB.IsValidField(o))
                         {
                             personId = Guid.NewGuid();
                             cmd.CommandText = "insert into person values(@id, @name, @email, @phone, @address, @create_date, @update_date)";
@@ -158,7 +158,7 @@ namespace DSA_lims
                         cmd.Parameters.Clear();
                         cmd.Parameters.AddWithValue("@pid", personId);
                         o = cmd.ExecuteScalar();
-                        if (o == null || o == DBNull.Value)
+                        if (!DB.IsValidField(o))
                         {
                             adminId = Guid.NewGuid();
                             cmd.CommandText = "insert into account values(@id, @username, @person_id, @laboratory_id, @language_code, @instance_status_id, @password_hash, @create_date, @update_date)";

@@ -24,6 +24,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -76,23 +77,16 @@ namespace DSA_lims
                 if(reader.HasRows)
                 {
                     reader.Read();                    
-                    tbActivity.Text = reader["activity"].ToString();
-                    tbUncertainty.Text = reader["activity_uncertainty_abs"].ToString();
+                    tbActivity.Text = String.Format(CultureInfo.InvariantCulture, "{0:0.###E+0}", reader["activity"]);
+                    tbUncertainty.Text = String.Format(CultureInfo.InvariantCulture, "{0:0.###E+0}", reader["activity_uncertainty_abs"]);
                     cbActivityApproved.Checked = Convert.ToBoolean(reader["activity_approved"]);
-                    tbDetectionLimit.Text = reader["detection_limit"].ToString();
+                    tbDetectionLimit.Text = String.Format(CultureInfo.InvariantCulture, "{0:0.###E+0}", reader["detection_limit"]);
                     cbDetectionLimitApproved.Checked = Convert.ToBoolean(reader["detection_limit_approved"]);
                     cbAccredited.Checked = Convert.ToBoolean(reader["accredited"]);
                     cbReportable.Checked = Convert.ToBoolean(reader["reportable"]);
                 }                
             }
-        }
-
-        private void FormPrepAnalResult_Load(object sender, EventArgs e)
-        {
-            tbActivity.KeyPress += CustomEvents.Numeric_KeyPress;
-            tbUncertainty.KeyPress += CustomEvents.Numeric_KeyPress;
-            tbDetectionLimit.KeyPress += CustomEvents.Numeric_KeyPress;
-        }
+        }        
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
@@ -135,10 +129,31 @@ namespace DSA_lims
                 return;
             }
 
-            p["activity"] = Convert.ToDouble(tbActivity.Text);
-            p["activity_uncertainty_abs"] = Convert.ToDouble(tbUncertainty.Text);
-            p["activity_approved"] = cbActivityApproved.Checked;
-            p["detection_limit"] = Convert.ToDouble(tbDetectionLimit.Text);
+            double act;
+            if(!Double.TryParse(tbActivity.Text.Trim(), out act))
+            {
+                MessageBox.Show("Invalid number format on activity");
+                return;
+            }
+            p["activity"] = act;
+
+            double unc;
+            if (!Double.TryParse(tbUncertainty.Text.Trim(), out unc))
+            {
+                MessageBox.Show("Invalid number format on uncertainty");
+                return;
+            }
+            p["activity_uncertainty_abs"] = unc;
+
+            double detlim;
+            if (!Double.TryParse(tbDetectionLimit.Text.Trim(), out detlim))
+            {
+                MessageBox.Show("Invalid number format on detection limit");
+                return;
+            }            
+            p["detection_limit"] = detlim;
+
+            p["activity_approved"] = cbActivityApproved.Checked;            
             p["detection_limit_approved"] = cbDetectionLimitApproved.Checked;
             p["accredited"] = cbAccredited.Checked;
             p["reportable"] = cbReportable.Checked;

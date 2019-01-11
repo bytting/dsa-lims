@@ -372,7 +372,7 @@ namespace DSA_lims
             cmd.CommandType = CommandType.Text;
             cmd.Parameters.AddWithValue("@sample_id", sampleId);
             object o = cmd.ExecuteScalar();
-            if (o == null || o == DBNull.Value)
+            if (!IsValidField(o))
                 throw new Exception("Requested sample number not found for id: " + sampleId.ToString());
 
             return Convert.ToInt32(o);
@@ -386,7 +386,7 @@ namespace DSA_lims
             cmd.CommandType = CommandType.Text;
             cmd.Parameters.AddWithValue("@sample_id", sampleId);
             object o = cmd.ExecuteScalar();
-            if (o == null || o == DBNull.Value)
+            if (!IsValidField(o))
                 return 1;
 
             return Convert.ToInt32(o) + 1;
@@ -400,7 +400,7 @@ namespace DSA_lims
             cmd.CommandType = CommandType.Text;
             cmd.Parameters.AddWithValue("@prep_id", prepId);
             object o = cmd.ExecuteScalar();
-            if (o == null || o == DBNull.Value)
+            if (!IsValidField(o))
                 return 1;
 
             return Convert.ToInt32(o) + 1;
@@ -497,7 +497,7 @@ order by name
                 new SqlParameter("@username", username)
             });
 
-            if (o == null || o == DBNull.Value)
+            if (!IsValidField(o))
                 return "";
 
             return o.ToString();
@@ -529,7 +529,7 @@ from role r
                 new SqlParameter("@id", sampleId)
             });
 
-            if (o == null || o == DBNull.Value)
+            if (!IsValidField(o))
                 return false;
 
             return true;
@@ -639,6 +639,11 @@ select
             }
 
             return n < 0 ? 0 : n;
+        }
+
+        public static bool IsValidField(object o)
+        {
+            return !(o == null || o == DBNull.Value);
         }
     }    
 }

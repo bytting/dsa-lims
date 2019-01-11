@@ -45,7 +45,7 @@ namespace DSA_lims
     public partial class FormCreateOrderReport : Form
     {
         private Guid mAssignmentId = Guid.Empty;
-        private string OrderName, LaboratoryName, ResponsibleName, CustomerName, CustomerCompany, CustomerAddress;
+        private string OrderName = "", LaboratoryName = "", ResponsibleName = "", CustomerName = "", CustomerCompany = "", CustomerAddress = "";
         private PdfImage labLogo = null, accredLogo = null;
 
         public FormCreateOrderReport(Guid assignmentId)
@@ -55,33 +55,42 @@ namespace DSA_lims
             mAssignmentId = assignmentId;
             using (SqlConnection conn = DB.OpenConnection())
             {
-                using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_assignment_informative", CommandType.StoredProcedure, new SqlParameter("@id", mAssignmentId)))
+                using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_assignment_flat", CommandType.StoredProcedure, new SqlParameter("@id", mAssignmentId)))
                 {
                     if (reader.HasRows)
                     {
                         reader.Read();
-                        OrderName = reader["name"].ToString();
-                        LaboratoryName = reader["laboratory_name"].ToString();
-                        ResponsibleName = reader["responsible_name"].ToString();
-                        CustomerName = reader["customer_contact_name"].ToString();
-                        CustomerCompany = reader["customer_company_name"].ToString();
-                        CustomerAddress = reader["customer_contact_address"].ToString();
+                        if(DB.IsValidField(reader["name"]))
+                            OrderName = reader["name"].ToString();
+                        if (DB.IsValidField(reader["laboratory_name"]))
+                            LaboratoryName = reader["laboratory_name"].ToString();
+                        if (DB.IsValidField(reader["account_name"]))
+                            ResponsibleName = reader["account_name"].ToString();
+                        if (DB.IsValidField(reader["customer_contact_name"]))
+                            CustomerName = reader["customer_contact_name"].ToString();
+                        if (DB.IsValidField(reader["customer_company_name"]))
+                            CustomerCompany = reader["customer_company_name"].ToString();
+                        if (DB.IsValidField(reader["customer_contact_address"]))
+                            CustomerAddress = reader["customer_contact_address"].ToString();
                     }
                 }
 
                 Guid labId = (Guid)DB.GetScalar(conn, "select laboratory_id from assignment where id = @id", CommandType.Text, new SqlParameter("@id", mAssignmentId));
 
-                using (SqlDataReader reader = DB.GetDataReader(conn, "select laboratory_logo, accredited_logo from laboratory where id = @id", CommandType.Text, new SqlParameter("@id", labId)))
+                if (Utils.IsValidGuid(labId))
                 {
-                    if (reader.HasRows)
+                    using (SqlDataReader reader = DB.GetDataReader(conn, "select laboratory_logo, accredited_logo from laboratory where id = @id", CommandType.Text, new SqlParameter("@id", labId)))
                     {
-                        reader.Read();
+                        if (reader.HasRows)
+                        {
+                            reader.Read();
 
-                        if (reader["laboratory_logo"] != null && reader["laboratory_logo"] != DBNull.Value)
-                            labLogo = PdfImage.GetInstance((byte[])reader["laboratory_logo"]);
+                            if (reader["laboratory_logo"] != null && reader["laboratory_logo"] != DBNull.Value)
+                                labLogo = PdfImage.GetInstance((byte[])reader["laboratory_logo"]);
 
-                        if (reader["accredited_logo"] != null && reader["accredited_logo"] != DBNull.Value)
-                            accredLogo = PdfImage.GetInstance((byte[])reader["accredited_logo"]);
+                            if (reader["accredited_logo"] != null && reader["accredited_logo"] != DBNull.Value)
+                                accredLogo = PdfImage.GetInstance((byte[])reader["accredited_logo"]);
+                        }
                     }
                 }
             }
@@ -188,13 +197,13 @@ order by s.number, p.number, a.number
                 }))
                 {                    
                     while (reader.Read())
-                    {
-                        table.AddCell(reader["sample"].ToString());
-                        table.AddCell(reader["preparation"].ToString());
-                        table.AddCell(reader["analysis"].ToString());
-                        table.AddCell(reader["analysis_method"].ToString());
-                        table.AddCell(reader["nuclide"].ToString());
-                        table.AddCell(reader["activity"].ToString());
+                    {                        
+                        table.AddCell(DB.IsValidField(reader["sample"]) ? "" : reader["sample"].ToString());
+                        table.AddCell(DB.IsValidField(reader["preparation"]) ? "" : reader["preparation"].ToString());
+                        table.AddCell(DB.IsValidField(reader["analysis"]) ? "" : reader["analysis"].ToString());
+                        table.AddCell(DB.IsValidField(reader["analysis_method"]) ? "" : reader["analysis_method"].ToString());
+                        table.AddCell(DB.IsValidField(reader["nuclide"]) ? "" : reader["nuclide"].ToString());
+                        table.AddCell(DB.IsValidField(reader["activity"]) ? "" : reader["activity"].ToString());
                         nRows++;
                     }
                 }

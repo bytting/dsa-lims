@@ -151,7 +151,7 @@
             // tbPrefix
             // 
             this.tbPrefix.Location = new System.Drawing.Point(114, 52);
-            this.tbPrefix.MaxLength = 8;
+            this.tbPrefix.MaxLength = 4;
             this.tbPrefix.Name = "tbPrefix";
             this.tbPrefix.Size = new System.Drawing.Size(260, 20);
             this.tbPrefix.TabIndex = 8;

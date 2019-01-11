@@ -263,7 +263,6 @@
             this.Name = "FormPrepAnalResult";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "DSA-Lims - Result";
-            this.Load += new System.EventHandler(this.FormPrepAnalResult_Load);
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();

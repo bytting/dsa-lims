@@ -144,7 +144,7 @@ namespace DSA_lims
             }
 
             p["name"] = tbName.Text.Trim();
-            p["name_prefix"] = tbPrefix.Text.Trim();
+            p["name_prefix"] = tbPrefix.Text.Trim().ToUpper();
             p["address"] = tbAddress.Text.Trim();
             p["email"] = tbEmail.Text.Trim();
             p["phone"] = tbPhone.Text.Trim();

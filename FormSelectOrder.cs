@@ -358,7 +358,7 @@ where sxast.sample_id = @sid";
             {
                 object o = DB.GetScalar(conn, "select preparation_laboratory_id from assignment_preparation_method where id = @id", CommandType.Text, 
                     new SqlParameter("@id", apmId));
-                if(o == null || o == DBNull.Value)
+                if(!DB.IsValidField(o))
                 {
                     MessageBox.Show("These preparations are not marked as external");
                     return;

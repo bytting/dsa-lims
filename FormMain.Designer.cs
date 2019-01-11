@@ -6843,10 +6843,10 @@
             // 
             this.tabTypeRelSampTypeParam.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.tabTypeRelSampTypeParam.Controls.Add(this.splitContainer14);
-            this.tabTypeRelSampTypeParam.Location = new System.Drawing.Point(4, 22);
+            this.tabTypeRelSampTypeParam.Location = new System.Drawing.Point(4, 24);
             this.tabTypeRelSampTypeParam.Name = "tabTypeRelSampTypeParam";
             this.tabTypeRelSampTypeParam.Padding = new System.Windows.Forms.Padding(3);
-            this.tabTypeRelSampTypeParam.Size = new System.Drawing.Size(730, 568);
+            this.tabTypeRelSampTypeParam.Size = new System.Drawing.Size(644, 564);
             this.tabTypeRelSampTypeParam.TabIndex = 1;
             this.tabTypeRelSampTypeParam.Text = "Parameters";
             // 
@@ -6866,8 +6866,8 @@
             // 
             this.splitContainer14.Panel2.Controls.Add(this.listBox4);
             this.splitContainer14.Panel2.Controls.Add(this.toolsTypeRelSampParaInherit);
-            this.splitContainer14.Size = new System.Drawing.Size(724, 562);
-            this.splitContainer14.SplitterDistance = 281;
+            this.splitContainer14.Size = new System.Drawing.Size(638, 558);
+            this.splitContainer14.SplitterDistance = 279;
             this.splitContainer14.SplitterWidth = 3;
             this.splitContainer14.TabIndex = 0;
             // 
@@ -6880,7 +6880,7 @@
             this.listBox2.ItemHeight = 15;
             this.listBox2.Location = new System.Drawing.Point(0, 25);
             this.listBox2.Name = "listBox2";
-            this.listBox2.Size = new System.Drawing.Size(724, 256);
+            this.listBox2.Size = new System.Drawing.Size(638, 254);
             this.listBox2.TabIndex = 2;
             // 
             // toolsTypeRelSampPara
@@ -6895,7 +6895,7 @@
             this.lblTypeRelSampParSel});
             this.toolsTypeRelSampPara.Location = new System.Drawing.Point(0, 0);
             this.toolsTypeRelSampPara.Name = "toolsTypeRelSampPara";
-            this.toolsTypeRelSampPara.Size = new System.Drawing.Size(724, 25);
+            this.toolsTypeRelSampPara.Size = new System.Drawing.Size(638, 25);
             this.toolsTypeRelSampPara.TabIndex = 1;
             this.toolsTypeRelSampPara.Text = "toolStrip32";
             // 
@@ -6951,7 +6951,7 @@
             this.listBox4.ItemHeight = 15;
             this.listBox4.Location = new System.Drawing.Point(0, 25);
             this.listBox4.Name = "listBox4";
-            this.listBox4.Size = new System.Drawing.Size(724, 253);
+            this.listBox4.Size = new System.Drawing.Size(638, 251);
             this.listBox4.TabIndex = 3;
             // 
             // toolsTypeRelSampParaInherit
@@ -6961,7 +6961,7 @@
             this.toolStripLabel26});
             this.toolsTypeRelSampParaInherit.Location = new System.Drawing.Point(0, 0);
             this.toolsTypeRelSampParaInherit.Name = "toolsTypeRelSampParaInherit";
-            this.toolsTypeRelSampParaInherit.Size = new System.Drawing.Size(724, 25);
+            this.toolsTypeRelSampParaInherit.Size = new System.Drawing.Size(638, 25);
             this.toolsTypeRelSampParaInherit.TabIndex = 2;
             this.toolsTypeRelSampParaInherit.Text = "toolStrip34";
             // 
@@ -6976,10 +6976,10 @@
             // 
             this.tabTypeRelSampTypePrep.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.tabTypeRelSampTypePrep.Controls.Add(this.splitContainer13);
-            this.tabTypeRelSampTypePrep.Location = new System.Drawing.Point(4, 22);
+            this.tabTypeRelSampTypePrep.Location = new System.Drawing.Point(4, 24);
             this.tabTypeRelSampTypePrep.Name = "tabTypeRelSampTypePrep";
             this.tabTypeRelSampTypePrep.Padding = new System.Windows.Forms.Padding(3);
-            this.tabTypeRelSampTypePrep.Size = new System.Drawing.Size(730, 568);
+            this.tabTypeRelSampTypePrep.Size = new System.Drawing.Size(644, 564);
             this.tabTypeRelSampTypePrep.TabIndex = 2;
             this.tabTypeRelSampTypePrep.Text = "Preparation methods";
             // 
@@ -6999,8 +6999,8 @@
             // 
             this.splitContainer13.Panel2.Controls.Add(this.lbTypeRelSampTypeInheritedPrepMeth);
             this.splitContainer13.Panel2.Controls.Add(this.toolsTypeRelSampAnalMeth);
-            this.splitContainer13.Size = new System.Drawing.Size(724, 562);
-            this.splitContainer13.SplitterDistance = 217;
+            this.splitContainer13.Size = new System.Drawing.Size(638, 558);
+            this.splitContainer13.SplitterDistance = 215;
             this.splitContainer13.SplitterWidth = 3;
             this.splitContainer13.TabIndex = 0;
             // 
@@ -7013,7 +7013,7 @@
             this.lbTypeRelSampTypePrepMeth.ItemHeight = 15;
             this.lbTypeRelSampTypePrepMeth.Location = new System.Drawing.Point(0, 25);
             this.lbTypeRelSampTypePrepMeth.Name = "lbTypeRelSampTypePrepMeth";
-            this.lbTypeRelSampTypePrepMeth.Size = new System.Drawing.Size(724, 192);
+            this.lbTypeRelSampTypePrepMeth.Size = new System.Drawing.Size(638, 190);
             this.lbTypeRelSampTypePrepMeth.TabIndex = 1;
             // 
             // toolsTypeRelSampPrepMeth
@@ -7027,7 +7027,7 @@
             this.lblTypeRelSampPrepSel});
             this.toolsTypeRelSampPrepMeth.Location = new System.Drawing.Point(0, 0);
             this.toolsTypeRelSampPrepMeth.Name = "toolsTypeRelSampPrepMeth";
-            this.toolsTypeRelSampPrepMeth.Size = new System.Drawing.Size(724, 25);
+            this.toolsTypeRelSampPrepMeth.Size = new System.Drawing.Size(638, 25);
             this.toolsTypeRelSampPrepMeth.TabIndex = 0;
             this.toolsTypeRelSampPrepMeth.Text = "toolStrip35";
             // 
@@ -7077,7 +7077,7 @@
             this.lbTypeRelSampTypeInheritedPrepMeth.Location = new System.Drawing.Point(0, 25);
             this.lbTypeRelSampTypeInheritedPrepMeth.Name = "lbTypeRelSampTypeInheritedPrepMeth";
             this.lbTypeRelSampTypeInheritedPrepMeth.SelectionMode = System.Windows.Forms.SelectionMode.None;
-            this.lbTypeRelSampTypeInheritedPrepMeth.Size = new System.Drawing.Size(724, 317);
+            this.lbTypeRelSampTypeInheritedPrepMeth.Size = new System.Drawing.Size(638, 315);
             this.lbTypeRelSampTypeInheritedPrepMeth.TabIndex = 1;
             // 
             // toolsTypeRelSampAnalMeth
@@ -7087,7 +7087,7 @@
             this.toolStripLabel55});
             this.toolsTypeRelSampAnalMeth.Location = new System.Drawing.Point(0, 0);
             this.toolsTypeRelSampAnalMeth.Name = "toolsTypeRelSampAnalMeth";
-            this.toolsTypeRelSampAnalMeth.Size = new System.Drawing.Size(724, 25);
+            this.toolsTypeRelSampAnalMeth.Size = new System.Drawing.Size(638, 25);
             this.toolsTypeRelSampAnalMeth.TabIndex = 0;
             this.toolsTypeRelSampAnalMeth.Text = "toolStrip36";
             // 

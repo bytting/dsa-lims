@@ -465,7 +465,7 @@ namespace DSA_lims
                 ActiveControl = tbMenuLookup;
 
                 if (!Roles.HasAccess(Role.OrderAdministrator, Role.OrderOperator))
-                {                    
+                {                
                     btnMenuNewOrder.Enabled = btnOrders.Enabled = false;
                 }
                 else
@@ -473,7 +473,7 @@ namespace DSA_lims
                     btnMenuNewOrder.Enabled = btnOrders.Enabled = true;
                 }
 
-                if (!Roles.HasAccess(Role.SampleRegistration))
+                if (!Roles.HasAccess(Role.LaboratoryAdministrator, Role.LaboratoryOperator, Role.SampleRegistration))
                 {
                     miSamplesNew.Enabled = miSamplesImport.Enabled = miSamplesEdit.Enabled = miSamplesDelete.Enabled = false;
                     btnMenuSamples.Enabled = btnMenuNewSample.Enabled = false;
@@ -676,6 +676,13 @@ namespace DSA_lims
         private void miNewUser_Click(object sender, EventArgs e)
         {
             // New user
+
+            if(!Roles.HasAccess(Role.LaboratoryAdministrator))
+            {
+                MessageBox.Show("You don't have access to create laboratory users");
+                return;
+            }
+
             FormUser form = new FormUser();
             if (form.ShowDialog() != DialogResult.OK)
                 return;
@@ -689,6 +696,13 @@ namespace DSA_lims
         private void miEditUser_Click(object sender, EventArgs e)
         {
             // edit user
+
+            if (!Roles.HasAccess(Role.LaboratoryAdministrator))
+            {
+                MessageBox.Show("You don't have access to edit laboratory users");
+                return;
+            }
+
             if (gridMetaUsers.SelectedRows.Count < 1)
             {
                 MessageBox.Show("You must select a user first");
@@ -760,6 +774,13 @@ namespace DSA_lims
         private void miProjectsNew_Click(object sender, EventArgs e)
         {
             // new main project
+
+            if (!Roles.HasAccess(Role.LaboratoryAdministrator))
+            {
+                MessageBox.Show("You don't have access to create projects");
+                return;
+            }
+
             FormProject form = new FormProject();
             switch (form.ShowDialog())
             {
@@ -782,6 +803,12 @@ namespace DSA_lims
 
         private void miProjectsEdit_Click(object sender, EventArgs e)
         {
+            if (!Roles.HasAccess(Role.LaboratoryAdministrator))
+            {
+                MessageBox.Show("You don't have access to edit projects");
+                return;
+            }
+
             if (gridProjectMain.SelectedRows.Count < 1)
                 return;
 
@@ -810,11 +837,24 @@ namespace DSA_lims
         private void miProjectsDelete_Click(object sender, EventArgs e)
         {
             // delete project
+
+            if (!Roles.HasAccess(Role.LaboratoryAdministrator))
+            {
+                MessageBox.Show("You don't have access to delete projects");
+                return;
+            }
         }
 
         private void miProjectsSubNew_Click(object sender, EventArgs e)
         {
             // new sub project
+
+            if (!Roles.HasAccess(Role.LaboratoryAdministrator))
+            {
+                MessageBox.Show("You don't have access to create projects");
+                return;
+            }
+
             if (gridProjectMain.SelectedRows.Count < 1)
             {
                 MessageBox.Show("You must select a main project first");
@@ -848,6 +888,13 @@ namespace DSA_lims
         private void miProjectsSubEdit_Click(object sender, EventArgs e)
         {
             // edit sub project
+
+            if (!Roles.HasAccess(Role.LaboratoryAdministrator))
+            {
+                MessageBox.Show("You don't have access to edit projects");
+                return;
+            }
+
             if (gridProjectMain.SelectedRows.Count < 1)
                 return;
 
@@ -882,10 +929,22 @@ namespace DSA_lims
         private void miProjectsSubDelete_Click(object sender, EventArgs e)
         {
             // delete sub project
+
+            if (!Roles.HasAccess(Role.LaboratoryAdministrator))
+            {
+                MessageBox.Show("You don't have access to delete projects");
+                return;
+            }
         }
 
         private void miNuclidesNew_Click(object sender, EventArgs e)
-        {            
+        {
+            if (!Roles.HasAccess(Role.LaboratoryAdministrator))
+            {
+                MessageBox.Show("You don't have access to create nuclides");
+                return;
+            }
+
             FormNuclide form = new FormNuclide();
             switch (form.ShowDialog())
             {
@@ -903,6 +962,12 @@ namespace DSA_lims
         private void miSampleTypesNew_Click(object sender, EventArgs e)
         {
             // New sample type
+
+            if (!Roles.IsAdmin())
+            {
+                MessageBox.Show("You don't have access to manage sample types");
+                return;
+            }
 
             FormSampleType form = new FormSampleType(treeSampleTypes.SelectedNode, false);
 
@@ -926,6 +991,13 @@ namespace DSA_lims
         private void miSampleTypesEdit_Click(object sender, EventArgs e)
         {
             // Edit sample type
+
+            if (!Roles.IsAdmin())
+            {
+                MessageBox.Show("You don't have access to manage sample types");
+                return;
+            }
+
             if (treeSampleTypes.SelectedNode == null)
             {
                 MessageBox.Show("You must select a parent sample type");
@@ -954,6 +1026,12 @@ namespace DSA_lims
         private void miSampleTypesDelete_Click(object sender, EventArgs e)
         {
             // Delete sample type
+
+            if (!Roles.IsAdmin())
+            {
+                MessageBox.Show("You don't have access to manage sample types");
+                return;
+            }
         }
 
         private void miSystemDataView_Click(object sender, EventArgs e)
@@ -1006,6 +1084,12 @@ namespace DSA_lims
 
         private void miNuclidesEdit_Click(object sender, EventArgs e)
         {
+            if (!Roles.HasAccess(Role.LaboratoryAdministrator))
+            {
+                MessageBox.Show("You don't have access to edit nuclides");
+                return;
+            }
+
             if (gridSysNuclides.SelectedRows.Count < 1)
                 return;
 
@@ -1027,7 +1111,13 @@ namespace DSA_lims
         }
 
         private void miNewGeometry_Click(object sender, EventArgs e)
-        {         
+        {
+            if (!Roles.HasAccess(Role.LaboratoryAdministrator))
+            {
+                MessageBox.Show("You don't have access to create preparation geometries");
+                return;
+            }
+
             FormGeometry form = new FormGeometry();
             switch (form.ShowDialog())
             {
@@ -1048,7 +1138,13 @@ namespace DSA_lims
         }
 
         private void miEditGeometry_Click(object sender, EventArgs e)
-        {            
+        {
+            if (!Roles.HasAccess(Role.LaboratoryAdministrator))
+            {
+                MessageBox.Show("You don't have access to edit preparation geometries");
+                return;
+            }
+
             if (gridSysGeom.SelectedRows.Count < 1)
                 return;
 
@@ -1072,6 +1168,12 @@ namespace DSA_lims
         private void miDeleteGeometry_Click(object sender, EventArgs e)
         {
             // delete geom
+
+            if (!Roles.HasAccess(Role.LaboratoryAdministrator))
+            {
+                MessageBox.Show("You don't have access to delete preparation geometries");
+                return;
+            }
         }
 
         private void miNewCounty_Click(object sender, EventArgs e)
@@ -1185,7 +1287,13 @@ namespace DSA_lims
         }        
 
         private void miNewStation_Click(object sender, EventArgs e)
-        {        
+        {
+            if (!Roles.HasAccess(Role.LaboratoryAdministrator, Role.LaboratoryOperator))
+            {
+                MessageBox.Show("You don't have access to create stations");
+                return;
+            }
+
             FormStation form = new FormStation();
             switch (form.ShowDialog())
             {
@@ -1206,7 +1314,13 @@ namespace DSA_lims
         }
 
         private void miEditStation_Click(object sender, EventArgs e)
-        {            
+        {
+            if (!Roles.HasAccess(Role.LaboratoryAdministrator, Role.LaboratoryOperator))
+            {
+                MessageBox.Show("You don't have access to edit stations");
+                return;
+            }
+
             if (gridMetaStation.SelectedRows.Count < 1)
                 return;
 
@@ -1235,10 +1349,22 @@ namespace DSA_lims
         private void miDeleteStation_Click(object sender, EventArgs e)
         {
             // delete station
+
+            if (!Roles.HasAccess(Role.LaboratoryAdministrator, Role.LaboratoryOperator))
+            {
+                MessageBox.Show("You don't have access to delete stations");
+                return;
+            }
         }
 
         private void miNewSampleStorage_Click(object sender, EventArgs e)
-        {        
+        {
+            if (!Roles.HasAccess(Role.LaboratoryAdministrator))
+            {
+                MessageBox.Show("You don't have access to create sample storage");
+                return;
+            }
+
             FormSampleStorage form = new FormSampleStorage();
             switch (form.ShowDialog())
             {
@@ -1260,7 +1386,13 @@ namespace DSA_lims
         }
 
         private void miEditSampleStorage_Click(object sender, EventArgs e)
-        {        
+        {
+            if (!Roles.HasAccess(Role.LaboratoryAdministrator))
+            {
+                MessageBox.Show("You don't have access to edit sample storage");
+                return;
+            }
+
             if (gridMetaSampleStorage.SelectedRows.Count < 1)
                 return;
 
@@ -1290,10 +1422,22 @@ namespace DSA_lims
         private void miDeleteSampleStorage_Click(object sender, EventArgs e)
         {
             // delete sample storage
+
+            if (!Roles.HasAccess(Role.LaboratoryAdministrator))
+            {
+                MessageBox.Show("You don't have access to create delete storage");
+                return;
+            }
         }
 
         private void miSamplerNew_Click(object sender, EventArgs e)
-        {        
+        {
+            if (!Roles.HasAccess(Role.LaboratoryAdministrator, Role.LaboratoryOperator))
+            {
+                MessageBox.Show("You don't have access to create samplers");
+                return;
+            }
+
             FormSampler form = new FormSampler();
             switch (form.ShowDialog())
             {
@@ -1316,6 +1460,12 @@ namespace DSA_lims
 
         private void miSamplerEdit_Click(object sender, EventArgs e)
         {
+            if (!Roles.HasAccess(Role.LaboratoryAdministrator, Role.LaboratoryOperator))
+            {
+                MessageBox.Show("You don't have access to edit samplers");
+                return;
+            }
+
             if (gridMetaSamplers.SelectedRows.Count < 1)
             {
                 MessageBox.Show("You must select a sampler first");
@@ -1348,6 +1498,11 @@ namespace DSA_lims
         private void miSamplerDelete_Click(object sender, EventArgs e)
         {
             // delete sampler
+            if (!Roles.HasAccess(Role.LaboratoryAdministrator, Role.LaboratoryOperator))
+            {
+                MessageBox.Show("You don't have access to delete samplers");
+                return;
+            }
         }
 
         private void cboxSampleSampleType_SelectedIndexChanged(object sender, EventArgs e)
@@ -1840,6 +1995,13 @@ namespace DSA_lims
         private void miSamplesSetOrder_Click(object sender, EventArgs e)
         {
             // add sample to order
+
+            if (!Roles.HasAccess(Role.LaboratoryAdministrator, Role.LaboratoryOperator))
+            {
+                MessageBox.Show("You don't have access to add samples to orders");
+                return;
+            }
+
             if (gridSamples.SelectedRows.Count < 1)
                 return;
 
@@ -2004,6 +2166,13 @@ order by a.number
         private void miSamplingMethodNew_Click(object sender, EventArgs e)
         {
             // new sampling method
+
+            if (!Roles.HasAccess(Role.LaboratoryAdministrator, Role.LaboratoryOperator))
+            {
+                MessageBox.Show("You don't have access to create sampling methods");
+                return;
+            }
+
             FormSamplingMeth form = new FormSamplingMeth();
             switch (form.ShowDialog())
             {
@@ -2027,6 +2196,13 @@ order by a.number
         private void miSamplingMethodEdit_Click(object sender, EventArgs e)
         {
             // edit sampling method
+
+            if (!Roles.HasAccess(Role.LaboratoryAdministrator, Role.LaboratoryOperator))
+            {
+                MessageBox.Show("You don't have access to edit sampling methods");
+                return;
+            }
+
             if (gridMetaSamplingMeth.SelectedRows.Count < 1)
                 return;
 
@@ -2056,6 +2232,12 @@ order by a.number
         private void miSamplingMethodDelete_Click(object sender, EventArgs e)
         {
             // delete sampling method
+
+            if (!Roles.HasAccess(Role.LaboratoryAdministrator, Role.LaboratoryOperator))
+            {
+                MessageBox.Show("You don't have access to delete sampling methods");
+                return;
+            }
         }
 
         private void cboxSamplesProjects_SelectedIndexChanged(object sender, EventArgs e)
@@ -2079,6 +2261,13 @@ order by a.number
         private void miPreparationMethodsNew_Click(object sender, EventArgs e)
         {
             // new preparation method
+
+            if (!Roles.HasAccess(Role.LaboratoryAdministrator))
+            {
+                MessageBox.Show("You don't have access to manage preparation methods");
+                return;
+            }
+
             FormPreparationMethod form = new FormPreparationMethod();
             switch (form.ShowDialog())
             {
@@ -2098,6 +2287,13 @@ order by a.number
         private void miPreparationMethodEdit_Click(object sender, EventArgs e)
         {
             // edit preparation method
+
+            if (!Roles.HasAccess(Role.LaboratoryAdministrator))
+            {
+                MessageBox.Show("You don't have access to manage preparation methods");
+                return;
+            }
+
             if (gridTypeRelPrepMeth.SelectedRows.Count < 1)
                 return;
 
@@ -2123,11 +2319,23 @@ order by a.number
         private void miPreparationMethodDelete_Click(object sender, EventArgs e)
         {
             // delete preparation method
+
+            if (!Roles.HasAccess(Role.LaboratoryAdministrator))
+            {
+                MessageBox.Show("You don't have access to manage preparation methods");
+                return;
+            }
         }
 
         private void miAnalysisMethodsNew_Click(object sender, EventArgs e)
         {
             // new analysis method
+            if (!Roles.HasAccess(Role.LaboratoryAdministrator))
+            {
+                MessageBox.Show("You don't have access to manage analysis methods");
+                return;
+            }
+
             FormAnalysisMethods form = new FormAnalysisMethods();
             switch (form.ShowDialog())
             {
@@ -2147,6 +2355,12 @@ order by a.number
         private void miAnalysisMethodsEdit_Click(object sender, EventArgs e)
         {
             // edit analysis method
+            if (!Roles.HasAccess(Role.LaboratoryAdministrator))
+            {
+                MessageBox.Show("You don't have access to manage analysis methods");
+                return;
+            }
+
             if (gridTypeRelAnalMeth.SelectedRows.Count < 1)
                 return;
 
@@ -2172,11 +2386,23 @@ order by a.number
         private void miAnalysisMethodsDelete_Click(object sender, EventArgs e)
         {
             // delete analysis method
+
+            if (!Roles.HasAccess(Role.LaboratoryAdministrator))
+            {
+                MessageBox.Show("You don't have access to manage analysis methods");
+                return;
+            }
         }
 
         private void miAddPrepMethToSampType_Click(object sender, EventArgs e)
         {
-            if(treeSampleTypes.SelectedNode == null)
+            if (!Roles.HasAccess(Role.LaboratoryAdministrator))
+            {
+                MessageBox.Show("You don't have access to manage preparation methods for sample types");
+                return;
+            }
+
+            if (treeSampleTypes.SelectedNode == null)
             {
                 MessageBox.Show("You must select a sample type first");
                 return;
@@ -2253,6 +2479,12 @@ order by name
 
         private void miTypeRelSampleTypesCompNew_Click(object sender, EventArgs e)
         {
+            if (!Roles.IsAdmin())
+            {
+                MessageBox.Show("You don't have access to manage sample types");
+                return;
+            }
+
             if (treeSampleTypes.SelectedNode == null)
             {
                 MessageBox.Show("You must select a sample type first");
@@ -2281,6 +2513,13 @@ order by name
         private void miTypeRelSampleTypesCompEdit_Click(object sender, EventArgs e)
         {
             // edit sample component
+
+            if (!Roles.IsAdmin())
+            {
+                MessageBox.Show("You don't have access to manage sample types");
+                return;
+            }
+
             if (treeSampleTypes.SelectedNode == null)
             {
                 MessageBox.Show("You must select a sample type first");
@@ -2316,6 +2555,13 @@ order by name
         private void miAnalysisMethodsAddNuclide_Click(object sender, EventArgs e)
         {
             // add nuclide to analysis method
+
+            if (!Roles.HasAccess(Role.LaboratoryAdministrator))
+            {
+                MessageBox.Show("You don't have access to manage analysis methods");
+                return;
+            }
+
             if (gridTypeRelAnalMeth.SelectedRows.Count < 1)
             {
                 MessageBox.Show("You must select an analysis type first");
@@ -2357,11 +2603,23 @@ order by name
         private void miAnalysisMethodsRemNuclide_Click(object sender, EventArgs e)
         {
             // remove nuclides from analysis method
+
+            if (!Roles.HasAccess(Role.LaboratoryAdministrator))
+            {
+                MessageBox.Show("You don't have access to manage analysis methods");
+                return;
+            }
         }        
 
         private void miTypeRelPrepMethAddAnalMeth_Click(object sender, EventArgs e)
         {
             // add analysis methods to preparation method
+            if (!Roles.HasAccess(Role.LaboratoryAdministrator))
+            {
+                MessageBox.Show("You don't have access to manage preparation methods");
+                return;
+            }
+
             if (gridTypeRelPrepMeth.SelectedRows.Count < 1)
             {
                 MessageBox.Show("You must select a preparation method first");
@@ -2404,6 +2662,11 @@ order by name
         private void miTypeRelPrepMethRemAnalMeth_Click(object sender, EventArgs e)
         {
             // remove analysis methods to preparation method
+            if (!Roles.HasAccess(Role.LaboratoryAdministrator))
+            {
+                MessageBox.Show("You don't have access to manage preparation methods");
+                return;
+            }
         }                        
 
         private void miOrdersNew_Click(object sender, EventArgs e)
@@ -2781,6 +3044,13 @@ order by s.number, p.number, a.number, n.name
         private void miCustomersNew_Click(object sender, EventArgs e)
         {
             // create new customer            
+
+            if (!Roles.HasAccess(Role.LaboratoryAdministrator))
+            {
+                MessageBox.Show("You don't have access to create customers");
+                return;
+            }
+
             FormCustomer form = new FormCustomer();
             switch (form.ShowDialog())
             {
@@ -2800,6 +3070,13 @@ order by s.number, p.number, a.number, n.name
         private void miCustomersEdit_Click(object sender, EventArgs e)
         {
             // edit customer
+
+            if (!Roles.HasAccess(Role.LaboratoryAdministrator))
+            {
+                MessageBox.Show("You don't have access to edit customers");
+                return;
+            }
+
             if (gridCustomers.SelectedRows.Count < 1)
             {
                 MessageBox.Show("You must select a customer first");
@@ -2828,6 +3105,12 @@ order by s.number, p.number, a.number, n.name
         private void miCustomersDelete_Click(object sender, EventArgs e)
         {
             // delete customer
+
+            if (!Roles.HasAccess(Role.LaboratoryAdministrator))
+            {
+                MessageBox.Show("You don't have access to delete customers");
+                return;
+            }
         }        
 
         private void gridSysCounty_SelectionChanged(object sender, EventArgs e)
@@ -3577,7 +3860,13 @@ insert into analysis_result values(
         }
 
         private void btnSampleAddSampleToOrder_Click(object sender, EventArgs e)
-        {            
+        {
+            if (!Roles.HasAccess(Role.LaboratoryAdministrator, Role.LaboratoryOperator))
+            {
+                MessageBox.Show("You don't have access to add samples to orders");
+                return;
+            }
+
             FormSelectOrder form = new FormSelectOrder(treeSampleTypes, selectedSampleId);
             if (form.ShowDialog() != DialogResult.OK)
                 return;
@@ -4288,6 +4577,12 @@ select
 
         private void btnOrderSaveStatus_Click(object sender, EventArgs e)
         {
+            if (!Roles.HasAccess(Role.LaboratoryAdministrator))
+            {
+                MessageBox.Show("You don't have access to create customers");
+                return;
+            }
+
             SqlConnection conn = null;
             try
             {
@@ -4793,6 +5088,12 @@ where id = @id
         private void miTypeRelSampleTypesNewRoot_Click(object sender, EventArgs e)
         {
             // New root sample type
+
+            if (!Roles.IsAdmin())
+            {
+                MessageBox.Show("You don't have access to manage sample types");
+                return;
+            }
 
             FormSampleType form = new FormSampleType(null, false);
 

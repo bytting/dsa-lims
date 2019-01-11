@@ -111,9 +111,7 @@ namespace DSA_lims
 
                 r = new ResourceManager("DSA_lims.lang_" + CultureInfo.CurrentUICulture.TwoLetterISOLanguageName, Assembly.GetExecutingAssembly());
                 Common.Log.Info("Setting language " + CultureInfo.CurrentUICulture.TwoLetterISOLanguageName);
-                SetLanguageLabels(r);
-
-                panelSampleLatLonAlt_Resize(sender, e);
+                SetLanguageLabels(r);                
             }
             catch (Exception ex)
             {
@@ -124,12 +122,20 @@ namespace DSA_lims
             }
         }
 
+        private void FormMain_Shown(object sender, EventArgs e)
+        {
+            bool initialized = false;
+            while (!initialized)
+            {
+                ShowLogin();
+                initialized = InitializeUI();
+            }
+        }
+
         private bool InitializeUI()
         {
             try
             {
-                DB.ConnectionString = Common.Settings.ConnectionString;
-
                 cbMachineSettingsUseAD.Checked = Common.Settings.UseActiveDirectoryCredentials;                
 
                 populateSamplesDisabled = true;
@@ -244,6 +250,9 @@ namespace DSA_lims
                 populateSamplesDisabled = false;
                 populateOrdersDisabled = false;
 
+                tabs_SelectedIndexChanged(null, null);
+                panelSampleLatLonAlt_Resize(null, null);
+
                 HideMenuItems();
 
                 ActiveControl = tbMenuLookup;
@@ -257,17 +266,7 @@ namespace DSA_lims
                 MessageBox.Show(ex.Message);
                 return false;
             }
-        }
-
-        private void FormMain_Shown(object sender, EventArgs e)
-        {
-            bool initialized = false;
-            while(!initialized)
-            {
-                ShowLogin();
-                initialized = InitializeUI();
-            }            
-        }
+        }        
 
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -378,6 +377,8 @@ namespace DSA_lims
                 Application.Exit();
             }
 
+            DB.ConnectionString = Common.Settings.ConnectionString;
+
             Common.UserId = formLogin.UserId;
             Common.Username = formLogin.UserName;
             Common.LabId = formLogin.LabId;
@@ -404,9 +405,7 @@ namespace DSA_lims
                         }
                     }
                 }
-            }            
-            
-            tabs_SelectedIndexChanged(null, null);
+            }
         }
 
         public void SaveSettings(string settingsFilename)

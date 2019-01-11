@@ -58,68 +58,69 @@ namespace DSA_lims
 
             Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo("en");
             Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo("en");
+
+            tabs.Appearance = TabAppearance.FlatButtons;
+            tabs.ItemSize = new Size(0, 1);
+            tabs.SizeMode = TabSizeMode.Fixed;
+            tabs.SelectedTab = tabMenu;
+
+            tabsPrepAnal.Appearance = TabAppearance.FlatButtons;
+            tabsPrepAnal.ItemSize = new Size(0, 1);
+            tabsPrepAnal.SizeMode = TabSizeMode.Fixed;
+            tabsPrepAnal.SelectedTab = tabMenu;
+
+            lblCurrentTab.Text = tabs.SelectedTab.Text;
+            lblStatus.Text = "";
+            lblCurrentUser.Text = "";
+            lblSampleToolId.Text = "";
+            lblSampleToolExId.Text = "";
+            lblSampleToolProject.Text = "";
+            lblSampleToolSubProject.Text = "";
+            lblSampleToolLaboratory.Text = "";
+            tbMenuLookup.Text = "";
+
+            tbMenuLookup.KeyPress += CustomEvents.Integer_KeyPress;
+            tbSamplesLookup.KeyPress += CustomEvents.Integer_KeyPress;
+            tbSampleInfoLatitude.KeyPress += CustomEvents.Numeric_KeyPress;
+            tbSampleInfoLongitude.KeyPress += CustomEvents.Numeric_KeyPress;
+            tbSampleInfoAltitude.KeyPress += CustomEvents.Numeric_KeyPress;
+            tbPrepAnalWetWeight.KeyPress += CustomEvents.Numeric_KeyPress;
+            tbPrepAnalDryWeight.KeyPress += CustomEvents.Numeric_KeyPress;
+            tbPrepAnalVolume.KeyPress += CustomEvents.Numeric_KeyPress;
+            tbPrepAnalLODStartWeight.KeyPress += CustomEvents.Numeric_KeyPress;
+            tbPrepAnalLODEndWeight.KeyPress += CustomEvents.Numeric_KeyPress;
+            tbPrepAnalLODWater.KeyPress += CustomEvents.Numeric_KeyPress;
+            tbPrepAnalPrepFillHeight.KeyPress += CustomEvents.Numeric_KeyPress;
+            tbPrepAnalPrepAmount.KeyPress += CustomEvents.Numeric_KeyPress;
+            tbPrepAnalPrepQuantity.KeyPress += CustomEvents.Numeric_KeyPress;            
         }        
 
         private void FormMain_Load(object sender, EventArgs e)
         {
+            if (!Directory.Exists(DSAEnvironment.SettingsPath))
+                Directory.CreateDirectory(DSAEnvironment.SettingsPath);
+
+            Common.Log = DSALogger.CreateLogger(DSAEnvironment.SettingsPath + Path.DirectorySeparatorChar + "dsa-lims.log");
+
+            Common.Log.Info("Loading settings file " + DSAEnvironment.SettingsFilename);
+            LoadSettings(DSAEnvironment.SettingsFilename);
+
+            DB.ConnectionString = Common.Settings.ConnectionString;
+
+            r = new ResourceManager("DSA_lims.lang_" + CultureInfo.CurrentUICulture.TwoLetterISOLanguageName, Assembly.GetExecutingAssembly());
+            Common.Log.Info("Setting language " + CultureInfo.CurrentUICulture.TwoLetterISOLanguageName);
+            SetLanguageLabels(r);
+
+            panelSampleLatLonAlt_Resize(sender, e);
+        }
+
+        private void InitializeUI()
+        {
             try
             {
-                if (!Directory.Exists(DSAEnvironment.SettingsPath))
-                    Directory.CreateDirectory(DSAEnvironment.SettingsPath);
-
-                Common.Log = DSALogger.CreateLogger(DSAEnvironment.SettingsPath + Path.DirectorySeparatorChar + "dsa-lims.log");
-
-                Common.Log.Info("Loading settings file " + DSAEnvironment.SettingsFilename);
-                LoadSettings(DSAEnvironment.SettingsFilename);
-
                 DB.ConnectionString = Common.Settings.ConnectionString;
 
-                ShowLogin();
-
-                DB.ConnectionString = Common.Settings.ConnectionString;
-
-                tabs.Appearance = TabAppearance.FlatButtons;
-                tabs.ItemSize = new Size(0, 1);
-                tabs.SizeMode = TabSizeMode.Fixed;
-                tabs.SelectedTab = tabMenu;                
-
-                tabsPrepAnal.Appearance = TabAppearance.FlatButtons;
-                tabsPrepAnal.ItemSize = new Size(0, 1);
-                tabsPrepAnal.SizeMode = TabSizeMode.Fixed;
-                tabsPrepAnal.SelectedTab = tabMenu;
-
-                lblCurrentTab.Text = tabs.SelectedTab.Text;
-                lblStatus.Text = "";                
-                lblSampleToolId.Text = "";
-                lblSampleToolExId.Text = "";
-                lblSampleToolProject.Text = "";
-                lblSampleToolSubProject.Text = "";
-                lblSampleToolLaboratory.Text = "";
-
-                cbMachineSettingsUseAD.Checked = Common.Settings.UseActiveDirectoryCredentials;
-
-                tbMenuLookup.KeyPress += CustomEvents.Integer_KeyPress;
-                tbSamplesLookup.KeyPress += CustomEvents.Integer_KeyPress;
-                tbSampleInfoLatitude.KeyPress += CustomEvents.Numeric_KeyPress;
-                tbSampleInfoLongitude.KeyPress += CustomEvents.Numeric_KeyPress;
-                tbSampleInfoAltitude.KeyPress += CustomEvents.Numeric_KeyPress;
-                tbPrepAnalWetWeight.KeyPress += CustomEvents.Numeric_KeyPress;
-                tbPrepAnalDryWeight.KeyPress += CustomEvents.Numeric_KeyPress;
-                tbPrepAnalVolume.KeyPress += CustomEvents.Numeric_KeyPress;
-                tbPrepAnalLODStartWeight.KeyPress += CustomEvents.Numeric_KeyPress;
-                tbPrepAnalLODEndWeight.KeyPress += CustomEvents.Numeric_KeyPress;
-                tbPrepAnalLODWater.KeyPress += CustomEvents.Numeric_KeyPress;
-                tbPrepAnalPrepFillHeight.KeyPress += CustomEvents.Numeric_KeyPress;
-                tbPrepAnalPrepAmount.KeyPress += CustomEvents.Numeric_KeyPress;
-                tbPrepAnalPrepQuantity.KeyPress += CustomEvents.Numeric_KeyPress;
-
-                tbMenuLookup.Text = "";                
-
-                panelSampleLatLonAlt_Resize(sender, e);
-
-                r = new ResourceManager("DSA_lims.lang_" + CultureInfo.CurrentUICulture.TwoLetterISOLanguageName, Assembly.GetExecutingAssembly());
-                Common.Log.Info("Setting language " + CultureInfo.CurrentUICulture.TwoLetterISOLanguageName);
-                SetLanguageLabels(r);
+                cbMachineSettingsUseAD.Checked = Common.Settings.UseActiveDirectoryCredentials;                
 
                 populateSamplesDisabled = true;
                 populateOrdersDisabled = true;
@@ -127,7 +128,7 @@ namespace DSA_lims
                 using (SqlConnection conn = DB.OpenConnection())
                 {
                     DB.LoadSampleTypes(conn);
-                    
+
                     cboxSamplesStatus.DataSource = DB.GetIntLemmata(conn, "csp_select_instance_status");
 
                     cboxSampleInstanceStatus.DataSource = DB.GetIntLemmata(conn, "csp_select_instance_status");
@@ -160,7 +161,7 @@ namespace DSA_lims
                     UI.PopulateActivityUnitTypes(conn, gridMetaUnitActivityUnitTypes);
 
                     UI.PopulateComboBoxes(conn, "csp_select_activity_units_short", new SqlParameter[] { }, cboxPrepAnalAnalUnit);
-                    
+
                     UI.PopulateComboBoxes(conn, "csp_select_activity_unit_types", new SqlParameter[] { }, cboxPrepAnalAnalUnitType);
 
                     UI.PopulateProjectsMain(conn, gridProjectMain);
@@ -175,41 +176,41 @@ namespace DSA_lims
                         new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
                     }, cboxSampleLaboratory, cboxOrderLaboratory);
 
-                    UI.PopulateUsers(conn, InstanceStatus.Deleted, gridMetaUsers);                    
+                    UI.PopulateUsers(conn, InstanceStatus.Deleted, gridMetaUsers);
 
                     UI.PopulateNuclides(conn, gridSysNuclides);
 
-                    UI.PopulateGeometries(conn, gridSysGeom);                    
+                    UI.PopulateGeometries(conn, gridSysGeom);
 
-                    UI.PopulateComboBoxes(conn, "csp_select_preparation_geometries_short", new[] {                    
+                    UI.PopulateComboBoxes(conn, "csp_select_preparation_geometries_short", new[] {
                         new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
                     }, cboxPrepAnalPrepGeom);
 
-                    UI.PopulateCounties(conn, gridSysCounty);                    
+                    UI.PopulateCounties(conn, gridSysCounty);
 
                     UI.PopulateComboBoxes(conn, "csp_select_counties_short", new[] {
                         new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
                     }, cboxSampleCounties);
 
-                    UI.PopulateStations(conn, gridMetaStation);                    
+                    UI.PopulateStations(conn, gridMetaStation);
 
                     UI.PopulateComboBoxes(conn, "csp_select_stations_short", new[] {
                         new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
                     }, cboxSampleInfoStations);
 
-                    UI.PopulateSampleStorage(conn, gridMetaSampleStorage);                    
+                    UI.PopulateSampleStorage(conn, gridMetaSampleStorage);
 
                     UI.PopulateComboBoxes(conn, "csp_select_sample_storages_short", new[] {
                         new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
                     }, cboxSampleSampleStorage);
 
-                    UI.PopulateSamplers(conn, gridMetaSamplers);                    
+                    UI.PopulateSamplers(conn, gridMetaSamplers);
 
                     UI.PopulateComboBoxes(conn, "csp_select_samplers_short", new[] {
                         new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
                     }, cboxSampleInfoSampler);
 
-                    UI.PopulateSamplingMethods(conn, gridMetaSamplingMeth);                    
+                    UI.PopulateSamplingMethods(conn, gridMetaSamplingMeth);
 
                     UI.PopulateComboBoxes(conn, "csp_select_sampling_methods_short", new[] {
                         new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
@@ -221,7 +222,7 @@ namespace DSA_lims
 
                     UI.PopulateSampleTypes(conn, treeSampleTypes);
 
-                    UI.PopulateSampleTypes(treeSampleTypes, cboxSampleSampleType);                    
+                    UI.PopulateSampleTypes(treeSampleTypes, cboxSampleSampleType);
 
                     UI.PopulateCustomers(conn, InstanceStatus.Deleted, gridCustomers);
 
@@ -237,19 +238,20 @@ namespace DSA_lims
 
                 ActiveControl = tbMenuLookup;
 
-                Common.Log.Info("Application loaded successfully");
+                Common.Log.Info("Application initialized successfully");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Common.Log.Fatal(ex);
                 MessageBox.Show(ex.Message);
                 Environment.Exit(1);
-            }            
+            }
         }
 
         private void FormMain_Shown(object sender, EventArgs e)
         {
-            //ShowLogin();
+            ShowLogin();
+            InitializeUI();
         }
 
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
@@ -329,6 +331,7 @@ namespace DSA_lims
         private void miLogout_Click(object sender, EventArgs e)
         {            
             ShowLogin();
+            InitializeUI();
         }
 
         private void miExit_Click(object sender, EventArgs e)
@@ -337,13 +340,18 @@ namespace DSA_lims
         }
 
         private void ShowLogin()
-        {            
+        {
+            if (tabs.SelectedTab != tabMenu)
+                tabs.SelectedTab = tabMenu;
+
             Common.UserId = Guid.Empty;
             Common.Username = String.Empty;
             Common.LabId = Guid.Empty;
             Common.LabLogo = null;
             Common.LabAccredLogo = null;
-            Roles.UserRoles.Clear();            
+            Roles.UserRoles.Clear();
+
+            lblCurrentUser.Text = "";
 
             FormLogin formLogin = new FormLogin(Common.Settings);
             if (formLogin.ShowDialog() != DialogResult.OK)
@@ -354,6 +362,8 @@ namespace DSA_lims
             Common.UserId = formLogin.UserId;
             Common.Username = formLogin.UserName;
             Common.LabId = formLogin.LabId;
+
+            lblCurrentUser.Text = Common.Username;
 
             using (SqlConnection conn = DB.OpenConnection())
             {
@@ -375,10 +385,7 @@ namespace DSA_lims
                         }
                     }
                 }
-            }
-
-            if (tabs.SelectedTab != tabMenu)
-                tabs.SelectedTab = tabMenu;
+            }            
             
             tabs_SelectedIndexChanged(null, null);
         }
@@ -1868,6 +1875,13 @@ namespace DSA_lims
         private void miSamplesPrepAnal_Click(object sender, EventArgs e)
         {
             // go to sample prep/anal
+
+            if (!Roles.HasAccess(Role.LaboratoryAdministrator, Role.LaboratoryOperator))
+            {
+                MessageBox.Show("You don't have access to preparations and analyses");
+                return;
+            }
+            
             if(gridSamples.SelectedRows.Count != 1)
             {
                 MessageBox.Show("You must select a single sample first");
@@ -1882,10 +1896,6 @@ namespace DSA_lims
                     return;
             }
 
-            ClearPrepAnalSample();
-            ClearPrepAnalPreparation();
-            ClearPrepAnalAnalysis();
-
             tabs.SelectedTab = tabPrepAnal;
         }
 
@@ -1898,7 +1908,10 @@ namespace DSA_lims
             }
 
             treePrepAnal.Nodes.Clear();
-            
+            ClearPrepAnalSample();
+            ClearPrepAnalPreparation();
+            ClearPrepAnalAnalysis();
+
             TreeNode sampleNode = null;
 
             string query = @"
@@ -3909,15 +3922,17 @@ insert into analysis_result values(
 
         private void btnSampleGoToPrepAnal_Click(object sender, EventArgs e)
         {
+            if (!Roles.HasAccess(Role.LaboratoryAdministrator, Role.LaboratoryOperator))
+            {
+                MessageBox.Show("You don't have access to preparations and analyses");
+                return;
+            }
+
             using (SqlConnection conn = DB.OpenConnection())
             {
                 if (!PopulatePrepAnal(conn, selectedSampleId))
                     return;
-            }
-
-            ClearPrepAnalSample();
-            ClearPrepAnalPreparation();
-            ClearPrepAnalAnalysis();
+            }            
 
             tabs.SelectedTab = tabPrepAnal;
         }
@@ -4754,6 +4769,29 @@ where id = @id
             using (SqlConnection conn = DB.OpenConnection())
             {
                 UI.PopulateAttachments(conn, "project_sub", psid, gridProjectAttachments);
+            }
+        }
+
+        private void miTypeRelSampleTypesNewRoot_Click(object sender, EventArgs e)
+        {
+            // New root sample type
+
+            FormSampleType form = new FormSampleType(null, false);
+
+            switch (form.ShowDialog())
+            {
+                case DialogResult.OK:
+                    SetStatusMessage("Sample type " + form.SampleTypeName + " created");
+                    using (SqlConnection conn = DB.OpenConnection())
+                    {
+                        DB.LoadSampleTypes(conn);
+                        UI.PopulateSampleTypes(conn, treeSampleTypes);
+                        UI.PopulateSampleTypes(treeSampleTypes, cboxSampleSampleType);
+                    }
+                    break;
+                case DialogResult.Abort:
+                    SetStatusMessage("Create sample type failed", StatusMessageType.Error);
+                    break;
             }
         }
     }    

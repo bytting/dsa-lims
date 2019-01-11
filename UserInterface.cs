@@ -158,6 +158,8 @@ namespace DSA_lims
             grid.Columns["email"].HeaderText = "Email";
             grid.Columns["phone"].HeaderText = "Phone";
             grid.Columns["address"].HeaderText = "Address";
+            grid.Columns["laboratory_name"].HeaderText = "Lab";
+            grid.Columns["language_code"].HeaderText = "Lang.";
             grid.Columns["instance_status_name"].HeaderText = "Status";
         }
 
@@ -392,8 +394,10 @@ namespace DSA_lims
                     n.Tag = n.FullPath;
                 }
 
-                foreach(TreeNode tnode in tree.Nodes)                
+                foreach (TreeNode tnode in tree.Nodes)
+                {
                     AddSampleTypeChildren(Common.SampleTypeList, tnode);
+                }
             }
             catch (Exception ex)
             {

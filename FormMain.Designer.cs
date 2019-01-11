@@ -901,6 +901,9 @@
             this.btnMenu = new System.Windows.Forms.ToolStripButton();
             this.lblCurrentTab = new System.Windows.Forms.ToolStripLabel();
             this.btnBack = new System.Windows.Forms.ToolStripButton();
+            this.miTypeRelSampleTypesNewRoot = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.lblCurrentUser = new System.Windows.Forms.ToolStripStatusLabel();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tabs.SuspendLayout();
@@ -1967,6 +1970,7 @@
             // miTypeRelSampleTypes
             // 
             this.miTypeRelSampleTypes.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.miTypeRelSampleTypesNewRoot,
             this.miTypeRelSampleTypesNew,
             this.miTypeRelSampleTypesEdit,
             this.miTypeRelSampleTypesDelete,
@@ -1982,28 +1986,28 @@
             // miTypeRelSampleTypesNew
             // 
             this.miTypeRelSampleTypesNew.Name = "miTypeRelSampleTypesNew";
-            this.miTypeRelSampleTypesNew.Size = new System.Drawing.Size(185, 22);
+            this.miTypeRelSampleTypesNew.Size = new System.Drawing.Size(190, 22);
             this.miTypeRelSampleTypesNew.Text = "&New sample type";
             this.miTypeRelSampleTypesNew.Click += new System.EventHandler(this.miSampleTypesNew_Click);
             // 
             // miTypeRelSampleTypesEdit
             // 
             this.miTypeRelSampleTypesEdit.Name = "miTypeRelSampleTypesEdit";
-            this.miTypeRelSampleTypesEdit.Size = new System.Drawing.Size(185, 22);
+            this.miTypeRelSampleTypesEdit.Size = new System.Drawing.Size(190, 22);
             this.miTypeRelSampleTypesEdit.Text = "&Edit sample type";
             this.miTypeRelSampleTypesEdit.Click += new System.EventHandler(this.miSampleTypesEdit_Click);
             // 
             // miTypeRelSampleTypesDelete
             // 
             this.miTypeRelSampleTypesDelete.Name = "miTypeRelSampleTypesDelete";
-            this.miTypeRelSampleTypesDelete.Size = new System.Drawing.Size(185, 22);
+            this.miTypeRelSampleTypesDelete.Size = new System.Drawing.Size(190, 22);
             this.miTypeRelSampleTypesDelete.Text = "&Delete sample type";
             this.miTypeRelSampleTypesDelete.Click += new System.EventHandler(this.miSampleTypesDelete_Click);
             // 
             // toolStripSeparator61
             // 
             this.toolStripSeparator61.Name = "toolStripSeparator61";
-            this.toolStripSeparator61.Size = new System.Drawing.Size(182, 6);
+            this.toolStripSeparator61.Size = new System.Drawing.Size(187, 6);
             // 
             // miTypeRelSampleTypesComps
             // 
@@ -2011,7 +2015,7 @@
             this.miTypeRelSampleTypesCompNew,
             this.miTypeRelSampleTypesCompEdit});
             this.miTypeRelSampleTypesComps.Name = "miTypeRelSampleTypesComps";
-            this.miTypeRelSampleTypesComps.Size = new System.Drawing.Size(185, 22);
+            this.miTypeRelSampleTypesComps.Size = new System.Drawing.Size(190, 22);
             this.miTypeRelSampleTypesComps.Text = "&Components";
             // 
             // miTypeRelSampleTypesCompNew
@@ -2033,7 +2037,7 @@
             this.miTypeRelSampleTypesPrepMeth.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.miTypeRelSampleTypesPrepMethAdd});
             this.miTypeRelSampleTypesPrepMeth.Name = "miTypeRelSampleTypesPrepMeth";
-            this.miTypeRelSampleTypesPrepMeth.Size = new System.Drawing.Size(185, 22);
+            this.miTypeRelSampleTypesPrepMeth.Size = new System.Drawing.Size(190, 22);
             this.miTypeRelSampleTypesPrepMeth.Text = "&Preparation methods";
             // 
             // miTypeRelSampleTypesPrepMethAdd
@@ -2046,14 +2050,14 @@
             // toolStripSeparator69
             // 
             this.toolStripSeparator69.Name = "toolStripSeparator69";
-            this.toolStripSeparator69.Size = new System.Drawing.Size(182, 6);
+            this.toolStripSeparator69.Size = new System.Drawing.Size(187, 6);
             // 
             // miTypeRelSampleTypesExport
             // 
             this.miTypeRelSampleTypesExport.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.miTypeRelSampleTypesExportSampTypeList});
             this.miTypeRelSampleTypesExport.Name = "miTypeRelSampleTypesExport";
-            this.miTypeRelSampleTypesExport.Size = new System.Drawing.Size(185, 22);
+            this.miTypeRelSampleTypesExport.Size = new System.Drawing.Size(190, 22);
             this.miTypeRelSampleTypesExport.Text = "Export...";
             // 
             // miTypeRelSampleTypesExportSampTypeList
@@ -2444,7 +2448,8 @@
             // status
             // 
             this.status.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.lblStatus});
+            this.lblStatus,
+            this.lblCurrentUser});
             this.status.Location = new System.Drawing.Point(0, 709);
             this.status.Name = "status";
             this.status.Padding = new System.Windows.Forms.Padding(1, 0, 16, 0);
@@ -2454,6 +2459,7 @@
             // 
             // lblStatus
             // 
+            this.lblStatus.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.lblStatus.Name = "lblStatus";
             this.lblStatus.Size = new System.Drawing.Size(68, 17);
             this.lblStatus.Text = "<lblStatus>";
@@ -6583,7 +6589,7 @@
             // 
             this.splitContainer12.Panel2.Controls.Add(this.tabControl3);
             this.splitContainer12.Size = new System.Drawing.Size(1108, 592);
-            this.splitContainer12.SplitterDistance = 365;
+            this.splitContainer12.SplitterDistance = 451;
             this.splitContainer12.SplitterWidth = 5;
             this.splitContainer12.TabIndex = 7;
             // 
@@ -6601,7 +6607,7 @@
             this.treeSampleTypes.Name = "treeSampleTypes";
             this.treeSampleTypes.PathSeparator = "/";
             this.treeSampleTypes.ShowNodeToolTips = true;
-            this.treeSampleTypes.Size = new System.Drawing.Size(365, 567);
+            this.treeSampleTypes.Size = new System.Drawing.Size(451, 567);
             this.treeSampleTypes.TabIndex = 1;
             this.treeSampleTypes.DrawNode += new System.Windows.Forms.DrawTreeNodeEventHandler(this.treeSampleTypes_DrawNode);
             this.treeSampleTypes.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeSampleTypes_AfterSelect);
@@ -6612,6 +6618,7 @@
             this.toolsTypeRelSamp.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripLabel47,
             this.toolStripSeparator35,
+            this.toolStripButton1,
             this.toolStripButton41,
             this.toolStripButton42,
             this.toolStripButton87,
@@ -6619,7 +6626,7 @@
             this.btnTypeRelSampTypeExport});
             this.toolsTypeRelSamp.Location = new System.Drawing.Point(0, 0);
             this.toolsTypeRelSamp.Name = "toolsTypeRelSamp";
-            this.toolsTypeRelSamp.Size = new System.Drawing.Size(365, 25);
+            this.toolsTypeRelSamp.Size = new System.Drawing.Size(451, 25);
             this.toolsTypeRelSamp.TabIndex = 0;
             this.toolsTypeRelSamp.Text = "toolStrip30";
             // 
@@ -6693,7 +6700,7 @@
             this.tabControl3.Location = new System.Drawing.Point(0, 0);
             this.tabControl3.Name = "tabControl3";
             this.tabControl3.SelectedIndex = 0;
-            this.tabControl3.Size = new System.Drawing.Size(738, 592);
+            this.tabControl3.Size = new System.Drawing.Size(652, 592);
             this.tabControl3.TabIndex = 1;
             // 
             // tabTypeRelSampTypeComp
@@ -6703,7 +6710,7 @@
             this.tabTypeRelSampTypeComp.Location = new System.Drawing.Point(4, 24);
             this.tabTypeRelSampTypeComp.Name = "tabTypeRelSampTypeComp";
             this.tabTypeRelSampTypeComp.Padding = new System.Windows.Forms.Padding(3);
-            this.tabTypeRelSampTypeComp.Size = new System.Drawing.Size(730, 564);
+            this.tabTypeRelSampTypeComp.Size = new System.Drawing.Size(644, 564);
             this.tabTypeRelSampTypeComp.TabIndex = 0;
             this.tabTypeRelSampTypeComp.Text = "Components";
             // 
@@ -6723,7 +6730,7 @@
             // 
             this.splitContainer16.Panel2.Controls.Add(this.lbSampleTypesInheritedComponents);
             this.splitContainer16.Panel2.Controls.Add(this.toolsTypeRelSampCompInherit);
-            this.splitContainer16.Size = new System.Drawing.Size(724, 558);
+            this.splitContainer16.Size = new System.Drawing.Size(638, 558);
             this.splitContainer16.SplitterDistance = 256;
             this.splitContainer16.SplitterWidth = 3;
             this.splitContainer16.TabIndex = 0;
@@ -6737,7 +6744,7 @@
             this.lbSampleTypesComponents.ItemHeight = 15;
             this.lbSampleTypesComponents.Location = new System.Drawing.Point(0, 25);
             this.lbSampleTypesComponents.Name = "lbSampleTypesComponents";
-            this.lbSampleTypesComponents.Size = new System.Drawing.Size(724, 231);
+            this.lbSampleTypesComponents.Size = new System.Drawing.Size(638, 231);
             this.lbSampleTypesComponents.TabIndex = 2;
             // 
             // toolsTypeRelSampComp
@@ -6752,7 +6759,7 @@
             this.lblTypeRelSampCompSel});
             this.toolsTypeRelSampComp.Location = new System.Drawing.Point(0, 0);
             this.toolsTypeRelSampComp.Name = "toolsTypeRelSampComp";
-            this.toolsTypeRelSampComp.Size = new System.Drawing.Size(724, 25);
+            this.toolsTypeRelSampComp.Size = new System.Drawing.Size(638, 25);
             this.toolsTypeRelSampComp.TabIndex = 1;
             this.toolsTypeRelSampComp.Text = "toolStrip31";
             // 
@@ -6811,7 +6818,7 @@
             this.lbSampleTypesInheritedComponents.Location = new System.Drawing.Point(0, 25);
             this.lbSampleTypesInheritedComponents.Name = "lbSampleTypesInheritedComponents";
             this.lbSampleTypesInheritedComponents.SelectionMode = System.Windows.Forms.SelectionMode.None;
-            this.lbSampleTypesInheritedComponents.Size = new System.Drawing.Size(724, 274);
+            this.lbSampleTypesInheritedComponents.Size = new System.Drawing.Size(638, 274);
             this.lbSampleTypesInheritedComponents.TabIndex = 3;
             // 
             // toolsTypeRelSampCompInherit
@@ -6821,7 +6828,7 @@
             this.toolStripLabel25});
             this.toolsTypeRelSampCompInherit.Location = new System.Drawing.Point(0, 0);
             this.toolsTypeRelSampCompInherit.Name = "toolsTypeRelSampCompInherit";
-            this.toolsTypeRelSampCompInherit.Size = new System.Drawing.Size(724, 25);
+            this.toolsTypeRelSampCompInherit.Size = new System.Drawing.Size(638, 25);
             this.toolsTypeRelSampCompInherit.TabIndex = 2;
             this.toolsTypeRelSampCompInherit.Text = "toolStrip33";
             // 
@@ -10250,6 +10257,31 @@
             this.btnBack.ToolTipText = "Back";
             this.btnBack.Click += new System.EventHandler(this.miBack_Click);
             // 
+            // miTypeRelSampleTypesNewRoot
+            // 
+            this.miTypeRelSampleTypesNewRoot.Name = "miTypeRelSampleTypesNewRoot";
+            this.miTypeRelSampleTypesNewRoot.Size = new System.Drawing.Size(190, 22);
+            this.miTypeRelSampleTypesNewRoot.Text = "New &root sample type";
+            this.miTypeRelSampleTypesNewRoot.Click += new System.EventHandler(this.miTypeRelSampleTypesNewRoot_Click);
+            // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.Image = global::DSA_lims.Properties.Resources._new;
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(76, 22);
+            this.toolStripButton1.Text = "New root";
+            this.toolStripButton1.Click += new System.EventHandler(this.miTypeRelSampleTypesNewRoot_Click);
+            // 
+            // lblCurrentUser
+            // 
+            this.lblCurrentUser.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.lblCurrentUser.Name = "lblCurrentUser";
+            this.lblCurrentUser.Size = new System.Drawing.Size(1020, 17);
+            this.lblCurrentUser.Spring = true;
+            this.lblCurrentUser.Text = "<lblCurrentUser>";
+            this.lblCurrentUser.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -11627,6 +11659,9 @@
         private System.Windows.Forms.ToolStripLabel toolStripLabel58;
         private System.Windows.Forms.ToolStrip toolStrip18;
         private System.Windows.Forms.ToolStripLabel toolStripLabel61;
+        private System.Windows.Forms.ToolStripMenuItem miTypeRelSampleTypesNewRoot;
+        private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripStatusLabel lblCurrentUser;
     }
 }
 

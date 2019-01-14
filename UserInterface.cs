@@ -870,7 +870,7 @@ from role r
                 return;
 
             Guid id = Guid.Parse(grid.Rows[gridIndex].Cells["id"].Value.ToString());
-            string fname = grid.Rows[gridIndex].Cells["label"].Value.ToString();
+            string fname = grid.Rows[gridIndex].Cells["name"].Value.ToString();
             string ext = grid.Rows[gridIndex].Cells["file_extension"].Value.ToString();
 
             string pathname = Path.GetTempPath() + "\\" + fname + "." + ext;

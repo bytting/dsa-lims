@@ -270,15 +270,26 @@ namespace DSA_lims
 
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Common.Log.Info("Application closing down");
-
-            using (SqlConnection conn = DB.OpenConnection())
+            try
             {
-                DB.UnlockSamples(conn);
-                DB.UnlockOrders(conn);
-            }
+                Common.Log.Info("Application closing down");
 
-            SaveSettings(DSAEnvironment.SettingsFilename);
+                if (!String.IsNullOrEmpty(DB.ConnectionString))
+                {
+                    using (SqlConnection conn = DB.OpenConnection())
+                    {
+                        DB.UnlockSamples(conn);
+                        DB.UnlockOrders(conn);
+                    }
+                }
+
+                SaveSettings(DSAEnvironment.SettingsFilename);
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                Common.Log.Error(ex);
+            }
         }
 
         private void FormMain_FormClosed(object sender, FormClosedEventArgs e)
@@ -4583,7 +4594,7 @@ select
         {
             if (!Roles.HasAccess(Role.LaboratoryAdministrator))
             {
-                MessageBox.Show("You don't have access to create customers");
+                MessageBox.Show("You don't have access to change order status");
                 return;
             }
 

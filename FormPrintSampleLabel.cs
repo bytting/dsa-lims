@@ -137,9 +137,9 @@ select
     ps.name as 'project_sub_name',
     l.name as 'laboratory_name'
 from sample s
-    inner join sample_type st on s.sample_type_id = st.id
-    inner join project_main pm on s.project_id = pm.id
+    inner join sample_type st on s.sample_type_id = st.id    
     inner join project_sub ps on s.project_sub_id = ps.id
+    inner join project_main pm on ps.project_main_id = pm.id
     inner join laboratory l on s.laboratory_id = l.id
 where s.id = @id
 ";
@@ -150,6 +150,11 @@ where s.id = @id
                 {
                     using (SqlDataReader reader = DB.GetDataReader(conn, query, CommandType.Text, new SqlParameter("@id", sid)))
                     {
+                        if (!reader.HasRows)
+                            continue;
+
+                        reader.Read();
+
                         sampleNumber = reader["sample_number"].ToString();
                         externalSampleId = reader["external_id"].ToString();
                         sampleType = reader["sample_type_name"].ToString();

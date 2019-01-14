@@ -36,6 +36,8 @@ namespace DSA_lims
         private Dictionary<string, object> p = new Dictionary<string, object>();
         private Guid mUnitId = Guid.Empty;
 
+        string invalidChars = "abcdfghijklmnopqrstuvwxyzæøåABCDFGHIJKLMNOPQRSTUVWXYZÆØÅ|*&/\\=<>(){},%[]";
+
         public Guid AnalysisResultId
         {
             get { return p.ContainsKey("id") ? (Guid)p["id"] : Guid.Empty; }
@@ -135,12 +137,24 @@ namespace DSA_lims
                 MessageBox.Show("Invalid number format on activity");
                 return;
             }
+
+            if(act < 0d)
+            {
+                MessageBox.Show("Activity can not be negative");
+                return;
+            }
             p["activity"] = act;
 
             double unc;
             if (!Double.TryParse(tbUncertainty.Text.Trim(), out unc))
             {
                 MessageBox.Show("Invalid number format on uncertainty");
+                return;
+            }
+
+            if (unc < 0d)
+            {
+                MessageBox.Show("Uncertainty can not be negative");
                 return;
             }
             p["activity_uncertainty_abs"] = unc;
@@ -150,7 +164,13 @@ namespace DSA_lims
             {
                 MessageBox.Show("Invalid number format on detection limit");
                 return;
-            }            
+            }
+
+            if (detlim < 0d)
+            {
+                MessageBox.Show("Detection limit can not be negative");
+                return;
+            }
             p["detection_limit"] = detlim;
 
             p["activity_approved"] = cbActivityApproved.Checked;            
@@ -283,6 +303,12 @@ namespace DSA_lims
             }
 
             return true;
+        }
+
+        private void tbActivity_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (invalidChars.Contains(e.KeyChar))
+                e.Handled = true;
         }
     }
 }

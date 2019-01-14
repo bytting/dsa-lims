@@ -126,6 +126,7 @@
             this.tbName.Name = "tbName";
             this.tbName.Size = new System.Drawing.Size(239, 20);
             this.tbName.TabIndex = 13;
+            this.tbName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbName_KeyPress);
             // 
             // tbNameCommon
             // 

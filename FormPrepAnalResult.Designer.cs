@@ -110,6 +110,7 @@
             this.tbActivity.Name = "tbActivity";
             this.tbActivity.Size = new System.Drawing.Size(233, 20);
             this.tbActivity.TabIndex = 11;
+            this.tbActivity.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbActivity_KeyPress);
             // 
             // tbUncertainty
             // 
@@ -118,6 +119,7 @@
             this.tbUncertainty.Name = "tbUncertainty";
             this.tbUncertainty.Size = new System.Drawing.Size(233, 20);
             this.tbUncertainty.TabIndex = 12;
+            this.tbUncertainty.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbActivity_KeyPress);
             // 
             // label2
             // 
@@ -154,6 +156,7 @@
             this.tbDetectionLimit.Name = "tbDetectionLimit";
             this.tbDetectionLimit.Size = new System.Drawing.Size(233, 20);
             this.tbDetectionLimit.TabIndex = 16;
+            this.tbDetectionLimit.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbActivity_KeyPress);
             // 
             // label4
             // 

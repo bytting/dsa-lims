@@ -43,8 +43,8 @@
             this.tbLIMSPrepGeom = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.tbLISSampleName = new System.Windows.Forms.TextBox();
-            this.tbLISPrepGeom = new System.Windows.Forms.TextBox();
+            this.tbLIMSGeomFillHeight = new System.Windows.Forms.TextBox();
+            this.tbLIMSGeomAmount = new System.Windows.Forms.TextBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.label6 = new System.Windows.Forms.Label();
@@ -56,6 +56,8 @@
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
             this.btnCutshall = new System.Windows.Forms.ToolStripButton();
             this.btnWeightedMean = new System.Windows.Forms.ToolStripButton();
+            this.lblLIMSGeomQuantity = new System.Windows.Forms.Label();
+            this.tbLIMSGeomQuantity = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -120,11 +122,13 @@
             // 
             // tableLayoutPanel1
             // 
-            this.tableLayoutPanel1.ColumnCount = 4;
+            this.tableLayoutPanel1.ColumnCount = 6;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 175F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 175F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 175F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.tableLayoutPanel1.Controls.Add(this.label3, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.tbFilename, 1, 0);
@@ -133,8 +137,10 @@
             this.tableLayoutPanel1.Controls.Add(this.tbLIMSPrepGeom, 1, 2);
             this.tableLayoutPanel1.Controls.Add(this.label4, 2, 1);
             this.tableLayoutPanel1.Controls.Add(this.label5, 2, 2);
-            this.tableLayoutPanel1.Controls.Add(this.tbLISSampleName, 3, 1);
-            this.tableLayoutPanel1.Controls.Add(this.tbLISPrepGeom, 3, 2);
+            this.tableLayoutPanel1.Controls.Add(this.tbLIMSGeomFillHeight, 3, 1);
+            this.tableLayoutPanel1.Controls.Add(this.tbLIMSGeomAmount, 3, 2);
+            this.tableLayoutPanel1.Controls.Add(this.lblLIMSGeomQuantity, 4, 1);
+            this.tableLayoutPanel1.Controls.Add(this.tbLIMSGeomQuantity, 5, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 25);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -168,7 +174,7 @@
             // 
             // tbFilename
             // 
-            this.tableLayoutPanel1.SetColumnSpan(this.tbFilename, 3);
+            this.tableLayoutPanel1.SetColumnSpan(this.tbFilename, 5);
             this.tbFilename.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbFilename.Location = new System.Drawing.Point(178, 3);
             this.tbFilename.Name = "tbFilename";
@@ -192,7 +198,7 @@
             this.tbLIMSSampleName.Location = new System.Drawing.Point(178, 31);
             this.tbLIMSSampleName.Name = "tbLIMSSampleName";
             this.tbLIMSSampleName.ReadOnly = true;
-            this.tbLIMSSampleName.Size = new System.Drawing.Size(348, 21);
+            this.tbLIMSSampleName.Size = new System.Drawing.Size(171, 21);
             this.tbLIMSSampleName.TabIndex = 3;
             // 
             // tbLIMSPrepGeom
@@ -201,46 +207,46 @@
             this.tbLIMSPrepGeom.Location = new System.Drawing.Point(178, 59);
             this.tbLIMSPrepGeom.Name = "tbLIMSPrepGeom";
             this.tbLIMSPrepGeom.ReadOnly = true;
-            this.tbLIMSPrepGeom.Size = new System.Drawing.Size(348, 21);
+            this.tbLIMSPrepGeom.Size = new System.Drawing.Size(171, 21);
             this.tbLIMSPrepGeom.TabIndex = 5;
             // 
             // label4
             // 
             this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label4.Location = new System.Drawing.Point(532, 28);
+            this.label4.Location = new System.Drawing.Point(355, 28);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(169, 28);
             this.label4.TabIndex = 6;
-            this.label4.Text = "LIS sample name";
+            this.label4.Text = "LIMS geom.fill height";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // label5
             // 
             this.label5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label5.Location = new System.Drawing.Point(532, 56);
+            this.label5.Location = new System.Drawing.Point(355, 56);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(169, 28);
             this.label5.TabIndex = 7;
-            this.label5.Text = "LIS prep. geometry";
+            this.label5.Text = "LIMS geom.amount";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // tbLISSampleName
+            // tbLIMSGeomFillHeight
             // 
-            this.tbLISSampleName.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbLISSampleName.Location = new System.Drawing.Point(707, 31);
-            this.tbLISSampleName.Name = "tbLISSampleName";
-            this.tbLISSampleName.ReadOnly = true;
-            this.tbLISSampleName.Size = new System.Drawing.Size(348, 21);
-            this.tbLISSampleName.TabIndex = 8;
+            this.tbLIMSGeomFillHeight.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbLIMSGeomFillHeight.Location = new System.Drawing.Point(530, 31);
+            this.tbLIMSGeomFillHeight.Name = "tbLIMSGeomFillHeight";
+            this.tbLIMSGeomFillHeight.ReadOnly = true;
+            this.tbLIMSGeomFillHeight.Size = new System.Drawing.Size(171, 21);
+            this.tbLIMSGeomFillHeight.TabIndex = 8;
             // 
-            // tbLISPrepGeom
+            // tbLIMSGeomAmount
             // 
-            this.tbLISPrepGeom.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbLISPrepGeom.Location = new System.Drawing.Point(707, 59);
-            this.tbLISPrepGeom.Name = "tbLISPrepGeom";
-            this.tbLISPrepGeom.ReadOnly = true;
-            this.tbLISPrepGeom.Size = new System.Drawing.Size(348, 21);
-            this.tbLISPrepGeom.TabIndex = 9;
+            this.tbLIMSGeomAmount.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbLIMSGeomAmount.Location = new System.Drawing.Point(530, 59);
+            this.tbLIMSGeomAmount.Name = "tbLIMSGeomAmount";
+            this.tbLIMSGeomAmount.ReadOnly = true;
+            this.tbLIMSGeomAmount.Size = new System.Drawing.Size(171, 21);
+            this.tbLIMSGeomAmount.TabIndex = 9;
             // 
             // panel2
             // 
@@ -366,6 +372,25 @@
             this.btnWeightedMean.Size = new System.Drawing.Size(133, 22);
             this.btnWeightedMean.Text = "Run weighted mean";
             // 
+            // lblLIMSGeomQuantity
+            // 
+            this.lblLIMSGeomQuantity.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblLIMSGeomQuantity.Location = new System.Drawing.Point(707, 28);
+            this.lblLIMSGeomQuantity.Name = "lblLIMSGeomQuantity";
+            this.lblLIMSGeomQuantity.Size = new System.Drawing.Size(169, 28);
+            this.lblLIMSGeomQuantity.TabIndex = 10;
+            this.lblLIMSGeomQuantity.Text = "LIMS geom.quantity";
+            this.lblLIMSGeomQuantity.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // tbLIMSGeomQuantity
+            // 
+            this.tbLIMSGeomQuantity.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbLIMSGeomQuantity.Location = new System.Drawing.Point(882, 31);
+            this.tbLIMSGeomQuantity.Name = "tbLIMSGeomQuantity";
+            this.tbLIMSGeomQuantity.ReadOnly = true;
+            this.tbLIMSGeomQuantity.Size = new System.Drawing.Size(173, 21);
+            this.tbLIMSGeomQuantity.TabIndex = 12;
+            // 
             // FormImportAnalysisLIS
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -419,8 +444,8 @@
         private System.Windows.Forms.TextBox tbLIMSPrepGeom;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox tbLISSampleName;
-        private System.Windows.Forms.TextBox tbLISPrepGeom;
+        private System.Windows.Forms.TextBox tbLIMSGeomFillHeight;
+        private System.Windows.Forms.TextBox tbLIMSGeomAmount;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.ToolStrip toolStrip2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
@@ -430,5 +455,7 @@
         private System.Windows.Forms.TextBox tbDetLimLib;
         private System.Windows.Forms.ToolStripButton btnCutshall;
         private System.Windows.Forms.ToolStripButton btnWeightedMean;
+        private System.Windows.Forms.Label lblLIMSGeomQuantity;
+        private System.Windows.Forms.TextBox tbLIMSGeomQuantity;
     }
 }

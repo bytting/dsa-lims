@@ -199,5 +199,12 @@ namespace DSA_lims
 
             return true;
         }
+
+        private void tbName_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Don't allow certain characters in XML
+            if ("&<>'\"/".Contains(e.KeyChar))
+                e.Handled = true;                
+        }
     }
 }

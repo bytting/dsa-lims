@@ -52,6 +52,9 @@ namespace DSA_lims
                 tbFilename.Text = parameters.FileName;
                 tbLIMSSampleName.Text = parameters.SampleName;
                 tbLIMSPrepGeom.Text = parameters.PreparationGeometry;
+                tbLIMSGeomFillHeight.Text = parameters.PreparationFillHeight.ToString();
+                tbLIMSGeomAmount.Text = parameters.PreparationAmount.ToString();
+                tbLIMSGeomQuantity.Text = parameters.PreparationQuantity.ToString();
 
                 LoadLIS(parameters.FileName);
                 foreach(AnalysisResult.Isotop isotop in result.Isotopes)
@@ -71,8 +74,6 @@ namespace DSA_lims
 
         private void ClearUI()
         {
-            tbLISSampleName.Text = "";
-            tbLISPrepGeom.Text = "";
             tbNuclideLibrary.Text = "";
             tbDetLimLib.Text = "";
 
@@ -82,9 +83,7 @@ namespace DSA_lims
         private void PopulateUI()
         {
             ClearUI();
-
-            tbLISSampleName.Text = result.SampleName;
-            tbLISPrepGeom.Text = result.Geometry;
+            
             tbNuclideLibrary.Text = result.NuclideLibrary;
             tbDetLimLib.Text = result.DetLimLib;
 

@@ -3678,6 +3678,7 @@ where p.id = @pid
             bool doClearAnalysis = false;
             SqlConnection connection = null;
             SqlTransaction transaction = null;
+            AnalysisParameters analysisParameters = new AnalysisParameters();
 
             try
             {
@@ -3700,10 +3701,32 @@ where p.id = @pid
                 dialog.Filter = "LIS files (*.lis)|*.lis";
                 if (dialog.ShowDialog() != DialogResult.OK)
                     return;
-
-                AnalysisParameters analysisParameters = new AnalysisParameters();
+                
                 analysisParameters.FileName = dialog.FileName;
-                analysisParameters.PreparationGeometry = cboxPrepAnalPrepGeom.Text;
+
+                string query = @"
+select p.fill_height_mm, p.amount, p.quantity, pg.name as 'geometry_name'
+from preparation p inner join preparation_geometry pg on p.preparation_geometry_id = pg.id
+where p.id = @pid
+";
+                Guid prepId = Guid.Parse(treePrepAnal.SelectedNode.Parent.Name);
+                using (SqlDataReader reader = DB.GetDataReader(connection, transaction, query, CommandType.Text, new SqlParameter("@pid", prepId)))
+                {
+                    if (reader.HasRows)
+                    {
+                        reader.Read();
+
+                        if (DB.IsValidField(reader["geometry_name"]))
+                            analysisParameters.PreparationGeometry = reader["geometry_name"].ToString();
+                        if (DB.IsValidField(reader["fill_height_mm"]))
+                            analysisParameters.PreparationFillHeight = Convert.ToDouble(reader["fill_height_mm"]);
+                        if (DB.IsValidField(reader["amount"]))
+                            analysisParameters.PreparationAmount = Convert.ToDouble(reader["amount"]);
+                        if (DB.IsValidField(reader["quantity"]))
+                            analysisParameters.PreparationQuantity = Convert.ToDouble(reader["quantity"]);
+                    }
+                }
+                                
                 analysisParameters.SampleName = treePrepAnal.Nodes.Count > 0 ? treePrepAnal.Nodes[0].Text : "";
                 analysisParameters.SpectrumReferenceRegEx = ""; // FIXME
                 analysisParameters.AllNuclides = DB.GetNuclideNames(connection, transaction);
@@ -3794,7 +3817,7 @@ insert into analysis_result values(
                     cmd.Parameters.AddWithValue("@updated_by", Common.Username);
 
                     cmd.ExecuteNonQuery();
-                }
+                }                
 
                 transaction.Commit();
             }
@@ -3803,6 +3826,7 @@ insert into analysis_result values(
                 transaction?.Rollback();
                 Common.Log.Error(ex);
                 MessageBox.Show(Utils.makeErrorMessage(ex.Message));
+                return;
             }
             finally
             {
@@ -3811,9 +3835,10 @@ insert into analysis_result values(
 
             using (SqlConnection conn = DB.OpenConnection())
             {
+                DB.AddAttachment(conn, "analysis", aid, Path.GetFileNameWithoutExtension(analysisParameters.FileName), "lis", File.ReadAllBytes(analysisParameters.FileName));
+
                 ClearPrepAnalAnalysis();
                 PopulateAnalysis(aid);
-
                 UI.PopulateAnalysisResults(conn, aid, gridPrepAnalResults);
             }
         }
@@ -5122,6 +5147,26 @@ where id = @id
                     SetStatusMessage("Create sample type failed", StatusMessageType.Error);
                     break;
             }
+        }
+
+        private void miSamplesPrintSampleLabels_Click(object sender, EventArgs e)
+        {
+            if(gridSamples.SelectedRows.Count < 1)
+            {
+                MessageBox.Show("No sample selected");
+                return;
+            }
+
+            List<Guid> sampleIds = new List<Guid>();
+
+            foreach (DataGridViewRow row in gridSamples.SelectedRows)
+            {
+                Guid sid = Guid.Parse(row.Cells["id"].Value.ToString());
+                sampleIds.Add(sid);
+            }            
+            
+            FormPrintSampleLabel form = new FormPrintSampleLabel(Common.Settings, sampleIds);
+            form.ShowDialog();
         }
     }    
 }

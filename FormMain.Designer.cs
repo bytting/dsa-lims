@@ -904,6 +904,8 @@
             this.btnMenu = new System.Windows.Forms.ToolStripButton();
             this.lblCurrentTab = new System.Windows.Forms.ToolStripLabel();
             this.btnBack = new System.Windows.Forms.ToolStripButton();
+            this.printToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.miSamplesPrintSampleLabels = new System.Windows.Forms.ToolStripMenuItem();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tabs.SuspendLayout();
@@ -1739,7 +1741,8 @@
             this.toolStripSeparator49,
             this.toolStripMenuItem1,
             this.miSamplesSet,
-            this.miSamplesPrepAnal});
+            this.miSamplesPrepAnal,
+            this.printToolStripMenuItem});
             this.miSamples.Name = "miSamples";
             this.miSamples.Size = new System.Drawing.Size(63, 20);
             this.miSamples.Text = "Sa&mples";
@@ -6033,11 +6036,12 @@
             this.sampleLabelToolStripMenuItem.Name = "sampleLabelToolStripMenuItem";
             this.sampleLabelToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.sampleLabelToolStripMenuItem.Text = "Sample labels";
+            this.sampleLabelToolStripMenuItem.Click += new System.EventHandler(this.miSamplesPrintSampleLabels_Click);
             // 
             // sampleInfoForSelectedToolStripMenuItem
             // 
             this.sampleInfoForSelectedToolStripMenuItem.Name = "sampleInfoForSelectedToolStripMenuItem";
-            this.sampleInfoForSelectedToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.sampleInfoForSelectedToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.sampleInfoForSelectedToolStripMenuItem.Text = "Sample info";
             // 
             // panel78
@@ -9274,10 +9278,10 @@
             // 
             this.tabPrepAnalPreps.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.tabPrepAnalPreps.Controls.Add(this.splitContainer3);
-            this.tabPrepAnalPreps.Location = new System.Drawing.Point(4, 22);
+            this.tabPrepAnalPreps.Location = new System.Drawing.Point(4, 24);
             this.tabPrepAnalPreps.Name = "tabPrepAnalPreps";
             this.tabPrepAnalPreps.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPrepAnalPreps.Size = new System.Drawing.Size(759, 600);
+            this.tabPrepAnalPreps.Size = new System.Drawing.Size(759, 598);
             this.tabPrepAnalPreps.TabIndex = 3;
             this.tabPrepAnalPreps.Text = "Preparations";
             // 
@@ -10145,7 +10149,7 @@
             // miImportLISFile2
             // 
             this.miImportLISFile2.Name = "miImportLISFile2";
-            this.miImportLISFile2.Size = new System.Drawing.Size(147, 22);
+            this.miImportLISFile2.Size = new System.Drawing.Size(152, 22);
             this.miImportLISFile2.Text = "Import LIS file";
             this.miImportLISFile2.Click += new System.EventHandler(this.miImportLISFile_Click);
             // 
@@ -10281,6 +10285,21 @@
             this.btnBack.Text = "toolStripButton25";
             this.btnBack.ToolTipText = "Back";
             this.btnBack.Click += new System.EventHandler(this.miBack_Click);
+            // 
+            // printToolStripMenuItem
+            // 
+            this.printToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.miSamplesPrintSampleLabels});
+            this.printToolStripMenuItem.Name = "printToolStripMenuItem";
+            this.printToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
+            this.printToolStripMenuItem.Text = "Print...";
+            // 
+            // miSamplesPrintSampleLabels
+            // 
+            this.miSamplesPrintSampleLabels.Name = "miSamplesPrintSampleLabels";
+            this.miSamplesPrintSampleLabels.Size = new System.Drawing.Size(152, 22);
+            this.miSamplesPrintSampleLabels.Text = "Sample labels";
+            this.miSamplesPrintSampleLabels.Click += new System.EventHandler(this.miSamplesPrintSampleLabels_Click);
             // 
             // FormMain
             // 
@@ -11662,6 +11681,8 @@
         private System.Windows.Forms.ToolStripMenuItem miTypeRelSampleTypesNewRoot;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.ToolStripStatusLabel lblCurrentUser;
+        private System.Windows.Forms.ToolStripMenuItem printToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem miSamplesPrintSampleLabels;
     }
 }
 

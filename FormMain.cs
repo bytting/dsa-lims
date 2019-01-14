@@ -3811,6 +3811,9 @@ insert into analysis_result values(
 
             using (SqlConnection conn = DB.OpenConnection())
             {
+                ClearPrepAnalAnalysis();
+                PopulateAnalysis(aid);
+
                 UI.PopulateAnalysisResults(conn, aid, gridPrepAnalResults);
             }
         }
@@ -4961,17 +4964,9 @@ where id = @id
                 return;
             }
 
-            string sampleTypeShort = sampleType.Split(new string[] { " -> " }, StringSplitOptions.RemoveEmptyEntries)[0];
-            FormPrintSampleLabel form = new FormPrintSampleLabel(
-                Common.Settings,
-                editingSampleNumber.ToString(),
-                lblSampleToolExId.Text,
-                cboxSampleProject.Text,
-                cboxSampleSubProject.Text, 
-                cboxSampleLaboratory.Text, 
-                sampleTypeShort
-            );
-
+            List<Guid> sampleIds = new List<Guid>();
+            sampleIds.Add(selectedSampleId);
+            FormPrintSampleLabel form = new FormPrintSampleLabel(Common.Settings, sampleIds);
             form.ShowDialog();
         }
 

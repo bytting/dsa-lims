@@ -27,6 +27,7 @@ namespace DSA_lims
 {
     public static class Utils
     {
+        public static int MIN_USERNAME_LENGTH { get { return 3; } }
         public static int MIN_PASSWORD_LENGTH { get { return 8; } }
 
         public static string DateTimeFormatISO = "yyyy-MM-dd HH:mm:ss";

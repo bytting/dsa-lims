@@ -82,7 +82,7 @@ namespace DSA_lims
                 }
                 else
                 {
-                    if (username.Length < 3)
+                    if (username.Length < Utils.MIN_USERNAME_LENGTH)
                     {
                         MessageBox.Show("Username must be at least 3 characters long");
                         return;
@@ -205,6 +205,7 @@ namespace DSA_lims
                             reader.Read();
 
                             mUserId = Guid.Parse(reader["id"].ToString());
+                            mUserName = username;
                             mLabId = Utils.IsValidGuid(reader["laboratory_id"]) ? Guid.Parse(reader["laboratory_id"].ToString()) : Guid.Empty;
                         }
                     }

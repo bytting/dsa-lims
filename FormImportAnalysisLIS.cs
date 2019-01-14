@@ -147,12 +147,20 @@ namespace DSA_lims
                     string[] items = line.Split(splitColon);
                     result.SpectrumName = items[1].Replace("\t", "").Trim();
                     result.SpectrumName = items[1].Replace(" ", "");
-                }                
+                }
+
+                if (line.Contains("SAMPLE IDENTITY"))
+                {
+                    string[] items = line.Split(splitColon);
+                    result.SampleName = items[1].Trim();                    
+                }
+
                 if (line.Contains("SAMPLE PLACE"))
                 {
                     string[] items = line.Split(splitColon);
                     result.SamplePlace = items[1].Trim();
                 }
+
                 if (line.Contains("SAMPLE QUANTITY"))
                 {
                     string[] items = line.Split(splitColon);
@@ -249,6 +257,8 @@ namespace DSA_lims
                     isotop.ConfidenceValue = Convert.ToDouble(items[2].Trim(), CultureInfo.InvariantCulture);
                     isotop.Activity = Convert.ToDouble(items[3].Trim(), CultureInfo.InvariantCulture);
                     isotop.Uncertainty = Convert.ToDouble(items[4].Trim(), CultureInfo.InvariantCulture) * 2.0;
+                    isotop.Uncertainty /= 100d;
+                    isotop.Uncertainty *= isotop.Activity;
                     result.Isotopes.Add(isotop);
                 }
             }
@@ -289,7 +299,7 @@ namespace DSA_lims
                     isotop.ConfidenceValue = 0.0;
                     isotop.Uncertainty = 0.0;
                     string s = items[1].Trim();
-                    if (s != "Infinity")
+                    if (s != "Infinity" && s != "Nuclide")
                     {
                         isotop.MDA = Convert.ToDouble(items[1].Trim(), CultureInfo.InvariantCulture);
                         result.Isotopes.Add(isotop);

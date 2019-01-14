@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Drawing.Printing;
 using System.Drawing.Text;
@@ -20,27 +21,23 @@ namespace DSA_lims
         Font fontLabel = null;
 
         DSASettings mSettings = null;
-        string mSampleNumber;
-        string mExternalSampleId;
-        string mProjectMain;
-        string mProjectSub;
-        string mLaboratory;
-        string mSampleType;
+        List<Guid> mSampleIds = new List<Guid>();
 
+        string sampleNumber;
+        string externalSampleId;
+        string projectMain;
+        string projectSub;
+        string laboratory;
+        string sampleType;
         string samplePart;
 
         PrintDocument printDocument = new PrintDocument();
 
-        public FormPrintSampleLabel(
-            DSASettings s, 
-            string sampleNumber, 
-            string externalSampleId, 
-            string projectMain, 
-            string projectSub, 
-            string laboratory, 
-            string sampleType)
+        public FormPrintSampleLabel(DSASettings s, List<Guid> sampleIds)
         {
             InitializeComponent();
+
+            mSampleIds = sampleIds;
 
             tbCopies.Text = "1";            
             tbCopies.KeyPress += CustomEvents.Integer_KeyPress;
@@ -49,12 +46,6 @@ namespace DSA_lims
             tbReplications.KeyPress += CustomEvents.Integer_KeyPress;
 
             mSettings = s;
-            mSampleNumber = sampleNumber;
-            mExternalSampleId = externalSampleId;
-            mProjectMain = projectMain;
-            mProjectSub = projectSub;
-            mLaboratory = laboratory;
-            mSampleType = sampleType;
 
             cboxPaperSizes.DisplayMember = "PaperName";
         }
@@ -136,12 +127,45 @@ namespace DSA_lims
             printDocument.DefaultPageSettings.PaperSize = paperSize;
 
             printDocument.PrintPage += PrintDocument_PrintPage;
-            for (int c = 0; c < copies; c++)
+
+            string query = @"
+select 
+    s.number as 'sample_number', 
+    s.external_id as 'external_id',
+    st.name as 'sample_type_name',
+    pm.name as 'project_main_name',
+    ps.name as 'project_sub_name',
+    l.name as 'laboratory_name'
+from sample s
+    inner join sample_type st on s.sample_type_id = st.id
+    inner join project_main pm on s.project_id = pm.id
+    inner join project_sub ps on s.project_sub_id = ps.id
+    inner join laboratory l on s.laboratory_id = l.id
+where s.id = @id
+";
+
+            using (SqlConnection conn = DB.OpenConnection())
             {
-                for (int r = 1; r <= reps; r++)
-                {                    
-                    samplePart = r.ToString() + "/" + reps.ToString();
-                    printDocument.Print();
+                foreach (Guid sid in mSampleIds)
+                {
+                    using (SqlDataReader reader = DB.GetDataReader(conn, query, CommandType.Text, new SqlParameter("@id", sid)))
+                    {
+                        sampleNumber = reader["sample_number"].ToString();
+                        externalSampleId = reader["external_id"].ToString();
+                        sampleType = reader["sample_type_name"].ToString();
+                        projectMain = reader["project_main_name"].ToString();
+                        projectSub = reader["project_sub_name"].ToString();
+                        laboratory = reader["laboratory_name"].ToString();
+
+                        for (int c = 0; c < copies; c++)
+                        {
+                            for (int r = 1; r <= reps; r++)
+                            {
+                                samplePart = r.ToString() + "/" + reps.ToString();
+                                printDocument.Print();
+                            }
+                        }
+                    }
                 }
             }
 
@@ -156,14 +180,14 @@ namespace DSA_lims
         private void PrintDocument_PrintPage(object sender, PrintPageEventArgs e)
         {            
             
-            e.Graphics.DrawString("ID: " + mSampleNumber, fontLabel, Brushes.Black, 5, 1);
-            e.Graphics.DrawString(mExternalSampleId, fontLabel, Brushes.Black, 90, 1);            
-            e.Graphics.DrawString("Sample type: " + mSampleType, fontLabel, Brushes.Black, 5, 15);
-            e.Graphics.DrawString("Main project: " + mProjectMain, fontLabel, Brushes.Black, 5, 30);
-            e.Graphics.DrawString("Sub project: " + mProjectSub, fontLabel, Brushes.Black, 5, 45);
-            e.Graphics.DrawString("Laboratory: " + mLaboratory, fontLabel, Brushes.Black, 5, 60);
+            e.Graphics.DrawString("ID: " + sampleNumber, fontLabel, Brushes.Black, 5, 1);
+            e.Graphics.DrawString(externalSampleId, fontLabel, Brushes.Black, 90, 1);            
+            e.Graphics.DrawString("Sample type: " + sampleType, fontLabel, Brushes.Black, 5, 15);
+            e.Graphics.DrawString("Main project: " + projectMain, fontLabel, Brushes.Black, 5, 30);
+            e.Graphics.DrawString("Sub project: " + projectSub, fontLabel, Brushes.Black, 5, 45);
+            e.Graphics.DrawString("Laboratory: " + laboratory, fontLabel, Brushes.Black, 5, 60);
             e.Graphics.DrawString("Batch: " + samplePart, fontLabel, Brushes.Black, 220, 60);
-            e.Graphics.DrawString("*" + mSampleNumber + "*", fontBarcode, Brushes.Black, 5, 80);
+            e.Graphics.DrawString("*" + sampleNumber + "*", fontBarcode, Brushes.Black, 5, 80);
 
             if (Common.LabLogo != null)
             {

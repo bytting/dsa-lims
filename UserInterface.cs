@@ -873,7 +873,7 @@ from role r
             string fname = grid.Rows[gridIndex].Cells["name"].Value.ToString();
             string ext = grid.Rows[gridIndex].Cells["file_extension"].Value.ToString();
 
-            string pathname = Path.GetTempPath() + "\\" + fname + "." + ext;
+            string pathname = Path.GetTempPath() + "\\" + fname + ext;
             if (File.Exists(pathname))
             {
                 try

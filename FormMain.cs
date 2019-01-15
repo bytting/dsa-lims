@@ -5033,7 +5033,7 @@ where id = @id
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                DB.AddAttachment(conn, "sample", selectedSampleId, form.DocumentName, "pdf", form.PdfData);
+                DB.AddAttachment(conn, "sample", selectedSampleId, form.DocumentName, ".pdf", form.PdfData);
 
                 UI.PopulateAttachments(conn, "sample", selectedSampleId, gridSampleAttachments);
             }
@@ -5047,7 +5047,7 @@ where id = @id
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                DB.AddAttachment(conn, "assignment", selectedOrderId, form.DocumentName, "pdf", form.PdfData);
+                DB.AddAttachment(conn, "assignment", selectedOrderId, form.DocumentName, ".pdf", form.PdfData);
 
                 UI.PopulateAttachments(conn, "assignment", selectedOrderId, gridOrderAttachments);
             }
@@ -5063,7 +5063,7 @@ where id = @id
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                DB.AddAttachment(conn, "preparation", prepId, form.DocumentName, "pdf", form.PdfData);
+                DB.AddAttachment(conn, "preparation", prepId, form.DocumentName, ".pdf", form.PdfData);
 
                 UI.PopulateAttachments(conn, "preparation", prepId, gridPrepAnalPrepAttachments);
             }
@@ -5079,7 +5079,7 @@ where id = @id
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                DB.AddAttachment(conn, "analysis", analId, form.DocumentName, "pdf", form.PdfData);
+                DB.AddAttachment(conn, "analysis", analId, form.DocumentName, ".pdf", form.PdfData);
 
                 UI.PopulateAttachments(conn, "analysis", analId, gridPrepAnalAnalAttachments);
             }
@@ -5101,7 +5101,7 @@ where id = @id
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                DB.AddAttachment(conn, "project_sub", psid, form.DocumentName, "pdf", form.PdfData);
+                DB.AddAttachment(conn, "project_sub", psid, form.DocumentName, ".pdf", form.PdfData);
 
                 UI.PopulateAttachments(conn, "project_sub", psid, gridProjectAttachments);
             }
@@ -5167,6 +5167,268 @@ where id = @id
             
             FormPrintSampleLabel form = new FormPrintSampleLabel(Common.Settings, sampleIds);
             form.ShowDialog();
+        }
+
+        private void btnSampleBrowseAttachment_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Filter = "All files(*)|*";
+            if (dialog.ShowDialog() == DialogResult.Cancel)
+                return;
+
+            string fileName = Path.GetFileNameWithoutExtension(dialog.FileName);
+            string fileExt = Path.GetExtension(dialog.FileName);
+            byte[] content = File.ReadAllBytes(dialog.FileName);
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                DB.AddAttachment(conn, "sample", selectedSampleId, fileName, fileExt, content);
+
+                UI.PopulateAttachments(conn, "sample", selectedSampleId, gridSampleAttachments);
+            }
+        }
+
+        private void btnOrderBrowseAttachment_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Filter = "All files(*)|*";
+            if (dialog.ShowDialog() == DialogResult.Cancel)
+                return;
+
+            string fileName = Path.GetFileNameWithoutExtension(dialog.FileName);
+            string fileExt = Path.GetExtension(dialog.FileName);
+            byte[] content = File.ReadAllBytes(dialog.FileName);
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                DB.AddAttachment(conn, "assignment", selectedOrderId, fileName, fileExt, content);
+
+                UI.PopulateAttachments(conn, "assignment", selectedOrderId, gridOrderAttachments);
+            }
+        }
+
+        private void btnProjectBrowseAttachment_Click(object sender, EventArgs e)
+        {
+            if(gridProjectSub.SelectedRows.Count < 1)
+            {
+                MessageBox.Show("No project selected");
+                return;
+            }
+
+            Guid pid = Guid.Parse(gridProjectSub.SelectedRows[0].Cells["id"].Value.ToString());
+
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Filter = "All files(*)|*";
+            if (dialog.ShowDialog() == DialogResult.Cancel)
+                return;
+
+            string fileName = Path.GetFileNameWithoutExtension(dialog.FileName);
+            string fileExt = Path.GetExtension(dialog.FileName);
+            byte[] content = File.ReadAllBytes(dialog.FileName);
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                DB.AddAttachment(conn, "project_sub", pid, fileName, fileExt, content);
+
+                UI.PopulateAttachments(conn, "project_sub", pid, gridProjectAttachments);
+            }
+        }
+
+        private void btnPrepAnalPrepBrowseAttachment_Click(object sender, EventArgs e)
+        {
+            if (treePrepAnal.SelectedNode == null)
+            {
+                MessageBox.Show("No sample selected");
+                return;
+            }
+
+            if(treePrepAnal.SelectedNode.Level != 1)
+            {
+                MessageBox.Show("No preparation selected");
+                return;
+            }
+
+            Guid pid = Guid.Parse(treePrepAnal.SelectedNode.Name);
+
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Filter = "All files(*)|*";
+            if (dialog.ShowDialog() == DialogResult.Cancel)
+                return;
+
+            string fileName = Path.GetFileNameWithoutExtension(dialog.FileName);
+            string fileExt = Path.GetExtension(dialog.FileName);
+            byte[] content = File.ReadAllBytes(dialog.FileName);
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                DB.AddAttachment(conn, "preparation", pid, fileName, fileExt, content);
+
+                UI.PopulateAttachments(conn, "preparation", pid, gridPrepAnalPrepAttachments);
+            }
+        }
+
+        private void btnPrepAnalAnalBrowseAttachment_Click(object sender, EventArgs e)
+        {
+            if (treePrepAnal.SelectedNode == null)
+            {
+                MessageBox.Show("No sample selected");
+                return;
+            }
+
+            if (treePrepAnal.SelectedNode.Level != 2)
+            {
+                MessageBox.Show("No analysis selected");
+                return;
+            }
+
+            Guid aid = Guid.Parse(treePrepAnal.SelectedNode.Name);
+
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Filter = "All files(*)|*";
+            if (dialog.ShowDialog() == DialogResult.Cancel)
+                return;
+
+            string fileName = Path.GetFileNameWithoutExtension(dialog.FileName);
+            string fileExt = Path.GetExtension(dialog.FileName);
+            byte[] content = File.ReadAllBytes(dialog.FileName);
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                DB.AddAttachment(conn, "analysis", aid, fileName, fileExt, content);
+
+                UI.PopulateAttachments(conn, "analysis", aid, gridPrepAnalAnalAttachments);
+            }
+        }
+
+        private void btnPrepAnalAnalDeleteAttachment_Click(object sender, EventArgs e)
+        {
+            if(gridPrepAnalAnalAttachments.SelectedRows.Count < 1)
+            {
+                MessageBox.Show("No attachment selected");
+                return;
+            }
+
+            if (treePrepAnal.SelectedNode == null || treePrepAnal.SelectedNode.Level != 2)
+            {
+                MessageBox.Show("No analysis selected");
+                return;
+            }
+
+            string attName = gridPrepAnalAnalAttachments.SelectedRows[0].Cells["name"].Value.ToString();
+            DialogResult dr = MessageBox.Show("Are you sure you want to delete attachment '" + attName + "' ?", "Warning", MessageBoxButtons.YesNo);
+            if (dr != DialogResult.Yes)
+                return;
+
+            Guid analId = Guid.Parse(treePrepAnal.SelectedNode.Name);
+            Guid attId = Guid.Parse(gridPrepAnalAnalAttachments.SelectedRows[0].Cells["id"].Value.ToString());
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                DB.DeleteAttachment(conn, "analysis", attId);
+
+                UI.PopulateAttachments(conn, "analysis", analId, gridPrepAnalAnalAttachments);
+            }
+        }
+
+        private void btnPrepAnalPrepDeleteAttachment_Click(object sender, EventArgs e)
+        {
+            if (gridPrepAnalPrepAttachments.SelectedRows.Count < 1)
+            {
+                MessageBox.Show("No attachment selected");
+                return;
+            }
+
+            if (treePrepAnal.SelectedNode == null || treePrepAnal.SelectedNode.Level != 1)
+            {
+                MessageBox.Show("No preparation selected");
+                return;
+            }
+
+            string attName = gridPrepAnalPrepAttachments.SelectedRows[0].Cells["name"].Value.ToString();
+            DialogResult dr = MessageBox.Show("Are you sure you want to delete attachment '" + attName + "' ?", "Warning", MessageBoxButtons.YesNo);
+            if (dr != DialogResult.Yes)
+                return;
+
+            Guid prepId = Guid.Parse(treePrepAnal.SelectedNode.Name);
+            Guid attId = Guid.Parse(gridPrepAnalPrepAttachments.SelectedRows[0].Cells["id"].Value.ToString());
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                DB.DeleteAttachment(conn, "preparation", attId);
+
+                UI.PopulateAttachments(conn, "preparation", prepId, gridPrepAnalPrepAttachments);
+            }
+        }
+
+        private void btnProjectDeleteAttachment_Click(object sender, EventArgs e)
+        {
+            if (gridProjectSub.SelectedRows.Count < 1)
+            {
+                MessageBox.Show("No project selected");
+                return;
+            }
+
+            if (gridProjectAttachments.SelectedRows.Count < 1)
+            {
+                MessageBox.Show("No attachment selected");
+                return;
+            }
+
+            string attName = gridProjectAttachments.SelectedRows[0].Cells["name"].Value.ToString();
+            DialogResult dr = MessageBox.Show("Are you sure you want to delete attachment '" + attName + "' ?", "Warning", MessageBoxButtons.YesNo);
+            if (dr != DialogResult.Yes)
+                return;
+
+            Guid projId = Guid.Parse(gridProjectSub.SelectedRows[0].Cells["id"].Value.ToString());
+            Guid attId = Guid.Parse(gridProjectAttachments.SelectedRows[0].Cells["id"].Value.ToString());
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                DB.DeleteAttachment(conn, "project_sub", attId);
+
+                UI.PopulateAttachments(conn, "project_sub", projId, gridProjectAttachments);
+            }
+        }
+
+        private void btnOrderDeleteAttachment_Click(object sender, EventArgs e)
+        {
+            if (gridOrderAttachments.SelectedRows.Count < 1)
+            {
+                MessageBox.Show("No attachment selected");
+                return;
+            }
+
+            string attName = gridOrderAttachments.SelectedRows[0].Cells["name"].Value.ToString();
+            DialogResult dr = MessageBox.Show("Are you sure you want to delete attachment '" + attName + "' ?", "Warning", MessageBoxButtons.YesNo);
+            if (dr != DialogResult.Yes)
+                return;
+
+            Guid attId = Guid.Parse(gridOrderAttachments.SelectedRows[0].Cells["id"].Value.ToString());
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                DB.DeleteAttachment(conn, "assignment", attId);
+
+                UI.PopulateAttachments(conn, "assignment", selectedOrderId, gridOrderAttachments);
+            }
+        }
+
+        private void btnSampleDeleteAttachment_Click(object sender, EventArgs e)
+        {
+            if (gridSampleAttachments.SelectedRows.Count < 1)
+            {
+                MessageBox.Show("No attachment selected");
+                return;
+            }
+
+            string attName = gridSampleAttachments.SelectedRows[0].Cells["name"].Value.ToString();
+            DialogResult dr = MessageBox.Show("Are you sure you want to delete attachment '" + attName + "' ?", "Warning", MessageBoxButtons.YesNo);
+            if (dr != DialogResult.Yes)
+                return;
+
+            Guid attId = Guid.Parse(gridSampleAttachments.SelectedRows[0].Cells["id"].Value.ToString());
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                DB.DeleteAttachment(conn, "sample", attId);
+
+                UI.PopulateAttachments(conn, "sample", selectedSampleId, gridSampleAttachments);
+            }
         }
     }    
 }

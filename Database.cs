@@ -549,6 +549,13 @@ from role r
             cmd.ExecuteNonQuery();
         }
 
+        public static void DeleteAttachment(SqlConnection conn, string sourceTable, Guid sourceId)
+        {
+            SqlCommand cmd = new SqlCommand("delete from attachment where source_table = '" + sourceTable + "' and id = @id", conn);
+            cmd.Parameters.AddWithValue("@id", sourceId);
+            cmd.ExecuteNonQuery();
+        }
+
         public static void GetOrderRequiredInventory(SqlConnection conn, Guid assignmentId, out int nSamples, out int nPreparations, out int nAnalyses)
         {
             nSamples = nPreparations = nAnalyses = 0;

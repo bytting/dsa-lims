@@ -59,16 +59,19 @@ namespace DSA_lims
 
         private void btnOk_Click(object sender, EventArgs e)
         {            
-            string username = tbUsername.Text.Trim();
+            string username = tbUsername.Text.ToLower().Trim();
             string password = tbPassword.Text.Trim();
 
             try
             {
                 if (cbUseAD.Checked)
                 {
-                    if(!ValidateADUser(username, password))
+                    if(!username.StartsWith(Environment.UserDomainName.ToLower()))
+                        username = Environment.UserDomainName.ToLower() + "\\" + username;
+
+                    if (!ValidateADUser(username, password))
                     {
-                        if(username.ToLower() != "administrator")
+                        if(username != Environment.UserDomainName.ToLower() + "\\administrator")
                         {
                             MessageBox.Show("Authentication failed");                            
                         }
@@ -119,7 +122,7 @@ namespace DSA_lims
                 if(!pc.ValidateCredentials(username, password))
                     return false;
 
-                if (username.ToLower() == "administrator")
+                if (username == Environment.UserDomainName.ToLower() + "\\administrator")
                 {
                     FormCreateLIMSAdministrator form = new FormCreateLIMSAdministrator();
                     if (form.ShowDialog() != DialogResult.OK)
@@ -191,11 +194,18 @@ namespace DSA_lims
                 {
                     using (SqlConnection conn = new SqlConnection(settings.ConnectionString))
                     {
+                        string shortUsername = username;
+                        if(shortUsername.StartsWith(Environment.UserDomainName.ToLower()))
+                        {
+                            string[] items = shortUsername.Split(new char[] { '\\' }, StringSplitOptions.RemoveEmptyEntries);
+                            shortUsername = items[1];
+                        }
+
                         conn.Open();
 
                         SqlCommand cmd = new SqlCommand("select id, laboratory_id from account where username = @username", conn);
                         cmd.CommandType = System.Data.CommandType.Text;
-                        cmd.Parameters.AddWithValue("@username", username);
+                        cmd.Parameters.AddWithValue("@username", shortUsername);
 
                         using (SqlDataReader reader = cmd.ExecuteReader())
                         {
@@ -205,7 +215,7 @@ namespace DSA_lims
                             reader.Read();
 
                             mUserId = Guid.Parse(reader["id"].ToString());
-                            mUserName = username;
+                            mUserName = shortUsername;
                             mLabId = Utils.IsValidGuid(reader["laboratory_id"]) ? Guid.Parse(reader["laboratory_id"].ToString()) : Guid.Empty;
                         }
                     }

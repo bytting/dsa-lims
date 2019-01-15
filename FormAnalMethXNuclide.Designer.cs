@@ -44,9 +44,9 @@
             this.panel1.Controls.Add(this.btnCancel);
             this.panel1.Controls.Add(this.btnOk);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 427);
+            this.panel1.Location = new System.Drawing.Point(0, 429);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(353, 30);
+            this.panel1.Size = new System.Drawing.Size(353, 28);
             this.panel1.TabIndex = 12;
             // 
             // btnCancel
@@ -54,8 +54,8 @@
             this.btnCancel.Dock = System.Windows.Forms.DockStyle.Right;
             this.btnCancel.Location = new System.Drawing.Point(153, 0);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(100, 30);
-            this.btnCancel.TabIndex = 1;
+            this.btnCancel.Size = new System.Drawing.Size(100, 28);
+            this.btnCancel.TabIndex = 2;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
@@ -65,8 +65,8 @@
             this.btnOk.Dock = System.Windows.Forms.DockStyle.Right;
             this.btnOk.Location = new System.Drawing.Point(253, 0);
             this.btnOk.Name = "btnOk";
-            this.btnOk.Size = new System.Drawing.Size(100, 30);
-            this.btnOk.TabIndex = 0;
+            this.btnOk.Size = new System.Drawing.Size(100, 28);
+            this.btnOk.TabIndex = 1;
             this.btnOk.Text = "Ok";
             this.btnOk.UseVisualStyleBackColor = true;
             this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
@@ -78,7 +78,7 @@
             this.lbNuclides.Name = "lbNuclides";
             this.lbNuclides.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.lbNuclides.Size = new System.Drawing.Size(296, 277);
-            this.lbNuclides.TabIndex = 13;
+            this.lbNuclides.TabIndex = 0;
             // 
             // label1
             // 
@@ -93,8 +93,9 @@
             // 
             this.tbAnalysisMethod.Location = new System.Drawing.Point(111, 37);
             this.tbAnalysisMethod.Name = "tbAnalysisMethod";
+            this.tbAnalysisMethod.ReadOnly = true;
             this.tbAnalysisMethod.Size = new System.Drawing.Size(213, 20);
-            this.tbAnalysisMethod.TabIndex = 15;
+            this.tbAnalysisMethod.TabIndex = 0;
             // 
             // label2
             // 

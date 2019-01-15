@@ -41,17 +41,17 @@
             this.panel1.Controls.Add(this.btnCancel);
             this.panel1.Controls.Add(this.btnOk);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 398);
+            this.panel1.Location = new System.Drawing.Point(0, 402);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(320, 32);
+            this.panel1.Size = new System.Drawing.Size(320, 28);
             this.panel1.TabIndex = 8;
             // 
             // btnCancel
             // 
             this.btnCancel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnCancel.Location = new System.Drawing.Point(86, 0);
+            this.btnCancel.Location = new System.Drawing.Point(120, 0);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(117, 32);
+            this.btnCancel.Size = new System.Drawing.Size(100, 28);
             this.btnCancel.TabIndex = 1;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
@@ -60,9 +60,9 @@
             // btnOk
             // 
             this.btnOk.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnOk.Location = new System.Drawing.Point(203, 0);
+            this.btnOk.Location = new System.Drawing.Point(220, 0);
             this.btnOk.Name = "btnOk";
-            this.btnOk.Size = new System.Drawing.Size(117, 32);
+            this.btnOk.Size = new System.Drawing.Size(100, 28);
             this.btnOk.TabIndex = 0;
             this.btnOk.Text = "Ok";
             this.btnOk.UseVisualStyleBackColor = true;
@@ -73,7 +73,7 @@
             this.lbRoles.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.lbRoles.FormattingEnabled = true;
             this.lbRoles.ItemHeight = 15;
-            this.lbRoles.Location = new System.Drawing.Point(0, 109);
+            this.lbRoles.Location = new System.Drawing.Point(0, 113);
             this.lbRoles.Name = "lbRoles";
             this.lbRoles.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.lbRoles.Size = new System.Drawing.Size(320, 289);

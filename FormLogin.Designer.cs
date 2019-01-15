@@ -59,9 +59,9 @@
             // btnCancel
             // 
             this.btnCancel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnCancel.Location = new System.Drawing.Point(224, 0);
+            this.btnCancel.Location = new System.Drawing.Point(198, 0);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(87, 28);
+            this.btnCancel.Size = new System.Drawing.Size(100, 28);
             this.btnCancel.TabIndex = 4;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
@@ -70,9 +70,9 @@
             // btnOk
             // 
             this.btnOk.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnOk.Location = new System.Drawing.Point(311, 0);
+            this.btnOk.Location = new System.Drawing.Point(298, 0);
             this.btnOk.Name = "btnOk";
-            this.btnOk.Size = new System.Drawing.Size(87, 28);
+            this.btnOk.Size = new System.Drawing.Size(100, 28);
             this.btnOk.TabIndex = 3;
             this.btnOk.Text = "Ok";
             this.btnOk.UseVisualStyleBackColor = true;
@@ -122,9 +122,9 @@
             this.cbUseAD.AutoSize = true;
             this.cbUseAD.Location = new System.Drawing.Point(117, 116);
             this.cbUseAD.Name = "cbUseAD";
-            this.cbUseAD.Size = new System.Drawing.Size(216, 19);
+            this.cbUseAD.Size = new System.Drawing.Size(222, 19);
             this.cbUseAD.TabIndex = 2;
-            this.cbUseAD.Text = "Use Active Directory to authenticate";
+            this.cbUseAD.Text = "Use domain account to authenticate";
             this.cbUseAD.UseVisualStyleBackColor = true;
             // 
             // menuStrip1

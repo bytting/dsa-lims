@@ -48,9 +48,9 @@
             this.panel1.Controls.Add(this.btnCancel);
             this.panel1.Controls.Add(this.btnOk);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 285);
+            this.panel1.Location = new System.Drawing.Point(0, 287);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(388, 30);
+            this.panel1.Size = new System.Drawing.Size(388, 28);
             this.panel1.TabIndex = 6;
             // 
             // btnCancel
@@ -58,8 +58,8 @@
             this.btnCancel.Dock = System.Windows.Forms.DockStyle.Right;
             this.btnCancel.Location = new System.Drawing.Point(188, 0);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(100, 30);
-            this.btnCancel.TabIndex = 1;
+            this.btnCancel.Size = new System.Drawing.Size(100, 28);
+            this.btnCancel.TabIndex = 5;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
@@ -69,8 +69,8 @@
             this.btnOk.Dock = System.Windows.Forms.DockStyle.Right;
             this.btnOk.Location = new System.Drawing.Point(288, 0);
             this.btnOk.Name = "btnOk";
-            this.btnOk.Size = new System.Drawing.Size(100, 30);
-            this.btnOk.TabIndex = 0;
+            this.btnOk.Size = new System.Drawing.Size(100, 28);
+            this.btnOk.TabIndex = 4;
             this.btnOk.Text = "Ok";
             this.btnOk.UseVisualStyleBackColor = true;
             this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
@@ -89,16 +89,16 @@
             this.cboxInstanceStatus.DisplayMember = "Name";
             this.cboxInstanceStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxInstanceStatus.FormattingEnabled = true;
-            this.cboxInstanceStatus.Location = new System.Drawing.Point(92, 88);
+            this.cboxInstanceStatus.Location = new System.Drawing.Point(92, 86);
             this.cboxInstanceStatus.Name = "cboxInstanceStatus";
             this.cboxInstanceStatus.Size = new System.Drawing.Size(263, 21);
-            this.cboxInstanceStatus.TabIndex = 11;
+            this.cboxInstanceStatus.TabIndex = 2;
             this.cboxInstanceStatus.ValueMember = "Id";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(24, 91);
+            this.label5.Location = new System.Drawing.Point(24, 89);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(37, 13);
             this.label5.TabIndex = 12;
@@ -107,7 +107,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(24, 118);
+            this.label6.Location = new System.Drawing.Point(24, 116);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(51, 13);
             this.label6.TabIndex = 13;
@@ -115,29 +115,29 @@
             // 
             // tbComment
             // 
-            this.tbComment.Location = new System.Drawing.Point(92, 115);
+            this.tbComment.Location = new System.Drawing.Point(92, 113);
             this.tbComment.MaxLength = 1000;
             this.tbComment.Multiline = true;
             this.tbComment.Name = "tbComment";
             this.tbComment.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.tbComment.Size = new System.Drawing.Size(263, 138);
-            this.tbComment.TabIndex = 18;
+            this.tbComment.TabIndex = 3;
             // 
             // cboxCompany
             // 
             this.cboxCompany.DisplayMember = "Name";
             this.cboxCompany.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxCompany.FormattingEnabled = true;
-            this.cboxCompany.Location = new System.Drawing.Point(92, 61);
+            this.cboxCompany.Location = new System.Drawing.Point(92, 59);
             this.cboxCompany.Name = "cboxCompany";
             this.cboxCompany.Size = new System.Drawing.Size(263, 21);
-            this.cboxCompany.TabIndex = 23;
+            this.cboxCompany.TabIndex = 1;
             this.cboxCompany.ValueMember = "Id";
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(24, 64);
+            this.label9.Location = new System.Drawing.Point(24, 62);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(51, 13);
             this.label9.TabIndex = 24;
@@ -151,7 +151,7 @@
             this.cboxPerson.Location = new System.Drawing.Point(92, 32);
             this.cboxPerson.Name = "cboxPerson";
             this.cboxPerson.Size = new System.Drawing.Size(263, 21);
-            this.cboxPerson.TabIndex = 25;
+            this.cboxPerson.TabIndex = 0;
             this.cboxPerson.ValueMember = "Id";
             // 
             // FormCustomer

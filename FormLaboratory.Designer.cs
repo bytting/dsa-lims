@@ -66,9 +66,9 @@
             this.panel1.Controls.Add(this.btnCancel);
             this.panel1.Controls.Add(this.btnOk);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 367);
+            this.panel1.Location = new System.Drawing.Point(0, 369);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(693, 30);
+            this.panel1.Size = new System.Drawing.Size(693, 28);
             this.panel1.TabIndex = 0;
             // 
             // btnCancel
@@ -77,8 +77,8 @@
             this.btnCancel.Dock = System.Windows.Forms.DockStyle.Right;
             this.btnCancel.Location = new System.Drawing.Point(493, 0);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(100, 30);
-            this.btnCancel.TabIndex = 1;
+            this.btnCancel.Size = new System.Drawing.Size(100, 28);
+            this.btnCancel.TabIndex = 10;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
@@ -89,8 +89,8 @@
             this.btnOk.Dock = System.Windows.Forms.DockStyle.Right;
             this.btnOk.Location = new System.Drawing.Point(593, 0);
             this.btnOk.Name = "btnOk";
-            this.btnOk.Size = new System.Drawing.Size(100, 30);
-            this.btnOk.TabIndex = 0;
+            this.btnOk.Size = new System.Drawing.Size(100, 28);
+            this.btnOk.TabIndex = 9;
             this.btnOk.Text = "Ok";
             this.btnOk.UseVisualStyleBackColor = true;
             this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
@@ -110,7 +110,7 @@
             this.tbName.MaxLength = 256;
             this.tbName.Name = "tbName";
             this.tbName.Size = new System.Drawing.Size(260, 20);
-            this.tbName.TabIndex = 2;
+            this.tbName.TabIndex = 0;
             // 
             // label2
             // 
@@ -154,7 +154,7 @@
             this.tbPrefix.MaxLength = 4;
             this.tbPrefix.Name = "tbPrefix";
             this.tbPrefix.Size = new System.Drawing.Size(260, 20);
-            this.tbPrefix.TabIndex = 8;
+            this.tbPrefix.TabIndex = 1;
             // 
             // tbAddress
             // 
@@ -162,7 +162,7 @@
             this.tbAddress.MaxLength = 256;
             this.tbAddress.Name = "tbAddress";
             this.tbAddress.Size = new System.Drawing.Size(260, 20);
-            this.tbAddress.TabIndex = 9;
+            this.tbAddress.TabIndex = 2;
             // 
             // tbEmail
             // 
@@ -170,7 +170,7 @@
             this.tbEmail.MaxLength = 80;
             this.tbEmail.Name = "tbEmail";
             this.tbEmail.Size = new System.Drawing.Size(260, 20);
-            this.tbEmail.TabIndex = 10;
+            this.tbEmail.TabIndex = 3;
             // 
             // tbPhone
             // 
@@ -178,7 +178,7 @@
             this.tbPhone.MaxLength = 80;
             this.tbPhone.Name = "tbPhone";
             this.tbPhone.Size = new System.Drawing.Size(260, 20);
-            this.tbPhone.TabIndex = 11;
+            this.tbPhone.TabIndex = 4;
             // 
             // tbComment
             // 
@@ -188,7 +188,7 @@
             this.tbComment.Name = "tbComment";
             this.tbComment.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.tbComment.Size = new System.Drawing.Size(260, 147);
-            this.tbComment.TabIndex = 12;
+            this.tbComment.TabIndex = 6;
             // 
             // label6
             // 
@@ -207,7 +207,7 @@
             this.cboxInstanceStatus.Location = new System.Drawing.Point(114, 157);
             this.cboxInstanceStatus.Name = "cboxInstanceStatus";
             this.cboxInstanceStatus.Size = new System.Drawing.Size(260, 21);
-            this.cboxInstanceStatus.TabIndex = 14;
+            this.cboxInstanceStatus.TabIndex = 5;
             this.cboxInstanceStatus.ValueMember = "Id";
             // 
             // label7
@@ -265,7 +265,7 @@
             this.linkLaboratoryLogo.Location = new System.Drawing.Point(405, 23);
             this.linkLaboratoryLogo.Name = "linkLaboratoryLogo";
             this.linkLaboratoryLogo.Size = new System.Drawing.Size(80, 13);
-            this.linkLaboratoryLogo.TabIndex = 24;
+            this.linkLaboratoryLogo.TabIndex = 7;
             this.linkLaboratoryLogo.TabStop = true;
             this.linkLaboratoryLogo.Text = "Laboratory logo";
             this.linkLaboratoryLogo.Click += new System.EventHandler(this.picLaboratoryLogo_DoubleClick);
@@ -276,7 +276,7 @@
             this.linkAccreditedLogo.Location = new System.Drawing.Point(405, 184);
             this.linkAccreditedLogo.Name = "linkAccreditedLogo";
             this.linkAccreditedLogo.Size = new System.Drawing.Size(81, 13);
-            this.linkAccreditedLogo.TabIndex = 25;
+            this.linkAccreditedLogo.TabIndex = 8;
             this.linkAccreditedLogo.TabStop = true;
             this.linkAccreditedLogo.Text = "Accredited logo";
             this.linkAccreditedLogo.Click += new System.EventHandler(this.picAccreditedLogo_DoubleClick);

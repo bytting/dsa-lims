@@ -45,6 +45,8 @@
             this.label5 = new System.Windows.Forms.Label();
             this.tbLIMSGeomFillHeight = new System.Windows.Forms.TextBox();
             this.tbLIMSGeomAmount = new System.Windows.Forms.TextBox();
+            this.lblLIMSGeomQuantity = new System.Windows.Forms.Label();
+            this.tbLIMSGeomQuantity = new System.Windows.Forms.TextBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.label6 = new System.Windows.Forms.Label();
@@ -56,8 +58,6 @@
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
             this.btnCutshall = new System.Windows.Forms.ToolStripButton();
             this.btnWeightedMean = new System.Windows.Forms.ToolStripButton();
-            this.lblLIMSGeomQuantity = new System.Windows.Forms.Label();
-            this.tbLIMSGeomQuantity = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -81,9 +81,9 @@
             // btnCancel
             // 
             this.btnCancel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnCancel.Location = new System.Drawing.Point(824, 0);
+            this.btnCancel.Location = new System.Drawing.Point(858, 0);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(117, 28);
+            this.btnCancel.Size = new System.Drawing.Size(100, 28);
             this.btnCancel.TabIndex = 1;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
@@ -92,9 +92,9 @@
             // btnOk
             // 
             this.btnOk.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnOk.Location = new System.Drawing.Point(941, 0);
+            this.btnOk.Location = new System.Drawing.Point(958, 0);
             this.btnOk.Name = "btnOk";
-            this.btnOk.Size = new System.Drawing.Size(117, 28);
+            this.btnOk.Size = new System.Drawing.Size(100, 28);
             this.btnOk.TabIndex = 0;
             this.btnOk.Text = "Import";
             this.btnOk.UseVisualStyleBackColor = true;
@@ -248,6 +248,25 @@
             this.tbLIMSGeomAmount.Size = new System.Drawing.Size(171, 21);
             this.tbLIMSGeomAmount.TabIndex = 9;
             // 
+            // lblLIMSGeomQuantity
+            // 
+            this.lblLIMSGeomQuantity.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblLIMSGeomQuantity.Location = new System.Drawing.Point(707, 28);
+            this.lblLIMSGeomQuantity.Name = "lblLIMSGeomQuantity";
+            this.lblLIMSGeomQuantity.Size = new System.Drawing.Size(169, 28);
+            this.lblLIMSGeomQuantity.TabIndex = 10;
+            this.lblLIMSGeomQuantity.Text = "LIMS geom.quantity";
+            this.lblLIMSGeomQuantity.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // tbLIMSGeomQuantity
+            // 
+            this.tbLIMSGeomQuantity.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbLIMSGeomQuantity.Location = new System.Drawing.Point(882, 31);
+            this.tbLIMSGeomQuantity.Name = "tbLIMSGeomQuantity";
+            this.tbLIMSGeomQuantity.ReadOnly = true;
+            this.tbLIMSGeomQuantity.Size = new System.Drawing.Size(173, 21);
+            this.tbLIMSGeomQuantity.TabIndex = 12;
+            // 
             // panel2
             // 
             this.panel2.Controls.Add(this.tableLayoutPanel2);
@@ -371,25 +390,6 @@
             this.btnWeightedMean.Name = "btnWeightedMean";
             this.btnWeightedMean.Size = new System.Drawing.Size(133, 22);
             this.btnWeightedMean.Text = "Run weighted mean";
-            // 
-            // lblLIMSGeomQuantity
-            // 
-            this.lblLIMSGeomQuantity.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblLIMSGeomQuantity.Location = new System.Drawing.Point(707, 28);
-            this.lblLIMSGeomQuantity.Name = "lblLIMSGeomQuantity";
-            this.lblLIMSGeomQuantity.Size = new System.Drawing.Size(169, 28);
-            this.lblLIMSGeomQuantity.TabIndex = 10;
-            this.lblLIMSGeomQuantity.Text = "LIMS geom.quantity";
-            this.lblLIMSGeomQuantity.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // tbLIMSGeomQuantity
-            // 
-            this.tbLIMSGeomQuantity.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbLIMSGeomQuantity.Location = new System.Drawing.Point(882, 31);
-            this.tbLIMSGeomQuantity.Name = "tbLIMSGeomQuantity";
-            this.tbLIMSGeomQuantity.ReadOnly = true;
-            this.tbLIMSGeomQuantity.Size = new System.Drawing.Size(173, 21);
-            this.tbLIMSGeomQuantity.TabIndex = 12;
             // 
             // FormImportAnalysisLIS
             // 

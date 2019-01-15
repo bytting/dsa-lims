@@ -71,10 +71,10 @@
             // btnCancel
             // 
             this.btnCancel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnCancel.Location = new System.Drawing.Point(421, 0);
+            this.btnCancel.Location = new System.Drawing.Point(455, 0);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(117, 28);
-            this.btnCancel.TabIndex = 1;
+            this.btnCancel.Size = new System.Drawing.Size(100, 28);
+            this.btnCancel.TabIndex = 4;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
@@ -82,10 +82,10 @@
             // btnOk
             // 
             this.btnOk.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnOk.Location = new System.Drawing.Point(538, 0);
+            this.btnOk.Location = new System.Drawing.Point(555, 0);
             this.btnOk.Name = "btnOk";
-            this.btnOk.Size = new System.Drawing.Size(117, 28);
-            this.btnOk.TabIndex = 0;
+            this.btnOk.Size = new System.Drawing.Size(100, 28);
+            this.btnOk.TabIndex = 3;
             this.btnOk.Text = "Ok";
             this.btnOk.UseVisualStyleBackColor = true;
             this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
@@ -107,7 +107,7 @@
             this.cboxLaboratory.Location = new System.Drawing.Point(102, 27);
             this.cboxLaboratory.Name = "cboxLaboratory";
             this.cboxLaboratory.Size = new System.Drawing.Size(304, 23);
-            this.cboxLaboratory.TabIndex = 9;
+            this.cboxLaboratory.TabIndex = 0;
             this.cboxLaboratory.ValueMember = "Id";
             this.cboxLaboratory.SelectedIndexChanged += new System.EventHandler(this.cboxLaboratory_SelectedIndexChanged);
             // 
@@ -131,7 +131,7 @@
             this.gridOrders.RowTemplate.DefaultCellStyle.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.gridOrders.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.gridOrders.Size = new System.Drawing.Size(655, 223);
-            this.gridOrders.TabIndex = 10;
+            this.gridOrders.TabIndex = 1;
             this.gridOrders.SelectionChanged += new System.EventHandler(this.gridOrders_SelectionChanged);
             // 
             // panel2
@@ -159,7 +159,7 @@
             this.treeOrderLines.ShowPlusMinus = false;
             this.treeOrderLines.ShowRootLines = false;
             this.treeOrderLines.Size = new System.Drawing.Size(627, 263);
-            this.treeOrderLines.TabIndex = 0;
+            this.treeOrderLines.TabIndex = 2;
             this.treeOrderLines.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeOrderLines_AfterSelect);
             // 
             // splitContainer1

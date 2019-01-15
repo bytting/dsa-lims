@@ -48,19 +48,19 @@
             this.panel1.Controls.Add(this.btnCancel);
             this.panel1.Controls.Add(this.btnOk);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 236);
+            this.panel1.Location = new System.Drawing.Point(0, 231);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(344, 30);
+            this.panel1.Size = new System.Drawing.Size(336, 28);
             this.panel1.TabIndex = 3;
             // 
             // btnCancel
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnCancel.Location = new System.Drawing.Point(144, 0);
+            this.btnCancel.Location = new System.Drawing.Point(136, 0);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(100, 30);
-            this.btnCancel.TabIndex = 1;
+            this.btnCancel.Size = new System.Drawing.Size(100, 28);
+            this.btnCancel.TabIndex = 5;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
@@ -69,36 +69,36 @@
             // 
             this.btnOk.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnOk.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnOk.Location = new System.Drawing.Point(244, 0);
+            this.btnOk.Location = new System.Drawing.Point(236, 0);
             this.btnOk.Name = "btnOk";
-            this.btnOk.Size = new System.Drawing.Size(100, 30);
-            this.btnOk.TabIndex = 0;
+            this.btnOk.Size = new System.Drawing.Size(100, 28);
+            this.btnOk.TabIndex = 4;
             this.btnOk.Text = "Ok";
             this.btnOk.UseVisualStyleBackColor = true;
             this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
             // 
             // tbComment
             // 
-            this.tbComment.Location = new System.Drawing.Point(98, 99);
+            this.tbComment.Location = new System.Drawing.Point(94, 98);
             this.tbComment.MaxLength = 1000;
             this.tbComment.Multiline = true;
             this.tbComment.Name = "tbComment";
             this.tbComment.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.tbComment.Size = new System.Drawing.Size(219, 109);
-            this.tbComment.TabIndex = 12;
+            this.tbComment.TabIndex = 3;
             // 
             // tbName
             // 
-            this.tbName.Location = new System.Drawing.Point(98, 46);
+            this.tbName.Location = new System.Drawing.Point(94, 45);
             this.tbName.MaxLength = 256;
             this.tbName.Name = "tbName";
             this.tbName.Size = new System.Drawing.Size(219, 20);
-            this.tbName.TabIndex = 11;
+            this.tbName.TabIndex = 1;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(22, 49);
+            this.label2.Location = new System.Drawing.Point(18, 48);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(35, 13);
             this.label2.TabIndex = 10;
@@ -107,7 +107,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(22, 102);
+            this.label1.Location = new System.Drawing.Point(18, 101);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(51, 13);
             this.label1.TabIndex = 9;
@@ -116,7 +116,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(22, 23);
+            this.label3.Location = new System.Drawing.Point(18, 22);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(65, 13);
             this.label3.TabIndex = 14;
@@ -124,27 +124,27 @@
             // 
             // tbMainProjectName
             // 
-            this.tbMainProjectName.Location = new System.Drawing.Point(98, 20);
+            this.tbMainProjectName.Location = new System.Drawing.Point(94, 19);
             this.tbMainProjectName.Name = "tbMainProjectName";
             this.tbMainProjectName.ReadOnly = true;
             this.tbMainProjectName.Size = new System.Drawing.Size(219, 20);
-            this.tbMainProjectName.TabIndex = 15;
+            this.tbMainProjectName.TabIndex = 0;
             // 
             // cboxInstanceStatus
             // 
             this.cboxInstanceStatus.DisplayMember = "Name";
             this.cboxInstanceStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxInstanceStatus.FormattingEnabled = true;
-            this.cboxInstanceStatus.Location = new System.Drawing.Point(98, 72);
+            this.cboxInstanceStatus.Location = new System.Drawing.Point(94, 71);
             this.cboxInstanceStatus.Name = "cboxInstanceStatus";
             this.cboxInstanceStatus.Size = new System.Drawing.Size(219, 21);
-            this.cboxInstanceStatus.TabIndex = 16;
+            this.cboxInstanceStatus.TabIndex = 2;
             this.cboxInstanceStatus.ValueMember = "Id";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(22, 75);
+            this.label4.Location = new System.Drawing.Point(18, 74);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(37, 13);
             this.label4.TabIndex = 17;
@@ -154,7 +154,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(344, 266);
+            this.ClientSize = new System.Drawing.Size(336, 259);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.cboxInstanceStatus);
             this.Controls.Add(this.tbMainProjectName);

@@ -64,7 +64,7 @@
             this.btnCancel.Location = new System.Drawing.Point(219, 0);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(100, 28);
-            this.btnCancel.TabIndex = 1;
+            this.btnCancel.TabIndex = 8;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
@@ -75,7 +75,7 @@
             this.btnOk.Location = new System.Drawing.Point(319, 0);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(100, 28);
-            this.btnOk.TabIndex = 0;
+            this.btnOk.TabIndex = 7;
             this.btnOk.Text = "Ok";
             this.btnOk.UseVisualStyleBackColor = true;
             this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
@@ -113,7 +113,7 @@
             this.tbName.MaxLength = 32;
             this.tbName.Name = "tbName";
             this.tbName.Size = new System.Drawing.Size(271, 20);
-            this.tbName.TabIndex = 10;
+            this.tbName.TabIndex = 0;
             // 
             // tbHalflife
             // 
@@ -121,7 +121,7 @@
             this.tbHalflife.MaxLength = 32;
             this.tbHalflife.Name = "tbHalflife";
             this.tbHalflife.Size = new System.Drawing.Size(271, 20);
-            this.tbHalflife.TabIndex = 13;
+            this.tbHalflife.TabIndex = 4;
             // 
             // tbComment
             // 
@@ -131,7 +131,7 @@
             this.tbComment.Name = "tbComment";
             this.tbComment.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.tbComment.Size = new System.Drawing.Size(271, 125);
-            this.tbComment.TabIndex = 18;
+            this.tbComment.TabIndex = 6;
             // 
             // cboxInstanceStatus
             // 
@@ -141,7 +141,7 @@
             this.cboxInstanceStatus.Location = new System.Drawing.Point(116, 156);
             this.cboxInstanceStatus.Name = "cboxInstanceStatus";
             this.cboxInstanceStatus.Size = new System.Drawing.Size(271, 21);
-            this.cboxInstanceStatus.TabIndex = 19;
+            this.cboxInstanceStatus.TabIndex = 5;
             this.cboxInstanceStatus.ValueMember = "Id";
             // 
             // label10
@@ -177,7 +177,7 @@
             this.tbProtons.MaxLength = 32;
             this.tbProtons.Name = "tbProtons";
             this.tbProtons.Size = new System.Drawing.Size(271, 20);
-            this.tbProtons.TabIndex = 23;
+            this.tbProtons.TabIndex = 1;
             // 
             // tbNeutrons
             // 
@@ -185,7 +185,7 @@
             this.tbNeutrons.MaxLength = 32;
             this.tbNeutrons.Name = "tbNeutrons";
             this.tbNeutrons.Size = new System.Drawing.Size(271, 20);
-            this.tbNeutrons.TabIndex = 24;
+            this.tbNeutrons.TabIndex = 2;
             // 
             // cbMetaStable
             // 
@@ -193,7 +193,7 @@
             this.cbMetaStable.Location = new System.Drawing.Point(116, 108);
             this.cbMetaStable.Name = "cbMetaStable";
             this.cbMetaStable.Size = new System.Drawing.Size(81, 17);
-            this.cbMetaStable.TabIndex = 25;
+            this.cbMetaStable.TabIndex = 3;
             this.cbMetaStable.Text = "Meta stable";
             this.cbMetaStable.UseVisualStyleBackColor = true;
             // 

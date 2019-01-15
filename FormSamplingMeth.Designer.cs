@@ -57,7 +57,7 @@
             this.btnCancel.Location = new System.Drawing.Point(136, 0);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(100, 30);
-            this.btnCancel.TabIndex = 1;
+            this.btnCancel.TabIndex = 4;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
@@ -68,7 +68,7 @@
             this.btnOk.Location = new System.Drawing.Point(236, 0);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(100, 30);
-            this.btnOk.TabIndex = 0;
+            this.btnOk.TabIndex = 3;
             this.btnOk.Text = "Ok";
             this.btnOk.UseVisualStyleBackColor = true;
             this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
@@ -79,7 +79,7 @@
             this.tbName.MaxLength = 256;
             this.tbName.Name = "tbName";
             this.tbName.Size = new System.Drawing.Size(215, 20);
-            this.tbName.TabIndex = 11;
+            this.tbName.TabIndex = 0;
             // 
             // cboxInstanceStatus
             // 
@@ -89,7 +89,7 @@
             this.cboxInstanceStatus.Location = new System.Drawing.Point(90, 48);
             this.cboxInstanceStatus.Name = "cboxInstanceStatus";
             this.cboxInstanceStatus.Size = new System.Drawing.Size(215, 21);
-            this.cboxInstanceStatus.TabIndex = 12;
+            this.cboxInstanceStatus.TabIndex = 1;
             this.cboxInstanceStatus.ValueMember = "Id";
             // 
             // tbComment
@@ -99,7 +99,7 @@
             this.tbComment.Multiline = true;
             this.tbComment.Name = "tbComment";
             this.tbComment.Size = new System.Drawing.Size(215, 114);
-            this.tbComment.TabIndex = 13;
+            this.tbComment.TabIndex = 2;
             // 
             // label1
             // 

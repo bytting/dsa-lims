@@ -94,7 +94,7 @@
             this.cboxScanner.Location = new System.Drawing.Point(112, 11);
             this.cboxScanner.Name = "cboxScanner";
             this.cboxScanner.Size = new System.Drawing.Size(323, 23);
-            this.cboxScanner.TabIndex = 1;
+            this.cboxScanner.TabIndex = 0;
             // 
             // cbDuplex
             // 
@@ -102,7 +102,7 @@
             this.cbDuplex.Location = new System.Drawing.Point(112, 41);
             this.cbDuplex.Name = "cbDuplex";
             this.cbDuplex.Size = new System.Drawing.Size(113, 19);
-            this.cbDuplex.TabIndex = 2;
+            this.cbDuplex.TabIndex = 1;
             this.cbDuplex.Text = "Scan both sides";
             this.cbDuplex.UseVisualStyleBackColor = true;
             // 
@@ -146,7 +146,7 @@
             this.cboxFlipType.Location = new System.Drawing.Point(112, 71);
             this.cboxFlipType.Name = "cboxFlipType";
             this.cboxFlipType.Size = new System.Drawing.Size(323, 23);
-            this.cboxFlipType.TabIndex = 6;
+            this.cboxFlipType.TabIndex = 2;
             // 
             // cboxPixelType
             // 
@@ -159,7 +159,7 @@
             this.cboxPixelType.Location = new System.Drawing.Point(112, 101);
             this.cboxPixelType.Name = "cboxPixelType";
             this.cboxPixelType.Size = new System.Drawing.Size(323, 23);
-            this.cboxPixelType.TabIndex = 5;
+            this.cboxPixelType.TabIndex = 3;
             // 
             // label4
             // 
@@ -190,7 +190,7 @@
             this.btnPreview.Location = new System.Drawing.Point(90, 0);
             this.btnPreview.Name = "btnPreview";
             this.btnPreview.Size = new System.Drawing.Size(90, 28);
-            this.btnPreview.TabIndex = 2;
+            this.btnPreview.TabIndex = 6;
             this.btnPreview.Text = "Preview";
             this.btnPreview.UseVisualStyleBackColor = true;
             this.btnPreview.Click += new System.EventHandler(this.btnPreview_Click);
@@ -201,7 +201,7 @@
             this.btnScan.Location = new System.Drawing.Point(0, 0);
             this.btnScan.Name = "btnScan";
             this.btnScan.Size = new System.Drawing.Size(90, 28);
-            this.btnScan.TabIndex = 0;
+            this.btnScan.TabIndex = 5;
             this.btnScan.Text = "Scan";
             this.btnScan.UseVisualStyleBackColor = true;
             this.btnScan.Click += new System.EventHandler(this.btnScan_Click);
@@ -212,7 +212,7 @@
             this.btnCancel.Location = new System.Drawing.Point(258, 0);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(90, 28);
-            this.btnCancel.TabIndex = 1;
+            this.btnCancel.TabIndex = 7;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
@@ -224,7 +224,7 @@
             this.btnStore.Location = new System.Drawing.Point(348, 0);
             this.btnStore.Name = "btnStore";
             this.btnStore.Size = new System.Drawing.Size(90, 28);
-            this.btnStore.TabIndex = 3;
+            this.btnStore.TabIndex = 8;
             this.btnStore.Text = "Store";
             this.btnStore.UseVisualStyleBackColor = true;
             this.btnStore.Click += new System.EventHandler(this.btnStore_Click);

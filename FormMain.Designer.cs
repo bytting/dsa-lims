@@ -2574,7 +2574,7 @@
             this.btnMenuSearch.Margin = new System.Windows.Forms.Padding(1);
             this.btnMenuSearch.Name = "btnMenuSearch";
             this.btnMenuSearch.Size = new System.Drawing.Size(280, 295);
-            this.btnMenuSearch.TabIndex = 5;
+            this.btnMenuSearch.TabIndex = 7;
             this.btnMenuSearch.Text = "Search";
             this.btnMenuSearch.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btnMenuSearch.UseVisualStyleBackColor = true;
@@ -2589,7 +2589,7 @@
             this.btnMenuMetadata.Margin = new System.Windows.Forms.Padding(1);
             this.btnMenuMetadata.Name = "btnMenuMetadata";
             this.btnMenuMetadata.Size = new System.Drawing.Size(278, 295);
-            this.btnMenuMetadata.TabIndex = 9;
+            this.btnMenuMetadata.TabIndex = 6;
             this.btnMenuMetadata.Text = "Metadata";
             this.btnMenuMetadata.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btnMenuMetadata.UseVisualStyleBackColor = true;
@@ -2604,7 +2604,7 @@
             this.btnMenuCustomer.Margin = new System.Windows.Forms.Padding(1);
             this.btnMenuCustomer.Name = "btnMenuCustomer";
             this.btnMenuCustomer.Size = new System.Drawing.Size(278, 295);
-            this.btnMenuCustomer.TabIndex = 4;
+            this.btnMenuCustomer.TabIndex = 5;
             this.btnMenuCustomer.Text = "Customers";
             this.btnMenuCustomer.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btnMenuCustomer.UseVisualStyleBackColor = true;
@@ -2620,7 +2620,7 @@
             this.btnMenuProjects.Margin = new System.Windows.Forms.Padding(1);
             this.btnMenuProjects.Name = "btnMenuProjects";
             this.btnMenuProjects.Size = new System.Drawing.Size(278, 295);
-            this.btnMenuProjects.TabIndex = 2;
+            this.btnMenuProjects.TabIndex = 4;
             this.btnMenuProjects.Text = "Projects";
             this.btnMenuProjects.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btnMenuProjects.UseVisualStyleBackColor = true;
@@ -2723,7 +2723,7 @@
             this.btnOrders.Margin = new System.Windows.Forms.Padding(1);
             this.btnOrders.Name = "btnOrders";
             this.btnOrders.Size = new System.Drawing.Size(280, 295);
-            this.btnOrders.TabIndex = 0;
+            this.btnOrders.TabIndex = 3;
             this.btnOrders.Text = "Orders";
             this.btnOrders.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.btnOrders.UseVisualStyleBackColor = true;
@@ -2881,7 +2881,7 @@
             this.cboxSampleSampleType.Location = new System.Drawing.Point(0, 0);
             this.cboxSampleSampleType.Name = "cboxSampleSampleType";
             this.cboxSampleSampleType.Size = new System.Drawing.Size(615, 21);
-            this.cboxSampleSampleType.TabIndex = 2;
+            this.cboxSampleSampleType.TabIndex = 0;
             this.cboxSampleSampleType.ValueMember = "Id";
             this.cboxSampleSampleType.SelectedIndexChanged += new System.EventHandler(this.cboxSampleSampleType_SelectedIndexChanged);
             this.cboxSampleSampleType.Leave += new System.EventHandler(this.cboxSampleSampleType_Leave);
@@ -2906,7 +2906,7 @@
             this.cboxSampleProject.Location = new System.Drawing.Point(153, 103);
             this.cboxSampleProject.Name = "cboxSampleProject";
             this.cboxSampleProject.Size = new System.Drawing.Size(315, 21);
-            this.cboxSampleProject.TabIndex = 36;
+            this.cboxSampleProject.TabIndex = 4;
             this.cboxSampleProject.ValueMember = "Id";
             this.cboxSampleProject.SelectedIndexChanged += new System.EventHandler(this.cboxSampleProject_SelectedIndexChanged);
             // 
@@ -2930,7 +2930,7 @@
             this.cboxSampleInfoSampler.Location = new System.Drawing.Point(153, 133);
             this.cboxSampleInfoSampler.Name = "cboxSampleInfoSampler";
             this.cboxSampleInfoSampler.Size = new System.Drawing.Size(315, 21);
-            this.cboxSampleInfoSampler.TabIndex = 1;
+            this.cboxSampleInfoSampler.TabIndex = 6;
             this.cboxSampleInfoSampler.ValueMember = "Id";
             // 
             // label9
@@ -2953,7 +2953,7 @@
             this.cboxSampleInfoStations.Location = new System.Drawing.Point(153, 163);
             this.cboxSampleInfoStations.Name = "cboxSampleInfoStations";
             this.cboxSampleInfoStations.Size = new System.Drawing.Size(315, 21);
-            this.cboxSampleInfoStations.TabIndex = 1;
+            this.cboxSampleInfoStations.TabIndex = 8;
             this.cboxSampleInfoStations.ValueMember = "Id";
             this.cboxSampleInfoStations.SelectedIndexChanged += new System.EventHandler(this.cboxSampleInfoStations_SelectedIndexChanged);
             // 
@@ -2988,7 +2988,7 @@
             this.cboxSampleCounties.Location = new System.Drawing.Point(153, 223);
             this.cboxSampleCounties.Name = "cboxSampleCounties";
             this.cboxSampleCounties.Size = new System.Drawing.Size(315, 21);
-            this.cboxSampleCounties.TabIndex = 27;
+            this.cboxSampleCounties.TabIndex = 12;
             this.cboxSampleCounties.ValueMember = "Id";
             this.cboxSampleCounties.SelectedIndexChanged += new System.EventHandler(this.cboxSampleCounties_SelectedIndexChanged);
             // 
@@ -3012,7 +3012,7 @@
             this.cboxSampleInfoLocationTypes.Location = new System.Drawing.Point(153, 253);
             this.cboxSampleInfoLocationTypes.Name = "cboxSampleInfoLocationTypes";
             this.cboxSampleInfoLocationTypes.Size = new System.Drawing.Size(315, 21);
-            this.cboxSampleInfoLocationTypes.TabIndex = 28;
+            this.cboxSampleInfoLocationTypes.TabIndex = 14;
             this.cboxSampleInfoLocationTypes.ValueMember = "Id";
             this.cboxSampleInfoLocationTypes.SelectedIndexChanged += new System.EventHandler(this.cboxSampleInfoLocationTypes_SelectedIndexChanged);
             // 
@@ -3036,7 +3036,7 @@
             this.cboxSampleLaboratory.Location = new System.Drawing.Point(153, 373);
             this.cboxSampleLaboratory.Name = "cboxSampleLaboratory";
             this.cboxSampleLaboratory.Size = new System.Drawing.Size(315, 21);
-            this.cboxSampleLaboratory.TabIndex = 42;
+            this.cboxSampleLaboratory.TabIndex = 19;
             this.cboxSampleLaboratory.ValueMember = "Id";
             this.cboxSampleLaboratory.SelectedIndexChanged += new System.EventHandler(this.cboxSampleLaboratory_SelectedIndexChanged);
             // 
@@ -3049,7 +3049,7 @@
             this.cboxSampleSubProject.Location = new System.Drawing.Point(474, 103);
             this.cboxSampleSubProject.Name = "cboxSampleSubProject";
             this.cboxSampleSubProject.Size = new System.Drawing.Size(316, 21);
-            this.cboxSampleSubProject.TabIndex = 38;
+            this.cboxSampleSubProject.TabIndex = 5;
             this.cboxSampleSubProject.ValueMember = "Id";
             this.cboxSampleSubProject.SelectedIndexChanged += new System.EventHandler(this.cboxSampleSubProject_SelectedIndexChanged);
             // 
@@ -3062,7 +3062,7 @@
             this.cboxSampleInfoSamplingMeth.Location = new System.Drawing.Point(474, 133);
             this.cboxSampleInfoSamplingMeth.Name = "cboxSampleInfoSamplingMeth";
             this.cboxSampleInfoSamplingMeth.Size = new System.Drawing.Size(316, 21);
-            this.cboxSampleInfoSamplingMeth.TabIndex = 1;
+            this.cboxSampleInfoSamplingMeth.TabIndex = 7;
             this.cboxSampleInfoSamplingMeth.ValueMember = "Id";
             // 
             // cboxSampleMunicipalities
@@ -3074,7 +3074,7 @@
             this.cboxSampleMunicipalities.Location = new System.Drawing.Point(474, 223);
             this.cboxSampleMunicipalities.Name = "cboxSampleMunicipalities";
             this.cboxSampleMunicipalities.Size = new System.Drawing.Size(316, 21);
-            this.cboxSampleMunicipalities.TabIndex = 40;
+            this.cboxSampleMunicipalities.TabIndex = 13;
             this.cboxSampleMunicipalities.ValueMember = "Id";
             // 
             // tbSampleLocation
@@ -3084,7 +3084,7 @@
             this.tbSampleLocation.MaxLength = 128;
             this.tbSampleLocation.Name = "tbSampleLocation";
             this.tbSampleLocation.Size = new System.Drawing.Size(316, 20);
-            this.tbSampleLocation.TabIndex = 30;
+            this.tbSampleLocation.TabIndex = 15;
             // 
             // panelSampleLatLonAlt
             // 
@@ -3106,7 +3106,7 @@
             this.tbSampleInfoLongitude.MaxLength = 32;
             this.tbSampleInfoLongitude.Name = "tbSampleInfoLongitude";
             this.tbSampleInfoLongitude.Size = new System.Drawing.Size(252, 20);
-            this.tbSampleInfoLongitude.TabIndex = 9;
+            this.tbSampleInfoLongitude.TabIndex = 10;
             // 
             // tbSampleInfoAltitude
             // 
@@ -3115,7 +3115,7 @@
             this.tbSampleInfoAltitude.MaxLength = 32;
             this.tbSampleInfoAltitude.Name = "tbSampleInfoAltitude";
             this.tbSampleInfoAltitude.Size = new System.Drawing.Size(198, 20);
-            this.tbSampleInfoAltitude.TabIndex = 10;
+            this.tbSampleInfoAltitude.TabIndex = 11;
             // 
             // tbSampleInfoLatitude
             // 
@@ -3124,7 +3124,7 @@
             this.tbSampleInfoLatitude.MaxLength = 32;
             this.tbSampleInfoLatitude.Name = "tbSampleInfoLatitude";
             this.tbSampleInfoLatitude.Size = new System.Drawing.Size(187, 20);
-            this.tbSampleInfoLatitude.TabIndex = 8;
+            this.tbSampleInfoLatitude.TabIndex = 9;
             // 
             // label5
             // 
@@ -3145,7 +3145,7 @@
             this.cboxSampleSampleStorage.Location = new System.Drawing.Point(153, 403);
             this.cboxSampleSampleStorage.Name = "cboxSampleSampleStorage";
             this.cboxSampleSampleStorage.Size = new System.Drawing.Size(315, 21);
-            this.cboxSampleSampleStorage.TabIndex = 44;
+            this.cboxSampleSampleStorage.TabIndex = 20;
             this.cboxSampleSampleStorage.ValueMember = "Id";
             // 
             // label16
@@ -3165,7 +3165,7 @@
             this.tbSampleExId.MaxLength = 128;
             this.tbSampleExId.Name = "tbSampleExId";
             this.tbSampleExId.Size = new System.Drawing.Size(315, 20);
-            this.tbSampleExId.TabIndex = 32;
+            this.tbSampleExId.TabIndex = 2;
             this.tbSampleExId.TextChanged += new System.EventHandler(this.tbSampleExId_TextChanged);
             // 
             // panel7
@@ -3284,7 +3284,7 @@
             this.cboxSampleInstanceStatus.Location = new System.Drawing.Point(153, 433);
             this.cboxSampleInstanceStatus.Name = "cboxSampleInstanceStatus";
             this.cboxSampleInstanceStatus.Size = new System.Drawing.Size(315, 21);
-            this.cboxSampleInstanceStatus.TabIndex = 55;
+            this.cboxSampleInstanceStatus.TabIndex = 21;
             this.cboxSampleInstanceStatus.ValueMember = "Id";
             // 
             // cbSampleConfidential
@@ -3293,7 +3293,7 @@
             this.cbSampleConfidential.Location = new System.Drawing.Point(474, 73);
             this.cbSampleConfidential.Name = "cbSampleConfidential";
             this.cbSampleConfidential.Size = new System.Drawing.Size(121, 17);
-            this.cbSampleConfidential.TabIndex = 45;
+            this.cbSampleConfidential.TabIndex = 3;
             this.cbSampleConfidential.Text = "Excempt from public";
             this.cbSampleConfidential.UseVisualStyleBackColor = true;
             // 
@@ -3348,7 +3348,7 @@
             this.tbSampleSamplingDateFrom.Name = "tbSampleSamplingDateFrom";
             this.tbSampleSamplingDateFrom.ReadOnly = true;
             this.tbSampleSamplingDateFrom.Size = new System.Drawing.Size(267, 21);
-            this.tbSampleSamplingDateFrom.TabIndex = 2;
+            this.tbSampleSamplingDateFrom.TabIndex = 16;
             this.tbSampleSamplingDateFrom.TextChanged += new System.EventHandler(this.tbSampleSamplingDateFrom_TextChanged);
             // 
             // btnSampleSamplingDateFromClear
@@ -3395,7 +3395,7 @@
             this.tbSampleSamplingDateTo.Name = "tbSampleSamplingDateTo";
             this.tbSampleSamplingDateTo.ReadOnly = true;
             this.tbSampleSamplingDateTo.Size = new System.Drawing.Size(267, 21);
-            this.tbSampleSamplingDateTo.TabIndex = 2;
+            this.tbSampleSamplingDateTo.TabIndex = 17;
             this.tbSampleSamplingDateTo.TextChanged += new System.EventHandler(this.tbSampleSamplingDateTo_TextChanged);
             // 
             // btnSampleSamplingDateToClear
@@ -3451,7 +3451,7 @@
             this.tbSampleReferenceDate.Name = "tbSampleReferenceDate";
             this.tbSampleReferenceDate.ReadOnly = true;
             this.tbSampleReferenceDate.Size = new System.Drawing.Size(267, 21);
-            this.tbSampleReferenceDate.TabIndex = 2;
+            this.tbSampleReferenceDate.TabIndex = 18;
             this.tbSampleReferenceDate.TextChanged += new System.EventHandler(this.tbSampleReferenceDate_TextChanged);
             // 
             // btnSampleReferenceDateClear
@@ -3488,7 +3488,7 @@
             this.layoutSample.SetRowSpan(this.tbSampleComment, 6);
             this.tbSampleComment.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.tbSampleComment.Size = new System.Drawing.Size(316, 174);
-            this.tbSampleComment.TabIndex = 17;
+            this.tbSampleComment.TabIndex = 22;
             // 
             // panel36
             // 
@@ -3505,7 +3505,7 @@
             this.btnSampleUpdate.Location = new System.Drawing.Point(610, 0);
             this.btnSampleUpdate.Name = "btnSampleUpdate";
             this.btnSampleUpdate.Size = new System.Drawing.Size(183, 28);
-            this.btnSampleUpdate.TabIndex = 46;
+            this.btnSampleUpdate.TabIndex = 23;
             this.btnSampleUpdate.Text = "Save sample info";
             this.btnSampleUpdate.UseVisualStyleBackColor = true;
             this.btnSampleUpdate.Click += new System.EventHandler(this.btnSampleUpdate_Click);
@@ -3991,7 +3991,7 @@
             this.cboxOrderResponsible.Location = new System.Drawing.Point(122, 63);
             this.cboxOrderResponsible.Name = "cboxOrderResponsible";
             this.cboxOrderResponsible.Size = new System.Drawing.Size(232, 23);
-            this.cboxOrderResponsible.TabIndex = 6;
+            this.cboxOrderResponsible.TabIndex = 2;
             this.cboxOrderResponsible.ValueMember = "Id";
             // 
             // cboxOrderLaboratory
@@ -4004,7 +4004,7 @@
             this.cboxOrderLaboratory.Location = new System.Drawing.Point(122, 33);
             this.cboxOrderLaboratory.Name = "cboxOrderLaboratory";
             this.cboxOrderLaboratory.Size = new System.Drawing.Size(232, 23);
-            this.cboxOrderLaboratory.TabIndex = 7;
+            this.cboxOrderLaboratory.TabIndex = 1;
             this.cboxOrderLaboratory.ValueMember = "Id";
             this.cboxOrderLaboratory.SelectedIndexChanged += new System.EventHandler(this.cboxOrderLaboratory_SelectedIndexChanged);
             // 
@@ -4022,7 +4022,7 @@
             this.cboxOrderRequestedSigma.Location = new System.Drawing.Point(122, 153);
             this.cboxOrderRequestedSigma.Name = "cboxOrderRequestedSigma";
             this.cboxOrderRequestedSigma.Size = new System.Drawing.Size(232, 23);
-            this.cboxOrderRequestedSigma.TabIndex = 9;
+            this.cboxOrderRequestedSigma.TabIndex = 4;
             this.cboxOrderRequestedSigma.ValueMember = "Id";
             // 
             // label4
@@ -4042,7 +4042,7 @@
             this.tbOrderName.Name = "tbOrderName";
             this.tbOrderName.ReadOnly = true;
             this.tbOrderName.Size = new System.Drawing.Size(232, 21);
-            this.tbOrderName.TabIndex = 11;
+            this.tbOrderName.TabIndex = 0;
             // 
             // panel30
             // 
@@ -4110,7 +4110,7 @@
             this.tbOrderContentComment.Name = "tbOrderContentComment";
             this.tbOrderContentComment.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.tbOrderContentComment.Size = new System.Drawing.Size(232, 94);
-            this.tbOrderContentComment.TabIndex = 4;
+            this.tbOrderContentComment.TabIndex = 6;
             // 
             // btnOrderSaveDetails
             // 
@@ -4118,7 +4118,7 @@
             this.btnOrderSaveDetails.Location = new System.Drawing.Point(122, 313);
             this.btnOrderSaveDetails.Name = "btnOrderSaveDetails";
             this.btnOrderSaveDetails.Size = new System.Drawing.Size(232, 24);
-            this.btnOrderSaveDetails.TabIndex = 15;
+            this.btnOrderSaveDetails.TabIndex = 7;
             this.btnOrderSaveDetails.Text = "Save details";
             this.btnOrderSaveDetails.UseVisualStyleBackColor = true;
             this.btnOrderSaveDetails.Click += new System.EventHandler(this.miOrderSave_Click);
@@ -4150,7 +4150,7 @@
             this.tbOrderCustomer.Name = "tbOrderCustomer";
             this.tbOrderCustomer.ReadOnly = true;
             this.tbOrderCustomer.Size = new System.Drawing.Size(208, 21);
-            this.tbOrderCustomer.TabIndex = 1;
+            this.tbOrderCustomer.TabIndex = 3;
             // 
             // btnOrderSelectCustomer
             // 
@@ -4183,7 +4183,7 @@
             this.cboxOrderRequestedSigmaMDA.Location = new System.Drawing.Point(122, 183);
             this.cboxOrderRequestedSigmaMDA.Name = "cboxOrderRequestedSigmaMDA";
             this.cboxOrderRequestedSigmaMDA.Size = new System.Drawing.Size(232, 23);
-            this.cboxOrderRequestedSigmaMDA.TabIndex = 19;
+            this.cboxOrderRequestedSigmaMDA.TabIndex = 5;
             this.cboxOrderRequestedSigmaMDA.ValueMember = "Id";
             // 
             // toolsOrderDetails
@@ -4433,7 +4433,7 @@
             this.cbOrderApprovedLaboratory.Location = new System.Drawing.Point(3, 49);
             this.cbOrderApprovedLaboratory.Name = "cbOrderApprovedLaboratory";
             this.cbOrderApprovedLaboratory.Size = new System.Drawing.Size(271, 24);
-            this.cbOrderApprovedLaboratory.TabIndex = 1;
+            this.cbOrderApprovedLaboratory.TabIndex = 3;
             this.cbOrderApprovedLaboratory.Text = "Approved by laboratory";
             this.cbOrderApprovedLaboratory.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.cbOrderApprovedLaboratory.UseVisualStyleBackColor = true;
@@ -4454,7 +4454,7 @@
             this.tbOrderApprovedLaboratoryBy.Name = "tbOrderApprovedLaboratoryBy";
             this.tbOrderApprovedLaboratoryBy.ReadOnly = true;
             this.tbOrderApprovedLaboratoryBy.Size = new System.Drawing.Size(548, 21);
-            this.tbOrderApprovedLaboratoryBy.TabIndex = 2;
+            this.tbOrderApprovedLaboratoryBy.TabIndex = 4;
             // 
             // cboxOrderStatus
             // 
@@ -4465,7 +4465,7 @@
             this.cboxOrderStatus.Location = new System.Drawing.Point(3, 349);
             this.cboxOrderStatus.Name = "cboxOrderStatus";
             this.cboxOrderStatus.Size = new System.Drawing.Size(271, 23);
-            this.cboxOrderStatus.TabIndex = 19;
+            this.cboxOrderStatus.TabIndex = 8;
             this.cboxOrderStatus.ValueMember = "Id";
             // 
             // tbOrderLastWorkflowStatusBy
@@ -4475,7 +4475,7 @@
             this.tbOrderLastWorkflowStatusBy.Name = "tbOrderLastWorkflowStatusBy";
             this.tbOrderLastWorkflowStatusBy.ReadOnly = true;
             this.tbOrderLastWorkflowStatusBy.Size = new System.Drawing.Size(548, 21);
-            this.tbOrderLastWorkflowStatusBy.TabIndex = 4;
+            this.tbOrderLastWorkflowStatusBy.TabIndex = 9;
             // 
             // tbOrderReportComment
             // 
@@ -4487,7 +4487,7 @@
             this.tbOrderReportComment.Name = "tbOrderReportComment";
             this.tbOrderReportComment.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.tbOrderReportComment.Size = new System.Drawing.Size(825, 144);
-            this.tbOrderReportComment.TabIndex = 8;
+            this.tbOrderReportComment.TabIndex = 6;
             // 
             // label43
             // 
@@ -4517,7 +4517,7 @@
             this.btnOrderSaveStatus.Location = new System.Drawing.Point(834, 349);
             this.btnOrderSaveStatus.Name = "btnOrderSaveStatus";
             this.btnOrderSaveStatus.Size = new System.Drawing.Size(271, 24);
-            this.btnOrderSaveStatus.TabIndex = 24;
+            this.btnOrderSaveStatus.TabIndex = 10;
             this.btnOrderSaveStatus.Text = "Save current status";
             this.btnOrderSaveStatus.UseVisualStyleBackColor = true;
             this.btnOrderSaveStatus.Click += new System.EventHandler(this.btnOrderSaveStatus_Click);
@@ -4528,7 +4528,7 @@
             this.btnOrderSaveApprovedCustomer.Location = new System.Drawing.Point(834, 19);
             this.btnOrderSaveApprovedCustomer.Name = "btnOrderSaveApprovedCustomer";
             this.btnOrderSaveApprovedCustomer.Size = new System.Drawing.Size(271, 24);
-            this.btnOrderSaveApprovedCustomer.TabIndex = 25;
+            this.btnOrderSaveApprovedCustomer.TabIndex = 2;
             this.btnOrderSaveApprovedCustomer.Text = "Save approval by customer";
             this.btnOrderSaveApprovedCustomer.UseVisualStyleBackColor = true;
             this.btnOrderSaveApprovedCustomer.Click += new System.EventHandler(this.btnOrderSaveApprovedCustomer_Click);
@@ -4539,7 +4539,7 @@
             this.btnOrderSaveApprovedLaboratory.Location = new System.Drawing.Point(834, 49);
             this.btnOrderSaveApprovedLaboratory.Name = "btnOrderSaveApprovedLaboratory";
             this.btnOrderSaveApprovedLaboratory.Size = new System.Drawing.Size(271, 24);
-            this.btnOrderSaveApprovedLaboratory.TabIndex = 26;
+            this.btnOrderSaveApprovedLaboratory.TabIndex = 5;
             this.btnOrderSaveApprovedLaboratory.Text = "Save approval by laboratory";
             this.btnOrderSaveApprovedLaboratory.UseVisualStyleBackColor = true;
             this.btnOrderSaveApprovedLaboratory.Click += new System.EventHandler(this.btnOrderSaveApprovedLaboratory_Click);
@@ -4571,7 +4571,7 @@
             this.btnOrderSaveReportComment.Location = new System.Drawing.Point(557, 289);
             this.btnOrderSaveReportComment.Name = "btnOrderSaveReportComment";
             this.btnOrderSaveReportComment.Size = new System.Drawing.Size(271, 24);
-            this.btnOrderSaveReportComment.TabIndex = 27;
+            this.btnOrderSaveReportComment.TabIndex = 7;
             this.btnOrderSaveReportComment.Text = "Save report comment";
             this.btnOrderSaveReportComment.UseVisualStyleBackColor = true;
             this.btnOrderSaveReportComment.Click += new System.EventHandler(this.btnOrderSaveReportComment_Click);
@@ -5741,7 +5741,7 @@
             this.cboxOrdersLaboratory.Location = new System.Drawing.Point(92, 18);
             this.cboxOrdersLaboratory.Name = "cboxOrdersLaboratory";
             this.cboxOrdersLaboratory.Size = new System.Drawing.Size(153, 23);
-            this.cboxOrdersLaboratory.TabIndex = 7;
+            this.cboxOrdersLaboratory.TabIndex = 0;
             this.cboxOrdersLaboratory.ValueMember = "Id";
             this.cboxOrdersLaboratory.SelectedIndexChanged += new System.EventHandler(this.cboxOrdersLaboratory_SelectedIndexChanged);
             // 
@@ -5773,7 +5773,7 @@
             this.cboxOrdersWorkflowStatus.Location = new System.Drawing.Point(532, 18);
             this.cboxOrdersWorkflowStatus.Name = "cboxOrdersWorkflowStatus";
             this.cboxOrdersWorkflowStatus.Size = new System.Drawing.Size(149, 23);
-            this.cboxOrdersWorkflowStatus.TabIndex = 4;
+            this.cboxOrdersWorkflowStatus.TabIndex = 2;
             this.cboxOrdersWorkflowStatus.ValueMember = "Id";
             this.cboxOrdersWorkflowStatus.SelectedIndexChanged += new System.EventHandler(this.cboxOrdersStatus_SelectedIndexChanged);
             // 
@@ -5794,7 +5794,7 @@
             this.cboxOrdersYear.Location = new System.Drawing.Point(314, 18);
             this.cboxOrdersYear.Name = "cboxOrdersYear";
             this.cboxOrdersYear.Size = new System.Drawing.Size(140, 23);
-            this.cboxOrdersYear.TabIndex = 0;
+            this.cboxOrdersYear.TabIndex = 1;
             this.cboxOrdersYear.SelectedIndexChanged += new System.EventHandler(this.cboxOrdersYear_SelectedIndexChanged);
             // 
             // toolsOrders
@@ -6100,7 +6100,7 @@
             this.cboxSamplesLaboratory.Location = new System.Drawing.Point(577, 38);
             this.cboxSamplesLaboratory.Name = "cboxSamplesLaboratory";
             this.cboxSamplesLaboratory.Size = new System.Drawing.Size(154, 23);
-            this.cboxSamplesLaboratory.TabIndex = 15;
+            this.cboxSamplesLaboratory.TabIndex = 5;
             this.cboxSamplesLaboratory.ValueMember = "Id";
             this.cboxSamplesLaboratory.SelectedIndexChanged += new System.EventHandler(this.cboxSamplesLaboratory_SelectedIndexChanged);
             // 
@@ -6121,7 +6121,7 @@
             this.cboxSamplesStatus.Location = new System.Drawing.Point(321, 38);
             this.cboxSamplesStatus.Name = "cboxSamplesStatus";
             this.cboxSamplesStatus.Size = new System.Drawing.Size(164, 23);
-            this.cboxSamplesStatus.TabIndex = 13;
+            this.cboxSamplesStatus.TabIndex = 4;
             this.cboxSamplesStatus.ValueMember = "Id";
             this.cboxSamplesStatus.SelectedIndexChanged += new System.EventHandler(this.cboxSamplesStatus_SelectedIndexChanged);
             // 
@@ -6142,7 +6142,7 @@
             this.cboxSamplesOrders.Location = new System.Drawing.Point(80, 38);
             this.cboxSamplesOrders.Name = "cboxSamplesOrders";
             this.cboxSamplesOrders.Size = new System.Drawing.Size(164, 23);
-            this.cboxSamplesOrders.TabIndex = 1;
+            this.cboxSamplesOrders.TabIndex = 3;
             this.cboxSamplesOrders.ValueMember = "Id";
             this.cboxSamplesOrders.SelectedIndexChanged += new System.EventHandler(this.cboxSamplesOrders_SelectedIndexChanged);
             // 
@@ -6163,7 +6163,7 @@
             this.cboxSamplesProjectsSub.Location = new System.Drawing.Point(577, 8);
             this.cboxSamplesProjectsSub.Name = "cboxSamplesProjectsSub";
             this.cboxSamplesProjectsSub.Size = new System.Drawing.Size(154, 23);
-            this.cboxSamplesProjectsSub.TabIndex = 5;
+            this.cboxSamplesProjectsSub.TabIndex = 2;
             this.cboxSamplesProjectsSub.ValueMember = "Id";
             this.cboxSamplesProjectsSub.SelectedIndexChanged += new System.EventHandler(this.cboxSamplesProjectsSub_SelectedIndexChanged);
             // 
@@ -6193,7 +6193,7 @@
             this.cboxSamplesProjects.Location = new System.Drawing.Point(321, 7);
             this.cboxSamplesProjects.Name = "cboxSamplesProjects";
             this.cboxSamplesProjects.Size = new System.Drawing.Size(164, 23);
-            this.cboxSamplesProjects.TabIndex = 3;
+            this.cboxSamplesProjects.TabIndex = 1;
             this.cboxSamplesProjects.ValueMember = "Id";
             this.cboxSamplesProjects.SelectedIndexChanged += new System.EventHandler(this.cboxSamplesProjects_SelectedIndexChanged);
             // 
@@ -6204,7 +6204,7 @@
             this.tbSamplesLookup.MaxLength = 32;
             this.tbSamplesLookup.Name = "tbSamplesLookup";
             this.tbSamplesLookup.Size = new System.Drawing.Size(164, 21);
-            this.tbSamplesLookup.TabIndex = 6;
+            this.tbSamplesLookup.TabIndex = 0;
             this.tbSamplesLookup.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbSamplesLookup_KeyPress);
             // 
             // toolStrip8
@@ -6649,7 +6649,7 @@
             this.treeSampleTypes.PathSeparator = "/";
             this.treeSampleTypes.ShowNodeToolTips = true;
             this.treeSampleTypes.Size = new System.Drawing.Size(451, 567);
-            this.treeSampleTypes.TabIndex = 1;
+            this.treeSampleTypes.TabIndex = 0;
             this.treeSampleTypes.DrawNode += new System.Windows.Forms.DrawTreeNodeEventHandler(this.treeSampleTypes_DrawNode);
             this.treeSampleTypes.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeSampleTypes_AfterSelect);
             // 
@@ -7612,7 +7612,7 @@
             this.btnUserSettingsSave.Location = new System.Drawing.Point(955, 195);
             this.btnUserSettingsSave.Name = "btnUserSettingsSave";
             this.btnUserSettingsSave.Size = new System.Drawing.Size(164, 26);
-            this.btnUserSettingsSave.TabIndex = 2;
+            this.btnUserSettingsSave.TabIndex = 0;
             this.btnUserSettingsSave.Text = "Save";
             this.btnUserSettingsSave.UseVisualStyleBackColor = true;
             this.btnUserSettingsSave.Click += new System.EventHandler(this.btnUserSettingsSave_Click);
@@ -7677,11 +7677,11 @@
             // 
             // btnMachineSettingsSave
             // 
-            this.btnMachineSettingsSave.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnMachineSettingsSave.Location = new System.Drawing.Point(956, 195);
+            this.btnMachineSettingsSave.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnMachineSettingsSave.Location = new System.Drawing.Point(787, 195);
             this.btnMachineSettingsSave.Name = "btnMachineSettingsSave";
-            this.btnMachineSettingsSave.Size = new System.Drawing.Size(163, 26);
-            this.btnMachineSettingsSave.TabIndex = 2;
+            this.btnMachineSettingsSave.Size = new System.Drawing.Size(332, 26);
+            this.btnMachineSettingsSave.TabIndex = 3;
             this.btnMachineSettingsSave.Text = "Save";
             this.btnMachineSettingsSave.UseVisualStyleBackColor = true;
             this.btnMachineSettingsSave.Click += new System.EventHandler(this.btnMachineSettingsSave_Click);
@@ -7712,7 +7712,7 @@
             this.comboBox16.Location = new System.Drawing.Point(227, 35);
             this.comboBox16.Name = "comboBox16";
             this.comboBox16.Size = new System.Drawing.Size(330, 23);
-            this.comboBox16.TabIndex = 3;
+            this.comboBox16.TabIndex = 0;
             // 
             // comboBox19
             // 
@@ -7722,16 +7722,16 @@
             this.comboBox19.Location = new System.Drawing.Point(227, 67);
             this.comboBox19.Name = "comboBox19";
             this.comboBox19.Size = new System.Drawing.Size(330, 23);
-            this.comboBox19.TabIndex = 4;
+            this.comboBox19.TabIndex = 1;
             // 
             // cbMachineSettingsUseAD
             // 
             this.cbMachineSettingsUseAD.AutoSize = true;
             this.cbMachineSettingsUseAD.Location = new System.Drawing.Point(787, 35);
             this.cbMachineSettingsUseAD.Name = "cbMachineSettingsUseAD";
-            this.cbMachineSettingsUseAD.Size = new System.Drawing.Size(262, 19);
-            this.cbMachineSettingsUseAD.TabIndex = 0;
-            this.cbMachineSettingsUseAD.Text = "Use Active Directory autentication as default";
+            this.cbMachineSettingsUseAD.Size = new System.Drawing.Size(271, 19);
+            this.cbMachineSettingsUseAD.TabIndex = 2;
+            this.cbMachineSettingsUseAD.Text = "Use domain account to autenticate as default";
             this.cbMachineSettingsUseAD.UseVisualStyleBackColor = true;
             // 
             // toolsMachSettings
@@ -8943,7 +8943,7 @@
             this.tbPrepAnalVolume.Location = new System.Drawing.Point(105, 0);
             this.tbPrepAnalVolume.Name = "tbPrepAnalVolume";
             this.tbPrepAnalVolume.Size = new System.Drawing.Size(236, 21);
-            this.tbPrepAnalVolume.TabIndex = 1;
+            this.tbPrepAnalVolume.TabIndex = 2;
             // 
             // panel67
             // 
@@ -9021,7 +9021,7 @@
             this.tbPrepAnalWetWeight.Location = new System.Drawing.Point(105, 0);
             this.tbPrepAnalWetWeight.Name = "tbPrepAnalWetWeight";
             this.tbPrepAnalWetWeight.Size = new System.Drawing.Size(236, 21);
-            this.tbPrepAnalWetWeight.TabIndex = 1;
+            this.tbPrepAnalWetWeight.TabIndex = 0;
             // 
             // panel26
             // 
@@ -9059,7 +9059,7 @@
             this.btnPrepAnalSampleUpdate.Location = new System.Drawing.Point(194, 6);
             this.btnPrepAnalSampleUpdate.Name = "btnPrepAnalSampleUpdate";
             this.btnPrepAnalSampleUpdate.Size = new System.Drawing.Size(173, 28);
-            this.btnPrepAnalSampleUpdate.TabIndex = 0;
+            this.btnPrepAnalSampleUpdate.TabIndex = 7;
             this.btnPrepAnalSampleUpdate.Text = "Save sample data";
             this.btnPrepAnalSampleUpdate.UseVisualStyleBackColor = true;
             this.btnPrepAnalSampleUpdate.Click += new System.EventHandler(this.btnPrepAnalSampleUpdate_Click);
@@ -9097,7 +9097,7 @@
             this.tbPrepAnalLODTemp.Location = new System.Drawing.Point(105, 0);
             this.tbPrepAnalLODTemp.Name = "tbPrepAnalLODTemp";
             this.tbPrepAnalLODTemp.Size = new System.Drawing.Size(256, 21);
-            this.tbPrepAnalLODTemp.TabIndex = 1;
+            this.tbPrepAnalLODTemp.TabIndex = 6;
             // 
             // panel75
             // 
@@ -9137,7 +9137,7 @@
             this.tbPrepAnalLODWater.Name = "tbPrepAnalLODWater";
             this.tbPrepAnalLODWater.ReadOnly = true;
             this.tbPrepAnalLODWater.Size = new System.Drawing.Size(256, 21);
-            this.tbPrepAnalLODWater.TabIndex = 1;
+            this.tbPrepAnalLODWater.TabIndex = 5;
             // 
             // panel73
             // 
@@ -9176,7 +9176,7 @@
             this.tbPrepAnalLODEndWeight.Location = new System.Drawing.Point(105, 0);
             this.tbPrepAnalLODEndWeight.Name = "tbPrepAnalLODEndWeight";
             this.tbPrepAnalLODEndWeight.Size = new System.Drawing.Size(256, 21);
-            this.tbPrepAnalLODEndWeight.TabIndex = 1;
+            this.tbPrepAnalLODEndWeight.TabIndex = 4;
             this.tbPrepAnalLODEndWeight.TextChanged += new System.EventHandler(this.tbPrepAnalLODStartWeight_TextChanged);
             // 
             // panel71
@@ -9216,7 +9216,7 @@
             this.tbPrepAnalLODStartWeight.Location = new System.Drawing.Point(105, 0);
             this.tbPrepAnalLODStartWeight.Name = "tbPrepAnalLODStartWeight";
             this.tbPrepAnalLODStartWeight.Size = new System.Drawing.Size(256, 21);
-            this.tbPrepAnalLODStartWeight.TabIndex = 1;
+            this.tbPrepAnalLODStartWeight.TabIndex = 3;
             this.tbPrepAnalLODStartWeight.TextChanged += new System.EventHandler(this.tbPrepAnalLODStartWeight_TextChanged);
             // 
             // panel69
@@ -9360,7 +9360,7 @@
             this.tbPrepAnalPrepComment.Name = "tbPrepAnalPrepComment";
             this.tbPrepAnalPrepComment.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.tbPrepAnalPrepComment.Size = new System.Drawing.Size(311, 129);
-            this.tbPrepAnalPrepComment.TabIndex = 12;
+            this.tbPrepAnalPrepComment.TabIndex = 8;
             // 
             // panel61
             // 
@@ -9400,7 +9400,7 @@
             this.cboxPrepAnalPrepWorkflowStatus.Location = new System.Drawing.Point(113, 0);
             this.cboxPrepAnalPrepWorkflowStatus.Name = "cboxPrepAnalPrepWorkflowStatus";
             this.cboxPrepAnalPrepWorkflowStatus.Size = new System.Drawing.Size(311, 23);
-            this.cboxPrepAnalPrepWorkflowStatus.TabIndex = 6;
+            this.cboxPrepAnalPrepWorkflowStatus.TabIndex = 7;
             this.cboxPrepAnalPrepWorkflowStatus.ValueMember = "Id";
             // 
             // panel83
@@ -9478,7 +9478,7 @@
             this.tbPrepAnalPrepQuantity.MaxLength = 32;
             this.tbPrepAnalPrepQuantity.Name = "tbPrepAnalPrepQuantity";
             this.tbPrepAnalPrepQuantity.Size = new System.Drawing.Size(192, 21);
-            this.tbPrepAnalPrepQuantity.TabIndex = 6;
+            this.tbPrepAnalPrepQuantity.TabIndex = 4;
             // 
             // cboxPrepAnalPrepQuantityUnit
             // 
@@ -9489,7 +9489,7 @@
             this.cboxPrepAnalPrepQuantityUnit.Location = new System.Drawing.Point(305, 0);
             this.cboxPrepAnalPrepQuantityUnit.Name = "cboxPrepAnalPrepQuantityUnit";
             this.cboxPrepAnalPrepQuantityUnit.Size = new System.Drawing.Size(119, 23);
-            this.cboxPrepAnalPrepQuantityUnit.TabIndex = 9;
+            this.cboxPrepAnalPrepQuantityUnit.TabIndex = 5;
             this.cboxPrepAnalPrepQuantityUnit.ValueMember = "Id";
             // 
             // panel58
@@ -9529,7 +9529,7 @@
             this.tbPrepAnalPrepAmount.MaxLength = 32;
             this.tbPrepAnalPrepAmount.Name = "tbPrepAnalPrepAmount";
             this.tbPrepAnalPrepAmount.Size = new System.Drawing.Size(192, 21);
-            this.tbPrepAnalPrepAmount.TabIndex = 7;
+            this.tbPrepAnalPrepAmount.TabIndex = 2;
             // 
             // panel56
             // 
@@ -9559,7 +9559,7 @@
             this.cboxPrepAnalPrepAmountUnit.Location = new System.Drawing.Point(305, 0);
             this.cboxPrepAnalPrepAmountUnit.Name = "cboxPrepAnalPrepAmountUnit";
             this.cboxPrepAnalPrepAmountUnit.Size = new System.Drawing.Size(119, 23);
-            this.cboxPrepAnalPrepAmountUnit.TabIndex = 8;
+            this.cboxPrepAnalPrepAmountUnit.TabIndex = 3;
             this.cboxPrepAnalPrepAmountUnit.ValueMember = "Id";
             // 
             // panel52
@@ -9580,7 +9580,7 @@
             this.tbPrepAnalPrepFillHeight.MaxLength = 32;
             this.tbPrepAnalPrepFillHeight.Name = "tbPrepAnalPrepFillHeight";
             this.tbPrepAnalPrepFillHeight.Size = new System.Drawing.Size(191, 21);
-            this.tbPrepAnalPrepFillHeight.TabIndex = 5;
+            this.tbPrepAnalPrepFillHeight.TabIndex = 1;
             // 
             // panel59
             // 
@@ -9639,7 +9639,7 @@
             this.cboxPrepAnalPrepGeom.Location = new System.Drawing.Point(113, 0);
             this.cboxPrepAnalPrepGeom.Name = "cboxPrepAnalPrepGeom";
             this.cboxPrepAnalPrepGeom.Size = new System.Drawing.Size(311, 23);
-            this.cboxPrepAnalPrepGeom.TabIndex = 4;
+            this.cboxPrepAnalPrepGeom.TabIndex = 0;
             this.cboxPrepAnalPrepGeom.ValueMember = "Id";
             this.cboxPrepAnalPrepGeom.SelectedIndexChanged += new System.EventHandler(this.cboxPrepAnalPrepGeom_SelectedIndexChanged);
             // 
@@ -9706,7 +9706,7 @@
             this.btnPrepAnalPrepUpdate.Location = new System.Drawing.Point(113, 0);
             this.btnPrepAnalPrepUpdate.Name = "btnPrepAnalPrepUpdate";
             this.btnPrepAnalPrepUpdate.Size = new System.Drawing.Size(311, 28);
-            this.btnPrepAnalPrepUpdate.TabIndex = 0;
+            this.btnPrepAnalPrepUpdate.TabIndex = 9;
             this.btnPrepAnalPrepUpdate.Text = "Save preparation info";
             this.btnPrepAnalPrepUpdate.UseVisualStyleBackColor = true;
             this.btnPrepAnalPrepUpdate.Click += new System.EventHandler(this.btnPrepAnalPrepUpdate_Click);
@@ -10004,7 +10004,7 @@
             this.tbPrepAnalAnalMDALib.Name = "tbPrepAnalAnalMDALib";
             this.tbPrepAnalAnalMDALib.ReadOnly = true;
             this.tbPrepAnalAnalMDALib.Size = new System.Drawing.Size(311, 21);
-            this.tbPrepAnalAnalMDALib.TabIndex = 1;
+            this.tbPrepAnalAnalMDALib.TabIndex = 4;
             // 
             // label58
             // 
@@ -10023,7 +10023,7 @@
             this.tbPrepAnalAnalNuclLib.Name = "tbPrepAnalAnalNuclLib";
             this.tbPrepAnalAnalNuclLib.ReadOnly = true;
             this.tbPrepAnalAnalNuclLib.Size = new System.Drawing.Size(311, 21);
-            this.tbPrepAnalAnalNuclLib.TabIndex = 1;
+            this.tbPrepAnalAnalNuclLib.TabIndex = 3;
             // 
             // label54
             // 
@@ -10042,7 +10042,7 @@
             this.tbPrepAnalAnalSpecRef.MaxLength = 256;
             this.tbPrepAnalAnalSpecRef.Name = "tbPrepAnalAnalSpecRef";
             this.tbPrepAnalAnalSpecRef.Size = new System.Drawing.Size(311, 21);
-            this.tbPrepAnalAnalSpecRef.TabIndex = 1;
+            this.tbPrepAnalAnalSpecRef.TabIndex = 2;
             // 
             // btnPrepAnalAnalUpdate
             // 
@@ -10050,7 +10050,7 @@
             this.btnPrepAnalAnalUpdate.Location = new System.Drawing.Point(108, 213);
             this.btnPrepAnalAnalUpdate.Name = "btnPrepAnalAnalUpdate";
             this.btnPrepAnalAnalUpdate.Size = new System.Drawing.Size(311, 26);
-            this.btnPrepAnalAnalUpdate.TabIndex = 0;
+            this.btnPrepAnalAnalUpdate.TabIndex = 7;
             this.btnPrepAnalAnalUpdate.Text = "Save analysis info";
             this.btnPrepAnalAnalUpdate.UseVisualStyleBackColor = true;
             this.btnPrepAnalAnalUpdate.Click += new System.EventHandler(this.btnPrepAnalAnalUpdate_Click);
@@ -10074,7 +10074,7 @@
             this.cboxPrepAnalAnalWorkflowStatus.Location = new System.Drawing.Point(108, 183);
             this.cboxPrepAnalAnalWorkflowStatus.Name = "cboxPrepAnalAnalWorkflowStatus";
             this.cboxPrepAnalAnalWorkflowStatus.Size = new System.Drawing.Size(311, 23);
-            this.cboxPrepAnalAnalWorkflowStatus.TabIndex = 1;
+            this.cboxPrepAnalAnalWorkflowStatus.TabIndex = 6;
             this.cboxPrepAnalAnalWorkflowStatus.ValueMember = "Id";
             // 
             // label60
@@ -10097,7 +10097,7 @@
             this.layoutPrepAnalAnal.SetRowSpan(this.tbPrepAnalAnalComment, 2);
             this.tbPrepAnalAnalComment.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.tbPrepAnalAnalComment.Size = new System.Drawing.Size(311, 54);
-            this.tbPrepAnalAnalComment.TabIndex = 1;
+            this.tbPrepAnalAnalComment.TabIndex = 5;
             // 
             // panelPrepAnalAnalUnit
             // 
@@ -10118,7 +10118,7 @@
             this.cboxPrepAnalAnalUnit.Location = new System.Drawing.Point(0, 0);
             this.cboxPrepAnalAnalUnit.Name = "cboxPrepAnalAnalUnit";
             this.cboxPrepAnalAnalUnit.Size = new System.Drawing.Size(150, 23);
-            this.cboxPrepAnalAnalUnit.TabIndex = 1;
+            this.cboxPrepAnalAnalUnit.TabIndex = 0;
             this.cboxPrepAnalAnalUnit.ValueMember = "id";
             // 
             // cboxPrepAnalAnalUnitType

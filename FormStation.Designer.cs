@@ -63,7 +63,7 @@
             this.btnCancel.Location = new System.Drawing.Point(143, 0);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(100, 28);
-            this.btnCancel.TabIndex = 1;
+            this.btnCancel.TabIndex = 6;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
@@ -74,7 +74,7 @@
             this.btnOk.Location = new System.Drawing.Point(243, 0);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(100, 28);
-            this.btnOk.TabIndex = 0;
+            this.btnOk.TabIndex = 5;
             this.btnOk.Text = "Ok";
             this.btnOk.UseVisualStyleBackColor = true;
             this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
@@ -120,32 +120,32 @@
             this.tbName.Location = new System.Drawing.Point(91, 18);
             this.tbName.MaxLength = 128;
             this.tbName.Name = "tbName";
-            this.tbName.Size = new System.Drawing.Size(222, 20);
-            this.tbName.TabIndex = 12;
+            this.tbName.Size = new System.Drawing.Size(228, 20);
+            this.tbName.TabIndex = 0;
             // 
             // tbLatitude
             // 
             this.tbLatitude.Location = new System.Drawing.Point(91, 44);
             this.tbLatitude.MaxLength = 32;
             this.tbLatitude.Name = "tbLatitude";
-            this.tbLatitude.Size = new System.Drawing.Size(222, 20);
-            this.tbLatitude.TabIndex = 13;
+            this.tbLatitude.Size = new System.Drawing.Size(228, 20);
+            this.tbLatitude.TabIndex = 1;
             // 
             // tbLongitude
             // 
             this.tbLongitude.Location = new System.Drawing.Point(91, 70);
             this.tbLongitude.MaxLength = 32;
             this.tbLongitude.Name = "tbLongitude";
-            this.tbLongitude.Size = new System.Drawing.Size(222, 20);
-            this.tbLongitude.TabIndex = 14;
+            this.tbLongitude.Size = new System.Drawing.Size(228, 20);
+            this.tbLongitude.TabIndex = 2;
             // 
             // tbAltitude
             // 
             this.tbAltitude.Location = new System.Drawing.Point(91, 96);
             this.tbAltitude.MaxLength = 8;
             this.tbAltitude.Name = "tbAltitude";
-            this.tbAltitude.Size = new System.Drawing.Size(222, 20);
-            this.tbAltitude.TabIndex = 15;
+            this.tbAltitude.Size = new System.Drawing.Size(228, 20);
+            this.tbAltitude.TabIndex = 3;
             // 
             // label5
             // 
@@ -163,8 +163,8 @@
             this.tbComment.Multiline = true;
             this.tbComment.Name = "tbComment";
             this.tbComment.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.tbComment.Size = new System.Drawing.Size(222, 130);
-            this.tbComment.TabIndex = 18;
+            this.tbComment.Size = new System.Drawing.Size(228, 130);
+            this.tbComment.TabIndex = 4;
             // 
             // cboxInstanceStatus
             // 
@@ -173,7 +173,7 @@
             this.cboxInstanceStatus.FormattingEnabled = true;
             this.cboxInstanceStatus.Location = new System.Drawing.Point(91, 122);
             this.cboxInstanceStatus.Name = "cboxInstanceStatus";
-            this.cboxInstanceStatus.Size = new System.Drawing.Size(222, 21);
+            this.cboxInstanceStatus.Size = new System.Drawing.Size(228, 21);
             this.cboxInstanceStatus.TabIndex = 19;
             this.cboxInstanceStatus.ValueMember = "Id";
             // 

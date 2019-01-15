@@ -44,9 +44,9 @@
             this.panel1.Controls.Add(this.btnCancel);
             this.panel1.Controls.Add(this.btnOk);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 450);
+            this.panel1.Location = new System.Drawing.Point(0, 445);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(431, 30);
+            this.panel1.Size = new System.Drawing.Size(431, 28);
             this.panel1.TabIndex = 6;
             // 
             // btnCancel
@@ -54,8 +54,8 @@
             this.btnCancel.Dock = System.Windows.Forms.DockStyle.Right;
             this.btnCancel.Location = new System.Drawing.Point(231, 0);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(100, 30);
-            this.btnCancel.TabIndex = 1;
+            this.btnCancel.Size = new System.Drawing.Size(100, 28);
+            this.btnCancel.TabIndex = 3;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
@@ -65,8 +65,8 @@
             this.btnOk.Dock = System.Windows.Forms.DockStyle.Right;
             this.btnOk.Location = new System.Drawing.Point(331, 0);
             this.btnOk.Name = "btnOk";
-            this.btnOk.Size = new System.Drawing.Size(100, 30);
-            this.btnOk.TabIndex = 0;
+            this.btnOk.Size = new System.Drawing.Size(100, 28);
+            this.btnOk.TabIndex = 2;
             this.btnOk.Text = "Ok";
             this.btnOk.UseVisualStyleBackColor = true;
             this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
@@ -86,7 +86,7 @@
             this.tbPreparationMethod.Name = "tbPreparationMethod";
             this.tbPreparationMethod.ReadOnly = true;
             this.tbPreparationMethod.Size = new System.Drawing.Size(277, 20);
-            this.tbPreparationMethod.TabIndex = 8;
+            this.tbPreparationMethod.TabIndex = 0;
             // 
             // label2
             // 
@@ -104,13 +104,13 @@
             this.lbAnalysisMethods.Name = "lbAnalysisMethods";
             this.lbAnalysisMethods.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.lbAnalysisMethods.Size = new System.Drawing.Size(376, 264);
-            this.lbAnalysisMethods.TabIndex = 10;
+            this.lbAnalysisMethods.TabIndex = 1;
             // 
             // FormPrepMethXAnalMeth
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(431, 480);
+            this.ClientSize = new System.Drawing.Size(431, 473);
             this.Controls.Add(this.lbAnalysisMethods);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.tbPreparationMethod);

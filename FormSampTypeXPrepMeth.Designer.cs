@@ -44,9 +44,9 @@
             this.panel1.Controls.Add(this.btnCancel);
             this.panel1.Controls.Add(this.btnOk);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 469);
+            this.panel1.Location = new System.Drawing.Point(0, 471);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(385, 30);
+            this.panel1.Size = new System.Drawing.Size(385, 28);
             this.panel1.TabIndex = 6;
             // 
             // btnCancel
@@ -54,8 +54,8 @@
             this.btnCancel.Dock = System.Windows.Forms.DockStyle.Right;
             this.btnCancel.Location = new System.Drawing.Point(185, 0);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(100, 30);
-            this.btnCancel.TabIndex = 1;
+            this.btnCancel.Size = new System.Drawing.Size(100, 28);
+            this.btnCancel.TabIndex = 3;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
@@ -65,8 +65,8 @@
             this.btnOk.Dock = System.Windows.Forms.DockStyle.Right;
             this.btnOk.Location = new System.Drawing.Point(285, 0);
             this.btnOk.Name = "btnOk";
-            this.btnOk.Size = new System.Drawing.Size(100, 30);
-            this.btnOk.TabIndex = 0;
+            this.btnOk.Size = new System.Drawing.Size(100, 28);
+            this.btnOk.TabIndex = 2;
             this.btnOk.Text = "Ok";
             this.btnOk.UseVisualStyleBackColor = true;
             this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
@@ -86,7 +86,7 @@
             this.tbSampleType.Name = "tbSampleType";
             this.tbSampleType.ReadOnly = true;
             this.tbSampleType.Size = new System.Drawing.Size(237, 20);
-            this.tbSampleType.TabIndex = 8;
+            this.tbSampleType.TabIndex = 0;
             // 
             // lbPrepMeth
             // 
@@ -95,7 +95,7 @@
             this.lbPrepMeth.Name = "lbPrepMeth";
             this.lbPrepMeth.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.lbPrepMeth.Size = new System.Drawing.Size(319, 329);
-            this.lbPrepMeth.TabIndex = 9;
+            this.lbPrepMeth.TabIndex = 1;
             // 
             // label2
             // 

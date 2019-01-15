@@ -48,9 +48,9 @@
             this.panel1.Controls.Add(this.btnCancel);
             this.panel1.Controls.Add(this.btnOk);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 153);
+            this.panel1.Location = new System.Drawing.Point(0, 148);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(371, 30);
+            this.panel1.Size = new System.Drawing.Size(371, 28);
             this.panel1.TabIndex = 7;
             // 
             // btnCancel
@@ -58,8 +58,8 @@
             this.btnCancel.Dock = System.Windows.Forms.DockStyle.Right;
             this.btnCancel.Location = new System.Drawing.Point(171, 0);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(100, 30);
-            this.btnCancel.TabIndex = 1;
+            this.btnCancel.Size = new System.Drawing.Size(100, 28);
+            this.btnCancel.TabIndex = 5;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
@@ -69,8 +69,8 @@
             this.btnOk.Dock = System.Windows.Forms.DockStyle.Right;
             this.btnOk.Location = new System.Drawing.Point(271, 0);
             this.btnOk.Name = "btnOk";
-            this.btnOk.Size = new System.Drawing.Size(100, 30);
-            this.btnOk.TabIndex = 0;
+            this.btnOk.Size = new System.Drawing.Size(100, 28);
+            this.btnOk.TabIndex = 4;
             this.btnOk.Text = "Ok";
             this.btnOk.UseVisualStyleBackColor = true;
             this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
@@ -117,7 +117,7 @@
             this.tbCurrent.Name = "tbCurrent";
             this.tbCurrent.ReadOnly = true;
             this.tbCurrent.Size = new System.Drawing.Size(239, 20);
-            this.tbCurrent.TabIndex = 12;
+            this.tbCurrent.TabIndex = 0;
             // 
             // tbName
             // 
@@ -125,7 +125,7 @@
             this.tbName.MaxLength = 80;
             this.tbName.Name = "tbName";
             this.tbName.Size = new System.Drawing.Size(239, 20);
-            this.tbName.TabIndex = 13;
+            this.tbName.TabIndex = 1;
             this.tbName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbName_KeyPress);
             // 
             // tbNameCommon
@@ -134,7 +134,7 @@
             this.tbNameCommon.MaxLength = 80;
             this.tbNameCommon.Name = "tbNameCommon";
             this.tbNameCommon.Size = new System.Drawing.Size(239, 20);
-            this.tbNameCommon.TabIndex = 14;
+            this.tbNameCommon.TabIndex = 2;
             // 
             // tbNameLatin
             // 
@@ -142,13 +142,13 @@
             this.tbNameLatin.MaxLength = 80;
             this.tbNameLatin.Name = "tbNameLatin";
             this.tbNameLatin.Size = new System.Drawing.Size(239, 20);
-            this.tbNameLatin.TabIndex = 15;
+            this.tbNameLatin.TabIndex = 3;
             // 
             // FormSampleType
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(371, 183);
+            this.ClientSize = new System.Drawing.Size(371, 176);
             this.Controls.Add(this.tbNameLatin);
             this.Controls.Add(this.tbNameCommon);
             this.Controls.Add(this.tbName);

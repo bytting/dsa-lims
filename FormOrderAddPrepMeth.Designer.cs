@@ -59,7 +59,7 @@
             this.btnCancel.Location = new System.Drawing.Point(269, 0);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(100, 28);
-            this.btnCancel.TabIndex = 1;
+            this.btnCancel.TabIndex = 6;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
@@ -70,7 +70,7 @@
             this.btnOk.Location = new System.Drawing.Point(369, 0);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(100, 28);
-            this.btnOk.TabIndex = 0;
+            this.btnOk.TabIndex = 5;
             this.btnOk.Text = "Ok";
             this.btnOk.UseVisualStyleBackColor = true;
             this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
@@ -92,7 +92,7 @@
             this.cboxPreparationMethod.Location = new System.Drawing.Point(136, 90);
             this.cboxPreparationMethod.Name = "cboxPreparationMethod";
             this.cboxPreparationMethod.Size = new System.Drawing.Size(286, 21);
-            this.cboxPreparationMethod.TabIndex = 9;
+            this.cboxPreparationMethod.TabIndex = 2;
             this.cboxPreparationMethod.ValueMember = "Id";
             // 
             // cbPrepsAlreadyExists
@@ -101,7 +101,7 @@
             this.cbPrepsAlreadyExists.Location = new System.Drawing.Point(136, 26);
             this.cbPrepsAlreadyExists.Name = "cbPrepsAlreadyExists";
             this.cbPrepsAlreadyExists.Size = new System.Drawing.Size(227, 17);
-            this.cbPrepsAlreadyExists.TabIndex = 10;
+            this.cbPrepsAlreadyExists.TabIndex = 0;
             this.cbPrepsAlreadyExists.Text = "Preparation(s) already exists at laboratory...";
             this.cbPrepsAlreadyExists.UseVisualStyleBackColor = true;
             this.cbPrepsAlreadyExists.CheckedChanged += new System.EventHandler(this.cbPrepsAlreadyExists_CheckedChanged);
@@ -114,7 +114,7 @@
             this.cboxPrepMethLaboratory.Location = new System.Drawing.Point(136, 49);
             this.cboxPrepMethLaboratory.Name = "cboxPrepMethLaboratory";
             this.cboxPrepMethLaboratory.Size = new System.Drawing.Size(286, 21);
-            this.cboxPrepMethLaboratory.TabIndex = 11;
+            this.cboxPrepMethLaboratory.TabIndex = 1;
             this.cboxPrepMethLaboratory.ValueMember = "Id";
             // 
             // tbComment
@@ -125,7 +125,7 @@
             this.tbComment.Name = "tbComment";
             this.tbComment.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.tbComment.Size = new System.Drawing.Size(286, 132);
-            this.tbComment.TabIndex = 12;
+            this.tbComment.TabIndex = 4;
             // 
             // label2
             // 
@@ -142,7 +142,7 @@
             this.tbCount.MaxLength = 32;
             this.tbCount.Name = "tbCount";
             this.tbCount.Size = new System.Drawing.Size(286, 20);
-            this.tbCount.TabIndex = 14;
+            this.tbCount.TabIndex = 3;
             // 
             // label3
             // 

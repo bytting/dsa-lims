@@ -50,7 +50,7 @@
             this.panel1.Controls.Add(this.btnCancel);
             this.panel1.Controls.Add(this.btnOk);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 182);
+            this.panel1.Location = new System.Drawing.Point(0, 176);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(481, 28);
             this.panel1.TabIndex = 8;
@@ -61,7 +61,7 @@
             this.btnCancel.Location = new System.Drawing.Point(281, 0);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(100, 28);
-            this.btnCancel.TabIndex = 1;
+            this.btnCancel.TabIndex = 5;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
@@ -72,7 +72,7 @@
             this.btnOk.Location = new System.Drawing.Point(381, 0);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(100, 28);
-            this.btnOk.TabIndex = 0;
+            this.btnOk.TabIndex = 4;
             this.btnOk.Text = "Ok";
             this.btnOk.UseVisualStyleBackColor = true;
             this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
@@ -94,7 +94,7 @@
             this.tbSampleNumber.Name = "tbSampleNumber";
             this.tbSampleNumber.ReadOnly = true;
             this.tbSampleNumber.Size = new System.Drawing.Size(355, 20);
-            this.tbSampleNumber.TabIndex = 10;
+            this.tbSampleNumber.TabIndex = 0;
             // 
             // label2
             // 
@@ -139,7 +139,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(481, 182);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(481, 176);
             this.tableLayoutPanel1.TabIndex = 11;
             // 
             // label3
@@ -171,7 +171,7 @@
             this.cboxComponents.Location = new System.Drawing.Point(123, 97);
             this.cboxComponents.Name = "cboxComponents";
             this.cboxComponents.Size = new System.Drawing.Size(355, 21);
-            this.cboxComponents.TabIndex = 13;
+            this.cboxComponents.TabIndex = 2;
             this.cboxComponents.ValueMember = "Id";
             // 
             // tbCount
@@ -181,13 +181,13 @@
             this.tbCount.MaxLength = 4;
             this.tbCount.Name = "tbCount";
             this.tbCount.Size = new System.Drawing.Size(355, 20);
-            this.tbCount.TabIndex = 14;
+            this.tbCount.TabIndex = 3;
             // 
             // FormSampleSplit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(481, 210);
+            this.ClientSize = new System.Drawing.Size(481, 204);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;

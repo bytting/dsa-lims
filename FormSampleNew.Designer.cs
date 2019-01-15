@@ -62,7 +62,7 @@
             this.btnCancel.Location = new System.Drawing.Point(281, 0);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(100, 28);
-            this.btnCancel.TabIndex = 1;
+            this.btnCancel.TabIndex = 7;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
@@ -73,7 +73,7 @@
             this.btnCreate.Location = new System.Drawing.Point(381, 0);
             this.btnCreate.Name = "btnCreate";
             this.btnCreate.Size = new System.Drawing.Size(100, 28);
-            this.btnCreate.TabIndex = 0;
+            this.btnCreate.TabIndex = 6;
             this.btnCreate.Text = "Create";
             this.btnCreate.UseVisualStyleBackColor = true;
             this.btnCreate.Click += new System.EventHandler(this.btnCreate_Click);
@@ -96,7 +96,7 @@
             this.cboxSampleType.Location = new System.Drawing.Point(128, 24);
             this.cboxSampleType.Name = "cboxSampleType";
             this.cboxSampleType.Size = new System.Drawing.Size(290, 21);
-            this.cboxSampleType.TabIndex = 11;
+            this.cboxSampleType.TabIndex = 0;
             this.cboxSampleType.ValueMember = "Id";
             this.cboxSampleType.SelectedIndexChanged += new System.EventHandler(this.cboxSampleType_SelectedIndexChanged);
             // 
@@ -126,7 +126,7 @@
             this.cboxLaboratory.Location = new System.Drawing.Point(128, 142);
             this.cboxLaboratory.Name = "cboxLaboratory";
             this.cboxLaboratory.Size = new System.Drawing.Size(321, 21);
-            this.cboxLaboratory.TabIndex = 14;
+            this.cboxLaboratory.TabIndex = 5;
             this.cboxLaboratory.ValueMember = "Id";
             // 
             // cboxProjectMain
@@ -137,7 +137,7 @@
             this.cboxProjectMain.Location = new System.Drawing.Point(128, 82);
             this.cboxProjectMain.Name = "cboxProjectMain";
             this.cboxProjectMain.Size = new System.Drawing.Size(321, 21);
-            this.cboxProjectMain.TabIndex = 15;
+            this.cboxProjectMain.TabIndex = 3;
             this.cboxProjectMain.ValueMember = "Id";
             this.cboxProjectMain.SelectedIndexChanged += new System.EventHandler(this.cboxProjectMain_SelectedIndexChanged);
             // 
@@ -149,7 +149,7 @@
             this.cboxProjectSub.Location = new System.Drawing.Point(128, 112);
             this.cboxProjectSub.Name = "cboxProjectSub";
             this.cboxProjectSub.Size = new System.Drawing.Size(321, 21);
-            this.cboxProjectSub.TabIndex = 16;
+            this.cboxProjectSub.TabIndex = 4;
             this.cboxProjectSub.ValueMember = "Id";
             // 
             // btnSelectSampleType
@@ -157,7 +157,7 @@
             this.btnSelectSampleType.Location = new System.Drawing.Point(419, 23);
             this.btnSelectSampleType.Name = "btnSelectSampleType";
             this.btnSelectSampleType.Size = new System.Drawing.Size(30, 23);
-            this.btnSelectSampleType.TabIndex = 17;
+            this.btnSelectSampleType.TabIndex = 1;
             this.btnSelectSampleType.Text = "...";
             this.btnSelectSampleType.UseVisualStyleBackColor = true;
             this.btnSelectSampleType.Click += new System.EventHandler(this.btnSelectSampleType_Click);
@@ -179,7 +179,7 @@
             this.cboxSampleComponent.Location = new System.Drawing.Point(128, 53);
             this.cboxSampleComponent.Name = "cboxSampleComponent";
             this.cboxSampleComponent.Size = new System.Drawing.Size(321, 21);
-            this.cboxSampleComponent.TabIndex = 19;
+            this.cboxSampleComponent.TabIndex = 2;
             this.cboxSampleComponent.ValueMember = "Id";
             // 
             // label5

@@ -67,7 +67,7 @@
             this.btnCancel.Location = new System.Drawing.Point(186, 0);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(100, 28);
-            this.btnCancel.TabIndex = 1;
+            this.btnCancel.TabIndex = 11;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
@@ -78,7 +78,7 @@
             this.btnOk.Location = new System.Drawing.Point(286, 0);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(100, 28);
-            this.btnOk.TabIndex = 0;
+            this.btnOk.TabIndex = 10;
             this.btnOk.Text = "Ok";
             this.btnOk.UseVisualStyleBackColor = true;
             this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
@@ -88,16 +88,16 @@
             this.cboxNuclides.DisplayMember = "Name";
             this.cboxNuclides.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxNuclides.FormattingEnabled = true;
-            this.cboxNuclides.Location = new System.Drawing.Point(117, 28);
+            this.cboxNuclides.Location = new System.Drawing.Point(112, 18);
             this.cboxNuclides.Name = "cboxNuclides";
-            this.cboxNuclides.Size = new System.Drawing.Size(233, 21);
-            this.cboxNuclides.TabIndex = 9;
+            this.cboxNuclides.Size = new System.Drawing.Size(249, 21);
+            this.cboxNuclides.TabIndex = 0;
             this.cboxNuclides.ValueMember = "Id";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(26, 31);
+            this.label1.Location = new System.Drawing.Point(21, 21);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(43, 13);
             this.label1.TabIndex = 10;
@@ -105,26 +105,26 @@
             // 
             // tbActivity
             // 
-            this.tbActivity.Location = new System.Drawing.Point(117, 57);
+            this.tbActivity.Location = new System.Drawing.Point(112, 47);
             this.tbActivity.MaxLength = 32;
             this.tbActivity.Name = "tbActivity";
-            this.tbActivity.Size = new System.Drawing.Size(233, 20);
-            this.tbActivity.TabIndex = 11;
+            this.tbActivity.Size = new System.Drawing.Size(249, 20);
+            this.tbActivity.TabIndex = 1;
             this.tbActivity.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbActivity_KeyPress);
             // 
             // tbUncertainty
             // 
-            this.tbUncertainty.Location = new System.Drawing.Point(117, 83);
+            this.tbUncertainty.Location = new System.Drawing.Point(112, 73);
             this.tbUncertainty.MaxLength = 32;
             this.tbUncertainty.Name = "tbUncertainty";
-            this.tbUncertainty.Size = new System.Drawing.Size(233, 20);
-            this.tbUncertainty.TabIndex = 12;
+            this.tbUncertainty.Size = new System.Drawing.Size(249, 20);
+            this.tbUncertainty.TabIndex = 2;
             this.tbUncertainty.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbActivity_KeyPress);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(26, 60);
+            this.label2.Location = new System.Drawing.Point(21, 50);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(41, 13);
             this.label2.TabIndex = 13;
@@ -133,7 +133,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(26, 86);
+            this.label3.Location = new System.Drawing.Point(21, 76);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(85, 13);
             this.label3.TabIndex = 14;
@@ -142,26 +142,26 @@
             // cbActivityApproved
             // 
             this.cbActivityApproved.AutoSize = true;
-            this.cbActivityApproved.Location = new System.Drawing.Point(117, 201);
+            this.cbActivityApproved.Location = new System.Drawing.Point(112, 191);
             this.cbActivityApproved.Name = "cbActivityApproved";
             this.cbActivityApproved.Size = new System.Drawing.Size(108, 17);
-            this.cbActivityApproved.TabIndex = 15;
+            this.cbActivityApproved.TabIndex = 6;
             this.cbActivityApproved.Text = "Activity approved";
             this.cbActivityApproved.UseVisualStyleBackColor = true;
             // 
             // tbDetectionLimit
             // 
-            this.tbDetectionLimit.Location = new System.Drawing.Point(117, 109);
+            this.tbDetectionLimit.Location = new System.Drawing.Point(112, 99);
             this.tbDetectionLimit.MaxLength = 32;
             this.tbDetectionLimit.Name = "tbDetectionLimit";
-            this.tbDetectionLimit.Size = new System.Drawing.Size(233, 20);
-            this.tbDetectionLimit.TabIndex = 16;
+            this.tbDetectionLimit.Size = new System.Drawing.Size(249, 20);
+            this.tbDetectionLimit.TabIndex = 3;
             this.tbDetectionLimit.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbActivity_KeyPress);
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(26, 112);
+            this.label4.Location = new System.Drawing.Point(21, 102);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(73, 13);
             this.label4.TabIndex = 17;
@@ -170,30 +170,30 @@
             // cbDetectionLimitApproved
             // 
             this.cbDetectionLimitApproved.AutoSize = true;
-            this.cbDetectionLimitApproved.Location = new System.Drawing.Point(117, 224);
+            this.cbDetectionLimitApproved.Location = new System.Drawing.Point(112, 214);
             this.cbDetectionLimitApproved.Name = "cbDetectionLimitApproved";
             this.cbDetectionLimitApproved.Size = new System.Drawing.Size(140, 17);
-            this.cbDetectionLimitApproved.TabIndex = 18;
+            this.cbDetectionLimitApproved.TabIndex = 7;
             this.cbDetectionLimitApproved.Text = "Detection limit approved";
             this.cbDetectionLimitApproved.UseVisualStyleBackColor = true;
             // 
             // cbAccredited
             // 
             this.cbAccredited.AutoSize = true;
-            this.cbAccredited.Location = new System.Drawing.Point(117, 247);
+            this.cbAccredited.Location = new System.Drawing.Point(112, 237);
             this.cbAccredited.Name = "cbAccredited";
             this.cbAccredited.Size = new System.Drawing.Size(77, 17);
-            this.cbAccredited.TabIndex = 19;
+            this.cbAccredited.TabIndex = 8;
             this.cbAccredited.Text = "Accredited";
             this.cbAccredited.UseVisualStyleBackColor = true;
             // 
             // cbReportable
             // 
             this.cbReportable.AutoSize = true;
-            this.cbReportable.Location = new System.Drawing.Point(117, 270);
+            this.cbReportable.Location = new System.Drawing.Point(112, 260);
             this.cbReportable.Name = "cbReportable";
             this.cbReportable.Size = new System.Drawing.Size(78, 17);
-            this.cbReportable.TabIndex = 20;
+            this.cbReportable.TabIndex = 9;
             this.cbReportable.Text = "Reportable";
             this.cbReportable.UseVisualStyleBackColor = true;
             // 
@@ -202,10 +202,10 @@
             this.cboxSigmaActivity.DisplayMember = "Name";
             this.cboxSigmaActivity.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxSigmaActivity.FormattingEnabled = true;
-            this.cboxSigmaActivity.Location = new System.Drawing.Point(117, 135);
+            this.cboxSigmaActivity.Location = new System.Drawing.Point(112, 125);
             this.cboxSigmaActivity.Name = "cboxSigmaActivity";
-            this.cboxSigmaActivity.Size = new System.Drawing.Size(233, 21);
-            this.cboxSigmaActivity.TabIndex = 21;
+            this.cboxSigmaActivity.Size = new System.Drawing.Size(249, 21);
+            this.cboxSigmaActivity.TabIndex = 4;
             this.cboxSigmaActivity.ValueMember = "Id";
             // 
             // cboxSigmaMDA
@@ -213,16 +213,16 @@
             this.cboxSigmaMDA.DisplayMember = "Name";
             this.cboxSigmaMDA.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxSigmaMDA.FormattingEnabled = true;
-            this.cboxSigmaMDA.Location = new System.Drawing.Point(117, 162);
+            this.cboxSigmaMDA.Location = new System.Drawing.Point(112, 152);
             this.cboxSigmaMDA.Name = "cboxSigmaMDA";
-            this.cboxSigmaMDA.Size = new System.Drawing.Size(233, 21);
-            this.cboxSigmaMDA.TabIndex = 22;
+            this.cboxSigmaMDA.Size = new System.Drawing.Size(249, 21);
+            this.cboxSigmaMDA.TabIndex = 5;
             this.cboxSigmaMDA.ValueMember = "Id";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(26, 138);
+            this.label5.Location = new System.Drawing.Point(21, 128);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(58, 13);
             this.label5.TabIndex = 23;
@@ -231,7 +231,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(26, 165);
+            this.label6.Location = new System.Drawing.Point(21, 155);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(63, 13);
             this.label6.TabIndex = 24;

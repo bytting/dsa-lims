@@ -69,10 +69,10 @@
             // btnCancel
             // 
             this.btnCancel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnCancel.Location = new System.Drawing.Point(202, 0);
+            this.btnCancel.Location = new System.Drawing.Point(236, 0);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(117, 28);
-            this.btnCancel.TabIndex = 1;
+            this.btnCancel.Size = new System.Drawing.Size(100, 28);
+            this.btnCancel.TabIndex = 7;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
@@ -80,10 +80,10 @@
             // btnCreate
             // 
             this.btnCreate.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnCreate.Location = new System.Drawing.Point(319, 0);
+            this.btnCreate.Location = new System.Drawing.Point(336, 0);
             this.btnCreate.Name = "btnCreate";
-            this.btnCreate.Size = new System.Drawing.Size(117, 28);
-            this.btnCreate.TabIndex = 0;
+            this.btnCreate.Size = new System.Drawing.Size(100, 28);
+            this.btnCreate.TabIndex = 6;
             this.btnCreate.Text = "Create";
             this.btnCreate.UseVisualStyleBackColor = true;
             this.btnCreate.Click += new System.EventHandler(this.btnCreate_Click);
@@ -105,7 +105,7 @@
             this.cboxLaboratory.Location = new System.Drawing.Point(138, 59);
             this.cboxLaboratory.Name = "cboxLaboratory";
             this.cboxLaboratory.Size = new System.Drawing.Size(270, 23);
-            this.cboxLaboratory.TabIndex = 10;
+            this.cboxLaboratory.TabIndex = 0;
             this.cboxLaboratory.ValueMember = "Id";
             this.cboxLaboratory.SelectedIndexChanged += new System.EventHandler(this.cboxLaboratory_SelectedIndexChanged);
             // 
@@ -126,7 +126,7 @@
             this.cboxResponsible.Location = new System.Drawing.Point(138, 88);
             this.cboxResponsible.Name = "cboxResponsible";
             this.cboxResponsible.Size = new System.Drawing.Size(270, 23);
-            this.cboxResponsible.TabIndex = 12;
+            this.cboxResponsible.TabIndex = 1;
             this.cboxResponsible.ValueMember = "Id";
             // 
             // label3
@@ -155,7 +155,7 @@
             this.tbDeadline.Name = "tbDeadline";
             this.tbDeadline.ReadOnly = true;
             this.tbDeadline.Size = new System.Drawing.Size(244, 21);
-            this.tbDeadline.TabIndex = 1;
+            this.tbDeadline.TabIndex = 2;
             // 
             // btnSelectDeadline
             // 
@@ -187,7 +187,7 @@
             this.cboxRequestedSigma.Location = new System.Drawing.Point(138, 146);
             this.cboxRequestedSigma.Name = "cboxRequestedSigma";
             this.cboxRequestedSigma.Size = new System.Drawing.Size(270, 23);
-            this.cboxRequestedSigma.TabIndex = 17;
+            this.cboxRequestedSigma.TabIndex = 3;
             this.cboxRequestedSigma.ValueMember = "Id";
             // 
             // label5
@@ -225,7 +225,7 @@
             this.tbCustomer.Name = "tbCustomer";
             this.tbCustomer.ReadOnly = true;
             this.tbCustomer.Size = new System.Drawing.Size(246, 21);
-            this.tbCustomer.TabIndex = 1;
+            this.tbCustomer.TabIndex = 5;
             // 
             // btnSelectCustomer
             // 
@@ -256,7 +256,7 @@
             this.cboxRequestedSigmaMDA.Location = new System.Drawing.Point(138, 175);
             this.cboxRequestedSigmaMDA.Name = "cboxRequestedSigmaMDA";
             this.cboxRequestedSigmaMDA.Size = new System.Drawing.Size(270, 23);
-            this.cboxRequestedSigmaMDA.TabIndex = 23;
+            this.cboxRequestedSigmaMDA.TabIndex = 4;
             this.cboxRequestedSigmaMDA.ValueMember = "Id";
             // 
             // FormOrderNew

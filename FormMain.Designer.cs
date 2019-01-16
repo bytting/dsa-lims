@@ -102,7 +102,7 @@
             this.miSamplesSplit = new System.Windows.Forms.ToolStripMenuItem();
             this.miSamplesMerge = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator49 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.miSamplesSetOrder = new System.Windows.Forms.ToolStripMenuItem();
             this.miSamplesSet = new System.Windows.Forms.ToolStripMenuItem();
             this.miSamplesSetProject = new System.Windows.Forms.ToolStripMenuItem();
             this.miSamplesSetCustomer = new System.Windows.Forms.ToolStripMenuItem();
@@ -496,14 +496,14 @@
             this.btnSamplesSplit = new System.Windows.Forms.ToolStripButton();
             this.btnSamplesMerge = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator45 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButton8 = new System.Windows.Forms.ToolStripButton();
+            this.btnSamplesSetOrder = new System.Windows.Forms.ToolStripButton();
             this.toolStripDropDownButton2 = new System.Windows.Forms.ToolStripDropDownButton();
             this.projectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.customerToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.samplerToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.samplingmethodToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.excemptFromPublicToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripButton96 = new System.Windows.Forms.ToolStripButton();
+            this.btnSamplesPrepAnal = new System.Windows.Forms.ToolStripButton();
             this.toolStripDropDownButton4 = new System.Windows.Forms.ToolStripDropDownButton();
             this.sampleLabelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sampleInfoForSelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -578,8 +578,8 @@
             this.toolStripLabel48 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator36 = new System.Windows.Forms.ToolStripSeparator();
             this.btnTypeRelSampTypeCompAdd = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton44 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton88 = new System.Windows.Forms.ToolStripButton();
+            this.btnTypeRelSampTypeCompEdit = new System.Windows.Forms.ToolStripButton();
+            this.btnTypeRelSampTypeCompDelete = new System.Windows.Forms.ToolStripButton();
             this.lblTypeRelSampCompSel = new System.Windows.Forms.ToolStripLabel();
             this.lbSampleTypesInheritedComponents = new System.Windows.Forms.ListBox();
             this.toolsTypeRelSampCompInherit = new System.Windows.Forms.ToolStrip();
@@ -604,7 +604,7 @@
             this.toolStripLabel50 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator38 = new System.Windows.Forms.ToolStripSeparator();
             this.btnTypeRelSampTypePrepMethAdd = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton92 = new System.Windows.Forms.ToolStripButton();
+            this.btnPreparationMethodDelete = new System.Windows.Forms.ToolStripButton();
             this.lblTypeRelSampPrepSel = new System.Windows.Forms.ToolStripLabel();
             this.lbTypeRelSampTypeInheritedPrepMeth = new System.Windows.Forms.ListBox();
             this.toolsTypeRelSampAnalMeth = new System.Windows.Forms.ToolStrip();
@@ -719,16 +719,16 @@
             this.toolsSysCounties = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel32 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButton58 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton59 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton77 = new System.Windows.Forms.ToolStripButton();
+            this.btnNewCounty = new System.Windows.Forms.ToolStripButton();
+            this.btnEditCounty = new System.Windows.Forms.ToolStripButton();
+            this.btnDeleteCounty = new System.Windows.Forms.ToolStripButton();
             this.gridSysMunicipality = new System.Windows.Forms.DataGridView();
             this.toolsSysMunicipalities = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel33 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButton60 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton61 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton78 = new System.Windows.Forms.ToolStripButton();
+            this.btnNewMunicipality = new System.Windows.Forms.ToolStripButton();
+            this.btnEditMunicipality = new System.Windows.Forms.ToolStripButton();
+            this.btnDeleteMunicipality = new System.Windows.Forms.ToolStripButton();
             this.tabSysAccredRules = new System.Windows.Forms.TabPage();
             this.dataGridView22 = new System.Windows.Forms.DataGridView();
             this.toolsSysAccredRules = new System.Windows.Forms.ToolStrip();
@@ -1739,7 +1739,7 @@
             this.miSamplesSplit,
             this.miSamplesMerge,
             this.toolStripSeparator49,
-            this.toolStripMenuItem1,
+            this.miSamplesSetOrder,
             this.miSamplesSet,
             this.miSamplesPrepAnal,
             this.printToolStripMenuItem});
@@ -1807,12 +1807,12 @@
             this.toolStripSeparator49.Name = "toolStripSeparator49";
             this.toolStripSeparator49.Size = new System.Drawing.Size(209, 6);
             // 
-            // toolStripMenuItem1
+            // miSamplesSetOrder
             // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(212, 22);
-            this.toolStripMenuItem1.Text = "Add to order";
-            this.toolStripMenuItem1.Click += new System.EventHandler(this.miSamplesSetOrder_Click);
+            this.miSamplesSetOrder.Name = "miSamplesSetOrder";
+            this.miSamplesSetOrder.Size = new System.Drawing.Size(212, 22);
+            this.miSamplesSetOrder.Text = "Add to order";
+            this.miSamplesSetOrder.Click += new System.EventHandler(this.miSamplesSetOrder_Click);
             // 
             // miSamplesSet
             // 
@@ -2302,21 +2302,21 @@
             // miNuclidesNew
             // 
             this.miNuclidesNew.Name = "miNuclidesNew";
-            this.miNuclidesNew.Size = new System.Drawing.Size(149, 22);
+            this.miNuclidesNew.Size = new System.Drawing.Size(152, 22);
             this.miNuclidesNew.Text = "&New nuclide";
             this.miNuclidesNew.Click += new System.EventHandler(this.miNuclidesNew_Click);
             // 
             // miNuclidesEdit
             // 
             this.miNuclidesEdit.Name = "miNuclidesEdit";
-            this.miNuclidesEdit.Size = new System.Drawing.Size(149, 22);
+            this.miNuclidesEdit.Size = new System.Drawing.Size(152, 22);
             this.miNuclidesEdit.Text = "&Edit nuclide";
             this.miNuclidesEdit.Click += new System.EventHandler(this.miNuclidesEdit_Click);
             // 
             // miNuclidesDelete
             // 
             this.miNuclidesDelete.Name = "miNuclidesDelete";
-            this.miNuclidesDelete.Size = new System.Drawing.Size(149, 22);
+            this.miNuclidesDelete.Size = new System.Drawing.Size(152, 22);
             this.miNuclidesDelete.Text = "&Delete nuclide";
             // 
             // miMunicipalities
@@ -5878,9 +5878,9 @@
             this.btnSamplesSplit,
             this.btnSamplesMerge,
             this.toolStripSeparator45,
-            this.toolStripButton8,
+            this.btnSamplesSetOrder,
             this.toolStripDropDownButton2,
-            this.toolStripButton96,
+            this.btnSamplesPrepAnal,
             this.toolStripDropDownButton4});
             this.toolsSamples.Location = new System.Drawing.Point(3, 104);
             this.toolsSamples.Name = "toolsSamples";
@@ -5972,14 +5972,14 @@
             this.toolStripSeparator45.Name = "toolStripSeparator45";
             this.toolStripSeparator45.Size = new System.Drawing.Size(6, 25);
             // 
-            // toolStripButton8
+            // btnSamplesSetOrder
             // 
-            this.toolStripButton8.Image = global::DSA_lims.Properties.Resources._new;
-            this.toolStripButton8.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton8.Name = "toolStripButton8";
-            this.toolStripButton8.Size = new System.Drawing.Size(94, 22);
-            this.toolStripButton8.Text = "Add to order";
-            this.toolStripButton8.Click += new System.EventHandler(this.miSamplesSetOrder_Click);
+            this.btnSamplesSetOrder.Image = global::DSA_lims.Properties.Resources._new;
+            this.btnSamplesSetOrder.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSamplesSetOrder.Name = "btnSamplesSetOrder";
+            this.btnSamplesSetOrder.Size = new System.Drawing.Size(94, 22);
+            this.btnSamplesSetOrder.Text = "Add to order";
+            this.btnSamplesSetOrder.Click += new System.EventHandler(this.miSamplesSetOrder_Click);
             // 
             // toolStripDropDownButton2
             // 
@@ -6030,14 +6030,14 @@
             this.excemptFromPublicToolStripMenuItem.Text = "&Excempt from public";
             this.excemptFromPublicToolStripMenuItem.Click += new System.EventHandler(this.miSamplesSetExcempt_Click);
             // 
-            // toolStripButton96
+            // btnSamplesPrepAnal
             // 
-            this.toolStripButton96.Image = global::DSA_lims.Properties.Resources.prep_anal;
-            this.toolStripButton96.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton96.Name = "toolStripButton96";
-            this.toolStripButton96.Size = new System.Drawing.Size(163, 22);
-            this.toolStripButton96.Text = "Preparations and analyses";
-            this.toolStripButton96.Click += new System.EventHandler(this.miSamplesPrepAnal_Click);
+            this.btnSamplesPrepAnal.Image = global::DSA_lims.Properties.Resources.prep_anal;
+            this.btnSamplesPrepAnal.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSamplesPrepAnal.Name = "btnSamplesPrepAnal";
+            this.btnSamplesPrepAnal.Size = new System.Drawing.Size(163, 22);
+            this.btnSamplesPrepAnal.Text = "Preparations and analyses";
+            this.btnSamplesPrepAnal.Click += new System.EventHandler(this.miSamplesPrepAnal_Click);
             // 
             // toolStripDropDownButton4
             // 
@@ -6804,8 +6804,8 @@
             this.toolStripLabel48,
             this.toolStripSeparator36,
             this.btnTypeRelSampTypeCompAdd,
-            this.toolStripButton44,
-            this.toolStripButton88,
+            this.btnTypeRelSampTypeCompEdit,
+            this.btnTypeRelSampTypeCompDelete,
             this.lblTypeRelSampCompSel});
             this.toolsTypeRelSampComp.Location = new System.Drawing.Point(0, 0);
             this.toolsTypeRelSampComp.Name = "toolsTypeRelSampComp";
@@ -6834,22 +6834,22 @@
             this.btnTypeRelSampTypeCompAdd.Text = "New";
             this.btnTypeRelSampTypeCompAdd.Click += new System.EventHandler(this.miTypeRelSampleTypesCompNew_Click);
             // 
-            // toolStripButton44
+            // btnTypeRelSampTypeCompEdit
             // 
-            this.toolStripButton44.Image = global::DSA_lims.Properties.Resources.edit;
-            this.toolStripButton44.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton44.Name = "toolStripButton44";
-            this.toolStripButton44.Size = new System.Drawing.Size(47, 22);
-            this.toolStripButton44.Text = "Edit";
-            this.toolStripButton44.Click += new System.EventHandler(this.miTypeRelSampleTypesCompEdit_Click);
+            this.btnTypeRelSampTypeCompEdit.Image = global::DSA_lims.Properties.Resources.edit;
+            this.btnTypeRelSampTypeCompEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnTypeRelSampTypeCompEdit.Name = "btnTypeRelSampTypeCompEdit";
+            this.btnTypeRelSampTypeCompEdit.Size = new System.Drawing.Size(47, 22);
+            this.btnTypeRelSampTypeCompEdit.Text = "Edit";
+            this.btnTypeRelSampTypeCompEdit.Click += new System.EventHandler(this.miTypeRelSampleTypesCompEdit_Click);
             // 
-            // toolStripButton88
+            // btnTypeRelSampTypeCompDelete
             // 
-            this.toolStripButton88.Image = global::DSA_lims.Properties.Resources.delete;
-            this.toolStripButton88.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton88.Name = "toolStripButton88";
-            this.toolStripButton88.Size = new System.Drawing.Size(60, 22);
-            this.toolStripButton88.Text = "Delete";
+            this.btnTypeRelSampTypeCompDelete.Image = global::DSA_lims.Properties.Resources.delete;
+            this.btnTypeRelSampTypeCompDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnTypeRelSampTypeCompDelete.Name = "btnTypeRelSampTypeCompDelete";
+            this.btnTypeRelSampTypeCompDelete.Size = new System.Drawing.Size(60, 22);
+            this.btnTypeRelSampTypeCompDelete.Text = "Delete";
             // 
             // lblTypeRelSampCompSel
             // 
@@ -6893,10 +6893,10 @@
             // 
             this.tabTypeRelSampTypeParam.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.tabTypeRelSampTypeParam.Controls.Add(this.splitContainer14);
-            this.tabTypeRelSampTypeParam.Location = new System.Drawing.Point(4, 22);
+            this.tabTypeRelSampTypeParam.Location = new System.Drawing.Point(4, 24);
             this.tabTypeRelSampTypeParam.Name = "tabTypeRelSampTypeParam";
             this.tabTypeRelSampTypeParam.Padding = new System.Windows.Forms.Padding(3);
-            this.tabTypeRelSampTypeParam.Size = new System.Drawing.Size(644, 568);
+            this.tabTypeRelSampTypeParam.Size = new System.Drawing.Size(644, 564);
             this.tabTypeRelSampTypeParam.TabIndex = 1;
             this.tabTypeRelSampTypeParam.Text = "Parameters";
             // 
@@ -6916,8 +6916,8 @@
             // 
             this.splitContainer14.Panel2.Controls.Add(this.listBox4);
             this.splitContainer14.Panel2.Controls.Add(this.toolsTypeRelSampParaInherit);
-            this.splitContainer14.Size = new System.Drawing.Size(638, 562);
-            this.splitContainer14.SplitterDistance = 281;
+            this.splitContainer14.Size = new System.Drawing.Size(638, 558);
+            this.splitContainer14.SplitterDistance = 279;
             this.splitContainer14.SplitterWidth = 3;
             this.splitContainer14.TabIndex = 0;
             // 
@@ -6930,7 +6930,7 @@
             this.listBox2.ItemHeight = 15;
             this.listBox2.Location = new System.Drawing.Point(0, 25);
             this.listBox2.Name = "listBox2";
-            this.listBox2.Size = new System.Drawing.Size(638, 256);
+            this.listBox2.Size = new System.Drawing.Size(638, 254);
             this.listBox2.TabIndex = 2;
             // 
             // toolsTypeRelSampPara
@@ -7001,7 +7001,7 @@
             this.listBox4.ItemHeight = 15;
             this.listBox4.Location = new System.Drawing.Point(0, 25);
             this.listBox4.Name = "listBox4";
-            this.listBox4.Size = new System.Drawing.Size(638, 253);
+            this.listBox4.Size = new System.Drawing.Size(638, 251);
             this.listBox4.TabIndex = 3;
             // 
             // toolsTypeRelSampParaInherit
@@ -7026,10 +7026,10 @@
             // 
             this.tabTypeRelSampTypePrep.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.tabTypeRelSampTypePrep.Controls.Add(this.splitContainer13);
-            this.tabTypeRelSampTypePrep.Location = new System.Drawing.Point(4, 22);
+            this.tabTypeRelSampTypePrep.Location = new System.Drawing.Point(4, 24);
             this.tabTypeRelSampTypePrep.Name = "tabTypeRelSampTypePrep";
             this.tabTypeRelSampTypePrep.Padding = new System.Windows.Forms.Padding(3);
-            this.tabTypeRelSampTypePrep.Size = new System.Drawing.Size(644, 568);
+            this.tabTypeRelSampTypePrep.Size = new System.Drawing.Size(644, 564);
             this.tabTypeRelSampTypePrep.TabIndex = 2;
             this.tabTypeRelSampTypePrep.Text = "Preparation methods";
             // 
@@ -7049,8 +7049,8 @@
             // 
             this.splitContainer13.Panel2.Controls.Add(this.lbTypeRelSampTypeInheritedPrepMeth);
             this.splitContainer13.Panel2.Controls.Add(this.toolsTypeRelSampAnalMeth);
-            this.splitContainer13.Size = new System.Drawing.Size(638, 562);
-            this.splitContainer13.SplitterDistance = 216;
+            this.splitContainer13.Size = new System.Drawing.Size(638, 558);
+            this.splitContainer13.SplitterDistance = 214;
             this.splitContainer13.SplitterWidth = 3;
             this.splitContainer13.TabIndex = 0;
             // 
@@ -7063,7 +7063,7 @@
             this.lbTypeRelSampTypePrepMeth.ItemHeight = 15;
             this.lbTypeRelSampTypePrepMeth.Location = new System.Drawing.Point(0, 25);
             this.lbTypeRelSampTypePrepMeth.Name = "lbTypeRelSampTypePrepMeth";
-            this.lbTypeRelSampTypePrepMeth.Size = new System.Drawing.Size(638, 191);
+            this.lbTypeRelSampTypePrepMeth.Size = new System.Drawing.Size(638, 189);
             this.lbTypeRelSampTypePrepMeth.TabIndex = 1;
             // 
             // toolsTypeRelSampPrepMeth
@@ -7073,7 +7073,7 @@
             this.toolStripLabel50,
             this.toolStripSeparator38,
             this.btnTypeRelSampTypePrepMethAdd,
-            this.toolStripButton92,
+            this.btnPreparationMethodDelete,
             this.lblTypeRelSampPrepSel});
             this.toolsTypeRelSampPrepMeth.Location = new System.Drawing.Point(0, 0);
             this.toolsTypeRelSampPrepMeth.Name = "toolsTypeRelSampPrepMeth";
@@ -7102,13 +7102,13 @@
             this.btnTypeRelSampTypePrepMethAdd.Text = "Add";
             this.btnTypeRelSampTypePrepMethAdd.Click += new System.EventHandler(this.miAddPrepMethToSampType_Click);
             // 
-            // toolStripButton92
+            // btnPreparationMethodDelete
             // 
-            this.toolStripButton92.Image = global::DSA_lims.Properties.Resources.delete;
-            this.toolStripButton92.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton92.Name = "toolStripButton92";
-            this.toolStripButton92.Size = new System.Drawing.Size(70, 22);
-            this.toolStripButton92.Text = "Remove";
+            this.btnPreparationMethodDelete.Image = global::DSA_lims.Properties.Resources.delete;
+            this.btnPreparationMethodDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnPreparationMethodDelete.Name = "btnPreparationMethodDelete";
+            this.btnPreparationMethodDelete.Size = new System.Drawing.Size(70, 22);
+            this.btnPreparationMethodDelete.Text = "Remove";
             // 
             // lblTypeRelSampPrepSel
             // 
@@ -7127,7 +7127,7 @@
             this.lbTypeRelSampTypeInheritedPrepMeth.Location = new System.Drawing.Point(0, 25);
             this.lbTypeRelSampTypeInheritedPrepMeth.Name = "lbTypeRelSampTypeInheritedPrepMeth";
             this.lbTypeRelSampTypeInheritedPrepMeth.SelectionMode = System.Windows.Forms.SelectionMode.None;
-            this.lbTypeRelSampTypeInheritedPrepMeth.Size = new System.Drawing.Size(638, 318);
+            this.lbTypeRelSampTypeInheritedPrepMeth.Size = new System.Drawing.Size(638, 316);
             this.lbTypeRelSampTypeInheritedPrepMeth.TabIndex = 1;
             // 
             // toolsTypeRelSampAnalMeth
@@ -8314,9 +8314,9 @@
             this.toolsSysCounties.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripLabel32,
             this.toolStripSeparator8,
-            this.toolStripButton58,
-            this.toolStripButton59,
-            this.toolStripButton77});
+            this.btnNewCounty,
+            this.btnEditCounty,
+            this.btnDeleteCounty});
             this.toolsSysCounties.Location = new System.Drawing.Point(0, 0);
             this.toolsSysCounties.Name = "toolsSysCounties";
             this.toolsSysCounties.Size = new System.Drawing.Size(511, 25);
@@ -8335,32 +8335,32 @@
             this.toolStripSeparator8.Name = "toolStripSeparator8";
             this.toolStripSeparator8.Size = new System.Drawing.Size(6, 25);
             // 
-            // toolStripButton58
+            // btnNewCounty
             // 
-            this.toolStripButton58.Image = global::DSA_lims.Properties.Resources._new;
-            this.toolStripButton58.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton58.Name = "toolStripButton58";
-            this.toolStripButton58.Size = new System.Drawing.Size(51, 22);
-            this.toolStripButton58.Text = "New";
-            this.toolStripButton58.Click += new System.EventHandler(this.miNewCounty_Click);
+            this.btnNewCounty.Image = global::DSA_lims.Properties.Resources._new;
+            this.btnNewCounty.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnNewCounty.Name = "btnNewCounty";
+            this.btnNewCounty.Size = new System.Drawing.Size(51, 22);
+            this.btnNewCounty.Text = "New";
+            this.btnNewCounty.Click += new System.EventHandler(this.miNewCounty_Click);
             // 
-            // toolStripButton59
+            // btnEditCounty
             // 
-            this.toolStripButton59.Image = global::DSA_lims.Properties.Resources.edit;
-            this.toolStripButton59.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton59.Name = "toolStripButton59";
-            this.toolStripButton59.Size = new System.Drawing.Size(47, 22);
-            this.toolStripButton59.Text = "Edit";
-            this.toolStripButton59.Click += new System.EventHandler(this.miEditCounty_Click);
+            this.btnEditCounty.Image = global::DSA_lims.Properties.Resources.edit;
+            this.btnEditCounty.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnEditCounty.Name = "btnEditCounty";
+            this.btnEditCounty.Size = new System.Drawing.Size(47, 22);
+            this.btnEditCounty.Text = "Edit";
+            this.btnEditCounty.Click += new System.EventHandler(this.miEditCounty_Click);
             // 
-            // toolStripButton77
+            // btnDeleteCounty
             // 
-            this.toolStripButton77.Image = global::DSA_lims.Properties.Resources.delete;
-            this.toolStripButton77.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton77.Name = "toolStripButton77";
-            this.toolStripButton77.Size = new System.Drawing.Size(60, 22);
-            this.toolStripButton77.Text = "Delete";
-            this.toolStripButton77.Click += new System.EventHandler(this.miDeleteCounty_Click);
+            this.btnDeleteCounty.Image = global::DSA_lims.Properties.Resources.delete;
+            this.btnDeleteCounty.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnDeleteCounty.Name = "btnDeleteCounty";
+            this.btnDeleteCounty.Size = new System.Drawing.Size(60, 22);
+            this.btnDeleteCounty.Text = "Delete";
+            this.btnDeleteCounty.Click += new System.EventHandler(this.miDeleteCounty_Click);
             // 
             // gridSysMunicipality
             // 
@@ -8386,9 +8386,9 @@
             this.toolsSysMunicipalities.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripLabel33,
             this.toolStripSeparator9,
-            this.toolStripButton60,
-            this.toolStripButton61,
-            this.toolStripButton78});
+            this.btnNewMunicipality,
+            this.btnEditMunicipality,
+            this.btnDeleteMunicipality});
             this.toolsSysMunicipalities.Location = new System.Drawing.Point(0, 0);
             this.toolsSysMunicipalities.Name = "toolsSysMunicipalities";
             this.toolsSysMunicipalities.Size = new System.Drawing.Size(592, 25);
@@ -8407,32 +8407,32 @@
             this.toolStripSeparator9.Name = "toolStripSeparator9";
             this.toolStripSeparator9.Size = new System.Drawing.Size(6, 25);
             // 
-            // toolStripButton60
+            // btnNewMunicipality
             // 
-            this.toolStripButton60.Image = global::DSA_lims.Properties.Resources._new;
-            this.toolStripButton60.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton60.Name = "toolStripButton60";
-            this.toolStripButton60.Size = new System.Drawing.Size(51, 22);
-            this.toolStripButton60.Text = "New";
-            this.toolStripButton60.Click += new System.EventHandler(this.miNewMunicipality_Click);
+            this.btnNewMunicipality.Image = global::DSA_lims.Properties.Resources._new;
+            this.btnNewMunicipality.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnNewMunicipality.Name = "btnNewMunicipality";
+            this.btnNewMunicipality.Size = new System.Drawing.Size(51, 22);
+            this.btnNewMunicipality.Text = "New";
+            this.btnNewMunicipality.Click += new System.EventHandler(this.miNewMunicipality_Click);
             // 
-            // toolStripButton61
+            // btnEditMunicipality
             // 
-            this.toolStripButton61.Image = global::DSA_lims.Properties.Resources.edit;
-            this.toolStripButton61.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton61.Name = "toolStripButton61";
-            this.toolStripButton61.Size = new System.Drawing.Size(47, 22);
-            this.toolStripButton61.Text = "Edit";
-            this.toolStripButton61.Click += new System.EventHandler(this.miEditMunicipality_Click);
+            this.btnEditMunicipality.Image = global::DSA_lims.Properties.Resources.edit;
+            this.btnEditMunicipality.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnEditMunicipality.Name = "btnEditMunicipality";
+            this.btnEditMunicipality.Size = new System.Drawing.Size(47, 22);
+            this.btnEditMunicipality.Text = "Edit";
+            this.btnEditMunicipality.Click += new System.EventHandler(this.miEditMunicipality_Click);
             // 
-            // toolStripButton78
+            // btnDeleteMunicipality
             // 
-            this.toolStripButton78.Image = global::DSA_lims.Properties.Resources.delete;
-            this.toolStripButton78.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton78.Name = "toolStripButton78";
-            this.toolStripButton78.Size = new System.Drawing.Size(60, 22);
-            this.toolStripButton78.Text = "Delete";
-            this.toolStripButton78.Click += new System.EventHandler(this.miDeleteMunicipality_Click);
+            this.btnDeleteMunicipality.Image = global::DSA_lims.Properties.Resources.delete;
+            this.btnDeleteMunicipality.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnDeleteMunicipality.Name = "btnDeleteMunicipality";
+            this.btnDeleteMunicipality.Size = new System.Drawing.Size(60, 22);
+            this.btnDeleteMunicipality.Text = "Delete";
+            this.btnDeleteMunicipality.Click += new System.EventHandler(this.miDeleteMunicipality_Click);
             // 
             // tabSysAccredRules
             // 
@@ -10951,7 +10951,7 @@
         private System.Windows.Forms.ListBox lbSampleTypesComponents;
         private System.Windows.Forms.ToolStrip toolsTypeRelSampComp;
         private System.Windows.Forms.ToolStripButton btnTypeRelSampTypeCompAdd;
-        private System.Windows.Forms.ToolStripButton toolStripButton44;
+        private System.Windows.Forms.ToolStripButton btnTypeRelSampTypeCompEdit;
         private System.Windows.Forms.ListBox lbSampleTypesInheritedComponents;
         private System.Windows.Forms.ToolStrip toolsTypeRelSampCompInherit;
         private System.Windows.Forms.ToolStripLabel toolStripLabel25;
@@ -11078,12 +11078,12 @@
         private System.Windows.Forms.SplitContainer splitContainer19;
         private System.Windows.Forms.DataGridView gridSysCounty;
         private System.Windows.Forms.ToolStrip toolsSysCounties;
-        private System.Windows.Forms.ToolStripButton toolStripButton58;
-        private System.Windows.Forms.ToolStripButton toolStripButton59;
+        private System.Windows.Forms.ToolStripButton btnNewCounty;
+        private System.Windows.Forms.ToolStripButton btnEditCounty;
         private System.Windows.Forms.DataGridView gridSysMunicipality;
         private System.Windows.Forms.ToolStrip toolsSysMunicipalities;
-        private System.Windows.Forms.ToolStripButton toolStripButton60;
-        private System.Windows.Forms.ToolStripButton toolStripButton61;
+        private System.Windows.Forms.ToolStripButton btnNewMunicipality;
+        private System.Windows.Forms.ToolStripButton btnEditMunicipality;
         private System.Windows.Forms.TabPage tabSysAccredRules;
         private System.Windows.Forms.DataGridView dataGridView22;
         private System.Windows.Forms.ToolStrip toolsSysAccredRules;
@@ -11123,9 +11123,9 @@
         private System.Windows.Forms.DataGridView gridSysGeom;
         private System.Windows.Forms.ToolStripButton toolStripButton76;
         private System.Windows.Forms.ToolStripLabel toolStripLabel32;
-        private System.Windows.Forms.ToolStripButton toolStripButton77;
+        private System.Windows.Forms.ToolStripButton btnDeleteCounty;
         private System.Windows.Forms.ToolStripLabel toolStripLabel33;
-        private System.Windows.Forms.ToolStripButton toolStripButton78;
+        private System.Windows.Forms.ToolStripButton btnDeleteMunicipality;
         private System.Windows.Forms.ToolStripLabel toolStripLabel34;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
@@ -11166,14 +11166,14 @@
         private System.Windows.Forms.ToolStripButton btnTypeRelSampleTypesDelete;
         private System.Windows.Forms.ToolStripLabel toolStripLabel48;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator36;
-        private System.Windows.Forms.ToolStripButton toolStripButton88;
+        private System.Windows.Forms.ToolStripButton btnTypeRelSampTypeCompDelete;
         private System.Windows.Forms.ToolStripLabel toolStripLabel49;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator37;
         private System.Windows.Forms.ToolStripButton toolStripButton89;
         private System.Windows.Forms.ToolStripLabel toolStripLabel50;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator38;
         private System.Windows.Forms.ToolStripButton btnTypeRelSampTypePrepMethAdd;
-        private System.Windows.Forms.ToolStripButton toolStripButton92;
+        private System.Windows.Forms.ToolStripButton btnPreparationMethodDelete;
         private System.Windows.Forms.ToolStripLabel toolStripLabel51;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator39;
         private System.Windows.Forms.ToolStripButton toolStripButton91;
@@ -11279,7 +11279,7 @@
         private System.Windows.Forms.ToolStripMenuItem samplerToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem samplingmethodToolStripMenuItem1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator47;
-        private System.Windows.Forms.ToolStripButton toolStripButton96;
+        private System.Windows.Forms.ToolStripButton btnSamplesPrepAnal;
         private System.Windows.Forms.TabPage tabPrepAnal;
         private System.Windows.Forms.ToolStrip toolStrip7;
         private System.Windows.Forms.TabControl tabsPrepAnal;
@@ -11453,8 +11453,8 @@
         private System.Windows.Forms.TreeView treePrepAnal;
         private System.Windows.Forms.SplitContainer splitContainer4;
         private System.Windows.Forms.Panel panel31;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
-        private System.Windows.Forms.ToolStripButton toolStripButton8;
+        private System.Windows.Forms.ToolStripMenuItem miSamplesSetOrder;
+        private System.Windows.Forms.ToolStripButton btnSamplesSetOrder;
         private System.Windows.Forms.ToolStripButton btnPrepAnalAddPrep;
         private System.Windows.Forms.ToolStripButton btnPrepAnalAddAnal;
         private System.Windows.Forms.ToolStrip toolStrip10;

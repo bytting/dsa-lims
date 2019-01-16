@@ -472,18 +472,33 @@ namespace DSA_lims
             btnMenuNewSample.Enabled = btnMenuSamples.Enabled = btnMenuNewOrder.Enabled = btnOrders.Enabled = btnMenuCustomer.Enabled = btnMenuProjects.Enabled = btnMenuMetadata.Enabled = btnMenuSearch.Enabled = isAdmin;
 
             miTypeRelSampleTypesNewRoot.Enabled = btnTypeRelSampleTypesNewRoot.Enabled = miTypeRelSampleTypesNew.Enabled = btnTypeRelSampleTypesNew.Enabled = miTypeRelSampleTypesEdit.Enabled = btnTypeRelSampleTypesEdit.Enabled = miTypeRelSampleTypesDelete.Enabled = btnTypeRelSampleTypesDelete.Enabled = isAdmin;
+            miNewLaboratory.Enabled = miEditLaboratory.Enabled = miDeleteLaboratory.Enabled = btnMetaLabNew.Enabled = btnMetaLabEdit.Enabled = btnMetaLabDelete.Enabled = isAdmin;
+            miNewUser.Enabled = miEditUser.Enabled = miDeleteUser.Enabled = btnMetaUsersNew.Enabled = btnMetaUsersEdit.Enabled = btnMetaUsersDelete.Enabled = isAdmin;
+            miNewCounty.Enabled = miEditCounty.Enabled = miDeleteCounty.Enabled = miNewMunicipality.Enabled = miEditMunicipality.Enabled = miDeleteMunicipality.Enabled = isAdmin;
+            btnNewCounty.Enabled = btnEditCounty.Enabled = btnDeleteCounty.Enabled = btnNewMunicipality.Enabled = btnEditMunicipality.Enabled = btnDeleteMunicipality.Enabled = isAdmin;
+            miTypeRelSampleTypesCompNew.Enabled = miTypeRelSampleTypesCompEdit.Enabled = btnTypeRelSampTypeCompAdd.Enabled = btnTypeRelSampTypeCompEdit.Enabled = btnTypeRelSampTypeCompDelete.Enabled = isAdmin;
+            miPreparationMethodsNew.Enabled = miPreparationMethodEdit.Enabled = miPreparationMethodDelete.Enabled = btnTypeRelSampTypePrepMethAdd.Enabled = btnPreparationMethodDelete.Enabled = isAdmin;
+            miSamplesSetOrder.Enabled = btnSamplesSetOrder.Enabled = btnSampleAddSampleToOrder.Enabled = isAdmin;
+            miSamplesPrepAnal.Enabled = btnSamplesPrepAnal.Enabled = btnSampleGoToPrepAnal.Enabled = isAdmin;
+
+            // FIXME: Accreditation rules
 
             if (Roles.HasAccess(Role.LaboratoryAdministrator))
-            {
-                miSearchView.Visible = true;
+            {                
                 miSearchView.Enabled = miProjectsView.Enabled = miCustomersView.Enabled = miTypeRelationsView.Enabled = miMetadataView.Enabled = miSystemDataView.Enabled = miAuditLogView.Enabled = true;
                 btnMenuNewSample.Enabled = btnMenuSamples.Enabled = btnMenuNewOrder.Enabled = btnOrders.Enabled = btnMenuCustomer.Enabled = btnMenuProjects.Enabled = btnMenuMetadata.Enabled = btnMenuSearch.Enabled = true;
+                miPreparationMethodsNew.Enabled = miPreparationMethodEdit.Enabled = miPreparationMethodDelete.Enabled = btnTypeRelSampTypePrepMethAdd.Enabled = btnPreparationMethodDelete.Enabled = true;
+                miSamplesSetOrder.Enabled = btnSamplesSetOrder.Enabled = btnSampleAddSampleToOrder.Enabled = true;
+                miSamplesPrepAnal.Enabled = btnSamplesPrepAnal.Enabled = btnSampleGoToPrepAnal.Enabled = true;
             }
 
             if (Roles.HasAccess(Role.LaboratoryOperator))
             {
                 miMetadataView.Visible = true;
                 btnMenuSamples.Enabled = btnMenuNewSample.Enabled = true;
+                miSearchView.Enabled = btnMenuSearch.Enabled = true;
+                miSamplesSetOrder.Enabled = btnSamplesSetOrder.Enabled = btnSampleAddSampleToOrder.Enabled = true;
+                miSamplesPrepAnal.Enabled = btnSamplesPrepAnal.Enabled = btnSampleGoToPrepAnal.Enabled = true;
             }
 
             if (Roles.HasAccess(Role.SampleRegistration))

@@ -563,10 +563,10 @@
             this.toolsTypeRelSamp = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel47 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator35 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton41 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton42 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton87 = new System.Windows.Forms.ToolStripButton();
+            this.btnTypeRelSampleTypesNewRoot = new System.Windows.Forms.ToolStripButton();
+            this.btnTypeRelSampleTypesNew = new System.Windows.Forms.ToolStripButton();
+            this.btnTypeRelSampleTypesEdit = new System.Windows.Forms.ToolStripButton();
+            this.btnTypeRelSampleTypesDelete = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator44 = new System.Windows.Forms.ToolStripSeparator();
             this.btnTypeRelSampTypeExport = new System.Windows.Forms.ToolStripDropDownButton();
             this.simpleSampleTypeListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -6659,10 +6659,10 @@
             this.toolsTypeRelSamp.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripLabel47,
             this.toolStripSeparator35,
-            this.toolStripButton1,
-            this.toolStripButton41,
-            this.toolStripButton42,
-            this.toolStripButton87,
+            this.btnTypeRelSampleTypesNewRoot,
+            this.btnTypeRelSampleTypesNew,
+            this.btnTypeRelSampleTypesEdit,
+            this.btnTypeRelSampleTypesDelete,
             this.toolStripSeparator44,
             this.btnTypeRelSampTypeExport});
             this.toolsTypeRelSamp.Location = new System.Drawing.Point(0, 0);
@@ -6683,41 +6683,41 @@
             this.toolStripSeparator35.Name = "toolStripSeparator35";
             this.toolStripSeparator35.Size = new System.Drawing.Size(6, 25);
             // 
-            // toolStripButton1
+            // btnTypeRelSampleTypesNewRoot
             // 
-            this.toolStripButton1.Image = global::DSA_lims.Properties.Resources._new;
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(76, 22);
-            this.toolStripButton1.Text = "New root";
-            this.toolStripButton1.Click += new System.EventHandler(this.miTypeRelSampleTypesNewRoot_Click);
+            this.btnTypeRelSampleTypesNewRoot.Image = global::DSA_lims.Properties.Resources._new;
+            this.btnTypeRelSampleTypesNewRoot.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnTypeRelSampleTypesNewRoot.Name = "btnTypeRelSampleTypesNewRoot";
+            this.btnTypeRelSampleTypesNewRoot.Size = new System.Drawing.Size(76, 22);
+            this.btnTypeRelSampleTypesNewRoot.Text = "New root";
+            this.btnTypeRelSampleTypesNewRoot.Click += new System.EventHandler(this.miTypeRelSampleTypesNewRoot_Click);
             // 
-            // toolStripButton41
+            // btnTypeRelSampleTypesNew
             // 
-            this.toolStripButton41.Image = global::DSA_lims.Properties.Resources._new;
-            this.toolStripButton41.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton41.Name = "toolStripButton41";
-            this.toolStripButton41.Size = new System.Drawing.Size(51, 22);
-            this.toolStripButton41.Text = "New";
-            this.toolStripButton41.Click += new System.EventHandler(this.miSampleTypesNew_Click);
+            this.btnTypeRelSampleTypesNew.Image = global::DSA_lims.Properties.Resources._new;
+            this.btnTypeRelSampleTypesNew.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnTypeRelSampleTypesNew.Name = "btnTypeRelSampleTypesNew";
+            this.btnTypeRelSampleTypesNew.Size = new System.Drawing.Size(51, 22);
+            this.btnTypeRelSampleTypesNew.Text = "New";
+            this.btnTypeRelSampleTypesNew.Click += new System.EventHandler(this.miSampleTypesNew_Click);
             // 
-            // toolStripButton42
+            // btnTypeRelSampleTypesEdit
             // 
-            this.toolStripButton42.Image = global::DSA_lims.Properties.Resources.edit;
-            this.toolStripButton42.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton42.Name = "toolStripButton42";
-            this.toolStripButton42.Size = new System.Drawing.Size(47, 22);
-            this.toolStripButton42.Text = "Edit";
-            this.toolStripButton42.Click += new System.EventHandler(this.miSampleTypesEdit_Click);
+            this.btnTypeRelSampleTypesEdit.Image = global::DSA_lims.Properties.Resources.edit;
+            this.btnTypeRelSampleTypesEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnTypeRelSampleTypesEdit.Name = "btnTypeRelSampleTypesEdit";
+            this.btnTypeRelSampleTypesEdit.Size = new System.Drawing.Size(47, 22);
+            this.btnTypeRelSampleTypesEdit.Text = "Edit";
+            this.btnTypeRelSampleTypesEdit.Click += new System.EventHandler(this.miSampleTypesEdit_Click);
             // 
-            // toolStripButton87
+            // btnTypeRelSampleTypesDelete
             // 
-            this.toolStripButton87.Image = global::DSA_lims.Properties.Resources.delete;
-            this.toolStripButton87.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton87.Name = "toolStripButton87";
-            this.toolStripButton87.Size = new System.Drawing.Size(60, 22);
-            this.toolStripButton87.Text = "Delete";
-            this.toolStripButton87.Click += new System.EventHandler(this.miSampleTypesDelete_Click);
+            this.btnTypeRelSampleTypesDelete.Image = global::DSA_lims.Properties.Resources.delete;
+            this.btnTypeRelSampleTypesDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnTypeRelSampleTypesDelete.Name = "btnTypeRelSampleTypesDelete";
+            this.btnTypeRelSampleTypesDelete.Size = new System.Drawing.Size(60, 22);
+            this.btnTypeRelSampleTypesDelete.Text = "Delete";
+            this.btnTypeRelSampleTypesDelete.Click += new System.EventHandler(this.miSampleTypesDelete_Click);
             // 
             // toolStripSeparator44
             // 
@@ -9299,10 +9299,10 @@
             // 
             this.tabPrepAnalPreps.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.tabPrepAnalPreps.Controls.Add(this.splitContainer3);
-            this.tabPrepAnalPreps.Location = new System.Drawing.Point(4, 24);
+            this.tabPrepAnalPreps.Location = new System.Drawing.Point(4, 22);
             this.tabPrepAnalPreps.Name = "tabPrepAnalPreps";
             this.tabPrepAnalPreps.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPrepAnalPreps.Size = new System.Drawing.Size(759, 598);
+            this.tabPrepAnalPreps.Size = new System.Drawing.Size(759, 600);
             this.tabPrepAnalPreps.TabIndex = 3;
             this.tabPrepAnalPreps.Text = "Preparations";
             // 
@@ -9808,10 +9808,10 @@
             this.tabPrepAnalAnalysis.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.tabPrepAnalAnalysis.Controls.Add(this.panel76);
             this.tabPrepAnalAnalysis.Controls.Add(this.panel63);
-            this.tabPrepAnalAnalysis.Location = new System.Drawing.Point(4, 24);
+            this.tabPrepAnalAnalysis.Location = new System.Drawing.Point(4, 22);
             this.tabPrepAnalAnalysis.Name = "tabPrepAnalAnalysis";
             this.tabPrepAnalAnalysis.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPrepAnalAnalysis.Size = new System.Drawing.Size(759, 598);
+            this.tabPrepAnalAnalysis.Size = new System.Drawing.Size(759, 600);
             this.tabPrepAnalAnalysis.TabIndex = 4;
             this.tabPrepAnalAnalysis.Text = "Analyses";
             // 
@@ -9821,7 +9821,7 @@
             this.panel76.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel76.Location = new System.Drawing.Point(3, 287);
             this.panel76.Name = "panel76";
-            this.panel76.Size = new System.Drawing.Size(753, 308);
+            this.panel76.Size = new System.Drawing.Size(753, 310);
             this.panel76.TabIndex = 3;
             // 
             // panel9
@@ -9831,7 +9831,7 @@
             this.panel9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel9.Location = new System.Drawing.Point(0, 0);
             this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(753, 308);
+            this.panel9.Size = new System.Drawing.Size(753, 310);
             this.panel9.TabIndex = 4;
             // 
             // gridPrepAnalResults
@@ -9850,7 +9850,7 @@
             this.gridPrepAnalResults.ReadOnly = true;
             this.gridPrepAnalResults.RowHeadersVisible = false;
             this.gridPrepAnalResults.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridPrepAnalResults.Size = new System.Drawing.Size(753, 283);
+            this.gridPrepAnalResults.Size = new System.Drawing.Size(753, 285);
             this.gridPrepAnalResults.TabIndex = 0;
             // 
             // toolsSampleResRes
@@ -10939,8 +10939,8 @@
         private System.Windows.Forms.SplitContainer splitContainer12;
         private System.Windows.Forms.ToolStrip toolsTypeRelSamp;
         private System.Windows.Forms.TreeView treeSampleTypes;
-        private System.Windows.Forms.ToolStripButton toolStripButton41;
-        private System.Windows.Forms.ToolStripButton toolStripButton42;
+        private System.Windows.Forms.ToolStripButton btnTypeRelSampleTypesNew;
+        private System.Windows.Forms.ToolStripButton btnTypeRelSampleTypesEdit;
         private System.Windows.Forms.TabControl tabControl2;
         private System.Windows.Forms.TabPage tabTypeRelationsSampleTypes;
         private System.Windows.Forms.TabPage tabTypeRelationsPrepMeth;
@@ -11163,7 +11163,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator32;
         private System.Windows.Forms.ToolStripLabel toolStripLabel47;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator35;
-        private System.Windows.Forms.ToolStripButton toolStripButton87;
+        private System.Windows.Forms.ToolStripButton btnTypeRelSampleTypesDelete;
         private System.Windows.Forms.ToolStripLabel toolStripLabel48;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator36;
         private System.Windows.Forms.ToolStripButton toolStripButton88;
@@ -11689,7 +11689,7 @@
         private System.Windows.Forms.ToolStrip toolStrip18;
         private System.Windows.Forms.ToolStripLabel toolStripLabel61;
         private System.Windows.Forms.ToolStripMenuItem miTypeRelSampleTypesNewRoot;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripButton btnTypeRelSampleTypesNewRoot;
         private System.Windows.Forms.ToolStripStatusLabel lblCurrentUser;
         private System.Windows.Forms.ToolStripMenuItem printToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem miSamplesPrintSampleLabels;

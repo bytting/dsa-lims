@@ -254,6 +254,7 @@ namespace DSA_lims
                 panelSampleLatLonAlt_Resize(null, null);
 
                 HideMenuItems();
+                SetMenuItemVisibilities();
 
                 ActiveControl = tbMenuLookup;
 
@@ -464,6 +465,43 @@ namespace DSA_lims
             miFile.Text = r.GetString(miFile.Name);
         }        
 
+        private void SetMenuItemVisibilities()
+        {
+            bool isAdmin = Roles.IsAdmin();
+            miSearchView.Enabled = miProjectsView.Enabled = miCustomersView.Enabled = miTypeRelationsView.Enabled = miMetadataView.Enabled = miSystemDataView.Enabled = miAuditLogView.Enabled = isAdmin;
+            btnMenuNewSample.Enabled = btnMenuSamples.Enabled = btnMenuNewOrder.Enabled = btnOrders.Enabled = btnMenuCustomer.Enabled = btnMenuProjects.Enabled = btnMenuMetadata.Enabled = btnMenuSearch.Enabled = isAdmin;
+
+            miTypeRelSampleTypesNewRoot.Enabled = btnTypeRelSampleTypesNewRoot.Enabled = miTypeRelSampleTypesNew.Enabled = btnTypeRelSampleTypesNew.Enabled = miTypeRelSampleTypesEdit.Enabled = btnTypeRelSampleTypesEdit.Enabled = miTypeRelSampleTypesDelete.Enabled = btnTypeRelSampleTypesDelete.Enabled = isAdmin;
+
+            if (Roles.HasAccess(Role.LaboratoryAdministrator))
+            {
+                miSearchView.Visible = true;
+                miSearchView.Enabled = miProjectsView.Enabled = miCustomersView.Enabled = miTypeRelationsView.Enabled = miMetadataView.Enabled = miSystemDataView.Enabled = miAuditLogView.Enabled = true;
+                btnMenuNewSample.Enabled = btnMenuSamples.Enabled = btnMenuNewOrder.Enabled = btnOrders.Enabled = btnMenuCustomer.Enabled = btnMenuProjects.Enabled = btnMenuMetadata.Enabled = btnMenuSearch.Enabled = true;
+            }
+
+            if (Roles.HasAccess(Role.LaboratoryOperator))
+            {
+                miMetadataView.Visible = true;
+                btnMenuSamples.Enabled = btnMenuNewSample.Enabled = true;
+            }
+
+            if (Roles.HasAccess(Role.SampleRegistration))
+            {
+                btnMenuSamples.Enabled = btnMenuNewSample.Enabled = true;
+            }
+
+            if (Roles.HasAccess(Role.OrderAdministrator))
+            {
+                btnMenuNewOrder.Enabled = btnOrders.Enabled = true;
+            }
+
+            if (Roles.HasAccess(Role.OrderOperator))
+            {
+                btnMenuNewOrder.Enabled = btnOrders.Enabled = true;
+            }
+        }
+
         private void tabs_SelectedIndexChanged(object sender, EventArgs e)
         {
             lblCurrentTab.Text = tabs.SelectedTab.Text;            
@@ -473,27 +511,7 @@ namespace DSA_lims
             if (tabs.SelectedTab == tabMenu)
             {
                 tbMenuLookup.Text = "";
-                ActiveControl = tbMenuLookup;
-
-                if (!Roles.HasAccess(Role.OrderAdministrator, Role.OrderOperator))
-                {                
-                    btnMenuNewOrder.Enabled = btnOrders.Enabled = false;
-                }
-                else
-                {
-                    btnMenuNewOrder.Enabled = btnOrders.Enabled = true;
-                }
-
-                if (!Roles.HasAccess(Role.LaboratoryAdministrator, Role.LaboratoryOperator, Role.SampleRegistration))
-                {
-                    miSamplesNew.Enabled = miSamplesImport.Enabled = miSamplesEdit.Enabled = miSamplesDelete.Enabled = false;
-                    btnMenuSamples.Enabled = btnMenuNewSample.Enabled = false;
-                }
-                else
-                {
-                    miSamplesNew.Enabled = miSamplesImport.Enabled = miSamplesEdit.Enabled = miSamplesDelete.Enabled = true;
-                    btnMenuSamples.Enabled = btnMenuNewSample.Enabled = true;
-                }
+                ActiveControl = tbMenuLookup;                
             }
             else if (tabs.SelectedTab == tabSample)
             {

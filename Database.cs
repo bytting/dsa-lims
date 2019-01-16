@@ -282,9 +282,10 @@ namespace DSA_lims
             SqlCommand cmd = new SqlCommand("", conn, trans);
             if (storedYear < currentYear)
             {
-                cmd.CommandText = "update laboratory set last_assignment_counter_year = @year, assignment_counter = 1";
+                cmd.CommandText = "update laboratory set last_assignment_counter_year = @year, assignment_counter = 1 where id = @id";
                 cmd.CommandType = CommandType.Text;
                 cmd.Parameters.AddWithValue("@year", currentYear);
+                cmd.Parameters.AddWithValue("@id", labId);
                 cmd.ExecuteNonQuery();
             }
 

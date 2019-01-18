@@ -25,7 +25,7 @@ namespace DSA_lims
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                gridSamples.DataSource = DB.GetDataTable(conn, query, CommandType.Text);
+                gridSamples.DataSource = DB.GetDataTable(conn, null, query, CommandType.Text);
             }
 
             gridSamples.Columns["id"].Visible = false;

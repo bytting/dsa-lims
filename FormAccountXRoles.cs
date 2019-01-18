@@ -51,7 +51,7 @@ namespace DSA_lims
                     query = "select id, name from role order by name";
                 else query = "select id, name from role where id not in(" + sroles + ") order by name";
 
-                using (SqlDataReader reader = DB.GetDataReader(conn, query, CommandType.Text))
+                using (SqlDataReader reader = DB.GetDataReader(conn, null, query, CommandType.Text))
                 {
                     lbRoles.Items.Clear();
 

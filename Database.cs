@@ -78,10 +78,11 @@ namespace DSA_lims
             else return o.ToString();
         }
 
-        public static DataTable GetDataTable(SqlConnection conn, string query, CommandType queryType, params SqlParameter[] parameters)
+        public static DataTable GetDataTable(SqlConnection conn, SqlTransaction trans, string query, CommandType queryType, params SqlParameter[] parameters)
         {
             SqlDataAdapter adapter = new SqlDataAdapter(query, conn);
-            adapter.SelectCommand.CommandType = queryType;
+            adapter.SelectCommand.CommandType = queryType;            
+            adapter.SelectCommand.Transaction = trans;
             adapter.SelectCommand.Parameters.AddRange(parameters);
             DataTable dt = new DataTable();
             adapter.Fill(dt);
@@ -90,40 +91,26 @@ namespace DSA_lims
 
         public static SqlDataReader GetDataReader(SqlConnection conn, SqlTransaction trans, string query, CommandType queryType, params SqlParameter[] parameters)
         {
-            SqlCommand cmd = new SqlCommand(query, conn);
-            if (trans != null)
-                cmd.Transaction = trans;
+            SqlCommand cmd = new SqlCommand(query, conn, trans);
             cmd.CommandType = queryType;
             cmd.Parameters.AddRange(parameters);
             return cmd.ExecuteReader();
         }
 
-        public static SqlDataReader GetDataReader(SqlConnection conn, string query, CommandType queryType, params SqlParameter[] parameters)
-        {
-            return GetDataReader(conn, null, query, queryType, parameters);
-        }
-
         public static object GetScalar(SqlConnection conn, SqlTransaction trans, string query, CommandType queryType, params SqlParameter[] parameters)
         {
-            SqlCommand cmd = new SqlCommand(query, conn);
-            if (trans != null)
-                cmd.Transaction = trans;
+            SqlCommand cmd = new SqlCommand(query, conn, trans);
             cmd.CommandType = queryType;
             cmd.Parameters.AddRange(parameters);
             return cmd.ExecuteScalar();
         }
 
-        public static object GetScalar(SqlConnection conn, string query, CommandType queryType, params SqlParameter[] parameters)
-        {
-            return GetScalar(conn, null, query, queryType, parameters);
-        }
-
-        public static List<Lemma<double?, string>> GetSigmaValues(SqlConnection conn)
+        public static List<Lemma<double?, string>> GetSigmaValues(SqlConnection conn, SqlTransaction trans = null)
         {
             List<Lemma<double?, string>> lst = new List<Lemma<double?, string>>();
             lst.Add(new Lemma<double?, string>(null, ""));
 
-            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_sigma_values", CommandType.StoredProcedure, new SqlParameter[] { }))
+            using (SqlDataReader reader = DB.GetDataReader(conn, trans, "csp_select_sigma_values", CommandType.StoredProcedure, new SqlParameter[] { }))
             {
                 while(reader.Read())
                     lst.Add(new Lemma<double?, string>(reader.GetDouble(0), reader.GetString(1)));
@@ -132,12 +119,12 @@ namespace DSA_lims
             return lst;
         }
 
-        public static List<Lemma<double?, string>> GetSigmaMDAValues(SqlConnection conn)
+        public static List<Lemma<double?, string>> GetSigmaMDAValues(SqlConnection conn, SqlTransaction trans = null)
         {
             List<Lemma<double?, string>> lst = new List<Lemma<double?, string>>();
             lst.Add(new Lemma<double?, string>(null, ""));
 
-            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_sigma_mda_values", CommandType.StoredProcedure, new SqlParameter[] { }))
+            using (SqlDataReader reader = DB.GetDataReader(conn, trans, "csp_select_sigma_mda_values", CommandType.StoredProcedure, new SqlParameter[] { }))
             {
                 while (reader.Read())
                     lst.Add(new Lemma<double?, string>(reader.GetDouble(0), reader.GetString(1)));
@@ -159,7 +146,7 @@ namespace DSA_lims
             cmd.ExecuteNonQuery();
         }
 
-        public static List<Lemma<int?, string>> GetIntLemmata(SqlConnection conn, string proc, bool addEmptyEntry = false)
+        public static List<Lemma<int?, string>> GetIntLemmata(SqlConnection conn, SqlTransaction trans, string proc, bool addEmptyEntry = false)
         {
             List<Lemma<int?, string>> list = new List<Lemma<int?, string>>();
 
@@ -168,7 +155,7 @@ namespace DSA_lims
 
             try
             {
-                using (SqlDataReader reader = DB.GetDataReader(conn, proc, CommandType.StoredProcedure))
+                using (SqlDataReader reader = DB.GetDataReader(conn, trans, proc, CommandType.StoredProcedure))
                 {
                     while (reader.Read())
                         list.Add(new Lemma<int?, string>(Convert.ToInt32(reader["id"]), reader["name"].ToString()));
@@ -265,6 +252,19 @@ namespace DSA_lims
             cmd.CommandType = CommandType.Text;
             cmd.Parameters.AddWithValue("@id", labId);
             return cmd.ExecuteScalar().ToString();
+        }
+
+        public static bool IsOrderClosed(SqlConnection conn, SqlTransaction trans, Guid orderId)
+        {
+            SqlCommand cmd = new SqlCommand("select instance_status from assignment where id = @id", conn, trans);
+            cmd.CommandType = CommandType.Text;
+            cmd.Parameters.AddWithValue("@id", orderId);            
+
+            object o = cmd.ExecuteScalar();
+            if (o == null || o == DBNull.Value)
+                return false;
+
+            return Convert.ToInt32(o) == WorkflowStatus.Complete;
         }
 
         public static int GetNextOrderCount(SqlConnection conn, SqlTransaction trans, Guid labId)
@@ -367,9 +367,9 @@ namespace DSA_lims
             }
         }
 
-        public static int GetSampleNumber(SqlConnection conn, Guid sampleId)
+        public static int GetSampleNumber(SqlConnection conn, SqlTransaction trans, Guid sampleId)
         {
-            SqlCommand cmd = new SqlCommand("select number from sample where id = @sample_id", conn);
+            SqlCommand cmd = new SqlCommand("select number from sample where id = @sample_id", conn, trans);
             cmd.CommandType = CommandType.Text;
             cmd.Parameters.AddWithValue("@sample_id", sampleId);
             object o = cmd.ExecuteScalar();
@@ -381,9 +381,7 @@ namespace DSA_lims
 
         public static int GetNextPreparationNumber(SqlConnection conn, SqlTransaction trans, Guid sampleId)
         {
-            SqlCommand cmd = new SqlCommand("select max(number) from preparation where sample_id = @sample_id", conn);
-            if(trans != null)
-                cmd.Transaction = trans;
+            SqlCommand cmd = new SqlCommand("select max(number) from preparation where sample_id = @sample_id", conn, trans);
             cmd.CommandType = CommandType.Text;
             cmd.Parameters.AddWithValue("@sample_id", sampleId);
             object o = cmd.ExecuteScalar();
@@ -395,9 +393,7 @@ namespace DSA_lims
 
         public static int GetNextAnalysisNumber(SqlConnection conn, SqlTransaction trans, Guid prepId)
         {
-            SqlCommand cmd = new SqlCommand("select max(number) from analysis where preparation_id = @prep_id", conn);
-            if(trans != null)
-                cmd.Transaction = trans;
+            SqlCommand cmd = new SqlCommand("select max(number) from analysis where preparation_id = @prep_id", conn, trans);
             cmd.CommandType = CommandType.Text;
             cmd.Parameters.AddWithValue("@prep_id", prepId);
             object o = cmd.ExecuteScalar();
@@ -407,11 +403,11 @@ namespace DSA_lims
             return Convert.ToInt32(o) + 1;
         }
 
-        public static void LoadSampleTypes(SqlConnection conn)
+        public static void LoadSampleTypes(SqlConnection conn, SqlTransaction trans)
         {
             Common.SampleTypeList.Clear();            
 
-            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_sample_types", CommandType.StoredProcedure))
+            using (SqlDataReader reader = DB.GetDataReader(conn, trans, "csp_select_sample_types", CommandType.StoredProcedure))
             {
                 while (reader.Read())
                 {
@@ -454,9 +450,7 @@ namespace DSA_lims
         {
             List<string> names = new List<string>();
             names.Add("");
-            SqlCommand cmd = new SqlCommand("select name from nuclide order by name", conn);
-            if (trans != null)
-                cmd.Transaction = trans;
+            SqlCommand cmd = new SqlCommand("select name from nuclide order by name", conn, trans);
             cmd.CommandType = CommandType.Text;
             using (SqlDataReader reader = cmd.ExecuteReader())
             {
@@ -477,11 +471,9 @@ select n.name
 from nuclide n, analysis_method_x_nuclide amxn
 where amxn.nuclide_id = n.id and amxn.analysis_method_id = @aid
 order by name
-", conn);
+", conn, trans);
             cmd.CommandType = CommandType.Text;
             cmd.Parameters.AddWithValue("@aid", analysisMethodId);
-            if (trans != null)
-                cmd.Transaction = trans;            
             using (SqlDataReader reader = cmd.ExecuteReader())
             {
                 while (reader.Read())
@@ -492,9 +484,9 @@ order by name
             return names;
         }
 
-        public static string GetAccountNameFromUsername(SqlConnection conn, string username)
+        public static string GetAccountNameFromUsername(SqlConnection conn, SqlTransaction trans, string username)
         {
-            object o = DB.GetScalar(conn, "select name + ' (' + email + ')' as 'name' from cv_account where username = @username", CommandType.Text, new[] {
+            object o = DB.GetScalar(conn, trans, "select name + ' (' + email + ')' as 'name' from cv_account where username = @username", CommandType.Text, new[] {
                 new SqlParameter("@username", username)
             });
 
@@ -504,7 +496,7 @@ order by name
             return o.ToString();
         }
 
-        public static void LoadUserRoles(SqlConnection conn, Guid userId, ref List<string> userRoles)
+        public static void LoadUserRoles(SqlConnection conn, SqlTransaction trans, Guid userId, ref List<string> userRoles)
         {
             userRoles.Clear();
 
@@ -513,7 +505,7 @@ select r.name
 from role r
     inner join account_x_role axr on axr.role_id = r.id and axr.account_id = @account_id
 ";
-            using (SqlDataReader reader = DB.GetDataReader(conn, query, CommandType.Text, new[] {
+            using (SqlDataReader reader = DB.GetDataReader(conn, trans, query, CommandType.Text, new[] {
                 new SqlParameter("@account_id", userId)
             }))
             {
@@ -524,9 +516,9 @@ from role r
             }
         }
 
-        public static bool SampleHasRequiredFields(SqlConnection conn, Guid sampleId)
+        public static bool SampleHasRequiredFields(SqlConnection conn, SqlTransaction trans, Guid sampleId)
         {
-            object o = DB.GetScalar(conn, "select reference_date from sample where id = @id", CommandType.Text, new[] {
+            object o = DB.GetScalar(conn, trans, "select reference_date from sample where id = @id", CommandType.Text, new[] {
                 new SqlParameter("@id", sampleId)
             });
 
@@ -536,9 +528,9 @@ from role r
             return true;
         }
 
-        public static void AddAttachment(SqlConnection conn, string sourceTable, Guid sourceId, string docName, string docExtension, byte[] data)
+        public static void AddAttachment(SqlConnection conn, SqlTransaction trans, string sourceTable, Guid sourceId, string docName, string docExtension, byte[] data)
         {            
-            SqlCommand cmd = new SqlCommand("insert into attachment values(@id, @source_table, @source_id, @label, @file_extension, @content, @create_date, @created_by)", conn);
+            SqlCommand cmd = new SqlCommand("insert into attachment values(@id, @source_table, @source_id, @label, @file_extension, @content, @create_date, @created_by)", conn, trans);
             cmd.Parameters.AddWithValue("@id", Guid.NewGuid());
             cmd.Parameters.AddWithValue("@source_table", sourceTable);
             cmd.Parameters.AddWithValue("@source_id", sourceId);
@@ -550,30 +542,45 @@ from role r
             cmd.ExecuteNonQuery();
         }
 
-        public static void DeleteAttachment(SqlConnection conn, string sourceTable, Guid sourceId)
+        public static void DeleteAttachment(SqlConnection conn, SqlTransaction trans, string sourceTable, Guid sourceId)
         {
-            SqlCommand cmd = new SqlCommand("delete from attachment where source_table = '" + sourceTable + "' and id = @id", conn);
+            SqlCommand cmd = new SqlCommand("delete from attachment where source_table = '" + sourceTable + "' and id = @id", conn, trans);
             cmd.Parameters.AddWithValue("@id", sourceId);
             cmd.ExecuteNonQuery();
         }
 
-        public static void GetOrderRequiredInventory(SqlConnection conn, Guid assignmentId, out int nSamples, out int nPreparations, out int nAnalyses)
+        public static void GetOrderRequiredInventory(SqlConnection conn, SqlTransaction trans, Guid assignmentId, out int nSamples, out int nPreparations, out int nAnalyses)
         {
             nSamples = nPreparations = nAnalyses = 0;
 
             string query = @"
+select
+(
+select sum(ast.sample_count)
+from assignment a
+	inner join assignment_sample_type ast on ast.assignment_id = a.id	
+where a.id = @aid
+) as 'nsamples',
+(
 select 
-	sum(ast.sample_count) as 'nsamples', 
-	sum(apm.preparation_method_count * ast.sample_count) as 'npreparations', 
+	sum(apm.preparation_method_count * ast.sample_count) as 'npreparations'	
+from assignment a
+	inner join assignment_sample_type ast on ast.assignment_id = a.id
+	inner join assignment_preparation_method apm on apm.assignment_sample_type_id = ast.id	
+where a.id = @aid
+) as 'npreparations',
+(
+select 
 	sum(aam.analysis_method_count * apm.preparation_method_count * ast.sample_count) as 'nanalyses'
 from assignment a
 	inner join assignment_sample_type ast on ast.assignment_id = a.id
 	inner join assignment_preparation_method apm on apm.assignment_sample_type_id = ast.id
 	left outer join assignment_analysis_method aam on aam.assignment_preparation_method_id = apm.id
 where a.id = @aid
+) as 'nanalyses'
 ";           
              
-            using (SqlDataReader reader = DB.GetDataReader(conn, query, CommandType.Text, new SqlParameter("@aid", assignmentId)))
+            using (SqlDataReader reader = DB.GetDataReader(conn, trans, query, CommandType.Text, new SqlParameter("@aid", assignmentId)))
             {
                 if(reader.HasRows)
                 {
@@ -586,7 +593,7 @@ where a.id = @aid
             }
         }
 
-        public static void GetOrderCurrentInventory(SqlConnection conn, Guid assignmentId, out int nSamples, out int nPreparations, out int nAnalyses)
+        public static void GetOrderCurrentInventory(SqlConnection conn, SqlTransaction trans, Guid assignmentId, out int nSamples, out int nPreparations, out int nAnalyses)
         {
             nSamples = nPreparations = nAnalyses = 0;
 
@@ -608,7 +615,7 @@ select
 	) as 'nanalyses'
 ";
 
-            using (SqlDataReader reader = DB.GetDataReader(conn, query, CommandType.Text, new SqlParameter("@aid", assignmentId)))
+            using (SqlDataReader reader = DB.GetDataReader(conn, trans, query, CommandType.Text, new SqlParameter("@aid", assignmentId)))
             {
                 if (reader.HasRows)
                 {
@@ -621,7 +628,7 @@ select
             }
         }
 
-        public static int GetAvailableSamplesOnAssignmentSampleType(SqlConnection conn, Guid astId)
+        public static int GetAvailableSamplesOnAssignmentSampleType(SqlConnection conn, SqlTransaction trans, Guid astId)
         {
             int n = 0;
             string query = @"
@@ -635,7 +642,7 @@ select
 		inner join assignment_sample_type ast on sxast.assignment_sample_type_id = ast.id and ast.id = @ast_id
 ) as 'current_sample_count'
 ";
-            using (SqlDataReader reader = DB.GetDataReader(conn, query, CommandType.Text, new SqlParameter("@ast_id", astId)))
+            using (SqlDataReader reader = DB.GetDataReader(conn, trans, query, CommandType.Text, new SqlParameter("@ast_id", astId)))
             {
                 if(reader.HasRows)
                 {

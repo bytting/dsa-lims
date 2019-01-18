@@ -2302,21 +2302,21 @@
             // miNuclidesNew
             // 
             this.miNuclidesNew.Name = "miNuclidesNew";
-            this.miNuclidesNew.Size = new System.Drawing.Size(152, 22);
+            this.miNuclidesNew.Size = new System.Drawing.Size(149, 22);
             this.miNuclidesNew.Text = "&New nuclide";
             this.miNuclidesNew.Click += new System.EventHandler(this.miNuclidesNew_Click);
             // 
             // miNuclidesEdit
             // 
             this.miNuclidesEdit.Name = "miNuclidesEdit";
-            this.miNuclidesEdit.Size = new System.Drawing.Size(152, 22);
+            this.miNuclidesEdit.Size = new System.Drawing.Size(149, 22);
             this.miNuclidesEdit.Text = "&Edit nuclide";
             this.miNuclidesEdit.Click += new System.EventHandler(this.miNuclidesEdit_Click);
             // 
             // miNuclidesDelete
             // 
             this.miNuclidesDelete.Name = "miNuclidesDelete";
-            this.miNuclidesDelete.Size = new System.Drawing.Size(152, 22);
+            this.miNuclidesDelete.Size = new System.Drawing.Size(149, 22);
             this.miNuclidesDelete.Text = "&Delete nuclide";
             // 
             // miMunicipalities
@@ -6893,10 +6893,10 @@
             // 
             this.tabTypeRelSampTypeParam.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.tabTypeRelSampTypeParam.Controls.Add(this.splitContainer14);
-            this.tabTypeRelSampTypeParam.Location = new System.Drawing.Point(4, 24);
+            this.tabTypeRelSampTypeParam.Location = new System.Drawing.Point(4, 22);
             this.tabTypeRelSampTypeParam.Name = "tabTypeRelSampTypeParam";
             this.tabTypeRelSampTypeParam.Padding = new System.Windows.Forms.Padding(3);
-            this.tabTypeRelSampTypeParam.Size = new System.Drawing.Size(644, 564);
+            this.tabTypeRelSampTypeParam.Size = new System.Drawing.Size(644, 568);
             this.tabTypeRelSampTypeParam.TabIndex = 1;
             this.tabTypeRelSampTypeParam.Text = "Parameters";
             // 
@@ -6916,8 +6916,8 @@
             // 
             this.splitContainer14.Panel2.Controls.Add(this.listBox4);
             this.splitContainer14.Panel2.Controls.Add(this.toolsTypeRelSampParaInherit);
-            this.splitContainer14.Size = new System.Drawing.Size(638, 558);
-            this.splitContainer14.SplitterDistance = 279;
+            this.splitContainer14.Size = new System.Drawing.Size(638, 562);
+            this.splitContainer14.SplitterDistance = 281;
             this.splitContainer14.SplitterWidth = 3;
             this.splitContainer14.TabIndex = 0;
             // 
@@ -6930,7 +6930,7 @@
             this.listBox2.ItemHeight = 15;
             this.listBox2.Location = new System.Drawing.Point(0, 25);
             this.listBox2.Name = "listBox2";
-            this.listBox2.Size = new System.Drawing.Size(638, 254);
+            this.listBox2.Size = new System.Drawing.Size(638, 256);
             this.listBox2.TabIndex = 2;
             // 
             // toolsTypeRelSampPara
@@ -7001,7 +7001,7 @@
             this.listBox4.ItemHeight = 15;
             this.listBox4.Location = new System.Drawing.Point(0, 25);
             this.listBox4.Name = "listBox4";
-            this.listBox4.Size = new System.Drawing.Size(638, 251);
+            this.listBox4.Size = new System.Drawing.Size(638, 253);
             this.listBox4.TabIndex = 3;
             // 
             // toolsTypeRelSampParaInherit
@@ -7026,10 +7026,10 @@
             // 
             this.tabTypeRelSampTypePrep.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.tabTypeRelSampTypePrep.Controls.Add(this.splitContainer13);
-            this.tabTypeRelSampTypePrep.Location = new System.Drawing.Point(4, 24);
+            this.tabTypeRelSampTypePrep.Location = new System.Drawing.Point(4, 22);
             this.tabTypeRelSampTypePrep.Name = "tabTypeRelSampTypePrep";
             this.tabTypeRelSampTypePrep.Padding = new System.Windows.Forms.Padding(3);
-            this.tabTypeRelSampTypePrep.Size = new System.Drawing.Size(644, 564);
+            this.tabTypeRelSampTypePrep.Size = new System.Drawing.Size(644, 568);
             this.tabTypeRelSampTypePrep.TabIndex = 2;
             this.tabTypeRelSampTypePrep.Text = "Preparation methods";
             // 
@@ -7049,8 +7049,8 @@
             // 
             this.splitContainer13.Panel2.Controls.Add(this.lbTypeRelSampTypeInheritedPrepMeth);
             this.splitContainer13.Panel2.Controls.Add(this.toolsTypeRelSampAnalMeth);
-            this.splitContainer13.Size = new System.Drawing.Size(638, 558);
-            this.splitContainer13.SplitterDistance = 214;
+            this.splitContainer13.Size = new System.Drawing.Size(638, 562);
+            this.splitContainer13.SplitterDistance = 215;
             this.splitContainer13.SplitterWidth = 3;
             this.splitContainer13.TabIndex = 0;
             // 
@@ -7063,7 +7063,7 @@
             this.lbTypeRelSampTypePrepMeth.ItemHeight = 15;
             this.lbTypeRelSampTypePrepMeth.Location = new System.Drawing.Point(0, 25);
             this.lbTypeRelSampTypePrepMeth.Name = "lbTypeRelSampTypePrepMeth";
-            this.lbTypeRelSampTypePrepMeth.Size = new System.Drawing.Size(638, 189);
+            this.lbTypeRelSampTypePrepMeth.Size = new System.Drawing.Size(638, 190);
             this.lbTypeRelSampTypePrepMeth.TabIndex = 1;
             // 
             // toolsTypeRelSampPrepMeth
@@ -7127,7 +7127,7 @@
             this.lbTypeRelSampTypeInheritedPrepMeth.Location = new System.Drawing.Point(0, 25);
             this.lbTypeRelSampTypeInheritedPrepMeth.Name = "lbTypeRelSampTypeInheritedPrepMeth";
             this.lbTypeRelSampTypeInheritedPrepMeth.SelectionMode = System.Windows.Forms.SelectionMode.None;
-            this.lbTypeRelSampTypeInheritedPrepMeth.Size = new System.Drawing.Size(638, 316);
+            this.lbTypeRelSampTypeInheritedPrepMeth.Size = new System.Drawing.Size(638, 319);
             this.lbTypeRelSampTypeInheritedPrepMeth.TabIndex = 1;
             // 
             // toolsTypeRelSampAnalMeth

@@ -148,7 +148,7 @@ where s.id = @id
             {
                 foreach (Guid sid in mSampleIds)
                 {
-                    using (SqlDataReader reader = DB.GetDataReader(conn, query, CommandType.Text, new SqlParameter("@id", sid)))
+                    using (SqlDataReader reader = DB.GetDataReader(conn, null, query, CommandType.Text, new SqlParameter("@id", sid)))
                     {
                         if (!reader.HasRows)
                             continue;

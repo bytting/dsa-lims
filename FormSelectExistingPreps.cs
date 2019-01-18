@@ -38,7 +38,7 @@ from preparation p
 where p.sample_id = @sample_id and p.laboratory_id = @laboratory_id 
 order by p.number";
 
-                gridPreparations.DataSource = DB.GetDataTable(conn, query, CommandType.Text,
+                gridPreparations.DataSource = DB.GetDataTable(conn, null, query, CommandType.Text,
                     new SqlParameter("@sample_id", DB.MakeParam(typeof(Guid), SampleId)),
                     new SqlParameter("@laboratory_id", DB.MakeParam(typeof(Guid), LaboratoryId)));
 

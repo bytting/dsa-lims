@@ -51,7 +51,7 @@ namespace DSA_lims
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                SampleNumber = DB.GetSampleNumber(conn, SampleId);     
+                SampleNumber = DB.GetSampleNumber(conn, null, SampleId);     
                 UI.PopulateComboBoxes(conn, "csp_select_laboratories_short", new[] {
                     new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
                 }, cboxLaboratory);
@@ -61,7 +61,7 @@ namespace DSA_lims
                     cboxLaboratory.SelectedValue = Common.LabId;
                 }
 
-                object o = DB.GetScalar(conn, "select sample_type_id from sample where id = @id", CommandType.Text, new SqlParameter("@id", SampleId));
+                object o = DB.GetScalar(conn, null, "select sample_type_id from sample where id = @id", CommandType.Text, new SqlParameter("@id", SampleId));
                 if (o != null && o != DBNull.Value)
                     SampleTypeId = Guid.Parse(o.ToString());
             }
@@ -115,14 +115,14 @@ where sxast.sample_id = @sid";
             object o = null;
             using (SqlConnection conn = DB.OpenConnection())
             {
-                int nAvail = DB.GetAvailableSamplesOnAssignmentSampleType(conn, SelectedOrderLineId);
+                int nAvail = DB.GetAvailableSamplesOnAssignmentSampleType(conn, null, SelectedOrderLineId);
                 if(nAvail == 0)
                 {
                     MessageBox.Show("This order line if already full");
                     return;
                 }
 
-                o = DB.GetScalar(conn, query, CommandType.Text, new[] {
+                o = DB.GetScalar(conn, null, query, CommandType.Text, new[] {
                     new SqlParameter("@sid", SampleId),
                     new SqlParameter("@aid", SelectedOrderId)
                 });
@@ -141,7 +141,7 @@ where sxast.sample_id = @sid";
                 {
                     Guid prepMethLineId = Guid.Parse(tn.Name);
 
-                    o = DB.GetScalar(conn, "select preparation_laboratory_id from assignment_preparation_method where id = @id", CommandType.Text,
+                    o = DB.GetScalar(conn, null, "select preparation_laboratory_id from assignment_preparation_method where id = @id", CommandType.Text,
                         new SqlParameter("@id", prepMethLineId));
                     if (o != null && o != DBNull.Value)
                     {
@@ -152,7 +152,7 @@ where sxast.sample_id = @sid";
                         }
                         else
                         {
-                            o = DB.GetScalar(conn, "select preparation_method_count from assignment_preparation_method where id = @id", CommandType.Text,
+                            o = DB.GetScalar(conn, null, "select preparation_method_count from assignment_preparation_method where id = @id", CommandType.Text,
                                 new SqlParameter("@id", prepMethLineId));
                             int cnt = Convert.ToInt32(o);
                             List<Guid> prepList = tn.Tag as List<Guid>;
@@ -356,7 +356,7 @@ where sxast.sample_id = @sid";
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                object o = DB.GetScalar(conn, "select preparation_laboratory_id from assignment_preparation_method where id = @id", CommandType.Text, 
+                object o = DB.GetScalar(conn, null, "select preparation_laboratory_id from assignment_preparation_method where id = @id", CommandType.Text, 
                     new SqlParameter("@id", apmId));
                 if(!DB.IsValidField(o))
                 {
@@ -409,7 +409,7 @@ where sxast.sample_id = @sid";
 
             List<object> prepNums = new List<object>();
             using (SqlConnection conn = DB.OpenConnection())            
-                using (SqlDataReader reader = DB.GetDataReader(conn, query, CommandType.Text))            
+                using (SqlDataReader reader = DB.GetDataReader(conn, null, query, CommandType.Text))            
                     while (reader.Read()) prepNums.Add(SampleNumber + "/" + reader["number"]);
 
             tnode.ToolTipText = "Connected preparations: " + String.Join(", ", prepNums);

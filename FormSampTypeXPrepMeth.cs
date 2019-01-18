@@ -56,7 +56,7 @@ namespace DSA_lims
                     query = "select id, name from preparation_method order by name";
                 else query = "select id, name from preparation_method where id not in(" + smeth + ") order by name";
 
-                using (SqlDataReader reader = DB.GetDataReader(conn, query, CommandType.Text))
+                using (SqlDataReader reader = DB.GetDataReader(conn, null, query, CommandType.Text))
                 {
                     lbPrepMeth.Items.Clear();
 

@@ -55,7 +55,7 @@ namespace DSA_lims
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, "csp_select_instance_status");
+                cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status");
 
                 UI.PopulateComboBoxes(conn, "csp_select_persons_short", new SqlParameter[] { },  cboxPersons);
 
@@ -81,7 +81,7 @@ namespace DSA_lims
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, "csp_select_instance_status");
+                cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status");
 
                 UI.PopulateComboBoxes(conn, "csp_select_persons_short", new SqlParameter[] { }, cboxPersons);
 

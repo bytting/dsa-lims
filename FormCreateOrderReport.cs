@@ -55,7 +55,7 @@ namespace DSA_lims
             mAssignmentId = assignmentId;
             using (SqlConnection conn = DB.OpenConnection())
             {
-                using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_assignment_flat", CommandType.StoredProcedure, new SqlParameter("@id", mAssignmentId)))
+                using (SqlDataReader reader = DB.GetDataReader(conn, null, "csp_select_assignment_flat", CommandType.StoredProcedure, new SqlParameter("@id", mAssignmentId)))
                 {
                     if (reader.HasRows)
                     {
@@ -75,11 +75,11 @@ namespace DSA_lims
                     }
                 }
 
-                Guid labId = (Guid)DB.GetScalar(conn, "select laboratory_id from assignment where id = @id", CommandType.Text, new SqlParameter("@id", mAssignmentId));
+                Guid labId = (Guid)DB.GetScalar(conn, null, "select laboratory_id from assignment where id = @id", CommandType.Text, new SqlParameter("@id", mAssignmentId));
 
                 if (Utils.IsValidGuid(labId))
                 {
-                    using (SqlDataReader reader = DB.GetDataReader(conn, "select laboratory_logo, accredited_logo from laboratory where id = @id", CommandType.Text, new SqlParameter("@id", labId)))
+                    using (SqlDataReader reader = DB.GetDataReader(conn, null, "select laboratory_logo, accredited_logo from laboratory where id = @id", CommandType.Text, new SqlParameter("@id", labId)))
                     {
                         if (reader.HasRows)
                         {
@@ -192,7 +192,7 @@ order by s.number, p.number, a.number
             int nRows = 0;
             using (SqlConnection conn = DB.OpenConnection())
             {
-                using (SqlDataReader reader = DB.GetDataReader(conn, query, CommandType.Text, new[] {
+                using (SqlDataReader reader = DB.GetDataReader(conn, null, query, CommandType.Text, new[] {
                     new SqlParameter("@assignment_id", mAssignmentId)
                 }))
                 {                    

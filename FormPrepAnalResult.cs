@@ -75,7 +75,7 @@ namespace DSA_lims
                 cboxSigmaActivity.DataSource = DB.GetSigmaValues(conn);
                 cboxSigmaMDA.DataSource = DB.GetSigmaMDAValues(conn);
 
-                SqlDataReader reader = DB.GetDataReader(conn, "csp_select_analysis_result", CommandType.StoredProcedure, new SqlParameter("@id", resultId));
+                SqlDataReader reader = DB.GetDataReader(conn, null, "csp_select_analysis_result", CommandType.StoredProcedure, new SqlParameter("@id", resultId));
                 if(reader.HasRows)
                 {
                     reader.Read();                    
@@ -120,7 +120,7 @@ namespace DSA_lims
 
                 using (SqlConnection conn = DB.OpenConnection())
                 {
-                    p["nuclide_id"] = DB.GetScalar(conn, "select id from nuclide where name = @nuclName", CommandType.Text, new SqlParameter("@nuclName", cboxNuclides.Text));
+                    p["nuclide_id"] = DB.GetScalar(conn, null, "select id from nuclide where name = @nuclName", CommandType.Text, new SqlParameter("@nuclName", cboxNuclides.Text));
                 }
             }
 
@@ -195,7 +195,7 @@ namespace DSA_lims
 
             try
             {
-                p["instance_status_id"] = 1;
+                p["instance_status_id"] = InstanceStatus.Active;
                 p["create_date"] = DateTime.Now;
                 p["created_by"] = Common.Username;
                 p["update_date"] = DateTime.Now;
@@ -257,7 +257,7 @@ namespace DSA_lims
 
             try
             {
-                p["instance_status_id"] = 1;                
+                p["instance_status_id"] = InstanceStatus.Active;                
                 p["update_date"] = DateTime.Now;
                 p["updated_by"] = Common.Username;
 

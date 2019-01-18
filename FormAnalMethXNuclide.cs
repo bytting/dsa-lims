@@ -55,7 +55,7 @@ namespace DSA_lims
                     query = "select id, name from nuclide order by name";
                 else query = "select id, name from nuclide where id not in(" + snucl + ") order by name";
 
-                using (SqlDataReader reader = DB.GetDataReader(conn, query, CommandType.Text))
+                using (SqlDataReader reader = DB.GetDataReader(conn, null, query, CommandType.Text))
                 {
                     lbNuclides.Items.Clear();
 

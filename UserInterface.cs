@@ -37,7 +37,7 @@ namespace DSA_lims
             List<Lemma<Guid, string>> list = new List<Lemma<Guid, string>>();
             list.Add(new Lemma<Guid, string>(Guid.Empty, ""));
 
-            using (SqlDataReader reader = DB.GetDataReader(conn, procedure, CommandType.StoredProcedure, sqlParams))
+            using (SqlDataReader reader = DB.GetDataReader(conn, null, procedure, CommandType.StoredProcedure, sqlParams))
             {
                 while (reader.Read())
                     list.Add(new Lemma<Guid, string>(Guid.Parse(reader["id"].ToString()), reader["name"].ToString()));
@@ -53,7 +53,7 @@ namespace DSA_lims
 
         public static void PopulatePreparationUnits(SqlConnection conn, DataGridView grid)
         {
-            grid.DataSource = DB.GetDataTable(conn, "csp_select_preparation_units", CommandType.StoredProcedure);
+            grid.DataSource = DB.GetDataTable(conn, null, "csp_select_preparation_units", CommandType.StoredProcedure);
 
             grid.Columns["id"].Visible = false;
 
@@ -62,7 +62,7 @@ namespace DSA_lims
 
         public static void PopulateActivityUnits(SqlConnection conn, DataGridView grid)
         {
-            grid.DataSource = DB.GetDataTable(conn, "csp_select_activity_units_flat", CommandType.StoredProcedure);
+            grid.DataSource = DB.GetDataTable(conn, null, "csp_select_activity_units_flat", CommandType.StoredProcedure);
 
             grid.Columns["id"].Visible = false;
 
@@ -73,7 +73,7 @@ namespace DSA_lims
 
         public static void PopulateQuantityUnits(SqlConnection conn, DataGridView grid)
         {
-            grid.DataSource = DB.GetDataTable(conn, "csp_select_quantity_units", CommandType.StoredProcedure);
+            grid.DataSource = DB.GetDataTable(conn, null, "csp_select_quantity_units", CommandType.StoredProcedure);
 
             grid.Columns["id"].Visible = false;
 
@@ -82,7 +82,7 @@ namespace DSA_lims
 
         public static void PopulateActivityUnitTypes(SqlConnection conn, DataGridView grid)
         {
-            grid.DataSource = DB.GetDataTable(conn, "csp_select_activity_unit_types", CommandType.StoredProcedure);
+            grid.DataSource = DB.GetDataTable(conn, null, "csp_select_activity_unit_types", CommandType.StoredProcedure);
 
             grid.Columns["id"].Visible = false;
 
@@ -91,7 +91,7 @@ namespace DSA_lims
 
         public static void PopulateProjectsMain(SqlConnection conn, DataGridView grid)
         {
-            grid.DataSource = DB.GetDataTable(conn, "csp_select_projects_main_flat", CommandType.StoredProcedure,
+            grid.DataSource = DB.GetDataTable(conn, null, "csp_select_projects_main_flat", CommandType.StoredProcedure,
                 new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
 
             grid.Columns["id"].Visible = false;
@@ -107,7 +107,7 @@ namespace DSA_lims
 
         public static void PopulateProjectsSub(SqlConnection conn, Guid project_main_id, DataGridView grid)
         {
-            grid.DataSource = DB.GetDataTable(conn, "csp_select_projects_sub_flat", CommandType.StoredProcedure,            
+            grid.DataSource = DB.GetDataTable(conn, null, "csp_select_projects_sub_flat", CommandType.StoredProcedure,            
                 new SqlParameter("@project_main_id", project_main_id),
                 new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
             );
@@ -126,7 +126,7 @@ namespace DSA_lims
 
         public static void PopulateLaboratories(SqlConnection conn, int instanceStatusLevel, DataGridView grid)
         {                        
-            grid.DataSource = DB.GetDataTable(conn, "csp_select_laboratories_flat", CommandType.StoredProcedure,
+            grid.DataSource = DB.GetDataTable(conn, null, "csp_select_laboratories_flat", CommandType.StoredProcedure,
                 new SqlParameter("@instance_status_level", instanceStatusLevel));
         
             grid.Columns["id"].Visible = false;
@@ -147,7 +147,7 @@ namespace DSA_lims
 
         public static void PopulateUsers(SqlConnection conn, int instanceStatusLevel, DataGridView grid)
         {                        
-            grid.DataSource = DB.GetDataTable(conn, "csp_select_accounts_flat", CommandType.StoredProcedure,
+            grid.DataSource = DB.GetDataTable(conn, null, "csp_select_accounts_flat", CommandType.StoredProcedure,
                 new SqlParameter("@instance_status_level", instanceStatusLevel));
 
             grid.Columns["id"].Visible = false;            
@@ -165,7 +165,7 @@ namespace DSA_lims
 
         public static void PopulateNuclides(SqlConnection conn, DataGridView grid)
         {                        
-            grid.DataSource = DB.GetDataTable(conn, "csp_select_nuclides_flat", CommandType.StoredProcedure,
+            grid.DataSource = DB.GetDataTable(conn, null, "csp_select_nuclides_flat", CommandType.StoredProcedure,
                 new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
         
             grid.Columns["id"].Visible = false;
@@ -188,7 +188,7 @@ namespace DSA_lims
 
         public static void PopulateGeometries(SqlConnection conn, DataGridView grid)
         {            
-            grid.DataSource = DB.GetDataTable(conn, "csp_select_preparation_geometries_flat", CommandType.StoredProcedure,
+            grid.DataSource = DB.GetDataTable(conn, null, "csp_select_preparation_geometries_flat", CommandType.StoredProcedure,
                 new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
         
             grid.Columns["id"].Visible = false;
@@ -207,7 +207,7 @@ namespace DSA_lims
 
         public static void PopulateCounties(SqlConnection conn, DataGridView grid)
         {
-            grid.DataSource = DB.GetDataTable(conn, "csp_select_counties_flat", CommandType.StoredProcedure,
+            grid.DataSource = DB.GetDataTable(conn, null, "csp_select_counties_flat", CommandType.StoredProcedure,
                 new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
         
             grid.Columns["id"].Visible = false;
@@ -223,7 +223,7 @@ namespace DSA_lims
 
         public static void PopulateMunicipalities(SqlConnection conn, Guid cid, DataGridView grid)
         {            
-            grid.DataSource = DB.GetDataTable(conn, "csp_select_municipalities_for_county_flat", CommandType.StoredProcedure,
+            grid.DataSource = DB.GetDataTable(conn, null, "csp_select_municipalities_for_county_flat", CommandType.StoredProcedure,
                 new SqlParameter("@county_id", cid),
                 new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
         
@@ -241,7 +241,7 @@ namespace DSA_lims
 
         public static void PopulateStations(SqlConnection conn, DataGridView grid)
         {
-            grid.DataSource = DB.GetDataTable(conn, "csp_select_stations_flat", CommandType.StoredProcedure,
+            grid.DataSource = DB.GetDataTable(conn, null, "csp_select_stations_flat", CommandType.StoredProcedure,
                 new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
 
             grid.Columns["id"].Visible = false;
@@ -260,7 +260,7 @@ namespace DSA_lims
 
         public static void PopulateSampleStorage(SqlConnection conn, DataGridView grid)
         {         
-            grid.DataSource = DB.GetDataTable(conn, "csp_select_sample_storages_flat", CommandType.StoredProcedure,
+            grid.DataSource = DB.GetDataTable(conn, null, "csp_select_sample_storages_flat", CommandType.StoredProcedure,
                 new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
         
             grid.Columns["id"].Visible = false;
@@ -277,7 +277,7 @@ namespace DSA_lims
 
         public static void PopulateSamplers(SqlConnection conn, DataGridView grid)
         {
-            grid.DataSource = DB.GetDataTable(conn, "csp_select_samplers_flat", CommandType.StoredProcedure,
+            grid.DataSource = DB.GetDataTable(conn, null, "csp_select_samplers_flat", CommandType.StoredProcedure,
                 new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
 
             grid.Columns["id"].Visible = false;
@@ -295,7 +295,7 @@ namespace DSA_lims
 
         public static void PopulateSamplingMethods(SqlConnection conn, DataGridView grid)
         {
-            grid.DataSource = DB.GetDataTable(conn, "csp_select_sampling_methods_flat", CommandType.StoredProcedure,
+            grid.DataSource = DB.GetDataTable(conn, null, "csp_select_sampling_methods_flat", CommandType.StoredProcedure,
                 new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
 
             grid.Columns["id"].Visible = false;
@@ -307,35 +307,11 @@ namespace DSA_lims
 
             grid.Columns["name"].HeaderText = "Name";
             grid.Columns["instance_status_name"].HeaderText = "Status";
-        }        
-
-        /*public static void PopulateSamples(SqlConnection conn, DataGridView grid)
-        {
-            grid.DataSource = DB.GetDataTable(conn, "csp_select_samples_informative", CommandType.StoredProcedure,
-                new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
-
-            grid.Columns["id"].Visible = false;
-            grid.Columns["merge_to"].Visible = false;
-
-            grid.Columns["number"].HeaderText = "Sample number";
-            grid.Columns["external_id"].HeaderText = "Ex.Id";
-            grid.Columns["laboratory_name"].HeaderText = "Laboratory";
-            grid.Columns["sample_type_name"].HeaderText = "Type";
-            grid.Columns["sample_component_name"].HeaderText = "Component";
-            grid.Columns["project_name"].HeaderText = "Project";
-            grid.Columns["sample_storage_name"].HeaderText = "Storage";
-            grid.Columns["reference_date"].HeaderText = "Ref.date";
-            grid.Columns["instance_status_name"].HeaderText = "Status";
-            grid.Columns["locked_by"].HeaderText = "Locked by";
-            grid.Columns["split_from"].HeaderText = "Split from";            
-            grid.Columns["merge_from"].HeaderText = "Merge from";
-
-            grid.Columns["reference_date"].DefaultCellStyle.Format = Utils.DateTimeFormatNorwegian;
-        }*/
+        }
 
         public static void PopulatePreparationMethods(SqlConnection conn, DataGridView grid)
         {
-            grid.DataSource = DB.GetDataTable(conn, "csp_select_preparation_methods_flat", CommandType.StoredProcedure,
+            grid.DataSource = DB.GetDataTable(conn, null, "csp_select_preparation_methods_flat", CommandType.StoredProcedure,
                 new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
 
             grid.Columns["id"].Visible = false;
@@ -353,7 +329,7 @@ namespace DSA_lims
 
         public static void PopulateAnalysisMethods(SqlConnection conn, DataGridView grid)
         {
-            grid.DataSource = DB.GetDataTable(conn, "csp_select_analysis_methods_flat", CommandType.StoredProcedure,
+            grid.DataSource = DB.GetDataTable(conn, null, "csp_select_analysis_methods_flat", CommandType.StoredProcedure,
                 new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
 
             grid.Columns["id"].Visible = false;
@@ -444,7 +420,7 @@ select pm.id, pm.name from preparation_method pm
 order by name";
 
             lb.Items.Clear();
-            using (SqlDataReader reader = DB.GetDataReader(conn, query, CommandType.Text, new SqlParameter("@sample_type_id", sampleTypeId)))
+            using (SqlDataReader reader = DB.GetDataReader(conn, null, query, CommandType.Text, new SqlParameter("@sample_type_id", sampleTypeId)))
             {
                 while (reader.Read())
                 {
@@ -458,7 +434,7 @@ order by name";
             {
                 tnode = tnode.Parent;
                 sampleTypeId = Guid.Parse(tnode.Name);
-                using (SqlDataReader reader = DB.GetDataReader(conn, query, CommandType.Text, new SqlParameter("@sample_type_id", sampleTypeId)))
+                using (SqlDataReader reader = DB.GetDataReader(conn, null, query, CommandType.Text, new SqlParameter("@sample_type_id", sampleTypeId)))
                 {
                     while (reader.Read())
                     {
@@ -473,7 +449,7 @@ order by name";
         {
             lb.Items.Clear();            
 
-            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_sample_components_for_sample_type", CommandType.StoredProcedure, 
+            using (SqlDataReader reader = DB.GetDataReader(conn, null, "csp_select_sample_components_for_sample_type", CommandType.StoredProcedure, 
                 new SqlParameter("@sample_type_id", sampleTypeId)))
             {
                 while (reader.Read())
@@ -499,7 +475,7 @@ order by name";
 
         private static void AddSampleTypeComponentsAscending(SqlConnection conn, Guid sampleTypeId, TreeNode tnode, List<Lemma<Guid, string>> comps)
         {
-            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_sample_components_for_sample_type", CommandType.StoredProcedure,
+            using (SqlDataReader reader = DB.GetDataReader(conn, null, "csp_select_sample_components_for_sample_type", CommandType.StoredProcedure,
                     new SqlParameter("@sample_type_id", sampleTypeId)))
             {
                 while (reader.Read())
@@ -516,7 +492,7 @@ order by name";
         public static void PopulateAnalMethNuclides(SqlConnection conn, Guid analysisMethodId, ListBox lb)
         {
             lb.Items.Clear();
-            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_nuclides_for_analysis_method", CommandType.StoredProcedure,
+            using (SqlDataReader reader = DB.GetDataReader(conn, null, "csp_select_nuclides_for_analysis_method", CommandType.StoredProcedure,
                 new SqlParameter("@analysis_method_id", analysisMethodId)))
             {
                 while (reader.Read())
@@ -530,7 +506,7 @@ order by name";
         public static void PopulatePrepMethAnalMeths(SqlConnection conn, Guid preparationMethodId, ListBox lb)
         {
             lb.Items.Clear();
-            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_analysis_methods_for_preparation_method", CommandType.StoredProcedure,
+            using (SqlDataReader reader = DB.GetDataReader(conn, null, "csp_select_analysis_methods_for_preparation_method", CommandType.StoredProcedure,
                 new SqlParameter("@preparation_method_id", preparationMethodId)))
             {
                 while (reader.Read())
@@ -543,7 +519,7 @@ order by name";
 
         public static void PopulateCustomers(SqlConnection conn, int statusLevel, DataGridView grid)
         {
-            grid.DataSource = DB.GetDataTable(conn, "csp_select_customers_flat", CommandType.StoredProcedure,
+            grid.DataSource = DB.GetDataTable(conn, null, "csp_select_customers_flat", CommandType.StoredProcedure,
                 new SqlParameter("@instance_status_level", statusLevel));
 
             grid.Columns["id"].Visible = false;
@@ -567,7 +543,7 @@ from assignment a
 where laboratory_id = @laboratory_id and instance_status_id <= @instance_status_level 
 order by create_date desc";
 
-            grid.DataSource = DB.GetDataTable(conn, query, CommandType.Text,
+            grid.DataSource = DB.GetDataTable(conn, null, query, CommandType.Text,
                 new SqlParameter("@laboratory_id", laboratoryId),
                 new SqlParameter("@instance_status_level", statusLevel));
 
@@ -588,12 +564,12 @@ order by create_date desc";
             {
                 if (sampleTypeId == Guid.Empty)
                 {
-                    astReader = DB.GetDataReader(conn, "csp_select_assignment_sample_types", CommandType.StoredProcedure, 
+                    astReader = DB.GetDataReader(conn, null, "csp_select_assignment_sample_types", CommandType.StoredProcedure, 
                         new SqlParameter("@assignment_id", selectedOrder));
                 }
                 else
                 {
-                    astReader = DB.GetDataReader(conn, "csp_select_assignment_sample_types_for_sample_type", CommandType.StoredProcedure, 
+                    astReader = DB.GetDataReader(conn, null, "csp_select_assignment_sample_types_for_sample_type", CommandType.StoredProcedure, 
                         new SqlParameter("@assignment_id", selectedOrder),
                         new SqlParameter("@sample_type_id", sampleTypeId));
                 }
@@ -625,7 +601,7 @@ order by create_date desc";
             {
                 Guid orderSampleTypeId = Guid.Parse(tnode.Name);
 
-                using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_assignment_preparation_methods", CommandType.StoredProcedure, 
+                using (SqlDataReader reader = DB.GetDataReader(conn, null, "csp_select_assignment_preparation_methods", CommandType.StoredProcedure, 
                     new SqlParameter("@assignment_sample_type_id", orderSampleTypeId)))
                 {
                     while (reader.Read())
@@ -646,7 +622,7 @@ order by create_date desc";
                 {
                     Guid orderPrepMethId = Guid.Parse(tn.Name);
 
-                    using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_assignment_analysis_methods", CommandType.StoredProcedure,
+                    using (SqlDataReader reader = DB.GetDataReader(conn, null, "csp_select_assignment_analysis_methods", CommandType.StoredProcedure,
                         new SqlParameter("@assignment_preparation_method_id", orderPrepMethId)))
                     {
                         while (reader.Read())
@@ -675,7 +651,7 @@ order by create_date desc";
                 object o = cmd.ExecuteScalar();
                 string sampleTypeName = o.ToString();
 
-                astReader = DB.GetDataReader(conn, "csp_select_assignment_sample_types_for_sample_type_name", CommandType.StoredProcedure,
+                astReader = DB.GetDataReader(conn, null, "csp_select_assignment_sample_types_for_sample_type_name", CommandType.StoredProcedure,
                     new SqlParameter("@assignment_id", selectedOrder),
                     new SqlParameter("@sample_type_name", sampleTypeName));
 
@@ -706,7 +682,7 @@ order by create_date desc";
             {
                 Guid orderSampleTypeId = Guid.Parse(tnode.Name);
 
-                using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_assignment_preparation_methods", CommandType.StoredProcedure,
+                using (SqlDataReader reader = DB.GetDataReader(conn, null, "csp_select_assignment_preparation_methods", CommandType.StoredProcedure,
                     new SqlParameter("@assignment_sample_type_id", orderSampleTypeId)))
                 {
                     while (reader.Read())
@@ -727,7 +703,7 @@ order by create_date desc";
                 {
                     Guid orderPrepMethId = Guid.Parse(tn.Name);
 
-                    using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_assignment_analysis_methods", CommandType.StoredProcedure,
+                    using (SqlDataReader reader = DB.GetDataReader(conn, null, "csp_select_assignment_analysis_methods", CommandType.StoredProcedure,
                         new SqlParameter("@assignment_preparation_method_id", orderPrepMethId)))
                     {
                         while (reader.Read())
@@ -745,7 +721,7 @@ order by create_date desc";
 
         public static void PopulateAnalysisResults(SqlConnection conn, Guid analysisId, DataGridView grid)
         {
-            grid.DataSource = DB.GetDataTable(conn, "csp_select_analysis_results_for_analysis_informative", CommandType.StoredProcedure,
+            grid.DataSource = DB.GetDataTable(conn, null, "csp_select_analysis_results_for_analysis_informative", CommandType.StoredProcedure,
                     new SqlParameter("@analysis_id", analysisId));
 
             grid.Columns["id"].Visible = false;
@@ -768,7 +744,7 @@ order by create_date desc";
 
         public static void PopulatePersons(SqlConnection conn, DataGridView grid)
         {
-            grid.DataSource = DB.GetDataTable(conn, "csp_select_persons", CommandType.StoredProcedure);
+            grid.DataSource = DB.GetDataTable(conn, null, "csp_select_persons", CommandType.StoredProcedure);
 
             grid.Columns["id"].Visible = false;
             grid.Columns["create_date"].Visible = false;
@@ -782,7 +758,7 @@ order by create_date desc";
 
         public static void PopulateCompanies(SqlConnection conn, DataGridView grid)
         {
-            grid.DataSource = DB.GetDataTable(conn, "csp_select_companies_flat", CommandType.StoredProcedure, 
+            grid.DataSource = DB.GetDataTable(conn, null, "csp_select_companies_flat", CommandType.StoredProcedure, 
                 new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
 
             grid.Columns["id"].Visible = false;
@@ -804,7 +780,7 @@ order by create_date desc";
             List<string> years = new List<string>();
             years.Add("");
 
-            using (SqlDataReader reader = DB.GetDataReader(conn, "select distinct year(create_date) as 'year' from assignment order by year", CommandType.Text))
+            using (SqlDataReader reader = DB.GetDataReader(conn, null, "select distinct year(create_date) as 'year' from assignment order by year", CommandType.Text))
             {
                 while(reader.Read())
                 {
@@ -819,7 +795,7 @@ order by create_date desc";
             List<Lemma<int, string>> stats = new List<Lemma<int, string>>();
             stats.Add(new Lemma<int, string>(0, ""));
 
-            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_workflow_status", CommandType.StoredProcedure))
+            using (SqlDataReader reader = DB.GetDataReader(conn, null, "csp_select_workflow_status", CommandType.StoredProcedure))
             {
                 while (reader.Read())
                 {
@@ -838,7 +814,7 @@ select id, name
 from role r
     inner join account_x_role axr on axr.role_id = r.id and axr.account_id = @account_id
 ";
-            using (SqlDataReader reader = DB.GetDataReader(conn, query, CommandType.Text, new[] {
+            using (SqlDataReader reader = DB.GetDataReader(conn, null, query, CommandType.Text, new[] {
                 new SqlParameter("@account_id", userId)
             }))
             {
@@ -854,7 +830,7 @@ from role r
         public static void PopulateAttachments(SqlConnection conn, string sourceTable, Guid id, DataGridView grid)
         {
             string query = "select id, name, file_extension from attachment where source_table = @source_table and source_id = @source_id order by create_date desc";
-            grid.DataSource = DB.GetDataTable(conn, query, CommandType.Text, new[] {
+            grid.DataSource = DB.GetDataTable(conn, null, query, CommandType.Text, new[] {
                 new SqlParameter("@source_table", sourceTable),
                 new SqlParameter("@source_id", id)
             });

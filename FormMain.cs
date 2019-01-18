@@ -143,23 +143,23 @@ namespace DSA_lims
 
                 using (SqlConnection conn = DB.OpenConnection())
                 {
-                    DB.LoadSampleTypes(conn);
+                    DB.LoadSampleTypes(conn, null);
 
-                    cboxSamplesStatus.DataSource = DB.GetIntLemmata(conn, "csp_select_instance_status");
+                    cboxSamplesStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status");
 
-                    cboxSampleInstanceStatus.DataSource = DB.GetIntLemmata(conn, "csp_select_instance_status");
+                    cboxSampleInstanceStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status");
 
-                    cboxPrepAnalPrepAmountUnit.DataSource = DB.GetIntLemmata(conn, "csp_select_preparation_units", true);
+                    cboxPrepAnalPrepAmountUnit.DataSource = DB.GetIntLemmata(conn, null, "csp_select_preparation_units", true);
 
-                    cboxPrepAnalPrepQuantityUnit.DataSource = DB.GetIntLemmata(conn, "csp_select_quantity_units", true);
+                    cboxPrepAnalPrepQuantityUnit.DataSource = DB.GetIntLemmata(conn, null, "csp_select_quantity_units", true);
 
-                    cboxPrepAnalAnalWorkflowStatus.DataSource = DB.GetIntLemmata(conn, "csp_select_workflow_status");
+                    cboxPrepAnalAnalWorkflowStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_workflow_status");
 
-                    cboxPrepAnalPrepWorkflowStatus.DataSource = DB.GetIntLemmata(conn, "csp_select_workflow_status");
+                    cboxPrepAnalPrepWorkflowStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_workflow_status");
 
-                    cboxOrderStatus.DataSource = DB.GetIntLemmata(conn, "csp_select_workflow_status");
+                    cboxOrderStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_workflow_status");
 
-                    cboxSampleInfoLocationTypes.DataSource = DB.GetIntLemmata(conn, "csp_select_location_types", true);
+                    cboxSampleInfoLocationTypes.DataSource = DB.GetIntLemmata(conn, null, "csp_select_location_types", true);
 
                     cboxOrderRequestedSigma.DataSource = DB.GetSigmaValues(conn);
                     cboxOrderRequestedSigmaMDA.DataSource = DB.GetSigmaMDAValues(conn);
@@ -399,11 +399,11 @@ namespace DSA_lims
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                DB.LoadUserRoles(conn, Common.UserId, ref Roles.UserRoles);
+                DB.LoadUserRoles(conn, null, Common.UserId, ref Roles.UserRoles);
 
                 if(Common.LabId != Guid.Empty)
                 {
-                    using (SqlDataReader reader = DB.GetDataReader(conn, "select laboratory_logo, accredited_logo from laboratory where id = @id", 
+                    using (SqlDataReader reader = DB.GetDataReader(conn, null, "select laboratory_logo, accredited_logo from laboratory where id = @id", 
                         CommandType.Text, new SqlParameter("@id", Common.LabId)))
                     {
                         if (reader.HasRows)
@@ -625,7 +625,7 @@ namespace DSA_lims
         {
             ListBox lb = inherited ? lbSampleTypesInheritedComponents : lbSampleTypesComponents;
 
-            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_sample_components_for_sample_type", CommandType.StoredProcedure,
+            using (SqlDataReader reader = DB.GetDataReader(conn, null, "csp_select_sample_components_for_sample_type", CommandType.StoredProcedure,
                     new SqlParameter("@sample_type_id", sampleTypeId)))
             {
                 while (reader.Read())
@@ -1021,7 +1021,7 @@ namespace DSA_lims
                     SetStatusMessage("Sample type " + form.SampleTypeName + " created");
                     using (SqlConnection conn = DB.OpenConnection())
                     {
-                        DB.LoadSampleTypes(conn);
+                        DB.LoadSampleTypes(conn, null);
                         UI.PopulateSampleTypes(conn, treeSampleTypes);
                         UI.PopulateSampleTypes(treeSampleTypes, cboxSampleSampleType);
                     }
@@ -1056,7 +1056,7 @@ namespace DSA_lims
                     SetStatusMessage("Sample type " + form.SampleTypeName + " updated");
                     using (SqlConnection conn = DB.OpenConnection())
                     {
-                        DB.LoadSampleTypes(conn);
+                        DB.LoadSampleTypes(conn, null);
                         UI.PopulateSampleTypes(conn, treeSampleTypes);
                         UI.PopulateSampleTypes(treeSampleTypes, cboxSampleSampleType);
                     }
@@ -1646,7 +1646,7 @@ namespace DSA_lims
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_station", CommandType.StoredProcedure, 
+                using (SqlDataReader reader = DB.GetDataReader(conn, null, "csp_select_station", CommandType.StoredProcedure, 
                     new SqlParameter("@id", stationId)))
                 {
                     reader.Read();
@@ -1803,7 +1803,7 @@ namespace DSA_lims
         {
             Dictionary<string, object> map = new Dictionary<string, object>();
 
-            using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_sample", CommandType.StoredProcedure,
+            using (SqlDataReader reader = DB.GetDataReader(conn, null, "csp_select_sample", CommandType.StoredProcedure,
                 new SqlParameter("@id", sampleId)))
             {
                 if (!reader.HasRows)
@@ -1864,7 +1864,7 @@ namespace DSA_lims
 
             if (map["project_sub_id"] != DBNull.Value)
             {
-                object mpid = DB.GetScalar(conn, "select project_main_id from project_sub where id = @id", CommandType.Text, new SqlParameter("@id", map["project_sub_id"]));
+                object mpid = DB.GetScalar(conn, null, "select project_main_id from project_sub where id = @id", CommandType.Text, new SqlParameter("@id", map["project_sub_id"]));
                 cboxSampleProject.SelectedValue = mpid;
                 cboxSampleSubProject.SelectedValue = map["project_sub_id"];
             }
@@ -1882,7 +1882,7 @@ namespace DSA_lims
 
             if (map["municipality_id"] != DBNull.Value)
             {
-                object cid = DB.GetScalar(conn, "select county_id from municipality where id = @id", CommandType.Text, new SqlParameter("@id", map["municipality_id"]));
+                object cid = DB.GetScalar(conn, null, "select county_id from municipality where id = @id", CommandType.Text, new SqlParameter("@id", map["municipality_id"]));
                 cboxSampleCounties.SelectedValue = cid;
                 cboxSampleMunicipalities.SelectedValue = map["municipality_id"];
             }
@@ -1975,7 +1975,7 @@ namespace DSA_lims
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                int mergeTest = Convert.ToInt32(DB.GetScalar(conn, "select count(transform_to_id) from sample where id = '" + sid.ToString() + "'", CommandType.Text));
+                int mergeTest = Convert.ToInt32(DB.GetScalar(conn, null, "select count(transform_to_id) from sample where id = '" + sid.ToString() + "'", CommandType.Text));
                 if (mergeTest > 0)
                 {
                     MessageBox.Show("Cannot split, sample has already been merged");
@@ -2010,14 +2010,14 @@ namespace DSA_lims
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                int mergeTest = Convert.ToInt32(DB.GetScalar(conn, "select count(transform_to_id) from sample where id in (" + sampleIdsCsv + ")", CommandType.Text));
+                int mergeTest = Convert.ToInt32(DB.GetScalar(conn, null, "select count(transform_to_id) from sample where id in (" + sampleIdsCsv + ")", CommandType.Text));
                 if(mergeTest > 0)
                 {
                     MessageBox.Show("Cannot merge, one or more of these samples has already been merged");
                     return;
                 }
 
-                Func<string, int> nCheck = field => Convert.ToInt32(DB.GetScalar(conn, "select count(distinct(" + field + ")) from sample where id in(" + sampleIdsCsv + ")", CommandType.Text));
+                Func<string, int> nCheck = field => Convert.ToInt32(DB.GetScalar(conn, null, "select count(distinct(" + field + ")) from sample where id in(" + sampleIdsCsv + ")", CommandType.Text));
 
                 // FIXME: Must select new sample type
                 if ((nCheck("laboratory_id") & nCheck("project_sub_id")) != 1)
@@ -2125,7 +2125,7 @@ namespace DSA_lims
 
         private bool PopulatePrepAnal(SqlConnection conn, Guid sampleId)
         {
-            if(!DB.SampleHasRequiredFields(conn, sampleId))
+            if(!DB.SampleHasRequiredFields(conn, null, sampleId))
             {
                 MessageBox.Show("This sample is not complete yet");
                 return false;
@@ -2146,7 +2146,7 @@ inner join laboratory l on l.id = s.laboratory_id
 where s.id = @id
 ";
 
-            using (SqlDataReader reader = DB.GetDataReader(conn, query, CommandType.Text, 
+            using (SqlDataReader reader = DB.GetDataReader(conn, null, query, CommandType.Text, 
                 new SqlParameter("@id", sampleId)))
             {
                 reader.Read();
@@ -2162,7 +2162,7 @@ left outer join assignment a on a.id = p.assignment_id
 where sample_id = @sample_id
 order by p.number
 ";
-            using (SqlDataReader reader = DB.GetDataReader(conn, query, CommandType.Text,
+            using (SqlDataReader reader = DB.GetDataReader(conn, null, query, CommandType.Text,
                 new SqlParameter("@sample_id", sampleId)))
             {
                 while (reader.Read())
@@ -2185,7 +2185,7 @@ left outer join assignment ass on ass.id = a.assignment_id
 where preparation_id = @preparation_id
 order by a.number
 ";
-                using (SqlDataReader reader = DB.GetDataReader(conn, query, CommandType.Text,
+                using (SqlDataReader reader = DB.GetDataReader(conn, null, query, CommandType.Text,
                     new SqlParameter("@preparation_id", prepId)))
                 {
                     while (reader.Read())
@@ -2633,7 +2633,7 @@ order by name
             List<Guid> existingNuclides = new List<Guid>();
             using (SqlConnection conn = DB.OpenConnection())
             {
-                using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_nuclides_for_analysis_method", CommandType.StoredProcedure,
+                using (SqlDataReader reader = DB.GetDataReader(conn, null, "csp_select_nuclides_for_analysis_method", CommandType.StoredProcedure,
                     new SqlParameter("@analysis_method_id", amid)))
                 {
                     while (reader.Read())
@@ -2692,7 +2692,7 @@ order by name
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_analysis_methods_for_preparation_method", CommandType.StoredProcedure,
+                using (SqlDataReader reader = DB.GetDataReader(conn, null, "csp_select_analysis_methods_for_preparation_method", CommandType.StoredProcedure,
                     new SqlParameter("@preparation_method_id", pmid)))
                 {
                     while (reader.Read())
@@ -2771,7 +2771,7 @@ order by name
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_assignment", CommandType.StoredProcedure, 
+                using (SqlDataReader reader = DB.GetDataReader(conn, null, "csp_select_assignment", CommandType.StoredProcedure, 
                     new SqlParameter("@id", id)))
                 {
                     if (!reader.HasRows)
@@ -2844,11 +2844,11 @@ order by name
                 tbOrderContentComment.Text = map["content_comment"].ToString();
                 tbOrderReportComment.Text = map["report_comment"].ToString();
                 cbOrderApprovedCustomer.Checked = Convert.ToBoolean(map["approved_customer"]);
-                tbOrderApprovedCustomerBy.Text = DB.GetAccountNameFromUsername(conn, map["approved_customer_by"].ToString());
+                tbOrderApprovedCustomerBy.Text = DB.GetAccountNameFromUsername(conn, null, map["approved_customer_by"].ToString());
                 cbOrderApprovedLaboratory.Checked = Convert.ToBoolean(map["approved_laboratory"]);
-                tbOrderApprovedLaboratoryBy.Text = DB.GetAccountNameFromUsername(conn, map["approved_laboratory_by"].ToString());
+                tbOrderApprovedLaboratoryBy.Text = DB.GetAccountNameFromUsername(conn, null, map["approved_laboratory_by"].ToString());
                 cboxOrderStatus.SelectedValue = map["workflow_status_id"];
-                tbOrderLastWorkflowStatusBy.Text = DB.GetAccountNameFromUsername(conn, map["last_workflow_status_by"].ToString());
+                tbOrderLastWorkflowStatusBy.Text = DB.GetAccountNameFromUsername(conn, null, map["last_workflow_status_by"].ToString());
 
                 UI.PopulateOrderContent(conn, id, treeOrderContent, Guid.Empty, treeSampleTypes, true);
 
@@ -2863,6 +2863,7 @@ select
     l.name as 'Prep.Lab',
     pm.name as 'Prep.Meth',
     (select name from workflow_status where id = p.workflow_status_id) as 'Prep.Status',    
+    la.name as 'Analysis.Lab',
     am.name as 'Analysis.Meth',
     (select name from workflow_status where id = a.workflow_status_id) as 'Analysis Status'
 from assignment ass
@@ -2874,10 +2875,11 @@ from assignment ass
     left outer join laboratory l on l.id = p.laboratory_id
     left outer join analysis a on a.preparation_id = p.id
     left outer join analysis_method am on am.id = a.analysis_method_id
+    left outer join laboratory la on la.id = a.laboratory_id
 where ass.id = @aid
 order by s.number, p.number, a.number
 ";                                
-                gridOrderAssigned.DataSource = DB.GetDataTable(conn, query, CommandType.Text, new[] {
+                gridOrderAssigned.DataSource = DB.GetDataTable(conn, null, query, CommandType.Text, new[] {
                     new SqlParameter("@aid", id)
                 });
 
@@ -2898,7 +2900,7 @@ from analysis_result ar
 where a.assignment_id = @aid
 order by s.number, p.number, a.number, n.name
 ";
-                gridOrderAssignedAnalyses.DataSource = DB.GetDataTable(conn, query, CommandType.Text, new[] {
+                gridOrderAssignedAnalyses.DataSource = DB.GetDataTable(conn, null, query, CommandType.Text, new[] {
                     new SqlParameter("@aid", id)
                 });
 
@@ -3074,8 +3076,7 @@ order by s.number, p.number, a.number, n.name
                 conn?.Close();
             }
 
-            PopulateOrders();
-            tabs.SelectedTab = tabOrders;
+            //PopulateOrders(selectedOrderId);
         }
 
         private void btnOrderSelectDeadline_Click(object sender, EventArgs e)
@@ -3306,6 +3307,7 @@ order by s.number, p.number, a.number, n.name
             }
             else if (e.TabPage == tabOrders)
             {
+                populateOrdersDisabled = true;
                 using (SqlConnection conn = DB.OpenConnection())
                 {
                     UI.PopulateComboBoxes(conn, "csp_select_laboratories_short", new[] {
@@ -3315,9 +3317,12 @@ order by s.number, p.number, a.number, n.name
                     if (Common.LabId != Guid.Empty)
                         cboxOrdersLaboratory.SelectedValue = Common.LabId;
                 }
+                populateOrdersDisabled = false;
+                PopulateOrders();
             }
             else if (e.TabPage == tabSamples)
             {
+                populateSamplesDisabled = true;
                 using (SqlConnection conn = DB.OpenConnection())
                 {
                     UI.PopulateComboBoxes(conn, "csp_select_assignments_short", new[] {
@@ -3331,6 +3336,8 @@ order by s.number, p.number, a.number, n.name
                     if (Common.LabId != Guid.Empty)
                         cboxSamplesLaboratory.SelectedValue = Common.LabId;
                 }
+                populateSamplesDisabled = false;
+                PopulateSamples();
             }
         }
 
@@ -3496,7 +3503,7 @@ order by s.number, p.number, a.number, n.name
         {
             using (SqlConnection conn = DB.OpenConnection())
             {
-                using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_preparation", CommandType.StoredProcedure, 
+                using (SqlDataReader reader = DB.GetDataReader(conn, null, "csp_select_preparation", CommandType.StoredProcedure, 
                     new SqlParameter("@id", pid)))
                 {
                     reader.Read();
@@ -3521,7 +3528,7 @@ select au.name + ', ' + aut.name from preparation p
     left outer join activity_unit_type aut on aut.id = ast.requested_activity_unit_type_id
 where p.id = @pid
 ";
-                object o = DB.GetScalar(conn, query, CommandType.Text, new SqlParameter("@pid", pid));
+                object o = DB.GetScalar(conn, null, query, CommandType.Text, new SqlParameter("@pid", pid));
                 if(o != null && o != DBNull.Value)
                     tbPrepAnalPrepReqUnit.Text = o.ToString();
 
@@ -3577,7 +3584,7 @@ where p.id = @pid
         {
             using (SqlConnection conn = DB.OpenConnection())
             {
-                using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_analysis", CommandType.StoredProcedure,
+                using (SqlDataReader reader = DB.GetDataReader(conn, null, "csp_select_analysis", CommandType.StoredProcedure,
                     new SqlParameter("@id", aid)))
                 {
                     reader.Read();
@@ -3609,7 +3616,7 @@ where p.id = @pid
 
                 using (SqlConnection conn = DB.OpenConnection())
                 {
-                    using (SqlDataReader reader = DB.GetDataReader(conn, "select min_fill_height_mm, max_fill_height_mm from preparation_geometry where id = @id", CommandType.Text,
+                    using (SqlDataReader reader = DB.GetDataReader(conn, null, "select min_fill_height_mm, max_fill_height_mm from preparation_geometry where id = @id", CommandType.Text,
                         new SqlParameter("@id", geomId)))
                     {
                         reader.Read();
@@ -3676,7 +3683,7 @@ where p.id = @pid
         {
             using (SqlConnection conn = DB.OpenConnection())
             {
-                using (SqlDataReader reader = DB.GetDataReader(conn, "csp_select_sample_info", CommandType.StoredProcedure,
+                using (SqlDataReader reader = DB.GetDataReader(conn, null, "csp_select_sample_info", CommandType.StoredProcedure,
                     new SqlParameter("@id", sid)))
                 {
                     reader.Read();
@@ -3868,7 +3875,7 @@ insert into analysis_result values(
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                DB.AddAttachment(conn, "analysis", aid, Path.GetFileNameWithoutExtension(analysisParameters.FileName), "lis", File.ReadAllBytes(analysisParameters.FileName));
+                DB.AddAttachment(conn, null, "analysis", aid, Path.GetFileNameWithoutExtension(analysisParameters.FileName), "lis", File.ReadAllBytes(analysisParameters.FileName));
 
                 ClearPrepAnalAnalysis();
                 PopulateAnalysis(aid);
@@ -4434,6 +4441,20 @@ select distinct
                 gridSamples.Columns["reference_date"].DefaultCellStyle.Format = Utils.DateTimeFormatNorwegian;
             }
 
+            if (Utils.IsValidGuid(selectedSampleId))
+            {
+                gridSamples.ClearSelection();
+                foreach (DataGridViewRow row in gridSamples.Rows)
+                {
+                    Guid sid = Guid.Parse(row.Cells["id"].Value.ToString());
+                    if (selectedSampleId == sid)
+                    {
+                        row.Selected = true;
+                        break;
+                    }
+                }
+            }
+
             ActiveControl = tbSamplesLookup;
         }
 
@@ -4533,7 +4554,7 @@ where s.number = @sample_number
             cboxSamplesProjects.SelectedValue = Guid.Empty;
             cboxSamplesProjectsSub.SelectedValue = Guid.Empty;
             cboxSamplesOrders.SelectedValue = Guid.Empty;
-            cboxSamplesStatus.SelectedValue = 1;
+            cboxSamplesStatus.SelectedValue = InstanceStatus.Active;
             cboxSamplesLaboratory.SelectedValue = Guid.Empty;
             populateSamplesDisabled = false;
             PopulateSamples();
@@ -4613,6 +4634,20 @@ select
 
                 gridOrders.Columns["deadline"].DefaultCellStyle.Format = Utils.DateFormatNorwegian;
             }
+
+            if (Utils.IsValidGuid(selectedOrderId))
+            {
+                gridOrders.ClearSelection();
+                foreach (DataGridViewRow row in gridOrders.Rows)
+                {
+                    Guid oid = Guid.Parse(row.Cells["id"].Value.ToString());
+                    if (selectedOrderId == oid)
+                    {
+                        row.Selected = true;
+                        break;
+                    }
+                }
+            }
         }
 
         private void cboxOrdersLaboratory_SelectedIndexChanged(object sender, EventArgs e)
@@ -4667,10 +4702,10 @@ select
                 if((int)cboxOrderStatus.SelectedValue == 2)
                 {
                     int nReqSamples, nReqPreparations, nReqAnalyses;
-                    DB.GetOrderRequiredInventory(conn, selectedOrderId, out nReqSamples, out nReqPreparations, out nReqAnalyses);
+                    DB.GetOrderRequiredInventory(conn, null, selectedOrderId, out nReqSamples, out nReqPreparations, out nReqAnalyses);
 
                     int nCurrSamples, nCurrPreparations, nCurrAnalyses;
-                    DB.GetOrderCurrentInventory(conn, selectedOrderId, out nCurrSamples, out nCurrPreparations, out nCurrAnalyses);
+                    DB.GetOrderCurrentInventory(conn, null, selectedOrderId, out nCurrSamples, out nCurrPreparations, out nCurrAnalyses);
 
                     if(nCurrSamples != nReqSamples)
                     {
@@ -4705,7 +4740,7 @@ where id = @id
                 cmd.Parameters.AddWithValue("@id", selectedOrderId);
                 cmd.ExecuteNonQuery();
 
-                tbOrderLastWorkflowStatusBy.Text = DB.GetAccountNameFromUsername(conn, Common.Username);
+                tbOrderLastWorkflowStatusBy.Text = DB.GetAccountNameFromUsername(conn, null, Common.Username);
 
                 SetStatusMessage("Order status saved for " + tbOrderName.Text, StatusMessageType.Success);
             }
@@ -4729,7 +4764,7 @@ where id = @id
                 if (cbOrderApprovedCustomer.Checked)
                 {
                     int nSamples, nPreparations, nAnalyses;
-                    DB.GetOrderRequiredInventory(conn, selectedOrderId, out nSamples, out nPreparations, out nAnalyses);
+                    DB.GetOrderRequiredInventory(conn, null, selectedOrderId, out nSamples, out nPreparations, out nAnalyses);
                     if (nPreparations < 1)
                     {
                         MessageBox.Show("Can not approve an order without any preparations");
@@ -4744,7 +4779,7 @@ where id = @id
                 cmd.Parameters.AddWithValue("@id", selectedOrderId);
                 cmd.ExecuteNonQuery();
 
-                tbOrderApprovedCustomerBy.Text = DB.GetAccountNameFromUsername(conn, Common.Username);
+                tbOrderApprovedCustomerBy.Text = DB.GetAccountNameFromUsername(conn, null, Common.Username);
 
                 SetStatusMessage("Approvement by customer updated for " + tbOrderName.Text, StatusMessageType.Success);
             }
@@ -4774,7 +4809,7 @@ where id = @id
                 if (cbOrderApprovedLaboratory.Checked)
                 {
                     int nSamples, nPreparations, nAnalyses;
-                    DB.GetOrderRequiredInventory(conn, selectedOrderId, out nSamples, out nPreparations, out nAnalyses);
+                    DB.GetOrderRequiredInventory(conn, null, selectedOrderId, out nSamples, out nPreparations, out nAnalyses);
                     if (nPreparations < 1)
                     {
                         MessageBox.Show("Can not approve an order without any preparations");
@@ -4789,7 +4824,7 @@ where id = @id
                 cmd.Parameters.AddWithValue("@id", selectedOrderId);
                 cmd.ExecuteNonQuery();
 
-                tbOrderApprovedLaboratoryBy.Text = DB.GetAccountNameFromUsername(conn, Common.Username);
+                tbOrderApprovedLaboratoryBy.Text = DB.GetAccountNameFromUsername(conn, null, Common.Username);
 
                 SetStatusMessage("Approvement by laboratory updated for " + tbOrderName.Text, StatusMessageType.Success);
             }
@@ -5066,7 +5101,7 @@ where id = @id
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                DB.AddAttachment(conn, "sample", selectedSampleId, form.DocumentName, ".pdf", form.PdfData);
+                DB.AddAttachment(conn, null, "sample", selectedSampleId, form.DocumentName, ".pdf", form.PdfData);
 
                 UI.PopulateAttachments(conn, "sample", selectedSampleId, gridSampleAttachments);
             }
@@ -5080,7 +5115,7 @@ where id = @id
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                DB.AddAttachment(conn, "assignment", selectedOrderId, form.DocumentName, ".pdf", form.PdfData);
+                DB.AddAttachment(conn, null, "assignment", selectedOrderId, form.DocumentName, ".pdf", form.PdfData);
 
                 UI.PopulateAttachments(conn, "assignment", selectedOrderId, gridOrderAttachments);
             }
@@ -5096,7 +5131,7 @@ where id = @id
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                DB.AddAttachment(conn, "preparation", prepId, form.DocumentName, ".pdf", form.PdfData);
+                DB.AddAttachment(conn, null, "preparation", prepId, form.DocumentName, ".pdf", form.PdfData);
 
                 UI.PopulateAttachments(conn, "preparation", prepId, gridPrepAnalPrepAttachments);
             }
@@ -5112,7 +5147,7 @@ where id = @id
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                DB.AddAttachment(conn, "analysis", analId, form.DocumentName, ".pdf", form.PdfData);
+                DB.AddAttachment(conn, null, "analysis", analId, form.DocumentName, ".pdf", form.PdfData);
 
                 UI.PopulateAttachments(conn, "analysis", analId, gridPrepAnalAnalAttachments);
             }
@@ -5134,7 +5169,7 @@ where id = @id
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                DB.AddAttachment(conn, "project_sub", psid, form.DocumentName, ".pdf", form.PdfData);
+                DB.AddAttachment(conn, null, "project_sub", psid, form.DocumentName, ".pdf", form.PdfData);
 
                 UI.PopulateAttachments(conn, "project_sub", psid, gridProjectAttachments);
             }
@@ -5171,7 +5206,7 @@ where id = @id
                     SetStatusMessage("Sample type " + form.SampleTypeName + " created");
                     using (SqlConnection conn = DB.OpenConnection())
                     {
-                        DB.LoadSampleTypes(conn);
+                        DB.LoadSampleTypes(conn, null);
                         UI.PopulateSampleTypes(conn, treeSampleTypes);
                         UI.PopulateSampleTypes(treeSampleTypes, cboxSampleSampleType);
                     }
@@ -5215,7 +5250,7 @@ where id = @id
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                DB.AddAttachment(conn, "sample", selectedSampleId, fileName, fileExt, content);
+                DB.AddAttachment(conn, null, "sample", selectedSampleId, fileName, fileExt, content);
 
                 UI.PopulateAttachments(conn, "sample", selectedSampleId, gridSampleAttachments);
             }
@@ -5234,7 +5269,7 @@ where id = @id
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                DB.AddAttachment(conn, "assignment", selectedOrderId, fileName, fileExt, content);
+                DB.AddAttachment(conn, null, "assignment", selectedOrderId, fileName, fileExt, content);
 
                 UI.PopulateAttachments(conn, "assignment", selectedOrderId, gridOrderAttachments);
             }
@@ -5261,7 +5296,7 @@ where id = @id
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                DB.AddAttachment(conn, "project_sub", pid, fileName, fileExt, content);
+                DB.AddAttachment(conn, null, "project_sub", pid, fileName, fileExt, content);
 
                 UI.PopulateAttachments(conn, "project_sub", pid, gridProjectAttachments);
             }
@@ -5294,7 +5329,7 @@ where id = @id
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                DB.AddAttachment(conn, "preparation", pid, fileName, fileExt, content);
+                DB.AddAttachment(conn, null, "preparation", pid, fileName, fileExt, content);
 
                 UI.PopulateAttachments(conn, "preparation", pid, gridPrepAnalPrepAttachments);
             }
@@ -5327,7 +5362,7 @@ where id = @id
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                DB.AddAttachment(conn, "analysis", aid, fileName, fileExt, content);
+                DB.AddAttachment(conn, null, "analysis", aid, fileName, fileExt, content);
 
                 UI.PopulateAttachments(conn, "analysis", aid, gridPrepAnalAnalAttachments);
             }
@@ -5356,7 +5391,7 @@ where id = @id
             Guid attId = Guid.Parse(gridPrepAnalAnalAttachments.SelectedRows[0].Cells["id"].Value.ToString());
             using (SqlConnection conn = DB.OpenConnection())
             {
-                DB.DeleteAttachment(conn, "analysis", attId);
+                DB.DeleteAttachment(conn, null, "analysis", attId);
 
                 UI.PopulateAttachments(conn, "analysis", analId, gridPrepAnalAnalAttachments);
             }
@@ -5385,7 +5420,7 @@ where id = @id
             Guid attId = Guid.Parse(gridPrepAnalPrepAttachments.SelectedRows[0].Cells["id"].Value.ToString());
             using (SqlConnection conn = DB.OpenConnection())
             {
-                DB.DeleteAttachment(conn, "preparation", attId);
+                DB.DeleteAttachment(conn, null, "preparation", attId);
 
                 UI.PopulateAttachments(conn, "preparation", prepId, gridPrepAnalPrepAttachments);
             }
@@ -5414,7 +5449,7 @@ where id = @id
             Guid attId = Guid.Parse(gridProjectAttachments.SelectedRows[0].Cells["id"].Value.ToString());
             using (SqlConnection conn = DB.OpenConnection())
             {
-                DB.DeleteAttachment(conn, "project_sub", attId);
+                DB.DeleteAttachment(conn, null, "project_sub", attId);
 
                 UI.PopulateAttachments(conn, "project_sub", projId, gridProjectAttachments);
             }
@@ -5436,7 +5471,7 @@ where id = @id
             Guid attId = Guid.Parse(gridOrderAttachments.SelectedRows[0].Cells["id"].Value.ToString());
             using (SqlConnection conn = DB.OpenConnection())
             {
-                DB.DeleteAttachment(conn, "assignment", attId);
+                DB.DeleteAttachment(conn, null, "assignment", attId);
 
                 UI.PopulateAttachments(conn, "assignment", selectedOrderId, gridOrderAttachments);
             }
@@ -5458,7 +5493,7 @@ where id = @id
             Guid attId = Guid.Parse(gridSampleAttachments.SelectedRows[0].Cells["id"].Value.ToString());
             using (SqlConnection conn = DB.OpenConnection())
             {
-                DB.DeleteAttachment(conn, "sample", attId);
+                DB.DeleteAttachment(conn, null, "sample", attId);
 
                 UI.PopulateAttachments(conn, "sample", selectedSampleId, gridSampleAttachments);
             }

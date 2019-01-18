@@ -43,7 +43,7 @@ namespace DSA_lims
             {
                 string query = "select * from sample s inner join sample_type st on s.sample_type_id = st.id where s.id = @id";                
 
-                using (SqlDataReader reader = DB.GetDataReader(conn, query, CommandType.Text, new SqlParameter("@id", map["id"])))
+                using (SqlDataReader reader = DB.GetDataReader(conn, null, query, CommandType.Text, new SqlParameter("@id", map["id"])))
                 {
                     reader.Read();
 
@@ -69,7 +69,7 @@ namespace DSA_lims
 
                 tbSampleNumber.Text = map["number"].ToString();
 
-                string sampleTypeName = DB.GetScalar(conn, "select name from sample_type where id = @id", CommandType.Text, new SqlParameter("@id", map["sample_type_id"])).ToString();
+                string sampleTypeName = DB.GetScalar(conn, null, "select name from sample_type where id = @id", CommandType.Text, new SqlParameter("@id", map["sample_type_id"])).ToString();
                 tbSampleType.Text = sampleTypeName;
                 
                 TreeNode[] tnodes = treeSampleTypes.Nodes.Find(map["sample_type_id"].ToString(), true);

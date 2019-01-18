@@ -244,62 +244,7 @@ namespace DSA_lims
             {
                 Common.Log.Error(ex);                
             }
-        }
-
-        public static string GetOrderPrefix(SqlConnection conn, SqlTransaction trans, Guid labId)
-        {
-            SqlCommand cmd = new SqlCommand("select name_prefix from laboratory where id = @id", conn, trans);
-            cmd.CommandType = CommandType.Text;
-            cmd.Parameters.AddWithValue("@id", labId);
-            return cmd.ExecuteScalar().ToString();
-        }
-
-        public static bool IsOrderClosed(SqlConnection conn, SqlTransaction trans, Guid orderId)
-        {
-            SqlCommand cmd = new SqlCommand("select instance_status from assignment where id = @id", conn, trans);
-            cmd.CommandType = CommandType.Text;
-            cmd.Parameters.AddWithValue("@id", orderId);            
-
-            object o = cmd.ExecuteScalar();
-            if (o == null || o == DBNull.Value)
-                return false;
-
-            return Convert.ToInt32(o) == WorkflowStatus.Complete;
-        }
-
-        public static int GetNextOrderCount(SqlConnection conn, SqlTransaction trans, Guid labId)
-        {
-            object o = GetScalar(conn, trans, "select last_assignment_counter_year from laboratory where id = @id", CommandType.Text, new[] {
-                new SqlParameter("@id", labId)
-            });
-
-            if (o == null || o == DBNull.Value)
-                throw new Exception("GetNextOrderCount: Unable to get last assignment counter year from database for lab id: " + labId.ToString());
-
-            int storedYear = Convert.ToInt32(o);
-            int currentYear = DateTime.Now.Year;
-
-            SqlCommand cmd = new SqlCommand("", conn, trans);
-            if (storedYear < currentYear)
-            {
-                cmd.CommandText = "update laboratory set last_assignment_counter_year = @year, assignment_counter = 1 where id = @id";
-                cmd.CommandType = CommandType.Text;
-                cmd.Parameters.AddWithValue("@year", currentYear);
-                cmd.Parameters.AddWithValue("@id", labId);
-                cmd.ExecuteNonQuery();
-            }
-
-            SqlParameter nextNumber = new SqlParameter("@current_count", SqlDbType.Int) { Direction = ParameterDirection.Output };
-
-            cmd.CommandText = "csp_increment_assignment_counter";
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.Clear();
-            cmd.Parameters.AddWithValue("@laboratory_id", labId);
-            cmd.Parameters.Add(nextNumber);
-            cmd.ExecuteNonQuery();
-
-            return Convert.ToInt32(nextNumber.Value);
-        }
+        }        
 
         public static bool LockOrder(SqlConnection conn, Guid orderId)
         {
@@ -365,6 +310,120 @@ namespace DSA_lims
             {
                 Common.Log.Error(ex);
             }
+        }
+
+        public static string GetOrderPrefix(SqlConnection conn, SqlTransaction trans, Guid labId)
+        {
+            SqlCommand cmd = new SqlCommand("select name_prefix from laboratory where id = @id", conn, trans);
+            cmd.CommandType = CommandType.Text;
+            cmd.Parameters.AddWithValue("@id", labId);
+            return cmd.ExecuteScalar().ToString();
+        }
+
+        public static bool IsOrderClosed(SqlConnection conn, SqlTransaction trans, Guid orderId)
+        {
+            SqlCommand cmd = new SqlCommand("select workflow_status_id from assignment where id = @id", conn, trans);
+            cmd.CommandType = CommandType.Text;
+            cmd.Parameters.AddWithValue("@id", orderId);
+
+            object o = cmd.ExecuteScalar();
+            if (o == null || o == DBNull.Value)
+                return false;
+
+            return Convert.ToInt32(o) == WorkflowStatus.Complete;
+        }
+
+        public static bool IsSampleClosed(SqlConnection conn, SqlTransaction trans, Guid sampleId)
+        {
+            string query = @"
+select count(*) as 'nclosed'
+from sample s
+	inner join sample_x_assignment_sample_type sxast on sxast.sample_id = s.id
+	inner join assignment_sample_type ast on ast.id = sxast.assignment_sample_type_id
+	inner join assignment a on a.id = ast.assignment_id
+where s.id = @sid and a.workflow_status_id = 2
+";
+            SqlCommand cmd = new SqlCommand(query, conn, trans);
+            cmd.CommandType = CommandType.Text;
+            cmd.Parameters.AddWithValue("@sid", sampleId);
+
+            object o = cmd.ExecuteScalar();
+            if (o == null || o == DBNull.Value)
+                return false;
+
+            return Convert.ToInt32(o) > 0;
+        }
+
+        public static bool IsPreparationClosed(SqlConnection conn, SqlTransaction trans, Guid prepId)
+        {
+            string query = @"
+select a.workflow_status_id 
+from assignment a
+	inner join preparation p on p.assignment_id = a.id
+where p.id = @pid
+";
+            SqlCommand cmd = new SqlCommand(query, conn, trans);
+            cmd.CommandType = CommandType.Text;
+            cmd.Parameters.AddWithValue("@pid", prepId);
+
+            object o = cmd.ExecuteScalar();
+            if (o == null || o == DBNull.Value)
+                return false;
+
+            return Convert.ToInt32(o) == WorkflowStatus.Complete;
+        }
+
+        public static bool IsAnalysisClosed(SqlConnection conn, SqlTransaction trans, Guid analId)
+        {
+            string query = @"
+select a.workflow_status_id 
+from assignment a
+	inner join analysis an on an.assignment_id = a.id
+where an.id = @aid
+";
+            SqlCommand cmd = new SqlCommand(query, conn, trans);
+            cmd.CommandType = CommandType.Text;
+            cmd.Parameters.AddWithValue("@aid", analId);
+
+            object o = cmd.ExecuteScalar();
+            if (o == null || o == DBNull.Value)
+                return false;
+
+            return Convert.ToInt32(o) == WorkflowStatus.Complete;
+        }
+
+        public static int GetNextOrderCount(SqlConnection conn, SqlTransaction trans, Guid labId)
+        {
+            object o = GetScalar(conn, trans, "select last_assignment_counter_year from laboratory where id = @id", CommandType.Text, new[] {
+                new SqlParameter("@id", labId)
+            });
+
+            if (o == null || o == DBNull.Value)
+                throw new Exception("GetNextOrderCount: Unable to get last assignment counter year from database for lab id: " + labId.ToString());
+
+            int storedYear = Convert.ToInt32(o);
+            int currentYear = DateTime.Now.Year;
+
+            SqlCommand cmd = new SqlCommand("", conn, trans);
+            if (storedYear < currentYear)
+            {
+                cmd.CommandText = "update laboratory set last_assignment_counter_year = @year, assignment_counter = 1 where id = @id";
+                cmd.CommandType = CommandType.Text;
+                cmd.Parameters.AddWithValue("@year", currentYear);
+                cmd.Parameters.AddWithValue("@id", labId);
+                cmd.ExecuteNonQuery();
+            }
+
+            SqlParameter nextNumber = new SqlParameter("@current_count", SqlDbType.Int) { Direction = ParameterDirection.Output };
+
+            cmd.CommandText = "csp_increment_assignment_counter";
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Clear();
+            cmd.Parameters.AddWithValue("@laboratory_id", labId);
+            cmd.Parameters.Add(nextNumber);
+            cmd.ExecuteNonQuery();
+
+            return Convert.ToInt32(nextNumber.Value);
         }
 
         public static int GetSampleNumber(SqlConnection conn, SqlTransaction trans, Guid sampleId)

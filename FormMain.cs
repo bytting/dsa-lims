@@ -2913,6 +2913,15 @@ order by s.number, p.number, a.number, n.name
         private void miOrderAddSampleType_Click(object sender, EventArgs e)
         {
             // add sample type to order
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                if (DB.IsOrderClosed(conn, null, selectedOrderId))
+                {
+                    MessageBox.Show("This order has been closed and can not be updated");
+                    return;
+                }
+            }
+
             FormOrderAddSampleType form = new FormOrderAddSampleType(selectedOrderId, treeSampleTypes);
             if (form.ShowDialog() != DialogResult.OK)
                 return;
@@ -2942,6 +2951,15 @@ order by s.number, p.number, a.number, n.name
             {
                 MessageBox.Show("You must select a sample type first");
                 return;
+            }
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                if (DB.IsOrderClosed(conn, null, selectedOrderId))
+                {
+                    MessageBox.Show("This order has been closed and can not be updated");
+                    return;
+                }
             }
 
             Guid orderSampleTypeId = Guid.Parse(tnode.Name);
@@ -2976,7 +2994,16 @@ order by s.number, p.number, a.number, n.name
                 MessageBox.Show("You must select a preparation method first");
                 return;
             }
-            
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                if (DB.IsOrderClosed(conn, null, selectedOrderId))
+                {
+                    MessageBox.Show("This order has been closed and can not be updated");
+                    return;
+                }
+            }
+
             Guid orderPrepMethId = Guid.Parse(tnode.Name);
             FormOrderAddAnalMeth form = new FormOrderAddAnalMeth(orderPrepMethId);
             if (form.ShowDialog() != DialogResult.OK)
@@ -2995,7 +3022,7 @@ order by s.number, p.number, a.number, n.name
 
         private void miOrderSave_Click(object sender, EventArgs e)
         {
-            // save order
+            // save order            
             if(!Utils.IsValidGuid(cboxOrderLaboratory.SelectedValue))
             {
                 MessageBox.Show("Laboratory is mandatory");
@@ -3033,7 +3060,13 @@ order by s.number, p.number, a.number, n.name
             try
             {
                 conn = DB.OpenConnection();
-                trans = conn.BeginTransaction();                
+                trans = conn.BeginTransaction();
+
+                if (DB.IsOrderClosed(conn, trans, selectedOrderId))
+                {
+                    MessageBox.Show("This order has been closed and can not be updated");
+                    return;
+                }
 
                 Guid labId = Guid.Parse(cboxOrderLaboratory.SelectedValue.ToString());
                 CustomerModel cust = (CustomerModel)tbOrderCustomer.Tag;
@@ -3470,6 +3503,13 @@ order by s.number, p.number, a.number, n.name
             try
             {
                 conn = DB.OpenConnection();
+
+                if(DB.IsPreparationClosed(conn, null, pid))
+                {
+                    MessageBox.Show("This preparation belongs to a closed order and can not be updated");
+                    return;
+                }
+
                 SqlCommand cmd = new SqlCommand("csp_update_preparation", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@id", pid);
@@ -3550,6 +3590,13 @@ where p.id = @pid
             try
             {
                 conn = DB.OpenConnection();
+
+                if (DB.IsAnalysisClosed(conn, null, aid))
+                {
+                    MessageBox.Show("This analysis belongs to a closed order and can not be updated");
+                    return;
+                }
+
                 SqlCommand cmd = new SqlCommand("csp_update_analysis", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@id", aid);
@@ -3652,6 +3699,13 @@ where p.id = @pid
             try
             {
                 conn = DB.OpenConnection();
+
+                if (DB.IsSampleClosed(conn, null, selectedSampleId))
+                {
+                    MessageBox.Show("This sample belongs to a closed order and can not be updated");
+                    return;
+                }
+
                 SqlCommand cmd = new SqlCommand("csp_update_sample_info", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@id", sid);
@@ -3723,7 +3777,13 @@ where p.id = @pid
             try
             {
                 connection = DB.OpenConnection();
-                transaction = connection.BeginTransaction();
+                transaction = connection.BeginTransaction();                
+                
+                if (DB.IsAnalysisClosed(connection, transaction, aid))
+                {
+                    MessageBox.Show("This analysis belongs to a closed order and can not be updated");
+                    return;
+                }
 
                 object oCount = DB.GetScalar(connection, transaction, "select count(*) from analysis_result where analysis_id = @aid", CommandType.Text, new SqlParameter("@aid", aid));
                 if (oCount != null && oCount != DBNull.Value)
@@ -4239,7 +4299,18 @@ insert into analysis_result values(
 
         private void btnPrepAnalEditResult_Click(object sender, EventArgs e)
         {
-            if(gridPrepAnalResults.SelectedRows.Count < 1)
+            Guid analId = Guid.Parse(treePrepAnal.SelectedNode.Name);
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                if (DB.IsAnalysisClosed(conn, null, analId))
+                {
+                    MessageBox.Show("This analysis belongs to a closed order and can not be updated");
+                    return;
+                }
+            }
+
+            if (gridPrepAnalResults.SelectedRows.Count < 1)
             {
                 MessageBox.Show("You must select a result first");
                 return;
@@ -4249,7 +4320,7 @@ insert into analysis_result values(
             {
                 MessageBox.Show("You must save a unit first");
                 return;
-            }
+            }            
 
             Guid unitId = Guid.Parse(cboxPrepAnalAnalUnit.SelectedValue.ToString());
             Guid resultId = Guid.Parse(gridPrepAnalResults.SelectedRows[0].Cells["id"].Value.ToString());
@@ -4257,8 +4328,7 @@ insert into analysis_result values(
             FormPrepAnalResult form = new FormPrepAnalResult(resultId, unitId, nuclName);
             if (form.ShowDialog() != DialogResult.OK)
                 return;
-
-            Guid analId = Guid.Parse(treePrepAnal.SelectedNode.Name);
+            
             using (SqlConnection conn = DB.OpenConnection())
             {
                 UI.PopulateAnalysisResults(conn, analId, gridPrepAnalResults);
@@ -4278,6 +4348,12 @@ insert into analysis_result values(
             List<string> nuclides = null;
             using (SqlConnection conn = DB.OpenConnection())
             {
+                if (DB.IsAnalysisClosed(conn, null, analId))
+                {
+                    MessageBox.Show("This analysis belongs to a closed order and can not be updated");
+                    return;
+                }
+
                 nuclides = DB.GetNuclideNamesForAnalysisMethod(conn, null, selectedAnalysisMethodId);
             }
             List<string> existingNuclides = new List<string>();
@@ -4760,6 +4836,12 @@ where id = @id
             try
             {
                 conn = DB.OpenConnection();
+                
+                if (DB.IsOrderClosed(conn, null, selectedOrderId))
+                {
+                    MessageBox.Show("This order has been closed and can not be updated");
+                    return;
+                }
 
                 if (cbOrderApprovedCustomer.Checked)
                 {
@@ -4806,6 +4888,12 @@ where id = @id
             {
                 conn = DB.OpenConnection();
 
+                if (DB.IsOrderClosed(conn, null, selectedOrderId))
+                {
+                    MessageBox.Show("This order has been closed and can not be updated");
+                    return;
+                }
+
                 if (cbOrderApprovedLaboratory.Checked)
                 {
                     int nSamples, nPreparations, nAnalyses;
@@ -4844,6 +4932,12 @@ where id = @id
             try
             {
                 conn = DB.OpenConnection();
+
+                if (DB.IsOrderClosed(conn, null, selectedOrderId))
+                {
+                    MessageBox.Show("This order has been closed and can not be updated");
+                    return;
+                }
 
                 string query = "update assignment set report_comment = @report_comment where id = @id";
                 SqlCommand cmd = new SqlCommand(query, conn);

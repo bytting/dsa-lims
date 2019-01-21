@@ -289,6 +289,12 @@
     <Compile Include="FormPrepMethXAnalMeth.Designer.cs">
       <DependentUpon>FormPrepMethXAnalMeth.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormPrintPrepLabel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormPrintPrepLabel.Designer.cs">
+      <DependentUpon>FormPrintPrepLabel.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormPrintSampleLabel.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -538,6 +544,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormPrepMethXAnalMeth.resx">
       <DependentUpon>FormPrepMethXAnalMeth.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormPrintPrepLabel.resx">
+      <DependentUpon>FormPrintPrepLabel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormPrintSampleLabel.resx">
       <DependentUpon>FormPrintSampleLabel.cs</DependentUpon>

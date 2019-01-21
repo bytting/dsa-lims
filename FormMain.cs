@@ -2873,7 +2873,7 @@ from assignment ass
 	inner join preparation p on p.sample_id = s.id
     left outer join preparation_method pm on pm.id = p.preparation_method_id
     left outer join laboratory l on l.id = p.laboratory_id
-    left outer join analysis a on a.preparation_id = p.id
+    left outer join analysis a on a.preparation_id = p.id and a.assignment_id = @aid
     left outer join analysis_method am on am.id = a.analysis_method_id
     left outer join laboratory la on la.id = a.laboratory_id
 where ass.id = @aid
@@ -2894,7 +2894,7 @@ select
     ar.reportable as 'Reportable'
 from analysis_result ar
     inner join nuclide n on ar.nuclide_id = n.id
-    inner join analysis a on ar.analysis_id = a.id
+    inner join analysis a on ar.analysis_id = a.id and a.assignment_id = @aid
     inner join preparation p on a.preparation_id = p.id
     inner join sample s on p.sample_id = s.id
 where a.assignment_id = @aid
@@ -5591,6 +5591,22 @@ where id = @id
 
                 UI.PopulateAttachments(conn, "sample", selectedSampleId, gridSampleAttachments);
             }
+        }
+
+        private void btnPrepAnalPrepPrintLabel_Click(object sender, EventArgs e)
+        {
+            if (treePrepAnal.SelectedNode == null || treePrepAnal.SelectedNode.Level != 1)
+            {
+                MessageBox.Show("You must select a preparation first");
+                return;
+            }
+
+            Guid pid = Guid.Parse(treePrepAnal.SelectedNode.Name);
+            List<Guid> prepIds = new List<Guid>();
+            prepIds.Add(pid);
+
+            FormPrintPrepLabel form = new FormPrintPrepLabel(Common.Settings, prepIds);
+            form.ShowDialog();
         }
     }    
 }

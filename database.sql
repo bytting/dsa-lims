@@ -1043,14 +1043,15 @@ if OBJECT_ID('dbo.preparation_unit', 'U') is not null drop table preparation_uni
 
 create table preparation_unit (
 	id int primary key not null,
-	name nvarchar(20) not null	
+	name nvarchar(20) not null,
+	name_short nvarchar(8) not null,
 )
 go
 
-insert into preparation_unit values(1, 'Wet weight (g)')
-insert into preparation_unit values(2, 'Dry weight (g)')
-insert into preparation_unit values(3, 'Ash weight (g)')
-insert into preparation_unit values(4, 'Volume (L)')
+insert into preparation_unit values(1, 'Wet weight (g)', 'ww(g)')
+insert into preparation_unit values(2, 'Dry weight (g)', 'dw(g)')
+insert into preparation_unit values(3, 'Ash weight (g)', 'aw(g)')
+insert into preparation_unit values(4, 'Volume (L)', 'V(L)')
 go
 
 create proc csp_select_preparation_units
@@ -1119,13 +1120,14 @@ if OBJECT_ID('dbo.activity_unit_type', 'U') is not null drop table activity_unit
 
 create table activity_unit_type (
 	id uniqueidentifier primary key not null,	
-	name nvarchar(32) not null	
+	name nvarchar(20) not null,
+	name_short nvarchar(8) not null,
 )
 go
 
-insert into activity_unit_type values(NEWID(), 'Wet weight')
-insert into activity_unit_type values(NEWID(), 'Dry weight')
-insert into activity_unit_type values(NEWID(), 'Ash weight')
+insert into activity_unit_type values(NEWID(), 'Wet weight', 'ww')
+insert into activity_unit_type values(NEWID(), 'Dry weight', 'dw')
+insert into activity_unit_type values(NEWID(), 'Ash weight', 'aw')
 go
 
 create proc csp_select_activity_unit_types

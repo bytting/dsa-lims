@@ -847,7 +847,7 @@
             this.label27 = new System.Windows.Forms.Label();
             this.toolsSamplePrepInfo = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel13 = new System.Windows.Forms.ToolStripLabel();
-            this.toolStripButton106 = new System.Windows.Forms.ToolStripButton();
+            this.btnPrepAnalPrepPrintLabel = new System.Windows.Forms.ToolStripButton();
             this.panel24 = new System.Windows.Forms.Panel();
             this.btnPrepAnalPrepUpdate = new System.Windows.Forms.Button();
             this.panel77 = new System.Windows.Forms.Panel();
@@ -6053,14 +6053,14 @@
             // sampleLabelToolStripMenuItem
             // 
             this.sampleLabelToolStripMenuItem.Name = "sampleLabelToolStripMenuItem";
-            this.sampleLabelToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.sampleLabelToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.sampleLabelToolStripMenuItem.Text = "Sample labels";
             this.sampleLabelToolStripMenuItem.Click += new System.EventHandler(this.miSamplesPrintSampleLabels_Click);
             // 
             // sampleInfoForSelectedToolStripMenuItem
             // 
             this.sampleInfoForSelectedToolStripMenuItem.Name = "sampleInfoForSelectedToolStripMenuItem";
-            this.sampleInfoForSelectedToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.sampleInfoForSelectedToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.sampleInfoForSelectedToolStripMenuItem.Text = "Sample info";
             // 
             // panel78
@@ -9667,7 +9667,7 @@
             this.toolsSamplePrepInfo.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolsSamplePrepInfo.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripLabel13,
-            this.toolStripButton106});
+            this.btnPrepAnalPrepPrintLabel});
             this.toolsSamplePrepInfo.Location = new System.Drawing.Point(0, 0);
             this.toolsSamplePrepInfo.Name = "toolsSamplePrepInfo";
             this.toolsSamplePrepInfo.Size = new System.Drawing.Size(424, 25);
@@ -9681,14 +9681,15 @@
             this.toolStripLabel13.Size = new System.Drawing.Size(97, 22);
             this.toolStripLabel13.Text = "Preparation info";
             // 
-            // toolStripButton106
+            // btnPrepAnalPrepPrintLabel
             // 
-            this.toolStripButton106.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.toolStripButton106.Image = global::DSA_lims.Properties.Resources.printer;
-            this.toolStripButton106.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton106.Name = "toolStripButton106";
-            this.toolStripButton106.Size = new System.Drawing.Size(80, 22);
-            this.toolStripButton106.Text = "Print label";
+            this.btnPrepAnalPrepPrintLabel.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.btnPrepAnalPrepPrintLabel.Image = global::DSA_lims.Properties.Resources.printer;
+            this.btnPrepAnalPrepPrintLabel.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnPrepAnalPrepPrintLabel.Name = "btnPrepAnalPrepPrintLabel";
+            this.btnPrepAnalPrepPrintLabel.Size = new System.Drawing.Size(80, 22);
+            this.btnPrepAnalPrepPrintLabel.Text = "Print label";
+            this.btnPrepAnalPrepPrintLabel.Click += new System.EventHandler(this.btnPrepAnalPrepPrintLabel_Click);
             // 
             // panel24
             // 
@@ -9808,10 +9809,10 @@
             this.tabPrepAnalAnalysis.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.tabPrepAnalAnalysis.Controls.Add(this.panel76);
             this.tabPrepAnalAnalysis.Controls.Add(this.panel63);
-            this.tabPrepAnalAnalysis.Location = new System.Drawing.Point(4, 24);
+            this.tabPrepAnalAnalysis.Location = new System.Drawing.Point(4, 22);
             this.tabPrepAnalAnalysis.Name = "tabPrepAnalAnalysis";
             this.tabPrepAnalAnalysis.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPrepAnalAnalysis.Size = new System.Drawing.Size(759, 598);
+            this.tabPrepAnalAnalysis.Size = new System.Drawing.Size(759, 600);
             this.tabPrepAnalAnalysis.TabIndex = 4;
             this.tabPrepAnalAnalysis.Text = "Analyses";
             // 
@@ -9821,7 +9822,7 @@
             this.panel76.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel76.Location = new System.Drawing.Point(3, 287);
             this.panel76.Name = "panel76";
-            this.panel76.Size = new System.Drawing.Size(753, 308);
+            this.panel76.Size = new System.Drawing.Size(753, 310);
             this.panel76.TabIndex = 3;
             // 
             // panel9
@@ -9831,7 +9832,7 @@
             this.panel9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel9.Location = new System.Drawing.Point(0, 0);
             this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(753, 308);
+            this.panel9.Size = new System.Drawing.Size(753, 310);
             this.panel9.TabIndex = 4;
             // 
             // gridPrepAnalResults
@@ -9850,7 +9851,7 @@
             this.gridPrepAnalResults.ReadOnly = true;
             this.gridPrepAnalResults.RowHeadersVisible = false;
             this.gridPrepAnalResults.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridPrepAnalResults.Size = new System.Drawing.Size(753, 283);
+            this.gridPrepAnalResults.Size = new System.Drawing.Size(753, 285);
             this.gridPrepAnalResults.TabIndex = 0;
             // 
             // toolsSampleResRes
@@ -11395,7 +11396,7 @@
         private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton4;
         private System.Windows.Forms.ToolStripMenuItem sampleLabelToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sampleInfoForSelectedToolStripMenuItem;
-        private System.Windows.Forms.ToolStripButton toolStripButton106;
+        private System.Windows.Forms.ToolStripButton btnPrepAnalPrepPrintLabel;
         private System.Windows.Forms.ListBox lbTypeRelSampTypePrepMeth;
         private System.Windows.Forms.ListBox lbTypeRelSampTypeInheritedPrepMeth;
         private System.Windows.Forms.ToolStripMenuItem miTypeRelSampleTypes;

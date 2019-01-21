@@ -4542,7 +4542,7 @@ select distinct
             cboxSamplesLaboratory.SelectedValue = Guid.Empty;            
 
             string query = @"
-select
+select distinct
 		s.id,	
 		s.number,
 		s.external_id,

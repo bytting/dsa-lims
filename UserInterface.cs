@@ -58,6 +58,7 @@ namespace DSA_lims
             grid.Columns["id"].Visible = false;
 
             grid.Columns["name"].HeaderText = "Name";
+            grid.Columns["name_short"].HeaderText = "Short name";
         }
 
         public static void PopulateActivityUnits(SqlConnection conn, DataGridView grid)
@@ -87,6 +88,7 @@ namespace DSA_lims
             grid.Columns["id"].Visible = false;
 
             grid.Columns["name"].HeaderText = "Name";
+            grid.Columns["name_short"].HeaderText = "Short name";
         }
 
         public static void PopulateProjectsMain(SqlConnection conn, DataGridView grid)

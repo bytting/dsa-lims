@@ -9379,7 +9379,7 @@
             this.label31.Size = new System.Drawing.Size(113, 129);
             this.label31.TabIndex = 11;
             this.label31.Text = "Comment";
-            this.label31.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label31.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // panel82
             // 

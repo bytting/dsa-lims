@@ -1048,10 +1048,10 @@ create table preparation_unit (
 )
 go
 
-insert into preparation_unit values(1, 'Wet weight (g)', 'ww(g)')
-insert into preparation_unit values(2, 'Dry weight (g)', 'dw(g)')
-insert into preparation_unit values(3, 'Ash weight (g)', 'aw(g)')
-insert into preparation_unit values(4, 'Volume (L)', 'V(L)')
+insert into preparation_unit values(1, 'Wet weight (g)', 'g ww')
+insert into preparation_unit values(2, 'Dry weight (g)', 'g dw')
+insert into preparation_unit values(3, 'Ash weight (g)', 'g aw')
+insert into preparation_unit values(4, 'Volume (L)', 'L vol')
 go
 
 create proc csp_select_preparation_units

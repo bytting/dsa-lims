@@ -129,8 +129,12 @@ where p.id = @pid
                         reader.Read();
 
                         sampleNumber = reader["sample_number"].ToString();
-                        samplingTimeFrom = Convert.ToDateTime(reader["sampling_date_from"]).ToString(Utils.DateTimeFormatNorwegian);
-                        samplingTimeTo = Convert.ToDateTime(reader["sampling_date_to"]).ToString(Utils.DateTimeFormatNorwegian);
+                        if (DB.IsValidField(reader["sampling_date_from"]))
+                            samplingTimeFrom = Convert.ToDateTime(reader["sampling_date_from"]).ToString(Utils.DateTimeFormatNorwegian);
+                        else samplingTimeFrom = "";
+                        if (DB.IsValidField(reader["sampling_date_to"]))
+                            samplingTimeTo = Convert.ToDateTime(reader["sampling_date_to"]).ToString(Utils.DateTimeFormatNorwegian);
+                        else samplingTimeTo = "";
                         prepNumber = reader["preparation_number"].ToString();                        
                         sampleType = reader["sample_type_name"].ToString();
                         projectMain = reader["project_main_name"].ToString();

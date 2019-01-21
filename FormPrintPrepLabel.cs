@@ -141,11 +141,21 @@ where p.id = @pid
                         projectSub = reader["project_sub_name"].ToString();
                         refDate = Convert.ToDateTime(reader["reference_date"]).ToString(Utils.DateTimeFormatNorwegian);
                         laboratory = reader["laboratory_name"].ToString();
-                        fillHeight = reader["fill_height"].ToString();
-                        prepWeight = reader["preparation_amount"].ToString();
-                        prepWeightUnit = reader["preparation_unit_name"].ToString();
-                        prepQuant = reader["preparation_quantity"].ToString();
-                        prepQuantUnit = reader["preparation_quantity_unit"].ToString();
+                        if (DB.IsValidField(reader["fill_height"]))
+                            fillHeight = reader["fill_height"].ToString();
+                        else fillHeight = "";
+                        if (DB.IsValidField(reader["preparation_amount"]))
+                            prepWeight = reader["preparation_amount"].ToString();
+                        else prepWeight = "";
+                        if (DB.IsValidField(reader["preparation_unit_name"]))
+                            prepWeightUnit = reader["preparation_unit_name"].ToString();
+                        else prepWeightUnit = "";
+                        if (DB.IsValidField(reader["preparation_quantity"]))
+                            prepQuant = reader["preparation_quantity"].ToString();
+                        else prepQuant = "";
+                        if (DB.IsValidField(reader["preparation_quantity_unit"]))
+                            prepQuantUnit = reader["preparation_quantity_unit"].ToString();
+                        else prepQuantUnit = "";
 
                         printDocument.Print();                            
                     }

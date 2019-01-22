@@ -32,6 +32,7 @@ using System.Reflection;
 using System.Data.SqlClient;
 using log4net;
 using System.IO;
+using System.Xml;
 using System.Xml.Serialization;
 using System.Diagnostics;
 
@@ -5607,6 +5608,86 @@ where id = @id
 
             FormPrintPrepLabel form = new FormPrintPrepLabel(Common.Settings, prepIds);
             form.ShowDialog();
+        }
+
+        private void AddSampleTypeToXML(SqlConnection conn, SampleTypeModel stm, XmlDocument doc, XmlNode xnode)
+        {
+            XmlNode newXNode = doc.CreateElement("sampletype");
+            XmlAttribute attrId = doc.CreateAttribute("id");
+            attrId.InnerText = stm.Id.ToString();
+            newXNode.Attributes.Append(attrId);
+            XmlAttribute attrName = doc.CreateAttribute("name");
+            attrName.InnerText = stm.Name;
+            newXNode.Attributes.Append(attrName);
+            XmlAttribute attrCommonName = doc.CreateAttribute("name_common");
+            attrCommonName.InnerText = stm.NameCommon;
+            newXNode.Attributes.Append(attrCommonName);
+            XmlAttribute attrLatinName = doc.CreateAttribute("name_latin");
+            attrLatinName.InnerText = stm.NameLatin;
+            newXNode.Attributes.Append(attrLatinName);            
+
+            using(SqlDataReader reader = DB.GetDataReader(conn, null, "select id, name from sample_component where sample_type_id = @stid", CommandType.Text, 
+                new SqlParameter("@stid", stm.Id)))
+            {
+                while(reader.Read())
+                {
+                    XmlNode newCNode = doc.CreateElement("component");
+                    XmlAttribute attrCompId = doc.CreateAttribute("id");
+                    attrCompId.InnerText = reader["id"].ToString();
+                    newCNode.Attributes.Append(attrCompId);
+                    XmlAttribute attrCompName = doc.CreateAttribute("name");
+                    attrCompName.InnerText = reader["name"].ToString();
+                    newCNode.Attributes.Append(attrCompName);
+                    newXNode.AppendChild(newCNode);
+                }
+            }
+
+            xnode.AppendChild(newXNode);
+
+            List<SampleTypeModel> stmNodes = Common.SampleTypeList.FindAll(x => x.ParentId == stm.Id);
+
+            foreach (SampleTypeModel m in stmNodes)
+            {
+                AddSampleTypeToXML(conn, m, doc, newXNode);
+            }
+        }
+
+        private void miTypeRelSampleTypesExportSampTypeXML_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog dialog = new SaveFileDialog();
+            dialog.Filter = "STX files (*.stx)|*.stx";
+            if (dialog.ShowDialog() != DialogResult.OK)
+                return;
+
+            SqlConnection connection = null;            
+
+            try
+            {
+                connection = DB.OpenConnection();
+
+                XmlDocument doc = new XmlDocument();
+
+                XmlNode xroot = doc.CreateElement("sampletypes");
+                doc.AppendChild(xroot);
+
+                List<SampleTypeModel> roots = Common.SampleTypeList.FindAll(x => x.ParentId == Guid.Empty);
+
+                foreach (SampleTypeModel m in roots)
+                {
+                    AddSampleTypeToXML(connection, m, doc, xroot);
+                }
+
+                doc.Save(dialog.FileName);
+            }
+            catch(Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                connection?.Close();
+            }
         }
     }    
 }

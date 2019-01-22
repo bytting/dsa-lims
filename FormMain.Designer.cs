@@ -569,7 +569,7 @@
             this.btnTypeRelSampleTypesDelete = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator44 = new System.Windows.Forms.ToolStripSeparator();
             this.btnTypeRelSampTypeExport = new System.Windows.Forms.ToolStripDropDownButton();
-            this.simpleSampleTypeListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnTypeRelSampleTypesExportSampTypeList = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl3 = new System.Windows.Forms.TabControl();
             this.tabTypeRelSampTypeComp = new System.Windows.Forms.TabPage();
             this.splitContainer16 = new System.Windows.Forms.SplitContainer();
@@ -906,6 +906,8 @@
             this.btnMenu = new System.Windows.Forms.ToolStripButton();
             this.lblCurrentTab = new System.Windows.Forms.ToolStripLabel();
             this.btnBack = new System.Windows.Forms.ToolStripButton();
+            this.btnTypeRelSampleTypesExportSampTypeXML = new System.Windows.Forms.ToolStripMenuItem();
+            this.miTypeRelSampleTypesExportSampTypeXML = new System.Windows.Forms.ToolStripMenuItem();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tabs.SuspendLayout();
@@ -2080,7 +2082,8 @@
             // miTypeRelSampleTypesExport
             // 
             this.miTypeRelSampleTypesExport.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.miTypeRelSampleTypesExportSampTypeList});
+            this.miTypeRelSampleTypesExportSampTypeList,
+            this.miTypeRelSampleTypesExportSampTypeXML});
             this.miTypeRelSampleTypesExport.Name = "miTypeRelSampleTypesExport";
             this.miTypeRelSampleTypesExport.Size = new System.Drawing.Size(190, 22);
             this.miTypeRelSampleTypesExport.Text = "Export...";
@@ -6053,14 +6056,14 @@
             // sampleLabelToolStripMenuItem
             // 
             this.sampleLabelToolStripMenuItem.Name = "sampleLabelToolStripMenuItem";
-            this.sampleLabelToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.sampleLabelToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.sampleLabelToolStripMenuItem.Text = "Sample labels";
             this.sampleLabelToolStripMenuItem.Click += new System.EventHandler(this.miSamplesPrintSampleLabels_Click);
             // 
             // sampleInfoForSelectedToolStripMenuItem
             // 
             this.sampleInfoForSelectedToolStripMenuItem.Name = "sampleInfoForSelectedToolStripMenuItem";
-            this.sampleInfoForSelectedToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.sampleInfoForSelectedToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.sampleInfoForSelectedToolStripMenuItem.Text = "Sample info";
             // 
             // panel78
@@ -6727,19 +6730,20 @@
             // btnTypeRelSampTypeExport
             // 
             this.btnTypeRelSampTypeExport.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.simpleSampleTypeListToolStripMenuItem});
+            this.btnTypeRelSampleTypesExportSampTypeList,
+            this.btnTypeRelSampleTypesExportSampTypeXML});
             this.btnTypeRelSampTypeExport.Image = ((System.Drawing.Image)(resources.GetObject("btnTypeRelSampTypeExport.Image")));
             this.btnTypeRelSampTypeExport.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnTypeRelSampTypeExport.Name = "btnTypeRelSampTypeExport";
             this.btnTypeRelSampTypeExport.Size = new System.Drawing.Size(78, 22);
             this.btnTypeRelSampTypeExport.Text = "Export...";
             // 
-            // simpleSampleTypeListToolStripMenuItem
+            // btnTypeRelSampleTypesExportSampTypeList
             // 
-            this.simpleSampleTypeListToolStripMenuItem.Name = "simpleSampleTypeListToolStripMenuItem";
-            this.simpleSampleTypeListToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
-            this.simpleSampleTypeListToolStripMenuItem.Text = "Simple sample type list";
-            this.simpleSampleTypeListToolStripMenuItem.Click += new System.EventHandler(this.miTypeRelSampleTypesExportSampTypeList_Click);
+            this.btnTypeRelSampleTypesExportSampTypeList.Name = "btnTypeRelSampleTypesExportSampTypeList";
+            this.btnTypeRelSampleTypesExportSampTypeList.Size = new System.Drawing.Size(195, 22);
+            this.btnTypeRelSampleTypesExportSampTypeList.Text = "Simple sample type list";
+            this.btnTypeRelSampleTypesExportSampTypeList.Click += new System.EventHandler(this.miTypeRelSampleTypesExportSampTypeList_Click);
             // 
             // tabControl3
             // 
@@ -9299,10 +9303,10 @@
             // 
             this.tabPrepAnalPreps.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.tabPrepAnalPreps.Controls.Add(this.splitContainer3);
-            this.tabPrepAnalPreps.Location = new System.Drawing.Point(4, 24);
+            this.tabPrepAnalPreps.Location = new System.Drawing.Point(4, 22);
             this.tabPrepAnalPreps.Name = "tabPrepAnalPreps";
             this.tabPrepAnalPreps.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPrepAnalPreps.Size = new System.Drawing.Size(759, 598);
+            this.tabPrepAnalPreps.Size = new System.Drawing.Size(759, 600);
             this.tabPrepAnalPreps.TabIndex = 3;
             this.tabPrepAnalPreps.Text = "Preparations";
             // 
@@ -10311,6 +10315,20 @@
             this.btnBack.Text = "toolStripButton25";
             this.btnBack.ToolTipText = "Back";
             this.btnBack.Click += new System.EventHandler(this.miBack_Click);
+            // 
+            // btnTypeRelSampleTypesExportSampTypeXML
+            // 
+            this.btnTypeRelSampleTypesExportSampTypeXML.Name = "btnTypeRelSampleTypesExportSampTypeXML";
+            this.btnTypeRelSampleTypesExportSampTypeXML.Size = new System.Drawing.Size(195, 22);
+            this.btnTypeRelSampleTypesExportSampTypeXML.Text = "Sample types (XML)";
+            this.btnTypeRelSampleTypesExportSampTypeXML.Click += new System.EventHandler(this.miTypeRelSampleTypesExportSampTypeXML_Click);
+            // 
+            // miTypeRelSampleTypesExportSampTypeXML
+            // 
+            this.miTypeRelSampleTypesExportSampTypeXML.Name = "miTypeRelSampleTypesExportSampTypeXML";
+            this.miTypeRelSampleTypesExportSampTypeXML.Size = new System.Drawing.Size(195, 22);
+            this.miTypeRelSampleTypesExportSampTypeXML.Text = "Sample types (XML)";
+            this.miTypeRelSampleTypesExportSampTypeXML.Click += new System.EventHandler(this.miTypeRelSampleTypesExportSampTypeXML_Click);
             // 
             // FormMain
             // 
@@ -11647,7 +11665,7 @@
         private System.Windows.Forms.ToolStripMenuItem miTypeRelSampleTypesExportSampTypeList;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator44;
         private System.Windows.Forms.ToolStripDropDownButton btnTypeRelSampTypeExport;
-        private System.Windows.Forms.ToolStripMenuItem simpleSampleTypeListToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem btnTypeRelSampleTypesExportSampTypeList;
         private System.Windows.Forms.ToolStripButton btnSampleGoToPrepAnal;
         private System.Windows.Forms.ToolStripButton btnSamplePrintSampleLabel;
         private System.Windows.Forms.ToolStripDropDownButton ddbOrderAdd;
@@ -11694,6 +11712,8 @@
         private System.Windows.Forms.ToolStripStatusLabel lblCurrentUser;
         private System.Windows.Forms.ToolStripMenuItem printToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem miSamplesPrintSampleLabels;
+        private System.Windows.Forms.ToolStripMenuItem btnTypeRelSampleTypesExportSampTypeXML;
+        private System.Windows.Forms.ToolStripMenuItem miTypeRelSampleTypesExportSampTypeXML;
     }
 }
 

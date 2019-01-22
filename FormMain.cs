@@ -2772,7 +2772,7 @@ order by name
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                using (SqlDataReader reader = DB.GetDataReader(conn, null, "csp_select_assignment", CommandType.StoredProcedure, 
+                using (SqlDataReader reader = DB.GetDataReader(conn, null, "csp_select_assignment", CommandType.StoredProcedure,
                     new SqlParameter("@id", id)))
                 {
                     if (!reader.HasRows)
@@ -2813,13 +2813,13 @@ order by name
                     map["create_date"] = reader["create_date"];
                     map["created_by"] = reader["created_by"];
                     map["update_date"] = reader["update_date"];
-                    map["updated_by"] = reader["updated_by"];    
+                    map["updated_by"] = reader["updated_by"];
                 }
 
                 tbOrderName.Text = map["name"].ToString();
                 cboxOrderLaboratory.SelectedValue = map["laboratory_id"];
                 Guid accId = Guid.Parse(map["account_id"].ToString());
-                cboxOrderResponsible.SelectedValue = accId;                
+                cboxOrderResponsible.SelectedValue = accId;
                 DateTime deadline = Convert.ToDateTime(map["deadline"]);
                 tbOrderDeadline.Text = deadline.ToString(Utils.DateFormatNorwegian);
                 tbOrderDeadline.Tag = deadline;
@@ -2836,10 +2836,10 @@ order by name
                 cust.ContactAddress = map["customer_contact_address"].ToString();
                 tbOrderCustomer.Text = cust.ContactName;
                 tbOrderCustomer.Tag = cust;
-                tbOrderCustomerInfo.Text = 
-                    cust.ContactName + Environment.NewLine + 
+                tbOrderCustomerInfo.Text =
+                    cust.ContactName + Environment.NewLine +
                     cust.CompanyName + Environment.NewLine + Environment.NewLine +
-                    cust.ContactEmail + Environment.NewLine + 
+                    cust.ContactEmail + Environment.NewLine +
                     cust.ContactPhone + Environment.NewLine + Environment.NewLine +
                     cust.ContactAddress;
                 tbOrderContentComment.Text = map["content_comment"].ToString();
@@ -2856,59 +2856,114 @@ order by name
                 // Show attachments
                 UI.PopulateAttachments(conn, "assignment", id, gridOrderAttachments);
 
-                // Populate assigned grid
+                // Populate assigned tree
+
+                Font fontSample = new Font(tvOrderContent.Font, FontStyle.Bold);
+
+                lblOrderContentOrderName.Text = map["name"].ToString();
+                tvOrderContent.Nodes.Clear();
 
                 string query = @"
-select
-    convert(nvarchar(50), s.number) + '/' + convert(nvarchar(50), p.number) + case when a.number is null then '' else '/' + convert(nvarchar(50), a.number) end as 'Name',
-    l.name as 'Prep.Lab',
-    pm.name as 'Prep.Meth',
-    (select name from workflow_status where id = p.workflow_status_id) as 'Prep.Status',    
-    la.name as 'Analysis.Lab',
-    am.name as 'Analysis.Meth',
-    (select name from workflow_status where id = a.workflow_status_id) as 'Analysis Status'
-from assignment ass
-    inner join assignment_sample_type ast on ast.assignment_id = ass.id
-    inner join sample_x_assignment_sample_type sxast on sxast.assignment_sample_type_id = ast.id
-    inner join sample s on s.id = sxast.sample_id
-	inner join preparation p on p.sample_id = s.id
-    left outer join preparation_method pm on pm.id = p.preparation_method_id
-    left outer join laboratory l on l.id = p.laboratory_id
-    left outer join analysis a on a.preparation_id = p.id and a.assignment_id = @aid
-    left outer join analysis_method am on am.id = a.analysis_method_id
-    left outer join laboratory la on la.id = a.laboratory_id
-where ass.id = @aid
-order by s.number, p.number, a.number
-";                                
-                gridOrderAssigned.DataSource = DB.GetDataTable(conn, null, query, CommandType.Text, new[] {
-                    new SqlParameter("@aid", id)
-                });
-
-                query = @"
 select 
-    convert(nvarchar(50), s.number) + '/' + convert(nvarchar(50), p.number) + '/' + convert(nvarchar(50), a.number) as 'Analysis',
-    n.name as 'Nuclide', 
-    ar.activity as 'Activity',
-    ar.activity_uncertainty_abs as 'Act.unc.',
-    ar.detection_limit as 'Det.lim.',
-    ar.accredited as 'Accredited',
-    ar.reportable as 'Reportable'
-from analysis_result ar
-    inner join nuclide n on ar.nuclide_id = n.id
-    inner join analysis a on ar.analysis_id = a.id and a.assignment_id = @aid
-    inner join preparation p on a.preparation_id = p.id
-    inner join sample s on p.sample_id = s.id
-where a.assignment_id = @aid
-order by s.number, p.number, a.number, n.name
+	s.id as 'sample_id',
+	s.number as 'sample_number',	
+	st.name as 'sample_type_name',
+	sc.name as 'sample_component_name',
+    s.comment as 'sample_comment'
+from sample s
+	inner join sample_x_assignment_sample_type sxast on sxast.sample_id = s.id
+	inner join assignment_sample_type ast on sxast.assignment_sample_type_id = ast.id
+	inner join assignment ass on ast.assignment_id = ass.id
+	inner join sample_type st on s.sample_type_id = st.id
+	left outer join sample_component sc on s.sample_component_id = sc.id
+where ass.id = @assid
+order by s.number
 ";
-                gridOrderAssignedAnalyses.DataSource = DB.GetDataTable(conn, null, query, CommandType.Text, new[] {
-                    new SqlParameter("@aid", id)
-                });
+                using (SqlDataReader reader = DB.GetDataReader(conn, null, query, CommandType.Text, new SqlParameter("@assid", id)))
+                {
+                    while (reader.Read())
+                    {
+                        string label = "Sample " + reader["sample_number"].ToString() + ", " + reader["sample_type_name"].ToString() + " " + reader["sample_component_name"].ToString();
+                        TreeNode sNode = tvOrderContent.Nodes.Add(reader["sample_id"].ToString(), label);
+                        sNode.NodeFont = fontSample;
+                        if (DB.IsValidField(reader["sample_comment"]))
+                            sNode.ToolTipText = reader["sample_comment"].ToString();
+                    }
+                }
 
-                gridOrderAssignedAnalyses.Columns["Activity"].DefaultCellStyle.Format = "0.###E+0";
-                gridOrderAssignedAnalyses.Columns["Act.unc."].DefaultCellStyle.Format = "0.###E+0";
-                gridOrderAssignedAnalyses.Columns["Det.lim."].DefaultCellStyle.Format = "0.###E+0";
-            }            
+                foreach(TreeNode tnode in tvOrderContent.Nodes)
+                {
+                    Guid sid = Guid.Parse(tnode.Name);
+                    string queryPrep = @"
+select 
+	p.id as 'preparation_id',
+	p.number as 'preparation_number',
+    pm.name as 'preparation_method_name',
+    ws.id as 'workflow_status_id',
+    ws.name as 'workflow_status_name',
+    p.comment as 'preparation_comment'
+from preparation p
+    inner join preparation_method pm on p.preparation_method_id = pm.id
+    inner join workflow_status ws on p.workflow_status_id = ws.id
+where p.sample_id = @sid and p.assignment_id = @assid
+order by p.number
+";
+                    using (SqlDataReader reader = DB.GetDataReader(conn, null, queryPrep, CommandType.Text, new[] {
+                        new SqlParameter("@sid", sid),
+                        new SqlParameter("@assid", id)
+                    }))
+                    {
+                        while (reader.Read())
+                        {
+                            int statusId = Convert.ToInt32(reader["workflow_status_id"]);
+                            string label = "Preparation " + reader["preparation_number"].ToString() + ", " + reader["preparation_method_name"].ToString() + ", " + reader["workflow_status_name"].ToString();
+                            TreeNode pNode = tnode.Nodes.Add(reader["preparation_id"].ToString(), label);
+                            pNode.BackColor = statusId == 1 ? Color.LightGoldenrodYellow : Color.PaleGreen;
+                            if (DB.IsValidField(reader["preparation_comment"]))
+                                pNode.ToolTipText = reader["preparation_comment"].ToString();
+                        }
+                    }
+                }
+
+                foreach (TreeNode tnode in tvOrderContent.Nodes)
+                {
+                    foreach (TreeNode tn in tnode.Nodes)
+                    {
+                        Guid pid = Guid.Parse(tn.Name);
+                        string queryAnal = @"
+select 
+	a.id as 'analysis_id',
+	a.number as 'analysis_number',
+    am.name as 'analysis_method_name',
+    ws.id as 'workflow_status_id',
+    ws.name as 'workflow_status_name',
+    a.comment as 'analysis_comment'
+from analysis a
+    inner join analysis_method am on a.analysis_method_id = am.id
+    inner join workflow_status ws on a.workflow_status_id = ws.id
+where a.preparation_id = @pid and a.assignment_id = @assid
+order by a.number
+";
+                        using (SqlDataReader reader = DB.GetDataReader(conn, null, queryAnal, CommandType.Text, new[] {
+                        new SqlParameter("@pid", pid),
+                        new SqlParameter("@assid", id)
+                    }))
+                        {
+                            while (reader.Read())
+                            {
+                                int statusId = Convert.ToInt32(reader["workflow_status_id"]);
+                                string label = "Analysis " + reader["analysis_number"].ToString() + ", " + reader["analysis_method_name"].ToString() + ", " + reader["workflow_status_name"].ToString();
+                                TreeNode aNode = tn.Nodes.Add(reader["analysis_id"].ToString(), label);
+                                aNode.BackColor = statusId == 1 ? Color.LightGoldenrodYellow: Color.PaleGreen;
+                                if (DB.IsValidField(reader["analysis_comment"]))
+                                    aNode.ToolTipText = reader["analysis_comment"].ToString();
+                            }
+                        }
+                    }
+                }
+
+                tvOrderContent.ExpandAll();
+            }                        
         }
 
         private void miOrderAddSampleType_Click(object sender, EventArgs e)
@@ -5680,6 +5735,75 @@ where id = @id
                 doc.Save(dialog.FileName);
             }
             catch(Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                connection?.Close();
+            }
+        }
+
+        private void miNuclidesExportNuclidesXML_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog dialog = new SaveFileDialog();
+            dialog.Filter = "NUX files (*.nux)|*.nux";
+            if (dialog.ShowDialog() != DialogResult.OK)
+                return;
+
+            SqlConnection connection = null;
+
+            try
+            {
+                connection = DB.OpenConnection();
+
+                XmlDocument doc = new XmlDocument();
+
+                XmlNode xroot = doc.CreateElement("nuclides");
+                doc.AppendChild(xroot);
+
+                using (SqlDataReader reader = DB.GetDataReader(connection, null, "select * from nuclide", CommandType.Text))
+                {
+                    while (reader.Read())
+                    {
+                        XmlNode newXNode = doc.CreateElement("nuclide");
+
+                        XmlAttribute attrId = doc.CreateAttribute("id");
+                        attrId.InnerText = reader["id"].ToString();
+                        newXNode.Attributes.Append(attrId);
+
+                        XmlAttribute attrZAS = doc.CreateAttribute("zas");
+                        attrZAS.InnerText = reader["zas"].ToString();
+                        newXNode.Attributes.Append(attrZAS);
+
+                        XmlAttribute attrName = doc.CreateAttribute("name");
+                        attrName.InnerText = reader["name"].ToString();
+                        newXNode.Attributes.Append(attrName);
+
+                        XmlAttribute attrProtons = doc.CreateAttribute("protons");
+                        attrProtons.InnerText = Convert.ToInt32(reader["protons"]).ToString();
+                        newXNode.Attributes.Append(attrProtons);
+
+                        XmlAttribute attrNeutrons = doc.CreateAttribute("neutrons");
+                        attrNeutrons.InnerText = Convert.ToInt32(reader["neutrons"]).ToString();
+                        newXNode.Attributes.Append(attrNeutrons);
+
+                        XmlAttribute attrMetaStable = doc.CreateAttribute("meta_stable");
+                        attrMetaStable.InnerText = Convert.ToInt32(reader["meta_stable"]).ToString();
+                        newXNode.Attributes.Append(attrMetaStable);
+
+                        XmlAttribute attrHalfLife = doc.CreateAttribute("half_life_year");
+                        attrHalfLife.InnerText = Convert.ToDouble(reader["half_life_year"]).ToString();
+                        newXNode.Attributes.Append(attrHalfLife);
+
+                        xroot.AppendChild(newXNode);
+                    }
+                }
+
+                doc.Save(dialog.FileName);
+            }
+            catch (Exception ex)
             {
                 Common.Log.Error(ex);
                 MessageBox.Show(ex.Message);

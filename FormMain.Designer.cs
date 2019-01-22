@@ -371,13 +371,8 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.btnOrderCreateReport = new System.Windows.Forms.ToolStripButton();
             this.tabOrderAssigned = new System.Windows.Forms.TabPage();
-            this.splitContainer8 = new System.Windows.Forms.SplitContainer();
-            this.gridOrderAssigned = new System.Windows.Forms.DataGridView();
             this.toolStrip17 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel58 = new System.Windows.Forms.ToolStripLabel();
-            this.gridOrderAssignedAnalyses = new System.Windows.Forms.DataGridView();
-            this.toolStrip18 = new System.Windows.Forms.ToolStrip();
-            this.toolStripLabel61 = new System.Windows.Forms.ToolStripLabel();
             this.tabSearch = new System.Windows.Forms.TabPage();
             this.panel17 = new System.Windows.Forms.Panel();
             this.btnSearchClose = new System.Windows.Forms.Button();
@@ -908,6 +903,13 @@
             this.btnBack = new System.Windows.Forms.ToolStripButton();
             this.btnTypeRelSampleTypesExportSampTypeXML = new System.Windows.Forms.ToolStripMenuItem();
             this.miTypeRelSampleTypesExportSampTypeXML = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnSysNuclideExport = new System.Windows.Forms.ToolStripDropDownButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.miNuclidesExport = new System.Windows.Forms.ToolStripMenuItem();
+            this.miNuclidesExportNuclidesXML = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnNuclidesExportNuclidesXML = new System.Windows.Forms.ToolStripMenuItem();
+            this.tvOrderContent = new System.Windows.Forms.TreeView();
+            this.lblOrderContentOrderName = new System.Windows.Forms.ToolStripLabel();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tabs.SuspendLayout();
@@ -965,14 +967,7 @@
             this.tableLayoutPanel7.SuspendLayout();
             this.toolsOrderStatus.SuspendLayout();
             this.tabOrderAssigned.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer8)).BeginInit();
-            this.splitContainer8.Panel1.SuspendLayout();
-            this.splitContainer8.Panel2.SuspendLayout();
-            this.splitContainer8.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gridOrderAssigned)).BeginInit();
             this.toolStrip17.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gridOrderAssignedAnalyses)).BeginInit();
-            this.toolStrip18.SuspendLayout();
             this.tabSearch.SuspendLayout();
             this.panel17.SuspendLayout();
             this.tabMetadata.SuspendLayout();
@@ -2297,7 +2292,9 @@
             this.miNuclides.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.miNuclidesNew,
             this.miNuclidesEdit,
-            this.miNuclidesDelete});
+            this.miNuclidesDelete,
+            this.toolStripSeparator1,
+            this.miNuclidesExport});
             this.miNuclides.Name = "miNuclides";
             this.miNuclides.Size = new System.Drawing.Size(173, 22);
             this.miNuclides.Text = "&Nuclides";
@@ -2305,21 +2302,21 @@
             // miNuclidesNew
             // 
             this.miNuclidesNew.Name = "miNuclidesNew";
-            this.miNuclidesNew.Size = new System.Drawing.Size(149, 22);
+            this.miNuclidesNew.Size = new System.Drawing.Size(152, 22);
             this.miNuclidesNew.Text = "&New nuclide";
             this.miNuclidesNew.Click += new System.EventHandler(this.miNuclidesNew_Click);
             // 
             // miNuclidesEdit
             // 
             this.miNuclidesEdit.Name = "miNuclidesEdit";
-            this.miNuclidesEdit.Size = new System.Drawing.Size(149, 22);
+            this.miNuclidesEdit.Size = new System.Drawing.Size(152, 22);
             this.miNuclidesEdit.Text = "&Edit nuclide";
             this.miNuclidesEdit.Click += new System.EventHandler(this.miNuclidesEdit_Click);
             // 
             // miNuclidesDelete
             // 
             this.miNuclidesDelete.Name = "miNuclidesDelete";
-            this.miNuclidesDelete.Size = new System.Drawing.Size(149, 22);
+            this.miNuclidesDelete.Size = new System.Drawing.Size(152, 22);
             this.miNuclidesDelete.Text = "&Delete nuclide";
             // 
             // miMunicipalities
@@ -4616,7 +4613,8 @@
             // tabOrderAssigned
             // 
             this.tabOrderAssigned.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.tabOrderAssigned.Controls.Add(this.splitContainer8);
+            this.tabOrderAssigned.Controls.Add(this.tvOrderContent);
+            this.tabOrderAssigned.Controls.Add(this.toolStrip17);
             this.tabOrderAssigned.Location = new System.Drawing.Point(4, 24);
             this.tabOrderAssigned.Name = "tabOrderAssigned";
             this.tabOrderAssigned.Padding = new System.Windows.Forms.Padding(3);
@@ -4624,51 +4622,13 @@
             this.tabOrderAssigned.TabIndex = 3;
             this.tabOrderAssigned.Text = "All units assigned to order";
             // 
-            // splitContainer8
-            // 
-            this.splitContainer8.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer8.Location = new System.Drawing.Point(3, 3);
-            this.splitContainer8.Name = "splitContainer8";
-            this.splitContainer8.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // splitContainer8.Panel1
-            // 
-            this.splitContainer8.Panel1.Controls.Add(this.gridOrderAssigned);
-            this.splitContainer8.Panel1.Controls.Add(this.toolStrip17);
-            // 
-            // splitContainer8.Panel2
-            // 
-            this.splitContainer8.Panel2.Controls.Add(this.gridOrderAssignedAnalyses);
-            this.splitContainer8.Panel2.Controls.Add(this.toolStrip18);
-            this.splitContainer8.Size = new System.Drawing.Size(1108, 592);
-            this.splitContainer8.SplitterDistance = 295;
-            this.splitContainer8.TabIndex = 2;
-            // 
-            // gridOrderAssigned
-            // 
-            this.gridOrderAssigned.AllowUserToAddRows = false;
-            this.gridOrderAssigned.AllowUserToDeleteRows = false;
-            this.gridOrderAssigned.AllowUserToResizeRows = false;
-            this.gridOrderAssigned.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.gridOrderAssigned.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
-            this.gridOrderAssigned.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.gridOrderAssigned.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gridOrderAssigned.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridOrderAssigned.Location = new System.Drawing.Point(0, 25);
-            this.gridOrderAssigned.MultiSelect = false;
-            this.gridOrderAssigned.Name = "gridOrderAssigned";
-            this.gridOrderAssigned.ReadOnly = true;
-            this.gridOrderAssigned.RowHeadersVisible = false;
-            this.gridOrderAssigned.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridOrderAssigned.Size = new System.Drawing.Size(1108, 270);
-            this.gridOrderAssigned.TabIndex = 0;
-            // 
             // toolStrip17
             // 
             this.toolStrip17.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStrip17.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripLabel58});
-            this.toolStrip17.Location = new System.Drawing.Point(0, 0);
+            this.toolStripLabel58,
+            this.lblOrderContentOrderName});
+            this.toolStrip17.Location = new System.Drawing.Point(3, 3);
             this.toolStrip17.Name = "toolStrip17";
             this.toolStrip17.Size = new System.Drawing.Size(1108, 25);
             this.toolStrip17.TabIndex = 1;
@@ -4680,43 +4640,6 @@
             this.toolStripLabel58.Name = "toolStripLabel58";
             this.toolStripLabel58.Size = new System.Drawing.Size(259, 22);
             this.toolStripLabel58.Text = "Preparations and analyses connected to order";
-            // 
-            // gridOrderAssignedAnalyses
-            // 
-            this.gridOrderAssignedAnalyses.AllowUserToAddRows = false;
-            this.gridOrderAssignedAnalyses.AllowUserToDeleteRows = false;
-            this.gridOrderAssignedAnalyses.AllowUserToResizeRows = false;
-            this.gridOrderAssignedAnalyses.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.gridOrderAssignedAnalyses.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
-            this.gridOrderAssignedAnalyses.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.gridOrderAssignedAnalyses.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gridOrderAssignedAnalyses.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridOrderAssignedAnalyses.Location = new System.Drawing.Point(0, 25);
-            this.gridOrderAssignedAnalyses.MultiSelect = false;
-            this.gridOrderAssignedAnalyses.Name = "gridOrderAssignedAnalyses";
-            this.gridOrderAssignedAnalyses.ReadOnly = true;
-            this.gridOrderAssignedAnalyses.RowHeadersVisible = false;
-            this.gridOrderAssignedAnalyses.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridOrderAssignedAnalyses.Size = new System.Drawing.Size(1108, 268);
-            this.gridOrderAssignedAnalyses.TabIndex = 1;
-            // 
-            // toolStrip18
-            // 
-            this.toolStrip18.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.toolStrip18.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripLabel61});
-            this.toolStrip18.Location = new System.Drawing.Point(0, 0);
-            this.toolStrip18.Name = "toolStrip18";
-            this.toolStrip18.Size = new System.Drawing.Size(1108, 25);
-            this.toolStrip18.TabIndex = 2;
-            this.toolStrip18.Text = "toolStrip18";
-            // 
-            // toolStripLabel61
-            // 
-            this.toolStripLabel61.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.toolStripLabel61.Name = "toolStripLabel61";
-            this.toolStripLabel61.Size = new System.Drawing.Size(164, 22);
-            this.toolStripLabel61.Text = "Analysis results on this order";
             // 
             // tabSearch
             // 
@@ -8552,7 +8475,8 @@
             this.toolStripSeparator3,
             this.btnSysNuclideNew,
             this.btnSysNuclideEdit,
-            this.btnSysNuclideDelete});
+            this.btnSysNuclideDelete,
+            this.btnSysNuclideExport});
             this.toolsSysNuclides.Location = new System.Drawing.Point(3, 3);
             this.toolsSysNuclides.Name = "toolsSysNuclides";
             this.toolsSysNuclides.Size = new System.Drawing.Size(1108, 25);
@@ -10330,6 +10254,66 @@
             this.miTypeRelSampleTypesExportSampTypeXML.Text = "Sample types (XML)";
             this.miTypeRelSampleTypesExportSampTypeXML.Click += new System.EventHandler(this.miTypeRelSampleTypesExportSampTypeXML_Click);
             // 
+            // btnSysNuclideExport
+            // 
+            this.btnSysNuclideExport.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnNuclidesExportNuclidesXML});
+            this.btnSysNuclideExport.Image = ((System.Drawing.Image)(resources.GetObject("btnSysNuclideExport.Image")));
+            this.btnSysNuclideExport.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSysNuclideExport.Name = "btnSysNuclideExport";
+            this.btnSysNuclideExport.Size = new System.Drawing.Size(78, 22);
+            this.btnSysNuclideExport.Text = "Export...";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+            // 
+            // miNuclidesExport
+            // 
+            this.miNuclidesExport.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.miNuclidesExportNuclidesXML});
+            this.miNuclidesExport.Name = "miNuclidesExport";
+            this.miNuclidesExport.Size = new System.Drawing.Size(152, 22);
+            this.miNuclidesExport.Text = "Export...";
+            // 
+            // miNuclidesExportNuclidesXML
+            // 
+            this.miNuclidesExportNuclidesXML.Name = "miNuclidesExportNuclidesXML";
+            this.miNuclidesExportNuclidesXML.Size = new System.Drawing.Size(155, 22);
+            this.miNuclidesExportNuclidesXML.Text = "Nuclides (XML)";
+            this.miNuclidesExportNuclidesXML.Click += new System.EventHandler(this.miNuclidesExportNuclidesXML_Click);
+            // 
+            // btnNuclidesExportNuclidesXML
+            // 
+            this.btnNuclidesExportNuclidesXML.Name = "btnNuclidesExportNuclidesXML";
+            this.btnNuclidesExportNuclidesXML.Size = new System.Drawing.Size(155, 22);
+            this.btnNuclidesExportNuclidesXML.Text = "Nuclides (XML)";
+            this.btnNuclidesExportNuclidesXML.Click += new System.EventHandler(this.miNuclidesExportNuclidesXML_Click);
+            // 
+            // tvOrderContent
+            // 
+            this.tvOrderContent.BackColor = System.Drawing.SystemColors.Window;
+            this.tvOrderContent.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tvOrderContent.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tvOrderContent.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tvOrderContent.Indent = 60;
+            this.tvOrderContent.ItemHeight = 26;
+            this.tvOrderContent.Location = new System.Drawing.Point(3, 28);
+            this.tvOrderContent.Name = "tvOrderContent";
+            this.tvOrderContent.ShowNodeToolTips = true;
+            this.tvOrderContent.ShowPlusMinus = false;
+            this.tvOrderContent.ShowRootLines = false;
+            this.tvOrderContent.Size = new System.Drawing.Size(1108, 567);
+            this.tvOrderContent.TabIndex = 2;
+            // 
+            // lblOrderContentOrderName
+            // 
+            this.lblOrderContentOrderName.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.lblOrderContentOrderName.Name = "lblOrderContentOrderName";
+            this.lblOrderContentOrderName.Size = new System.Drawing.Size(180, 22);
+            this.lblOrderContentOrderName.Text = "<lblOrderContentOrderName>";
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -10440,18 +10424,9 @@
             this.toolsOrderStatus.ResumeLayout(false);
             this.toolsOrderStatus.PerformLayout();
             this.tabOrderAssigned.ResumeLayout(false);
-            this.splitContainer8.Panel1.ResumeLayout(false);
-            this.splitContainer8.Panel1.PerformLayout();
-            this.splitContainer8.Panel2.ResumeLayout(false);
-            this.splitContainer8.Panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer8)).EndInit();
-            this.splitContainer8.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.gridOrderAssigned)).EndInit();
+            this.tabOrderAssigned.PerformLayout();
             this.toolStrip17.ResumeLayout(false);
             this.toolStrip17.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gridOrderAssignedAnalyses)).EndInit();
-            this.toolStrip18.ResumeLayout(false);
-            this.toolStrip18.PerformLayout();
             this.tabSearch.ResumeLayout(false);
             this.panel17.ResumeLayout(false);
             this.tabMetadata.ResumeLayout(false);
@@ -11696,17 +11671,12 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripButton btnOrderCreateReport;
         private System.Windows.Forms.TabPage tabOrderAssigned;
-        private System.Windows.Forms.DataGridView gridOrderAssigned;
         private System.Windows.Forms.Button btnOrderSaveStatus;
         private System.Windows.Forms.Button btnOrderSaveApprovedCustomer;
         private System.Windows.Forms.Button btnOrderSaveApprovedLaboratory;
         private System.Windows.Forms.Button btnOrderSaveReportComment;
-        private System.Windows.Forms.DataGridView gridOrderAssignedAnalyses;
-        private System.Windows.Forms.SplitContainer splitContainer8;
         private System.Windows.Forms.ToolStrip toolStrip17;
         private System.Windows.Forms.ToolStripLabel toolStripLabel58;
-        private System.Windows.Forms.ToolStrip toolStrip18;
-        private System.Windows.Forms.ToolStripLabel toolStripLabel61;
         private System.Windows.Forms.ToolStripMenuItem miTypeRelSampleTypesNewRoot;
         private System.Windows.Forms.ToolStripButton btnTypeRelSampleTypesNewRoot;
         private System.Windows.Forms.ToolStripStatusLabel lblCurrentUser;
@@ -11714,6 +11684,13 @@
         private System.Windows.Forms.ToolStripMenuItem miSamplesPrintSampleLabels;
         private System.Windows.Forms.ToolStripMenuItem btnTypeRelSampleTypesExportSampTypeXML;
         private System.Windows.Forms.ToolStripMenuItem miTypeRelSampleTypesExportSampTypeXML;
+        private System.Windows.Forms.ToolStripDropDownButton btnSysNuclideExport;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem miNuclidesExport;
+        private System.Windows.Forms.ToolStripMenuItem miNuclidesExportNuclidesXML;
+        private System.Windows.Forms.ToolStripMenuItem btnNuclidesExportNuclidesXML;
+        private System.Windows.Forms.TreeView tvOrderContent;
+        private System.Windows.Forms.ToolStripLabel lblOrderContentOrderName;
     }
 }
 

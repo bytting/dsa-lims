@@ -44,12 +44,13 @@ namespace DSA_lims
 
         private Guid selectedOrderId = Guid.Empty;
         private Guid selectedSampleId = Guid.Empty;
-        private Guid selectedAnalysisMethodId = Guid.Empty;
 
         private bool populateSamplesDisabled = false;
         private bool populateOrdersDisabled = false;
 
         private int editingSampleNumber;
+
+        private Analysis analysis = new Analysis();
 
         public FormMain()
         {
@@ -2138,6 +2139,7 @@ namespace DSA_lims
             ClearPrepAnalAnalysis();
 
             TreeNode sampleNode = null;
+            Font fontSample = new Font(treePrepAnal.Font, FontStyle.Bold);
 
             string query = @"
 select s.id as 'sample_id', s.number as 'sample_number', st.name as 'sample_type_name', l.name as 'laboratory_name'
@@ -2153,10 +2155,11 @@ where s.id = @id
                 reader.Read();
                 string txt = reader["sample_number"].ToString() + " - " + reader["sample_type_name"].ToString() + ", " + reader["laboratory_name"].ToString();
                 sampleNode = treePrepAnal.Nodes.Add(sampleId.ToString(), txt);
+                sampleNode.NodeFont = fontSample;
             }
 
             query = @"
-select p.id as 'preparation_id', p.number as 'preparation_number', a.name as 'assignment_name', pm.name as 'preparation_method_name'
+select p.id as 'preparation_id', p.number as 'preparation_number', a.name as 'assignment_name', pm.name as 'preparation_method_name', p.workflow_status_id
 from preparation p 
 inner join preparation_method pm on pm.id = p.preparation_method_id
 left outer join assignment a on a.id = p.assignment_id
@@ -2168,10 +2171,12 @@ order by p.number
             {
                 while (reader.Read())
                 {
+                    int status = Convert.ToInt32(reader["workflow_status_id"]);
                     string txt = reader["preparation_number"].ToString() + " - " + reader["preparation_method_name"].ToString();
                     if(!String.IsNullOrEmpty(reader["assignment_name"].ToString()))
                         txt += ", " + reader["assignment_name"].ToString();
                     TreeNode prepNode = sampleNode.Nodes.Add(reader["preparation_id"].ToString(), txt);
+                    prepNode.ForeColor = status == WorkflowStatus.Complete ? Color.DarkGreen : Color.Firebrick;
                 }
             }
                 
@@ -2179,7 +2184,7 @@ order by p.number
             {
                 Guid prepId = Guid.Parse(prepNode.Name);
                 query = @"
-select a.id as 'analysis_id', a.number as 'analysis_number', am.name as 'analysis_method_name', ass.name as 'assignment_name'
+select a.id as 'analysis_id', a.number as 'analysis_number', am.name as 'analysis_method_name', ass.name as 'assignment_name', a.workflow_status_id
 from analysis a 
 inner join analysis_method am on am.id = a.analysis_method_id
 left outer join assignment ass on ass.id = a.assignment_id
@@ -2191,10 +2196,12 @@ order by a.number
                 {
                     while (reader.Read())
                     {
+                        int status = Convert.ToInt32(reader["workflow_status_id"]);
                         string txt = reader["analysis_number"].ToString() + " - " + reader["analysis_method_name"].ToString();
                         if(!String.IsNullOrEmpty(reader["assignment_name"].ToString()))
                             txt += ", " + reader["assignment_name"].ToString();
                         TreeNode analNode = prepNode.Nodes.Add(reader["analysis_id"].ToString(), txt);
+                        analNode.ForeColor = status == WorkflowStatus.Complete ? Color.DarkGreen : Color.Firebrick;
                     }
                 }
             }
@@ -2859,9 +2866,11 @@ order by name
                 // Populate assigned tree
 
                 Font fontSample = new Font(tvOrderContent.Font, FontStyle.Bold);
-
-                lblOrderContentOrderName.Text = map["name"].ToString();
+                
                 tvOrderContent.Nodes.Clear();
+
+                TreeNode root = tvOrderContent.Nodes.Add(map["name"].ToString());
+                root.NodeFont = fontSample;
 
                 string query = @"
 select 
@@ -2884,14 +2893,14 @@ order by s.number
                     while (reader.Read())
                     {
                         string label = "Sample " + reader["sample_number"].ToString() + ", " + reader["sample_type_name"].ToString() + " " + reader["sample_component_name"].ToString();
-                        TreeNode sNode = tvOrderContent.Nodes.Add(reader["sample_id"].ToString(), label);
+                        TreeNode sNode = root.Nodes.Add(reader["sample_id"].ToString(), label);
                         sNode.NodeFont = fontSample;
                         if (DB.IsValidField(reader["sample_comment"]))
                             sNode.ToolTipText = reader["sample_comment"].ToString();
                     }
                 }
 
-                foreach(TreeNode tnode in tvOrderContent.Nodes)
+                foreach(TreeNode tnode in root.Nodes)
                 {
                     Guid sid = Guid.Parse(tnode.Name);
                     string queryPrep = @"
@@ -2925,7 +2934,7 @@ order by p.number
                     }
                 }
 
-                foreach (TreeNode tnode in tvOrderContent.Nodes)
+                foreach (TreeNode tnode in root.Nodes)
                 {
                     foreach (TreeNode tn in tnode.Nodes)
                     {
@@ -3319,27 +3328,31 @@ order by a.number
         {
             btnPrepAnalAddAnal.Enabled = false;
 
-            switch (e.Node.Level)
+            using (SqlConnection conn = DB.OpenConnection())
             {
-                case 0:
-                    ClearPrepAnalSample();
-                    Guid sid = Guid.Parse(e.Node.Name);
-                    PopulateSampleInfo(sid, e.Node);
-                    tabsPrepAnal.SelectedTab = tabPrepAnalSample;
-                    break;
-                case 1:
-                    ClearPrepAnalPreparation();
-                    Guid pid = Guid.Parse(e.Node.Name);
-                    PopulatePreparation(pid);
-                    btnPrepAnalAddAnal.Enabled = true;
-                    tabsPrepAnal.SelectedTab = tabPrepAnalPreps;
-                    break;
-                case 2:
-                    ClearPrepAnalAnalysis();
-                    Guid aid = Guid.Parse(e.Node.Name);
-                    PopulateAnalysis(aid);
-                    tabsPrepAnal.SelectedTab = tabPrepAnalAnalysis;
-                    break;
+                switch (e.Node.Level)
+                {
+                    case 0:
+                        ClearPrepAnalSample();
+                        Guid sid = Guid.Parse(e.Node.Name);
+                        PopulateSampleInfo(sid, e.Node);
+                        tabsPrepAnal.SelectedTab = tabPrepAnalSample;
+                        break;
+                    case 1:
+                        ClearPrepAnalPreparation();
+                        Guid pid = Guid.Parse(e.Node.Name);
+                        PopulatePreparation(pid);
+                        btnPrepAnalAddAnal.Enabled = true;
+                        tabsPrepAnal.SelectedTab = tabPrepAnalPreps;
+                        break;
+                    case 2:
+                        //ClearPrepAnalAnalysis();                        
+                        Guid aid = Guid.Parse(e.Node.Name);
+                        analysis.LoadFromDB(conn, null, aid);
+                        PopulateAnalysis(analysis);
+                        tabsPrepAnal.SelectedTab = tabPrepAnalAnalysis;
+                        break;
+                }
             }
         }
 
@@ -3639,41 +3652,44 @@ where p.id = @pid
                 MessageBox.Show("No valid analysis ID found");
                 return;
             }
-
-            Guid aid = Guid.Parse(treePrepAnal.SelectedNode.Name);
+            
             SqlConnection conn = null;
+            SqlTransaction trans = null;
 
             try
             {
                 conn = DB.OpenConnection();
+                trans = conn.BeginTransaction();
 
-                if (DB.IsAnalysisClosed(conn, null, aid))
+                if (DB.IsAnalysisClosed(conn, trans, analysis.Id))
                 {
                     MessageBox.Show("This analysis belongs to a closed order and can not be updated");
                     return;
                 }
 
-                SqlCommand cmd = new SqlCommand("csp_update_analysis", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@id", aid);
-                cmd.Parameters.AddWithValue("@workflow_status_id", DB.MakeParam(typeof(int), cboxPrepAnalAnalWorkflowStatus.SelectedValue));
-                cmd.Parameters.AddWithValue("@specter_reference", tbPrepAnalAnalSpecRef.Text);
-                cmd.Parameters.AddWithValue("@activity_unit_id", DB.MakeParam(typeof(Guid), cboxPrepAnalAnalUnit.SelectedValue));
-                cmd.Parameters.AddWithValue("@activity_unit_type_id", DB.MakeParam(typeof(Guid), cboxPrepAnalAnalUnitType.SelectedValue));
-                cmd.Parameters.AddWithValue("@sigma_act", DBNull.Value); // FIXME
-                cmd.Parameters.AddWithValue("@sigma_mda", DBNull.Value); // FIXME
-                cmd.Parameters.AddWithValue("@nuclide_library", tbPrepAnalAnalNuclLib.Text);
-                cmd.Parameters.AddWithValue("@mda_library", tbPrepAnalAnalMDALib.Text);
-                cmd.Parameters.AddWithValue("@comment", tbPrepAnalAnalComment.Text);
-                cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
-                cmd.Parameters.AddWithValue("@updated_by", Common.Username);
+                /*if(analysis.Results.Count > 0)
+                {
+                    if (MessageBox.Show("There are already analysis results on this analysis, are you sure you want to replace them?", "Question", MessageBoxButtons.YesNo) == DialogResult.No)
+                        return;
 
-                cmd.ExecuteNonQuery();
+                    ClearAnalysisResults(conn, trans, analysis.Id);
+                }*/
 
+                analysis.ActivityUnitId = Guid.Parse(cboxPrepAnalAnalUnit.SelectedValue.ToString());
+                analysis.ActivityUnitTypeId = Guid.Parse(cboxPrepAnalAnalUnitType.SelectedValue.ToString());
+                analysis.SpecterReference = tbPrepAnalAnalSpecRef.Text;
+                analysis.Comment = tbPrepAnalAnalComment.Text;
+                analysis.WorkflowStatusId = Convert.ToInt32(cboxPrepAnalAnalWorkflowStatus.SelectedValue);
+                treePrepAnal.SelectedNode.ForeColor = analysis.WorkflowStatusId == WorkflowStatus.Complete ? Color.DarkGreen : Color.Firebrick;
+
+                analysis.StoreToDB(conn, trans);
+
+                trans.Commit();
                 lblStatus.Text = Utils.makeStatusMessage("Analysis updated successfully");
             }
             catch (Exception ex)
             {
+                trans?.Rollback();
                 Common.Log.Error(ex);
                 MessageBox.Show(ex.Message);
             }
@@ -3681,32 +3697,19 @@ where p.id = @pid
             {
                 conn?.Close();
             }
-        }
-
-        private void PopulateAnalysis(Guid aid)
-        {
-            using (SqlConnection conn = DB.OpenConnection())
+            
+            /*using (SqlConnection conn2 = DB.OpenConnection())
             {
-                using (SqlDataReader reader = DB.GetDataReader(conn, null, "csp_select_analysis", CommandType.StoredProcedure,
-                    new SqlParameter("@id", aid)))
+                if (!String.IsNullOrEmpty(importedAnalysisResultFile))
                 {
-                    reader.Read();
+                    DB.AddAttachment(conn2, null, "analysis", aid, Path.GetFileNameWithoutExtension(importedAnalysisResultFile), "lis", File.ReadAllBytes(importedAnalysisResultFile));
+                }                    
 
-                    cboxPrepAnalAnalUnit.SelectedValue = reader["activity_unit_id"];
-                    cboxPrepAnalAnalUnitType.SelectedValue = reader["activity_unit_type_id"];
-                    tbPrepAnalAnalSpecRef.Text = reader["specter_reference"].ToString();
-                    tbPrepAnalAnalNuclLib.Text = reader["nuclide_library"].ToString();
-                    tbPrepAnalAnalMDALib.Text = reader["mda_library"].ToString();
-                    cboxPrepAnalAnalWorkflowStatus.SelectedValue = reader["workflow_status_id"];
-                    tbPrepAnalAnalComment.Text = reader["comment"].ToString();
-                    selectedAnalysisMethodId = Guid.Parse(reader["analysis_method_id"].ToString());
-                }
-
-                UI.PopulateAnalysisResults(conn, aid, gridPrepAnalResults);
-
-                UI.PopulateAttachments(conn, "analysis", aid, gridPrepAnalAnalAttachments);
-            }
-        }
+                ClearPrepAnalAnalysis();
+                PopulateAnalysis(aid);
+                UI.PopulateAnalysisResults(conn2, aid, gridPrepAnalResults);
+            }*/
+        }        
 
         private void cboxPrepAnalPrepGeom_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -3823,9 +3826,7 @@ where p.id = @pid
         }
 
         private void miImportLISFile_Click(object sender, EventArgs e)
-        {
-            Guid aid = Guid.Parse(treePrepAnal.SelectedNode.Name);
-            bool doClearAnalysis = false;
+        {                        
             SqlConnection connection = null;
             SqlTransaction transaction = null;
             AnalysisParameters analysisParameters = new AnalysisParameters();
@@ -3835,24 +3836,12 @@ where p.id = @pid
                 connection = DB.OpenConnection();
                 transaction = connection.BeginTransaction();                
                 
-                if (DB.IsAnalysisClosed(connection, transaction, aid))
+                if (DB.IsAnalysisClosed(connection, transaction, analysis.Id))
                 {
                     MessageBox.Show("This analysis belongs to a closed order and can not be updated");
                     return;
                 }
-
-                object oCount = DB.GetScalar(connection, transaction, "select count(*) from analysis_result where analysis_id = @aid", CommandType.Text, new SqlParameter("@aid", aid));
-                if (oCount != null && oCount != DBNull.Value)
-                {
-                    int cnt = Convert.ToInt32(oCount);
-                    if (cnt > 0)
-                    {
-                        if (MessageBox.Show("There are already analysis results on this analysis, are you sure you want to replace them?", "Question", MessageBoxButtons.YesNo) == DialogResult.No)
-                            return;
-                        doClearAnalysis = true;
-                    }
-                }
-
+                
                 OpenFileDialog dialog = new OpenFileDialog();
                 dialog.Filter = "LIS files (*.lis)|*.lis";
                 if (dialog.ShowDialog() != DialogResult.OK)
@@ -3882,98 +3871,9 @@ where p.id = @pid
                             analysisParameters.PreparationQuantity = Convert.ToDouble(reader["quantity"]);
                     }
                 }
-                                
+
                 analysisParameters.SampleName = treePrepAnal.Nodes.Count > 0 ? treePrepAnal.Nodes[0].Text : "";
                 analysisParameters.SpectrumReferenceRegEx = ""; // FIXME
-                analysisParameters.AllNuclides = DB.GetNuclideNames(connection, transaction);
-                analysisParameters.AnalMethNuclides = DB.GetNuclideNamesForAnalysisMethod(connection, transaction, selectedAnalysisMethodId);
-
-                AnalysisResult analysisResult = new AnalysisResult();
-                FormImportAnalysisLIS form = new FormImportAnalysisLIS(analysisParameters, analysisResult);
-                if (form.ShowDialog() != DialogResult.OK)
-                    return;
-
-                if(doClearAnalysis)
-                    ClearAnalysisResults(connection, transaction, aid);
-
-                SqlCommand cmd = new SqlCommand(@"
-update analysis set 
-    specter_reference = @specter_reference,
-    nuclide_library = @nuclide_library,
-    mda_library = @mda_library,
-    sigma_act = @sigma_act,
-    sigma_mda = @sigma_mda,
-    update_date = @update_date,
-    updated_by = @updated_by
-where id = @id
-", connection, transaction);
-                cmd.Parameters.AddWithValue("@id", aid);
-                cmd.Parameters.AddWithValue("@specter_reference", analysisResult.SpectrumName);
-                cmd.Parameters.AddWithValue("@nuclide_library", analysisResult.NuclideLibrary);
-                cmd.Parameters.AddWithValue("@mda_library", analysisResult.DetLimLib);
-                cmd.Parameters.AddWithValue("@sigma_act", analysisResult.SigmaAct);
-                cmd.Parameters.AddWithValue("@sigma_mda", analysisResult.SigmaMDA);
-                cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
-                cmd.Parameters.AddWithValue("@updated_by", Common.Username);
-
-                cmd.ExecuteNonQuery();
-
-                cmd.CommandText = @"
-insert into analysis_result values(
-    @id,
-    @analysis_id,
-    @nuclide_id,
-    @activity,
-    @activity_uncertainty_abs,
-    @activity_approved,
-    @uniform_activity,
-    @uniform_activity_unit_id,
-    @detection_limit, 
-    @detection_limit_approved,
-    @accredited,
-    @reportable,
-    @instance_status_id,
-    @create_date,
-    @created_by,
-    @update_date,
-    @updated_by)";
-
-                foreach (AnalysisResult.Isotop iso in analysisResult.Isotopes)
-                {                    
-                    cmd.Parameters.Clear();
-                    cmd.Parameters.AddWithValue("@id", Guid.NewGuid());
-                    cmd.Parameters.AddWithValue("@analysis_id", aid);
-                    object oNuclId = DB.GetScalar(connection, transaction, "select id from nuclide where name = '" + iso.NuclideName + "'", CommandType.Text);
-                    if(!DB.IsValidField(oNuclId))
-                    {
-                        Common.Log.Warn("Unregistered nuclide: " + iso.NuclideName);
-                        continue;
-                    }                    
-                    cmd.Parameters.AddWithValue("@nuclide_id", DB.MakeParam(typeof(Guid), oNuclId));
-                    cmd.Parameters.AddWithValue("@activity", iso.Activity);
-                    cmd.Parameters.AddWithValue("@activity_uncertainty_abs", iso.Uncertainty);
-                    cmd.Parameters.AddWithValue("@activity_approved", iso.ApprovedRES);                    
-                    double uAct = -1.0;
-                    int uActUnitId = -1;
-                    if(Utils.IsValidGuid(cboxPrepAnalAnalUnit.SelectedValue))
-                    {
-                        Guid analUnitId = Guid.Parse(cboxPrepAnalAnalUnit.SelectedValue.ToString());
-                        DB.GetUniformActivity(connection, transaction, iso.Activity, analUnitId, out uAct, out uActUnitId);
-                    }                    
-                    cmd.Parameters.AddWithValue("@uniform_activity", uAct);
-                    cmd.Parameters.AddWithValue("@uniform_activity_unit_id", uActUnitId);
-                    cmd.Parameters.AddWithValue("@detection_limit", iso.MDA);
-                    cmd.Parameters.AddWithValue("@detection_limit_approved", iso.ApprovedMDA);
-                    cmd.Parameters.AddWithValue("@accredited", iso.Accredited);
-                    cmd.Parameters.AddWithValue("@reportable", iso.Reportable);
-                    cmd.Parameters.AddWithValue("@instance_status_id", InstanceStatus.Active);
-                    cmd.Parameters.AddWithValue("@create_date", DateTime.Now);
-                    cmd.Parameters.AddWithValue("@created_by", Common.Username);
-                    cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
-                    cmd.Parameters.AddWithValue("@updated_by", Common.Username);
-
-                    cmd.ExecuteNonQuery();
-                }                
 
                 transaction.Commit();
             }
@@ -3989,14 +3889,61 @@ insert into analysis_result values(
                 connection?.Close();
             }
 
-            using (SqlConnection conn = DB.OpenConnection())
-            {
-                DB.AddAttachment(conn, null, "analysis", aid, Path.GetFileNameWithoutExtension(analysisParameters.FileName), "lis", File.ReadAllBytes(analysisParameters.FileName));
+            FormImportAnalysisLIS form = new FormImportAnalysisLIS(analysisParameters, analysis);
+            if (form.ShowDialog() != DialogResult.OK)
+                return;
 
-                ClearPrepAnalAnalysis();
-                PopulateAnalysis(aid);
-                UI.PopulateAnalysisResults(conn, aid, gridPrepAnalResults);
-            }
+            analysis._Dirty = true;
+            analysis.Results.ForEach(x => x._Dirty = true);
+
+            PopulateAnalysis(analysis);
+        }
+
+        private void PopulateAnalysis(Analysis a)
+        {
+            cboxPrepAnalAnalUnit.SelectedValue = a.ActivityUnitId;
+            cboxPrepAnalAnalUnitType.SelectedValue = a.ActivityUnitTypeId;
+            cboxPrepAnalAnalWorkflowStatus.SelectedValue = a.WorkflowStatusId;
+            tbPrepAnalAnalSpecRef.Text = a.SpecterReference;
+            tbPrepAnalAnalNuclLib.Text = a.NuclideLibrary;
+            tbPrepAnalAnalMDALib.Text = a.MDALibrary;
+            tbPrepAnalAnalComment.Text = a.Comment;
+
+            PopulateAnalysisResults(a);
+
+            a._Dirty = false;
+        }
+
+        private void PopulateAnalysisResults(Analysis a)
+        {
+            a.Results.Sort((r1, r2) => r1.NuclideName.CompareTo(r2.NuclideName));
+
+            gridPrepAnalResults.DataSource = null;
+            gridPrepAnalResults.DataSource = a.Results;
+
+            gridPrepAnalResults.Columns["Id"].Visible = false;
+            gridPrepAnalResults.Columns["AnalysisId"].Visible = false;
+            gridPrepAnalResults.Columns["NuclideId"].Visible = false;
+            gridPrepAnalResults.Columns["UniformActivity"].Visible = false;
+            gridPrepAnalResults.Columns["UniformActivityUnitId"].Visible = false;
+            gridPrepAnalResults.Columns["InstanceStatusId"].Visible = false;
+            gridPrepAnalResults.Columns["CreateDate"].Visible = false;
+            gridPrepAnalResults.Columns["CreatedBy"].Visible = false;
+            gridPrepAnalResults.Columns["UpdateDate"].Visible = false;
+            gridPrepAnalResults.Columns["UpdatedBy"].Visible = false;
+
+            gridPrepAnalResults.Columns["NuclideName"].HeaderText = "Nuclide";
+            gridPrepAnalResults.Columns["ActivityUncertaintyABS"].HeaderText = "Act.Unc.";
+            gridPrepAnalResults.Columns["ActivityApproved"].HeaderText = "Act.Appr.";
+            gridPrepAnalResults.Columns["DetectionLimit"].HeaderText = "Det.Lim.";
+            gridPrepAnalResults.Columns["DetectionLimitApproved"].HeaderText = "Det.Lim.Appr";
+
+            gridPrepAnalResults.Columns["Activity"].DefaultCellStyle.Format = Utils.ScientificFormat;
+            gridPrepAnalResults.Columns["ActivityUncertaintyABS"].DefaultCellStyle.Format = Utils.ScientificFormat;
+            gridPrepAnalResults.Columns["DetectionLimit"].DefaultCellStyle.Format = Utils.ScientificFormat;
+
+            foreach (Analysis.AnalysisResult ar in a.Results)
+                ar._Dirty = false;
         }
 
         private void tbPrepAnalLODStartWeight_TextChanged(object sender, EventArgs e)
@@ -4145,7 +4092,9 @@ insert into analysis_result values(
             using (SqlConnection conn = DB.OpenConnection())
             {
                 ClearAnalysisResults(conn, null, aid);
-                UI.PopulateAnalysisResults(conn, aid, gridPrepAnalResults);
+                analysis.LoadFromDB(conn, null, aid);
+                PopulateAnalysis(analysis);
+                //UI.PopulateAnalysisResults(conn, aid, gridPrepAnalResults);
             }
         }
 
@@ -4355,11 +4304,9 @@ insert into analysis_result values(
 
         private void btnPrepAnalEditResult_Click(object sender, EventArgs e)
         {
-            Guid analId = Guid.Parse(treePrepAnal.SelectedNode.Name);
-
             using (SqlConnection conn = DB.OpenConnection())
             {
-                if (DB.IsAnalysisClosed(conn, null, analId))
+                if (DB.IsAnalysisClosed(conn, null, analysis.Id))
                 {
                     MessageBox.Show("This analysis belongs to a closed order and can not be updated");
                     return;
@@ -4372,61 +4319,50 @@ insert into analysis_result values(
                 return;
             }
 
-            if (!Utils.IsValidGuid(cboxPrepAnalAnalUnit.SelectedValue))
+            if (!Utils.IsValidGuid(analysis.ActivityUnitId))
             {
                 MessageBox.Show("You must save a unit first");
                 return;
             }            
-
-            Guid unitId = Guid.Parse(cboxPrepAnalAnalUnit.SelectedValue.ToString());
-            Guid resultId = Guid.Parse(gridPrepAnalResults.SelectedRows[0].Cells["id"].Value.ToString());
-            string nuclName = gridPrepAnalResults.SelectedRows[0].Cells["nuclide_name"].Value.ToString();            
-            FormPrepAnalResult form = new FormPrepAnalResult(resultId, unitId, nuclName);
+            
+            Guid resultId = Guid.Parse(gridPrepAnalResults.SelectedRows[0].Cells["Id"].Value.ToString());
+            FormPrepAnalResult form = new FormPrepAnalResult(analysis, resultId);
             if (form.ShowDialog() != DialogResult.OK)
                 return;
-            
-            using (SqlConnection conn = DB.OpenConnection())
-            {
-                UI.PopulateAnalysisResults(conn, analId, gridPrepAnalResults);
-            }
+
+            PopulateAnalysisResults(analysis);
+
+            analysis.Results.Find(x => x.Id == resultId)._Dirty = true;
         }
 
         private void btnPrepAnalAddResult_Click(object sender, EventArgs e)
         {
-            if(!Utils.IsValidGuid(cboxPrepAnalAnalUnit.SelectedValue))
+            if(!Utils.IsValidGuid(analysis.ActivityUnitId))
             {
                 MessageBox.Show("You must save a unit first");
                 return;
             }
-
-            Guid unitId = Guid.Parse(cboxPrepAnalAnalUnit.SelectedValue.ToString());
-            Guid analId = Guid.Parse(treePrepAnal.SelectedNode.Name);
-            List<string> nuclides = null;
+            
+            Dictionary<string, Guid> nuclides = null;
             using (SqlConnection conn = DB.OpenConnection())
             {
-                if (DB.IsAnalysisClosed(conn, null, analId))
+                if (DB.IsAnalysisClosed(conn, null, analysis.Id))
                 {
                     MessageBox.Show("This analysis belongs to a closed order and can not be updated");
                     return;
                 }
 
-                nuclides = DB.GetNuclideNamesForAnalysisMethod(conn, null, selectedAnalysisMethodId);
+                nuclides = DB.GetNuclideNamesForAnalysisMethod(conn, null, analysis.AnalysisMethodId);
             }
-            List<string> existingNuclides = new List<string>();
-            foreach (DataGridViewRow row in gridPrepAnalResults.Rows)
-            {
-                string nucl = row.Cells["nuclide_name"].Value.ToString();
-                existingNuclides.Add(nucl);
-            }
-            nuclides.RemoveAll(x => existingNuclides.Contains(x));
-            FormPrepAnalResult form = new FormPrepAnalResult(analId, unitId, nuclides);
+            
+            foreach (Analysis.AnalysisResult ar in analysis.Results)            
+                nuclides.Remove(ar.NuclideName.ToUpper());                            
+            
+            FormPrepAnalResult form = new FormPrepAnalResult(analysis, nuclides);
             if (form.ShowDialog() != DialogResult.OK)
                 return;
-            
-            using (SqlConnection conn = DB.OpenConnection())
-            {
-                UI.PopulateAnalysisResults(conn, analId, gridPrepAnalResults);
-            }
+
+            PopulateAnalysis(analysis);
         }
 
         private void cboxSampleInfoLocationTypes_SelectedIndexChanged(object sender, EventArgs e)
@@ -5812,6 +5748,36 @@ where id = @id
             {
                 connection?.Close();
             }
+        }
+
+        private void cboxPrepAnalAnalUnit_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            analysis._Dirty = true;
+        }
+
+        private void cboxPrepAnalAnalUnitType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            analysis._Dirty = true;
+        }
+
+        private void tbPrepAnalAnalSpecRef_TextChanged(object sender, EventArgs e)
+        {
+            analysis._Dirty = true;
+        }
+
+        private void tbPrepAnalAnalNuclLib_TextChanged(object sender, EventArgs e)
+        {
+            analysis._Dirty = true;
+        }
+
+        private void tbPrepAnalAnalMDALib_TextChanged(object sender, EventArgs e)
+        {
+            analysis._Dirty = true;
+        }
+
+        private void tbPrepAnalAnalComment_TextChanged(object sender, EventArgs e)
+        {
+            analysis._Dirty = true;
         }
     }    
 }

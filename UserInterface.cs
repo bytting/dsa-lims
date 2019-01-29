@@ -185,7 +185,7 @@ namespace DSA_lims
             grid.Columns["half_life_year"].HeaderText = "T 1/2 (Years)";
             grid.Columns["instance_status_name"].HeaderText = "Status";
 
-            grid.Columns["half_life_year"].DefaultCellStyle.Format = "E5";
+            grid.Columns["half_life_year"].DefaultCellStyle.Format = Utils.ScientificFormat;
         }
 
         public static void PopulateGeometries(SqlConnection conn, DataGridView grid)
@@ -719,29 +719,6 @@ order by create_date desc";
             }
 
             tree.ExpandAll();
-        }
-
-        public static void PopulateAnalysisResults(SqlConnection conn, Guid analysisId, DataGridView grid)
-        {
-            grid.DataSource = DB.GetDataTable(conn, null, "csp_select_analysis_results_for_analysis_informative", CommandType.StoredProcedure,
-                    new SqlParameter("@analysis_id", analysisId));
-
-            grid.Columns["id"].Visible = false;
-            grid.Columns["uniform_activity"].Visible = false;
-            grid.Columns["uniform_activity_name"].Visible = false;
-
-            grid.Columns["nuclide_name"].HeaderText = "Nucl.";
-            grid.Columns["activity"].HeaderText = "Act.";
-            grid.Columns["activity_uncertainty_abs"].HeaderText = "Unc.Abs.";
-            grid.Columns["activity_approved"].HeaderText = "Act.Appr.";
-            grid.Columns["detection_limit"].HeaderText = "Det.Lim.";
-            grid.Columns["detection_limit_approved"].HeaderText = "Det.Lim.Appr.";
-            grid.Columns["accredited"].HeaderText = "Accredited";
-            grid.Columns["reportable"].HeaderText = "Reportable";
-
-            grid.Columns["activity"].DefaultCellStyle.Format = "0.###E+0";
-            grid.Columns["activity_uncertainty_abs"].DefaultCellStyle.Format = "0.###E+0";
-            grid.Columns["detection_limit"].DefaultCellStyle.Format = "0.###E+0";
         }
 
         public static void PopulatePersons(SqlConnection conn, DataGridView grid)

@@ -32,26 +32,25 @@ using System.Windows.Forms;
 namespace DSA_lims
 {
     public partial class FormPrepAnalResult : Form
-    {
-        private Dictionary<string, object> p = new Dictionary<string, object>();
-        private Guid mUnitId = Guid.Empty;
+    {        
+        private Analysis mAnalysis = null;
+        private Analysis.AnalysisResult mResult = null;
+        private Dictionary<string, Guid> mNuclides = null;
+        bool editing = false;
 
         string invalidChars = "abcdfghijklmnopqrstuvwxyzæøåABCDFGHIJKLMNOPQRSTUVWXYZÆØÅ|*&/\\=<>(){},%[]";
 
-        public Guid AnalysisResultId
-        {
-            get { return p.ContainsKey("id") ? (Guid)p["id"] : Guid.Empty; }
-        }
-
-        public FormPrepAnalResult(Guid analId, Guid unitId, List<string> nuclides)
+        public FormPrepAnalResult(Analysis analysis, Dictionary<string, Guid> nuclides)
         {
             InitializeComponent();
 
             Text = "DSA-Lims - Add nuclide";
-            cboxNuclides.DataSource = nuclides;
+            cboxNuclides.DataSource = nuclides.Keys.ToArray();
             cboxNuclides.Text = "";
-            p["analysis_id"] = analId;
-            mUnitId = unitId;
+            mAnalysis = analysis;
+            mNuclides = nuclides;
+            mResult = new Analysis.AnalysisResult();
+            mResult.Id = Guid.NewGuid();
             using (SqlConnection conn = DB.OpenConnection())
             {
                 cboxSigmaActivity.DataSource = DB.GetSigmaValues(conn);
@@ -59,35 +58,40 @@ namespace DSA_lims
             }
         }
 
-        public FormPrepAnalResult(Guid resultId, Guid unitId, string nuclideName)
+        public FormPrepAnalResult(Analysis analysis, Guid resultId)
         {
             InitializeComponent();
 
             Text = "DSA-Lims - Edit nuclide";
-            p["id"] = resultId;
-            mUnitId = unitId;
-            cboxNuclides.Items.Add(nuclideName);
-            cboxNuclides.Text = nuclideName;
+            editing = true;
+            mAnalysis = analysis;
+            mResult = mAnalysis.Results.Find(x => x.Id == resultId);
+            if(mResult == null)
+            {
+                MessageBox.Show("Unable to find analysis result with id: " + resultId);
+                Close();
+            }
+
+            cboxNuclides.Items.Add(mResult.NuclideName);
+            cboxNuclides.Text = mResult.NuclideName;
             cboxNuclides.Enabled = false;            
 
             using (SqlConnection conn = DB.OpenConnection())
             {
                 cboxSigmaActivity.DataSource = DB.GetSigmaValues(conn);
-                cboxSigmaMDA.DataSource = DB.GetSigmaMDAValues(conn);
-
-                SqlDataReader reader = DB.GetDataReader(conn, null, "csp_select_analysis_result", CommandType.StoredProcedure, new SqlParameter("@id", resultId));
-                if(reader.HasRows)
-                {
-                    reader.Read();                    
-                    tbActivity.Text = String.Format(CultureInfo.InvariantCulture, "{0:0.###E+0}", reader["activity"]);
-                    tbUncertainty.Text = String.Format(CultureInfo.InvariantCulture, "{0:0.###E+0}", reader["activity_uncertainty_abs"]);
-                    cbActivityApproved.Checked = Convert.ToBoolean(reader["activity_approved"]);
-                    tbDetectionLimit.Text = String.Format(CultureInfo.InvariantCulture, "{0:0.###E+0}", reader["detection_limit"]);
-                    cbDetectionLimitApproved.Checked = Convert.ToBoolean(reader["detection_limit_approved"]);
-                    cbAccredited.Checked = Convert.ToBoolean(reader["accredited"]);
-                    cbReportable.Checked = Convert.ToBoolean(reader["reportable"]);
-                }                
+                cboxSigmaMDA.DataSource = DB.GetSigmaMDAValues(conn);                
             }
+
+            cboxSigmaActivity.SelectedValue = mAnalysis.SigmaActivity;
+            cboxSigmaMDA.SelectedValue = mAnalysis.SigmaMDA;
+
+            tbActivity.Text = mResult.Activity.ToString(Utils.ScientificFormat);
+            tbUncertainty.Text = mResult.ActivityUncertaintyABS.ToString(Utils.ScientificFormat);
+            cbActivityApproved.Checked = mResult.ActivityApproved;
+            tbDetectionLimit.Text = mResult.DetectionLimit.ToString(Utils.ScientificFormat);
+            cbDetectionLimitApproved.Checked = mResult.DetectionLimitApproved;
+            cbAccredited.Checked = mResult.Accredited;
+            cbReportable.Checked = mResult.Reportable;
         }        
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -110,17 +114,12 @@ namespace DSA_lims
                 return;
             }
 
-            if (!p.ContainsKey("id"))
+            if (editing)
             {
                 if(String.IsNullOrEmpty(cboxNuclides.Text))
                 {
                     MessageBox.Show("Nuclide is mandatory");
                     return;
-                }
-
-                using (SqlConnection conn = DB.OpenConnection())
-                {
-                    p["nuclide_id"] = DB.GetScalar(conn, null, "select id from nuclide where name = @nuclName", CommandType.Text, new SqlParameter("@nuclName", cboxNuclides.Text));
                 }
             }
 
@@ -142,8 +141,7 @@ namespace DSA_lims
             {
                 MessageBox.Show("Activity can not be negative");
                 return;
-            }
-            p["activity"] = act;
+            }            
 
             double unc;
             if (!Double.TryParse(tbUncertainty.Text.Trim(), out unc))
@@ -156,8 +154,7 @@ namespace DSA_lims
             {
                 MessageBox.Show("Uncertainty can not be negative");
                 return;
-            }
-            p["activity_uncertainty_abs"] = unc;
+            }            
 
             double detlim;
             if (!Double.TryParse(tbDetectionLimit.Text.Trim(), out detlim))
@@ -171,139 +168,25 @@ namespace DSA_lims
                 MessageBox.Show("Detection limit can not be negative");
                 return;
             }
-            p["detection_limit"] = detlim;
 
-            p["activity_approved"] = cbActivityApproved.Checked;            
-            p["detection_limit_approved"] = cbDetectionLimitApproved.Checked;
-            p["accredited"] = cbAccredited.Checked;
-            p["reportable"] = cbReportable.Checked;
+            mResult.Activity = act;
+            mResult.ActivityUncertaintyABS = unc;
+            mResult.DetectionLimit = detlim;
+            mResult.ActivityApproved = cbActivityApproved.Checked;
+            mResult.DetectionLimitApproved = cbDetectionLimitApproved.Checked;
+            mResult.Accredited = cbAccredited.Checked;
+            mResult.Reportable = cbReportable.Checked;
 
-            bool success;
-            if (!p.ContainsKey("id"))            
-                success = InsertAnalysisResult();
-            else
-                success = UpdateAnalysisResult();
+            if (!editing)
+            {
+                mResult.NuclideName = cboxNuclides.SelectedValue.ToString();
+                mResult.NuclideId = mNuclides[mResult.NuclideName];
+                mAnalysis.Results.Add(mResult);
+            }
 
-            DialogResult = success ? DialogResult.OK : DialogResult.Abort;
+            DialogResult = DialogResult.OK;
             Close();
-        }
-
-        private bool InsertAnalysisResult()
-        {
-            SqlConnection connection = null;
-            SqlTransaction transaction = null;
-
-            try
-            {
-                p["instance_status_id"] = InstanceStatus.Active;
-                p["create_date"] = DateTime.Now;
-                p["created_by"] = Common.Username;
-                p["update_date"] = DateTime.Now;
-                p["updated_by"] = Common.Username;
-
-                connection = DB.OpenConnection();
-                transaction = connection.BeginTransaction();
-
-                SqlCommand cmd = new SqlCommand("csp_insert_analysis_result", connection, transaction);
-                cmd.CommandType = CommandType.StoredProcedure;
-                p["id"] = Guid.NewGuid();
-                cmd.Parameters.AddWithValue("@id", p["id"]);
-                cmd.Parameters.AddWithValue("@analysis_id", p["analysis_id"]);
-                cmd.Parameters.AddWithValue("@nuclide_id", p["nuclide_id"]);
-                cmd.Parameters.AddWithValue("@activity", p["activity"]);
-                cmd.Parameters.AddWithValue("@activity_uncertainty_abs", p["activity_uncertainty_abs"]);
-                cmd.Parameters.AddWithValue("@activity_approved", p["activity_approved"]);
-                double uAct = -1.0;
-                int uActUnitId = -1;
-                if (Utils.IsValidGuid(mUnitId))
-                {                    
-                    DB.GetUniformActivity(connection, transaction, Convert.ToDouble(p["activity"]), mUnitId, out uAct, out uActUnitId);
-                }
-                cmd.Parameters.AddWithValue("@uniform_activity", uAct);
-                cmd.Parameters.AddWithValue("@uniform_activity_unit_id", uActUnitId);
-                cmd.Parameters.AddWithValue("@detection_limit", p["detection_limit"]);
-                cmd.Parameters.AddWithValue("@detection_limit_approved", p["detection_limit_approved"]);
-                cmd.Parameters.AddWithValue("@accredited", p["accredited"]);
-                cmd.Parameters.AddWithValue("@reportable", p["reportable"]);
-                cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
-                cmd.Parameters.AddWithValue("@create_date", p["create_date"]);
-                cmd.Parameters.AddWithValue("@created_by", p["created_by"]);
-                cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
-                cmd.Parameters.AddWithValue("@updated_by", p["updated_by"]);
-                cmd.ExecuteNonQuery();
-
-                DB.AddAuditMessage(connection, transaction, "analysis_result", (Guid)p["id"], AuditOperationType.Insert, JsonConvert.SerializeObject(p));
-
-                transaction.Commit();
-            }
-            catch (Exception ex)
-            {
-                transaction?.Rollback();
-                Common.Log.Error(ex);
-                return false;
-            }
-            finally
-            {
-                connection?.Close();
-            }
-
-            return true;
-        }
-
-        private bool UpdateAnalysisResult()
-        {
-            SqlConnection connection = null;
-            SqlTransaction transaction = null;
-
-            try
-            {
-                p["instance_status_id"] = InstanceStatus.Active;                
-                p["update_date"] = DateTime.Now;
-                p["updated_by"] = Common.Username;
-
-                connection = DB.OpenConnection();
-                transaction = connection.BeginTransaction();
-
-                SqlCommand cmd = new SqlCommand("csp_update_analysis_result", connection, transaction);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@id", p["id"]);
-                cmd.Parameters.AddWithValue("@activity", p["activity"]);
-                cmd.Parameters.AddWithValue("@activity_uncertainty_abs", p["activity_uncertainty_abs"]);
-                cmd.Parameters.AddWithValue("@activity_approved", p["activity_approved"]);
-                double uAct = -1.0;
-                int uActUnitId = -1;
-                if (Utils.IsValidGuid(mUnitId))
-                {
-                    DB.GetUniformActivity(connection, transaction, Convert.ToDouble(p["activity"]), mUnitId, out uAct, out uActUnitId);
-                }
-                cmd.Parameters.AddWithValue("@uniform_activity", uAct);
-                cmd.Parameters.AddWithValue("@uniform_activity_unit_id", uActUnitId);
-                cmd.Parameters.AddWithValue("@detection_limit", p["detection_limit"]);
-                cmd.Parameters.AddWithValue("@detection_limit_approved", p["detection_limit_approved"]);
-                cmd.Parameters.AddWithValue("@accredited", p["accredited"]);
-                cmd.Parameters.AddWithValue("@reportable", p["reportable"]);
-                cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
-                cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
-                cmd.Parameters.AddWithValue("@updated_by", p["updated_by"]);
-                cmd.ExecuteNonQuery();
-
-                DB.AddAuditMessage(connection, transaction, "analysis_result", (Guid)p["id"], AuditOperationType.Update, JsonConvert.SerializeObject(p));
-
-                transaction.Commit();
-            }
-            catch (Exception ex)
-            {
-                transaction?.Rollback();
-                Common.Log.Error(ex);
-                return false;
-            }
-            finally
-            {
-                connection?.Close();
-            }
-
-            return true;
-        }
+        }        
 
         private void tbActivity_KeyPress(object sender, KeyPressEventArgs e)
         {

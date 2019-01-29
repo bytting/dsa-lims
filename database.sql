@@ -3895,6 +3895,15 @@ as
 	where id = @id
 go
 
+create proc csp_select_analysis_results_for_analysis
+	@analysis_id uniqueidentifier
+as
+	select ar.*, n.name as 'nuclide_name'
+	from analysis_result ar 
+		inner join nuclide n on n.id = ar.nuclide_id
+	where ar.analysis_id = @analysis_id
+go
+
 create proc csp_select_analysis_results_for_analysis_informative
 	@analysis_id uniqueidentifier
 as

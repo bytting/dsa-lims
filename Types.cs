@@ -117,36 +117,5 @@ namespace DSA_lims
         public double PreparationAmount { get; set; }
         public double PreparationQuantity { get; set; }
         public string SpectrumReferenceRegEx { get; set; }
-        public List<string> AllNuclides { get; set; }
-        public List<string> AnalMethNuclides { get; set; }
-    }    
-
-    public class AnalysisResult
-    {
-        public string SpectrumName, SampleName, SamplePlace, Geometry, Unit, ReferenceTime, NuclideLibrary, DetLimLib;
-        public double Height, Weight, Volume, Density, SampleQuantity;
-        public double SigmaAct, SigmaMDA, MDAFactor;        
-        public List<Isotop> Isotopes = new List<Isotop>();
-
-        public void Clear()
-        {
-            SpectrumName = SampleName = SamplePlace = Geometry = Unit = ReferenceTime = NuclideLibrary = DetLimLib = String.Empty;
-            Height = Weight = Volume = Density = SampleQuantity = 0d;
-            SigmaAct = SigmaMDA = MDAFactor = 0d;            
-            Isotopes.Clear();
-        }
-
-        public class Isotop
-        {
-            public string NuclideName { get; set; }
-            public double ConfidenceValue { get; set; }
-            public double Activity { get; set; }
-            public double Uncertainty { get; set; }
-            public double MDA { get; set; }
-            public bool ApprovedRES { get; set; }
-            public bool ApprovedMDA { get; set; }
-            public bool Accredited { get; set; }
-            public bool Reportable { get; set; }
-        }
-    }    
+    }            
 }

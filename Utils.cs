@@ -35,6 +35,8 @@ namespace DSA_lims
         public static string DateTimeFormatNorwegian = "dd.MM.yyyy HH:mm:ss";
         public static string DateFormatNorwegian = "dd.MM.yyyy";
 
+        public static string ScientificFormat = "0.###E+0";
+
         public static string makeStatusMessage(string msg)
         {
             return DateTime.Now.ToString(DateTimeFormatNorwegian) + " - " + msg;

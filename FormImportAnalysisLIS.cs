@@ -29,38 +29,52 @@ using System.Diagnostics;
 using System.IO;
 using System.Globalization;
 using System.Text.RegularExpressions;
+using System.Data.SqlClient;
 
 namespace DSA_lims
 {
     public partial class FormImportAnalysisLIS : Form
     {
-        private AnalysisParameters parameters = null;
-        private AnalysisResult result = null;
+        private AnalysisParameters mParameters = null;
+        private Analysis mAnalysis = null;
+        private Dictionary<string, Guid> AllNuclides = null;
+        private Dictionary<string, Guid> AnalMethNuclides = null;
 
-        public FormImportAnalysisLIS(AnalysisParameters analysisParameters, AnalysisResult analysisResult)
+        string SpectrumNo, SampleIdentity, SamplePlace, SampleQuantityUnit, Geometry, NuclideLibrary, DetLimLib;
+        double SampleQuantity, SampleHeight, SampleWeight, SigmaActivity;
+        DateTime ReferenceTime;
+
+        public FormImportAnalysisLIS(AnalysisParameters analysisParameters, Analysis analysis)
         {
             InitializeComponent();
 
-            parameters = analysisParameters;
-            result = analysisResult;
+            mParameters = analysisParameters;
+            mAnalysis = analysis;
         }
 
         private void FormImportAnalysisLIS_Load(object sender, EventArgs e)
         {
+            SqlConnection connection = null;
+
             try
             {
-                tbFilename.Text = parameters.FileName;
-                tbLIMSSampleName.Text = parameters.SampleName;
-                tbLIMSPrepGeom.Text = parameters.PreparationGeometry;
-                tbLIMSGeomFillHeight.Text = parameters.PreparationFillHeight.ToString();
-                tbLIMSGeomAmount.Text = parameters.PreparationAmount.ToString();
-                tbLIMSGeomQuantity.Text = parameters.PreparationQuantity.ToString();
+                connection = DB.OpenConnection();
 
-                LoadLIS(parameters.FileName);
-                foreach(AnalysisResult.Isotop isotop in result.Isotopes)
+                AllNuclides = DB.GetNuclideNames(connection, null);
+                AnalMethNuclides = DB.GetNuclideNamesForAnalysisMethod(connection, null, mAnalysis.AnalysisMethodId);
+
+                tbFilename.Text = mParameters.FileName;
+                tbLIMSSampleName.Text = mParameters.SampleName;
+                tbLIMSPrepGeom.Text = mParameters.PreparationGeometry;
+                tbLIMSGeomFillHeight.Text = mParameters.PreparationFillHeight.ToString();
+                tbLIMSGeomAmount.Text = mParameters.PreparationAmount.ToString();
+                tbLIMSGeomQuantity.Text = mParameters.PreparationQuantity.ToString();
+
+                LoadLIS(mParameters.FileName);
+                foreach(Analysis.AnalysisResult r in mAnalysis.Results)
                 {
-                    if (isotop.MDA == 0.0)
-                        isotop.ApprovedMDA = false;
+                    if (r.DetectionLimit == 0.0)
+                        r.DetectionLimitApproved = false;
                 }
                 
                 PopulateUI();
@@ -69,6 +83,10 @@ namespace DSA_lims
             {
                 Common.Log.Error(ex);
                 MessageBox.Show("Error: " + ex.Message);
+            }
+            finally
+            {
+                connection?.Close();
             }
         }
 
@@ -84,30 +102,31 @@ namespace DSA_lims
         {
             ClearUI();
             
-            tbNuclideLibrary.Text = result.NuclideLibrary;
-            tbDetLimLib.Text = result.DetLimLib;
+            tbNuclideLibrary.Text = mAnalysis.NuclideLibrary;
+            tbDetLimLib.Text = mAnalysis.MDALibrary;
 
-            grid.DataSource = result.Isotopes;
+            grid.DataSource = mAnalysis.Results;
 
+            grid.Columns["NuclideId"].Visible = false;
             grid.Columns["NuclideName"].ReadOnly = true;
-            grid.Columns["ConfidenceValue"].ReadOnly = true;
+            //grid.Columns["ConfidenceValue"].ReadOnly = true;
             grid.Columns["Activity"].ReadOnly = true;
-            grid.Columns["Uncertainty"].ReadOnly = true;
-            grid.Columns["MDA"].ReadOnly = true;
+            grid.Columns["ActivityUncertaintyABS"].ReadOnly = true;
+            grid.Columns["DetectionLimit"].ReadOnly = true;
 
-            grid.Columns["Uncertainty"].HeaderText = "Uncertainty (2σ)";
-            grid.Columns["MDA"].HeaderText = "MDA (95%)";
+            grid.Columns["ActivityUncertaintyABS"].HeaderText = "Uncertainty (2σ)";
+            grid.Columns["DetectionLimit"].HeaderText = "MDA (95%)";
 
             foreach(DataGridViewRow row in grid.Rows)
             {
-                string nuclName = row.Cells["NuclideName"].Value.ToString().ToUpper();
-                if (!parameters.AllNuclides.Contains(nuclName))
+                Guid nuclId = Guid.Parse(row.Cells["NuclideId"].Value.ToString());
+                if (nuclId == Guid.Empty)
                 {
                     row.DefaultCellStyle.BackColor = Color.Tomato;
                     foreach (DataGridViewCell cell in row.Cells)
                         cell.ReadOnly = true;
                 }
-                else if (!parameters.AnalMethNuclides.Contains(nuclName))
+                else if (!AnalMethNuclides.ContainsKey(row.Cells["NuclideName"].Value.ToString().ToUpper()))
                 {
                     row.DefaultCellStyle.BackColor = Color.Yellow;
                     foreach (DataGridViewCell cell in row.Cells)
@@ -136,7 +155,7 @@ namespace DSA_lims
             
             TextReader reader = File.OpenText(filename);
             string line;            
-            result.Clear();
+            mAnalysis.Results.Clear();
             while ((line = reader.ReadLine()) != null)
             {
                 line = line.Trim();
@@ -144,20 +163,20 @@ namespace DSA_lims
                 if (line.Contains("SPECTRUM NO"))
                 {
                     string[] items = line.Split(splitColon);
-                    result.SpectrumName = items[1].Replace("\t", "").Trim();
-                    result.SpectrumName = items[1].Replace(" ", "");
+                    SpectrumNo = items[1].Replace("\t", "").Trim();
+                    SpectrumNo = items[1].Replace(" ", "");
                 }
 
                 if (line.Contains("SAMPLE IDENTITY"))
                 {
-                    string[] items = line.Split(splitColon);
-                    result.SampleName = items[1].Trim();                    
+                    string[] items = line.Split(splitColon);                    
+                    SampleIdentity = items[1].Trim();                    
                 }
 
                 if (line.Contains("SAMPLE PLACE"))
                 {
                     string[] items = line.Split(splitColon);
-                    result.SamplePlace = items[1].Trim();
+                    SamplePlace = items[1].Trim();
                 }
 
                 if (line.Contains("SAMPLE QUANTITY"))
@@ -165,15 +184,15 @@ namespace DSA_lims
                     string[] items = line.Split(splitColon);
                     string res = items[1].Trim();
 
-                    string[] unitpart = res.Split(splitBlank, StringSplitOptions.RemoveEmptyEntries);
-                    result.SampleQuantity = Convert.ToDouble(unitpart[0], CultureInfo.InvariantCulture);
-                    result.Unit = unitpart[1];
+                    string[] unitpart = res.Split(splitBlank, StringSplitOptions.RemoveEmptyEntries);                    
+                    SampleQuantity = Convert.ToDouble(unitpart[0], CultureInfo.InvariantCulture);
+                    SampleQuantityUnit = unitpart[1];
                 }
 
                 if (line.Contains("BEAKER NO"))
                 {
                     string[] items = line.Split(splitColon);
-                    result.Geometry = items[1].Trim();
+                    Geometry = items[1].Trim();
                 }
                 if (line.Contains("SAMPLE HEIGHT"))
                 {
@@ -181,7 +200,7 @@ namespace DSA_lims
                     string res = items[1].Trim();
 
                     string[] unitpart = res.Split(splitBlank, StringSplitOptions.RemoveEmptyEntries);
-                    result.Height = Convert.ToDouble(unitpart[0], CultureInfo.InvariantCulture);
+                    SampleHeight = Convert.ToDouble(unitpart[0], CultureInfo.InvariantCulture);
                 }
                 if (line.Contains("SAMPLE WEIGHT"))
                 {
@@ -189,7 +208,7 @@ namespace DSA_lims
                     string res = items[1].Trim();
 
                     string[] unitpart = res.Split(splitBlank, StringSplitOptions.RemoveEmptyEntries);
-                    result.Weight = Convert.ToDouble(unitpart[0], CultureInfo.InvariantCulture);
+                    SampleWeight = Convert.ToDouble(unitpart[0], CultureInfo.InvariantCulture);
                 }
 
                 if (line.Contains("REFERENCE TIME"))
@@ -203,18 +222,17 @@ namespace DSA_lims
                     int hour = Convert.ToInt32(timeparts[3].Trim());
                     int min = Convert.ToInt32(timeparts[4].Trim());
 
-                    DateTime refdate = new DateTime(year, month, day, hour, min, 00);
-                    result.ReferenceTime = refdate.ToString();
+                    ReferenceTime = new DateTime(year, month, day, hour, min, 00);
                 }
                 if (line.Contains("NUCLIDE LIBRARY"))
                 {
                     string[] items = line.Split(splitColon);
-                    result.NuclideLibrary = items[1].Trim();
+                    NuclideLibrary = items[1].Trim();
                 }
                 if (line.Contains("DETECTION LIMIT LIB"))
                 {
                     string[] items = line.Split(splitColon);
-                    result.DetLimLib = items[1].Trim();
+                    DetLimLib = items[1].Trim();
                 }
                 if (line.Contains("THE FOLLOWING ISOTOPES WERE IDENTIFIED"))
                 {
@@ -227,6 +245,12 @@ namespace DSA_lims
                 }
             }
             reader.Close();
+
+            mAnalysis.SpecterReference = SpectrumNo;
+            mAnalysis.NuclideLibrary = NuclideLibrary;
+            mAnalysis.MDALibrary = DetLimLib;
+            mAnalysis.SigmaActivity = 2.0;
+            mAnalysis.SigmaMDA = 1.645;
         }
 
         private void ParseResults(TextReader reader)
@@ -244,21 +268,24 @@ namespace DSA_lims
 
                 if (line.StartsWith("NR"))
                 {
-                    result.SigmaAct = GetFirstPositiveNumber(line);
+                    SigmaActivity = GetFirstPositiveNumber(line);
                 }
 
                 string[] items = line.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
                 if (items.Length == 5)
                 {
-                    AnalysisResult.Isotop isotop = new AnalysisResult.Isotop();
-                    isotop.ApprovedMDA = true;
-                    isotop.NuclideName = items[1].Trim().ToUpper();
-                    isotop.ConfidenceValue = Convert.ToDouble(items[2].Trim(), CultureInfo.InvariantCulture);
-                    isotop.Activity = Convert.ToDouble(items[3].Trim(), CultureInfo.InvariantCulture);
-                    isotop.Uncertainty = Convert.ToDouble(items[4].Trim(), CultureInfo.InvariantCulture) * 2.0;
-                    isotop.Uncertainty /= 100d;
-                    isotop.Uncertainty *= isotop.Activity;
-                    result.Isotopes.Add(isotop);
+                    Analysis.AnalysisResult r = new Analysis.AnalysisResult();
+                    r.DetectionLimitApproved = true;
+                    r.NuclideName = items[1].Trim().ToUpper();
+                    if (!AllNuclides.ContainsKey(r.NuclideName))
+                        r.NuclideId = Guid.Empty;
+                    else r.NuclideId = AllNuclides[r.NuclideName];
+                    //r.ConfidenceValue = Convert.ToDouble(items[2].Trim(), CultureInfo.InvariantCulture);
+                    r.Activity = Convert.ToDouble(items[3].Trim(), CultureInfo.InvariantCulture);
+                    r.ActivityUncertaintyABS = Convert.ToDouble(items[4].Trim(), CultureInfo.InvariantCulture) * 2.0;
+                    r.ActivityUncertaintyABS /= 100d;
+                    r.ActivityUncertaintyABS *= r.Activity;
+                    mAnalysis.Results.Add(r);
                 }
             }
         }
@@ -277,31 +304,33 @@ namespace DSA_lims
                 if (items[0].Trim().StartsWith("NUCLIDE"))
                 {
                     // Plukk ut MDA%
-                    result.MDAFactor = GetFirstPositiveNumber(line);
+                    //mAnalysis.MDA = GetFirstPositiveNumber(line);
                     continue;
                 }
 
                 if (items[0].Trim().StartsWith("Bq"))
                     continue;
 
-                AnalysisResult.Isotop isotop = result.Isotopes.Find(i => i.NuclideName == items[0].Trim());
-                if (isotop != null)
-                {
-                    isotop.MDA = Convert.ToDouble(items[1].Trim(), CultureInfo.InvariantCulture);
+                string nuclName = items[0].Trim().ToUpper();
+                Analysis.AnalysisResult r = mAnalysis.Results.Find(x => x.NuclideId == AllNuclides[nuclName]);
+                if (r != null)                                
+                {                    
+                    r.DetectionLimit = Convert.ToDouble(items[1].Trim(), CultureInfo.InvariantCulture);
                 }
                 else
                 {
-                    isotop = new AnalysisResult.Isotop();
-                    isotop.ApprovedMDA = true;
-                    isotop.NuclideName = items[0].Trim().ToUpper();
-                    isotop.Activity = 0.0;
-                    isotop.ConfidenceValue = 0.0;
-                    isotop.Uncertainty = 0.0;
+                    r = new Analysis.AnalysisResult();
+                    r.DetectionLimitApproved = true;
+                    r.NuclideId = AllNuclides[nuclName];
+                    r.NuclideName = nuclName;
+                    r.Activity = 0.0;
+                    //r.ConfidenceValue = 0.0;
+                    r.ActivityUncertaintyABS = 0.0;
                     string s = items[1].Trim();
                     if (s != "Infinity" && s != "Nuclide")
                     {
-                        isotop.MDA = Convert.ToDouble(items[1].Trim(), CultureInfo.InvariantCulture);
-                        result.Isotopes.Add(isotop);
+                        r.DetectionLimit = Convert.ToDouble(items[1].Trim(), CultureInfo.InvariantCulture);
+                        mAnalysis.Results.Add(r);
                     }
                 }
             }
@@ -309,7 +338,7 @@ namespace DSA_lims
 
         private void btnShowLIS_Click(object sender, EventArgs e)
         {
-            Process.Start("notepad.exe", parameters.FileName);
+            Process.Start("notepad.exe", mParameters.FileName);
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -319,20 +348,20 @@ namespace DSA_lims
         }
 
         private void btnOk_Click(object sender, EventArgs e)
-        {
-            foreach(AnalysisResult.Isotop iso in result.Isotopes)
+        {            
+            foreach(Analysis.AnalysisResult r in mAnalysis.Results)
             {
-                bool approved = iso.ApprovedRES || iso.ApprovedMDA;
-                bool prop = iso.Accredited || iso.Reportable;
+                bool approved = r.ActivityApproved || r.DetectionLimitApproved;
+                bool prop = r.Accredited || r.Reportable;
                 if(prop && !approved)
                 {
-                    MessageBox.Show("Nuclide " + iso.NuclideName + ": Can not set accredited or reportable on nuclide that is not approved");
+                    MessageBox.Show("Nuclide " + r.NuclideId + ": Can not set accredited or reportable on nuclide that is not approved");
                     return;
                 }
             }
 
-            result.Isotopes.RemoveAll(x => parameters.AllNuclides.Contains(x.NuclideName) == false);
-            result.Isotopes.RemoveAll(x => parameters.AnalMethNuclides.Contains(x.NuclideName) == false);
+            mAnalysis.Results.RemoveAll(x => x.NuclideId == Guid.Empty);
+            mAnalysis.Results.RemoveAll(x => AnalMethNuclides.ContainsValue(x.NuclideId) == false);
 
             DialogResult = DialogResult.OK;
             Close();

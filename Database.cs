@@ -505,31 +505,32 @@ where an.id = @aid
             return true;
         }
 
-        public static List<string> GetNuclideNames(SqlConnection conn, SqlTransaction trans)
+        public static Dictionary<string, Guid> GetNuclideNames(SqlConnection conn, SqlTransaction trans)
         {
-            List<string> names = new List<string>();
-            names.Add("");
-            SqlCommand cmd = new SqlCommand("select name from nuclide order by name", conn, trans);
+            Dictionary<string, Guid> names = new Dictionary<string, Guid>();
+            names.Add("", Guid.Empty);
+            SqlCommand cmd = new SqlCommand("select id, name from nuclide order by name", conn, trans);
             cmd.CommandType = CommandType.Text;
             using (SqlDataReader reader = cmd.ExecuteReader())
             {
                 while (reader.Read())
                 {
-                    names.Add(reader["name"].ToString());
+                    names.Add(reader["name"].ToString().ToUpper(), Guid.Parse(reader["id"].ToString()));
                 }
             }
+
             return names;
         }
 
-        public static List<string> GetNuclideNamesForAnalysisMethod(SqlConnection conn, SqlTransaction trans, Guid analysisMethodId)
+        public static Dictionary<string, Guid> GetNuclideNamesForAnalysisMethod(SqlConnection conn, SqlTransaction trans, Guid analysisMethodId)
         {
-            List<string> names = new List<string>();
-            names.Add("");
+            Dictionary<string, Guid> names = new Dictionary<string, Guid>();
+            names.Add("", Guid.Empty);
             SqlCommand cmd = new SqlCommand(@"
-select n.name 
+select n.id, n.name 
 from nuclide n, analysis_method_x_nuclide amxn
 where amxn.nuclide_id = n.id and amxn.analysis_method_id = @aid
-order by name
+order by n.name
 ", conn, trans);
             cmd.CommandType = CommandType.Text;
             cmd.Parameters.AddWithValue("@aid", analysisMethodId);
@@ -537,7 +538,7 @@ order by name
             {
                 while (reader.Read())
                 {
-                    names.Add(reader["name"].ToString());
+                    names.Add(reader["name"].ToString().ToUpper(), Guid.Parse(reader["id"].ToString()));
                 }
             }
             return names;
@@ -718,6 +719,352 @@ select
         public static bool IsValidField(object o)
         {
             return !(o == null || o == DBNull.Value);
+        }
+
+        public static bool AnalysisExists(SqlConnection conn, SqlTransaction trans, Guid aId)
+        {
+            SqlCommand cmd = new SqlCommand("select count(*) from analysis where id = @id", conn, trans);
+            cmd.Parameters.AddWithValue("@id", aId);
+            return (int)cmd.ExecuteScalar() > 0;
+        }
+
+        public static bool AnalysisResultExists(SqlConnection conn, SqlTransaction trans, Guid arId)
+        {
+            SqlCommand cmd = new SqlCommand("select count(*) from analysis_result where id = @id", conn, trans);
+            cmd.Parameters.AddWithValue("@id", arId);
+            return (int)cmd.ExecuteScalar() > 0;
+        }
+    }    
+
+    public class Analysis
+    {
+        public Analysis()
+        {
+            Results = new List<AnalysisResult>();
+        }
+
+        public Guid Id { get; set; }
+        public int Number { get; set; }
+        public Guid AssignmentId { get; set; }
+        public Guid LaboratoryId { get; set; }
+        public Guid PreparationId { get; set; }
+        public Guid AnalysisMethodId { get; set; }
+        public int WorkflowStatusId { get; set; }
+        public string SpecterReference { get; set; }
+        public Guid ActivityUnitId { get; set; }
+        public Guid ActivityUnitTypeId { get; set; }
+        public double SigmaActivity { get; set; }
+        public double SigmaMDA { get; set; }
+        public string NuclideLibrary { get; set; }
+        public string MDALibrary { get; set; }
+        public int InstanceStatusId { get; set; }
+        public string Comment { get; set; }
+        public DateTime CreateDate { get; set; }
+        public string CreatedBy { get; set; }
+        public DateTime UpdateDate { get; set; }
+        public string UpdatedBy { get; set; }
+
+        public List<AnalysisResult> Results { get; set; }
+
+        public string _ImportFile;
+        public bool _Dirty;        
+
+        public void Clear()
+        {
+            Id = Guid.Empty;
+            Number = 0;
+            AssignmentId = Guid.Empty;
+            LaboratoryId = Guid.Empty;
+            PreparationId = Guid.Empty;
+            AnalysisMethodId = Guid.Empty;
+            WorkflowStatusId = 0;
+            SpecterReference = String.Empty;
+            ActivityUnitId = Guid.Empty;
+            ActivityUnitTypeId = Guid.Empty;
+            SigmaActivity = 0d;
+            SigmaMDA = 0d;
+            NuclideLibrary = String.Empty;
+            MDALibrary = String.Empty;
+            InstanceStatusId = 0;
+            Comment = String.Empty;
+            CreateDate = DateTime.MinValue;
+            CreatedBy = String.Empty;
+            UpdateDate = DateTime.MinValue;
+            UpdatedBy = String.Empty;
+            Results.Clear();
+            _ImportFile = String.Empty;
+            _Dirty = false;
+        }
+
+        public void SetDirtyStates(bool state)
+        {
+            _Dirty = state;
+            Results.ForEach(x => x._Dirty = state);
+        }
+
+        public void LoadFromDB(SqlConnection conn, SqlTransaction trans, Guid analysisId)
+        {
+            Clear();         
+            bool analysisFound = false; 
+
+            using (SqlDataReader reader = DB.GetDataReader(conn, trans, "csp_select_analysis", CommandType.StoredProcedure,
+                new SqlParameter("@id", analysisId)))
+            {
+                analysisFound = reader.HasRows;
+                if (analysisFound)
+                {
+                    reader.Read();
+
+                    Id = Guid.Parse(reader["id"].ToString());
+                    Number = Convert.ToInt32(reader["number"]);
+                    AssignmentId = DB.IsValidField(reader["assignment_id"]) ? Guid.Parse(reader["assignment_id"].ToString()) : Guid.Empty;
+                    LaboratoryId = DB.IsValidField(reader["laboratory_id"]) ? Guid.Parse(reader["laboratory_id"].ToString()) : Guid.Empty;
+                    PreparationId = DB.IsValidField(reader["preparation_id"]) ? Guid.Parse(reader["preparation_id"].ToString()) : Guid.Empty;
+                    AnalysisMethodId = DB.IsValidField(reader["analysis_method_id"]) ? Guid.Parse(reader["analysis_method_id"].ToString()) : Guid.Empty;
+                    WorkflowStatusId = Convert.ToInt32(reader["workflow_status_id"]);
+                    SpecterReference = reader["specter_reference"].ToString();
+                    ActivityUnitId = DB.IsValidField(reader["activity_unit_id"]) ? Guid.Parse(reader["activity_unit_id"].ToString()) : Guid.Empty;
+                    ActivityUnitTypeId = DB.IsValidField(reader["activity_unit_type_id"]) ? Guid.Parse(reader["activity_unit_type_id"].ToString()) : Guid.Empty;
+                    SigmaActivity = DB.IsValidField(reader["sigma_act"]) ? Convert.ToDouble(reader["sigma_act"]) : 0d;
+                    SigmaMDA = DB.IsValidField(reader["sigma_mda"]) ? Convert.ToDouble(reader["sigma_mda"]) : 0d;
+                    NuclideLibrary = reader["nuclide_library"].ToString();
+                    MDALibrary = reader["mda_library"].ToString();
+                    InstanceStatusId = Convert.ToInt32(reader["instance_status_id"]);
+                    Comment = reader["comment"].ToString();
+                    CreateDate = Convert.ToDateTime(reader["create_date"]);
+                    CreatedBy = reader["created_by"].ToString();
+                    UpdateDate = Convert.ToDateTime(reader["update_date"]);
+                    UpdatedBy = reader["updated_by"].ToString();                    
+                }                
+            }
+
+            if (analysisFound)
+            {
+                using (SqlDataReader reader = DB.GetDataReader(conn, trans, "csp_select_analysis_results_for_analysis", CommandType.StoredProcedure,
+                    new SqlParameter("@analysis_id", analysisId)))
+                {
+                    while (reader.Read())
+                    {
+                        AnalysisResult ar = new AnalysisResult();
+                        ar.Id = Guid.Parse(reader["id"].ToString());
+                        ar.AnalysisId = Guid.Parse(reader["analysis_id"].ToString());
+                        ar.NuclideId = Guid.Parse(reader["nuclide_id"].ToString());
+                        ar.NuclideName = reader["nuclide_name"].ToString();
+                        ar.Activity = Convert.ToDouble(reader["activity"]);
+                        ar.ActivityUncertaintyABS = Convert.ToDouble(reader["activity_uncertainty_abs"]);
+                        ar.ActivityApproved = Convert.ToBoolean(reader["activity_approved"]);
+                        ar.UniformActivity = Convert.ToDouble(reader["uniform_activity"]);
+                        ar.UniformActivityUnitId = Convert.ToInt32(reader["uniform_activity_unit_id"]);
+                        ar.DetectionLimit = Convert.ToDouble(reader["detection_limit"]);
+                        ar.DetectionLimitApproved = Convert.ToBoolean(reader["detection_limit_approved"]);
+                        ar.Accredited = Convert.ToBoolean(reader["accredited"]);
+                        ar.Reportable = Convert.ToBoolean(reader["reportable"]);
+                        ar.InstanceStatusId = Convert.ToInt32(reader["instance_status_id"]);
+                        ar.CreateDate = Convert.ToDateTime(reader["create_date"]);
+                        ar.CreatedBy = reader["created_by"].ToString();
+                        ar.UpdateDate = Convert.ToDateTime(reader["update_date"]);
+                        ar.UpdatedBy = reader["updated_by"].ToString();
+                
+                        ar._Dirty = false;
+                        Results.Add(ar);                        
+                    }
+                }
+            }
+
+            _ImportFile = String.Empty;
+            _Dirty = false;
+        }
+
+        public void StoreToDB(SqlConnection conn, SqlTransaction trans)
+        {
+            SqlCommand cmd = new SqlCommand("", conn, trans);
+
+            if (Id == Guid.Empty || !DB.AnalysisExists(conn, trans, Id))
+            {
+                // Insert new analysis            
+                if(Id == Guid.Empty)
+                    Id = Guid.NewGuid();
+                cmd.CommandText = "csp_insert_analysis";
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@id", Id);
+                cmd.Parameters.AddWithValue("@number", Number);
+                cmd.Parameters.AddWithValue("@assignment_id", DB.MakeParam(typeof(int), AssignmentId));
+                cmd.Parameters.AddWithValue("@laboratory_id", DB.MakeParam(typeof(int), LaboratoryId));
+                cmd.Parameters.AddWithValue("@preparation_id", DB.MakeParam(typeof(int), PreparationId));
+                cmd.Parameters.AddWithValue("@analysis_method_id", DB.MakeParam(typeof(int), AnalysisMethodId));
+                cmd.Parameters.AddWithValue("@workflow_status_id", DB.MakeParam(typeof(int), WorkflowStatusId));
+                cmd.Parameters.AddWithValue("@specter_reference", SpecterReference);
+                cmd.Parameters.AddWithValue("@activity_unit_id", DB.MakeParam(typeof(Guid), ActivityUnitId));
+                cmd.Parameters.AddWithValue("@activity_unit_type_id", DB.MakeParam(typeof(Guid), ActivityUnitTypeId));
+                cmd.Parameters.AddWithValue("@sigma_act", SigmaActivity);
+                cmd.Parameters.AddWithValue("@sigma_mda", SigmaMDA);
+                cmd.Parameters.AddWithValue("@nuclide_library", NuclideLibrary);
+                cmd.Parameters.AddWithValue("@mda_library", MDALibrary);
+                cmd.Parameters.AddWithValue("@instance_status_id", InstanceStatusId);
+                cmd.Parameters.AddWithValue("@comment", Comment);
+                cmd.Parameters.AddWithValue("@create_date", DateTime.Now);
+                cmd.Parameters.AddWithValue("@created_by", Common.Username);
+                cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
+                cmd.Parameters.AddWithValue("@updated_by", Common.Username);
+
+                cmd.ExecuteNonQuery();
+
+                _ImportFile = String.Empty;                
+                _Dirty = false;
+            }
+            else
+            {
+                if (_Dirty)
+                {
+                    // Update existing analysis
+                    cmd.CommandText = "csp_update_analysis";
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@id", Id);
+                    cmd.Parameters.AddWithValue("@workflow_status_id", DB.MakeParam(typeof(int), WorkflowStatusId));
+                    cmd.Parameters.AddWithValue("@specter_reference", SpecterReference);
+                    cmd.Parameters.AddWithValue("@activity_unit_id", DB.MakeParam(typeof(Guid), ActivityUnitId));
+                    cmd.Parameters.AddWithValue("@activity_unit_type_id", DB.MakeParam(typeof(Guid), ActivityUnitTypeId));
+                    cmd.Parameters.AddWithValue("@sigma_act", SigmaActivity);
+                    cmd.Parameters.AddWithValue("@sigma_mda", SigmaMDA);
+                    cmd.Parameters.AddWithValue("@nuclide_library", NuclideLibrary);
+                    cmd.Parameters.AddWithValue("@mda_library", MDALibrary);
+                    cmd.Parameters.AddWithValue("@comment", Comment);
+                    cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
+                    cmd.Parameters.AddWithValue("@updated_by", Common.Username);
+
+                    cmd.ExecuteNonQuery();
+
+                    _ImportFile = String.Empty;                    
+                    _Dirty = false;
+                }
+            }            
+
+            foreach (AnalysisResult r in Results)
+            {
+                if(DB.AnalysisResultExists(conn, trans, r.Id))
+                {
+                    // analysis result already exist in the db and has been modified, update it
+                    if(r._Dirty)
+                    {
+                        // analysis result has been modified, update it
+                        cmd.CommandText = @"
+update analysis_result set
+    activity = @activity,
+	activity_uncertainty_abs = @activity_uncertainty_abs,
+	activity_approved = @activity_approved,
+	uniform_activity = @uniform_activity,
+	uniform_activity_unit_id = @uniform_activity_unit_id,
+	detection_limit = @detection_limit,
+	detection_limit_approved = @detection_limit_approved,
+	accredited = @accredited,
+	reportable = @reportable,
+	instance_status_id = @instance_status_id,
+	update_date = @update_date,
+	updated_by = @updated_by
+where id = @id
+";
+                        cmd.Parameters.Clear();
+                        cmd.Parameters.AddWithValue("@id", r.Id);
+                        cmd.Parameters.AddWithValue("@activity", r.Activity);
+                        cmd.Parameters.AddWithValue("@activity_uncertainty_abs", r.ActivityUncertaintyABS);
+                        cmd.Parameters.AddWithValue("@activity_approved", r.ActivityApproved);
+                        double uAct = -1.0;
+                        int uActUnitId = -1;
+                        if (Utils.IsValidGuid(ActivityUnitId))
+                        {
+                            DB.GetUniformActivity(conn, trans, r.Activity, ActivityUnitId, out uAct, out uActUnitId);
+                        }
+                        cmd.Parameters.AddWithValue("@uniform_activity", uAct);
+                        cmd.Parameters.AddWithValue("@uniform_activity_unit_id", uActUnitId);
+                        cmd.Parameters.AddWithValue("@detection_limit", r.DetectionLimit);
+                        cmd.Parameters.AddWithValue("@detection_limit_approved", r.DetectionLimitApproved);
+                        cmd.Parameters.AddWithValue("@accredited", r.Accredited);
+                        cmd.Parameters.AddWithValue("@reportable", r.Reportable);
+                        cmd.Parameters.AddWithValue("@instance_status_id", r.InstanceStatusId);
+                        cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
+                        cmd.Parameters.AddWithValue("@updated_by", Common.Username);
+
+                        cmd.ExecuteNonQuery();                    
+                        r._Dirty = false;
+                    }
+                }
+                else
+                {
+                    // analysis result does not exist, insert it
+                    cmd.CommandText = @"
+insert into analysis_result values(
+    @id,
+    @analysis_id,
+    @nuclide_id,
+    @activity,
+    @activity_uncertainty_abs,
+    @activity_approved,
+    @uniform_activity,
+    @uniform_activity_unit_id,
+    @detection_limit, 
+    @detection_limit_approved,
+    @accredited,
+    @reportable,
+    @instance_status_id,
+    @create_date,
+    @created_by,
+    @update_date,
+    @updated_by)";
+                    cmd.CommandType = CommandType.Text;
+                    r.Id = Guid.NewGuid();
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.AddWithValue("@id", r.Id);
+                    cmd.Parameters.AddWithValue("@analysis_id", Id);
+                    cmd.Parameters.AddWithValue("@nuclide_id", DB.MakeParam(typeof(Guid), r.NuclideId));
+                    cmd.Parameters.AddWithValue("@activity", r.Activity);
+                    cmd.Parameters.AddWithValue("@activity_uncertainty_abs", r.ActivityUncertaintyABS);
+                    cmd.Parameters.AddWithValue("@activity_approved", r.ActivityApproved);
+                    double uAct = -1.0;
+                    int uActUnitId = -1;
+                    if (Utils.IsValidGuid(ActivityUnitId))
+                    {
+                        DB.GetUniformActivity(conn, trans, r.Activity, ActivityUnitId, out uAct, out uActUnitId);
+                    }
+                    cmd.Parameters.AddWithValue("@uniform_activity", uAct);
+                    cmd.Parameters.AddWithValue("@uniform_activity_unit_id", uActUnitId);
+                    cmd.Parameters.AddWithValue("@detection_limit", r.DetectionLimit);
+                    cmd.Parameters.AddWithValue("@detection_limit_approved", r.DetectionLimitApproved);
+                    cmd.Parameters.AddWithValue("@accredited", r.Accredited);
+                    cmd.Parameters.AddWithValue("@reportable", r.Reportable);
+                    cmd.Parameters.AddWithValue("@instance_status_id", r.InstanceStatusId);
+                    cmd.Parameters.AddWithValue("@create_date", DateTime.Now);
+                    cmd.Parameters.AddWithValue("@created_by", Common.Username);
+                    cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
+                    cmd.Parameters.AddWithValue("@updated_by", Common.Username);
+
+                    cmd.ExecuteNonQuery();                    
+                    r._Dirty = false;
+                }                
+            }
+        }
+
+        public class AnalysisResult
+        {
+            public Guid Id { get; set; }
+            public Guid AnalysisId { get; set; }
+            public Guid NuclideId { get; set; }
+            public string NuclideName { get; set; }
+            public double Activity { get; set; }
+            public double ActivityUncertaintyABS { get; set; }
+            public bool ActivityApproved { get; set; }
+            public double UniformActivity { get; set; }
+            public int UniformActivityUnitId { get; set; }
+            public double DetectionLimit { get; set; }
+            public bool DetectionLimitApproved { get; set; }
+            public bool Accredited { get; set; }
+            public bool Reportable { get; set; }
+            public int InstanceStatusId { get; set; }
+            public DateTime CreateDate { get; set; }
+            public string CreatedBy { get; set; }
+            public DateTime UpdateDate { get; set; }
+            public string UpdatedBy { get; set; }
+
+            public bool _Dirty;                        
         }
     }    
 }

@@ -721,6 +721,13 @@ select
             return !(o == null || o == DBNull.Value);
         }
 
+        public static bool PreparationExists(SqlConnection conn, SqlTransaction trans, Guid pId)
+        {
+            SqlCommand cmd = new SqlCommand("select count(*) from preparation where id = @id", conn, trans);
+            cmd.Parameters.AddWithValue("@id", pId);
+            return (int)cmd.ExecuteScalar() > 0;
+        }
+
         public static bool AnalysisExists(SqlConnection conn, SqlTransaction trans, Guid aId)
         {
             SqlCommand cmd = new SqlCommand("select count(*) from analysis where id = @id", conn, trans);
@@ -734,7 +741,160 @@ select
             cmd.Parameters.AddWithValue("@id", arId);
             return (int)cmd.ExecuteScalar() > 0;
         }
-    }    
+    }
+
+    public class Preparation
+    {
+        public Guid Id { get; set; }
+        public Guid SampleId { get; set; }
+        public int Number { get; set; }
+        public Guid AssignmentId { get; set; }
+        public Guid LaboratoryId { get; set; }
+        public Guid PreparationGeometryId { get; set; }
+        public Guid PreparationMethodId { get; set; }
+        public int WorkflowStatusId { get; set; }
+        public double Amount { get; set; }
+        public int PrepUnitId { get; set; }
+        public double Quantity { get; set; }
+        public int QuantityUnitId { get; set; }
+        public double FillHeightMM { get; set; }
+        public int InstanceStatusId { get; set; }
+        public string Comment { get; set; }
+        public DateTime CreateDate { get; set; }
+        public string CreatedBy { get; set; }
+        public DateTime UpdateDate { get; set; }
+        public string UpdatedBy { get; set; }
+
+        public bool _Dirty;
+
+        public void Clear()
+        {
+            Id = Guid.Empty;
+            SampleId = Guid.Empty;
+            Number = 0;
+            AssignmentId = Guid.Empty;
+            LaboratoryId = Guid.Empty;
+            PreparationGeometryId = Guid.Empty;
+            PreparationMethodId = Guid.Empty;
+            WorkflowStatusId = 0;
+            Amount = 0d;
+            PrepUnitId = 0;
+            Quantity = 0d;
+            QuantityUnitId = 0;
+            FillHeightMM = 0d;
+            InstanceStatusId = 0;
+            Comment = String.Empty;
+            CreateDate = DateTime.MinValue;
+            CreatedBy = String.Empty;
+            UpdateDate = DateTime.MinValue;
+            UpdatedBy = String.Empty;
+            _Dirty = false;
+        }
+
+        public bool LoadFromDB(SqlConnection conn, SqlTransaction trans, Guid preparationId)
+        {
+            bool res = false;
+
+            Clear();
+
+            using (SqlDataReader reader = DB.GetDataReader(conn, trans, "csp_select_preparation", CommandType.StoredProcedure,
+                new SqlParameter("@id", preparationId)))
+            {
+                if (reader.HasRows)
+                {
+                    reader.Read();
+
+                    Id = Guid.Parse(reader["id"].ToString());
+                    SampleId = DB.IsValidField(reader["sample_id"]) ? Guid.Parse(reader["sample_id"].ToString()) : Guid.Empty;
+                    Number = Convert.ToInt32(reader["number"]);
+                    AssignmentId = DB.IsValidField(reader["assignment_id"]) ? Guid.Parse(reader["assignment_id"].ToString()) : Guid.Empty;
+                    LaboratoryId = DB.IsValidField(reader["laboratory_id"]) ? Guid.Parse(reader["laboratory_id"].ToString()) : Guid.Empty;
+                    PreparationGeometryId = DB.IsValidField(reader["preparation_geometry_id"]) ? Guid.Parse(reader["preparation_geometry_id"].ToString()) : Guid.Empty;
+                    PreparationMethodId = DB.IsValidField(reader["preparation_method_id"]) ? Guid.Parse(reader["preparation_method_id"].ToString()) : Guid.Empty;
+                    WorkflowStatusId = Convert.ToInt32(reader["workflow_status_id"]);
+                    Amount = DB.IsValidField(reader["amount"]) ? Convert.ToDouble(reader["amount"]) : 0d;
+                    PrepUnitId = DB.IsValidField(reader["prep_unit_id"]) ? Convert.ToInt32(reader["prep_unit_id"]) : 0;
+                    Quantity = DB.IsValidField(reader["quantity"]) ? Convert.ToDouble(reader["quantity"]) : 0d;
+                    QuantityUnitId = DB.IsValidField(reader["quantity_unit_id"]) ? Convert.ToInt32(reader["quantity_unit_id"]) : 0;
+                    FillHeightMM = DB.IsValidField(reader["fill_height_mm"]) ? Convert.ToDouble(reader["fill_height_mm"]) : 0d;
+                    InstanceStatusId = Convert.ToInt32(reader["instance_status_id"]);
+                    Comment = reader["comment"].ToString();
+                    CreateDate = Convert.ToDateTime(reader["create_date"]);
+                    CreatedBy = reader["created_by"].ToString();
+                    UpdateDate = Convert.ToDateTime(reader["update_date"]);
+                    UpdatedBy = reader["updated_by"].ToString();
+                    res = true;
+                }
+            }
+
+            return res;
+        }
+
+        public bool StoreToDB(SqlConnection conn, SqlTransaction trans)
+        {
+            bool res = false;
+            SqlCommand cmd = new SqlCommand("", conn, trans);
+
+            if (Id == Guid.Empty || !DB.PreparationExists(conn, trans, Id))
+            {
+                // Insert new preparation            
+                if (Id == Guid.Empty)
+                    Id = Guid.NewGuid();
+                cmd.CommandText = "csp_insert_preparation";
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@id", Id);
+                cmd.Parameters.AddWithValue("@sample_id", DB.MakeParam(typeof(Guid), SampleId));
+                cmd.Parameters.AddWithValue("@number", Number);
+                cmd.Parameters.AddWithValue("@assignment_id", DB.MakeParam(typeof(Guid), AssignmentId));
+                cmd.Parameters.AddWithValue("@laboratory_id", DB.MakeParam(typeof(Guid), LaboratoryId));
+                cmd.Parameters.AddWithValue("@preparation_geometry_id", DB.MakeParam(typeof(Guid), PreparationGeometryId));
+                cmd.Parameters.AddWithValue("@preparation_method_id", DB.MakeParam(typeof(Guid), PreparationMethodId));
+                cmd.Parameters.AddWithValue("@workflow_status_id", DB.MakeParam(typeof(int), WorkflowStatusId));
+                cmd.Parameters.AddWithValue("@amount", DB.MakeParam(typeof(double), Amount));
+                cmd.Parameters.AddWithValue("@prep_unit_id", DB.MakeParam(typeof(int), PrepUnitId));
+                cmd.Parameters.AddWithValue("@quantity", DB.MakeParam(typeof(double), Quantity));
+                cmd.Parameters.AddWithValue("@quantity_unit_id", DB.MakeParam(typeof(int), QuantityUnitId));
+                cmd.Parameters.AddWithValue("@fill_height_mm", FillHeightMM);
+                cmd.Parameters.AddWithValue("@instance_status_id", InstanceStatusId);
+                cmd.Parameters.AddWithValue("@comment", Comment);
+                cmd.Parameters.AddWithValue("@create_date", DateTime.Now);
+                cmd.Parameters.AddWithValue("@created_by", Common.Username);
+                cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
+                cmd.Parameters.AddWithValue("@updated_by", Common.Username);
+
+                cmd.ExecuteNonQuery();
+                _Dirty = false;
+                res = true;
+            }
+            else
+            {
+                if (_Dirty)
+                {
+                    // Update existing preparation
+                    cmd.CommandText = "csp_update_preparation";
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.AddWithValue("@id", Id);
+                    cmd.Parameters.AddWithValue("@preparation_geometry_id", DB.MakeParam(typeof(Guid), PreparationGeometryId));
+                    cmd.Parameters.AddWithValue("@workflow_status_id", DB.MakeParam(typeof(int), WorkflowStatusId));
+                    cmd.Parameters.AddWithValue("@amount", DB.MakeParam(typeof(double), Amount));
+                    cmd.Parameters.AddWithValue("@prep_unit_id", DB.MakeParam(typeof(int), PrepUnitId));
+                    cmd.Parameters.AddWithValue("@quantity", DB.MakeParam(typeof(double), Quantity));
+                    cmd.Parameters.AddWithValue("@quantity_unit_id", DB.MakeParam(typeof(int), QuantityUnitId));
+                    cmd.Parameters.AddWithValue("@fill_height_mm", FillHeightMM);
+                    cmd.Parameters.AddWithValue("@comment", Comment);
+                    cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
+                    cmd.Parameters.AddWithValue("@updated_by", Common.Username);
+
+                    cmd.ExecuteNonQuery();
+                    _Dirty = false;
+                    res = true;
+                }
+            }
+
+            return res;
+        }
+    }
 
     public class Analysis
     {
@@ -767,7 +927,7 @@ select
         public List<AnalysisResult> Results { get; set; }
 
         public string _ImportFile;
-        public bool _Dirty;        
+        public bool _Dirty;
 
         public void Clear()
         {
@@ -794,12 +954,6 @@ select
             Results.Clear();
             _ImportFile = String.Empty;
             _Dirty = false;
-        }
-
-        public void SetDirtyStates(bool state)
-        {
-            _Dirty = state;
-            Results.ForEach(x => x._Dirty = state);
         }
 
         public void LoadFromDB(SqlConnection conn, SqlTransaction trans, Guid analysisId)
@@ -888,10 +1042,10 @@ select
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@id", Id);
                 cmd.Parameters.AddWithValue("@number", Number);
-                cmd.Parameters.AddWithValue("@assignment_id", DB.MakeParam(typeof(int), AssignmentId));
-                cmd.Parameters.AddWithValue("@laboratory_id", DB.MakeParam(typeof(int), LaboratoryId));
-                cmd.Parameters.AddWithValue("@preparation_id", DB.MakeParam(typeof(int), PreparationId));
-                cmd.Parameters.AddWithValue("@analysis_method_id", DB.MakeParam(typeof(int), AnalysisMethodId));
+                cmd.Parameters.AddWithValue("@assignment_id", DB.MakeParam(typeof(Guid), AssignmentId));
+                cmd.Parameters.AddWithValue("@laboratory_id", DB.MakeParam(typeof(Guid), LaboratoryId));
+                cmd.Parameters.AddWithValue("@preparation_id", DB.MakeParam(typeof(Guid), PreparationId));
+                cmd.Parameters.AddWithValue("@analysis_method_id", DB.MakeParam(typeof(Guid), AnalysisMethodId));
                 cmd.Parameters.AddWithValue("@workflow_status_id", DB.MakeParam(typeof(int), WorkflowStatusId));
                 cmd.Parameters.AddWithValue("@specter_reference", SpecterReference);
                 cmd.Parameters.AddWithValue("@activity_unit_id", DB.MakeParam(typeof(Guid), ActivityUnitId));

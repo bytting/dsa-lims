@@ -34,8 +34,8 @@ using System.Data.SqlClient;
 namespace DSA_lims
 {
     public partial class FormImportAnalysisLIS : Form
-    {
-        private AnalysisParameters mParameters = null;
+    {        
+        private Preparation mPreparation = null;
         private Analysis mAnalysis = null;
         private Dictionary<string, Guid> AllNuclides = null;
         private Dictionary<string, Guid> AnalMethNuclides = null;
@@ -44,11 +44,11 @@ namespace DSA_lims
         double SampleQuantity, SampleHeight, SampleWeight, SigmaActivity;
         DateTime ReferenceTime;
 
-        public FormImportAnalysisLIS(AnalysisParameters analysisParameters, Analysis analysis)
+        public FormImportAnalysisLIS(Preparation preparation, Analysis analysis)
         {
             InitializeComponent();
 
-            mParameters = analysisParameters;
+            mPreparation = preparation;
             mAnalysis = analysis;
         }
 
@@ -63,14 +63,14 @@ namespace DSA_lims
                 AllNuclides = DB.GetNuclideNames(connection, null);
                 AnalMethNuclides = DB.GetNuclideNamesForAnalysisMethod(connection, null, mAnalysis.AnalysisMethodId);
 
-                tbFilename.Text = mParameters.FileName;
-                tbLIMSSampleName.Text = mParameters.SampleName;
-                tbLIMSPrepGeom.Text = mParameters.PreparationGeometry;
-                tbLIMSGeomFillHeight.Text = mParameters.PreparationFillHeight.ToString();
-                tbLIMSGeomAmount.Text = mParameters.PreparationAmount.ToString();
-                tbLIMSGeomQuantity.Text = mParameters.PreparationQuantity.ToString();
+                tbFilename.Text = mAnalysis._ImportFile;
+                tbLIMSSampleName.Text = mPreparation.SampleId.ToString(); // FIXME
+                tbLIMSPrepGeom.Text = mPreparation.PreparationGeometryId.ToString(); // FIXME
+                tbLIMSGeomFillHeight.Text = mPreparation.FillHeightMM.ToString();
+                tbLIMSGeomAmount.Text = mPreparation.Amount.ToString();
+                tbLIMSGeomQuantity.Text = mPreparation.Quantity.ToString();
 
-                LoadLIS(mParameters.FileName);
+                LoadLIS(mAnalysis._ImportFile);
                 foreach(Analysis.AnalysisResult r in mAnalysis.Results)
                 {
                     if (r.DetectionLimit == 0.0)
@@ -338,7 +338,7 @@ namespace DSA_lims
 
         private void btnShowLIS_Click(object sender, EventArgs e)
         {
-            Process.Start("notepad.exe", mParameters.FileName);
+            Process.Start("notepad.exe", mAnalysis._ImportFile);
         }
 
         private void btnCancel_Click(object sender, EventArgs e)

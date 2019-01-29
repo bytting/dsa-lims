@@ -51,6 +51,7 @@ namespace DSA_lims
         private int editingSampleNumber;
 
         private Analysis analysis = new Analysis();
+        private Preparation preparation = new Preparation();
 
         public FormMain()
         {
@@ -1727,29 +1728,6 @@ namespace DSA_lims
             tbPrepAnalLODTemp.Text = "";
         }
 
-        private void ClearPrepAnalPreparation()
-        {
-            cboxPrepAnalPrepGeom.SelectedValue = Guid.Empty;
-            tbPrepAnalPrepFillHeight.Text = "";
-            tbPrepAnalPrepAmount.Text = "";
-            cboxPrepAnalPrepAmountUnit.SelectedValue = 0;
-            cboxPrepAnalPrepWorkflowStatus.SelectedValue = WorkflowStatus.Construction;
-            tbPrepAnalPrepReqUnit.Text = "";
-            tbPrepAnalPrepComment.Text = "";
-            lblPrepAnalPrepRange.Text = "";
-        }
-
-        private void ClearPrepAnalAnalysis()
-        {
-            cboxPrepAnalAnalUnit.SelectedValue = Guid.Empty;
-            cboxPrepAnalAnalUnitType.SelectedValue = Guid.Empty;
-            tbPrepAnalAnalSpecRef.Text = "";
-            tbPrepAnalAnalNuclLib.Text = "";
-            tbPrepAnalAnalMDALib.Text = "";
-            cboxPrepAnalAnalWorkflowStatus.SelectedValue = WorkflowStatus.Construction;
-            tbPrepAnalAnalComment.Text = "";
-        }
-
         private void ClearSample()
         {
             cboxSampleSampleType.SelectedValue = Guid.Empty;
@@ -2135,8 +2113,6 @@ namespace DSA_lims
 
             treePrepAnal.Nodes.Clear();
             ClearPrepAnalSample();
-            ClearPrepAnalPreparation();
-            ClearPrepAnalAnalysis();
 
             TreeNode sampleNode = null;
             Font fontSample = new Font(treePrepAnal.Font, FontStyle.Bold);
@@ -2207,6 +2183,7 @@ order by a.number
             }
 
             treePrepAnal.ExpandAll();
+            tabsPrepAnal.SelectedTab = tabPrepAnalSample;
             return true;
         }
 
@@ -3330,6 +3307,7 @@ order by a.number
 
             using (SqlConnection conn = DB.OpenConnection())
             {
+                Guid pid;
                 switch (e.Node.Level)
                 {
                     case 0:
@@ -3338,15 +3316,16 @@ order by a.number
                         PopulateSampleInfo(sid, e.Node);
                         tabsPrepAnal.SelectedTab = tabPrepAnalSample;
                         break;
-                    case 1:
-                        ClearPrepAnalPreparation();
-                        Guid pid = Guid.Parse(e.Node.Name);
-                        PopulatePreparation(pid);
+                    case 1:                        
+                        pid = Guid.Parse(e.Node.Name);
+                        preparation.LoadFromDB(conn, null, pid);
+                        PopulatePreparation(preparation);
                         btnPrepAnalAddAnal.Enabled = true;
                         tabsPrepAnal.SelectedTab = tabPrepAnalPreps;
                         break;
                     case 2:
-                        //ClearPrepAnalAnalysis();                        
+                        pid = Guid.Parse(e.Node.Parent.Name);
+                        preparation.LoadFromDB(conn, null, pid);
                         Guid aid = Guid.Parse(e.Node.Name);
                         analysis.LoadFromDB(conn, null, aid);
                         PopulateAnalysis(analysis);
@@ -3560,45 +3539,45 @@ order by a.number
 
         private void btnPrepAnalPrepUpdate_Click(object sender, EventArgs e)
         {
-            if(!Utils.IsValidGuid(treePrepAnal.SelectedNode.Name))
+            if(!Utils.IsValidGuid(preparation.Id))
             {
                 MessageBox.Show("No valid preparation ID found");
                 return;
             }
-
-            Guid pid = Guid.Parse(treePrepAnal.SelectedNode.Name);
+            
             SqlConnection conn = null;
+            SqlTransaction trans = null;
 
             try
             {
                 conn = DB.OpenConnection();
+                trans = conn.BeginTransaction();
 
-                if(DB.IsPreparationClosed(conn, null, pid))
+                if(DB.IsPreparationClosed(conn, trans, preparation.Id))
                 {
                     MessageBox.Show("This preparation belongs to a closed order and can not be updated");
                     return;
                 }
 
-                SqlCommand cmd = new SqlCommand("csp_update_preparation", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@id", pid);
-                cmd.Parameters.AddWithValue("@preparation_geometry_id", DB.MakeParam(typeof(Guid), cboxPrepAnalPrepGeom.SelectedValue));
-                cmd.Parameters.AddWithValue("@workflow_status_id", DB.MakeParam(typeof(int), cboxPrepAnalPrepWorkflowStatus.SelectedValue));
-                cmd.Parameters.AddWithValue("@amount", DB.MakeParam(typeof(double), tbPrepAnalPrepAmount.Text));
-                cmd.Parameters.AddWithValue("@prep_unit_id", DB.MakeParam(typeof(int), cboxPrepAnalPrepAmountUnit.SelectedValue));
-                cmd.Parameters.AddWithValue("@quantity", DB.MakeParam(typeof(double), tbPrepAnalPrepQuantity.Text));
-                cmd.Parameters.AddWithValue("@quantity_unit_id", DB.MakeParam(typeof(int), cboxPrepAnalPrepQuantityUnit.SelectedValue));
-                cmd.Parameters.AddWithValue("@fill_height_mm", DB.MakeParam(typeof(double), tbPrepAnalPrepFillHeight.Text));
-                cmd.Parameters.AddWithValue("@comment", tbPrepAnalPrepComment.Text);
-                cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
-                cmd.Parameters.AddWithValue("@updated_by", Common.Username);
+                preparation.PreparationGeometryId = Guid.Parse(cboxPrepAnalPrepGeom.SelectedValue.ToString());
+                preparation.FillHeightMM = String.IsNullOrEmpty(tbPrepAnalPrepFillHeight.Text) ? 0d : Convert.ToDouble(tbPrepAnalPrepFillHeight.Text);
+                preparation.Amount = String.IsNullOrEmpty(tbPrepAnalPrepAmount.Text) ? 0d : Convert.ToDouble(tbPrepAnalPrepAmount.Text);
+                preparation.PrepUnitId = Convert.ToInt32(cboxPrepAnalPrepAmountUnit.SelectedValue);
+                preparation.Quantity = String.IsNullOrEmpty(tbPrepAnalPrepQuantity.Text) ? 0d : Convert.ToDouble(tbPrepAnalPrepQuantity.Text);
+                preparation.QuantityUnitId = Convert.ToInt32(cboxPrepAnalPrepQuantityUnit.SelectedValue);
+                preparation.Comment = tbPrepAnalPrepComment.Text.Trim();
+                preparation.WorkflowStatusId = Convert.ToInt32(cboxPrepAnalPrepWorkflowStatus.SelectedValue);
 
-                cmd.ExecuteNonQuery();
+                preparation.StoreToDB(conn, trans);
 
+                trans.Commit();
+
+                treePrepAnal.SelectedNode.ForeColor = preparation.WorkflowStatusId == WorkflowStatus.Complete ? Color.DarkGreen : Color.Firebrick;
                 lblStatus.Text = Utils.makeStatusMessage("Preparation updated successfully");
             }
             catch(Exception ex)
             {
+                trans?.Rollback();
                 Common.Log.Error(ex);
                 MessageBox.Show(ex.Message);
             }
@@ -3608,42 +3587,22 @@ order by a.number
             }
         }
 
-        private void PopulatePreparation(Guid pid)
-        {
-            using (SqlConnection conn = DB.OpenConnection())
-            {
-                using (SqlDataReader reader = DB.GetDataReader(conn, null, "csp_select_preparation", CommandType.StoredProcedure, 
-                    new SqlParameter("@id", pid)))
-                {
-                    reader.Read();
+        private void PopulatePreparation(Preparation p)
+        {                                                            
+            tbPrepAnalPrepReqUnit.Text = "";            
+            lblPrepAnalPrepRange.Text = "";
 
-                    cboxPrepAnalPrepGeom.SelectedValue = reader["preparation_geometry_id"];
-                    tbPrepAnalPrepFillHeight.Text = reader["fill_height_mm"].ToString();
-                    tbPrepAnalPrepAmount.Text = reader["amount"].ToString();
-                    cboxPrepAnalPrepAmountUnit.SelectedValue = reader["prep_unit_id"];
-                    tbPrepAnalPrepQuantity.Text = reader["quantity"].ToString();
-                    cboxPrepAnalPrepQuantityUnit.SelectedValue = reader["quantity_unit_id"];
-                    cboxPrepAnalPrepWorkflowStatus.SelectedValue = reader["workflow_status_id"];
-                    tbPrepAnalPrepComment.Text = reader["comment"].ToString();                    
-                }
+            cboxPrepAnalPrepGeom.SelectedValue = p.PreparationGeometryId;
+            tbPrepAnalPrepFillHeight.Text = p.FillHeightMM == 0d ? "" : p.FillHeightMM.ToString();
+            tbPrepAnalPrepAmount.Text = p.Amount == 0d ? "" : p.Amount.ToString();
+            cboxPrepAnalPrepAmountUnit.SelectedValue = p.PrepUnitId;
+            tbPrepAnalPrepQuantity.Text = p.Quantity == 0d ? "" : p.Quantity.ToString();
+            cboxPrepAnalPrepQuantityUnit.SelectedValue = p.QuantityUnitId;
+            tbPrepAnalPrepComment.Text = p.Comment;
+            cboxPrepAnalPrepWorkflowStatus.SelectedValue = p.WorkflowStatusId;
 
-                string query = @"
-select au.name + ', ' + aut.name from preparation p
-    inner join sample s on p.sample_id = s.id
-    inner join sample_x_assignment_sample_type sxast on sxast.sample_id = s.id
-    inner join assignment_sample_type ast on sxast.assignment_sample_type_id = ast.id
-    inner join assignment a on a.id = p.assignment_id
-    left outer join activity_unit au on au.id = ast.requested_activity_unit_id
-    left outer join activity_unit_type aut on aut.id = ast.requested_activity_unit_type_id
-where p.id = @pid
-";
-                object o = DB.GetScalar(conn, null, query, CommandType.Text, new SqlParameter("@pid", pid));
-                if(o != null && o != DBNull.Value)
-                    tbPrepAnalPrepReqUnit.Text = o.ToString();
-
-                UI.PopulateAttachments(conn, "preparation", pid, gridPrepAnalPrepAttachments);
-            }                
-        }        
+            p._Dirty = false;
+        }
 
         private void btnPrepAnalAnalUpdate_Click(object sender, EventArgs e)
         {
@@ -3679,12 +3638,13 @@ where p.id = @pid
                 analysis.ActivityUnitTypeId = Guid.Parse(cboxPrepAnalAnalUnitType.SelectedValue.ToString());
                 analysis.SpecterReference = tbPrepAnalAnalSpecRef.Text;
                 analysis.Comment = tbPrepAnalAnalComment.Text;
-                analysis.WorkflowStatusId = Convert.ToInt32(cboxPrepAnalAnalWorkflowStatus.SelectedValue);
-                treePrepAnal.SelectedNode.ForeColor = analysis.WorkflowStatusId == WorkflowStatus.Complete ? Color.DarkGreen : Color.Firebrick;
+                analysis.WorkflowStatusId = Convert.ToInt32(cboxPrepAnalAnalWorkflowStatus.SelectedValue);                
 
                 analysis.StoreToDB(conn, trans);
 
                 trans.Commit();
+
+                treePrepAnal.SelectedNode.ForeColor = analysis.WorkflowStatusId == WorkflowStatus.Complete ? Color.DarkGreen : Color.Firebrick;
                 lblStatus.Text = Utils.makeStatusMessage("Analysis updated successfully");
             }
             catch (Exception ex)
@@ -3715,15 +3675,14 @@ where p.id = @pid
         {
             lblPrepAnalPrepRange.Text = "";
 
-            if (Utils.IsValidGuid(cboxPrepAnalPrepGeom.SelectedValue))
+            if (Utils.IsValidGuid(preparation.PreparationGeometryId))
             {
                 string fhInfo = "[";
-                Guid geomId = Guid.Parse(cboxPrepAnalPrepGeom.SelectedValue.ToString());
 
                 using (SqlConnection conn = DB.OpenConnection())
                 {
                     using (SqlDataReader reader = DB.GetDataReader(conn, null, "select min_fill_height_mm, max_fill_height_mm from preparation_geometry where id = @id", CommandType.Text,
-                        new SqlParameter("@id", geomId)))
+                        new SqlParameter("@id", preparation.PreparationGeometryId)))
                     {
                         reader.Read();
                         fhInfo += reader["min_fill_height_mm"] + ", " + reader["max_fill_height_mm"] + "]";
@@ -3731,6 +3690,8 @@ where p.id = @pid
                     lblPrepAnalPrepRange.Text = fhInfo;
                 }
             }
+
+            preparation._Dirty = true;
         }
 
         private void btnPrepAnalSampleUpdate_Click(object sender, EventArgs e)
@@ -3826,77 +3787,34 @@ where p.id = @pid
         }
 
         private void miImportLISFile_Click(object sender, EventArgs e)
-        {                        
-            SqlConnection connection = null;
-            SqlTransaction transaction = null;
-            AnalysisParameters analysisParameters = new AnalysisParameters();
-
-            try
+        {    
+            using (SqlConnection conn = DB.OpenConnection())
             {
-                connection = DB.OpenConnection();
-                transaction = connection.BeginTransaction();                
-                
-                if (DB.IsAnalysisClosed(connection, transaction, analysis.Id))
+                if (DB.IsAnalysisClosed(conn, null, analysis.Id))
                 {
                     MessageBox.Show("This analysis belongs to a closed order and can not be updated");
                     return;
                 }
+            }                    
                 
-                OpenFileDialog dialog = new OpenFileDialog();
-                dialog.Filter = "LIS files (*.lis)|*.lis";
-                if (dialog.ShowDialog() != DialogResult.OK)
-                    return;
-                
-                analysisParameters.FileName = dialog.FileName;
-
-                string query = @"
-select p.fill_height_mm, p.amount, p.quantity, pg.name as 'geometry_name'
-from preparation p inner join preparation_geometry pg on p.preparation_geometry_id = pg.id
-where p.id = @pid
-";
-                Guid prepId = Guid.Parse(treePrepAnal.SelectedNode.Parent.Name);
-                using (SqlDataReader reader = DB.GetDataReader(connection, transaction, query, CommandType.Text, new SqlParameter("@pid", prepId)))
-                {
-                    if (reader.HasRows)
-                    {
-                        reader.Read();
-
-                        if (DB.IsValidField(reader["geometry_name"]))
-                            analysisParameters.PreparationGeometry = reader["geometry_name"].ToString();
-                        if (DB.IsValidField(reader["fill_height_mm"]))
-                            analysisParameters.PreparationFillHeight = Convert.ToDouble(reader["fill_height_mm"]);
-                        if (DB.IsValidField(reader["amount"]))
-                            analysisParameters.PreparationAmount = Convert.ToDouble(reader["amount"]);
-                        if (DB.IsValidField(reader["quantity"]))
-                            analysisParameters.PreparationQuantity = Convert.ToDouble(reader["quantity"]);
-                    }
-                }
-
-                analysisParameters.SampleName = treePrepAnal.Nodes.Count > 0 ? treePrepAnal.Nodes[0].Text : "";
-                analysisParameters.SpectrumReferenceRegEx = ""; // FIXME
-
-                transaction.Commit();
-            }
-            catch(Exception ex)
-            {
-                transaction?.Rollback();
-                Common.Log.Error(ex);
-                MessageBox.Show(Utils.makeErrorMessage(ex.Message));
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Filter = "LIS files (*.lis)|*.lis";
+            if (dialog.ShowDialog() != DialogResult.OK)
                 return;
-            }
-            finally
-            {
-                connection?.Close();
-            }
+                
+            analysis._ImportFile = dialog.FileName;
 
-            FormImportAnalysisLIS form = new FormImportAnalysisLIS(analysisParameters, analysis);
+            FormImportAnalysisLIS form = new FormImportAnalysisLIS(preparation, analysis);
             if (form.ShowDialog() != DialogResult.OK)
+            {
+                analysis._ImportFile = String.Empty;
                 return;
-
-            analysis._Dirty = true;
-            analysis.Results.ForEach(x => x._Dirty = true);
+            }
 
             PopulateAnalysis(analysis);
+
+            analysis._Dirty = true;
+            analysis.Results.ForEach(x => x._Dirty = true);            
         }
 
         private void PopulateAnalysis(Analysis a)
@@ -4087,14 +4005,11 @@ where p.id = @pid
             if (MessageBox.Show("Are you sure you want to delete all results from this analysis?", "Question", MessageBoxButtons.YesNo) == DialogResult.No)
                 return;
 
-            Guid aid = Guid.Parse(treePrepAnal.SelectedNode.Name);            
-
             using (SqlConnection conn = DB.OpenConnection())
             {
-                ClearAnalysisResults(conn, null, aid);
-                analysis.LoadFromDB(conn, null, aid);
+                ClearAnalysisResults(conn, null, analysis.Id);
+                analysis.LoadFromDB(conn, null, analysis.Id);
                 PopulateAnalysis(analysis);
-                //UI.PopulateAnalysisResults(conn, aid, gridPrepAnalResults);
             }
         }
 
@@ -5778,6 +5693,41 @@ where id = @id
         private void tbPrepAnalAnalComment_TextChanged(object sender, EventArgs e)
         {
             analysis._Dirty = true;
+        }
+
+        private void tbPrepAnalPrepFillHeight_TextChanged(object sender, EventArgs e)
+        {
+            preparation._Dirty = true;
+        }
+
+        private void tbPrepAnalPrepAmount_TextChanged(object sender, EventArgs e)
+        {
+            preparation._Dirty = true;
+        }
+
+        private void cboxPrepAnalPrepAmountUnit_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            preparation._Dirty = true;
+        }
+
+        private void tbPrepAnalPrepQuantity_TextChanged(object sender, EventArgs e)
+        {
+            preparation._Dirty = true;
+        }
+
+        private void cboxPrepAnalPrepQuantityUnit_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            preparation._Dirty = true;
+        }
+
+        private void tbPrepAnalPrepComment_TextChanged(object sender, EventArgs e)
+        {
+            preparation._Dirty = true;
+        }
+
+        private void cboxPrepAnalPrepWorkflowStatus_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            preparation._Dirty = true;
         }
     }    
 }

@@ -9303,17 +9303,17 @@
             this.panel10.Controls.Add(this.cboxPrepAnalPrepWorkflowStatus);
             this.panel10.Controls.Add(this.btnPrepAnalPrepUpdate);
             this.panel10.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel10.Location = new System.Drawing.Point(3, 567);
+            this.panel10.Location = new System.Drawing.Point(3, 569);
             this.panel10.Name = "panel10";
-            this.panel10.Size = new System.Drawing.Size(726, 28);
+            this.panel10.Size = new System.Drawing.Size(726, 26);
             this.panel10.TabIndex = 1;
             // 
             // label23
             // 
             this.label23.Dock = System.Windows.Forms.DockStyle.Right;
-            this.label23.Location = new System.Drawing.Point(189, 0);
+            this.label23.Location = new System.Drawing.Point(213, 0);
             this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(133, 28);
+            this.label23.Size = new System.Drawing.Size(133, 26);
             this.label23.TabIndex = 0;
             this.label23.Text = "Preparation status";
             this.label23.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -9326,18 +9326,19 @@
             this.cboxPrepAnalPrepWorkflowStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cboxPrepAnalPrepWorkflowStatus.FormattingEnabled = true;
             this.cboxPrepAnalPrepWorkflowStatus.ItemHeight = 15;
-            this.cboxPrepAnalPrepWorkflowStatus.Location = new System.Drawing.Point(322, 0);
+            this.cboxPrepAnalPrepWorkflowStatus.Location = new System.Drawing.Point(346, 0);
             this.cboxPrepAnalPrepWorkflowStatus.Name = "cboxPrepAnalPrepWorkflowStatus";
-            this.cboxPrepAnalPrepWorkflowStatus.Size = new System.Drawing.Size(204, 23);
+            this.cboxPrepAnalPrepWorkflowStatus.Size = new System.Drawing.Size(200, 23);
             this.cboxPrepAnalPrepWorkflowStatus.TabIndex = 7;
             this.cboxPrepAnalPrepWorkflowStatus.ValueMember = "Id";
+            this.cboxPrepAnalPrepWorkflowStatus.SelectedIndexChanged += new System.EventHandler(this.cboxPrepAnalPrepWorkflowStatus_SelectedIndexChanged);
             // 
             // btnPrepAnalPrepUpdate
             // 
             this.btnPrepAnalPrepUpdate.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnPrepAnalPrepUpdate.Location = new System.Drawing.Point(526, 0);
+            this.btnPrepAnalPrepUpdate.Location = new System.Drawing.Point(546, 0);
             this.btnPrepAnalPrepUpdate.Name = "btnPrepAnalPrepUpdate";
-            this.btnPrepAnalPrepUpdate.Size = new System.Drawing.Size(200, 28);
+            this.btnPrepAnalPrepUpdate.Size = new System.Drawing.Size(180, 26);
             this.btnPrepAnalPrepUpdate.TabIndex = 9;
             this.btnPrepAnalPrepUpdate.Text = "Save preparation info";
             this.btnPrepAnalPrepUpdate.UseVisualStyleBackColor = true;
@@ -9396,6 +9397,7 @@
             this.tbPrepAnalPrepComment.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.tbPrepAnalPrepComment.Size = new System.Drawing.Size(295, 182);
             this.tbPrepAnalPrepComment.TabIndex = 8;
+            this.tbPrepAnalPrepComment.TextChanged += new System.EventHandler(this.tbPrepAnalPrepComment_TextChanged);
             // 
             // panel61
             // 
@@ -9473,6 +9475,7 @@
             this.tbPrepAnalPrepQuantity.Name = "tbPrepAnalPrepQuantity";
             this.tbPrepAnalPrepQuantity.Size = new System.Drawing.Size(176, 21);
             this.tbPrepAnalPrepQuantity.TabIndex = 4;
+            this.tbPrepAnalPrepQuantity.TextChanged += new System.EventHandler(this.tbPrepAnalPrepQuantity_TextChanged);
             // 
             // cboxPrepAnalPrepQuantityUnit
             // 
@@ -9485,6 +9488,7 @@
             this.cboxPrepAnalPrepQuantityUnit.Size = new System.Drawing.Size(119, 23);
             this.cboxPrepAnalPrepQuantityUnit.TabIndex = 5;
             this.cboxPrepAnalPrepQuantityUnit.ValueMember = "Id";
+            this.cboxPrepAnalPrepQuantityUnit.SelectedIndexChanged += new System.EventHandler(this.cboxPrepAnalPrepQuantityUnit_SelectedIndexChanged);
             // 
             // panel58
             // 
@@ -9524,6 +9528,7 @@
             this.tbPrepAnalPrepAmount.Name = "tbPrepAnalPrepAmount";
             this.tbPrepAnalPrepAmount.Size = new System.Drawing.Size(176, 21);
             this.tbPrepAnalPrepAmount.TabIndex = 2;
+            this.tbPrepAnalPrepAmount.TextChanged += new System.EventHandler(this.tbPrepAnalPrepAmount_TextChanged);
             // 
             // panel56
             // 
@@ -9555,6 +9560,7 @@
             this.cboxPrepAnalPrepAmountUnit.Size = new System.Drawing.Size(119, 23);
             this.cboxPrepAnalPrepAmountUnit.TabIndex = 3;
             this.cboxPrepAnalPrepAmountUnit.ValueMember = "Id";
+            this.cboxPrepAnalPrepAmountUnit.SelectedIndexChanged += new System.EventHandler(this.cboxPrepAnalPrepAmountUnit_SelectedIndexChanged);
             // 
             // panel52
             // 
@@ -9575,6 +9581,7 @@
             this.tbPrepAnalPrepFillHeight.Name = "tbPrepAnalPrepFillHeight";
             this.tbPrepAnalPrepFillHeight.Size = new System.Drawing.Size(175, 21);
             this.tbPrepAnalPrepFillHeight.TabIndex = 1;
+            this.tbPrepAnalPrepFillHeight.TextChanged += new System.EventHandler(this.tbPrepAnalPrepFillHeight_TextChanged);
             // 
             // panel59
             // 
@@ -9798,7 +9805,7 @@
             this.panel9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel9.Location = new System.Drawing.Point(0, 0);
             this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(726, 318);
+            this.panel9.Size = new System.Drawing.Size(726, 320);
             this.panel9.TabIndex = 4;
             // 
             // gridPrepAnalResults
@@ -9817,7 +9824,7 @@
             this.gridPrepAnalResults.ReadOnly = true;
             this.gridPrepAnalResults.RowHeadersVisible = false;
             this.gridPrepAnalResults.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridPrepAnalResults.Size = new System.Drawing.Size(726, 293);
+            this.gridPrepAnalResults.Size = new System.Drawing.Size(726, 295);
             this.gridPrepAnalResults.TabIndex = 0;
             // 
             // toolsSampleResRes
@@ -9887,17 +9894,17 @@
             this.panel14.Controls.Add(this.cboxPrepAnalAnalWorkflowStatus);
             this.panel14.Controls.Add(this.btnPrepAnalAnalUpdate);
             this.panel14.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel14.Location = new System.Drawing.Point(0, 318);
+            this.panel14.Location = new System.Drawing.Point(0, 320);
             this.panel14.Name = "panel14";
-            this.panel14.Size = new System.Drawing.Size(726, 28);
+            this.panel14.Size = new System.Drawing.Size(726, 26);
             this.panel14.TabIndex = 5;
             // 
             // label55
             // 
             this.label55.Dock = System.Windows.Forms.DockStyle.Right;
-            this.label55.Location = new System.Drawing.Point(224, 0);
+            this.label55.Location = new System.Drawing.Point(230, 0);
             this.label55.Name = "label55";
-            this.label55.Size = new System.Drawing.Size(116, 28);
+            this.label55.Size = new System.Drawing.Size(116, 26);
             this.label55.TabIndex = 0;
             this.label55.Text = "Analysis status";
             this.label55.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -9908,18 +9915,18 @@
             this.cboxPrepAnalAnalWorkflowStatus.Dock = System.Windows.Forms.DockStyle.Right;
             this.cboxPrepAnalAnalWorkflowStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxPrepAnalAnalWorkflowStatus.FormattingEnabled = true;
-            this.cboxPrepAnalAnalWorkflowStatus.Location = new System.Drawing.Point(340, 0);
+            this.cboxPrepAnalAnalWorkflowStatus.Location = new System.Drawing.Point(346, 0);
             this.cboxPrepAnalAnalWorkflowStatus.Name = "cboxPrepAnalAnalWorkflowStatus";
-            this.cboxPrepAnalAnalWorkflowStatus.Size = new System.Drawing.Size(198, 23);
+            this.cboxPrepAnalAnalWorkflowStatus.Size = new System.Drawing.Size(200, 23);
             this.cboxPrepAnalAnalWorkflowStatus.TabIndex = 6;
             this.cboxPrepAnalAnalWorkflowStatus.ValueMember = "Id";
             // 
             // btnPrepAnalAnalUpdate
             // 
             this.btnPrepAnalAnalUpdate.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnPrepAnalAnalUpdate.Location = new System.Drawing.Point(538, 0);
+            this.btnPrepAnalAnalUpdate.Location = new System.Drawing.Point(546, 0);
             this.btnPrepAnalAnalUpdate.Name = "btnPrepAnalAnalUpdate";
-            this.btnPrepAnalAnalUpdate.Size = new System.Drawing.Size(188, 28);
+            this.btnPrepAnalAnalUpdate.Size = new System.Drawing.Size(180, 26);
             this.btnPrepAnalAnalUpdate.TabIndex = 7;
             this.btnPrepAnalAnalUpdate.Text = "Save analysis info";
             this.btnPrepAnalAnalUpdate.UseVisualStyleBackColor = true;

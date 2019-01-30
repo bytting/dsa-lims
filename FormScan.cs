@@ -105,9 +105,9 @@ namespace DSA_lims
                 mSettings.ScannerFlipType = cboxFlipType.Text;
                 mSettings.ScannerPixelType = cboxPixelType.Text;
             }
-            catch(Exception ex)
+            catch
             {
-                MessageBox.Show(ex.Message);
+                Common.Log.Error("Scanning of document failed on scanner " + cboxScanner.Text);
             }
         }
 

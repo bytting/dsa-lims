@@ -3607,7 +3607,7 @@ order by a.number
 
         private void btnPrepAnalAnalUpdate_Click(object sender, EventArgs e)
         {
-            if (!Utils.IsValidGuid(treePrepAnal.SelectedNode.Name))
+            if (!Utils.IsValidGuid(analysis.Id))
             {
                 MessageBox.Show("No valid analysis ID found");
                 return;
@@ -3635,6 +3635,17 @@ order by a.number
 
                 analysis.StoreToDB(conn, trans);
 
+                if (!String.IsNullOrEmpty(analysis._ImportFile) && File.Exists(analysis._ImportFile))
+                {
+                    try
+                    {
+                        DB.AddAttachment(conn, trans, "analysis", analysis.Id, Path.GetFileNameWithoutExtension(analysis._ImportFile), ".lis", File.ReadAllBytes(analysis._ImportFile));
+                        analysis._ImportFile = String.Empty;
+                        UI.PopulateAttachments(conn, trans, "analysis", analysis.Id, gridPrepAnalAnalAttachments);
+                    }
+                    catch { }
+                }
+
                 trans.Commit();
 
                 treePrepAnal.SelectedNode.ForeColor = analysis.WorkflowStatusId == WorkflowStatus.Complete ? Color.DarkGreen : Color.Firebrick;
@@ -3647,19 +3658,9 @@ order by a.number
                 MessageBox.Show(ex.Message);
             }
             finally
-            {
+            {                
                 conn?.Close();
-            }
-                        
-            if (!String.IsNullOrEmpty(analysis._ImportFile) && File.Exists(analysis._ImportFile))
-            {
-                using (SqlConnection conn2 = DB.OpenConnection())
-                {
-                    DB.AddAttachment(conn2, null, "analysis", analysis.Id, Path.GetFileNameWithoutExtension(analysis._ImportFile), "lis", File.ReadAllBytes(analysis._ImportFile));
-                    analysis._ImportFile = String.Empty;
-                    UI.PopulateAttachments(conn2, null, "analysis", analysis.Id, gridPrepAnalAnalAttachments);
-                }
-            }
+            }            
         }        
 
         private void cboxPrepAnalPrepGeom_SelectedIndexChanged(object sender, EventArgs e)
@@ -3816,11 +3817,11 @@ order by a.number
             tbPrepAnalAnalSpecRef.Text = a.SpecterReference;
             tbPrepAnalAnalNuclLib.Text = a.NuclideLibrary;
             tbPrepAnalAnalMDALib.Text = a.MDALibrary;
-            tbPrepAnalAnalComment.Text = a.Comment;
-
-            UI.PopulateAttachments(conn, trans, "analysis", a.Id, gridPrepAnalAnalAttachments);
+            tbPrepAnalAnalComment.Text = a.Comment;            
 
             PopulateAnalysisResults(a);
+
+            UI.PopulateAttachments(conn, trans, "analysis", a.Id, gridPrepAnalAnalAttachments);
 
             a._Dirty = false;
         }

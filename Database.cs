@@ -1090,8 +1090,7 @@ where p.assignment_id = ast.assignment_id
                 cmd.Parameters.AddWithValue("@updated_by", Common.Username);
 
                 cmd.ExecuteNonQuery();
-
-                _ImportFile = String.Empty;                
+                
                 _Dirty = false;
             }
             else
@@ -1116,7 +1115,6 @@ where p.assignment_id = ast.assignment_id
 
                     cmd.ExecuteNonQuery();
 
-                    _ImportFile = String.Empty;                    
                     _Dirty = false;
                 }
             }

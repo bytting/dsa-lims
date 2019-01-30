@@ -184,6 +184,8 @@ namespace DSA_lims
                 mAnalysis.Results.Add(mResult);
             }
 
+            mResult._Dirty = true;
+
             DialogResult = DialogResult.OK;
             Close();
         }        

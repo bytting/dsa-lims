@@ -132,6 +132,28 @@ namespace DSA_lims
             {
                 ShowLogin();
                 initialized = InitializeUI();
+                Application.Idle += Application_Idle;
+            }
+        }
+
+        private void Application_Idle(object sender, EventArgs e)
+        {
+            if(tabs.SelectedTab == tabPrepAnal)
+            {
+                if(tabsPrepAnal.SelectedTab == tabPrepAnalAnalysis)
+                {
+                    if (analysis.IsDirty)
+                        btnPrepAnalAnalUpdate.ForeColor = Color.Red;
+                    else
+                        btnPrepAnalAnalUpdate.ForeColor = SystemColors.ControlText;
+                }
+                else if (tabsPrepAnal.SelectedTab == tabPrepAnalPreps)
+                {
+                    if (preparation.IsDirty)
+                        btnPrepAnalPrepUpdate.ForeColor = Color.Red;
+                    else
+                        btnPrepAnalPrepUpdate.ForeColor = SystemColors.ControlText;
+                }
             }
         }
 
@@ -3319,7 +3341,7 @@ order by a.number
                     case 1:                        
                         pid = Guid.Parse(e.Node.Name);
                         preparation.LoadFromDB(conn, null, pid);
-                        PopulatePreparation(conn, null, preparation);
+                        PopulatePreparation(conn, null, preparation, true);
                         btnPrepAnalAddAnal.Enabled = true;
                         tabsPrepAnal.SelectedTab = tabPrepAnalPreps;
                         break;
@@ -3328,7 +3350,7 @@ order by a.number
                         preparation.LoadFromDB(conn, null, pid);
                         Guid aid = Guid.Parse(e.Node.Name);
                         analysis.LoadFromDB(conn, null, aid);
-                        PopulateAnalysis(conn, null, analysis);
+                        PopulateAnalysis(conn, null, analysis, true);
                         tabsPrepAnal.SelectedTab = tabPrepAnalAnalysis;
                         break;
                 }
@@ -3587,7 +3609,7 @@ order by a.number
             }
         }
 
-        private void PopulatePreparation(SqlConnection conn, SqlTransaction trans, Preparation p)
+        private void PopulatePreparation(SqlConnection conn, SqlTransaction trans, Preparation p, bool clearDirty)
         {                                                            
             tbPrepAnalPrepReqUnit.Text = "";
             lblPrepAnalPrepRange.Text = "";
@@ -3602,7 +3624,8 @@ order by a.number
             cboxPrepAnalPrepWorkflowStatus.SelectedValue = p.WorkflowStatusId;
             tbPrepAnalPrepReqUnit.Text = p.GetRequestedActivityUnitName(conn, trans);
 
-            p._Dirty = false;
+            if(clearDirty)
+                p._Dirty = false;
         }
 
         private void btnPrepAnalAnalUpdate_Click(object sender, EventArgs e)
@@ -3648,7 +3671,7 @@ order by a.number
 
                 trans.Commit();
 
-                treePrepAnal.SelectedNode.ForeColor = analysis.WorkflowStatusId == WorkflowStatus.Complete ? Color.DarkGreen : Color.Firebrick;
+                treePrepAnal.SelectedNode.ForeColor = analysis.WorkflowStatusId == WorkflowStatus.Complete ? Color.DarkGreen : Color.Firebrick;                
                 lblStatus.Text = Utils.makeStatusMessage("Analysis updated successfully");
             }
             catch (Exception ex)
@@ -3802,14 +3825,11 @@ order by a.number
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                PopulateAnalysis(conn, null, analysis);
+                PopulateAnalysis(conn, null, analysis, false);
             }
-
-            analysis._Dirty = true;
-            analysis.Results.ForEach(x => x._Dirty = true);            
         }
 
-        private void PopulateAnalysis(SqlConnection conn, SqlTransaction trans, Analysis a)
+        private void PopulateAnalysis(SqlConnection conn, SqlTransaction trans, Analysis a, bool clearDirty)
         {
             cboxPrepAnalAnalUnit.SelectedValue = a.ActivityUnitId;
             cboxPrepAnalAnalUnitType.SelectedValue = a.ActivityUnitTypeId;
@@ -3819,14 +3839,15 @@ order by a.number
             tbPrepAnalAnalMDALib.Text = a.MDALibrary;
             tbPrepAnalAnalComment.Text = a.Comment;            
 
-            PopulateAnalysisResults(a);
+            PopulateAnalysisResults(a, clearDirty);
 
             UI.PopulateAttachments(conn, trans, "analysis", a.Id, gridPrepAnalAnalAttachments);
 
-            a._Dirty = false;
+            if(clearDirty)
+                a._Dirty = false;
         }
 
-        private void PopulateAnalysisResults(Analysis a)
+        private void PopulateAnalysisResults(Analysis a, bool clearDirty)
         {
             a.Results.Sort((r1, r2) => r1.NuclideName.CompareTo(r2.NuclideName));
 
@@ -3854,8 +3875,9 @@ order by a.number
             gridPrepAnalResults.Columns["ActivityUncertaintyABS"].DefaultCellStyle.Format = Utils.ScientificFormat;
             gridPrepAnalResults.Columns["DetectionLimit"].DefaultCellStyle.Format = Utils.ScientificFormat;
 
-            foreach (AnalysisResult ar in a.Results)
-                ar._Dirty = false;
+            if(clearDirty)
+                foreach (AnalysisResult ar in a.Results)
+                    ar._Dirty = false;
         }
 
         private void tbPrepAnalLODStartWeight_TextChanged(object sender, EventArgs e)
@@ -4003,7 +4025,7 @@ order by a.number
             {
                 ClearAnalysisResults(conn, null, analysis.Id);
                 analysis.LoadFromDB(conn, null, analysis.Id);
-                PopulateAnalysis(conn, null, analysis);
+                PopulateAnalysis(conn, null, analysis, true);
             }
         }
 
@@ -4239,9 +4261,7 @@ order by a.number
             if (form.ShowDialog() != DialogResult.OK)
                 return;
 
-            PopulateAnalysisResults(analysis);
-
-            analysis.Results.Find(x => x.Id == resultId)._Dirty = true;
+            PopulateAnalysisResults(analysis, false);
         }
 
         private void btnPrepAnalAddResult_Click(object sender, EventArgs e)
@@ -4273,7 +4293,7 @@ order by a.number
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                PopulateAnalysis(conn, null, analysis);
+                PopulateAnalysis(conn, null, analysis, false);
             }
         }
 
@@ -5664,37 +5684,37 @@ where id = @id
 
         private void cboxPrepAnalAnalUnit_SelectedIndexChanged(object sender, EventArgs e)
         {
-            analysis._Dirty = true;
+            analysis._Dirty = true;            
         }
 
         private void cboxPrepAnalAnalUnitType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            analysis._Dirty = true;
+            analysis._Dirty = true;            
         }
 
         private void tbPrepAnalAnalSpecRef_TextChanged(object sender, EventArgs e)
         {
-            analysis._Dirty = true;
+            analysis._Dirty = true;            
         }
 
         private void tbPrepAnalAnalNuclLib_TextChanged(object sender, EventArgs e)
         {
-            analysis._Dirty = true;
+            analysis._Dirty = true;            
         }
 
         private void tbPrepAnalAnalMDALib_TextChanged(object sender, EventArgs e)
         {
-            analysis._Dirty = true;
+            analysis._Dirty = true;            
         }
 
         private void tbPrepAnalAnalComment_TextChanged(object sender, EventArgs e)
         {
-            analysis._Dirty = true;
+            analysis._Dirty = true;            
         }
 
         private void tbPrepAnalPrepFillHeight_TextChanged(object sender, EventArgs e)
         {
-            preparation._Dirty = true;
+            preparation._Dirty = true;            
         }
 
         private void tbPrepAnalPrepAmount_TextChanged(object sender, EventArgs e)
@@ -5725,6 +5745,34 @@ where id = @id
         private void cboxPrepAnalPrepWorkflowStatus_SelectedIndexChanged(object sender, EventArgs e)
         {
             preparation._Dirty = true;
+        }
+
+        private void treePrepAnal_BeforeSelect(object sender, TreeViewCancelEventArgs e)
+        {
+            if (tabsPrepAnal.SelectedTab == tabPrepAnalAnalysis)
+            {
+                if (analysis.IsDirty)
+                {
+                    DialogResult r = MessageBox.Show("Changes to the current analysis will be discarded. Do you want to continue?", "", MessageBoxButtons.YesNo);
+                    if (r == DialogResult.No)
+                    {
+                        e.Cancel = true;
+                        return;
+                    }
+                }
+            }
+            else if (tabsPrepAnal.SelectedTab == tabPrepAnalPreps)
+            {
+                if (preparation.IsDirty)
+                {
+                    DialogResult r = MessageBox.Show("Changes to the current preparation will be discarded. Do you want to continue?", "", MessageBoxButtons.YesNo);
+                    if (r == DialogResult.No)
+                    {
+                        e.Cancel = true;
+                        return;
+                    }
+                }
+            }
         }
     }    
 }

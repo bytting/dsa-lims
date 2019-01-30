@@ -870,6 +870,14 @@ select
             return res;
         }
 
+        public bool IsDirty
+        {
+            get
+            {
+                return _Dirty;
+            }
+        }
+
         public bool IsClosed(SqlConnection conn, SqlTransaction trans)
         {
             string query = @"
@@ -1227,9 +1235,26 @@ insert into analysis_result values(
 
             string strExResIds = string.Join(",", existingResultIds.Select(x => "'" + x.ToString() + "'"));
             cmd.CommandText = "delete from analysis_result where analysis_id = @analysis_id and id not in (" + strExResIds + ")";
+            cmd.CommandType = CommandType.Text;
             cmd.Parameters.Clear();
             cmd.Parameters.AddWithValue("@analysis_id", Id);
             cmd.ExecuteNonQuery();
+        }
+
+        public bool IsDirty
+        {
+            get
+            {
+                if (_Dirty)
+                    return true;
+
+                foreach (AnalysisResult r in Results)
+                {
+                    if (r._Dirty)
+                        return true;
+                }
+                return false;
+            }            
         }
 
         public bool IsClosed(SqlConnection conn, SqlTransaction trans)
@@ -1254,6 +1279,11 @@ where an.id = @aid
 
     public class AnalysisResult
     {
+        public AnalysisResult()
+        {
+            _Dirty = true;
+        }
+
         public Guid Id { get; set; }
         public Guid AnalysisId { get; set; }
         public Guid NuclideId { get; set; }

@@ -1703,7 +1703,7 @@ namespace DSA_lims
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                PopulateSample(conn, selectedSampleId);
+                PopulateSample(conn, null, selectedSampleId);
             }
 
             tabs.SelectedTab = tabSample;
@@ -1772,18 +1772,18 @@ namespace DSA_lims
 
             using (SqlConnection conn = DB.OpenConnection())
             {                
-                PopulateSample(conn, selectedSampleId);
+                PopulateSample(conn, null, selectedSampleId);
             }
 
             tabsSample.SelectedTab = tabSamplesInfo;
             tabs.SelectedTab = tabSample;
         }
 
-        private void PopulateSample(SqlConnection conn, Guid sampleId)
+        private void PopulateSample(SqlConnection conn, SqlTransaction trans, Guid sampleId)
         {
             Dictionary<string, object> map = new Dictionary<string, object>();
 
-            using (SqlDataReader reader = DB.GetDataReader(conn, null, "csp_select_sample", CommandType.StoredProcedure,
+            using (SqlDataReader reader = DB.GetDataReader(conn, trans, "csp_select_sample", CommandType.StoredProcedure,
                 new SqlParameter("@id", sampleId)))
             {
                 if (!reader.HasRows)
@@ -1928,7 +1928,7 @@ namespace DSA_lims
             lblSampleToolLaboratory.Text = String.IsNullOrEmpty(cboxSampleLaboratory.Text) ? "" : "[Laboratory] " + cboxSampleLaboratory.Text;
 
             // Show attachments
-            UI.PopulateAttachments(conn, "sample", sampleId, gridSampleAttachments);
+            UI.PopulateAttachments(conn, trans, "sample", sampleId, gridSampleAttachments);
         }
 
         private void miSamplesDelete_Click(object sender, EventArgs e)
@@ -2838,7 +2838,7 @@ order by name
                 UI.PopulateOrderContent(conn, id, treeOrderContent, Guid.Empty, treeSampleTypes, true);
 
                 // Show attachments
-                UI.PopulateAttachments(conn, "assignment", id, gridOrderAttachments);
+                UI.PopulateAttachments(conn, null, "assignment", id, gridOrderAttachments);
 
                 // Populate assigned tree
 
@@ -3313,13 +3313,13 @@ order by a.number
                     case 0:
                         ClearPrepAnalSample();
                         Guid sid = Guid.Parse(e.Node.Name);
-                        PopulateSampleInfo(sid, e.Node);
+                        PopulateSampleInfo(conn, null, sid, e.Node);
                         tabsPrepAnal.SelectedTab = tabPrepAnalSample;
                         break;
                     case 1:                        
                         pid = Guid.Parse(e.Node.Name);
                         preparation.LoadFromDB(conn, null, pid);
-                        PopulatePreparation(preparation);
+                        PopulatePreparation(conn, null, preparation);
                         btnPrepAnalAddAnal.Enabled = true;
                         tabsPrepAnal.SelectedTab = tabPrepAnalPreps;
                         break;
@@ -3328,7 +3328,7 @@ order by a.number
                         preparation.LoadFromDB(conn, null, pid);
                         Guid aid = Guid.Parse(e.Node.Name);
                         analysis.LoadFromDB(conn, null, aid);
-                        PopulateAnalysis(analysis);
+                        PopulateAnalysis(conn, null, analysis);
                         tabsPrepAnal.SelectedTab = tabPrepAnalAnalysis;
                         break;
                 }
@@ -3553,7 +3553,7 @@ order by a.number
                 conn = DB.OpenConnection();
                 trans = conn.BeginTransaction();
 
-                if(DB.IsPreparationClosed(conn, trans, preparation.Id))
+                if(preparation.IsClosed(conn, trans))
                 {
                     MessageBox.Show("This preparation belongs to a closed order and can not be updated");
                     return;
@@ -3587,9 +3587,9 @@ order by a.number
             }
         }
 
-        private void PopulatePreparation(Preparation p)
+        private void PopulatePreparation(SqlConnection conn, SqlTransaction trans, Preparation p)
         {                                                            
-            tbPrepAnalPrepReqUnit.Text = "";            
+            tbPrepAnalPrepReqUnit.Text = "";
             lblPrepAnalPrepRange.Text = "";
 
             cboxPrepAnalPrepGeom.SelectedValue = p.PreparationGeometryId;
@@ -3600,6 +3600,7 @@ order by a.number
             cboxPrepAnalPrepQuantityUnit.SelectedValue = p.QuantityUnitId;
             tbPrepAnalPrepComment.Text = p.Comment;
             cboxPrepAnalPrepWorkflowStatus.SelectedValue = p.WorkflowStatusId;
+            tbPrepAnalPrepReqUnit.Text = p.GetRequestedActivityUnitName(conn, trans);
 
             p._Dirty = false;
         }
@@ -3620,19 +3621,11 @@ order by a.number
                 conn = DB.OpenConnection();
                 trans = conn.BeginTransaction();
 
-                if (DB.IsAnalysisClosed(conn, trans, analysis.Id))
+                if (analysis.IsClosed(conn, trans))
                 {
                     MessageBox.Show("This analysis belongs to a closed order and can not be updated");
                     return;
                 }
-
-                /*if(analysis.Results.Count > 0)
-                {
-                    if (MessageBox.Show("There are already analysis results on this analysis, are you sure you want to replace them?", "Question", MessageBoxButtons.YesNo) == DialogResult.No)
-                        return;
-
-                    ClearAnalysisResults(conn, trans, analysis.Id);
-                }*/
 
                 analysis.ActivityUnitId = Guid.Parse(cboxPrepAnalAnalUnit.SelectedValue.ToString());
                 analysis.ActivityUnitTypeId = Guid.Parse(cboxPrepAnalAnalUnitType.SelectedValue.ToString());
@@ -3657,18 +3650,16 @@ order by a.number
             {
                 conn?.Close();
             }
-            
-            /*using (SqlConnection conn2 = DB.OpenConnection())
+                        
+            if (!String.IsNullOrEmpty(analysis._ImportFile) && File.Exists(analysis._ImportFile))
             {
-                if (!String.IsNullOrEmpty(importedAnalysisResultFile))
+                using (SqlConnection conn2 = DB.OpenConnection())
                 {
-                    DB.AddAttachment(conn2, null, "analysis", aid, Path.GetFileNameWithoutExtension(importedAnalysisResultFile), "lis", File.ReadAllBytes(importedAnalysisResultFile));
-                }                    
-
-                ClearPrepAnalAnalysis();
-                PopulateAnalysis(aid);
-                UI.PopulateAnalysisResults(conn2, aid, gridPrepAnalResults);
-            }*/
+                    DB.AddAttachment(conn2, null, "analysis", analysis.Id, Path.GetFileNameWithoutExtension(analysis._ImportFile), "lis", File.ReadAllBytes(analysis._ImportFile));
+                    analysis._ImportFile = String.Empty;
+                    UI.PopulateAttachments(conn2, null, "analysis", analysis.Id, gridPrepAnalAnalAttachments);
+                }
+            }
         }        
 
         private void cboxPrepAnalPrepGeom_SelectedIndexChanged(object sender, EventArgs e)
@@ -3753,44 +3744,41 @@ order by a.number
             }
         }
 
-        private void PopulateSampleInfo(Guid sid, TreeNode tnode)
-        {
-            using (SqlConnection conn = DB.OpenConnection())
+        private void PopulateSampleInfo(SqlConnection conn, SqlTransaction trans, Guid sid, TreeNode tnode)
+        {            
+            using (SqlDataReader reader = DB.GetDataReader(conn, trans, "csp_select_sample_info", CommandType.StoredProcedure,
+                new SqlParameter("@id", sid)))
             {
-                using (SqlDataReader reader = DB.GetDataReader(conn, null, "csp_select_sample_info", CommandType.StoredProcedure,
-                    new SqlParameter("@id", sid)))
+                reader.Read();
+
+                string refDateStr = "";
+                object o = reader["reference_date"];
+                if(o != null && o != DBNull.Value)
                 {
-                    reader.Read();
+                    DateTime refDate = Convert.ToDateTime(reader["reference_date"]);
+                    refDateStr = refDate.ToString(Utils.DateFormatNorwegian);
+                }                        
 
-                    string refDateStr = "";
-                    object o = reader["reference_date"];
-                    if(o != null && o != DBNull.Value)
-                    {
-                        DateTime refDate = Convert.ToDateTime(reader["reference_date"]);
-                        refDateStr = refDate.ToString(Utils.DateFormatNorwegian);
-                    }                        
+                tnode.ToolTipText = "Component: " + reader["sample_component_name"].ToString() + Environment.NewLine
+                    + "External Id: " + reader["external_id"].ToString() + Environment.NewLine
+                    + "Project: " + reader["project_name"].ToString() + Environment.NewLine
+                    + "Reference date: " + refDateStr;
 
-                    tnode.ToolTipText = "Component: " + reader["sample_component_name"].ToString() + Environment.NewLine
-                        + "External Id: " + reader["external_id"].ToString() + Environment.NewLine
-                        + "Project: " + reader["project_name"].ToString() + Environment.NewLine
-                        + "Reference date: " + refDateStr;
-
-                    tbPrepAnalInfoComment.Text = reader["comment"].ToString();                    
-                    tbPrepAnalWetWeight.Text = reader["wet_weight_g"].ToString();
-                    tbPrepAnalDryWeight.Text = reader["dry_weight_g"].ToString();
-                    tbPrepAnalVolume.Text = reader["volume_l"].ToString();
-                    tbPrepAnalLODStartWeight.Text = reader["lod_weight_start"].ToString();
-                    tbPrepAnalLODEndWeight.Text = reader["lod_weight_end"].ToString();
-                    tbPrepAnalLODTemp.Text = reader["lod_temperature"].ToString();
-                }
-            }
+                tbPrepAnalInfoComment.Text = reader["comment"].ToString();                    
+                tbPrepAnalWetWeight.Text = reader["wet_weight_g"].ToString();
+                tbPrepAnalDryWeight.Text = reader["dry_weight_g"].ToString();
+                tbPrepAnalVolume.Text = reader["volume_l"].ToString();
+                tbPrepAnalLODStartWeight.Text = reader["lod_weight_start"].ToString();
+                tbPrepAnalLODEndWeight.Text = reader["lod_weight_end"].ToString();
+                tbPrepAnalLODTemp.Text = reader["lod_temperature"].ToString();
+            }        
         }
 
         private void miImportLISFile_Click(object sender, EventArgs e)
         {    
             using (SqlConnection conn = DB.OpenConnection())
             {
-                if (DB.IsAnalysisClosed(conn, null, analysis.Id))
+                if (analysis.IsClosed(conn, null))
                 {
                     MessageBox.Show("This analysis belongs to a closed order and can not be updated");
                     return;
@@ -3811,13 +3799,16 @@ order by a.number
                 return;
             }
 
-            PopulateAnalysis(analysis);
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                PopulateAnalysis(conn, null, analysis);
+            }
 
             analysis._Dirty = true;
             analysis.Results.ForEach(x => x._Dirty = true);            
         }
 
-        private void PopulateAnalysis(Analysis a)
+        private void PopulateAnalysis(SqlConnection conn, SqlTransaction trans, Analysis a)
         {
             cboxPrepAnalAnalUnit.SelectedValue = a.ActivityUnitId;
             cboxPrepAnalAnalUnitType.SelectedValue = a.ActivityUnitTypeId;
@@ -3826,6 +3817,8 @@ order by a.number
             tbPrepAnalAnalNuclLib.Text = a.NuclideLibrary;
             tbPrepAnalAnalMDALib.Text = a.MDALibrary;
             tbPrepAnalAnalComment.Text = a.Comment;
+
+            UI.PopulateAttachments(conn, trans, "analysis", a.Id, gridPrepAnalAnalAttachments);
 
             PopulateAnalysisResults(a);
 
@@ -3860,7 +3853,7 @@ order by a.number
             gridPrepAnalResults.Columns["ActivityUncertaintyABS"].DefaultCellStyle.Format = Utils.ScientificFormat;
             gridPrepAnalResults.Columns["DetectionLimit"].DefaultCellStyle.Format = Utils.ScientificFormat;
 
-            foreach (Analysis.AnalysisResult ar in a.Results)
+            foreach (AnalysisResult ar in a.Results)
                 ar._Dirty = false;
         }
 
@@ -4009,7 +4002,7 @@ order by a.number
             {
                 ClearAnalysisResults(conn, null, analysis.Id);
                 analysis.LoadFromDB(conn, null, analysis.Id);
-                PopulateAnalysis(analysis);
+                PopulateAnalysis(conn, null, analysis);
             }
         }
 
@@ -4221,7 +4214,7 @@ order by a.number
         {
             using (SqlConnection conn = DB.OpenConnection())
             {
-                if (DB.IsAnalysisClosed(conn, null, analysis.Id))
+                if (analysis.IsClosed(conn, null))
                 {
                     MessageBox.Show("This analysis belongs to a closed order and can not be updated");
                     return;
@@ -4261,7 +4254,7 @@ order by a.number
             Dictionary<string, Guid> nuclides = null;
             using (SqlConnection conn = DB.OpenConnection())
             {
-                if (DB.IsAnalysisClosed(conn, null, analysis.Id))
+                if (analysis.IsClosed(conn, null))
                 {
                     MessageBox.Show("This analysis belongs to a closed order and can not be updated");
                     return;
@@ -4270,14 +4263,17 @@ order by a.number
                 nuclides = DB.GetNuclideNamesForAnalysisMethod(conn, null, analysis.AnalysisMethodId);
             }
             
-            foreach (Analysis.AnalysisResult ar in analysis.Results)            
+            foreach (AnalysisResult ar in analysis.Results)            
                 nuclides.Remove(ar.NuclideName.ToUpper());                            
             
             FormPrepAnalResult form = new FormPrepAnalResult(analysis, nuclides);
             if (form.ShowDialog() != DialogResult.OK)
                 return;
 
-            PopulateAnalysis(analysis);
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                PopulateAnalysis(conn, null, analysis);
+            }
         }
 
         private void cboxSampleInfoLocationTypes_SelectedIndexChanged(object sender, EventArgs e)
@@ -5104,7 +5100,7 @@ where id = @id
             {
                 DB.AddAttachment(conn, null, "sample", selectedSampleId, form.DocumentName, ".pdf", form.PdfData);
 
-                UI.PopulateAttachments(conn, "sample", selectedSampleId, gridSampleAttachments);
+                UI.PopulateAttachments(conn, null, "sample", selectedSampleId, gridSampleAttachments);
             }
         }        
 
@@ -5118,7 +5114,7 @@ where id = @id
             {
                 DB.AddAttachment(conn, null, "assignment", selectedOrderId, form.DocumentName, ".pdf", form.PdfData);
 
-                UI.PopulateAttachments(conn, "assignment", selectedOrderId, gridOrderAttachments);
+                UI.PopulateAttachments(conn, null, "assignment", selectedOrderId, gridOrderAttachments);
             }
         }
 
@@ -5134,7 +5130,7 @@ where id = @id
             {
                 DB.AddAttachment(conn, null, "preparation", prepId, form.DocumentName, ".pdf", form.PdfData);
 
-                UI.PopulateAttachments(conn, "preparation", prepId, gridPrepAnalPrepAttachments);
+                UI.PopulateAttachments(conn, null, "preparation", prepId, gridPrepAnalPrepAttachments);
             }
         }
 
@@ -5150,7 +5146,7 @@ where id = @id
             {
                 DB.AddAttachment(conn, null, "analysis", analId, form.DocumentName, ".pdf", form.PdfData);
 
-                UI.PopulateAttachments(conn, "analysis", analId, gridPrepAnalAnalAttachments);
+                UI.PopulateAttachments(conn, null, "analysis", analId, gridPrepAnalAnalAttachments);
             }
         }
 
@@ -5172,7 +5168,7 @@ where id = @id
             {
                 DB.AddAttachment(conn, null, "project_sub", psid, form.DocumentName, ".pdf", form.PdfData);
 
-                UI.PopulateAttachments(conn, "project_sub", psid, gridProjectAttachments);
+                UI.PopulateAttachments(conn, null, "project_sub", psid, gridProjectAttachments);
             }
         }
 
@@ -5185,7 +5181,7 @@ where id = @id
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                UI.PopulateAttachments(conn, "project_sub", psid, gridProjectAttachments);
+                UI.PopulateAttachments(conn, null, "project_sub", psid, gridProjectAttachments);
             }
         }
 
@@ -5253,7 +5249,7 @@ where id = @id
             {
                 DB.AddAttachment(conn, null, "sample", selectedSampleId, fileName, fileExt, content);
 
-                UI.PopulateAttachments(conn, "sample", selectedSampleId, gridSampleAttachments);
+                UI.PopulateAttachments(conn, null, "sample", selectedSampleId, gridSampleAttachments);
             }
         }
 
@@ -5272,7 +5268,7 @@ where id = @id
             {
                 DB.AddAttachment(conn, null, "assignment", selectedOrderId, fileName, fileExt, content);
 
-                UI.PopulateAttachments(conn, "assignment", selectedOrderId, gridOrderAttachments);
+                UI.PopulateAttachments(conn, null, "assignment", selectedOrderId, gridOrderAttachments);
             }
         }
 
@@ -5299,7 +5295,7 @@ where id = @id
             {
                 DB.AddAttachment(conn, null, "project_sub", pid, fileName, fileExt, content);
 
-                UI.PopulateAttachments(conn, "project_sub", pid, gridProjectAttachments);
+                UI.PopulateAttachments(conn, null, "project_sub", pid, gridProjectAttachments);
             }
         }
 
@@ -5332,7 +5328,7 @@ where id = @id
             {
                 DB.AddAttachment(conn, null, "preparation", pid, fileName, fileExt, content);
 
-                UI.PopulateAttachments(conn, "preparation", pid, gridPrepAnalPrepAttachments);
+                UI.PopulateAttachments(conn, null, "preparation", pid, gridPrepAnalPrepAttachments);
             }
         }
 
@@ -5365,7 +5361,7 @@ where id = @id
             {
                 DB.AddAttachment(conn, null, "analysis", aid, fileName, fileExt, content);
 
-                UI.PopulateAttachments(conn, "analysis", aid, gridPrepAnalAnalAttachments);
+                UI.PopulateAttachments(conn, null, "analysis", aid, gridPrepAnalAnalAttachments);
             }
         }
 
@@ -5394,7 +5390,7 @@ where id = @id
             {
                 DB.DeleteAttachment(conn, null, "analysis", attId);
 
-                UI.PopulateAttachments(conn, "analysis", analId, gridPrepAnalAnalAttachments);
+                UI.PopulateAttachments(conn, null, "analysis", analId, gridPrepAnalAnalAttachments);
             }
         }
 
@@ -5423,7 +5419,7 @@ where id = @id
             {
                 DB.DeleteAttachment(conn, null, "preparation", attId);
 
-                UI.PopulateAttachments(conn, "preparation", prepId, gridPrepAnalPrepAttachments);
+                UI.PopulateAttachments(conn, null, "preparation", prepId, gridPrepAnalPrepAttachments);
             }
         }
 
@@ -5452,7 +5448,7 @@ where id = @id
             {
                 DB.DeleteAttachment(conn, null, "project_sub", attId);
 
-                UI.PopulateAttachments(conn, "project_sub", projId, gridProjectAttachments);
+                UI.PopulateAttachments(conn, null, "project_sub", projId, gridProjectAttachments);
             }
         }
 
@@ -5474,7 +5470,7 @@ where id = @id
             {
                 DB.DeleteAttachment(conn, null, "assignment", attId);
 
-                UI.PopulateAttachments(conn, "assignment", selectedOrderId, gridOrderAttachments);
+                UI.PopulateAttachments(conn, null, "assignment", selectedOrderId, gridOrderAttachments);
             }
         }
 
@@ -5496,7 +5492,7 @@ where id = @id
             {
                 DB.DeleteAttachment(conn, null, "sample", attId);
 
-                UI.PopulateAttachments(conn, "sample", selectedSampleId, gridSampleAttachments);
+                UI.PopulateAttachments(conn, null, "sample", selectedSampleId, gridSampleAttachments);
             }
         }
 

@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Text;
+using System.Linq;
 
 namespace DSA_lims
 {
@@ -354,44 +355,6 @@ where s.id = @sid and a.workflow_status_id = 2
             return Convert.ToInt32(o) > 0;
         }
 
-        public static bool IsPreparationClosed(SqlConnection conn, SqlTransaction trans, Guid prepId)
-        {
-            string query = @"
-select a.workflow_status_id 
-from assignment a
-	inner join preparation p on p.assignment_id = a.id
-where p.id = @pid
-";
-            SqlCommand cmd = new SqlCommand(query, conn, trans);
-            cmd.CommandType = CommandType.Text;
-            cmd.Parameters.AddWithValue("@pid", prepId);
-
-            object o = cmd.ExecuteScalar();
-            if (o == null || o == DBNull.Value)
-                return false;
-
-            return Convert.ToInt32(o) == WorkflowStatus.Complete;
-        }
-
-        public static bool IsAnalysisClosed(SqlConnection conn, SqlTransaction trans, Guid analId)
-        {
-            string query = @"
-select a.workflow_status_id 
-from assignment a
-	inner join analysis an on an.assignment_id = a.id
-where an.id = @aid
-";
-            SqlCommand cmd = new SqlCommand(query, conn, trans);
-            cmd.CommandType = CommandType.Text;
-            cmd.Parameters.AddWithValue("@aid", analId);
-
-            object o = cmd.ExecuteScalar();
-            if (o == null || o == DBNull.Value)
-                return false;
-
-            return Convert.ToInt32(o) == WorkflowStatus.Complete;
-        }
-
         public static int GetNextOrderCount(SqlConnection conn, SqlTransaction trans, Guid labId)
         {
             object o = GetScalar(conn, trans, "select last_assignment_counter_year from laboratory where id = @id", CommandType.Text, new[] {
@@ -436,6 +399,18 @@ where an.id = @aid
                 throw new Exception("Requested sample number not found for id: " + sampleId.ToString());
 
             return Convert.ToInt32(o);
+        }
+
+        public static string GetGeometryName(SqlConnection conn, SqlTransaction trans, Guid geomId)
+        {
+            SqlCommand cmd = new SqlCommand("select name from preparation_geometry where id = @geometry_id", conn, trans);
+            cmd.CommandType = CommandType.Text;
+            cmd.Parameters.AddWithValue("@geometry_id", geomId);
+            object o = cmd.ExecuteScalar();
+            if (!IsValidField(o))
+                throw new Exception("Requested geometry not found for id: " + geomId.ToString());
+
+            return o.ToString();
         }
 
         public static int GetNextPreparationNumber(SqlConnection conn, SqlTransaction trans, Guid sampleId)
@@ -894,6 +869,59 @@ select
 
             return res;
         }
+
+        public bool IsClosed(SqlConnection conn, SqlTransaction trans)
+        {
+            string query = @"
+select a.workflow_status_id 
+from assignment a
+	inner join preparation p on p.assignment_id = a.id
+where p.id = @pid
+";
+            SqlCommand cmd = new SqlCommand(query, conn, trans);
+            cmd.CommandType = CommandType.Text;
+            cmd.Parameters.AddWithValue("@pid", Id);
+
+            object o = cmd.ExecuteScalar();
+            if (!DB.IsValidField(o))
+                return false;
+
+            return Convert.ToInt32(o) == WorkflowStatus.Complete;
+        }
+
+        public string GetRequestedActivityUnitName(SqlConnection conn, SqlTransaction trans)
+        {
+            string requnit = "";
+            string query = @"
+select name
+from activity_unit au
+    inner join assignment_sample_type ast on au.id = ast.requested_activity_unit_id
+    inner join sample_x_assignment_sample_type sxast on ast.id = sxast.assignment_sample_type_id
+    inner join sample s on s.id = sxast.sample_id
+    inner join preparation p on p.id = @pid
+where p.assignment_id = ast.assignment_id
+";
+            SqlCommand cmd = new SqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@pid", Id);
+            object o = cmd.ExecuteScalar();
+            if (DB.IsValidField(o))
+                requnit += o.ToString() + " ";
+
+            cmd.CommandText = @"
+select name
+from activity_unit_type aut
+    inner join assignment_sample_type ast on aut.id = ast.requested_activity_unit_type_id
+    inner join sample_x_assignment_sample_type sxast on ast.id = sxast.assignment_sample_type_id
+    inner join sample s on s.id = sxast.sample_id
+    inner join preparation p on p.id = @pid
+where p.assignment_id = ast.assignment_id
+";
+            o = cmd.ExecuteScalar();
+            if (DB.IsValidField(o))
+                requnit += o.ToString();
+
+            return requnit;
+        }        
     }
 
     public class Analysis
@@ -1091,14 +1119,15 @@ select
                     _ImportFile = String.Empty;                    
                     _Dirty = false;
                 }
-            }            
+            }
 
+            List<Guid> existingResultIds = new List<Guid>();
             foreach (AnalysisResult r in Results)
             {
                 if(DB.AnalysisResultExists(conn, trans, r.Id))
-                {
+                {                    
                     // analysis result already exist in the db and has been modified, update it
-                    if(r._Dirty)
+                    if (r._Dirty)
                     {
                         // analysis result has been modified, update it
                         cmd.CommandText = @"
@@ -1193,32 +1222,59 @@ insert into analysis_result values(
 
                     cmd.ExecuteNonQuery();                    
                     r._Dirty = false;
-                }                
+                }
+
+                existingResultIds.Add(r.Id);
             }
+
+            string strExResIds = string.Join(",", existingResultIds.Select(x => "'" + x.ToString() + "'"));
+            cmd.CommandText = "delete from analysis_result where analysis_id = @analysis_id and id not in (" + strExResIds + ")";
+            cmd.Parameters.Clear();
+            cmd.Parameters.AddWithValue("@analysis_id", Id);
+            cmd.ExecuteNonQuery();
         }
 
-        public class AnalysisResult
+        public bool IsClosed(SqlConnection conn, SqlTransaction trans)
         {
-            public Guid Id { get; set; }
-            public Guid AnalysisId { get; set; }
-            public Guid NuclideId { get; set; }
-            public string NuclideName { get; set; }
-            public double Activity { get; set; }
-            public double ActivityUncertaintyABS { get; set; }
-            public bool ActivityApproved { get; set; }
-            public double UniformActivity { get; set; }
-            public int UniformActivityUnitId { get; set; }
-            public double DetectionLimit { get; set; }
-            public bool DetectionLimitApproved { get; set; }
-            public bool Accredited { get; set; }
-            public bool Reportable { get; set; }
-            public int InstanceStatusId { get; set; }
-            public DateTime CreateDate { get; set; }
-            public string CreatedBy { get; set; }
-            public DateTime UpdateDate { get; set; }
-            public string UpdatedBy { get; set; }
+            string query = @"
+select a.workflow_status_id 
+from assignment a
+	inner join analysis an on an.assignment_id = a.id
+where an.id = @aid
+";
+            SqlCommand cmd = new SqlCommand(query, conn, trans);
+            cmd.CommandType = CommandType.Text;
+            cmd.Parameters.AddWithValue("@aid", Id);
 
-            public bool _Dirty;                        
-        }
-    }    
+            object o = cmd.ExecuteScalar();
+            if (!DB.IsValidField(o))
+                return false;
+
+            return Convert.ToInt32(o) == WorkflowStatus.Complete;
+        }        
+    }
+
+    public class AnalysisResult
+    {
+        public Guid Id { get; set; }
+        public Guid AnalysisId { get; set; }
+        public Guid NuclideId { get; set; }
+        public string NuclideName { get; set; }
+        public double Activity { get; set; }
+        public double ActivityUncertaintyABS { get; set; }
+        public bool ActivityApproved { get; set; }
+        public double UniformActivity { get; set; }
+        public int UniformActivityUnitId { get; set; }
+        public double DetectionLimit { get; set; }
+        public bool DetectionLimitApproved { get; set; }
+        public bool Accredited { get; set; }
+        public bool Reportable { get; set; }
+        public int InstanceStatusId { get; set; }
+        public DateTime CreateDate { get; set; }
+        public string CreatedBy { get; set; }
+        public DateTime UpdateDate { get; set; }
+        public string UpdatedBy { get; set; }
+
+        public bool _Dirty;
+    }
 }

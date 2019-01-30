@@ -34,7 +34,7 @@ namespace DSA_lims
     public partial class FormPrepAnalResult : Form
     {        
         private Analysis mAnalysis = null;
-        private Analysis.AnalysisResult mResult = null;
+        private AnalysisResult mResult = null;
         private Dictionary<string, Guid> mNuclides = null;
         bool editing = false;
 
@@ -49,7 +49,7 @@ namespace DSA_lims
             cboxNuclides.Text = "";
             mAnalysis = analysis;
             mNuclides = nuclides;
-            mResult = new Analysis.AnalysisResult();
+            mResult = new AnalysisResult();
             mResult.Id = Guid.NewGuid();
             using (SqlConnection conn = DB.OpenConnection())
             {

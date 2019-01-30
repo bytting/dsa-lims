@@ -806,10 +806,10 @@ from role r
             lb.DataSource = roles;
         }
 
-        public static void PopulateAttachments(SqlConnection conn, string sourceTable, Guid id, DataGridView grid)
+        public static void PopulateAttachments(SqlConnection conn, SqlTransaction trans, string sourceTable, Guid id, DataGridView grid)
         {
             string query = "select id, name, file_extension from attachment where source_table = @source_table and source_id = @source_id order by create_date desc";
-            grid.DataSource = DB.GetDataTable(conn, null, query, CommandType.Text, new[] {
+            grid.DataSource = DB.GetDataTable(conn, trans, query, CommandType.Text, new[] {
                 new SqlParameter("@source_table", sourceTable),
                 new SqlParameter("@source_id", id)
             });

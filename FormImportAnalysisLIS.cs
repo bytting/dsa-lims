@@ -62,16 +62,18 @@ namespace DSA_lims
 
                 AllNuclides = DB.GetNuclideNames(connection, null);
                 AnalMethNuclides = DB.GetNuclideNamesForAnalysisMethod(connection, null, mAnalysis.AnalysisMethodId);
+                int sampNum = DB.GetSampleNumber(connection, null, mPreparation.SampleId);
+                string geomName = DB.GetGeometryName(connection, null, mPreparation.PreparationGeometryId);
 
                 tbFilename.Text = mAnalysis._ImportFile;
-                tbLIMSSampleName.Text = mPreparation.SampleId.ToString(); // FIXME
-                tbLIMSPrepGeom.Text = mPreparation.PreparationGeometryId.ToString(); // FIXME
+                tbLIMSSampleName.Text = sampNum.ToString();
+                tbLIMSPrepGeom.Text = geomName;
                 tbLIMSGeomFillHeight.Text = mPreparation.FillHeightMM.ToString();
                 tbLIMSGeomAmount.Text = mPreparation.Amount.ToString();
                 tbLIMSGeomQuantity.Text = mPreparation.Quantity.ToString();
 
                 LoadLIS(mAnalysis._ImportFile);
-                foreach(Analysis.AnalysisResult r in mAnalysis.Results)
+                foreach(AnalysisResult r in mAnalysis.Results)
                 {
                     if (r.DetectionLimit == 0.0)
                         r.DetectionLimitApproved = false;
@@ -274,7 +276,7 @@ namespace DSA_lims
                 string[] items = line.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
                 if (items.Length == 5)
                 {
-                    Analysis.AnalysisResult r = new Analysis.AnalysisResult();
+                    AnalysisResult r = new AnalysisResult();
                     r.DetectionLimitApproved = true;
                     r.NuclideName = items[1].Trim().ToUpper();
                     if (!AllNuclides.ContainsKey(r.NuclideName))
@@ -312,14 +314,14 @@ namespace DSA_lims
                     continue;
 
                 string nuclName = items[0].Trim().ToUpper();
-                Analysis.AnalysisResult r = mAnalysis.Results.Find(x => x.NuclideId == AllNuclides[nuclName]);
+                AnalysisResult r = mAnalysis.Results.Find(x => x.NuclideId == AllNuclides[nuclName]);
                 if (r != null)                                
                 {                    
                     r.DetectionLimit = Convert.ToDouble(items[1].Trim(), CultureInfo.InvariantCulture);
                 }
                 else
                 {
-                    r = new Analysis.AnalysisResult();
+                    r = new AnalysisResult();
                     r.DetectionLimitApproved = true;
                     r.NuclideId = AllNuclides[nuclName];
                     r.NuclideName = nuclName;
@@ -349,7 +351,7 @@ namespace DSA_lims
 
         private void btnOk_Click(object sender, EventArgs e)
         {            
-            foreach(Analysis.AnalysisResult r in mAnalysis.Results)
+            foreach(AnalysisResult r in mAnalysis.Results)
             {
                 bool approved = r.ActivityApproved || r.DetectionLimitApproved;
                 bool prop = r.Accredited || r.Reportable;

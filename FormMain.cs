@@ -304,20 +304,16 @@ namespace DSA_lims
             {
                 if (analysis.IsDirty)
                 {
-                    DialogResult r = MessageBox.Show("Changes to the current analysis will be discarded. Do you want to continue?", "", MessageBoxButtons.YesNo);
-                    if (r == DialogResult.No)
-                    {
-                        return false;
-                    }
+                    DialogResult r = MessageBox.Show("Changes to the current analysis will be discarded. Do you want to continue?", "Warning", MessageBoxButtons.YesNo);
+                    if (r == DialogResult.No)                    
+                        return false;                    
                 }
 
                 if (preparation.IsDirty)
                 {
-                    DialogResult r = MessageBox.Show("Changes to the current preparation will be discarded. Do you want to continue?", "", MessageBoxButtons.YesNo);
-                    if (r == DialogResult.No)
-                    {
-                        return false;
-                    }
+                    DialogResult r = MessageBox.Show("Changes to the current preparation will be discarded. Do you want to continue?", "Warning", MessageBoxButtons.YesNo);
+                    if (r == DialogResult.No)                    
+                        return false;                    
                 }
             }
 
@@ -4278,9 +4274,9 @@ order by a.number
                 return;
             }
 
-            if (gridPrepAnalResults.SelectedRows.Count < 1)
+            if (gridPrepAnalResults.SelectedRows.Count != 1)
             {
-                MessageBox.Show("You must select a result first");
+                MessageBox.Show("You must select a single result first");
                 return;
             }
 
@@ -5804,6 +5800,45 @@ where id = @id
                 e.Cancel = true;
                 return;
             }
-        }        
+        }
+
+        private void btnPrepAnalRemoveResult_Click(object sender, EventArgs e)
+        {
+            if (gridPrepAnalResults.SelectedRows.Count > 0)
+            {
+                DialogResult r = MessageBox.Show("Are you sure you want to delete " + gridPrepAnalResults.SelectedRows.Count + " results from this analysis?", "Warning", MessageBoxButtons.YesNo);
+                if (r == DialogResult.No)                
+                    return;
+
+                foreach (DataGridViewRow row in gridPrepAnalResults.SelectedRows)
+                {
+                    Guid id = Guid.Parse(row.Cells["Id"].Value.ToString());
+                    analysis.Results.RemoveAll(x => x.Id == id);
+                }                
+
+                using (SqlConnection conn = DB.OpenConnection())
+                    PopulateAnalysis(conn, null, analysis, false);
+
+                analysis._Dirty = true;
+            }
+        }
+
+        private void btnPrepAnalAnalDiscard_Click(object sender, EventArgs e)
+        {
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                analysis.LoadFromDB(conn, null, analysis.Id);
+                PopulateAnalysis(conn, null, analysis, true);
+            }
+        }
+
+        private void btnPrepAnalPrepDiscard_Click(object sender, EventArgs e)
+        {
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                preparation.LoadFromDB(conn, null, preparation.Id);
+                PopulatePreparation(conn, null, preparation, true);
+            }
+        }
     }    
 }

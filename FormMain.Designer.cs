@@ -906,6 +906,8 @@
             this.btnMenu = new System.Windows.Forms.ToolStripButton();
             this.lblCurrentTab = new System.Windows.Forms.ToolStripLabel();
             this.btnBack = new System.Windows.Forms.ToolStripButton();
+            this.btnPrepAnalAnalDiscard = new System.Windows.Forms.Button();
+            this.btnPrepAnalPrepDiscard = new System.Windows.Forms.Button();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tabs.SuspendLayout();
@@ -1257,19 +1259,19 @@
             // miLogout
             // 
             this.miLogout.Name = "miLogout";
-            this.miLogout.Size = new System.Drawing.Size(112, 22);
+            this.miLogout.Size = new System.Drawing.Size(152, 22);
             this.miLogout.Text = "&Logout";
             this.miLogout.Click += new System.EventHandler(this.miLogout_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(109, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(149, 6);
             // 
             // miExit
             // 
             this.miExit.Name = "miExit";
-            this.miExit.Size = new System.Drawing.Size(112, 22);
+            this.miExit.Size = new System.Drawing.Size(152, 22);
             this.miExit.Text = "E&xit";
             this.miExit.Click += new System.EventHandler(this.miExit_Click);
             // 
@@ -9299,9 +9301,10 @@
             // 
             // panel10
             // 
-            this.panel10.Controls.Add(this.label23);
+            this.panel10.Controls.Add(this.btnPrepAnalPrepDiscard);
             this.panel10.Controls.Add(this.cboxPrepAnalPrepWorkflowStatus);
             this.panel10.Controls.Add(this.btnPrepAnalPrepUpdate);
+            this.panel10.Controls.Add(this.label23);
             this.panel10.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel10.Location = new System.Drawing.Point(3, 569);
             this.panel10.Name = "panel10";
@@ -9310,25 +9313,25 @@
             // 
             // label23
             // 
-            this.label23.Dock = System.Windows.Forms.DockStyle.Right;
-            this.label23.Location = new System.Drawing.Point(213, 0);
+            this.label23.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label23.Location = new System.Drawing.Point(0, 0);
             this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(133, 26);
+            this.label23.Size = new System.Drawing.Size(113, 26);
             this.label23.TabIndex = 0;
             this.label23.Text = "Preparation status";
-            this.label23.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label23.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // cboxPrepAnalPrepWorkflowStatus
             // 
             this.cboxPrepAnalPrepWorkflowStatus.DisplayMember = "Name";
-            this.cboxPrepAnalPrepWorkflowStatus.Dock = System.Windows.Forms.DockStyle.Right;
+            this.cboxPrepAnalPrepWorkflowStatus.Dock = System.Windows.Forms.DockStyle.Left;
             this.cboxPrepAnalPrepWorkflowStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxPrepAnalPrepWorkflowStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cboxPrepAnalPrepWorkflowStatus.FormattingEnabled = true;
             this.cboxPrepAnalPrepWorkflowStatus.ItemHeight = 15;
-            this.cboxPrepAnalPrepWorkflowStatus.Location = new System.Drawing.Point(346, 0);
+            this.cboxPrepAnalPrepWorkflowStatus.Location = new System.Drawing.Point(113, 0);
             this.cboxPrepAnalPrepWorkflowStatus.Name = "cboxPrepAnalPrepWorkflowStatus";
-            this.cboxPrepAnalPrepWorkflowStatus.Size = new System.Drawing.Size(200, 23);
+            this.cboxPrepAnalPrepWorkflowStatus.Size = new System.Drawing.Size(160, 23);
             this.cboxPrepAnalPrepWorkflowStatus.TabIndex = 7;
             this.cboxPrepAnalPrepWorkflowStatus.ValueMember = "Id";
             this.cboxPrepAnalPrepWorkflowStatus.SelectedIndexChanged += new System.EventHandler(this.cboxPrepAnalPrepWorkflowStatus_SelectedIndexChanged);
@@ -9336,9 +9339,9 @@
             // btnPrepAnalPrepUpdate
             // 
             this.btnPrepAnalPrepUpdate.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnPrepAnalPrepUpdate.Location = new System.Drawing.Point(546, 0);
+            this.btnPrepAnalPrepUpdate.Location = new System.Drawing.Point(566, 0);
             this.btnPrepAnalPrepUpdate.Name = "btnPrepAnalPrepUpdate";
-            this.btnPrepAnalPrepUpdate.Size = new System.Drawing.Size(180, 26);
+            this.btnPrepAnalPrepUpdate.Size = new System.Drawing.Size(160, 26);
             this.btnPrepAnalPrepUpdate.TabIndex = 9;
             this.btnPrepAnalPrepUpdate.Text = "Save preparation info";
             this.btnPrepAnalPrepUpdate.UseVisualStyleBackColor = true;
@@ -9819,7 +9822,6 @@
             this.gridPrepAnalResults.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridPrepAnalResults.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gridPrepAnalResults.Location = new System.Drawing.Point(0, 25);
-            this.gridPrepAnalResults.MultiSelect = false;
             this.gridPrepAnalResults.Name = "gridPrepAnalResults";
             this.gridPrepAnalResults.ReadOnly = true;
             this.gridPrepAnalResults.RowHeadersVisible = false;
@@ -9880,6 +9882,7 @@
             this.btnPrepAnalRemoveResult.Name = "btnPrepAnalRemoveResult";
             this.btnPrepAnalRemoveResult.Size = new System.Drawing.Size(70, 22);
             this.btnPrepAnalRemoveResult.Text = "Remove";
+            this.btnPrepAnalRemoveResult.Click += new System.EventHandler(this.btnPrepAnalRemoveResult_Click);
             // 
             // toolStripLabel57
             // 
@@ -9890,8 +9893,9 @@
             // 
             // panel14
             // 
-            this.panel14.Controls.Add(this.label55);
             this.panel14.Controls.Add(this.cboxPrepAnalAnalWorkflowStatus);
+            this.panel14.Controls.Add(this.label55);
+            this.panel14.Controls.Add(this.btnPrepAnalAnalDiscard);
             this.panel14.Controls.Add(this.btnPrepAnalAnalUpdate);
             this.panel14.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel14.Location = new System.Drawing.Point(0, 320);
@@ -9901,23 +9905,23 @@
             // 
             // label55
             // 
-            this.label55.Dock = System.Windows.Forms.DockStyle.Right;
-            this.label55.Location = new System.Drawing.Point(230, 0);
+            this.label55.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label55.Location = new System.Drawing.Point(0, 0);
             this.label55.Name = "label55";
-            this.label55.Size = new System.Drawing.Size(116, 26);
+            this.label55.Size = new System.Drawing.Size(90, 26);
             this.label55.TabIndex = 0;
             this.label55.Text = "Analysis status";
-            this.label55.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label55.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // cboxPrepAnalAnalWorkflowStatus
             // 
             this.cboxPrepAnalAnalWorkflowStatus.DisplayMember = "Name";
-            this.cboxPrepAnalAnalWorkflowStatus.Dock = System.Windows.Forms.DockStyle.Right;
+            this.cboxPrepAnalAnalWorkflowStatus.Dock = System.Windows.Forms.DockStyle.Left;
             this.cboxPrepAnalAnalWorkflowStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxPrepAnalAnalWorkflowStatus.FormattingEnabled = true;
-            this.cboxPrepAnalAnalWorkflowStatus.Location = new System.Drawing.Point(346, 0);
+            this.cboxPrepAnalAnalWorkflowStatus.Location = new System.Drawing.Point(90, 0);
             this.cboxPrepAnalAnalWorkflowStatus.Name = "cboxPrepAnalAnalWorkflowStatus";
-            this.cboxPrepAnalAnalWorkflowStatus.Size = new System.Drawing.Size(200, 23);
+            this.cboxPrepAnalAnalWorkflowStatus.Size = new System.Drawing.Size(160, 23);
             this.cboxPrepAnalAnalWorkflowStatus.TabIndex = 6;
             this.cboxPrepAnalAnalWorkflowStatus.ValueMember = "Id";
             this.cboxPrepAnalAnalWorkflowStatus.SelectedIndexChanged += new System.EventHandler(this.cboxPrepAnalAnalWorkflowStatus_SelectedIndexChanged);
@@ -9925,9 +9929,9 @@
             // btnPrepAnalAnalUpdate
             // 
             this.btnPrepAnalAnalUpdate.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnPrepAnalAnalUpdate.Location = new System.Drawing.Point(546, 0);
+            this.btnPrepAnalAnalUpdate.Location = new System.Drawing.Point(566, 0);
             this.btnPrepAnalAnalUpdate.Name = "btnPrepAnalAnalUpdate";
-            this.btnPrepAnalAnalUpdate.Size = new System.Drawing.Size(180, 26);
+            this.btnPrepAnalAnalUpdate.Size = new System.Drawing.Size(160, 26);
             this.btnPrepAnalAnalUpdate.TabIndex = 7;
             this.btnPrepAnalAnalUpdate.Text = "Save analysis info";
             this.btnPrepAnalAnalUpdate.UseVisualStyleBackColor = true;
@@ -10159,7 +10163,7 @@
             // miImportLISFile2
             // 
             this.miImportLISFile2.Name = "miImportLISFile2";
-            this.miImportLISFile2.Size = new System.Drawing.Size(147, 22);
+            this.miImportLISFile2.Size = new System.Drawing.Size(152, 22);
             this.miImportLISFile2.Text = "Import LIS file";
             this.miImportLISFile2.Click += new System.EventHandler(this.miImportLISFile_Click);
             // 
@@ -10288,6 +10292,28 @@
             this.btnBack.Text = "toolStripButton25";
             this.btnBack.ToolTipText = "Back";
             this.btnBack.Click += new System.EventHandler(this.miBack_Click);
+            // 
+            // btnPrepAnalAnalDiscard
+            // 
+            this.btnPrepAnalAnalDiscard.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnPrepAnalAnalDiscard.Location = new System.Drawing.Point(406, 0);
+            this.btnPrepAnalAnalDiscard.Name = "btnPrepAnalAnalDiscard";
+            this.btnPrepAnalAnalDiscard.Size = new System.Drawing.Size(160, 26);
+            this.btnPrepAnalAnalDiscard.TabIndex = 8;
+            this.btnPrepAnalAnalDiscard.Text = "Discard changes";
+            this.btnPrepAnalAnalDiscard.UseVisualStyleBackColor = true;
+            this.btnPrepAnalAnalDiscard.Click += new System.EventHandler(this.btnPrepAnalAnalDiscard_Click);
+            // 
+            // btnPrepAnalPrepDiscard
+            // 
+            this.btnPrepAnalPrepDiscard.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnPrepAnalPrepDiscard.Location = new System.Drawing.Point(406, 0);
+            this.btnPrepAnalPrepDiscard.Name = "btnPrepAnalPrepDiscard";
+            this.btnPrepAnalPrepDiscard.Size = new System.Drawing.Size(160, 26);
+            this.btnPrepAnalPrepDiscard.TabIndex = 10;
+            this.btnPrepAnalPrepDiscard.Text = "Discard changes";
+            this.btnPrepAnalPrepDiscard.UseVisualStyleBackColor = true;
+            this.btnPrepAnalPrepDiscard.Click += new System.EventHandler(this.btnPrepAnalPrepDiscard_Click);
             // 
             // FormMain
             // 
@@ -11661,6 +11687,8 @@
         private System.Windows.Forms.ToolStripLabel toolStripLabel6;
         private System.Windows.Forms.Panel panel10;
         private System.Windows.Forms.Panel panel14;
+        private System.Windows.Forms.Button btnPrepAnalAnalDiscard;
+        private System.Windows.Forms.Button btnPrepAnalPrepDiscard;
     }
 }
 

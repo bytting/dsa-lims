@@ -35,12 +35,16 @@ using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace DSA_lims
 {
     public partial class FormMain : Form
     {
         private ResourceManager r = null;
+
+        Action clearStatus = null;
+        int statusMessageTimeout = 8000;
 
         private Guid selectedOrderId = Guid.Empty;
         private Guid selectedSampleId = Guid.Empty;
@@ -71,6 +75,8 @@ namespace DSA_lims
             tabsPrepAnal.ItemSize = new Size(0, 1);
             tabsPrepAnal.SizeMode = TabSizeMode.Fixed;
             tabsPrepAnal.SelectedTab = tabMenu;
+
+            clearStatus = () => { lblStatus.Text = ""; lblStatus.ForeColor = SystemColors.ControlText; };
 
             lblCurrentTab.Text = tabs.SelectedTab.Text;
             lblStatus.Text = "";
@@ -296,7 +302,13 @@ namespace DSA_lims
                 MessageBox.Show(ex.Message);
                 return false;
             }
-        }        
+        }
+
+        public async Task ClearStatus()
+        {
+            await Task.Delay(statusMessageTimeout);
+            clearStatus();
+        }
 
         private bool DiscardUnsavedChanges()
         {
@@ -379,14 +391,16 @@ namespace DSA_lims
                     lblStatus.Text = Utils.makeErrorMessage(msg);
                     lblStatus.ForeColor = Color.Red;
                     break;
-            }            
+            }
+
+            ClearStatus();
         }
 
-        private void ClearStatusMessage()
+        /*private void ClearStatusMessage()
         {
             lblStatus.Text = "";
             lblStatus.ForeColor = SystemColors.ControlText;
-        }
+        }*/
 
         private void HideMenuItems()
         {
@@ -1613,9 +1627,7 @@ namespace DSA_lims
         }
 
         private void cboxSampleSampleType_SelectedIndexChanged(object sender, EventArgs e)
-        {            
-            ClearStatusMessage();            
-
+        {
             if (!Utils.IsValidGuid(cboxSampleSampleType.SelectedValue))
             {
                 cboxSampleSampleComponent.DataSource = null;
@@ -1635,8 +1647,6 @@ namespace DSA_lims
 
         private void cboxSampleSampleType_Leave(object sender, EventArgs e)
         {
-            ClearStatusMessage();
-
             if (String.IsNullOrEmpty(cboxSampleSampleType.Text.Trim()))
             {                
                 cboxSampleSampleType.SelectedItem = Guid.Empty;
@@ -1768,7 +1778,7 @@ namespace DSA_lims
 
             tabs.SelectedTab = tabSample;
 
-            lblStatus.Text = Utils.makeStatusMessage("Sample " + form.SampleNumber + " created successfully");
+            SetStatusMessage("Sample " + form.SampleNumber + " created successfully");
         }
 
         private void miSamplesImportExcel_Click(object sender, EventArgs e)
@@ -2029,7 +2039,7 @@ namespace DSA_lims
             
             PopulateSamples();
 
-            lblStatus.Text = Utils.makeStatusMessage("Splitting sample successful");
+            SetStatusMessage("Splitting sample successful");
         }
 
         private void miSamplesMerge_Click(object sender, EventArgs e)
@@ -2073,7 +2083,7 @@ namespace DSA_lims
             
             PopulateSamples();
 
-            lblStatus.Text = Utils.makeStatusMessage("Merging samples successful");
+            SetStatusMessage("Merging samples successful");
         }
 
         private void miSamplesSetOrder_Click(object sender, EventArgs e)
@@ -2107,7 +2117,7 @@ namespace DSA_lims
             FormSelectOrder form = new FormSelectOrder(treeSampleTypes, sampleId);
             if (form.ShowDialog() == DialogResult.OK)
             {
-                lblStatus.Text = Utils.makeStatusMessage("Successfully added sample " + sampleName + " to order " + form.SelectedOrderName);
+                SetStatusMessage("Successfully added sample " + sampleName + " to order " + form.SelectedOrderName);
             }
 
             using (SqlConnection conn = DB.OpenConnection())
@@ -2212,7 +2222,7 @@ order by p.number
                     if(!String.IsNullOrEmpty(reader["assignment_name"].ToString()))
                         txt += ", " + reader["assignment_name"].ToString();
                     TreeNode prepNode = sampleNode.Nodes.Add(reader["preparation_id"].ToString(), txt);
-                    prepNode.ForeColor = status == WorkflowStatus.Complete ? Color.DarkGreen : Color.Firebrick;
+                    prepNode.ForeColor = WorkflowStatus.GetStatusColor(status);
                 }
             }
                 
@@ -2237,7 +2247,7 @@ order by a.number
                         if(!String.IsNullOrEmpty(reader["assignment_name"].ToString()))
                             txt += ", " + reader["assignment_name"].ToString();
                         TreeNode analNode = prepNode.Nodes.Add(reader["analysis_id"].ToString(), txt);
-                        analNode.ForeColor = status == WorkflowStatus.Complete ? Color.DarkGreen : Color.Firebrick;
+                        analNode.ForeColor = WorkflowStatus.GetStatusColor(status);
                     }
                 }
             }
@@ -2961,10 +2971,10 @@ order by p.number
                     {
                         while (reader.Read())
                         {
-                            int statusId = Convert.ToInt32(reader["workflow_status_id"]);
+                            int status = Convert.ToInt32(reader["workflow_status_id"]);
                             string label = "Preparation " + reader["preparation_number"].ToString() + ", " + reader["preparation_method_name"].ToString() + ", " + reader["workflow_status_name"].ToString();
                             TreeNode pNode = tnode.Nodes.Add(reader["preparation_id"].ToString(), label);
-                            pNode.BackColor = statusId == 1 ? Color.LightGoldenrodYellow : Color.PaleGreen;
+                            pNode.ForeColor = WorkflowStatus.GetStatusColor(status);
                             if (DB.IsValidField(reader["preparation_comment"]))
                                 pNode.ToolTipText = reader["preparation_comment"].ToString();
                         }
@@ -2997,10 +3007,10 @@ order by a.number
                         {
                             while (reader.Read())
                             {
-                                int statusId = Convert.ToInt32(reader["workflow_status_id"]);
+                                int status = Convert.ToInt32(reader["workflow_status_id"]);
                                 string label = "Analysis " + reader["analysis_number"].ToString() + ", " + reader["analysis_method_name"].ToString() + ", " + reader["workflow_status_name"].ToString();
                                 TreeNode aNode = tn.Nodes.Add(reader["analysis_id"].ToString(), label);
-                                aNode.BackColor = statusId == 1 ? Color.LightGoldenrodYellow: Color.PaleGreen;
+                                aNode.ForeColor = WorkflowStatus.GetStatusColor(status);
                                 if (DB.IsValidField(reader["analysis_comment"]))
                                     aNode.ToolTipText = reader["analysis_comment"].ToString();
                             }
@@ -3197,8 +3207,8 @@ order by a.number
                 cmd.ExecuteNonQuery();
 
                 trans.Commit();
-                
-                lblStatus.Text = Utils.makeStatusMessage("Order " + tbOrderName.Text + " updated");
+
+                SetStatusMessage("Order " + tbOrderName.Text + " updated");
             }
             catch (Exception ex)
             {
@@ -3210,8 +3220,6 @@ order by a.number
             {
                 conn?.Close();
             }
-
-            //PopulateOrders(selectedOrderId);
         }
 
         private void btnOrderSelectDeadline_Click(object sender, EventArgs e)
@@ -3583,7 +3591,7 @@ order by a.number
 
                 cmd.ExecuteNonQuery();
 
-                lblStatus.Text = Utils.makeStatusMessage("Sample " + oNumber.ToString() + " updated");
+                SetStatusMessage("Sample " + oNumber.ToString() + " updated");
             }
             catch (Exception ex)
             {
@@ -3638,8 +3646,8 @@ order by a.number
 
                 trans.Commit();
 
-                treePrepAnal.SelectedNode.ForeColor = preparation.WorkflowStatusId == WorkflowStatus.Complete ? Color.DarkGreen : Color.Firebrick;
-                lblStatus.Text = Utils.makeStatusMessage("Preparation updated successfully");
+                treePrepAnal.SelectedNode.ForeColor = WorkflowStatus.GetStatusColor(preparation.WorkflowStatusId);
+                SetStatusMessage("Preparation updated successfully");
             }
             catch(Exception ex)
             {
@@ -3715,8 +3723,8 @@ order by a.number
 
                 trans.Commit();
 
-                treePrepAnal.SelectedNode.ForeColor = analysis.WorkflowStatusId == WorkflowStatus.Complete ? Color.DarkGreen : Color.Firebrick;                
-                lblStatus.Text = Utils.makeStatusMessage("Analysis updated successfully");
+                treePrepAnal.SelectedNode.ForeColor = WorkflowStatus.GetStatusColor(analysis.WorkflowStatusId);
+                SetStatusMessage("Analysis updated successfully");
             }
             catch (Exception ex)
             {
@@ -3799,7 +3807,7 @@ order by a.number
 
                 cmd.ExecuteNonQuery();
 
-                lblStatus.Text = Utils.makeStatusMessage("Sample data updated successfully");
+                SetStatusMessage("Sample data updated successfully");
             }
             catch (Exception ex)
             {
@@ -3871,6 +3879,8 @@ order by a.number
             {
                 PopulateAnalysis(conn, null, analysis, false);
             }
+
+            SetStatusMessage("Imported LIS file " + analysis._ImportFile + " for analysis");
         }
 
         private void PopulateAnalysis(SqlConnection conn, SqlTransaction trans, Analysis a, bool clearDirty)
@@ -3995,7 +4005,7 @@ order by a.number
             if (form.ShowDialog() != DialogResult.OK)
                 return;
 
-            lblStatus.Text = Utils.makeStatusMessage("Successfully added sample " + form.SelectedSampleNumber.ToString() + " to order " + form.SelectedOrderName);
+            SetStatusMessage("Successfully added sample " + form.SelectedSampleNumber.ToString() + " to order " + form.SelectedOrderName);
         }
 
         private void btnSampleSamplingDateFrom_Click(object sender, EventArgs e)
@@ -5830,6 +5840,8 @@ where id = @id
                 analysis.LoadFromDB(conn, null, analysis.Id);
                 PopulateAnalysis(conn, null, analysis, true);
             }
+
+            SetStatusMessage("Changes discarded for analysis");            
         }
 
         private void btnPrepAnalPrepDiscard_Click(object sender, EventArgs e)
@@ -5839,6 +5851,8 @@ where id = @id
                 preparation.LoadFromDB(conn, null, preparation.Id);
                 PopulatePreparation(conn, null, preparation, true);
             }
+
+            SetStatusMessage("Changes discarded for preparation");
         }
     }    
 }

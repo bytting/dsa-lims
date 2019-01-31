@@ -22,6 +22,7 @@ using System.Drawing;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace DSA_lims
 {
@@ -38,7 +39,7 @@ namespace DSA_lims
         public static string ScientificFormat = "0.###E+0";
 
         public static string makeStatusMessage(string msg)
-        {
+        {            
             return DateTime.Now.ToString(DateTimeFormatNorwegian) + " - " + msg;
         }
 

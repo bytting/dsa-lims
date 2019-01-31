@@ -19,6 +19,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Text;
 
 namespace DSA_lims
@@ -49,6 +50,19 @@ namespace DSA_lims
         public const int Construction = 1;
         public const int Complete = 2;
         public const int Rejected = 3;
+
+        public static Color GetStatusColor(int status)
+        {
+            switch(status)
+            {
+                case Construction:
+                    return Color.Firebrick;
+                case Complete:
+                    return Color.DarkGreen;
+                default:
+                    return SystemColors.ControlDark;
+            }
+        }
     }
 
     public class Lemma<I, N>

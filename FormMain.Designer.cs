@@ -9331,7 +9331,7 @@
             this.cboxPrepAnalPrepWorkflowStatus.ItemHeight = 15;
             this.cboxPrepAnalPrepWorkflowStatus.Location = new System.Drawing.Point(113, 0);
             this.cboxPrepAnalPrepWorkflowStatus.Name = "cboxPrepAnalPrepWorkflowStatus";
-            this.cboxPrepAnalPrepWorkflowStatus.Size = new System.Drawing.Size(160, 23);
+            this.cboxPrepAnalPrepWorkflowStatus.Size = new System.Drawing.Size(140, 23);
             this.cboxPrepAnalPrepWorkflowStatus.TabIndex = 7;
             this.cboxPrepAnalPrepWorkflowStatus.ValueMember = "Id";
             this.cboxPrepAnalPrepWorkflowStatus.SelectedIndexChanged += new System.EventHandler(this.cboxPrepAnalPrepWorkflowStatus_SelectedIndexChanged);
@@ -9339,11 +9339,11 @@
             // btnPrepAnalPrepUpdate
             // 
             this.btnPrepAnalPrepUpdate.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnPrepAnalPrepUpdate.Location = new System.Drawing.Point(566, 0);
+            this.btnPrepAnalPrepUpdate.Location = new System.Drawing.Point(586, 0);
             this.btnPrepAnalPrepUpdate.Name = "btnPrepAnalPrepUpdate";
-            this.btnPrepAnalPrepUpdate.Size = new System.Drawing.Size(160, 26);
+            this.btnPrepAnalPrepUpdate.Size = new System.Drawing.Size(140, 26);
             this.btnPrepAnalPrepUpdate.TabIndex = 9;
-            this.btnPrepAnalPrepUpdate.Text = "Save preparation info";
+            this.btnPrepAnalPrepUpdate.Text = "Save preparation";
             this.btnPrepAnalPrepUpdate.UseVisualStyleBackColor = true;
             this.btnPrepAnalPrepUpdate.Click += new System.EventHandler(this.btnPrepAnalPrepUpdate_Click);
             // 
@@ -9921,7 +9921,7 @@
             this.cboxPrepAnalAnalWorkflowStatus.FormattingEnabled = true;
             this.cboxPrepAnalAnalWorkflowStatus.Location = new System.Drawing.Point(90, 0);
             this.cboxPrepAnalAnalWorkflowStatus.Name = "cboxPrepAnalAnalWorkflowStatus";
-            this.cboxPrepAnalAnalWorkflowStatus.Size = new System.Drawing.Size(160, 23);
+            this.cboxPrepAnalAnalWorkflowStatus.Size = new System.Drawing.Size(140, 23);
             this.cboxPrepAnalAnalWorkflowStatus.TabIndex = 6;
             this.cboxPrepAnalAnalWorkflowStatus.ValueMember = "Id";
             this.cboxPrepAnalAnalWorkflowStatus.SelectedIndexChanged += new System.EventHandler(this.cboxPrepAnalAnalWorkflowStatus_SelectedIndexChanged);
@@ -9929,11 +9929,11 @@
             // btnPrepAnalAnalUpdate
             // 
             this.btnPrepAnalAnalUpdate.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnPrepAnalAnalUpdate.Location = new System.Drawing.Point(566, 0);
+            this.btnPrepAnalAnalUpdate.Location = new System.Drawing.Point(586, 0);
             this.btnPrepAnalAnalUpdate.Name = "btnPrepAnalAnalUpdate";
-            this.btnPrepAnalAnalUpdate.Size = new System.Drawing.Size(160, 26);
+            this.btnPrepAnalAnalUpdate.Size = new System.Drawing.Size(140, 26);
             this.btnPrepAnalAnalUpdate.TabIndex = 7;
-            this.btnPrepAnalAnalUpdate.Text = "Save analysis info";
+            this.btnPrepAnalAnalUpdate.Text = "Save analysis";
             this.btnPrepAnalAnalUpdate.UseVisualStyleBackColor = true;
             this.btnPrepAnalAnalUpdate.Click += new System.EventHandler(this.btnPrepAnalAnalUpdate_Click);
             // 
@@ -10296,9 +10296,9 @@
             // btnPrepAnalAnalDiscard
             // 
             this.btnPrepAnalAnalDiscard.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnPrepAnalAnalDiscard.Location = new System.Drawing.Point(406, 0);
+            this.btnPrepAnalAnalDiscard.Location = new System.Drawing.Point(446, 0);
             this.btnPrepAnalAnalDiscard.Name = "btnPrepAnalAnalDiscard";
-            this.btnPrepAnalAnalDiscard.Size = new System.Drawing.Size(160, 26);
+            this.btnPrepAnalAnalDiscard.Size = new System.Drawing.Size(140, 26);
             this.btnPrepAnalAnalDiscard.TabIndex = 8;
             this.btnPrepAnalAnalDiscard.Text = "Discard changes";
             this.btnPrepAnalAnalDiscard.UseVisualStyleBackColor = true;
@@ -10307,9 +10307,9 @@
             // btnPrepAnalPrepDiscard
             // 
             this.btnPrepAnalPrepDiscard.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnPrepAnalPrepDiscard.Location = new System.Drawing.Point(406, 0);
+            this.btnPrepAnalPrepDiscard.Location = new System.Drawing.Point(446, 0);
             this.btnPrepAnalPrepDiscard.Name = "btnPrepAnalPrepDiscard";
-            this.btnPrepAnalPrepDiscard.Size = new System.Drawing.Size(160, 26);
+            this.btnPrepAnalPrepDiscard.Size = new System.Drawing.Size(140, 26);
             this.btnPrepAnalPrepDiscard.TabIndex = 10;
             this.btnPrepAnalPrepDiscard.Text = "Discard changes";
             this.btnPrepAnalPrepDiscard.UseVisualStyleBackColor = true;

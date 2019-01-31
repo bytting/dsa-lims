@@ -287,6 +287,7 @@ namespace DSA_lims
                     r.ActivityUncertaintyABS = Convert.ToDouble(items[4].Trim(), CultureInfo.InvariantCulture) * 2.0;
                     r.ActivityUncertaintyABS /= 100d;
                     r.ActivityUncertaintyABS *= r.Activity;
+                    r._Dirty = true;
                     mAnalysis.Results.Add(r);
                 }
             }
@@ -335,6 +336,7 @@ namespace DSA_lims
                         mAnalysis.Results.Add(r);
                     }
                 }
+                r._Dirty = true;
             }
         }
 

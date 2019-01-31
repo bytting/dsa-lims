@@ -894,7 +894,6 @@
             this.toolStripSeparator53 = new System.Windows.Forms.ToolStripSeparator();
             this.ddPrepAnalImport2 = new System.Windows.Forms.ToolStripDropDownButton();
             this.miImportLISFile2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnPrepAnalClearAnal = new System.Windows.Forms.ToolStripButton();
             this.panel8 = new System.Windows.Forms.Panel();
             this.gridPrepAnalAnalAttachments = new System.Windows.Forms.DataGridView();
             this.toolsSampleResAttachments = new System.Windows.Forms.ToolStrip();
@@ -9921,6 +9920,7 @@
             this.cboxPrepAnalAnalWorkflowStatus.Size = new System.Drawing.Size(200, 23);
             this.cboxPrepAnalAnalWorkflowStatus.TabIndex = 6;
             this.cboxPrepAnalAnalWorkflowStatus.ValueMember = "Id";
+            this.cboxPrepAnalAnalWorkflowStatus.SelectedIndexChanged += new System.EventHandler(this.cboxPrepAnalAnalWorkflowStatus_SelectedIndexChanged);
             // 
             // btnPrepAnalAnalUpdate
             // 
@@ -10127,8 +10127,7 @@
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripLabel59,
             this.toolStripSeparator53,
-            this.ddPrepAnalImport2,
-            this.btnPrepAnalClearAnal});
+            this.ddPrepAnalImport2});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(406, 25);
@@ -10163,15 +10162,6 @@
             this.miImportLISFile2.Size = new System.Drawing.Size(147, 22);
             this.miImportLISFile2.Text = "Import LIS file";
             this.miImportLISFile2.Click += new System.EventHandler(this.miImportLISFile_Click);
-            // 
-            // btnPrepAnalClearAnal
-            // 
-            this.btnPrepAnalClearAnal.Image = global::DSA_lims.Properties.Resources.delete;
-            this.btnPrepAnalClearAnal.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnPrepAnalClearAnal.Name = "btnPrepAnalClearAnal";
-            this.btnPrepAnalClearAnal.Size = new System.Drawing.Size(98, 22);
-            this.btnPrepAnalClearAnal.Text = "Clear analysis";
-            this.btnPrepAnalClearAnal.Click += new System.EventHandler(this.btnPrepAnalClearAnal_Click);
             // 
             // panel8
             // 
@@ -11505,7 +11495,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator53;
         private System.Windows.Forms.ToolStripDropDownButton ddPrepAnalImport2;
         private System.Windows.Forms.ToolStripMenuItem miImportLISFile2;
-        private System.Windows.Forms.ToolStripButton btnPrepAnalClearAnal;
         private System.Windows.Forms.ToolStripButton btnPrepAnalEditResult;
         private System.Windows.Forms.TextBox tbPrepAnalPrepQuantity;
         private System.Windows.Forms.ComboBox cboxPrepAnalPrepQuantityUnit;

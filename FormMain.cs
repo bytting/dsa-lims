@@ -283,7 +283,11 @@ namespace DSA_lims
 
                 ActiveControl = tbMenuLookup;
 
+                preparation.Clear();
+                analysis.Clear();
+
                 Common.Log.Info("Application initialized successfully");
+
                 return true;
             }
             catch (Exception ex)
@@ -294,10 +298,45 @@ namespace DSA_lims
             }
         }        
 
-        private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
+        private bool DiscardUnsavedChanges()
         {
+            if (tabs.SelectedTab == tabPrepAnal)
+            {
+                if (analysis.IsDirty)
+                {
+                    DialogResult r = MessageBox.Show("Changes to the current analysis will be discarded. Do you want to continue?", "", MessageBoxButtons.YesNo);
+                    if (r == DialogResult.No)
+                    {
+                        return false;
+                    }
+                }
+
+                if (preparation.IsDirty)
+                {
+                    DialogResult r = MessageBox.Show("Changes to the current preparation will be discarded. Do you want to continue?", "", MessageBoxButtons.YesNo);
+                    if (r == DialogResult.No)
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            preparation.Clear();
+            analysis.Clear();
+
+            return true;
+        }
+
+        private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
+        {            
             try
             {
+                if(!DiscardUnsavedChanges())
+                {
+                    e.Cancel = true;
+                    return;
+                }
+
                 Common.Log.Info("Application closing down");
 
                 if (!String.IsNullOrEmpty(DB.ConnectionString))
@@ -381,6 +420,9 @@ namespace DSA_lims
 
         private void miLogout_Click(object sender, EventArgs e)
         {
+            if (!DiscardUnsavedChanges())            
+                return;
+
             bool initialized = false;
             while (!initialized)
             {
@@ -3446,6 +3488,12 @@ order by a.number
 
         private void tabs_Deselecting(object sender, TabControlCancelEventArgs e)
         {
+            if (!DiscardUnsavedChanges())
+            {
+                e.Cancel = true;
+                return;
+            }
+
             if (e.TabPage == tabSample || e.TabPage == tabPrepAnal)
             {
                 using (SqlConnection conn = DB.OpenConnection())
@@ -3459,7 +3507,7 @@ order by a.number
                 {
                     DB.UnlockOrders(conn);
                 }
-            }
+            }            
         }
 
         private void miBack_Click(object sender, EventArgs e)
@@ -3813,15 +3861,15 @@ order by a.number
             dialog.Filter = "LIS files (*.lis)|*.lis";
             if (dialog.ShowDialog() != DialogResult.OK)
                 return;
-                
-            analysis._ImportFile = dialog.FileName;
 
-            FormImportAnalysisLIS form = new FormImportAnalysisLIS(preparation, analysis);
-            if (form.ShowDialog() != DialogResult.OK)
-            {
-                analysis._ImportFile = String.Empty;
+            Analysis a = analysis.Clone();
+            a._ImportFile = dialog.FileName;
+
+            FormImportAnalysisLIS form = new FormImportAnalysisLIS(preparation, a);
+            if (form.ShowDialog() != DialogResult.OK)            
                 return;
-            }
+
+            analysis = a.Clone();
 
             using (SqlConnection conn = DB.OpenConnection())
             {
@@ -4014,29 +4062,6 @@ order by a.number
         {
             tbOrderDeadline.Text = "";
             tbOrderDeadline.Tag = null;
-        }
-
-        private void btnPrepAnalClearAnal_Click(object sender, EventArgs e)
-        {
-            if (MessageBox.Show("Are you sure you want to delete all results from this analysis?", "Question", MessageBoxButtons.YesNo) == DialogResult.No)
-                return;
-
-            using (SqlConnection conn = DB.OpenConnection())
-            {
-                ClearAnalysisResults(conn, null, analysis.Id);
-                analysis.LoadFromDB(conn, null, analysis.Id);
-                PopulateAnalysis(conn, null, analysis, true);
-            }
-        }
-
-        private void ClearAnalysisResults(SqlConnection conn, SqlTransaction trans, Guid analysisId)
-        {                        
-            SqlCommand cmd = new SqlCommand("delete from analysis_result where analysis_id = @aid", conn);
-            if (trans != null)
-                cmd.Transaction = trans;
-
-            cmd.Parameters.AddWithValue("@aid", analysisId);
-            cmd.ExecuteNonQuery();
         }
 
         private void btnOrderSelectCustomer_Click(object sender, EventArgs e)
@@ -4235,6 +4260,9 @@ order by a.number
 
         private void btnPrepAnalEditResult_Click(object sender, EventArgs e)
         {
+            if (!Utils.IsValidGuid(analysis.Id))            
+                return;
+
             using (SqlConnection conn = DB.OpenConnection())
             {
                 if (analysis.IsClosed(conn, null))
@@ -4244,19 +4272,36 @@ order by a.number
                 }
             }
 
+            if (!Utils.IsValidGuid(analysis.ActivityUnitId))
+            {
+                MessageBox.Show("You must save a unit first");
+                return;
+            }
+
             if (gridPrepAnalResults.SelectedRows.Count < 1)
             {
                 MessageBox.Show("You must select a result first");
                 return;
             }
 
-            if (!Utils.IsValidGuid(analysis.ActivityUnitId))
+            DataGridViewCell cell = null;
+            try
             {
-                MessageBox.Show("You must save a unit first");
+                cell = gridPrepAnalResults.SelectedRows[0].Cells["Id"];
+            }
+            catch(Exception ex)
+            {
+                Common.Log.Error(ex);
                 return;
-            }            
-            
-            Guid resultId = Guid.Parse(gridPrepAnalResults.SelectedRows[0].Cells["Id"].Value.ToString());
+            }
+
+            if(cell.Value == null)
+            {
+                Common.Log.Error("Analysis result cell is null");
+                return;
+            }
+
+            Guid resultId = Guid.Parse(cell.Value.ToString());
             FormPrepAnalResult form = new FormPrepAnalResult(analysis, resultId);
             if (form.ShowDialog() != DialogResult.OK)
                 return;
@@ -5709,7 +5754,12 @@ where id = @id
 
         private void tbPrepAnalAnalComment_TextChanged(object sender, EventArgs e)
         {
-            analysis._Dirty = true;            
+            analysis._Dirty = true;
+        }
+
+        private void cboxPrepAnalAnalWorkflowStatus_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            analysis._Dirty = true;
         }
 
         private void tbPrepAnalPrepFillHeight_TextChanged(object sender, EventArgs e)
@@ -5749,30 +5799,11 @@ where id = @id
 
         private void treePrepAnal_BeforeSelect(object sender, TreeViewCancelEventArgs e)
         {
-            if (tabsPrepAnal.SelectedTab == tabPrepAnalAnalysis)
+            if (!DiscardUnsavedChanges())
             {
-                if (analysis.IsDirty)
-                {
-                    DialogResult r = MessageBox.Show("Changes to the current analysis will be discarded. Do you want to continue?", "", MessageBoxButtons.YesNo);
-                    if (r == DialogResult.No)
-                    {
-                        e.Cancel = true;
-                        return;
-                    }
-                }
+                e.Cancel = true;
+                return;
             }
-            else if (tabsPrepAnal.SelectedTab == tabPrepAnalPreps)
-            {
-                if (preparation.IsDirty)
-                {
-                    DialogResult r = MessageBox.Show("Changes to the current preparation will be discarded. Do you want to continue?", "", MessageBoxButtons.YesNo);
-                    if (r == DialogResult.No)
-                    {
-                        e.Cancel = true;
-                        return;
-                    }
-                }
-            }
-        }
+        }        
     }    
 }

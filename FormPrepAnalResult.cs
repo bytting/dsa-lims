@@ -83,7 +83,9 @@ namespace DSA_lims
             }
 
             cboxSigmaActivity.SelectedValue = mAnalysis.SigmaActivity;
+            cboxSigmaActivity.Enabled = false;
             cboxSigmaMDA.SelectedValue = mAnalysis.SigmaMDA;
+            cboxSigmaMDA.Enabled = false;
 
             tbActivity.Text = mResult.Activity.ToString(Utils.ScientificFormat);
             tbUncertainty.Text = mResult.ActivityUncertaintyABS.ToString(Utils.ScientificFormat);

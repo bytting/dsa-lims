@@ -837,7 +837,7 @@ from role r
                 }
                 catch
                 {
-                    MessageBox.Show("File is already open");
+                    MessageBox.Show("The file " + pathname + " is already open");
                     return;
                 }
             }

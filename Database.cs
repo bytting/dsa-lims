@@ -408,7 +408,7 @@ where s.id = @sid and a.workflow_status_id = 2
             cmd.Parameters.AddWithValue("@geometry_id", geomId);
             object o = cmd.ExecuteScalar();
             if (!IsValidField(o))
-                throw new Exception("Requested geometry not found for id: " + geomId.ToString());
+                return "";
 
             return o.ToString();
         }
@@ -937,6 +937,7 @@ where p.assignment_id = ast.assignment_id
         public Analysis()
         {
             Results = new List<AnalysisResult>();
+            _Dirty = false;
         }
 
         public Guid Id { get; set; }
@@ -990,6 +991,35 @@ where p.assignment_id = ast.assignment_id
             Results.Clear();
             _ImportFile = String.Empty;
             _Dirty = false;
+        }
+
+        public Analysis Clone()
+        {
+            Analysis a = new Analysis();
+            a.Id = Id;
+            a.Number = Number;
+            a.AssignmentId = AssignmentId;
+            a.LaboratoryId = LaboratoryId;
+            a.PreparationId = PreparationId;
+            a.AnalysisMethodId = AnalysisMethodId;
+            a.WorkflowStatusId = WorkflowStatusId;
+            a.SpecterReference = SpecterReference;
+            a.ActivityUnitId = ActivityUnitId;
+            a.ActivityUnitTypeId = ActivityUnitTypeId;
+            a.SigmaActivity = SigmaActivity;
+            a.SigmaMDA = SigmaMDA;
+            a.NuclideLibrary = NuclideLibrary;
+            a.MDALibrary = MDALibrary;
+            a.InstanceStatusId = InstanceStatusId;
+            a.Comment = Comment;
+            a.CreateDate = CreateDate;
+            a.CreatedBy = CreatedBy;
+            a.UpdateDate = UpdateDate;
+            a.UpdatedBy = UpdatedBy;
+            a._ImportFile = _ImportFile;
+            a._Dirty = _Dirty;
+            a.Results.AddRange(Results);
+            return a;
         }
 
         public void LoadFromDB(SqlConnection conn, SqlTransaction trans, Guid analysisId)
@@ -1234,11 +1264,14 @@ insert into analysis_result values(
             }
 
             string strExResIds = string.Join(",", existingResultIds.Select(x => "'" + x.ToString() + "'"));
-            cmd.CommandText = "delete from analysis_result where analysis_id = @analysis_id and id not in (" + strExResIds + ")";
-            cmd.CommandType = CommandType.Text;
-            cmd.Parameters.Clear();
-            cmd.Parameters.AddWithValue("@analysis_id", Id);
-            cmd.ExecuteNonQuery();
+            if (!String.IsNullOrEmpty(strExResIds))
+            {
+                cmd.CommandText = "delete from analysis_result where analysis_id = @analysis_id and id not in (" + strExResIds + ")";
+                cmd.CommandType = CommandType.Text;
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@analysis_id", Id);
+                cmd.ExecuteNonQuery();
+            }
         }
 
         public bool IsDirty
@@ -1279,10 +1312,10 @@ where an.id = @aid
 
     public class AnalysisResult
     {
-        public AnalysisResult()
+        /*public AnalysisResult()
         {
             _Dirty = true;
-        }
+        }*/
 
         public Guid Id { get; set; }
         public Guid AnalysisId { get; set; }

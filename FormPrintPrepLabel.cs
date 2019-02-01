@@ -23,8 +23,9 @@ namespace DSA_lims
         DSASettings mSettings = null;
         List<Guid> mPrepIds = new List<Guid>();
 
-        string sampleNumber, prepNumber, sampleType, projectMain, projectSub, refDate, laboratory, fillHeight, prepWeight, prepWeightUnit;
-        string prepQuant, prepQuantUnit, samplingTimeFrom, samplingTimeTo;
+        string sampleNumber, prepNumber, sampleType, projectMain, projectSub, refDate, laboratory, prepWeightUnit;
+        string prepQuantUnit, samplingTimeFrom, samplingTimeTo;
+        double fillHeight = 0d, prepWeight = 0d, prepQuant = 0d;
 
         PrintDocument printDocument = new PrintDocument();
 
@@ -107,13 +108,13 @@ select
     p.quantity as 'preparation_quantity',
     qu.name as 'preparation_quantity_unit'
 from preparation p
-    inner join sample s on p.sample_id = s.id
-    inner join sample_type st on s.sample_type_id = st.id    
-    inner join project_sub ps on s.project_sub_id = ps.id
-    inner join project_main pm on ps.project_main_id = pm.id
-    inner join laboratory l on s.laboratory_id = l.id
-    inner join preparation_unit pu on pu.id = p.prep_unit_id
-    inner join quantity_unit qu on qu.id = p.quantity_unit_id
+    left outer join sample s on p.sample_id = s.id
+    left outer join sample_type st on s.sample_type_id = st.id    
+    left outer join project_sub ps on s.project_sub_id = ps.id
+    left outer join project_main pm on ps.project_main_id = pm.id
+    left outer join laboratory l on s.laboratory_id = l.id
+    left outer join preparation_unit pu on pu.id = p.prep_unit_id
+    left outer join quantity_unit qu on qu.id = p.quantity_unit_id
 where p.id = @pid
 ";
 
@@ -142,17 +143,14 @@ where p.id = @pid
                         refDate = Convert.ToDateTime(reader["reference_date"]).ToString(Utils.DateTimeFormatNorwegian);
                         laboratory = reader["laboratory_name"].ToString();
                         if (DB.IsValidField(reader["fill_height"]))
-                            fillHeight = reader["fill_height"].ToString();
-                        else fillHeight = "";
+                            fillHeight = Convert.ToDouble(reader["fill_height"]);
                         if (DB.IsValidField(reader["preparation_amount"]))
-                            prepWeight = reader["preparation_amount"].ToString();
-                        else prepWeight = "";
+                            prepWeight = Convert.ToDouble(reader["preparation_amount"]);                        
                         if (DB.IsValidField(reader["preparation_unit_name"]))
                             prepWeightUnit = reader["preparation_unit_name"].ToString();
                         else prepWeightUnit = "";
                         if (DB.IsValidField(reader["preparation_quantity"]))
-                            prepQuant = reader["preparation_quantity"].ToString();
-                        else prepQuant = "";
+                            prepQuant = Convert.ToDouble(reader["preparation_quantity"]);
                         if (DB.IsValidField(reader["preparation_quantity_unit"]))
                             prepQuantUnit = reader["preparation_quantity_unit"].ToString();
                         else prepQuantUnit = "";
@@ -172,7 +170,6 @@ where p.id = @pid
 
         private void PrintDocument_PrintPage(object sender, PrintPageEventArgs e)
         {
-
             e.Graphics.DrawString("ID: " + sampleNumber + "/" + prepNumber, fontLabel, Brushes.Black, 2, 1);
             e.Graphics.DrawString("Lab: " + laboratory, fontLabel, Brushes.Black, 140, 1);
             e.Graphics.DrawString("Project: " + projectMain + " - " + projectSub, fontLabel, Brushes.Black, 2, 12);
@@ -181,9 +178,9 @@ where p.id = @pid
             string sampTime = samplingTimeFrom;
             sampTime += String.IsNullOrEmpty(samplingTimeTo) ? "" : ", " + samplingTimeTo;
             e.Graphics.DrawString("Sampling time: " + sampTime, fontLabel, Brushes.Black, 2, 45);                        
-            e.Graphics.DrawString("Fill height(mm): " + fillHeight, fontLabel, Brushes.Black, 2, 56);
-            e.Graphics.DrawString("Amount: " + prepWeight + " " + prepWeightUnit, fontLabel, Brushes.Black, 2, 67);
-            e.Graphics.DrawString("Quantity: " + prepQuant + " " + prepQuantUnit, fontLabel, Brushes.Black, 2, 78);
+            e.Graphics.DrawString("Fill height(mm): " + (fillHeight > 0d ? fillHeight.ToString() : ""), fontLabel, Brushes.Black, 2, 56);
+            e.Graphics.DrawString("Amount: " + (prepWeight > 0d ? prepWeight.ToString() + " " + prepWeightUnit : ""), fontLabel, Brushes.Black, 2, 67);
+            e.Graphics.DrawString("Quantity: " + (prepQuant > 0d ? prepQuant.ToString() + " " + prepQuantUnit : ""), fontLabel, Brushes.Black, 2, 78);
             e.Graphics.DrawString("*" + sampleNumber + "*", fontBarcode, Brushes.Black, 130, 60);
         }
 

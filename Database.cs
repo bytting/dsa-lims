@@ -23,6 +23,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Text;
 using System.Linq;
+using Newtonsoft.Json;
 
 namespace DSA_lims
 {
@@ -134,15 +135,16 @@ namespace DSA_lims
             return lst;
         }
 
-        public static void AddAuditMessage(SqlConnection conn, SqlTransaction trans, string tbl, Guid id, AuditOperationType op, string msg)
+        public static void AddAuditMessage(SqlConnection conn, SqlTransaction trans, string tbl, Guid id, AuditOperationType op, string msg, string comment = "")
         {
             SqlCommand cmd = new SqlCommand("csp_insert_audit_message", conn, trans);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@id", Guid.NewGuid());
-            cmd.Parameters.AddWithValue("@source_table", tbl);
+            cmd.Parameters.AddWithValue("@source_table", tbl.Trim());
             cmd.Parameters.AddWithValue("@source_id", id);
             cmd.Parameters.AddWithValue("@operation", op.ToString());
-            cmd.Parameters.AddWithValue("@value", msg);
+            cmd.Parameters.AddWithValue("@comment", comment.Trim());
+            cmd.Parameters.AddWithValue("@value", msg.Trim());
             cmd.Parameters.AddWithValue("@create_date", DateTime.Now);
             cmd.ExecuteNonQuery();
         }
@@ -798,6 +800,30 @@ select
             _Dirty = false;
         }
 
+        public static void AddAuditMessage(SqlConnection conn, SqlTransaction trans, Guid preparationId, AuditOperationType operation, string comment)
+        {
+            Dictionary<string, object> map = new Dictionary<string, object>();
+
+            using (SqlDataReader reader = DB.GetDataReader(conn, trans, "csp_select_preparation_informative", CommandType.StoredProcedure,
+                new SqlParameter("@id", preparationId)))
+            {
+                if (reader.HasRows)
+                {
+                    reader.Read();
+
+                    var cols = new List<string>();
+                    for (int i = 0; i < reader.FieldCount; i++)
+                        cols.Add(reader.GetName(i));
+
+                    foreach (var col in cols)
+                        map.Add(col, reader[col]);
+                }
+            }
+
+            string json = JsonConvert.SerializeObject(map, Formatting.None);
+            DB.AddAuditMessage(conn, trans, "preparation", preparationId, operation, json, comment);
+        }
+
         public bool LoadFromDB(SqlConnection conn, SqlTransaction trans, Guid preparationId)
         {
             bool res = false;
@@ -870,6 +896,9 @@ select
                 cmd.Parameters.AddWithValue("@updated_by", Common.Username);
 
                 cmd.ExecuteNonQuery();
+
+                AddAuditMessage(conn, trans, Id, AuditOperationType.Insert, "");
+
                 _Dirty = false;
                 res = true;
             }
@@ -894,6 +923,9 @@ select
                     cmd.Parameters.AddWithValue("@updated_by", Common.Username);
 
                     cmd.ExecuteNonQuery();
+
+                    AddAuditMessage(conn, trans, Id, AuditOperationType.Update, "");
+
                     _Dirty = false;
                     res = true;
                 }
@@ -1054,6 +1086,30 @@ where p.assignment_id = ast.assignment_id
             return a;
         }
 
+        public static void AddAuditMessage(SqlConnection conn, SqlTransaction trans, Guid analysisId, AuditOperationType operation, string comment)
+        {
+            Dictionary<string, object> map = new Dictionary<string, object>();
+            
+            using (SqlDataReader reader = DB.GetDataReader(conn, trans, "csp_select_analysis_informative", CommandType.StoredProcedure,
+                new SqlParameter("@id", analysisId)))
+            {
+                if(reader.HasRows)
+                {
+                    reader.Read();
+                                      
+                    var cols = new List<string>();
+                    for (int i = 0; i < reader.FieldCount; i++)
+                        cols.Add(reader.GetName(i));
+
+                    foreach (var col in cols)
+                        map.Add(col, reader[col]);
+                }
+            }
+
+            string json = JsonConvert.SerializeObject(map, Formatting.None);
+            DB.AddAuditMessage(conn, trans, "analysis", analysisId, operation, json, comment);
+        }
+
         public void LoadFromDB(SqlConnection conn, SqlTransaction trans, Guid analysisId)
         {
             Clear();         
@@ -1160,7 +1216,9 @@ where p.assignment_id = ast.assignment_id
                 cmd.Parameters.AddWithValue("@updated_by", Common.Username);
 
                 cmd.ExecuteNonQuery();
-                
+
+                AddAuditMessage(conn, trans, Id, AuditOperationType.Insert, "");
+
                 _Dirty = false;
             }
             else
@@ -1185,6 +1243,8 @@ where p.assignment_id = ast.assignment_id
 
                     cmd.ExecuteNonQuery();
 
+                    AddAuditMessage(conn, trans, Id, AuditOperationType.Update, "");
+
                     _Dirty = false;
                 }
             }
@@ -1193,8 +1253,8 @@ where p.assignment_id = ast.assignment_id
             foreach (AnalysisResult r in Results)
             {
                 if(DB.AnalysisResultExists(conn, trans, r.Id))
-                {                    
-                    // analysis result already exist in the db and has been modified, update it
+                {
+                    // analysis result already exist in the db
                     if (r._Dirty)
                     {
                         // analysis result has been modified, update it
@@ -1236,7 +1296,10 @@ where id = @id
                         cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
                         cmd.Parameters.AddWithValue("@updated_by", Common.Username);
 
-                        cmd.ExecuteNonQuery();                    
+                        cmd.ExecuteNonQuery();
+
+                        AnalysisResult.AddAuditMessage(conn, trans, r.Id, AuditOperationType.Update, "");
+
                         r._Dirty = false;
                     }
                 }
@@ -1289,13 +1352,17 @@ insert into analysis_result values(
                     cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
                     cmd.Parameters.AddWithValue("@updated_by", Common.Username);
 
-                    cmd.ExecuteNonQuery();                    
+                    cmd.ExecuteNonQuery();
+
+                    AnalysisResult.AddAuditMessage(conn, trans, r.Id, AuditOperationType.Insert, "");
+
                     r._Dirty = false;
                 }
 
                 existingResultIds.Add(r.Id);
             }
 
+            // FIXME: Audit log
             string strExResIds = string.Join(",", existingResultIds.Select(x => "'" + x.ToString() + "'"));
             if (!String.IsNullOrEmpty(strExResIds))
             {
@@ -1344,11 +1411,11 @@ where an.id = @aid
     }
 
     public class AnalysisResult
-    {
-        /*public AnalysisResult()
+    {        
+        public AnalysisResult()
         {
-            _Dirty = true;
-        }*/
+            InstanceStatusId = InstanceStatus.Active;
+        }
 
         public Guid Id { get; set; }
         public Guid AnalysisId { get; set; }
@@ -1370,5 +1437,29 @@ where an.id = @aid
         public string UpdatedBy { get; set; }
 
         public bool _Dirty;
+
+        public static void AddAuditMessage(SqlConnection conn, SqlTransaction trans, Guid analysisResultId, AuditOperationType operation, string comment)
+        {
+            Dictionary<string, object> map = new Dictionary<string, object>();
+
+            using (SqlDataReader reader = DB.GetDataReader(conn, trans, "csp_select_analysis_result_informative", CommandType.StoredProcedure,
+                new SqlParameter("@id", analysisResultId)))
+            {
+                if (reader.HasRows)
+                {
+                    reader.Read();
+
+                    var cols = new List<string>();
+                    for (int i = 0; i < reader.FieldCount; i++)
+                        cols.Add(reader.GetName(i));
+
+                    foreach (var col in cols)
+                        map.Add(col, reader[col]);
+                }
+            }
+
+            string json = JsonConvert.SerializeObject(map, Formatting.None);
+            DB.AddAuditMessage(conn, trans, "analysis_result", analysisResultId, operation, json, comment);
+        }
     }
 }

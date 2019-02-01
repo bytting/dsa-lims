@@ -128,6 +128,7 @@ create table audit_log (
 	source_table nvarchar(50) not null,
 	source_id uniqueidentifier not null,	
 	operation nvarchar(50) not null,
+	comment nvarchar(200) default null,
 	value nvarchar(max) not null,
 	create_date datetime not null
 )
@@ -138,10 +139,11 @@ create proc csp_insert_audit_message
 	@source_table nvarchar(50),
 	@source_id uniqueidentifier,
 	@operation nvarchar(50),
+	@comment nvarchar(200),
 	@value nvarchar(max),
 	@create_date datetime
 as
-	insert into audit_log values(@id, @source_table, @source_id, @operation, @value, @create_date);
+	insert into audit_log values(@id, @source_table, @source_id, @operation, @comment, @value, @create_date);
 go
 
 /*===========================================================================*/
@@ -2359,6 +2361,42 @@ as
 	select * from preparation where id = @id
 go
 
+create proc csp_select_preparation_informative
+	@id uniqueidentifier
+as
+	select 
+	p.id,
+	p.number as 'preparation_number',
+	s.number as 'sample_number',
+	ass.name as 'assignment',
+	l.name as 'laboratory',
+	pg.name as 'geometry',
+	pm.name as 'preparation_method',
+	ws.name as 'workflow_status',
+	p.amount,
+	pu.name as 'amount_unit',
+	p.quantity,
+	qu.name as 'quantity_unit',
+	p.fill_height_mm,
+	inst.name as 'instance_status',
+	p.comment,
+	p.create_date,
+	p.created_by,
+	p.update_date,
+	p.updated_by
+from preparation p
+	left outer join sample s on s.id = p.sample_id
+	left outer join assignment ass on ass.id = p.assignment_id
+	left outer join laboratory l on l.id = p.laboratory_id
+	left outer join preparation_geometry pg on pg.id = p.preparation_geometry_id
+	left outer join preparation_method pm on pm.id = p.preparation_method_id
+	left outer join workflow_status ws on ws.id = p.workflow_status_id
+	left outer join preparation_unit pu on pu.id = p.prep_unit_id
+	left outer join quantity_unit qu on qu.id = p.quantity_unit_id
+	left outer join instance_status inst on inst.id = p.instance_status_id
+where p.id = @id
+go
+
 /*===========================================================================*/
 /* tbl analysis_method */
 
@@ -2598,6 +2636,42 @@ create proc csp_select_analysis
 	@id uniqueidentifier
 as
 	select * from analysis where id = @id
+go
+
+create proc csp_select_analysis_informative
+	@id uniqueidentifier
+as
+	select
+	a.id as 'id',
+	a.number as 'analysis_number',
+	ass.name as 'assignment',
+	l.name as 'laboratory',
+	p.number as 'preparation_number',
+	am.name as 'analysis_method',
+	ws.name as 'workflow_status',
+	a.specter_reference as 'specter_reference',
+	au.name as 'activity_unit',
+	aut.name as 'activity_unit_type',
+	a.sigma_act,
+	a.sigma_mda,
+	a.nuclide_library,
+	a.mda_library,
+	inst.name as 'instance_status',
+	a.comment,
+	a.create_date,
+	a.created_by,
+	a.update_date,
+	a.updated_by
+from analysis a
+	left outer join assignment ass on ass.id = a.assignment_id
+	left outer join laboratory l on l.id = a.laboratory_id
+	left outer join preparation p on p.id = a.preparation_id
+	left outer join analysis_method am on am.id = a.analysis_method_id
+	left outer join workflow_status ws on ws.id = a.workflow_status_id
+	left outer join activity_unit au on au.id = a.activity_unit_id
+	left outer join activity_unit_type aut on aut.id = a.activity_unit_type_id
+	left outer join instance_status inst on inst.id = a.instance_status_id
+where a.id = @id
 go
 
 /*===========================================================================*/
@@ -3893,6 +3967,35 @@ as
 	select *		
 	from analysis_result		
 	where id = @id
+go
+
+create proc csp_select_analysis_result_informative
+	@id uniqueidentifier
+as
+	select 
+	ar.id,
+	a.number as 'analysis_number',
+	n.name as 'nuclide_name',
+	ar.activity as 'activity',
+	ar.activity_uncertainty_abs as 'activity_uncertainty',
+	ar.activity_approved,
+	ar.uniform_activity,
+	uau.name as 'uniform_activity_unit',
+	ar.detection_limit,
+	ar.detection_limit_approved,
+	ar.accredited,
+	ar.reportable,
+	inst.name as 'instance_status',
+	ar.create_date,
+	ar.created_by,
+	ar.update_date,
+	ar.updated_by
+from analysis_result ar
+	left outer join analysis a on a.id = ar.analysis_id
+	left outer join nuclide n on n.id = ar.nuclide_id
+	left outer join uniform_activity_unit uau on uau.id = ar.uniform_activity_unit_id
+	left outer join instance_status inst on inst.id = ar.instance_status_id
+where ar.id = @id
 go
 
 create proc csp_select_analysis_results_for_analysis

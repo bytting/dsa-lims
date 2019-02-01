@@ -235,6 +235,8 @@ where sxast.sample_id = @sid";
 
                             cmd.ExecuteNonQuery();
 
+                            Preparation.AddAuditMessage(connection, transaction, newPrepId, AuditOperationType.Insert, "");
+
                             GenerateOrderAnalyses(connection, transaction, orderId, labId, newPrepId, tnode.Nodes);
 
                             prepCount--;
@@ -307,6 +309,8 @@ where sxast.sample_id = @sid";
                     cmd.Parameters.AddWithValue("@updated_by", Common.Username);
                                         
                     cmd.ExecuteNonQuery();
+
+                    Analysis.AddAuditMessage(conn, trans, newAnalId, AuditOperationType.Insert, "");
 
                     analCount--;
                 }

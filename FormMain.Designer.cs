@@ -92,6 +92,8 @@
             this.miOrdersDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator65 = new System.Windows.Forms.ToolStripSeparator();
             this.miOrdersClearAllFilters = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator72 = new System.Windows.Forms.ToolStripSeparator();
+            this.miOrdersUnlock = new System.Windows.Forms.ToolStripMenuItem();
             this.miSamples = new System.Windows.Forms.ToolStripMenuItem();
             this.miSamplesNew = new System.Windows.Forms.ToolStripMenuItem();
             this.miSamplesImport = new System.Windows.Forms.ToolStripMenuItem();
@@ -112,6 +114,8 @@
             this.miSamplesPrepAnal = new System.Windows.Forms.ToolStripMenuItem();
             this.printToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.miSamplesPrintSampleLabels = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator70 = new System.Windows.Forms.ToolStripSeparator();
+            this.miSamplesUnlock = new System.Windows.Forms.ToolStripMenuItem();
             this.miProjects = new System.Windows.Forms.ToolStripMenuItem();
             this.miProjectsNew = new System.Windows.Forms.ToolStripMenuItem();
             this.miProjectsEdit = new System.Windows.Forms.ToolStripMenuItem();
@@ -471,6 +475,8 @@
             this.btnOrdersNew = new System.Windows.Forms.ToolStripButton();
             this.btnOrdersEdit = new System.Windows.Forms.ToolStripButton();
             this.btnOrdersDelete = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator71 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnOrdersUnlock = new System.Windows.Forms.ToolStripButton();
             this.panel2 = new System.Windows.Forms.Panel();
             this.cboxOrdersLaboratory = new System.Windows.Forms.ComboBox();
             this.label36 = new System.Windows.Forms.Label();
@@ -507,6 +513,7 @@
             this.toolStripDropDownButton4 = new System.Windows.Forms.ToolStripDropDownButton();
             this.sampleLabelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sampleInfoForSelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnSamplesUnlock = new System.Windows.Forms.ToolStripButton();
             this.panel78 = new System.Windows.Forms.Panel();
             this.label32 = new System.Windows.Forms.Label();
             this.cboxSamplesLaboratory = new System.Windows.Forms.ComboBox();
@@ -908,13 +915,6 @@
             this.btnMenu = new System.Windows.Forms.ToolStripButton();
             this.lblCurrentTab = new System.Windows.Forms.ToolStripLabel();
             this.btnBack = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator70 = new System.Windows.Forms.ToolStripSeparator();
-            this.miSamplesUnlock = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnSamplesUnlock = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator71 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator72 = new System.Windows.Forms.ToolStripSeparator();
-            this.miOrdersUnlock = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnOrdersUnlock = new System.Windows.Forms.ToolStripButton();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tabs.SuspendLayout();
@@ -1701,35 +1701,47 @@
             // miOrdersNew
             // 
             this.miOrdersNew.Name = "miOrdersNew";
-            this.miOrdersNew.Size = new System.Drawing.Size(152, 22);
+            this.miOrdersNew.Size = new System.Drawing.Size(148, 22);
             this.miOrdersNew.Text = "&New order";
             this.miOrdersNew.Click += new System.EventHandler(this.miOrdersNew_Click);
             // 
             // miOrdersEdit
             // 
             this.miOrdersEdit.Name = "miOrdersEdit";
-            this.miOrdersEdit.Size = new System.Drawing.Size(152, 22);
+            this.miOrdersEdit.Size = new System.Drawing.Size(148, 22);
             this.miOrdersEdit.Text = "&Edit order";
             this.miOrdersEdit.Click += new System.EventHandler(this.miOrdersEdit_Click);
             // 
             // miOrdersDelete
             // 
             this.miOrdersDelete.Name = "miOrdersDelete";
-            this.miOrdersDelete.Size = new System.Drawing.Size(152, 22);
+            this.miOrdersDelete.Size = new System.Drawing.Size(148, 22);
             this.miOrdersDelete.Text = "&Delete order";
             this.miOrdersDelete.Click += new System.EventHandler(this.miOrdersDelete_Click);
             // 
             // toolStripSeparator65
             // 
             this.toolStripSeparator65.Name = "toolStripSeparator65";
-            this.toolStripSeparator65.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator65.Size = new System.Drawing.Size(145, 6);
             // 
             // miOrdersClearAllFilters
             // 
             this.miOrdersClearAllFilters.Name = "miOrdersClearAllFilters";
-            this.miOrdersClearAllFilters.Size = new System.Drawing.Size(152, 22);
+            this.miOrdersClearAllFilters.Size = new System.Drawing.Size(148, 22);
             this.miOrdersClearAllFilters.Text = "&Clear all filters";
             this.miOrdersClearAllFilters.Click += new System.EventHandler(this.miOrdersClearAllFilters_Click);
+            // 
+            // toolStripSeparator72
+            // 
+            this.toolStripSeparator72.Name = "toolStripSeparator72";
+            this.toolStripSeparator72.Size = new System.Drawing.Size(145, 6);
+            // 
+            // miOrdersUnlock
+            // 
+            this.miOrdersUnlock.Name = "miOrdersUnlock";
+            this.miOrdersUnlock.Size = new System.Drawing.Size(148, 22);
+            this.miOrdersUnlock.Text = "&Unlock";
+            this.miOrdersUnlock.Click += new System.EventHandler(this.miOrdersUnlock_Click);
             // 
             // miSamples
             // 
@@ -1887,6 +1899,18 @@
             this.miSamplesPrintSampleLabels.Size = new System.Drawing.Size(146, 22);
             this.miSamplesPrintSampleLabels.Text = "Sample labels";
             this.miSamplesPrintSampleLabels.Click += new System.EventHandler(this.miSamplesPrintSampleLabels_Click);
+            // 
+            // toolStripSeparator70
+            // 
+            this.toolStripSeparator70.Name = "toolStripSeparator70";
+            this.toolStripSeparator70.Size = new System.Drawing.Size(209, 6);
+            // 
+            // miSamplesUnlock
+            // 
+            this.miSamplesUnlock.Name = "miSamplesUnlock";
+            this.miSamplesUnlock.Size = new System.Drawing.Size(212, 22);
+            this.miSamplesUnlock.Text = "&Unlock";
+            this.miSamplesUnlock.Click += new System.EventHandler(this.miSamplesUnlock_Click);
             // 
             // miProjects
             // 
@@ -5697,6 +5721,20 @@
             this.btnOrdersDelete.Text = "Delete";
             this.btnOrdersDelete.Click += new System.EventHandler(this.miOrdersDelete_Click);
             // 
+            // toolStripSeparator71
+            // 
+            this.toolStripSeparator71.Name = "toolStripSeparator71";
+            this.toolStripSeparator71.Size = new System.Drawing.Size(6, 25);
+            // 
+            // btnOrdersUnlock
+            // 
+            this.btnOrdersUnlock.Image = ((System.Drawing.Image)(resources.GetObject("btnOrdersUnlock.Image")));
+            this.btnOrdersUnlock.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnOrdersUnlock.Name = "btnOrdersUnlock";
+            this.btnOrdersUnlock.Size = new System.Drawing.Size(64, 22);
+            this.btnOrdersUnlock.Text = "Unlock";
+            this.btnOrdersUnlock.Click += new System.EventHandler(this.miOrdersUnlock_Click);
+            // 
             // panel2
             // 
             this.panel2.Controls.Add(this.cboxOrdersLaboratory);
@@ -6041,6 +6079,15 @@
             this.sampleInfoForSelectedToolStripMenuItem.Name = "sampleInfoForSelectedToolStripMenuItem";
             this.sampleInfoForSelectedToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.sampleInfoForSelectedToolStripMenuItem.Text = "Sample info";
+            // 
+            // btnSamplesUnlock
+            // 
+            this.btnSamplesUnlock.Image = ((System.Drawing.Image)(resources.GetObject("btnSamplesUnlock.Image")));
+            this.btnSamplesUnlock.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSamplesUnlock.Name = "btnSamplesUnlock";
+            this.btnSamplesUnlock.Size = new System.Drawing.Size(64, 22);
+            this.btnSamplesUnlock.Text = "Unlock";
+            this.btnSamplesUnlock.Click += new System.EventHandler(this.miSamplesUnlock_Click);
             // 
             // panel78
             // 
@@ -9306,10 +9353,10 @@
             this.tabPrepAnalPreps.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.tabPrepAnalPreps.Controls.Add(this.panel10);
             this.tabPrepAnalPreps.Controls.Add(this.splitContainer3);
-            this.tabPrepAnalPreps.Location = new System.Drawing.Point(4, 22);
+            this.tabPrepAnalPreps.Location = new System.Drawing.Point(4, 24);
             this.tabPrepAnalPreps.Name = "tabPrepAnalPreps";
             this.tabPrepAnalPreps.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPrepAnalPreps.Size = new System.Drawing.Size(732, 600);
+            this.tabPrepAnalPreps.Size = new System.Drawing.Size(732, 598);
             this.tabPrepAnalPreps.TabIndex = 3;
             this.tabPrepAnalPreps.Text = "Preparations";
             // 
@@ -9320,7 +9367,7 @@
             this.panel10.Controls.Add(this.btnPrepAnalPrepUpdate);
             this.panel10.Controls.Add(this.label23);
             this.panel10.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel10.Location = new System.Drawing.Point(3, 571);
+            this.panel10.Location = new System.Drawing.Point(3, 569);
             this.panel10.Name = "panel10";
             this.panel10.Size = new System.Drawing.Size(726, 26);
             this.panel10.TabIndex = 1;
@@ -9809,10 +9856,10 @@
             this.tabPrepAnalAnalysis.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.tabPrepAnalAnalysis.Controls.Add(this.panel76);
             this.tabPrepAnalAnalysis.Controls.Add(this.panel63);
-            this.tabPrepAnalAnalysis.Location = new System.Drawing.Point(4, 22);
+            this.tabPrepAnalAnalysis.Location = new System.Drawing.Point(4, 24);
             this.tabPrepAnalAnalysis.Name = "tabPrepAnalAnalysis";
             this.tabPrepAnalAnalysis.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPrepAnalAnalysis.Size = new System.Drawing.Size(732, 600);
+            this.tabPrepAnalAnalysis.Size = new System.Drawing.Size(732, 598);
             this.tabPrepAnalAnalysis.TabIndex = 4;
             this.tabPrepAnalAnalysis.Text = "Analyses";
             // 
@@ -9823,7 +9870,7 @@
             this.panel76.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel76.Location = new System.Drawing.Point(3, 249);
             this.panel76.Name = "panel76";
-            this.panel76.Size = new System.Drawing.Size(726, 348);
+            this.panel76.Size = new System.Drawing.Size(726, 346);
             this.panel76.TabIndex = 3;
             // 
             // panel9
@@ -9833,7 +9880,7 @@
             this.panel9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel9.Location = new System.Drawing.Point(0, 0);
             this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(726, 322);
+            this.panel9.Size = new System.Drawing.Size(726, 320);
             this.panel9.TabIndex = 4;
             // 
             // gridPrepAnalResults
@@ -9851,7 +9898,7 @@
             this.gridPrepAnalResults.ReadOnly = true;
             this.gridPrepAnalResults.RowHeadersVisible = false;
             this.gridPrepAnalResults.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridPrepAnalResults.Size = new System.Drawing.Size(726, 297);
+            this.gridPrepAnalResults.Size = new System.Drawing.Size(726, 295);
             this.gridPrepAnalResults.TabIndex = 0;
             // 
             // toolsSampleResRes
@@ -9923,7 +9970,7 @@
             this.panel14.Controls.Add(this.btnPrepAnalAnalDiscard);
             this.panel14.Controls.Add(this.btnPrepAnalAnalUpdate);
             this.panel14.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel14.Location = new System.Drawing.Point(0, 322);
+            this.panel14.Location = new System.Drawing.Point(0, 320);
             this.panel14.Name = "panel14";
             this.panel14.Size = new System.Drawing.Size(726, 26);
             this.panel14.TabIndex = 5;
@@ -10328,53 +10375,6 @@
             this.btnBack.Text = "toolStripButton25";
             this.btnBack.ToolTipText = "Back";
             this.btnBack.Click += new System.EventHandler(this.miBack_Click);
-            // 
-            // toolStripSeparator70
-            // 
-            this.toolStripSeparator70.Name = "toolStripSeparator70";
-            this.toolStripSeparator70.Size = new System.Drawing.Size(209, 6);
-            // 
-            // miSamplesUnlock
-            // 
-            this.miSamplesUnlock.Name = "miSamplesUnlock";
-            this.miSamplesUnlock.Size = new System.Drawing.Size(212, 22);
-            this.miSamplesUnlock.Text = "&Unlock";
-            this.miSamplesUnlock.Click += new System.EventHandler(this.miSamplesUnlock_Click);
-            // 
-            // btnSamplesUnlock
-            // 
-            this.btnSamplesUnlock.Image = ((System.Drawing.Image)(resources.GetObject("btnSamplesUnlock.Image")));
-            this.btnSamplesUnlock.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSamplesUnlock.Name = "btnSamplesUnlock";
-            this.btnSamplesUnlock.Size = new System.Drawing.Size(64, 22);
-            this.btnSamplesUnlock.Text = "Unlock";
-            this.btnSamplesUnlock.Click += new System.EventHandler(this.miSamplesUnlock_Click);
-            // 
-            // toolStripSeparator71
-            // 
-            this.toolStripSeparator71.Name = "toolStripSeparator71";
-            this.toolStripSeparator71.Size = new System.Drawing.Size(6, 25);
-            // 
-            // toolStripSeparator72
-            // 
-            this.toolStripSeparator72.Name = "toolStripSeparator72";
-            this.toolStripSeparator72.Size = new System.Drawing.Size(149, 6);
-            // 
-            // miOrdersUnlock
-            // 
-            this.miOrdersUnlock.Name = "miOrdersUnlock";
-            this.miOrdersUnlock.Size = new System.Drawing.Size(152, 22);
-            this.miOrdersUnlock.Text = "&Unlock";
-            this.miOrdersUnlock.Click += new System.EventHandler(this.miOrdersUnlock_Click);
-            // 
-            // btnOrdersUnlock
-            // 
-            this.btnOrdersUnlock.Image = ((System.Drawing.Image)(resources.GetObject("btnOrdersUnlock.Image")));
-            this.btnOrdersUnlock.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnOrdersUnlock.Name = "btnOrdersUnlock";
-            this.btnOrdersUnlock.Size = new System.Drawing.Size(64, 22);
-            this.btnOrdersUnlock.Text = "Unlock";
-            this.btnOrdersUnlock.Click += new System.EventHandler(this.miOrdersUnlock_Click);
             // 
             // FormMain
             // 

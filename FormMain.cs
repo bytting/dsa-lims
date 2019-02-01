@@ -35,16 +35,15 @@ using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
 using System.Diagnostics;
-using System.Threading.Tasks;
 
 namespace DSA_lims
 {
     public partial class FormMain : Form
     {
         private ResourceManager r = null;
-
-        Action clearStatus = null;
+        
         int statusMessageTimeout = 20000;
+        System.Timers.Timer statusMessageTimer = null;
 
         private Guid selectedOrderId = Guid.Empty;
         private Guid selectedSampleId = Guid.Empty;
@@ -75,8 +74,6 @@ namespace DSA_lims
             tabsPrepAnal.ItemSize = new Size(0, 1);
             tabsPrepAnal.SizeMode = TabSizeMode.Fixed;
             tabsPrepAnal.SelectedTab = tabMenu;
-
-            clearStatus = () => { lblStatus.Text = ""; lblStatus.ForeColor = SystemColors.ControlText; };
 
             lblCurrentTab.Text = tabs.SelectedTab.Text;
             lblStatus.Text = "";
@@ -120,7 +117,13 @@ namespace DSA_lims
 
                 r = new ResourceManager("DSA_lims.lang_" + CultureInfo.CurrentUICulture.TwoLetterISOLanguageName, Assembly.GetExecutingAssembly());
                 Common.Log.Info("Setting language " + CultureInfo.CurrentUICulture.TwoLetterISOLanguageName);
-                SetLanguageLabels(r);                
+                SetLanguageLabels(r);
+
+                statusMessageTimer = new System.Timers.Timer(statusMessageTimeout);
+                statusMessageTimer.SynchronizingObject = this;
+                statusMessageTimer.Elapsed += StatusMessageTimer_Elapsed;
+                statusMessageTimer.AutoReset = false;
+                statusMessageTimer.Enabled = false;
             }
             catch (Exception ex)
             {
@@ -129,6 +132,11 @@ namespace DSA_lims
                 MessageBox.Show(ex.Message);
                 Environment.Exit(1);
             }
+        }
+
+        private void StatusMessageTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            lblStatus.Text = "";
         }
 
         private void FormMain_Shown(object sender, EventArgs e)
@@ -149,16 +157,28 @@ namespace DSA_lims
                 if(tabsPrepAnal.SelectedTab == tabPrepAnalAnalysis)
                 {
                     if (analysis.IsDirty)
+                    {
                         btnPrepAnalAnalUpdate.ForeColor = Color.Red;
+                        btnPrepAnalAnalDiscard.ForeColor = Color.Red;
+                    }
                     else
+                    {
                         btnPrepAnalAnalUpdate.ForeColor = SystemColors.ControlText;
+                        btnPrepAnalAnalDiscard.ForeColor = SystemColors.ControlText;
+                    }
                 }
                 else if (tabsPrepAnal.SelectedTab == tabPrepAnalPreps)
                 {
                     if (preparation.IsDirty)
+                    {
                         btnPrepAnalPrepUpdate.ForeColor = Color.Red;
+                        btnPrepAnalPrepDiscard.ForeColor = Color.Red;
+                    }
                     else
+                    {
                         btnPrepAnalPrepUpdate.ForeColor = SystemColors.ControlText;
+                        btnPrepAnalPrepDiscard.ForeColor = SystemColors.ControlText;
+                    }
                 }
             }
         }
@@ -291,7 +311,7 @@ namespace DSA_lims
 
                 preparation.Clear();
                 analysis.Clear();
-
+                
                 Common.Log.Info("Application initialized successfully");
 
                 return true;
@@ -302,12 +322,6 @@ namespace DSA_lims
                 MessageBox.Show(ex.Message);
                 return false;
             }
-        }
-
-        public async Task ClearStatus()
-        {
-            await Task.Delay(statusMessageTimeout);
-            clearStatus();
         }
 
         private bool DiscardUnsavedChanges()
@@ -393,7 +407,8 @@ namespace DSA_lims
                     break;
             }
 
-            ClearStatus();
+            statusMessageTimer.Stop();
+            statusMessageTimer.Start();
         }
 
         private void HideMenuItems()

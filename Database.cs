@@ -1214,6 +1214,7 @@ update analysis_result set
 	updated_by = @updated_by
 where id = @id
 ";
+                        cmd.CommandType = CommandType.Text;
                         cmd.Parameters.Clear();
                         cmd.Parameters.AddWithValue("@id", r.Id);
                         cmd.Parameters.AddWithValue("@activity", r.Activity);

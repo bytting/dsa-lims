@@ -815,9 +815,10 @@
             this.btnPrepAnalSampleUpdate = new System.Windows.Forms.Button();
             this.tabPrepAnalPreps = new System.Windows.Forms.TabPage();
             this.panel10 = new System.Windows.Forms.Panel();
-            this.label23 = new System.Windows.Forms.Label();
+            this.btnPrepAnalPrepDiscard = new System.Windows.Forms.Button();
             this.cboxPrepAnalPrepWorkflowStatus = new System.Windows.Forms.ComboBox();
             this.btnPrepAnalPrepUpdate = new System.Windows.Forms.Button();
+            this.label23 = new System.Windows.Forms.Label();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel60 = new System.Windows.Forms.Panel();
@@ -871,8 +872,9 @@
             this.btnPrepAnalRemoveResult = new System.Windows.Forms.ToolStripButton();
             this.toolStripLabel57 = new System.Windows.Forms.ToolStripLabel();
             this.panel14 = new System.Windows.Forms.Panel();
-            this.label55 = new System.Windows.Forms.Label();
             this.cboxPrepAnalAnalWorkflowStatus = new System.Windows.Forms.ComboBox();
+            this.label55 = new System.Windows.Forms.Label();
+            this.btnPrepAnalAnalDiscard = new System.Windows.Forms.Button();
             this.btnPrepAnalAnalUpdate = new System.Windows.Forms.Button();
             this.panel63 = new System.Windows.Forms.Panel();
             this.splitContainer21 = new System.Windows.Forms.SplitContainer();
@@ -906,8 +908,13 @@
             this.btnMenu = new System.Windows.Forms.ToolStripButton();
             this.lblCurrentTab = new System.Windows.Forms.ToolStripLabel();
             this.btnBack = new System.Windows.Forms.ToolStripButton();
-            this.btnPrepAnalAnalDiscard = new System.Windows.Forms.Button();
-            this.btnPrepAnalPrepDiscard = new System.Windows.Forms.Button();
+            this.toolStripSeparator70 = new System.Windows.Forms.ToolStripSeparator();
+            this.miSamplesUnlock = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnSamplesUnlock = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator71 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator72 = new System.Windows.Forms.ToolStripSeparator();
+            this.miOrdersUnlock = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnOrdersUnlock = new System.Windows.Forms.ToolStripButton();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tabs.SuspendLayout();
@@ -1259,19 +1266,19 @@
             // miLogout
             // 
             this.miLogout.Name = "miLogout";
-            this.miLogout.Size = new System.Drawing.Size(152, 22);
+            this.miLogout.Size = new System.Drawing.Size(112, 22);
             this.miLogout.Text = "&Logout";
             this.miLogout.Click += new System.EventHandler(this.miLogout_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(109, 6);
             // 
             // miExit
             // 
             this.miExit.Name = "miExit";
-            this.miExit.Size = new System.Drawing.Size(152, 22);
+            this.miExit.Size = new System.Drawing.Size(112, 22);
             this.miExit.Text = "E&xit";
             this.miExit.Click += new System.EventHandler(this.miExit_Click);
             // 
@@ -1684,7 +1691,9 @@
             this.miOrdersEdit,
             this.miOrdersDelete,
             this.toolStripSeparator65,
-            this.miOrdersClearAllFilters});
+            this.miOrdersClearAllFilters,
+            this.toolStripSeparator72,
+            this.miOrdersUnlock});
             this.miOrders.Name = "miOrders";
             this.miOrders.Size = new System.Drawing.Size(54, 20);
             this.miOrders.Text = "Or&ders";
@@ -1692,33 +1701,33 @@
             // miOrdersNew
             // 
             this.miOrdersNew.Name = "miOrdersNew";
-            this.miOrdersNew.Size = new System.Drawing.Size(148, 22);
+            this.miOrdersNew.Size = new System.Drawing.Size(152, 22);
             this.miOrdersNew.Text = "&New order";
             this.miOrdersNew.Click += new System.EventHandler(this.miOrdersNew_Click);
             // 
             // miOrdersEdit
             // 
             this.miOrdersEdit.Name = "miOrdersEdit";
-            this.miOrdersEdit.Size = new System.Drawing.Size(148, 22);
+            this.miOrdersEdit.Size = new System.Drawing.Size(152, 22);
             this.miOrdersEdit.Text = "&Edit order";
             this.miOrdersEdit.Click += new System.EventHandler(this.miOrdersEdit_Click);
             // 
             // miOrdersDelete
             // 
             this.miOrdersDelete.Name = "miOrdersDelete";
-            this.miOrdersDelete.Size = new System.Drawing.Size(148, 22);
+            this.miOrdersDelete.Size = new System.Drawing.Size(152, 22);
             this.miOrdersDelete.Text = "&Delete order";
             this.miOrdersDelete.Click += new System.EventHandler(this.miOrdersDelete_Click);
             // 
             // toolStripSeparator65
             // 
             this.toolStripSeparator65.Name = "toolStripSeparator65";
-            this.toolStripSeparator65.Size = new System.Drawing.Size(145, 6);
+            this.toolStripSeparator65.Size = new System.Drawing.Size(149, 6);
             // 
             // miOrdersClearAllFilters
             // 
             this.miOrdersClearAllFilters.Name = "miOrdersClearAllFilters";
-            this.miOrdersClearAllFilters.Size = new System.Drawing.Size(148, 22);
+            this.miOrdersClearAllFilters.Size = new System.Drawing.Size(152, 22);
             this.miOrdersClearAllFilters.Text = "&Clear all filters";
             this.miOrdersClearAllFilters.Click += new System.EventHandler(this.miOrdersClearAllFilters_Click);
             // 
@@ -1736,7 +1745,9 @@
             this.miSamplesSetOrder,
             this.miSamplesSet,
             this.miSamplesPrepAnal,
-            this.printToolStripMenuItem});
+            this.printToolStripMenuItem,
+            this.toolStripSeparator70,
+            this.miSamplesUnlock});
             this.miSamples.Name = "miSamples";
             this.miSamples.Size = new System.Drawing.Size(63, 20);
             this.miSamples.Text = "Sa&mples";
@@ -5638,7 +5649,9 @@
             this.toolStripSeparator64,
             this.btnOrdersNew,
             this.btnOrdersEdit,
-            this.btnOrdersDelete});
+            this.btnOrdersDelete,
+            this.toolStripSeparator71,
+            this.btnOrdersUnlock});
             this.toolStrip9.Location = new System.Drawing.Point(3, 88);
             this.toolStrip9.Name = "toolStrip9";
             this.toolStrip9.Size = new System.Drawing.Size(1122, 25);
@@ -5846,7 +5859,8 @@
             this.btnSamplesSetOrder,
             this.toolStripDropDownButton2,
             this.btnSamplesPrepAnal,
-            this.toolStripDropDownButton4});
+            this.toolStripDropDownButton4,
+            this.btnSamplesUnlock});
             this.toolsSamples.Location = new System.Drawing.Point(3, 104);
             this.toolsSamples.Name = "toolsSamples";
             this.toolsSamples.Size = new System.Drawing.Size(1122, 25);
@@ -9292,10 +9306,10 @@
             this.tabPrepAnalPreps.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.tabPrepAnalPreps.Controls.Add(this.panel10);
             this.tabPrepAnalPreps.Controls.Add(this.splitContainer3);
-            this.tabPrepAnalPreps.Location = new System.Drawing.Point(4, 24);
+            this.tabPrepAnalPreps.Location = new System.Drawing.Point(4, 22);
             this.tabPrepAnalPreps.Name = "tabPrepAnalPreps";
             this.tabPrepAnalPreps.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPrepAnalPreps.Size = new System.Drawing.Size(732, 598);
+            this.tabPrepAnalPreps.Size = new System.Drawing.Size(732, 600);
             this.tabPrepAnalPreps.TabIndex = 3;
             this.tabPrepAnalPreps.Text = "Preparations";
             // 
@@ -9306,20 +9320,21 @@
             this.panel10.Controls.Add(this.btnPrepAnalPrepUpdate);
             this.panel10.Controls.Add(this.label23);
             this.panel10.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel10.Location = new System.Drawing.Point(3, 569);
+            this.panel10.Location = new System.Drawing.Point(3, 571);
             this.panel10.Name = "panel10";
             this.panel10.Size = new System.Drawing.Size(726, 26);
             this.panel10.TabIndex = 1;
             // 
-            // label23
+            // btnPrepAnalPrepDiscard
             // 
-            this.label23.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label23.Location = new System.Drawing.Point(0, 0);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(113, 26);
-            this.label23.TabIndex = 0;
-            this.label23.Text = "Preparation status";
-            this.label23.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnPrepAnalPrepDiscard.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnPrepAnalPrepDiscard.Location = new System.Drawing.Point(446, 0);
+            this.btnPrepAnalPrepDiscard.Name = "btnPrepAnalPrepDiscard";
+            this.btnPrepAnalPrepDiscard.Size = new System.Drawing.Size(140, 26);
+            this.btnPrepAnalPrepDiscard.TabIndex = 10;
+            this.btnPrepAnalPrepDiscard.Text = "Discard changes";
+            this.btnPrepAnalPrepDiscard.UseVisualStyleBackColor = true;
+            this.btnPrepAnalPrepDiscard.Click += new System.EventHandler(this.btnPrepAnalPrepDiscard_Click);
             // 
             // cboxPrepAnalPrepWorkflowStatus
             // 
@@ -9346,6 +9361,16 @@
             this.btnPrepAnalPrepUpdate.Text = "Save preparation";
             this.btnPrepAnalPrepUpdate.UseVisualStyleBackColor = true;
             this.btnPrepAnalPrepUpdate.Click += new System.EventHandler(this.btnPrepAnalPrepUpdate_Click);
+            // 
+            // label23
+            // 
+            this.label23.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label23.Location = new System.Drawing.Point(0, 0);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(113, 26);
+            this.label23.TabIndex = 0;
+            this.label23.Text = "Preparation status";
+            this.label23.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // splitContainer3
             // 
@@ -9784,10 +9809,10 @@
             this.tabPrepAnalAnalysis.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.tabPrepAnalAnalysis.Controls.Add(this.panel76);
             this.tabPrepAnalAnalysis.Controls.Add(this.panel63);
-            this.tabPrepAnalAnalysis.Location = new System.Drawing.Point(4, 24);
+            this.tabPrepAnalAnalysis.Location = new System.Drawing.Point(4, 22);
             this.tabPrepAnalAnalysis.Name = "tabPrepAnalAnalysis";
             this.tabPrepAnalAnalysis.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPrepAnalAnalysis.Size = new System.Drawing.Size(732, 598);
+            this.tabPrepAnalAnalysis.Size = new System.Drawing.Size(732, 600);
             this.tabPrepAnalAnalysis.TabIndex = 4;
             this.tabPrepAnalAnalysis.Text = "Analyses";
             // 
@@ -9798,7 +9823,7 @@
             this.panel76.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel76.Location = new System.Drawing.Point(3, 249);
             this.panel76.Name = "panel76";
-            this.panel76.Size = new System.Drawing.Size(726, 346);
+            this.panel76.Size = new System.Drawing.Size(726, 348);
             this.panel76.TabIndex = 3;
             // 
             // panel9
@@ -9808,7 +9833,7 @@
             this.panel9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel9.Location = new System.Drawing.Point(0, 0);
             this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(726, 320);
+            this.panel9.Size = new System.Drawing.Size(726, 322);
             this.panel9.TabIndex = 4;
             // 
             // gridPrepAnalResults
@@ -9826,7 +9851,7 @@
             this.gridPrepAnalResults.ReadOnly = true;
             this.gridPrepAnalResults.RowHeadersVisible = false;
             this.gridPrepAnalResults.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridPrepAnalResults.Size = new System.Drawing.Size(726, 295);
+            this.gridPrepAnalResults.Size = new System.Drawing.Size(726, 297);
             this.gridPrepAnalResults.TabIndex = 0;
             // 
             // toolsSampleResRes
@@ -9898,20 +9923,10 @@
             this.panel14.Controls.Add(this.btnPrepAnalAnalDiscard);
             this.panel14.Controls.Add(this.btnPrepAnalAnalUpdate);
             this.panel14.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel14.Location = new System.Drawing.Point(0, 320);
+            this.panel14.Location = new System.Drawing.Point(0, 322);
             this.panel14.Name = "panel14";
             this.panel14.Size = new System.Drawing.Size(726, 26);
             this.panel14.TabIndex = 5;
-            // 
-            // label55
-            // 
-            this.label55.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label55.Location = new System.Drawing.Point(0, 0);
-            this.label55.Name = "label55";
-            this.label55.Size = new System.Drawing.Size(90, 26);
-            this.label55.TabIndex = 0;
-            this.label55.Text = "Analysis status";
-            this.label55.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // cboxPrepAnalAnalWorkflowStatus
             // 
@@ -9925,6 +9940,27 @@
             this.cboxPrepAnalAnalWorkflowStatus.TabIndex = 6;
             this.cboxPrepAnalAnalWorkflowStatus.ValueMember = "Id";
             this.cboxPrepAnalAnalWorkflowStatus.SelectedIndexChanged += new System.EventHandler(this.cboxPrepAnalAnalWorkflowStatus_SelectedIndexChanged);
+            // 
+            // label55
+            // 
+            this.label55.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label55.Location = new System.Drawing.Point(0, 0);
+            this.label55.Name = "label55";
+            this.label55.Size = new System.Drawing.Size(90, 26);
+            this.label55.TabIndex = 0;
+            this.label55.Text = "Analysis status";
+            this.label55.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // btnPrepAnalAnalDiscard
+            // 
+            this.btnPrepAnalAnalDiscard.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnPrepAnalAnalDiscard.Location = new System.Drawing.Point(446, 0);
+            this.btnPrepAnalAnalDiscard.Name = "btnPrepAnalAnalDiscard";
+            this.btnPrepAnalAnalDiscard.Size = new System.Drawing.Size(140, 26);
+            this.btnPrepAnalAnalDiscard.TabIndex = 8;
+            this.btnPrepAnalAnalDiscard.Text = "Discard changes";
+            this.btnPrepAnalAnalDiscard.UseVisualStyleBackColor = true;
+            this.btnPrepAnalAnalDiscard.Click += new System.EventHandler(this.btnPrepAnalAnalDiscard_Click);
             // 
             // btnPrepAnalAnalUpdate
             // 
@@ -10163,7 +10199,7 @@
             // miImportLISFile2
             // 
             this.miImportLISFile2.Name = "miImportLISFile2";
-            this.miImportLISFile2.Size = new System.Drawing.Size(152, 22);
+            this.miImportLISFile2.Size = new System.Drawing.Size(147, 22);
             this.miImportLISFile2.Text = "Import LIS file";
             this.miImportLISFile2.Click += new System.EventHandler(this.miImportLISFile_Click);
             // 
@@ -10293,27 +10329,52 @@
             this.btnBack.ToolTipText = "Back";
             this.btnBack.Click += new System.EventHandler(this.miBack_Click);
             // 
-            // btnPrepAnalAnalDiscard
+            // toolStripSeparator70
             // 
-            this.btnPrepAnalAnalDiscard.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnPrepAnalAnalDiscard.Location = new System.Drawing.Point(446, 0);
-            this.btnPrepAnalAnalDiscard.Name = "btnPrepAnalAnalDiscard";
-            this.btnPrepAnalAnalDiscard.Size = new System.Drawing.Size(140, 26);
-            this.btnPrepAnalAnalDiscard.TabIndex = 8;
-            this.btnPrepAnalAnalDiscard.Text = "Discard changes";
-            this.btnPrepAnalAnalDiscard.UseVisualStyleBackColor = true;
-            this.btnPrepAnalAnalDiscard.Click += new System.EventHandler(this.btnPrepAnalAnalDiscard_Click);
+            this.toolStripSeparator70.Name = "toolStripSeparator70";
+            this.toolStripSeparator70.Size = new System.Drawing.Size(209, 6);
             // 
-            // btnPrepAnalPrepDiscard
+            // miSamplesUnlock
             // 
-            this.btnPrepAnalPrepDiscard.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnPrepAnalPrepDiscard.Location = new System.Drawing.Point(446, 0);
-            this.btnPrepAnalPrepDiscard.Name = "btnPrepAnalPrepDiscard";
-            this.btnPrepAnalPrepDiscard.Size = new System.Drawing.Size(140, 26);
-            this.btnPrepAnalPrepDiscard.TabIndex = 10;
-            this.btnPrepAnalPrepDiscard.Text = "Discard changes";
-            this.btnPrepAnalPrepDiscard.UseVisualStyleBackColor = true;
-            this.btnPrepAnalPrepDiscard.Click += new System.EventHandler(this.btnPrepAnalPrepDiscard_Click);
+            this.miSamplesUnlock.Name = "miSamplesUnlock";
+            this.miSamplesUnlock.Size = new System.Drawing.Size(212, 22);
+            this.miSamplesUnlock.Text = "&Unlock";
+            this.miSamplesUnlock.Click += new System.EventHandler(this.miSamplesUnlock_Click);
+            // 
+            // btnSamplesUnlock
+            // 
+            this.btnSamplesUnlock.Image = ((System.Drawing.Image)(resources.GetObject("btnSamplesUnlock.Image")));
+            this.btnSamplesUnlock.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSamplesUnlock.Name = "btnSamplesUnlock";
+            this.btnSamplesUnlock.Size = new System.Drawing.Size(64, 22);
+            this.btnSamplesUnlock.Text = "Unlock";
+            this.btnSamplesUnlock.Click += new System.EventHandler(this.miSamplesUnlock_Click);
+            // 
+            // toolStripSeparator71
+            // 
+            this.toolStripSeparator71.Name = "toolStripSeparator71";
+            this.toolStripSeparator71.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripSeparator72
+            // 
+            this.toolStripSeparator72.Name = "toolStripSeparator72";
+            this.toolStripSeparator72.Size = new System.Drawing.Size(149, 6);
+            // 
+            // miOrdersUnlock
+            // 
+            this.miOrdersUnlock.Name = "miOrdersUnlock";
+            this.miOrdersUnlock.Size = new System.Drawing.Size(152, 22);
+            this.miOrdersUnlock.Text = "&Unlock";
+            this.miOrdersUnlock.Click += new System.EventHandler(this.miOrdersUnlock_Click);
+            // 
+            // btnOrdersUnlock
+            // 
+            this.btnOrdersUnlock.Image = ((System.Drawing.Image)(resources.GetObject("btnOrdersUnlock.Image")));
+            this.btnOrdersUnlock.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnOrdersUnlock.Name = "btnOrdersUnlock";
+            this.btnOrdersUnlock.Size = new System.Drawing.Size(64, 22);
+            this.btnOrdersUnlock.Text = "Unlock";
+            this.btnOrdersUnlock.Click += new System.EventHandler(this.miOrdersUnlock_Click);
             // 
             // FormMain
             // 
@@ -11689,6 +11750,13 @@
         private System.Windows.Forms.Panel panel14;
         private System.Windows.Forms.Button btnPrepAnalAnalDiscard;
         private System.Windows.Forms.Button btnPrepAnalPrepDiscard;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator70;
+        private System.Windows.Forms.ToolStripMenuItem miSamplesUnlock;
+        private System.Windows.Forms.ToolStripButton btnSamplesUnlock;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator72;
+        private System.Windows.Forms.ToolStripMenuItem miOrdersUnlock;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator71;
+        private System.Windows.Forms.ToolStripButton btnOrdersUnlock;
     }
 }
 

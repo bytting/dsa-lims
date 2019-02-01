@@ -584,6 +584,32 @@ from role r
             cmd.ExecuteNonQuery();
         }
 
+        public static bool IsOrderApproved(SqlConnection conn, SqlTransaction trans, Guid orderId)
+        {
+            bool apprCust = false;
+            bool apprLab = false;
+
+            using (SqlDataReader reader = GetDataReader(conn, trans, "select approved_customer, approved_laboratory from assignment where id = @id", CommandType.Text, 
+                new SqlParameter("@id", orderId)))
+            {
+                if (!reader.HasRows)
+                    return false;
+
+                reader.Read();
+
+                if (!IsValidField(reader["approved_customer"]))
+                    return false;
+
+                if (!IsValidField(reader["approved_laboratory"]))
+                    return false;
+
+                apprCust = Convert.ToBoolean(reader["approved_customer"]);
+                apprLab = Convert.ToBoolean(reader["approved_laboratory"]);
+            }
+
+            return apprCust && apprLab;
+        }
+
         public static void GetOrderRequiredInventory(SqlConnection conn, SqlTransaction trans, Guid assignmentId, out int nSamples, out int nPreparations, out int nAnalyses)
         {
             nSamples = nPreparations = nAnalyses = 0;
@@ -621,9 +647,12 @@ where a.id = @aid
                 {
                     reader.Read();
 
-                    nSamples = Convert.ToInt32(reader["nsamples"]);
-                    nPreparations = Convert.ToInt32(reader["npreparations"]);
-                    nAnalyses = Convert.ToInt32(reader["nanalyses"]);
+                    if(IsValidField(reader["nsamples"]))
+                        nSamples = Convert.ToInt32(reader["nsamples"]);
+                    if (IsValidField(reader["npreparations"]))
+                        nPreparations = Convert.ToInt32(reader["npreparations"]);
+                    if (IsValidField(reader["nanalyses"]))
+                        nAnalyses = Convert.ToInt32(reader["nanalyses"]);
                 }
             }
         }
@@ -656,9 +685,12 @@ select
                 {
                     reader.Read();
 
-                    nSamples = Convert.ToInt32(reader["nsamples"]);
-                    nPreparations = Convert.ToInt32(reader["npreparations"]);
-                    nAnalyses = Convert.ToInt32(reader["nanalyses"]);
+                    if(IsValidField(reader["nsamples"]))
+                        nSamples = Convert.ToInt32(reader["nsamples"]);
+                    if (IsValidField(reader["npreparations"]))
+                        nPreparations = Convert.ToInt32(reader["npreparations"]);
+                    if (IsValidField(reader["nanalyses"]))
+                        nAnalyses = Convert.ToInt32(reader["nanalyses"]);
                 }
             }
         }

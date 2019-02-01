@@ -44,7 +44,7 @@ namespace DSA_lims
         private ResourceManager r = null;
 
         Action clearStatus = null;
-        int statusMessageTimeout = 8000;
+        int statusMessageTimeout = 20000;
 
         private Guid selectedOrderId = Guid.Empty;
         private Guid selectedSampleId = Guid.Empty;
@@ -396,12 +396,6 @@ namespace DSA_lims
             ClearStatus();
         }
 
-        /*private void ClearStatusMessage()
-        {
-            lblStatus.Text = "";
-            lblStatus.ForeColor = SystemColors.ControlText;
-        }*/
-
         private void HideMenuItems()
         {
             miSample.Visible = miOrder.Visible = miSearch.Visible = miMeta.Visible = miOrders.Visible 
@@ -557,6 +551,8 @@ namespace DSA_lims
             miPreparationMethodsNew.Enabled = miPreparationMethodEdit.Enabled = miPreparationMethodDelete.Enabled = btnTypeRelSampTypePrepMethAdd.Enabled = btnPreparationMethodDelete.Enabled = isAdmin;
             miSamplesSetOrder.Enabled = btnSamplesSetOrder.Enabled = btnSampleAddSampleToOrder.Enabled = isAdmin;
             miSamplesPrepAnal.Enabled = btnSamplesPrepAnal.Enabled = btnSampleGoToPrepAnal.Enabled = isAdmin;
+            miSamplesUnlock.Enabled = btnSamplesUnlock.Enabled = isAdmin;
+            miOrdersUnlock.Enabled = btnOrdersUnlock.Enabled = isAdmin;
 
             // FIXME: Accreditation rules
 
@@ -4746,17 +4742,26 @@ select
             }
 
             SqlConnection conn = null;
+            SqlTransaction trans = null;
+
             try
             {
                 conn = DB.OpenConnection();
+                trans = conn.BeginTransaction();
 
-                if((int)cboxOrderStatus.SelectedValue == 2)
+                if((int)cboxOrderStatus.SelectedValue == WorkflowStatus.Complete)
                 {
+                    if(!DB.IsOrderApproved(conn, trans, selectedOrderId))
+                    {
+                        MessageBox.Show("Can not complete an order that is not approved");
+                        return;
+                    }
+
                     int nReqSamples, nReqPreparations, nReqAnalyses;
-                    DB.GetOrderRequiredInventory(conn, null, selectedOrderId, out nReqSamples, out nReqPreparations, out nReqAnalyses);
+                    DB.GetOrderRequiredInventory(conn, trans, selectedOrderId, out nReqSamples, out nReqPreparations, out nReqAnalyses);
 
                     int nCurrSamples, nCurrPreparations, nCurrAnalyses;
-                    DB.GetOrderCurrentInventory(conn, null, selectedOrderId, out nCurrSamples, out nCurrPreparations, out nCurrAnalyses);
+                    DB.GetOrderCurrentInventory(conn, trans, selectedOrderId, out nCurrSamples, out nCurrPreparations, out nCurrAnalyses);
 
                     if(nCurrSamples != nReqSamples)
                     {
@@ -4784,20 +4789,23 @@ update assignment set
     last_workflow_status_by = @last_workflow_status_by
 where id = @id
 ";
-                SqlCommand cmd = new SqlCommand(query, conn);
+                SqlCommand cmd = new SqlCommand(query, conn, trans);
                 cmd.Parameters.AddWithValue("@workflow_status_id", DB.MakeParam(typeof(int), cboxOrderStatus.SelectedValue));
                 cmd.Parameters.AddWithValue("@last_workflow_status_date", DateTime.Now);
                 cmd.Parameters.AddWithValue("@last_workflow_status_by", Common.Username);
                 cmd.Parameters.AddWithValue("@id", selectedOrderId);
                 cmd.ExecuteNonQuery();
 
-                tbOrderLastWorkflowStatusBy.Text = DB.GetAccountNameFromUsername(conn, null, Common.Username);
+                tbOrderLastWorkflowStatusBy.Text = DB.GetAccountNameFromUsername(conn, trans, Common.Username);
 
-                SetStatusMessage("Order status saved for " + tbOrderName.Text, StatusMessageType.Success);
+                trans.Commit();
+                SetStatusMessage("Order status saved for " + tbOrderName.Text);
             }
             catch(Exception ex)
             {
+                trans?.Rollback();
                 Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
             }
             finally
             {
@@ -5853,6 +5861,56 @@ where id = @id
             }
 
             SetStatusMessage("Changes discarded for preparation");
+        }
+
+        private void miSamplesUnlock_Click(object sender, EventArgs e)
+        {
+            if (gridSamples.SelectedRows.Count < 1)
+            {
+                MessageBox.Show("You must select a sample first");
+                return;
+            }
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                SqlCommand cmd = new SqlCommand("update sample set locked_by = @locked_by where id = @id", conn);
+
+                foreach (DataGridViewRow row in gridSamples.SelectedRows)
+                {
+                    Guid sampleId = Guid.Parse(row.Cells["id"].Value.ToString());
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.AddWithValue("@locked_by", DBNull.Value);
+                    cmd.Parameters.AddWithValue("@id", sampleId);
+                    cmd.ExecuteNonQuery();
+                }
+
+                PopulateSamples();
+            }
+        }
+
+        private void miOrdersUnlock_Click(object sender, EventArgs e)
+        {
+            if (gridOrders.SelectedRows.Count < 1)
+            {
+                MessageBox.Show("You must select one or more samples first");
+                return;
+            }
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                SqlCommand cmd = new SqlCommand("update assignment set locked_by = @locked_by where id = @id", conn);
+
+                foreach (DataGridViewRow row in gridOrders.SelectedRows)
+                {
+                    Guid orderId = Guid.Parse(row.Cells["id"].Value.ToString());
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.AddWithValue("@locked_by", DBNull.Value);
+                    cmd.Parameters.AddWithValue("@id", orderId);
+                    cmd.ExecuteNonQuery();
+                }
+
+                PopulateOrders();
+            }
         }
     }    
 }

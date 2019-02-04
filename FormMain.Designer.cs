@@ -7304,7 +7304,7 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.tabsPrepAnal);
-            this.splitContainer2.Size = new System.Drawing.Size(1122, 628);
+            this.splitContainer2.Size = new System.Drawing.Size(1122, 626);
             this.splitContainer2.SplitterDistance = 379;
             this.splitContainer2.SplitterWidth = 3;
             this.splitContainer2.TabIndex = 4;
@@ -7317,7 +7317,7 @@
             this.panel31.Location = new System.Drawing.Point(0, 25);
             this.panel31.Name = "panel31";
             this.panel31.Padding = new System.Windows.Forms.Padding(12);
-            this.panel31.Size = new System.Drawing.Size(379, 603);
+            this.panel31.Size = new System.Drawing.Size(379, 601);
             this.panel31.TabIndex = 1;
             // 
             // treePrepAnal
@@ -7335,7 +7335,7 @@
             this.treePrepAnal.PathSeparator = "/";
             this.treePrepAnal.ShowNodeToolTips = true;
             this.treePrepAnal.ShowRootLines = false;
-            this.treePrepAnal.Size = new System.Drawing.Size(355, 579);
+            this.treePrepAnal.Size = new System.Drawing.Size(355, 577);
             this.treePrepAnal.TabIndex = 0;
             this.treePrepAnal.DrawNode += new System.Windows.Forms.DrawTreeNodeEventHandler(this.treePrepAnal_DrawNode);
             this.treePrepAnal.BeforeSelect += new System.Windows.Forms.TreeViewCancelEventHandler(this.treePrepAnal_BeforeSelect);
@@ -7363,7 +7363,7 @@
             this.tabsPrepAnal.Margin = new System.Windows.Forms.Padding(0);
             this.tabsPrepAnal.Name = "tabsPrepAnal";
             this.tabsPrepAnal.SelectedIndex = 0;
-            this.tabsPrepAnal.Size = new System.Drawing.Size(740, 628);
+            this.tabsPrepAnal.Size = new System.Drawing.Size(740, 626);
             this.tabsPrepAnal.TabIndex = 3;
             // 
             // tabPrepAnalSample
@@ -7376,7 +7376,7 @@
             this.tabPrepAnalSample.Location = new System.Drawing.Point(4, 24);
             this.tabPrepAnalSample.Name = "tabPrepAnalSample";
             this.tabPrepAnalSample.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPrepAnalSample.Size = new System.Drawing.Size(732, 600);
+            this.tabPrepAnalSample.Size = new System.Drawing.Size(732, 598);
             this.tabPrepAnalSample.TabIndex = 5;
             this.tabPrepAnalSample.Text = "Sample";
             // 
@@ -7387,7 +7387,7 @@
             this.panel81.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel81.Location = new System.Drawing.Point(3, 282);
             this.panel81.Name = "panel81";
-            this.panel81.Size = new System.Drawing.Size(726, 289);
+            this.panel81.Size = new System.Drawing.Size(726, 287);
             this.panel81.TabIndex = 5;
             // 
             // tbPrepAnalInfoComment
@@ -7398,7 +7398,7 @@
             this.tbPrepAnalInfoComment.Name = "tbPrepAnalInfoComment";
             this.tbPrepAnalInfoComment.ReadOnly = true;
             this.tbPrepAnalInfoComment.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.tbPrepAnalInfoComment.Size = new System.Drawing.Size(726, 264);
+            this.tbPrepAnalInfoComment.Size = new System.Drawing.Size(726, 262);
             this.tbPrepAnalInfoComment.TabIndex = 3;
             // 
             // toolStrip10
@@ -7768,7 +7768,7 @@
             // 
             this.panel80.Controls.Add(this.btnPrepAnalSampleUpdate);
             this.panel80.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel80.Location = new System.Drawing.Point(3, 571);
+            this.panel80.Location = new System.Drawing.Point(3, 569);
             this.panel80.Name = "panel80";
             this.panel80.Size = new System.Drawing.Size(726, 26);
             this.panel80.TabIndex = 7;
@@ -8258,7 +8258,7 @@
             this.tabPrepAnalAnalysis.Location = new System.Drawing.Point(4, 24);
             this.tabPrepAnalAnalysis.Name = "tabPrepAnalAnalysis";
             this.tabPrepAnalAnalysis.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPrepAnalAnalysis.Size = new System.Drawing.Size(732, 600);
+            this.tabPrepAnalAnalysis.Size = new System.Drawing.Size(732, 598);
             this.tabPrepAnalAnalysis.TabIndex = 4;
             this.tabPrepAnalAnalysis.Text = "Analyses";
             // 
@@ -8269,7 +8269,7 @@
             this.panel76.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel76.Location = new System.Drawing.Point(3, 249);
             this.panel76.Name = "panel76";
-            this.panel76.Size = new System.Drawing.Size(726, 348);
+            this.panel76.Size = new System.Drawing.Size(726, 346);
             this.panel76.TabIndex = 3;
             // 
             // panel9
@@ -8279,7 +8279,7 @@
             this.panel9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel9.Location = new System.Drawing.Point(0, 0);
             this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(726, 322);
+            this.panel9.Size = new System.Drawing.Size(726, 320);
             this.panel9.TabIndex = 4;
             // 
             // gridPrepAnalResults
@@ -8297,7 +8297,7 @@
             this.gridPrepAnalResults.ReadOnly = true;
             this.gridPrepAnalResults.RowHeadersVisible = false;
             this.gridPrepAnalResults.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridPrepAnalResults.Size = new System.Drawing.Size(726, 297);
+            this.gridPrepAnalResults.Size = new System.Drawing.Size(726, 295);
             this.gridPrepAnalResults.TabIndex = 0;
             // 
             // toolsSampleResRes
@@ -8342,7 +8342,7 @@
             this.panel14.Controls.Add(this.btnPrepAnalAnalDiscard);
             this.panel14.Controls.Add(this.btnPrepAnalAnalUpdate);
             this.panel14.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel14.Location = new System.Drawing.Point(0, 322);
+            this.panel14.Location = new System.Drawing.Point(0, 320);
             this.panel14.Name = "panel14";
             this.panel14.Size = new System.Drawing.Size(726, 26);
             this.panel14.TabIndex = 5;

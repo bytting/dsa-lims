@@ -1407,14 +1407,15 @@ insert into analysis_result values(
 
             // FIXME: Audit log
             string strExResIds = string.Join(",", existingResultIds.Select(x => "'" + x.ToString() + "'"));
-            if (!String.IsNullOrEmpty(strExResIds))
-            {
-                cmd.CommandText = "delete from analysis_result where analysis_id = @analysis_id and id not in (" + strExResIds + ")";
-                cmd.CommandType = CommandType.Text;
-                cmd.Parameters.Clear();
-                cmd.Parameters.AddWithValue("@analysis_id", Id);
-                cmd.ExecuteNonQuery();
-            }
+            if (!String.IsNullOrEmpty(strExResIds))            
+                cmd.CommandText = "delete from analysis_result where analysis_id = @analysis_id and id not in (" + strExResIds + ")";            
+            else            
+                cmd.CommandText = "delete from analysis_result where analysis_id = @analysis_id";
+
+            cmd.CommandType = CommandType.Text;
+            cmd.Parameters.Clear();
+            cmd.Parameters.AddWithValue("@analysis_id", Id);
+            cmd.ExecuteNonQuery();
         }
 
         public bool IsDirty

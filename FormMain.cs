@@ -5941,8 +5941,11 @@ where id = @id
 
                 foreach (DataGridViewRow row in gridPrepAnalResults.SelectedRows)
                 {
-                    Guid id = Guid.Parse(row.Cells["Id"].Value.ToString());
-                    analysis.Results.RemoveAll(x => x.Id == id);
+                    if (row.Cells["Id"].Value != null)
+                    {
+                        Guid id = Guid.Parse(row.Cells["Id"].Value.ToString());
+                        analysis.Results.RemoveAll(x => x.Id == id);
+                    }
                 }                
 
                 using (SqlConnection conn = DB.OpenConnection())

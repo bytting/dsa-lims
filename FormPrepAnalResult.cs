@@ -163,6 +163,10 @@ namespace DSA_lims
                 unc = act * (unc / 100d);
             }
 
+            double sigmaAct = Convert.ToDouble(cboxSigmaActivity.SelectedValue);
+            unc /= sigmaAct;
+            unc *= 2d;
+
             double detlim;
             if (!Double.TryParse(tbDetectionLimit.Text.Trim(), out detlim))
             {
@@ -175,6 +179,10 @@ namespace DSA_lims
                 MessageBox.Show("Detection limit can not be negative");
                 return;
             }
+
+            double sigmaMDA = Convert.ToDouble(cboxSigmaMDA.SelectedValue);
+            detlim /= sigmaMDA;
+            detlim *= 1.645d;
 
             mResult.Activity = act;
             mResult.ActivityUncertaintyABS = unc;

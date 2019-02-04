@@ -415,6 +415,49 @@ where s.id = @sid and a.workflow_status_id = 2
             return o.ToString();
         }
 
+        public static Guid GetLaboratoryIdFromOrderId(SqlConnection conn, SqlTransaction trans, Guid orderId)
+        {
+            SqlCommand cmd = new SqlCommand("select laboratory_id from assignment where id = @assignment_id", conn, trans);
+            cmd.CommandType = CommandType.Text;
+            cmd.Parameters.AddWithValue("@assignment_id", orderId);
+            object o = cmd.ExecuteScalar();
+            if (!IsValidField(o))
+                return Guid.Empty;
+
+            return Guid.Parse(o.ToString());
+        }
+
+        public static Guid GetLaboratoryIdFromSampleId(SqlConnection conn, SqlTransaction trans, Guid sampleId)
+        {
+            SqlCommand cmd = new SqlCommand(@"
+select a.laboratory_id 
+from assignment a
+    inner join assignment_sample_type ast on ast.assignment_id = a.id
+    inner join sample_x_assignment_sample_type sxast on sxast.assignment_sample_type_id = ast.id
+    inner join sample s on s.id = sxast.sample_id
+where s.id = @sample_id
+", conn, trans);
+            cmd.CommandType = CommandType.Text;
+            cmd.Parameters.AddWithValue("@sample_id", sampleId);
+            object o = cmd.ExecuteScalar();
+            if (!IsValidField(o))
+                return Guid.Empty;
+
+            return Guid.Parse(o.ToString());
+        }
+
+        public static string GetCreatedByFromSampleId(SqlConnection conn, SqlTransaction trans, Guid sampleId)
+        {
+            SqlCommand cmd = new SqlCommand("select created_by from sample where id = @sample_id", conn, trans);
+            cmd.CommandType = CommandType.Text;
+            cmd.Parameters.AddWithValue("@sample_id", sampleId);
+            object o = cmd.ExecuteScalar();
+            if (!IsValidField(o))
+                return String.Empty;
+
+            return o.ToString();
+        }
+
         public static int GetNextPreparationNumber(SqlConnection conn, SqlTransaction trans, Guid sampleId)
         {
             SqlCommand cmd = new SqlCommand("select max(number) from preparation where sample_id = @sample_id", conn, trans);
@@ -1461,5 +1504,49 @@ where an.id = @aid
             string json = JsonConvert.SerializeObject(map, Formatting.None);
             DB.AddAuditMessage(conn, trans, "analysis_result", analysisResultId, operation, json, comment);
         }
+    }
+
+    public class PreparationGeometry
+    {
+        public PreparationGeometry()
+        {
+
+        }
+
+        public PreparationGeometry(SqlConnection conn, SqlTransaction trans, Guid id)
+        {
+            using (SqlDataReader reader = DB.GetDataReader(conn, trans, "csp_select_preparation_geometry", CommandType.StoredProcedure,
+                    new SqlParameter("@id", id)))
+            {
+                if (reader.HasRows)
+                {
+                    reader.Read();
+
+                    Id = Guid.Parse(reader["id"].ToString());
+                    Name = reader["name"].ToString();
+                    if (DB.IsValidField(reader["min_fill_height_mm"]))
+                        MinFillHeightMM = Convert.ToDouble(reader["min_fill_height_mm"]);
+                    if (DB.IsValidField(reader["max_fill_height_mm"]))
+                        MaxFillHeightMM = Convert.ToDouble(reader["max_fill_height_mm"]);
+                    InstanceStatusId = Convert.ToInt32(reader["instance_status_id"]);
+                    Comment = reader["comment"].ToString();
+                    CreateDate = Convert.ToDateTime(reader["create_date"]);
+                    CreatedBy = reader["created_by"].ToString();
+                    UpdateDate = Convert.ToDateTime(reader["update_date"]);
+                    UpdatedBy = reader["updated_by"].ToString();
+                }
+            }
+        }
+
+        public Guid Id { get; set; }
+        public string Name { get; set; }
+        public double MinFillHeightMM { get; set; }
+        public double MaxFillHeightMM { get; set; }
+        public int InstanceStatusId { get; set; }
+        public string Comment { get; set; }
+        public DateTime CreateDate { get; set; }
+        public string CreatedBy { get; set; }
+        public DateTime UpdateDate { get; set; }
+        public string UpdatedBy { get; set; }
     }
 }

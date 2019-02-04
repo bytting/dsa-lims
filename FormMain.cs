@@ -1797,18 +1797,6 @@ namespace DSA_lims
             // Import sample from excel
         }
 
-        private void ClearPrepAnalSample()
-        {
-            tbPrepAnalInfoComment.Text = "";
-            tbPrepAnalDryWeight.Text = "";
-            tbPrepAnalWetWeight.Text = "";
-            tbPrepAnalVolume.Text = "";
-            tbPrepAnalLODStartWeight.Text = "";
-            tbPrepAnalLODEndWeight.Text = "";
-            tbPrepAnalLODWater.Text = "";
-            tbPrepAnalLODTemp.Text = "";
-        }
-
         private void ClearSample()
         {
             cboxSampleSampleType.SelectedValue = Guid.Empty;
@@ -1847,12 +1835,44 @@ namespace DSA_lims
                 return;
             }
 
-            selectedSampleId = Guid.Parse(gridSamples.SelectedRows[0].Cells["id"].Value.ToString());
-
-            ClearSample();
+            Guid sid = Guid.Parse(gridSamples.SelectedRows[0].Cells["id"].Value.ToString());
 
             using (SqlConnection conn = DB.OpenConnection())
             {                
+                if(Common.LabId == Guid.Empty)
+                {
+                    string owner = DB.GetCreatedByFromSampleId(conn, null, sid);
+                    if(Common.Username.ToUpper() != owner.ToUpper())
+                    {
+                        MessageBox.Show("Can not edit this sample. Sample does not belong to your user");
+                        return;
+                    }
+                }
+                else
+                {
+                    bool allow = false;
+
+                    Guid labId = DB.GetLaboratoryIdFromSampleId(conn, null, sid);
+                    if (labId == Common.LabId)
+                    {
+                        allow = true;
+                    }
+                    else
+                    {
+                        string owner = DB.GetCreatedByFromSampleId(conn, null, sid);
+                        if (Common.Username.ToUpper() == owner.ToUpper())
+                            allow = true;
+                    }
+
+                    if (!allow)
+                    {
+                        MessageBox.Show("Can not edit this sample. Sample does not belong to you or your laboratory");
+                        return;
+                    }
+                }
+
+                selectedSampleId = sid;
+                ClearSample();
                 PopulateSample(conn, null, selectedSampleId);
             }
 
@@ -2193,7 +2213,6 @@ namespace DSA_lims
             }
 
             treePrepAnal.Nodes.Clear();
-            ClearPrepAnalSample();
 
             TreeNode sampleNode = null;
             Font fontSample = new Font(treePrepAnal.Font, FontStyle.Bold);
@@ -2264,6 +2283,16 @@ order by a.number
             }
 
             treePrepAnal.ExpandAll();
+
+            tbPrepAnalLODWater.Text = "";
+            tbPrepAnalInfoComment.Text = "";
+            tbPrepAnalWetWeight.Text = "";
+            tbPrepAnalDryWeight.Text = "";
+            tbPrepAnalVolume.Text = "";
+            tbPrepAnalLODStartWeight.Text = "";
+            tbPrepAnalLODEndWeight.Text = "";
+            tbPrepAnalLODTemp.Text = "";
+
             tabsPrepAnal.SelectedTab = tabPrepAnalSample;
             return true;
         }
@@ -2805,8 +2834,26 @@ order by name
                 return;
             }
 
+            Guid orderId = Guid.Parse(gridOrders.SelectedRows[0].Cells["id"].Value.ToString());
+            if(!Utils.IsValidGuid(orderId))
+            {
+                MessageBox.Show("Error: Invalid order id found, " + orderId.ToString());
+                Common.Log.Error("Error: Invalid order id found, " + orderId.ToString());
+                return;
+            }
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                Guid labId = DB.GetLaboratoryIdFromOrderId(conn, null, orderId);
+                if(labId != Common.LabId)
+                {
+                    MessageBox.Show("Can not edit this order. Order does not belong to your laboratory");
+                    return;
+                }
+            }
+            
             ClearOrderInfo();
-            selectedOrderId = Guid.Parse(gridOrders.SelectedRows[0].Cells["id"].Value.ToString());
+            selectedOrderId = orderId;
             PopulateOrder(selectedOrderId);
 
             tabsOrder.SelectedTab = tabOrderInfo;
@@ -3389,8 +3436,7 @@ order by a.number
                 Guid pid;
                 switch (e.Node.Level)
                 {
-                    case 0:
-                        ClearPrepAnalSample();
+                    case 0:                        
                         Guid sid = Guid.Parse(e.Node.Name);
                         PopulateSampleInfo(conn, null, sid, e.Node);
                         tabsPrepAnal.SelectedTab = tabPrepAnalSample;
@@ -3628,8 +3674,8 @@ order by a.number
             {
                 MessageBox.Show("No valid preparation ID found");
                 return;
-            }
-            
+            }            
+
             SqlConnection conn = null;
             SqlTransaction trans = null;
 
@@ -3644,7 +3690,19 @@ order by a.number
                     return;
                 }
 
-                preparation.PreparationGeometryId = Guid.Parse(cboxPrepAnalPrepGeom.SelectedValue.ToString());
+                Guid pgid = Guid.Parse(cboxPrepAnalPrepGeom.SelectedValue.ToString());
+                if (!String.IsNullOrEmpty(tbPrepAnalPrepFillHeight.Text) && Utils.IsValidGuid(pgid))
+                {
+                    double fh = Convert.ToDouble(tbPrepAnalPrepFillHeight.Text);
+                    PreparationGeometry pg = new PreparationGeometry(conn, trans, pgid);
+                    if(fh < pg.MinFillHeightMM || fh > pg.MaxFillHeightMM)
+                    {
+                        MessageBox.Show("Fill height " + fh + " is outside valid range. Valid range is [" + pg.MinFillHeightMM + ", " + pg.MaxFillHeightMM + "]");
+                        return;
+                    }
+                }
+
+                preparation.PreparationGeometryId = pgid;
                 preparation.FillHeightMM = String.IsNullOrEmpty(tbPrepAnalPrepFillHeight.Text) ? 0d : Convert.ToDouble(tbPrepAnalPrepFillHeight.Text);
                 preparation.Amount = String.IsNullOrEmpty(tbPrepAnalPrepAmount.Text) ? 0d : Convert.ToDouble(tbPrepAnalPrepAmount.Text);
                 preparation.PrepUnitId = Convert.ToInt32(cboxPrepAnalPrepAmountUnit.SelectedValue);
@@ -3673,10 +3731,8 @@ order by a.number
         }
 
         private void PopulatePreparation(SqlConnection conn, SqlTransaction trans, Preparation p, bool clearDirty)
-        {                                                            
-            tbPrepAnalPrepReqUnit.Text = "";
+        {
             lblPrepAnalPrepRange.Text = "";
-
             cboxPrepAnalPrepGeom.SelectedValue = p.PreparationGeometryId;
             tbPrepAnalPrepFillHeight.Text = p.FillHeightMM == 0d ? "" : p.FillHeightMM.ToString();
             tbPrepAnalPrepAmount.Text = p.Amount == 0d ? "" : p.Amount.ToString();
@@ -3687,7 +3743,29 @@ order by a.number
             cboxPrepAnalPrepWorkflowStatus.SelectedValue = p.WorkflowStatusId;
             tbPrepAnalPrepReqUnit.Text = p.GetRequestedActivityUnitName(conn, trans);
 
-            if(clearDirty)
+            if (Utils.IsValidGuid(p.PreparationGeometryId))
+            {
+                PreparationGeometry pg = new PreparationGeometry(conn, trans, p.PreparationGeometryId);
+                lblPrepAnalPrepRange.Text = "[" + pg.MinFillHeightMM + ", " + pg.MaxFillHeightMM + "]";
+            }
+            
+            if (Utils.IsValidGuid(p.AssignmentId))
+            {
+                btnPrepAnalPrepUpdate.Enabled = false;
+                btnPrepAnalPrepDiscard.Enabled = false;
+
+                Guid labId = DB.GetLaboratoryIdFromOrderId(conn, trans, p.AssignmentId);
+                if(Utils.IsValidGuid(labId))
+                {
+                    if(labId == Common.LabId)
+                    {
+                        btnPrepAnalPrepUpdate.Enabled = true;
+                        btnPrepAnalPrepDiscard.Enabled = true;
+                    }
+                }
+            }
+
+            if (clearDirty)
                 p._Dirty = false;
         }
 
@@ -3751,21 +3829,14 @@ order by a.number
 
         private void cboxPrepAnalPrepGeom_SelectedIndexChanged(object sender, EventArgs e)
         {
-            lblPrepAnalPrepRange.Text = "";
+            lblPrepAnalPrepRange.Text = "";            
 
-            if (Utils.IsValidGuid(preparation.PreparationGeometryId))
+            if (Utils.IsValidGuid(cboxPrepAnalPrepGeom.SelectedValue))
             {
-                string fhInfo = "[";
-
                 using (SqlConnection conn = DB.OpenConnection())
                 {
-                    using (SqlDataReader reader = DB.GetDataReader(conn, null, "select min_fill_height_mm, max_fill_height_mm from preparation_geometry where id = @id", CommandType.Text,
-                        new SqlParameter("@id", preparation.PreparationGeometryId)))
-                    {
-                        reader.Read();
-                        fhInfo += reader["min_fill_height_mm"] + ", " + reader["max_fill_height_mm"] + "]";
-                    }
-                    lblPrepAnalPrepRange.Text = fhInfo;
+                    PreparationGeometry pg = new PreparationGeometry(conn, null, Guid.Parse(cboxPrepAnalPrepGeom.SelectedValue.ToString()));
+                    lblPrepAnalPrepRange.Text = "[" + pg.MinFillHeightMM + ", " + pg.MaxFillHeightMM + "]";
                 }
             }
 
@@ -3836,29 +3907,38 @@ order by a.number
             using (SqlDataReader reader = DB.GetDataReader(conn, trans, "csp_select_sample_info", CommandType.StoredProcedure,
                 new SqlParameter("@id", sid)))
             {
-                reader.Read();
-
-                string refDateStr = "";
-                object o = reader["reference_date"];
-                if(o != null && o != DBNull.Value)
+                if (reader.HasRows)
                 {
-                    DateTime refDate = Convert.ToDateTime(reader["reference_date"]);
-                    refDateStr = refDate.ToString(Utils.DateFormatNorwegian);
-                }                        
+                    reader.Read();
 
-                tnode.ToolTipText = "Component: " + reader["sample_component_name"].ToString() + Environment.NewLine
-                    + "External Id: " + reader["external_id"].ToString() + Environment.NewLine
-                    + "Project: " + reader["project_name"].ToString() + Environment.NewLine
-                    + "Reference date: " + refDateStr;
+                    string refDateStr = "";
+                    object o = reader["reference_date"];
+                    if (o != null && o != DBNull.Value)
+                    {
+                        DateTime refDate = Convert.ToDateTime(reader["reference_date"]);
+                        refDateStr = refDate.ToString(Utils.DateFormatNorwegian);
+                    }
 
-                tbPrepAnalInfoComment.Text = reader["comment"].ToString();                    
-                tbPrepAnalWetWeight.Text = reader["wet_weight_g"].ToString();
-                tbPrepAnalDryWeight.Text = reader["dry_weight_g"].ToString();
-                tbPrepAnalVolume.Text = reader["volume_l"].ToString();
-                tbPrepAnalLODStartWeight.Text = reader["lod_weight_start"].ToString();
-                tbPrepAnalLODEndWeight.Text = reader["lod_weight_end"].ToString();
-                tbPrepAnalLODTemp.Text = reader["lod_temperature"].ToString();
-            }        
+                    tnode.ToolTipText = "Component: " + reader["sample_component_name"].ToString() + Environment.NewLine
+                        + "External Id: " + reader["external_id"].ToString() + Environment.NewLine
+                        + "Project: " + reader["project_name"].ToString() + Environment.NewLine
+                        + "Reference date: " + refDateStr;
+                                                                                
+                    tbPrepAnalLODWater.Text = "";
+                    tbPrepAnalInfoComment.Text = reader["comment"].ToString();
+                    tbPrepAnalWetWeight.Text = reader["wet_weight_g"].ToString();
+                    tbPrepAnalDryWeight.Text = reader["dry_weight_g"].ToString();
+                    tbPrepAnalVolume.Text = reader["volume_l"].ToString();
+                    tbPrepAnalLODStartWeight.Text = reader["lod_weight_start"].ToString();
+                    tbPrepAnalLODEndWeight.Text = reader["lod_weight_end"].ToString();
+                    tbPrepAnalLODTemp.Text = reader["lod_temperature"].ToString();
+                }
+            }
+
+            btnPrepAnalSampleUpdate.Enabled = false;
+            Guid labId = DB.GetLaboratoryIdFromSampleId(conn, trans, sid);
+            if (Utils.IsValidGuid(labId) && labId == Common.LabId)
+                btnPrepAnalSampleUpdate.Enabled = true;
         }
 
         private void miImportLISFile_Click(object sender, EventArgs e)
@@ -3908,7 +3988,23 @@ order by a.number
 
             UI.PopulateAttachments(conn, trans, "analysis", a.Id, gridPrepAnalAnalAttachments);
 
-            if(clearDirty)
+            if (Utils.IsValidGuid(a.AssignmentId))
+            {
+                btnPrepAnalAnalUpdate.Enabled = false;
+                btnPrepAnalAnalDiscard.Enabled = false;
+
+                Guid labId = DB.GetLaboratoryIdFromOrderId(conn, trans, a.AssignmentId);
+                if (Utils.IsValidGuid(labId))
+                {
+                    if (labId == Common.LabId)
+                    {
+                        btnPrepAnalAnalUpdate.Enabled = true;
+                        btnPrepAnalAnalDiscard.Enabled = true;
+                    }
+                }
+            }
+
+            if (clearDirty)
                 a._Dirty = false;
         }
 

@@ -156,7 +156,12 @@ namespace DSA_lims
             {
                 MessageBox.Show("Uncertainty can not be negative");
                 return;
-            }            
+            }
+
+            if(!cbUncertaintyAbs.Checked)
+            {
+                unc = act * (unc / 100d);
+            }
 
             double detlim;
             if (!Double.TryParse(tbDetectionLimit.Text.Trim(), out detlim))

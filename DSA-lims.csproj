@@ -740,6 +740,7 @@
     <Content Include="comments.txt" />
     <Content Include="database.sql" />
     <None Include="images\dsa_logo_64.png" />
+    <None Include="images\switch.png" />
     <Content Include="SqlServerTypes\readme.htm" />
     <Content Include="SqlServerTypes\x64\msvcr120.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

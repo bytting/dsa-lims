@@ -1866,6 +1866,7 @@ as
 	ast.sample_count as 'sample_count',
 	st.name as 'sample_type_name', 	
 	sc.name as 'sample_component_name',
+	ast.return_to_sender as 'return_to_sender',
 	ast.comment as 'sample_comment'
 from assignment_sample_type ast
 	inner join sample_type st on ast.sample_type_id = st.id and ast.assignment_id = @assignment_id
@@ -1883,6 +1884,7 @@ as
 	ast.sample_count as 'sample_count',
 	st.name as 'sample_type_name', 	
 	sc.name as 'sample_component_name',
+	ast.return_to_sender as 'return_to_sender',
 	ast.comment as 'sample_comment'
 from assignment_sample_type ast
 	inner join sample_type st on ast.sample_type_id = st.id and ast.assignment_id = @assignment_id and st.id = @sample_type_id

@@ -48,6 +48,7 @@
             this.cboxSigmaMDA = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
+            this.cbUncertaintyAbs = new System.Windows.Forms.CheckBox();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -114,10 +115,10 @@
             // 
             // tbUncertainty
             // 
-            this.tbUncertainty.Location = new System.Drawing.Point(112, 73);
+            this.tbUncertainty.Location = new System.Drawing.Point(167, 73);
             this.tbUncertainty.MaxLength = 32;
             this.tbUncertainty.Name = "tbUncertainty";
-            this.tbUncertainty.Size = new System.Drawing.Size(249, 20);
+            this.tbUncertainty.Size = new System.Drawing.Size(194, 20);
             this.tbUncertainty.TabIndex = 2;
             this.tbUncertainty.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbActivity_KeyPress);
             // 
@@ -135,9 +136,9 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(21, 76);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(85, 13);
+            this.label3.Size = new System.Drawing.Size(61, 13);
             this.label3.TabIndex = 14;
-            this.label3.Text = "Uncertainty Abs.";
+            this.label3.Text = "Uncertainty";
             // 
             // cbActivityApproved
             // 
@@ -224,9 +225,9 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(21, 128);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(58, 13);
+            this.label5.Size = new System.Drawing.Size(62, 13);
             this.label5.TabIndex = 23;
-            this.label5.Text = "Sigma Act.";
+            this.label5.Text = "Sigma Unc.";
             // 
             // label6
             // 
@@ -237,11 +238,24 @@
             this.label6.TabIndex = 24;
             this.label6.Text = "Sigma MDA";
             // 
+            // cbUncertaintyAbs
+            // 
+            this.cbUncertaintyAbs.AutoSize = true;
+            this.cbUncertaintyAbs.Checked = true;
+            this.cbUncertaintyAbs.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbUncertaintyAbs.Location = new System.Drawing.Point(117, 75);
+            this.cbUncertaintyAbs.Name = "cbUncertaintyAbs";
+            this.cbUncertaintyAbs.Size = new System.Drawing.Size(44, 17);
+            this.cbUncertaintyAbs.TabIndex = 25;
+            this.cbUncertaintyAbs.Text = "Abs";
+            this.cbUncertaintyAbs.UseVisualStyleBackColor = true;
+            // 
             // FormPrepAnalResult
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(386, 338);
+            this.Controls.Add(this.cbUncertaintyAbs);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.cboxSigmaMDA);
@@ -293,5 +307,6 @@
         private System.Windows.Forms.ComboBox cboxSigmaMDA;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.CheckBox cbUncertaintyAbs;
     }
 }

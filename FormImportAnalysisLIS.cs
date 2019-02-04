@@ -109,17 +109,33 @@ namespace DSA_lims
 
             grid.DataSource = mAnalysis.Results;
 
+            grid.Columns["Id"].Visible = false;
+            grid.Columns["AnalysisId"].Visible = false;
             grid.Columns["NuclideId"].Visible = false;
+            grid.Columns["UniformActivity"].Visible = false;
+            grid.Columns["UniformActivityUnitId"].Visible = false;
+            grid.Columns["InstanceStatusId"].Visible = false;
+            grid.Columns["CreateDate"].Visible = false;
+            grid.Columns["CreatedBy"].Visible = false;
+            grid.Columns["UpdateDate"].Visible = false;
+            grid.Columns["UpdatedBy"].Visible = false;
+
             grid.Columns["NuclideName"].ReadOnly = true;
             //grid.Columns["ConfidenceValue"].ReadOnly = true;
             grid.Columns["Activity"].ReadOnly = true;
             grid.Columns["ActivityUncertaintyABS"].ReadOnly = true;
             grid.Columns["DetectionLimit"].ReadOnly = true;
 
+            grid.Columns["NuclideName"].HeaderText = "Nuclide";
             grid.Columns["ActivityUncertaintyABS"].HeaderText = "Uncertainty (2σ)";
             grid.Columns["DetectionLimit"].HeaderText = "MDA (95%)";
+            grid.Columns["DetectionLimitApproved"].HeaderText = "MDA.Appr";
+            grid.Columns["ActivityApproved"].HeaderText = "Act.Appr";
 
-            foreach(DataGridViewRow row in grid.Rows)
+            grid.Columns["Activity"].DefaultCellStyle.Format = Utils.ScientificFormat;
+            grid.Columns["ActivityUncertaintyABS"].DefaultCellStyle.Format = Utils.ScientificFormat;
+
+            foreach (DataGridViewRow row in grid.Rows)
             {
                 Guid nuclId = Guid.Parse(row.Cells["NuclideId"].Value.ToString());
                 if (nuclId == Guid.Empty)

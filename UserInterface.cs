@@ -583,7 +583,10 @@ order by create_date desc";
                         txt += ", " + astReader["sample_component_name"].ToString();
                     TreeNode[] nodes = treeSampleTypes.Nodes.Find(astReader["sample_type_id"].ToString(), true);
                     if (nodes.Length > 0)
-                        txt += " (" + nodes[0].FullPath + ")";
+                        txt += " -> " + nodes[0].FullPath;
+                    bool retToSender = Convert.ToBoolean(astReader["return_to_sender"]);
+                    if (retToSender)
+                        txt += ", Return to customer";
 
                     TreeNode tnode = tree.Nodes.Add(astReader["id"].ToString(), txt);
                     tnode.ToolTipText = useCommentToolTips ? astReader["sample_comment"].ToString() : "";

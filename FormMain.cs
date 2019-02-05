@@ -310,6 +310,7 @@ namespace DSA_lims
                 ActiveControl = tbMenuLookup;
 
                 preparation.Clear();
+                gridPrepAnalResults.DataSource = null;
                 analysis.Clear();
                 
                 Common.Log.Info("Application initialized successfully");
@@ -344,6 +345,7 @@ namespace DSA_lims
             }
 
             preparation.Clear();
+            gridPrepAnalResults.DataSource = null;
             analysis.Clear();
 
             return true;
@@ -3554,7 +3556,7 @@ order by a.number
                 e.Cancel = true;
                 return;
             }
-
+            
             if (e.TabPage == tabSample || e.TabPage == tabPrepAnal)
             {
                 using (SqlConnection conn = DB.OpenConnection())
@@ -3568,7 +3570,7 @@ order by a.number
                 {
                     DB.UnlockOrders(conn);
                 }
-            }            
+            }
         }
 
         private void miBack_Click(object sender, EventArgs e)

@@ -104,6 +104,12 @@ namespace DSA_lims
 
         private void btnOk_Click(object sender, EventArgs e)
         {
+            if(cboxNuclides.SelectedValue == null || String.IsNullOrEmpty(cboxNuclides.SelectedValue.ToString()))
+            {
+                MessageBox.Show("The nuclide field is mandatory");
+                return;
+            }
+
             if (String.IsNullOrEmpty(tbActivity.Text.Trim()))
             {
                 MessageBox.Show("The activity field is mandatory");
@@ -113,6 +119,18 @@ namespace DSA_lims
             if (String.IsNullOrEmpty(tbUncertainty.Text.Trim()))
             {
                 MessageBox.Show("The uncertainty field is mandatory");
+                return;
+            }
+
+            if(cboxSigmaActivity.SelectedValue == null)
+            {
+                MessageBox.Show("Sigma activity is mandatory");
+                return;
+            }
+
+            if (cboxSigmaMDA.SelectedValue == null)
+            {
+                MessageBox.Show("Sigma MDA is mandatory");
                 return;
             }
 

@@ -202,9 +202,17 @@
             this.tabs = new System.Windows.Forms.TabControl();
             this.tabMenu = new System.Windows.Forms.TabPage();
             this.layoutMenu = new System.Windows.Forms.TableLayoutPanel();
+            this.btnMenuSearch = new System.Windows.Forms.Button();
+            this.btnMenuMetadata = new System.Windows.Forms.Button();
+            this.btnMenuCustomer = new System.Windows.Forms.Button();
+            this.btnMenuProjects = new System.Windows.Forms.Button();
+            this.btnMenuNewSample = new System.Windows.Forms.Button();
+            this.btnMenuSamples = new System.Windows.Forms.Button();
             this.lblMenuSamples = new System.Windows.Forms.Label();
             this.tbMenuLookup = new System.Windows.Forms.TextBox();
             this.lblMenuOrders = new System.Windows.Forms.Label();
+            this.btnMenuNewOrder = new System.Windows.Forms.Button();
+            this.btnOrders = new System.Windows.Forms.Button();
             this.tabSample = new System.Windows.Forms.TabPage();
             this.tabsSample = new System.Windows.Forms.TabControl();
             this.tabSamplesInfo = new System.Windows.Forms.TabPage();
@@ -213,6 +221,7 @@
             this.cboxSampleSampleComponent = new System.Windows.Forms.ComboBox();
             this.panel22 = new System.Windows.Forms.Panel();
             this.cboxSampleSampleType = new System.Windows.Forms.ComboBox();
+            this.btnSampleSelectSampleType = new System.Windows.Forms.Button();
             this.cboxSampleProject = new System.Windows.Forms.ComboBox();
             this.label15 = new System.Windows.Forms.Label();
             this.cboxSampleInfoSampler = new System.Windows.Forms.ComboBox();
@@ -254,26 +263,40 @@
             this.label25 = new System.Windows.Forms.Label();
             this.panel87 = new System.Windows.Forms.Panel();
             this.tbSampleSamplingDateFrom = new System.Windows.Forms.TextBox();
+            this.btnSampleSamplingDateFromClear = new System.Windows.Forms.PictureBox();
+            this.btnSampleSamplingDateFrom = new System.Windows.Forms.PictureBox();
             this.panel88 = new System.Windows.Forms.Panel();
             this.tbSampleSamplingDateTo = new System.Windows.Forms.TextBox();
+            this.btnSampleSamplingDateToClear = new System.Windows.Forms.PictureBox();
+            this.btnSampleSamplingDateTo = new System.Windows.Forms.PictureBox();
             this.label26 = new System.Windows.Forms.Label();
             this.panel89 = new System.Windows.Forms.Panel();
             this.tbSampleReferenceDate = new System.Windows.Forms.TextBox();
+            this.btnSampleReferenceDateClear = new System.Windows.Forms.PictureBox();
+            this.btnSampleReferenceDate = new System.Windows.Forms.PictureBox();
             this.tbSampleComment = new System.Windows.Forms.TextBox();
             this.panel36 = new System.Windows.Forms.Panel();
             this.btnSampleUpdate = new System.Windows.Forms.Button();
             this.toolStrip11 = new System.Windows.Forms.ToolStrip();
+            this.btnSampleAddSampleToOrder = new System.Windows.Forms.ToolStripButton();
+            this.btnSampleGoToPrepAnal = new System.Windows.Forms.ToolStripButton();
+            this.btnSamplePrintSampleLabel = new System.Windows.Forms.ToolStripButton();
             this.panel21 = new System.Windows.Forms.Panel();
             this.panelSamplesAttachments = new System.Windows.Forms.Panel();
             this.gridSampleAttachments = new System.Windows.Forms.DataGridView();
             this.toolsSampleSampInfoAttachments = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel18 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator46 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnSampleScanAttachment = new System.Windows.Forms.ToolStripButton();
+            this.btnSampleBrowseAttachment = new System.Windows.Forms.ToolStripButton();
+            this.btnSampleDeleteAttachment = new System.Windows.Forms.ToolStripButton();
             this.tabSamplesParams = new System.Windows.Forms.TabPage();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.toolStrip6 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel9 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator24 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButton9 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton10 = new System.Windows.Forms.ToolStripButton();
             this.toolsSample = new System.Windows.Forms.ToolStrip();
             this.lblSampleToolId = new System.Windows.Forms.ToolStripLabel();
             this.lblSampleToolExId = new System.Windows.Forms.ToolStripLabel();
@@ -289,6 +312,9 @@
             this.toolsOrderAttachments = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel4 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator29 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnOrderScanAttachment = new System.Windows.Forms.ToolStripButton();
+            this.btnOrderBrowseAttachment = new System.Windows.Forms.ToolStripButton();
+            this.btnOrderDeleteAttachment = new System.Windows.Forms.ToolStripButton();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.label38 = new System.Windows.Forms.Label();
             this.label39 = new System.Windows.Forms.Label();
@@ -301,12 +327,15 @@
             this.tbOrderName = new System.Windows.Forms.TextBox();
             this.panel30 = new System.Windows.Forms.Panel();
             this.tbOrderDeadline = new System.Windows.Forms.TextBox();
+            this.btnOrderClearDeadline = new System.Windows.Forms.PictureBox();
+            this.btnOrderSelectDeadline = new System.Windows.Forms.PictureBox();
             this.label41 = new System.Windows.Forms.Label();
             this.tbOrderContentComment = new System.Windows.Forms.TextBox();
             this.btnOrderSaveDetails = new System.Windows.Forms.Button();
             this.label34 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
             this.tbOrderCustomer = new System.Windows.Forms.TextBox();
+            this.btnOrderSelectCustomer = new System.Windows.Forms.PictureBox();
             this.label35 = new System.Windows.Forms.Label();
             this.cboxOrderRequestedSigmaMDA = new System.Windows.Forms.ComboBox();
             this.toolsOrderDetails = new System.Windows.Forms.ToolStrip();
@@ -315,13 +344,23 @@
             this.toolsOrderContent = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel8 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator60 = new System.Windows.Forms.ToolStripSeparator();
+            this.ddbOrderAdd = new System.Windows.Forms.ToolStripDropDownButton();
+            this.btnOrderAddSampleType = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnOrderAddPrepMeth = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnOrderAddAnalMeth = new System.Windows.Forms.ToolStripMenuItem();
+            this.ddbOrderEdit = new System.Windows.Forms.ToolStripDropDownButton();
+            this.btnOrderEditSampleType = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnOrderEditPrepMeth = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnOrderEditAnalMeth = new System.Windows.Forms.ToolStripMenuItem();
+            this.ddbOrderDel = new System.Windows.Forms.ToolStripDropDownButton();
+            this.btnOrderDelSampleType = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnOrderDelPrepMeth = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnOrderDelAnalMeth = new System.Windows.Forms.ToolStripMenuItem();
             this.tabOrderStatus = new System.Windows.Forms.TabPage();
             this.panel11 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
             this.cbOrderApprovedCustomer = new System.Windows.Forms.CheckBox();
-            this.cbOrderApprovedLaboratory = new System.Windows.Forms.CheckBox();
             this.tbOrderApprovedCustomerBy = new System.Windows.Forms.TextBox();
-            this.tbOrderApprovedLaboratoryBy = new System.Windows.Forms.TextBox();
             this.cboxOrderStatus = new System.Windows.Forms.ComboBox();
             this.tbOrderLastWorkflowStatusBy = new System.Windows.Forms.TextBox();
             this.tbOrderReportComment = new System.Windows.Forms.TextBox();
@@ -329,13 +368,16 @@
             this.label71 = new System.Windows.Forms.Label();
             this.btnOrderSaveStatus = new System.Windows.Forms.Button();
             this.btnOrderSaveApprovedCustomer = new System.Windows.Forms.Button();
-            this.btnOrderSaveApprovedLaboratory = new System.Windows.Forms.Button();
             this.tbOrderCustomerInfo = new System.Windows.Forms.TextBox();
             this.label61 = new System.Windows.Forms.Label();
             this.btnOrderSaveReportComment = new System.Windows.Forms.Button();
+            this.cbOrderApprovedLaboratory = new System.Windows.Forms.CheckBox();
+            this.tbOrderApprovedLaboratoryBy = new System.Windows.Forms.TextBox();
+            this.btnOrderSaveApprovedLaboratory = new System.Windows.Forms.Button();
             this.toolsOrderStatus = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel17 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnOrderCreateReport = new System.Windows.Forms.ToolStripButton();
             this.tabOrderAssigned = new System.Windows.Forms.TabPage();
             this.tvOrderContent = new System.Windows.Forms.TreeView();
             this.toolStrip17 = new System.Windows.Forms.ToolStrip();
@@ -350,11 +392,17 @@
             this.toolsMetaStations = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel36 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator17 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButton64 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton65 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton66 = new System.Windows.Forms.ToolStripButton();
             this.tabMetaSampleStorage = new System.Windows.Forms.TabPage();
             this.gridMetaSampleStorage = new System.Windows.Forms.DataGridView();
             this.toolsMetaSampStorage = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel37 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator18 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButton67 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton68 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton69 = new System.Windows.Forms.ToolStripButton();
             this.tabMetaUnits = new System.Windows.Forms.TabPage();
             this.splitContainer22 = new System.Windows.Forms.SplitContainer();
             this.splitContainer6 = new System.Windows.Forms.SplitContainer();
@@ -362,45 +410,73 @@
             this.toolsMetaUnits = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel38 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator19 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnMetaUnitPrepUnitsNew = new System.Windows.Forms.ToolStripButton();
+            this.btnMetaUnitPrepUnitsEdit = new System.Windows.Forms.ToolStripButton();
+            this.btnMetaUnitPrepUnitsDelete = new System.Windows.Forms.ToolStripButton();
             this.gridMetaUnitQuantUnits = new System.Windows.Forms.DataGridView();
             this.toolStrip13 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel42 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator22 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnMetaUnitQuantUnitsNew = new System.Windows.Forms.ToolStripButton();
+            this.btnMetaUnitQuantUnitsEdit = new System.Windows.Forms.ToolStripButton();
+            this.btnMetaUnitQuantUnitsDelete = new System.Windows.Forms.ToolStripButton();
             this.splitContainer5 = new System.Windows.Forms.SplitContainer();
             this.gridMetaUnitActivityUnits = new System.Windows.Forms.DataGridView();
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel60 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator51 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnMetaUnitActivityUnitsNew = new System.Windows.Forms.ToolStripButton();
+            this.btnMetaUnitActivityUnitsEdit = new System.Windows.Forms.ToolStripButton();
+            this.btnMetaUnitActivityUnitsDelete = new System.Windows.Forms.ToolStripButton();
             this.gridMetaUnitActivityUnitTypes = new System.Windows.Forms.DataGridView();
             this.toolStrip12 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel12 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnMetaUnitActivityUnitTypesNew = new System.Windows.Forms.ToolStripButton();
+            this.btnMetaUnitActivityUnitTypesEdit = new System.Windows.Forms.ToolStripButton();
+            this.btnMetaUnitActivityUnitTypesDelete = new System.Windows.Forms.ToolStripButton();
             this.tabMetaSamplers = new System.Windows.Forms.TabPage();
             this.gridMetaSamplers = new System.Windows.Forms.DataGridView();
             this.toolsMetaSamplers = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel39 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator20 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButton62 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton63 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton75 = new System.Windows.Forms.ToolStripButton();
             this.tabMetaSamplingMeth = new System.Windows.Forms.TabPage();
             this.gridMetaSamplingMeth = new System.Windows.Forms.DataGridView();
             this.toolsMetaSampMeth = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel40 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator21 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButton82 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton83 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton84 = new System.Windows.Forms.ToolStripButton();
             this.tabMetaCompanies = new System.Windows.Forms.TabPage();
             this.gridMetaCompanies = new System.Windows.Forms.DataGridView();
             this.toolStrip15 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel46 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator59 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButton14 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton15 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton25 = new System.Windows.Forms.ToolStripButton();
             this.tabCustomers = new System.Windows.Forms.TabPage();
             this.gridCustomers = new System.Windows.Forms.DataGridView();
             this.toolsCust = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel45 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator33 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnCustomersNew = new System.Windows.Forms.ToolStripButton();
+            this.btnCustomersEdit = new System.Windows.Forms.ToolStripButton();
+            this.btnCustomersDelete = new System.Windows.Forms.ToolStripButton();
             this.tabOrders = new System.Windows.Forms.TabPage();
             this.gridOrders = new System.Windows.Forms.DataGridView();
             this.toolStrip9 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel44 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator64 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnOrdersNew = new System.Windows.Forms.ToolStripButton();
+            this.btnOrdersEdit = new System.Windows.Forms.ToolStripButton();
+            this.btnOrdersDelete = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator71 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnOrdersUnlock = new System.Windows.Forms.ToolStripButton();
             this.panel2 = new System.Windows.Forms.Panel();
             this.cboxOrdersLaboratory = new System.Windows.Forms.ComboBox();
             this.label36 = new System.Windows.Forms.Label();
@@ -411,13 +487,33 @@
             this.toolsOrders = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel30 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator63 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnOrdersClearAllFilters = new System.Windows.Forms.ToolStripButton();
             this.tabSamples = new System.Windows.Forms.TabPage();
             this.gridSamples = new System.Windows.Forms.DataGridView();
             this.toolsSamples = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel56 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator30 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButton99 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripDropDownButton3 = new System.Windows.Forms.ToolStripDropDownButton();
+            this.excelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnSamplesEdit = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton104 = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator47 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnSamplesSplit = new System.Windows.Forms.ToolStripButton();
+            this.btnSamplesMerge = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator45 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnSamplesSetOrder = new System.Windows.Forms.ToolStripButton();
+            this.toolStripDropDownButton2 = new System.Windows.Forms.ToolStripDropDownButton();
+            this.projectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.customerToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.samplerToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.samplingmethodToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.excemptFromPublicToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnSamplesPrepAnal = new System.Windows.Forms.ToolStripButton();
+            this.toolStripDropDownButton4 = new System.Windows.Forms.ToolStripDropDownButton();
+            this.sampleLabelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sampleInfoForSelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnSamplesUnlock = new System.Windows.Forms.ToolStripButton();
             this.panel78 = new System.Windows.Forms.Panel();
             this.label32 = new System.Windows.Forms.Label();
             this.cboxSamplesLaboratory = new System.Windows.Forms.ComboBox();
@@ -434,27 +530,38 @@
             this.toolStrip8 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel22 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator57 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnSamplesClearFilters = new System.Windows.Forms.ToolStripButton();
             this.tabProjects = new System.Windows.Forms.TabPage();
             this.splitProjects = new System.Windows.Forms.SplitContainer();
             this.gridProjectMain = new System.Windows.Forms.DataGridView();
             this.toolStrip4 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel15 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator54 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnProjectsMainNew = new System.Windows.Forms.ToolStripButton();
+            this.btnProjectsMainEdit = new System.Windows.Forms.ToolStripButton();
             this.splitContainer24 = new System.Windows.Forms.SplitContainer();
             this.gridProjectSub = new System.Windows.Forms.DataGridView();
             this.toolStrip5 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel21 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator55 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnProjectsSubNew = new System.Windows.Forms.ToolStripButton();
+            this.btnProjectsSubEdit = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator56 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnProjectSubPrint = new System.Windows.Forms.ToolStripButton();
             this.splitContainer25 = new System.Windows.Forms.SplitContainer();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.toolsProjUsers = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator31 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButton24 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton26 = new System.Windows.Forms.ToolStripButton();
             this.gridProjectAttachments = new System.Windows.Forms.DataGridView();
             this.toolsProjAttachments = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel3 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator32 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnProjectScanAttachment = new System.Windows.Forms.ToolStripButton();
+            this.btnProjectBrowseAttachment = new System.Windows.Forms.ToolStripButton();
+            this.btnProjectDeleteAttachment = new System.Windows.Forms.ToolStripButton();
             this.tabTypeRel = new System.Windows.Forms.TabPage();
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.tabTypeRelationsSampleTypes = new System.Windows.Forms.TabPage();
@@ -463,7 +570,14 @@
             this.toolsTypeRelSamp = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel47 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator35 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnTypeRelSampleTypesNewRoot = new System.Windows.Forms.ToolStripButton();
+            this.btnTypeRelSampleTypesNew = new System.Windows.Forms.ToolStripButton();
+            this.btnTypeRelSampleTypesEdit = new System.Windows.Forms.ToolStripButton();
+            this.btnTypeRelSampleTypesDelete = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator44 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnTypeRelSampTypeExport = new System.Windows.Forms.ToolStripDropDownButton();
+            this.btnTypeRelSampleTypesExportSampTypeList = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnTypeRelSampleTypesExportSampTypeXML = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl3 = new System.Windows.Forms.TabControl();
             this.tabTypeRelSampTypeComp = new System.Windows.Forms.TabPage();
             this.splitContainer16 = new System.Windows.Forms.SplitContainer();
@@ -471,6 +585,9 @@
             this.toolsTypeRelSampComp = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel48 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator36 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnTypeRelSampTypeCompAdd = new System.Windows.Forms.ToolStripButton();
+            this.btnTypeRelSampTypeCompEdit = new System.Windows.Forms.ToolStripButton();
+            this.btnTypeRelSampTypeCompDelete = new System.Windows.Forms.ToolStripButton();
             this.lblTypeRelSampCompSel = new System.Windows.Forms.ToolStripLabel();
             this.lbSampleTypesInheritedComponents = new System.Windows.Forms.ListBox();
             this.toolsTypeRelSampCompInherit = new System.Windows.Forms.ToolStrip();
@@ -481,6 +598,9 @@
             this.toolsTypeRelSampPara = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel49 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator37 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButton45 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton46 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton89 = new System.Windows.Forms.ToolStripButton();
             this.lblTypeRelSampParSel = new System.Windows.Forms.ToolStripLabel();
             this.listBox4 = new System.Windows.Forms.ListBox();
             this.toolsTypeRelSampParaInherit = new System.Windows.Forms.ToolStrip();
@@ -491,6 +611,8 @@
             this.toolsTypeRelSampPrepMeth = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel50 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator38 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnTypeRelSampTypePrepMethAdd = new System.Windows.Forms.ToolStripButton();
+            this.btnPreparationMethodDelete = new System.Windows.Forms.ToolStripButton();
             this.lblTypeRelSampPrepSel = new System.Windows.Forms.ToolStripLabel();
             this.lbTypeRelSampTypeInheritedPrepMeth = new System.Windows.Forms.ListBox();
             this.toolsTypeRelSampAnalMeth = new System.Windows.Forms.ToolStrip();
@@ -501,20 +623,30 @@
             this.toolsTypeRelPrepMeth = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel51 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator39 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButton49 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton50 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton91 = new System.Windows.Forms.ToolStripButton();
             this.lbTypRelPrepMethAnalMeth = new System.Windows.Forms.ListBox();
             this.toolsTypeRelPrepAnalMeth = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel20 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator40 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnTypeRelPrepMethAddAnalMeth = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton48 = new System.Windows.Forms.ToolStripButton();
             this.tabTypeRelationsAnalMeth = new System.Windows.Forms.TabPage();
             this.splitContainer17 = new System.Windows.Forms.SplitContainer();
             this.gridTypeRelAnalMeth = new System.Windows.Forms.DataGridView();
             this.toolsTypeRelAnalMeth = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel52 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator41 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButton51 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton52 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton93 = new System.Windows.Forms.ToolStripButton();
             this.lbTypRelAnalMethNuclides = new System.Windows.Forms.ListBox();
             this.toolsTypeRelNuclides = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel23 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator42 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnAnalysisMethodsAddNuclide = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton54 = new System.Windows.Forms.ToolStripButton();
             this.tabAuditLog = new System.Windows.Forms.TabPage();
             this.dataGridView21 = new System.Windows.Forms.DataGridView();
             this.panel32 = new System.Windows.Forms.Panel();
@@ -525,6 +657,7 @@
             this.toolsAuditLog = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel53 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator43 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButton94 = new System.Windows.Forms.ToolStripButton();
             this.tabUserSettings = new System.Windows.Forms.TabPage();
             this.tblSettingsUser = new System.Windows.Forms.TableLayoutPanel();
             this.btnUserSettingsSave = new System.Windows.Forms.Button();
@@ -548,67 +681,104 @@
             this.toolsSysLab = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel31 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator14 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnMetaLabNew = new System.Windows.Forms.ToolStripButton();
+            this.btnMetaLabEdit = new System.Windows.Forms.ToolStripButton();
+            this.btnMetaLabDelete = new System.Windows.Forms.ToolStripButton();
             this.splitContainer10 = new System.Windows.Forms.SplitContainer();
             this.listBox3 = new System.Windows.Forms.ListBox();
             this.toolsSysLabPrepMeth = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel5 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator15 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButton27 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton29 = new System.Windows.Forms.ToolStripButton();
             this.listBox5 = new System.Windows.Forms.ListBox();
             this.toolsSysLabAnalMeth = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel14 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator16 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButton30 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton31 = new System.Windows.Forms.ToolStripButton();
             this.tabSysUsers = new System.Windows.Forms.TabPage();
             this.splitContainer11 = new System.Windows.Forms.SplitContainer();
             this.gridMetaUsers = new System.Windows.Forms.DataGridView();
             this.toolsSysUsers = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel35 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnMetaUsersNew = new System.Windows.Forms.ToolStripButton();
+            this.btnMetaUsersEdit = new System.Windows.Forms.ToolStripButton();
+            this.btnMetaUsersDelete = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnMetaUsersResetPass = new System.Windows.Forms.ToolStripButton();
             this.splitContainer18 = new System.Windows.Forms.SplitContainer();
             this.lbSysUsersRoles = new System.Windows.Forms.ListBox();
             this.toolsSysUsersRoles = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel28 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator12 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnSysUsersAddRoles = new System.Windows.Forms.ToolStripButton();
+            this.btnSysUsersRemRoles = new System.Windows.Forms.ToolStripButton();
             this.listBox7 = new System.Windows.Forms.ListBox();
             this.toolsSysUsersAnalMeth = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel29 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator13 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButton33 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton55 = new System.Windows.Forms.ToolStripButton();
             this.tabSysMunicipalities = new System.Windows.Forms.TabPage();
             this.splitContainer19 = new System.Windows.Forms.SplitContainer();
             this.gridSysCounty = new System.Windows.Forms.DataGridView();
             this.toolsSysCounties = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel32 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnNewCounty = new System.Windows.Forms.ToolStripButton();
+            this.btnEditCounty = new System.Windows.Forms.ToolStripButton();
+            this.btnDeleteCounty = new System.Windows.Forms.ToolStripButton();
             this.gridSysMunicipality = new System.Windows.Forms.DataGridView();
             this.toolsSysMunicipalities = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel33 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnNewMunicipality = new System.Windows.Forms.ToolStripButton();
+            this.btnEditMunicipality = new System.Windows.Forms.ToolStripButton();
+            this.btnDeleteMunicipality = new System.Windows.Forms.ToolStripButton();
             this.tabSysAccredRules = new System.Windows.Forms.TabPage();
             this.dataGridView22 = new System.Windows.Forms.DataGridView();
             this.toolsSysAccredRules = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel34 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButton70 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton71 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton72 = new System.Windows.Forms.ToolStripButton();
             this.tabSysNuclides = new System.Windows.Forms.TabPage();
             this.gridSysNuclides = new System.Windows.Forms.DataGridView();
             this.toolsSysNuclides = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel41 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnSysNuclideNew = new System.Windows.Forms.ToolStripButton();
+            this.btnSysNuclideEdit = new System.Windows.Forms.ToolStripButton();
+            this.btnSysNuclideDelete = new System.Windows.Forms.ToolStripButton();
+            this.btnSysNuclideExport = new System.Windows.Forms.ToolStripDropDownButton();
+            this.btnNuclidesExportNuclidesXML = new System.Windows.Forms.ToolStripMenuItem();
             this.tabSysGeometries = new System.Windows.Forms.TabPage();
             this.panel6 = new System.Windows.Forms.Panel();
             this.gridSysGeom = new System.Windows.Forms.DataGridView();
             this.toolsSysGeom = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel43 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator23 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButton39 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton40 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton76 = new System.Windows.Forms.ToolStripButton();
             this.tabSysPers = new System.Windows.Forms.TabPage();
             this.gridSysPers = new System.Windows.Forms.DataGridView();
             this.toolStrip14 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel16 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator34 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnSysPersNew = new System.Windows.Forms.ToolStripButton();
+            this.btnSysPersEdit = new System.Windows.Forms.ToolStripButton();
+            this.btnSysPersDelete = new System.Windows.Forms.ToolStripButton();
             this.tabPrepAnal = new System.Windows.Forms.TabPage();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.panel31 = new System.Windows.Forms.Panel();
             this.treePrepAnal = new System.Windows.Forms.TreeView();
             this.toolStrip7 = new System.Windows.Forms.ToolStrip();
+            this.btnPrepAnalAddPrep = new System.Windows.Forms.ToolStripButton();
+            this.btnPrepAnalAddAnal = new System.Windows.Forms.ToolStripButton();
             this.tabsPrepAnal = new System.Windows.Forms.TabControl();
             this.tabPrepAnalSample = new System.Windows.Forms.TabPage();
             this.panel81 = new System.Windows.Forms.Panel();
@@ -688,11 +858,15 @@
             this.label27 = new System.Windows.Forms.Label();
             this.toolsSamplePrepInfo = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel13 = new System.Windows.Forms.ToolStripLabel();
+            this.btnPrepAnalPrepPrintLabel = new System.Windows.Forms.ToolStripButton();
             this.panel5 = new System.Windows.Forms.Panel();
             this.gridPrepAnalPrepAttachments = new System.Windows.Forms.DataGridView();
             this.toolsSampleAttachments = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel10 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator26 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnPrepAnalPrepScanAttachment = new System.Windows.Forms.ToolStripButton();
+            this.btnPrepAnalPrepBrowseAttachment = new System.Windows.Forms.ToolStripButton();
+            this.btnPrepAnalPrepDeleteAttachment = new System.Windows.Forms.ToolStripButton();
             this.tabPrepAnalAnalysis = new System.Windows.Forms.TabPage();
             this.panel76 = new System.Windows.Forms.Panel();
             this.panel9 = new System.Windows.Forms.Panel();
@@ -700,6 +874,9 @@
             this.toolsSampleResRes = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel7 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator28 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnPrepAnalAddResult = new System.Windows.Forms.ToolStripButton();
+            this.btnPrepAnalEditResult = new System.Windows.Forms.ToolStripButton();
+            this.btnPrepAnalRemoveResult = new System.Windows.Forms.ToolStripButton();
             this.toolStripLabel57 = new System.Windows.Forms.ToolStripLabel();
             this.panel14 = new System.Windows.Forms.Panel();
             this.cboxPrepAnalAnalWorkflowStatus = new System.Windows.Forms.ComboBox();
@@ -724,196 +901,19 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel59 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator53 = new System.Windows.Forms.ToolStripSeparator();
+            this.ddPrepAnalImport2 = new System.Windows.Forms.ToolStripDropDownButton();
+            this.miImportLISFile2 = new System.Windows.Forms.ToolStripMenuItem();
             this.panel8 = new System.Windows.Forms.Panel();
             this.gridPrepAnalAnalAttachments = new System.Windows.Forms.DataGridView();
             this.toolsSampleResAttachments = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator27 = new System.Windows.Forms.ToolStripSeparator();
-            this.tools = new System.Windows.Forms.ToolStrip();
-            this.lblCurrentTab = new System.Windows.Forms.ToolStripLabel();
-            this.btnMenuSearch = new System.Windows.Forms.Button();
-            this.btnMenuMetadata = new System.Windows.Forms.Button();
-            this.btnMenuCustomer = new System.Windows.Forms.Button();
-            this.btnMenuProjects = new System.Windows.Forms.Button();
-            this.btnMenuNewSample = new System.Windows.Forms.Button();
-            this.btnMenuSamples = new System.Windows.Forms.Button();
-            this.btnMenuNewOrder = new System.Windows.Forms.Button();
-            this.btnOrders = new System.Windows.Forms.Button();
-            this.btnSampleSelectSampleType = new System.Windows.Forms.Button();
-            this.btnSampleSamplingDateFromClear = new System.Windows.Forms.PictureBox();
-            this.btnSampleSamplingDateFrom = new System.Windows.Forms.PictureBox();
-            this.btnSampleSamplingDateToClear = new System.Windows.Forms.PictureBox();
-            this.btnSampleSamplingDateTo = new System.Windows.Forms.PictureBox();
-            this.btnSampleReferenceDateClear = new System.Windows.Forms.PictureBox();
-            this.btnSampleReferenceDate = new System.Windows.Forms.PictureBox();
-            this.btnSampleAddSampleToOrder = new System.Windows.Forms.ToolStripButton();
-            this.btnSampleGoToPrepAnal = new System.Windows.Forms.ToolStripButton();
-            this.btnSamplePrintSampleLabel = new System.Windows.Forms.ToolStripButton();
-            this.btnSampleScanAttachment = new System.Windows.Forms.ToolStripButton();
-            this.btnSampleBrowseAttachment = new System.Windows.Forms.ToolStripButton();
-            this.btnSampleDeleteAttachment = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton9 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton10 = new System.Windows.Forms.ToolStripButton();
-            this.btnOrderScanAttachment = new System.Windows.Forms.ToolStripButton();
-            this.btnOrderBrowseAttachment = new System.Windows.Forms.ToolStripButton();
-            this.btnOrderDeleteAttachment = new System.Windows.Forms.ToolStripButton();
-            this.btnOrderClearDeadline = new System.Windows.Forms.PictureBox();
-            this.btnOrderSelectDeadline = new System.Windows.Forms.PictureBox();
-            this.btnOrderSelectCustomer = new System.Windows.Forms.PictureBox();
-            this.ddbOrderAdd = new System.Windows.Forms.ToolStripDropDownButton();
-            this.btnOrderAddSampleType = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnOrderAddPrepMeth = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnOrderAddAnalMeth = new System.Windows.Forms.ToolStripMenuItem();
-            this.ddbOrderEdit = new System.Windows.Forms.ToolStripDropDownButton();
-            this.btnOrderEditSampleType = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnOrderEditPrepMeth = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnOrderEditAnalMeth = new System.Windows.Forms.ToolStripMenuItem();
-            this.ddbOrderDel = new System.Windows.Forms.ToolStripDropDownButton();
-            this.btnOrderDelSampleType = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnOrderDelPrepMeth = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnOrderDelAnalMeth = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnOrderCreateReport = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton64 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton65 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton66 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton67 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton68 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton69 = new System.Windows.Forms.ToolStripButton();
-            this.btnMetaUnitPrepUnitsNew = new System.Windows.Forms.ToolStripButton();
-            this.btnMetaUnitPrepUnitsEdit = new System.Windows.Forms.ToolStripButton();
-            this.btnMetaUnitPrepUnitsDelete = new System.Windows.Forms.ToolStripButton();
-            this.btnMetaUnitQuantUnitsNew = new System.Windows.Forms.ToolStripButton();
-            this.btnMetaUnitQuantUnitsEdit = new System.Windows.Forms.ToolStripButton();
-            this.btnMetaUnitQuantUnitsDelete = new System.Windows.Forms.ToolStripButton();
-            this.btnMetaUnitActivityUnitsNew = new System.Windows.Forms.ToolStripButton();
-            this.btnMetaUnitActivityUnitsEdit = new System.Windows.Forms.ToolStripButton();
-            this.btnMetaUnitActivityUnitsDelete = new System.Windows.Forms.ToolStripButton();
-            this.btnMetaUnitActivityUnitTypesNew = new System.Windows.Forms.ToolStripButton();
-            this.btnMetaUnitActivityUnitTypesEdit = new System.Windows.Forms.ToolStripButton();
-            this.btnMetaUnitActivityUnitTypesDelete = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton62 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton63 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton75 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton82 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton83 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton84 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton14 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton15 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton25 = new System.Windows.Forms.ToolStripButton();
-            this.btnCustomersNew = new System.Windows.Forms.ToolStripButton();
-            this.btnCustomersEdit = new System.Windows.Forms.ToolStripButton();
-            this.btnCustomersDelete = new System.Windows.Forms.ToolStripButton();
-            this.btnOrdersNew = new System.Windows.Forms.ToolStripButton();
-            this.btnOrdersEdit = new System.Windows.Forms.ToolStripButton();
-            this.btnOrdersDelete = new System.Windows.Forms.ToolStripButton();
-            this.btnOrdersUnlock = new System.Windows.Forms.ToolStripButton();
-            this.btnOrdersClearAllFilters = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton99 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripDropDownButton3 = new System.Windows.Forms.ToolStripDropDownButton();
-            this.excelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnSamplesEdit = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton104 = new System.Windows.Forms.ToolStripButton();
-            this.btnSamplesSplit = new System.Windows.Forms.ToolStripButton();
-            this.btnSamplesMerge = new System.Windows.Forms.ToolStripButton();
-            this.btnSamplesSetOrder = new System.Windows.Forms.ToolStripButton();
-            this.toolStripDropDownButton2 = new System.Windows.Forms.ToolStripDropDownButton();
-            this.projectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.customerToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.samplerToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.samplingmethodToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.excemptFromPublicToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnSamplesPrepAnal = new System.Windows.Forms.ToolStripButton();
-            this.toolStripDropDownButton4 = new System.Windows.Forms.ToolStripDropDownButton();
-            this.sampleLabelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.sampleInfoForSelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnSamplesUnlock = new System.Windows.Forms.ToolStripButton();
-            this.btnSamplesClearFilters = new System.Windows.Forms.ToolStripButton();
-            this.btnProjectsMainNew = new System.Windows.Forms.ToolStripButton();
-            this.btnProjectsMainEdit = new System.Windows.Forms.ToolStripButton();
-            this.btnProjectsSubNew = new System.Windows.Forms.ToolStripButton();
-            this.btnProjectsSubEdit = new System.Windows.Forms.ToolStripButton();
-            this.btnProjectSubPrint = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton24 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton26 = new System.Windows.Forms.ToolStripButton();
-            this.btnProjectScanAttachment = new System.Windows.Forms.ToolStripButton();
-            this.btnProjectBrowseAttachment = new System.Windows.Forms.ToolStripButton();
-            this.btnProjectDeleteAttachment = new System.Windows.Forms.ToolStripButton();
-            this.btnTypeRelSampleTypesNewRoot = new System.Windows.Forms.ToolStripButton();
-            this.btnTypeRelSampleTypesNew = new System.Windows.Forms.ToolStripButton();
-            this.btnTypeRelSampleTypesEdit = new System.Windows.Forms.ToolStripButton();
-            this.btnTypeRelSampleTypesDelete = new System.Windows.Forms.ToolStripButton();
-            this.btnTypeRelSampTypeExport = new System.Windows.Forms.ToolStripDropDownButton();
-            this.btnTypeRelSampleTypesExportSampTypeList = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnTypeRelSampleTypesExportSampTypeXML = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnTypeRelSampTypeCompAdd = new System.Windows.Forms.ToolStripButton();
-            this.btnTypeRelSampTypeCompEdit = new System.Windows.Forms.ToolStripButton();
-            this.btnTypeRelSampTypeCompDelete = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton45 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton46 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton89 = new System.Windows.Forms.ToolStripButton();
-            this.btnTypeRelSampTypePrepMethAdd = new System.Windows.Forms.ToolStripButton();
-            this.btnPreparationMethodDelete = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton49 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton50 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton91 = new System.Windows.Forms.ToolStripButton();
-            this.btnTypeRelPrepMethAddAnalMeth = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton48 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton51 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton52 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton93 = new System.Windows.Forms.ToolStripButton();
-            this.btnAnalysisMethodsAddNuclide = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton54 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton94 = new System.Windows.Forms.ToolStripButton();
-            this.btnMetaLabNew = new System.Windows.Forms.ToolStripButton();
-            this.btnMetaLabEdit = new System.Windows.Forms.ToolStripButton();
-            this.btnMetaLabDelete = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton27 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton29 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton30 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton31 = new System.Windows.Forms.ToolStripButton();
-            this.btnMetaUsersNew = new System.Windows.Forms.ToolStripButton();
-            this.btnMetaUsersEdit = new System.Windows.Forms.ToolStripButton();
-            this.btnMetaUsersDelete = new System.Windows.Forms.ToolStripButton();
-            this.btnMetaUsersResetPass = new System.Windows.Forms.ToolStripButton();
-            this.btnSysUsersAddRoles = new System.Windows.Forms.ToolStripButton();
-            this.btnSysUsersRemRoles = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton33 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton55 = new System.Windows.Forms.ToolStripButton();
-            this.btnNewCounty = new System.Windows.Forms.ToolStripButton();
-            this.btnEditCounty = new System.Windows.Forms.ToolStripButton();
-            this.btnDeleteCounty = new System.Windows.Forms.ToolStripButton();
-            this.btnNewMunicipality = new System.Windows.Forms.ToolStripButton();
-            this.btnEditMunicipality = new System.Windows.Forms.ToolStripButton();
-            this.btnDeleteMunicipality = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton70 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton71 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton72 = new System.Windows.Forms.ToolStripButton();
-            this.btnSysNuclideNew = new System.Windows.Forms.ToolStripButton();
-            this.btnSysNuclideEdit = new System.Windows.Forms.ToolStripButton();
-            this.btnSysNuclideDelete = new System.Windows.Forms.ToolStripButton();
-            this.btnSysNuclideExport = new System.Windows.Forms.ToolStripDropDownButton();
-            this.btnNuclidesExportNuclidesXML = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripButton39 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton40 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton76 = new System.Windows.Forms.ToolStripButton();
-            this.btnSysPersNew = new System.Windows.Forms.ToolStripButton();
-            this.btnSysPersEdit = new System.Windows.Forms.ToolStripButton();
-            this.btnSysPersDelete = new System.Windows.Forms.ToolStripButton();
-            this.btnPrepAnalAddPrep = new System.Windows.Forms.ToolStripButton();
-            this.btnPrepAnalAddAnal = new System.Windows.Forms.ToolStripButton();
-            this.btnPrepAnalPrepPrintLabel = new System.Windows.Forms.ToolStripButton();
-            this.btnPrepAnalPrepScanAttachment = new System.Windows.Forms.ToolStripButton();
-            this.btnPrepAnalPrepBrowseAttachment = new System.Windows.Forms.ToolStripButton();
-            this.btnPrepAnalPrepDeleteAttachment = new System.Windows.Forms.ToolStripButton();
-            this.btnPrepAnalAddResult = new System.Windows.Forms.ToolStripButton();
-            this.btnPrepAnalEditResult = new System.Windows.Forms.ToolStripButton();
-            this.btnPrepAnalRemoveResult = new System.Windows.Forms.ToolStripButton();
-            this.ddPrepAnalImport2 = new System.Windows.Forms.ToolStripDropDownButton();
-            this.miImportLISFile2 = new System.Windows.Forms.ToolStripMenuItem();
             this.btnPrepAnalAnalScanAttachment = new System.Windows.Forms.ToolStripButton();
             this.btnPrepAnalAnalBrowseAttachment = new System.Windows.Forms.ToolStripButton();
             this.btnPrepAnalAnalDeleteAttachment = new System.Windows.Forms.ToolStripButton();
+            this.tools = new System.Windows.Forms.ToolStrip();
             this.btnMenu = new System.Windows.Forms.ToolStripButton();
+            this.lblCurrentTab = new System.Windows.Forms.ToolStripLabel();
             this.btnBack = new System.Windows.Forms.ToolStripButton();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
@@ -931,8 +931,14 @@
             this.panel23.SuspendLayout();
             this.panel86.SuspendLayout();
             this.panel87.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.btnSampleSamplingDateFromClear)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnSampleSamplingDateFrom)).BeginInit();
             this.panel88.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.btnSampleSamplingDateToClear)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnSampleSamplingDateTo)).BeginInit();
             this.panel89.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.btnSampleReferenceDateClear)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnSampleReferenceDate)).BeginInit();
             this.panel36.SuspendLayout();
             this.toolStrip11.SuspendLayout();
             this.panel21.SuspendLayout();
@@ -955,7 +961,10 @@
             this.toolsOrderAttachments.SuspendLayout();
             this.tableLayoutPanel6.SuspendLayout();
             this.panel30.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.btnOrderClearDeadline)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnOrderSelectDeadline)).BeginInit();
             this.panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.btnOrderSelectCustomer)).BeginInit();
             this.toolsOrderDetails.SuspendLayout();
             this.toolsOrderContent.SuspendLayout();
             this.tabOrderStatus.SuspendLayout();
@@ -1218,15 +1227,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.gridPrepAnalAnalAttachments)).BeginInit();
             this.toolsSampleResAttachments.SuspendLayout();
             this.tools.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.btnSampleSamplingDateFromClear)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnSampleSamplingDateFrom)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnSampleSamplingDateToClear)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnSampleSamplingDateTo)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnSampleReferenceDateClear)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnSampleReferenceDate)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnOrderClearDeadline)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnOrderSelectDeadline)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnOrderSelectCustomer)).BeginInit();
             this.SuspendLayout();
             // 
             // menu
@@ -2624,6 +2624,99 @@
             this.layoutMenu.Size = new System.Drawing.Size(1122, 626);
             this.layoutMenu.TabIndex = 5;
             // 
+            // btnMenuSearch
+            // 
+            this.btnMenuSearch.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnMenuSearch.Font = new System.Drawing.Font("Arial", 16F, System.Drawing.FontStyle.Bold);
+            this.btnMenuSearch.Image = global::DSA_lims.Properties.Resources.search_gray;
+            this.btnMenuSearch.Location = new System.Drawing.Point(841, 330);
+            this.btnMenuSearch.Margin = new System.Windows.Forms.Padding(1);
+            this.btnMenuSearch.Name = "btnMenuSearch";
+            this.btnMenuSearch.Size = new System.Drawing.Size(280, 295);
+            this.btnMenuSearch.TabIndex = 7;
+            this.btnMenuSearch.Text = "Search";
+            this.btnMenuSearch.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnMenuSearch.UseVisualStyleBackColor = true;
+            this.btnMenuSearch.Click += new System.EventHandler(this.miSearchView_Click);
+            // 
+            // btnMenuMetadata
+            // 
+            this.btnMenuMetadata.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnMenuMetadata.Font = new System.Drawing.Font("Arial", 16F, System.Drawing.FontStyle.Bold);
+            this.btnMenuMetadata.Image = global::DSA_lims.Properties.Resources.new_batch_gray;
+            this.btnMenuMetadata.Location = new System.Drawing.Point(561, 330);
+            this.btnMenuMetadata.Margin = new System.Windows.Forms.Padding(1);
+            this.btnMenuMetadata.Name = "btnMenuMetadata";
+            this.btnMenuMetadata.Size = new System.Drawing.Size(278, 295);
+            this.btnMenuMetadata.TabIndex = 6;
+            this.btnMenuMetadata.Text = "Metadata";
+            this.btnMenuMetadata.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnMenuMetadata.UseVisualStyleBackColor = true;
+            this.btnMenuMetadata.Click += new System.EventHandler(this.miMetadataView_Click);
+            // 
+            // btnMenuCustomer
+            // 
+            this.btnMenuCustomer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnMenuCustomer.Font = new System.Drawing.Font("Arial", 16F, System.Drawing.FontStyle.Bold);
+            this.btnMenuCustomer.Image = global::DSA_lims.Properties.Resources.users_gray;
+            this.btnMenuCustomer.Location = new System.Drawing.Point(281, 330);
+            this.btnMenuCustomer.Margin = new System.Windows.Forms.Padding(1);
+            this.btnMenuCustomer.Name = "btnMenuCustomer";
+            this.btnMenuCustomer.Size = new System.Drawing.Size(278, 295);
+            this.btnMenuCustomer.TabIndex = 5;
+            this.btnMenuCustomer.Text = "Customers";
+            this.btnMenuCustomer.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnMenuCustomer.UseVisualStyleBackColor = true;
+            this.btnMenuCustomer.Click += new System.EventHandler(this.miCustomersView_Click);
+            // 
+            // btnMenuProjects
+            // 
+            this.btnMenuProjects.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnMenuProjects.Font = new System.Drawing.Font("Arial", 16F, System.Drawing.FontStyle.Bold);
+            this.btnMenuProjects.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.btnMenuProjects.Image = global::DSA_lims.Properties.Resources.projects_gray;
+            this.btnMenuProjects.Location = new System.Drawing.Point(1, 330);
+            this.btnMenuProjects.Margin = new System.Windows.Forms.Padding(1);
+            this.btnMenuProjects.Name = "btnMenuProjects";
+            this.btnMenuProjects.Size = new System.Drawing.Size(278, 295);
+            this.btnMenuProjects.TabIndex = 4;
+            this.btnMenuProjects.Text = "Projects";
+            this.btnMenuProjects.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnMenuProjects.UseVisualStyleBackColor = true;
+            this.btnMenuProjects.Click += new System.EventHandler(this.miProjectsView_Click);
+            // 
+            // btnMenuNewSample
+            // 
+            this.btnMenuNewSample.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnMenuNewSample.Font = new System.Drawing.Font("Arial", 16F, System.Drawing.FontStyle.Bold);
+            this.btnMenuNewSample.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.btnMenuNewSample.Image = global::DSA_lims.Properties.Resources.new_gray;
+            this.btnMenuNewSample.Location = new System.Drawing.Point(1, 33);
+            this.btnMenuNewSample.Margin = new System.Windows.Forms.Padding(1);
+            this.btnMenuNewSample.Name = "btnMenuNewSample";
+            this.btnMenuNewSample.Size = new System.Drawing.Size(278, 295);
+            this.btnMenuNewSample.TabIndex = 0;
+            this.btnMenuNewSample.Text = "New sample";
+            this.btnMenuNewSample.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnMenuNewSample.UseVisualStyleBackColor = true;
+            this.btnMenuNewSample.Click += new System.EventHandler(this.miSamplesNew_Click);
+            // 
+            // btnMenuSamples
+            // 
+            this.btnMenuSamples.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnMenuSamples.Font = new System.Drawing.Font("Arial", 16F, System.Drawing.FontStyle.Bold);
+            this.btnMenuSamples.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.btnMenuSamples.Image = global::DSA_lims.Properties.Resources.drawer_gray;
+            this.btnMenuSamples.Location = new System.Drawing.Point(281, 33);
+            this.btnMenuSamples.Margin = new System.Windows.Forms.Padding(1);
+            this.btnMenuSamples.Name = "btnMenuSamples";
+            this.btnMenuSamples.Size = new System.Drawing.Size(278, 295);
+            this.btnMenuSamples.TabIndex = 1;
+            this.btnMenuSamples.Text = "Samples";
+            this.btnMenuSamples.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnMenuSamples.UseVisualStyleBackColor = true;
+            this.btnMenuSamples.Click += new System.EventHandler(this.btnSamples_Click);
+            // 
             // lblMenuSamples
             // 
             this.lblMenuSamples.AutoSize = true;
@@ -2662,6 +2755,38 @@
             this.lblMenuOrders.TabIndex = 1;
             this.lblMenuOrders.Text = "Orders";
             this.lblMenuOrders.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // btnMenuNewOrder
+            // 
+            this.btnMenuNewOrder.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnMenuNewOrder.Font = new System.Drawing.Font("Arial", 16F, System.Drawing.FontStyle.Bold);
+            this.btnMenuNewOrder.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.btnMenuNewOrder.Image = global::DSA_lims.Properties.Resources.new_gray;
+            this.btnMenuNewOrder.Location = new System.Drawing.Point(561, 33);
+            this.btnMenuNewOrder.Margin = new System.Windows.Forms.Padding(1);
+            this.btnMenuNewOrder.Name = "btnMenuNewOrder";
+            this.btnMenuNewOrder.Size = new System.Drawing.Size(278, 295);
+            this.btnMenuNewOrder.TabIndex = 2;
+            this.btnMenuNewOrder.Text = "New order";
+            this.btnMenuNewOrder.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnMenuNewOrder.UseVisualStyleBackColor = true;
+            this.btnMenuNewOrder.Click += new System.EventHandler(this.miOrdersNew_Click);
+            // 
+            // btnOrders
+            // 
+            this.btnOrders.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnOrders.Font = new System.Drawing.Font("Arial", 16F, System.Drawing.FontStyle.Bold);
+            this.btnOrders.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.btnOrders.Image = global::DSA_lims.Properties.Resources.drawer_gray;
+            this.btnOrders.Location = new System.Drawing.Point(841, 33);
+            this.btnOrders.Margin = new System.Windows.Forms.Padding(1);
+            this.btnOrders.Name = "btnOrders";
+            this.btnOrders.Size = new System.Drawing.Size(280, 295);
+            this.btnOrders.TabIndex = 3;
+            this.btnOrders.Text = "Orders";
+            this.btnOrders.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnOrders.UseVisualStyleBackColor = true;
+            this.btnOrders.Click += new System.EventHandler(this.btnOrders_Click);
             // 
             // tabSample
             // 
@@ -2819,6 +2944,17 @@
             this.cboxSampleSampleType.ValueMember = "Id";
             this.cboxSampleSampleType.SelectedIndexChanged += new System.EventHandler(this.cboxSampleSampleType_SelectedIndexChanged);
             this.cboxSampleSampleType.Leave += new System.EventHandler(this.cboxSampleSampleType_Leave);
+            // 
+            // btnSampleSelectSampleType
+            // 
+            this.btnSampleSelectSampleType.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnSampleSelectSampleType.Image = global::DSA_lims.Properties.Resources.tree_16;
+            this.btnSampleSelectSampleType.Location = new System.Drawing.Point(615, 0);
+            this.btnSampleSelectSampleType.Name = "btnSampleSelectSampleType";
+            this.btnSampleSelectSampleType.Size = new System.Drawing.Size(22, 24);
+            this.btnSampleSelectSampleType.TabIndex = 1;
+            this.btnSampleSelectSampleType.UseVisualStyleBackColor = true;
+            this.btnSampleSelectSampleType.Click += new System.EventHandler(this.btnSampleSelectSampleType_Click);
             // 
             // cboxSampleProject
             // 
@@ -3274,6 +3410,31 @@
             this.tbSampleSamplingDateFrom.TabIndex = 16;
             this.tbSampleSamplingDateFrom.TextChanged += new System.EventHandler(this.tbSampleSamplingDateFrom_TextChanged);
             // 
+            // btnSampleSamplingDateFromClear
+            // 
+            this.btnSampleSamplingDateFromClear.BackgroundImage = global::DSA_lims.Properties.Resources.clear_16;
+            this.btnSampleSamplingDateFromClear.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnSampleSamplingDateFromClear.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnSampleSamplingDateFromClear.Location = new System.Drawing.Point(267, 0);
+            this.btnSampleSamplingDateFromClear.Name = "btnSampleSamplingDateFromClear";
+            this.btnSampleSamplingDateFromClear.Size = new System.Drawing.Size(24, 24);
+            this.btnSampleSamplingDateFromClear.TabIndex = 1;
+            this.btnSampleSamplingDateFromClear.TabStop = false;
+            this.btnSampleSamplingDateFromClear.Click += new System.EventHandler(this.btnSampleSamplingDateFromClear_Click);
+            // 
+            // btnSampleSamplingDateFrom
+            // 
+            this.btnSampleSamplingDateFrom.BackgroundImage = global::DSA_lims.Properties.Resources.datetime_16;
+            this.btnSampleSamplingDateFrom.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnSampleSamplingDateFrom.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnSampleSamplingDateFrom.InitialImage = null;
+            this.btnSampleSamplingDateFrom.Location = new System.Drawing.Point(291, 0);
+            this.btnSampleSamplingDateFrom.Name = "btnSampleSamplingDateFrom";
+            this.btnSampleSamplingDateFrom.Size = new System.Drawing.Size(24, 24);
+            this.btnSampleSamplingDateFrom.TabIndex = 0;
+            this.btnSampleSamplingDateFrom.TabStop = false;
+            this.btnSampleSamplingDateFrom.Click += new System.EventHandler(this.btnSampleSamplingDateFrom_Click);
+            // 
             // panel88
             // 
             this.panel88.Controls.Add(this.tbSampleSamplingDateTo);
@@ -3295,6 +3456,30 @@
             this.tbSampleSamplingDateTo.Size = new System.Drawing.Size(267, 21);
             this.tbSampleSamplingDateTo.TabIndex = 17;
             this.tbSampleSamplingDateTo.TextChanged += new System.EventHandler(this.tbSampleSamplingDateTo_TextChanged);
+            // 
+            // btnSampleSamplingDateToClear
+            // 
+            this.btnSampleSamplingDateToClear.BackgroundImage = global::DSA_lims.Properties.Resources.clear_16;
+            this.btnSampleSamplingDateToClear.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnSampleSamplingDateToClear.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnSampleSamplingDateToClear.Location = new System.Drawing.Point(267, 0);
+            this.btnSampleSamplingDateToClear.Name = "btnSampleSamplingDateToClear";
+            this.btnSampleSamplingDateToClear.Size = new System.Drawing.Size(24, 24);
+            this.btnSampleSamplingDateToClear.TabIndex = 1;
+            this.btnSampleSamplingDateToClear.TabStop = false;
+            this.btnSampleSamplingDateToClear.Click += new System.EventHandler(this.btnSampleSamplingDateToClear_Click);
+            // 
+            // btnSampleSamplingDateTo
+            // 
+            this.btnSampleSamplingDateTo.BackgroundImage = global::DSA_lims.Properties.Resources.datetime_16;
+            this.btnSampleSamplingDateTo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnSampleSamplingDateTo.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnSampleSamplingDateTo.Location = new System.Drawing.Point(291, 0);
+            this.btnSampleSamplingDateTo.Name = "btnSampleSamplingDateTo";
+            this.btnSampleSamplingDateTo.Size = new System.Drawing.Size(24, 24);
+            this.btnSampleSamplingDateTo.TabIndex = 0;
+            this.btnSampleSamplingDateTo.TabStop = false;
+            this.btnSampleSamplingDateTo.Click += new System.EventHandler(this.btnSampleSamplingDateTo_Click);
             // 
             // label26
             // 
@@ -3327,6 +3512,30 @@
             this.tbSampleReferenceDate.Size = new System.Drawing.Size(267, 21);
             this.tbSampleReferenceDate.TabIndex = 18;
             this.tbSampleReferenceDate.TextChanged += new System.EventHandler(this.tbSampleReferenceDate_TextChanged);
+            // 
+            // btnSampleReferenceDateClear
+            // 
+            this.btnSampleReferenceDateClear.BackgroundImage = global::DSA_lims.Properties.Resources.clear_16;
+            this.btnSampleReferenceDateClear.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnSampleReferenceDateClear.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnSampleReferenceDateClear.Location = new System.Drawing.Point(267, 0);
+            this.btnSampleReferenceDateClear.Name = "btnSampleReferenceDateClear";
+            this.btnSampleReferenceDateClear.Size = new System.Drawing.Size(24, 24);
+            this.btnSampleReferenceDateClear.TabIndex = 1;
+            this.btnSampleReferenceDateClear.TabStop = false;
+            this.btnSampleReferenceDateClear.Click += new System.EventHandler(this.btnSampleReferenceDateClear_Click);
+            // 
+            // btnSampleReferenceDate
+            // 
+            this.btnSampleReferenceDate.BackgroundImage = global::DSA_lims.Properties.Resources.datetime_16;
+            this.btnSampleReferenceDate.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnSampleReferenceDate.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnSampleReferenceDate.Location = new System.Drawing.Point(291, 0);
+            this.btnSampleReferenceDate.Name = "btnSampleReferenceDate";
+            this.btnSampleReferenceDate.Size = new System.Drawing.Size(24, 24);
+            this.btnSampleReferenceDate.TabIndex = 0;
+            this.btnSampleReferenceDate.TabStop = false;
+            this.btnSampleReferenceDate.Click += new System.EventHandler(this.btnSampleReferenceDate_Click);
             // 
             // tbSampleComment
             // 
@@ -3372,6 +3581,34 @@
             this.toolStrip11.Size = new System.Drawing.Size(793, 25);
             this.toolStrip11.TabIndex = 2;
             this.toolStrip11.Text = "toolStrip11";
+            // 
+            // btnSampleAddSampleToOrder
+            // 
+            this.btnSampleAddSampleToOrder.Image = global::DSA_lims.Properties.Resources._new;
+            this.btnSampleAddSampleToOrder.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSampleAddSampleToOrder.Name = "btnSampleAddSampleToOrder";
+            this.btnSampleAddSampleToOrder.Size = new System.Drawing.Size(135, 22);
+            this.btnSampleAddSampleToOrder.Text = "Add sample to order";
+            this.btnSampleAddSampleToOrder.Click += new System.EventHandler(this.btnSampleAddSampleToOrder_Click);
+            // 
+            // btnSampleGoToPrepAnal
+            // 
+            this.btnSampleGoToPrepAnal.Image = global::DSA_lims.Properties.Resources.right;
+            this.btnSampleGoToPrepAnal.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSampleGoToPrepAnal.Name = "btnSampleGoToPrepAnal";
+            this.btnSampleGoToPrepAnal.Size = new System.Drawing.Size(195, 22);
+            this.btnSampleGoToPrepAnal.Text = "Go to preparations and analyses";
+            this.btnSampleGoToPrepAnal.Click += new System.EventHandler(this.btnSampleGoToPrepAnal_Click);
+            // 
+            // btnSamplePrintSampleLabel
+            // 
+            this.btnSamplePrintSampleLabel.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.btnSamplePrintSampleLabel.Image = global::DSA_lims.Properties.Resources.printer;
+            this.btnSamplePrintSampleLabel.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSamplePrintSampleLabel.Name = "btnSamplePrintSampleLabel";
+            this.btnSamplePrintSampleLabel.Size = new System.Drawing.Size(121, 22);
+            this.btnSamplePrintSampleLabel.Text = "Print sample label";
+            this.btnSamplePrintSampleLabel.Click += new System.EventHandler(this.btnSamplePrintSampleLabel_Click);
             // 
             // panel21
             // 
@@ -3439,6 +3676,33 @@
             this.toolStripSeparator46.Name = "toolStripSeparator46";
             this.toolStripSeparator46.Size = new System.Drawing.Size(6, 25);
             // 
+            // btnSampleScanAttachment
+            // 
+            this.btnSampleScanAttachment.Image = global::DSA_lims.Properties.Resources.scan;
+            this.btnSampleScanAttachment.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSampleScanAttachment.Name = "btnSampleScanAttachment";
+            this.btnSampleScanAttachment.Size = new System.Drawing.Size(52, 22);
+            this.btnSampleScanAttachment.Text = "Scan";
+            this.btnSampleScanAttachment.Click += new System.EventHandler(this.btnSampleScanAttachment_Click);
+            // 
+            // btnSampleBrowseAttachment
+            // 
+            this.btnSampleBrowseAttachment.Image = global::DSA_lims.Properties.Resources.projects;
+            this.btnSampleBrowseAttachment.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSampleBrowseAttachment.Name = "btnSampleBrowseAttachment";
+            this.btnSampleBrowseAttachment.Size = new System.Drawing.Size(65, 22);
+            this.btnSampleBrowseAttachment.Text = "Browse";
+            this.btnSampleBrowseAttachment.Click += new System.EventHandler(this.btnSampleBrowseAttachment_Click);
+            // 
+            // btnSampleDeleteAttachment
+            // 
+            this.btnSampleDeleteAttachment.Image = global::DSA_lims.Properties.Resources.delete;
+            this.btnSampleDeleteAttachment.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSampleDeleteAttachment.Name = "btnSampleDeleteAttachment";
+            this.btnSampleDeleteAttachment.Size = new System.Drawing.Size(60, 22);
+            this.btnSampleDeleteAttachment.Text = "Delete";
+            this.btnSampleDeleteAttachment.Click += new System.EventHandler(this.btnSampleDeleteAttachment_Click);
+            // 
             // tabSamplesParams
             // 
             this.tabSamplesParams.BackColor = System.Drawing.SystemColors.ButtonFace;
@@ -3447,7 +3711,7 @@
             this.tabSamplesParams.Location = new System.Drawing.Point(4, 24);
             this.tabSamplesParams.Name = "tabSamplesParams";
             this.tabSamplesParams.Padding = new System.Windows.Forms.Padding(3);
-            this.tabSamplesParams.Size = new System.Drawing.Size(1114, 575);
+            this.tabSamplesParams.Size = new System.Drawing.Size(1114, 573);
             this.tabSamplesParams.TabIndex = 1;
             this.tabSamplesParams.Text = "Parameters";
             // 
@@ -3462,7 +3726,7 @@
             this.dataGridView1.Location = new System.Drawing.Point(3, 28);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.Size = new System.Drawing.Size(1108, 544);
+            this.dataGridView1.Size = new System.Drawing.Size(1108, 542);
             this.dataGridView1.TabIndex = 1;
             // 
             // toolStrip6
@@ -3490,6 +3754,22 @@
             // 
             this.toolStripSeparator24.Name = "toolStripSeparator24";
             this.toolStripSeparator24.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripButton9
+            // 
+            this.toolStripButton9.Image = global::DSA_lims.Properties.Resources._new;
+            this.toolStripButton9.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton9.Name = "toolStripButton9";
+            this.toolStripButton9.Size = new System.Drawing.Size(49, 22);
+            this.toolStripButton9.Text = "Add";
+            // 
+            // toolStripButton10
+            // 
+            this.toolStripButton10.Image = global::DSA_lims.Properties.Resources.delete;
+            this.toolStripButton10.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton10.Name = "toolStripButton10";
+            this.toolStripButton10.Size = new System.Drawing.Size(60, 22);
+            this.toolStripButton10.Text = "Delete";
             // 
             // toolsSample
             // 
@@ -3655,6 +3935,33 @@
             this.toolStripSeparator29.Name = "toolStripSeparator29";
             this.toolStripSeparator29.Size = new System.Drawing.Size(6, 25);
             // 
+            // btnOrderScanAttachment
+            // 
+            this.btnOrderScanAttachment.Image = global::DSA_lims.Properties.Resources.scan;
+            this.btnOrderScanAttachment.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnOrderScanAttachment.Name = "btnOrderScanAttachment";
+            this.btnOrderScanAttachment.Size = new System.Drawing.Size(52, 22);
+            this.btnOrderScanAttachment.Text = "Scan";
+            this.btnOrderScanAttachment.Click += new System.EventHandler(this.btnOrderScanAttachment_Click);
+            // 
+            // btnOrderBrowseAttachment
+            // 
+            this.btnOrderBrowseAttachment.Image = global::DSA_lims.Properties.Resources.projects;
+            this.btnOrderBrowseAttachment.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnOrderBrowseAttachment.Name = "btnOrderBrowseAttachment";
+            this.btnOrderBrowseAttachment.Size = new System.Drawing.Size(65, 22);
+            this.btnOrderBrowseAttachment.Text = "Browse";
+            this.btnOrderBrowseAttachment.Click += new System.EventHandler(this.btnOrderBrowseAttachment_Click);
+            // 
+            // btnOrderDeleteAttachment
+            // 
+            this.btnOrderDeleteAttachment.Image = global::DSA_lims.Properties.Resources.delete;
+            this.btnOrderDeleteAttachment.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnOrderDeleteAttachment.Name = "btnOrderDeleteAttachment";
+            this.btnOrderDeleteAttachment.Size = new System.Drawing.Size(60, 22);
+            this.btnOrderDeleteAttachment.Text = "Delete";
+            this.btnOrderDeleteAttachment.Click += new System.EventHandler(this.btnOrderDeleteAttachment_Click);
+            // 
             // tableLayoutPanel6
             // 
             this.tableLayoutPanel6.ColumnCount = 2;
@@ -3817,6 +4124,31 @@
             this.tbOrderDeadline.Size = new System.Drawing.Size(184, 21);
             this.tbOrderDeadline.TabIndex = 1;
             // 
+            // btnOrderClearDeadline
+            // 
+            this.btnOrderClearDeadline.BackgroundImage = global::DSA_lims.Properties.Resources.clear_16;
+            this.btnOrderClearDeadline.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnOrderClearDeadline.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnOrderClearDeadline.Location = new System.Drawing.Point(184, 0);
+            this.btnOrderClearDeadline.Name = "btnOrderClearDeadline";
+            this.btnOrderClearDeadline.Size = new System.Drawing.Size(24, 24);
+            this.btnOrderClearDeadline.TabIndex = 3;
+            this.btnOrderClearDeadline.TabStop = false;
+            this.btnOrderClearDeadline.Click += new System.EventHandler(this.btnOrderClearDeadline_Click);
+            // 
+            // btnOrderSelectDeadline
+            // 
+            this.btnOrderSelectDeadline.BackgroundImage = global::DSA_lims.Properties.Resources.datetime_16;
+            this.btnOrderSelectDeadline.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnOrderSelectDeadline.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnOrderSelectDeadline.InitialImage = null;
+            this.btnOrderSelectDeadline.Location = new System.Drawing.Point(208, 0);
+            this.btnOrderSelectDeadline.Name = "btnOrderSelectDeadline";
+            this.btnOrderSelectDeadline.Size = new System.Drawing.Size(24, 24);
+            this.btnOrderSelectDeadline.TabIndex = 2;
+            this.btnOrderSelectDeadline.TabStop = false;
+            this.btnOrderSelectDeadline.Click += new System.EventHandler(this.btnOrderSelectDeadline_Click);
+            // 
             // label41
             // 
             this.label41.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -3878,6 +4210,18 @@
             this.tbOrderCustomer.ReadOnly = true;
             this.tbOrderCustomer.Size = new System.Drawing.Size(208, 21);
             this.tbOrderCustomer.TabIndex = 3;
+            // 
+            // btnOrderSelectCustomer
+            // 
+            this.btnOrderSelectCustomer.BackgroundImage = global::DSA_lims.Properties.Resources.user_16;
+            this.btnOrderSelectCustomer.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnOrderSelectCustomer.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnOrderSelectCustomer.Location = new System.Drawing.Point(208, 0);
+            this.btnOrderSelectCustomer.Name = "btnOrderSelectCustomer";
+            this.btnOrderSelectCustomer.Size = new System.Drawing.Size(24, 24);
+            this.btnOrderSelectCustomer.TabIndex = 0;
+            this.btnOrderSelectCustomer.TabStop = false;
+            this.btnOrderSelectCustomer.Click += new System.EventHandler(this.btnOrderSelectCustomer_Click);
             // 
             // label35
             // 
@@ -3965,6 +4309,108 @@
             this.toolStripSeparator60.Name = "toolStripSeparator60";
             this.toolStripSeparator60.Size = new System.Drawing.Size(6, 25);
             // 
+            // ddbOrderAdd
+            // 
+            this.ddbOrderAdd.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnOrderAddSampleType,
+            this.btnOrderAddPrepMeth,
+            this.btnOrderAddAnalMeth});
+            this.ddbOrderAdd.Image = global::DSA_lims.Properties.Resources._new;
+            this.ddbOrderAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.ddbOrderAdd.Name = "ddbOrderAdd";
+            this.ddbOrderAdd.Size = new System.Drawing.Size(67, 22);
+            this.ddbOrderAdd.Text = "Add...";
+            // 
+            // btnOrderAddSampleType
+            // 
+            this.btnOrderAddSampleType.Name = "btnOrderAddSampleType";
+            this.btnOrderAddSampleType.Size = new System.Drawing.Size(180, 22);
+            this.btnOrderAddSampleType.Text = "Sample type";
+            this.btnOrderAddSampleType.Click += new System.EventHandler(this.miOrderAddSampleType_Click);
+            // 
+            // btnOrderAddPrepMeth
+            // 
+            this.btnOrderAddPrepMeth.Enabled = false;
+            this.btnOrderAddPrepMeth.Name = "btnOrderAddPrepMeth";
+            this.btnOrderAddPrepMeth.Size = new System.Drawing.Size(180, 22);
+            this.btnOrderAddPrepMeth.Text = "Preparation method";
+            this.btnOrderAddPrepMeth.Click += new System.EventHandler(this.miOrderAddPrepMeth_Click);
+            // 
+            // btnOrderAddAnalMeth
+            // 
+            this.btnOrderAddAnalMeth.Enabled = false;
+            this.btnOrderAddAnalMeth.Name = "btnOrderAddAnalMeth";
+            this.btnOrderAddAnalMeth.Size = new System.Drawing.Size(180, 22);
+            this.btnOrderAddAnalMeth.Text = "Analysis method";
+            this.btnOrderAddAnalMeth.Click += new System.EventHandler(this.miOrderAddAnalMeth_Click);
+            // 
+            // ddbOrderEdit
+            // 
+            this.ddbOrderEdit.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnOrderEditSampleType,
+            this.btnOrderEditPrepMeth,
+            this.btnOrderEditAnalMeth});
+            this.ddbOrderEdit.Image = global::DSA_lims.Properties.Resources.edit;
+            this.ddbOrderEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.ddbOrderEdit.Name = "ddbOrderEdit";
+            this.ddbOrderEdit.Size = new System.Drawing.Size(65, 22);
+            this.ddbOrderEdit.Text = "Edit...";
+            // 
+            // btnOrderEditSampleType
+            // 
+            this.btnOrderEditSampleType.Name = "btnOrderEditSampleType";
+            this.btnOrderEditSampleType.Size = new System.Drawing.Size(180, 22);
+            this.btnOrderEditSampleType.Text = "Sample type";
+            // 
+            // btnOrderEditPrepMeth
+            // 
+            this.btnOrderEditPrepMeth.Enabled = false;
+            this.btnOrderEditPrepMeth.Name = "btnOrderEditPrepMeth";
+            this.btnOrderEditPrepMeth.Size = new System.Drawing.Size(180, 22);
+            this.btnOrderEditPrepMeth.Text = "Preparation method";
+            // 
+            // btnOrderEditAnalMeth
+            // 
+            this.btnOrderEditAnalMeth.Enabled = false;
+            this.btnOrderEditAnalMeth.Name = "btnOrderEditAnalMeth";
+            this.btnOrderEditAnalMeth.Size = new System.Drawing.Size(180, 22);
+            this.btnOrderEditAnalMeth.Text = "Analysis method";
+            // 
+            // ddbOrderDel
+            // 
+            this.ddbOrderDel.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnOrderDelSampleType,
+            this.btnOrderDelPrepMeth,
+            this.btnOrderDelAnalMeth});
+            this.ddbOrderDel.Image = global::DSA_lims.Properties.Resources.delete;
+            this.ddbOrderDel.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.ddbOrderDel.Name = "ddbOrderDel";
+            this.ddbOrderDel.Size = new System.Drawing.Size(78, 22);
+            this.ddbOrderDel.Text = "Delete...";
+            // 
+            // btnOrderDelSampleType
+            // 
+            this.btnOrderDelSampleType.Name = "btnOrderDelSampleType";
+            this.btnOrderDelSampleType.Size = new System.Drawing.Size(180, 22);
+            this.btnOrderDelSampleType.Text = "Sample type";
+            this.btnOrderDelSampleType.Click += new System.EventHandler(this.miOrderRemSampleType_Click);
+            // 
+            // btnOrderDelPrepMeth
+            // 
+            this.btnOrderDelPrepMeth.Enabled = false;
+            this.btnOrderDelPrepMeth.Name = "btnOrderDelPrepMeth";
+            this.btnOrderDelPrepMeth.Size = new System.Drawing.Size(180, 22);
+            this.btnOrderDelPrepMeth.Text = "Preparation method";
+            this.btnOrderDelPrepMeth.Click += new System.EventHandler(this.miOrderRemPrepMeth_Click);
+            // 
+            // btnOrderDelAnalMeth
+            // 
+            this.btnOrderDelAnalMeth.Enabled = false;
+            this.btnOrderDelAnalMeth.Name = "btnOrderDelAnalMeth";
+            this.btnOrderDelAnalMeth.Size = new System.Drawing.Size(180, 22);
+            this.btnOrderDelAnalMeth.Text = "Analysis method";
+            this.btnOrderDelAnalMeth.Click += new System.EventHandler(this.miOrderRemAnalMeth_Click);
+            // 
             // tabOrderStatus
             // 
             this.tabOrderStatus.BackColor = System.Drawing.SystemColors.ButtonFace;
@@ -4038,20 +4484,6 @@
             this.cbOrderApprovedCustomer.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.cbOrderApprovedCustomer.UseVisualStyleBackColor = true;
             // 
-            // cbOrderApprovedLaboratory
-            // 
-            this.cbOrderApprovedLaboratory.AutoSize = true;
-            this.cbOrderApprovedLaboratory.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.cbOrderApprovedLaboratory.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cbOrderApprovedLaboratory.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbOrderApprovedLaboratory.Location = new System.Drawing.Point(3, 19);
-            this.cbOrderApprovedLaboratory.Name = "cbOrderApprovedLaboratory";
-            this.cbOrderApprovedLaboratory.Size = new System.Drawing.Size(271, 24);
-            this.cbOrderApprovedLaboratory.TabIndex = 3;
-            this.cbOrderApprovedLaboratory.Text = "Approved by laboratory";
-            this.cbOrderApprovedLaboratory.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.cbOrderApprovedLaboratory.UseVisualStyleBackColor = true;
-            // 
             // tbOrderApprovedCustomerBy
             // 
             this.tbOrderApprovedCustomerBy.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -4060,15 +4492,6 @@
             this.tbOrderApprovedCustomerBy.ReadOnly = true;
             this.tbOrderApprovedCustomerBy.Size = new System.Drawing.Size(548, 21);
             this.tbOrderApprovedCustomerBy.TabIndex = 1;
-            // 
-            // tbOrderApprovedLaboratoryBy
-            // 
-            this.tbOrderApprovedLaboratoryBy.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbOrderApprovedLaboratoryBy.Location = new System.Drawing.Point(280, 19);
-            this.tbOrderApprovedLaboratoryBy.Name = "tbOrderApprovedLaboratoryBy";
-            this.tbOrderApprovedLaboratoryBy.ReadOnly = true;
-            this.tbOrderApprovedLaboratoryBy.Size = new System.Drawing.Size(548, 21);
-            this.tbOrderApprovedLaboratoryBy.TabIndex = 4;
             // 
             // cboxOrderStatus
             // 
@@ -4147,17 +4570,6 @@
             this.btnOrderSaveApprovedCustomer.UseVisualStyleBackColor = true;
             this.btnOrderSaveApprovedCustomer.Click += new System.EventHandler(this.btnOrderSaveApprovedCustomer_Click);
             // 
-            // btnOrderSaveApprovedLaboratory
-            // 
-            this.btnOrderSaveApprovedLaboratory.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnOrderSaveApprovedLaboratory.Location = new System.Drawing.Point(834, 19);
-            this.btnOrderSaveApprovedLaboratory.Name = "btnOrderSaveApprovedLaboratory";
-            this.btnOrderSaveApprovedLaboratory.Size = new System.Drawing.Size(271, 24);
-            this.btnOrderSaveApprovedLaboratory.TabIndex = 5;
-            this.btnOrderSaveApprovedLaboratory.Text = "Save approval by laboratory";
-            this.btnOrderSaveApprovedLaboratory.UseVisualStyleBackColor = true;
-            this.btnOrderSaveApprovedLaboratory.Click += new System.EventHandler(this.btnOrderSaveApprovedLaboratory_Click);
-            // 
             // tbOrderCustomerInfo
             // 
             this.tbOrderCustomerInfo.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -4190,6 +4602,40 @@
             this.btnOrderSaveReportComment.UseVisualStyleBackColor = true;
             this.btnOrderSaveReportComment.Click += new System.EventHandler(this.btnOrderSaveReportComment_Click);
             // 
+            // cbOrderApprovedLaboratory
+            // 
+            this.cbOrderApprovedLaboratory.AutoSize = true;
+            this.cbOrderApprovedLaboratory.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cbOrderApprovedLaboratory.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cbOrderApprovedLaboratory.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbOrderApprovedLaboratory.Location = new System.Drawing.Point(3, 19);
+            this.cbOrderApprovedLaboratory.Name = "cbOrderApprovedLaboratory";
+            this.cbOrderApprovedLaboratory.Size = new System.Drawing.Size(271, 24);
+            this.cbOrderApprovedLaboratory.TabIndex = 3;
+            this.cbOrderApprovedLaboratory.Text = "Approved by laboratory";
+            this.cbOrderApprovedLaboratory.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cbOrderApprovedLaboratory.UseVisualStyleBackColor = true;
+            // 
+            // tbOrderApprovedLaboratoryBy
+            // 
+            this.tbOrderApprovedLaboratoryBy.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbOrderApprovedLaboratoryBy.Location = new System.Drawing.Point(280, 19);
+            this.tbOrderApprovedLaboratoryBy.Name = "tbOrderApprovedLaboratoryBy";
+            this.tbOrderApprovedLaboratoryBy.ReadOnly = true;
+            this.tbOrderApprovedLaboratoryBy.Size = new System.Drawing.Size(548, 21);
+            this.tbOrderApprovedLaboratoryBy.TabIndex = 4;
+            // 
+            // btnOrderSaveApprovedLaboratory
+            // 
+            this.btnOrderSaveApprovedLaboratory.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnOrderSaveApprovedLaboratory.Location = new System.Drawing.Point(834, 19);
+            this.btnOrderSaveApprovedLaboratory.Name = "btnOrderSaveApprovedLaboratory";
+            this.btnOrderSaveApprovedLaboratory.Size = new System.Drawing.Size(271, 24);
+            this.btnOrderSaveApprovedLaboratory.TabIndex = 5;
+            this.btnOrderSaveApprovedLaboratory.Text = "Save approval by laboratory";
+            this.btnOrderSaveApprovedLaboratory.UseVisualStyleBackColor = true;
+            this.btnOrderSaveApprovedLaboratory.Click += new System.EventHandler(this.btnOrderSaveApprovedLaboratory_Click);
+            // 
             // toolsOrderStatus
             // 
             this.toolsOrderStatus.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
@@ -4215,6 +4661,15 @@
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
             // 
+            // btnOrderCreateReport
+            // 
+            this.btnOrderCreateReport.Image = global::DSA_lims.Properties.Resources.report;
+            this.btnOrderCreateReport.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnOrderCreateReport.Name = "btnOrderCreateReport";
+            this.btnOrderCreateReport.Size = new System.Drawing.Size(127, 22);
+            this.btnOrderCreateReport.Text = "Create order report";
+            this.btnOrderCreateReport.Click += new System.EventHandler(this.btnOrderCreateReport_Click);
+            // 
             // tabOrderAssigned
             // 
             this.tabOrderAssigned.BackColor = System.Drawing.SystemColors.ButtonFace;
@@ -4223,7 +4678,7 @@
             this.tabOrderAssigned.Location = new System.Drawing.Point(4, 24);
             this.tabOrderAssigned.Name = "tabOrderAssigned";
             this.tabOrderAssigned.Padding = new System.Windows.Forms.Padding(3);
-            this.tabOrderAssigned.Size = new System.Drawing.Size(1114, 600);
+            this.tabOrderAssigned.Size = new System.Drawing.Size(1114, 598);
             this.tabOrderAssigned.TabIndex = 3;
             this.tabOrderAssigned.Text = "All units assigned to order";
             // 
@@ -4240,7 +4695,7 @@
             this.tvOrderContent.ShowNodeToolTips = true;
             this.tvOrderContent.ShowPlusMinus = false;
             this.tvOrderContent.ShowRootLines = false;
-            this.tvOrderContent.Size = new System.Drawing.Size(1108, 569);
+            this.tvOrderContent.Size = new System.Drawing.Size(1108, 567);
             this.tvOrderContent.TabIndex = 2;
             // 
             // toolStrip17
@@ -4276,7 +4731,7 @@
             // 
             this.panel17.Controls.Add(this.btnSearchClose);
             this.panel17.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel17.Location = new System.Drawing.Point(3, 601);
+            this.panel17.Location = new System.Drawing.Point(3, 599);
             this.panel17.Name = "panel17";
             this.panel17.Size = new System.Drawing.Size(1122, 30);
             this.panel17.TabIndex = 0;
@@ -4316,7 +4771,7 @@
             this.tabsMeta.Location = new System.Drawing.Point(3, 3);
             this.tabsMeta.Name = "tabsMeta";
             this.tabsMeta.SelectedIndex = 0;
-            this.tabsMeta.Size = new System.Drawing.Size(1122, 628);
+            this.tabsMeta.Size = new System.Drawing.Size(1122, 626);
             this.tabsMeta.TabIndex = 2;
             this.tabsMeta.SelectedIndexChanged += new System.EventHandler(this.tabsMeta_SelectedIndexChanged);
             // 
@@ -4328,7 +4783,7 @@
             this.tabMetaStations.Location = new System.Drawing.Point(4, 24);
             this.tabMetaStations.Name = "tabMetaStations";
             this.tabMetaStations.Padding = new System.Windows.Forms.Padding(3);
-            this.tabMetaStations.Size = new System.Drawing.Size(1114, 600);
+            this.tabMetaStations.Size = new System.Drawing.Size(1114, 598);
             this.tabMetaStations.TabIndex = 5;
             this.tabMetaStations.Text = "Stations";
             // 
@@ -4347,7 +4802,7 @@
             this.gridMetaStation.ReadOnly = true;
             this.gridMetaStation.RowHeadersVisible = false;
             this.gridMetaStation.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridMetaStation.Size = new System.Drawing.Size(1108, 569);
+            this.gridMetaStation.Size = new System.Drawing.Size(1108, 567);
             this.gridMetaStation.TabIndex = 0;
             // 
             // toolsMetaStations
@@ -4377,6 +4832,33 @@
             this.toolStripSeparator17.Name = "toolStripSeparator17";
             this.toolStripSeparator17.Size = new System.Drawing.Size(6, 25);
             // 
+            // toolStripButton64
+            // 
+            this.toolStripButton64.Image = global::DSA_lims.Properties.Resources._new;
+            this.toolStripButton64.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton64.Name = "toolStripButton64";
+            this.toolStripButton64.Size = new System.Drawing.Size(51, 22);
+            this.toolStripButton64.Text = "New";
+            this.toolStripButton64.Click += new System.EventHandler(this.miNewStation_Click);
+            // 
+            // toolStripButton65
+            // 
+            this.toolStripButton65.Image = global::DSA_lims.Properties.Resources.edit;
+            this.toolStripButton65.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton65.Name = "toolStripButton65";
+            this.toolStripButton65.Size = new System.Drawing.Size(47, 22);
+            this.toolStripButton65.Text = "Edit";
+            this.toolStripButton65.Click += new System.EventHandler(this.miEditStation_Click);
+            // 
+            // toolStripButton66
+            // 
+            this.toolStripButton66.Image = global::DSA_lims.Properties.Resources.delete;
+            this.toolStripButton66.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton66.Name = "toolStripButton66";
+            this.toolStripButton66.Size = new System.Drawing.Size(60, 22);
+            this.toolStripButton66.Text = "Delete";
+            this.toolStripButton66.Click += new System.EventHandler(this.miDeleteStation_Click);
+            // 
             // tabMetaSampleStorage
             // 
             this.tabMetaSampleStorage.BackColor = System.Drawing.SystemColors.ButtonFace;
@@ -4385,7 +4867,7 @@
             this.tabMetaSampleStorage.Location = new System.Drawing.Point(4, 24);
             this.tabMetaSampleStorage.Name = "tabMetaSampleStorage";
             this.tabMetaSampleStorage.Padding = new System.Windows.Forms.Padding(3);
-            this.tabMetaSampleStorage.Size = new System.Drawing.Size(1114, 600);
+            this.tabMetaSampleStorage.Size = new System.Drawing.Size(1114, 598);
             this.tabMetaSampleStorage.TabIndex = 6;
             this.tabMetaSampleStorage.Text = "Sample storage";
             // 
@@ -4405,7 +4887,7 @@
             this.gridMetaSampleStorage.ReadOnly = true;
             this.gridMetaSampleStorage.RowHeadersVisible = false;
             this.gridMetaSampleStorage.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridMetaSampleStorage.Size = new System.Drawing.Size(1108, 569);
+            this.gridMetaSampleStorage.Size = new System.Drawing.Size(1108, 567);
             this.gridMetaSampleStorage.TabIndex = 0;
             // 
             // toolsMetaSampStorage
@@ -4435,6 +4917,33 @@
             this.toolStripSeparator18.Name = "toolStripSeparator18";
             this.toolStripSeparator18.Size = new System.Drawing.Size(6, 25);
             // 
+            // toolStripButton67
+            // 
+            this.toolStripButton67.Image = global::DSA_lims.Properties.Resources._new;
+            this.toolStripButton67.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton67.Name = "toolStripButton67";
+            this.toolStripButton67.Size = new System.Drawing.Size(51, 22);
+            this.toolStripButton67.Text = "New";
+            this.toolStripButton67.Click += new System.EventHandler(this.miNewSampleStorage_Click);
+            // 
+            // toolStripButton68
+            // 
+            this.toolStripButton68.Image = global::DSA_lims.Properties.Resources.edit;
+            this.toolStripButton68.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton68.Name = "toolStripButton68";
+            this.toolStripButton68.Size = new System.Drawing.Size(47, 22);
+            this.toolStripButton68.Text = "Edit";
+            this.toolStripButton68.Click += new System.EventHandler(this.miEditSampleStorage_Click);
+            // 
+            // toolStripButton69
+            // 
+            this.toolStripButton69.Image = global::DSA_lims.Properties.Resources.delete;
+            this.toolStripButton69.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton69.Name = "toolStripButton69";
+            this.toolStripButton69.Size = new System.Drawing.Size(60, 22);
+            this.toolStripButton69.Text = "Delete";
+            this.toolStripButton69.Click += new System.EventHandler(this.miDeleteSampleStorage_Click);
+            // 
             // tabMetaUnits
             // 
             this.tabMetaUnits.BackColor = System.Drawing.SystemColors.ButtonFace;
@@ -4442,7 +4951,7 @@
             this.tabMetaUnits.Location = new System.Drawing.Point(4, 24);
             this.tabMetaUnits.Name = "tabMetaUnits";
             this.tabMetaUnits.Padding = new System.Windows.Forms.Padding(3);
-            this.tabMetaUnits.Size = new System.Drawing.Size(1114, 600);
+            this.tabMetaUnits.Size = new System.Drawing.Size(1114, 598);
             this.tabMetaUnits.TabIndex = 9;
             this.tabMetaUnits.Text = "Units";
             // 
@@ -4459,7 +4968,7 @@
             // splitContainer22.Panel2
             // 
             this.splitContainer22.Panel2.Controls.Add(this.splitContainer5);
-            this.splitContainer22.Size = new System.Drawing.Size(1108, 596);
+            this.splitContainer22.Size = new System.Drawing.Size(1108, 592);
             this.splitContainer22.SplitterDistance = 526;
             this.splitContainer22.SplitterWidth = 3;
             this.splitContainer22.TabIndex = 4;
@@ -4480,8 +4989,8 @@
             // 
             this.splitContainer6.Panel2.Controls.Add(this.gridMetaUnitQuantUnits);
             this.splitContainer6.Panel2.Controls.Add(this.toolStrip13);
-            this.splitContainer6.Size = new System.Drawing.Size(526, 596);
-            this.splitContainer6.SplitterDistance = 292;
+            this.splitContainer6.Size = new System.Drawing.Size(526, 592);
+            this.splitContainer6.SplitterDistance = 290;
             this.splitContainer6.TabIndex = 4;
             // 
             // gridMetaUnitPrepUnits
@@ -4500,7 +5009,7 @@
             this.gridMetaUnitPrepUnits.ReadOnly = true;
             this.gridMetaUnitPrepUnits.RowHeadersVisible = false;
             this.gridMetaUnitPrepUnits.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridMetaUnitPrepUnits.Size = new System.Drawing.Size(526, 267);
+            this.gridMetaUnitPrepUnits.Size = new System.Drawing.Size(526, 265);
             this.gridMetaUnitPrepUnits.TabIndex = 3;
             // 
             // toolsMetaUnits
@@ -4530,6 +5039,30 @@
             this.toolStripSeparator19.Name = "toolStripSeparator19";
             this.toolStripSeparator19.Size = new System.Drawing.Size(6, 25);
             // 
+            // btnMetaUnitPrepUnitsNew
+            // 
+            this.btnMetaUnitPrepUnitsNew.Image = global::DSA_lims.Properties.Resources._new;
+            this.btnMetaUnitPrepUnitsNew.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnMetaUnitPrepUnitsNew.Name = "btnMetaUnitPrepUnitsNew";
+            this.btnMetaUnitPrepUnitsNew.Size = new System.Drawing.Size(51, 22);
+            this.btnMetaUnitPrepUnitsNew.Text = "New";
+            // 
+            // btnMetaUnitPrepUnitsEdit
+            // 
+            this.btnMetaUnitPrepUnitsEdit.Image = global::DSA_lims.Properties.Resources.edit;
+            this.btnMetaUnitPrepUnitsEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnMetaUnitPrepUnitsEdit.Name = "btnMetaUnitPrepUnitsEdit";
+            this.btnMetaUnitPrepUnitsEdit.Size = new System.Drawing.Size(47, 22);
+            this.btnMetaUnitPrepUnitsEdit.Text = "Edit";
+            // 
+            // btnMetaUnitPrepUnitsDelete
+            // 
+            this.btnMetaUnitPrepUnitsDelete.Image = global::DSA_lims.Properties.Resources.delete;
+            this.btnMetaUnitPrepUnitsDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnMetaUnitPrepUnitsDelete.Name = "btnMetaUnitPrepUnitsDelete";
+            this.btnMetaUnitPrepUnitsDelete.Size = new System.Drawing.Size(60, 22);
+            this.btnMetaUnitPrepUnitsDelete.Text = "Delete";
+            // 
             // gridMetaUnitQuantUnits
             // 
             this.gridMetaUnitQuantUnits.AllowUserToAddRows = false;
@@ -4546,7 +5079,7 @@
             this.gridMetaUnitQuantUnits.ReadOnly = true;
             this.gridMetaUnitQuantUnits.RowHeadersVisible = false;
             this.gridMetaUnitQuantUnits.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridMetaUnitQuantUnits.Size = new System.Drawing.Size(526, 275);
+            this.gridMetaUnitQuantUnits.Size = new System.Drawing.Size(526, 273);
             this.gridMetaUnitQuantUnits.TabIndex = 4;
             // 
             // toolStrip13
@@ -4576,6 +5109,30 @@
             this.toolStripSeparator22.Name = "toolStripSeparator22";
             this.toolStripSeparator22.Size = new System.Drawing.Size(6, 25);
             // 
+            // btnMetaUnitQuantUnitsNew
+            // 
+            this.btnMetaUnitQuantUnitsNew.Image = global::DSA_lims.Properties.Resources._new;
+            this.btnMetaUnitQuantUnitsNew.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnMetaUnitQuantUnitsNew.Name = "btnMetaUnitQuantUnitsNew";
+            this.btnMetaUnitQuantUnitsNew.Size = new System.Drawing.Size(51, 22);
+            this.btnMetaUnitQuantUnitsNew.Text = "New";
+            // 
+            // btnMetaUnitQuantUnitsEdit
+            // 
+            this.btnMetaUnitQuantUnitsEdit.Image = global::DSA_lims.Properties.Resources.edit;
+            this.btnMetaUnitQuantUnitsEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnMetaUnitQuantUnitsEdit.Name = "btnMetaUnitQuantUnitsEdit";
+            this.btnMetaUnitQuantUnitsEdit.Size = new System.Drawing.Size(47, 22);
+            this.btnMetaUnitQuantUnitsEdit.Text = "Edit";
+            // 
+            // btnMetaUnitQuantUnitsDelete
+            // 
+            this.btnMetaUnitQuantUnitsDelete.Image = global::DSA_lims.Properties.Resources.delete;
+            this.btnMetaUnitQuantUnitsDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnMetaUnitQuantUnitsDelete.Name = "btnMetaUnitQuantUnitsDelete";
+            this.btnMetaUnitQuantUnitsDelete.Size = new System.Drawing.Size(60, 22);
+            this.btnMetaUnitQuantUnitsDelete.Text = "Delete";
+            // 
             // splitContainer5
             // 
             this.splitContainer5.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -4592,8 +5149,8 @@
             // 
             this.splitContainer5.Panel2.Controls.Add(this.gridMetaUnitActivityUnitTypes);
             this.splitContainer5.Panel2.Controls.Add(this.toolStrip12);
-            this.splitContainer5.Size = new System.Drawing.Size(579, 596);
-            this.splitContainer5.SplitterDistance = 298;
+            this.splitContainer5.Size = new System.Drawing.Size(579, 592);
+            this.splitContainer5.SplitterDistance = 296;
             this.splitContainer5.TabIndex = 2;
             // 
             // gridMetaUnitActivityUnits
@@ -4612,7 +5169,7 @@
             this.gridMetaUnitActivityUnits.ReadOnly = true;
             this.gridMetaUnitActivityUnits.RowHeadersVisible = false;
             this.gridMetaUnitActivityUnits.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridMetaUnitActivityUnits.Size = new System.Drawing.Size(579, 273);
+            this.gridMetaUnitActivityUnits.Size = new System.Drawing.Size(579, 271);
             this.gridMetaUnitActivityUnits.TabIndex = 1;
             // 
             // toolStrip2
@@ -4642,6 +5199,30 @@
             this.toolStripSeparator51.Name = "toolStripSeparator51";
             this.toolStripSeparator51.Size = new System.Drawing.Size(6, 25);
             // 
+            // btnMetaUnitActivityUnitsNew
+            // 
+            this.btnMetaUnitActivityUnitsNew.Image = global::DSA_lims.Properties.Resources._new;
+            this.btnMetaUnitActivityUnitsNew.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnMetaUnitActivityUnitsNew.Name = "btnMetaUnitActivityUnitsNew";
+            this.btnMetaUnitActivityUnitsNew.Size = new System.Drawing.Size(51, 22);
+            this.btnMetaUnitActivityUnitsNew.Text = "New";
+            // 
+            // btnMetaUnitActivityUnitsEdit
+            // 
+            this.btnMetaUnitActivityUnitsEdit.Image = global::DSA_lims.Properties.Resources.edit;
+            this.btnMetaUnitActivityUnitsEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnMetaUnitActivityUnitsEdit.Name = "btnMetaUnitActivityUnitsEdit";
+            this.btnMetaUnitActivityUnitsEdit.Size = new System.Drawing.Size(47, 22);
+            this.btnMetaUnitActivityUnitsEdit.Text = "Edit";
+            // 
+            // btnMetaUnitActivityUnitsDelete
+            // 
+            this.btnMetaUnitActivityUnitsDelete.Image = global::DSA_lims.Properties.Resources.delete;
+            this.btnMetaUnitActivityUnitsDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnMetaUnitActivityUnitsDelete.Name = "btnMetaUnitActivityUnitsDelete";
+            this.btnMetaUnitActivityUnitsDelete.Size = new System.Drawing.Size(60, 22);
+            this.btnMetaUnitActivityUnitsDelete.Text = "Delete";
+            // 
             // gridMetaUnitActivityUnitTypes
             // 
             this.gridMetaUnitActivityUnitTypes.AllowUserToAddRows = false;
@@ -4658,7 +5239,7 @@
             this.gridMetaUnitActivityUnitTypes.ReadOnly = true;
             this.gridMetaUnitActivityUnitTypes.RowHeadersVisible = false;
             this.gridMetaUnitActivityUnitTypes.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridMetaUnitActivityUnitTypes.Size = new System.Drawing.Size(579, 269);
+            this.gridMetaUnitActivityUnitTypes.Size = new System.Drawing.Size(579, 267);
             this.gridMetaUnitActivityUnitTypes.TabIndex = 2;
             // 
             // toolStrip12
@@ -4688,6 +5269,30 @@
             this.toolStripSeparator5.Name = "toolStripSeparator5";
             this.toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
             // 
+            // btnMetaUnitActivityUnitTypesNew
+            // 
+            this.btnMetaUnitActivityUnitTypesNew.Image = global::DSA_lims.Properties.Resources._new;
+            this.btnMetaUnitActivityUnitTypesNew.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnMetaUnitActivityUnitTypesNew.Name = "btnMetaUnitActivityUnitTypesNew";
+            this.btnMetaUnitActivityUnitTypesNew.Size = new System.Drawing.Size(51, 22);
+            this.btnMetaUnitActivityUnitTypesNew.Text = "New";
+            // 
+            // btnMetaUnitActivityUnitTypesEdit
+            // 
+            this.btnMetaUnitActivityUnitTypesEdit.Image = global::DSA_lims.Properties.Resources.edit;
+            this.btnMetaUnitActivityUnitTypesEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnMetaUnitActivityUnitTypesEdit.Name = "btnMetaUnitActivityUnitTypesEdit";
+            this.btnMetaUnitActivityUnitTypesEdit.Size = new System.Drawing.Size(47, 22);
+            this.btnMetaUnitActivityUnitTypesEdit.Text = "Edit";
+            // 
+            // btnMetaUnitActivityUnitTypesDelete
+            // 
+            this.btnMetaUnitActivityUnitTypesDelete.Image = global::DSA_lims.Properties.Resources.delete;
+            this.btnMetaUnitActivityUnitTypesDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnMetaUnitActivityUnitTypesDelete.Name = "btnMetaUnitActivityUnitTypesDelete";
+            this.btnMetaUnitActivityUnitTypesDelete.Size = new System.Drawing.Size(60, 22);
+            this.btnMetaUnitActivityUnitTypesDelete.Text = "Delete";
+            // 
             // tabMetaSamplers
             // 
             this.tabMetaSamplers.BackColor = System.Drawing.SystemColors.ButtonFace;
@@ -4696,7 +5301,7 @@
             this.tabMetaSamplers.Location = new System.Drawing.Point(4, 24);
             this.tabMetaSamplers.Name = "tabMetaSamplers";
             this.tabMetaSamplers.Padding = new System.Windows.Forms.Padding(3);
-            this.tabMetaSamplers.Size = new System.Drawing.Size(1114, 600);
+            this.tabMetaSamplers.Size = new System.Drawing.Size(1114, 598);
             this.tabMetaSamplers.TabIndex = 12;
             this.tabMetaSamplers.Text = "Samplers";
             // 
@@ -4716,7 +5321,7 @@
             this.gridMetaSamplers.ReadOnly = true;
             this.gridMetaSamplers.RowHeadersVisible = false;
             this.gridMetaSamplers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridMetaSamplers.Size = new System.Drawing.Size(1108, 569);
+            this.gridMetaSamplers.Size = new System.Drawing.Size(1108, 567);
             this.gridMetaSamplers.TabIndex = 0;
             // 
             // toolsMetaSamplers
@@ -4746,6 +5351,33 @@
             this.toolStripSeparator20.Name = "toolStripSeparator20";
             this.toolStripSeparator20.Size = new System.Drawing.Size(6, 25);
             // 
+            // toolStripButton62
+            // 
+            this.toolStripButton62.Image = global::DSA_lims.Properties.Resources._new;
+            this.toolStripButton62.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton62.Name = "toolStripButton62";
+            this.toolStripButton62.Size = new System.Drawing.Size(51, 22);
+            this.toolStripButton62.Text = "New";
+            this.toolStripButton62.Click += new System.EventHandler(this.miSamplerNew_Click);
+            // 
+            // toolStripButton63
+            // 
+            this.toolStripButton63.Image = global::DSA_lims.Properties.Resources.edit;
+            this.toolStripButton63.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton63.Name = "toolStripButton63";
+            this.toolStripButton63.Size = new System.Drawing.Size(47, 22);
+            this.toolStripButton63.Text = "Edit";
+            this.toolStripButton63.Click += new System.EventHandler(this.miSamplerEdit_Click);
+            // 
+            // toolStripButton75
+            // 
+            this.toolStripButton75.Image = global::DSA_lims.Properties.Resources.delete;
+            this.toolStripButton75.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton75.Name = "toolStripButton75";
+            this.toolStripButton75.Size = new System.Drawing.Size(60, 22);
+            this.toolStripButton75.Text = "Delete";
+            this.toolStripButton75.Click += new System.EventHandler(this.miSamplerDelete_Click);
+            // 
             // tabMetaSamplingMeth
             // 
             this.tabMetaSamplingMeth.BackColor = System.Drawing.SystemColors.ButtonFace;
@@ -4754,7 +5386,7 @@
             this.tabMetaSamplingMeth.Location = new System.Drawing.Point(4, 24);
             this.tabMetaSamplingMeth.Name = "tabMetaSamplingMeth";
             this.tabMetaSamplingMeth.Padding = new System.Windows.Forms.Padding(3);
-            this.tabMetaSamplingMeth.Size = new System.Drawing.Size(1114, 600);
+            this.tabMetaSamplingMeth.Size = new System.Drawing.Size(1114, 598);
             this.tabMetaSamplingMeth.TabIndex = 13;
             this.tabMetaSamplingMeth.Text = "Sampling methods";
             // 
@@ -4774,7 +5406,7 @@
             this.gridMetaSamplingMeth.ReadOnly = true;
             this.gridMetaSamplingMeth.RowHeadersVisible = false;
             this.gridMetaSamplingMeth.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridMetaSamplingMeth.Size = new System.Drawing.Size(1108, 569);
+            this.gridMetaSamplingMeth.Size = new System.Drawing.Size(1108, 567);
             this.gridMetaSamplingMeth.TabIndex = 3;
             // 
             // toolsMetaSampMeth
@@ -4804,6 +5436,33 @@
             this.toolStripSeparator21.Name = "toolStripSeparator21";
             this.toolStripSeparator21.Size = new System.Drawing.Size(6, 25);
             // 
+            // toolStripButton82
+            // 
+            this.toolStripButton82.Image = global::DSA_lims.Properties.Resources._new;
+            this.toolStripButton82.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton82.Name = "toolStripButton82";
+            this.toolStripButton82.Size = new System.Drawing.Size(51, 22);
+            this.toolStripButton82.Text = "New";
+            this.toolStripButton82.Click += new System.EventHandler(this.miSamplingMethodNew_Click);
+            // 
+            // toolStripButton83
+            // 
+            this.toolStripButton83.Image = global::DSA_lims.Properties.Resources.edit;
+            this.toolStripButton83.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton83.Name = "toolStripButton83";
+            this.toolStripButton83.Size = new System.Drawing.Size(47, 22);
+            this.toolStripButton83.Text = "Edit";
+            this.toolStripButton83.Click += new System.EventHandler(this.miSamplingMethodEdit_Click);
+            // 
+            // toolStripButton84
+            // 
+            this.toolStripButton84.Image = global::DSA_lims.Properties.Resources.delete;
+            this.toolStripButton84.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton84.Name = "toolStripButton84";
+            this.toolStripButton84.Size = new System.Drawing.Size(60, 22);
+            this.toolStripButton84.Text = "Delete";
+            this.toolStripButton84.Click += new System.EventHandler(this.miSamplingMethodDelete_Click);
+            // 
             // tabMetaCompanies
             // 
             this.tabMetaCompanies.BackColor = System.Drawing.SystemColors.ButtonFace;
@@ -4812,7 +5471,7 @@
             this.tabMetaCompanies.Location = new System.Drawing.Point(4, 24);
             this.tabMetaCompanies.Name = "tabMetaCompanies";
             this.tabMetaCompanies.Padding = new System.Windows.Forms.Padding(3);
-            this.tabMetaCompanies.Size = new System.Drawing.Size(1114, 600);
+            this.tabMetaCompanies.Size = new System.Drawing.Size(1114, 598);
             this.tabMetaCompanies.TabIndex = 14;
             this.tabMetaCompanies.Text = "Companies";
             // 
@@ -4832,7 +5491,7 @@
             this.gridMetaCompanies.ReadOnly = true;
             this.gridMetaCompanies.RowHeadersVisible = false;
             this.gridMetaCompanies.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridMetaCompanies.Size = new System.Drawing.Size(1108, 569);
+            this.gridMetaCompanies.Size = new System.Drawing.Size(1108, 567);
             this.gridMetaCompanies.TabIndex = 3;
             // 
             // toolStrip15
@@ -4862,6 +5521,33 @@
             this.toolStripSeparator59.Name = "toolStripSeparator59";
             this.toolStripSeparator59.Size = new System.Drawing.Size(6, 25);
             // 
+            // toolStripButton14
+            // 
+            this.toolStripButton14.Image = global::DSA_lims.Properties.Resources._new;
+            this.toolStripButton14.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton14.Name = "toolStripButton14";
+            this.toolStripButton14.Size = new System.Drawing.Size(51, 22);
+            this.toolStripButton14.Text = "New";
+            this.toolStripButton14.Click += new System.EventHandler(this.miCompanyNew_Click);
+            // 
+            // toolStripButton15
+            // 
+            this.toolStripButton15.Image = global::DSA_lims.Properties.Resources.edit;
+            this.toolStripButton15.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton15.Name = "toolStripButton15";
+            this.toolStripButton15.Size = new System.Drawing.Size(47, 22);
+            this.toolStripButton15.Text = "Edit";
+            this.toolStripButton15.Click += new System.EventHandler(this.miCompanyEdit_Click);
+            // 
+            // toolStripButton25
+            // 
+            this.toolStripButton25.Image = global::DSA_lims.Properties.Resources.delete;
+            this.toolStripButton25.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton25.Name = "toolStripButton25";
+            this.toolStripButton25.Size = new System.Drawing.Size(60, 22);
+            this.toolStripButton25.Text = "Delete";
+            this.toolStripButton25.Click += new System.EventHandler(this.miCompanyDelete_Click);
+            // 
             // tabCustomers
             // 
             this.tabCustomers.BackColor = System.Drawing.SystemColors.ButtonFace;
@@ -4870,7 +5556,7 @@
             this.tabCustomers.Location = new System.Drawing.Point(4, 24);
             this.tabCustomers.Name = "tabCustomers";
             this.tabCustomers.Padding = new System.Windows.Forms.Padding(3);
-            this.tabCustomers.Size = new System.Drawing.Size(1114, 600);
+            this.tabCustomers.Size = new System.Drawing.Size(1114, 598);
             this.tabCustomers.TabIndex = 15;
             this.tabCustomers.Text = "Customers";
             // 
@@ -4890,7 +5576,7 @@
             this.gridCustomers.ReadOnly = true;
             this.gridCustomers.RowHeadersVisible = false;
             this.gridCustomers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridCustomers.Size = new System.Drawing.Size(1108, 569);
+            this.gridCustomers.Size = new System.Drawing.Size(1108, 567);
             this.gridCustomers.TabIndex = 1;
             // 
             // toolsCust
@@ -4919,6 +5605,33 @@
             // 
             this.toolStripSeparator33.Name = "toolStripSeparator33";
             this.toolStripSeparator33.Size = new System.Drawing.Size(6, 25);
+            // 
+            // btnCustomersNew
+            // 
+            this.btnCustomersNew.Image = ((System.Drawing.Image)(resources.GetObject("btnCustomersNew.Image")));
+            this.btnCustomersNew.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnCustomersNew.Name = "btnCustomersNew";
+            this.btnCustomersNew.Size = new System.Drawing.Size(49, 22);
+            this.btnCustomersNew.Text = "Add";
+            this.btnCustomersNew.Click += new System.EventHandler(this.miCustomersNew_Click);
+            // 
+            // btnCustomersEdit
+            // 
+            this.btnCustomersEdit.Image = ((System.Drawing.Image)(resources.GetObject("btnCustomersEdit.Image")));
+            this.btnCustomersEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnCustomersEdit.Name = "btnCustomersEdit";
+            this.btnCustomersEdit.Size = new System.Drawing.Size(47, 22);
+            this.btnCustomersEdit.Text = "Edit";
+            this.btnCustomersEdit.Click += new System.EventHandler(this.miCustomersEdit_Click);
+            // 
+            // btnCustomersDelete
+            // 
+            this.btnCustomersDelete.Image = ((System.Drawing.Image)(resources.GetObject("btnCustomersDelete.Image")));
+            this.btnCustomersDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnCustomersDelete.Name = "btnCustomersDelete";
+            this.btnCustomersDelete.Size = new System.Drawing.Size(60, 22);
+            this.btnCustomersDelete.Text = "Delete";
+            this.btnCustomersDelete.Click += new System.EventHandler(this.miCustomersDelete_Click);
             // 
             // tabOrders
             // 
@@ -4982,10 +5695,46 @@
             this.toolStripSeparator64.Name = "toolStripSeparator64";
             this.toolStripSeparator64.Size = new System.Drawing.Size(6, 25);
             // 
+            // btnOrdersNew
+            // 
+            this.btnOrdersNew.Image = global::DSA_lims.Properties.Resources._new;
+            this.btnOrdersNew.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnOrdersNew.Name = "btnOrdersNew";
+            this.btnOrdersNew.Size = new System.Drawing.Size(51, 22);
+            this.btnOrdersNew.Text = "New";
+            this.btnOrdersNew.Click += new System.EventHandler(this.miOrdersNew_Click);
+            // 
+            // btnOrdersEdit
+            // 
+            this.btnOrdersEdit.Image = global::DSA_lims.Properties.Resources.edit;
+            this.btnOrdersEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnOrdersEdit.Name = "btnOrdersEdit";
+            this.btnOrdersEdit.Size = new System.Drawing.Size(47, 22);
+            this.btnOrdersEdit.Text = "Edit";
+            this.btnOrdersEdit.Click += new System.EventHandler(this.miOrdersEdit_Click);
+            // 
+            // btnOrdersDelete
+            // 
+            this.btnOrdersDelete.Image = global::DSA_lims.Properties.Resources.delete;
+            this.btnOrdersDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnOrdersDelete.Name = "btnOrdersDelete";
+            this.btnOrdersDelete.Size = new System.Drawing.Size(60, 22);
+            this.btnOrdersDelete.Text = "Delete";
+            this.btnOrdersDelete.Click += new System.EventHandler(this.miOrdersDelete_Click);
+            // 
             // toolStripSeparator71
             // 
             this.toolStripSeparator71.Name = "toolStripSeparator71";
             this.toolStripSeparator71.Size = new System.Drawing.Size(6, 25);
+            // 
+            // btnOrdersUnlock
+            // 
+            this.btnOrdersUnlock.Image = global::DSA_lims.Properties.Resources._switch;
+            this.btnOrdersUnlock.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnOrdersUnlock.Name = "btnOrdersUnlock";
+            this.btnOrdersUnlock.Size = new System.Drawing.Size(64, 22);
+            this.btnOrdersUnlock.Text = "Unlock";
+            this.btnOrdersUnlock.Click += new System.EventHandler(this.miOrdersUnlock_Click);
             // 
             // panel2
             // 
@@ -5090,6 +5839,15 @@
             this.toolStripSeparator63.Name = "toolStripSeparator63";
             this.toolStripSeparator63.Size = new System.Drawing.Size(6, 25);
             // 
+            // btnOrdersClearAllFilters
+            // 
+            this.btnOrdersClearAllFilters.Image = global::DSA_lims.Properties.Resources.trash;
+            this.btnOrdersClearAllFilters.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnOrdersClearAllFilters.Name = "btnOrdersClearAllFilters";
+            this.btnOrdersClearAllFilters.Size = new System.Drawing.Size(101, 22);
+            this.btnOrdersClearAllFilters.Text = "Clear all filters";
+            this.btnOrdersClearAllFilters.Click += new System.EventHandler(this.miOrdersClearAllFilters_Click);
+            // 
             // tabSamples
             // 
             this.tabSamples.BackColor = System.Drawing.SystemColors.ButtonFace;
@@ -5160,15 +5918,177 @@
             this.toolStripSeparator30.Name = "toolStripSeparator30";
             this.toolStripSeparator30.Size = new System.Drawing.Size(6, 25);
             // 
+            // toolStripButton99
+            // 
+            this.toolStripButton99.Image = global::DSA_lims.Properties.Resources._new;
+            this.toolStripButton99.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton99.Name = "toolStripButton99";
+            this.toolStripButton99.Size = new System.Drawing.Size(51, 22);
+            this.toolStripButton99.Text = "New";
+            this.toolStripButton99.Click += new System.EventHandler(this.miSamplesNew_Click);
+            // 
+            // toolStripDropDownButton3
+            // 
+            this.toolStripDropDownButton3.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.excelToolStripMenuItem});
+            this.toolStripDropDownButton3.Image = global::DSA_lims.Properties.Resources._new;
+            this.toolStripDropDownButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripDropDownButton3.Name = "toolStripDropDownButton3";
+            this.toolStripDropDownButton3.Size = new System.Drawing.Size(81, 22);
+            this.toolStripDropDownButton3.Text = "Import...";
+            // 
+            // excelToolStripMenuItem
+            // 
+            this.excelToolStripMenuItem.Name = "excelToolStripMenuItem";
+            this.excelToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
+            this.excelToolStripMenuItem.Text = "Excel";
+            this.excelToolStripMenuItem.Click += new System.EventHandler(this.miSamplesImportExcel_Click);
+            // 
+            // btnSamplesEdit
+            // 
+            this.btnSamplesEdit.Image = global::DSA_lims.Properties.Resources.edit;
+            this.btnSamplesEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSamplesEdit.Name = "btnSamplesEdit";
+            this.btnSamplesEdit.Size = new System.Drawing.Size(47, 22);
+            this.btnSamplesEdit.Text = "Edit";
+            this.btnSamplesEdit.Click += new System.EventHandler(this.miSamplesEdit_Click);
+            // 
+            // toolStripButton104
+            // 
+            this.toolStripButton104.Image = global::DSA_lims.Properties.Resources.delete;
+            this.toolStripButton104.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton104.Name = "toolStripButton104";
+            this.toolStripButton104.Size = new System.Drawing.Size(60, 22);
+            this.toolStripButton104.Text = "Delete";
+            this.toolStripButton104.Click += new System.EventHandler(this.miSamplesDelete_Click);
+            // 
             // toolStripSeparator47
             // 
             this.toolStripSeparator47.Name = "toolStripSeparator47";
             this.toolStripSeparator47.Size = new System.Drawing.Size(6, 25);
             // 
+            // btnSamplesSplit
+            // 
+            this.btnSamplesSplit.Image = global::DSA_lims.Properties.Resources.split;
+            this.btnSamplesSplit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSamplesSplit.Name = "btnSamplesSplit";
+            this.btnSamplesSplit.Size = new System.Drawing.Size(50, 22);
+            this.btnSamplesSplit.Text = "Split";
+            this.btnSamplesSplit.Click += new System.EventHandler(this.miSamplesSplit_Click);
+            // 
+            // btnSamplesMerge
+            // 
+            this.btnSamplesMerge.Image = global::DSA_lims.Properties.Resources.merge;
+            this.btnSamplesMerge.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSamplesMerge.Name = "btnSamplesMerge";
+            this.btnSamplesMerge.Size = new System.Drawing.Size(61, 22);
+            this.btnSamplesMerge.Text = "Merge";
+            this.btnSamplesMerge.Click += new System.EventHandler(this.miSamplesMerge_Click);
+            // 
             // toolStripSeparator45
             // 
             this.toolStripSeparator45.Name = "toolStripSeparator45";
             this.toolStripSeparator45.Size = new System.Drawing.Size(6, 25);
+            // 
+            // btnSamplesSetOrder
+            // 
+            this.btnSamplesSetOrder.Image = global::DSA_lims.Properties.Resources._new;
+            this.btnSamplesSetOrder.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSamplesSetOrder.Name = "btnSamplesSetOrder";
+            this.btnSamplesSetOrder.Size = new System.Drawing.Size(94, 22);
+            this.btnSamplesSetOrder.Text = "Add to order";
+            this.btnSamplesSetOrder.Click += new System.EventHandler(this.miSamplesSetOrder_Click);
+            // 
+            // toolStripDropDownButton2
+            // 
+            this.toolStripDropDownButton2.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.projectToolStripMenuItem,
+            this.customerToolStripMenuItem1,
+            this.samplerToolStripMenuItem1,
+            this.samplingmethodToolStripMenuItem1,
+            this.excemptFromPublicToolStripMenuItem});
+            this.toolStripDropDownButton2.Image = global::DSA_lims.Properties.Resources.set;
+            this.toolStripDropDownButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripDropDownButton2.Name = "toolStripDropDownButton2";
+            this.toolStripDropDownButton2.Size = new System.Drawing.Size(61, 22);
+            this.toolStripDropDownButton2.Text = "Set...";
+            // 
+            // projectToolStripMenuItem
+            // 
+            this.projectToolStripMenuItem.Name = "projectToolStripMenuItem";
+            this.projectToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.projectToolStripMenuItem.Text = "&Project";
+            this.projectToolStripMenuItem.Click += new System.EventHandler(this.miSamplesSetProject_Click);
+            // 
+            // customerToolStripMenuItem1
+            // 
+            this.customerToolStripMenuItem1.Name = "customerToolStripMenuItem1";
+            this.customerToolStripMenuItem1.Size = new System.Drawing.Size(184, 22);
+            this.customerToolStripMenuItem1.Text = "&Customer";
+            this.customerToolStripMenuItem1.Click += new System.EventHandler(this.miSamplesSetCustomer_Click);
+            // 
+            // samplerToolStripMenuItem1
+            // 
+            this.samplerToolStripMenuItem1.Name = "samplerToolStripMenuItem1";
+            this.samplerToolStripMenuItem1.Size = new System.Drawing.Size(184, 22);
+            this.samplerToolStripMenuItem1.Text = "&Sampler";
+            this.samplerToolStripMenuItem1.Click += new System.EventHandler(this.miSamplesSetSampler_Click);
+            // 
+            // samplingmethodToolStripMenuItem1
+            // 
+            this.samplingmethodToolStripMenuItem1.Name = "samplingmethodToolStripMenuItem1";
+            this.samplingmethodToolStripMenuItem1.Size = new System.Drawing.Size(184, 22);
+            this.samplingmethodToolStripMenuItem1.Text = "Sampling &method";
+            this.samplingmethodToolStripMenuItem1.Click += new System.EventHandler(this.miSamplesSetSamplingMethod_Click);
+            // 
+            // excemptFromPublicToolStripMenuItem
+            // 
+            this.excemptFromPublicToolStripMenuItem.Name = "excemptFromPublicToolStripMenuItem";
+            this.excemptFromPublicToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.excemptFromPublicToolStripMenuItem.Text = "&Excempt from public";
+            this.excemptFromPublicToolStripMenuItem.Click += new System.EventHandler(this.miSamplesSetExcempt_Click);
+            // 
+            // btnSamplesPrepAnal
+            // 
+            this.btnSamplesPrepAnal.Image = global::DSA_lims.Properties.Resources.prep_anal;
+            this.btnSamplesPrepAnal.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSamplesPrepAnal.Name = "btnSamplesPrepAnal";
+            this.btnSamplesPrepAnal.Size = new System.Drawing.Size(163, 22);
+            this.btnSamplesPrepAnal.Text = "Preparations and analyses";
+            this.btnSamplesPrepAnal.Click += new System.EventHandler(this.miSamplesPrepAnal_Click);
+            // 
+            // toolStripDropDownButton4
+            // 
+            this.toolStripDropDownButton4.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.sampleLabelToolStripMenuItem,
+            this.sampleInfoForSelectedToolStripMenuItem});
+            this.toolStripDropDownButton4.Image = global::DSA_lims.Properties.Resources.printer;
+            this.toolStripDropDownButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripDropDownButton4.Name = "toolStripDropDownButton4";
+            this.toolStripDropDownButton4.Size = new System.Drawing.Size(70, 22);
+            this.toolStripDropDownButton4.Text = "Print...";
+            // 
+            // sampleLabelToolStripMenuItem
+            // 
+            this.sampleLabelToolStripMenuItem.Name = "sampleLabelToolStripMenuItem";
+            this.sampleLabelToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.sampleLabelToolStripMenuItem.Text = "Sample labels";
+            this.sampleLabelToolStripMenuItem.Click += new System.EventHandler(this.miSamplesPrintSampleLabels_Click);
+            // 
+            // sampleInfoForSelectedToolStripMenuItem
+            // 
+            this.sampleInfoForSelectedToolStripMenuItem.Name = "sampleInfoForSelectedToolStripMenuItem";
+            this.sampleInfoForSelectedToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.sampleInfoForSelectedToolStripMenuItem.Text = "Sample info";
+            // 
+            // btnSamplesUnlock
+            // 
+            this.btnSamplesUnlock.Image = global::DSA_lims.Properties.Resources._switch;
+            this.btnSamplesUnlock.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSamplesUnlock.Name = "btnSamplesUnlock";
+            this.btnSamplesUnlock.Size = new System.Drawing.Size(64, 22);
+            this.btnSamplesUnlock.Text = "Unlock";
+            this.btnSamplesUnlock.Click += new System.EventHandler(this.miSamplesUnlock_Click);
             // 
             // panel78
             // 
@@ -5339,6 +6259,15 @@
             this.toolStripSeparator57.Name = "toolStripSeparator57";
             this.toolStripSeparator57.Size = new System.Drawing.Size(6, 25);
             // 
+            // btnSamplesClearFilters
+            // 
+            this.btnSamplesClearFilters.Image = global::DSA_lims.Properties.Resources.trash;
+            this.btnSamplesClearFilters.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSamplesClearFilters.Name = "btnSamplesClearFilters";
+            this.btnSamplesClearFilters.Size = new System.Drawing.Size(101, 22);
+            this.btnSamplesClearFilters.Text = "Clear all filters";
+            this.btnSamplesClearFilters.Click += new System.EventHandler(this.btnSamplesClearFilters_Click);
+            // 
             // tabProjects
             // 
             this.tabProjects.BackColor = System.Drawing.SystemColors.ButtonFace;
@@ -5364,7 +6293,7 @@
             // splitProjects.Panel2
             // 
             this.splitProjects.Panel2.Controls.Add(this.splitContainer24);
-            this.splitProjects.Size = new System.Drawing.Size(1122, 628);
+            this.splitProjects.Size = new System.Drawing.Size(1122, 626);
             this.splitProjects.SplitterDistance = 373;
             this.splitProjects.SplitterWidth = 3;
             this.splitProjects.TabIndex = 6;
@@ -5385,7 +6314,7 @@
             this.gridProjectMain.ReadOnly = true;
             this.gridProjectMain.RowHeadersVisible = false;
             this.gridProjectMain.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridProjectMain.Size = new System.Drawing.Size(373, 603);
+            this.gridProjectMain.Size = new System.Drawing.Size(373, 601);
             this.gridProjectMain.TabIndex = 1;
             this.gridProjectMain.SelectionChanged += new System.EventHandler(this.gridProjectMain_SelectionChanged);
             // 
@@ -5415,6 +6344,24 @@
             this.toolStripSeparator54.Name = "toolStripSeparator54";
             this.toolStripSeparator54.Size = new System.Drawing.Size(6, 25);
             // 
+            // btnProjectsMainNew
+            // 
+            this.btnProjectsMainNew.Image = global::DSA_lims.Properties.Resources._new;
+            this.btnProjectsMainNew.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnProjectsMainNew.Name = "btnProjectsMainNew";
+            this.btnProjectsMainNew.Size = new System.Drawing.Size(51, 22);
+            this.btnProjectsMainNew.Text = "New";
+            this.btnProjectsMainNew.Click += new System.EventHandler(this.miProjectsNew_Click);
+            // 
+            // btnProjectsMainEdit
+            // 
+            this.btnProjectsMainEdit.Image = global::DSA_lims.Properties.Resources.edit;
+            this.btnProjectsMainEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnProjectsMainEdit.Name = "btnProjectsMainEdit";
+            this.btnProjectsMainEdit.Size = new System.Drawing.Size(47, 22);
+            this.btnProjectsMainEdit.Text = "Edit";
+            this.btnProjectsMainEdit.Click += new System.EventHandler(this.miProjectsEdit_Click);
+            // 
             // splitContainer24
             // 
             this.splitContainer24.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -5429,7 +6376,7 @@
             // splitContainer24.Panel2
             // 
             this.splitContainer24.Panel2.Controls.Add(this.splitContainer25);
-            this.splitContainer24.Size = new System.Drawing.Size(746, 628);
+            this.splitContainer24.Size = new System.Drawing.Size(746, 626);
             this.splitContainer24.SplitterDistance = 384;
             this.splitContainer24.SplitterWidth = 3;
             this.splitContainer24.TabIndex = 0;
@@ -5450,7 +6397,7 @@
             this.gridProjectSub.ReadOnly = true;
             this.gridProjectSub.RowHeadersVisible = false;
             this.gridProjectSub.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridProjectSub.Size = new System.Drawing.Size(384, 603);
+            this.gridProjectSub.Size = new System.Drawing.Size(384, 601);
             this.gridProjectSub.TabIndex = 1;
             this.gridProjectSub.SelectionChanged += new System.EventHandler(this.gridProjectSub_SelectionChanged);
             // 
@@ -5482,10 +6429,36 @@
             this.toolStripSeparator55.Name = "toolStripSeparator55";
             this.toolStripSeparator55.Size = new System.Drawing.Size(6, 25);
             // 
+            // btnProjectsSubNew
+            // 
+            this.btnProjectsSubNew.Image = global::DSA_lims.Properties.Resources._new;
+            this.btnProjectsSubNew.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnProjectsSubNew.Name = "btnProjectsSubNew";
+            this.btnProjectsSubNew.Size = new System.Drawing.Size(51, 22);
+            this.btnProjectsSubNew.Text = "New";
+            this.btnProjectsSubNew.Click += new System.EventHandler(this.miProjectsSubNew_Click);
+            // 
+            // btnProjectsSubEdit
+            // 
+            this.btnProjectsSubEdit.Image = global::DSA_lims.Properties.Resources.edit;
+            this.btnProjectsSubEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnProjectsSubEdit.Name = "btnProjectsSubEdit";
+            this.btnProjectsSubEdit.Size = new System.Drawing.Size(47, 22);
+            this.btnProjectsSubEdit.Text = "Edit";
+            this.btnProjectsSubEdit.Click += new System.EventHandler(this.miProjectsSubEdit_Click);
+            // 
             // toolStripSeparator56
             // 
             this.toolStripSeparator56.Name = "toolStripSeparator56";
             this.toolStripSeparator56.Size = new System.Drawing.Size(6, 25);
+            // 
+            // btnProjectSubPrint
+            // 
+            this.btnProjectSubPrint.Image = global::DSA_lims.Properties.Resources.printer;
+            this.btnProjectSubPrint.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnProjectSubPrint.Name = "btnProjectSubPrint";
+            this.btnProjectSubPrint.Size = new System.Drawing.Size(80, 22);
+            this.btnProjectSubPrint.Text = "Print label";
             // 
             // splitContainer25
             // 
@@ -5503,8 +6476,8 @@
             // 
             this.splitContainer25.Panel2.Controls.Add(this.gridProjectAttachments);
             this.splitContainer25.Panel2.Controls.Add(this.toolsProjAttachments);
-            this.splitContainer25.Size = new System.Drawing.Size(359, 628);
-            this.splitContainer25.SplitterDistance = 326;
+            this.splitContainer25.Size = new System.Drawing.Size(359, 626);
+            this.splitContainer25.SplitterDistance = 324;
             this.splitContainer25.SplitterWidth = 3;
             this.splitContainer25.TabIndex = 0;
             // 
@@ -5517,7 +6490,7 @@
             this.listBox1.ItemHeight = 15;
             this.listBox1.Location = new System.Drawing.Point(0, 25);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(359, 301);
+            this.listBox1.Size = new System.Drawing.Size(359, 299);
             this.listBox1.TabIndex = 1;
             // 
             // toolsProjUsers
@@ -5545,6 +6518,22 @@
             // 
             this.toolStripSeparator31.Name = "toolStripSeparator31";
             this.toolStripSeparator31.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripButton24
+            // 
+            this.toolStripButton24.Image = global::DSA_lims.Properties.Resources.create_user;
+            this.toolStripButton24.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton24.Name = "toolStripButton24";
+            this.toolStripButton24.Size = new System.Drawing.Size(49, 22);
+            this.toolStripButton24.Text = "Add";
+            // 
+            // toolStripButton26
+            // 
+            this.toolStripButton26.Image = global::DSA_lims.Properties.Resources.delete_user;
+            this.toolStripButton26.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton26.Name = "toolStripButton26";
+            this.toolStripButton26.Size = new System.Drawing.Size(70, 22);
+            this.toolStripButton26.Text = "Remove";
             // 
             // gridProjectAttachments
             // 
@@ -5592,6 +6581,33 @@
             this.toolStripSeparator32.Name = "toolStripSeparator32";
             this.toolStripSeparator32.Size = new System.Drawing.Size(6, 25);
             // 
+            // btnProjectScanAttachment
+            // 
+            this.btnProjectScanAttachment.Image = global::DSA_lims.Properties.Resources.scan;
+            this.btnProjectScanAttachment.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnProjectScanAttachment.Name = "btnProjectScanAttachment";
+            this.btnProjectScanAttachment.Size = new System.Drawing.Size(52, 22);
+            this.btnProjectScanAttachment.Text = "Scan";
+            this.btnProjectScanAttachment.Click += new System.EventHandler(this.btnProjectScanAttachment_Click);
+            // 
+            // btnProjectBrowseAttachment
+            // 
+            this.btnProjectBrowseAttachment.Image = global::DSA_lims.Properties.Resources.projects;
+            this.btnProjectBrowseAttachment.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnProjectBrowseAttachment.Name = "btnProjectBrowseAttachment";
+            this.btnProjectBrowseAttachment.Size = new System.Drawing.Size(65, 22);
+            this.btnProjectBrowseAttachment.Text = "Browse";
+            this.btnProjectBrowseAttachment.Click += new System.EventHandler(this.btnProjectBrowseAttachment_Click);
+            // 
+            // btnProjectDeleteAttachment
+            // 
+            this.btnProjectDeleteAttachment.Image = global::DSA_lims.Properties.Resources.delete;
+            this.btnProjectDeleteAttachment.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnProjectDeleteAttachment.Name = "btnProjectDeleteAttachment";
+            this.btnProjectDeleteAttachment.Size = new System.Drawing.Size(60, 22);
+            this.btnProjectDeleteAttachment.Text = "Delete";
+            this.btnProjectDeleteAttachment.Click += new System.EventHandler(this.btnProjectDeleteAttachment_Click);
+            // 
             // tabTypeRel
             // 
             this.tabTypeRel.BackColor = System.Drawing.SystemColors.ButtonFace;
@@ -5612,7 +6628,7 @@
             this.tabControl2.Location = new System.Drawing.Point(3, 3);
             this.tabControl2.Name = "tabControl2";
             this.tabControl2.SelectedIndex = 0;
-            this.tabControl2.Size = new System.Drawing.Size(1122, 628);
+            this.tabControl2.Size = new System.Drawing.Size(1122, 626);
             this.tabControl2.TabIndex = 8;
             // 
             // tabTypeRelationsSampleTypes
@@ -5622,7 +6638,7 @@
             this.tabTypeRelationsSampleTypes.Location = new System.Drawing.Point(4, 24);
             this.tabTypeRelationsSampleTypes.Name = "tabTypeRelationsSampleTypes";
             this.tabTypeRelationsSampleTypes.Padding = new System.Windows.Forms.Padding(3);
-            this.tabTypeRelationsSampleTypes.Size = new System.Drawing.Size(1114, 600);
+            this.tabTypeRelationsSampleTypes.Size = new System.Drawing.Size(1114, 598);
             this.tabTypeRelationsSampleTypes.TabIndex = 0;
             this.tabTypeRelationsSampleTypes.Text = "Sample types";
             // 
@@ -5640,7 +6656,7 @@
             // splitContainer12.Panel2
             // 
             this.splitContainer12.Panel2.Controls.Add(this.tabControl3);
-            this.splitContainer12.Size = new System.Drawing.Size(1108, 594);
+            this.splitContainer12.Size = new System.Drawing.Size(1108, 592);
             this.splitContainer12.SplitterDistance = 451;
             this.splitContainer12.SplitterWidth = 5;
             this.splitContainer12.TabIndex = 7;
@@ -5659,7 +6675,7 @@
             this.treeSampleTypes.Name = "treeSampleTypes";
             this.treeSampleTypes.PathSeparator = "/";
             this.treeSampleTypes.ShowNodeToolTips = true;
-            this.treeSampleTypes.Size = new System.Drawing.Size(451, 569);
+            this.treeSampleTypes.Size = new System.Drawing.Size(451, 567);
             this.treeSampleTypes.TabIndex = 0;
             this.treeSampleTypes.DrawNode += new System.Windows.Forms.DrawTreeNodeEventHandler(this.treeSampleTypes_DrawNode);
             this.treeSampleTypes.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeSampleTypes_AfterSelect);
@@ -5694,10 +6710,71 @@
             this.toolStripSeparator35.Name = "toolStripSeparator35";
             this.toolStripSeparator35.Size = new System.Drawing.Size(6, 25);
             // 
+            // btnTypeRelSampleTypesNewRoot
+            // 
+            this.btnTypeRelSampleTypesNewRoot.Image = global::DSA_lims.Properties.Resources._new;
+            this.btnTypeRelSampleTypesNewRoot.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnTypeRelSampleTypesNewRoot.Name = "btnTypeRelSampleTypesNewRoot";
+            this.btnTypeRelSampleTypesNewRoot.Size = new System.Drawing.Size(76, 22);
+            this.btnTypeRelSampleTypesNewRoot.Text = "New root";
+            this.btnTypeRelSampleTypesNewRoot.Click += new System.EventHandler(this.miTypeRelSampleTypesNewRoot_Click);
+            // 
+            // btnTypeRelSampleTypesNew
+            // 
+            this.btnTypeRelSampleTypesNew.Image = global::DSA_lims.Properties.Resources._new;
+            this.btnTypeRelSampleTypesNew.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnTypeRelSampleTypesNew.Name = "btnTypeRelSampleTypesNew";
+            this.btnTypeRelSampleTypesNew.Size = new System.Drawing.Size(51, 22);
+            this.btnTypeRelSampleTypesNew.Text = "New";
+            this.btnTypeRelSampleTypesNew.Click += new System.EventHandler(this.miSampleTypesNew_Click);
+            // 
+            // btnTypeRelSampleTypesEdit
+            // 
+            this.btnTypeRelSampleTypesEdit.Image = global::DSA_lims.Properties.Resources.edit;
+            this.btnTypeRelSampleTypesEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnTypeRelSampleTypesEdit.Name = "btnTypeRelSampleTypesEdit";
+            this.btnTypeRelSampleTypesEdit.Size = new System.Drawing.Size(47, 22);
+            this.btnTypeRelSampleTypesEdit.Text = "Edit";
+            this.btnTypeRelSampleTypesEdit.Click += new System.EventHandler(this.miSampleTypesEdit_Click);
+            // 
+            // btnTypeRelSampleTypesDelete
+            // 
+            this.btnTypeRelSampleTypesDelete.Image = global::DSA_lims.Properties.Resources.delete;
+            this.btnTypeRelSampleTypesDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnTypeRelSampleTypesDelete.Name = "btnTypeRelSampleTypesDelete";
+            this.btnTypeRelSampleTypesDelete.Size = new System.Drawing.Size(60, 22);
+            this.btnTypeRelSampleTypesDelete.Text = "Delete";
+            this.btnTypeRelSampleTypesDelete.Click += new System.EventHandler(this.miSampleTypesDelete_Click);
+            // 
             // toolStripSeparator44
             // 
             this.toolStripSeparator44.Name = "toolStripSeparator44";
             this.toolStripSeparator44.Size = new System.Drawing.Size(6, 25);
+            // 
+            // btnTypeRelSampTypeExport
+            // 
+            this.btnTypeRelSampTypeExport.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnTypeRelSampleTypesExportSampTypeList,
+            this.btnTypeRelSampleTypesExportSampTypeXML});
+            this.btnTypeRelSampTypeExport.Image = ((System.Drawing.Image)(resources.GetObject("btnTypeRelSampTypeExport.Image")));
+            this.btnTypeRelSampTypeExport.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnTypeRelSampTypeExport.Name = "btnTypeRelSampTypeExport";
+            this.btnTypeRelSampTypeExport.Size = new System.Drawing.Size(78, 22);
+            this.btnTypeRelSampTypeExport.Text = "Export...";
+            // 
+            // btnTypeRelSampleTypesExportSampTypeList
+            // 
+            this.btnTypeRelSampleTypesExportSampTypeList.Name = "btnTypeRelSampleTypesExportSampTypeList";
+            this.btnTypeRelSampleTypesExportSampTypeList.Size = new System.Drawing.Size(195, 22);
+            this.btnTypeRelSampleTypesExportSampTypeList.Text = "Simple sample type list";
+            this.btnTypeRelSampleTypesExportSampTypeList.Click += new System.EventHandler(this.miTypeRelSampleTypesExportSampTypeList_Click);
+            // 
+            // btnTypeRelSampleTypesExportSampTypeXML
+            // 
+            this.btnTypeRelSampleTypesExportSampTypeXML.Name = "btnTypeRelSampleTypesExportSampTypeXML";
+            this.btnTypeRelSampleTypesExportSampTypeXML.Size = new System.Drawing.Size(195, 22);
+            this.btnTypeRelSampleTypesExportSampTypeXML.Text = "Sample types (XML)";
+            this.btnTypeRelSampleTypesExportSampTypeXML.Click += new System.EventHandler(this.miTypeRelSampleTypesExportSampTypeXML_Click);
             // 
             // tabControl3
             // 
@@ -5708,7 +6785,7 @@
             this.tabControl3.Location = new System.Drawing.Point(0, 0);
             this.tabControl3.Name = "tabControl3";
             this.tabControl3.SelectedIndex = 0;
-            this.tabControl3.Size = new System.Drawing.Size(652, 594);
+            this.tabControl3.Size = new System.Drawing.Size(652, 592);
             this.tabControl3.TabIndex = 1;
             // 
             // tabTypeRelSampTypeComp
@@ -5718,7 +6795,7 @@
             this.tabTypeRelSampTypeComp.Location = new System.Drawing.Point(4, 24);
             this.tabTypeRelSampTypeComp.Name = "tabTypeRelSampTypeComp";
             this.tabTypeRelSampTypeComp.Padding = new System.Windows.Forms.Padding(3);
-            this.tabTypeRelSampTypeComp.Size = new System.Drawing.Size(644, 566);
+            this.tabTypeRelSampTypeComp.Size = new System.Drawing.Size(644, 564);
             this.tabTypeRelSampTypeComp.TabIndex = 0;
             this.tabTypeRelSampTypeComp.Text = "Components";
             // 
@@ -5738,8 +6815,8 @@
             // 
             this.splitContainer16.Panel2.Controls.Add(this.lbSampleTypesInheritedComponents);
             this.splitContainer16.Panel2.Controls.Add(this.toolsTypeRelSampCompInherit);
-            this.splitContainer16.Size = new System.Drawing.Size(638, 560);
-            this.splitContainer16.SplitterDistance = 256;
+            this.splitContainer16.Size = new System.Drawing.Size(638, 558);
+            this.splitContainer16.SplitterDistance = 255;
             this.splitContainer16.SplitterWidth = 3;
             this.splitContainer16.TabIndex = 0;
             // 
@@ -5752,7 +6829,7 @@
             this.lbSampleTypesComponents.ItemHeight = 15;
             this.lbSampleTypesComponents.Location = new System.Drawing.Point(0, 25);
             this.lbSampleTypesComponents.Name = "lbSampleTypesComponents";
-            this.lbSampleTypesComponents.Size = new System.Drawing.Size(638, 231);
+            this.lbSampleTypesComponents.Size = new System.Drawing.Size(638, 230);
             this.lbSampleTypesComponents.TabIndex = 2;
             // 
             // toolsTypeRelSampComp
@@ -5783,6 +6860,32 @@
             this.toolStripSeparator36.Name = "toolStripSeparator36";
             this.toolStripSeparator36.Size = new System.Drawing.Size(6, 25);
             // 
+            // btnTypeRelSampTypeCompAdd
+            // 
+            this.btnTypeRelSampTypeCompAdd.Image = global::DSA_lims.Properties.Resources._new;
+            this.btnTypeRelSampTypeCompAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnTypeRelSampTypeCompAdd.Name = "btnTypeRelSampTypeCompAdd";
+            this.btnTypeRelSampTypeCompAdd.Size = new System.Drawing.Size(51, 22);
+            this.btnTypeRelSampTypeCompAdd.Text = "New";
+            this.btnTypeRelSampTypeCompAdd.Click += new System.EventHandler(this.miTypeRelSampleTypesCompNew_Click);
+            // 
+            // btnTypeRelSampTypeCompEdit
+            // 
+            this.btnTypeRelSampTypeCompEdit.Image = global::DSA_lims.Properties.Resources.edit;
+            this.btnTypeRelSampTypeCompEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnTypeRelSampTypeCompEdit.Name = "btnTypeRelSampTypeCompEdit";
+            this.btnTypeRelSampTypeCompEdit.Size = new System.Drawing.Size(47, 22);
+            this.btnTypeRelSampTypeCompEdit.Text = "Edit";
+            this.btnTypeRelSampTypeCompEdit.Click += new System.EventHandler(this.miTypeRelSampleTypesCompEdit_Click);
+            // 
+            // btnTypeRelSampTypeCompDelete
+            // 
+            this.btnTypeRelSampTypeCompDelete.Image = global::DSA_lims.Properties.Resources.delete;
+            this.btnTypeRelSampTypeCompDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnTypeRelSampTypeCompDelete.Name = "btnTypeRelSampTypeCompDelete";
+            this.btnTypeRelSampTypeCompDelete.Size = new System.Drawing.Size(60, 22);
+            this.btnTypeRelSampTypeCompDelete.Text = "Delete";
+            // 
             // lblTypeRelSampCompSel
             // 
             this.lblTypeRelSampCompSel.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
@@ -5800,7 +6903,7 @@
             this.lbSampleTypesInheritedComponents.Location = new System.Drawing.Point(0, 25);
             this.lbSampleTypesInheritedComponents.Name = "lbSampleTypesInheritedComponents";
             this.lbSampleTypesInheritedComponents.SelectionMode = System.Windows.Forms.SelectionMode.None;
-            this.lbSampleTypesInheritedComponents.Size = new System.Drawing.Size(638, 276);
+            this.lbSampleTypesInheritedComponents.Size = new System.Drawing.Size(638, 275);
             this.lbSampleTypesInheritedComponents.TabIndex = 3;
             // 
             // toolsTypeRelSampCompInherit
@@ -5825,10 +6928,10 @@
             // 
             this.tabTypeRelSampTypeParam.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.tabTypeRelSampTypeParam.Controls.Add(this.splitContainer14);
-            this.tabTypeRelSampTypeParam.Location = new System.Drawing.Point(4, 24);
+            this.tabTypeRelSampTypeParam.Location = new System.Drawing.Point(4, 22);
             this.tabTypeRelSampTypeParam.Name = "tabTypeRelSampTypeParam";
             this.tabTypeRelSampTypeParam.Padding = new System.Windows.Forms.Padding(3);
-            this.tabTypeRelSampTypeParam.Size = new System.Drawing.Size(644, 566);
+            this.tabTypeRelSampTypeParam.Size = new System.Drawing.Size(644, 568);
             this.tabTypeRelSampTypeParam.TabIndex = 1;
             this.tabTypeRelSampTypeParam.Text = "Parameters";
             // 
@@ -5893,6 +6996,30 @@
             this.toolStripSeparator37.Name = "toolStripSeparator37";
             this.toolStripSeparator37.Size = new System.Drawing.Size(6, 25);
             // 
+            // toolStripButton45
+            // 
+            this.toolStripButton45.Image = global::DSA_lims.Properties.Resources._new;
+            this.toolStripButton45.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton45.Name = "toolStripButton45";
+            this.toolStripButton45.Size = new System.Drawing.Size(51, 22);
+            this.toolStripButton45.Text = "New";
+            // 
+            // toolStripButton46
+            // 
+            this.toolStripButton46.Image = global::DSA_lims.Properties.Resources.edit;
+            this.toolStripButton46.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton46.Name = "toolStripButton46";
+            this.toolStripButton46.Size = new System.Drawing.Size(47, 22);
+            this.toolStripButton46.Text = "Edit";
+            // 
+            // toolStripButton89
+            // 
+            this.toolStripButton89.Image = global::DSA_lims.Properties.Resources.delete;
+            this.toolStripButton89.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton89.Name = "toolStripButton89";
+            this.toolStripButton89.Size = new System.Drawing.Size(60, 22);
+            this.toolStripButton89.Text = "Delete";
+            // 
             // lblTypeRelSampParSel
             // 
             this.lblTypeRelSampParSel.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
@@ -5934,10 +7061,10 @@
             // 
             this.tabTypeRelSampTypePrep.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.tabTypeRelSampTypePrep.Controls.Add(this.splitContainer13);
-            this.tabTypeRelSampTypePrep.Location = new System.Drawing.Point(4, 24);
+            this.tabTypeRelSampTypePrep.Location = new System.Drawing.Point(4, 22);
             this.tabTypeRelSampTypePrep.Name = "tabTypeRelSampTypePrep";
             this.tabTypeRelSampTypePrep.Padding = new System.Windows.Forms.Padding(3);
-            this.tabTypeRelSampTypePrep.Size = new System.Drawing.Size(644, 566);
+            this.tabTypeRelSampTypePrep.Size = new System.Drawing.Size(644, 568);
             this.tabTypeRelSampTypePrep.TabIndex = 2;
             this.tabTypeRelSampTypePrep.Text = "Preparation methods";
             // 
@@ -6001,6 +7128,23 @@
             this.toolStripSeparator38.Name = "toolStripSeparator38";
             this.toolStripSeparator38.Size = new System.Drawing.Size(6, 25);
             // 
+            // btnTypeRelSampTypePrepMethAdd
+            // 
+            this.btnTypeRelSampTypePrepMethAdd.Image = global::DSA_lims.Properties.Resources._new;
+            this.btnTypeRelSampTypePrepMethAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnTypeRelSampTypePrepMethAdd.Name = "btnTypeRelSampTypePrepMethAdd";
+            this.btnTypeRelSampTypePrepMethAdd.Size = new System.Drawing.Size(49, 22);
+            this.btnTypeRelSampTypePrepMethAdd.Text = "Add";
+            this.btnTypeRelSampTypePrepMethAdd.Click += new System.EventHandler(this.miAddPrepMethToSampType_Click);
+            // 
+            // btnPreparationMethodDelete
+            // 
+            this.btnPreparationMethodDelete.Image = global::DSA_lims.Properties.Resources.delete;
+            this.btnPreparationMethodDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnPreparationMethodDelete.Name = "btnPreparationMethodDelete";
+            this.btnPreparationMethodDelete.Size = new System.Drawing.Size(70, 22);
+            this.btnPreparationMethodDelete.Text = "Remove";
+            // 
             // lblTypeRelSampPrepSel
             // 
             this.lblTypeRelSampPrepSel.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
@@ -6046,7 +7190,7 @@
             this.tabTypeRelationsPrepMeth.Location = new System.Drawing.Point(4, 24);
             this.tabTypeRelationsPrepMeth.Name = "tabTypeRelationsPrepMeth";
             this.tabTypeRelationsPrepMeth.Padding = new System.Windows.Forms.Padding(3);
-            this.tabTypeRelationsPrepMeth.Size = new System.Drawing.Size(1114, 600);
+            this.tabTypeRelationsPrepMeth.Size = new System.Drawing.Size(1114, 598);
             this.tabTypeRelationsPrepMeth.TabIndex = 1;
             this.tabTypeRelationsPrepMeth.Text = "Preparation methods";
             // 
@@ -6065,7 +7209,7 @@
             // 
             this.splitContainer15.Panel2.Controls.Add(this.lbTypRelPrepMethAnalMeth);
             this.splitContainer15.Panel2.Controls.Add(this.toolsTypeRelPrepAnalMeth);
-            this.splitContainer15.Size = new System.Drawing.Size(1108, 596);
+            this.splitContainer15.Size = new System.Drawing.Size(1108, 592);
             this.splitContainer15.SplitterDistance = 565;
             this.splitContainer15.SplitterWidth = 3;
             this.splitContainer15.TabIndex = 0;
@@ -6086,7 +7230,7 @@
             this.gridTypeRelPrepMeth.ReadOnly = true;
             this.gridTypeRelPrepMeth.RowHeadersVisible = false;
             this.gridTypeRelPrepMeth.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridTypeRelPrepMeth.Size = new System.Drawing.Size(565, 571);
+            this.gridTypeRelPrepMeth.Size = new System.Drawing.Size(565, 567);
             this.gridTypeRelPrepMeth.TabIndex = 1;
             this.gridTypeRelPrepMeth.SelectionChanged += new System.EventHandler(this.gridTypeRelPrepMeth_SelectionChanged);
             // 
@@ -6117,6 +7261,33 @@
             this.toolStripSeparator39.Name = "toolStripSeparator39";
             this.toolStripSeparator39.Size = new System.Drawing.Size(6, 25);
             // 
+            // toolStripButton49
+            // 
+            this.toolStripButton49.Image = global::DSA_lims.Properties.Resources._new;
+            this.toolStripButton49.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton49.Name = "toolStripButton49";
+            this.toolStripButton49.Size = new System.Drawing.Size(51, 22);
+            this.toolStripButton49.Text = "New";
+            this.toolStripButton49.Click += new System.EventHandler(this.miPreparationMethodsNew_Click);
+            // 
+            // toolStripButton50
+            // 
+            this.toolStripButton50.Image = global::DSA_lims.Properties.Resources.edit;
+            this.toolStripButton50.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton50.Name = "toolStripButton50";
+            this.toolStripButton50.Size = new System.Drawing.Size(47, 22);
+            this.toolStripButton50.Text = "Edit";
+            this.toolStripButton50.Click += new System.EventHandler(this.miPreparationMethodEdit_Click);
+            // 
+            // toolStripButton91
+            // 
+            this.toolStripButton91.Image = global::DSA_lims.Properties.Resources.delete;
+            this.toolStripButton91.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton91.Name = "toolStripButton91";
+            this.toolStripButton91.Size = new System.Drawing.Size(60, 22);
+            this.toolStripButton91.Text = "Delete";
+            this.toolStripButton91.Click += new System.EventHandler(this.miPreparationMethodDelete_Click);
+            // 
             // lbTypRelPrepMethAnalMeth
             // 
             this.lbTypRelPrepMethAnalMeth.BackColor = System.Drawing.SystemColors.ButtonFace;
@@ -6127,7 +7298,7 @@
             this.lbTypRelPrepMethAnalMeth.Location = new System.Drawing.Point(0, 25);
             this.lbTypRelPrepMethAnalMeth.Name = "lbTypRelPrepMethAnalMeth";
             this.lbTypRelPrepMethAnalMeth.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.lbTypRelPrepMethAnalMeth.Size = new System.Drawing.Size(540, 571);
+            this.lbTypRelPrepMethAnalMeth.Size = new System.Drawing.Size(540, 567);
             this.lbTypRelPrepMethAnalMeth.TabIndex = 1;
             // 
             // toolsTypeRelPrepAnalMeth
@@ -6156,6 +7327,24 @@
             this.toolStripSeparator40.Name = "toolStripSeparator40";
             this.toolStripSeparator40.Size = new System.Drawing.Size(6, 25);
             // 
+            // btnTypeRelPrepMethAddAnalMeth
+            // 
+            this.btnTypeRelPrepMethAddAnalMeth.Image = global::DSA_lims.Properties.Resources._new;
+            this.btnTypeRelPrepMethAddAnalMeth.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnTypeRelPrepMethAddAnalMeth.Name = "btnTypeRelPrepMethAddAnalMeth";
+            this.btnTypeRelPrepMethAddAnalMeth.Size = new System.Drawing.Size(49, 22);
+            this.btnTypeRelPrepMethAddAnalMeth.Text = "Add";
+            this.btnTypeRelPrepMethAddAnalMeth.Click += new System.EventHandler(this.miTypeRelPrepMethAddAnalMeth_Click);
+            // 
+            // toolStripButton48
+            // 
+            this.toolStripButton48.Image = global::DSA_lims.Properties.Resources.delete;
+            this.toolStripButton48.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton48.Name = "toolStripButton48";
+            this.toolStripButton48.Size = new System.Drawing.Size(70, 22);
+            this.toolStripButton48.Text = "Remove";
+            this.toolStripButton48.Click += new System.EventHandler(this.miTypeRelPrepMethRemAnalMeth_Click);
+            // 
             // tabTypeRelationsAnalMeth
             // 
             this.tabTypeRelationsAnalMeth.BackColor = System.Drawing.SystemColors.ButtonFace;
@@ -6163,7 +7352,7 @@
             this.tabTypeRelationsAnalMeth.Location = new System.Drawing.Point(4, 24);
             this.tabTypeRelationsAnalMeth.Name = "tabTypeRelationsAnalMeth";
             this.tabTypeRelationsAnalMeth.Padding = new System.Windows.Forms.Padding(3);
-            this.tabTypeRelationsAnalMeth.Size = new System.Drawing.Size(1114, 600);
+            this.tabTypeRelationsAnalMeth.Size = new System.Drawing.Size(1114, 598);
             this.tabTypeRelationsAnalMeth.TabIndex = 2;
             this.tabTypeRelationsAnalMeth.Text = "Analysis methods";
             // 
@@ -6182,7 +7371,7 @@
             // 
             this.splitContainer17.Panel2.Controls.Add(this.lbTypRelAnalMethNuclides);
             this.splitContainer17.Panel2.Controls.Add(this.toolsTypeRelNuclides);
-            this.splitContainer17.Size = new System.Drawing.Size(1108, 596);
+            this.splitContainer17.Size = new System.Drawing.Size(1108, 592);
             this.splitContainer17.SplitterDistance = 575;
             this.splitContainer17.SplitterWidth = 3;
             this.splitContainer17.TabIndex = 1;
@@ -6203,7 +7392,7 @@
             this.gridTypeRelAnalMeth.ReadOnly = true;
             this.gridTypeRelAnalMeth.RowHeadersVisible = false;
             this.gridTypeRelAnalMeth.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridTypeRelAnalMeth.Size = new System.Drawing.Size(575, 571);
+            this.gridTypeRelAnalMeth.Size = new System.Drawing.Size(575, 567);
             this.gridTypeRelAnalMeth.TabIndex = 1;
             this.gridTypeRelAnalMeth.SelectionChanged += new System.EventHandler(this.gridTypeRelAnalMeth_SelectionChanged);
             // 
@@ -6234,6 +7423,33 @@
             this.toolStripSeparator41.Name = "toolStripSeparator41";
             this.toolStripSeparator41.Size = new System.Drawing.Size(6, 25);
             // 
+            // toolStripButton51
+            // 
+            this.toolStripButton51.Image = global::DSA_lims.Properties.Resources._new;
+            this.toolStripButton51.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton51.Name = "toolStripButton51";
+            this.toolStripButton51.Size = new System.Drawing.Size(51, 22);
+            this.toolStripButton51.Text = "New";
+            this.toolStripButton51.Click += new System.EventHandler(this.miAnalysisMethodsNew_Click);
+            // 
+            // toolStripButton52
+            // 
+            this.toolStripButton52.Image = global::DSA_lims.Properties.Resources.edit;
+            this.toolStripButton52.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton52.Name = "toolStripButton52";
+            this.toolStripButton52.Size = new System.Drawing.Size(47, 22);
+            this.toolStripButton52.Text = "Edit";
+            this.toolStripButton52.Click += new System.EventHandler(this.miAnalysisMethodsEdit_Click);
+            // 
+            // toolStripButton93
+            // 
+            this.toolStripButton93.Image = global::DSA_lims.Properties.Resources.delete;
+            this.toolStripButton93.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton93.Name = "toolStripButton93";
+            this.toolStripButton93.Size = new System.Drawing.Size(60, 22);
+            this.toolStripButton93.Text = "Delete";
+            this.toolStripButton93.Click += new System.EventHandler(this.miAnalysisMethodsDelete_Click);
+            // 
             // lbTypRelAnalMethNuclides
             // 
             this.lbTypRelAnalMethNuclides.BackColor = System.Drawing.SystemColors.ButtonFace;
@@ -6243,7 +7459,7 @@
             this.lbTypRelAnalMethNuclides.ItemHeight = 15;
             this.lbTypRelAnalMethNuclides.Location = new System.Drawing.Point(0, 25);
             this.lbTypRelAnalMethNuclides.Name = "lbTypRelAnalMethNuclides";
-            this.lbTypRelAnalMethNuclides.Size = new System.Drawing.Size(530, 571);
+            this.lbTypRelAnalMethNuclides.Size = new System.Drawing.Size(530, 567);
             this.lbTypRelAnalMethNuclides.TabIndex = 1;
             // 
             // toolsTypeRelNuclides
@@ -6271,6 +7487,24 @@
             // 
             this.toolStripSeparator42.Name = "toolStripSeparator42";
             this.toolStripSeparator42.Size = new System.Drawing.Size(6, 25);
+            // 
+            // btnAnalysisMethodsAddNuclide
+            // 
+            this.btnAnalysisMethodsAddNuclide.Image = global::DSA_lims.Properties.Resources._new;
+            this.btnAnalysisMethodsAddNuclide.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnAnalysisMethodsAddNuclide.Name = "btnAnalysisMethodsAddNuclide";
+            this.btnAnalysisMethodsAddNuclide.Size = new System.Drawing.Size(49, 22);
+            this.btnAnalysisMethodsAddNuclide.Text = "Add";
+            this.btnAnalysisMethodsAddNuclide.Click += new System.EventHandler(this.miAnalysisMethodsAddNuclide_Click);
+            // 
+            // toolStripButton54
+            // 
+            this.toolStripButton54.Image = global::DSA_lims.Properties.Resources.delete;
+            this.toolStripButton54.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton54.Name = "toolStripButton54";
+            this.toolStripButton54.Size = new System.Drawing.Size(70, 22);
+            this.toolStripButton54.Text = "Remove";
+            this.toolStripButton54.Click += new System.EventHandler(this.miAnalysisMethodsRemNuclide_Click);
             // 
             // tabAuditLog
             // 
@@ -6365,6 +7599,14 @@
             // 
             this.toolStripSeparator43.Name = "toolStripSeparator43";
             this.toolStripSeparator43.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripButton94
+            // 
+            this.toolStripButton94.Image = global::DSA_lims.Properties.Resources.search;
+            this.toolStripButton94.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton94.Name = "toolStripButton94";
+            this.toolStripButton94.Size = new System.Drawing.Size(62, 22);
+            this.toolStripButton94.Text = "Search";
             // 
             // tabUserSettings
             // 
@@ -6569,7 +7811,7 @@
             this.tabsSys.Location = new System.Drawing.Point(3, 3);
             this.tabsSys.Name = "tabsSys";
             this.tabsSys.SelectedIndex = 0;
-            this.tabsSys.Size = new System.Drawing.Size(1122, 628);
+            this.tabsSys.Size = new System.Drawing.Size(1122, 626);
             this.tabsSys.TabIndex = 0;
             this.tabsSys.SelectedIndexChanged += new System.EventHandler(this.tabsSys_SelectedIndexChanged);
             // 
@@ -6580,7 +7822,7 @@
             this.tabSysLaboratories.Location = new System.Drawing.Point(4, 24);
             this.tabSysLaboratories.Name = "tabSysLaboratories";
             this.tabSysLaboratories.Padding = new System.Windows.Forms.Padding(3);
-            this.tabSysLaboratories.Size = new System.Drawing.Size(1114, 600);
+            this.tabSysLaboratories.Size = new System.Drawing.Size(1114, 598);
             this.tabSysLaboratories.TabIndex = 2;
             this.tabSysLaboratories.Text = "Laboratories";
             // 
@@ -6598,7 +7840,7 @@
             // splitContainer9.Panel2
             // 
             this.splitContainer9.Panel2.Controls.Add(this.splitContainer10);
-            this.splitContainer9.Size = new System.Drawing.Size(1108, 594);
+            this.splitContainer9.Size = new System.Drawing.Size(1108, 592);
             this.splitContainer9.SplitterDistance = 619;
             this.splitContainer9.SplitterWidth = 3;
             this.splitContainer9.TabIndex = 3;
@@ -6619,7 +7861,7 @@
             this.gridMetaLab.ReadOnly = true;
             this.gridMetaLab.RowHeadersVisible = false;
             this.gridMetaLab.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridMetaLab.Size = new System.Drawing.Size(619, 569);
+            this.gridMetaLab.Size = new System.Drawing.Size(619, 567);
             this.gridMetaLab.TabIndex = 2;
             // 
             // toolsSysLab
@@ -6649,6 +7891,33 @@
             this.toolStripSeparator14.Name = "toolStripSeparator14";
             this.toolStripSeparator14.Size = new System.Drawing.Size(6, 25);
             // 
+            // btnMetaLabNew
+            // 
+            this.btnMetaLabNew.Image = global::DSA_lims.Properties.Resources._new;
+            this.btnMetaLabNew.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnMetaLabNew.Name = "btnMetaLabNew";
+            this.btnMetaLabNew.Size = new System.Drawing.Size(51, 22);
+            this.btnMetaLabNew.Text = "New";
+            this.btnMetaLabNew.Click += new System.EventHandler(this.miNewLaboratory_Click);
+            // 
+            // btnMetaLabEdit
+            // 
+            this.btnMetaLabEdit.Image = global::DSA_lims.Properties.Resources.edit;
+            this.btnMetaLabEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnMetaLabEdit.Name = "btnMetaLabEdit";
+            this.btnMetaLabEdit.Size = new System.Drawing.Size(47, 22);
+            this.btnMetaLabEdit.Text = "Edit";
+            this.btnMetaLabEdit.Click += new System.EventHandler(this.miEditLaboratory_Click);
+            // 
+            // btnMetaLabDelete
+            // 
+            this.btnMetaLabDelete.Image = global::DSA_lims.Properties.Resources.delete;
+            this.btnMetaLabDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnMetaLabDelete.Name = "btnMetaLabDelete";
+            this.btnMetaLabDelete.Size = new System.Drawing.Size(60, 22);
+            this.btnMetaLabDelete.Text = "Delete";
+            this.btnMetaLabDelete.Click += new System.EventHandler(this.miDeleteLaboratory_Click);
+            // 
             // splitContainer10
             // 
             this.splitContainer10.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -6665,8 +7934,8 @@
             // 
             this.splitContainer10.Panel2.Controls.Add(this.listBox5);
             this.splitContainer10.Panel2.Controls.Add(this.toolsSysLabAnalMeth);
-            this.splitContainer10.Size = new System.Drawing.Size(486, 594);
-            this.splitContainer10.SplitterDistance = 284;
+            this.splitContainer10.Size = new System.Drawing.Size(486, 592);
+            this.splitContainer10.SplitterDistance = 283;
             this.splitContainer10.SplitterWidth = 3;
             this.splitContainer10.TabIndex = 0;
             // 
@@ -6677,7 +7946,7 @@
             this.listBox3.ItemHeight = 15;
             this.listBox3.Location = new System.Drawing.Point(0, 25);
             this.listBox3.Name = "listBox3";
-            this.listBox3.Size = new System.Drawing.Size(486, 259);
+            this.listBox3.Size = new System.Drawing.Size(486, 258);
             this.listBox3.TabIndex = 1;
             // 
             // toolsSysLabPrepMeth
@@ -6706,6 +7975,22 @@
             this.toolStripSeparator15.Name = "toolStripSeparator15";
             this.toolStripSeparator15.Size = new System.Drawing.Size(6, 25);
             // 
+            // toolStripButton27
+            // 
+            this.toolStripButton27.Image = global::DSA_lims.Properties.Resources._new;
+            this.toolStripButton27.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton27.Name = "toolStripButton27";
+            this.toolStripButton27.Size = new System.Drawing.Size(49, 22);
+            this.toolStripButton27.Text = "Add";
+            // 
+            // toolStripButton29
+            // 
+            this.toolStripButton29.Image = global::DSA_lims.Properties.Resources.delete;
+            this.toolStripButton29.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton29.Name = "toolStripButton29";
+            this.toolStripButton29.Size = new System.Drawing.Size(70, 22);
+            this.toolStripButton29.Text = "Remove";
+            // 
             // listBox5
             // 
             this.listBox5.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -6713,7 +7998,7 @@
             this.listBox5.ItemHeight = 15;
             this.listBox5.Location = new System.Drawing.Point(0, 25);
             this.listBox5.Name = "listBox5";
-            this.listBox5.Size = new System.Drawing.Size(486, 282);
+            this.listBox5.Size = new System.Drawing.Size(486, 281);
             this.listBox5.TabIndex = 1;
             // 
             // toolsSysLabAnalMeth
@@ -6742,6 +8027,22 @@
             this.toolStripSeparator16.Name = "toolStripSeparator16";
             this.toolStripSeparator16.Size = new System.Drawing.Size(6, 25);
             // 
+            // toolStripButton30
+            // 
+            this.toolStripButton30.Image = global::DSA_lims.Properties.Resources._new;
+            this.toolStripButton30.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton30.Name = "toolStripButton30";
+            this.toolStripButton30.Size = new System.Drawing.Size(49, 22);
+            this.toolStripButton30.Text = "Add";
+            // 
+            // toolStripButton31
+            // 
+            this.toolStripButton31.Image = global::DSA_lims.Properties.Resources.delete;
+            this.toolStripButton31.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton31.Name = "toolStripButton31";
+            this.toolStripButton31.Size = new System.Drawing.Size(70, 22);
+            this.toolStripButton31.Text = "Remove";
+            // 
             // tabSysUsers
             // 
             this.tabSysUsers.BackColor = System.Drawing.SystemColors.ButtonFace;
@@ -6749,7 +8050,7 @@
             this.tabSysUsers.Location = new System.Drawing.Point(4, 24);
             this.tabSysUsers.Name = "tabSysUsers";
             this.tabSysUsers.Padding = new System.Windows.Forms.Padding(3);
-            this.tabSysUsers.Size = new System.Drawing.Size(1114, 600);
+            this.tabSysUsers.Size = new System.Drawing.Size(1114, 598);
             this.tabSysUsers.TabIndex = 3;
             this.tabSysUsers.Text = "Users";
             // 
@@ -6767,7 +8068,7 @@
             // splitContainer11.Panel2
             // 
             this.splitContainer11.Panel2.Controls.Add(this.splitContainer18);
-            this.splitContainer11.Size = new System.Drawing.Size(1108, 596);
+            this.splitContainer11.Size = new System.Drawing.Size(1108, 592);
             this.splitContainer11.SplitterDistance = 648;
             this.splitContainer11.SplitterWidth = 3;
             this.splitContainer11.TabIndex = 5;
@@ -6788,7 +8089,7 @@
             this.gridMetaUsers.ReadOnly = true;
             this.gridMetaUsers.RowHeadersVisible = false;
             this.gridMetaUsers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridMetaUsers.Size = new System.Drawing.Size(648, 571);
+            this.gridMetaUsers.Size = new System.Drawing.Size(648, 567);
             this.gridMetaUsers.TabIndex = 0;
             this.gridMetaUsers.SelectionChanged += new System.EventHandler(this.gridMetaUsers_SelectionChanged);
             // 
@@ -6821,10 +8122,47 @@
             this.toolStripSeparator10.Name = "toolStripSeparator10";
             this.toolStripSeparator10.Size = new System.Drawing.Size(6, 25);
             // 
+            // btnMetaUsersNew
+            // 
+            this.btnMetaUsersNew.Image = global::DSA_lims.Properties.Resources.create_user;
+            this.btnMetaUsersNew.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnMetaUsersNew.Name = "btnMetaUsersNew";
+            this.btnMetaUsersNew.Size = new System.Drawing.Size(51, 22);
+            this.btnMetaUsersNew.Text = "New";
+            this.btnMetaUsersNew.Click += new System.EventHandler(this.miNewUser_Click);
+            // 
+            // btnMetaUsersEdit
+            // 
+            this.btnMetaUsersEdit.Image = global::DSA_lims.Properties.Resources.user;
+            this.btnMetaUsersEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnMetaUsersEdit.Name = "btnMetaUsersEdit";
+            this.btnMetaUsersEdit.Size = new System.Drawing.Size(47, 22);
+            this.btnMetaUsersEdit.Text = "Edit";
+            this.btnMetaUsersEdit.Click += new System.EventHandler(this.miEditUser_Click);
+            // 
+            // btnMetaUsersDelete
+            // 
+            this.btnMetaUsersDelete.Image = global::DSA_lims.Properties.Resources.delete_user;
+            this.btnMetaUsersDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnMetaUsersDelete.Name = "btnMetaUsersDelete";
+            this.btnMetaUsersDelete.Size = new System.Drawing.Size(60, 22);
+            this.btnMetaUsersDelete.Text = "Delete";
+            this.btnMetaUsersDelete.Click += new System.EventHandler(this.miDeleteUser_Click);
+            // 
             // toolStripSeparator11
             // 
             this.toolStripSeparator11.Name = "toolStripSeparator11";
             this.toolStripSeparator11.Size = new System.Drawing.Size(6, 25);
+            // 
+            // btnMetaUsersResetPass
+            // 
+            this.btnMetaUsersResetPass.Enabled = false;
+            this.btnMetaUsersResetPass.Image = global::DSA_lims.Properties.Resources.refresh;
+            this.btnMetaUsersResetPass.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnMetaUsersResetPass.Name = "btnMetaUsersResetPass";
+            this.btnMetaUsersResetPass.Size = new System.Drawing.Size(108, 22);
+            this.btnMetaUsersResetPass.Text = "Reset password";
+            this.btnMetaUsersResetPass.Click += new System.EventHandler(this.miResetPass_Click);
             // 
             // splitContainer18
             // 
@@ -6842,8 +8180,8 @@
             // 
             this.splitContainer18.Panel2.Controls.Add(this.listBox7);
             this.splitContainer18.Panel2.Controls.Add(this.toolsSysUsersAnalMeth);
-            this.splitContainer18.Size = new System.Drawing.Size(457, 596);
-            this.splitContainer18.SplitterDistance = 276;
+            this.splitContainer18.Size = new System.Drawing.Size(457, 592);
+            this.splitContainer18.SplitterDistance = 274;
             this.splitContainer18.SplitterWidth = 3;
             this.splitContainer18.TabIndex = 3;
             // 
@@ -6855,7 +8193,7 @@
             this.lbSysUsersRoles.Location = new System.Drawing.Point(0, 25);
             this.lbSysUsersRoles.Name = "lbSysUsersRoles";
             this.lbSysUsersRoles.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.lbSysUsersRoles.Size = new System.Drawing.Size(457, 251);
+            this.lbSysUsersRoles.Size = new System.Drawing.Size(457, 249);
             this.lbSysUsersRoles.TabIndex = 1;
             // 
             // toolsSysUsersRoles
@@ -6884,6 +8222,24 @@
             this.toolStripSeparator12.Name = "toolStripSeparator12";
             this.toolStripSeparator12.Size = new System.Drawing.Size(6, 25);
             // 
+            // btnSysUsersAddRoles
+            // 
+            this.btnSysUsersAddRoles.Image = global::DSA_lims.Properties.Resources._new;
+            this.btnSysUsersAddRoles.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSysUsersAddRoles.Name = "btnSysUsersAddRoles";
+            this.btnSysUsersAddRoles.Size = new System.Drawing.Size(49, 22);
+            this.btnSysUsersAddRoles.Text = "Add";
+            this.btnSysUsersAddRoles.Click += new System.EventHandler(this.btnSysUsersAddRoles_Click);
+            // 
+            // btnSysUsersRemRoles
+            // 
+            this.btnSysUsersRemRoles.Image = global::DSA_lims.Properties.Resources.delete;
+            this.btnSysUsersRemRoles.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSysUsersRemRoles.Name = "btnSysUsersRemRoles";
+            this.btnSysUsersRemRoles.Size = new System.Drawing.Size(70, 22);
+            this.btnSysUsersRemRoles.Text = "Remove";
+            this.btnSysUsersRemRoles.Click += new System.EventHandler(this.btnSysUsersRemRoles_Click);
+            // 
             // listBox7
             // 
             this.listBox7.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -6891,7 +8247,7 @@
             this.listBox7.ItemHeight = 15;
             this.listBox7.Location = new System.Drawing.Point(0, 25);
             this.listBox7.Name = "listBox7";
-            this.listBox7.Size = new System.Drawing.Size(457, 292);
+            this.listBox7.Size = new System.Drawing.Size(457, 290);
             this.listBox7.TabIndex = 1;
             // 
             // toolsSysUsersAnalMeth
@@ -6920,6 +8276,22 @@
             this.toolStripSeparator13.Name = "toolStripSeparator13";
             this.toolStripSeparator13.Size = new System.Drawing.Size(6, 25);
             // 
+            // toolStripButton33
+            // 
+            this.toolStripButton33.Image = global::DSA_lims.Properties.Resources._new;
+            this.toolStripButton33.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton33.Name = "toolStripButton33";
+            this.toolStripButton33.Size = new System.Drawing.Size(49, 22);
+            this.toolStripButton33.Text = "Add";
+            // 
+            // toolStripButton55
+            // 
+            this.toolStripButton55.Image = global::DSA_lims.Properties.Resources.delete;
+            this.toolStripButton55.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton55.Name = "toolStripButton55";
+            this.toolStripButton55.Size = new System.Drawing.Size(70, 22);
+            this.toolStripButton55.Text = "Remove";
+            // 
             // tabSysMunicipalities
             // 
             this.tabSysMunicipalities.BackColor = System.Drawing.SystemColors.ButtonFace;
@@ -6927,7 +8299,7 @@
             this.tabSysMunicipalities.Location = new System.Drawing.Point(4, 24);
             this.tabSysMunicipalities.Name = "tabSysMunicipalities";
             this.tabSysMunicipalities.Padding = new System.Windows.Forms.Padding(3);
-            this.tabSysMunicipalities.Size = new System.Drawing.Size(1114, 600);
+            this.tabSysMunicipalities.Size = new System.Drawing.Size(1114, 598);
             this.tabSysMunicipalities.TabIndex = 5;
             this.tabSysMunicipalities.Text = "Municipalities";
             // 
@@ -6946,7 +8318,7 @@
             // 
             this.splitContainer19.Panel2.Controls.Add(this.gridSysMunicipality);
             this.splitContainer19.Panel2.Controls.Add(this.toolsSysMunicipalities);
-            this.splitContainer19.Size = new System.Drawing.Size(1108, 596);
+            this.splitContainer19.Size = new System.Drawing.Size(1108, 592);
             this.splitContainer19.SplitterDistance = 511;
             this.splitContainer19.SplitterWidth = 5;
             this.splitContainer19.TabIndex = 1;
@@ -6967,7 +8339,7 @@
             this.gridSysCounty.ReadOnly = true;
             this.gridSysCounty.RowHeadersVisible = false;
             this.gridSysCounty.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridSysCounty.Size = new System.Drawing.Size(511, 571);
+            this.gridSysCounty.Size = new System.Drawing.Size(511, 567);
             this.gridSysCounty.TabIndex = 1;
             this.gridSysCounty.SelectionChanged += new System.EventHandler(this.gridSysCounty_SelectionChanged);
             // 
@@ -6998,6 +8370,33 @@
             this.toolStripSeparator8.Name = "toolStripSeparator8";
             this.toolStripSeparator8.Size = new System.Drawing.Size(6, 25);
             // 
+            // btnNewCounty
+            // 
+            this.btnNewCounty.Image = global::DSA_lims.Properties.Resources._new;
+            this.btnNewCounty.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnNewCounty.Name = "btnNewCounty";
+            this.btnNewCounty.Size = new System.Drawing.Size(51, 22);
+            this.btnNewCounty.Text = "New";
+            this.btnNewCounty.Click += new System.EventHandler(this.miNewCounty_Click);
+            // 
+            // btnEditCounty
+            // 
+            this.btnEditCounty.Image = global::DSA_lims.Properties.Resources.edit;
+            this.btnEditCounty.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnEditCounty.Name = "btnEditCounty";
+            this.btnEditCounty.Size = new System.Drawing.Size(47, 22);
+            this.btnEditCounty.Text = "Edit";
+            this.btnEditCounty.Click += new System.EventHandler(this.miEditCounty_Click);
+            // 
+            // btnDeleteCounty
+            // 
+            this.btnDeleteCounty.Image = global::DSA_lims.Properties.Resources.delete;
+            this.btnDeleteCounty.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnDeleteCounty.Name = "btnDeleteCounty";
+            this.btnDeleteCounty.Size = new System.Drawing.Size(60, 22);
+            this.btnDeleteCounty.Text = "Delete";
+            this.btnDeleteCounty.Click += new System.EventHandler(this.miDeleteCounty_Click);
+            // 
             // gridSysMunicipality
             // 
             this.gridSysMunicipality.AllowUserToAddRows = false;
@@ -7013,7 +8412,7 @@
             this.gridSysMunicipality.ReadOnly = true;
             this.gridSysMunicipality.RowHeadersVisible = false;
             this.gridSysMunicipality.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridSysMunicipality.Size = new System.Drawing.Size(592, 571);
+            this.gridSysMunicipality.Size = new System.Drawing.Size(592, 567);
             this.gridSysMunicipality.TabIndex = 1;
             // 
             // toolsSysMunicipalities
@@ -7043,6 +8442,33 @@
             this.toolStripSeparator9.Name = "toolStripSeparator9";
             this.toolStripSeparator9.Size = new System.Drawing.Size(6, 25);
             // 
+            // btnNewMunicipality
+            // 
+            this.btnNewMunicipality.Image = global::DSA_lims.Properties.Resources._new;
+            this.btnNewMunicipality.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnNewMunicipality.Name = "btnNewMunicipality";
+            this.btnNewMunicipality.Size = new System.Drawing.Size(51, 22);
+            this.btnNewMunicipality.Text = "New";
+            this.btnNewMunicipality.Click += new System.EventHandler(this.miNewMunicipality_Click);
+            // 
+            // btnEditMunicipality
+            // 
+            this.btnEditMunicipality.Image = global::DSA_lims.Properties.Resources.edit;
+            this.btnEditMunicipality.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnEditMunicipality.Name = "btnEditMunicipality";
+            this.btnEditMunicipality.Size = new System.Drawing.Size(47, 22);
+            this.btnEditMunicipality.Text = "Edit";
+            this.btnEditMunicipality.Click += new System.EventHandler(this.miEditMunicipality_Click);
+            // 
+            // btnDeleteMunicipality
+            // 
+            this.btnDeleteMunicipality.Image = global::DSA_lims.Properties.Resources.delete;
+            this.btnDeleteMunicipality.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnDeleteMunicipality.Name = "btnDeleteMunicipality";
+            this.btnDeleteMunicipality.Size = new System.Drawing.Size(60, 22);
+            this.btnDeleteMunicipality.Text = "Delete";
+            this.btnDeleteMunicipality.Click += new System.EventHandler(this.miDeleteMunicipality_Click);
+            // 
             // tabSysAccredRules
             // 
             this.tabSysAccredRules.BackColor = System.Drawing.SystemColors.ButtonFace;
@@ -7051,7 +8477,7 @@
             this.tabSysAccredRules.Location = new System.Drawing.Point(4, 24);
             this.tabSysAccredRules.Name = "tabSysAccredRules";
             this.tabSysAccredRules.Padding = new System.Windows.Forms.Padding(3);
-            this.tabSysAccredRules.Size = new System.Drawing.Size(1114, 600);
+            this.tabSysAccredRules.Size = new System.Drawing.Size(1114, 598);
             this.tabSysAccredRules.TabIndex = 8;
             this.tabSysAccredRules.Text = "Accreditation rules";
             // 
@@ -7064,7 +8490,7 @@
             this.dataGridView22.Location = new System.Drawing.Point(3, 28);
             this.dataGridView22.Name = "dataGridView22";
             this.dataGridView22.ReadOnly = true;
-            this.dataGridView22.Size = new System.Drawing.Size(1108, 569);
+            this.dataGridView22.Size = new System.Drawing.Size(1108, 567);
             this.dataGridView22.TabIndex = 1;
             // 
             // toolsSysAccredRules
@@ -7094,6 +8520,30 @@
             this.toolStripSeparator7.Name = "toolStripSeparator7";
             this.toolStripSeparator7.Size = new System.Drawing.Size(6, 25);
             // 
+            // toolStripButton70
+            // 
+            this.toolStripButton70.Image = global::DSA_lims.Properties.Resources._new;
+            this.toolStripButton70.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton70.Name = "toolStripButton70";
+            this.toolStripButton70.Size = new System.Drawing.Size(51, 22);
+            this.toolStripButton70.Text = "New";
+            // 
+            // toolStripButton71
+            // 
+            this.toolStripButton71.Image = global::DSA_lims.Properties.Resources.edit;
+            this.toolStripButton71.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton71.Name = "toolStripButton71";
+            this.toolStripButton71.Size = new System.Drawing.Size(47, 22);
+            this.toolStripButton71.Text = "Edit";
+            // 
+            // toolStripButton72
+            // 
+            this.toolStripButton72.Image = global::DSA_lims.Properties.Resources.delete;
+            this.toolStripButton72.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton72.Name = "toolStripButton72";
+            this.toolStripButton72.Size = new System.Drawing.Size(60, 22);
+            this.toolStripButton72.Text = "Delete";
+            // 
             // tabSysNuclides
             // 
             this.tabSysNuclides.BackColor = System.Drawing.SystemColors.ButtonFace;
@@ -7102,7 +8552,7 @@
             this.tabSysNuclides.Location = new System.Drawing.Point(4, 24);
             this.tabSysNuclides.Name = "tabSysNuclides";
             this.tabSysNuclides.Padding = new System.Windows.Forms.Padding(3);
-            this.tabSysNuclides.Size = new System.Drawing.Size(1114, 600);
+            this.tabSysNuclides.Size = new System.Drawing.Size(1114, 598);
             this.tabSysNuclides.TabIndex = 9;
             this.tabSysNuclides.Text = "Nuclides";
             // 
@@ -7122,7 +8572,7 @@
             this.gridSysNuclides.ReadOnly = true;
             this.gridSysNuclides.RowHeadersVisible = false;
             this.gridSysNuclides.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridSysNuclides.Size = new System.Drawing.Size(1108, 569);
+            this.gridSysNuclides.Size = new System.Drawing.Size(1108, 567);
             this.gridSysNuclides.TabIndex = 1;
             // 
             // toolsSysNuclides
@@ -7153,6 +8603,49 @@
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
             // 
+            // btnSysNuclideNew
+            // 
+            this.btnSysNuclideNew.Image = global::DSA_lims.Properties.Resources._new;
+            this.btnSysNuclideNew.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSysNuclideNew.Name = "btnSysNuclideNew";
+            this.btnSysNuclideNew.Size = new System.Drawing.Size(51, 22);
+            this.btnSysNuclideNew.Text = "New";
+            this.btnSysNuclideNew.Click += new System.EventHandler(this.miNuclidesNew_Click);
+            // 
+            // btnSysNuclideEdit
+            // 
+            this.btnSysNuclideEdit.Image = global::DSA_lims.Properties.Resources.edit;
+            this.btnSysNuclideEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSysNuclideEdit.Name = "btnSysNuclideEdit";
+            this.btnSysNuclideEdit.Size = new System.Drawing.Size(47, 22);
+            this.btnSysNuclideEdit.Text = "Edit";
+            this.btnSysNuclideEdit.Click += new System.EventHandler(this.miNuclidesEdit_Click);
+            // 
+            // btnSysNuclideDelete
+            // 
+            this.btnSysNuclideDelete.Image = global::DSA_lims.Properties.Resources.delete;
+            this.btnSysNuclideDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSysNuclideDelete.Name = "btnSysNuclideDelete";
+            this.btnSysNuclideDelete.Size = new System.Drawing.Size(60, 22);
+            this.btnSysNuclideDelete.Text = "Delete";
+            // 
+            // btnSysNuclideExport
+            // 
+            this.btnSysNuclideExport.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnNuclidesExportNuclidesXML});
+            this.btnSysNuclideExport.Image = ((System.Drawing.Image)(resources.GetObject("btnSysNuclideExport.Image")));
+            this.btnSysNuclideExport.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSysNuclideExport.Name = "btnSysNuclideExport";
+            this.btnSysNuclideExport.Size = new System.Drawing.Size(78, 22);
+            this.btnSysNuclideExport.Text = "Export...";
+            // 
+            // btnNuclidesExportNuclidesXML
+            // 
+            this.btnNuclidesExportNuclidesXML.Name = "btnNuclidesExportNuclidesXML";
+            this.btnNuclidesExportNuclidesXML.Size = new System.Drawing.Size(155, 22);
+            this.btnNuclidesExportNuclidesXML.Text = "Nuclides (XML)";
+            this.btnNuclidesExportNuclidesXML.Click += new System.EventHandler(this.miNuclidesExportNuclidesXML_Click);
+            // 
             // tabSysGeometries
             // 
             this.tabSysGeometries.BackColor = System.Drawing.SystemColors.ButtonFace;
@@ -7161,7 +8654,7 @@
             this.tabSysGeometries.Location = new System.Drawing.Point(4, 24);
             this.tabSysGeometries.Name = "tabSysGeometries";
             this.tabSysGeometries.Padding = new System.Windows.Forms.Padding(3);
-            this.tabSysGeometries.Size = new System.Drawing.Size(1114, 600);
+            this.tabSysGeometries.Size = new System.Drawing.Size(1114, 598);
             this.tabSysGeometries.TabIndex = 11;
             this.tabSysGeometries.Text = "Geometries";
             // 
@@ -7171,7 +8664,7 @@
             this.panel6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel6.Location = new System.Drawing.Point(3, 28);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(1108, 569);
+            this.panel6.Size = new System.Drawing.Size(1108, 567);
             this.panel6.TabIndex = 2;
             // 
             // gridSysGeom
@@ -7190,7 +8683,7 @@
             this.gridSysGeom.ReadOnly = true;
             this.gridSysGeom.RowHeadersVisible = false;
             this.gridSysGeom.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridSysGeom.Size = new System.Drawing.Size(1108, 569);
+            this.gridSysGeom.Size = new System.Drawing.Size(1108, 567);
             this.gridSysGeom.TabIndex = 0;
             // 
             // toolsSysGeom
@@ -7220,6 +8713,33 @@
             this.toolStripSeparator23.Name = "toolStripSeparator23";
             this.toolStripSeparator23.Size = new System.Drawing.Size(6, 25);
             // 
+            // toolStripButton39
+            // 
+            this.toolStripButton39.Image = global::DSA_lims.Properties.Resources._new;
+            this.toolStripButton39.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton39.Name = "toolStripButton39";
+            this.toolStripButton39.Size = new System.Drawing.Size(51, 22);
+            this.toolStripButton39.Text = "New";
+            this.toolStripButton39.Click += new System.EventHandler(this.miNewGeometry_Click);
+            // 
+            // toolStripButton40
+            // 
+            this.toolStripButton40.Image = global::DSA_lims.Properties.Resources.edit;
+            this.toolStripButton40.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton40.Name = "toolStripButton40";
+            this.toolStripButton40.Size = new System.Drawing.Size(47, 22);
+            this.toolStripButton40.Text = "Edit";
+            this.toolStripButton40.Click += new System.EventHandler(this.miEditGeometry_Click);
+            // 
+            // toolStripButton76
+            // 
+            this.toolStripButton76.Image = global::DSA_lims.Properties.Resources.delete;
+            this.toolStripButton76.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton76.Name = "toolStripButton76";
+            this.toolStripButton76.Size = new System.Drawing.Size(60, 22);
+            this.toolStripButton76.Text = "Delete";
+            this.toolStripButton76.Click += new System.EventHandler(this.miDeleteGeometry_Click);
+            // 
             // tabSysPers
             // 
             this.tabSysPers.BackColor = System.Drawing.SystemColors.ButtonFace;
@@ -7228,7 +8748,7 @@
             this.tabSysPers.Location = new System.Drawing.Point(4, 24);
             this.tabSysPers.Name = "tabSysPers";
             this.tabSysPers.Padding = new System.Windows.Forms.Padding(3);
-            this.tabSysPers.Size = new System.Drawing.Size(1114, 600);
+            this.tabSysPers.Size = new System.Drawing.Size(1114, 598);
             this.tabSysPers.TabIndex = 12;
             this.tabSysPers.Text = "Persons";
             // 
@@ -7248,7 +8768,7 @@
             this.gridSysPers.ReadOnly = true;
             this.gridSysPers.RowHeadersVisible = false;
             this.gridSysPers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridSysPers.Size = new System.Drawing.Size(1108, 569);
+            this.gridSysPers.Size = new System.Drawing.Size(1108, 567);
             this.gridSysPers.TabIndex = 1;
             // 
             // toolStrip14
@@ -7277,6 +8797,33 @@
             // 
             this.toolStripSeparator34.Name = "toolStripSeparator34";
             this.toolStripSeparator34.Size = new System.Drawing.Size(6, 25);
+            // 
+            // btnSysPersNew
+            // 
+            this.btnSysPersNew.Image = global::DSA_lims.Properties.Resources._new;
+            this.btnSysPersNew.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSysPersNew.Name = "btnSysPersNew";
+            this.btnSysPersNew.Size = new System.Drawing.Size(51, 22);
+            this.btnSysPersNew.Text = "New";
+            this.btnSysPersNew.Click += new System.EventHandler(this.miPersonNew_Click);
+            // 
+            // btnSysPersEdit
+            // 
+            this.btnSysPersEdit.Image = global::DSA_lims.Properties.Resources.edit;
+            this.btnSysPersEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSysPersEdit.Name = "btnSysPersEdit";
+            this.btnSysPersEdit.Size = new System.Drawing.Size(47, 22);
+            this.btnSysPersEdit.Text = "Edit";
+            this.btnSysPersEdit.Click += new System.EventHandler(this.miPersonEdit_Click);
+            // 
+            // btnSysPersDelete
+            // 
+            this.btnSysPersDelete.Image = global::DSA_lims.Properties.Resources.delete;
+            this.btnSysPersDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSysPersDelete.Name = "btnSysPersDelete";
+            this.btnSysPersDelete.Size = new System.Drawing.Size(60, 22);
+            this.btnSysPersDelete.Text = "Delete";
+            this.btnSysPersDelete.Click += new System.EventHandler(this.miPersonDelete_Click);
             // 
             // tabPrepAnal
             // 
@@ -7352,6 +8899,24 @@
             this.toolStrip7.Size = new System.Drawing.Size(379, 25);
             this.toolStrip7.TabIndex = 0;
             this.toolStrip7.Text = "toolStrip7";
+            // 
+            // btnPrepAnalAddPrep
+            // 
+            this.btnPrepAnalAddPrep.Image = global::DSA_lims.Properties.Resources._new;
+            this.btnPrepAnalAddPrep.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnPrepAnalAddPrep.Name = "btnPrepAnalAddPrep";
+            this.btnPrepAnalAddPrep.Size = new System.Drawing.Size(113, 22);
+            this.btnPrepAnalAddPrep.Text = "Add preparation";
+            this.btnPrepAnalAddPrep.Click += new System.EventHandler(this.btnPrepAnalAddPrep_Click);
+            // 
+            // btnPrepAnalAddAnal
+            // 
+            this.btnPrepAnalAddAnal.Image = global::DSA_lims.Properties.Resources._new;
+            this.btnPrepAnalAddAnal.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnPrepAnalAddAnal.Name = "btnPrepAnalAddAnal";
+            this.btnPrepAnalAddAnal.Size = new System.Drawing.Size(93, 22);
+            this.btnPrepAnalAddAnal.Text = "Add analysis";
+            this.btnPrepAnalAddAnal.Click += new System.EventHandler(this.btnPrepAnalAddAnal_Click);
             // 
             // tabsPrepAnal
             // 
@@ -7789,7 +9354,7 @@
             this.tabPrepAnalPreps.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.tabPrepAnalPreps.Controls.Add(this.panel10);
             this.tabPrepAnalPreps.Controls.Add(this.splitContainer3);
-            this.tabPrepAnalPreps.Location = new System.Drawing.Point(4, 24);
+            this.tabPrepAnalPreps.Location = new System.Drawing.Point(4, 22);
             this.tabPrepAnalPreps.Name = "tabPrepAnalPreps";
             this.tabPrepAnalPreps.Padding = new System.Windows.Forms.Padding(3);
             this.tabPrepAnalPreps.Size = new System.Drawing.Size(732, 600);
@@ -8193,6 +9758,16 @@
             this.toolStripLabel13.Size = new System.Drawing.Size(97, 22);
             this.toolStripLabel13.Text = "Preparation info";
             // 
+            // btnPrepAnalPrepPrintLabel
+            // 
+            this.btnPrepAnalPrepPrintLabel.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.btnPrepAnalPrepPrintLabel.Image = global::DSA_lims.Properties.Resources.printer;
+            this.btnPrepAnalPrepPrintLabel.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnPrepAnalPrepPrintLabel.Name = "btnPrepAnalPrepPrintLabel";
+            this.btnPrepAnalPrepPrintLabel.Size = new System.Drawing.Size(80, 22);
+            this.btnPrepAnalPrepPrintLabel.Text = "Print label";
+            this.btnPrepAnalPrepPrintLabel.Click += new System.EventHandler(this.btnPrepAnalPrepPrintLabel_Click);
+            // 
             // panel5
             // 
             this.panel5.Controls.Add(this.gridPrepAnalPrepAttachments);
@@ -8249,6 +9824,33 @@
             // 
             this.toolStripSeparator26.Name = "toolStripSeparator26";
             this.toolStripSeparator26.Size = new System.Drawing.Size(6, 25);
+            // 
+            // btnPrepAnalPrepScanAttachment
+            // 
+            this.btnPrepAnalPrepScanAttachment.Image = global::DSA_lims.Properties.Resources.scan;
+            this.btnPrepAnalPrepScanAttachment.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnPrepAnalPrepScanAttachment.Name = "btnPrepAnalPrepScanAttachment";
+            this.btnPrepAnalPrepScanAttachment.Size = new System.Drawing.Size(52, 22);
+            this.btnPrepAnalPrepScanAttachment.Text = "Scan";
+            this.btnPrepAnalPrepScanAttachment.Click += new System.EventHandler(this.btnPrepAnalPrepScanAttachment_Click);
+            // 
+            // btnPrepAnalPrepBrowseAttachment
+            // 
+            this.btnPrepAnalPrepBrowseAttachment.Image = global::DSA_lims.Properties.Resources.projects;
+            this.btnPrepAnalPrepBrowseAttachment.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnPrepAnalPrepBrowseAttachment.Name = "btnPrepAnalPrepBrowseAttachment";
+            this.btnPrepAnalPrepBrowseAttachment.Size = new System.Drawing.Size(65, 22);
+            this.btnPrepAnalPrepBrowseAttachment.Text = "Browse";
+            this.btnPrepAnalPrepBrowseAttachment.Click += new System.EventHandler(this.btnPrepAnalPrepBrowseAttachment_Click);
+            // 
+            // btnPrepAnalPrepDeleteAttachment
+            // 
+            this.btnPrepAnalPrepDeleteAttachment.Image = global::DSA_lims.Properties.Resources.delete;
+            this.btnPrepAnalPrepDeleteAttachment.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnPrepAnalPrepDeleteAttachment.Name = "btnPrepAnalPrepDeleteAttachment";
+            this.btnPrepAnalPrepDeleteAttachment.Size = new System.Drawing.Size(60, 22);
+            this.btnPrepAnalPrepDeleteAttachment.Text = "Delete";
+            this.btnPrepAnalPrepDeleteAttachment.Click += new System.EventHandler(this.btnPrepAnalPrepDeleteAttachment_Click);
             // 
             // tabPrepAnalAnalysis
             // 
@@ -8327,6 +9929,33 @@
             // 
             this.toolStripSeparator28.Name = "toolStripSeparator28";
             this.toolStripSeparator28.Size = new System.Drawing.Size(6, 25);
+            // 
+            // btnPrepAnalAddResult
+            // 
+            this.btnPrepAnalAddResult.Image = global::DSA_lims.Properties.Resources._new;
+            this.btnPrepAnalAddResult.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnPrepAnalAddResult.Name = "btnPrepAnalAddResult";
+            this.btnPrepAnalAddResult.Size = new System.Drawing.Size(49, 22);
+            this.btnPrepAnalAddResult.Text = "Add";
+            this.btnPrepAnalAddResult.Click += new System.EventHandler(this.btnPrepAnalAddResult_Click);
+            // 
+            // btnPrepAnalEditResult
+            // 
+            this.btnPrepAnalEditResult.Image = global::DSA_lims.Properties.Resources.edit;
+            this.btnPrepAnalEditResult.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnPrepAnalEditResult.Name = "btnPrepAnalEditResult";
+            this.btnPrepAnalEditResult.Size = new System.Drawing.Size(47, 22);
+            this.btnPrepAnalEditResult.Text = "Edit";
+            this.btnPrepAnalEditResult.Click += new System.EventHandler(this.btnPrepAnalEditResult_Click);
+            // 
+            // btnPrepAnalRemoveResult
+            // 
+            this.btnPrepAnalRemoveResult.Image = global::DSA_lims.Properties.Resources.delete;
+            this.btnPrepAnalRemoveResult.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnPrepAnalRemoveResult.Name = "btnPrepAnalRemoveResult";
+            this.btnPrepAnalRemoveResult.Size = new System.Drawing.Size(70, 22);
+            this.btnPrepAnalRemoveResult.Text = "Remove";
+            this.btnPrepAnalRemoveResult.Click += new System.EventHandler(this.btnPrepAnalRemoveResult_Click);
             // 
             // toolStripLabel57
             // 
@@ -8605,6 +10234,23 @@
             this.toolStripSeparator53.Name = "toolStripSeparator53";
             this.toolStripSeparator53.Size = new System.Drawing.Size(6, 25);
             // 
+            // ddPrepAnalImport2
+            // 
+            this.ddPrepAnalImport2.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.miImportLISFile2});
+            this.ddPrepAnalImport2.Image = global::DSA_lims.Properties.Resources.import;
+            this.ddPrepAnalImport2.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.ddPrepAnalImport2.Name = "ddPrepAnalImport2";
+            this.ddPrepAnalImport2.Size = new System.Drawing.Size(81, 22);
+            this.ddPrepAnalImport2.Text = "Import...";
+            // 
+            // miImportLISFile2
+            // 
+            this.miImportLISFile2.Name = "miImportLISFile2";
+            this.miImportLISFile2.Size = new System.Drawing.Size(147, 22);
+            this.miImportLISFile2.Text = "Import LIS file";
+            this.miImportLISFile2.Click += new System.EventHandler(this.miImportLISFile_Click);
+            // 
             // panel8
             // 
             this.panel8.Controls.Add(this.gridPrepAnalAnalAttachments);
@@ -8662,1673 +10308,6 @@
             this.toolStripSeparator27.Name = "toolStripSeparator27";
             this.toolStripSeparator27.Size = new System.Drawing.Size(6, 25);
             // 
-            // tools
-            // 
-            this.tools.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.tools.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnMenu,
-            this.lblCurrentTab,
-            this.btnBack});
-            this.tools.Location = new System.Drawing.Point(0, 24);
-            this.tools.Name = "tools";
-            this.tools.Size = new System.Drawing.Size(1136, 25);
-            this.tools.TabIndex = 5;
-            this.tools.Text = "toolStrip29";
-            // 
-            // lblCurrentTab
-            // 
-            this.lblCurrentTab.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.lblCurrentTab.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.lblCurrentTab.Name = "lblCurrentTab";
-            this.lblCurrentTab.Size = new System.Drawing.Size(98, 22);
-            this.lblCurrentTab.Text = "<lblCurrentTab>";
-            // 
-            // btnMenuSearch
-            // 
-            this.btnMenuSearch.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnMenuSearch.Font = new System.Drawing.Font("Arial", 16F, System.Drawing.FontStyle.Bold);
-            this.btnMenuSearch.Image = global::DSA_lims.Properties.Resources.search_gray;
-            this.btnMenuSearch.Location = new System.Drawing.Point(841, 330);
-            this.btnMenuSearch.Margin = new System.Windows.Forms.Padding(1);
-            this.btnMenuSearch.Name = "btnMenuSearch";
-            this.btnMenuSearch.Size = new System.Drawing.Size(280, 295);
-            this.btnMenuSearch.TabIndex = 7;
-            this.btnMenuSearch.Text = "Search";
-            this.btnMenuSearch.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnMenuSearch.UseVisualStyleBackColor = true;
-            this.btnMenuSearch.Click += new System.EventHandler(this.miSearchView_Click);
-            // 
-            // btnMenuMetadata
-            // 
-            this.btnMenuMetadata.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnMenuMetadata.Font = new System.Drawing.Font("Arial", 16F, System.Drawing.FontStyle.Bold);
-            this.btnMenuMetadata.Image = global::DSA_lims.Properties.Resources.new_batch_gray;
-            this.btnMenuMetadata.Location = new System.Drawing.Point(561, 330);
-            this.btnMenuMetadata.Margin = new System.Windows.Forms.Padding(1);
-            this.btnMenuMetadata.Name = "btnMenuMetadata";
-            this.btnMenuMetadata.Size = new System.Drawing.Size(278, 295);
-            this.btnMenuMetadata.TabIndex = 6;
-            this.btnMenuMetadata.Text = "Metadata";
-            this.btnMenuMetadata.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnMenuMetadata.UseVisualStyleBackColor = true;
-            this.btnMenuMetadata.Click += new System.EventHandler(this.miMetadataView_Click);
-            // 
-            // btnMenuCustomer
-            // 
-            this.btnMenuCustomer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnMenuCustomer.Font = new System.Drawing.Font("Arial", 16F, System.Drawing.FontStyle.Bold);
-            this.btnMenuCustomer.Image = global::DSA_lims.Properties.Resources.users_gray;
-            this.btnMenuCustomer.Location = new System.Drawing.Point(281, 330);
-            this.btnMenuCustomer.Margin = new System.Windows.Forms.Padding(1);
-            this.btnMenuCustomer.Name = "btnMenuCustomer";
-            this.btnMenuCustomer.Size = new System.Drawing.Size(278, 295);
-            this.btnMenuCustomer.TabIndex = 5;
-            this.btnMenuCustomer.Text = "Customers";
-            this.btnMenuCustomer.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnMenuCustomer.UseVisualStyleBackColor = true;
-            this.btnMenuCustomer.Click += new System.EventHandler(this.miCustomersView_Click);
-            // 
-            // btnMenuProjects
-            // 
-            this.btnMenuProjects.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnMenuProjects.Font = new System.Drawing.Font("Arial", 16F, System.Drawing.FontStyle.Bold);
-            this.btnMenuProjects.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.btnMenuProjects.Image = global::DSA_lims.Properties.Resources.projects_gray;
-            this.btnMenuProjects.Location = new System.Drawing.Point(1, 330);
-            this.btnMenuProjects.Margin = new System.Windows.Forms.Padding(1);
-            this.btnMenuProjects.Name = "btnMenuProjects";
-            this.btnMenuProjects.Size = new System.Drawing.Size(278, 295);
-            this.btnMenuProjects.TabIndex = 4;
-            this.btnMenuProjects.Text = "Projects";
-            this.btnMenuProjects.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnMenuProjects.UseVisualStyleBackColor = true;
-            this.btnMenuProjects.Click += new System.EventHandler(this.miProjectsView_Click);
-            // 
-            // btnMenuNewSample
-            // 
-            this.btnMenuNewSample.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnMenuNewSample.Font = new System.Drawing.Font("Arial", 16F, System.Drawing.FontStyle.Bold);
-            this.btnMenuNewSample.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.btnMenuNewSample.Image = global::DSA_lims.Properties.Resources.new_gray;
-            this.btnMenuNewSample.Location = new System.Drawing.Point(1, 33);
-            this.btnMenuNewSample.Margin = new System.Windows.Forms.Padding(1);
-            this.btnMenuNewSample.Name = "btnMenuNewSample";
-            this.btnMenuNewSample.Size = new System.Drawing.Size(278, 295);
-            this.btnMenuNewSample.TabIndex = 0;
-            this.btnMenuNewSample.Text = "New sample";
-            this.btnMenuNewSample.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnMenuNewSample.UseVisualStyleBackColor = true;
-            this.btnMenuNewSample.Click += new System.EventHandler(this.miSamplesNew_Click);
-            // 
-            // btnMenuSamples
-            // 
-            this.btnMenuSamples.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnMenuSamples.Font = new System.Drawing.Font("Arial", 16F, System.Drawing.FontStyle.Bold);
-            this.btnMenuSamples.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.btnMenuSamples.Image = global::DSA_lims.Properties.Resources.drawer_gray;
-            this.btnMenuSamples.Location = new System.Drawing.Point(281, 33);
-            this.btnMenuSamples.Margin = new System.Windows.Forms.Padding(1);
-            this.btnMenuSamples.Name = "btnMenuSamples";
-            this.btnMenuSamples.Size = new System.Drawing.Size(278, 295);
-            this.btnMenuSamples.TabIndex = 1;
-            this.btnMenuSamples.Text = "Samples";
-            this.btnMenuSamples.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnMenuSamples.UseVisualStyleBackColor = true;
-            this.btnMenuSamples.Click += new System.EventHandler(this.btnSamples_Click);
-            // 
-            // btnMenuNewOrder
-            // 
-            this.btnMenuNewOrder.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnMenuNewOrder.Font = new System.Drawing.Font("Arial", 16F, System.Drawing.FontStyle.Bold);
-            this.btnMenuNewOrder.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.btnMenuNewOrder.Image = global::DSA_lims.Properties.Resources.new_gray;
-            this.btnMenuNewOrder.Location = new System.Drawing.Point(561, 33);
-            this.btnMenuNewOrder.Margin = new System.Windows.Forms.Padding(1);
-            this.btnMenuNewOrder.Name = "btnMenuNewOrder";
-            this.btnMenuNewOrder.Size = new System.Drawing.Size(278, 295);
-            this.btnMenuNewOrder.TabIndex = 2;
-            this.btnMenuNewOrder.Text = "New order";
-            this.btnMenuNewOrder.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnMenuNewOrder.UseVisualStyleBackColor = true;
-            this.btnMenuNewOrder.Click += new System.EventHandler(this.miOrdersNew_Click);
-            // 
-            // btnOrders
-            // 
-            this.btnOrders.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnOrders.Font = new System.Drawing.Font("Arial", 16F, System.Drawing.FontStyle.Bold);
-            this.btnOrders.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.btnOrders.Image = global::DSA_lims.Properties.Resources.drawer_gray;
-            this.btnOrders.Location = new System.Drawing.Point(841, 33);
-            this.btnOrders.Margin = new System.Windows.Forms.Padding(1);
-            this.btnOrders.Name = "btnOrders";
-            this.btnOrders.Size = new System.Drawing.Size(280, 295);
-            this.btnOrders.TabIndex = 3;
-            this.btnOrders.Text = "Orders";
-            this.btnOrders.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnOrders.UseVisualStyleBackColor = true;
-            this.btnOrders.Click += new System.EventHandler(this.btnOrders_Click);
-            // 
-            // btnSampleSelectSampleType
-            // 
-            this.btnSampleSelectSampleType.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnSampleSelectSampleType.Image = global::DSA_lims.Properties.Resources.tree_16;
-            this.btnSampleSelectSampleType.Location = new System.Drawing.Point(615, 0);
-            this.btnSampleSelectSampleType.Name = "btnSampleSelectSampleType";
-            this.btnSampleSelectSampleType.Size = new System.Drawing.Size(22, 24);
-            this.btnSampleSelectSampleType.TabIndex = 1;
-            this.btnSampleSelectSampleType.UseVisualStyleBackColor = true;
-            this.btnSampleSelectSampleType.Click += new System.EventHandler(this.btnSampleSelectSampleType_Click);
-            // 
-            // btnSampleSamplingDateFromClear
-            // 
-            this.btnSampleSamplingDateFromClear.BackgroundImage = global::DSA_lims.Properties.Resources.clear_16;
-            this.btnSampleSamplingDateFromClear.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btnSampleSamplingDateFromClear.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnSampleSamplingDateFromClear.Location = new System.Drawing.Point(267, 0);
-            this.btnSampleSamplingDateFromClear.Name = "btnSampleSamplingDateFromClear";
-            this.btnSampleSamplingDateFromClear.Size = new System.Drawing.Size(24, 24);
-            this.btnSampleSamplingDateFromClear.TabIndex = 1;
-            this.btnSampleSamplingDateFromClear.TabStop = false;
-            this.btnSampleSamplingDateFromClear.Click += new System.EventHandler(this.btnSampleSamplingDateFromClear_Click);
-            // 
-            // btnSampleSamplingDateFrom
-            // 
-            this.btnSampleSamplingDateFrom.BackgroundImage = global::DSA_lims.Properties.Resources.datetime_16;
-            this.btnSampleSamplingDateFrom.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btnSampleSamplingDateFrom.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnSampleSamplingDateFrom.InitialImage = null;
-            this.btnSampleSamplingDateFrom.Location = new System.Drawing.Point(291, 0);
-            this.btnSampleSamplingDateFrom.Name = "btnSampleSamplingDateFrom";
-            this.btnSampleSamplingDateFrom.Size = new System.Drawing.Size(24, 24);
-            this.btnSampleSamplingDateFrom.TabIndex = 0;
-            this.btnSampleSamplingDateFrom.TabStop = false;
-            this.btnSampleSamplingDateFrom.Click += new System.EventHandler(this.btnSampleSamplingDateFrom_Click);
-            // 
-            // btnSampleSamplingDateToClear
-            // 
-            this.btnSampleSamplingDateToClear.BackgroundImage = global::DSA_lims.Properties.Resources.clear_16;
-            this.btnSampleSamplingDateToClear.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btnSampleSamplingDateToClear.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnSampleSamplingDateToClear.Location = new System.Drawing.Point(267, 0);
-            this.btnSampleSamplingDateToClear.Name = "btnSampleSamplingDateToClear";
-            this.btnSampleSamplingDateToClear.Size = new System.Drawing.Size(24, 24);
-            this.btnSampleSamplingDateToClear.TabIndex = 1;
-            this.btnSampleSamplingDateToClear.TabStop = false;
-            this.btnSampleSamplingDateToClear.Click += new System.EventHandler(this.btnSampleSamplingDateToClear_Click);
-            // 
-            // btnSampleSamplingDateTo
-            // 
-            this.btnSampleSamplingDateTo.BackgroundImage = global::DSA_lims.Properties.Resources.datetime_16;
-            this.btnSampleSamplingDateTo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btnSampleSamplingDateTo.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnSampleSamplingDateTo.Location = new System.Drawing.Point(291, 0);
-            this.btnSampleSamplingDateTo.Name = "btnSampleSamplingDateTo";
-            this.btnSampleSamplingDateTo.Size = new System.Drawing.Size(24, 24);
-            this.btnSampleSamplingDateTo.TabIndex = 0;
-            this.btnSampleSamplingDateTo.TabStop = false;
-            this.btnSampleSamplingDateTo.Click += new System.EventHandler(this.btnSampleSamplingDateTo_Click);
-            // 
-            // btnSampleReferenceDateClear
-            // 
-            this.btnSampleReferenceDateClear.BackgroundImage = global::DSA_lims.Properties.Resources.clear_16;
-            this.btnSampleReferenceDateClear.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btnSampleReferenceDateClear.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnSampleReferenceDateClear.Location = new System.Drawing.Point(267, 0);
-            this.btnSampleReferenceDateClear.Name = "btnSampleReferenceDateClear";
-            this.btnSampleReferenceDateClear.Size = new System.Drawing.Size(24, 24);
-            this.btnSampleReferenceDateClear.TabIndex = 1;
-            this.btnSampleReferenceDateClear.TabStop = false;
-            this.btnSampleReferenceDateClear.Click += new System.EventHandler(this.btnSampleReferenceDateClear_Click);
-            // 
-            // btnSampleReferenceDate
-            // 
-            this.btnSampleReferenceDate.BackgroundImage = global::DSA_lims.Properties.Resources.datetime_16;
-            this.btnSampleReferenceDate.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btnSampleReferenceDate.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnSampleReferenceDate.Location = new System.Drawing.Point(291, 0);
-            this.btnSampleReferenceDate.Name = "btnSampleReferenceDate";
-            this.btnSampleReferenceDate.Size = new System.Drawing.Size(24, 24);
-            this.btnSampleReferenceDate.TabIndex = 0;
-            this.btnSampleReferenceDate.TabStop = false;
-            this.btnSampleReferenceDate.Click += new System.EventHandler(this.btnSampleReferenceDate_Click);
-            // 
-            // btnSampleAddSampleToOrder
-            // 
-            this.btnSampleAddSampleToOrder.Image = global::DSA_lims.Properties.Resources._new;
-            this.btnSampleAddSampleToOrder.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSampleAddSampleToOrder.Name = "btnSampleAddSampleToOrder";
-            this.btnSampleAddSampleToOrder.Size = new System.Drawing.Size(135, 22);
-            this.btnSampleAddSampleToOrder.Text = "Add sample to order";
-            this.btnSampleAddSampleToOrder.Click += new System.EventHandler(this.btnSampleAddSampleToOrder_Click);
-            // 
-            // btnSampleGoToPrepAnal
-            // 
-            this.btnSampleGoToPrepAnal.Image = global::DSA_lims.Properties.Resources.right;
-            this.btnSampleGoToPrepAnal.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSampleGoToPrepAnal.Name = "btnSampleGoToPrepAnal";
-            this.btnSampleGoToPrepAnal.Size = new System.Drawing.Size(195, 22);
-            this.btnSampleGoToPrepAnal.Text = "Go to preparations and analyses";
-            this.btnSampleGoToPrepAnal.Click += new System.EventHandler(this.btnSampleGoToPrepAnal_Click);
-            // 
-            // btnSamplePrintSampleLabel
-            // 
-            this.btnSamplePrintSampleLabel.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.btnSamplePrintSampleLabel.Image = global::DSA_lims.Properties.Resources.printer;
-            this.btnSamplePrintSampleLabel.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSamplePrintSampleLabel.Name = "btnSamplePrintSampleLabel";
-            this.btnSamplePrintSampleLabel.Size = new System.Drawing.Size(121, 22);
-            this.btnSamplePrintSampleLabel.Text = "Print sample label";
-            this.btnSamplePrintSampleLabel.Click += new System.EventHandler(this.btnSamplePrintSampleLabel_Click);
-            // 
-            // btnSampleScanAttachment
-            // 
-            this.btnSampleScanAttachment.Image = global::DSA_lims.Properties.Resources.scan;
-            this.btnSampleScanAttachment.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSampleScanAttachment.Name = "btnSampleScanAttachment";
-            this.btnSampleScanAttachment.Size = new System.Drawing.Size(52, 22);
-            this.btnSampleScanAttachment.Text = "Scan";
-            this.btnSampleScanAttachment.Click += new System.EventHandler(this.btnSampleScanAttachment_Click);
-            // 
-            // btnSampleBrowseAttachment
-            // 
-            this.btnSampleBrowseAttachment.Image = global::DSA_lims.Properties.Resources.projects;
-            this.btnSampleBrowseAttachment.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSampleBrowseAttachment.Name = "btnSampleBrowseAttachment";
-            this.btnSampleBrowseAttachment.Size = new System.Drawing.Size(65, 22);
-            this.btnSampleBrowseAttachment.Text = "Browse";
-            this.btnSampleBrowseAttachment.Click += new System.EventHandler(this.btnSampleBrowseAttachment_Click);
-            // 
-            // btnSampleDeleteAttachment
-            // 
-            this.btnSampleDeleteAttachment.Image = global::DSA_lims.Properties.Resources.delete;
-            this.btnSampleDeleteAttachment.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSampleDeleteAttachment.Name = "btnSampleDeleteAttachment";
-            this.btnSampleDeleteAttachment.Size = new System.Drawing.Size(60, 22);
-            this.btnSampleDeleteAttachment.Text = "Delete";
-            this.btnSampleDeleteAttachment.Click += new System.EventHandler(this.btnSampleDeleteAttachment_Click);
-            // 
-            // toolStripButton9
-            // 
-            this.toolStripButton9.Image = global::DSA_lims.Properties.Resources._new;
-            this.toolStripButton9.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton9.Name = "toolStripButton9";
-            this.toolStripButton9.Size = new System.Drawing.Size(49, 22);
-            this.toolStripButton9.Text = "Add";
-            // 
-            // toolStripButton10
-            // 
-            this.toolStripButton10.Image = global::DSA_lims.Properties.Resources.delete;
-            this.toolStripButton10.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton10.Name = "toolStripButton10";
-            this.toolStripButton10.Size = new System.Drawing.Size(60, 22);
-            this.toolStripButton10.Text = "Delete";
-            // 
-            // btnOrderScanAttachment
-            // 
-            this.btnOrderScanAttachment.Image = global::DSA_lims.Properties.Resources.scan;
-            this.btnOrderScanAttachment.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnOrderScanAttachment.Name = "btnOrderScanAttachment";
-            this.btnOrderScanAttachment.Size = new System.Drawing.Size(52, 22);
-            this.btnOrderScanAttachment.Text = "Scan";
-            this.btnOrderScanAttachment.Click += new System.EventHandler(this.btnOrderScanAttachment_Click);
-            // 
-            // btnOrderBrowseAttachment
-            // 
-            this.btnOrderBrowseAttachment.Image = global::DSA_lims.Properties.Resources.projects;
-            this.btnOrderBrowseAttachment.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnOrderBrowseAttachment.Name = "btnOrderBrowseAttachment";
-            this.btnOrderBrowseAttachment.Size = new System.Drawing.Size(65, 22);
-            this.btnOrderBrowseAttachment.Text = "Browse";
-            this.btnOrderBrowseAttachment.Click += new System.EventHandler(this.btnOrderBrowseAttachment_Click);
-            // 
-            // btnOrderDeleteAttachment
-            // 
-            this.btnOrderDeleteAttachment.Image = global::DSA_lims.Properties.Resources.delete;
-            this.btnOrderDeleteAttachment.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnOrderDeleteAttachment.Name = "btnOrderDeleteAttachment";
-            this.btnOrderDeleteAttachment.Size = new System.Drawing.Size(60, 22);
-            this.btnOrderDeleteAttachment.Text = "Delete";
-            this.btnOrderDeleteAttachment.Click += new System.EventHandler(this.btnOrderDeleteAttachment_Click);
-            // 
-            // btnOrderClearDeadline
-            // 
-            this.btnOrderClearDeadline.BackgroundImage = global::DSA_lims.Properties.Resources.clear_16;
-            this.btnOrderClearDeadline.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btnOrderClearDeadline.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnOrderClearDeadline.Location = new System.Drawing.Point(184, 0);
-            this.btnOrderClearDeadline.Name = "btnOrderClearDeadline";
-            this.btnOrderClearDeadline.Size = new System.Drawing.Size(24, 24);
-            this.btnOrderClearDeadline.TabIndex = 3;
-            this.btnOrderClearDeadline.TabStop = false;
-            this.btnOrderClearDeadline.Click += new System.EventHandler(this.btnOrderClearDeadline_Click);
-            // 
-            // btnOrderSelectDeadline
-            // 
-            this.btnOrderSelectDeadline.BackgroundImage = global::DSA_lims.Properties.Resources.datetime_16;
-            this.btnOrderSelectDeadline.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btnOrderSelectDeadline.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnOrderSelectDeadline.InitialImage = null;
-            this.btnOrderSelectDeadline.Location = new System.Drawing.Point(208, 0);
-            this.btnOrderSelectDeadline.Name = "btnOrderSelectDeadline";
-            this.btnOrderSelectDeadline.Size = new System.Drawing.Size(24, 24);
-            this.btnOrderSelectDeadline.TabIndex = 2;
-            this.btnOrderSelectDeadline.TabStop = false;
-            this.btnOrderSelectDeadline.Click += new System.EventHandler(this.btnOrderSelectDeadline_Click);
-            // 
-            // btnOrderSelectCustomer
-            // 
-            this.btnOrderSelectCustomer.BackgroundImage = global::DSA_lims.Properties.Resources.user_16;
-            this.btnOrderSelectCustomer.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btnOrderSelectCustomer.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnOrderSelectCustomer.Location = new System.Drawing.Point(208, 0);
-            this.btnOrderSelectCustomer.Name = "btnOrderSelectCustomer";
-            this.btnOrderSelectCustomer.Size = new System.Drawing.Size(24, 24);
-            this.btnOrderSelectCustomer.TabIndex = 0;
-            this.btnOrderSelectCustomer.TabStop = false;
-            this.btnOrderSelectCustomer.Click += new System.EventHandler(this.btnOrderSelectCustomer_Click);
-            // 
-            // ddbOrderAdd
-            // 
-            this.ddbOrderAdd.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnOrderAddSampleType,
-            this.btnOrderAddPrepMeth,
-            this.btnOrderAddAnalMeth});
-            this.ddbOrderAdd.Image = global::DSA_lims.Properties.Resources._new;
-            this.ddbOrderAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.ddbOrderAdd.Name = "ddbOrderAdd";
-            this.ddbOrderAdd.Size = new System.Drawing.Size(67, 22);
-            this.ddbOrderAdd.Text = "Add...";
-            // 
-            // btnOrderAddSampleType
-            // 
-            this.btnOrderAddSampleType.Name = "btnOrderAddSampleType";
-            this.btnOrderAddSampleType.Size = new System.Drawing.Size(180, 22);
-            this.btnOrderAddSampleType.Text = "Sample type";
-            this.btnOrderAddSampleType.Click += new System.EventHandler(this.miOrderAddSampleType_Click);
-            // 
-            // btnOrderAddPrepMeth
-            // 
-            this.btnOrderAddPrepMeth.Enabled = false;
-            this.btnOrderAddPrepMeth.Name = "btnOrderAddPrepMeth";
-            this.btnOrderAddPrepMeth.Size = new System.Drawing.Size(180, 22);
-            this.btnOrderAddPrepMeth.Text = "Preparation method";
-            this.btnOrderAddPrepMeth.Click += new System.EventHandler(this.miOrderAddPrepMeth_Click);
-            // 
-            // btnOrderAddAnalMeth
-            // 
-            this.btnOrderAddAnalMeth.Enabled = false;
-            this.btnOrderAddAnalMeth.Name = "btnOrderAddAnalMeth";
-            this.btnOrderAddAnalMeth.Size = new System.Drawing.Size(180, 22);
-            this.btnOrderAddAnalMeth.Text = "Analysis method";
-            this.btnOrderAddAnalMeth.Click += new System.EventHandler(this.miOrderAddAnalMeth_Click);
-            // 
-            // ddbOrderEdit
-            // 
-            this.ddbOrderEdit.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnOrderEditSampleType,
-            this.btnOrderEditPrepMeth,
-            this.btnOrderEditAnalMeth});
-            this.ddbOrderEdit.Image = global::DSA_lims.Properties.Resources.edit;
-            this.ddbOrderEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.ddbOrderEdit.Name = "ddbOrderEdit";
-            this.ddbOrderEdit.Size = new System.Drawing.Size(65, 22);
-            this.ddbOrderEdit.Text = "Edit...";
-            // 
-            // btnOrderEditSampleType
-            // 
-            this.btnOrderEditSampleType.Name = "btnOrderEditSampleType";
-            this.btnOrderEditSampleType.Size = new System.Drawing.Size(180, 22);
-            this.btnOrderEditSampleType.Text = "Sample type";
-            // 
-            // btnOrderEditPrepMeth
-            // 
-            this.btnOrderEditPrepMeth.Enabled = false;
-            this.btnOrderEditPrepMeth.Name = "btnOrderEditPrepMeth";
-            this.btnOrderEditPrepMeth.Size = new System.Drawing.Size(180, 22);
-            this.btnOrderEditPrepMeth.Text = "Preparation method";
-            // 
-            // btnOrderEditAnalMeth
-            // 
-            this.btnOrderEditAnalMeth.Enabled = false;
-            this.btnOrderEditAnalMeth.Name = "btnOrderEditAnalMeth";
-            this.btnOrderEditAnalMeth.Size = new System.Drawing.Size(180, 22);
-            this.btnOrderEditAnalMeth.Text = "Analysis method";
-            // 
-            // ddbOrderDel
-            // 
-            this.ddbOrderDel.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnOrderDelSampleType,
-            this.btnOrderDelPrepMeth,
-            this.btnOrderDelAnalMeth});
-            this.ddbOrderDel.Image = global::DSA_lims.Properties.Resources.delete;
-            this.ddbOrderDel.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.ddbOrderDel.Name = "ddbOrderDel";
-            this.ddbOrderDel.Size = new System.Drawing.Size(78, 22);
-            this.ddbOrderDel.Text = "Delete...";
-            // 
-            // btnOrderDelSampleType
-            // 
-            this.btnOrderDelSampleType.Name = "btnOrderDelSampleType";
-            this.btnOrderDelSampleType.Size = new System.Drawing.Size(180, 22);
-            this.btnOrderDelSampleType.Text = "Sample type";
-            this.btnOrderDelSampleType.Click += new System.EventHandler(this.miOrderRemSampleType_Click);
-            // 
-            // btnOrderDelPrepMeth
-            // 
-            this.btnOrderDelPrepMeth.Enabled = false;
-            this.btnOrderDelPrepMeth.Name = "btnOrderDelPrepMeth";
-            this.btnOrderDelPrepMeth.Size = new System.Drawing.Size(180, 22);
-            this.btnOrderDelPrepMeth.Text = "Preparation method";
-            this.btnOrderDelPrepMeth.Click += new System.EventHandler(this.miOrderRemPrepMeth_Click);
-            // 
-            // btnOrderDelAnalMeth
-            // 
-            this.btnOrderDelAnalMeth.Enabled = false;
-            this.btnOrderDelAnalMeth.Name = "btnOrderDelAnalMeth";
-            this.btnOrderDelAnalMeth.Size = new System.Drawing.Size(180, 22);
-            this.btnOrderDelAnalMeth.Text = "Analysis method";
-            this.btnOrderDelAnalMeth.Click += new System.EventHandler(this.miOrderRemAnalMeth_Click);
-            // 
-            // btnOrderCreateReport
-            // 
-            this.btnOrderCreateReport.Image = global::DSA_lims.Properties.Resources.report;
-            this.btnOrderCreateReport.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnOrderCreateReport.Name = "btnOrderCreateReport";
-            this.btnOrderCreateReport.Size = new System.Drawing.Size(127, 22);
-            this.btnOrderCreateReport.Text = "Create order report";
-            this.btnOrderCreateReport.Click += new System.EventHandler(this.btnOrderCreateReport_Click);
-            // 
-            // toolStripButton64
-            // 
-            this.toolStripButton64.Image = global::DSA_lims.Properties.Resources._new;
-            this.toolStripButton64.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton64.Name = "toolStripButton64";
-            this.toolStripButton64.Size = new System.Drawing.Size(51, 22);
-            this.toolStripButton64.Text = "New";
-            this.toolStripButton64.Click += new System.EventHandler(this.miNewStation_Click);
-            // 
-            // toolStripButton65
-            // 
-            this.toolStripButton65.Image = global::DSA_lims.Properties.Resources.edit;
-            this.toolStripButton65.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton65.Name = "toolStripButton65";
-            this.toolStripButton65.Size = new System.Drawing.Size(47, 22);
-            this.toolStripButton65.Text = "Edit";
-            this.toolStripButton65.Click += new System.EventHandler(this.miEditStation_Click);
-            // 
-            // toolStripButton66
-            // 
-            this.toolStripButton66.Image = global::DSA_lims.Properties.Resources.delete;
-            this.toolStripButton66.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton66.Name = "toolStripButton66";
-            this.toolStripButton66.Size = new System.Drawing.Size(60, 22);
-            this.toolStripButton66.Text = "Delete";
-            this.toolStripButton66.Click += new System.EventHandler(this.miDeleteStation_Click);
-            // 
-            // toolStripButton67
-            // 
-            this.toolStripButton67.Image = global::DSA_lims.Properties.Resources._new;
-            this.toolStripButton67.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton67.Name = "toolStripButton67";
-            this.toolStripButton67.Size = new System.Drawing.Size(51, 22);
-            this.toolStripButton67.Text = "New";
-            this.toolStripButton67.Click += new System.EventHandler(this.miNewSampleStorage_Click);
-            // 
-            // toolStripButton68
-            // 
-            this.toolStripButton68.Image = global::DSA_lims.Properties.Resources.edit;
-            this.toolStripButton68.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton68.Name = "toolStripButton68";
-            this.toolStripButton68.Size = new System.Drawing.Size(47, 22);
-            this.toolStripButton68.Text = "Edit";
-            this.toolStripButton68.Click += new System.EventHandler(this.miEditSampleStorage_Click);
-            // 
-            // toolStripButton69
-            // 
-            this.toolStripButton69.Image = global::DSA_lims.Properties.Resources.delete;
-            this.toolStripButton69.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton69.Name = "toolStripButton69";
-            this.toolStripButton69.Size = new System.Drawing.Size(60, 22);
-            this.toolStripButton69.Text = "Delete";
-            this.toolStripButton69.Click += new System.EventHandler(this.miDeleteSampleStorage_Click);
-            // 
-            // btnMetaUnitPrepUnitsNew
-            // 
-            this.btnMetaUnitPrepUnitsNew.Image = global::DSA_lims.Properties.Resources._new;
-            this.btnMetaUnitPrepUnitsNew.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnMetaUnitPrepUnitsNew.Name = "btnMetaUnitPrepUnitsNew";
-            this.btnMetaUnitPrepUnitsNew.Size = new System.Drawing.Size(51, 22);
-            this.btnMetaUnitPrepUnitsNew.Text = "New";
-            // 
-            // btnMetaUnitPrepUnitsEdit
-            // 
-            this.btnMetaUnitPrepUnitsEdit.Image = global::DSA_lims.Properties.Resources.edit;
-            this.btnMetaUnitPrepUnitsEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnMetaUnitPrepUnitsEdit.Name = "btnMetaUnitPrepUnitsEdit";
-            this.btnMetaUnitPrepUnitsEdit.Size = new System.Drawing.Size(47, 22);
-            this.btnMetaUnitPrepUnitsEdit.Text = "Edit";
-            // 
-            // btnMetaUnitPrepUnitsDelete
-            // 
-            this.btnMetaUnitPrepUnitsDelete.Image = global::DSA_lims.Properties.Resources.delete;
-            this.btnMetaUnitPrepUnitsDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnMetaUnitPrepUnitsDelete.Name = "btnMetaUnitPrepUnitsDelete";
-            this.btnMetaUnitPrepUnitsDelete.Size = new System.Drawing.Size(60, 22);
-            this.btnMetaUnitPrepUnitsDelete.Text = "Delete";
-            // 
-            // btnMetaUnitQuantUnitsNew
-            // 
-            this.btnMetaUnitQuantUnitsNew.Image = global::DSA_lims.Properties.Resources._new;
-            this.btnMetaUnitQuantUnitsNew.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnMetaUnitQuantUnitsNew.Name = "btnMetaUnitQuantUnitsNew";
-            this.btnMetaUnitQuantUnitsNew.Size = new System.Drawing.Size(51, 22);
-            this.btnMetaUnitQuantUnitsNew.Text = "New";
-            // 
-            // btnMetaUnitQuantUnitsEdit
-            // 
-            this.btnMetaUnitQuantUnitsEdit.Image = global::DSA_lims.Properties.Resources.edit;
-            this.btnMetaUnitQuantUnitsEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnMetaUnitQuantUnitsEdit.Name = "btnMetaUnitQuantUnitsEdit";
-            this.btnMetaUnitQuantUnitsEdit.Size = new System.Drawing.Size(47, 22);
-            this.btnMetaUnitQuantUnitsEdit.Text = "Edit";
-            // 
-            // btnMetaUnitQuantUnitsDelete
-            // 
-            this.btnMetaUnitQuantUnitsDelete.Image = global::DSA_lims.Properties.Resources.delete;
-            this.btnMetaUnitQuantUnitsDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnMetaUnitQuantUnitsDelete.Name = "btnMetaUnitQuantUnitsDelete";
-            this.btnMetaUnitQuantUnitsDelete.Size = new System.Drawing.Size(60, 22);
-            this.btnMetaUnitQuantUnitsDelete.Text = "Delete";
-            // 
-            // btnMetaUnitActivityUnitsNew
-            // 
-            this.btnMetaUnitActivityUnitsNew.Image = global::DSA_lims.Properties.Resources._new;
-            this.btnMetaUnitActivityUnitsNew.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnMetaUnitActivityUnitsNew.Name = "btnMetaUnitActivityUnitsNew";
-            this.btnMetaUnitActivityUnitsNew.Size = new System.Drawing.Size(51, 22);
-            this.btnMetaUnitActivityUnitsNew.Text = "New";
-            // 
-            // btnMetaUnitActivityUnitsEdit
-            // 
-            this.btnMetaUnitActivityUnitsEdit.Image = global::DSA_lims.Properties.Resources.edit;
-            this.btnMetaUnitActivityUnitsEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnMetaUnitActivityUnitsEdit.Name = "btnMetaUnitActivityUnitsEdit";
-            this.btnMetaUnitActivityUnitsEdit.Size = new System.Drawing.Size(47, 22);
-            this.btnMetaUnitActivityUnitsEdit.Text = "Edit";
-            // 
-            // btnMetaUnitActivityUnitsDelete
-            // 
-            this.btnMetaUnitActivityUnitsDelete.Image = global::DSA_lims.Properties.Resources.delete;
-            this.btnMetaUnitActivityUnitsDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnMetaUnitActivityUnitsDelete.Name = "btnMetaUnitActivityUnitsDelete";
-            this.btnMetaUnitActivityUnitsDelete.Size = new System.Drawing.Size(60, 22);
-            this.btnMetaUnitActivityUnitsDelete.Text = "Delete";
-            // 
-            // btnMetaUnitActivityUnitTypesNew
-            // 
-            this.btnMetaUnitActivityUnitTypesNew.Image = global::DSA_lims.Properties.Resources._new;
-            this.btnMetaUnitActivityUnitTypesNew.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnMetaUnitActivityUnitTypesNew.Name = "btnMetaUnitActivityUnitTypesNew";
-            this.btnMetaUnitActivityUnitTypesNew.Size = new System.Drawing.Size(51, 22);
-            this.btnMetaUnitActivityUnitTypesNew.Text = "New";
-            // 
-            // btnMetaUnitActivityUnitTypesEdit
-            // 
-            this.btnMetaUnitActivityUnitTypesEdit.Image = global::DSA_lims.Properties.Resources.edit;
-            this.btnMetaUnitActivityUnitTypesEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnMetaUnitActivityUnitTypesEdit.Name = "btnMetaUnitActivityUnitTypesEdit";
-            this.btnMetaUnitActivityUnitTypesEdit.Size = new System.Drawing.Size(47, 22);
-            this.btnMetaUnitActivityUnitTypesEdit.Text = "Edit";
-            // 
-            // btnMetaUnitActivityUnitTypesDelete
-            // 
-            this.btnMetaUnitActivityUnitTypesDelete.Image = global::DSA_lims.Properties.Resources.delete;
-            this.btnMetaUnitActivityUnitTypesDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnMetaUnitActivityUnitTypesDelete.Name = "btnMetaUnitActivityUnitTypesDelete";
-            this.btnMetaUnitActivityUnitTypesDelete.Size = new System.Drawing.Size(60, 22);
-            this.btnMetaUnitActivityUnitTypesDelete.Text = "Delete";
-            // 
-            // toolStripButton62
-            // 
-            this.toolStripButton62.Image = global::DSA_lims.Properties.Resources._new;
-            this.toolStripButton62.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton62.Name = "toolStripButton62";
-            this.toolStripButton62.Size = new System.Drawing.Size(51, 22);
-            this.toolStripButton62.Text = "New";
-            this.toolStripButton62.Click += new System.EventHandler(this.miSamplerNew_Click);
-            // 
-            // toolStripButton63
-            // 
-            this.toolStripButton63.Image = global::DSA_lims.Properties.Resources.edit;
-            this.toolStripButton63.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton63.Name = "toolStripButton63";
-            this.toolStripButton63.Size = new System.Drawing.Size(47, 22);
-            this.toolStripButton63.Text = "Edit";
-            this.toolStripButton63.Click += new System.EventHandler(this.miSamplerEdit_Click);
-            // 
-            // toolStripButton75
-            // 
-            this.toolStripButton75.Image = global::DSA_lims.Properties.Resources.delete;
-            this.toolStripButton75.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton75.Name = "toolStripButton75";
-            this.toolStripButton75.Size = new System.Drawing.Size(60, 22);
-            this.toolStripButton75.Text = "Delete";
-            this.toolStripButton75.Click += new System.EventHandler(this.miSamplerDelete_Click);
-            // 
-            // toolStripButton82
-            // 
-            this.toolStripButton82.Image = global::DSA_lims.Properties.Resources._new;
-            this.toolStripButton82.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton82.Name = "toolStripButton82";
-            this.toolStripButton82.Size = new System.Drawing.Size(51, 22);
-            this.toolStripButton82.Text = "New";
-            this.toolStripButton82.Click += new System.EventHandler(this.miSamplingMethodNew_Click);
-            // 
-            // toolStripButton83
-            // 
-            this.toolStripButton83.Image = global::DSA_lims.Properties.Resources.edit;
-            this.toolStripButton83.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton83.Name = "toolStripButton83";
-            this.toolStripButton83.Size = new System.Drawing.Size(47, 22);
-            this.toolStripButton83.Text = "Edit";
-            this.toolStripButton83.Click += new System.EventHandler(this.miSamplingMethodEdit_Click);
-            // 
-            // toolStripButton84
-            // 
-            this.toolStripButton84.Image = global::DSA_lims.Properties.Resources.delete;
-            this.toolStripButton84.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton84.Name = "toolStripButton84";
-            this.toolStripButton84.Size = new System.Drawing.Size(60, 22);
-            this.toolStripButton84.Text = "Delete";
-            this.toolStripButton84.Click += new System.EventHandler(this.miSamplingMethodDelete_Click);
-            // 
-            // toolStripButton14
-            // 
-            this.toolStripButton14.Image = global::DSA_lims.Properties.Resources._new;
-            this.toolStripButton14.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton14.Name = "toolStripButton14";
-            this.toolStripButton14.Size = new System.Drawing.Size(51, 22);
-            this.toolStripButton14.Text = "New";
-            this.toolStripButton14.Click += new System.EventHandler(this.miCompanyNew_Click);
-            // 
-            // toolStripButton15
-            // 
-            this.toolStripButton15.Image = global::DSA_lims.Properties.Resources.edit;
-            this.toolStripButton15.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton15.Name = "toolStripButton15";
-            this.toolStripButton15.Size = new System.Drawing.Size(47, 22);
-            this.toolStripButton15.Text = "Edit";
-            this.toolStripButton15.Click += new System.EventHandler(this.miCompanyEdit_Click);
-            // 
-            // toolStripButton25
-            // 
-            this.toolStripButton25.Image = global::DSA_lims.Properties.Resources.delete;
-            this.toolStripButton25.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton25.Name = "toolStripButton25";
-            this.toolStripButton25.Size = new System.Drawing.Size(60, 22);
-            this.toolStripButton25.Text = "Delete";
-            this.toolStripButton25.Click += new System.EventHandler(this.miCompanyDelete_Click);
-            // 
-            // btnCustomersNew
-            // 
-            this.btnCustomersNew.Image = ((System.Drawing.Image)(resources.GetObject("btnCustomersNew.Image")));
-            this.btnCustomersNew.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnCustomersNew.Name = "btnCustomersNew";
-            this.btnCustomersNew.Size = new System.Drawing.Size(49, 22);
-            this.btnCustomersNew.Text = "Add";
-            this.btnCustomersNew.Click += new System.EventHandler(this.miCustomersNew_Click);
-            // 
-            // btnCustomersEdit
-            // 
-            this.btnCustomersEdit.Image = ((System.Drawing.Image)(resources.GetObject("btnCustomersEdit.Image")));
-            this.btnCustomersEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnCustomersEdit.Name = "btnCustomersEdit";
-            this.btnCustomersEdit.Size = new System.Drawing.Size(47, 22);
-            this.btnCustomersEdit.Text = "Edit";
-            this.btnCustomersEdit.Click += new System.EventHandler(this.miCustomersEdit_Click);
-            // 
-            // btnCustomersDelete
-            // 
-            this.btnCustomersDelete.Image = ((System.Drawing.Image)(resources.GetObject("btnCustomersDelete.Image")));
-            this.btnCustomersDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnCustomersDelete.Name = "btnCustomersDelete";
-            this.btnCustomersDelete.Size = new System.Drawing.Size(60, 22);
-            this.btnCustomersDelete.Text = "Delete";
-            this.btnCustomersDelete.Click += new System.EventHandler(this.miCustomersDelete_Click);
-            // 
-            // btnOrdersNew
-            // 
-            this.btnOrdersNew.Image = global::DSA_lims.Properties.Resources._new;
-            this.btnOrdersNew.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnOrdersNew.Name = "btnOrdersNew";
-            this.btnOrdersNew.Size = new System.Drawing.Size(51, 22);
-            this.btnOrdersNew.Text = "New";
-            this.btnOrdersNew.Click += new System.EventHandler(this.miOrdersNew_Click);
-            // 
-            // btnOrdersEdit
-            // 
-            this.btnOrdersEdit.Image = global::DSA_lims.Properties.Resources.edit;
-            this.btnOrdersEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnOrdersEdit.Name = "btnOrdersEdit";
-            this.btnOrdersEdit.Size = new System.Drawing.Size(47, 22);
-            this.btnOrdersEdit.Text = "Edit";
-            this.btnOrdersEdit.Click += new System.EventHandler(this.miOrdersEdit_Click);
-            // 
-            // btnOrdersDelete
-            // 
-            this.btnOrdersDelete.Image = global::DSA_lims.Properties.Resources.delete;
-            this.btnOrdersDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnOrdersDelete.Name = "btnOrdersDelete";
-            this.btnOrdersDelete.Size = new System.Drawing.Size(60, 22);
-            this.btnOrdersDelete.Text = "Delete";
-            this.btnOrdersDelete.Click += new System.EventHandler(this.miOrdersDelete_Click);
-            // 
-            // btnOrdersUnlock
-            // 
-            this.btnOrdersUnlock.Image = global::DSA_lims.Properties.Resources._switch;
-            this.btnOrdersUnlock.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnOrdersUnlock.Name = "btnOrdersUnlock";
-            this.btnOrdersUnlock.Size = new System.Drawing.Size(64, 22);
-            this.btnOrdersUnlock.Text = "Unlock";
-            this.btnOrdersUnlock.Click += new System.EventHandler(this.miOrdersUnlock_Click);
-            // 
-            // btnOrdersClearAllFilters
-            // 
-            this.btnOrdersClearAllFilters.Image = global::DSA_lims.Properties.Resources.trash;
-            this.btnOrdersClearAllFilters.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnOrdersClearAllFilters.Name = "btnOrdersClearAllFilters";
-            this.btnOrdersClearAllFilters.Size = new System.Drawing.Size(101, 22);
-            this.btnOrdersClearAllFilters.Text = "Clear all filters";
-            this.btnOrdersClearAllFilters.Click += new System.EventHandler(this.miOrdersClearAllFilters_Click);
-            // 
-            // toolStripButton99
-            // 
-            this.toolStripButton99.Image = global::DSA_lims.Properties.Resources._new;
-            this.toolStripButton99.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton99.Name = "toolStripButton99";
-            this.toolStripButton99.Size = new System.Drawing.Size(51, 22);
-            this.toolStripButton99.Text = "New";
-            this.toolStripButton99.Click += new System.EventHandler(this.miSamplesNew_Click);
-            // 
-            // toolStripDropDownButton3
-            // 
-            this.toolStripDropDownButton3.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.excelToolStripMenuItem});
-            this.toolStripDropDownButton3.Image = global::DSA_lims.Properties.Resources._new;
-            this.toolStripDropDownButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripDropDownButton3.Name = "toolStripDropDownButton3";
-            this.toolStripDropDownButton3.Size = new System.Drawing.Size(81, 22);
-            this.toolStripDropDownButton3.Text = "Import...";
-            // 
-            // excelToolStripMenuItem
-            // 
-            this.excelToolStripMenuItem.Name = "excelToolStripMenuItem";
-            this.excelToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
-            this.excelToolStripMenuItem.Text = "Excel";
-            this.excelToolStripMenuItem.Click += new System.EventHandler(this.miSamplesImportExcel_Click);
-            // 
-            // btnSamplesEdit
-            // 
-            this.btnSamplesEdit.Image = global::DSA_lims.Properties.Resources.edit;
-            this.btnSamplesEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSamplesEdit.Name = "btnSamplesEdit";
-            this.btnSamplesEdit.Size = new System.Drawing.Size(47, 22);
-            this.btnSamplesEdit.Text = "Edit";
-            this.btnSamplesEdit.Click += new System.EventHandler(this.miSamplesEdit_Click);
-            // 
-            // toolStripButton104
-            // 
-            this.toolStripButton104.Image = global::DSA_lims.Properties.Resources.delete;
-            this.toolStripButton104.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton104.Name = "toolStripButton104";
-            this.toolStripButton104.Size = new System.Drawing.Size(60, 22);
-            this.toolStripButton104.Text = "Delete";
-            this.toolStripButton104.Click += new System.EventHandler(this.miSamplesDelete_Click);
-            // 
-            // btnSamplesSplit
-            // 
-            this.btnSamplesSplit.Image = global::DSA_lims.Properties.Resources.split;
-            this.btnSamplesSplit.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSamplesSplit.Name = "btnSamplesSplit";
-            this.btnSamplesSplit.Size = new System.Drawing.Size(50, 22);
-            this.btnSamplesSplit.Text = "Split";
-            this.btnSamplesSplit.Click += new System.EventHandler(this.miSamplesSplit_Click);
-            // 
-            // btnSamplesMerge
-            // 
-            this.btnSamplesMerge.Image = global::DSA_lims.Properties.Resources.merge;
-            this.btnSamplesMerge.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSamplesMerge.Name = "btnSamplesMerge";
-            this.btnSamplesMerge.Size = new System.Drawing.Size(61, 22);
-            this.btnSamplesMerge.Text = "Merge";
-            this.btnSamplesMerge.Click += new System.EventHandler(this.miSamplesMerge_Click);
-            // 
-            // btnSamplesSetOrder
-            // 
-            this.btnSamplesSetOrder.Image = global::DSA_lims.Properties.Resources._new;
-            this.btnSamplesSetOrder.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSamplesSetOrder.Name = "btnSamplesSetOrder";
-            this.btnSamplesSetOrder.Size = new System.Drawing.Size(94, 22);
-            this.btnSamplesSetOrder.Text = "Add to order";
-            this.btnSamplesSetOrder.Click += new System.EventHandler(this.miSamplesSetOrder_Click);
-            // 
-            // toolStripDropDownButton2
-            // 
-            this.toolStripDropDownButton2.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.projectToolStripMenuItem,
-            this.customerToolStripMenuItem1,
-            this.samplerToolStripMenuItem1,
-            this.samplingmethodToolStripMenuItem1,
-            this.excemptFromPublicToolStripMenuItem});
-            this.toolStripDropDownButton2.Image = global::DSA_lims.Properties.Resources.set;
-            this.toolStripDropDownButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripDropDownButton2.Name = "toolStripDropDownButton2";
-            this.toolStripDropDownButton2.Size = new System.Drawing.Size(61, 22);
-            this.toolStripDropDownButton2.Text = "Set...";
-            // 
-            // projectToolStripMenuItem
-            // 
-            this.projectToolStripMenuItem.Name = "projectToolStripMenuItem";
-            this.projectToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
-            this.projectToolStripMenuItem.Text = "&Project";
-            this.projectToolStripMenuItem.Click += new System.EventHandler(this.miSamplesSetProject_Click);
-            // 
-            // customerToolStripMenuItem1
-            // 
-            this.customerToolStripMenuItem1.Name = "customerToolStripMenuItem1";
-            this.customerToolStripMenuItem1.Size = new System.Drawing.Size(184, 22);
-            this.customerToolStripMenuItem1.Text = "&Customer";
-            this.customerToolStripMenuItem1.Click += new System.EventHandler(this.miSamplesSetCustomer_Click);
-            // 
-            // samplerToolStripMenuItem1
-            // 
-            this.samplerToolStripMenuItem1.Name = "samplerToolStripMenuItem1";
-            this.samplerToolStripMenuItem1.Size = new System.Drawing.Size(184, 22);
-            this.samplerToolStripMenuItem1.Text = "&Sampler";
-            this.samplerToolStripMenuItem1.Click += new System.EventHandler(this.miSamplesSetSampler_Click);
-            // 
-            // samplingmethodToolStripMenuItem1
-            // 
-            this.samplingmethodToolStripMenuItem1.Name = "samplingmethodToolStripMenuItem1";
-            this.samplingmethodToolStripMenuItem1.Size = new System.Drawing.Size(184, 22);
-            this.samplingmethodToolStripMenuItem1.Text = "Sampling &method";
-            this.samplingmethodToolStripMenuItem1.Click += new System.EventHandler(this.miSamplesSetSamplingMethod_Click);
-            // 
-            // excemptFromPublicToolStripMenuItem
-            // 
-            this.excemptFromPublicToolStripMenuItem.Name = "excemptFromPublicToolStripMenuItem";
-            this.excemptFromPublicToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
-            this.excemptFromPublicToolStripMenuItem.Text = "&Excempt from public";
-            this.excemptFromPublicToolStripMenuItem.Click += new System.EventHandler(this.miSamplesSetExcempt_Click);
-            // 
-            // btnSamplesPrepAnal
-            // 
-            this.btnSamplesPrepAnal.Image = global::DSA_lims.Properties.Resources.prep_anal;
-            this.btnSamplesPrepAnal.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSamplesPrepAnal.Name = "btnSamplesPrepAnal";
-            this.btnSamplesPrepAnal.Size = new System.Drawing.Size(163, 22);
-            this.btnSamplesPrepAnal.Text = "Preparations and analyses";
-            this.btnSamplesPrepAnal.Click += new System.EventHandler(this.miSamplesPrepAnal_Click);
-            // 
-            // toolStripDropDownButton4
-            // 
-            this.toolStripDropDownButton4.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.sampleLabelToolStripMenuItem,
-            this.sampleInfoForSelectedToolStripMenuItem});
-            this.toolStripDropDownButton4.Image = global::DSA_lims.Properties.Resources.printer;
-            this.toolStripDropDownButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripDropDownButton4.Name = "toolStripDropDownButton4";
-            this.toolStripDropDownButton4.Size = new System.Drawing.Size(70, 22);
-            this.toolStripDropDownButton4.Text = "Print...";
-            // 
-            // sampleLabelToolStripMenuItem
-            // 
-            this.sampleLabelToolStripMenuItem.Name = "sampleLabelToolStripMenuItem";
-            this.sampleLabelToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
-            this.sampleLabelToolStripMenuItem.Text = "Sample labels";
-            this.sampleLabelToolStripMenuItem.Click += new System.EventHandler(this.miSamplesPrintSampleLabels_Click);
-            // 
-            // sampleInfoForSelectedToolStripMenuItem
-            // 
-            this.sampleInfoForSelectedToolStripMenuItem.Name = "sampleInfoForSelectedToolStripMenuItem";
-            this.sampleInfoForSelectedToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
-            this.sampleInfoForSelectedToolStripMenuItem.Text = "Sample info";
-            // 
-            // btnSamplesUnlock
-            // 
-            this.btnSamplesUnlock.Image = global::DSA_lims.Properties.Resources._switch;
-            this.btnSamplesUnlock.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSamplesUnlock.Name = "btnSamplesUnlock";
-            this.btnSamplesUnlock.Size = new System.Drawing.Size(64, 22);
-            this.btnSamplesUnlock.Text = "Unlock";
-            this.btnSamplesUnlock.Click += new System.EventHandler(this.miSamplesUnlock_Click);
-            // 
-            // btnSamplesClearFilters
-            // 
-            this.btnSamplesClearFilters.Image = global::DSA_lims.Properties.Resources.trash;
-            this.btnSamplesClearFilters.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSamplesClearFilters.Name = "btnSamplesClearFilters";
-            this.btnSamplesClearFilters.Size = new System.Drawing.Size(101, 22);
-            this.btnSamplesClearFilters.Text = "Clear all filters";
-            this.btnSamplesClearFilters.Click += new System.EventHandler(this.btnSamplesClearFilters_Click);
-            // 
-            // btnProjectsMainNew
-            // 
-            this.btnProjectsMainNew.Image = global::DSA_lims.Properties.Resources._new;
-            this.btnProjectsMainNew.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnProjectsMainNew.Name = "btnProjectsMainNew";
-            this.btnProjectsMainNew.Size = new System.Drawing.Size(51, 22);
-            this.btnProjectsMainNew.Text = "New";
-            this.btnProjectsMainNew.Click += new System.EventHandler(this.miProjectsNew_Click);
-            // 
-            // btnProjectsMainEdit
-            // 
-            this.btnProjectsMainEdit.Image = global::DSA_lims.Properties.Resources.edit;
-            this.btnProjectsMainEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnProjectsMainEdit.Name = "btnProjectsMainEdit";
-            this.btnProjectsMainEdit.Size = new System.Drawing.Size(47, 22);
-            this.btnProjectsMainEdit.Text = "Edit";
-            this.btnProjectsMainEdit.Click += new System.EventHandler(this.miProjectsEdit_Click);
-            // 
-            // btnProjectsSubNew
-            // 
-            this.btnProjectsSubNew.Image = global::DSA_lims.Properties.Resources._new;
-            this.btnProjectsSubNew.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnProjectsSubNew.Name = "btnProjectsSubNew";
-            this.btnProjectsSubNew.Size = new System.Drawing.Size(51, 22);
-            this.btnProjectsSubNew.Text = "New";
-            this.btnProjectsSubNew.Click += new System.EventHandler(this.miProjectsSubNew_Click);
-            // 
-            // btnProjectsSubEdit
-            // 
-            this.btnProjectsSubEdit.Image = global::DSA_lims.Properties.Resources.edit;
-            this.btnProjectsSubEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnProjectsSubEdit.Name = "btnProjectsSubEdit";
-            this.btnProjectsSubEdit.Size = new System.Drawing.Size(47, 22);
-            this.btnProjectsSubEdit.Text = "Edit";
-            this.btnProjectsSubEdit.Click += new System.EventHandler(this.miProjectsSubEdit_Click);
-            // 
-            // btnProjectSubPrint
-            // 
-            this.btnProjectSubPrint.Image = global::DSA_lims.Properties.Resources.printer;
-            this.btnProjectSubPrint.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnProjectSubPrint.Name = "btnProjectSubPrint";
-            this.btnProjectSubPrint.Size = new System.Drawing.Size(80, 22);
-            this.btnProjectSubPrint.Text = "Print label";
-            // 
-            // toolStripButton24
-            // 
-            this.toolStripButton24.Image = global::DSA_lims.Properties.Resources.create_user;
-            this.toolStripButton24.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton24.Name = "toolStripButton24";
-            this.toolStripButton24.Size = new System.Drawing.Size(49, 22);
-            this.toolStripButton24.Text = "Add";
-            // 
-            // toolStripButton26
-            // 
-            this.toolStripButton26.Image = global::DSA_lims.Properties.Resources.delete_user;
-            this.toolStripButton26.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton26.Name = "toolStripButton26";
-            this.toolStripButton26.Size = new System.Drawing.Size(70, 22);
-            this.toolStripButton26.Text = "Remove";
-            // 
-            // btnProjectScanAttachment
-            // 
-            this.btnProjectScanAttachment.Image = global::DSA_lims.Properties.Resources.scan;
-            this.btnProjectScanAttachment.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnProjectScanAttachment.Name = "btnProjectScanAttachment";
-            this.btnProjectScanAttachment.Size = new System.Drawing.Size(52, 22);
-            this.btnProjectScanAttachment.Text = "Scan";
-            this.btnProjectScanAttachment.Click += new System.EventHandler(this.btnProjectScanAttachment_Click);
-            // 
-            // btnProjectBrowseAttachment
-            // 
-            this.btnProjectBrowseAttachment.Image = global::DSA_lims.Properties.Resources.projects;
-            this.btnProjectBrowseAttachment.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnProjectBrowseAttachment.Name = "btnProjectBrowseAttachment";
-            this.btnProjectBrowseAttachment.Size = new System.Drawing.Size(65, 22);
-            this.btnProjectBrowseAttachment.Text = "Browse";
-            this.btnProjectBrowseAttachment.Click += new System.EventHandler(this.btnProjectBrowseAttachment_Click);
-            // 
-            // btnProjectDeleteAttachment
-            // 
-            this.btnProjectDeleteAttachment.Image = global::DSA_lims.Properties.Resources.delete;
-            this.btnProjectDeleteAttachment.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnProjectDeleteAttachment.Name = "btnProjectDeleteAttachment";
-            this.btnProjectDeleteAttachment.Size = new System.Drawing.Size(60, 22);
-            this.btnProjectDeleteAttachment.Text = "Delete";
-            this.btnProjectDeleteAttachment.Click += new System.EventHandler(this.btnProjectDeleteAttachment_Click);
-            // 
-            // btnTypeRelSampleTypesNewRoot
-            // 
-            this.btnTypeRelSampleTypesNewRoot.Image = global::DSA_lims.Properties.Resources._new;
-            this.btnTypeRelSampleTypesNewRoot.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnTypeRelSampleTypesNewRoot.Name = "btnTypeRelSampleTypesNewRoot";
-            this.btnTypeRelSampleTypesNewRoot.Size = new System.Drawing.Size(76, 22);
-            this.btnTypeRelSampleTypesNewRoot.Text = "New root";
-            this.btnTypeRelSampleTypesNewRoot.Click += new System.EventHandler(this.miTypeRelSampleTypesNewRoot_Click);
-            // 
-            // btnTypeRelSampleTypesNew
-            // 
-            this.btnTypeRelSampleTypesNew.Image = global::DSA_lims.Properties.Resources._new;
-            this.btnTypeRelSampleTypesNew.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnTypeRelSampleTypesNew.Name = "btnTypeRelSampleTypesNew";
-            this.btnTypeRelSampleTypesNew.Size = new System.Drawing.Size(51, 22);
-            this.btnTypeRelSampleTypesNew.Text = "New";
-            this.btnTypeRelSampleTypesNew.Click += new System.EventHandler(this.miSampleTypesNew_Click);
-            // 
-            // btnTypeRelSampleTypesEdit
-            // 
-            this.btnTypeRelSampleTypesEdit.Image = global::DSA_lims.Properties.Resources.edit;
-            this.btnTypeRelSampleTypesEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnTypeRelSampleTypesEdit.Name = "btnTypeRelSampleTypesEdit";
-            this.btnTypeRelSampleTypesEdit.Size = new System.Drawing.Size(47, 22);
-            this.btnTypeRelSampleTypesEdit.Text = "Edit";
-            this.btnTypeRelSampleTypesEdit.Click += new System.EventHandler(this.miSampleTypesEdit_Click);
-            // 
-            // btnTypeRelSampleTypesDelete
-            // 
-            this.btnTypeRelSampleTypesDelete.Image = global::DSA_lims.Properties.Resources.delete;
-            this.btnTypeRelSampleTypesDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnTypeRelSampleTypesDelete.Name = "btnTypeRelSampleTypesDelete";
-            this.btnTypeRelSampleTypesDelete.Size = new System.Drawing.Size(60, 22);
-            this.btnTypeRelSampleTypesDelete.Text = "Delete";
-            this.btnTypeRelSampleTypesDelete.Click += new System.EventHandler(this.miSampleTypesDelete_Click);
-            // 
-            // btnTypeRelSampTypeExport
-            // 
-            this.btnTypeRelSampTypeExport.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnTypeRelSampleTypesExportSampTypeList,
-            this.btnTypeRelSampleTypesExportSampTypeXML});
-            this.btnTypeRelSampTypeExport.Image = ((System.Drawing.Image)(resources.GetObject("btnTypeRelSampTypeExport.Image")));
-            this.btnTypeRelSampTypeExport.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnTypeRelSampTypeExport.Name = "btnTypeRelSampTypeExport";
-            this.btnTypeRelSampTypeExport.Size = new System.Drawing.Size(78, 22);
-            this.btnTypeRelSampTypeExport.Text = "Export...";
-            // 
-            // btnTypeRelSampleTypesExportSampTypeList
-            // 
-            this.btnTypeRelSampleTypesExportSampTypeList.Name = "btnTypeRelSampleTypesExportSampTypeList";
-            this.btnTypeRelSampleTypesExportSampTypeList.Size = new System.Drawing.Size(195, 22);
-            this.btnTypeRelSampleTypesExportSampTypeList.Text = "Simple sample type list";
-            this.btnTypeRelSampleTypesExportSampTypeList.Click += new System.EventHandler(this.miTypeRelSampleTypesExportSampTypeList_Click);
-            // 
-            // btnTypeRelSampleTypesExportSampTypeXML
-            // 
-            this.btnTypeRelSampleTypesExportSampTypeXML.Name = "btnTypeRelSampleTypesExportSampTypeXML";
-            this.btnTypeRelSampleTypesExportSampTypeXML.Size = new System.Drawing.Size(195, 22);
-            this.btnTypeRelSampleTypesExportSampTypeXML.Text = "Sample types (XML)";
-            this.btnTypeRelSampleTypesExportSampTypeXML.Click += new System.EventHandler(this.miTypeRelSampleTypesExportSampTypeXML_Click);
-            // 
-            // btnTypeRelSampTypeCompAdd
-            // 
-            this.btnTypeRelSampTypeCompAdd.Image = global::DSA_lims.Properties.Resources._new;
-            this.btnTypeRelSampTypeCompAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnTypeRelSampTypeCompAdd.Name = "btnTypeRelSampTypeCompAdd";
-            this.btnTypeRelSampTypeCompAdd.Size = new System.Drawing.Size(51, 22);
-            this.btnTypeRelSampTypeCompAdd.Text = "New";
-            this.btnTypeRelSampTypeCompAdd.Click += new System.EventHandler(this.miTypeRelSampleTypesCompNew_Click);
-            // 
-            // btnTypeRelSampTypeCompEdit
-            // 
-            this.btnTypeRelSampTypeCompEdit.Image = global::DSA_lims.Properties.Resources.edit;
-            this.btnTypeRelSampTypeCompEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnTypeRelSampTypeCompEdit.Name = "btnTypeRelSampTypeCompEdit";
-            this.btnTypeRelSampTypeCompEdit.Size = new System.Drawing.Size(47, 22);
-            this.btnTypeRelSampTypeCompEdit.Text = "Edit";
-            this.btnTypeRelSampTypeCompEdit.Click += new System.EventHandler(this.miTypeRelSampleTypesCompEdit_Click);
-            // 
-            // btnTypeRelSampTypeCompDelete
-            // 
-            this.btnTypeRelSampTypeCompDelete.Image = global::DSA_lims.Properties.Resources.delete;
-            this.btnTypeRelSampTypeCompDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnTypeRelSampTypeCompDelete.Name = "btnTypeRelSampTypeCompDelete";
-            this.btnTypeRelSampTypeCompDelete.Size = new System.Drawing.Size(60, 22);
-            this.btnTypeRelSampTypeCompDelete.Text = "Delete";
-            // 
-            // toolStripButton45
-            // 
-            this.toolStripButton45.Image = global::DSA_lims.Properties.Resources._new;
-            this.toolStripButton45.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton45.Name = "toolStripButton45";
-            this.toolStripButton45.Size = new System.Drawing.Size(51, 22);
-            this.toolStripButton45.Text = "New";
-            // 
-            // toolStripButton46
-            // 
-            this.toolStripButton46.Image = global::DSA_lims.Properties.Resources.edit;
-            this.toolStripButton46.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton46.Name = "toolStripButton46";
-            this.toolStripButton46.Size = new System.Drawing.Size(47, 22);
-            this.toolStripButton46.Text = "Edit";
-            // 
-            // toolStripButton89
-            // 
-            this.toolStripButton89.Image = global::DSA_lims.Properties.Resources.delete;
-            this.toolStripButton89.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton89.Name = "toolStripButton89";
-            this.toolStripButton89.Size = new System.Drawing.Size(60, 22);
-            this.toolStripButton89.Text = "Delete";
-            // 
-            // btnTypeRelSampTypePrepMethAdd
-            // 
-            this.btnTypeRelSampTypePrepMethAdd.Image = global::DSA_lims.Properties.Resources._new;
-            this.btnTypeRelSampTypePrepMethAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnTypeRelSampTypePrepMethAdd.Name = "btnTypeRelSampTypePrepMethAdd";
-            this.btnTypeRelSampTypePrepMethAdd.Size = new System.Drawing.Size(49, 22);
-            this.btnTypeRelSampTypePrepMethAdd.Text = "Add";
-            this.btnTypeRelSampTypePrepMethAdd.Click += new System.EventHandler(this.miAddPrepMethToSampType_Click);
-            // 
-            // btnPreparationMethodDelete
-            // 
-            this.btnPreparationMethodDelete.Image = global::DSA_lims.Properties.Resources.delete;
-            this.btnPreparationMethodDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnPreparationMethodDelete.Name = "btnPreparationMethodDelete";
-            this.btnPreparationMethodDelete.Size = new System.Drawing.Size(70, 22);
-            this.btnPreparationMethodDelete.Text = "Remove";
-            // 
-            // toolStripButton49
-            // 
-            this.toolStripButton49.Image = global::DSA_lims.Properties.Resources._new;
-            this.toolStripButton49.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton49.Name = "toolStripButton49";
-            this.toolStripButton49.Size = new System.Drawing.Size(51, 22);
-            this.toolStripButton49.Text = "New";
-            this.toolStripButton49.Click += new System.EventHandler(this.miPreparationMethodsNew_Click);
-            // 
-            // toolStripButton50
-            // 
-            this.toolStripButton50.Image = global::DSA_lims.Properties.Resources.edit;
-            this.toolStripButton50.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton50.Name = "toolStripButton50";
-            this.toolStripButton50.Size = new System.Drawing.Size(47, 22);
-            this.toolStripButton50.Text = "Edit";
-            this.toolStripButton50.Click += new System.EventHandler(this.miPreparationMethodEdit_Click);
-            // 
-            // toolStripButton91
-            // 
-            this.toolStripButton91.Image = global::DSA_lims.Properties.Resources.delete;
-            this.toolStripButton91.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton91.Name = "toolStripButton91";
-            this.toolStripButton91.Size = new System.Drawing.Size(60, 22);
-            this.toolStripButton91.Text = "Delete";
-            this.toolStripButton91.Click += new System.EventHandler(this.miPreparationMethodDelete_Click);
-            // 
-            // btnTypeRelPrepMethAddAnalMeth
-            // 
-            this.btnTypeRelPrepMethAddAnalMeth.Image = global::DSA_lims.Properties.Resources._new;
-            this.btnTypeRelPrepMethAddAnalMeth.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnTypeRelPrepMethAddAnalMeth.Name = "btnTypeRelPrepMethAddAnalMeth";
-            this.btnTypeRelPrepMethAddAnalMeth.Size = new System.Drawing.Size(49, 22);
-            this.btnTypeRelPrepMethAddAnalMeth.Text = "Add";
-            this.btnTypeRelPrepMethAddAnalMeth.Click += new System.EventHandler(this.miTypeRelPrepMethAddAnalMeth_Click);
-            // 
-            // toolStripButton48
-            // 
-            this.toolStripButton48.Image = global::DSA_lims.Properties.Resources.delete;
-            this.toolStripButton48.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton48.Name = "toolStripButton48";
-            this.toolStripButton48.Size = new System.Drawing.Size(70, 22);
-            this.toolStripButton48.Text = "Remove";
-            this.toolStripButton48.Click += new System.EventHandler(this.miTypeRelPrepMethRemAnalMeth_Click);
-            // 
-            // toolStripButton51
-            // 
-            this.toolStripButton51.Image = global::DSA_lims.Properties.Resources._new;
-            this.toolStripButton51.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton51.Name = "toolStripButton51";
-            this.toolStripButton51.Size = new System.Drawing.Size(51, 22);
-            this.toolStripButton51.Text = "New";
-            this.toolStripButton51.Click += new System.EventHandler(this.miAnalysisMethodsNew_Click);
-            // 
-            // toolStripButton52
-            // 
-            this.toolStripButton52.Image = global::DSA_lims.Properties.Resources.edit;
-            this.toolStripButton52.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton52.Name = "toolStripButton52";
-            this.toolStripButton52.Size = new System.Drawing.Size(47, 22);
-            this.toolStripButton52.Text = "Edit";
-            this.toolStripButton52.Click += new System.EventHandler(this.miAnalysisMethodsEdit_Click);
-            // 
-            // toolStripButton93
-            // 
-            this.toolStripButton93.Image = global::DSA_lims.Properties.Resources.delete;
-            this.toolStripButton93.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton93.Name = "toolStripButton93";
-            this.toolStripButton93.Size = new System.Drawing.Size(60, 22);
-            this.toolStripButton93.Text = "Delete";
-            this.toolStripButton93.Click += new System.EventHandler(this.miAnalysisMethodsDelete_Click);
-            // 
-            // btnAnalysisMethodsAddNuclide
-            // 
-            this.btnAnalysisMethodsAddNuclide.Image = global::DSA_lims.Properties.Resources._new;
-            this.btnAnalysisMethodsAddNuclide.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnAnalysisMethodsAddNuclide.Name = "btnAnalysisMethodsAddNuclide";
-            this.btnAnalysisMethodsAddNuclide.Size = new System.Drawing.Size(49, 22);
-            this.btnAnalysisMethodsAddNuclide.Text = "Add";
-            this.btnAnalysisMethodsAddNuclide.Click += new System.EventHandler(this.miAnalysisMethodsAddNuclide_Click);
-            // 
-            // toolStripButton54
-            // 
-            this.toolStripButton54.Image = global::DSA_lims.Properties.Resources.delete;
-            this.toolStripButton54.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton54.Name = "toolStripButton54";
-            this.toolStripButton54.Size = new System.Drawing.Size(70, 22);
-            this.toolStripButton54.Text = "Remove";
-            this.toolStripButton54.Click += new System.EventHandler(this.miAnalysisMethodsRemNuclide_Click);
-            // 
-            // toolStripButton94
-            // 
-            this.toolStripButton94.Image = global::DSA_lims.Properties.Resources.search;
-            this.toolStripButton94.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton94.Name = "toolStripButton94";
-            this.toolStripButton94.Size = new System.Drawing.Size(62, 22);
-            this.toolStripButton94.Text = "Search";
-            // 
-            // btnMetaLabNew
-            // 
-            this.btnMetaLabNew.Image = global::DSA_lims.Properties.Resources._new;
-            this.btnMetaLabNew.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnMetaLabNew.Name = "btnMetaLabNew";
-            this.btnMetaLabNew.Size = new System.Drawing.Size(51, 22);
-            this.btnMetaLabNew.Text = "New";
-            this.btnMetaLabNew.Click += new System.EventHandler(this.miNewLaboratory_Click);
-            // 
-            // btnMetaLabEdit
-            // 
-            this.btnMetaLabEdit.Image = global::DSA_lims.Properties.Resources.edit;
-            this.btnMetaLabEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnMetaLabEdit.Name = "btnMetaLabEdit";
-            this.btnMetaLabEdit.Size = new System.Drawing.Size(47, 22);
-            this.btnMetaLabEdit.Text = "Edit";
-            this.btnMetaLabEdit.Click += new System.EventHandler(this.miEditLaboratory_Click);
-            // 
-            // btnMetaLabDelete
-            // 
-            this.btnMetaLabDelete.Image = global::DSA_lims.Properties.Resources.delete;
-            this.btnMetaLabDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnMetaLabDelete.Name = "btnMetaLabDelete";
-            this.btnMetaLabDelete.Size = new System.Drawing.Size(60, 22);
-            this.btnMetaLabDelete.Text = "Delete";
-            this.btnMetaLabDelete.Click += new System.EventHandler(this.miDeleteLaboratory_Click);
-            // 
-            // toolStripButton27
-            // 
-            this.toolStripButton27.Image = global::DSA_lims.Properties.Resources._new;
-            this.toolStripButton27.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton27.Name = "toolStripButton27";
-            this.toolStripButton27.Size = new System.Drawing.Size(49, 22);
-            this.toolStripButton27.Text = "Add";
-            // 
-            // toolStripButton29
-            // 
-            this.toolStripButton29.Image = global::DSA_lims.Properties.Resources.delete;
-            this.toolStripButton29.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton29.Name = "toolStripButton29";
-            this.toolStripButton29.Size = new System.Drawing.Size(70, 22);
-            this.toolStripButton29.Text = "Remove";
-            // 
-            // toolStripButton30
-            // 
-            this.toolStripButton30.Image = global::DSA_lims.Properties.Resources._new;
-            this.toolStripButton30.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton30.Name = "toolStripButton30";
-            this.toolStripButton30.Size = new System.Drawing.Size(49, 22);
-            this.toolStripButton30.Text = "Add";
-            // 
-            // toolStripButton31
-            // 
-            this.toolStripButton31.Image = global::DSA_lims.Properties.Resources.delete;
-            this.toolStripButton31.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton31.Name = "toolStripButton31";
-            this.toolStripButton31.Size = new System.Drawing.Size(70, 22);
-            this.toolStripButton31.Text = "Remove";
-            // 
-            // btnMetaUsersNew
-            // 
-            this.btnMetaUsersNew.Image = global::DSA_lims.Properties.Resources.create_user;
-            this.btnMetaUsersNew.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnMetaUsersNew.Name = "btnMetaUsersNew";
-            this.btnMetaUsersNew.Size = new System.Drawing.Size(51, 22);
-            this.btnMetaUsersNew.Text = "New";
-            this.btnMetaUsersNew.Click += new System.EventHandler(this.miNewUser_Click);
-            // 
-            // btnMetaUsersEdit
-            // 
-            this.btnMetaUsersEdit.Image = global::DSA_lims.Properties.Resources.user;
-            this.btnMetaUsersEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnMetaUsersEdit.Name = "btnMetaUsersEdit";
-            this.btnMetaUsersEdit.Size = new System.Drawing.Size(47, 22);
-            this.btnMetaUsersEdit.Text = "Edit";
-            this.btnMetaUsersEdit.Click += new System.EventHandler(this.miEditUser_Click);
-            // 
-            // btnMetaUsersDelete
-            // 
-            this.btnMetaUsersDelete.Image = global::DSA_lims.Properties.Resources.delete_user;
-            this.btnMetaUsersDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnMetaUsersDelete.Name = "btnMetaUsersDelete";
-            this.btnMetaUsersDelete.Size = new System.Drawing.Size(60, 22);
-            this.btnMetaUsersDelete.Text = "Delete";
-            this.btnMetaUsersDelete.Click += new System.EventHandler(this.miDeleteUser_Click);
-            // 
-            // btnMetaUsersResetPass
-            // 
-            this.btnMetaUsersResetPass.Enabled = false;
-            this.btnMetaUsersResetPass.Image = global::DSA_lims.Properties.Resources.refresh;
-            this.btnMetaUsersResetPass.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnMetaUsersResetPass.Name = "btnMetaUsersResetPass";
-            this.btnMetaUsersResetPass.Size = new System.Drawing.Size(108, 22);
-            this.btnMetaUsersResetPass.Text = "Reset password";
-            this.btnMetaUsersResetPass.Click += new System.EventHandler(this.miResetPass_Click);
-            // 
-            // btnSysUsersAddRoles
-            // 
-            this.btnSysUsersAddRoles.Image = global::DSA_lims.Properties.Resources._new;
-            this.btnSysUsersAddRoles.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSysUsersAddRoles.Name = "btnSysUsersAddRoles";
-            this.btnSysUsersAddRoles.Size = new System.Drawing.Size(49, 22);
-            this.btnSysUsersAddRoles.Text = "Add";
-            this.btnSysUsersAddRoles.Click += new System.EventHandler(this.btnSysUsersAddRoles_Click);
-            // 
-            // btnSysUsersRemRoles
-            // 
-            this.btnSysUsersRemRoles.Image = global::DSA_lims.Properties.Resources.delete;
-            this.btnSysUsersRemRoles.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSysUsersRemRoles.Name = "btnSysUsersRemRoles";
-            this.btnSysUsersRemRoles.Size = new System.Drawing.Size(70, 22);
-            this.btnSysUsersRemRoles.Text = "Remove";
-            this.btnSysUsersRemRoles.Click += new System.EventHandler(this.btnSysUsersRemRoles_Click);
-            // 
-            // toolStripButton33
-            // 
-            this.toolStripButton33.Image = global::DSA_lims.Properties.Resources._new;
-            this.toolStripButton33.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton33.Name = "toolStripButton33";
-            this.toolStripButton33.Size = new System.Drawing.Size(49, 22);
-            this.toolStripButton33.Text = "Add";
-            // 
-            // toolStripButton55
-            // 
-            this.toolStripButton55.Image = global::DSA_lims.Properties.Resources.delete;
-            this.toolStripButton55.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton55.Name = "toolStripButton55";
-            this.toolStripButton55.Size = new System.Drawing.Size(70, 22);
-            this.toolStripButton55.Text = "Remove";
-            // 
-            // btnNewCounty
-            // 
-            this.btnNewCounty.Image = global::DSA_lims.Properties.Resources._new;
-            this.btnNewCounty.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnNewCounty.Name = "btnNewCounty";
-            this.btnNewCounty.Size = new System.Drawing.Size(51, 22);
-            this.btnNewCounty.Text = "New";
-            this.btnNewCounty.Click += new System.EventHandler(this.miNewCounty_Click);
-            // 
-            // btnEditCounty
-            // 
-            this.btnEditCounty.Image = global::DSA_lims.Properties.Resources.edit;
-            this.btnEditCounty.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnEditCounty.Name = "btnEditCounty";
-            this.btnEditCounty.Size = new System.Drawing.Size(47, 22);
-            this.btnEditCounty.Text = "Edit";
-            this.btnEditCounty.Click += new System.EventHandler(this.miEditCounty_Click);
-            // 
-            // btnDeleteCounty
-            // 
-            this.btnDeleteCounty.Image = global::DSA_lims.Properties.Resources.delete;
-            this.btnDeleteCounty.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnDeleteCounty.Name = "btnDeleteCounty";
-            this.btnDeleteCounty.Size = new System.Drawing.Size(60, 22);
-            this.btnDeleteCounty.Text = "Delete";
-            this.btnDeleteCounty.Click += new System.EventHandler(this.miDeleteCounty_Click);
-            // 
-            // btnNewMunicipality
-            // 
-            this.btnNewMunicipality.Image = global::DSA_lims.Properties.Resources._new;
-            this.btnNewMunicipality.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnNewMunicipality.Name = "btnNewMunicipality";
-            this.btnNewMunicipality.Size = new System.Drawing.Size(51, 22);
-            this.btnNewMunicipality.Text = "New";
-            this.btnNewMunicipality.Click += new System.EventHandler(this.miNewMunicipality_Click);
-            // 
-            // btnEditMunicipality
-            // 
-            this.btnEditMunicipality.Image = global::DSA_lims.Properties.Resources.edit;
-            this.btnEditMunicipality.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnEditMunicipality.Name = "btnEditMunicipality";
-            this.btnEditMunicipality.Size = new System.Drawing.Size(47, 22);
-            this.btnEditMunicipality.Text = "Edit";
-            this.btnEditMunicipality.Click += new System.EventHandler(this.miEditMunicipality_Click);
-            // 
-            // btnDeleteMunicipality
-            // 
-            this.btnDeleteMunicipality.Image = global::DSA_lims.Properties.Resources.delete;
-            this.btnDeleteMunicipality.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnDeleteMunicipality.Name = "btnDeleteMunicipality";
-            this.btnDeleteMunicipality.Size = new System.Drawing.Size(60, 22);
-            this.btnDeleteMunicipality.Text = "Delete";
-            this.btnDeleteMunicipality.Click += new System.EventHandler(this.miDeleteMunicipality_Click);
-            // 
-            // toolStripButton70
-            // 
-            this.toolStripButton70.Image = global::DSA_lims.Properties.Resources._new;
-            this.toolStripButton70.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton70.Name = "toolStripButton70";
-            this.toolStripButton70.Size = new System.Drawing.Size(51, 22);
-            this.toolStripButton70.Text = "New";
-            // 
-            // toolStripButton71
-            // 
-            this.toolStripButton71.Image = global::DSA_lims.Properties.Resources.edit;
-            this.toolStripButton71.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton71.Name = "toolStripButton71";
-            this.toolStripButton71.Size = new System.Drawing.Size(47, 22);
-            this.toolStripButton71.Text = "Edit";
-            // 
-            // toolStripButton72
-            // 
-            this.toolStripButton72.Image = global::DSA_lims.Properties.Resources.delete;
-            this.toolStripButton72.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton72.Name = "toolStripButton72";
-            this.toolStripButton72.Size = new System.Drawing.Size(60, 22);
-            this.toolStripButton72.Text = "Delete";
-            // 
-            // btnSysNuclideNew
-            // 
-            this.btnSysNuclideNew.Image = global::DSA_lims.Properties.Resources._new;
-            this.btnSysNuclideNew.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSysNuclideNew.Name = "btnSysNuclideNew";
-            this.btnSysNuclideNew.Size = new System.Drawing.Size(51, 22);
-            this.btnSysNuclideNew.Text = "New";
-            this.btnSysNuclideNew.Click += new System.EventHandler(this.miNuclidesNew_Click);
-            // 
-            // btnSysNuclideEdit
-            // 
-            this.btnSysNuclideEdit.Image = global::DSA_lims.Properties.Resources.edit;
-            this.btnSysNuclideEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSysNuclideEdit.Name = "btnSysNuclideEdit";
-            this.btnSysNuclideEdit.Size = new System.Drawing.Size(47, 22);
-            this.btnSysNuclideEdit.Text = "Edit";
-            this.btnSysNuclideEdit.Click += new System.EventHandler(this.miNuclidesEdit_Click);
-            // 
-            // btnSysNuclideDelete
-            // 
-            this.btnSysNuclideDelete.Image = global::DSA_lims.Properties.Resources.delete;
-            this.btnSysNuclideDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSysNuclideDelete.Name = "btnSysNuclideDelete";
-            this.btnSysNuclideDelete.Size = new System.Drawing.Size(60, 22);
-            this.btnSysNuclideDelete.Text = "Delete";
-            // 
-            // btnSysNuclideExport
-            // 
-            this.btnSysNuclideExport.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnNuclidesExportNuclidesXML});
-            this.btnSysNuclideExport.Image = ((System.Drawing.Image)(resources.GetObject("btnSysNuclideExport.Image")));
-            this.btnSysNuclideExport.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSysNuclideExport.Name = "btnSysNuclideExport";
-            this.btnSysNuclideExport.Size = new System.Drawing.Size(78, 22);
-            this.btnSysNuclideExport.Text = "Export...";
-            // 
-            // btnNuclidesExportNuclidesXML
-            // 
-            this.btnNuclidesExportNuclidesXML.Name = "btnNuclidesExportNuclidesXML";
-            this.btnNuclidesExportNuclidesXML.Size = new System.Drawing.Size(155, 22);
-            this.btnNuclidesExportNuclidesXML.Text = "Nuclides (XML)";
-            this.btnNuclidesExportNuclidesXML.Click += new System.EventHandler(this.miNuclidesExportNuclidesXML_Click);
-            // 
-            // toolStripButton39
-            // 
-            this.toolStripButton39.Image = global::DSA_lims.Properties.Resources._new;
-            this.toolStripButton39.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton39.Name = "toolStripButton39";
-            this.toolStripButton39.Size = new System.Drawing.Size(51, 22);
-            this.toolStripButton39.Text = "New";
-            this.toolStripButton39.Click += new System.EventHandler(this.miNewGeometry_Click);
-            // 
-            // toolStripButton40
-            // 
-            this.toolStripButton40.Image = global::DSA_lims.Properties.Resources.edit;
-            this.toolStripButton40.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton40.Name = "toolStripButton40";
-            this.toolStripButton40.Size = new System.Drawing.Size(47, 22);
-            this.toolStripButton40.Text = "Edit";
-            this.toolStripButton40.Click += new System.EventHandler(this.miEditGeometry_Click);
-            // 
-            // toolStripButton76
-            // 
-            this.toolStripButton76.Image = global::DSA_lims.Properties.Resources.delete;
-            this.toolStripButton76.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton76.Name = "toolStripButton76";
-            this.toolStripButton76.Size = new System.Drawing.Size(60, 22);
-            this.toolStripButton76.Text = "Delete";
-            this.toolStripButton76.Click += new System.EventHandler(this.miDeleteGeometry_Click);
-            // 
-            // btnSysPersNew
-            // 
-            this.btnSysPersNew.Image = global::DSA_lims.Properties.Resources._new;
-            this.btnSysPersNew.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSysPersNew.Name = "btnSysPersNew";
-            this.btnSysPersNew.Size = new System.Drawing.Size(51, 22);
-            this.btnSysPersNew.Text = "New";
-            this.btnSysPersNew.Click += new System.EventHandler(this.miPersonNew_Click);
-            // 
-            // btnSysPersEdit
-            // 
-            this.btnSysPersEdit.Image = global::DSA_lims.Properties.Resources.edit;
-            this.btnSysPersEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSysPersEdit.Name = "btnSysPersEdit";
-            this.btnSysPersEdit.Size = new System.Drawing.Size(47, 22);
-            this.btnSysPersEdit.Text = "Edit";
-            this.btnSysPersEdit.Click += new System.EventHandler(this.miPersonEdit_Click);
-            // 
-            // btnSysPersDelete
-            // 
-            this.btnSysPersDelete.Image = global::DSA_lims.Properties.Resources.delete;
-            this.btnSysPersDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSysPersDelete.Name = "btnSysPersDelete";
-            this.btnSysPersDelete.Size = new System.Drawing.Size(60, 22);
-            this.btnSysPersDelete.Text = "Delete";
-            this.btnSysPersDelete.Click += new System.EventHandler(this.miPersonDelete_Click);
-            // 
-            // btnPrepAnalAddPrep
-            // 
-            this.btnPrepAnalAddPrep.Image = global::DSA_lims.Properties.Resources._new;
-            this.btnPrepAnalAddPrep.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnPrepAnalAddPrep.Name = "btnPrepAnalAddPrep";
-            this.btnPrepAnalAddPrep.Size = new System.Drawing.Size(113, 22);
-            this.btnPrepAnalAddPrep.Text = "Add preparation";
-            this.btnPrepAnalAddPrep.Click += new System.EventHandler(this.btnPrepAnalAddPrep_Click);
-            // 
-            // btnPrepAnalAddAnal
-            // 
-            this.btnPrepAnalAddAnal.Image = global::DSA_lims.Properties.Resources._new;
-            this.btnPrepAnalAddAnal.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnPrepAnalAddAnal.Name = "btnPrepAnalAddAnal";
-            this.btnPrepAnalAddAnal.Size = new System.Drawing.Size(93, 22);
-            this.btnPrepAnalAddAnal.Text = "Add analysis";
-            this.btnPrepAnalAddAnal.Click += new System.EventHandler(this.btnPrepAnalAddAnal_Click);
-            // 
-            // btnPrepAnalPrepPrintLabel
-            // 
-            this.btnPrepAnalPrepPrintLabel.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.btnPrepAnalPrepPrintLabel.Image = global::DSA_lims.Properties.Resources.printer;
-            this.btnPrepAnalPrepPrintLabel.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnPrepAnalPrepPrintLabel.Name = "btnPrepAnalPrepPrintLabel";
-            this.btnPrepAnalPrepPrintLabel.Size = new System.Drawing.Size(80, 22);
-            this.btnPrepAnalPrepPrintLabel.Text = "Print label";
-            this.btnPrepAnalPrepPrintLabel.Click += new System.EventHandler(this.btnPrepAnalPrepPrintLabel_Click);
-            // 
-            // btnPrepAnalPrepScanAttachment
-            // 
-            this.btnPrepAnalPrepScanAttachment.Image = global::DSA_lims.Properties.Resources.scan;
-            this.btnPrepAnalPrepScanAttachment.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnPrepAnalPrepScanAttachment.Name = "btnPrepAnalPrepScanAttachment";
-            this.btnPrepAnalPrepScanAttachment.Size = new System.Drawing.Size(52, 22);
-            this.btnPrepAnalPrepScanAttachment.Text = "Scan";
-            this.btnPrepAnalPrepScanAttachment.Click += new System.EventHandler(this.btnPrepAnalPrepScanAttachment_Click);
-            // 
-            // btnPrepAnalPrepBrowseAttachment
-            // 
-            this.btnPrepAnalPrepBrowseAttachment.Image = global::DSA_lims.Properties.Resources.projects;
-            this.btnPrepAnalPrepBrowseAttachment.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnPrepAnalPrepBrowseAttachment.Name = "btnPrepAnalPrepBrowseAttachment";
-            this.btnPrepAnalPrepBrowseAttachment.Size = new System.Drawing.Size(65, 22);
-            this.btnPrepAnalPrepBrowseAttachment.Text = "Browse";
-            this.btnPrepAnalPrepBrowseAttachment.Click += new System.EventHandler(this.btnPrepAnalPrepBrowseAttachment_Click);
-            // 
-            // btnPrepAnalPrepDeleteAttachment
-            // 
-            this.btnPrepAnalPrepDeleteAttachment.Image = global::DSA_lims.Properties.Resources.delete;
-            this.btnPrepAnalPrepDeleteAttachment.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnPrepAnalPrepDeleteAttachment.Name = "btnPrepAnalPrepDeleteAttachment";
-            this.btnPrepAnalPrepDeleteAttachment.Size = new System.Drawing.Size(60, 22);
-            this.btnPrepAnalPrepDeleteAttachment.Text = "Delete";
-            this.btnPrepAnalPrepDeleteAttachment.Click += new System.EventHandler(this.btnPrepAnalPrepDeleteAttachment_Click);
-            // 
-            // btnPrepAnalAddResult
-            // 
-            this.btnPrepAnalAddResult.Image = global::DSA_lims.Properties.Resources._new;
-            this.btnPrepAnalAddResult.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnPrepAnalAddResult.Name = "btnPrepAnalAddResult";
-            this.btnPrepAnalAddResult.Size = new System.Drawing.Size(49, 22);
-            this.btnPrepAnalAddResult.Text = "Add";
-            this.btnPrepAnalAddResult.Click += new System.EventHandler(this.btnPrepAnalAddResult_Click);
-            // 
-            // btnPrepAnalEditResult
-            // 
-            this.btnPrepAnalEditResult.Image = global::DSA_lims.Properties.Resources.edit;
-            this.btnPrepAnalEditResult.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnPrepAnalEditResult.Name = "btnPrepAnalEditResult";
-            this.btnPrepAnalEditResult.Size = new System.Drawing.Size(47, 22);
-            this.btnPrepAnalEditResult.Text = "Edit";
-            this.btnPrepAnalEditResult.Click += new System.EventHandler(this.btnPrepAnalEditResult_Click);
-            // 
-            // btnPrepAnalRemoveResult
-            // 
-            this.btnPrepAnalRemoveResult.Image = global::DSA_lims.Properties.Resources.delete;
-            this.btnPrepAnalRemoveResult.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnPrepAnalRemoveResult.Name = "btnPrepAnalRemoveResult";
-            this.btnPrepAnalRemoveResult.Size = new System.Drawing.Size(70, 22);
-            this.btnPrepAnalRemoveResult.Text = "Remove";
-            this.btnPrepAnalRemoveResult.Click += new System.EventHandler(this.btnPrepAnalRemoveResult_Click);
-            // 
-            // ddPrepAnalImport2
-            // 
-            this.ddPrepAnalImport2.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.miImportLISFile2});
-            this.ddPrepAnalImport2.Image = global::DSA_lims.Properties.Resources.import;
-            this.ddPrepAnalImport2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.ddPrepAnalImport2.Name = "ddPrepAnalImport2";
-            this.ddPrepAnalImport2.Size = new System.Drawing.Size(81, 22);
-            this.ddPrepAnalImport2.Text = "Import...";
-            // 
-            // miImportLISFile2
-            // 
-            this.miImportLISFile2.Name = "miImportLISFile2";
-            this.miImportLISFile2.Size = new System.Drawing.Size(147, 22);
-            this.miImportLISFile2.Text = "Import LIS file";
-            this.miImportLISFile2.Click += new System.EventHandler(this.miImportLISFile_Click);
-            // 
             // btnPrepAnalAnalScanAttachment
             // 
             this.btnPrepAnalAnalScanAttachment.Image = global::DSA_lims.Properties.Resources.scan;
@@ -10356,6 +10335,19 @@
             this.btnPrepAnalAnalDeleteAttachment.Text = "Delete";
             this.btnPrepAnalAnalDeleteAttachment.Click += new System.EventHandler(this.btnPrepAnalAnalDeleteAttachment_Click);
             // 
+            // tools
+            // 
+            this.tools.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.tools.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnMenu,
+            this.lblCurrentTab,
+            this.btnBack});
+            this.tools.Location = new System.Drawing.Point(0, 24);
+            this.tools.Name = "tools";
+            this.tools.Size = new System.Drawing.Size(1136, 25);
+            this.tools.TabIndex = 5;
+            this.tools.Text = "toolStrip29";
+            // 
             // btnMenu
             // 
             this.btnMenu.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -10365,6 +10357,14 @@
             this.btnMenu.Size = new System.Drawing.Size(23, 22);
             this.btnMenu.Text = "Menu";
             this.btnMenu.Click += new System.EventHandler(this.miMainMenuView_Click);
+            // 
+            // lblCurrentTab
+            // 
+            this.lblCurrentTab.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.lblCurrentTab.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.lblCurrentTab.Name = "lblCurrentTab";
+            this.lblCurrentTab.Size = new System.Drawing.Size(98, 22);
+            this.lblCurrentTab.Text = "<lblCurrentTab>";
             // 
             // btnBack
             // 
@@ -10426,10 +10426,16 @@
             this.panel86.PerformLayout();
             this.panel87.ResumeLayout(false);
             this.panel87.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.btnSampleSamplingDateFromClear)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnSampleSamplingDateFrom)).EndInit();
             this.panel88.ResumeLayout(false);
             this.panel88.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.btnSampleSamplingDateToClear)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnSampleSamplingDateTo)).EndInit();
             this.panel89.ResumeLayout(false);
             this.panel89.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.btnSampleReferenceDateClear)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnSampleReferenceDate)).EndInit();
             this.panel36.ResumeLayout(false);
             this.toolStrip11.ResumeLayout(false);
             this.toolStrip11.PerformLayout();
@@ -10464,8 +10470,11 @@
             this.tableLayoutPanel6.PerformLayout();
             this.panel30.ResumeLayout(false);
             this.panel30.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.btnOrderClearDeadline)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnOrderSelectDeadline)).EndInit();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.btnOrderSelectCustomer)).EndInit();
             this.toolsOrderDetails.ResumeLayout(false);
             this.toolsOrderDetails.PerformLayout();
             this.toolsOrderContent.ResumeLayout(false);
@@ -10856,15 +10865,6 @@
             this.toolsSampleResAttachments.PerformLayout();
             this.tools.ResumeLayout(false);
             this.tools.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.btnSampleSamplingDateFromClear)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnSampleSamplingDateFrom)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnSampleSamplingDateToClear)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnSampleSamplingDateTo)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnSampleReferenceDateClear)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnSampleReferenceDate)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnOrderClearDeadline)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnOrderSelectDeadline)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnOrderSelectCustomer)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

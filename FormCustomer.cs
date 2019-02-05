@@ -38,12 +38,7 @@ namespace DSA_lims
         {
             get { return p.ContainsKey("id") ? (Guid)p["id"] : Guid.Empty; }
         }
-
-        public string CustomerName
-        {
-            get { return p.ContainsKey("name") ? p["name"].ToString() : String.Empty; }
-        }
-
+        
         public FormCustomer()
         {
             InitializeComponent();
@@ -123,102 +118,73 @@ namespace DSA_lims
             p["instance_status_id"] = cboxInstanceStatus.SelectedValue;
             p["comment"] = tbComment.Text.Trim();
 
-            bool success;
-            if (!p.ContainsKey("id"))
-                success = InsertCustomer();
-            else
-                success = UpdateCustomer();
+            SqlConnection connection = null;
+            SqlTransaction transaction = null;
+            bool success = true;
+
+            try
+            {
+                connection = DB.OpenConnection();
+                transaction = connection.BeginTransaction();
+            
+                if (!p.ContainsKey("id"))
+                    InsertCustomer(connection, transaction);
+                else
+                    UpdateCustomer(connection, transaction);
+
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                success = false;
+                transaction?.Rollback();
+                Common.Log.Error(ex);                
+            }
+            finally
+            {
+                connection?.Close();
+            }
 
             DialogResult = success ? DialogResult.OK : DialogResult.Abort;
             Close();
         }
 
-        private bool InsertCustomer()
-        {
-            SqlConnection connection = null;
-            SqlTransaction transaction = null;
+        private void InsertCustomer(SqlConnection conn, SqlTransaction trans)
+        {            
+            p["create_date"] = DateTime.Now;
+            p["created_by"] = Common.Username;
+            p["update_date"] = DateTime.Now;
+            p["updated_by"] = Common.Username;        
 
-            try
-            {
-                p["create_date"] = DateTime.Now;
-                p["created_by"] = Common.Username;
-                p["update_date"] = DateTime.Now;
-                p["updated_by"] = Common.Username;
-
-                connection = DB.OpenConnection();
-                transaction = connection.BeginTransaction();
-
-                SqlCommand cmd = new SqlCommand("csp_insert_customer", connection, transaction);
-                cmd.CommandType = CommandType.StoredProcedure;
-                p["id"] = Guid.NewGuid();
-                cmd.Parameters.AddWithValue("@id", p["id"]);
-                cmd.Parameters.AddWithValue("@person_id", DB.MakeParam(typeof(Guid), p["person_id"]));
-                cmd.Parameters.AddWithValue("@company_id", DB.MakeParam(typeof(Guid), p["company_id"]));
-                cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
-                cmd.Parameters.AddWithValue("@comment", p["comment"]);
-                cmd.Parameters.AddWithValue("@create_date", p["create_date"]);
-                cmd.Parameters.AddWithValue("@created_by", p["created_by"]);
-                cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
-                cmd.Parameters.AddWithValue("@updated_by", p["updated_by"]);
-                cmd.ExecuteNonQuery();
-
-                DB.AddAuditMessage(connection, transaction, "customer", (Guid)p["id"], AuditOperationType.Insert, JsonConvert.SerializeObject(p));
-
-                transaction.Commit();
-            }
-            catch (Exception ex)
-            {
-                transaction?.Rollback();
-                Common.Log.Error(ex);
-                return false;
-            }
-            finally
-            {
-                connection?.Close();
-            }
-
-            return true;
+            SqlCommand cmd = new SqlCommand("csp_insert_customer", conn, trans);
+            cmd.CommandType = CommandType.StoredProcedure;
+            p["id"] = Guid.NewGuid();
+            cmd.Parameters.AddWithValue("@id", p["id"]);
+            cmd.Parameters.AddWithValue("@person_id", DB.MakeParam(typeof(Guid), p["person_id"]));
+            cmd.Parameters.AddWithValue("@company_id", DB.MakeParam(typeof(Guid), p["company_id"]));
+            cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
+            cmd.Parameters.AddWithValue("@comment", p["comment"]);
+            cmd.Parameters.AddWithValue("@create_date", p["create_date"]);
+            cmd.Parameters.AddWithValue("@created_by", p["created_by"]);
+            cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
+            cmd.Parameters.AddWithValue("@updated_by", p["updated_by"]);
+            cmd.ExecuteNonQuery();                        
         }
 
-        private bool UpdateCustomer()
-        {
-            SqlConnection connection = null;
-            SqlTransaction transaction = null;
+        private void UpdateCustomer(SqlConnection conn, SqlTransaction trans)
+        {            
+            p["update_date"] = DateTime.Now;
+            p["updated_by"] = Common.Username;        
 
-            try
-            {
-                p["update_date"] = DateTime.Now;
-                p["updated_by"] = Common.Username;
-
-                connection = DB.OpenConnection();
-                transaction = connection.BeginTransaction();
-
-                SqlCommand cmd = new SqlCommand("csp_update_customer", connection, transaction);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@id", p["id"]);
-                cmd.Parameters.AddWithValue("@company_id", DB.MakeParam(typeof(Guid), p["company_id"]));
-                cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
-                cmd.Parameters.AddWithValue("@comment", p["comment"]);
-                cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
-                cmd.Parameters.AddWithValue("@updated_by", p["updated_by"]);
-                cmd.ExecuteNonQuery();
-
-                DB.AddAuditMessage(connection, transaction, "customer", (Guid)p["id"], AuditOperationType.Update, JsonConvert.SerializeObject(p));
-
-                transaction.Commit();
-            }
-            catch (Exception ex)
-            {
-                transaction?.Rollback();
-                Common.Log.Error(ex);
-                return false;
-            }
-            finally
-            {
-                connection?.Close();
-            }
-
-            return true;
+            SqlCommand cmd = new SqlCommand("csp_update_customer", conn, trans);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@id", p["id"]);
+            cmd.Parameters.AddWithValue("@company_id", DB.MakeParam(typeof(Guid), p["company_id"]));
+            cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
+            cmd.Parameters.AddWithValue("@comment", p["comment"]);
+            cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
+            cmd.Parameters.AddWithValue("@updated_by", p["updated_by"]);
+            cmd.ExecuteNonQuery();                        
         }        
     }
 }

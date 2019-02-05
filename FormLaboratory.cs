@@ -149,137 +149,114 @@ namespace DSA_lims
             p["email"] = tbEmail.Text.Trim();
             p["phone"] = tbPhone.Text.Trim();
             p["instance_status_id"] = cboxInstanceStatus.SelectedValue;
-            p["comment"] = tbComment.Text.Trim();                        
+            p["comment"] = tbComment.Text.Trim();
 
-            bool success;
-            if (!p.ContainsKey("id"))
-                success = InsertLaboratory();
-            else
-                success = UpdateLaboratory();
+            SqlConnection connection = null;
+            SqlTransaction transaction = null;
+            bool success = true;
+
+            try
+            {
+                connection = DB.OpenConnection();
+                transaction = connection.BeginTransaction();
+
+                if (DB.NameExists(connection, transaction, "laboratory", p["name"].ToString(), LaboratoryId))
+                {
+                    MessageBox.Show("The laboratory '" + p["name"] + "' already exists");
+                    return;
+                }
+
+                if (!p.ContainsKey("id"))
+                    InsertLaboratory(connection, transaction);
+                else
+                    UpdateLaboratory(connection, transaction);
+
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                success = false;
+                transaction?.Rollback();
+                Common.Log.Error(ex);                
+            }
+            finally
+            {
+                connection?.Close();
+            }
 
             DialogResult = success ? DialogResult.OK : DialogResult.Abort;
             Close();
         }
 
-        private bool InsertLaboratory()
-        {
-            SqlConnection connection = null;
-            SqlTransaction transaction = null;
+        private void InsertLaboratory(SqlConnection conn, SqlTransaction trans)
+        {            
+            p["last_assignment_counter_year"] = DateTime.Now.Year;
+            p["assignment_counter"] = 1;                
+            p["create_date"] = DateTime.Now;
+            p["created_by"] = Common.Username;
+            p["update_date"] = DateTime.Now;
+            p["updated_by"] = Common.Username;        
 
-            try
-            {
-                p["last_assignment_counter_year"] = DateTime.Now.Year;
-                p["assignment_counter"] = 1;                
-                p["create_date"] = DateTime.Now;
-                p["created_by"] = Common.Username;
-                p["update_date"] = DateTime.Now;
-                p["updated_by"] = Common.Username;
+            SqlCommand cmd = new SqlCommand("csp_insert_laboratory", conn, trans);
+            cmd.CommandType = CommandType.StoredProcedure;
+            p["id"] = Guid.NewGuid();
+            cmd.Parameters.AddWithValue("@id", p["id"]);
+            cmd.Parameters.AddWithValue("@name", p["name"]);
+            cmd.Parameters.AddWithValue("@name_prefix", p["name_prefix"]);
+            cmd.Parameters.AddWithValue("@address", p["address"]);
+            cmd.Parameters.AddWithValue("@email", p["email"]);
+            cmd.Parameters.AddWithValue("@phone", p["phone"]);
+            cmd.Parameters.AddWithValue("@last_assignment_counter_year", p["last_assignment_counter_year"]);
+            cmd.Parameters.AddWithValue("@assignment_counter", p["assignment_counter"]);                
+            cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
+            cmd.Parameters.AddWithValue("@comment", p["comment"]);
 
-                connection = DB.OpenConnection();
-                transaction = connection.BeginTransaction();
+            if(p["laboratory_logo"] == null)
+                cmd.Parameters.Add("@laboratory_logo", SqlDbType.VarBinary, -1).Value = DBNull.Value;
+            else
+                cmd.Parameters.Add("@laboratory_logo", SqlDbType.VarBinary, -1).Value = p["laboratory_logo"];
 
-                SqlCommand cmd = new SqlCommand("csp_insert_laboratory", connection, transaction);
-                cmd.CommandType = CommandType.StoredProcedure;
-                p["id"] = Guid.NewGuid();
-                cmd.Parameters.AddWithValue("@id", p["id"]);
-                cmd.Parameters.AddWithValue("@name", p["name"]);
-                cmd.Parameters.AddWithValue("@name_prefix", p["name_prefix"]);
-                cmd.Parameters.AddWithValue("@address", p["address"]);
-                cmd.Parameters.AddWithValue("@email", p["email"]);
-                cmd.Parameters.AddWithValue("@phone", p["phone"]);
-                cmd.Parameters.AddWithValue("@last_assignment_counter_year", p["last_assignment_counter_year"]);
-                cmd.Parameters.AddWithValue("@assignment_counter", p["assignment_counter"]);                
-                cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
-                cmd.Parameters.AddWithValue("@comment", p["comment"]);
+            if (p["accredited_logo"] == null)
+                cmd.Parameters.Add("@accredited_logo", SqlDbType.VarBinary, -1).Value = DBNull.Value;
+            else
+                cmd.Parameters.Add("@accredited_logo", SqlDbType.VarBinary, -1).Value = p["accredited_logo"];
 
-                if(p["laboratory_logo"] == null)
-                    cmd.Parameters.Add("@laboratory_logo", SqlDbType.VarBinary, -1).Value = DBNull.Value;
-                else
-                    cmd.Parameters.Add("@laboratory_logo", SqlDbType.VarBinary, -1).Value = p["laboratory_logo"];
-
-                if (p["accredited_logo"] == null)
-                    cmd.Parameters.Add("@accredited_logo", SqlDbType.VarBinary, -1).Value = DBNull.Value;
-                else
-                    cmd.Parameters.Add("@accredited_logo", SqlDbType.VarBinary, -1).Value = p["accredited_logo"];
-
-                cmd.Parameters.AddWithValue("@create_date", p["create_date"]);
-                cmd.Parameters.AddWithValue("@created_by", p["created_by"]);
-                cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
-                cmd.Parameters.AddWithValue("@updated_by", p["updated_by"]);
-                cmd.ExecuteNonQuery();
-
-                DB.AddAuditMessage(connection, transaction, "laboratory", (Guid)p["id"], AuditOperationType.Insert, JsonConvert.SerializeObject(p));
-
-                transaction.Commit();
-            }
-            catch (Exception ex)
-            {
-                transaction?.Rollback();
-                Common.Log.Error(ex);
-                return false;
-            }
-            finally
-            {
-                connection?.Close();
-            }
-
-            return true;
+            cmd.Parameters.AddWithValue("@create_date", p["create_date"]);
+            cmd.Parameters.AddWithValue("@created_by", p["created_by"]);
+            cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
+            cmd.Parameters.AddWithValue("@updated_by", p["updated_by"]);
+            cmd.ExecuteNonQuery();        
         }
 
-        private bool UpdateLaboratory()
-        {
-            SqlConnection connection = null;
-            SqlTransaction transaction = null;
+        private void UpdateLaboratory(SqlConnection conn, SqlTransaction trans)
+        {            
+            p["update_date"] = DateTime.Now;
+            p["updated_by"] = Common.Username;                
 
-            try
-            {
-                p["update_date"] = DateTime.Now;
-                p["updated_by"] = Common.Username;
+            SqlCommand cmd = new SqlCommand("csp_update_laboratory", conn, trans);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@id", p["id"]);
+            cmd.Parameters.AddWithValue("@name", p["name"]);
+            cmd.Parameters.AddWithValue("@name_prefix", p["name_prefix"]);                
+            cmd.Parameters.AddWithValue("@address", p["address"]);
+            cmd.Parameters.AddWithValue("@email", p["email"]);
+            cmd.Parameters.AddWithValue("@phone", p["phone"]);
+            cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
+            cmd.Parameters.AddWithValue("@comment", p["comment"]);
 
-                connection = DB.OpenConnection();
-                transaction = connection.BeginTransaction();
+            if (p["laboratory_logo"] == null)
+                cmd.Parameters.Add("@laboratory_logo", SqlDbType.VarBinary, -1).Value = DBNull.Value;
+            else
+                cmd.Parameters.Add("@laboratory_logo", SqlDbType.VarBinary, -1).Value = p["laboratory_logo"];
 
-                SqlCommand cmd = new SqlCommand("csp_update_laboratory", connection, transaction);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@id", p["id"]);
-                cmd.Parameters.AddWithValue("@name", p["name"]);
-                cmd.Parameters.AddWithValue("@name_prefix", p["name_prefix"]);                
-                cmd.Parameters.AddWithValue("@address", p["address"]);
-                cmd.Parameters.AddWithValue("@email", p["email"]);
-                cmd.Parameters.AddWithValue("@phone", p["phone"]);
-                cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
-                cmd.Parameters.AddWithValue("@comment", p["comment"]);
+            if (p["accredited_logo"] == null)
+                cmd.Parameters.Add("@accredited_logo", SqlDbType.VarBinary, -1).Value = DBNull.Value;
+            else
+                cmd.Parameters.Add("@accredited_logo", SqlDbType.VarBinary, -1).Value = p["accredited_logo"];
 
-                if (p["laboratory_logo"] == null)
-                    cmd.Parameters.Add("@laboratory_logo", SqlDbType.VarBinary, -1).Value = DBNull.Value;
-                else
-                    cmd.Parameters.Add("@laboratory_logo", SqlDbType.VarBinary, -1).Value = p["laboratory_logo"];
-
-                if (p["accredited_logo"] == null)
-                    cmd.Parameters.Add("@accredited_logo", SqlDbType.VarBinary, -1).Value = DBNull.Value;
-                else
-                    cmd.Parameters.Add("@accredited_logo", SqlDbType.VarBinary, -1).Value = p["accredited_logo"];
-
-                cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
-                cmd.Parameters.AddWithValue("@updated_by", p["updated_by"]);
-                cmd.ExecuteNonQuery();
-
-                DB.AddAuditMessage(connection, transaction, "laboratory", (Guid)p["id"], AuditOperationType.Update, JsonConvert.SerializeObject(p));
-
-                transaction.Commit();
-            }
-            catch (Exception ex)
-            {
-                transaction?.Rollback();
-                Common.Log.Error(ex);
-                return false;
-            }
-            finally
-            {
-                connection?.Close();
-            }
-
-            return true;
+            cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
+            cmd.Parameters.AddWithValue("@updated_by", p["updated_by"]);
+            cmd.ExecuteNonQuery();                
         }
 
         private void picLaboratoryLogo_DoubleClick(object sender, EventArgs e)

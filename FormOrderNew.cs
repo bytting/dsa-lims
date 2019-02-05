@@ -111,6 +111,13 @@ namespace DSA_lims
                 int orderCount = DB.GetNextOrderCount(conn, trans, labId);
                 OrderName = labPrefix + "-" + DateTime.Now.ToString("yyyy") + "-" + orderCount;
 
+                if(DB.NameExists(conn, trans, "assignment", OrderName, Guid.Empty))
+                {
+                    Common.Log.Error("Order with name " + OrderName + " already exist");
+                    MessageBox.Show("Order with name " + OrderName + " already exist");
+                    return;
+                }
+
                 SqlCommand cmd = new SqlCommand("csp_insert_assignment", conn, trans);
                 cmd.CommandType = CommandType.StoredProcedure;
                 OrderId = Guid.NewGuid();

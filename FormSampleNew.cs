@@ -101,6 +101,15 @@ namespace DSA_lims
                 
                 SampleNumber = DB.GetNextSampleCount(conn, trans);
 
+                SqlCommand cmdCheck = new SqlCommand("select count(*) from sample where number = @number", conn, trans);
+                cmdCheck.Parameters.AddWithValue("@number", SampleNumber);
+                int cnt = (int)cmdCheck.ExecuteScalar();
+                if (cnt > 0)
+                {
+                    MessageBox.Show("Sample number '" + SampleNumber + "' already exists");
+                    return;
+                }
+
                 SqlCommand cmd = new SqlCommand("csp_insert_sample", conn, trans);
                 cmd.CommandType = CommandType.StoredProcedure;
                 SampleId = Guid.NewGuid();

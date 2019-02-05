@@ -105,31 +105,31 @@ namespace DSA_lims
 
             SqlConnection connection = null;
             SqlTransaction transaction = null;
-            bool success;
+            bool success = true;
 
             try
             {
                 connection = DB.OpenConnection();
                 transaction = connection.BeginTransaction();
 
-                if (DB.NameExists(connection, transaction, "project_main", p["name"].ToString()))
+                if (DB.NameExists(connection, transaction, "project_main", p["name"].ToString(), ProjectId))
                 {
                     MessageBox.Show("The project '" + p["name"] + "' already exists");
                     return;
                 }
 
                 if (!p.ContainsKey("id"))
-                    success = InsertMainProject(connection, transaction);
+                    InsertMainProject(connection, transaction);
                 else
-                    success = UpdateMainProject(connection, transaction);
+                    UpdateMainProject(connection, transaction);
 
                 transaction.Commit();
             }
             catch (Exception ex)
             {
+                success = false;
                 transaction?.Rollback();
-                Common.Log.Error(ex);
-                return;
+                Common.Log.Error(ex);                
             }
             finally
             {
@@ -140,7 +140,7 @@ namespace DSA_lims
             Close();
         }
 
-        private bool InsertMainProject(SqlConnection conn, SqlTransaction trans)
+        private void InsertMainProject(SqlConnection conn, SqlTransaction trans)
         {                        
             p["create_date"] = DateTime.Now;
             p["created_by"] = Common.Username;
@@ -159,11 +159,9 @@ namespace DSA_lims
             cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
             cmd.Parameters.AddWithValue("@updated_by", p["updated_by"]);
             cmd.ExecuteNonQuery();
-
-            return true;
         }
 
-        private bool UpdateMainProject(SqlConnection conn, SqlTransaction trans)
+        private void UpdateMainProject(SqlConnection conn, SqlTransaction trans)
         {            
             p["update_date"] = DateTime.Now;
             p["updated_by"] = Common.Username;        
@@ -176,9 +174,7 @@ namespace DSA_lims
             cmd.Parameters.AddWithValue("@comment", p["comment"]);
             cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
             cmd.Parameters.AddWithValue("@updated_by", p["updated_by"]);
-            cmd.ExecuteNonQuery();
-
-            return true;
+            cmd.ExecuteNonQuery();            
         }
     }
 }

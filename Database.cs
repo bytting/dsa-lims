@@ -804,10 +804,25 @@ select
             return (int)cmd.ExecuteScalar() > 0;
         }
 
-        public static bool NameExists(SqlConnection conn, SqlTransaction trans, string table, string name)
+        public static bool NameExists(SqlConnection conn, SqlTransaction trans, string table, string name, Guid exceptId)
         {
-            SqlCommand cmd = new SqlCommand("select count(*) from " + table + " where name = @name", conn, trans);
-            cmd.Parameters.AddWithValue("@name", name);
+            string query;
+            SqlCommand cmd = new SqlCommand("", conn, trans);
+
+            if (exceptId == Guid.Empty)
+            {
+                query = "select count(*) from " + table + " where name = @name";
+                cmd.Parameters.AddWithValue("@name", name);
+            }
+            else
+            {
+                query = "select count(*) from " + table + " where name = @name and id not in(@exId)";
+                cmd.Parameters.AddWithValue("@name", name);
+                cmd.Parameters.AddWithValue("@exId", exceptId);
+            }
+
+            cmd.CommandText = query;
+
             return (int)cmd.ExecuteScalar() > 0;
         }
 

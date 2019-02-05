@@ -135,107 +135,84 @@ namespace DSA_lims
             p["instance_status_id"] = cboxInstanceStatus.SelectedValue;
             p["comment"] = tbComment.Text.Trim();
 
-            bool success;
-            if (!p.ContainsKey("id"))
-                success = InsertStation();
-            else
-                success = UpdateStation();
+            SqlConnection connection = null;
+            SqlTransaction transaction = null;
+            bool success = true;
+
+            try
+            {
+                connection = DB.OpenConnection();
+                transaction = connection.BeginTransaction();
+
+                if (DB.NameExists(connection, transaction, "station", p["name"].ToString(), StationId))
+                {
+                    MessageBox.Show("The station '" + p["name"] + "' already exists");
+                    return;
+                }
+
+                if (!p.ContainsKey("id"))
+                    InsertStation(connection, transaction);
+                else
+                    UpdateStation(connection, transaction);
+
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                success = false;
+                transaction?.Rollback();
+                Common.Log.Error(ex);
+            }
+            finally
+            {
+                connection?.Close();
+            }
 
             DialogResult = success ? DialogResult.OK : DialogResult.Abort;
             Close();
         }
 
-        private bool InsertStation()
-        {
-            SqlConnection connection = null;
-            SqlTransaction transaction = null;
+        private void InsertStation(SqlConnection conn, SqlTransaction trans)
+        {            
+            p["create_date"] = DateTime.Now;
+            p["created_by"] = Common.Username;
+            p["update_date"] = DateTime.Now;
+            p["updated_by"] = Common.Username;        
 
-            try
-            {
-                p["create_date"] = DateTime.Now;
-                p["created_by"] = Common.Username;
-                p["update_date"] = DateTime.Now;
-                p["updated_by"] = Common.Username;
-
-                connection = DB.OpenConnection();
-                transaction = connection.BeginTransaction();
-
-                SqlCommand cmd = new SqlCommand("csp_insert_station", connection, transaction);
-                cmd.CommandType = CommandType.StoredProcedure;
-                p["id"] = Guid.NewGuid();
-                cmd.Parameters.AddWithValue("@id", p["id"]);
-                cmd.Parameters.AddWithValue("@name", p["name"]);
-                cmd.Parameters.AddWithValue("@latitude", p["latitude"]);
-                cmd.Parameters.AddWithValue("@longitude", p["longitude"]);
-                cmd.Parameters.AddWithValue("@altitude", p["altitude"]);
-                cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
-                cmd.Parameters.AddWithValue("@comment", p["comment"]);
-                cmd.Parameters.AddWithValue("@create_date", p["create_date"]);
-                cmd.Parameters.AddWithValue("@created_by", p["created_by"]);
-                cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
-                cmd.Parameters.AddWithValue("@updated_by", p["updated_by"]);
-                cmd.ExecuteNonQuery();
-
-                DB.AddAuditMessage(connection, transaction, "station", (Guid)p["id"], AuditOperationType.Insert, JsonConvert.SerializeObject(p));
-
-                transaction.Commit();
-            }
-            catch (Exception ex)
-            {
-                transaction?.Rollback();
-                Common.Log.Error(ex);
-                return false;
-            }
-            finally
-            {
-                connection?.Close();
-            }
-
-            return true;
+            SqlCommand cmd = new SqlCommand("csp_insert_station", conn, trans);
+            cmd.CommandType = CommandType.StoredProcedure;
+            p["id"] = Guid.NewGuid();
+            cmd.Parameters.AddWithValue("@id", p["id"]);
+            cmd.Parameters.AddWithValue("@name", p["name"]);
+            cmd.Parameters.AddWithValue("@latitude", p["latitude"]);
+            cmd.Parameters.AddWithValue("@longitude", p["longitude"]);
+            cmd.Parameters.AddWithValue("@altitude", p["altitude"]);
+            cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
+            cmd.Parameters.AddWithValue("@comment", p["comment"]);
+            cmd.Parameters.AddWithValue("@create_date", p["create_date"]);
+            cmd.Parameters.AddWithValue("@created_by", p["created_by"]);
+            cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
+            cmd.Parameters.AddWithValue("@updated_by", p["updated_by"]);
+            cmd.ExecuteNonQuery();
         }
 
-        private bool UpdateStation()
-        {
-            SqlConnection connection = null;
-            SqlTransaction transaction = null;
+        private void UpdateStation(SqlConnection conn, SqlTransaction trans)
+        {            
+            p["update_date"] = DateTime.Now;
+            p["updated_by"] = Common.Username;        
 
-            try
-            {
-                p["update_date"] = DateTime.Now;
-                p["updated_by"] = Common.Username;
-
-                connection = DB.OpenConnection();
-                transaction = connection.BeginTransaction();
-
-                SqlCommand cmd = new SqlCommand("csp_update_station", connection, transaction);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@id", p["id"]);
-                cmd.Parameters.AddWithValue("@name", p["name"]);
-                cmd.Parameters.AddWithValue("@latitude", p["latitude"]);
-                cmd.Parameters.AddWithValue("@longitude", p["longitude"]);
-                cmd.Parameters.AddWithValue("@altitude", p["altitude"]);
-                cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
-                cmd.Parameters.AddWithValue("@comment", p["comment"]);
-                cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
-                cmd.Parameters.AddWithValue("@updated_by", p["updated_by"]);
-                cmd.ExecuteNonQuery();
-
-                DB.AddAuditMessage(connection, transaction, "station", (Guid)p["id"], AuditOperationType.Update, JsonConvert.SerializeObject(p));
-
-                transaction.Commit();
-            }
-            catch (Exception ex)
-            {
-                transaction?.Rollback();
-                Common.Log.Error(ex);
-                return false;
-            }
-            finally
-            {
-                connection?.Close();
-            }
-
-            return true;
+            SqlCommand cmd = new SqlCommand("csp_update_station", conn, trans);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@id", p["id"]);
+            cmd.Parameters.AddWithValue("@name", p["name"]);
+            cmd.Parameters.AddWithValue("@latitude", p["latitude"]);
+            cmd.Parameters.AddWithValue("@longitude", p["longitude"]);
+            cmd.Parameters.AddWithValue("@altitude", p["altitude"]);
+            cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
+            cmd.Parameters.AddWithValue("@comment", p["comment"]);
+            cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
+            cmd.Parameters.AddWithValue("@updated_by", p["updated_by"]);
+            cmd.ExecuteNonQuery();
         }        
     }
 }

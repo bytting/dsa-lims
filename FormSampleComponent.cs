@@ -74,98 +74,86 @@ namespace DSA_lims
 
             p["name"] = tbName.Text.Trim();
 
-            bool success;
-            if (!p.ContainsKey("id"))
-                success = InsertSampleComponent();
-            else
-                success = UpdateSampleComponent();
+            SqlConnection connection = null;
+            SqlTransaction transaction = null;
+            bool success = true;
+
+            try
+            {
+                connection = DB.OpenConnection();
+                transaction = connection.BeginTransaction();
+
+                SqlCommand cmd = new SqlCommand("", connection, transaction);
+                string query = "select count(*) from sample_component where name = @name and sample_type_id = @stid";
+                cmd.Parameters.AddWithValue("@name", p["name"]);
+                cmd.Parameters.AddWithValue("@stid", p["sample_type_id"]);
+                if (p.ContainsKey("id"))
+                {
+                    query += " and id not in(@exId)";
+                    cmd.Parameters.AddWithValue("@exId", SampleComponentId);
+                }
+
+                int cnt = (int)cmd.ExecuteScalar();
+                if (cnt > 0)
+                {
+                    MessageBox.Show("The sample component  '" + p["name"] + "' already exists for this sample type");
+                    return;
+                }
+
+                if (!p.ContainsKey("id"))
+                    InsertSampleComponent(connection, transaction);
+                else
+                    UpdateSampleComponent(connection, transaction);
+
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                success = false;
+                transaction?.Rollback();
+                Common.Log.Error(ex);                
+            }
+            finally
+            {
+                connection?.Close();
+            }
 
             DialogResult = success ? DialogResult.OK : DialogResult.Abort;
             Close();
         }
 
-        private bool InsertSampleComponent()
-        {
-            SqlConnection connection = null;
-            SqlTransaction transaction = null;
+        private void InsertSampleComponent(SqlConnection conn, SqlTransaction trans)
+        {            
+            p["create_date"] = DateTime.Now;
+            p["created_by"] = Common.Username;
+            p["update_date"] = DateTime.Now;
+            p["updated_by"] = Common.Username;        
 
-            try
-            {
-                p["create_date"] = DateTime.Now;
-                p["created_by"] = Common.Username;
-                p["update_date"] = DateTime.Now;
-                p["updated_by"] = Common.Username;
-
-                connection = DB.OpenConnection();
-                transaction = connection.BeginTransaction();
-
-                SqlCommand cmd = new SqlCommand("csp_insert_sample_component", connection, transaction);
-                cmd.CommandType = CommandType.StoredProcedure;
-                p["id"] = Guid.NewGuid();
-                cmd.Parameters.AddWithValue("@id", p["id"]);
-                cmd.Parameters.AddWithValue("@sample_type_id", DB.MakeParam(typeof(Guid), p["sample_type_id"]));
-                cmd.Parameters.AddWithValue("@name", p["name"]);
-                cmd.Parameters.AddWithValue("@create_date", p["create_date"]);
-                cmd.Parameters.AddWithValue("@created_by", p["created_by"]);
-                cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
-                cmd.Parameters.AddWithValue("@updated_by", p["updated_by"]);
-                cmd.ExecuteNonQuery();
-
-                DB.AddAuditMessage(connection, transaction, "sample_component", (Guid)p["id"], AuditOperationType.Insert, JsonConvert.SerializeObject(p));
-
-                transaction.Commit();
-            }
-            catch (Exception ex)
-            {
-                transaction?.Rollback();
-                Common.Log.Error(ex);
-                return false;
-            }
-            finally
-            {
-                connection?.Close();
-            }
-
-            return true;
+            SqlCommand cmd = new SqlCommand("csp_insert_sample_component", conn, trans);
+            cmd.CommandType = CommandType.StoredProcedure;
+            p["id"] = Guid.NewGuid();
+            cmd.Parameters.AddWithValue("@id", p["id"]);
+            cmd.Parameters.AddWithValue("@sample_type_id", DB.MakeParam(typeof(Guid), p["sample_type_id"]));
+            cmd.Parameters.AddWithValue("@name", p["name"]);
+            cmd.Parameters.AddWithValue("@create_date", p["create_date"]);
+            cmd.Parameters.AddWithValue("@created_by", p["created_by"]);
+            cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
+            cmd.Parameters.AddWithValue("@updated_by", p["updated_by"]);
+            cmd.ExecuteNonQuery();                        
         }
 
-        private bool UpdateSampleComponent()
-        {
-            SqlConnection connection = null;
-            SqlTransaction transaction = null;
+        private void UpdateSampleComponent(SqlConnection conn, SqlTransaction trans)
+        {            
+            p["update_date"] = DateTime.Now;
+            p["updated_by"] = Common.Username;        
 
-            try
-            {
-                p["update_date"] = DateTime.Now;
-                p["updated_by"] = Common.Username;
-
-                connection = DB.OpenConnection();
-                transaction = connection.BeginTransaction();
-
-                SqlCommand cmd = new SqlCommand("csp_update_sample_component", connection, transaction);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@id", p["id"]);
-                cmd.Parameters.AddWithValue("@name", p["name"]);
-                cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
-                cmd.Parameters.AddWithValue("@updated_by", p["updated_by"]);
-                cmd.ExecuteNonQuery();
-
-                DB.AddAuditMessage(connection, transaction, "sample_component", (Guid)p["id"], AuditOperationType.Update, JsonConvert.SerializeObject(p));
-
-                transaction.Commit();
-            }
-            catch (Exception ex)
-            {
-                transaction?.Rollback();
-                Common.Log.Error(ex);
-                return false;
-            }
-            finally
-            {
-                connection?.Close();
-            }
-
-            return true;
+            SqlCommand cmd = new SqlCommand("csp_update_sample_component", conn, trans);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@id", p["id"]);
+            cmd.Parameters.AddWithValue("@name", p["name"]);
+            cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
+            cmd.Parameters.AddWithValue("@updated_by", p["updated_by"]);
+            cmd.ExecuteNonQuery();                        
         }
     }
 }

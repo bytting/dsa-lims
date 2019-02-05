@@ -117,102 +117,90 @@ namespace DSA_lims
             p["number"] = Convert.ToInt32(tbNumber.Text.Trim());
             p["instance_status_id"] = cboxInstanceStatus.SelectedValue;
 
-            bool success;
-            if (!p.ContainsKey("id"))
-                success = InsertMunicipality();
-            else
-                success = UpdateMunicipality();
+            SqlConnection connection = null;
+            SqlTransaction transaction = null;
+            bool success = true;
+
+            try
+            {
+                connection = DB.OpenConnection();
+                transaction = connection.BeginTransaction();
+
+                SqlCommand cmd = new SqlCommand("", connection, transaction);
+                string query = "select count(*) from municipality where name = @name and county_id = @cid";
+                cmd.Parameters.AddWithValue("@name", p["name"]);
+                cmd.Parameters.AddWithValue("@cid", p["county_id"]);
+                if (p.ContainsKey("id"))
+                {
+                    query += " and id not in(@exId)";
+                    cmd.Parameters.AddWithValue("@exId", MunicipalityId);
+                }
+
+                int cnt = (int)cmd.ExecuteScalar();
+                if (cnt > 0)
+                {
+                    MessageBox.Show("The municipality '" + p["name"] + "' already exists");
+                    return;
+                }
+
+                if (!p.ContainsKey("id"))
+                    InsertMunicipality(connection, transaction);
+                else
+                    UpdateMunicipality(connection, transaction);
+
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                success = false;
+                transaction?.Rollback();
+                Common.Log.Error(ex);                
+            }
+            finally
+            {
+                connection?.Close();
+            }
 
             DialogResult = success ? DialogResult.OK : DialogResult.Abort;
             Close();
         }
 
-        private bool InsertMunicipality()
-        {
-            SqlConnection connection = null;
-            SqlTransaction transaction = null;
+        private void InsertMunicipality(SqlConnection conn, SqlTransaction trans)
+        {            
+            p["create_date"] = DateTime.Now;
+            p["created_by"] = Common.Username;
+            p["update_date"] = DateTime.Now;
+            p["updated_by"] = Common.Username;        
 
-            try
-            {
-                p["create_date"] = DateTime.Now;
-                p["created_by"] = Common.Username;
-                p["update_date"] = DateTime.Now;
-                p["updated_by"] = Common.Username;
-
-                connection = DB.OpenConnection();
-                transaction = connection.BeginTransaction();
-
-                SqlCommand cmd = new SqlCommand("csp_insert_municipality", connection, transaction);
-                cmd.CommandType = CommandType.StoredProcedure;
-                p["id"] = Guid.NewGuid();
-                cmd.Parameters.AddWithValue("@id", p["id"]);
-                cmd.Parameters.AddWithValue("@county_id", DB.MakeParam(typeof(Guid), p["county_id"]));
-                cmd.Parameters.AddWithValue("@name", p["name"]);
-                cmd.Parameters.AddWithValue("@municipality_number", p["number"]);
-                cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
-                cmd.Parameters.AddWithValue("@create_date", p["create_date"]);
-                cmd.Parameters.AddWithValue("@created_by", p["created_by"]);
-                cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
-                cmd.Parameters.AddWithValue("@updated_by", p["updated_by"]);
-                cmd.ExecuteNonQuery();
-
-                DB.AddAuditMessage(connection, transaction, "municipality", (Guid)p["id"], AuditOperationType.Insert, JsonConvert.SerializeObject(p));
-
-                transaction.Commit();
-            }
-            catch (Exception ex)
-            {
-                transaction?.Rollback();
-                Common.Log.Error(ex);
-                return false;
-            }
-            finally
-            {
-                connection?.Close();
-            }
-
-            return true;
+            SqlCommand cmd = new SqlCommand("csp_insert_municipality", conn, trans);
+            cmd.CommandType = CommandType.StoredProcedure;
+            p["id"] = Guid.NewGuid();
+            cmd.Parameters.AddWithValue("@id", p["id"]);
+            cmd.Parameters.AddWithValue("@county_id", DB.MakeParam(typeof(Guid), p["county_id"]));
+            cmd.Parameters.AddWithValue("@name", p["name"]);
+            cmd.Parameters.AddWithValue("@municipality_number", p["number"]);
+            cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
+            cmd.Parameters.AddWithValue("@create_date", p["create_date"]);
+            cmd.Parameters.AddWithValue("@created_by", p["created_by"]);
+            cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
+            cmd.Parameters.AddWithValue("@updated_by", p["updated_by"]);
+            cmd.ExecuteNonQuery();                        
         }
 
-        private bool UpdateMunicipality()
-        {
-            SqlConnection connection = null;
-            SqlTransaction transaction = null;
+        private void UpdateMunicipality(SqlConnection conn, SqlTransaction trans)
+        {            
+            p["update_date"] = DateTime.Now;
+            p["updated_by"] = Common.Username;                
 
-            try
-            {
-                p["update_date"] = DateTime.Now;
-                p["updated_by"] = Common.Username;
-
-                connection = DB.OpenConnection();
-                transaction = connection.BeginTransaction();
-
-                SqlCommand cmd = new SqlCommand("csp_update_municipality", connection, transaction);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@id", p["id"]);
-                cmd.Parameters.AddWithValue("@name", p["name"]);
-                cmd.Parameters.AddWithValue("@municipality_number", p["number"]);
-                cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
-                cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
-                cmd.Parameters.AddWithValue("@updated_by", p["updated_by"]);
-                cmd.ExecuteNonQuery();
-
-                DB.AddAuditMessage(connection, transaction, "municipality", (Guid)p["id"], AuditOperationType.Update, JsonConvert.SerializeObject(p));
-
-                transaction.Commit();
-            }
-            catch (Exception ex)
-            {
-                transaction?.Rollback();
-                Common.Log.Error(ex);
-                return false;
-            }
-            finally
-            {
-                connection?.Close();
-            }
-
-            return true;
+            SqlCommand cmd = new SqlCommand("csp_update_municipality", conn, trans);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@id", p["id"]);
+            cmd.Parameters.AddWithValue("@name", p["name"]);
+            cmd.Parameters.AddWithValue("@municipality_number", p["number"]);
+            cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
+            cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
+            cmd.Parameters.AddWithValue("@updated_by", p["updated_by"]);
+            cmd.ExecuteNonQuery();                        
         }
     }
 }

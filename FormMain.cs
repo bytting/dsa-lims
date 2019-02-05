@@ -3332,7 +3332,7 @@ order by a.number
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
-                    SetStatusMessage("Customer " + form.CustomerName + " created");
+                    SetStatusMessage("Customer created");
                     using (SqlConnection conn = DB.OpenConnection())
                     {
                         UI.PopulateCustomers(conn, InstanceStatus.Deleted, gridCustomers);
@@ -3367,7 +3367,7 @@ order by a.number
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
-                    SetStatusMessage("Customer " + form.CustomerName + " updated");
+                    SetStatusMessage("Customer updated");
                     using (SqlConnection conn = DB.OpenConnection())
                     {
                         UI.PopulateCustomers(conn, InstanceStatus.Deleted, gridCustomers);
@@ -4498,8 +4498,8 @@ order by a.number
                         PopulateSamplesSingle(snum);
                 }
                 
-                e.Handled = true;                
-                btnSamplesSearch.ForeColor = SystemColors.ControlText;
+                e.Handled = true;
+                btnSamplesSearch.ForeColor = Color.Red;
                 return;
             }
         }

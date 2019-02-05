@@ -109,97 +109,84 @@ namespace DSA_lims
             p["phone"] = tbPhone.Text.Trim();
             p["address"] = tbAddress.Text.Trim();
 
-            bool success;
-            if (!p.ContainsKey("id"))
-                success = InsertPerson();
-            else
-                success = UpdatePerson();
+            SqlConnection connection = null;
+            SqlTransaction transaction = null;
+            bool success = true;
+
+            try
+            {
+                connection = DB.OpenConnection();
+                transaction = connection.BeginTransaction();
+
+                SqlCommand cmd = new SqlCommand("", connection, transaction);
+                string query = "select count(*) from person where email = @email";
+                cmd.Parameters.AddWithValue("@email", p["email"]);                
+                if (p.ContainsKey("id"))
+                {
+                    query += " and id not in(@exId)";
+                    cmd.Parameters.AddWithValue("@exId", PersonId);
+                }
+
+                int cnt = (int)cmd.ExecuteScalar();
+                if (cnt > 0)
+                {
+                    MessageBox.Show("A person with email '" + p["email"] + "' already exists");
+                    return;
+                }
+
+                if (!p.ContainsKey("id"))
+                    InsertPerson(connection, transaction);
+                else
+                    UpdatePerson(connection, transaction);
+
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                success = false;
+                transaction?.Rollback();
+                Common.Log.Error(ex);                
+            }
+            finally
+            {
+                connection?.Close();
+            }
 
             DialogResult = success ? DialogResult.OK : DialogResult.Abort;
             Close();
         }
 
-        private bool InsertPerson()
-        {
-            SqlConnection connection = null;
-            SqlTransaction transaction = null;
+        private void InsertPerson(SqlConnection conn, SqlTransaction trans)
+        {            
+            p["create_date"] = DateTime.Now;                
+            p["update_date"] = DateTime.Now;        
 
-            try
-            {
-                p["create_date"] = DateTime.Now;                
-                p["update_date"] = DateTime.Now;
-
-                connection = DB.OpenConnection();
-                transaction = connection.BeginTransaction();
-
-                SqlCommand cmd = new SqlCommand("csp_insert_person", connection, transaction);
-                cmd.CommandType = CommandType.StoredProcedure;
-                p["id"] = Guid.NewGuid();
-                cmd.Parameters.AddWithValue("@id", p["id"]);
-                cmd.Parameters.AddWithValue("@name", p["name"]);
-                cmd.Parameters.AddWithValue("@email", p["email"]);
-                cmd.Parameters.AddWithValue("@phone", p["phone"]);
-                cmd.Parameters.AddWithValue("@address", p["address"]);
-                cmd.Parameters.AddWithValue("@create_date", p["create_date"]);                
-                cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
-                cmd.ExecuteNonQuery();
-
-                DB.AddAuditMessage(connection, transaction, "person", (Guid)p["id"], AuditOperationType.Insert, JsonConvert.SerializeObject(p));
-
-                transaction.Commit();
-            }
-            catch (Exception ex)
-            {
-                transaction?.Rollback();
-                Common.Log.Error(ex);
-                return false;
-            }
-            finally
-            {
-                connection?.Close();
-            }
-
-            return true;
+            SqlCommand cmd = new SqlCommand("csp_insert_person", conn, trans);
+            cmd.CommandType = CommandType.StoredProcedure;
+            p["id"] = Guid.NewGuid();
+            cmd.Parameters.AddWithValue("@id", p["id"]);
+            cmd.Parameters.AddWithValue("@name", p["name"]);
+            cmd.Parameters.AddWithValue("@email", p["email"]);
+            cmd.Parameters.AddWithValue("@phone", p["phone"]);
+            cmd.Parameters.AddWithValue("@address", p["address"]);
+            cmd.Parameters.AddWithValue("@create_date", p["create_date"]);                
+            cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
+            cmd.ExecuteNonQuery();                            
         }
 
-        private bool UpdatePerson()
-        {
-            SqlConnection connection = null;
-            SqlTransaction transaction = null;
+        private void UpdatePerson(SqlConnection conn, SqlTransaction trans)
+        {            
+            p["update_date"] = DateTime.Now;                
 
-            try
-            {
-                p["update_date"] = DateTime.Now;
-
-                connection = DB.OpenConnection();
-                transaction = connection.BeginTransaction();
-
-                SqlCommand cmd = new SqlCommand("csp_update_person", connection, transaction);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@id", p["id"]);
-                cmd.Parameters.AddWithValue("@name", p["name"]);
-                cmd.Parameters.AddWithValue("@email", p["email"]);
-                cmd.Parameters.AddWithValue("@phone", p["phone"]);
-                cmd.Parameters.AddWithValue("@address", p["address"]);                
-                cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
-                cmd.ExecuteNonQuery();
-
-                DB.AddAuditMessage(connection, transaction, "person", (Guid)p["id"], AuditOperationType.Update, JsonConvert.SerializeObject(p));
-
-                transaction.Commit();
-            }
-            catch (Exception ex)
-            {
-                transaction?.Rollback();
-                Common.Log.Error(ex);
-                return false;
-            }
-            finally
-            {
-                connection?.Close();
-            }
-
-            return true;
+            SqlCommand cmd = new SqlCommand("csp_update_person", conn, trans);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@id", p["id"]);
+            cmd.Parameters.AddWithValue("@name", p["name"]);
+            cmd.Parameters.AddWithValue("@email", p["email"]);
+            cmd.Parameters.AddWithValue("@phone", p["phone"]);
+            cmd.Parameters.AddWithValue("@address", p["address"]);                
+            cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
+            cmd.ExecuteNonQuery();                        
         }
     }
 }

@@ -106,19 +106,24 @@ namespace DSA_lims
 
             SqlConnection connection = null;
             SqlTransaction transaction = null;
-            bool success;
+            bool success = true;
 
             try
             {
                 connection = DB.OpenConnection();
                 transaction = connection.BeginTransaction();
 
-                int cnt = (int)DB.GetScalar(connection, transaction, "select count(*) from project_sub where name = @name and project_main_id = @pmid", CommandType.Text, new[]
+                SqlCommand cmd = new SqlCommand("", connection, transaction);
+                string query = "select count(*) from project_sub where name = @name and project_main_id = @pmid";
+                cmd.Parameters.AddWithValue("@name", p["name"]);
+                cmd.Parameters.AddWithValue("@pmid", p["project_main_id"]);
+                if (p.ContainsKey("id"))
                 {
-                    new SqlParameter("@name", p["name"]),
-                    new SqlParameter("@pmid", p["project_main_id"])
-                });
-            
+                    query += " and id not in(@exId)";
+                    cmd.Parameters.AddWithValue("@exId", ProjectSubId);
+                }
+
+                int cnt = (int)cmd.ExecuteScalar();            
                 if(cnt > 0)
                 {
                     MessageBox.Show("The sub project '" + p["name"] + "' already exists");
@@ -126,17 +131,17 @@ namespace DSA_lims
                 }
 
                 if (!p.ContainsKey("id"))
-                    success = InsertSubProject(connection, transaction);
+                    InsertSubProject(connection, transaction);
                 else
-                    success = UpdateSubProject(connection, transaction);
+                    UpdateSubProject(connection, transaction);
 
                 transaction.Commit();
             }
             catch (Exception ex)
             {
+                success = false;
                 transaction?.Rollback();
-                Common.Log.Error(ex);
-                return;
+                Common.Log.Error(ex);                
             }
             finally
             {
@@ -147,7 +152,7 @@ namespace DSA_lims
             Close();
         }
 
-        private bool InsertSubProject(SqlConnection conn, SqlTransaction trans)
+        private void InsertSubProject(SqlConnection conn, SqlTransaction trans)
         {            
             p["create_date"] = DateTime.Now;
             p["created_by"] = Common.Username;
@@ -166,12 +171,10 @@ namespace DSA_lims
             cmd.Parameters.AddWithValue("@created_by", p["created_by"]);
             cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
             cmd.Parameters.AddWithValue("@updated_by", p["updated_by"]);
-            cmd.ExecuteNonQuery();
-
-            return true;
+            cmd.ExecuteNonQuery();        
         }
 
-        private bool UpdateSubProject(SqlConnection conn, SqlTransaction trans)
+        private void UpdateSubProject(SqlConnection conn, SqlTransaction trans)
         {            
             p["update_date"] = DateTime.Now;
             p["updated_by"] = Common.Username;
@@ -186,8 +189,6 @@ namespace DSA_lims
             cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
             cmd.Parameters.AddWithValue("@updated_by", p["updated_by"]);
             cmd.ExecuteNonQuery();
-                
-            return true;
         }
     }
 }

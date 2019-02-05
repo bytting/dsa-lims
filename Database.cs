@@ -135,6 +135,16 @@ namespace DSA_lims
             return lst;
         }
 
+        public static List<Lemma<int?, string>> GetTopValues()
+        {
+            List<Lemma<int?, string>> lst = new List<Lemma<int?, string>>();
+            lst.Add(new Lemma<int?, string>(null, ""));
+            lst.Add(new Lemma<int?, string>(50, "50"));
+            lst.Add(new Lemma<int?, string>(500, "500"));
+
+            return lst;
+        }
+
         public static void AddAuditMessage(SqlConnection conn, SqlTransaction trans, string tbl, Guid id, AuditOperationType op, string msg, string comment = "")
         {
             SqlCommand cmd = new SqlCommand("csp_insert_audit_message", conn, trans);
@@ -792,6 +802,24 @@ select
             SqlCommand cmd = new SqlCommand("select count(*) from analysis_result where id = @id", conn, trans);
             cmd.Parameters.AddWithValue("@id", arId);
             return (int)cmd.ExecuteScalar() > 0;
+        }
+
+        public static bool NameExists(SqlConnection conn, SqlTransaction trans, string table, string name)
+        {
+            SqlCommand cmd = new SqlCommand("select count(*) from " + table + " where name = @name", conn, trans);
+            cmd.Parameters.AddWithValue("@name", name);
+            return (int)cmd.ExecuteScalar() > 0;
+        }
+
+        public static bool GetOrderApprovedByLab(SqlConnection conn, SqlTransaction trans, Guid orderId)
+        {
+            SqlCommand cmd = new SqlCommand("select approved_laboratory from assignment where id = @id", conn, trans);
+            cmd.Parameters.AddWithValue("@id", orderId);
+            object o = cmd.ExecuteScalar();
+            if (!DB.IsValidField(o))
+                return false;
+
+            return Convert.ToBoolean(o);
         }
     }
 

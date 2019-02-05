@@ -45,9 +45,12 @@ namespace DSA_lims
 
             foreach (ComboBox cb in cbn)
             {
+                object o = cb.SelectedValue;
                 cb.DataSource = new List<Lemma<Guid, string>>(list);
                 cb.DisplayMember = "Name";
                 cb.ValueMember = "Id";
+                if (o != null)
+                    cb.SelectedValue = o;
             }
         }
 

@@ -48,9 +48,6 @@ namespace DSA_lims
         private Guid selectedOrderId = Guid.Empty;
         private Guid selectedSampleId = Guid.Empty;
 
-        private bool populateSamplesDisabled = false;
-        private bool populateOrdersDisabled = false;
-
         private int editingSampleNumber;
 
         private Analysis analysis = new Analysis();
@@ -187,10 +184,7 @@ namespace DSA_lims
         {
             try
             {
-                cbMachineSettingsUseAD.Checked = Common.Settings.UseActiveDirectoryCredentials;                
-
-                populateSamplesDisabled = true;
-                populateOrdersDisabled = true;
+                cbMachineSettingsUseAD.Checked = Common.Settings.UseActiveDirectoryCredentials;
 
                 using (SqlConnection conn = DB.OpenConnection())
                 {
@@ -296,12 +290,41 @@ namespace DSA_lims
                     UI.PopulateOrderYears(conn, cboxOrdersYear);
 
                     UI.PopulateOrderWorkflowStatus(conn, cboxOrdersWorkflowStatus);
+
+                    UI.PopulateComboBoxes(conn, "csp_select_assignments_short", new[] {
+                        new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
+                    }, cboxSamplesOrders);
+
+                    UI.PopulateComboBoxes(conn, "csp_select_laboratories_short", new[] {
+                        new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
+                    }, cboxSamplesLaboratory);
+
+                    UI.PopulateComboBoxes(conn, "csp_select_laboratories_short", new[] {
+                        new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
+                    }, cboxOrdersLaboratory);
                 }
 
-                populateSamplesDisabled = false;
-                populateOrdersDisabled = false;
+                cboxOrdersTop.DataSource = DB.GetTopValues();
+                cboxOrdersTop.SelectedValue = 50;
 
-                tabs_SelectedIndexChanged(null, null);
+                cboxSamplesTop.DataSource = DB.GetTopValues();
+                cboxSamplesTop.SelectedValue = 50;
+
+                if (Common.LabId != Guid.Empty)
+                {
+                    cboxOrdersLaboratory.SelectedValue = Common.LabId;
+                    cboxSamplesLaboratory.SelectedValue = Common.LabId;
+                }                    
+                
+                cboxSamplesStatus.SelectedValue = InstanceStatus.Active;
+                cboxOrdersWorkflowStatus.SelectedValue = WorkflowStatus.Construction;
+
+                PopulateOrders();
+                btnOrdersSearch.ForeColor = SystemColors.ControlText;
+
+                PopulateSamples();
+                btnSamplesSearch.ForeColor = SystemColors.ControlText;
+
                 panelSampleLatLonAlt_Resize(null, null);
 
                 HideMenuItems();
@@ -568,8 +591,8 @@ namespace DSA_lims
             miPreparationMethodsNew.Enabled = miPreparationMethodEdit.Enabled = miPreparationMethodDelete.Enabled = btnTypeRelSampTypePrepMethAdd.Enabled = btnPreparationMethodDelete.Enabled = isAdmin;
             miSamplesSetOrder.Enabled = btnSamplesSetOrder.Enabled = btnSampleAddSampleToOrder.Enabled = isAdmin;
             miSamplesPrepAnal.Enabled = btnSamplesPrepAnal.Enabled = btnSampleGoToPrepAnal.Enabled = isAdmin;
-            miSamplesUnlock.Enabled = btnSamplesUnlock.Enabled = isAdmin;
-            miOrdersUnlock.Enabled = btnOrdersUnlock.Enabled = isAdmin;
+            miSamplesUnlock.Enabled = btnSamplesUnlock.Visible = isAdmin;
+            miOrdersUnlock.Enabled = btnOrdersUnlock.Visible = isAdmin;
 
             // FIXME: Accreditation rules
 
@@ -2397,6 +2420,8 @@ order by a.number
                     new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
                 }, cboxSamplesProjectsSub);
             }
+
+            btnSamplesSearch.ForeColor = Color.Red;
         }
 
         private void miPreparationMethodsNew_Click(object sender, EventArgs e)
@@ -3512,41 +3537,7 @@ order by a.number
                         e.Cancel = true;
                     }
                 }
-            }
-            else if (e.TabPage == tabOrders)
-            {
-                populateOrdersDisabled = true;
-                using (SqlConnection conn = DB.OpenConnection())
-                {
-                    UI.PopulateComboBoxes(conn, "csp_select_laboratories_short", new[] {
-                        new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
-                    }, cboxOrdersLaboratory);
-
-                    if (Common.LabId != Guid.Empty)
-                        cboxOrdersLaboratory.SelectedValue = Common.LabId;
-                }
-                populateOrdersDisabled = false;
-                PopulateOrders();
-            }
-            else if (e.TabPage == tabSamples)
-            {
-                populateSamplesDisabled = true;
-                using (SqlConnection conn = DB.OpenConnection())
-                {
-                    UI.PopulateComboBoxes(conn, "csp_select_assignments_short", new[] {
-                        new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
-                    }, cboxSamplesOrders);
-
-                    UI.PopulateComboBoxes(conn, "csp_select_laboratories_short", new[] {
-                        new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
-                    }, cboxSamplesLaboratory);
-
-                    if (Common.LabId != Guid.Empty)
-                        cboxSamplesLaboratory.SelectedValue = Common.LabId;
-                }
-                populateSamplesDisabled = false;
-                PopulateSamples();
-            }
+            }            
         }
 
         private void tabs_Deselecting(object sender, TabControlCancelEventArgs e)
@@ -4493,9 +4484,12 @@ order by a.number
                 return;
 
             if (e.KeyChar == Convert.ToChar(Keys.Enter))
-            {
+            {                
                 int snum = Convert.ToInt32(tbSamplesLookup.Text);
-                if(gridSamples.SelectedRows.Count == 1)
+
+                btnSamplesClearFilters_Click(sender, e);
+
+                if (gridSamples.SelectedRows.Count == 1)
                 {
                     int selNum = Convert.ToInt32(gridSamples.SelectedRows[0].Cells["number"].Value);
                     if (snum == selNum)
@@ -4504,19 +4498,19 @@ order by a.number
                         PopulateSamplesSingle(snum);
                 }
                 
-                e.Handled = true;
-                tbSamplesLookup.Text = "";
+                e.Handled = true;                
+                btnSamplesSearch.ForeColor = SystemColors.ControlText;
                 return;
             }
         }
 
         private void PopulateSamples()
         {
-            if (populateSamplesDisabled)
-                return;
+            string query = "select distinct ";
+            if (cboxSamplesTop.SelectedValue != null)
+                query += "top " + cboxSamplesTop.SelectedValue + " ";
 
-            string query = @"
-select distinct
+            query += @"
 		s.id,	
 		s.number,
 		s.external_id,
@@ -4687,46 +4681,24 @@ where s.number = @sample_number
             ActiveControl = tbSamplesLookup;
         }
 
-        private void cboxSamplesProjectsSub_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            PopulateSamples();
-        }
-
-        private void cboxSamplesOrders_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            PopulateSamples();
-        }
-
-        private void cboxSamplesStatus_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            PopulateSamples();
-        }
-
-        private void cboxSamplesLaboratory_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            PopulateSamples();
-        }
-
         private void btnSamplesClearFilters_Click(object sender, EventArgs e)
-        {
-            populateSamplesDisabled = true;
+        {            
             tbSamplesLookup.Text = "";
             cboxSamplesProjects.SelectedValue = Guid.Empty;
             cboxSamplesProjectsSub.SelectedValue = Guid.Empty;
             cboxSamplesOrders.SelectedValue = Guid.Empty;
             cboxSamplesStatus.SelectedValue = InstanceStatus.Active;
-            cboxSamplesLaboratory.SelectedValue = Guid.Empty;
-            populateSamplesDisabled = false;
-            PopulateSamples();
+            cboxSamplesLaboratory.SelectedValue = Common.LabId;
+            cboxSamplesTop.SelectedValue = 50;
         }
 
         private void PopulateOrders()
         {
-            if (populateOrdersDisabled)
-                return;
+            string query = "select ";
+            if(cboxOrdersTop.SelectedValue != null)            
+                query += "top " + cboxOrdersTop.SelectedValue + " ";
 
-            string query = @"
-select		
+            query += @"
 		a.id,
 		a.name,		
 		l.name as 'laboratory_name',
@@ -4810,29 +4782,12 @@ select
             }
         }
 
-        private void cboxOrdersLaboratory_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            PopulateOrders();
-        }
-
-        private void cboxOrdersYear_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            PopulateOrders();
-        }
-
-        private void cboxOrdersStatus_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            PopulateOrders();
-        }
-
         private void miOrdersClearAllFilters_Click(object sender, EventArgs e)
-        {
-            populateOrdersDisabled = true;
+        {            
             cboxOrdersLaboratory.SelectedValue = Guid.Empty;
             cboxOrdersYear.Text = "";
             cboxOrdersWorkflowStatus.SelectedValue = 0;
-            populateOrdersDisabled = false;
-            PopulateOrders();
+            cboxOrdersTop.SelectedValue = 50;
         }
 
         private void btnOrderCreateReport_Click(object sender, EventArgs e)
@@ -4941,11 +4896,20 @@ where id = @id
 
                 if (cbOrderApprovedCustomer.Checked)
                 {
+                    bool labAppr = DB.GetOrderApprovedByLab(conn, null, selectedOrderId);
+                    if(!labAppr)
+                    {
+                        MessageBox.Show("Laboratory must approve this order first");
+                        cbOrderApprovedCustomer.Checked = false;
+                        return;
+                    }
+
                     int nSamples, nPreparations, nAnalyses;
                     DB.GetOrderRequiredInventory(conn, null, selectedOrderId, out nSamples, out nPreparations, out nAnalyses);
                     if (nPreparations < 1)
                     {
                         MessageBox.Show("Can not approve an order without any preparations");
+                        cbOrderApprovedCustomer.Checked = false;
                         return;
                     }
                 }
@@ -6027,6 +5991,63 @@ where id = @id
 
                 PopulateOrders();
             }
+        }
+
+        private void btnSamplesSearch_Click(object sender, EventArgs e)
+        {                                    
+            PopulateSamples();
+            btnSamplesSearch.ForeColor = SystemColors.ControlText;
+        }
+
+        private void btnOrdersSearch_Click(object sender, EventArgs e)
+        {
+            PopulateOrders();
+            btnOrdersSearch.ForeColor = SystemColors.ControlText;
+        }
+
+        private void cboxOrdersLaboratory_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            btnOrdersSearch.ForeColor = Color.Red;
+        }
+
+        private void cboxOrdersYear_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            btnOrdersSearch.ForeColor = Color.Red;
+        }
+
+        private void cboxOrdersWorkflowStatus_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            btnOrdersSearch.ForeColor = Color.Red;
+        }
+
+        private void cboxOrdersTop_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            btnOrdersSearch.ForeColor = Color.Red;
+        }
+
+        private void cboxSamplesProjectsSub_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            btnSamplesSearch.ForeColor = Color.Red;
+        }
+
+        private void cboxSamplesTop_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            btnSamplesSearch.ForeColor = Color.Red;
+        }
+
+        private void cboxSamplesOrders_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            btnSamplesSearch.ForeColor = Color.Red;
+        }
+
+        private void cboxSamplesStatus_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            btnSamplesSearch.ForeColor = Color.Red;
+        }
+
+        private void cboxSamplesLaboratory_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            btnSamplesSearch.ForeColor = Color.Red;
         }
     }    
 }

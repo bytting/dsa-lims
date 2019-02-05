@@ -22,11 +22,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
-using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using Newtonsoft.Json;
 
 namespace DSA_lims
 {
@@ -107,102 +104,89 @@ namespace DSA_lims
             p["instance_status_id"] = cboxInstanceStatus.SelectedValue;
             p["comment"] = tbComment.Text.Trim();
 
+            SqlConnection connection = null;
+            SqlTransaction transaction = null;
             bool success;
-            if (!p.ContainsKey("id"))
-                success = InsertSubProject();
-            else
-                success = UpdateSubProject();
+
+            try
+            {
+                connection = DB.OpenConnection();
+                transaction = connection.BeginTransaction();
+
+                int cnt = (int)DB.GetScalar(connection, transaction, "select count(*) from project_sub where name = @name and project_main_id = @pmid", CommandType.Text, new[]
+                {
+                    new SqlParameter("@name", p["name"]),
+                    new SqlParameter("@pmid", p["project_main_id"])
+                });
+            
+                if(cnt > 0)
+                {
+                    MessageBox.Show("The sub project '" + p["name"] + "' already exists");
+                    return;
+                }
+
+                if (!p.ContainsKey("id"))
+                    success = InsertSubProject(connection, transaction);
+                else
+                    success = UpdateSubProject(connection, transaction);
+
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                transaction?.Rollback();
+                Common.Log.Error(ex);
+                return;
+            }
+            finally
+            {
+                connection?.Close();
+            }
 
             DialogResult = success ? DialogResult.OK : DialogResult.Abort;
             Close();
         }
 
-        private bool InsertSubProject()
-        {
-            SqlConnection connection = null;
-            SqlTransaction transaction = null;
+        private bool InsertSubProject(SqlConnection conn, SqlTransaction trans)
+        {            
+            p["create_date"] = DateTime.Now;
+            p["created_by"] = Common.Username;
+            p["update_date"] = DateTime.Now;
+            p["updated_by"] = Common.Username;                
 
-            try
-            {
-                p["create_date"] = DateTime.Now;
-                p["created_by"] = Common.Username;
-                p["update_date"] = DateTime.Now;
-                p["updated_by"] = Common.Username;
-
-                connection = DB.OpenConnection();
-                transaction = connection.BeginTransaction();
-
-                SqlCommand cmd = new SqlCommand("csp_insert_project_sub", connection, transaction);
-                cmd.CommandType = CommandType.StoredProcedure;
-                p["id"] = Guid.NewGuid();
-                cmd.Parameters.AddWithValue("@id", p["id"]);
-                cmd.Parameters.AddWithValue("@project_main_id", DB.MakeParam(typeof(Guid), p["project_main_id"]));
-                cmd.Parameters.AddWithValue("@name", p["name"]);
-                cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
-                cmd.Parameters.AddWithValue("@comment", p["comment"]);
-                cmd.Parameters.AddWithValue("@create_date", p["create_date"]);
-                cmd.Parameters.AddWithValue("@created_by", p["created_by"]);
-                cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
-                cmd.Parameters.AddWithValue("@updated_by", p["updated_by"]);
-                cmd.ExecuteNonQuery();
-
-                DB.AddAuditMessage(connection, transaction, "project_sub", (Guid)p["id"], AuditOperationType.Insert, JsonConvert.SerializeObject(p));
-
-                transaction.Commit();
-            }
-            catch (Exception ex)
-            {
-                transaction?.Rollback();
-                Common.Log.Error(ex);
-                return false;
-            }
-            finally
-            {
-                connection?.Close();
-            }
+            SqlCommand cmd = new SqlCommand("csp_insert_project_sub", conn, trans);
+            cmd.CommandType = CommandType.StoredProcedure;
+            p["id"] = Guid.NewGuid();
+            cmd.Parameters.AddWithValue("@id", p["id"]);
+            cmd.Parameters.AddWithValue("@project_main_id", DB.MakeParam(typeof(Guid), p["project_main_id"]));
+            cmd.Parameters.AddWithValue("@name", p["name"]);
+            cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
+            cmd.Parameters.AddWithValue("@comment", p["comment"]);
+            cmd.Parameters.AddWithValue("@create_date", p["create_date"]);
+            cmd.Parameters.AddWithValue("@created_by", p["created_by"]);
+            cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
+            cmd.Parameters.AddWithValue("@updated_by", p["updated_by"]);
+            cmd.ExecuteNonQuery();
 
             return true;
         }
 
-        private bool UpdateSubProject()
-        {
-            SqlConnection connection = null;
-            SqlTransaction transaction = null;
+        private bool UpdateSubProject(SqlConnection conn, SqlTransaction trans)
+        {            
+            p["update_date"] = DateTime.Now;
+            p["updated_by"] = Common.Username;
 
-            try
-            {
-                p["update_date"] = DateTime.Now;
-                p["updated_by"] = Common.Username;
-
-                connection = DB.OpenConnection();
-                transaction = connection.BeginTransaction();
-
-                SqlCommand cmd = new SqlCommand("csp_update_project_sub", connection, transaction);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@id", p["id"]);
-                cmd.Parameters.AddWithValue("@project_main_id", DB.MakeParam(typeof(Guid), p["project_main_id"]));
-                cmd.Parameters.AddWithValue("@name", p["name"]);
-                cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
-                cmd.Parameters.AddWithValue("@comment", p["comment"]);
-                cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
-                cmd.Parameters.AddWithValue("@updated_by", p["updated_by"]);
-                cmd.ExecuteNonQuery();
-
-                DB.AddAuditMessage(connection, transaction, "project_sub", (Guid)p["id"], AuditOperationType.Update, JsonConvert.SerializeObject(p));
-
-                transaction.Commit();
-            }
-            catch (Exception ex)
-            {
-                transaction?.Rollback();
-                Common.Log.Error(ex);
-                return false;
-            }
-            finally
-            {
-                connection?.Close();
-            }
-
+            SqlCommand cmd = new SqlCommand("csp_update_project_sub", conn, trans);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@id", p["id"]);
+            cmd.Parameters.AddWithValue("@project_main_id", DB.MakeParam(typeof(Guid), p["project_main_id"]));
+            cmd.Parameters.AddWithValue("@name", p["name"]);
+            cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
+            cmd.Parameters.AddWithValue("@comment", p["comment"]);
+            cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
+            cmd.Parameters.AddWithValue("@updated_by", p["updated_by"]);
+            cmd.ExecuteNonQuery();
+                
             return true;
         }
     }

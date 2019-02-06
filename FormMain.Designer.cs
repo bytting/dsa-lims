@@ -10476,7 +10476,7 @@
             this.btnSampleSelectCoords.Name = "btnSampleSelectCoords";
             this.btnSampleSelectCoords.Size = new System.Drawing.Size(316, 24);
             this.btnSampleSelectCoords.TabIndex = 61;
-            this.btnSampleSelectCoords.Text = "Select coords from map";
+            this.btnSampleSelectCoords.Text = "Select coordinates from map";
             this.btnSampleSelectCoords.UseVisualStyleBackColor = true;
             this.btnSampleSelectCoords.Click += new System.EventHandler(this.btnSampleSelectCoords_Click);
             // 

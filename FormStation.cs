@@ -90,9 +90,7 @@ namespace DSA_lims
         }
 
         private void FormStation_Load(object sender, EventArgs e)
-        {
-            tbLatitude.KeyPress += CustomEvents.Numeric_KeyPress;
-            tbLongitude.KeyPress += CustomEvents.Numeric_KeyPress;
+        {            
             tbAltitude.KeyPress += CustomEvents.Numeric_KeyPress;
         }
 
@@ -222,6 +220,16 @@ namespace DSA_lims
             cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
             cmd.Parameters.AddWithValue("@updated_by", p["updated_by"]);
             cmd.ExecuteNonQuery();
-        }        
+        }
+
+        private void btnSelectCoordsFromMap_Click(object sender, EventArgs e)
+        {
+            FormGetCoords form = new FormGetCoords();
+            if (form.ShowDialog() != DialogResult.OK)
+                return;
+
+            tbLatitude.Text = form.SelectedLatitude.ToString();
+            tbLongitude.Text = form.SelectedLongitude.ToString();
+        }
     }
 }

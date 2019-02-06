@@ -1965,11 +1965,12 @@ as
 		apm.comment as 'comment', 
 		apm.preparation_laboratory_id as 'preparation_laboratory_id', 
 		lab.name as 'preparation_laboratory_name', 
-		pm.name as 'preparation_method_name'
+		pm.name_short as 'preparation_method_name',
+		pm.name as 'preparation_method_name_full'
 	from assignment_preparation_method apm 
 		inner join preparation_method pm on apm.assignment_sample_type_id = @assignment_sample_type_id and apm.preparation_method_id = pm.id
 		left outer join laboratory lab on apm.preparation_laboratory_id = lab.id
-	order by pm.name
+	order by pm.name_short
 go
 
 /*===========================================================================*/
@@ -2021,10 +2022,11 @@ as
 		aam.id as 'id', 
 		aam.analysis_method_count as 'count', 
 		aam.comment as 'comment', 
-		am.name as 'analysis_method_name'
+		am.name_short as 'analysis_method_name',
+		am.name as 'analysis_method_name_full'
 	from assignment_analysis_method aam, analysis_method am
 	where aam.assignment_preparation_method_id = @assignment_preparation_method_id and aam.analysis_method_id = am.id
-	order by am.name
+	order by am.name_short
 go
 
 /*===========================================================================*/
@@ -2145,7 +2147,8 @@ if OBJECT_ID('dbo.preparation_method', 'U') is not null drop table preparation_m
 
 create table preparation_method (
 	id uniqueidentifier primary key not null,
-	name nvarchar(80) not null,
+	name nvarchar(200) not null,
+	name_short nvarchar(20) not null,
 	description_link nvarchar(1024) default null,
 	destructive bit default 0,	
 	instance_status_id int default 1,
@@ -2159,7 +2162,8 @@ go
 
 create proc csp_insert_preparation_method
 	@id uniqueidentifier,
-	@name nvarchar(80),
+	@name nvarchar(200),
+	@name_short nvarchar(20),
 	@description_link nvarchar(256),	
 	@destructive bit,	
 	@instance_status_id int,
@@ -2172,6 +2176,7 @@ as
 	insert into preparation_method values (
 		@id,
 		@name,
+		@name_short,
 		@description_link,		
 		@destructive,
 		@instance_status_id,
@@ -2185,7 +2190,8 @@ go
 
 create proc csp_update_preparation_method
 	@id uniqueidentifier,
-	@name nvarchar(80),
+	@name nvarchar(200),
+	@name_short nvarchar(20),
 	@description_link nvarchar(256),	
 	@destructive bit,	
 	@instance_status_id int,
@@ -2195,6 +2201,7 @@ create proc csp_update_preparation_method
 as 
 	update preparation_method set 
 		name = @name,
+		name_short = @name_short,
 		description_link = @description_link,
 		destructive = @destructive,
 		instance_status_id = @instance_status_id,
@@ -2222,10 +2229,12 @@ go
 create proc csp_select_preparation_methods_short
 	@instance_status_level int
 as
-	select id, name
+	select 
+		id as 'id', 
+		name_short as 'name'
 	from preparation_method
 	where instance_status_id <= @instance_status_level
-	order by name
+	order by name_short
 go
 
 create proc csp_select_preparation_methods_flat
@@ -2234,6 +2243,7 @@ as
 	select 
 		pm.id,
 		pm.name,
+		pm.name_short,
 		pm.description_link, 
 		pm.destructive, 
 		st.name as 'instance_status_name',
@@ -2244,6 +2254,15 @@ as
 		pm.updated_by
 	from preparation_method pm, instance_status st
 	where pm.instance_status_id = st.id and pm.instance_status_id <= @instance_status_level
+	order by pm.name
+go
+
+create proc csp_select_preparation_methods_for_sample_type
+	@sample_type_id uniqueidentifier
+as
+	select pm.* 
+	from preparation_method pm, sample_type_x_preparation_method stpm
+	where pm.id = stpm.preparation_method_id and stpm.sample_type_id = @sample_type_id
 	order by pm.name
 go
 
@@ -2406,7 +2425,8 @@ if OBJECT_ID('dbo.analysis_method', 'U') is not null drop table analysis_method;
 
 create table analysis_method (
 	id uniqueidentifier primary key not null,
-	name nvarchar(32) not null,
+	name nvarchar(200) not null,
+	name_short nvarchar(20) not null,
 	description_link nvarchar(1024) default null,
 	specter_reference_regexp nvarchar(256) default null,	
 	instance_status_id int default 1,
@@ -2420,7 +2440,8 @@ go
 
 create proc csp_insert_analysis_method
 	@id uniqueidentifier,
-	@name nvarchar(80),
+	@name nvarchar(200),
+	@name_short nvarchar(20),
 	@description_link nvarchar(256),	
 	@specter_reference_regexp nvarchar(256),	
 	@instance_status_id int,
@@ -2433,6 +2454,7 @@ as
 	insert into analysis_method values (
 		@id,
 		@name,
+		@name_short,
 		@description_link,		
 		@specter_reference_regexp,
 		@instance_status_id,
@@ -2446,7 +2468,8 @@ go
 
 create proc csp_update_analysis_method
 	@id uniqueidentifier,
-	@name nvarchar(80),
+	@name nvarchar(200),
+	@name_short nvarchar(20),
 	@description_link nvarchar(256),	
 	@specter_reference_regexp nvarchar(256),	
 	@instance_status_id int,
@@ -2456,6 +2479,7 @@ create proc csp_update_analysis_method
 as 
 	update analysis_method set 
 		name = @name,
+		name_short = @name_short,
 		description_link = @description_link,
 		specter_reference_regexp = @specter_reference_regexp,
 		instance_status_id = @instance_status_id,
@@ -2483,10 +2507,12 @@ go
 create proc csp_select_analysis_methods_short
 	@instance_status_level int
 as
-	select id, name
+	select 
+		id as 'id', 
+		name_short as 'name'
 	from analysis_method
 	where instance_status_id <= @instance_status_level
-	order by name
+	order by name_short
 go
 
 create proc csp_select_analysis_methods_flat
@@ -2495,6 +2521,7 @@ as
 	select 
 		am.id,
 		am.name,
+		am.name_short,
 		am.description_link, 
 		am.specter_reference_regexp, 
 		st.name as 'instance_status_name',
@@ -3824,15 +3851,6 @@ create table sample_type_x_preparation_method (
 	sample_type_id uniqueidentifier not null,
 	preparation_method_id uniqueidentifier not null
 )
-go
-
-create proc csp_select_preparation_methods_for_sample_type
-	@sample_type_id uniqueidentifier
-as
-	select pm.* 
-	from preparation_method pm, sample_type_x_preparation_method stpm
-	where pm.id = stpm.preparation_method_id and stpm.sample_type_id = @sample_type_id
-	order by pm.name
 go
 
 /*===========================================================================*/

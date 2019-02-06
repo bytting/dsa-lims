@@ -331,7 +331,7 @@ namespace DSA_lims
             cmd.CommandType = CommandType.Text;
             cmd.Parameters.AddWithValue("@id", labId);
             return cmd.ExecuteScalar().ToString();
-        }
+        }        
 
         public static bool IsOrderClosed(SqlConnection conn, SqlTransaction trans, Guid orderId)
         {
@@ -1501,6 +1501,7 @@ where an.id = @aid
     {        
         public AnalysisResult()
         {
+            Id = Guid.NewGuid();
             InstanceStatusId = InstanceStatus.Active;
         }
 

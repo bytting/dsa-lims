@@ -73,6 +73,7 @@ namespace DSA_lims
 
                     reader.Read();
                     tbName.Text = reader["name"].ToString();
+                    tbShortName.Text = reader["name_short"].ToString();
                     tbDescriptionLink.Text = reader["description_link"].ToString();
                     tbSpecRefRegExp.Text = reader["specter_reference_regexp"].ToString();
                     cboxInstanceStatus.SelectedValue = reader["instance_status_id"];
@@ -99,7 +100,14 @@ namespace DSA_lims
                 return;
             }
 
+            if (String.IsNullOrEmpty(tbShortName.Text.Trim()))
+            {
+                MessageBox.Show("Short name is mandatory");
+                return;
+            }
+
             p["name"] = tbName.Text.Trim();
+            p["name_short"] = tbShortName.Text.Trim();
             p["description_link"] = tbDescriptionLink.Text.Trim();
             p["specter_reference_regexp"] = tbSpecRefRegExp.Text.Trim();
             p["instance_status_id"] = cboxInstanceStatus.SelectedValue;
@@ -154,6 +162,7 @@ namespace DSA_lims
             p["id"] = Guid.NewGuid();
             cmd.Parameters.AddWithValue("@id", p["id"]);
             cmd.Parameters.AddWithValue("@name", p["name"]);
+            cmd.Parameters.AddWithValue("@name_short", p["name_short"]);
             cmd.Parameters.AddWithValue("@description_link", p["description_link"]);
             cmd.Parameters.AddWithValue("@specter_reference_regexp", p["specter_reference_regexp"]);
             cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
@@ -174,6 +183,7 @@ namespace DSA_lims
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@id", p["id"]);
             cmd.Parameters.AddWithValue("@name", p["name"]);
+            cmd.Parameters.AddWithValue("@name_short", p["name_short"]);
             cmd.Parameters.AddWithValue("@description_link", p["description_link"]);
             cmd.Parameters.AddWithValue("@specter_reference_regexp", p["specter_reference_regexp"]);
             cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);

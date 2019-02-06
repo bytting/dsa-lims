@@ -2144,7 +2144,7 @@ namespace DSA_lims
 
         private void miSamplesSetOrder_Click(object sender, EventArgs e)
         {
-            // add sample to order
+            // add sample to order 1
 
             if (!Roles.HasAccess(Role.LaboratoryAdministrator, Role.LaboratoryOperator))
             {
@@ -2260,7 +2260,7 @@ where s.id = @id
             }
 
             query = @"
-select p.id as 'preparation_id', p.number as 'preparation_number', a.name as 'assignment_name', pm.name as 'preparation_method_name', p.workflow_status_id
+select p.id as 'preparation_id', p.number as 'preparation_number', a.name as 'assignment_name', pm.name_short as 'preparation_method_name', pm.name as 'preparation_method_name_full', p.workflow_status_id
 from preparation p 
 inner join preparation_method pm on pm.id = p.preparation_method_id
 left outer join assignment a on a.id = p.assignment_id
@@ -2277,6 +2277,7 @@ order by p.number
                     if(!String.IsNullOrEmpty(reader["assignment_name"].ToString()))
                         txt += ", " + reader["assignment_name"].ToString();
                     TreeNode prepNode = sampleNode.Nodes.Add(reader["preparation_id"].ToString(), txt);
+                    prepNode.ToolTipText = reader["preparation_method_name_full"].ToString();
                     prepNode.ForeColor = WorkflowStatus.GetStatusColor(status);
                 }
             }
@@ -2285,7 +2286,7 @@ order by p.number
             {
                 Guid prepId = Guid.Parse(prepNode.Name);
                 query = @"
-select a.id as 'analysis_id', a.number as 'analysis_number', am.name as 'analysis_method_name', ass.name as 'assignment_name', a.workflow_status_id
+select a.id as 'analysis_id', a.number as 'analysis_number', am.name_short as 'analysis_method_name', am.name as 'analysis_method_name_full', ass.name as 'assignment_name', a.workflow_status_id
 from analysis a 
 inner join analysis_method am on am.id = a.analysis_method_id
 left outer join assignment ass on ass.id = a.assignment_id
@@ -2302,6 +2303,7 @@ order by a.number
                         if(!String.IsNullOrEmpty(reader["assignment_name"].ToString()))
                             txt += ", " + reader["assignment_name"].ToString();
                         TreeNode analNode = prepNode.Nodes.Add(reader["analysis_id"].ToString(), txt);
+                        analNode.ToolTipText = reader["analysis_method_name_full"].ToString();
                         analNode.ForeColor = WorkflowStatus.GetStatusColor(status);
                     }
                 }
@@ -3117,6 +3119,12 @@ order by a.number
                     MessageBox.Show("This order has been closed and can not be updated");
                     return;
                 }
+
+                if (DB.IsOrderApproved(conn, null, selectedOrderId))
+                {
+                    MessageBox.Show("This order has been approved and can not be updated");
+                    return;
+                }
             }
 
             FormOrderAddSampleType form = new FormOrderAddSampleType(selectedOrderId, treeSampleTypes);
@@ -3148,13 +3156,19 @@ order by a.number
             {
                 MessageBox.Show("You must select a sample type first");
                 return;
-            }
+            }            
 
             using (SqlConnection conn = DB.OpenConnection())
             {
                 if (DB.IsOrderClosed(conn, null, selectedOrderId))
                 {
                     MessageBox.Show("This order has been closed and can not be updated");
+                    return;
+                }
+
+                if (DB.IsOrderApproved(conn, null, selectedOrderId))
+                {
+                    MessageBox.Show("This order has been approved and can not be updated");
                     return;
                 }
             }
@@ -3197,6 +3211,12 @@ order by a.number
                 if (DB.IsOrderClosed(conn, null, selectedOrderId))
                 {
                     MessageBox.Show("This order has been closed and can not be updated");
+                    return;
+                }
+
+                if (DB.IsOrderApproved(conn, null, selectedOrderId))
+                {
+                    MessageBox.Show("This order has been approved and can not be updated");
                     return;
                 }
             }
@@ -3262,6 +3282,12 @@ order by a.number
                 if (DB.IsOrderClosed(conn, trans, selectedOrderId))
                 {
                     MessageBox.Show("This order has been closed and can not be updated");
+                    return;
+                }
+
+                if (DB.IsOrderApproved(conn, null, selectedOrderId))
+                {
+                    MessageBox.Show("This order has been approved and can not be updated");
                     return;
                 }
 
@@ -4944,40 +4970,64 @@ where id = @id
             }
 
             SqlConnection conn = null;
+            SqlTransaction trans = null;
+
             try
             {
                 conn = DB.OpenConnection();
+                trans = conn.BeginTransaction();
 
-                if (DB.IsOrderClosed(conn, null, selectedOrderId))
+                if (DB.IsOrderClosed(conn, trans, selectedOrderId))
                 {
+                    trans.Rollback();
                     MessageBox.Show("This order has been closed and can not be updated");
                     return;
                 }
 
+                SqlCommand cmd = new SqlCommand("", conn, trans);
+
                 if (cbOrderApprovedLaboratory.Checked)
                 {
                     int nSamples, nPreparations, nAnalyses;
-                    DB.GetOrderRequiredInventory(conn, null, selectedOrderId, out nSamples, out nPreparations, out nAnalyses);
+                    DB.GetOrderRequiredInventory(conn, trans, selectedOrderId, out nSamples, out nPreparations, out nAnalyses);
                     if (nPreparations < 1)
                     {
+                        trans.Rollback();
                         MessageBox.Show("Can not approve an order without any preparations");
                         return;
                     }
                 }
+                else
+                {
+                    cmd.CommandText = "update assignment set approved_customer = @approved_customer, approved_customer_by = @approved_customer_by where id = @id";
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.AddWithValue("@approved_customer", false);
+                    cmd.Parameters.AddWithValue("@approved_customer_by", DBNull.Value);
+                    cmd.Parameters.AddWithValue("@id", selectedOrderId);
+                    cmd.ExecuteNonQuery();
 
-                string query = "update assignment set approved_laboratory = @approved_laboratory, approved_laboratory_by = @approved_laboratory_by where id = @id";
-                SqlCommand cmd = new SqlCommand(query, conn);
+                    cbOrderApprovedCustomer.Checked = false;
+                    tbOrderApprovedCustomerBy.Text = "";
+                }
+
+                cmd.CommandText = "update assignment set approved_laboratory = @approved_laboratory, approved_laboratory_by = @approved_laboratory_by where id = @id";
+                cmd.CommandType = CommandType.Text;
+                cmd.Parameters.Clear();
                 cmd.Parameters.AddWithValue("@approved_laboratory", cbOrderApprovedLaboratory.Checked);
                 cmd.Parameters.AddWithValue("@approved_laboratory_by", Common.Username);
                 cmd.Parameters.AddWithValue("@id", selectedOrderId);
                 cmd.ExecuteNonQuery();
 
-                tbOrderApprovedLaboratoryBy.Text = DB.GetAccountNameFromUsername(conn, null, Common.Username);
+                tbOrderApprovedLaboratoryBy.Text = DB.GetAccountNameFromUsername(conn, trans, Common.Username);
 
-                SetStatusMessage("Approvement by laboratory updated for " + tbOrderName.Text, StatusMessageType.Success);
+                trans.Commit();
+
+                SetStatusMessage("Approvement by laboratory updated for " + tbOrderName.Text);
             }
             catch (Exception ex)
             {
+                trans?.Rollback();
                 Common.Log.Error(ex);
             }
             finally

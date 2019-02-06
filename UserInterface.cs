@@ -327,7 +327,8 @@ namespace DSA_lims
             grid.Columns["update_date"].Visible = false;
 
             grid.Columns["name"].HeaderText = "Name";
-            grid.Columns["description_link"].HeaderText = "Desc. link";
+            grid.Columns["name_short"].HeaderText = "Abbr.";
+            grid.Columns["description_link"].HeaderText = "Desc.link";
             grid.Columns["destructive"].HeaderText = "Destructive";
             grid.Columns["instance_status_name"].HeaderText = "Status";
         }        
@@ -345,7 +346,8 @@ namespace DSA_lims
             grid.Columns["update_date"].Visible = false;
 
             grid.Columns["name"].HeaderText = "Name";
-            grid.Columns["description_link"].HeaderText = "Desc. link";
+            grid.Columns["name_short"].HeaderText = "Abbr.";
+            grid.Columns["description_link"].HeaderText = "Desc.link";
             grid.Columns["specter_reference_regexp"].HeaderText = "Spec.Ref RE";
             grid.Columns["instance_status_name"].HeaderText = "Status";
         }        
@@ -559,6 +561,23 @@ order by create_date desc";
             grid.Columns["customer_company_name"].HeaderText = "Company";
         }
 
+        public static void PopulateOrdersConstruction(SqlConnection conn, Guid laboratoryId, DataGridView grid)
+        {
+            string query = @"
+select id, name, customer_contact_name, customer_company_name
+from assignment a 
+where laboratory_id = @laboratory_id and instance_status_id = 1 and workflow_status_id = 1
+order by create_date desc";
+
+            grid.DataSource = DB.GetDataTable(conn, null, query, CommandType.Text, new SqlParameter("@laboratory_id", laboratoryId));
+
+            grid.Columns["id"].Visible = false;
+
+            grid.Columns["name"].HeaderText = "Name";
+            grid.Columns["customer_contact_name"].HeaderText = "Customer";
+            grid.Columns["customer_company_name"].HeaderText = "Company";
+        }
+
         public static void PopulateOrderContent(SqlConnection conn, Guid selectedOrder, TreeView tree, Guid sampleTypeId, TreeView treeSampleTypes, bool useCommentToolTips)
         {
             tree.Nodes.Clear();
@@ -619,7 +638,12 @@ order by create_date desc";
                             txt += " (" + reader["preparation_laboratory_name"].ToString() + ")";
 
                         TreeNode tn = tnode.Nodes.Add(reader["id"].ToString(), txt);
-                        tn.ToolTipText = useCommentToolTips ? reader["comment"].ToString() : "";
+                        if(useCommentToolTips)
+                        {
+                            tn.ToolTipText = reader["preparation_method_name_full"].ToString() + 
+                                Environment.NewLine + Environment.NewLine + 
+                                reader["comment"].ToString();
+                        }                        
                     }
                 }
             }
@@ -637,7 +661,12 @@ order by create_date desc";
                         {
                             string txt = reader["count"].ToString() + ", " + reader["analysis_method_name"].ToString();
                             TreeNode tn2 = tn.Nodes.Add(reader["id"].ToString(), txt);
-                            tn2.ToolTipText = useCommentToolTips ? reader["comment"].ToString() : "";
+                            if (useCommentToolTips)
+                            {
+                                tn2.ToolTipText = reader["analysis_method_name_full"].ToString() +
+                                    Environment.NewLine + Environment.NewLine +
+                                    reader["comment"].ToString();
+                            }
                         }
                     }
                 }

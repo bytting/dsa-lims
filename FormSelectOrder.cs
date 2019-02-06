@@ -115,6 +115,12 @@ where sxast.sample_id = @sid";
             object o = null;
             using (SqlConnection conn = DB.OpenConnection())
             {
+                if(!DB.IsOrderApproved(conn, null, SelectedOrderId))
+                {
+                    MessageBox.Show("Can not add sample to this order. The order is not approved");
+                    return;
+                }
+
                 int nAvail = DB.GetAvailableSamplesOnAssignmentSampleType(conn, null, SelectedOrderLineId);
                 if(nAvail == 0)
                 {
@@ -328,7 +334,7 @@ where sxast.sample_id = @sid";
             Guid labId = Guid.Parse(cboxLaboratory.SelectedValue.ToString());
             using (SqlConnection conn = DB.OpenConnection())
             {
-                UI.PopulateOrders(conn, InstanceStatus.Active, labId, gridOrders);
+                UI.PopulateOrdersConstruction(conn, labId, gridOrders);
             }
         }
 

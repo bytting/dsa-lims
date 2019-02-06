@@ -21,8 +21,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
 
@@ -47,5 +45,7 @@ namespace DSA_lims
         public bool ScannerDuplex { get; set; }
         public string ScannerFlipType { get; set; }
         public string ScannerPixelType { get; set; }
+
+        public string MapProviderName { get; set; }
     }
 }

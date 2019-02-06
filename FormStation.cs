@@ -224,7 +224,19 @@ namespace DSA_lims
 
         private void btnSelectCoordsFromMap_Click(object sender, EventArgs e)
         {
-            FormGetCoords form = new FormGetCoords();
+            double? lat = null, lon = null;
+            
+            if(!String.IsNullOrEmpty(tbLatitude.Text) && !String.IsNullOrEmpty(tbLongitude.Text))
+            {
+                try
+                {
+                    lat = Convert.ToDouble(tbLatitude.Text);
+                    lon = Convert.ToDouble(tbLongitude.Text);
+                }
+                catch { }
+            }
+
+            FormGetCoords form = new FormGetCoords(lat, lon);
             if (form.ShowDialog() != DialogResult.OK)
                 return;
 

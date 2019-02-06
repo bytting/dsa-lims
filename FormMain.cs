@@ -6125,7 +6125,19 @@ where id = @id
 
         private void btnSampleSelectCoords_Click(object sender, EventArgs e)
         {
-            FormGetCoords form = new FormGetCoords();
+            double? lat = null, lon = null;
+
+            if (!String.IsNullOrEmpty(tbSampleInfoLatitude.Text) && !String.IsNullOrEmpty(tbSampleInfoLongitude.Text))
+            {
+                try
+                {
+                    lat = Convert.ToDouble(tbSampleInfoLatitude.Text);
+                    lon = Convert.ToDouble(tbSampleInfoLongitude.Text);
+                }
+                catch { }
+            }
+
+            FormGetCoords form = new FormGetCoords(lat, lon);
             if (form.ShowDialog() != DialogResult.OK)
                 return;
 

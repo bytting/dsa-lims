@@ -83,7 +83,11 @@ namespace DSA_lims
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
                     if (!reader.HasRows)
-                        throw new Exception("Sampler with ID " + p["id"] + " was not found");
+                    {
+                        Common.Log.Error("Sampler with ID " + p["id"] + " was not found");
+                        MessageBox.Show("Sampler with ID " + p["id"] + " was not found");
+                        Close();
+                    }
 
                     reader.Read();
                     cboxPersons.SelectedValue = reader["person_id"];
@@ -94,6 +98,8 @@ namespace DSA_lims
                     p["created_by"] = reader["created_by"];
                     p["update_date"] = reader["update_date"];
                     p["updated_by"] = reader["updated_by"];
+
+                    cboxPersons.Enabled = false;
                 }
             }
         }

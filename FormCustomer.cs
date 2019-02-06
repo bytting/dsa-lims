@@ -80,7 +80,11 @@ namespace DSA_lims
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
                     if (!reader.HasRows)
-                        throw new Exception("Customer with ID " + p["id"] + " was not found");
+                    {
+                        Common.Log.Error("Customer with ID " + p["id"] + " was not found");
+                        MessageBox.Show("Customer with ID " + p["id"] + " was not found");
+                        Close();
+                    }
 
                     reader.Read();
                     cboxPerson.SelectedValue = reader["person_id"];
@@ -91,6 +95,8 @@ namespace DSA_lims
                     p["created_by"] = reader["created_by"];
                     p["update_date"] = reader["update_date"];
                     p["updated_by"] = reader["updated_by"];
+
+                    cboxPerson.Enabled = false;
                 }
             }
         }

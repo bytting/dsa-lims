@@ -128,10 +128,19 @@ namespace DSA_lims
                 return;
             }
 
+            try
+            {
+                p["latitude"] = Utils.GetLatitude(tbLatitude.Text);
+                p["longitude"] = Utils.GetLongitude(tbLongitude.Text);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }            
+
             p["name"] = tbName.Text.Trim();
-            p["latitude"] = Convert.ToDouble(tbLatitude.Text.Trim());
-            p["longitude"] = Convert.ToDouble(tbLongitude.Text.Trim());
-            p["altitude"] = Convert.ToDouble(tbAltitude.Text.Trim());
+            p["altitude"] = Convert.ToDouble(tbAltitude.Text);
             p["instance_status_id"] = cboxInstanceStatus.SelectedValue;
             p["comment"] = tbComment.Text.Trim();
 

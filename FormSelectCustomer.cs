@@ -22,8 +22,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
-using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
@@ -31,18 +29,26 @@ namespace DSA_lims
 {
     public partial class FormSelectCustomer : Form
     {
+        private int mInstanceStatusLevel;
+
         public CustomerModel SelectedCustomer = new CustomerModel();
 
-        public FormSelectCustomer()
+        public FormSelectCustomer(int instanceStatusLevel)
         {
             InitializeComponent();
+
+            mInstanceStatusLevel = instanceStatusLevel;
         }
 
         private void FormSelectCustomer_Load(object sender, EventArgs e)
         {
             using (SqlConnection conn = DB.OpenConnection())
             {
-                UI.PopulateCustomers(conn, InstanceStatus.Active, gridCustomers);
+                UI.PopulateCustomers(conn, mInstanceStatusLevel, gridCustomers);
+
+                gridCustomers.Columns["company_email"].Visible = false;
+                gridCustomers.Columns["company_phone"].Visible = false;
+                gridCustomers.Columns["company_address"].Visible = false;
                 gridCustomers.Columns["instance_status_name"].Visible = false;
             }
         }

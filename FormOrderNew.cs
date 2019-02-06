@@ -212,7 +212,7 @@ namespace DSA_lims
 
         private void btnSelectCustomer_Click(object sender, EventArgs e)
         {
-            FormSelectCustomer form = new FormSelectCustomer();
+            FormSelectCustomer form = new FormSelectCustomer(InstanceStatus.Active);
             if (form.ShowDialog() != DialogResult.OK)
                 return;
 

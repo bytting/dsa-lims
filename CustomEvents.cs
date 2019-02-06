@@ -35,15 +35,15 @@ namespace DSA_lims
         public static void Numeric_KeyPress(object sender, KeyPressEventArgs e)
         {
             // Only allow decimals            
-            char sep = Convert.ToChar(CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator);
+            //char sep = Convert.ToChar(CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator);
 
             TextBox tb = (TextBox)sender;
-            if (e.KeyChar == sep)
+            if (e.KeyChar == Utils.NumberSeparatorChar)
             {
                 // Only allow one separator
                 foreach (char c in tb.Text)
                 {
-                    if (c == sep)
+                    if (c == Utils.NumberSeparatorChar)
                     {
                         e.Handled = true;
                         return;
@@ -70,7 +70,7 @@ namespace DSA_lims
                 }
             }
 
-            if (!Char.IsNumber(e.KeyChar) && !Char.IsControl(e.KeyChar) && e.KeyChar != sep && e.KeyChar != '-')
+            if (!Char.IsNumber(e.KeyChar) && !Char.IsControl(e.KeyChar) && e.KeyChar != Utils.NumberSeparatorChar && e.KeyChar != '-')
                 e.Handled = true;
         }
     }    

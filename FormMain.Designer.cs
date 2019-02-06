@@ -920,6 +920,7 @@
             this.btnMenu = new System.Windows.Forms.ToolStripButton();
             this.lblCurrentTab = new System.Windows.Forms.ToolStripLabel();
             this.btnBack = new System.Windows.Forms.ToolStripButton();
+            this.btnSampleSelectCoords = new System.Windows.Forms.Button();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tabs.SuspendLayout();
@@ -2875,6 +2876,7 @@
             this.layoutSample.Controls.Add(this.label26, 0, 11);
             this.layoutSample.Controls.Add(this.panel89, 1, 12);
             this.layoutSample.Controls.Add(this.tbSampleComment, 2, 10);
+            this.layoutSample.Controls.Add(this.btnSampleSelectCoords, 2, 6);
             this.layoutSample.Dock = System.Windows.Forms.DockStyle.Fill;
             this.layoutSample.Location = new System.Drawing.Point(3, 28);
             this.layoutSample.Name = "layoutSample";
@@ -3167,7 +3169,7 @@
             // 
             this.tbSampleInfoLongitude.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbSampleInfoLongitude.Location = new System.Drawing.Point(187, 0);
-            this.tbSampleInfoLongitude.MaxLength = 32;
+            this.tbSampleInfoLongitude.MaxLength = 40;
             this.tbSampleInfoLongitude.Name = "tbSampleInfoLongitude";
             this.tbSampleInfoLongitude.Size = new System.Drawing.Size(252, 20);
             this.tbSampleInfoLongitude.TabIndex = 10;
@@ -3185,7 +3187,7 @@
             // 
             this.tbSampleInfoLatitude.Dock = System.Windows.Forms.DockStyle.Left;
             this.tbSampleInfoLatitude.Location = new System.Drawing.Point(0, 0);
-            this.tbSampleInfoLatitude.MaxLength = 32;
+            this.tbSampleInfoLatitude.MaxLength = 40;
             this.tbSampleInfoLatitude.Name = "tbSampleInfoLatitude";
             this.tbSampleInfoLatitude.Size = new System.Drawing.Size(187, 20);
             this.tbSampleInfoLatitude.TabIndex = 9;
@@ -9947,10 +9949,10 @@
             this.tabPrepAnalAnalysis.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.tabPrepAnalAnalysis.Controls.Add(this.panel76);
             this.tabPrepAnalAnalysis.Controls.Add(this.panel63);
-            this.tabPrepAnalAnalysis.Location = new System.Drawing.Point(4, 24);
+            this.tabPrepAnalAnalysis.Location = new System.Drawing.Point(4, 22);
             this.tabPrepAnalAnalysis.Name = "tabPrepAnalAnalysis";
             this.tabPrepAnalAnalysis.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPrepAnalAnalysis.Size = new System.Drawing.Size(732, 598);
+            this.tabPrepAnalAnalysis.Size = new System.Drawing.Size(732, 600);
             this.tabPrepAnalAnalysis.TabIndex = 4;
             this.tabPrepAnalAnalysis.Text = "Analyses";
             // 
@@ -9961,7 +9963,7 @@
             this.panel76.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel76.Location = new System.Drawing.Point(3, 249);
             this.panel76.Name = "panel76";
-            this.panel76.Size = new System.Drawing.Size(726, 346);
+            this.panel76.Size = new System.Drawing.Size(726, 348);
             this.panel76.TabIndex = 3;
             // 
             // panel9
@@ -9971,7 +9973,7 @@
             this.panel9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel9.Location = new System.Drawing.Point(0, 0);
             this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(726, 320);
+            this.panel9.Size = new System.Drawing.Size(726, 322);
             this.panel9.TabIndex = 4;
             // 
             // gridPrepAnalResults
@@ -9989,7 +9991,7 @@
             this.gridPrepAnalResults.ReadOnly = true;
             this.gridPrepAnalResults.RowHeadersVisible = false;
             this.gridPrepAnalResults.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridPrepAnalResults.Size = new System.Drawing.Size(726, 295);
+            this.gridPrepAnalResults.Size = new System.Drawing.Size(726, 297);
             this.gridPrepAnalResults.TabIndex = 0;
             // 
             // toolsSampleResRes
@@ -10061,7 +10063,7 @@
             this.panel14.Controls.Add(this.btnPrepAnalAnalDiscard);
             this.panel14.Controls.Add(this.btnPrepAnalAnalUpdate);
             this.panel14.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel14.Location = new System.Drawing.Point(0, 320);
+            this.panel14.Location = new System.Drawing.Point(0, 322);
             this.panel14.Name = "panel14";
             this.panel14.Size = new System.Drawing.Size(726, 26);
             this.panel14.TabIndex = 5;
@@ -10466,6 +10468,17 @@
             this.btnBack.Text = "toolStripButton25";
             this.btnBack.ToolTipText = "Back";
             this.btnBack.Click += new System.EventHandler(this.miBack_Click);
+            // 
+            // btnSampleSelectCoords
+            // 
+            this.btnSampleSelectCoords.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnSampleSelectCoords.Location = new System.Drawing.Point(474, 163);
+            this.btnSampleSelectCoords.Name = "btnSampleSelectCoords";
+            this.btnSampleSelectCoords.Size = new System.Drawing.Size(316, 24);
+            this.btnSampleSelectCoords.TabIndex = 61;
+            this.btnSampleSelectCoords.Text = "Select coords from map";
+            this.btnSampleSelectCoords.UseVisualStyleBackColor = true;
+            this.btnSampleSelectCoords.Click += new System.EventHandler(this.btnSampleSelectCoords_Click);
             // 
             // FormMain
             // 
@@ -11853,6 +11866,7 @@
         private System.Windows.Forms.Button btnOrdersSearch;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.ComboBox cboxOrdersTop;
+        private System.Windows.Forms.Button btnSampleSelectCoords;
     }
 }
 

@@ -83,9 +83,7 @@ namespace DSA_lims
             tbMenuLookup.Text = "";
 
             tbMenuLookup.KeyPress += CustomEvents.Integer_KeyPress;
-            tbSamplesLookup.KeyPress += CustomEvents.Integer_KeyPress;
-            tbSampleInfoLatitude.KeyPress += CustomEvents.Numeric_KeyPress;
-            tbSampleInfoLongitude.KeyPress += CustomEvents.Numeric_KeyPress;
+            tbSamplesLookup.KeyPress += CustomEvents.Integer_KeyPress;            
             tbSampleInfoAltitude.KeyPress += CustomEvents.Numeric_KeyPress;
             tbPrepAnalWetWeight.KeyPress += CustomEvents.Numeric_KeyPress;
             tbPrepAnalDryWeight.KeyPress += CustomEvents.Numeric_KeyPress;
@@ -3475,7 +3473,7 @@ order by a.number
             {
                 UI.PopulateComboBoxes(conn, "csp_select_accounts_for_laboratory", new[] {
                     new SqlParameter("@laboratory_id", labId),
-                    new SqlParameter("@instance_status_level", InstanceStatus.Active)
+                    new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
                 }, cboxOrderResponsible);
             }
         }
@@ -3625,6 +3623,25 @@ order by a.number
                 return;
             }
 
+            double lat = -1d, lon = -1d, alt = -1d;
+
+            try
+            {
+                if (!String.IsNullOrEmpty(tbSampleInfoLatitude.Text.Trim()))
+                    lat = Utils.GetLatitude(tbSampleInfoLatitude.Text.Trim());
+
+                if (!String.IsNullOrEmpty(tbSampleInfoLongitude.Text.Trim()))
+                    lon = Utils.GetLongitude(tbSampleInfoLongitude.Text.Trim());                
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
+
+            if (!String.IsNullOrEmpty(tbSampleInfoAltitude.Text))
+                alt = Convert.ToDouble(tbSampleInfoAltitude.Text);
+
             SqlConnection conn = null;            
 
             try
@@ -3652,9 +3669,15 @@ order by a.number
                 cmd.Parameters.AddWithValue("@municipality_id", DB.MakeParam(typeof(Guid), cboxSampleMunicipalities.SelectedValue));
                 cmd.Parameters.AddWithValue("@location_type", DB.MakeParam(typeof(string), cboxSampleInfoLocationTypes.Text));
                 cmd.Parameters.AddWithValue("@location", DB.MakeParam(typeof(string), tbSampleLocation.Text.Trim()));
-                cmd.Parameters.AddWithValue("@latitude", DB.MakeParam(typeof(double), tbSampleInfoLatitude.Text.Trim()));
-                cmd.Parameters.AddWithValue("@longitude", DB.MakeParam(typeof(double), tbSampleInfoLongitude.Text.Trim()));
-                cmd.Parameters.AddWithValue("@altitude", DB.MakeParam(typeof(double), tbSampleInfoAltitude.Text.Trim()));
+                if(lat == -1d)
+                    cmd.Parameters.AddWithValue("@latitude", DBNull.Value);
+                else cmd.Parameters.AddWithValue("@latitude", lat);
+                if (lon == -1d)
+                    cmd.Parameters.AddWithValue("@longitude", DBNull.Value);
+                else cmd.Parameters.AddWithValue("@longitude", lon);
+                if (alt == -1d)
+                    cmd.Parameters.AddWithValue("@altitude", DBNull.Value);
+                else cmd.Parameters.AddWithValue("@altitude", alt);                
                 cmd.Parameters.AddWithValue("@sampling_date_from", DB.MakeParam(typeof(DateTime), tbSampleSamplingDateFrom.Tag));                
                 cmd.Parameters.AddWithValue("@sampling_date_to", DB.MakeParam(typeof(DateTime), tbSampleSamplingDateTo.Tag));
                 cmd.Parameters.AddWithValue("@reference_date", DB.MakeParam(typeof(DateTime), tbSampleReferenceDate.Tag));
@@ -4198,7 +4221,7 @@ order by a.number
 
         private void btnOrderSelectCustomer_Click(object sender, EventArgs e)
         {
-            FormSelectCustomer form = new FormSelectCustomer();
+            FormSelectCustomer form = new FormSelectCustomer(InstanceStatus.Deleted);
             if (form.ShowDialog() != DialogResult.OK)
                 return;
 
@@ -6098,6 +6121,16 @@ where id = @id
         private void cboxSamplesLaboratory_SelectedIndexChanged(object sender, EventArgs e)
         {
             btnSamplesSearch.ForeColor = Color.Red;
+        }
+
+        private void btnSampleSelectCoords_Click(object sender, EventArgs e)
+        {
+            FormGetCoords form = new FormGetCoords();
+            if (form.ShowDialog() != DialogResult.OK)
+                return;
+
+            tbSampleInfoLatitude.Text = form.SelectedLatitude.ToString();
+            tbSampleInfoLongitude.Text = form.SelectedLongitude.ToString();
         }
     }    
 }

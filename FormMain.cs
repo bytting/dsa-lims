@@ -2147,16 +2147,19 @@ namespace DSA_lims
 
         private void miSamplesSetOrder_Click(object sender, EventArgs e)
         {
-            // add sample to order 1
+            // add sample to order
+
+            if (gridSamples.SelectedRows.Count != 1)
+            {
+                MessageBox.Show("You must select a single sample first");
+                return;
+            }                
 
             if (!Roles.HasAccess(Role.LaboratoryAdministrator, Role.LaboratoryOperator))
             {
                 MessageBox.Show("You don't have access to add samples to orders");
                 return;
-            }
-
-            if (gridSamples.SelectedRows.Count < 1)
-                return;
+            }            
 
             Guid sampleId = Guid.Parse(gridSamples.SelectedRows[0].Cells["id"].Value.ToString());
             string sampleName = gridSamples.SelectedRows[0].Cells["number"].Value.ToString();

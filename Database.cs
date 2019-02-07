@@ -633,6 +633,25 @@ from role r
             return true;
         }
 
+        public static bool SpecRefExists(SqlConnection conn, SqlTransaction trans, string specref, Guid exceptId)
+        {
+            SqlCommand cmd = new SqlCommand("", conn, trans);
+            string query = "select count(*) from analysis where specter_reference = @specref";
+            cmd.Parameters.AddWithValue("@specref", specref);
+            if (exceptId != Guid.Empty)
+            {
+                query += " and id not in(@exId)";
+                cmd.Parameters.AddWithValue("@exId", exceptId);
+            }
+            cmd.CommandText = query;
+
+            int cnt = (int)cmd.ExecuteScalar();
+            if (cnt > 0)            
+                return true;
+
+            return false;
+        }
+
         public static void AddAttachment(SqlConnection conn, SqlTransaction trans, string sourceTable, Guid sourceId, string docName, string docExtension, byte[] data)
         {            
             SqlCommand cmd = new SqlCommand("insert into attachment values(@id, @source_table, @source_id, @label, @file_extension, @content, @create_date, @created_by)", conn, trans);

@@ -3836,7 +3836,7 @@ order by a.number
                 {
                     MessageBox.Show("This analysis belongs to a closed order and can not be updated");
                     return;
-                }
+                }                
 
                 analysis.ActivityUnitId = Guid.Parse(cboxPrepAnalAnalUnit.SelectedValue.ToString());
                 analysis.ActivityUnitTypeId = Guid.Parse(cboxPrepAnalAnalUnitType.SelectedValue.ToString());

@@ -135,6 +135,7 @@ namespace DSA_lims
                     query += " and id not in(@exId)";
                     cmd.Parameters.AddWithValue("@exId", MunicipalityId);
                 }
+                cmd.CommandText = query;
 
                 int cnt = (int)cmd.ExecuteScalar();
                 if (cnt > 0)

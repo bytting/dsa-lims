@@ -368,8 +368,17 @@ namespace DSA_lims
         }
 
         private void btnOk_Click(object sender, EventArgs e)
-        {            
-            foreach(AnalysisResult r in mAnalysis.Results)
+        {
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                if (!String.IsNullOrEmpty(mAnalysis.SpecterReference) && DB.SpecRefExists(conn, null, mAnalysis.SpecterReference, mAnalysis.Id))
+                {
+                    MessageBox.Show("Can not import file. Specter reference has already been used");
+                    return;
+                }
+            }
+
+            foreach (AnalysisResult r in mAnalysis.Results)
             {
                 bool approved = r.ActivityApproved || r.DetectionLimitApproved;
                 bool prop = r.Accredited || r.Reportable;

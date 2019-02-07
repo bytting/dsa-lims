@@ -901,12 +901,13 @@ select
             _Dirty = false;
         }
 
-        public static void AddAuditMessage(SqlConnection conn, SqlTransaction trans, Guid preparationId, AuditOperationType operation, string comment)
+        public static string ToJSON(SqlConnection conn, SqlTransaction trans, Guid prepId)
         {
+            string json = String.Empty;
             Dictionary<string, object> map = new Dictionary<string, object>();
 
-            using (SqlDataReader reader = DB.GetDataReader(conn, trans, "csp_select_preparation_informative", CommandType.StoredProcedure,
-                new SqlParameter("@id", preparationId)))
+            using (SqlDataReader reader = DB.GetDataReader(conn, trans, "csp_select_preparation_flat", CommandType.StoredProcedure,
+                new SqlParameter("@id", prepId)))
             {
                 if (reader.HasRows)
                 {
@@ -918,11 +919,12 @@ select
 
                     foreach (var col in cols)
                         map.Add(col, reader[col]);
+
+                    json = JsonConvert.SerializeObject(map, Formatting.None);
                 }
             }
 
-            string json = JsonConvert.SerializeObject(map, Formatting.None);
-            DB.AddAuditMessage(conn, trans, "preparation", preparationId, operation, json, comment);
+            return json;
         }
 
         public bool LoadFromDB(SqlConnection conn, SqlTransaction trans, Guid preparationId)
@@ -998,7 +1000,9 @@ select
 
                 cmd.ExecuteNonQuery();
 
-                AddAuditMessage(conn, trans, Id, AuditOperationType.Insert, "");
+                string json = Preparation.ToJSON(conn, trans, Id);
+                if (!String.IsNullOrEmpty(json))
+                    DB.AddAuditMessage(conn, trans, "preparation", Id, AuditOperationType.Insert, json, "");
 
                 _Dirty = false;
                 res = true;
@@ -1025,7 +1029,9 @@ select
 
                     cmd.ExecuteNonQuery();
 
-                    AddAuditMessage(conn, trans, Id, AuditOperationType.Update, "");
+                    string json = Preparation.ToJSON(conn, trans, Id);
+                    if (!String.IsNullOrEmpty(json))
+                        DB.AddAuditMessage(conn, trans, "preparation", Id, AuditOperationType.Update, json, "");
 
                     _Dirty = false;
                     res = true;
@@ -1187,28 +1193,30 @@ where p.assignment_id = ast.assignment_id
             return a;
         }
 
-        public static void AddAuditMessage(SqlConnection conn, SqlTransaction trans, Guid analysisId, AuditOperationType operation, string comment)
+        public static string ToJSON(SqlConnection conn, SqlTransaction trans, Guid analId)
         {
+            string json = String.Empty;
             Dictionary<string, object> map = new Dictionary<string, object>();
-            
-            using (SqlDataReader reader = DB.GetDataReader(conn, trans, "csp_select_analysis_informative", CommandType.StoredProcedure,
-                new SqlParameter("@id", analysisId)))
+
+            using (SqlDataReader reader = DB.GetDataReader(conn, trans, "csp_select_analysis_flat", CommandType.StoredProcedure,
+                new SqlParameter("@id", analId)))
             {
-                if(reader.HasRows)
+                if (reader.HasRows)
                 {
                     reader.Read();
-                                      
+
                     var cols = new List<string>();
                     for (int i = 0; i < reader.FieldCount; i++)
                         cols.Add(reader.GetName(i));
 
                     foreach (var col in cols)
                         map.Add(col, reader[col]);
+
+                    json = JsonConvert.SerializeObject(map, Formatting.None);
                 }
             }
 
-            string json = JsonConvert.SerializeObject(map, Formatting.None);
-            DB.AddAuditMessage(conn, trans, "analysis", analysisId, operation, json, comment);
+            return json;
         }
 
         public void LoadFromDB(SqlConnection conn, SqlTransaction trans, Guid analysisId)
@@ -1318,7 +1326,9 @@ where p.assignment_id = ast.assignment_id
 
                 cmd.ExecuteNonQuery();
 
-                AddAuditMessage(conn, trans, Id, AuditOperationType.Insert, "");
+                string json = Analysis.ToJSON(conn, trans, Id);
+                if (!String.IsNullOrEmpty(json))
+                    DB.AddAuditMessage(conn, trans, "analysis", Id, AuditOperationType.Insert, json, "");
 
                 _Dirty = false;
             }
@@ -1344,7 +1354,9 @@ where p.assignment_id = ast.assignment_id
 
                     cmd.ExecuteNonQuery();
 
-                    AddAuditMessage(conn, trans, Id, AuditOperationType.Update, "");
+                    string json = Analysis.ToJSON(conn, trans, Id);
+                    if (!String.IsNullOrEmpty(json))
+                        DB.AddAuditMessage(conn, trans, "analysis", Id, AuditOperationType.Update, json, "");
 
                     _Dirty = false;
                 }
@@ -1399,7 +1411,9 @@ where id = @id
 
                         cmd.ExecuteNonQuery();
 
-                        AnalysisResult.AddAuditMessage(conn, trans, r.Id, AuditOperationType.Update, "");
+                        string json = AnalysisResult.ToJSON(conn, trans, r.Id);
+                        if (!String.IsNullOrEmpty(json))
+                            DB.AddAuditMessage(conn, trans, "analysis_result", r.Id, AuditOperationType.Update, json, "");
 
                         r._Dirty = false;
                     }
@@ -1455,7 +1469,9 @@ insert into analysis_result values(
 
                     cmd.ExecuteNonQuery();
 
-                    AnalysisResult.AddAuditMessage(conn, trans, r.Id, AuditOperationType.Insert, "");
+                    string json = AnalysisResult.ToJSON(conn, trans, r.Id);
+                    if(!String.IsNullOrEmpty(json))
+                        DB.AddAuditMessage(conn, trans, "analysis_result", r.Id, AuditOperationType.Insert, json, "");
 
                     r._Dirty = false;
                 }
@@ -1541,12 +1557,13 @@ where an.id = @aid
 
         public bool _Dirty;
 
-        public static void AddAuditMessage(SqlConnection conn, SqlTransaction trans, Guid analysisResultId, AuditOperationType operation, string comment)
+        public static string ToJSON(SqlConnection conn, SqlTransaction trans, Guid analResId)
         {
+            string json = String.Empty;
             Dictionary<string, object> map = new Dictionary<string, object>();
 
-            using (SqlDataReader reader = DB.GetDataReader(conn, trans, "csp_select_analysis_result_informative", CommandType.StoredProcedure,
-                new SqlParameter("@id", analysisResultId)))
+            using (SqlDataReader reader = DB.GetDataReader(conn, trans, "csp_select_analysis_result_flat", CommandType.StoredProcedure,
+                new SqlParameter("@id", analResId)))
             {
                 if (reader.HasRows)
                 {
@@ -1558,11 +1575,12 @@ where an.id = @aid
 
                     foreach (var col in cols)
                         map.Add(col, reader[col]);
+
+                    json = JsonConvert.SerializeObject(map, Formatting.None);
                 }
             }
 
-            string json = JsonConvert.SerializeObject(map, Formatting.None);
-            DB.AddAuditMessage(conn, trans, "analysis_result", analysisResultId, operation, json, comment);
+            return json;
         }
     }
 
@@ -1570,7 +1588,6 @@ where an.id = @aid
     {
         public PreparationGeometry()
         {
-
         }
 
         public PreparationGeometry(SqlConnection conn, SqlTransaction trans, Guid id)

@@ -35,6 +35,7 @@ using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
 using System.Diagnostics;
+using Newtonsoft.Json;
 
 namespace DSA_lims
 {
@@ -6172,6 +6173,53 @@ where id = @id
 
             tbSampleInfoLatitude.Text = form.SelectedLatitude.ToString();
             tbSampleInfoLongitude.Text = form.SelectedLongitude.ToString();
+        }
+
+        private void btnPrepAnalShowAudit_Click(object sender, EventArgs e)
+        {
+            if (treePrepAnal.SelectedNode == null)
+                return;
+
+            string title;
+
+            switch (treePrepAnal.SelectedNode.Level)
+            {
+                case 0:
+                    break;
+                case 1:
+                    Guid pid = Guid.Parse(treePrepAnal.SelectedNode.Name);
+                    title = treePrepAnal.SelectedNode.Parent.Text + "     " + treePrepAnal.SelectedNode.Text;
+                    ShowAuditLog("preparation", pid, title);
+                    break;
+                case 2:
+                    Guid aid = Guid.Parse(treePrepAnal.SelectedNode.Name);
+                    title = treePrepAnal.SelectedNode.Parent.Parent.Text + "     " + treePrepAnal.SelectedNode.Parent.Text + "     " + treePrepAnal.SelectedNode.Text;
+                    ShowAuditLog("analysis", aid, title);
+                    break;
+            }
+        }
+
+        private void ShowAuditLog(string table, Guid id, string title)
+        {
+            lbAuditLog.Items.Clear();
+            lblAuditLogTitle.Text = title;
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                string query = "select value from audit_log where source_table = @table and source_id = @id order by create_date desc";
+                using (SqlDataReader reader = DB.GetDataReader(conn, null, query, CommandType.Text, new[] {
+                    new SqlParameter("@table", table),
+                    new SqlParameter("@id", id),
+                }))
+                {
+                    while (reader.Read())
+                    {
+                        lbAuditLog.Items.Add(reader["value"].ToString());                        
+                    }
+                }                
+            }
+
+            tabs.SelectedTab = tabAuditLog;
         }
     }    
 }

@@ -241,7 +241,9 @@ where sxast.sample_id = @sid";
 
                             cmd.ExecuteNonQuery();
 
-                            Preparation.AddAuditMessage(connection, transaction, newPrepId, AuditOperationType.Insert, "");
+                            string json = Preparation.ToJSON(connection, transaction, newPrepId);
+                            if (!String.IsNullOrEmpty(json))
+                                DB.AddAuditMessage(connection, transaction, "preparation", newPrepId, AuditOperationType.Insert, json, "");
 
                             GenerateOrderAnalyses(connection, transaction, orderId, labId, newPrepId, tnode.Nodes);
 
@@ -316,7 +318,9 @@ where sxast.sample_id = @sid";
                                         
                     cmd.ExecuteNonQuery();
 
-                    Analysis.AddAuditMessage(conn, trans, newAnalId, AuditOperationType.Insert, "");
+                    string json = Analysis.ToJSON(conn, trans, newAnalId);
+                    if (!String.IsNullOrEmpty(json))
+                        DB.AddAuditMessage(conn, trans, "analysis", newAnalId, AuditOperationType.Insert, json, "");
 
                     analCount--;
                 }

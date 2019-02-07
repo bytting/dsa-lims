@@ -26,15 +26,20 @@ namespace DSA_lims
             get { return p.ContainsKey("name") ? p["name"].ToString() : String.Empty; }
         }
 
-        public FormSampleComponent(Guid sampleTypeId)
+        public FormSampleComponent(Guid sampleTypeId, string sampleTypeName)
         {
             InitializeComponent();
+
+            tbSampleType.Text = sampleTypeName;
             p["sample_type_id"] = sampleTypeId;
+            ActiveControl = tbName;
         }
 
-        public FormSampleComponent(Guid sampleTypeId, Guid sampleComponentId)
+        public FormSampleComponent(Guid sampleTypeId, string sampleTypeName, Guid sampleComponentId)
         {
             InitializeComponent();
+
+            tbSampleType.Text = sampleTypeName;
             p["id"] = sampleComponentId;
 
             using (SqlConnection conn = DB.OpenConnection())
@@ -56,6 +61,8 @@ namespace DSA_lims
                     p["updated_by"] = reader["updated_by"];
                 }
             }
+
+            ActiveControl = tbName;
         }
 
         private void btnCancel_Click(object sender, EventArgs e)

@@ -608,12 +608,27 @@ from role r
 
         public static bool SampleHasRequiredFields(SqlConnection conn, SqlTransaction trans, Guid sampleId)
         {
-            object o = DB.GetScalar(conn, trans, "select reference_date from sample where id = @id", CommandType.Text, new[] {
-                new SqlParameter("@id", sampleId)
-            });
+            string query = "select number, sample_type_id, project_sub_id, laboratory_id, reference_date from sample where id = @id";
 
-            if (!IsValidField(o))
-                return false;
+            using (SqlDataReader reader = DB.GetDataReader(conn, trans, query, CommandType.Text, new SqlParameter("@id", sampleId)))
+            {
+                if (!reader.HasRows)
+                    return false;
+
+                reader.Read();
+
+                if (!IsValidField(reader["number"])             
+                    || !IsValidField(reader["sample_type_id"]) 
+                    || !IsValidField(reader["project_sub_id"]) 
+                    || !IsValidField(reader["laboratory_id"]) 
+                    || !IsValidField(reader["reference_date"]))
+                    return false;
+
+                if (!Utils.IsValidGuid(reader["sample_type_id"]) 
+                    || !Utils.IsValidGuid(reader["project_sub_id"]) 
+                    || !Utils.IsValidGuid(reader["laboratory_id"]))
+                    return false;
+            }
 
             return true;
         }

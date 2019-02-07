@@ -139,6 +139,7 @@ namespace DSA_lims
             bool initialized = false;
             while (!initialized)
             {
+                HideMenuItems();
                 ShowLogin();
                 initialized = InitializeUI();
                 Application.Idle += Application_Idle;
@@ -468,6 +469,7 @@ namespace DSA_lims
             bool initialized = false;
             while (!initialized)
             {
+                HideMenuItems();
                 ShowLogin();
                 initialized = InitializeUI();
             }
@@ -1812,6 +1814,8 @@ namespace DSA_lims
 
             tabs.SelectedTab = tabSample;
 
+            btnSamplesSearch.ForeColor = Color.Red;
+
             SetStatusMessage("Sample " + form.SampleNumber + " created successfully");
         }
 
@@ -1852,9 +1856,9 @@ namespace DSA_lims
         {
             // edit sample
 
-            if(gridSamples.SelectedRows.Count < 1)
+            if(gridSamples.SelectedRows.Count != 1)
             {
-                MessageBox.Show("You must select a sample first");
+                MessageBox.Show("You must select a single sample first");
                 return;
             }
 
@@ -2660,7 +2664,7 @@ order by name
             // new sample component
             Guid sampleTypeId = Guid.Parse(treeSampleTypes.SelectedNode.Name);
 
-            FormSampleComponent form = new FormSampleComponent(sampleTypeId);
+            FormSampleComponent form = new FormSampleComponent(sampleTypeId, treeSampleTypes.SelectedNode.Text);
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
@@ -2702,7 +2706,7 @@ order by name
 
             Lemma<Guid, string> sampleComponent = lbSampleTypesComponents.SelectedItems[0] as Lemma<Guid, string>;
 
-            FormSampleComponent form = new FormSampleComponent(sampleTypeId, sampleComponent.Id);
+            FormSampleComponent form = new FormSampleComponent(sampleTypeId, treeSampleTypes.SelectedNode.Text, sampleComponent.Id);
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
@@ -4164,13 +4168,24 @@ order by a.number
                 return;
 
             tbSampleSamplingDateFrom.Tag = form.SelectedDateTime;
-            tbSampleSamplingDateFrom.Text = form.SelectedDateTime.ToString(Utils.DateTimeFormatNorwegian);            
+            tbSampleSamplingDateFrom.Text = form.SelectedDateTime.ToString(Utils.DateTimeFormatNorwegian);
+
+            btnSampleSamplingDateTo.Enabled = true;
+            btnSampleSamplingDateToClear.Enabled = true;
+            tbSampleSamplingDateTo.Enabled = true;
         }
 
         private void btnSampleSamplingDateFromClear_Click(object sender, EventArgs e)
-        {            
+        {
+            tbSampleSamplingDateTo.Tag = null;
+            tbSampleSamplingDateTo.Text = "";
+            tbSampleSamplingDateTo.Enabled = false;
+
+            btnSampleSamplingDateTo.Enabled = false;
+            btnSampleSamplingDateToClear.Enabled = false;
+
             tbSampleSamplingDateFrom.Tag = null;
-            tbSampleSamplingDateFrom.Text = "";
+            tbSampleSamplingDateFrom.Text = "";            
         }
 
         private void btnSampleSamplingDateToClear_Click(object sender, EventArgs e)
@@ -5277,11 +5292,13 @@ where id = @id
 
         private void btnSamplePrintSampleLabel_Click(object sender, EventArgs e)
         {
-            string sampleType = cboxSampleSampleType.Text;
-            if(String.IsNullOrEmpty(sampleType))
+            using (SqlConnection conn = DB.OpenConnection())
             {
-                MessageBox.Show("Missing sample type");
-                return;
+                if (!DB.SampleHasRequiredFields(conn, null, selectedSampleId))
+                {
+                    MessageBox.Show("Can not print label. Required fields for this sample must be saved first");
+                    return;
+                }
             }
 
             List<Guid> sampleIds = new List<Guid>();
@@ -5448,7 +5465,7 @@ where id = @id
         {
             if(gridSamples.SelectedRows.Count < 1)
             {
-                MessageBox.Show("No sample selected");
+                MessageBox.Show("No samples selected");
                 return;
             }
 
@@ -5458,8 +5475,20 @@ where id = @id
             {
                 Guid sid = Guid.Parse(row.Cells["id"].Value.ToString());
                 sampleIds.Add(sid);
-            }            
-            
+            }
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                foreach (Guid sid in sampleIds)
+                {
+                    if (!DB.SampleHasRequiredFields(conn, null, sid))
+                    {
+                        MessageBox.Show("Can not print labels. Required fields missing for one or more samples");
+                        return;
+                    }
+                }
+            }
+
             FormPrintSampleLabel form = new FormPrintSampleLabel(Common.Settings, sampleIds);
             form.ShowDialog();
         }

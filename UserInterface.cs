@@ -358,7 +358,7 @@ namespace DSA_lims
             foreach (SampleTypeModel st in children)
             {
                 TreeNode n = tnode.Nodes.Add(st.Id.ToString(), st.Name);
-                n.ToolTipText = n.FullPath + Environment.NewLine + Environment.NewLine + "Common name: " + st.NameCommon + Environment.NewLine + "Latin name: " + st.NameLatin;
+                n.ToolTipText = n.FullPath + Environment.NewLine + Environment.NewLine + "English name: " + st.NameCommon + Environment.NewLine + "Latin name: " + st.NameLatin;
                 n.Tag = n.FullPath;
                 AddSampleTypeChildren(sampleTypeList, n);
             }
@@ -373,7 +373,7 @@ namespace DSA_lims
                 foreach (SampleTypeModel st in roots)
                 {
                     TreeNode n = tree.Nodes.Add(st.Id.ToString(), st.Name);
-                    n.ToolTipText = n.FullPath + Environment.NewLine + Environment.NewLine + "Common name: " + st.NameCommon + Environment.NewLine + "Latin name: " + st.NameLatin;
+                    n.ToolTipText = n.FullPath + Environment.NewLine + Environment.NewLine + "English name: " + st.NameCommon + Environment.NewLine + "Latin name: " + st.NameLatin;
                     n.Tag = n.FullPath;
                 }
 

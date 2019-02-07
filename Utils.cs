@@ -24,14 +24,13 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace DSA_lims
 {
     public static class Utils
     {        
         public static string NumberSeparator = CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator;
-        public static char NumberSeparatorChar = Convert.ToChar(CultureInfo.InvariantCulture.NumberFormat.NumberDecimalSeparator);
+        public static char NumberSeparatorChar = Convert.ToChar(NumberSeparator);
 
         public static int MIN_USERNAME_LENGTH { get { return 3; } }
         public static int MIN_PASSWORD_LENGTH { get { return 8; } }

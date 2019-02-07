@@ -297,11 +297,7 @@ namespace DSA_lims
 
                     UI.PopulateComboBoxes(conn, "csp_select_laboratories_short", new[] {
                         new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
-                    }, cboxSamplesLaboratory);
-
-                    UI.PopulateComboBoxes(conn, "csp_select_laboratories_short", new[] {
-                        new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
-                    }, cboxOrdersLaboratory);
+                    }, cboxSamplesLaboratory, cboxOrdersLaboratory);
                 }
 
                 cboxOrdersTop.DataSource = DB.GetTopValues();
@@ -2856,6 +2852,15 @@ order by name
             selectedOrderId = form.OrderId;
             tbOrderName.Text = form.OrderName;
             PopulateOrder(selectedOrderId);
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                UI.PopulateComboBoxes(conn, "csp_select_assignments_short", new[] {
+                    new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
+                }, cboxSamplesOrders);
+
+                UI.PopulateOrderYears(conn, cboxOrdersYear);
+            }
 
             tabs.SelectedTab = tabOrder;
         }

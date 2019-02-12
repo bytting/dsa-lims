@@ -600,6 +600,8 @@ namespace DSA_lims
             miSamplesUnlock.Enabled = btnSamplesUnlock.Visible = isAdmin;
             miOrdersUnlock.Enabled = btnOrdersUnlock.Visible = isAdmin;
 
+            cboxOrderStatus.Enabled = cbOrderApprovedLaboratory.Enabled = Roles.HasAccess(Role.LaboratoryAdministrator);
+
             // FIXME: Accreditation rules
 
             if (Roles.HasAccess(Role.LaboratoryAdministrator))
@@ -2978,7 +2980,7 @@ order by s.number
 
             foreach(TreeNode tnode in root.Nodes)
             {
-                Guid sid = Guid.Parse(tnode.Name);
+                Guid sid = Guid.Parse(tnode.Name);  
                 string queryPrep = @"
 select 
 p.id as 'preparation_id',
@@ -2990,12 +2992,11 @@ p.comment as 'preparation_comment'
 from preparation p
 inner join preparation_method pm on p.preparation_method_id = pm.id
 inner join workflow_status ws on p.workflow_status_id = ws.id
-where p.sample_id = @sid and p.assignment_id = @assid
+where p.sample_id = @sid
 order by p.number
-";
+";                
                 using (SqlDataReader reader = DB.GetDataReader(conn, null, queryPrep, CommandType.Text, new[] {
-                    new SqlParameter("@sid", sid),
-                    new SqlParameter("@assid", a.Id)
+                    new SqlParameter("@sid", sid)                    
                 }))
                 {
                     while (reader.Read())
@@ -3232,21 +3233,9 @@ order by a.number
         private void miOrderSave_Click(object sender, EventArgs e)
         {
             // save order            
-            /*if (assignment.WorkflowStatusId == WorkflowStatus.Complete)
+            if(!assignment.IsDirty)
             {
-                MessageBox.Show("This order has been closed and can not be updated");
-                return;
-            }
-
-            if (assignment.ApprovedLaboratory || assignment.ApprovedCustomer)
-            {
-                MessageBox.Show("This order has been approved and can not be updated");
-                return;
-            }*/
-
-            if (!Utils.IsValidGuid(cboxOrderLaboratory.SelectedValue))
-            {
-                MessageBox.Show("Laboratory is mandatory");
+                SetStatusMessage("Nothing to save for order " + assignment.Name);
                 return;
             }
 
@@ -3276,16 +3265,26 @@ order by a.number
                 return;
             }
 
-            assignment.LaboratoryId = Guid.Parse(cboxOrderLaboratory.SelectedValue.ToString());
-            assignment.AccountId = Guid.Parse(cboxOrderResponsible.SelectedValue.ToString());
-            assignment.Deadline = deadline;
-            assignment.RequestedSigmaAct = Convert.ToDouble(cboxOrderRequestedSigma.SelectedValue);
-            assignment.RequestedSigmaMDA = Convert.ToDouble(cboxOrderRequestedSigmaMDA.SelectedValue);
-            assignment.ContentComment = tbOrderContentComment.Text.Trim();
-            assignment.ApprovedLaboratory = cbOrderApprovedLaboratory.Checked;
-            assignment.ApprovedCustomer = cbOrderApprovedCustomer.Checked;
-            assignment.ReportComment = tbOrderReportComment.Text.Trim();
-            assignment.WorkflowStatusId = Convert.ToInt32(cboxOrderStatus.SelectedValue);
+            if (assignment.ApprovedLaboratory != cbOrderApprovedLaboratory.Checked)
+            {
+                if (!Roles.HasAccess(Role.LaboratoryAdministrator))
+                {
+                    MessageBox.Show("You are not allowed to approve orders");
+                    return;
+                }
+            }
+
+            if (cbOrderApprovedCustomer.Checked && !cbOrderApprovedLaboratory.Checked)
+            {
+                MessageBox.Show("Laboratory must approve this order before customer");
+                return;
+            }
+
+            if (!Utils.IsValidGuid(cboxOrderLaboratory.SelectedValue))
+            {
+                MessageBox.Show("Laboratory is mandatory");
+                return;
+            }
 
             SqlConnection conn = null;
             SqlTransaction trans = null;
@@ -3294,6 +3293,46 @@ order by a.number
             {
                 conn = DB.OpenConnection();
                 trans = conn.BeginTransaction();
+
+                int wfStatus = Convert.ToInt32(cboxOrderStatus.SelectedValue);
+
+                if (wfStatus == WorkflowStatus.Complete)
+                {
+                    int nCurrSamples, nCurrPreparations, nCurrAnalyses;
+                    DB.GetOrderCurrentInventory(conn, trans, assignment.Id, out nCurrSamples, out nCurrPreparations, out nCurrAnalyses);
+
+                    int nReqSamples, nReqPreparations, nReqAnalyses;
+                    DB.GetOrderRequiredInventory(conn, trans, assignment.Id, out nReqSamples, out nReqPreparations, out nReqAnalyses);
+
+                    if(nCurrSamples < nReqSamples)
+                    {
+                        MessageBox.Show("Can not set this order to complete. Connected samples " + nCurrSamples + " of " + nReqSamples);
+                        return;
+                    }
+
+                    if (nCurrPreparations < nReqPreparations)
+                    {
+                        MessageBox.Show("Can not set this order to complete. Connected preparations " + nCurrPreparations + " of " + nReqPreparations);
+                        return;
+                    }
+
+                    if (nCurrAnalyses < nReqAnalyses)
+                    {
+                        MessageBox.Show("Can not set this order to complete. Connected analyses " + nCurrAnalyses + " of " + nReqAnalyses);
+                        return;
+                    }
+                }
+
+                assignment.LaboratoryId = Guid.Parse(cboxOrderLaboratory.SelectedValue.ToString());
+                assignment.AccountId = Guid.Parse(cboxOrderResponsible.SelectedValue.ToString());
+                assignment.Deadline = deadline;
+                assignment.RequestedSigmaAct = Convert.ToDouble(cboxOrderRequestedSigma.SelectedValue);
+                assignment.RequestedSigmaMDA = Convert.ToDouble(cboxOrderRequestedSigmaMDA.SelectedValue);
+                assignment.ContentComment = tbOrderContentComment.Text.Trim();
+                assignment.ApprovedLaboratory = cbOrderApprovedLaboratory.Checked;
+                assignment.ApprovedCustomer = cbOrderApprovedCustomer.Checked;
+                assignment.ReportComment = tbOrderReportComment.Text.Trim();
+                assignment.WorkflowStatusId = wfStatus;                           
 
                 assignment.StoreToDB(conn, trans);
 
@@ -3702,11 +3741,11 @@ order by a.number
 
         private void btnPrepAnalPrepUpdate_Click(object sender, EventArgs e)
         {
-            if(!Utils.IsValidGuid(preparation.Id))
+            if (!preparation.IsDirty)
             {
-                MessageBox.Show("No valid preparation ID found");
+                SetStatusMessage("Nothing to save for preparation " + preparation.Number);
                 return;
-            }            
+            }
 
             SqlConnection conn = null;
             SqlTransaction trans = null;
@@ -3781,6 +3820,8 @@ order by a.number
                 lblPrepAnalPrepRange.Text = "[" + pg.MinFillHeightMM + ", " + pg.MaxFillHeightMM + "]";
             }
 
+            UI.PopulateAttachments(conn, trans, "preparation", p.Id, gridPrepAnalPrepAttachments);
+
             btnPrepAnalPrepUpdate.Enabled = true;
             btnPrepAnalPrepDiscard.Enabled = true;
 
@@ -3803,9 +3844,9 @@ order by a.number
 
         private void btnPrepAnalAnalUpdate_Click(object sender, EventArgs e)
         {
-            if (!Utils.IsValidGuid(analysis.Id))
-            {
-                MessageBox.Show("No valid analysis ID found");
+            if(!analysis.IsDirty)
+            {                
+                SetStatusMessage("Nothing to save for analysis " + preparation.Number + "/" + analysis.Number);
                 return;
             }
             
@@ -5787,6 +5828,12 @@ where s.number = @sample_number
 
         private void btnPrepAnalAnalDiscard_Click(object sender, EventArgs e)
         {
+            if (!analysis.IsDirty)
+            {
+                SetStatusMessage("Nothing to discard for analysis " + preparation.Number + "/" + analysis.Number);
+                return;
+            }
+
             DialogResult res = MessageBox.Show("Are you sure you want to discard current changes?", "Confirmation", MessageBoxButtons.YesNo);
             if (res != DialogResult.Yes)
                 return;
@@ -5797,11 +5844,17 @@ where s.number = @sample_number
                 PopulateAnalysis(conn, null, analysis, true);
             }
 
-            SetStatusMessage("Changes discarded for analysis");
+            SetStatusMessage("Changes discarded for analysis " + preparation.Number + "/" + analysis.Number);
         }
 
         private void btnPrepAnalPrepDiscard_Click(object sender, EventArgs e)
         {
+            if (!preparation.IsDirty)
+            {
+                SetStatusMessage("Nothing to discard for preparation " + preparation.Number);
+                return;
+            }
+
             DialogResult res = MessageBox.Show("Are you sure you want to discard current changes?", "Confirmation", MessageBoxButtons.YesNo);
             if (res != DialogResult.Yes)
                 return;
@@ -5812,7 +5865,7 @@ where s.number = @sample_number
                 PopulatePreparation(conn, null, preparation, true);
             }
 
-            SetStatusMessage("Changes discarded for preparation");
+            SetStatusMessage("Changes discarded for preparation " + preparation.Number);
         }
 
         private void miSamplesUnlock_Click(object sender, EventArgs e)
@@ -5993,6 +6046,12 @@ where s.number = @sample_number
 
         private void miOrderDiscard_Click(object sender, EventArgs e)
         {
+            if (!assignment.IsDirty)
+            {
+                SetStatusMessage("Nothing to discard for order " + assignment.Name);
+                return;
+            }
+
             DialogResult res = MessageBox.Show("Are you sure you want to discard current changes?", "Confirmation", MessageBoxButtons.YesNo);
             if (res != DialogResult.Yes)
                 return;

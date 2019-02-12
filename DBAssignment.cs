@@ -90,44 +90,6 @@ namespace DSA_lims
             }
         }
 
-        public void Clear()
-        {
-            Id = Guid.Empty;
-            Name = String.Empty;
-            LaboratoryId = Guid.Empty;
-            AccountId = Guid.Empty;
-            Deadline = DateTime.MinValue;
-            RequestedSigmaAct = 0d;
-            RequestedSigmaMDA = 0d;
-            CustomerCompanyName = String.Empty;
-            CustomerCompanyEmail = String.Empty;
-            CustomerCompanyPhone = String.Empty;
-            CustomerCompanyAddress = String.Empty;
-            CustomerContactName = String.Empty;
-            CustomerContactEmail = String.Empty;
-            CustomerContactPhone = String.Empty;
-            CustomerContactAddress = String.Empty;
-            ApprovedCustomer = false;
-            ApprovedCustomerBy = String.Empty;
-            ApprovedLaboratory = false;
-            ApprovedLaboratoryBy = String.Empty;
-            ContentComment = String.Empty;
-            ReportComment = String.Empty;
-            AuditComment = String.Empty;
-            WorkflowStatusId = WorkflowStatus.Construction;
-            LastWorkflowStatusDate = DateTime.MinValue;
-            LastWorkflowStatusBy = String.Empty;
-            AnalysisReportVersion = 0;
-            InstanceStatusId = InstanceStatus.Active;
-            LockedBy = String.Empty;
-            CreateDate = DateTime.MinValue;
-            CreatedBy = String.Empty;
-            UpdateDate = DateTime.MinValue;
-            UpdatedBy = String.Empty;
-
-            SampleTypes.Clear();
-        }
-
         public static string ToJSON(SqlConnection conn, SqlTransaction trans, Guid assignmentId)
         {
             string json = String.Empty;
@@ -162,8 +124,6 @@ namespace DSA_lims
 
         public void LoadFromDB(SqlConnection conn, SqlTransaction trans, Guid assId)
         {
-            Clear();            
-
             using (SqlDataReader reader = DB.GetDataReader(conn, trans, "csp_select_assignment", CommandType.StoredProcedure,
                 new SqlParameter("@id", assId)))
             {
@@ -207,7 +167,9 @@ namespace DSA_lims
                 UpdateDate = Convert.ToDateTime(reader["update_date"]);
                 UpdatedBy = reader["updated_by"].ToString();
             }
-            
+
+            SampleTypes.Clear();
+
             List<Guid> sampleTypeIds = new List<Guid>();
             using (SqlDataReader reader = DB.GetDataReader(conn, trans, "select id from assignment_sample_type where assignment_id = @id", CommandType.Text,
                 new SqlParameter("@id", assId)))

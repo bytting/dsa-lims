@@ -50,7 +50,6 @@ namespace DSA_lims
             mAnalysis = analysis;
             mNuclides = nuclides;
             mResult = new AnalysisResult();
-            mResult.Id = Guid.NewGuid();
             using (SqlConnection conn = DB.OpenConnection())
             {
                 cboxSigmaActivity.DataSource = DB.GetSigmaValues(conn);
@@ -71,9 +70,9 @@ namespace DSA_lims
                 MessageBox.Show("Unable to find analysis result with id: " + resultId);
                 Close();
             }
-
+                        
             cboxNuclides.Items.Add(mResult.NuclideName);
-            cboxNuclides.Text = mResult.NuclideName;
+            cboxNuclides.Text = mResult.NuclideName;            
             cboxNuclides.Enabled = false;            
 
             using (SqlConnection conn = DB.OpenConnection())
@@ -104,7 +103,7 @@ namespace DSA_lims
 
         private void btnOk_Click(object sender, EventArgs e)
         {
-            if(cboxNuclides.SelectedValue == null || String.IsNullOrEmpty(cboxNuclides.SelectedValue.ToString()))
+            if(!editing && (cboxNuclides.SelectedValue == null))
             {
                 MessageBox.Show("The nuclide field is mandatory");
                 return;
@@ -132,15 +131,6 @@ namespace DSA_lims
             {
                 MessageBox.Show("Sigma MDA is mandatory");
                 return;
-            }
-
-            if (editing)
-            {
-                if(String.IsNullOrEmpty(cboxNuclides.Text))
-                {
-                    MessageBox.Show("Nuclide is mandatory");
-                    return;
-                }
             }
 
             bool approved = cbActivityApproved.Checked || cbDetectionLimitApproved.Checked;
@@ -212,12 +202,13 @@ namespace DSA_lims
 
             if (!editing)
             {
+                mResult.AnalysisId = mAnalysis.Id;
                 mResult.NuclideName = cboxNuclides.SelectedValue.ToString();
                 mResult.NuclideId = mNuclides[mResult.NuclideName];
                 mAnalysis.Results.Add(mResult);
             }
 
-            mResult._Dirty = true;
+            mResult.Dirty = true;
 
             DialogResult = DialogResult.OK;
             Close();

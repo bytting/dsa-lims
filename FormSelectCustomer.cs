@@ -31,12 +31,12 @@ namespace DSA_lims
     {
         private int mInstanceStatusLevel;
 
-        public CustomerModel SelectedCustomer = new CustomerModel();
+        public Customer SelectedCustomer = new Customer();        
 
         public FormSelectCustomer(int instanceStatusLevel)
         {
             InitializeComponent();
-
+            
             mInstanceStatusLevel = instanceStatusLevel;
         }
 
@@ -67,9 +67,9 @@ namespace DSA_lims
                 return;
             }
 
-            SelectedCustomer.Id = Guid.Parse(gridCustomers.SelectedRows[0].Cells["id"].Value.ToString());            
+            SelectedCustomer.Id = Guid.Parse(gridCustomers.SelectedRows[0].Cells["id"].Value.ToString());
             SelectedCustomer.CompanyName = gridCustomers.SelectedRows[0].Cells["company_name"].Value.ToString();
-            SelectedCustomer.CompanyEmail = gridCustomers.SelectedRows[0].Cells["company_email"].Value.ToString();            
+            SelectedCustomer.CompanyEmail = gridCustomers.SelectedRows[0].Cells["company_email"].Value.ToString();
             SelectedCustomer.CompanyPhone = gridCustomers.SelectedRows[0].Cells["company_phone"].Value.ToString();
             SelectedCustomer.CompanyAddress = gridCustomers.SelectedRows[0].Cells["company_address"].Value.ToString();
             SelectedCustomer.ContactName = gridCustomers.SelectedRows[0].Cells["person_name"].Value.ToString();

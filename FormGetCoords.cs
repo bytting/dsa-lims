@@ -63,6 +63,7 @@ namespace DSA_lims
             cboxProviders.Items.Add(OpenStreetMapProvider.Instance);            
             cboxProviders.Items.Add(BingMapProvider.Instance);
             cboxProviders.Items.Add(BingSatelliteMapProvider.Instance);
+            cboxProviders.Items.Add(BingHybridMapProvider.Instance);
             cboxProviders.Items.Add(BingOSMapProvider.Instance);
             cboxProviders.Items.Add(GoogleMapProvider.Instance);
             cboxProviders.Items.Add(GoogleSatelliteMapProvider.Instance);
@@ -181,7 +182,7 @@ namespace DSA_lims
 
             marker = new GMap.NET.WindowsForms.Markers.GMarkerGoogle(
                 new PointLatLng(lat, lon),
-                GMap.NET.WindowsForms.Markers.GMarkerGoogleType.red_pushpin);
+                GMap.NET.WindowsForms.Markers.GMarkerGoogleType.yellow_pushpin);
             
             overlay.Markers.Add(marker);
 

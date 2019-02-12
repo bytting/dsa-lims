@@ -578,7 +578,7 @@ order by create_date desc";
             grid.Columns["customer_company_name"].HeaderText = "Company";
         }
 
-        public static void PopulateOrderContent(SqlConnection conn, Guid selectedOrder, TreeView tree, Guid sampleTypeId, TreeView treeSampleTypes, bool useCommentToolTips)
+        /*public static void PopulateOrderContent(SqlConnection conn, Guid selectedOrder, TreeView tree, Guid sampleTypeId, TreeView treeSampleTypes, bool useCommentToolTips)
         {
             tree.Nodes.Clear();
 
@@ -673,7 +673,7 @@ order by create_date desc";
             }
 
             tree.ExpandAll();
-        }        
+        } */       
 
         public static void PopulateOrderContentForSampleTypeName(SqlConnection conn, Guid selectedOrder, TreeView tree, Guid sampleTypeId, TreeView treeSampleTypes, bool useCommentToolTips)
         {

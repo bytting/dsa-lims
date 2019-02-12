@@ -83,7 +83,7 @@ namespace DSA_lims
 
             if (gridOrders.SelectedRows.Count < 1)
             {
-                MessageBox.Show("You must select a order first");
+                MessageBox.Show("You must select an order first");
                 return;
             }
 
@@ -115,9 +115,12 @@ where sxast.sample_id = @sid";
             object o = null;
             using (SqlConnection conn = DB.OpenConnection())
             {
-                if(!DB.IsOrderApproved(conn, null, SelectedOrderId))
+                Assignment ass = new Assignment();
+                ass.LoadFromDB(conn, null, SelectedOrderId);
+
+                if (!ass.ApprovedLaboratory || !ass.ApprovedCustomer)
                 {
-                    MessageBox.Show("Can not add sample to this order. The order is not approved");
+                    MessageBox.Show("You can not add samples to this order. The order is not approved");
                     return;
                 }
 

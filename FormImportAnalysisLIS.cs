@@ -65,14 +65,14 @@ namespace DSA_lims
                 int sampNum = DB.GetSampleNumber(connection, null, mPreparation.SampleId);
                 string geomName = DB.GetGeometryName(connection, null, mPreparation.PreparationGeometryId);
 
-                tbFilename.Text = mAnalysis._ImportFile;
+                tbFilename.Text = mAnalysis.ImportFile;
                 tbLIMSSampleName.Text = sampNum.ToString();
                 tbLIMSPrepGeom.Text = geomName;
                 tbLIMSGeomFillHeight.Text = mPreparation.FillHeightMM.ToString();
                 tbLIMSGeomAmount.Text = mPreparation.Amount.ToString();
                 tbLIMSGeomQuantity.Text = mPreparation.Quantity.ToString();
 
-                LoadLIS(mAnalysis._ImportFile);
+                LoadLIS(mAnalysis.ImportFile);
                 foreach(AnalysisResult r in mAnalysis.Results)
                 {
                     if (r.DetectionLimit == 0.0)
@@ -293,6 +293,7 @@ namespace DSA_lims
                 if (items.Length == 5)
                 {
                     AnalysisResult r = new AnalysisResult();
+                    r.AnalysisId = mAnalysis.Id;
                     r.DetectionLimitApproved = true;
                     r.NuclideName = items[1].Trim().ToUpper();
                     if (!AllNuclides.ContainsKey(r.NuclideName))
@@ -303,7 +304,7 @@ namespace DSA_lims
                     r.ActivityUncertaintyABS = Convert.ToDouble(items[4].Trim(), CultureInfo.InvariantCulture) * 2.0;
                     r.ActivityUncertaintyABS /= 100d;
                     r.ActivityUncertaintyABS *= r.Activity;
-                    r._Dirty = true;
+                    r.Dirty = true;
                     mAnalysis.Results.Add(r);
                 }
             }
@@ -339,6 +340,7 @@ namespace DSA_lims
                 else
                 {
                     r = new AnalysisResult();
+                    r.AnalysisId = mAnalysis.Id;
                     r.DetectionLimitApproved = true;
                     r.NuclideId = AllNuclides[nuclName];
                     r.NuclideName = nuclName;
@@ -352,13 +354,13 @@ namespace DSA_lims
                         mAnalysis.Results.Add(r);
                     }
                 }
-                r._Dirty = true;
+                r.Dirty = true;
             }
         }
 
         private void btnShowLIS_Click(object sender, EventArgs e)
         {
-            Process.Start("notepad.exe", mAnalysis._ImportFile);
+            Process.Start("notepad.exe", mAnalysis.ImportFile);
         }
 
         private void btnCancel_Click(object sender, EventArgs e)

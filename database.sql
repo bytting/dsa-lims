@@ -405,6 +405,18 @@ as
 	order by name
 go
 
+create proc csp_select_accounts_for_laboratory_short
+	@laboratory_id uniqueidentifier,
+	@instance_status_level int
+as 
+	select 
+		id, 
+		name + ' (' + email + ')' as name
+	from cv_account 
+	where laboratory_id = @laboratory_id and instance_status_id <= @instance_status_level
+	order by name
+go
+
 /*===========================================================================*/
 /* tbl company */
 
@@ -1513,7 +1525,7 @@ create table assignment (
 	id uniqueidentifier primary key not null,
 	name nvarchar(80) not null,	
 	laboratory_id uniqueidentifier not null,
-	account_id nvarchar(50) not null,
+	account_id uniqueidentifier not null,
 	deadline datetime not null,
 	requested_sigma_act float default null,
 	requested_sigma_mda float default null,
@@ -1549,7 +1561,7 @@ create proc csp_insert_assignment
 	@id uniqueidentifier,
 	@name nvarchar(80),	
 	@laboratory_id uniqueidentifier,
-	@account_id nvarchar(50),
+	@account_id uniqueidentifier,
 	@deadline datetime,
 	@requested_sigma_act float,	
 	@requested_sigma_mda float,	
@@ -1615,13 +1627,14 @@ as
 	);
 go
 
-create proc csp_update_assignment_details
+create proc csp_update_assignment
 	@id uniqueidentifier,
+	@name nvarchar(80),	
 	@laboratory_id uniqueidentifier,
-	@account_id nvarchar(50),
+	@account_id uniqueidentifier,
 	@deadline datetime,
-	@requested_sigma_act float,
-	@requested_sigma_mda float,
+	@requested_sigma_act float,	
+	@requested_sigma_mda float,	
 	@customer_company_name nvarchar(80),	
 	@customer_company_email nvarchar(80),
 	@customer_company_phone nvarchar(80),
@@ -1630,12 +1643,24 @@ create proc csp_update_assignment_details
 	@customer_contact_email nvarchar(80),
 	@customer_contact_phone nvarchar(80),
 	@customer_contact_address nvarchar(256),
+	@approved_customer bit,
+	@approved_customer_by nvarchar(50),
+	@approved_laboratory bit,	
+	@approved_laboratory_by nvarchar(50),
 	@content_comment nvarchar(1000),
-	@instance_status_id int,
+	@report_comment nvarchar(1000),	
+	@audit_comment nvarchar(4000),	
+	@workflow_status_id int,
+	@last_workflow_status_date datetime,
+	@last_workflow_status_by nvarchar(50),
+	@analysis_report_version int,
+	@instance_status_id int,	
+	@locked_by nvarchar(50),
 	@update_date datetime,
-	@updated_by nvarchar(50)	
+	@updated_by nvarchar(50)
 as 		
-	update assignment set
+	update assignment set		
+		name = @name,
 		laboratory_id = @laboratory_id,
 		account_id = @account_id,
 		deadline = @deadline,
@@ -1645,14 +1670,25 @@ as
 		customer_company_email = @customer_company_email,
 		customer_company_phone = @customer_company_phone,
 		customer_company_address = @customer_company_address,
-		customer_contact_name = @customer_contact_name,		
+		customer_contact_name = @customer_contact_name,
 		customer_contact_email = @customer_contact_email,
 		customer_contact_phone = @customer_contact_phone,
 		customer_contact_address = @customer_contact_address,
+		approved_customer = @approved_customer,
+		approved_customer_by = @approved_customer_by,
+		approved_laboratory = @approved_laboratory,	
+		approved_laboratory_by = @approved_laboratory_by,
 		content_comment = @content_comment,
-		instance_status_id = @instance_status_id,
+		report_comment = @report_comment,
+		audit_comment = @audit_comment,
+		workflow_status_id = @workflow_status_id,
+		last_workflow_status_date = @last_workflow_status_date,
+		last_workflow_status_by = @last_workflow_status_by,
+		analysis_report_version = @analysis_report_version,
+		instance_status_id = @instance_status_id,				
+		locked_by = @locked_by,
 		update_date = @update_date,
-		updated_by = @updated_by
+		updated_by = @updated_by		
 	where id = @id
 go
 
@@ -1857,6 +1893,67 @@ as
 	);
 go
 
+create proc csp_update_assignment_sample_type
+	@id uniqueidentifier,	
+	@assignment_id uniqueidentifier,	
+	@sample_type_id uniqueidentifier,	
+	@sample_component_id uniqueidentifier,	
+	@sample_count int,
+	@requested_activity_unit_id uniqueidentifier,
+	@requested_activity_unit_type_id uniqueidentifier,
+	@return_to_sender bit,
+	@comment nvarchar(1000),	
+	@update_date datetime,
+	@updated_by nvarchar(50)
+as	
+	update assignment_sample_type set 
+		assignment_id = @assignment_id,	
+		sample_type_id = @sample_type_id,	
+		sample_component_id = @sample_component_id,	
+		sample_count = @sample_count,
+		requested_activity_unit_id = @requested_activity_unit_id,
+		requested_activity_unit_type_id = @requested_activity_unit_type_id,
+		return_to_sender = @return_to_sender,
+		comment = @comment,		
+		update_date = @update_date,
+		updated_by = @updated_by
+	where id = @id
+go
+
+create proc csp_select_assignment_sample_type
+	@id uniqueidentifier
+as
+	select *
+	from assignment_sample_type		
+	where id = @id
+go
+
+create proc csp_select_assignment_sample_type_flat
+	@id uniqueidentifier
+as
+	select 
+		ast.id as 'id', 
+		ass.name as 'assignment_name',
+		st.name as 'sample_type_name', 
+		sc.name as 'sample_component_name', 
+		ast.sample_count as 'sample_count',
+		rau.name as 'requested_activity_unit_name',
+		raut.name as 'requested_activity_unit_type_name',
+		ast.return_to_sender as 'return_to_sender',
+		ast.comment as 'comment',
+		ast.create_date,
+		ast.created_by,
+		ast.update_date,
+		ast.updated_by
+	from assignment_sample_type ast
+		inner join assignment ass on ass.id = ast.assignment_id
+		inner join sample_type st on ast.sample_type_id = st.id
+		left outer join sample_component sc on ast.sample_component_id = sc.id
+		left outer join requested_activity_unit rau on rau.id = ast.requested_activity_unit_id
+		left outer join requested_activity_unit_type raut on raut.id = ast.requested_activity_unit_type_id
+	where ast.id = @id
+go
+
 create proc csp_select_assignment_sample_types
 	@assignment_id uniqueidentifier
 as
@@ -1956,6 +2053,55 @@ as
 	);
 go
 
+create proc csp_update_assignment_preparation_method
+	@id uniqueidentifier,	
+	@assignment_sample_type_id uniqueidentifier,	
+	@preparation_method_id uniqueidentifier,
+	@preparation_method_count int,
+	@preparation_laboratory_id uniqueidentifier,
+	@comment nvarchar(1000),	
+	@update_date datetime,
+	@updated_by nvarchar(50)
+as	
+	update assignment_preparation_method set		
+		assignment_sample_type_id = @assignment_sample_type_id,	
+		preparation_method_id = @preparation_method_id,
+		preparation_method_count = @preparation_method_count,
+		preparation_laboratory_id = @preparation_laboratory_id,
+		comment = @comment,		
+		update_date = @update_date,
+		updated_by = @updated_by
+	where id = @id
+go
+
+create proc csp_select_assignment_preparation_method
+	@id uniqueidentifier
+as	
+	select *
+	from assignment_preparation_method		
+	where id = @id
+go
+
+create proc csp_select_assignment_preparation_method_flat
+	@id uniqueidentifier
+as	
+	select 
+		apm.id,	
+		apm.assignment_sample_type_id,	
+		pm.name as 'preparation_method_name',
+		apm.preparation_method_count as 'preparation_method_count',
+		lab.name as 'preparation_laboratory_name',
+		apm.comment,
+		apm.create_date,
+		apm.created_by,
+		apm.update_date,
+		apm.updated_by
+	from assignment_preparation_method apm 		
+		inner join preparation_method pm on pm.id = apm.preparation_method_id		
+		left outer join laboratory lab on apm.preparation_laboratory_id = lab.id
+	where apm.id = @id
+go
+
 create proc csp_select_assignment_preparation_methods
 	@assignment_sample_type_id uniqueidentifier
 as	
@@ -2013,6 +2159,51 @@ as
 		@update_date,
 		@updated_by
 	);
+go
+
+create proc csp_update_assignment_analysis_method
+	@id uniqueidentifier,	
+	@assignment_preparation_method_id uniqueidentifier,	
+	@analysis_method_id uniqueidentifier,
+	@analysis_method_count int,
+	@comment nvarchar(1000),	
+	@update_date datetime,
+	@updated_by nvarchar(50)
+as	
+	update assignment_analysis_method set		
+		assignment_preparation_method_id = @assignment_preparation_method_id,	
+		analysis_method_id = @analysis_method_id,
+		analysis_method_count = @analysis_method_count,
+		comment = @comment,
+		update_date = @update_date,
+		updated_by = @updated_by
+	where id = @id
+go
+
+create proc csp_select_assignment_analysis_method
+	@id uniqueidentifier
+as	
+	select *
+	from assignment_analysis_method		
+	where id = @id
+go
+
+create proc csp_select_assignment_analysis_method_flat
+	@id uniqueidentifier
+as	
+	select 
+		aam.id as 'id', 
+		aam.assignment_preparation_method_id,
+		am.name as 'analysis_method_name',
+		aam.analysis_method_count as 'analysis_method_count',
+		aam.comment,
+		aam.create_date,
+		aam.created_by,
+		aam.update_date,
+		aam.updated_by
+	from assignment_analysis_method aam			
+		inner join analysis_method am on am.id = aam.analysis_method_id
+	where aam.id = @id
 go
 
 create proc csp_select_assignment_analysis_methods

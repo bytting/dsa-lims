@@ -12,16 +12,16 @@ namespace DSA_lims
 {
     public partial class FormOrderAddSampleType : Form
     {
-        private Guid OrderId = Guid.Empty;
+        private Assignment mAssignment = null;
         private TreeView TreeSampleTypes = null;
 
-        public FormOrderAddSampleType(Guid orderId, TreeView treeSampleTypes)
+        public FormOrderAddSampleType(Assignment assignment, TreeView treeSampleTypes)
         {
             InitializeComponent();
 
             tbNumSamples.KeyPress += CustomEvents.Integer_KeyPress;
 
-            OrderId = orderId;
+            mAssignment = assignment;
             TreeSampleTypes = treeSampleTypes;
             UI.PopulateSampleTypes(TreeSampleTypes, cboxSampleType);
             using (SqlConnection conn = DB.OpenConnection())
@@ -59,36 +59,21 @@ namespace DSA_lims
                 return;
             }
 
-            try
-            {
-                Guid sampleTypeId = Guid.Parse(cboxSampleType.SelectedValue.ToString());
-                int count = Convert.ToInt32(tbNumSamples.Text);
-
-                using (SqlConnection conn = DB.OpenConnection())
-                {
-                    SqlCommand cmd = new SqlCommand("csp_insert_assignment_sample_type", conn);
-                    cmd.CommandType = CommandType.StoredProcedure;                    
-                    cmd.Parameters.AddWithValue("@id", Guid.NewGuid());
-                    cmd.Parameters.AddWithValue("@assignment_id", DB.MakeParam(typeof(Guid), OrderId));
-                    cmd.Parameters.AddWithValue("@sample_type_id", DB.MakeParam(typeof(Guid), sampleTypeId));                    
-                    cmd.Parameters.AddWithValue("@sample_component_id", DB.MakeParam(typeof(Guid), cboxSampleComponent.SelectedValue));
-                    cmd.Parameters.AddWithValue("@sample_count", count);                    
-                    cmd.Parameters.AddWithValue("@requested_activity_unit_id", DB.MakeParam(typeof(Guid), cboxRequestedUnit.SelectedValue));                    
-                    cmd.Parameters.AddWithValue("@requested_activity_unit_type_id", DB.MakeParam(typeof(Guid), cboxRequestedUnitType.SelectedValue));
-                    cmd.Parameters.AddWithValue("@return_to_sender", cbReturnToSender.Checked ? 1 : 0);
-                    cmd.Parameters.AddWithValue("@comment", tbComment.Text);
-                    cmd.Parameters.AddWithValue("@create_date", DateTime.Now);
-                    cmd.Parameters.AddWithValue("@created_by", Common.Username);
-                    cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
-                    cmd.Parameters.AddWithValue("@updated_by", Common.Username);
-
-                    cmd.ExecuteNonQuery();
-                }
-            }
-            catch (Exception ex)
-            {
-                Common.Log.Error(ex);
-            }
+            AssignmentSampleType ast = new AssignmentSampleType();
+            ast.AssignmentId = mAssignment.Id;
+            ast.SampleTypeId = Guid.Parse(cboxSampleType.SelectedValue.ToString());
+            ast.SampleComponentId = Guid.Parse(cboxSampleComponent.SelectedValue.ToString());
+            ast.SampleCount = Convert.ToInt32(tbNumSamples.Text);
+            ast.RequestedActivityUnitId = Guid.Parse(cboxRequestedUnit.SelectedValue.ToString());
+            ast.RequestedActivityUnitTypeId = Guid.Parse(cboxRequestedUnitType.SelectedValue.ToString());
+            ast.ReturnToSender = cbReturnToSender.Checked;
+            ast.Comment = tbComment.Text.Trim();
+            ast.CreateDate = DateTime.Now;
+            ast.CreatedBy = Common.Username;
+            ast.UpdateDate = DateTime.Now;
+            ast.UpdatedBy = Common.Username;
+            ast.Dirty = true;
+            mAssignment.SampleTypes.Add(ast);            
 
             DialogResult = DialogResult.OK;
             Close();

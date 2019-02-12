@@ -109,7 +109,7 @@ namespace DSA_lims
         }
     }
 
-    public class CustomerModel
+    public class Customer
     {
         public Guid Id { get; set; }
         public string CompanyName { get; set; }        
@@ -121,15 +121,4 @@ namespace DSA_lims
         public string ContactPhone { get; set; }
         public string ContactAddress { get; set; }
     }
-
-    public class AnalysisParameters
-    {
-        public string FileName { get; set; }
-        public string SampleName { get; set; }
-        public string PreparationGeometry { get; set; }
-        public double PreparationFillHeight { get; set; }
-        public double PreparationAmount { get; set; }
-        public double PreparationQuantity { get; set; }
-        public string SpectrumReferenceRegEx { get; set; }
-    }            
 }

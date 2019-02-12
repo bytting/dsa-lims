@@ -45,12 +45,12 @@ namespace DSA_lims
         
         int statusMessageTimeout = 20000;
         System.Timers.Timer statusMessageTimer = null;
-
-        private Guid selectedOrderId = Guid.Empty;
+        
         private Guid selectedSampleId = Guid.Empty;
 
         private int editingSampleNumber;
 
+        private Assignment assignment = new Assignment();
         private Analysis analysis = new Analysis();
         private Preparation preparation = new Preparation();
 
@@ -176,6 +176,19 @@ namespace DSA_lims
                         btnPrepAnalPrepUpdate.ForeColor = SystemColors.ControlText;
                         btnPrepAnalPrepDiscard.ForeColor = SystemColors.ControlText;
                     }
+                }
+            }
+            else if(tabs.SelectedTab == tabOrder)
+            {
+                if(assignment.IsDirty)
+                {
+                    btnOrderSave.ForeColor = Color.Red;
+                    btnOrderDiscard.ForeColor = Color.Red;
+                }
+                else
+                {
+                    btnOrderSave.ForeColor = SystemColors.ControlText;
+                    btnOrderDiscard.ForeColor = SystemColors.ControlText;
                 }
             }
         }
@@ -314,7 +327,7 @@ namespace DSA_lims
                 
                 cboxSamplesStatus.SelectedValue = InstanceStatus.Active;
                 cboxOrdersWorkflowStatus.SelectedValue = WorkflowStatus.Construction;
-
+                
                 PopulateOrders();
                 btnOrdersSearch.ForeColor = SystemColors.ControlText;
 
@@ -327,10 +340,6 @@ namespace DSA_lims
                 SetMenuItemVisibilities();
 
                 ActiveControl = tbMenuLookup;
-
-                preparation.Clear();
-                gridPrepAnalResults.DataSource = null;
-                analysis.Clear();
                 
                 Common.Log.Info("Application initialized successfully");
 
@@ -361,11 +370,11 @@ namespace DSA_lims
                     if (r == DialogResult.No)                    
                         return false;                    
                 }
+                
+                gridPrepAnalResults.DataSource = null;
+                preparation.ClearDirty();
+                analysis.ClearDirty();
             }
-
-            preparation.Clear();
-            gridPrepAnalResults.DataSource = null;
-            analysis.Clear();
 
             return true;
         }
@@ -2322,6 +2331,9 @@ order by a.number
             tbPrepAnalLODEndWeight.Text = "";
             tbPrepAnalLODTemp.Text = "";
 
+            preparation.ClearDirty();
+            analysis.ClearDirty();
+
             tabsPrepAnal.SelectedTab = tabPrepAnalSample;
             return true;
         }
@@ -2841,20 +2853,19 @@ order by name
 
         private void miOrdersNew_Click(object sender, EventArgs e)
         {
-            // create new order
-            ClearOrderInfo();
-            selectedOrderId = Guid.Empty;
-
+            // create new order            
             FormOrderNew form = new FormOrderNew();
             if (form.ShowDialog() != DialogResult.OK)
                 return;
 
-            selectedOrderId = form.OrderId;
-            tbOrderName.Text = form.OrderName;
-            PopulateOrder(selectedOrderId);
+            assignment = new Assignment();            
 
             using (SqlConnection conn = DB.OpenConnection())
             {
+                assignment.LoadFromDB(conn, null, form.OrderId);
+                tbOrderName.Text = form.OrderName;
+                PopulateOrder(conn, null, assignment, true);
+
                 UI.PopulateComboBoxes(conn, "csp_select_assignments_short", new[] {
                     new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
                 }, cboxSamplesOrders);
@@ -2874,27 +2885,20 @@ order by name
                 return;
             }
 
-            Guid orderId = Guid.Parse(gridOrders.SelectedRows[0].Cells["id"].Value.ToString());
-            if(!Utils.IsValidGuid(orderId))
-            {
-                MessageBox.Show("Error: Invalid order id found, " + orderId.ToString());
-                Common.Log.Error("Error: Invalid order id found, " + orderId.ToString());
-                return;
-            }
+            Guid orderId = Guid.Parse(gridOrders.SelectedRows[0].Cells["id"].Value.ToString());            
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                Guid labId = DB.GetLaboratoryIdFromOrderId(conn, null, orderId);
-                if(labId != Common.LabId)
+                assignment.LoadFromDB(conn, null, orderId);
+                
+                if(assignment.LaboratoryId != Common.LabId)
                 {
-                    MessageBox.Show("Can not edit this order. Order does not belong to your laboratory");
+                    MessageBox.Show("You can not edit this order. Order does not belong to your laboratory");
                     return;
                 }
-            }
-            
-            ClearOrderInfo();
-            selectedOrderId = orderId;
-            PopulateOrder(selectedOrderId);
+
+                PopulateOrder(conn, null, assignment, true);
+            }            
 
             tabsOrder.SelectedTab = tabOrderInfo;
             tabs.SelectedTab = tabOrder;
@@ -2903,248 +2907,229 @@ order by name
         private void miOrdersDelete_Click(object sender, EventArgs e)
         {
             // delete order
-        }
+        }        
 
-        private void ClearOrderInfo()
+        private void PopulateOrder(SqlConnection conn, SqlTransaction trans, Assignment a, bool clearDirty)
         {
-            tbOrderName.Text = "";
-            cboxOrderLaboratory.SelectedValue = Guid.Empty;
-            cboxOrderResponsible.SelectedValue = Guid.Empty;
-            tbOrderDeadline.Text = "";
-            cboxOrderRequestedSigma.SelectedValue = -1;
-            tbOrderContentComment.Text = "";
-            tbOrderCustomerInfo.Text = "";
-            tbOrderReportComment.Text = "";
-            // TODO
-        }
+            tbOrderName.Text = a.Name;
+            cboxOrderLaboratory.SelectedValue = a.LaboratoryId;
+            cboxOrderResponsible.SelectedValue = a.AccountId;
+            tbOrderDeadline.Tag = a.Deadline;
+            tbOrderDeadline.Text = a.Deadline.ToString(Utils.DateFormatNorwegian);            
+            cboxOrderRequestedSigma.SelectedValue = a.RequestedSigmaAct;
+            cboxOrderRequestedSigmaMDA.SelectedValue = a.RequestedSigmaMDA;
+            tbOrderCustomer.Text = a.CustomerContactName;
+            tbOrderCustomerInfo.Text =
+                a.CustomerContactName + Environment.NewLine +
+                a.CustomerCompanyName + Environment.NewLine + Environment.NewLine +
+                a.CustomerContactEmail + Environment.NewLine +
+                a.CustomerContactPhone + Environment.NewLine + Environment.NewLine +
+                a.CustomerContactAddress;
+            tbOrderContentComment.Text = a.ContentComment;
+            tbOrderReportComment.Text = a.ReportComment;
+            cbOrderApprovedCustomer.Checked = a.ApprovedCustomer;
+            tbOrderApprovedCustomerBy.Text = a.ApprovedCustomerBy;
+            cbOrderApprovedLaboratory.Checked = a.ApprovedLaboratory;
+            tbOrderApprovedLaboratoryBy.Text = a.ApprovedLaboratoryBy;
+            cboxOrderStatus.SelectedValue = a.WorkflowStatusId;
+            tbOrderLastWorkflowStatusBy.Text = a.LastWorkflowStatusBy;
 
-        private void PopulateOrder(Guid id)
-        {
-            Dictionary<string, object> map = new Dictionary<string, object>();
+            PopulateOrderContent(conn, trans, a);
 
-            using (SqlConnection conn = DB.OpenConnection())
-            {
-                using (SqlDataReader reader = DB.GetDataReader(conn, null, "csp_select_assignment", CommandType.StoredProcedure,
-                    new SqlParameter("@id", id)))
-                {
-                    if (!reader.HasRows)
-                    {
-                        Common.Log.Error("Order with ID " + id.ToString() + " was not found");
-                        MessageBox.Show("Order with ID " + id.ToString() + " was not found");
-                        return;
-                    }
+            // Show attachments
+            UI.PopulateAttachments(conn, null, "assignment", a.Id, gridOrderAttachments);
 
-                    reader.Read();
+            // Populate assigned tree
 
-                    map["id"] = reader["id"];
-                    map["name"] = reader["name"];
-                    map["laboratory_id"] = reader["laboratory_id"];
-                    map["account_id"] = reader["account_id"];
-                    map["deadline"] = reader["deadline"];
-                    map["requested_sigma_act"] = reader["requested_sigma_act"];
-                    map["requested_sigma_mda"] = reader["requested_sigma_mda"];
-                    map["customer_company_name"] = reader["customer_company_name"];
-                    map["customer_company_email"] = reader["customer_company_email"];
-                    map["customer_company_phone"] = reader["customer_company_phone"];
-                    map["customer_company_address"] = reader["customer_company_address"];
-                    map["customer_contact_name"] = reader["customer_contact_name"];
-                    map["customer_contact_email"] = reader["customer_contact_email"];
-                    map["customer_contact_phone"] = reader["customer_contact_phone"];
-                    map["customer_contact_address"] = reader["customer_contact_address"];
-                    map["approved_customer"] = reader["approved_customer"];
-                    map["approved_customer_by"] = reader["approved_customer_by"];
-                    map["approved_laboratory"] = reader["approved_laboratory"];
-                    map["approved_laboratory_by"] = reader["approved_laboratory_by"];
-                    map["content_comment"] = reader["content_comment"];
-                    map["report_comment"] = reader["report_comment"];
-                    map["workflow_status_id"] = reader["workflow_status_id"];
-                    map["last_workflow_status_date"] = reader["last_workflow_status_date"];
-                    map["last_workflow_status_by"] = reader["last_workflow_status_by"];
-                    map["instance_status_id"] = reader["instance_status_id"];
-                    map["locked_by"] = reader["locked_by"];
-                    map["create_date"] = reader["create_date"];
-                    map["created_by"] = reader["created_by"];
-                    map["update_date"] = reader["update_date"];
-                    map["updated_by"] = reader["updated_by"];
-                }
-
-                tbOrderName.Text = map["name"].ToString();
-                cboxOrderLaboratory.SelectedValue = map["laboratory_id"];
-                Guid accId = Guid.Parse(map["account_id"].ToString());
-                cboxOrderResponsible.SelectedValue = accId;
-                DateTime deadline = Convert.ToDateTime(map["deadline"]);
-                tbOrderDeadline.Text = deadline.ToString(Utils.DateFormatNorwegian);
-                tbOrderDeadline.Tag = deadline;
-                cboxOrderRequestedSigma.SelectedValue = map["requested_sigma_act"];
-                cboxOrderRequestedSigmaMDA.SelectedValue = map["requested_sigma_mda"];
-                CustomerModel cust = new CustomerModel();
-                cust.CompanyName = map["customer_company_name"].ToString();
-                cust.CompanyEmail = map["customer_company_email"].ToString();
-                cust.CompanyPhone = map["customer_company_phone"].ToString();
-                cust.CompanyAddress = map["customer_company_address"].ToString();
-                cust.ContactName = map["customer_contact_name"].ToString();
-                cust.ContactEmail = map["customer_contact_email"].ToString();
-                cust.ContactPhone = map["customer_contact_phone"].ToString();
-                cust.ContactAddress = map["customer_contact_address"].ToString();
-                tbOrderCustomer.Text = cust.ContactName;
-                tbOrderCustomer.Tag = cust;
-                tbOrderCustomerInfo.Text =
-                    cust.ContactName + Environment.NewLine +
-                    cust.CompanyName + Environment.NewLine + Environment.NewLine +
-                    cust.ContactEmail + Environment.NewLine +
-                    cust.ContactPhone + Environment.NewLine + Environment.NewLine +
-                    cust.ContactAddress;
-                tbOrderContentComment.Text = map["content_comment"].ToString();
-                tbOrderReportComment.Text = map["report_comment"].ToString();
-                cbOrderApprovedCustomer.Checked = Convert.ToBoolean(map["approved_customer"]);
-                tbOrderApprovedCustomerBy.Text = DB.GetAccountNameFromUsername(conn, null, map["approved_customer_by"].ToString());
-                cbOrderApprovedLaboratory.Checked = Convert.ToBoolean(map["approved_laboratory"]);
-                tbOrderApprovedLaboratoryBy.Text = DB.GetAccountNameFromUsername(conn, null, map["approved_laboratory_by"].ToString());
-                cboxOrderStatus.SelectedValue = map["workflow_status_id"];
-                tbOrderLastWorkflowStatusBy.Text = DB.GetAccountNameFromUsername(conn, null, map["last_workflow_status_by"].ToString());
-
-                UI.PopulateOrderContent(conn, id, treeOrderContent, Guid.Empty, treeSampleTypes, true);
-
-                // Show attachments
-                UI.PopulateAttachments(conn, null, "assignment", id, gridOrderAttachments);
-
-                // Populate assigned tree
-
-                Font fontSample = new Font(tvOrderContent.Font, FontStyle.Bold);
+            Font fontSample = new Font(tvOrderContent.Font, FontStyle.Bold);
                 
-                tvOrderContent.Nodes.Clear();
+            tvOrderContent.Nodes.Clear();
 
-                TreeNode root = tvOrderContent.Nodes.Add(map["name"].ToString());
-                root.NodeFont = fontSample;
+            TreeNode root = tvOrderContent.Nodes.Add(a.Name);
+            root.NodeFont = fontSample;
 
-                string query = @"
+            string query = @"
 select 
-	s.id as 'sample_id',
-	s.number as 'sample_number',	
-	st.name as 'sample_type_name',
-	sc.name as 'sample_component_name',
-    s.comment as 'sample_comment'
+s.id as 'sample_id',
+s.number as 'sample_number',	
+st.name as 'sample_type_name',
+sc.name as 'sample_component_name',
+s.comment as 'sample_comment'
 from sample s
-	inner join sample_x_assignment_sample_type sxast on sxast.sample_id = s.id
-	inner join assignment_sample_type ast on sxast.assignment_sample_type_id = ast.id
-	inner join assignment ass on ast.assignment_id = ass.id
-	inner join sample_type st on s.sample_type_id = st.id
-	left outer join sample_component sc on s.sample_component_id = sc.id
+inner join sample_x_assignment_sample_type sxast on sxast.sample_id = s.id
+inner join assignment_sample_type ast on sxast.assignment_sample_type_id = ast.id
+inner join assignment ass on ast.assignment_id = ass.id
+inner join sample_type st on s.sample_type_id = st.id
+left outer join sample_component sc on s.sample_component_id = sc.id
 where ass.id = @assid
 order by s.number
 ";
-                using (SqlDataReader reader = DB.GetDataReader(conn, null, query, CommandType.Text, new SqlParameter("@assid", id)))
+            using (SqlDataReader reader = DB.GetDataReader(conn, null, query, CommandType.Text, new SqlParameter("@assid", a.Id)))
+            {
+                while (reader.Read())
                 {
-                    while (reader.Read())
-                    {
-                        string label = "Sample " + reader["sample_number"].ToString() + ", " + reader["sample_type_name"].ToString() + " " + reader["sample_component_name"].ToString();
-                        TreeNode sNode = root.Nodes.Add(reader["sample_id"].ToString(), label);
-                        sNode.NodeFont = fontSample;
-                        if (DB.IsValidField(reader["sample_comment"]))
-                            sNode.ToolTipText = reader["sample_comment"].ToString();
-                    }
+                    string label = "Sample " + reader["sample_number"].ToString() + ", " + reader["sample_type_name"].ToString() + " " + reader["sample_component_name"].ToString();
+                    TreeNode sNode = root.Nodes.Add(reader["sample_id"].ToString(), label);
+                    sNode.NodeFont = fontSample;
+                    if (DB.IsValidField(reader["sample_comment"]))
+                        sNode.ToolTipText = reader["sample_comment"].ToString();
                 }
+            }
 
-                foreach(TreeNode tnode in root.Nodes)
-                {
-                    Guid sid = Guid.Parse(tnode.Name);
-                    string queryPrep = @"
+            foreach(TreeNode tnode in root.Nodes)
+            {
+                Guid sid = Guid.Parse(tnode.Name);
+                string queryPrep = @"
 select 
-	p.id as 'preparation_id',
-	p.number as 'preparation_number',
-    pm.name as 'preparation_method_name',
-    ws.id as 'workflow_status_id',
-    ws.name as 'workflow_status_name',
-    p.comment as 'preparation_comment'
+p.id as 'preparation_id',
+p.number as 'preparation_number',
+pm.name as 'preparation_method_name',
+ws.id as 'workflow_status_id',
+ws.name as 'workflow_status_name',
+p.comment as 'preparation_comment'
 from preparation p
-    inner join preparation_method pm on p.preparation_method_id = pm.id
-    inner join workflow_status ws on p.workflow_status_id = ws.id
+inner join preparation_method pm on p.preparation_method_id = pm.id
+inner join workflow_status ws on p.workflow_status_id = ws.id
 where p.sample_id = @sid and p.assignment_id = @assid
 order by p.number
 ";
-                    using (SqlDataReader reader = DB.GetDataReader(conn, null, queryPrep, CommandType.Text, new[] {
-                        new SqlParameter("@sid", sid),
-                        new SqlParameter("@assid", id)
-                    }))
+                using (SqlDataReader reader = DB.GetDataReader(conn, null, queryPrep, CommandType.Text, new[] {
+                    new SqlParameter("@sid", sid),
+                    new SqlParameter("@assid", a.Id)
+                }))
+                {
+                    while (reader.Read())
+                    {
+                        int status = Convert.ToInt32(reader["workflow_status_id"]);
+                        string label = "Preparation " + reader["preparation_number"].ToString() + ", " + reader["preparation_method_name"].ToString() + ", " + reader["workflow_status_name"].ToString();
+                        TreeNode pNode = tnode.Nodes.Add(reader["preparation_id"].ToString(), label);
+                        pNode.ForeColor = WorkflowStatus.GetStatusColor(status);
+                        if (DB.IsValidField(reader["preparation_comment"]))
+                            pNode.ToolTipText = reader["preparation_comment"].ToString();
+                    }
+                }
+            }
+
+            foreach (TreeNode tnode in root.Nodes)
+            {
+                foreach (TreeNode tn in tnode.Nodes)
+                {
+                    Guid pid = Guid.Parse(tn.Name);
+                    string queryAnal = @"
+select 
+a.id as 'analysis_id',
+a.number as 'analysis_number',
+am.name as 'analysis_method_name',
+ws.id as 'workflow_status_id',
+ws.name as 'workflow_status_name',
+a.comment as 'analysis_comment'
+from analysis a
+inner join analysis_method am on a.analysis_method_id = am.id
+inner join workflow_status ws on a.workflow_status_id = ws.id
+where a.preparation_id = @pid and a.assignment_id = @assid
+order by a.number
+";
+                    using (SqlDataReader reader = DB.GetDataReader(conn, null, queryAnal, CommandType.Text, new[] {
+                    new SqlParameter("@pid", pid),
+                    new SqlParameter("@assid", a.Id)
+                }))
                     {
                         while (reader.Read())
                         {
                             int status = Convert.ToInt32(reader["workflow_status_id"]);
-                            string label = "Preparation " + reader["preparation_number"].ToString() + ", " + reader["preparation_method_name"].ToString() + ", " + reader["workflow_status_name"].ToString();
-                            TreeNode pNode = tnode.Nodes.Add(reader["preparation_id"].ToString(), label);
-                            pNode.ForeColor = WorkflowStatus.GetStatusColor(status);
-                            if (DB.IsValidField(reader["preparation_comment"]))
-                                pNode.ToolTipText = reader["preparation_comment"].ToString();
+                            string label = "Analysis " + reader["analysis_number"].ToString() + ", " + reader["analysis_method_name"].ToString() + ", " + reader["workflow_status_name"].ToString();
+                            TreeNode aNode = tn.Nodes.Add(reader["analysis_id"].ToString(), label);
+                            aNode.ForeColor = WorkflowStatus.GetStatusColor(status);
+                            if (DB.IsValidField(reader["analysis_comment"]))
+                                aNode.ToolTipText = reader["analysis_comment"].ToString();
                         }
                     }
                 }
+            }
 
-                foreach (TreeNode tnode in root.Nodes)
+            tvOrderContent.ExpandAll();
+
+            if(clearDirty)
+            {
+                assignment.Dirty = false;
+                foreach (AssignmentSampleType ast in a.SampleTypes)
                 {
-                    foreach (TreeNode tn in tnode.Nodes)
+                    ast.Dirty = false;
+                    foreach (AssignmentPreparationMethod apm in ast.PreparationMethods)
                     {
-                        Guid pid = Guid.Parse(tn.Name);
-                        string queryAnal = @"
-select 
-	a.id as 'analysis_id',
-	a.number as 'analysis_number',
-    am.name as 'analysis_method_name',
-    ws.id as 'workflow_status_id',
-    ws.name as 'workflow_status_name',
-    a.comment as 'analysis_comment'
-from analysis a
-    inner join analysis_method am on a.analysis_method_id = am.id
-    inner join workflow_status ws on a.workflow_status_id = ws.id
-where a.preparation_id = @pid and a.assignment_id = @assid
-order by a.number
-";
-                        using (SqlDataReader reader = DB.GetDataReader(conn, null, queryAnal, CommandType.Text, new[] {
-                        new SqlParameter("@pid", pid),
-                        new SqlParameter("@assid", id)
-                    }))
-                        {
-                            while (reader.Read())
-                            {
-                                int status = Convert.ToInt32(reader["workflow_status_id"]);
-                                string label = "Analysis " + reader["analysis_number"].ToString() + ", " + reader["analysis_method_name"].ToString() + ", " + reader["workflow_status_name"].ToString();
-                                TreeNode aNode = tn.Nodes.Add(reader["analysis_id"].ToString(), label);
-                                aNode.ForeColor = WorkflowStatus.GetStatusColor(status);
-                                if (DB.IsValidField(reader["analysis_comment"]))
-                                    aNode.ToolTipText = reader["analysis_comment"].ToString();
-                            }
-                        }
+                        apm.Dirty = false;
+                        foreach (AssignmentAnalysisMethod aam in apm.AnalysisMethods)                 
+                            aam.Dirty = false;
                     }
                 }
+            }
+        }
 
-                tvOrderContent.ExpandAll();
-            }                        
+        private void PopulateOrderContent(SqlConnection conn, SqlTransaction trans, Assignment a)
+        {
+            treeOrderContent.Nodes.Clear();
+
+            foreach (AssignmentSampleType ast in a.SampleTypes)
+            {
+                string txt = ast.SampleCount.ToString() + ", " + ast.SampleTypeName(conn, trans);
+                if (Utils.IsValidGuid(ast.SampleComponentId))
+                    txt += ", " + ast.SampleComponentName(conn, trans);
+                TreeNode[] nodes = treeSampleTypes.Nodes.Find(ast.SampleTypeId.ToString(), true);
+                if (nodes.Length > 0)
+                    txt += " -> " + nodes[0].FullPath;
+                if (ast.ReturnToSender)
+                    txt += ", Return to customer";
+
+                TreeNode tnode = treeOrderContent.Nodes.Add(ast.Id.ToString(), txt);
+                tnode.Tag = ast;
+                tnode.ToolTipText = ast.Comment;
+                tnode.NodeFont = new Font(treeOrderContent.Font.FontFamily, treeOrderContent.Font.Size, FontStyle.Bold);
+
+                foreach (AssignmentPreparationMethod apm in ast.PreparationMethods)
+                {
+                    txt = apm.PreparationMethodCount.ToString() + ", " + apm.PreparationMethodName(conn, trans);
+                    if (Utils.IsValidGuid(apm.PreparationLaboratoryId))
+                        txt += " (" + apm.PreparationLaboratoryName(conn, trans) + ")";
+
+                    TreeNode tn = tnode.Nodes.Add(apm.Id.ToString(), txt);
+                    tn.Tag = apm;
+                    tn.ToolTipText = apm.PreparationMethodNameFull(conn, trans) + Environment.NewLine + Environment.NewLine + apm.Comment;
+
+                    foreach (AssignmentAnalysisMethod aam in apm.AnalysisMethods)
+                    {
+                        txt = aam.AnalysisMethodCount.ToString() + ", " + aam.AnalysisMethodName(conn, trans);
+                        TreeNode tn2 = tn.Nodes.Add(aam.Id.ToString(), txt);
+                        tn2.Tag = aam;
+                        tn2.ToolTipText = aam.AnalysisMethodNameFull(conn, trans) + Environment.NewLine + Environment.NewLine + aam.Comment;
+                    }
+                }
+            }
+
+            treeOrderContent.ExpandAll();
         }
 
         private void miOrderAddSampleType_Click(object sender, EventArgs e)
         {
             // add sample type to order
-            using (SqlConnection conn = DB.OpenConnection())
+            if (assignment.WorkflowStatusId == WorkflowStatus.Complete)
             {
-                if (DB.IsOrderClosed(conn, null, selectedOrderId))
-                {
-                    MessageBox.Show("This order has been closed and can not be updated");
-                    return;
-                }
-
-                if (DB.IsOrderApproved(conn, null, selectedOrderId))
-                {
-                    MessageBox.Show("This order has been approved and can not be updated");
-                    return;
-                }
+                MessageBox.Show("This order has been closed and can not be updated");
+                return;
+            }
+                            
+            if (assignment.ApprovedLaboratory || assignment.ApprovedCustomer)
+            {
+                MessageBox.Show("This order has been approved and can not be updated");
+                return;
             }
 
-            FormOrderAddSampleType form = new FormOrderAddSampleType(selectedOrderId, treeSampleTypes);
+            FormOrderAddSampleType form = new FormOrderAddSampleType(assignment, treeSampleTypes);
             if (form.ShowDialog() != DialogResult.OK)
                 return;
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                UI.PopulateOrderContent(conn, selectedOrderId, treeOrderContent, Guid.Empty, treeSampleTypes, true);
+                PopulateOrderContent(conn, null, assignment);
             }
         }
 
@@ -3167,31 +3152,29 @@ order by a.number
             {
                 MessageBox.Show("You must select a sample type first");
                 return;
-            }            
-
-            using (SqlConnection conn = DB.OpenConnection())
-            {
-                if (DB.IsOrderClosed(conn, null, selectedOrderId))
-                {
-                    MessageBox.Show("This order has been closed and can not be updated");
-                    return;
-                }
-
-                if (DB.IsOrderApproved(conn, null, selectedOrderId))
-                {
-                    MessageBox.Show("This order has been approved and can not be updated");
-                    return;
-                }
             }
 
-            Guid orderSampleTypeId = Guid.Parse(tnode.Name);
-            FormOrderAddPrepMeth form = new FormOrderAddPrepMeth(orderSampleTypeId);
+            AssignmentSampleType ast = tnode.Tag as AssignmentSampleType;
+            
+            if (assignment.WorkflowStatusId == WorkflowStatus.Complete)
+            {
+                MessageBox.Show("This order has been closed and can not be updated");
+                return;
+            }
+
+            if (assignment.ApprovedLaboratory || assignment.ApprovedCustomer)
+            {
+                MessageBox.Show("This order has been approved and can not be updated");
+                return;
+            }
+            
+            FormOrderAddPrepMeth form = new FormOrderAddPrepMeth(ast);
             if (form.ShowDialog() != DialogResult.OK)
                 return;
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                UI.PopulateOrderContent(conn, selectedOrderId, treeOrderContent, Guid.Empty, treeSampleTypes, true);
+                PopulateOrderContent(conn, null, assignment);
             }
         }
 
@@ -3217,29 +3200,27 @@ order by a.number
                 return;
             }
 
-            using (SqlConnection conn = DB.OpenConnection())
-            {
-                if (DB.IsOrderClosed(conn, null, selectedOrderId))
-                {
-                    MessageBox.Show("This order has been closed and can not be updated");
-                    return;
-                }
+            AssignmentPreparationMethod apm = tnode.Tag as AssignmentPreparationMethod;
 
-                if (DB.IsOrderApproved(conn, null, selectedOrderId))
-                {
-                    MessageBox.Show("This order has been approved and can not be updated");
-                    return;
-                }
+            if (assignment.WorkflowStatusId == WorkflowStatus.Complete)
+            {
+                MessageBox.Show("This order has been closed and can not be updated");
+                return;
             }
 
-            Guid orderPrepMethId = Guid.Parse(tnode.Name);
-            FormOrderAddAnalMeth form = new FormOrderAddAnalMeth(orderPrepMethId);
+            if (assignment.ApprovedLaboratory || assignment.ApprovedCustomer)
+            {
+                MessageBox.Show("This order has been approved and can not be updated");
+                return;
+            }
+            
+            FormOrderAddAnalMeth form = new FormOrderAddAnalMeth(apm);
             if (form.ShowDialog() != DialogResult.OK)
                 return;
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                UI.PopulateOrderContent(conn, selectedOrderId, treeOrderContent, Guid.Empty, treeSampleTypes, true);
+                PopulateOrderContent(conn, null, assignment);
             }
         }
 
@@ -3251,13 +3232,25 @@ order by a.number
         private void miOrderSave_Click(object sender, EventArgs e)
         {
             // save order            
-            if(!Utils.IsValidGuid(cboxOrderLaboratory.SelectedValue))
+            /*if (assignment.WorkflowStatusId == WorkflowStatus.Complete)
+            {
+                MessageBox.Show("This order has been closed and can not be updated");
+                return;
+            }
+
+            if (assignment.ApprovedLaboratory || assignment.ApprovedCustomer)
+            {
+                MessageBox.Show("This order has been approved and can not be updated");
+                return;
+            }*/
+
+            if (!Utils.IsValidGuid(cboxOrderLaboratory.SelectedValue))
             {
                 MessageBox.Show("Laboratory is mandatory");
                 return;
             }
 
-            if (cboxOrderResponsible.SelectedValue == null)
+            if (!Utils.IsValidGuid(cboxOrderResponsible.SelectedValue))
             {
                 MessageBox.Show("Responsible is mandatory");
                 return;
@@ -3269,18 +3262,30 @@ order by a.number
                 return;
             }
 
-            DateTime dl = (DateTime)tbOrderDeadline.Tag;
-            if (dl < DateTime.Now)
+            DateTime deadline = (DateTime)tbOrderDeadline.Tag;
+
+            if (deadline < DateTime.Now)
             {
                 MessageBox.Show("Deadline can not be in the past");
                 return;
             }
 
-            if (tbOrderCustomer.Tag == null)
+            if (String.IsNullOrEmpty(tbOrderCustomer.Text))
             {
                 MessageBox.Show("Customer is mandatory");
                 return;
             }
+
+            assignment.LaboratoryId = Guid.Parse(cboxOrderLaboratory.SelectedValue.ToString());
+            assignment.AccountId = Guid.Parse(cboxOrderResponsible.SelectedValue.ToString());
+            assignment.Deadline = deadline;
+            assignment.RequestedSigmaAct = Convert.ToDouble(cboxOrderRequestedSigma.SelectedValue);
+            assignment.RequestedSigmaMDA = Convert.ToDouble(cboxOrderRequestedSigmaMDA.SelectedValue);
+            assignment.ContentComment = tbOrderContentComment.Text.Trim();
+            assignment.ApprovedLaboratory = cbOrderApprovedLaboratory.Checked;
+            assignment.ApprovedCustomer = cbOrderApprovedCustomer.Checked;
+            assignment.ReportComment = tbOrderReportComment.Text.Trim();
+            assignment.WorkflowStatusId = Convert.ToInt32(cboxOrderStatus.SelectedValue);
 
             SqlConnection conn = null;
             SqlTransaction trans = null;
@@ -3290,47 +3295,13 @@ order by a.number
                 conn = DB.OpenConnection();
                 trans = conn.BeginTransaction();
 
-                if (DB.IsOrderClosed(conn, trans, selectedOrderId))
-                {
-                    MessageBox.Show("This order has been closed and can not be updated");
-                    return;
-                }
-
-                if (DB.IsOrderApproved(conn, null, selectedOrderId))
-                {
-                    MessageBox.Show("This order has been approved and can not be updated");
-                    return;
-                }
-
-                Guid labId = Guid.Parse(cboxOrderLaboratory.SelectedValue.ToString());
-                CustomerModel cust = (CustomerModel)tbOrderCustomer.Tag;
-
-                SqlCommand cmd = new SqlCommand("csp_update_assignment_details", conn, trans);
-                cmd.CommandType = CommandType.StoredProcedure;                
-                cmd.Parameters.AddWithValue("@id", selectedOrderId);                
-                cmd.Parameters.AddWithValue("@laboratory_id", labId);
-                cmd.Parameters.AddWithValue("@account_id", DB.MakeParam(typeof(String), cboxOrderResponsible.SelectedValue));
-                cmd.Parameters.AddWithValue("@deadline", DB.MakeParam(typeof(DateTime), tbOrderDeadline.Tag));
-                cmd.Parameters.AddWithValue("@requested_sigma_act", DB.MakeParam(typeof(double), cboxOrderRequestedSigma.SelectedValue));
-                cmd.Parameters.AddWithValue("@requested_sigma_mda", DB.MakeParam(typeof(double), cboxOrderRequestedSigmaMDA.SelectedValue));
-                cmd.Parameters.AddWithValue("@customer_company_name", DB.MakeParam(typeof(string), cust.CompanyName));
-                cmd.Parameters.AddWithValue("@customer_company_email", DB.MakeParam(typeof(string), cust.CompanyEmail));
-                cmd.Parameters.AddWithValue("@customer_company_phone", DB.MakeParam(typeof(string), cust.CompanyPhone));
-                cmd.Parameters.AddWithValue("@customer_company_address", DB.MakeParam(typeof(string), cust.CompanyAddress));
-                cmd.Parameters.AddWithValue("@customer_contact_name", DB.MakeParam(typeof(string), cust.ContactName));
-                cmd.Parameters.AddWithValue("@customer_contact_email", DB.MakeParam(typeof(string), cust.ContactEmail));
-                cmd.Parameters.AddWithValue("@customer_contact_phone", DB.MakeParam(typeof(string), cust.ContactPhone));
-                cmd.Parameters.AddWithValue("@customer_contact_address", DB.MakeParam(typeof(string), cust.ContactAddress));
-                cmd.Parameters.AddWithValue("@content_comment", DB.MakeParam(typeof(string), tbOrderContentComment.Text));
-                cmd.Parameters.AddWithValue("@instance_status_id", InstanceStatus.Active); // FIXME
-                cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
-                cmd.Parameters.AddWithValue("@updated_by", Common.Username);
-
-                cmd.ExecuteNonQuery();
+                assignment.StoreToDB(conn, trans);
 
                 trans.Commit();
 
-                SetStatusMessage("Order " + tbOrderName.Text + " updated");
+                btnOrdersSearch_Click(sender, e);
+
+                SetStatusMessage("Order " + assignment.Name + " updated");
             }
             catch (Exception ex)
             {
@@ -3353,6 +3324,8 @@ order by a.number
             DateTime selectedDate = form.SelectedDate;
             tbOrderDeadline.Tag = selectedDate;
             tbOrderDeadline.Text = selectedDate.ToString(Utils.DateFormatNorwegian);
+
+            assignment.Dirty = true;
         }
 
         private void miCustomersNew_Click(object sender, EventArgs e)
@@ -3475,17 +3448,18 @@ order by a.number
 
         private void cboxOrderLaboratory_SelectedIndexChanged(object sender, EventArgs e)
         {
+            assignment.Dirty = true;
+
             if (!Utils.IsValidGuid(cboxOrderLaboratory.SelectedValue))
-            {
+            {            
                 cboxOrderResponsible.SelectedValue = Guid.Empty;
                 return;
             }
 
-            Guid labId = Guid.Parse(cboxOrderLaboratory.SelectedValue.ToString());
             using (SqlConnection conn = DB.OpenConnection())
             {
-                UI.PopulateComboBoxes(conn, "csp_select_accounts_for_laboratory", new[] {
-                    new SqlParameter("@laboratory_id", labId),
+                UI.PopulateComboBoxes(conn, "csp_select_accounts_for_laboratory_short", new[] {
+                    new SqlParameter("@laboratory_id", assignment.LaboratoryId),
                     new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
                 }, cboxOrderResponsible);
             }
@@ -3494,6 +3468,9 @@ order by a.number
         private void treePrepAnal_AfterSelect(object sender, TreeViewEventArgs e)
         {
             btnPrepAnalAddAnal.Enabled = false;
+            gridPrepAnalResults.DataSource = null;
+            preparation.ClearDirty();
+            analysis.ClearDirty();
 
             using (SqlConnection conn = DB.OpenConnection())
             {
@@ -3564,11 +3541,11 @@ order by a.number
                     }
                 }
             }
-            else if (e.TabPage == tabOrder && selectedOrderId != Guid.Empty)
+            else if (e.TabPage == tabOrder && assignment.Id != Guid.Empty)
             {
                 using (SqlConnection conn = DB.OpenConnection())
                 {
-                    if (!DB.LockOrder(conn, selectedOrderId))
+                    if (!DB.LockOrder(conn, assignment.Id))
                     {
                         MessageBox.Show("Unable to lock order");
                         e.Cancel = true;
@@ -3803,25 +3780,25 @@ order by a.number
                 PreparationGeometry pg = new PreparationGeometry(conn, trans, p.PreparationGeometryId);
                 lblPrepAnalPrepRange.Text = "[" + pg.MinFillHeightMM + ", " + pg.MaxFillHeightMM + "]";
             }
-            
+
+            btnPrepAnalPrepUpdate.Enabled = true;
+            btnPrepAnalPrepDiscard.Enabled = true;
+
             if (Utils.IsValidGuid(p.AssignmentId))
             {
-                btnPrepAnalPrepUpdate.Enabled = false;
-                btnPrepAnalPrepDiscard.Enabled = false;
-
                 Guid labId = DB.GetLaboratoryIdFromOrderId(conn, trans, p.AssignmentId);
                 if(Utils.IsValidGuid(labId))
                 {
-                    if(labId == Common.LabId)
+                    if(labId != Common.LabId)
                     {
-                        btnPrepAnalPrepUpdate.Enabled = true;
-                        btnPrepAnalPrepDiscard.Enabled = true;
+                        btnPrepAnalPrepUpdate.Enabled = false;
+                        btnPrepAnalPrepDiscard.Enabled = false;
                     }
                 }
             }
 
             if (clearDirty)
-                p._Dirty = false;
+                p.ClearDirty();
         }
 
         private void btnPrepAnalAnalUpdate_Click(object sender, EventArgs e)
@@ -3854,12 +3831,12 @@ order by a.number
 
                 analysis.StoreToDB(conn, trans);
 
-                if (!String.IsNullOrEmpty(analysis._ImportFile) && File.Exists(analysis._ImportFile))
+                if (!String.IsNullOrEmpty(analysis.ImportFile) && File.Exists(analysis.ImportFile))
                 {
                     try
                     {
-                        DB.AddAttachment(conn, trans, "analysis", analysis.Id, Path.GetFileNameWithoutExtension(analysis._ImportFile), ".lis", File.ReadAllBytes(analysis._ImportFile));
-                        analysis._ImportFile = String.Empty;
+                        DB.AddAttachment(conn, trans, "analysis", analysis.Id, Path.GetFileNameWithoutExtension(analysis.ImportFile), ".lis", File.ReadAllBytes(analysis.ImportFile));
+                        analysis.ImportFile = String.Empty;
                         UI.PopulateAttachments(conn, trans, "analysis", analysis.Id, gridPrepAnalAnalAttachments);
                     }
                     catch { }
@@ -3895,7 +3872,7 @@ order by a.number
                 }
             }
 
-            preparation._Dirty = true;
+            preparation.Dirty = true;
         }
 
         private void btnPrepAnalSampleUpdate_Click(object sender, EventArgs e)
@@ -3987,6 +3964,8 @@ order by a.number
                     tbPrepAnalLODStartWeight.Text = reader["lod_weight_start"].ToString();
                     tbPrepAnalLODEndWeight.Text = reader["lod_weight_end"].ToString();
                     tbPrepAnalLODTemp.Text = reader["lod_temperature"].ToString();
+
+                    CalculateLODPercent();
                 }
             }
 
@@ -4013,7 +3992,7 @@ order by a.number
                 return;
 
             Analysis a = analysis.Clone();
-            a._ImportFile = dialog.FileName;
+            a.ImportFile = dialog.FileName;
 
             FormImportAnalysisLIS form = new FormImportAnalysisLIS(preparation, a);
             if (form.ShowDialog() != DialogResult.OK)            
@@ -4026,7 +4005,7 @@ order by a.number
                 PopulateAnalysis(conn, null, analysis, false);
             }
 
-            SetStatusMessage("Imported LIS file " + analysis._ImportFile + " for analysis");
+            SetStatusMessage("Imported LIS file " + analysis.ImportFile + " for analysis");
         }
 
         private void PopulateAnalysis(SqlConnection conn, SqlTransaction trans, Analysis a, bool clearDirty)
@@ -4043,24 +4022,24 @@ order by a.number
 
             UI.PopulateAttachments(conn, trans, "analysis", a.Id, gridPrepAnalAnalAttachments);
 
+            btnPrepAnalAnalUpdate.Enabled = true;
+            btnPrepAnalAnalDiscard.Enabled = true;
+
             if (Utils.IsValidGuid(a.AssignmentId))
             {
-                btnPrepAnalAnalUpdate.Enabled = false;
-                btnPrepAnalAnalDiscard.Enabled = false;
-
                 Guid labId = DB.GetLaboratoryIdFromOrderId(conn, trans, a.AssignmentId);
                 if (Utils.IsValidGuid(labId))
                 {
-                    if (labId == Common.LabId)
+                    if (labId != Common.LabId)
                     {
-                        btnPrepAnalAnalUpdate.Enabled = true;
-                        btnPrepAnalAnalDiscard.Enabled = true;
+                        btnPrepAnalAnalUpdate.Enabled = false;
+                        btnPrepAnalAnalDiscard.Enabled = false;
                     }
                 }
             }
 
             if (clearDirty)
-                a._Dirty = false;
+                a.ClearDirty();
         }
 
         private void PopulateAnalysisResults(Analysis a, bool clearDirty)
@@ -4076,10 +4055,12 @@ order by a.number
             gridPrepAnalResults.Columns["UniformActivity"].Visible = false;
             gridPrepAnalResults.Columns["UniformActivityUnitId"].Visible = false;
             gridPrepAnalResults.Columns["InstanceStatusId"].Visible = false;
+            gridPrepAnalResults.Columns["Dirty"].Visible = false;
+            gridPrepAnalResults.Columns["IsDirty"].Visible = false;
             gridPrepAnalResults.Columns["CreateDate"].Visible = false;
             gridPrepAnalResults.Columns["CreatedBy"].Visible = false;
             gridPrepAnalResults.Columns["UpdateDate"].Visible = false;
-            gridPrepAnalResults.Columns["UpdatedBy"].Visible = false;
+            gridPrepAnalResults.Columns["UpdatedBy"].Visible = false;            
 
             gridPrepAnalResults.Columns["NuclideName"].HeaderText = "Nuclide";
             gridPrepAnalResults.Columns["ActivityUncertaintyABS"].HeaderText = "Act.Unc.";
@@ -4093,7 +4074,7 @@ order by a.number
 
             if(clearDirty)
                 foreach (AnalysisResult ar in a.Results)
-                    ar._Dirty = false;
+                    ar.Dirty = false;
         }
 
         private void tbPrepAnalLODStartWeight_TextChanged(object sender, EventArgs e)
@@ -4241,6 +4222,8 @@ order by a.number
         {
             tbOrderDeadline.Text = "";
             tbOrderDeadline.Tag = null;
+
+            assignment.Dirty = true;
         }
 
         private void btnOrderSelectCustomer_Click(object sender, EventArgs e)
@@ -4248,16 +4231,19 @@ order by a.number
             FormSelectCustomer form = new FormSelectCustomer(InstanceStatus.Deleted);
             if (form.ShowDialog() != DialogResult.OK)
                 return;
+            
+            assignment.CustomerContactName = form.SelectedCustomer.ContactName;
+            assignment.CustomerContactEmail = form.SelectedCustomer.ContactEmail;
+            assignment.CustomerContactPhone = form.SelectedCustomer.ContactPhone;
+            assignment.CustomerContactAddress = form.SelectedCustomer.ContactAddress;
+            assignment.CustomerCompanyName = form.SelectedCustomer.CompanyName;
+            assignment.CustomerCompanyEmail = form.SelectedCustomer.CompanyEmail;
+            assignment.CustomerCompanyPhone = form.SelectedCustomer.CompanyPhone;
+            assignment.CustomerCompanyAddress = form.SelectedCustomer.CompanyAddress;
 
-            CustomerModel c = form.SelectedCustomer;
-            tbOrderCustomer.Text = c.ContactName;
-            tbOrderCustomer.Tag = c;
-            tbOrderCustomerInfo.Text = 
-                c.ContactName + Environment.NewLine + 
-                c.CompanyName + Environment.NewLine + Environment.NewLine + 
-                c.ContactEmail + Environment.NewLine + 
-                c.ContactPhone + Environment.NewLine + Environment.NewLine + 
-                c.ContactAddress;
+            tbOrderCustomer.Text = assignment.CustomerContactName;
+
+            assignment.Dirty = true;
         }
 
         private void miPersonNew_Click(object sender, EventArgs e)
@@ -4840,13 +4826,13 @@ where s.number = @sample_number
                 gridOrders.Columns["deadline"].DefaultCellStyle.Format = Utils.DateFormatNorwegian;
             }
 
-            if (Utils.IsValidGuid(selectedOrderId))
+            if (Utils.IsValidGuid(assignment.Id))
             {
                 gridOrders.ClearSelection();
                 foreach (DataGridViewRow row in gridOrders.Rows)
                 {
                     Guid oid = Guid.Parse(row.Cells["id"].Value.ToString());
-                    if (selectedOrderId == oid)
+                    if (assignment.Id == oid)
                     {
                         row.Selected = true;
                         break;
@@ -4865,254 +4851,14 @@ where s.number = @sample_number
 
         private void btnOrderCreateReport_Click(object sender, EventArgs e)
         {
-            FormCreateOrderReport form = new FormCreateOrderReport(selectedOrderId);
+            FormCreateOrderReport form = new FormCreateOrderReport(assignment.Id);
             form.ShowDialog();
         }
 
         private void layoutPrepAnalAnal_Resize(object sender, EventArgs e)
         {
             cboxPrepAnalAnalUnitType.Width = panelPrepAnalAnalUnit.Width / 2;
-        }
-
-        private void btnOrderSaveStatus_Click(object sender, EventArgs e)
-        {
-            if (!Roles.HasAccess(Role.LaboratoryAdministrator))
-            {
-                MessageBox.Show("You don't have access to change order status");
-                return;
-            }
-
-            SqlConnection conn = null;
-            SqlTransaction trans = null;
-
-            try
-            {
-                conn = DB.OpenConnection();
-                trans = conn.BeginTransaction();
-
-                if((int)cboxOrderStatus.SelectedValue == WorkflowStatus.Complete)
-                {
-                    if(!DB.IsOrderApproved(conn, trans, selectedOrderId))
-                    {
-                        MessageBox.Show("Can not complete an order that is not approved");
-                        return;
-                    }
-
-                    int nReqSamples, nReqPreparations, nReqAnalyses;
-                    DB.GetOrderRequiredInventory(conn, trans, selectedOrderId, out nReqSamples, out nReqPreparations, out nReqAnalyses);
-
-                    int nCurrSamples, nCurrPreparations, nCurrAnalyses;
-                    DB.GetOrderCurrentInventory(conn, trans, selectedOrderId, out nCurrSamples, out nCurrPreparations, out nCurrAnalyses);
-
-                    if(nCurrSamples != nReqSamples)
-                    {
-                        MessageBox.Show("This order is not complete. Wrong number of samples: " + nCurrSamples + "/" + nReqSamples);
-                        return;
-                    }
-
-                    if (nCurrPreparations != nReqPreparations)
-                    {
-                        MessageBox.Show("This order is not complete. Wrong number of preparations: " + nCurrPreparations + "/" + nReqPreparations);
-                        return;
-                    }
-
-                    if (nCurrAnalyses != nReqAnalyses)
-                    {
-                        MessageBox.Show("This order is not complete. Wrong number of analyses: " + nCurrAnalyses + "/" + nReqAnalyses);
-                        return;
-                    }
-                }
-
-                string query = @"
-update assignment set
-    workflow_status_id = @workflow_status_id, 
-    last_workflow_status_date = @last_workflow_status_date, 
-    last_workflow_status_by = @last_workflow_status_by
-where id = @id
-";
-                SqlCommand cmd = new SqlCommand(query, conn, trans);
-                cmd.Parameters.AddWithValue("@workflow_status_id", DB.MakeParam(typeof(int), cboxOrderStatus.SelectedValue));
-                cmd.Parameters.AddWithValue("@last_workflow_status_date", DateTime.Now);
-                cmd.Parameters.AddWithValue("@last_workflow_status_by", Common.Username);
-                cmd.Parameters.AddWithValue("@id", selectedOrderId);
-                cmd.ExecuteNonQuery();
-
-                tbOrderLastWorkflowStatusBy.Text = DB.GetAccountNameFromUsername(conn, trans, Common.Username);
-
-                trans.Commit();
-                SetStatusMessage("Order status saved for " + tbOrderName.Text);
-            }
-            catch(Exception ex)
-            {
-                trans?.Rollback();
-                Common.Log.Error(ex);
-                MessageBox.Show(ex.Message);
-            }
-            finally
-            {
-                conn?.Close();
-            }
-        }
-
-        private void btnOrderSaveApprovedCustomer_Click(object sender, EventArgs e)
-        {
-            SqlConnection conn = null;
-            try
-            {
-                conn = DB.OpenConnection();
-                
-                if (DB.IsOrderClosed(conn, null, selectedOrderId))
-                {
-                    MessageBox.Show("This order has been closed and can not be updated");
-                    return;
-                }
-
-                if (cbOrderApprovedCustomer.Checked)
-                {
-                    bool labAppr = DB.GetOrderApprovedByLab(conn, null, selectedOrderId);
-                    if(!labAppr)
-                    {
-                        MessageBox.Show("Laboratory must approve this order first");
-                        cbOrderApprovedCustomer.Checked = false;
-                        return;
-                    }
-
-                    int nSamples, nPreparations, nAnalyses;
-                    DB.GetOrderRequiredInventory(conn, null, selectedOrderId, out nSamples, out nPreparations, out nAnalyses);
-                    if (nPreparations < 1)
-                    {
-                        MessageBox.Show("Can not approve an order without any preparations");
-                        cbOrderApprovedCustomer.Checked = false;
-                        return;
-                    }
-                }
-
-                string query = "update assignment set approved_customer = @approved_customer, approved_customer_by = @approved_customer_by where id = @id";
-                SqlCommand cmd = new SqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@approved_customer", cbOrderApprovedCustomer.Checked);
-                cmd.Parameters.AddWithValue("@approved_customer_by", Common.Username);
-                cmd.Parameters.AddWithValue("@id", selectedOrderId);
-                cmd.ExecuteNonQuery();
-
-                tbOrderApprovedCustomerBy.Text = DB.GetAccountNameFromUsername(conn, null, Common.Username);
-
-                SetStatusMessage("Approvement by customer updated for " + tbOrderName.Text, StatusMessageType.Success);
-            }
-            catch (Exception ex)
-            {
-                Common.Log.Error(ex);
-            }
-            finally
-            {
-                conn?.Close();
-            }
-        }
-
-        private void btnOrderSaveApprovedLaboratory_Click(object sender, EventArgs e)
-        {
-            if(!Roles.HasAccess(Role.OrderAdministrator))
-            {
-                MessageBox.Show("You are not authorized to approve orders");
-                return;
-            }
-
-            SqlConnection conn = null;
-            SqlTransaction trans = null;
-
-            try
-            {
-                conn = DB.OpenConnection();
-                trans = conn.BeginTransaction();
-
-                if (DB.IsOrderClosed(conn, trans, selectedOrderId))
-                {
-                    trans.Rollback();
-                    MessageBox.Show("This order has been closed and can not be updated");
-                    return;
-                }
-
-                SqlCommand cmd = new SqlCommand("", conn, trans);
-
-                if (cbOrderApprovedLaboratory.Checked)
-                {
-                    int nSamples, nPreparations, nAnalyses;
-                    DB.GetOrderRequiredInventory(conn, trans, selectedOrderId, out nSamples, out nPreparations, out nAnalyses);
-                    if (nPreparations < 1)
-                    {
-                        trans.Rollback();
-                        MessageBox.Show("Can not approve an order without any preparations");
-                        return;
-                    }
-                }
-                else
-                {
-                    cmd.CommandText = "update assignment set approved_customer = @approved_customer, approved_customer_by = @approved_customer_by where id = @id";
-                    cmd.CommandType = CommandType.Text;
-                    cmd.Parameters.Clear();
-                    cmd.Parameters.AddWithValue("@approved_customer", false);
-                    cmd.Parameters.AddWithValue("@approved_customer_by", DBNull.Value);
-                    cmd.Parameters.AddWithValue("@id", selectedOrderId);
-                    cmd.ExecuteNonQuery();
-
-                    cbOrderApprovedCustomer.Checked = false;
-                    tbOrderApprovedCustomerBy.Text = "";
-                }
-
-                cmd.CommandText = "update assignment set approved_laboratory = @approved_laboratory, approved_laboratory_by = @approved_laboratory_by where id = @id";
-                cmd.CommandType = CommandType.Text;
-                cmd.Parameters.Clear();
-                cmd.Parameters.AddWithValue("@approved_laboratory", cbOrderApprovedLaboratory.Checked);
-                cmd.Parameters.AddWithValue("@approved_laboratory_by", Common.Username);
-                cmd.Parameters.AddWithValue("@id", selectedOrderId);
-                cmd.ExecuteNonQuery();
-
-                tbOrderApprovedLaboratoryBy.Text = DB.GetAccountNameFromUsername(conn, trans, Common.Username);
-
-                trans.Commit();
-
-                SetStatusMessage("Approvement by laboratory updated for " + tbOrderName.Text);
-            }
-            catch (Exception ex)
-            {
-                trans?.Rollback();
-                Common.Log.Error(ex);
-            }
-            finally
-            {
-                conn?.Close();
-            }
-        }
-
-        private void btnOrderSaveReportComment_Click(object sender, EventArgs e)
-        {
-            SqlConnection conn = null;
-            try
-            {
-                conn = DB.OpenConnection();
-
-                if (DB.IsOrderClosed(conn, null, selectedOrderId))
-                {
-                    MessageBox.Show("This order has been closed and can not be updated");
-                    return;
-                }
-
-                string query = "update assignment set report_comment = @report_comment where id = @id";
-                SqlCommand cmd = new SqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@report_comment", tbOrderReportComment.Text.Trim());
-                cmd.Parameters.AddWithValue("@id", selectedOrderId);
-                cmd.ExecuteNonQuery();
-
-                SetStatusMessage("Report comment updated for " + tbOrderName.Text, StatusMessageType.Success);
-            }
-            catch (Exception ex)
-            {
-                Common.Log.Error(ex);
-            }
-            finally
-            {
-                conn?.Close();
-            }
-        }
+        }                                
 
         private void btnSysUsersAddRoles_Click(object sender, EventArgs e)
         {
@@ -5368,9 +5114,9 @@ where id = @id
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                DB.AddAttachment(conn, null, "assignment", selectedOrderId, form.DocumentName, ".pdf", form.PdfData);
+                DB.AddAttachment(conn, null, "assignment", assignment.Id, form.DocumentName, ".pdf", form.PdfData);
 
-                UI.PopulateAttachments(conn, null, "assignment", selectedOrderId, gridOrderAttachments);
+                UI.PopulateAttachments(conn, null, "assignment", assignment.Id, gridOrderAttachments);
             }
         }
 
@@ -5534,9 +5280,9 @@ where id = @id
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                DB.AddAttachment(conn, null, "assignment", selectedOrderId, fileName, fileExt, content);
+                DB.AddAttachment(conn, null, "assignment", assignment.Id, fileName, fileExt, content);
 
-                UI.PopulateAttachments(conn, null, "assignment", selectedOrderId, gridOrderAttachments);
+                UI.PopulateAttachments(conn, null, "assignment", assignment.Id, gridOrderAttachments);
             }
         }
 
@@ -5738,7 +5484,7 @@ where id = @id
             {
                 DB.DeleteAttachment(conn, null, "assignment", attId);
 
-                UI.PopulateAttachments(conn, null, "assignment", selectedOrderId, gridOrderAttachments);
+                UI.PopulateAttachments(conn, null, "assignment", assignment.Id, gridOrderAttachments);
             }
         }
 
@@ -5772,9 +5518,14 @@ where id = @id
                 return;
             }
 
-            Guid pid = Guid.Parse(treePrepAnal.SelectedNode.Name);
+            if(preparation.WorkflowStatusId != WorkflowStatus.Complete)
+            {
+                MessageBox.Show("Preparation must be saved with complete status before printing a label");
+                return;
+            }
+
             List<Guid> prepIds = new List<Guid>();
-            prepIds.Add(pid);
+            prepIds.Add(preparation.Id);
 
             FormPrintPrepLabel form = new FormPrintPrepLabel(Common.Settings, prepIds);
             form.ShowDialog();
@@ -5931,72 +5682,72 @@ where id = @id
 
         private void cboxPrepAnalAnalUnit_SelectedIndexChanged(object sender, EventArgs e)
         {
-            analysis._Dirty = true;            
+            analysis.Dirty = true;            
         }
 
         private void cboxPrepAnalAnalUnitType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            analysis._Dirty = true;            
+            analysis.Dirty = true;            
         }
 
         private void tbPrepAnalAnalSpecRef_TextChanged(object sender, EventArgs e)
         {
-            analysis._Dirty = true;            
+            analysis.Dirty = true;            
         }
 
         private void tbPrepAnalAnalNuclLib_TextChanged(object sender, EventArgs e)
         {
-            analysis._Dirty = true;            
+            analysis.Dirty = true;            
         }
 
         private void tbPrepAnalAnalMDALib_TextChanged(object sender, EventArgs e)
         {
-            analysis._Dirty = true;            
+            analysis.Dirty = true;            
         }
 
         private void tbPrepAnalAnalComment_TextChanged(object sender, EventArgs e)
         {
-            analysis._Dirty = true;
+            analysis.Dirty = true;
         }
 
         private void cboxPrepAnalAnalWorkflowStatus_SelectedIndexChanged(object sender, EventArgs e)
         {
-            analysis._Dirty = true;
+            analysis.Dirty = true;
         }
 
         private void tbPrepAnalPrepFillHeight_TextChanged(object sender, EventArgs e)
         {
-            preparation._Dirty = true;            
+            preparation.Dirty = true;            
         }
 
         private void tbPrepAnalPrepAmount_TextChanged(object sender, EventArgs e)
         {
-            preparation._Dirty = true;
+            preparation.Dirty = true;
         }
 
         private void cboxPrepAnalPrepAmountUnit_SelectedIndexChanged(object sender, EventArgs e)
         {
-            preparation._Dirty = true;
+            preparation.Dirty = true;
         }
 
         private void tbPrepAnalPrepQuantity_TextChanged(object sender, EventArgs e)
         {
-            preparation._Dirty = true;
+            preparation.Dirty = true;
         }
 
         private void cboxPrepAnalPrepQuantityUnit_SelectedIndexChanged(object sender, EventArgs e)
         {
-            preparation._Dirty = true;
+            preparation.Dirty = true;
         }
 
         private void tbPrepAnalPrepComment_TextChanged(object sender, EventArgs e)
         {
-            preparation._Dirty = true;
+            preparation.Dirty = true;
         }
 
         private void cboxPrepAnalPrepWorkflowStatus_SelectedIndexChanged(object sender, EventArgs e)
         {
-            preparation._Dirty = true;
+            preparation.Dirty = true;
         }
 
         private void treePrepAnal_BeforeSelect(object sender, TreeViewCancelEventArgs e)
@@ -6023,28 +5774,38 @@ where id = @id
                         Guid id = Guid.Parse(row.Cells["Id"].Value.ToString());
                         analysis.Results.RemoveAll(x => x.Id == id);
                     }
-                }                
+                }
 
                 using (SqlConnection conn = DB.OpenConnection())
+                {
                     PopulateAnalysis(conn, null, analysis, false);
+                }
 
-                analysis._Dirty = true;
+                analysis.Dirty = true;
             }
         }
 
         private void btnPrepAnalAnalDiscard_Click(object sender, EventArgs e)
         {
+            DialogResult res = MessageBox.Show("Are you sure you want to discard current changes?", "Confirmation", MessageBoxButtons.YesNo);
+            if (res != DialogResult.Yes)
+                return;
+
             using (SqlConnection conn = DB.OpenConnection())
             {
                 analysis.LoadFromDB(conn, null, analysis.Id);
                 PopulateAnalysis(conn, null, analysis, true);
             }
 
-            SetStatusMessage("Changes discarded for analysis");            
+            SetStatusMessage("Changes discarded for analysis");
         }
 
         private void btnPrepAnalPrepDiscard_Click(object sender, EventArgs e)
         {
+            DialogResult res = MessageBox.Show("Are you sure you want to discard current changes?", "Confirmation", MessageBoxButtons.YesNo);
+            if (res != DialogResult.Yes)
+                return;
+
             using (SqlConnection conn = DB.OpenConnection())
             {
                 preparation.LoadFromDB(conn, null, preparation.Id);
@@ -6228,6 +5989,61 @@ where id = @id
             }
 
             tabs.SelectedTab = tabAuditLog;
+        }
+
+        private void miOrderDiscard_Click(object sender, EventArgs e)
+        {
+            DialogResult res = MessageBox.Show("Are you sure you want to discard current changes?", "Confirmation", MessageBoxButtons.YesNo);
+            if (res != DialogResult.Yes)
+                return;
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                assignment.LoadFromDB(conn, null, assignment.Id);
+                PopulateOrder(conn, null, assignment, true);
+            }
+
+            SetStatusMessage("Changes discarded for order " + assignment.Name);
+        }
+
+        private void cboxOrderResponsible_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            assignment.Dirty = true;
+        }
+
+        private void cboxOrderRequestedSigma_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            assignment.Dirty = true;
+        }
+
+        private void cboxOrderRequestedSigmaMDA_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            assignment.Dirty = true;
+        }
+
+        private void tbOrderContentComment_TextChanged(object sender, EventArgs e)
+        {
+            assignment.Dirty = true;
+        }
+
+        private void tbOrderReportComment_TextChanged(object sender, EventArgs e)
+        {
+            assignment.Dirty = true;
+        }
+
+        private void cbOrderApprovedLaboratory_CheckedChanged(object sender, EventArgs e)
+        {
+            assignment.Dirty = true;
+        }
+
+        private void cbOrderApprovedCustomer_CheckedChanged(object sender, EventArgs e)
+        {
+            assignment.Dirty = true;
+        }
+
+        private void cboxOrderStatus_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            assignment.Dirty = true;
         }
     }    
 }

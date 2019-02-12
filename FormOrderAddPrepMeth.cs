@@ -31,15 +31,15 @@ namespace DSA_lims
 {
     public partial class FormOrderAddPrepMeth : Form
     {
-        private Guid OrderSampleTypeId = Guid.Empty;
+        private AssignmentSampleType mAst = null;
 
-        public FormOrderAddPrepMeth(Guid orderSampleTypeId)
+        public FormOrderAddPrepMeth(AssignmentSampleType ast)
         {
             InitializeComponent();
 
             tbCount.KeyPress += CustomEvents.Integer_KeyPress;
 
-            OrderSampleTypeId = orderSampleTypeId;
+            mAst = ast;
             cbPrepsAlreadyExists.Checked = false;
             cboxPrepMethLaboratory.Enabled = false;
 
@@ -75,40 +75,18 @@ namespace DSA_lims
                 return;
             }
 
-            try
-            {
-                int cnt = Convert.ToInt32(tbCount.Text.Trim());
-                Guid prepMethId = Guid.Parse(cboxPreparationMethod.SelectedValue.ToString());                
-
-                using (SqlConnection conn = DB.OpenConnection())
-                {                    
-                    SqlCommand cmd = new SqlCommand("csp_insert_assignment_preparation_method", conn);
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@id", Guid.NewGuid());
-                    cmd.Parameters.AddWithValue("@assignment_sample_type_id", DB.MakeParam(typeof(Guid), OrderSampleTypeId));
-                    cmd.Parameters.AddWithValue("@preparation_method_id", DB.MakeParam(typeof(Guid), prepMethId));
-                    cmd.Parameters.AddWithValue("@preparation_method_count", cnt);
-
-                    if (Utils.IsValidGuid(cboxPrepMethLaboratory.SelectedValue))
-                    {
-                        Guid prepLabId = Guid.Parse(cboxPrepMethLaboratory.SelectedValue.ToString());
-                        cmd.Parameters.AddWithValue("@preparation_laboratory_id", DB.MakeParam(typeof(Guid), prepLabId));
-                    }
-                    else cmd.Parameters.AddWithValue("@preparation_laboratory_id", DBNull.Value);
-
-                    cmd.Parameters.AddWithValue("@comment", tbComment.Text);
-                    cmd.Parameters.AddWithValue("@create_date", DateTime.Now);
-                    cmd.Parameters.AddWithValue("@created_by", Common.Username);
-                    cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
-                    cmd.Parameters.AddWithValue("@updated_by", Common.Username);
-
-                    cmd.ExecuteNonQuery();
-                }
-            }
-            catch (Exception ex)
-            {
-                Common.Log.Error(ex);
-            }
+            AssignmentPreparationMethod apm = new AssignmentPreparationMethod();
+            apm.AssignmentSampleTypeId = mAst.Id;
+            apm.PreparationMethodId = Guid.Parse(cboxPreparationMethod.SelectedValue.ToString());
+            apm.PreparationMethodCount = Convert.ToInt32(tbCount.Text);
+            apm.PreparationLaboratoryId = Guid.Parse(cboxPrepMethLaboratory.SelectedValue.ToString());
+            apm.Comment = tbComment.Text.Trim();
+            apm.CreateDate = DateTime.Now;
+            apm.CreatedBy = Common.Username;
+            apm.UpdateDate = DateTime.Now;
+            apm.UpdatedBy = Common.Username;
+            apm.Dirty = true;
+            mAst.PreparationMethods.Add(apm);
 
             DialogResult = DialogResult.OK;
             Close();

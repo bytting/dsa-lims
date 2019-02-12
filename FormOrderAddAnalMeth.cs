@@ -32,15 +32,16 @@ namespace DSA_lims
 {
     public partial class FormOrderAddAnalMeth : Form
     {
-        private Guid OrderPrepMethId = Guid.Empty;
+        private AssignmentPreparationMethod mApm = null;
 
-        public FormOrderAddAnalMeth(Guid orderPrepMethId)
+        public FormOrderAddAnalMeth(AssignmentPreparationMethod apm)
         {
             InitializeComponent();
 
             tbCount.KeyPress += CustomEvents.Integer_KeyPress;
 
-            OrderPrepMethId = orderPrepMethId;
+            mApm = apm;
+
             using (SqlConnection conn = DB.OpenConnection())
             {                
                 UI.PopulateComboBoxes(conn, "csp_select_analysis_methods_short", new[] {
@@ -69,32 +70,17 @@ namespace DSA_lims
                 return;
             }
 
-            try
-            {
-                int cnt = Convert.ToInt32(tbCount.Text.Trim());
-                Guid analMethId = Guid.Parse(cboxAnalysisMethods.SelectedValue.ToString());
-
-                using (SqlConnection conn = DB.OpenConnection())
-                {                    
-                    SqlCommand cmd = new SqlCommand("csp_insert_assignment_analysis_method", conn);
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@id", Guid.NewGuid());
-                    cmd.Parameters.AddWithValue("@assignment_preparation_method_id", DB.MakeParam(typeof(Guid), OrderPrepMethId));
-                    cmd.Parameters.AddWithValue("@analysis_method_id", DB.MakeParam(typeof(Guid), analMethId));
-                    cmd.Parameters.AddWithValue("@analysis_method_count", cnt);
-                    cmd.Parameters.AddWithValue("@comment", tbComment.Text);
-                    cmd.Parameters.AddWithValue("@create_date", DateTime.Now);
-                    cmd.Parameters.AddWithValue("@created_by", Common.Username);
-                    cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
-                    cmd.Parameters.AddWithValue("@updated_by", Common.Username);
-
-                    cmd.ExecuteNonQuery();
-                }
-            }
-            catch (Exception ex)
-            {
-                Common.Log.Error(ex);
-            }
+            AssignmentAnalysisMethod aam = new AssignmentAnalysisMethod();
+            aam.AssignmentPreparationMethodId = mApm.Id;
+            aam.AnalysisMethodId = Guid.Parse(cboxAnalysisMethods.SelectedValue.ToString());
+            aam.AnalysisMethodCount = Convert.ToInt32(tbCount.Text);
+            aam.Comment = tbComment.Text.Trim();
+            aam.CreateDate = DateTime.Now;
+            aam.CreatedBy = Common.Username;
+            aam.UpdateDate = DateTime.Now;
+            aam.UpdatedBy = Common.Username;
+            aam.Dirty = true;
+            mApm.AnalysisMethods.Add(aam);
 
             DialogResult = DialogResult.OK;
             Close();

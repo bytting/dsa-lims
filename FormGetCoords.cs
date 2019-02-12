@@ -102,7 +102,7 @@ namespace DSA_lims
             if (CurrentLatitude != null && CurrentLongitude != null)
             {
                 gmap.Position = new PointLatLng(CurrentLatitude.Value, CurrentLongitude.Value);
-                gmap.Zoom = 10;
+                gmap.Zoom = 12;
                 SetMarker(CurrentLatitude.Value, CurrentLongitude.Value);
             }
             else

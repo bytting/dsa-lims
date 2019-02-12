@@ -360,20 +360,29 @@ namespace DSA_lims
                 if (analysis.IsDirty)
                 {
                     DialogResult r = MessageBox.Show("Changes to the current analysis will be discarded. Do you want to continue?", "Warning", MessageBoxButtons.YesNo);
-                    if (r == DialogResult.No)                    
-                        return false;                    
+                    if (r == DialogResult.No)
+                        return false;
                 }
 
                 if (preparation.IsDirty)
                 {
                     DialogResult r = MessageBox.Show("Changes to the current preparation will be discarded. Do you want to continue?", "Warning", MessageBoxButtons.YesNo);
-                    if (r == DialogResult.No)                    
-                        return false;                    
+                    if (r == DialogResult.No)
+                        return false;
                 }
-                
+
                 gridPrepAnalResults.DataSource = null;
                 preparation.ClearDirty();
                 analysis.ClearDirty();
+            }
+            else if (tabs.SelectedTab == tabOrder)
+            {
+                if (assignment.IsDirty)
+                {
+                    DialogResult r = MessageBox.Show("Changes to the current assignment will be discarded. Do you want to continue?", "Warning", MessageBoxButtons.YesNo);
+                    if (r == DialogResult.No)
+                        return false;
+                }
             }
 
             return true;
@@ -2253,17 +2262,9 @@ namespace DSA_lims
             treePrepAnal.Nodes.Clear();
 
             TreeNode sampleNode = null;
-            Font fontSample = new Font(treePrepAnal.Font, FontStyle.Bold);
+            Font fontSample = new Font(treePrepAnal.Font, FontStyle.Bold);            
 
-            string query = @"
-select s.id as 'sample_id', s.number as 'sample_number', st.name as 'sample_type_name', l.name as 'laboratory_name'
-from sample s
-inner join sample_type st on st.id = s.sample_type_id
-inner join laboratory l on l.id = s.laboratory_id
-where s.id = @id
-";
-
-            using (SqlDataReader reader = DB.GetDataReader(conn, null, query, CommandType.Text, 
+            using (SqlDataReader reader = DB.GetDataReader(conn, null, "csp_select_sample_header", CommandType.StoredProcedure, 
                 new SqlParameter("@id", sampleId)))
             {
                 reader.Read();
@@ -2271,16 +2272,8 @@ where s.id = @id
                 sampleNode = treePrepAnal.Nodes.Add(sampleId.ToString(), txt);
                 sampleNode.NodeFont = fontSample;
             }
-
-            query = @"
-select p.id as 'preparation_id', p.number as 'preparation_number', a.name as 'assignment_name', pm.name_short as 'preparation_method_name', pm.name as 'preparation_method_name_full', p.workflow_status_id
-from preparation p 
-inner join preparation_method pm on pm.id = p.preparation_method_id
-left outer join assignment a on a.id = p.assignment_id
-where sample_id = @sample_id
-order by p.number
-";
-            using (SqlDataReader reader = DB.GetDataReader(conn, null, query, CommandType.Text,
+            
+            using (SqlDataReader reader = DB.GetDataReader(conn, null, "csp_select_preparation_headers_for_sample", CommandType.StoredProcedure,
                 new SqlParameter("@sample_id", sampleId)))
             {
                 while (reader.Read())
@@ -2298,15 +2291,7 @@ order by p.number
             foreach (TreeNode prepNode in sampleNode.Nodes)
             {
                 Guid prepId = Guid.Parse(prepNode.Name);
-                query = @"
-select a.id as 'analysis_id', a.number as 'analysis_number', am.name_short as 'analysis_method_name', am.name as 'analysis_method_name_full', ass.name as 'assignment_name', a.workflow_status_id
-from analysis a 
-inner join analysis_method am on am.id = a.analysis_method_id
-left outer join assignment ass on ass.id = a.assignment_id
-where preparation_id = @preparation_id
-order by a.number
-";
-                using (SqlDataReader reader = DB.GetDataReader(conn, null, query, CommandType.Text,
+                using (SqlDataReader reader = DB.GetDataReader(conn, null, "csp_select_analysis_headers_for_preparation", CommandType.StoredProcedure,
                     new SqlParameter("@preparation_id", prepId)))
                 {
                     while (reader.Read())
@@ -2618,12 +2603,8 @@ order by a.number
             Guid sampleTypeId = Guid.Parse(tnode.Name);
             using (SqlConnection conn = DB.OpenConnection())
             {
-                SqlCommand cmd = new SqlCommand(@"
-select pm.id, pm.name from preparation_method pm	
-    inner join sample_type_x_preparation_method stpm on stpm.preparation_method_id = pm.id
-    inner join sample_type st on stpm.sample_type_id = st.id and st.id = @sample_type_id
-order by name
-", conn);
+                SqlCommand cmd = new SqlCommand("csp_select_preparation_methods_for_sample_type_short", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@sample_type_id", DB.MakeParam(typeof(Guid), sampleTypeId));
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
@@ -2949,24 +2930,9 @@ order by name
 
             TreeNode root = tvOrderContent.Nodes.Add(a.Name);
             root.NodeFont = fontSample;
-
-            string query = @"
-select 
-s.id as 'sample_id',
-s.number as 'sample_number',	
-st.name as 'sample_type_name',
-sc.name as 'sample_component_name',
-s.comment as 'sample_comment'
-from sample s
-inner join sample_x_assignment_sample_type sxast on sxast.sample_id = s.id
-inner join assignment_sample_type ast on sxast.assignment_sample_type_id = ast.id
-inner join assignment ass on ast.assignment_id = ass.id
-inner join sample_type st on s.sample_type_id = st.id
-left outer join sample_component sc on s.sample_component_id = sc.id
-where ass.id = @assid
-order by s.number
-";
-            using (SqlDataReader reader = DB.GetDataReader(conn, null, query, CommandType.Text, new SqlParameter("@assid", a.Id)))
+            
+            using (SqlDataReader reader = DB.GetDataReader(conn, null, "csp_select_sample_headers_for_assignment", CommandType.StoredProcedure, 
+                new SqlParameter("@assignment_id", a.Id)))
             {
                 while (reader.Read())
                 {
@@ -2980,24 +2946,9 @@ order by s.number
 
             foreach(TreeNode tnode in root.Nodes)
             {
-                Guid sid = Guid.Parse(tnode.Name);  
-                string queryPrep = @"
-select 
-p.id as 'preparation_id',
-p.number as 'preparation_number',
-pm.name as 'preparation_method_name',
-ws.id as 'workflow_status_id',
-ws.name as 'workflow_status_name',
-p.comment as 'preparation_comment'
-from preparation p
-inner join preparation_method pm on p.preparation_method_id = pm.id
-inner join workflow_status ws on p.workflow_status_id = ws.id
-where p.sample_id = @sid
-order by p.number
-";                
-                using (SqlDataReader reader = DB.GetDataReader(conn, null, queryPrep, CommandType.Text, new[] {
-                    new SqlParameter("@sid", sid)                    
-                }))
+                Guid sid = Guid.Parse(tnode.Name);
+                using (SqlDataReader reader = DB.GetDataReader(conn, null, "csp_select_preparation_headers_for_sample2", CommandType.StoredProcedure,
+                    new SqlParameter("@sample_id", sid)))
                 {
                     while (reader.Read())
                     {
@@ -3016,24 +2967,10 @@ order by p.number
                 foreach (TreeNode tn in tnode.Nodes)
                 {
                     Guid pid = Guid.Parse(tn.Name);
-                    string queryAnal = @"
-select 
-a.id as 'analysis_id',
-a.number as 'analysis_number',
-am.name as 'analysis_method_name',
-ws.id as 'workflow_status_id',
-ws.name as 'workflow_status_name',
-a.comment as 'analysis_comment'
-from analysis a
-inner join analysis_method am on a.analysis_method_id = am.id
-inner join workflow_status ws on a.workflow_status_id = ws.id
-where a.preparation_id = @pid and a.assignment_id = @assid
-order by a.number
-";
-                    using (SqlDataReader reader = DB.GetDataReader(conn, null, queryAnal, CommandType.Text, new[] {
-                    new SqlParameter("@pid", pid),
-                    new SqlParameter("@assid", a.Id)
-                }))
+                    using (SqlDataReader reader = DB.GetDataReader(conn, null, "csp_select_analysis_headers_for_preparation_assignment", CommandType.StoredProcedure, new[] {
+                        new SqlParameter("@preparation_id", pid),
+                        new SqlParameter("@assignment_id", a.Id)
+                    }))
                     {
                         while (reader.Read())
                         {

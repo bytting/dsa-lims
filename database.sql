@@ -2408,6 +2408,18 @@ as
 	select * from preparation_method where id = @id
 go
 
+create proc csp_select_preparation_methods_for_sample_type_short
+	@sample_type_id uniqueidentifier
+as 
+	select 
+		pm.id, 
+		pm.name 
+	from preparation_method pm	
+		inner join sample_type_x_preparation_method stpm on stpm.preparation_method_id = pm.id
+		inner join sample_type st on stpm.sample_type_id = st.id and st.id = @sample_type_id
+	order by name
+go
+
 create proc csp_select_preparation_methods
 	@instance_status_level int
 as
@@ -2571,6 +2583,40 @@ create proc csp_select_preparation
 	@id uniqueidentifier
 as
 	select * from preparation where id = @id
+go
+
+create proc csp_select_preparation_headers_for_sample
+	@sample_id uniqueidentifier
+as
+	select 
+		p.id as 'preparation_id', 
+		p.number as 'preparation_number', 
+		a.name as 'assignment_name', 
+		pm.name_short as 'preparation_method_name', 
+		pm.name as 'preparation_method_name_full', 
+		p.workflow_status_id
+	from preparation p 
+		inner join preparation_method pm on pm.id = p.preparation_method_id
+		left outer join assignment a on a.id = p.assignment_id
+	where sample_id = @sample_id
+	order by p.number
+go
+
+create proc csp_select_preparation_headers_for_sample2
+	@sample_id uniqueidentifier
+as
+	select
+		p.id as 'preparation_id',
+		p.number as 'preparation_number',
+		pm.name as 'preparation_method_name',
+		ws.id as 'workflow_status_id',
+		ws.name as 'workflow_status_name',
+		p.comment as 'preparation_comment'
+	from preparation p
+		inner join preparation_method pm on p.preparation_method_id = pm.id
+		inner join workflow_status ws on p.workflow_status_id = ws.id
+	where p.sample_id = @sample_id
+	order by p.number
 go
 
 create proc csp_select_preparation_flat
@@ -2892,6 +2938,41 @@ create proc csp_select_analysis
 	@id uniqueidentifier
 as
 	select * from analysis where id = @id
+go
+
+create proc csp_select_analysis_headers_for_preparation
+	@preparation_id uniqueidentifier
+as
+	select 
+		a.id as 'analysis_id', 
+		a.number as 'analysis_number', 
+		am.name_short as 'analysis_method_name', 
+		am.name as 'analysis_method_name_full', 
+		ass.name as 'assignment_name', 
+		a.workflow_status_id
+	from analysis a 
+		inner join analysis_method am on am.id = a.analysis_method_id
+		left outer join assignment ass on ass.id = a.assignment_id
+	where preparation_id = @preparation_id
+	order by a.number
+go
+
+create proc csp_select_analysis_headers_for_preparation_assignment
+	@preparation_id uniqueidentifier,
+	@assignment_id uniqueidentifier
+as
+	select 
+		a.id as 'analysis_id',
+		a.number as 'analysis_number',
+		am.name as 'analysis_method_name',
+		ws.id as 'workflow_status_id',
+		ws.name as 'workflow_status_name',
+		a.comment as 'analysis_comment'
+	from analysis a
+		inner join analysis_method am on a.analysis_method_id = am.id
+		inner join workflow_status ws on a.workflow_status_id = ws.id
+	where a.preparation_id = @preparation_id and a.assignment_id = @assignment_id
+	order by a.number
 go
 
 create proc csp_select_analysis_flat
@@ -3941,6 +4022,63 @@ as
 	where id = @id
 go
 
+create proc csp_select_sample_info
+	@id uniqueidentifier	
+as 		
+	select
+		sc.name as 'sample_component_name',
+		s.external_id,
+		pm.name + ' - ' + ps.name as 'project_name',
+		s.reference_date,
+		ss.name as 'sample_storage_name',
+		s.wet_weight_g,
+		s.dry_weight_g,
+		s.volume_l,
+		s.lod_weight_start,
+		s.lod_weight_end,
+		s.lod_temperature,
+		s.comment
+	from sample s		
+		inner join project_sub ps on s.project_sub_id = ps.id
+		inner join project_main pm on pm.id = ps.project_main_id
+		left outer join sample_component sc on s.sample_component_id = sc.id
+		left outer join sample_storage ss on s.sample_storage_id = ss.id
+	where s.id = @id
+go
+
+create proc csp_select_sample_header
+	@id uniqueidentifier	
+as 		
+	select 
+		s.id as 'sample_id', 
+		s.number as 'sample_number', 
+		st.name as 'sample_type_name', 
+		l.name as 'laboratory_name'
+	from sample s
+		inner join sample_type st on st.id = s.sample_type_id
+		inner join laboratory l on l.id = s.laboratory_id
+	where s.id = @id
+go
+
+create proc csp_select_sample_headers_for_assignment
+	@assignment_id uniqueidentifier	
+as 		
+	select 
+		s.id as 'sample_id',
+		s.number as 'sample_number',	
+		st.name as 'sample_type_name',
+		sc.name as 'sample_component_name',
+		s.comment as 'sample_comment'
+	from sample s
+		inner join sample_x_assignment_sample_type sxast on sxast.sample_id = s.id
+		inner join assignment_sample_type ast on sxast.assignment_sample_type_id = ast.id
+		inner join assignment ass on ast.assignment_id = ass.id
+		inner join sample_type st on s.sample_type_id = st.id
+		left outer join sample_component sc on s.sample_component_id = sc.id
+	where ass.id = @assignment_id
+	order by s.number
+go
+
 create proc csp_select_samples
 	@instance_status_level int
 as
@@ -4060,30 +4198,6 @@ from sample s inner join sample_x_assignment_sample_type sxast on s.id = sxast.s
 	left outer join sample_component sc on s.sample_component_id = sc.id
 	inner join project_sub ps on s.project_sub_id = ps.id
 	inner join project_main pm on pm.id = ps.project_main_id
-go
-
-create proc csp_select_sample_info
-	@id uniqueidentifier	
-as 		
-	select
-		sc.name as 'sample_component_name',
-		s.external_id,
-		pm.name + ' - ' + ps.name as 'project_name',
-		s.reference_date,
-		ss.name as 'sample_storage_name',
-		s.wet_weight_g,
-		s.dry_weight_g,
-		s.volume_l,
-		s.lod_weight_start,
-		s.lod_weight_end,
-		s.lod_temperature,
-		s.comment
-	from sample s		
-		inner join project_sub ps on s.project_sub_id = ps.id
-		inner join project_main pm on pm.id = ps.project_main_id
-		left outer join sample_component sc on s.sample_component_id = sc.id
-		left outer join sample_storage ss on s.sample_storage_id = ss.id
-	where s.id = @id
 go
 
 /*===========================================================================*/

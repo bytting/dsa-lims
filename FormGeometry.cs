@@ -109,21 +109,36 @@ namespace DSA_lims
                 return;
             }
 
-            if (String.IsNullOrEmpty(tbMinFillHeight.Text.Trim()))
+            if (String.IsNullOrEmpty(tbMinFillHeight.Text))
             {
                 MessageBox.Show("Minimum fill height is mandatory");
                 return;
             }
 
-            if (String.IsNullOrEmpty(tbMaxFillHeight.Text.Trim()))
+            if (String.IsNullOrEmpty(tbMaxFillHeight.Text))
             {
                 MessageBox.Show("Maximum fill height is mandatory");
                 return;
             }
 
+            double minFillHeight = Convert.ToDouble(tbMinFillHeight.Text);
+            double maxFillHeight = Convert.ToDouble(tbMaxFillHeight.Text);
+
+            if(minFillHeight < 0d || maxFillHeight < 0d)
+            {
+                MessageBox.Show("Minimum and maximum fill height can not be less than zero");
+                return;
+            }
+
+            if(minFillHeight > maxFillHeight)
+            {
+                MessageBox.Show("Minimum fill height can not be bigger than maximum fill height");
+                return;
+            }
+
             p["name"] = tbName.Text.Trim();
-            p["min_fill_height"] = Convert.ToDouble(tbMinFillHeight.Text.Trim());
-            p["max_fill_height"] = Convert.ToDouble(tbMaxFillHeight.Text.Trim());
+            p["min_fill_height"] = minFillHeight;
+            p["max_fill_height"] = maxFillHeight;
             p["instance_status_id"] = cboxInstanceStatus.SelectedValue;
             p["comment"] = tbComment.Text.Trim();
 

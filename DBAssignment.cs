@@ -90,6 +90,13 @@ namespace DSA_lims
             }
         }
 
+        public void ClearDirty()
+        {
+            Dirty = false;
+            foreach (AssignmentSampleType ast in SampleTypes)
+                ast.ClearDirty();
+        }
+
         public static string ToJSON(SqlConnection conn, SqlTransaction trans, Guid assignmentId)
         {
             string json = String.Empty;

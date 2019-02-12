@@ -69,6 +69,13 @@ namespace DSA_lims
             }
         }
 
+        public void ClearDirty()
+        {
+            Dirty = false;
+            foreach (AssignmentPreparationMethod apm in PreparationMethods)
+                apm.ClearDirty();
+        }
+
         public string SampleTypeName(SqlConnection conn, SqlTransaction trans)
         {
             object o = DB.GetScalar(conn, trans, "select name from sample_type where id = @sid", CommandType.Text, new SqlParameter("@sid", SampleTypeId));

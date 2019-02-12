@@ -383,6 +383,8 @@ namespace DSA_lims
                     if (r == DialogResult.No)
                         return false;
                 }
+
+                assignment.ClearDirty();
             }
 
             return true;
@@ -4220,6 +4222,12 @@ namespace DSA_lims
             assignment.CustomerCompanyAddress = form.SelectedCustomer.CompanyAddress;
 
             tbOrderCustomer.Text = assignment.CustomerContactName;
+            tbOrderCustomerInfo.Text =
+                assignment.CustomerContactName + Environment.NewLine +
+                assignment.CustomerCompanyName + Environment.NewLine + Environment.NewLine +
+                assignment.CustomerContactEmail + Environment.NewLine +
+                assignment.CustomerContactPhone + Environment.NewLine + Environment.NewLine +
+                assignment.CustomerContactAddress;
 
             assignment.Dirty = true;
         }

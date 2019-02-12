@@ -66,6 +66,13 @@ namespace DSA_lims
             }
         }
 
+        public void ClearDirty()
+        {
+            Dirty = false;
+            foreach (AssignmentAnalysisMethod aam in AnalysisMethods)
+                aam.ClearDirty();
+        }
+
         public string PreparationMethodName(SqlConnection conn, SqlTransaction trans)
         {
             object o = DB.GetScalar(conn, trans, "select name_short from preparation_method where id = @pmid", CommandType.Text, new SqlParameter("@pmid", PreparationMethodId));

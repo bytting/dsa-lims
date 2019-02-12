@@ -52,6 +52,11 @@ namespace DSA_lims
             get { return Dirty; }
         }
 
+        public void ClearDirty()
+        {
+            Dirty = false;
+        }
+
         public string AnalysisMethodName(SqlConnection conn, SqlTransaction trans)
         {
             object o = DB.GetScalar(conn, trans, "select name_short from analysis_method where id = @aid", CommandType.Text, new SqlParameter("@aid", AnalysisMethodId));

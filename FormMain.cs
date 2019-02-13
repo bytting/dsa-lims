@@ -380,9 +380,9 @@ namespace DSA_lims
         {
             if (tabs.SelectedTab == tabPrepAnal)
             {
-                if (analysis.IsDirty())
+                if (sample.IsDirty())
                 {
-                    DialogResult r = MessageBox.Show("Changes to the current analysis will be discarded. Do you want to continue?", "Warning", MessageBoxButtons.YesNo);
+                    DialogResult r = MessageBox.Show("Changes to the current sample will be discarded. Do you want to continue?", "Warning", MessageBoxButtons.YesNo);
                     if (r == DialogResult.No)
                         return false;
                 }
@@ -394,7 +394,15 @@ namespace DSA_lims
                         return false;
                 }
 
+                if (analysis.IsDirty())
+                {
+                    DialogResult r = MessageBox.Show("Changes to the current analysis will be discarded. Do you want to continue?", "Warning", MessageBoxButtons.YesNo);
+                    if (r == DialogResult.No)
+                        return false;
+                }                
+
                 gridPrepAnalResults.DataSource = null;
+                sample.ClearDirty();
                 preparation.ClearDirty();
                 analysis.ClearDirty();
             }
@@ -2265,8 +2273,9 @@ namespace DSA_lims
             tbPrepAnalVolume.Text = s.Volume_l.ToString();
             tbPrepAnalLODStartWeight.Text = s.LodWeightStart.ToString();
             tbPrepAnalLODEndWeight.Text = s.LodWeightEnd.ToString();
-            tbPrepAnalLODTemp.Text = s.LodTemperature.ToString();            
+            tbPrepAnalLODTemp.Text = s.LodTemperature.ToString();
 
+            sample.ClearDirty();
             preparation.ClearDirty();
             analysis.ClearDirty();
 
@@ -3394,6 +3403,7 @@ namespace DSA_lims
         {
             btnPrepAnalAddAnal.Enabled = false;
             gridPrepAnalResults.DataSource = null;
+            sample.ClearDirty();
             preparation.ClearDirty();
             analysis.ClearDirty();
 

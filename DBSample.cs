@@ -169,25 +169,7 @@ where s.id = @sample_id
             }
 
             return true;
-        }
-
-        public double CalculateLODPercent()
-        {
-            if (LodWeightStart == 0d && LodWeightEnd == 0d)
-                return -1;            
-
-            if (LodWeightStart < LodWeightEnd)            
-                return -1;
-
-            double delta = LodWeightStart - LodWeightEnd;
-            return (delta / LodWeightStart) * 100.0;
-        }
-
-        public string GetLODPercentString()
-        {
-            double percent = CalculateLODPercent();
-            return percent == -1 ? "" : percent.ToString("0.0#");
-        }
+        }        
 
         public bool HasOrders(SqlConnection conn, SqlTransaction trans)
         {
@@ -326,7 +308,7 @@ where s.id = @sid and a.workflow_status_id = 2
 
             if (!Sample.IdExists(conn, trans, Id))
             {
-                // insert new analysis result
+                // insert new sample
                 cmd.CommandText = "csp_insert_sample";
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Clear();
@@ -382,7 +364,7 @@ where s.id = @sid and a.workflow_status_id = 2
             {
                 if (Dirty)
                 {
-                    // update existing analysis result
+                    // update existing sample
                     cmd.CommandText = "csp_update_sample";
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.Clear();
@@ -440,6 +422,8 @@ where s.id = @sid and a.workflow_status_id = 2
             cmd.Parameters.AddWithValue("@updated_by", Common.Username);
 
             cmd.ExecuteNonQuery();
+
+            Dirty = false;
         }
     }
 }

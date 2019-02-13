@@ -152,6 +152,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AboutBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AboutBox.Designer.cs">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="Common.cs" />
     <Compile Include="CustomEvents.cs" />
     <Compile Include="Database.cs" />
@@ -508,6 +514,9 @@
     <Compile Include="Logger.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="UserInterface.cs" />
+    <EmbeddedResource Include="AboutBox.resx">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormAccountXRoles.resx">
       <DependentUpon>FormAccountXRoles.cs</DependentUpon>
     </EmbeddedResource>
@@ -795,6 +804,8 @@
     <None Include="images\dsa_logo_64.png" />
     <None Include="images\switch.png" />
     <None Include="images\report.png" />
+    <None Include="images\dsa_logo_vert.png" />
+    <None Include="images\dsa_logo_146.png" />
     <Content Include="SqlServerTypes\readme.htm" />
     <Content Include="SqlServerTypes\x64\msvcr120.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

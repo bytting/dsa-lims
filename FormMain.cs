@@ -146,9 +146,9 @@ namespace DSA_lims
 
         private void Application_Idle(object sender, EventArgs e)
         {
-            if(tabs.SelectedTab == tabPrepAnal)
+            if (tabs.SelectedTab == tabPrepAnal)
             {
-                if(tabsPrepAnal.SelectedTab == tabPrepAnalAnalysis)
+                if (tabsPrepAnal.SelectedTab == tabPrepAnalAnalysis)
                 {
                     if (analysis.IsDirty())
                     {
@@ -174,10 +174,23 @@ namespace DSA_lims
                         btnPrepAnalPrepDiscard.ForeColor = SystemColors.ControlText;
                     }
                 }
+                else if (tabsPrepAnal.SelectedTab == tabPrepAnalSample)
+                {
+                    if(sample.IsDirty())
+                    {
+                        btnPrepAnalSampleUpdate.ForeColor = Color.Green;
+                        btnPrepAnalSampleDiscard.ForeColor = Color.Red;
+                    }
+                    else
+                    {
+                        btnPrepAnalSampleUpdate.ForeColor = SystemColors.ControlText;
+                        btnPrepAnalSampleDiscard.ForeColor = SystemColors.ControlText;
+                    }
+                }
             }
-            else if(tabs.SelectedTab == tabOrder)
+            else if (tabs.SelectedTab == tabOrder)
             {
-                if(assignment.IsDirty())
+                if (assignment.IsDirty())
                 {
                     btnOrderSave.ForeColor = Color.Green;
                     btnOrderDiscard.ForeColor = Color.Red;
@@ -2245,8 +2258,7 @@ namespace DSA_lims
             }
 
             treePrepAnal.ExpandAll();
-
-            tbPrepAnalLODWater.Text = "";
+            
             tbPrepAnalInfoComment.Text = s.Comment;
             tbPrepAnalWetWeight.Text = s.WetWeight_g.ToString();
             tbPrepAnalDryWeight.Text = s.DryWeight_g.ToString();
@@ -3393,7 +3405,7 @@ namespace DSA_lims
                     case 0:                        
                         sid = Guid.Parse(e.Node.Name);
                         sample.LoadFromDB(conn, null, sid);
-                        PopulateSampleInfo(conn, null, sample, e.Node);
+                        PopulateSampleInfo(conn, null, sample, e.Node, true);
                         tabsPrepAnal.SelectedTab = tabPrepAnalSample;
                         break;
                     case 1:
@@ -3814,14 +3826,24 @@ namespace DSA_lims
                     return;
                 }
 
-                sample.LodWeightStart = lodStart;
-                sample.LodWeightEnd = lodEnd;
-                if(!String.IsNullOrEmpty(tbPrepAnalLODTemp.Text))
+                if (!String.IsNullOrEmpty(tbPrepAnalWetWeight.Text))
+                    sample.WetWeight_g = Convert.ToDouble(tbPrepAnalWetWeight.Text);
+
+                if (!String.IsNullOrEmpty(tbPrepAnalDryWeight.Text))
+                    sample.DryWeight_g = Convert.ToDouble(tbPrepAnalDryWeight.Text);
+
+                if (!String.IsNullOrEmpty(tbPrepAnalVolume.Text))
+                    sample.Volume_l = Convert.ToDouble(tbPrepAnalVolume.Text);
+
+                if (!String.IsNullOrEmpty(tbPrepAnalLODTemp.Text))
                     sample.LodTemperature = Convert.ToDouble(tbPrepAnalLODTemp.Text);
+
+                sample.LodWeightStart = lodStart;
+                sample.LodWeightEnd = lodEnd;                
 
                 sample.StoreLabInfoToDB(conn, null);
 
-                SetStatusMessage("Sample data updated successfully");
+                SetStatusMessage("Lab data updated for sample " + sample.Number);
             }
             catch (Exception ex)
             {
@@ -3834,14 +3856,13 @@ namespace DSA_lims
             }
         }
 
-        private void PopulateSampleInfo(SqlConnection conn, SqlTransaction trans, Sample s, TreeNode tnode)
+        private void PopulateSampleInfo(SqlConnection conn, SqlTransaction trans, Sample s, TreeNode tnode, bool clearDirty)
         {                        
             tnode.ToolTipText = "Component: " + sample.GetSampleComponentName(conn, trans) + Environment.NewLine
                 + "External Id: " + sample.ExternalId + Environment.NewLine
                 + "Project: " + sample.GetProjectName(conn, trans) + Environment.NewLine
                 + "Reference date: " + sample.ReferenceDate.ToString(Utils.DateTimeFormatNorwegian);
-
-            tbPrepAnalLODWater.Text = "";
+            
             tbPrepAnalInfoComment.Text = s.Comment;
             tbPrepAnalWetWeight.Text = s.WetWeight_g.ToString();
             tbPrepAnalDryWeight.Text = s.DryWeight_g.ToString();
@@ -3850,10 +3871,13 @@ namespace DSA_lims
             tbPrepAnalLODEndWeight.Text = s.LodWeightEnd.ToString();
             tbPrepAnalLODTemp.Text = s.LodTemperature.ToString();
 
-            btnPrepAnalSampleUpdate.Enabled = false;
+            btnPrepAnalSampleUpdate.Enabled = true;
             Guid labId = sample.GetAssignmentLaboratory(conn, trans);
-            if (Utils.IsValidGuid(labId) && labId == Common.LabId)
-                btnPrepAnalSampleUpdate.Enabled = true;
+            if (Utils.IsValidGuid(labId) && labId != Common.LabId)
+                btnPrepAnalSampleUpdate.Enabled = false;
+
+            if (clearDirty)
+                s.ClearDirty();
         }
 
         private void miImportLISFile_Click(object sender, EventArgs e)
@@ -3956,9 +3980,35 @@ namespace DSA_lims
                     ar.Dirty = false;
         }
 
+        public void CalculateLODPercent()
+        {
+            double lws, lwe;
+            try
+            {
+                lws = Convert.ToDouble(tbPrepAnalLODStartWeight.Text);
+                lwe = Convert.ToDouble(tbPrepAnalLODEndWeight.Text);
+            }
+            catch
+            {
+                tbPrepAnalLODWater.Text = "";
+                return;
+            }
+
+            if (lws < lwe)
+            {
+                tbPrepAnalLODWater.Text = "";
+                return;
+            }
+
+            double delta = lws - lwe;
+            double percent = (delta / lws) * 100.0;
+            tbPrepAnalLODWater.Text = percent.ToString("0.0#");
+        }
+
         private void tbPrepAnalLODStartWeight_TextChanged(object sender, EventArgs e)
         {
-            tbPrepAnalLODWater.Text = sample.GetLODPercentString();
+            sample.Dirty = true;
+            CalculateLODPercent();
         }
 
         private void btnPrepAnalAddPrep_Click(object sender, EventArgs e)
@@ -6011,6 +6061,40 @@ where s.number = @sample_number
             }
 
             SetStatusMessage("Changes discarded for sample " + sample.Number);
+        }
+
+        private void miAbout_Click(object sender, EventArgs e)
+        {
+            AboutBox about = new AboutBox();
+            about.ShowDialog();
+        }
+
+        private void tbPrepAnalWetWeight_TextChanged(object sender, EventArgs e)
+        {
+            sample.Dirty = true;
+        }
+
+        private void tbPrepAnalDryWeight_TextChanged(object sender, EventArgs e)
+        {
+            sample.Dirty = true;
+        }
+
+        private void tbPrepAnalVolume_TextChanged(object sender, EventArgs e)
+        {
+            sample.Dirty = true;
+        }
+
+        private void tbPrepAnalLODTemp_TextChanged(object sender, EventArgs e)
+        {
+            sample.Dirty = true;
+        }
+
+        private void btnPrepAnalSampleDiscard_Click(object sender, EventArgs e)
+        {
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                PopulateSampleInfo(conn, null, sample, treePrepAnal.Nodes[0], true);
+            }
         }
     }    
 }

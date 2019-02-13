@@ -71,23 +71,20 @@ namespace DSA_lims
         public DateTime UpdateDate { get; set; }
         public string UpdatedBy { get; set; }
 
-        public List<AssignmentSampleType> SampleTypes { get; set; }                
+        public List<AssignmentSampleType> SampleTypes { get; set; }
 
-        public bool Dirty { get; set; }
+        public bool Dirty;
 
-        public bool IsDirty
-        {
-            get
-            {
-                if (Dirty)
+        public bool IsDirty()
+        {            
+            if (Dirty)
+                return true;
+
+            foreach (AssignmentSampleType ast in SampleTypes)
+                if (ast.IsDirty())
                     return true;
 
-                foreach (AssignmentSampleType ast in SampleTypes)
-                    if (ast.IsDirty)
-                        return true;
-
-                return false;
-            }
+            return false;        
         }
 
         public void ClearDirty()

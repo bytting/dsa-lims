@@ -57,9 +57,9 @@ namespace DSA_lims
 
         public bool Dirty;
 
-        public bool IsDirty
+        public bool IsDirty()
         {
-            get { return Dirty; }
+            return Dirty;
         }
 
         public void ClearDirty()
@@ -99,10 +99,8 @@ namespace DSA_lims
             return cnt > 0;
         }
 
-        public bool LoadFromDB(SqlConnection conn, SqlTransaction trans, Guid prepId)
+        public void LoadFromDB(SqlConnection conn, SqlTransaction trans, Guid prepId)
         {
-            bool res = false;
-
             using (SqlDataReader reader = DB.GetDataReader(conn, trans, "csp_select_preparation", CommandType.StoredProcedure,
                 new SqlParameter("@id", prepId)))
             {
@@ -129,19 +127,15 @@ namespace DSA_lims
                 CreateDate = Convert.ToDateTime(reader["create_date"]);
                 CreatedBy = reader["created_by"].ToString();
                 UpdateDate = Convert.ToDateTime(reader["update_date"]);
-                UpdatedBy = reader["updated_by"].ToString();
-                res = true;
+                UpdatedBy = reader["updated_by"].ToString();         
             }
-
-            return res;
         }
 
-        public bool StoreToDB(SqlConnection conn, SqlTransaction trans)
+        public void StoreToDB(SqlConnection conn, SqlTransaction trans)
         {
             if (Id == Guid.Empty)
                 throw new Exception("Error: Can not store a preparation with empty id");
-
-            bool res = false;
+            
             SqlCommand cmd = new SqlCommand("", conn, trans);            
 
             if (!Preparation.IdExists(conn, trans, Id))
@@ -176,7 +170,6 @@ namespace DSA_lims
                     DB.AddAuditMessage(conn, trans, "preparation", Id, AuditOperationType.Insert, json, "");
 
                 Dirty = false;
-                res = true;
             }
             else
             {
@@ -204,12 +197,9 @@ namespace DSA_lims
                     if (!String.IsNullOrEmpty(json))
                         DB.AddAuditMessage(conn, trans, "preparation", Id, AuditOperationType.Update, json, "");
 
-                    Dirty = false;
-                    res = true;
+                    Dirty = false;                    
                 }
             }
-
-            return res;
         }        
 
         public bool IsClosed(SqlConnection conn, SqlTransaction trans)

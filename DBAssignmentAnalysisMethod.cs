@@ -47,9 +47,9 @@ namespace DSA_lims
 
         public bool Dirty;
 
-        public bool IsDirty
+        public bool IsDirty()
         {
-            get { return Dirty; }
+            return Dirty;
         }
 
         public void ClearDirty()

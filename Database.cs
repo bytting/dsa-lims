@@ -63,10 +63,15 @@ namespace DSA_lims
             else if (type == typeof(Int64))
                 return Convert.ToInt64(o);
             else if (type == typeof(DateTime))
-                return Convert.ToDateTime(o);
+            {
+                DateTime dt = Convert.ToDateTime(o);
+                if (dt == DateTime.MinValue)
+                    return DBNull.Value;
+                return dt;
+            }
             else if (type == typeof(bool))
                 return Convert.ToBoolean(o);
-            else if (type == typeof(string))            
+            else if (type == typeof(string))
                 return o.ToString();
             else if (type == typeof(Guid))
             {
@@ -75,7 +80,7 @@ namespace DSA_lims
                     return DBNull.Value;
 
                 return g;
-            }            
+            }
             else return o.ToString();
         }
 
@@ -330,28 +335,7 @@ namespace DSA_lims
             cmd.CommandType = CommandType.Text;
             cmd.Parameters.AddWithValue("@id", labId);
             return cmd.ExecuteScalar().ToString();
-        }
-
-        public static bool IsSampleClosed(SqlConnection conn, SqlTransaction trans, Guid sampleId)
-        {
-            string query = @"
-select count(*) as 'nclosed'
-from sample s
-	inner join sample_x_assignment_sample_type sxast on sxast.sample_id = s.id
-	inner join assignment_sample_type ast on ast.id = sxast.assignment_sample_type_id
-	inner join assignment a on a.id = ast.assignment_id
-where s.id = @sid and a.workflow_status_id = 2
-";
-            SqlCommand cmd = new SqlCommand(query, conn, trans);
-            cmd.CommandType = CommandType.Text;
-            cmd.Parameters.AddWithValue("@sid", sampleId);
-
-            object o = cmd.ExecuteScalar();
-            if (o == null || o == DBNull.Value)
-                return false;
-
-            return Convert.ToInt32(o) > 0;
-        }
+        }        
 
         public static int GetNextOrderCount(SqlConnection conn, SqlTransaction trans, Guid labId)
         {
@@ -421,37 +405,6 @@ where s.id = @sid and a.workflow_status_id = 2
                 return Guid.Empty;
 
             return Guid.Parse(o.ToString());
-        }
-
-        public static Guid GetLaboratoryIdFromSampleId(SqlConnection conn, SqlTransaction trans, Guid sampleId)
-        {
-            SqlCommand cmd = new SqlCommand(@"
-select a.laboratory_id 
-from assignment a
-    inner join assignment_sample_type ast on ast.assignment_id = a.id
-    inner join sample_x_assignment_sample_type sxast on sxast.assignment_sample_type_id = ast.id
-    inner join sample s on s.id = sxast.sample_id
-where s.id = @sample_id
-", conn, trans);
-            cmd.CommandType = CommandType.Text;
-            cmd.Parameters.AddWithValue("@sample_id", sampleId);
-            object o = cmd.ExecuteScalar();
-            if (!IsValidField(o))
-                return Guid.Empty;
-
-            return Guid.Parse(o.ToString());
-        }
-
-        public static string GetCreatedByFromSampleId(SqlConnection conn, SqlTransaction trans, Guid sampleId)
-        {
-            SqlCommand cmd = new SqlCommand("select created_by from sample where id = @sample_id", conn, trans);
-            cmd.CommandType = CommandType.Text;
-            cmd.Parameters.AddWithValue("@sample_id", sampleId);
-            object o = cmd.ExecuteScalar();
-            if (!IsValidField(o))
-                return String.Empty;
-
-            return o.ToString();
         }
 
         public static int GetNextPreparationNumber(SqlConnection conn, SqlTransaction trans, Guid sampleId)
@@ -578,34 +531,7 @@ from role r
                     userRoles.Add(reader["name"].ToString().ToUpper());
                 }
             }
-        }
-
-        public static bool SampleHasRequiredFields(SqlConnection conn, SqlTransaction trans, Guid sampleId)
-        {
-            string query = "select number, sample_type_id, project_sub_id, laboratory_id, reference_date from sample where id = @id";
-
-            using (SqlDataReader reader = DB.GetDataReader(conn, trans, query, CommandType.Text, new SqlParameter("@id", sampleId)))
-            {
-                if (!reader.HasRows)
-                    return false;
-
-                reader.Read();
-
-                if (!IsValidField(reader["number"])             
-                    || !IsValidField(reader["sample_type_id"]) 
-                    || !IsValidField(reader["project_sub_id"]) 
-                    || !IsValidField(reader["laboratory_id"]) 
-                    || !IsValidField(reader["reference_date"]))
-                    return false;
-
-                if (!Utils.IsValidGuid(reader["sample_type_id"]) 
-                    || !Utils.IsValidGuid(reader["project_sub_id"]) 
-                    || !Utils.IsValidGuid(reader["laboratory_id"]))
-                    return false;
-            }
-
-            return true;
-        }
+        }        
 
         public static bool SpecRefExists(SqlConnection conn, SqlTransaction trans, string specref, Guid exceptId)
         {

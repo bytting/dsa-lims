@@ -51,19 +51,16 @@ namespace DSA_lims
 
         public bool Dirty;
 
-        public bool IsDirty
-        {
-            get
-            {
-                if (Dirty)
+        public bool IsDirty()
+        {            
+            if (Dirty)
+                return true;
+
+            foreach (AssignmentAnalysisMethod aam in AnalysisMethods)
+                if (aam.IsDirty())
                     return true;
 
-                foreach (AssignmentAnalysisMethod aam in AnalysisMethods)
-                    if (aam.IsDirty)
-                        return true;
-
-                return false;
-            }
+            return false;
         }
 
         public void ClearDirty()

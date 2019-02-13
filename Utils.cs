@@ -64,6 +64,18 @@ namespace DSA_lims
             return true;
         }
 
+        public static Guid MakeGuid(object o)
+        {
+            if (o == null || o == DBNull.Value)
+                return Guid.Empty;
+
+            Guid g;
+            if (!Guid.TryParse(o.ToString(), out g) || g == Guid.Empty)
+                return Guid.Empty;
+
+            return Guid.Parse(o.ToString());
+        }
+
         public static byte[] MakePasswordHash(string password, string username)
         {
             return MakePasswordHash(Encoding.UTF8.GetBytes(password), Encoding.UTF8.GetBytes(username.ToUpper().Substring(0, 3)));

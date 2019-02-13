@@ -55,11 +55,11 @@ namespace DSA_lims
         public DateTime UpdateDate { get; set; }
         public string UpdatedBy { get; set; }
 
-        public bool Dirty { get; set; }
+        public bool Dirty;
 
-        public bool IsDirty
+        public bool IsDirty()
         {
-            get { return Dirty; }
+            return Dirty;
         }
 
         public void ClearDirty()

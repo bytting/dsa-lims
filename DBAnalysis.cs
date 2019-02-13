@@ -59,24 +59,19 @@ namespace DSA_lims
 
         public List<AnalysisResult> Results { get; set; }
 
-        public string ImportFile { get; set; }
-        public bool Dirty { get; set; }
+        public string ImportFile;
+        public bool Dirty;
 
-        public bool IsDirty
-        {
-            get
-            {
-                if (Dirty)
+        public bool IsDirty()
+        {            
+            if (Dirty)
+                return true;
+
+            foreach (AnalysisResult r in Results)                
+                if (r.IsDirty())
                     return true;
 
-                foreach (AnalysisResult r in Results)
-                {
-                    if (r.IsDirty)
-                        return true;
-                }
-
-                return false;
-            }
+            return false;
         }
 
         public void ClearDirty()

@@ -163,6 +163,7 @@
     <Compile Include="DBAssignmentSampleType.cs" />
     <Compile Include="DBPreparation.cs" />
     <Compile Include="DBPreparationGeometry.cs" />
+    <Compile Include="DBSample.cs" />
     <Compile Include="Environment.cs" />
     <Compile Include="FormAccountXRoles.cs">
       <SubType>Form</SubType>

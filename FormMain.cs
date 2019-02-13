@@ -45,11 +45,8 @@ namespace DSA_lims
         
         int statusMessageTimeout = 20000;
         System.Timers.Timer statusMessageTimer = null;
-        
-        private Guid selectedSampleId = Guid.Empty;
 
-        private int editingSampleNumber;
-
+        private Sample sample = new Sample();
         private Assignment assignment = new Assignment();
         private Analysis analysis = new Analysis();
         private Preparation preparation = new Preparation();
@@ -153,9 +150,9 @@ namespace DSA_lims
             {
                 if(tabsPrepAnal.SelectedTab == tabPrepAnalAnalysis)
                 {
-                    if (analysis.IsDirty)
+                    if (analysis.IsDirty())
                     {
-                        btnPrepAnalAnalUpdate.ForeColor = Color.Red;
+                        btnPrepAnalAnalUpdate.ForeColor = Color.Green;
                         btnPrepAnalAnalDiscard.ForeColor = Color.Red;
                     }
                     else
@@ -166,9 +163,9 @@ namespace DSA_lims
                 }
                 else if (tabsPrepAnal.SelectedTab == tabPrepAnalPreps)
                 {
-                    if (preparation.IsDirty)
+                    if (preparation.IsDirty())
                     {
-                        btnPrepAnalPrepUpdate.ForeColor = Color.Red;
+                        btnPrepAnalPrepUpdate.ForeColor = Color.Green;
                         btnPrepAnalPrepDiscard.ForeColor = Color.Red;
                     }
                     else
@@ -180,15 +177,28 @@ namespace DSA_lims
             }
             else if(tabs.SelectedTab == tabOrder)
             {
-                if(assignment.IsDirty)
+                if(assignment.IsDirty())
                 {
-                    btnOrderSave.ForeColor = Color.Red;
+                    btnOrderSave.ForeColor = Color.Green;
                     btnOrderDiscard.ForeColor = Color.Red;
                 }
                 else
                 {
                     btnOrderSave.ForeColor = SystemColors.ControlText;
                     btnOrderDiscard.ForeColor = SystemColors.ControlText;
+                }
+            }
+            else if (tabs.SelectedTab == tabSample)
+            {
+                if (sample.IsDirty())
+                {
+                    btnSampleUpdate.ForeColor = Color.Green;
+                    btnSampleDiscard.ForeColor = Color.Red;
+                }
+                else
+                {
+                    btnSampleUpdate.ForeColor = SystemColors.ControlText;
+                    btnSampleDiscard.ForeColor = SystemColors.ControlText;
                 }
             }
         }
@@ -357,14 +367,14 @@ namespace DSA_lims
         {
             if (tabs.SelectedTab == tabPrepAnal)
             {
-                if (analysis.IsDirty)
+                if (analysis.IsDirty())
                 {
                     DialogResult r = MessageBox.Show("Changes to the current analysis will be discarded. Do you want to continue?", "Warning", MessageBoxButtons.YesNo);
                     if (r == DialogResult.No)
                         return false;
                 }
 
-                if (preparation.IsDirty)
+                if (preparation.IsDirty())
                 {
                     DialogResult r = MessageBox.Show("Changes to the current preparation will be discarded. Do you want to continue?", "Warning", MessageBoxButtons.YesNo);
                     if (r == DialogResult.No)
@@ -377,7 +387,7 @@ namespace DSA_lims
             }
             else if (tabs.SelectedTab == tabOrder)
             {
-                if (assignment.IsDirty)
+                if (assignment.IsDirty())
                 {
                     DialogResult r = MessageBox.Show("Changes to the current assignment will be discarded. Do you want to continue?", "Warning", MessageBoxButtons.YesNo);
                     if (r == DialogResult.No)
@@ -1683,6 +1693,8 @@ namespace DSA_lims
 
         private void cboxSampleSampleType_SelectedIndexChanged(object sender, EventArgs e)
         {
+            sample.Dirty = true;
+
             if (!Utils.IsValidGuid(cboxSampleSampleType.SelectedValue))
             {
                 cboxSampleSampleComponent.DataSource = null;
@@ -1728,6 +1740,8 @@ namespace DSA_lims
 
         private void cboxSampleProject_SelectedIndexChanged(object sender, EventArgs e)
         {
+            sample.Dirty = true;
+
             if (!Utils.IsValidGuid(cboxSampleProject.SelectedValue))
             {
                 lblSampleToolProject.Text = "";
@@ -1751,6 +1765,8 @@ namespace DSA_lims
 
         private void cboxSampleSubProject_SelectedIndexChanged(object sender, EventArgs e)
         {
+            sample.Dirty = true;
+
             if (!Utils.IsValidGuid(cboxSampleSubProject.SelectedValue))
             {
                 lblSampleToolSubProject.Text = "";
@@ -1762,7 +1778,9 @@ namespace DSA_lims
 
         private void cboxSampleInfoStations_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(!Utils.IsValidGuid(cboxSampleInfoStations.SelectedValue))
+            sample.Dirty = true;
+
+            if (!Utils.IsValidGuid(cboxSampleInfoStations.SelectedValue))
             {
                 tbSampleInfoLatitude.Text = "";
                 tbSampleInfoLongitude.Text = "";
@@ -1787,7 +1805,9 @@ namespace DSA_lims
 
         private void tbSampleExId_TextChanged(object sender, EventArgs e)
         {
-            if(String.IsNullOrEmpty(tbSampleExId.Text.Trim()))
+            sample.Dirty = true;
+
+            if (String.IsNullOrEmpty(tbSampleExId.Text.Trim()))
             {
                 lblSampleToolExId.Text = "";
                 return;
@@ -1798,7 +1818,9 @@ namespace DSA_lims
 
         private void cboxSampleCounties_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(!Utils.IsValidGuid(cboxSampleCounties.SelectedValue))
+            sample.Dirty = true;
+
+            if (!Utils.IsValidGuid(cboxSampleCounties.SelectedValue))
             {
                 cboxSampleMunicipalities.DataSource = null;
                 return;
@@ -1816,19 +1838,16 @@ namespace DSA_lims
 
         private void miSamplesNew_Click(object sender, EventArgs e)
         {
-            // new sample            
-            ClearSample();
-            selectedSampleId = Guid.Empty;
-
+            // new sample                        
             FormSampleNew form = new FormSampleNew(treeSampleTypes);
             if (form.ShowDialog() != DialogResult.OK)
-                return;
-
-            selectedSampleId = form.SampleId;
+                return;            
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                PopulateSample(conn, null, selectedSampleId);
+                sample.LoadFromDB(conn, null, form.SampleId);
+
+                PopulateSample(conn, null, sample, true);
             }
 
             tabs.SelectedTab = tabSample;
@@ -1841,34 +1860,6 @@ namespace DSA_lims
         private void miSamplesImportExcel_Click(object sender, EventArgs e)
         {
             // Import sample from excel
-        }
-
-        private void ClearSample()
-        {
-            cboxSampleSampleType.SelectedValue = Guid.Empty;
-            cboxSampleSampleComponent.SelectedValue = Guid.Empty;
-            cboxSampleInfoSampler.SelectedValue = Guid.Empty;
-            cboxSampleInfoSamplingMeth.SelectedValue = Guid.Empty;
-            cboxSampleProject.SelectedValue = Guid.Empty;
-            cboxSampleSubProject.SelectedValue = Guid.Empty;
-            cboxSampleInfoStations.SelectedValue = Guid.Empty;
-            tbSampleInfoLatitude.Text = "";
-            tbSampleInfoLongitude.Text = "";
-            tbSampleInfoAltitude.Text = "";
-            cboxSampleCounties.SelectedValue = Guid.Empty;
-            cboxSampleMunicipalities.SelectedValue = Guid.Empty;
-            cboxSampleInfoLocationTypes.SelectedValue = -1;
-            tbSampleLocation.Text = "";
-            cboxSampleLaboratory.SelectedValue = Guid.Empty;
-            DateTime now = DateTime.Now;
-            tbSampleSamplingDateFrom.Text = "";
-            tbSampleSamplingDateTo.Text = "";
-            tbSampleReferenceDate.Text = "";
-            tbSampleExId.Text = "";
-            cbSampleConfidential.Checked = false;
-            cboxSampleSampleStorage.SelectedValue = Guid.Empty;
-            tbSampleComment.Text = "";
-            gridSampleAttachments.DataSource = null;
         }
 
         private void miSamplesEdit_Click(object sender, EventArgs e)
@@ -1884,11 +1875,12 @@ namespace DSA_lims
             Guid sid = Guid.Parse(gridSamples.SelectedRows[0].Cells["id"].Value.ToString());
 
             using (SqlConnection conn = DB.OpenConnection())
-            {                
-                if(Common.LabId == Guid.Empty)
-                {
-                    string owner = DB.GetCreatedByFromSampleId(conn, null, sid);
-                    if(Common.Username.ToUpper() != owner.ToUpper())
+            {
+                sample.LoadFromDB(conn, null, sid);
+
+                if (Common.LabId == Guid.Empty)
+                {                    
+                    if(Common.Username.ToUpper() != sample.CreatedBy.ToUpper())
                     {
                         MessageBox.Show("Can not edit this sample. Sample does not belong to your user");
                         return;
@@ -1897,16 +1889,14 @@ namespace DSA_lims
                 else
                 {
                     bool allow = false;
-
-                    Guid labId = DB.GetLaboratoryIdFromSampleId(conn, null, sid);
-                    if (labId == Common.LabId)
+                    
+                    if (Common.LabId == sample.GetAssignmentLaboratory(conn, null))
                     {
                         allow = true;
                     }
                     else
-                    {
-                        string owner = DB.GetCreatedByFromSampleId(conn, null, sid);
-                        if (Common.Username.ToUpper() == owner.ToUpper())
+                    {                        
+                        if (Common.Username.ToUpper() == sample.CreatedBy.ToUpper())
                             allow = true;
                     }
 
@@ -1916,166 +1906,109 @@ namespace DSA_lims
                         return;
                     }
                 }
-
-                selectedSampleId = sid;
-                ClearSample();
-                PopulateSample(conn, null, selectedSampleId);
+                
+                PopulateSample(conn, null, sample, true);
             }
 
             tabsSample.SelectedTab = tabSamplesInfo;
             tabs.SelectedTab = tabSample;
         }
 
-        private void PopulateSample(SqlConnection conn, SqlTransaction trans, Guid sampleId)
+        private void PopulateSample(SqlConnection conn, SqlTransaction trans, Sample s, bool clearDirty)
         {
-            Dictionary<string, object> map = new Dictionary<string, object>();
+            cboxSampleSampleType.SelectedValue = s.SampleTypeId;
+            cboxSampleSampleComponent.SelectedValue = s.SampleComponentId;
+            cboxSampleInfoSampler.SelectedValue = s.SamplerId;
+            cboxSampleInfoSamplingMeth.SelectedValue = s.SamplingMethodId;
 
-            using (SqlDataReader reader = DB.GetDataReader(conn, trans, "csp_select_sample", CommandType.StoredProcedure,
-                new SqlParameter("@id", sampleId)))
+            if (Utils.IsValidGuid(s.ProjectSubId))
             {
-                if (!reader.HasRows)
-                {
-                    Common.Log.Error("Sample with ID " + sampleId.ToString() + " was not found");
-                    MessageBox.Show("Sample with ID " + sampleId.ToString() + " was not found");
-                    return;
-                }
-
-                reader.Read();
-
-                map["id"] = reader["id"];
-                map["number"] = reader["number"];
-                map["laboratory_id"] = reader["laboratory_id"];
-                map["sample_type_id"] = reader["sample_type_id"];
-                map["sample_storage_id"] = reader["sample_storage_id"];
-                map["sample_component_id"] = reader["sample_component_id"];
-                map["project_sub_id"] = reader["project_sub_id"];
-                map["station_id"] = reader["station_id"];
-                map["sampler_id"] = reader["sampler_id"];
-                map["sampling_method_id"] = reader["sampling_method_id"];
-                map["transform_from_id"] = reader["transform_from_id"];
-                map["transform_to_id"] = reader["transform_to_id"];
-                map["imported_from"] = reader["imported_from"];
-                map["imported_from_id"] = reader["imported_from_id"];
-                map["municipality_id"] = reader["municipality_id"];
-                map["location_type"] = reader["location_type"];
-                map["location"] = reader["location"];
-                map["latitude"] = reader["latitude"];
-                map["longitude"] = reader["longitude"];
-                map["altitude"] = reader["altitude"];
-                map["sampling_date_from"] = reader["sampling_date_from"];                
-                map["sampling_date_to"] = reader["sampling_date_to"];
-                map["reference_date"] = reader["reference_date"];
-                map["external_id"] = reader["external_id"];
-                map["wet_weight_g"] = reader["wet_weight_g"];
-                map["dry_weight_g"] = reader["dry_weight_g"];
-                map["volume_l"] = reader["volume_l"];
-                map["lod_weight_start"] = reader["lod_weight_start"];
-                map["lod_weight_end"] = reader["lod_weight_end"];
-                map["lod_temperature"] = reader["lod_temperature"];
-                map["confidential"] = reader["confidential"];
-                map["parameters"] = reader["parameters"];
-                map["instance_status_id"] = reader["instance_status_id"];
-                map["comment"] = reader["comment"];
-                map["create_date"] = reader["create_date"];
-                map["created_by"] = reader["created_by"];
-                map["update_date"] = reader["update_date"];
-                map["updated_by"] = reader["updated_by"];
-            }
-
-            editingSampleNumber = Convert.ToInt32(map["number"]);
-
-            cboxSampleSampleType.SelectedValue = map["sample_type_id"];
-            cboxSampleSampleComponent.SelectedValue = map["sample_component_id"];
-            cboxSampleInfoSampler.SelectedValue = map["sampler_id"];
-            cboxSampleInfoSamplingMeth.SelectedValue = map["sampling_method_id"];
-
-            if (map["project_sub_id"] != DBNull.Value)
-            {
-                object mpid = DB.GetScalar(conn, null, "select project_main_id from project_sub where id = @id", CommandType.Text, new SqlParameter("@id", map["project_sub_id"]));
+                object mpid = DB.GetScalar(conn, null, "select project_main_id from project_sub where id = @id", CommandType.Text, 
+                    new SqlParameter("@id", s.ProjectSubId));
                 cboxSampleProject.SelectedValue = mpid;
-                cboxSampleSubProject.SelectedValue = map["project_sub_id"];
+                cboxSampleSubProject.SelectedValue = s.ProjectSubId;
             }
 
-            if (!Utils.IsValidGuid(map["station_id"]))
+            if (!Utils.IsValidGuid(s.StationId))
             {
-                if (map["latitude"] != DBNull.Value)
-                    tbSampleInfoLatitude.Text = map["latitude"].ToString();
-                if (map["longitude"] != DBNull.Value)
-                    tbSampleInfoLongitude.Text = map["longitude"].ToString();
-                if (map["altitude"] != DBNull.Value)
-                    tbSampleInfoAltitude.Text = map["altitude"].ToString();
+                tbSampleInfoLatitude.Text = s.Latitude.ToString();
+                tbSampleInfoLongitude.Text = s.Longitude.ToString();
+                tbSampleInfoAltitude.Text = s.Altitude.ToString();
             }
-            else cboxSampleInfoStations.SelectedValue = map["station_id"];
+            else cboxSampleInfoStations.SelectedValue = s.StationId;
 
-            if (map["municipality_id"] != DBNull.Value)
+            if (Utils.IsValidGuid(s.MunicipalityId))
             {
-                object cid = DB.GetScalar(conn, null, "select county_id from municipality where id = @id", CommandType.Text, new SqlParameter("@id", map["municipality_id"]));
+                object cid = DB.GetScalar(conn, null, "select county_id from municipality where id = @id", CommandType.Text, 
+                    new SqlParameter("@id", s.MunicipalityId));
                 cboxSampleCounties.SelectedValue = cid;
-                cboxSampleMunicipalities.SelectedValue = map["municipality_id"];
+                cboxSampleMunicipalities.SelectedValue = s.MunicipalityId;
             }
 
-            cboxSampleInfoLocationTypes.Text = map["location_type"].ToString();
-            tbSampleLocation.Text = map["location"].ToString();
+            cboxSampleInfoLocationTypes.Text = s.LocationType;
+            tbSampleLocation.Text = s.Location;
 
-            cboxSampleLaboratory.SelectedValue = map["laboratory_id"];
+            cboxSampleLaboratory.SelectedValue = s.LaboratoryId;
 
             tbSampleSamplingDateFrom.TextChanged -= tbSampleSamplingDateFrom_TextChanged;
             tbSampleSamplingDateTo.TextChanged -= tbSampleSamplingDateTo_TextChanged;
             tbSampleReferenceDate.TextChanged -= tbSampleReferenceDate_TextChanged;
 
-            if (!DB.IsValidField(map["sampling_date_from"]))
+            if (s.SamplingDateFrom == DateTime.MinValue)
             {
                 tbSampleSamplingDateFrom.Tag = null;
                 tbSampleSamplingDateFrom.Text = "";                
             }   
             else
             {
-                DateTime samplingDateFrom = Convert.ToDateTime(map["sampling_date_from"]);
-                tbSampleSamplingDateFrom.Tag = samplingDateFrom;
-                tbSampleSamplingDateFrom.Text = samplingDateFrom.ToString(Utils.DateTimeFormatNorwegian);                
+                tbSampleSamplingDateFrom.Tag = s.SamplingDateFrom;
+                tbSampleSamplingDateFrom.Text = s.SamplingDateFrom.ToString(Utils.DateTimeFormatNorwegian);                
             }            
 
-            if (!DB.IsValidField(map["sampling_date_to"]))
+            if (s.SamplingDateTo == DateTime.MinValue)
             {
                 tbSampleSamplingDateTo.Tag = null;
                 tbSampleSamplingDateTo.Text = "";                
             }
             else
             {
-                DateTime samplingDateTo = Convert.ToDateTime(map["sampling_date_to"]);
-                tbSampleSamplingDateTo.Tag = samplingDateTo;
-                tbSampleSamplingDateTo.Text = samplingDateTo.ToString(Utils.DateTimeFormatNorwegian);                
+                tbSampleSamplingDateTo.Tag = s.SamplingDateTo;
+                tbSampleSamplingDateTo.Text = s.SamplingDateTo.ToString(Utils.DateTimeFormatNorwegian);                
             }
 
-            if (!DB.IsValidField(map["reference_date"]))
+            if (s.ReferenceDate == DateTime.MinValue)
             {
                 tbSampleReferenceDate.Tag = null;
                 tbSampleReferenceDate.Text = "";                
             }
             else
             {
-                DateTime referenceDate = Convert.ToDateTime(map["reference_date"]);
-                tbSampleReferenceDate.Tag = referenceDate;
-                tbSampleReferenceDate.Text = referenceDate.ToString(Utils.DateTimeFormatNorwegian);                
+                tbSampleReferenceDate.Tag = s.ReferenceDate;
+                tbSampleReferenceDate.Text = s.ReferenceDate.ToString(Utils.DateTimeFormatNorwegian);                
             }
 
             tbSampleSamplingDateFrom.TextChanged += tbSampleSamplingDateFrom_TextChanged;
             tbSampleSamplingDateTo.TextChanged += tbSampleSamplingDateTo_TextChanged;
             tbSampleReferenceDate.TextChanged += tbSampleReferenceDate_TextChanged;
 
-            tbSampleExId.Text = map["external_id"].ToString();
-            cbSampleConfidential.Checked = Convert.ToBoolean(map["confidential"]);
+            tbSampleExId.Text = s.ExternalId;
+            cbSampleConfidential.Checked = s.Confidential;
 
-            cboxSampleSampleStorage.SelectedValue = map["sample_storage_id"];
+            cboxSampleSampleStorage.SelectedValue = s.SampleStorageId;
 
-            cboxSampleInstanceStatus.SelectedValue = map["instance_status_id"];
+            cboxSampleInstanceStatus.SelectedValue = s.InstanceStatusId;
 
-            tbSampleComment.Text = map["comment"].ToString();
-            lblSampleToolId.Text = "[Sample] " + map["number"].ToString();
+            tbSampleComment.Text = s.Comment;
+            lblSampleToolId.Text = "[Sample] " + s.Number.ToString();
             lblSampleToolLaboratory.Text = String.IsNullOrEmpty(cboxSampleLaboratory.Text) ? "" : "[Laboratory] " + cboxSampleLaboratory.Text;
 
             // Show attachments
-            UI.PopulateAttachments(conn, trans, "sample", sampleId, gridSampleAttachments);
+            UI.PopulateAttachments(conn, trans, "sample", s.Id, gridSampleAttachments);
+
+            if(clearDirty)
+            {
+                sample.ClearDirty();
+            }
         }
 
         private void miSamplesDelete_Click(object sender, EventArgs e)
@@ -2242,20 +2175,22 @@ namespace DSA_lims
                 return;
             }
 
-            selectedSampleId = Guid.Parse(gridSamples.SelectedRows[0].Cells["id"].Value.ToString());
+            Guid sid = Guid.Parse(gridSamples.SelectedRows[0].Cells["id"].Value.ToString());            
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                if (!PopulatePrepAnal(conn, selectedSampleId))
+                sample.LoadFromDB(conn, null, sid);
+
+                if (!PopulatePrepAnal(conn, sample))
                     return;
             }
 
             tabs.SelectedTab = tabPrepAnal;
         }
 
-        private bool PopulatePrepAnal(SqlConnection conn, Guid sampleId)
+        private bool PopulatePrepAnal(SqlConnection conn, Sample s)
         {
-            if(!DB.SampleHasRequiredFields(conn, null, sampleId))
+            if(!s.HasRequiredFields())
             {
                 MessageBox.Show("This sample is not complete yet");
                 return false;
@@ -2267,16 +2202,16 @@ namespace DSA_lims
             Font fontSample = new Font(treePrepAnal.Font, FontStyle.Bold);            
 
             using (SqlDataReader reader = DB.GetDataReader(conn, null, "csp_select_sample_header", CommandType.StoredProcedure, 
-                new SqlParameter("@id", sampleId)))
+                new SqlParameter("@id", s.Id)))
             {
                 reader.Read();
                 string txt = reader["sample_number"].ToString() + " - " + reader["sample_type_name"].ToString() + ", " + reader["laboratory_name"].ToString();
-                sampleNode = treePrepAnal.Nodes.Add(sampleId.ToString(), txt);
+                sampleNode = treePrepAnal.Nodes.Add(sample.Id.ToString(), txt);
                 sampleNode.NodeFont = fontSample;
             }
             
             using (SqlDataReader reader = DB.GetDataReader(conn, null, "csp_select_preparation_headers_for_sample", CommandType.StoredProcedure,
-                new SqlParameter("@sample_id", sampleId)))
+                new SqlParameter("@sample_id", s.Id)))
             {
                 while (reader.Read())
                 {
@@ -2312,13 +2247,13 @@ namespace DSA_lims
             treePrepAnal.ExpandAll();
 
             tbPrepAnalLODWater.Text = "";
-            tbPrepAnalInfoComment.Text = "";
-            tbPrepAnalWetWeight.Text = "";
-            tbPrepAnalDryWeight.Text = "";
-            tbPrepAnalVolume.Text = "";
-            tbPrepAnalLODStartWeight.Text = "";
-            tbPrepAnalLODEndWeight.Text = "";
-            tbPrepAnalLODTemp.Text = "";
+            tbPrepAnalInfoComment.Text = s.Comment;
+            tbPrepAnalWetWeight.Text = s.WetWeight_g.ToString();
+            tbPrepAnalDryWeight.Text = s.DryWeight_g.ToString();
+            tbPrepAnalVolume.Text = s.Volume_l.ToString();
+            tbPrepAnalLODStartWeight.Text = s.LodWeightStart.ToString();
+            tbPrepAnalLODEndWeight.Text = s.LodWeightEnd.ToString();
+            tbPrepAnalLODTemp.Text = s.LodTemperature.ToString();            
 
             preparation.ClearDirty();
             analysis.ClearDirty();
@@ -3172,7 +3107,7 @@ namespace DSA_lims
         private void miOrderSave_Click(object sender, EventArgs e)
         {
             // save order            
-            if(!assignment.IsDirty)
+            if(!assignment.IsDirty())
             {
                 SetStatusMessage("Nothing to save for order " + assignment.Name);
                 return;
@@ -3452,15 +3387,18 @@ namespace DSA_lims
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                Guid pid;
+                Guid sid, pid;
                 switch (e.Node.Level)
                 {
                     case 0:                        
-                        Guid sid = Guid.Parse(e.Node.Name);
-                        PopulateSampleInfo(conn, null, sid, e.Node);
+                        sid = Guid.Parse(e.Node.Name);
+                        sample.LoadFromDB(conn, null, sid);
+                        PopulateSampleInfo(conn, null, sample, e.Node);
                         tabsPrepAnal.SelectedTab = tabPrepAnalSample;
                         break;
-                    case 1:                        
+                    case 1:
+                        sid = Guid.Parse(e.Node.Parent.Name);
+                        sample.LoadFromDB(conn, null, sid);
                         pid = Guid.Parse(e.Node.Name);
                         preparation.LoadFromDB(conn, null, pid);
                         PopulatePreparation(conn, null, preparation, true);
@@ -3468,6 +3406,8 @@ namespace DSA_lims
                         tabsPrepAnal.SelectedTab = tabPrepAnalPreps;
                         break;
                     case 2:
+                        sid = Guid.Parse(e.Node.Parent.Parent.Name);
+                        sample.LoadFromDB(conn, null, sid);
                         pid = Guid.Parse(e.Node.Parent.Name);
                         preparation.LoadFromDB(conn, null, pid);
                         Guid aid = Guid.Parse(e.Node.Name);
@@ -3508,18 +3448,18 @@ namespace DSA_lims
 
         private void tabs_Selecting(object sender, TabControlCancelEventArgs e)
         {
-            if ((e.TabPage == tabSample || e.TabPage == tabPrepAnal) && selectedSampleId != Guid.Empty)
+            if (e.TabPage == tabSample || e.TabPage == tabPrepAnal)
             {
                 using (SqlConnection conn = DB.OpenConnection())
                 {
-                    if (!DB.LockSample(conn, selectedSampleId))
+                    if (!DB.LockSample(conn, sample.Id))
                     {
                         MessageBox.Show("Unable to lock sample");
                         e.Cancel = true;
                     }
                 }
             }
-            else if (e.TabPage == tabOrder && assignment.Id != Guid.Empty)
+            else if (e.TabPage == tabOrder)
             {
                 using (SqlConnection conn = DB.OpenConnection())
                 {
@@ -3589,7 +3529,7 @@ namespace DSA_lims
             {
                 MessageBox.Show("Sub project is mandatory");
                 return;
-            }
+            }            
 
             double lat = -1d, lon = -1d, alt = -1d;
 
@@ -3610,55 +3550,47 @@ namespace DSA_lims
             if (!String.IsNullOrEmpty(tbSampleInfoAltitude.Text))
                 alt = Convert.ToDouble(tbSampleInfoAltitude.Text);
 
-            SqlConnection conn = null;            
+            SqlConnection conn = null;
 
             try
             {
                 conn = DB.OpenConnection();
 
-                // update selected sample
-                SqlCommand cmd = new SqlCommand("select number from sample where id = @id", conn);
-                cmd.CommandType = CommandType.Text;
-                cmd.Parameters.AddWithValue("@id", selectedSampleId);
-                object oNumber = cmd.ExecuteScalar();
+                Guid newSampleTypeId = Utils.MakeGuid(cboxSampleSampleType.SelectedValue);
+                if (sample.SampleTypeId != newSampleTypeId && sample.HasOrders(conn, null))
+                {
+                    MessageBox.Show("Can not change sample type. This sample belongs to one or more orders");
+                    return;
+                }
 
-                cmd.CommandText = "csp_update_sample";
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Clear();
-                cmd.Parameters.AddWithValue("@id", selectedSampleId);
-                cmd.Parameters.AddWithValue("@laboratory_id", DB.MakeParam(typeof(Guid), cboxSampleLaboratory.SelectedValue));
-                cmd.Parameters.AddWithValue("@sample_type_id", DB.MakeParam(typeof(Guid), cboxSampleSampleType.SelectedValue));
-                cmd.Parameters.AddWithValue("@sample_storage_id", DB.MakeParam(typeof(Guid), cboxSampleSampleStorage.SelectedValue));
-                cmd.Parameters.AddWithValue("@sample_component_id", DB.MakeParam(typeof(Guid), cboxSampleSampleComponent.SelectedValue));
-                cmd.Parameters.AddWithValue("@project_sub_id", DB.MakeParam(typeof(Guid), cboxSampleSubProject.SelectedValue));
-                cmd.Parameters.AddWithValue("@station_id", DB.MakeParam(typeof(Guid), cboxSampleInfoStations.SelectedValue));
-                cmd.Parameters.AddWithValue("@sampler_id", DB.MakeParam(typeof(Guid), cboxSampleInfoSampler.SelectedValue));
-                cmd.Parameters.AddWithValue("@sampling_method_id", DB.MakeParam(typeof(Guid), cboxSampleInfoSamplingMeth.SelectedValue));
-                cmd.Parameters.AddWithValue("@municipality_id", DB.MakeParam(typeof(Guid), cboxSampleMunicipalities.SelectedValue));
-                cmd.Parameters.AddWithValue("@location_type", DB.MakeParam(typeof(string), cboxSampleInfoLocationTypes.Text));
-                cmd.Parameters.AddWithValue("@location", DB.MakeParam(typeof(string), tbSampleLocation.Text.Trim()));
-                if(lat == -1d)
-                    cmd.Parameters.AddWithValue("@latitude", DBNull.Value);
-                else cmd.Parameters.AddWithValue("@latitude", lat);
-                if (lon == -1d)
-                    cmd.Parameters.AddWithValue("@longitude", DBNull.Value);
-                else cmd.Parameters.AddWithValue("@longitude", lon);
-                if (alt == -1d)
-                    cmd.Parameters.AddWithValue("@altitude", DBNull.Value);
-                else cmd.Parameters.AddWithValue("@altitude", alt);                
-                cmd.Parameters.AddWithValue("@sampling_date_from", DB.MakeParam(typeof(DateTime), tbSampleSamplingDateFrom.Tag));                
-                cmd.Parameters.AddWithValue("@sampling_date_to", DB.MakeParam(typeof(DateTime), tbSampleSamplingDateTo.Tag));
-                cmd.Parameters.AddWithValue("@reference_date", DB.MakeParam(typeof(DateTime), tbSampleReferenceDate.Tag));
-                cmd.Parameters.AddWithValue("@external_id", DB.MakeParam(typeof(string), tbSampleExId.Text.Trim()));
-                cmd.Parameters.AddWithValue("@confidential", cbSampleConfidential.Checked ? 1 : 0);
-                cmd.Parameters.AddWithValue("@instance_status_id", DB.MakeParam(typeof(int), cboxSampleInstanceStatus.SelectedValue));
-                cmd.Parameters.AddWithValue("@comment", tbSampleComment.Text.Trim());
-                cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
-                cmd.Parameters.AddWithValue("@updated_by", Common.Username);
+                sample.LaboratoryId = Utils.MakeGuid(cboxSampleLaboratory.SelectedValue);
+                sample.SampleTypeId = Utils.MakeGuid(cboxSampleSampleType.SelectedValue);
+                sample.SampleStorageId = Utils.MakeGuid(cboxSampleSampleStorage.SelectedValue);
+                sample.SampleComponentId = Utils.MakeGuid(cboxSampleSampleComponent.SelectedValue);
+                sample.ProjectSubId = Utils.MakeGuid(cboxSampleSubProject.SelectedValue);
+                sample.StationId = Utils.MakeGuid(cboxSampleInfoStations.SelectedValue);
+                sample.SamplerId = Utils.MakeGuid(cboxSampleInfoSampler.SelectedValue);
+                sample.SamplingMethodId = Utils.MakeGuid(cboxSampleInfoSamplingMeth.SelectedValue);
+                sample.MunicipalityId = Utils.MakeGuid(cboxSampleMunicipalities.SelectedValue);
+                sample.LocationType = cboxSampleInfoLocationTypes.Text;
+                sample.Location = tbSampleLocation.Text;
+                sample.Latitude = lat;
+                sample.Longitude = lon;
+                sample.Altitude = alt;
+                if(tbSampleSamplingDateFrom.Tag != null)
+                    sample.SamplingDateFrom = (DateTime)tbSampleSamplingDateFrom.Tag;
+                if(tbSampleSamplingDateTo.Tag != null)
+                    sample.SamplingDateTo = (DateTime)tbSampleSamplingDateTo.Tag;
+                if(tbSampleReferenceDate.Tag != null)
+                    sample.ReferenceDate = (DateTime)tbSampleReferenceDate.Tag;
+                sample.ExternalId = tbSampleExId.Text;
+                sample.Confidential = cbSampleConfidential.Checked;
+                sample.InstanceStatusId = Convert.ToInt32(cboxSampleInstanceStatus.SelectedValue);
+                sample.Comment = tbSampleComment.Text.Trim();
 
-                cmd.ExecuteNonQuery();
+                sample.StoreToDB(conn, null);
 
-                SetStatusMessage("Sample " + oNumber.ToString() + " updated");
+                SetStatusMessage("Sample " + sample.Number + " updated");
             }
             catch (Exception ex)
             {
@@ -3680,7 +3612,7 @@ namespace DSA_lims
 
         private void btnPrepAnalPrepUpdate_Click(object sender, EventArgs e)
         {
-            if (!preparation.IsDirty)
+            if (!preparation.IsDirty())
             {
                 SetStatusMessage("Nothing to save for preparation " + preparation.Number);
                 return;
@@ -3783,7 +3715,7 @@ namespace DSA_lims
 
         private void btnPrepAnalAnalUpdate_Click(object sender, EventArgs e)
         {
-            if(!analysis.IsDirty)
+            if(!analysis.IsDirty())
             {                
                 SetStatusMessage("Nothing to save for analysis " + preparation.Number + "/" + analysis.Number);
                 return;
@@ -3857,19 +3789,12 @@ namespace DSA_lims
 
         private void btnPrepAnalSampleUpdate_Click(object sender, EventArgs e)
         {
-            if (!Utils.IsValidGuid(treePrepAnal.SelectedNode.Name))
-            {
-                MessageBox.Show("No valid sample ID found");
-                return;
-            }
+            double lodStart = -1, lodEnd = -1;
 
-            Guid sid = Guid.Parse(treePrepAnal.SelectedNode.Name);
-            SqlConnection conn = null;
-
-            if(!String.IsNullOrEmpty(tbPrepAnalLODStartWeight.Text) && !String.IsNullOrEmpty(tbPrepAnalLODEndWeight.Text))
+            if (!String.IsNullOrEmpty(tbPrepAnalLODStartWeight.Text) && !String.IsNullOrEmpty(tbPrepAnalLODEndWeight.Text))
             {
-                double lodStart = Convert.ToDouble(tbPrepAnalLODStartWeight.Text);
-                double lodEnd = Convert.ToDouble(tbPrepAnalLODEndWeight.Text);
+                lodStart = Convert.ToDouble(tbPrepAnalLODStartWeight.Text);
+                lodEnd = Convert.ToDouble(tbPrepAnalLODEndWeight.Text);
                 if (lodStart < lodEnd)
                 {
                     MessageBox.Show("LOD start weight cannot be smaller than end weight");
@@ -3877,29 +3802,24 @@ namespace DSA_lims
                 }
             }
 
+            SqlConnection conn = null;
+
             try
             {
                 conn = DB.OpenConnection();
 
-                if (DB.IsSampleClosed(conn, null, selectedSampleId))
+                if (sample.IsClosed(conn, null))
                 {
                     MessageBox.Show("This sample belongs to a closed order and can not be updated");
                     return;
                 }
 
-                SqlCommand cmd = new SqlCommand("csp_update_sample_info", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@id", sid);
-                cmd.Parameters.AddWithValue("@wet_weight_g", DB.MakeParam(typeof(double), tbPrepAnalWetWeight.Text));
-                cmd.Parameters.AddWithValue("@dry_weight_g", DB.MakeParam(typeof(double), tbPrepAnalDryWeight.Text));
-                cmd.Parameters.AddWithValue("@volume_l", DB.MakeParam(typeof(double), tbPrepAnalVolume.Text));
-                cmd.Parameters.AddWithValue("@lod_weight_start", DB.MakeParam(typeof(double), tbPrepAnalLODStartWeight.Text));
-                cmd.Parameters.AddWithValue("@lod_weight_end", DB.MakeParam(typeof(double), tbPrepAnalLODEndWeight.Text));
-                cmd.Parameters.AddWithValue("@lod_temperature", DB.MakeParam(typeof(double), tbPrepAnalLODTemp.Text));
-                cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
-                cmd.Parameters.AddWithValue("@updated_by", Common.Username);
+                sample.LodWeightStart = lodStart;
+                sample.LodWeightEnd = lodEnd;
+                if(!String.IsNullOrEmpty(tbPrepAnalLODTemp.Text))
+                    sample.LodTemperature = Convert.ToDouble(tbPrepAnalLODTemp.Text);
 
-                cmd.ExecuteNonQuery();
+                sample.StoreLabInfoToDB(conn, null);
 
                 SetStatusMessage("Sample data updated successfully");
             }
@@ -3914,43 +3834,24 @@ namespace DSA_lims
             }
         }
 
-        private void PopulateSampleInfo(SqlConnection conn, SqlTransaction trans, Guid sid, TreeNode tnode)
-        {            
-            using (SqlDataReader reader = DB.GetDataReader(conn, trans, "csp_select_sample_info", CommandType.StoredProcedure,
-                new SqlParameter("@id", sid)))
-            {
-                if (reader.HasRows)
-                {
-                    reader.Read();
+        private void PopulateSampleInfo(SqlConnection conn, SqlTransaction trans, Sample s, TreeNode tnode)
+        {                        
+            tnode.ToolTipText = "Component: " + sample.GetSampleComponentName(conn, trans) + Environment.NewLine
+                + "External Id: " + sample.ExternalId + Environment.NewLine
+                + "Project: " + sample.GetProjectName(conn, trans) + Environment.NewLine
+                + "Reference date: " + sample.ReferenceDate.ToString(Utils.DateTimeFormatNorwegian);
 
-                    string refDateStr = "";
-                    object o = reader["reference_date"];
-                    if (o != null && o != DBNull.Value)
-                    {
-                        DateTime refDate = Convert.ToDateTime(reader["reference_date"]);
-                        refDateStr = refDate.ToString(Utils.DateFormatNorwegian);
-                    }
-
-                    tnode.ToolTipText = "Component: " + reader["sample_component_name"].ToString() + Environment.NewLine
-                        + "External Id: " + reader["external_id"].ToString() + Environment.NewLine
-                        + "Project: " + reader["project_name"].ToString() + Environment.NewLine
-                        + "Reference date: " + refDateStr;
-                                                                                
-                    tbPrepAnalLODWater.Text = "";
-                    tbPrepAnalInfoComment.Text = reader["comment"].ToString();
-                    tbPrepAnalWetWeight.Text = reader["wet_weight_g"].ToString();
-                    tbPrepAnalDryWeight.Text = reader["dry_weight_g"].ToString();
-                    tbPrepAnalVolume.Text = reader["volume_l"].ToString();
-                    tbPrepAnalLODStartWeight.Text = reader["lod_weight_start"].ToString();
-                    tbPrepAnalLODEndWeight.Text = reader["lod_weight_end"].ToString();
-                    tbPrepAnalLODTemp.Text = reader["lod_temperature"].ToString();
-
-                    CalculateLODPercent();
-                }
-            }
+            tbPrepAnalLODWater.Text = "";
+            tbPrepAnalInfoComment.Text = s.Comment;
+            tbPrepAnalWetWeight.Text = s.WetWeight_g.ToString();
+            tbPrepAnalDryWeight.Text = s.DryWeight_g.ToString();
+            tbPrepAnalVolume.Text = s.Volume_l.ToString();
+            tbPrepAnalLODStartWeight.Text = s.LodWeightStart.ToString();
+            tbPrepAnalLODEndWeight.Text = s.LodWeightEnd.ToString();
+            tbPrepAnalLODTemp.Text = s.LodTemperature.ToString();
 
             btnPrepAnalSampleUpdate.Enabled = false;
-            Guid labId = DB.GetLaboratoryIdFromSampleId(conn, trans, sid);
+            Guid labId = sample.GetAssignmentLaboratory(conn, trans);
             if (Utils.IsValidGuid(labId) && labId == Common.LabId)
                 btnPrepAnalSampleUpdate.Enabled = true;
         }
@@ -4035,8 +3936,6 @@ namespace DSA_lims
             gridPrepAnalResults.Columns["UniformActivity"].Visible = false;
             gridPrepAnalResults.Columns["UniformActivityUnitId"].Visible = false;
             gridPrepAnalResults.Columns["InstanceStatusId"].Visible = false;
-            gridPrepAnalResults.Columns["Dirty"].Visible = false;
-            gridPrepAnalResults.Columns["IsDirty"].Visible = false;
             gridPrepAnalResults.Columns["CreateDate"].Visible = false;
             gridPrepAnalResults.Columns["CreatedBy"].Visible = false;
             gridPrepAnalResults.Columns["UpdateDate"].Visible = false;
@@ -4059,43 +3958,18 @@ namespace DSA_lims
 
         private void tbPrepAnalLODStartWeight_TextChanged(object sender, EventArgs e)
         {
-            CalculateLODPercent();
-        }
-
-        private void CalculateLODPercent()
-        {
-            string startWeight = tbPrepAnalLODStartWeight.Text.Trim();
-            string endWeight = tbPrepAnalLODEndWeight.Text.Trim();
-
-            if (String.IsNullOrEmpty(startWeight) || String.IsNullOrEmpty(endWeight))
-            {
-                tbPrepAnalLODWater.Text = "";
-                return;
-            }
-
-            double sw = Convert.ToDouble(startWeight);
-            double ew = Convert.ToDouble(endWeight);
-
-            if(sw < ew)
-            {
-                tbPrepAnalLODWater.Text = "";
-                return;
-            }
-
-            double delta = sw - ew;
-            double precent = (delta / sw) * 100.0;
-            tbPrepAnalLODWater.Text = precent.ToString("0.0#");
+            tbPrepAnalLODWater.Text = sample.GetLODPercentString();
         }
 
         private void btnPrepAnalAddPrep_Click(object sender, EventArgs e)
         {
-            FormPrepAnalAddPrep form = new FormPrepAnalAddPrep(selectedSampleId);
+            FormPrepAnalAddPrep form = new FormPrepAnalAddPrep(sample.Id);
             if (form.ShowDialog() != DialogResult.OK)
                 return;
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                PopulatePrepAnal(conn, selectedSampleId);
+                PopulatePrepAnal(conn, sample);
             }
         }
 
@@ -4112,7 +3986,7 @@ namespace DSA_lims
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                PopulatePrepAnal(conn, selectedSampleId);
+                PopulatePrepAnal(conn, sample);
             }
         }
 
@@ -4124,7 +3998,7 @@ namespace DSA_lims
                 return;
             }
 
-            FormSelectOrder form = new FormSelectOrder(treeSampleTypes, selectedSampleId);
+            FormSelectOrder form = new FormSelectOrder(treeSampleTypes, sample.Id);
             if (form.ShowDialog() != DialogResult.OK)
                 return;
 
@@ -4192,7 +4066,9 @@ namespace DSA_lims
 
         private void cboxSampleLaboratory_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(!Utils.IsValidGuid(cboxSampleLaboratory.SelectedValue))            
+            sample.Dirty = true;
+
+            if (!Utils.IsValidGuid(cboxSampleLaboratory.SelectedValue))            
                 lblSampleToolLaboratory.Text = "";
             else            
                 lblSampleToolLaboratory.Text = "[Laboratory] " + cboxSampleLaboratory.Text;
@@ -4495,7 +4371,9 @@ namespace DSA_lims
 
         private void cboxSampleInfoLocationTypes_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(cboxSampleInfoLocationTypes.SelectedValue == null)
+            sample.Dirty = true;
+
+            if (cboxSampleInfoLocationTypes.SelectedValue == null)
             {
                 tbSampleLocation.Text = "";
                 tbSampleLocation.Enabled = false;
@@ -4516,7 +4394,7 @@ namespace DSA_lims
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                if (!PopulatePrepAnal(conn, selectedSampleId))
+                if (!PopulatePrepAnal(conn, sample))
                     return;
             }            
 
@@ -4640,13 +4518,13 @@ namespace DSA_lims
                 gridSamples.Columns["reference_date"].DefaultCellStyle.Format = Utils.DateTimeFormatNorwegian;
             }
 
-            if (Utils.IsValidGuid(selectedSampleId))
+            if (Utils.IsValidGuid(sample.Id))
             {
                 gridSamples.ClearSelection();
                 foreach (DataGridViewRow row in gridSamples.Rows)
                 {
                     Guid sid = Guid.Parse(row.Cells["id"].Value.ToString());
-                    if (selectedSampleId == sid)
+                    if (sample.Id == sid)
                     {
                         row.Selected = true;
                         break;
@@ -4940,6 +4818,8 @@ where s.number = @sample_number
 
         private void tbSampleSamplingDateFrom_TextChanged(object sender, EventArgs e)
         {
+            sample.Dirty = true;
+
             if (String.IsNullOrEmpty(tbSampleSamplingDateFrom.Text))
             {
                 if (tbSampleSamplingDateTo.Tag != null)
@@ -4984,6 +4864,8 @@ where s.number = @sample_number
 
         private void tbSampleSamplingDateTo_TextChanged(object sender, EventArgs e)
         {
+            sample.Dirty = true;
+
             if (String.IsNullOrEmpty(tbSampleSamplingDateTo.Text))
             {
                 if (tbSampleSamplingDateFrom.Tag != null)
@@ -5028,14 +4910,14 @@ where s.number = @sample_number
 
         private void tbSampleReferenceDate_TextChanged(object sender, EventArgs e)
         {
-            //
+            sample.Dirty = true;
         }
 
         private void btnSamplePrintSampleLabel_Click(object sender, EventArgs e)
         {
             using (SqlConnection conn = DB.OpenConnection())
             {
-                if (!DB.SampleHasRequiredFields(conn, null, selectedSampleId))
+                if (!sample.HasRequiredFields())
                 {
                     MessageBox.Show("Can not print label. Required fields for this sample must be saved first");
                     return;
@@ -5043,7 +4925,7 @@ where s.number = @sample_number
             }
 
             List<Guid> sampleIds = new List<Guid>();
-            sampleIds.Add(selectedSampleId);
+            sampleIds.Add(sample.Id);
             FormPrintSampleLabel form = new FormPrintSampleLabel(Common.Settings, sampleIds);
             form.ShowDialog();
         }
@@ -5086,9 +4968,9 @@ where s.number = @sample_number
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                DB.AddAttachment(conn, null, "sample", selectedSampleId, form.DocumentName, ".pdf", form.PdfData);
+                DB.AddAttachment(conn, null, "sample", sample.Id, form.DocumentName, ".pdf", form.PdfData);
 
-                UI.PopulateAttachments(conn, null, "sample", selectedSampleId, gridSampleAttachments);
+                UI.PopulateAttachments(conn, null, "sample", sample.Id, gridSampleAttachments);
             }
         }        
 
@@ -5222,7 +5104,7 @@ where s.number = @sample_number
             {
                 foreach (Guid sid in sampleIds)
                 {
-                    if (!DB.SampleHasRequiredFields(conn, null, sid))
+                    if (!Sample.HasRequiredFields(conn, null, sid))
                     {
                         MessageBox.Show("Can not print labels. Required fields missing for one or more samples");
                         return;
@@ -5247,9 +5129,9 @@ where s.number = @sample_number
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                DB.AddAttachment(conn, null, "sample", selectedSampleId, fileName, fileExt, content);
+                DB.AddAttachment(conn, null, "sample", sample.Id, fileName, fileExt, content);
 
-                UI.PopulateAttachments(conn, null, "sample", selectedSampleId, gridSampleAttachments);
+                UI.PopulateAttachments(conn, null, "sample", sample.Id, gridSampleAttachments);
             }
         }
 
@@ -5492,7 +5374,7 @@ where s.number = @sample_number
             {
                 DB.DeleteAttachment(conn, null, "sample", attId);
 
-                UI.PopulateAttachments(conn, null, "sample", selectedSampleId, gridSampleAttachments);
+                UI.PopulateAttachments(conn, null, "sample", sample.Id, gridSampleAttachments);
             }
         }
 
@@ -5773,7 +5655,7 @@ where s.number = @sample_number
 
         private void btnPrepAnalAnalDiscard_Click(object sender, EventArgs e)
         {
-            if (!analysis.IsDirty)
+            if (!analysis.IsDirty())
             {
                 SetStatusMessage("Nothing to discard for analysis " + preparation.Number + "/" + analysis.Number);
                 return;
@@ -5794,7 +5676,7 @@ where s.number = @sample_number
 
         private void btnPrepAnalPrepDiscard_Click(object sender, EventArgs e)
         {
-            if (!preparation.IsDirty)
+            if (!preparation.IsDirty())
             {
                 SetStatusMessage("Nothing to discard for preparation " + preparation.Number);
                 return;
@@ -5991,7 +5873,7 @@ where s.number = @sample_number
 
         private void miOrderDiscard_Click(object sender, EventArgs e)
         {
-            if (!assignment.IsDirty)
+            if (!assignment.IsDirty())
             {
                 SetStatusMessage("Nothing to discard for order " + assignment.Name);
                 return;
@@ -6048,6 +5930,87 @@ where s.number = @sample_number
         private void cboxOrderStatus_SelectedIndexChanged(object sender, EventArgs e)
         {
             assignment.Dirty = true;
+        }
+
+        private void cboxSampleSampleComponent_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            sample.Dirty = true;
+        }
+
+        private void cbSampleConfidential_CheckedChanged(object sender, EventArgs e)
+        {
+            sample.Dirty = true;
+        }
+
+        private void cboxSampleInfoSampler_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            sample.Dirty = true;
+        }
+
+        private void cboxSampleInfoSamplingMeth_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            sample.Dirty = true;
+        }
+
+        private void tbSampleInfoLatitude_TextChanged(object sender, EventArgs e)
+        {
+            sample.Dirty = true;
+        }
+
+        private void tbSampleInfoLongitude_TextChanged(object sender, EventArgs e)
+        {
+            sample.Dirty = true;
+        }
+
+        private void tbSampleInfoAltitude_TextChanged(object sender, EventArgs e)
+        {
+            sample.Dirty = true;
+        }
+
+        private void cboxSampleMunicipalities_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            sample.Dirty = true;
+        }
+
+        private void tbSampleLocation_TextChanged(object sender, EventArgs e)
+        {
+            sample.Dirty = true;
+        }
+
+        private void cboxSampleSampleStorage_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            sample.Dirty = true;
+        }
+
+        private void cboxSampleInstanceStatus_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            sample.Dirty = true;
+        }
+
+        private void tbSampleComment_TextChanged(object sender, EventArgs e)
+        {
+            sample.Dirty = true;
+        }
+
+        private void btnSampleDiscard_Click(object sender, EventArgs e)
+        {
+            if (!sample.IsDirty())
+            {
+                SetStatusMessage("Nothing to discard for sample " + sample.Number);
+                return;
+            }
+
+            DialogResult res = MessageBox.Show("Are you sure you want to discard current changes?", "Confirmation", MessageBoxButtons.YesNo);
+            if (res != DialogResult.Yes)
+                return;
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                sample.LoadFromDB(conn, null, sample.Id);
+                PopulateSample(conn, null, sample, true);
+            }
+
+            SetStatusMessage("Changes discarded for sample " + sample.Number);
         }
     }    
 }

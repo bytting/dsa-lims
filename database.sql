@@ -4022,6 +4022,67 @@ as
 	where id = @id
 go
 
+create proc csp_select_sample_flat
+	@id uniqueidentifier
+as
+	select
+		s.id,	
+		s.number,
+		l.name as 'laboratory_name',	
+		st.name as 'sample_type_name',	
+		ss.name as 'sample_storage_name',
+		sc.name as 'sample_component_name',
+		pm.name as 'project_main_name',
+		ps.name as 'project_sub_name',
+		sta.name as 'station_name',
+		sa.person_name as 'sampler_name',
+		sm.name as 'sampling_method_name',
+		(select number from sample where id = s.transform_from_id) as 'split_parent',	
+		(select number from sample where id = s.transform_to_id) as 'merge_child',
+		s.imported_from,
+		s.imported_from_id,		
+		co.name as 'county_name',
+		mun.name as 'municipality_name',
+		s.location_type,
+		s.location,	
+		s.latitude,
+		s.longitude,
+		s.altitude,
+		s.sampling_date_from,		
+		s.sampling_date_to,
+		s.reference_date,
+		s.external_id,
+		s.wet_weight_g,	
+		s.dry_weight_g,
+		s.volume_l,
+		s.lod_weight_start,	
+		s.lod_weight_end,	
+		s.lod_temperature,
+		s.confidential,	
+		s.parameters,
+		insta.name as 'instance_status_name',
+		s.locked_by,	
+		s.comment,	
+		s.create_date,
+		s.created_by,
+		s.update_date,
+		s.updated_by
+	from sample s 
+		left outer join laboratory l on s.laboratory_id = l.id
+		left outer join sample_type st on s.sample_type_id = st.id
+		left outer join sample_storage ss on s.sample_storage_id = ss.id
+		left outer join sample_component sc on s.sample_component_id = sc.id
+		inner join project_sub ps on s.project_sub_id = ps.id
+		inner join project_main pm on pm.id = ps.project_main_id
+		left outer join station sta on s.station_id = sta.id
+		left outer join cv_sampler sa on s.sampler_id = sa.id
+		left outer join sampling_method sm on s.sampling_method_id = sm.id
+		left outer join municipality mun on s.municipality_id = mun.id
+		left outer join county co on mun.county_id = co.id
+		inner join instance_status insta on s.instance_status_id = insta.id
+	where s.id = @id
+go
+
 create proc csp_select_sample_info
 	@id uniqueidentifier	
 as 		

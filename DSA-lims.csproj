@@ -255,6 +255,18 @@
     <Compile Include="FormImportAnalysisLIS.Designer.cs">
       <DependentUpon>FormImportAnalysisLIS.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormLabXAnalMeth.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormLabXAnalMeth.Designer.cs">
+      <DependentUpon>FormLabXAnalMeth.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormLabXPrepMeth.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormLabXPrepMeth.Designer.cs">
+      <DependentUpon>FormLabXPrepMeth.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormLogin.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -495,6 +507,12 @@
     <Compile Include="FormUser.Designer.cs">
       <DependentUpon>FormUser.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormUserXAnalMeth.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormUserXAnalMeth.Designer.cs">
+      <DependentUpon>FormUserXAnalMeth.cs</DependentUpon>
+    </Compile>
     <Compile Include="lang_en.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -558,6 +576,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormImportAnalysisLIS.resx">
       <DependentUpon>FormImportAnalysisLIS.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormLabXAnalMeth.resx">
+      <DependentUpon>FormLabXAnalMeth.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormLabXPrepMeth.resx">
+      <DependentUpon>FormLabXPrepMeth.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormLogin.resx">
       <DependentUpon>FormLogin.cs</DependentUpon>
@@ -681,6 +705,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormUser.resx">
       <DependentUpon>FormUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormUserXAnalMeth.resx">
+      <DependentUpon>FormUserXAnalMeth.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="lang_en.resx">
       <Generator>ResXFileCodeGenerator</Generator>

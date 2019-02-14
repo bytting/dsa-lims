@@ -2815,6 +2815,7 @@ if OBJECT_ID('dbo.laboratory_x_analysis_method', 'U') is not null drop table lab
 
 create table laboratory_x_analysis_method (
 	laboratory_id uniqueidentifier not null,
+	preparation_method_id uniqueidentifier not null,
 	analysis_method_id uniqueidentifier not null
 )
 go

@@ -267,13 +267,13 @@ namespace DSA_lims
                         new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
                     }, cboxSamplesProjects, cboxSampleProject);
 
-                    UI.PopulateLaboratories(conn, InstanceStatus.Deleted, gridMetaLab);
+                    UI.PopulateLaboratories(conn, InstanceStatus.Deleted, gridSysLab);
 
                     UI.PopulateComboBoxes(conn, "csp_select_laboratories_short", new[] {
                         new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
                     }, cboxSampleLaboratory, cboxOrderLaboratory);
 
-                    UI.PopulateUsers(conn, InstanceStatus.Deleted, gridMetaUsers);
+                    UI.PopulateUsers(conn, InstanceStatus.Deleted, gridSysUsers);
 
                     UI.PopulateNuclides(conn, gridSysNuclides);
 
@@ -631,7 +631,7 @@ namespace DSA_lims
             btnMenuNewSample.Enabled = btnMenuSamples.Enabled = btnMenuNewOrder.Enabled = btnOrders.Enabled = btnMenuCustomer.Enabled = btnMenuProjects.Enabled = btnMenuMetadata.Enabled = btnMenuSearch.Enabled = isAdmin;
 
             miTypeRelSampleTypesNewRoot.Enabled = btnTypeRelSampleTypesNewRoot.Enabled = miTypeRelSampleTypesNew.Enabled = btnTypeRelSampleTypesNew.Enabled = miTypeRelSampleTypesEdit.Enabled = btnTypeRelSampleTypesEdit.Enabled = miTypeRelSampleTypesDelete.Enabled = btnTypeRelSampleTypesDelete.Enabled = isAdmin;
-            miNewLaboratory.Enabled = miEditLaboratory.Enabled = miDeleteLaboratory.Enabled = btnMetaLabNew.Enabled = btnMetaLabEdit.Enabled = btnMetaLabDelete.Enabled = isAdmin;
+            miNewLaboratory.Enabled = miEditLaboratory.Enabled = miDeleteLaboratory.Enabled = btnSysLabNew.Enabled = btnSysLabEdit.Enabled = btnSysLabDelete.Enabled = isAdmin;
             miNewUser.Enabled = miEditUser.Enabled = miDeleteUser.Enabled = btnMetaUsersNew.Enabled = btnMetaUsersEdit.Enabled = btnMetaUsersDelete.Enabled = isAdmin;
             miNewCounty.Enabled = miEditCounty.Enabled = miDeleteCounty.Enabled = miNewMunicipality.Enabled = miEditMunicipality.Enabled = miDeleteMunicipality.Enabled = isAdmin;
             btnNewCounty.Enabled = btnEditCounty.Enabled = btnDeleteCounty.Enabled = btnNewMunicipality.Enabled = btnEditMunicipality.Enabled = btnDeleteMunicipality.Enabled = isAdmin;
@@ -641,6 +641,9 @@ namespace DSA_lims
             miSamplesPrepAnal.Enabled = btnSamplesPrepAnal.Enabled = btnSampleGoToPrepAnal.Enabled = isAdmin;
             miSamplesUnlock.Enabled = btnSamplesUnlock.Visible = isAdmin;
             miOrdersUnlock.Enabled = btnOrdersUnlock.Visible = isAdmin;
+
+            btnSysLabPrepMethAdd.Enabled = btnSysLabPrepMethRemove.Enabled = btnSysLabAnalMethAdd.Enabled = btnSysLabAnalMethRemove.Enabled = isAdmin;
+            btnSysUsersAddRoles.Enabled = btnSysUsersRemRoles.Enabled = btnSysUsersAnalMethAdd.Enabled = btnSysUsersAnalMethRemove.Enabled = isAdmin;
 
             cboxOrderStatus.Enabled = cbOrderApprovedLaboratory.Enabled = Roles.HasAccess(Role.LaboratoryAdministrator);
 
@@ -834,7 +837,7 @@ namespace DSA_lims
                     SetStatusMessage("Laboratory " + form.LaboratoryName + " created");
                     using (SqlConnection conn = DB.OpenConnection())
                     {
-                        UI.PopulateLaboratories(conn, InstanceStatus.Deleted, gridMetaLab);
+                        UI.PopulateLaboratories(conn, InstanceStatus.Deleted, gridSysLab);
 
                         UI.PopulateComboBoxes(conn, "csp_select_laboratories_short", new[] {
                             new SqlParameter("@instance_status_level", InstanceStatus.Active)
@@ -896,8 +899,10 @@ namespace DSA_lims
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                UI.PopulateUsers(conn, InstanceStatus.Deleted, gridMetaUsers);
+                UI.PopulateUsers(conn, InstanceStatus.Deleted, gridSysUsers);
             }
+            
+            SetStatusMessage("Added username " + form.UserName);
         }
 
         private void miEditUser_Click(object sender, EventArgs e)
@@ -910,13 +915,13 @@ namespace DSA_lims
                 return;
             }
 
-            if (gridMetaUsers.SelectedRows.Count < 1)
+            if (gridSysUsers.SelectedRows.Count < 1)
             {
                 MessageBox.Show("You must select a user first");
                 return;
             }
 
-            Guid uid = Guid.Parse(gridMetaUsers.SelectedRows[0].Cells["id"].Value.ToString());
+            Guid uid = Guid.Parse(gridSysUsers.SelectedRows[0].Cells["id"].Value.ToString());
 
             FormUser form = new FormUser(uid);
             if (form.ShowDialog() != DialogResult.OK)
@@ -924,8 +929,10 @@ namespace DSA_lims
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                UI.PopulateUsers(conn, InstanceStatus.Deleted, gridMetaUsers);
+                UI.PopulateUsers(conn, InstanceStatus.Deleted, gridSysUsers);
             }
+
+            SetStatusMessage("Edited username " + form.UserName);
         }        
 
         private void miDeleteUser_Click(object sender, EventArgs e)
@@ -935,14 +942,14 @@ namespace DSA_lims
 
         private void miResetPass_Click(object sender, EventArgs e)
         {
-            if(gridMetaUsers.SelectedRows.Count < 1)
+            if(gridSysUsers.SelectedRows.Count < 1)
             {
                 MessageBox.Show("You must select a user first");
                 return;
             }
 
-            Guid userId = Guid.Parse(gridMetaUsers.SelectedRows[0].Cells["id"].Value.ToString());
-            string username = gridMetaUsers.SelectedRows[0].Cells["username"].Value.ToString();
+            Guid userId = Guid.Parse(gridSysUsers.SelectedRows[0].Cells["id"].Value.ToString());
+            string username = gridSysUsers.SelectedRows[0].Cells["username"].Value.ToString();
             FormResetPassword form = new FormResetPassword(userId, username);
             if(form.ShowDialog() == DialogResult.OK)
             {
@@ -953,10 +960,10 @@ namespace DSA_lims
         private void miEditLaboratory_Click(object sender, EventArgs e)
         {
             // edit lab
-            if (gridMetaLab.SelectedRows.Count < 1)
+            if (gridSysLab.SelectedRows.Count < 1)
                 return;
 
-            DataGridViewRow row = gridMetaLab.SelectedRows[0];
+            DataGridViewRow row = gridSysLab.SelectedRows[0];
             Guid lid = Guid.Parse(row.Cells["id"].Value.ToString());
 
             FormLaboratory form = new FormLaboratory(lid);
@@ -966,7 +973,7 @@ namespace DSA_lims
                     SetStatusMessage("Laboratory " + form.LaboratoryName + " updated");
                     using (SqlConnection conn = DB.OpenConnection())
                     {                        
-                        UI.PopulateLaboratories(conn, InstanceStatus.Deleted, gridMetaLab);
+                        UI.PopulateLaboratories(conn, InstanceStatus.Deleted, gridSysLab);
                         UI.PopulateComboBoxes(conn, "csp_select_laboratories_short", new[] {
                             new SqlParameter("@instance_status_level", InstanceStatus.Active)
                         }, cboxSampleLaboratory, cboxOrderLaboratory);
@@ -4792,13 +4799,13 @@ where s.number = @sample_number
                 return;
             }
 
-            if(gridMetaUsers.SelectedRows.Count < 1)
+            if(gridSysUsers.SelectedRows.Count < 1)
             {
                 MessageBox.Show("You must select a user first");
                 return;
             }
 
-            Guid userId = Guid.Parse(gridMetaUsers.SelectedRows[0].Cells["id"].Value.ToString());
+            Guid userId = Guid.Parse(gridSysUsers.SelectedRows[0].Cells["id"].Value.ToString());
             List<Guid> existingRoles = new List<Guid>();
             foreach (Lemma<Guid, string> l in lbSysUsersRoles.Items)
                 existingRoles.Add(l.Id);
@@ -4811,14 +4818,17 @@ where s.number = @sample_number
             {
                 UI.PopulateRoles(conn, userId, lbSysUsersRoles);
             }
+
+            string user = gridSysUsers.SelectedRows[0].Cells["name"].Value.ToString();
+            SetStatusMessage("Added roles for user " + user);
         }
 
         private void gridMetaUsers_SelectionChanged(object sender, EventArgs e)
         {
-            if (gridMetaUsers.SelectedRows.Count < 1)
+            if (gridSysUsers.SelectedRows.Count < 1)
                 return;
 
-            Guid uid = Guid.Parse(gridMetaUsers.SelectedRows[0].Cells["id"].Value.ToString());
+            Guid uid = Guid.Parse(gridSysUsers.SelectedRows[0].Cells["id"].Value.ToString());
 
             if(Roles.IsAdmin() || uid == Common.UserId)
             {
@@ -4834,6 +4844,7 @@ where s.number = @sample_number
             using (SqlConnection conn = DB.OpenConnection())
             {
                 UI.PopulateRoles(conn, uid, lbSysUsersRoles);
+                UI.PopulateUserAnalMeths(conn, uid, gridSysUsersAnalMeth);
             }
         }
 
@@ -4845,13 +4856,13 @@ where s.number = @sample_number
                 return;
             }
 
-            if (gridMetaUsers.SelectedRows.Count < 1)
+            if (gridSysUsers.SelectedRows.Count < 1)
             {
                 MessageBox.Show("You must select a user first");
                 return;
             }
 
-            Guid userId = Guid.Parse(gridMetaUsers.SelectedRows[0].Cells["id"].Value.ToString());
+            Guid userId = Guid.Parse(gridSysUsers.SelectedRows[0].Cells["id"].Value.ToString());
 
             if (lbSysUsersRoles.SelectedItems.Count < 1)
             {
@@ -4874,6 +4885,9 @@ where s.number = @sample_number
 
                 UI.PopulateRoles(conn, userId, lbSysUsersRoles);
             }
+
+            string user = gridSysUsers.SelectedRows[0].Cells["name"].Value.ToString();
+            SetStatusMessage("Removed roles for user " + user);
         }        
 
         private void tbSampleSamplingDateFrom_TextChanged(object sender, EventArgs e)
@@ -6105,6 +6119,192 @@ where s.number = @sample_number
             {
                 PopulateSampleInfo(conn, null, sample, treePrepAnal.Nodes[0], true);
             }
+        }
+
+        private void btnSysLabPrepMethAdd_Click(object sender, EventArgs e)
+        {
+            if(gridSysLab.SelectedRows.Count != 1)
+            {
+                MessageBox.Show("You must select a single laboratory first");
+                return;
+            }
+
+            Guid lid = Guid.Parse(gridSysLab.SelectedRows[0].Cells["id"].Value.ToString());
+
+            FormLabXPrepMeth form = new FormLabXPrepMeth(lid);
+            if (form.ShowDialog() != DialogResult.OK)
+                return;
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                UI.PopulateLabPrepMeths(conn, lid, gridSysLabPrepMeth);
+            }
+        }
+
+        private void gridSysLab_SelectionChanged(object sender, EventArgs e)
+        {
+            if (gridSysLab.SelectedRows.Count < 1)
+                return;
+
+            Guid lid = Guid.Parse(gridSysLab.SelectedRows[0].Cells["id"].Value.ToString());
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                UI.PopulateLabPrepMeths(conn, lid, gridSysLabPrepMeth);
+            }
+        }
+
+        private void btnSysLabPrepMethRemove_Click(object sender, EventArgs e)
+        {
+            if (gridSysLab.SelectedRows.Count < 1 || gridSysLabPrepMeth.SelectedRows.Count < 1)
+                return;            
+
+            Guid lid = Guid.Parse(gridSysLab.SelectedRows[0].Cells["id"].Value.ToString());
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                SqlCommand cmd = new SqlCommand("delete from laboratory_x_preparation_method where laboratory_id = @lab_id and preparation_method_id = @pm_id", conn);                
+                foreach (DataGridViewRow row in gridSysLabPrepMeth.SelectedRows)
+                {
+                    Guid pmid = Guid.Parse(row.Cells["id"].Value.ToString());
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.AddWithValue("@lab_id", lid);
+                    cmd.Parameters.AddWithValue("@pm_id", pmid);
+                    cmd.ExecuteNonQuery();
+                }
+
+                UI.PopulateLabPrepMeths(conn, lid, gridSysLabPrepMeth);
+            }
+        }
+
+        private void btnSysLabAnalMethAdd_Click(object sender, EventArgs e)
+        {
+            if (gridSysLab.SelectedRows.Count != 1)
+            {
+                MessageBox.Show("You must select a single laboratory first");
+                return;
+            }
+
+            Guid lid = Guid.Parse(gridSysLab.SelectedRows[0].Cells["id"].Value.ToString());
+
+            if (gridSysLabPrepMeth.SelectedRows.Count != 1)
+            {
+                MessageBox.Show("You must select a single preparation method first");
+                return;
+            }
+
+            Guid pmid = Guid.Parse(gridSysLabPrepMeth.SelectedRows[0].Cells["id"].Value.ToString());
+
+            FormLabXAnalMeth form = new FormLabXAnalMeth(lid, pmid);
+            if (form.ShowDialog() != DialogResult.OK)
+                return;
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                UI.PopulateLabAnalMeths(conn, lid, pmid, gridSysLabAnalMeth);
+            }
+        }
+
+        private void btnSysLabAnalMethRemove_Click(object sender, EventArgs e)
+        {
+            if (gridSysLab.SelectedRows.Count != 1)
+            {
+                MessageBox.Show("You must select a single laboratory first");
+                return;
+            }
+
+            Guid lid = Guid.Parse(gridSysLab.SelectedRows[0].Cells["id"].Value.ToString());
+
+            if (gridSysLabPrepMeth.SelectedRows.Count != 1)
+            {
+                MessageBox.Show("You must select a single preparation method first");
+                return;
+            }
+
+            Guid pmid = Guid.Parse(gridSysLabPrepMeth.SelectedRows[0].Cells["id"].Value.ToString());
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                SqlCommand cmd = new SqlCommand("delete from laboratory_x_analysis_method where laboratory_id = @lab_id and preparation_method_id = @pm_id and analysis_method_id = @am_id", conn);
+                foreach (DataGridViewRow row in gridSysLabAnalMeth.SelectedRows)
+                {
+                    Guid amid = Guid.Parse(row.Cells["id"].Value.ToString());
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.AddWithValue("@lab_id", lid);
+                    cmd.Parameters.AddWithValue("@pm_id", pmid);
+                    cmd.Parameters.AddWithValue("@am_id", amid);
+                    cmd.ExecuteNonQuery();
+                }
+
+                UI.PopulateLabAnalMeths(conn, lid, pmid, gridSysLabAnalMeth);
+            }
+        }
+
+        private void gridSysLabPrepMeth_SelectionChanged(object sender, EventArgs e)
+        {
+            if (gridSysLab.SelectedRows.Count != 1)            
+                return;            
+
+            Guid lid = Guid.Parse(gridSysLab.SelectedRows[0].Cells["id"].Value.ToString());
+
+            if (gridSysLabPrepMeth.SelectedRows.Count != 1)                        
+                return;            
+
+            Guid pmid = Guid.Parse(gridSysLabPrepMeth.SelectedRows[0].Cells["id"].Value.ToString());
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                UI.PopulateLabAnalMeths(conn, lid, pmid, gridSysLabAnalMeth);
+            }
+        }
+
+        private void btnSysUsersAnalMethAdd_Click(object sender, EventArgs e)
+        {
+            if (gridSysUsers.SelectedRows.Count != 1)
+            {
+                MessageBox.Show("You must select a single user first");
+                return;
+            }
+
+            Guid uid = Guid.Parse(gridSysUsers.SelectedRows[0].Cells["id"].Value.ToString());
+
+            FormUserXAnalMeth form = new FormUserXAnalMeth(uid);
+            if (form.ShowDialog() != DialogResult.OK)
+                return;
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                UI.PopulateUserAnalMeths(conn, uid, gridSysUsersAnalMeth);
+            }
+
+            string user = gridSysUsers.SelectedRows[0].Cells["name"].Value.ToString();
+            SetStatusMessage("Added analysis methods for user " + user);
+        }
+
+        private void btnSysUsersAnalMethRemove_Click(object sender, EventArgs e)
+        {
+            if (gridSysUsers.SelectedRows.Count < 1)
+                return;
+
+            Guid uid = Guid.Parse(gridSysUsers.SelectedRows[0].Cells["id"].Value.ToString());
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                SqlCommand cmd = new SqlCommand("delete from account_x_analysis_method where account_id = @acc_id and analysis_method_id = @am_id", conn);
+                foreach (DataGridViewRow row in gridSysUsersAnalMeth.SelectedRows)
+                {
+                    Guid amid = Guid.Parse(row.Cells["id"].Value.ToString());
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.AddWithValue("@acc_id", uid);
+                    cmd.Parameters.AddWithValue("@am_id", amid);
+                    cmd.ExecuteNonQuery();
+                }
+
+                UI.PopulateUserAnalMeths(conn, uid, gridSysUsersAnalMeth);
+            }
+
+            string user = gridSysUsers.SelectedRows[0].Cells["name"].Value.ToString();
+            SetStatusMessage("Removed analysis methods for user " + user);
         }
     }    
 }

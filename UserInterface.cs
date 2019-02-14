@@ -895,5 +895,58 @@ from role r
                 }
             }
         }
+
+        public static void PopulateLabPrepMeths(SqlConnection conn, Guid labId, DataGridView grid)
+        {
+            string query = @"
+select pm.id, pm.name_short, pm.name
+from preparation_method pm
+    inner join laboratory_x_preparation_method lxpm on lxpm.preparation_method_id = pm.id
+where lxpm.laboratory_id = @lab_id
+order by pm.name_short
+";
+            grid.DataSource = DB.GetDataTable(conn, null, query, CommandType.Text, new SqlParameter("@lab_id", labId));
+
+            grid.Columns["id"].Visible = false;
+
+            grid.Columns["name_short"].HeaderText = "Abbr.";
+            grid.Columns["name"].HeaderText = "Name";
+        }
+
+        public static void PopulateLabAnalMeths(SqlConnection conn, Guid labId, Guid prepMethId, DataGridView grid)
+        {
+            string query = @"
+select am.id, am.name_short, am.name
+from analysis_method am
+    inner join laboratory_x_analysis_method lxam on lxam.analysis_method_id = am.id and lxam.preparation_method_id = @prep_meth_id and lxam.laboratory_id = @lab_id
+order by am.name_short
+";
+            grid.DataSource = DB.GetDataTable(conn, null, query, CommandType.Text, new[] {
+                new SqlParameter("@lab_id", labId),
+                new SqlParameter("@prep_meth_id", prepMethId),
+            });
+
+            grid.Columns["id"].Visible = false;
+
+            grid.Columns["name_short"].HeaderText = "Abbr.";
+            grid.Columns["name"].HeaderText = "Name";
+        }
+
+        public static void PopulateUserAnalMeths(SqlConnection conn, Guid userId, DataGridView grid)
+        {
+            string query = @"
+select am.id, am.name_short, am.name
+from analysis_method am
+    inner join account_x_analysis_method lxam on lxam.analysis_method_id = am.id
+where lxam.account_id = @acc_id
+order by am.name_short
+";
+            grid.DataSource = DB.GetDataTable(conn, null, query, CommandType.Text, new SqlParameter("@acc_id", userId));
+
+            grid.Columns["id"].Visible = false;
+
+            grid.Columns["name_short"].HeaderText = "Abbr.";
+            grid.Columns["name"].HeaderText = "Name";
+        }
     }
 }

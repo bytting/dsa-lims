@@ -31,14 +31,16 @@ namespace DSA_lims
 {
     public partial class FormOrderAddPrepMeth : Form
     {
+        private Assignment mAssignment = null;
         private AssignmentSampleType mAst = null;
 
-        public FormOrderAddPrepMeth(AssignmentSampleType ast)
+        public FormOrderAddPrepMeth(Assignment ass, AssignmentSampleType ast)
         {
             InitializeComponent();
 
             tbCount.KeyPress += CustomEvents.Integer_KeyPress;
 
+            mAssignment = ass;
             mAst = ast;
             cbPrepsAlreadyExists.Checked = false;
             cboxPrepMethLaboratory.Enabled = false;
@@ -47,11 +49,9 @@ namespace DSA_lims
             {                
                 UI.PopulateComboBoxes(conn, "csp_select_laboratories_short", new[] {
                     new SqlParameter("@instance_status_level", InstanceStatus.Active)
-                }, cboxPrepMethLaboratory);                
+                }, cboxPrepMethLaboratory);
 
-                UI.PopulateComboBoxes(conn, "csp_select_preparation_methods_short", new[] {
-                    new SqlParameter("@instance_status_level", InstanceStatus.Active)
-                }, cboxPreparationMethod);
+                cboxPrepMethLaboratory.SelectedValue = mAssignment.LaboratoryId;
             }
         }
 
@@ -66,6 +66,12 @@ namespace DSA_lims
             if (!Utils.IsValidGuid(cboxPreparationMethod.SelectedValue))
             {
                 MessageBox.Show("Preparation method is mandatory");
+                return;
+            }
+
+            if(cbPrepsAlreadyExists.Checked && !Utils.IsValidGuid(cboxPrepMethLaboratory.SelectedValue))
+            {
+                MessageBox.Show("You must select a laboratory for external preparations");
                 return;
             }
 
@@ -96,7 +102,25 @@ namespace DSA_lims
         {
             cboxPrepMethLaboratory.Enabled = cbPrepsAlreadyExists.Checked;
             if (!cbPrepsAlreadyExists.Checked)
-                cboxPrepMethLaboratory.SelectedValue = Guid.Empty;
+                cboxPrepMethLaboratory.SelectedValue = mAssignment.LaboratoryId;
+        }
+
+        private void cboxPrepMethLaboratory_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!Utils.IsValidGuid(cboxPrepMethLaboratory.SelectedValue))
+            {
+                cboxPreparationMethod.DataSource = null;
+                return;
+            }
+
+            Guid labId = Utils.MakeGuid(cboxPrepMethLaboratory.SelectedValue);
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                UI.PopulateComboBoxes(conn, "csp_select_preparation_methods_for_laboratory_short", new[] {
+                    new SqlParameter("@laboratory_id", labId),
+                    new SqlParameter("@instance_status_level", InstanceStatus.Active)
+                }, cboxPreparationMethod);
+            }
         }
     }
 }

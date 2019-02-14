@@ -2440,6 +2440,19 @@ as
 	order by name_short
 go
 
+create proc csp_select_preparation_methods_for_laboratory_short
+	@laboratory_id uniqueidentifier,
+	@instance_status_level int
+as
+	select 
+		pm.id as 'id', 
+		pm.name_short as 'name'
+	from preparation_method pm
+		inner join laboratory_x_preparation_method lxpm on lxpm.preparation_method_id = pm.id and lxpm.laboratory_id = @laboratory_id
+	where instance_status_id <= @instance_status_level
+	order by name_short
+go
+
 create proc csp_select_preparation_methods_flat
 	@instance_status_level int
 as
@@ -2786,6 +2799,20 @@ as
 	from analysis_method
 	where instance_status_id <= @instance_status_level
 	order by name_short
+go
+
+create proc csp_select_analysis_methods_for_laboratory_and_preparation_method_short
+	@laboratory_id uniqueidentifier,
+	@preparation_method_id uniqueidentifier,
+	@instance_status_level int
+as
+	select 
+		am.id as 'id', 
+		am.name_short as 'name'
+	from analysis_method am
+		inner join laboratory_x_analysis_method lxam on lxam.analysis_method_id = am.id and lxam.laboratory_id = @laboratory_id and lxam.preparation_method_id = @preparation_method_id
+	where instance_status_id <= @instance_status_level
+	order by am.name_short
 go
 
 create proc csp_select_analysis_methods_flat

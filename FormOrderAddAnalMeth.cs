@@ -25,26 +25,29 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DSA_lims
 {
     public partial class FormOrderAddAnalMeth : Form
     {
+        private Assignment mAssignment = null;
         private AssignmentPreparationMethod mApm = null;
 
-        public FormOrderAddAnalMeth(AssignmentPreparationMethod apm)
+        public FormOrderAddAnalMeth(Assignment ass, AssignmentPreparationMethod apm)
         {
             InitializeComponent();
 
             tbCount.KeyPress += CustomEvents.Integer_KeyPress;
 
+            mAssignment = ass;
             mApm = apm;
 
             using (SqlConnection conn = DB.OpenConnection())
             {                
-                UI.PopulateComboBoxes(conn, "csp_select_analysis_methods_short", new[] {
+                UI.PopulateComboBoxes(conn, "csp_select_analysis_methods_for_laboratory_and_preparation_method_short", new[] {
+                    new SqlParameter("@laboratory_id", mApm.PreparationLaboratoryId),
+                    new SqlParameter("@preparation_method_id", mApm.PreparationMethodId),
                     new SqlParameter("@instance_status_level", InstanceStatus.Active)
                 }, cboxAnalysisMethods);
             }

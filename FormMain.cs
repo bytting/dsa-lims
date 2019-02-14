@@ -3070,8 +3070,8 @@ namespace DSA_lims
                 MessageBox.Show("This order has been approved and can not be updated");
                 return;
             }
-            
-            FormOrderAddPrepMeth form = new FormOrderAddPrepMeth(ast);
+                        
+            FormOrderAddPrepMeth form = new FormOrderAddPrepMeth(assignment, ast);
             if (form.ShowDialog() != DialogResult.OK)
                 return;
 
@@ -3117,7 +3117,7 @@ namespace DSA_lims
                 return;
             }
             
-            FormOrderAddAnalMeth form = new FormOrderAddAnalMeth(apm);
+            FormOrderAddAnalMeth form = new FormOrderAddAnalMeth(assignment, apm);
             if (form.ShowDialog() != DialogResult.OK)
                 return;
 
@@ -6144,12 +6144,17 @@ where s.number = @sample_number
         private void gridSysLab_SelectionChanged(object sender, EventArgs e)
         {
             if (gridSysLab.SelectedRows.Count < 1)
+            {
+                gridSysLabPrepMeth.DataSource = null;
+                gridSysLabAnalMeth.DataSource = null;
                 return;
+            }
 
             Guid lid = Guid.Parse(gridSysLab.SelectedRows[0].Cells["id"].Value.ToString());
-
+            
             using (SqlConnection conn = DB.OpenConnection())
             {
+                gridSysLabAnalMeth.DataSource = null;
                 UI.PopulateLabPrepMeths(conn, lid, gridSysLabPrepMeth);
             }
         }
@@ -6157,29 +6162,57 @@ where s.number = @sample_number
         private void btnSysLabPrepMethRemove_Click(object sender, EventArgs e)
         {
             if (gridSysLab.SelectedRows.Count < 1 || gridSysLabPrepMeth.SelectedRows.Count < 1)
-                return;            
+            {
+                gridSysLabPrepMeth.DataSource = null;
+                gridSysLabAnalMeth.DataSource = null;
+                return;
+            }
 
             Guid lid = Guid.Parse(gridSysLab.SelectedRows[0].Cells["id"].Value.ToString());
 
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            SqlTransaction trans = null;
+
+            try
             {
-                SqlCommand cmd = new SqlCommand("delete from laboratory_x_preparation_method where laboratory_id = @lab_id and preparation_method_id = @pm_id", conn);                
+                conn = DB.OpenConnection();
+                trans = conn.BeginTransaction();
+
+                SqlCommand cmd = new SqlCommand("", conn, trans);
+
                 foreach (DataGridViewRow row in gridSysLabPrepMeth.SelectedRows)
                 {
                     Guid pmid = Guid.Parse(row.Cells["id"].Value.ToString());
-                    cmd.Parameters.Clear();
+
+                    cmd.CommandText = "delete from laboratory_x_analysis_method where laboratory_id = @lab_id and preparation_method_id = @pm_id";
                     cmd.Parameters.AddWithValue("@lab_id", lid);
                     cmd.Parameters.AddWithValue("@pm_id", pmid);
                     cmd.ExecuteNonQuery();
+
+                    cmd.CommandText = "delete from laboratory_x_preparation_method where laboratory_id = @lab_id and preparation_method_id = @pm_id";
+                    cmd.ExecuteNonQuery();
                 }
 
-                UI.PopulateLabPrepMeths(conn, lid, gridSysLabPrepMeth);
+                trans.Commit();
+
+                gridSysLabAnalMeth.DataSource = null;
+                UI.PopulateLabPrepMeths(conn, lid, gridSysLabPrepMeth);                
+            }
+            catch(Exception ex)
+            {
+                trans?.Rollback();
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn?.Close();
             }
         }
 
         private void btnSysLabAnalMethAdd_Click(object sender, EventArgs e)
         {
-            if (gridSysLab.SelectedRows.Count != 1)
+            if (gridSysLab.SelectedRows.Count < 1)
             {
                 MessageBox.Show("You must select a single laboratory first");
                 return;
@@ -6207,7 +6240,7 @@ where s.number = @sample_number
 
         private void btnSysLabAnalMethRemove_Click(object sender, EventArgs e)
         {
-            if (gridSysLab.SelectedRows.Count != 1)
+            if (gridSysLab.SelectedRows.Count < 1)
             {
                 MessageBox.Show("You must select a single laboratory first");
                 return;
@@ -6242,8 +6275,12 @@ where s.number = @sample_number
 
         private void gridSysLabPrepMeth_SelectionChanged(object sender, EventArgs e)
         {
-            if (gridSysLab.SelectedRows.Count != 1)            
-                return;            
+            if (gridSysLab.SelectedRows.Count < 1)
+            {
+                gridSysLabPrepMeth.DataSource = null;
+                gridSysLabAnalMeth.DataSource = null;
+                return;
+            }
 
             Guid lid = Guid.Parse(gridSysLab.SelectedRows[0].Cells["id"].Value.ToString());
 
@@ -6260,9 +6297,9 @@ where s.number = @sample_number
 
         private void btnSysUsersAnalMethAdd_Click(object sender, EventArgs e)
         {
-            if (gridSysUsers.SelectedRows.Count != 1)
+            if (gridSysUsers.SelectedRows.Count < 1)
             {
-                MessageBox.Show("You must select a single user first");
+                MessageBox.Show("You must select a user first");
                 return;
             }
 

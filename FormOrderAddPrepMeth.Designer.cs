@@ -116,6 +116,7 @@
             this.cboxPrepMethLaboratory.Size = new System.Drawing.Size(286, 21);
             this.cboxPrepMethLaboratory.TabIndex = 1;
             this.cboxPrepMethLaboratory.ValueMember = "Id";
+            this.cboxPrepMethLaboratory.SelectedIndexChanged += new System.EventHandler(this.cboxPrepMethLaboratory_SelectedIndexChanged);
             // 
             // tbComment
             // 

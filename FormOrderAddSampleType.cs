@@ -53,7 +53,7 @@ namespace DSA_lims
                 return;
             }
 
-            if(String.IsNullOrEmpty(tbNumSamples.Text.Trim()))
+            if(String.IsNullOrEmpty(tbNumSamples.Text))
             {
                 MessageBox.Show("Number of samples is mandatory");
                 return;

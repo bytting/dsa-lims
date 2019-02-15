@@ -132,8 +132,8 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@parent_id", p["parent_id"]);
                 cmd.Parameters.AddWithValue("@path", p["path"]);
                 cmd.Parameters.AddWithValue("@name", p["name"]);
-                cmd.Parameters.AddWithValue("@name_common", p["name_common"]);
-                cmd.Parameters.AddWithValue("@name_latin", p["name_latin"]);
+                cmd.Parameters.AddWithValue("@name_common", p["name_common"], String.Empty);
+                cmd.Parameters.AddWithValue("@name_latin", p["name_latin"], String.Empty);
                 cmd.Parameters.AddWithValue("@create_date", p["create_date"]);
                 cmd.Parameters.AddWithValue("@created_by", p["created_by"]);
                 cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
@@ -176,8 +176,8 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@id", p["id"]);
                 cmd.Parameters.AddWithValue("@path", p["path"]);
                 cmd.Parameters.AddWithValue("@name", p["name"]);                
-                cmd.Parameters.AddWithValue("@name_common", p["name_common"]);
-                cmd.Parameters.AddWithValue("@name_latin", p["name_latin"]);
+                cmd.Parameters.AddWithValue("@name_common", p["name_common"], String.Empty);
+                cmd.Parameters.AddWithValue("@name_latin", p["name_latin"], String.Empty);
                 cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
                 cmd.Parameters.AddWithValue("@updated_by", p["updated_by"]);
                 cmd.ExecuteNonQuery();

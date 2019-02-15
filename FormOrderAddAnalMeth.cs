@@ -67,7 +67,7 @@ namespace DSA_lims
                 return;
             }
 
-            if(String.IsNullOrEmpty(tbCount.Text.Trim()))
+            if(String.IsNullOrEmpty(tbCount.Text))
             {
                 MessageBox.Show("Analysis method count is mandatory");
                 return;

@@ -186,7 +186,7 @@ namespace DSA_lims
             cmd.CommandType = CommandType.StoredProcedure;
             p["id"] = Guid.NewGuid();
             cmd.Parameters.AddWithValue("@id", p["id"]);
-            cmd.Parameters.AddWithValue("@name", p["name"], String.Empty);
+            cmd.Parameters.AddWithValue("@name", p["name"]);
             cmd.Parameters.AddWithValue("@latitude", p["latitude"]);
             cmd.Parameters.AddWithValue("@longitude", p["longitude"]);
             cmd.Parameters.AddWithValue("@altitude", p["altitude"]);
@@ -207,7 +207,7 @@ namespace DSA_lims
             SqlCommand cmd = new SqlCommand("csp_update_station", conn, trans);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@id", p["id"]);
-            cmd.Parameters.AddWithValue("@name", p["name"], String.Empty);
+            cmd.Parameters.AddWithValue("@name", p["name"]);
             cmd.Parameters.AddWithValue("@latitude", p["latitude"]);
             cmd.Parameters.AddWithValue("@longitude", p["longitude"]);
             cmd.Parameters.AddWithValue("@altitude", p["altitude"]);

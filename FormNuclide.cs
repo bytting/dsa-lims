@@ -96,6 +96,7 @@ namespace DSA_lims
         {
             tbProtons.KeyPress += CustomEvents.Integer_KeyPress;
             tbNeutrons.KeyPress += CustomEvents.Integer_KeyPress;
+            tbHalflife.KeyPress += CustomEvents.Numeric_KeyPress;
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -112,7 +113,7 @@ namespace DSA_lims
                 return;
             }
 
-            if (String.IsNullOrEmpty(tbHalflife.Text.Trim()))
+            if (String.IsNullOrEmpty(tbHalflife.Text))
             {
                 MessageBox.Show("Halflife is mandatory");
                 return;
@@ -128,7 +129,7 @@ namespace DSA_lims
             p["protons"] = protons;
             p["neutrons"] = neutrons;
             p["meta_stable"] = meta;
-            p["halflife"] = Convert.ToDouble(tbHalflife.Text.Trim());
+            p["halflife"] = Convert.ToDouble(tbHalflife.Text);
             p["instance_status_id"] = cboxInstanceStatus.SelectedValue;
             p["comment"] = tbComment.Text.Trim();
 
@@ -187,7 +188,7 @@ namespace DSA_lims
             cmd.Parameters.AddWithValue("@meta_stable", p["meta_stable"]);
             cmd.Parameters.AddWithValue("@half_life_year", p["halflife"]);                
             cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
-            cmd.Parameters.AddWithValue("@comment", p["comment"]);
+            cmd.Parameters.AddWithValue("@comment", p["comment"], String.Empty);
             cmd.Parameters.AddWithValue("@create_date", p["create_date"]);
             cmd.Parameters.AddWithValue("@created_by", p["created_by"]);
             cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
@@ -210,7 +211,7 @@ namespace DSA_lims
             cmd.Parameters.AddWithValue("@meta_stable", p["meta_stable"]);
             cmd.Parameters.AddWithValue("@half_life_year", p["halflife"]);
             cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
-            cmd.Parameters.AddWithValue("@comment", p["comment"]);
+            cmd.Parameters.AddWithValue("@comment", p["comment"], String.Empty);
             cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
             cmd.Parameters.AddWithValue("@updated_by", p["updated_by"]);
             cmd.ExecuteNonQuery();                        

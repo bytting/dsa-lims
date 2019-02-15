@@ -93,6 +93,11 @@ namespace DSA_lims
             }
         }
 
+        private void FormMunicipality_Load(object sender, EventArgs e)
+        {
+            tbNumber.KeyPress += CustomEvents.Integer_KeyPress;
+        }
+
         private void btnCancel_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;
@@ -114,7 +119,7 @@ namespace DSA_lims
             }
 
             p["name"] = tbName.Text.Trim();
-            p["number"] = Convert.ToInt32(tbNumber.Text.Trim());
+            p["number"] = Convert.ToInt32(tbNumber.Text);
             p["instance_status_id"] = cboxInstanceStatus.SelectedValue;
 
             SqlConnection connection = null;
@@ -202,6 +207,6 @@ namespace DSA_lims
             cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
             cmd.Parameters.AddWithValue("@updated_by", p["updated_by"]);
             cmd.ExecuteNonQuery();                        
-        }
+        }        
     }
 }

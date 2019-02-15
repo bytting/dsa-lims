@@ -74,13 +74,14 @@ namespace DSA_lims
                         throw new Exception("Sampler with ID " + p["id"] + " was not found");
 
                     reader.Read();
-                    tbName.Text = reader["name"].ToString();
-                    cboxInstanceStatus.SelectedValue = reader["instance_status_id"];
-                    tbComment.Text = reader["comment"].ToString();
-                    p["create_date"] = reader["create_date"];
-                    p["created_by"] = reader["created_by"];
-                    p["update_date"] = reader["update_date"];
-                    p["updated_by"] = reader["updated_by"];
+
+                    tbName.Text = reader.GetString("name");
+                    cboxInstanceStatus.SelectedValue = reader.GetInt32("instance_status_id");
+                    tbComment.Text = reader.GetString("comment");
+                    p["create_date"] = reader.GetDateTime("create_date");
+                    p["created_by"] = reader.GetString("created_by");
+                    p["update_date"] = reader.GetDateTime("update_date");
+                    p["updated_by"] = reader.GetString("updated_by");
                 }
             }
         }
@@ -153,7 +154,7 @@ namespace DSA_lims
             cmd.Parameters.AddWithValue("@id", p["id"]);
             cmd.Parameters.AddWithValue("@name", p["name"]);
             cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
-            cmd.Parameters.AddWithValue("@comment", p["comment"]);
+            cmd.Parameters.AddWithValue("@comment", p["comment"], String.Empty);
             cmd.Parameters.AddWithValue("@create_date", p["create_date"]);
             cmd.Parameters.AddWithValue("@created_by", p["created_by"]);
             cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
@@ -171,7 +172,7 @@ namespace DSA_lims
             cmd.Parameters.AddWithValue("@id", p["id"]);
             cmd.Parameters.AddWithValue("@name", p["name"]);                
             cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
-            cmd.Parameters.AddWithValue("@comment", p["comment"]);
+            cmd.Parameters.AddWithValue("@comment", p["comment"], String.Empty);
             cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
             cmd.Parameters.AddWithValue("@updated_by", p["updated_by"]);
             cmd.ExecuteNonQuery();                

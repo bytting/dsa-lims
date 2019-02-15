@@ -167,6 +167,7 @@
             this.Name = "FormMunicipality";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "FormMunicipality";
+            this.Load += new System.EventHandler(this.FormMunicipality_Load);
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();

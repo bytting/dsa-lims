@@ -133,7 +133,7 @@ namespace DSA_lims
 
             p["name"] = tbName.Text.Trim();
             if (String.IsNullOrEmpty(tbAltitude.Text))
-                p["altitude"] = null;
+                p["altitude"] = DBNull.Value;
             else p["altitude"] = Convert.ToDouble(tbAltitude.Text);
             p["instance_status_id"] = cboxInstanceStatus.SelectedValue;
             p["comment"] = tbComment.Text.Trim();
@@ -186,12 +186,12 @@ namespace DSA_lims
             cmd.CommandType = CommandType.StoredProcedure;
             p["id"] = Guid.NewGuid();
             cmd.Parameters.AddWithValue("@id", p["id"]);
-            cmd.Parameters.AddWithValue("@name", DB.MakeParam(typeof(String), p["name"]));
-            cmd.Parameters.AddWithValue("@latitude", DB.MakeParam(typeof(double), p["latitude"]));
-            cmd.Parameters.AddWithValue("@longitude", DB.MakeParam(typeof(double), p["longitude"]));
-            cmd.Parameters.AddWithValue("@altitude", DB.MakeParam(typeof(double), p["altitude"]));
-            cmd.Parameters.AddWithValue("@instance_status_id", DB.MakeParam(typeof(int), p["instance_status_id"]));
-            cmd.Parameters.AddWithValue("@comment", DB.MakeParam(typeof(String), p["comment"]));
+            cmd.Parameters.AddWithValue("@name", p["name"], String.Empty);
+            cmd.Parameters.AddWithValue("@latitude", p["latitude"]);
+            cmd.Parameters.AddWithValue("@longitude", p["longitude"]);
+            cmd.Parameters.AddWithValue("@altitude", p["altitude"]);
+            cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
+            cmd.Parameters.AddWithValue("@comment", p["comment"], String.Empty);
             cmd.Parameters.AddWithValue("@create_date", p["create_date"]);
             cmd.Parameters.AddWithValue("@created_by", p["created_by"]);
             cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
@@ -207,12 +207,12 @@ namespace DSA_lims
             SqlCommand cmd = new SqlCommand("csp_update_station", conn, trans);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@id", p["id"]);
-            cmd.Parameters.AddWithValue("@name", DB.MakeParam(typeof(String), p["name"]));
-            cmd.Parameters.AddWithValue("@latitude", DB.MakeParam(typeof(double), p["latitude"]));
-            cmd.Parameters.AddWithValue("@longitude", DB.MakeParam(typeof(double), p["longitude"]));
-            cmd.Parameters.AddWithValue("@altitude", DB.MakeParam(typeof(double), p["altitude"]));
-            cmd.Parameters.AddWithValue("@instance_status_id", DB.MakeParam(typeof(int), p["instance_status_id"]));
-            cmd.Parameters.AddWithValue("@comment", DB.MakeParam(typeof(String), p["comment"]));
+            cmd.Parameters.AddWithValue("@name", p["name"], String.Empty);
+            cmd.Parameters.AddWithValue("@latitude", p["latitude"]);
+            cmd.Parameters.AddWithValue("@longitude", p["longitude"]);
+            cmd.Parameters.AddWithValue("@altitude", p["altitude"]);
+            cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
+            cmd.Parameters.AddWithValue("@comment", p["comment"], String.Empty);
             cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
             cmd.Parameters.AddWithValue("@updated_by", p["updated_by"]);
             cmd.ExecuteNonQuery();

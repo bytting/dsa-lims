@@ -57,7 +57,7 @@ namespace DSA_lims
 
                     while (reader.Read())
                     {
-                        var r = new Lemma<Guid, string>(Guid.Parse(reader["id"].ToString()), reader["name"].ToString());
+                        var r = new Lemma<Guid, string>(reader.GetGuid("id"), reader.GetString("name"));
                         lbRoles.Items.Add(r);
                     }
                 }
@@ -83,8 +83,8 @@ namespace DSA_lims
                         var selItem = item as Lemma<Guid, string>;
 
                         cmd.Parameters.Clear();
-                        cmd.Parameters.AddWithValue("@account_id", DB.MakeParam(typeof(Guid), mUserId));
-                        cmd.Parameters.AddWithValue("@role_id", DB.MakeParam(typeof(Guid), selItem.Id));
+                        cmd.Parameters.AddWithValue("@account_id", mUserId, Guid.Empty);
+                        cmd.Parameters.AddWithValue("@role_id", selItem.Id, Guid.Empty);
                         cmd.ExecuteNonQuery();
                     }
                 }

@@ -153,24 +153,24 @@ namespace DSA_lims
                 reader.Read();
 
                 Id = reader.GetGuid("id");
-                Number = reader.GetInt32("number");
+                Number = reader.GetInt32Nullable("number");
                 AssignmentId = reader.GetGuid("assignment_id");
                 LaboratoryId = reader.GetGuid("laboratory_id");
                 PreparationId = reader.GetGuid("preparation_id");
                 AnalysisMethodId = reader.GetGuid("analysis_method_id");
-                WorkflowStatusId = reader.GetInt32("workflow_status_id");
+                WorkflowStatusId = reader.GetInt32Nullable("workflow_status_id");
                 SpecterReference = reader.GetString("specter_reference");
                 ActivityUnitId = reader.GetGuid("activity_unit_id");
                 ActivityUnitTypeId = reader.GetGuid("activity_unit_type_id");
-                SigmaActivity = reader.GetDouble("sigma_act");
-                SigmaMDA = reader.GetDouble("sigma_mda");
+                SigmaActivity = reader.GetDoubleNullable("sigma_act");
+                SigmaMDA = reader.GetDoubleNullable("sigma_mda");
                 NuclideLibrary = reader.GetString("nuclide_library");
                 MDALibrary = reader.GetString("mda_library");
-                InstanceStatusId = reader.GetInt32("instance_status_id");
+                InstanceStatusId = reader.GetInt32Nullable("instance_status_id");
                 Comment = reader.GetString("comment");
-                CreateDate = reader.GetDateTime("create_date");
+                CreateDate = reader.GetDateTimeNullable("create_date");
                 CreatedBy = reader.GetString("created_by");
-                UpdateDate = reader.GetDateTime("update_date");
+                UpdateDate = reader.GetDateTimeNullable("update_date");
                 UpdatedBy = reader.GetString("updated_by");
             }
 
@@ -181,7 +181,7 @@ namespace DSA_lims
                 new SqlParameter("@id", analId)))
             {
                 while (reader.Read())
-                    analResIds.Add(Guid.Parse(reader["id"].ToString()));
+                    analResIds.Add(reader.GetGuid("id"));
             }
 
             foreach (Guid analResId in analResIds)
@@ -275,7 +275,7 @@ namespace DSA_lims
                 new SqlParameter("@id", Id)))
             {
                 while(reader.Read())                
-                    storedAnalResIds.Add(Guid.Parse(reader["id"].ToString()));
+                    storedAnalResIds.Add(reader.GetGuid("id"));
             }
 
             cmd.CommandText = "delete from analysis_result where id = @id";

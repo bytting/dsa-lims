@@ -153,8 +153,8 @@ namespace DSA_lims
                 cmd.CommandType = CommandType.StoredProcedure;
                 p["id"] = Guid.NewGuid();
                 cmd.Parameters.AddWithValue("@id", p["id"]);
-                cmd.Parameters.AddWithValue("@person_id", DB.MakeParam(typeof(Guid), p["person_id"]));
-                cmd.Parameters.AddWithValue("@company_id", DB.MakeParam(typeof(Guid), p["company_id"]));
+                cmd.Parameters.AddWithValue("@person_id", p["person_id"], Guid.Empty);
+                cmd.Parameters.AddWithValue("@company_id", p["company_id"], Guid.Empty);
                 cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
                 cmd.Parameters.AddWithValue("@comment", p["comment"]);
                 cmd.Parameters.AddWithValue("@create_date", p["create_date"]);
@@ -197,7 +197,7 @@ namespace DSA_lims
                 SqlCommand cmd = new SqlCommand("csp_update_sampler", connection, transaction);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@id", p["id"]);                
-                cmd.Parameters.AddWithValue("@company_id", DB.MakeParam(typeof(Guid), p["company_id"]));
+                cmd.Parameters.AddWithValue("@company_id", p["company_id"], Guid.Empty);
                 cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
                 cmd.Parameters.AddWithValue("@comment", p["comment"]);
                 cmd.Parameters.AddWithValue("@update_date", p["update_date"]);

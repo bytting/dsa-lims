@@ -94,12 +94,12 @@ namespace DSA_lims
                     Guid newPrepId = Guid.NewGuid();
                     cmd.Parameters.Clear();
                     cmd.Parameters.AddWithValue("@id", newPrepId);
-                    cmd.Parameters.AddWithValue("@sample_id", DB.MakeParam(typeof(Guid), SampleId));
+                    cmd.Parameters.AddWithValue("@sample_id", SampleId, Guid.Empty);
                     cmd.Parameters.AddWithValue("@number", nextPrepNumber++);
                     cmd.Parameters.AddWithValue("@assignment_id", DBNull.Value);
-                    cmd.Parameters.AddWithValue("@laboratory_id", Common.LabId);
+                    cmd.Parameters.AddWithValue("@laboratory_id", Common.LabId, Guid.Empty);
                     cmd.Parameters.AddWithValue("@preparation_geometry_id", DBNull.Value);
-                    cmd.Parameters.AddWithValue("@preparation_method_id", DB.MakeParam(typeof(Guid), cboxPrepMethods.SelectedValue));
+                    cmd.Parameters.AddWithValue("@preparation_method_id", cboxPrepMethods.SelectedValue, Guid.Empty);
                     cmd.Parameters.AddWithValue("@workflow_status_id", 1);
                     cmd.Parameters.AddWithValue("@amount", DBNull.Value);
                     cmd.Parameters.AddWithValue("@prep_unit_id", DBNull.Value);
@@ -109,9 +109,9 @@ namespace DSA_lims
                     cmd.Parameters.AddWithValue("@instance_status_id", InstanceStatus.Active);
                     cmd.Parameters.AddWithValue("@comment", DBNull.Value);
                     cmd.Parameters.AddWithValue("@create_date", DateTime.Now);
-                    cmd.Parameters.AddWithValue("@created_by", Common.Username);
+                    cmd.Parameters.AddWithValue("@created_by", Common.Username, String.Empty);
                     cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
-                    cmd.Parameters.AddWithValue("@updated_by", Common.Username);
+                    cmd.Parameters.AddWithValue("@updated_by", Common.Username, String.Empty);
 
                     cmd.ExecuteNonQuery();
                     count--;

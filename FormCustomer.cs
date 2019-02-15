@@ -87,14 +87,15 @@ namespace DSA_lims
                     }
 
                     reader.Read();
-                    cboxPerson.SelectedValue = reader["person_id"];
-                    cboxCompany.SelectedValue = reader["company_id"];
-                    cboxInstanceStatus.SelectedValue = reader["instance_status_id"];
-                    tbComment.Text = reader["comment"].ToString();
-                    p["create_date"] = reader["create_date"];
-                    p["created_by"] = reader["created_by"];
-                    p["update_date"] = reader["update_date"];
-                    p["updated_by"] = reader["updated_by"];
+
+                    cboxPerson.SelectedValue = reader.GetGuid("person_id");
+                    cboxCompany.SelectedValue = reader.GetGuid("company_id");
+                    cboxInstanceStatus.SelectedValue = reader.GetInt32("instance_status_id");
+                    tbComment.Text = reader.GetString("comment");
+                    p["create_date"] = reader.GetDateTime("create_date");
+                    p["created_by"] = reader.GetString("created_by");
+                    p["update_date"] = reader.GetDateTime("update_date");
+                    p["updated_by"] = reader.GetString("updated_by");
 
                     cboxPerson.Enabled = false;
                 }
@@ -166,10 +167,10 @@ namespace DSA_lims
             cmd.CommandType = CommandType.StoredProcedure;
             p["id"] = Guid.NewGuid();
             cmd.Parameters.AddWithValue("@id", p["id"]);
-            cmd.Parameters.AddWithValue("@person_id", DB.MakeParam(typeof(Guid), p["person_id"]));
-            cmd.Parameters.AddWithValue("@company_id", DB.MakeParam(typeof(Guid), p["company_id"]));
+            cmd.Parameters.AddWithValue("@person_id", p["person_id"], Guid.Empty);
+            cmd.Parameters.AddWithValue("@company_id", p["company_id"], Guid.Empty);
             cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
-            cmd.Parameters.AddWithValue("@comment", p["comment"]);
+            cmd.Parameters.AddWithValue("@comment", p["comment"], String.Empty);
             cmd.Parameters.AddWithValue("@create_date", p["create_date"]);
             cmd.Parameters.AddWithValue("@created_by", p["created_by"]);
             cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
@@ -185,7 +186,7 @@ namespace DSA_lims
             SqlCommand cmd = new SqlCommand("csp_update_customer", conn, trans);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@id", p["id"]);
-            cmd.Parameters.AddWithValue("@company_id", DB.MakeParam(typeof(Guid), p["company_id"]));
+            cmd.Parameters.AddWithValue("@company_id", p["company_id"], Guid.Empty);
             cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
             cmd.Parameters.AddWithValue("@comment", p["comment"]);
             cmd.Parameters.AddWithValue("@update_date", p["update_date"]);

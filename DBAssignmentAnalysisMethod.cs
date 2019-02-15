@@ -167,11 +167,11 @@ namespace DSA_lims
                 Id = reader.GetGuid("id");
                 AssignmentPreparationMethodId = reader.GetGuid("assignment_preparation_method_id");
                 AnalysisMethodId = reader.GetGuid("analysis_method_id");
-                AnalysisMethodCount = reader.GetInt32("analysis_method_count");
+                AnalysisMethodCount = reader.GetInt32Nullable("analysis_method_count");
                 Comment = reader.GetString("comment");
-                CreateDate = reader.GetDateTime("create_date");
+                CreateDate = reader.GetDateTimeNullable("create_date");
                 CreatedBy = reader.GetString("created_by");
-                UpdateDate = reader.GetDateTime("update_date");
+                UpdateDate = reader.GetDateTimeNullable("update_date");
                 UpdatedBy = reader.GetString("updated_by");
                 Dirty = false;
             }

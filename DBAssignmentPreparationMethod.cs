@@ -183,7 +183,7 @@ namespace DSA_lims
                 new SqlParameter("@id", Id)))
             {
                 while (reader.Read())
-                    storedAnalMethIds.Add(Guid.Parse(reader["id"].ToString()));
+                    storedAnalMethIds.Add(reader.GetGuid("id"));
             }
 
             cmd.CommandText = "delete from assignment_analysis_method where id = @id";
@@ -216,12 +216,12 @@ namespace DSA_lims
                 Id = reader.GetGuid("id");
                 AssignmentSampleTypeId = reader.GetGuid("assignment_sample_type_id");
                 PreparationMethodId = reader.GetGuid("preparation_method_id");
-                PreparationMethodCount = reader.GetInt32("preparation_method_count");                
+                PreparationMethodCount = reader.GetInt32Nullable("preparation_method_count");                
                 PreparationLaboratoryId = reader.GetGuid("preparation_laboratory_id");
                 Comment = reader.GetString("comment");
-                CreateDate = reader.GetDateTime("create_date");
+                CreateDate = reader.GetDateTimeNullable("create_date");
                 CreatedBy = reader.GetString("created_by");
-                UpdateDate = reader.GetDateTime("update_date");
+                UpdateDate = reader.GetDateTimeNullable("update_date");
                 UpdatedBy = reader.GetString("updated_by");
                 Dirty = false;
             }
@@ -231,7 +231,7 @@ namespace DSA_lims
                 new SqlParameter("@apmid", apmId)))
             {
                 while (reader.Read())
-                    analMethIds.Add(Guid.Parse(reader["id"].ToString()));
+                    analMethIds.Add(reader.GetGuid("id"));
             }
 
             foreach (Guid aamId in analMethIds)

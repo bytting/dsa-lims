@@ -140,9 +140,9 @@ namespace DSA_lims
                 Name = reader.GetString("name");
                 LaboratoryId = reader.GetGuid("laboratory_id");
                 AccountId = reader.GetGuid("account_id");
-                Deadline = reader.GetDateTime("deadline");
-                RequestedSigmaAct = reader.GetDouble("requested_sigma_act");
-                RequestedSigmaMDA = reader.GetDouble("requested_sigma_mda");
+                Deadline = reader.GetDateTimeNullable("deadline");
+                RequestedSigmaAct = reader.GetDoubleNullable("requested_sigma_act");
+                RequestedSigmaMDA = reader.GetDoubleNullable("requested_sigma_mda");
                 CustomerCompanyName = reader.GetString("customer_company_name");
                 CustomerCompanyEmail = reader.GetString("customer_company_email");
                 CustomerCompanyPhone = reader.GetString("customer_company_phone");
@@ -158,15 +158,15 @@ namespace DSA_lims
                 ContentComment = reader.GetString("content_comment");
                 ReportComment = reader.GetString("report_comment");
                 AuditComment = reader.GetString("audit_comment");
-                WorkflowStatusId = reader.GetInt32("workflow_status_id");                
-                LastWorkflowStatusDate = reader.GetDateTime("last_workflow_status_date");                
+                WorkflowStatusId = reader.GetInt32Nullable("workflow_status_id");                
+                LastWorkflowStatusDate = reader.GetDateTimeNullable("last_workflow_status_date");                
                 LastWorkflowStatusBy = reader.GetString("last_workflow_status_by");
-                AnalysisReportVersion = reader.GetInt32("analysis_report_version");
-                InstanceStatusId = reader.GetInt32("instance_status_id");
+                AnalysisReportVersion = reader.GetInt32Nullable("analysis_report_version");
+                InstanceStatusId = reader.GetInt32Nullable("instance_status_id");
                 LockedBy = reader.GetString("locked_by");
-                CreateDate = reader.GetDateTime("create_date");
+                CreateDate = reader.GetDateTimeNullable("create_date");
                 CreatedBy = reader.GetString("created_by");
-                UpdateDate = reader.GetDateTime("update_date");
+                UpdateDate = reader.GetDateTimeNullable("update_date");
                 UpdatedBy = reader.GetString("updated_by");
             }
 
@@ -177,7 +177,7 @@ namespace DSA_lims
                 new SqlParameter("@id", assId)))
             {
                 while (reader.Read())                    
-                    sampleTypeIds.Add(Guid.Parse(reader["id"].ToString()));
+                    sampleTypeIds.Add(reader.GetGuid("id"));
             }
 
             foreach (Guid astId in sampleTypeIds)
@@ -298,7 +298,7 @@ namespace DSA_lims
                 new SqlParameter("@id", Id)))
             {
                 while (reader.Read())
-                    storedSampTypeIds.Add(Guid.Parse(reader["id"].ToString()));
+                    storedSampTypeIds.Add(reader.GetGuid("id"));
             }
 
             cmd.CommandText = "delete from assignment_sample_type where id = @id";

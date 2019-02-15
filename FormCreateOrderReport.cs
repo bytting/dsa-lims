@@ -59,19 +59,14 @@ namespace DSA_lims
                 {
                     if (reader.HasRows)
                     {
-                        reader.Read();
-                        if(DB.IsValidField(reader["name"]))
-                            OrderName = reader["name"].ToString();
-                        if (DB.IsValidField(reader["laboratory_name"]))
-                            LaboratoryName = reader["laboratory_name"].ToString();
-                        if (DB.IsValidField(reader["account_name"]))
-                            ResponsibleName = reader["account_name"].ToString();
-                        if (DB.IsValidField(reader["customer_contact_name"]))
-                            CustomerName = reader["customer_contact_name"].ToString();
-                        if (DB.IsValidField(reader["customer_company_name"]))
-                            CustomerCompany = reader["customer_company_name"].ToString();
-                        if (DB.IsValidField(reader["customer_contact_address"]))
-                            CustomerAddress = reader["customer_contact_address"].ToString();
+                        reader.Read();                        
+
+                        OrderName = reader.GetString("name");
+                        LaboratoryName = reader.GetString("laboratory_name");
+                        ResponsibleName = reader.GetString("account_name");
+                        CustomerName = reader.GetString("customer_contact_name");
+                        CustomerCompany = reader.GetString("customer_company_name");
+                        CustomerAddress = reader.GetString("customer_contact_address");
                     }
                 }
 
@@ -198,12 +193,12 @@ order by s.number, p.number, a.number
                 {                    
                     while (reader.Read())
                     {                        
-                        table.AddCell(DB.IsValidField(reader["sample"]) ? "" : reader["sample"].ToString());
-                        table.AddCell(DB.IsValidField(reader["preparation"]) ? "" : reader["preparation"].ToString());
-                        table.AddCell(DB.IsValidField(reader["analysis"]) ? "" : reader["analysis"].ToString());
-                        table.AddCell(DB.IsValidField(reader["analysis_method"]) ? "" : reader["analysis_method"].ToString());
-                        table.AddCell(DB.IsValidField(reader["nuclide"]) ? "" : reader["nuclide"].ToString());
-                        table.AddCell(DB.IsValidField(reader["activity"]) ? "" : reader["activity"].ToString());
+                        table.AddCell(reader.GetString("sample"));
+                        table.AddCell(reader.GetString("preparation"));
+                        table.AddCell(reader.GetString("analysis"));
+                        table.AddCell(reader.GetString("analysis_method"));
+                        table.AddCell(reader.GetString("nuclide"));
+                        table.AddCell(reader.GetString("activity"));
                         nRows++;
                     }
                 }

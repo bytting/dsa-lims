@@ -115,11 +115,11 @@ namespace DSA_lims
                 SampleId = Guid.NewGuid();
                 cmd.Parameters.AddWithValue("@id", SampleId);
                 cmd.Parameters.AddWithValue("@number", SampleNumber);
-                cmd.Parameters.AddWithValue("@laboratory_id", DB.MakeParam(typeof(Guid), cboxLaboratory.SelectedValue));
-                cmd.Parameters.AddWithValue("@sample_type_id", DB.MakeParam(typeof(Guid), cboxSampleType.SelectedValue));
+                cmd.Parameters.AddWithValue("@laboratory_id", cboxLaboratory.SelectedValue, Guid.Empty);
+                cmd.Parameters.AddWithValue("@sample_type_id", cboxSampleType.SelectedValue, Guid.Empty);
                 cmd.Parameters.AddWithValue("@sample_storage_id", DBNull.Value);
-                cmd.Parameters.AddWithValue("@sample_component_id", DB.MakeParam(typeof(Guid), cboxSampleComponent.SelectedValue));
-                cmd.Parameters.AddWithValue("@project_sub_id", DB.MakeParam(typeof(Guid), cboxProjectSub.SelectedValue));
+                cmd.Parameters.AddWithValue("@sample_component_id", cboxSampleComponent.SelectedValue, Guid.Empty);
+                cmd.Parameters.AddWithValue("@project_sub_id", cboxProjectSub.SelectedValue, Guid.Empty);
                 cmd.Parameters.AddWithValue("@station_id", DBNull.Value);
                 cmd.Parameters.AddWithValue("@sampler_id", DBNull.Value);
                 cmd.Parameters.AddWithValue("@sampling_method_id", DBNull.Value);
@@ -195,7 +195,7 @@ namespace DSA_lims
             using (SqlConnection conn = DB.OpenConnection())
             {
                 UI.PopulateComboBoxes(conn, "csp_select_projects_sub_short", new[] {
-                    new SqlParameter("@project_main_id", DB.MakeParam(typeof(Guid), projectMainId)),
+                    new SqlParameter("@project_main_id", projectMainId),
                     new SqlParameter("@instance_status_level", InstanceStatus.Active)
                 }, cboxProjectSub);
             }

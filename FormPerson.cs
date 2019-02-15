@@ -168,9 +168,9 @@ namespace DSA_lims
             cmd.Parameters.AddWithValue("@id", p["id"]);
             cmd.Parameters.AddWithValue("@name", p["name"]);
             cmd.Parameters.AddWithValue("@email", p["email"]);
-            cmd.Parameters.AddWithValue("@phone", p["phone"]);
-            cmd.Parameters.AddWithValue("@address", p["address"]);
-            cmd.Parameters.AddWithValue("@create_date", p["create_date"]);                
+            cmd.Parameters.AddWithValue("@phone", p["phone"], String.Empty);
+            cmd.Parameters.AddWithValue("@address", p["address"], String.Empty);
+            cmd.Parameters.AddWithValue("@create_date", p["create_date"]);
             cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
             cmd.ExecuteNonQuery();                            
         }
@@ -184,8 +184,8 @@ namespace DSA_lims
             cmd.Parameters.AddWithValue("@id", p["id"]);
             cmd.Parameters.AddWithValue("@name", p["name"]);
             cmd.Parameters.AddWithValue("@email", p["email"]);
-            cmd.Parameters.AddWithValue("@phone", p["phone"]);
-            cmd.Parameters.AddWithValue("@address", p["address"]);                
+            cmd.Parameters.AddWithValue("@phone", p["phone"], String.Empty);
+            cmd.Parameters.AddWithValue("@address", p["address"], String.Empty);
             cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
             cmd.ExecuteNonQuery();                        
         }

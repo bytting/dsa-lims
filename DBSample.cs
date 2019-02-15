@@ -249,7 +249,7 @@ where s.id = @sid and a.workflow_status_id = 2
                 reader.Read();
 
                 Id = reader.GetGuid("id");
-                Number = reader.GetInt32("number");
+                Number = reader.GetInt32Nullable("number");
                 LaboratoryId = reader.GetGuid("laboratory_id");
                 SampleTypeId = reader.GetGuid("sample_type_id");
                 SampleStorageId = reader.GetGuid("sample_storage_id");
@@ -265,27 +265,27 @@ where s.id = @sid and a.workflow_status_id = 2
                 MunicipalityId = reader.GetGuid("municipality_id");
                 LocationType = reader.GetString("location_type");
                 Location = reader.GetString("location");                
-                Latitude = reader.GetDouble("latitude");                
-                Longitude = reader.GetDouble("longitude");                
-                Altitude = reader.GetDouble("altitude");                
-                SamplingDateFrom = reader.GetDateTime("sampling_date_from");                
-                SamplingDateTo = reader.GetDateTime("sampling_date_to");                
-                ReferenceDate = reader.GetDateTime("reference_date");
+                Latitude = reader.GetDoubleNullable("latitude");                
+                Longitude = reader.GetDoubleNullable("longitude");                
+                Altitude = reader.GetDoubleNullable("altitude");                
+                SamplingDateFrom = reader.GetDateTimeNullable("sampling_date_from");                
+                SamplingDateTo = reader.GetDateTimeNullable("sampling_date_to");                
+                ReferenceDate = reader.GetDateTimeNullable("reference_date");
                 ExternalId = reader.GetString("external_id");
-                WetWeight_g = reader.GetDouble("wet_weight_g");
-                DryWeight_g = reader.GetDouble("dry_weight_g");
-                Volume_l = reader.GetDouble("volume_l");
-                LodWeightStart = reader.GetDouble("lod_weight_start");
-                LodWeightEnd = reader.GetDouble("lod_weight_end");
-                LodTemperature = reader.GetDouble("lod_temperature");
+                WetWeight_g = reader.GetDoubleNullable("wet_weight_g");
+                DryWeight_g = reader.GetDoubleNullable("dry_weight_g");
+                Volume_l = reader.GetDoubleNullable("volume_l");
+                LodWeightStart = reader.GetDoubleNullable("lod_weight_start");
+                LodWeightEnd = reader.GetDoubleNullable("lod_weight_end");
+                LodTemperature = reader.GetDoubleNullable("lod_temperature");
                 Confidential = reader.GetBoolean("confidential");
                 Parameters = reader.GetString("parameters");
-                InstanceStatusId = reader.GetInt32("instance_status_id");
+                InstanceStatusId = reader.GetInt32Nullable("instance_status_id");
                 LockedBy = reader.GetString("locked_by");
                 Comment = reader.GetString("comment");
-                CreateDate = reader.GetDateTime("create_date");
+                CreateDate = reader.GetDateTimeNullable("create_date");
                 CreatedBy = reader.GetString("created_by");
-                UpdateDate = reader.GetDateTime("update_date");
+                UpdateDate = reader.GetDateTimeNullable("update_date");
                 UpdatedBy = reader.GetString("updated_by");
             }
 

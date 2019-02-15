@@ -98,8 +98,8 @@ namespace DSA_lims
                         var selItem = item as Lemma<Guid, string>;
 
                         cmd.Parameters.Clear();
-                        cmd.Parameters.AddWithValue("@sample_type_id", DB.MakeParam(typeof(Guid), SampleTypeId));
-                        cmd.Parameters.AddWithValue("@preparation_method_id", DB.MakeParam(typeof(Guid), selItem.Id));
+                        cmd.Parameters.AddWithValue("@sample_type_id", SampleTypeId, Guid.Empty);
+                        cmd.Parameters.AddWithValue("@preparation_method_id", selItem.Id, Guid.Empty);
                         cmd.ExecuteNonQuery();
                     }
                 }

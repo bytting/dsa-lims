@@ -185,8 +185,8 @@ namespace DSA_lims
                 p["id"] = Guid.NewGuid();                
                 cmd.Parameters.AddWithValue("@id", p["id"]);
                 cmd.Parameters.AddWithValue("@username", p["username"]);
-                cmd.Parameters.AddWithValue("@person_id", DB.MakeParam(typeof(Guid), p["person_id"]));
-                cmd.Parameters.AddWithValue("@laboratory_id", DB.MakeParam(typeof(Guid), p["laboratory_id"]));
+                cmd.Parameters.AddWithValue("@person_id", p["person_id"], Guid.Empty);
+                cmd.Parameters.AddWithValue("@laboratory_id", p["laboratory_id"], Guid.Empty);
                 cmd.Parameters.AddWithValue("@language_code", p["language_code"]);
                 cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
                 cmd.Parameters.AddWithValue("@password_hash", p["password_hash"]);
@@ -220,7 +220,7 @@ namespace DSA_lims
                 SqlCommand cmd = new SqlCommand("csp_update_account", connection);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@id", p["id"]);
-                cmd.Parameters.AddWithValue("@laboratory_id", DB.MakeParam(typeof(Guid), p["laboratory_id"]));
+                cmd.Parameters.AddWithValue("@laboratory_id", p["laboratory_id"], Guid.Empty);
                 cmd.Parameters.AddWithValue("@language_code", p["language_code"]);
                 cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
                 cmd.Parameters.AddWithValue("@update_date", p["update_date"]);

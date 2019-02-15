@@ -38,51 +38,7 @@ namespace DSA_lims
             SqlConnection connection = new SqlConnection(ConnectionString);
             connection.Open();
             return connection;
-        }
-
-        public static object MakeParam(Type type, object o)
-        {
-            if (o == null)
-                return DBNull.Value;
-
-            if(o.GetType() == typeof(string))
-            {
-                string s = Convert.ToString(o);
-                if (String.IsNullOrEmpty(s))
-                    return DBNull.Value;
-            }
-
-            if (type == typeof(double))
-                return Convert.ToDouble(o);
-            else if (type == typeof(float))
-                return Convert.ToSingle(o);
-            else if (type == typeof(int) || type == typeof(Int32))
-                return Convert.ToInt32(o);
-            else if (type == typeof(Int16))
-                return Convert.ToInt16(o);
-            else if (type == typeof(Int64))
-                return Convert.ToInt64(o);
-            else if (type == typeof(DateTime))
-            {
-                DateTime dt = Convert.ToDateTime(o);
-                if (dt == DateTime.MinValue)
-                    return DBNull.Value;
-                return dt;
-            }
-            else if (type == typeof(bool))
-                return Convert.ToBoolean(o);
-            else if (type == typeof(string))
-                return o.ToString();
-            else if (type == typeof(Guid))
-            {
-                Guid g;
-                if (!Guid.TryParse(o.ToString(), out g) || g == Guid.Empty)
-                    return DBNull.Value;
-
-                return g;
-            }
-            else return o.ToString();
-        }
+        }        
 
         public static DataTable GetDataTable(SqlConnection conn, SqlTransaction trans, string query, CommandType queryType, params SqlParameter[] parameters)
         {
@@ -173,7 +129,7 @@ namespace DSA_lims
                 using (SqlDataReader reader = DB.GetDataReader(conn, trans, proc, CommandType.StoredProcedure))
                 {
                     while (reader.Read())
-                        list.Add(new Lemma<int?, string>(Convert.ToInt32(reader["id"]), reader["name"].ToString()));
+                        list.Add(new Lemma<int?, string>(reader.GetInt32("id"), reader.GetString("name")));
                 }
             }
             catch (Exception ex)
@@ -438,11 +394,11 @@ namespace DSA_lims
                 while (reader.Read())
                 {
                     SampleTypeModel sampleType = new SampleTypeModel(
-                        Guid.Parse(reader["id"].ToString()),
-                        Guid.Parse(reader["parent_id"].ToString()),
-                        reader["name"].ToString(),
-                        reader["name_common"].ToString(),
-                        reader["name_latin"].ToString());
+                        reader.GetGuid("id"),
+                        reader.GetGuid("parent_id"),
+                        reader.GetString("name"),
+                        reader.GetString("name_common"),
+                        reader.GetString("name_latin"));
 
                     Common.SampleTypeList.Add(sampleType);
                 }
@@ -464,8 +420,8 @@ namespace DSA_lims
                 }
 
                 reader.Read();
-                double convFactor = Convert.ToDouble(reader["convert_factor"]);
-                uActivityUnitId = Convert.ToInt32(reader["uniform_activity_unit_id"]);
+                double convFactor = reader.GetDouble("convert_factor");
+                uActivityUnitId = reader.GetInt32("uniform_activity_unit_id");
                 uActivity = activity / convFactor;
             }            
 
@@ -482,7 +438,7 @@ namespace DSA_lims
             {
                 while (reader.Read())
                 {
-                    names.Add(reader["name"].ToString().ToUpper(), Guid.Parse(reader["id"].ToString()));
+                    names.Add(reader.GetString("name").ToUpper(), reader.GetGuid("id"));
                 }
             }
 
@@ -505,7 +461,7 @@ order by n.name
             {
                 while (reader.Read())
                 {
-                    names.Add(reader["name"].ToString().ToUpper(), Guid.Parse(reader["id"].ToString()));
+                    names.Add(reader.GetString("name").ToUpper(), reader.GetGuid("id"));
                 }
             }
             return names;
@@ -526,7 +482,7 @@ from role r
             {
                 while(reader.Read())
                 {
-                    userRoles.Add(reader["name"].ToString().ToUpper());
+                    userRoles.Add(reader.GetString("name").ToUpper());
                 }
             }
         }        
@@ -608,12 +564,9 @@ where a.id = @aid
                 {
                     reader.Read();
 
-                    if(IsValidField(reader["nsamples"]))
-                        nSamples = Convert.ToInt32(reader["nsamples"]);
-                    if (IsValidField(reader["npreparations"]))
-                        nPreparations = Convert.ToInt32(reader["npreparations"]);
-                    if (IsValidField(reader["nanalyses"]))
-                        nAnalyses = Convert.ToInt32(reader["nanalyses"]);
+                    nSamples = reader.GetInt32("nsamples");
+                    nPreparations = reader.GetInt32("npreparations");
+                    nAnalyses = reader.GetInt32("nanalyses");
                 }
             }
         }
@@ -645,13 +598,10 @@ select
                 if (reader.HasRows)
                 {
                     reader.Read();
-
-                    if(IsValidField(reader["nsamples"]))
-                        nSamples = Convert.ToInt32(reader["nsamples"]);
-                    if (IsValidField(reader["npreparations"]))
-                        nPreparations = Convert.ToInt32(reader["npreparations"]);
-                    if (IsValidField(reader["nanalyses"]))
-                        nAnalyses = Convert.ToInt32(reader["nanalyses"]);
+                    
+                    nSamples = reader.GetInt32("nsamples");
+                    nPreparations = reader.GetInt32("npreparations");
+                    nAnalyses = reader.GetInt32("nanalyses");
                 }
             }
         }
@@ -675,8 +625,8 @@ select
                 if(reader.HasRows)
                 {
                     reader.Read();
-                    int nAvailSamples = Convert.ToInt32(reader["available_sample_count"]);
-                    int nCurrSamples = Convert.ToInt32(reader["current_sample_count"]);
+                    int nAvailSamples = reader.GetInt32("available_sample_count");
+                    int nCurrSamples = reader.GetInt32("current_sample_count");
                     n = nAvailSamples - nCurrSamples;
                 }
             }
@@ -719,42 +669,84 @@ select
             return (int)cmd.ExecuteScalar() > 0;
         }
 
-        public static double? GetDouble(this SqlDataReader reader, string key)
+        public static double GetDouble(this SqlDataReader reader, string key)
+        {
+            if (!IsValidField(reader[key]))
+                throw new Exception("GetDouble: Invalid DB field: " + key);
+            return Convert.ToDouble(reader[key]);
+        }
+
+        public static double? GetDoubleNullable(this SqlDataReader reader, string key)
         {
             if (!IsValidField(reader[key]))
                 return null;
             return Convert.ToDouble(reader[key]);
         }
 
-        public static float? GetSingle(this SqlDataReader reader, string key)
+        public static float GetSingle(this SqlDataReader reader, string key)
+        {
+            if (!IsValidField(reader[key]))
+                throw new Exception("GetSingle: Invalid DB field: " + key);
+            return Convert.ToSingle(reader[key]);
+        }
+
+        public static float? GetSingleNullable(this SqlDataReader reader, string key)
         {
             if (!IsValidField(reader[key]))
                 return null;
             return Convert.ToSingle(reader[key]);
         }
 
-        public static Int16? GetInt16(this SqlDataReader reader, string key)
+        public static Int16 GetInt16(this SqlDataReader reader, string key)
+        {
+            if (!IsValidField(reader[key]))
+                throw new Exception("GetInt16: Invalid DB field: " + key);
+            return Convert.ToInt16(reader[key]);
+        }
+
+        public static Int16? GetInt16Nullable(this SqlDataReader reader, string key)
         {
             if (!IsValidField(reader[key]))
                 return null;
             return Convert.ToInt16(reader[key]);
         }
 
-        public static Int32? GetInt32(this SqlDataReader reader, string key)
+        public static Int32 GetInt32(this SqlDataReader reader, string key)
+        {
+            if (!IsValidField(reader[key]))
+                throw new Exception("GetInt32: Invalid DB field: " + key);
+            return Convert.ToInt32(reader[key]);
+        }
+
+        public static Int32? GetInt32Nullable(this SqlDataReader reader, string key)
         {
             if (!IsValidField(reader[key]))
                 return null;
             return Convert.ToInt32(reader[key]);
         }
 
-        public static Int64? GetInt64(this SqlDataReader reader, string key)
+        public static Int64 GetInt64(this SqlDataReader reader, string key)
+        {
+            if (!IsValidField(reader[key]))
+                throw new Exception("GetInt64: Invalid DB field: " + key);
+            return Convert.ToInt64(reader[key]);
+        }
+
+        public static Int64? GetInt64Nullable(this SqlDataReader reader, string key)
         {
             if (!IsValidField(reader[key]))
                 return null;
             return Convert.ToInt64(reader[key]);
         }
 
-        public static DateTime? GetDateTime(this SqlDataReader reader, string key)
+        public static DateTime GetDateTime(this SqlDataReader reader, string key)
+        {
+            if (!IsValidField(reader[key]))
+                throw new Exception("GetDateTime: Invalid DB field: " + key);
+            return Convert.ToDateTime(reader[key]);
+        }
+
+        public static DateTime? GetDateTimeNullable(this SqlDataReader reader, string key)
         {
             if (!IsValidField(reader[key]))
                 return null;
@@ -764,7 +756,14 @@ select
         public static bool GetBoolean(this SqlDataReader reader, string key)
         {
             if (!IsValidField(reader[key]))
-                return false;
+                throw new Exception("GetBoolean: Invalid DB field: " + key);
+            return Convert.ToBoolean(reader[key]);
+        }
+
+        public static bool? GetBooleanNullable(this SqlDataReader reader, string key)
+        {
+            if (!IsValidField(reader[key]))
+                return null;
             return Convert.ToBoolean(reader[key]);
         }
 

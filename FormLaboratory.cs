@@ -84,15 +84,16 @@ namespace DSA_lims
                         throw new Exception("Laboratory with ID " + p["id"] + " was not found");
 
                     reader.Read();
-                    tbName.Text = reader["name"].ToString();
-                    tbPrefix.Text = reader["name_prefix"].ToString();
-                    tbAddress.Text = reader["address"].ToString();
-                    tbEmail.Text = reader["email"].ToString();
-                    tbPhone.Text = reader["phone"].ToString();
-                    cboxInstanceStatus.SelectedValue = reader["instance_status_id"];
-                    tbComment.Text = reader["comment"].ToString();
 
-                    if (reader["laboratory_logo"] != null && reader["laboratory_logo"] != DBNull.Value)
+                    tbName.Text = reader.GetString("name");
+                    tbPrefix.Text = reader.GetString("name_prefix");
+                    tbAddress.Text = reader.GetString("address");
+                    tbEmail.Text = reader.GetString("email");
+                    tbPhone.Text = reader.GetString("phone");
+                    cboxInstanceStatus.SelectedValue = reader.GetInt32("instance_status_id");
+                    tbComment.Text = reader.GetString("comment");
+
+                    if (DB.IsValidField(reader["laboratory_logo"]))
                     {
                         p["laboratory_logo"] = (byte[])reader["laboratory_logo"];
                         picLaboratoryLogo.Image = Image.FromStream(new MemoryStream((byte[])p["laboratory_logo"]));
@@ -103,7 +104,7 @@ namespace DSA_lims
                         p["laboratory_logo"] = picLaboratoryLogo.Image = null;
                     }
 
-                    if (reader["accredited_logo"] != null && reader["accredited_logo"] != DBNull.Value)
+                    if (DB.IsValidField(reader["accredited_logo"]))
                     {
                         p["accredited_logo"] = (byte[])reader["accredited_logo"];
                         picAccreditedLogo.Image = Image.FromStream(new MemoryStream((byte[])p["accredited_logo"]));
@@ -114,11 +115,11 @@ namespace DSA_lims
                         p["accredited_logo"] = picAccreditedLogo.Image = null;
                     }
 
-                    p["assignment_counter"] = reader["assignment_counter"];
-                    p["create_date"] = reader["create_date"];
-                    p["created_by"] = reader["created_by"];
-                    p["update_date"] = reader["update_date"];
-                    p["updated_by"] = reader["updated_by"];
+                    p["assignment_counter"] = reader.GetInt32("assignment_counter");
+                    p["create_date"] = reader.GetDateTime("create_date");
+                    p["created_by"] = reader.GetString("created_by");
+                    p["update_date"] = reader.GetDateTime("update_date");
+                    p["updated_by"] = reader.GetString("updated_by");
                 }
             }
         }
@@ -203,13 +204,13 @@ namespace DSA_lims
             cmd.Parameters.AddWithValue("@id", p["id"]);
             cmd.Parameters.AddWithValue("@name", p["name"]);
             cmd.Parameters.AddWithValue("@name_prefix", p["name_prefix"]);
-            cmd.Parameters.AddWithValue("@address", p["address"]);
-            cmd.Parameters.AddWithValue("@email", p["email"]);
-            cmd.Parameters.AddWithValue("@phone", p["phone"]);
+            cmd.Parameters.AddWithValue("@address", p["address"], String.Empty);
+            cmd.Parameters.AddWithValue("@email", p["email"], String.Empty);
+            cmd.Parameters.AddWithValue("@phone", p["phone"], String.Empty);
             cmd.Parameters.AddWithValue("@last_assignment_counter_year", p["last_assignment_counter_year"]);
             cmd.Parameters.AddWithValue("@assignment_counter", p["assignment_counter"]);                
             cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
-            cmd.Parameters.AddWithValue("@comment", p["comment"]);
+            cmd.Parameters.AddWithValue("@comment", p["comment"], String.Empty);
 
             if(p["laboratory_logo"] == null)
                 cmd.Parameters.Add("@laboratory_logo", SqlDbType.VarBinary, -1).Value = DBNull.Value;
@@ -238,11 +239,11 @@ namespace DSA_lims
             cmd.Parameters.AddWithValue("@id", p["id"]);
             cmd.Parameters.AddWithValue("@name", p["name"]);
             cmd.Parameters.AddWithValue("@name_prefix", p["name_prefix"]);                
-            cmd.Parameters.AddWithValue("@address", p["address"]);
-            cmd.Parameters.AddWithValue("@email", p["email"]);
-            cmd.Parameters.AddWithValue("@phone", p["phone"]);
+            cmd.Parameters.AddWithValue("@address", p["address"], String.Empty);
+            cmd.Parameters.AddWithValue("@email", p["email"], String.Empty);
+            cmd.Parameters.AddWithValue("@phone", p["phone"], String.Empty);
             cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
-            cmd.Parameters.AddWithValue("@comment", p["comment"]);
+            cmd.Parameters.AddWithValue("@comment", p["comment"], String.Empty);
 
             if (p["laboratory_logo"] == null)
                 cmd.Parameters.Add("@laboratory_logo", SqlDbType.VarBinary, -1).Value = DBNull.Value;

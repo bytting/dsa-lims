@@ -189,7 +189,7 @@ namespace DSA_lims
                 new SqlParameter("@id", Id)))
             {
                 while (reader.Read())
-                    storedPrepMethIds.Add(Guid.Parse(reader["id"].ToString()));
+                    storedPrepMethIds.Add(reader.GetGuid("id"));
             }
 
             cmd.CommandText = "delete from assignment_preparation_method where id = @id";
@@ -228,14 +228,14 @@ namespace DSA_lims
                 AssignmentId = reader.GetGuid("assignment_id");
                 SampleTypeId = reader.GetGuid("sample_type_id");                
                 SampleComponentId = reader.GetGuid("sample_component_id");                
-                SampleCount = reader.GetInt32("sample_count");                
+                SampleCount = reader.GetInt32Nullable("sample_count");                
                 RequestedActivityUnitId = reader.GetGuid("requested_activity_unit_id");                                
                 RequestedActivityUnitTypeId = reader.GetGuid("requested_activity_unit_type_id");                
                 ReturnToSender = reader.GetBoolean("return_to_sender");
                 Comment = reader.GetString("comment");
-                CreateDate = reader.GetDateTime("create_date");
+                CreateDate = reader.GetDateTimeNullable("create_date");
                 CreatedBy = reader.GetString("created_by");
-                UpdateDate = reader.GetDateTime("update_date");
+                UpdateDate = reader.GetDateTimeNullable("update_date");
                 UpdatedBy = reader.GetString("updated_by");
                 Dirty = false;
             }
@@ -245,7 +245,7 @@ namespace DSA_lims
                     new SqlParameter("@astId", astId)))
             {
                 while (reader.Read())                
-                    prepMethIds.Add(Guid.Parse(reader["id"].ToString()));
+                    prepMethIds.Add(reader.GetGuid("id"));
             }
 
             foreach (Guid apmId in prepMethIds)

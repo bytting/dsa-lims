@@ -43,13 +43,13 @@ namespace DSA_lims
 
                     Id = reader.GetGuid("id");
                     Name = reader.GetString("name");
-                    MinFillHeightMM = reader.GetDouble("min_fill_height_mm");
-                    MaxFillHeightMM = reader.GetDouble("max_fill_height_mm");
-                    InstanceStatusId = reader.GetInt32("instance_status_id");
+                    MinFillHeightMM = reader.GetDoubleNullable("min_fill_height_mm");
+                    MaxFillHeightMM = reader.GetDoubleNullable("max_fill_height_mm");
+                    InstanceStatusId = reader.GetInt32Nullable("instance_status_id");
                     Comment = reader.GetString("comment");
-                    CreateDate = reader.GetDateTime("create_date");
+                    CreateDate = reader.GetDateTimeNullable("create_date");
                     CreatedBy = reader.GetString("created_by");
-                    UpdateDate = reader.GetDateTime("update_date");
+                    UpdateDate = reader.GetDateTimeNullable("update_date");
                     UpdatedBy = reader.GetString("updated_by");
                 }
             }

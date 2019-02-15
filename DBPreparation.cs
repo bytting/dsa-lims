@@ -111,22 +111,22 @@ namespace DSA_lims
 
                 Id = reader.GetGuid("id");
                 SampleId = reader.GetGuid("sample_id");
-                Number = reader.GetInt32("number");
+                Number = reader.GetInt32Nullable("number");
                 AssignmentId = reader.GetGuid("assignment_id");
                 LaboratoryId = reader.GetGuid("laboratory_id");
                 PreparationGeometryId = reader.GetGuid("preparation_geometry_id");
                 PreparationMethodId = reader.GetGuid("preparation_method_id");
-                WorkflowStatusId = reader.GetInt32("workflow_status_id");
-                Amount = reader.GetDouble("amount");
-                PrepUnitId = reader.GetInt32("prep_unit_id");
-                Quantity = reader.GetDouble("quantity");
-                QuantityUnitId = reader.GetInt32("quantity_unit_id");
-                FillHeightMM = reader.GetDouble("fill_height_mm");
-                InstanceStatusId = reader.GetInt32("instance_status_id");
+                WorkflowStatusId = reader.GetInt32Nullable("workflow_status_id");
+                Amount = reader.GetDoubleNullable("amount");
+                PrepUnitId = reader.GetInt32Nullable("prep_unit_id");
+                Quantity = reader.GetDoubleNullable("quantity");
+                QuantityUnitId = reader.GetInt32Nullable("quantity_unit_id");
+                FillHeightMM = reader.GetDoubleNullable("fill_height_mm");
+                InstanceStatusId = reader.GetInt32Nullable("instance_status_id");
                 Comment = reader.GetString("comment");
-                CreateDate = reader.GetDateTime("create_date");
+                CreateDate = reader.GetDateTimeNullable("create_date");
                 CreatedBy = reader.GetString("created_by");
-                UpdateDate = reader.GetDateTime("update_date");
+                UpdateDate = reader.GetDateTimeNullable("update_date");
                 UpdatedBy = reader.GetString("updated_by");
             }
         }

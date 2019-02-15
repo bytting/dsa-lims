@@ -72,16 +72,16 @@ namespace DSA_lims
                         throw new Exception("Analysis method with ID " + p["id"] + " was not found");
 
                     reader.Read();
-                    tbName.Text = reader["name"].ToString();
-                    tbShortName.Text = reader["name_short"].ToString();
-                    tbDescriptionLink.Text = reader["description_link"].ToString();
-                    tbSpecRefRegExp.Text = reader["specter_reference_regexp"].ToString();
-                    cboxInstanceStatus.SelectedValue = reader["instance_status_id"];
-                    tbComment.Text = reader["comment"].ToString();
-                    p["create_date"] = reader["create_date"];
-                    p["created_by"] = reader["created_by"];
-                    p["update_date"] = reader["update_date"];
-                    p["updated_by"] = reader["updated_by"];
+                    tbName.Text = reader.GetString("name");
+                    tbShortName.Text = reader.GetString("name_short");
+                    tbDescriptionLink.Text = reader.GetString("description_link");
+                    tbSpecRefRegExp.Text = reader.GetString("specter_reference_regexp");
+                    cboxInstanceStatus.SelectedValue = reader.GetInt32("instance_status_id");
+                    tbComment.Text = reader.GetString("comment");
+                    p["create_date"] = reader.GetDateTime("create_date");
+                    p["created_by"] = reader.GetString("created_by");
+                    p["update_date"] = reader.GetDateTime("update_date");
+                    p["updated_by"] = reader.GetString("updated_by");
                 }
             }
         }

@@ -75,13 +75,13 @@ namespace DSA_lims
                         throw new Exception("County with ID " + p["id"] + " was not found");
 
                     reader.Read();
-                    tbName.Text = reader["name"].ToString();
-                    tbNumber.Text = reader["county_number"].ToString();
-                    cboxInstanceStatus.SelectedValue = reader["instance_status_id"];
-                    p["create_date"] = reader["create_date"];
-                    p["created_by"] = reader["created_by"];
-                    p["update_date"] = reader["update_date"];
-                    p["updated_by"] = reader["updated_by"];
+                    tbName.Text = reader.GetString("name");
+                    tbNumber.Text = reader.GetString("county_number");
+                    cboxInstanceStatus.SelectedValue = reader.GetInt32("instance_status_id");
+                    p["create_date"] = reader.GetDateTime("create_date");
+                    p["created_by"] = reader.GetString("created_by");
+                    p["update_date"] = reader.GetDateTime("update_date");
+                    p["updated_by"] = reader.GetString("updated_by");
                 }
             }
         }

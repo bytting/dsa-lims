@@ -1824,9 +1824,10 @@ namespace DSA_lims
                     new SqlParameter("@id", stationId)))
                 {
                     reader.Read();
-                    tbSampleInfoLatitude.Text = reader["latitude"].ToString();
-                    tbSampleInfoLongitude.Text = reader["longitude"].ToString();
-                    tbSampleInfoAltitude.Text = reader["altitude"].ToString();
+
+                    tbSampleInfoLatitude.Text = reader.GetDouble("latitude").ToString();
+                    tbSampleInfoLongitude.Text = reader.GetDouble("longitude").ToString();
+                    tbSampleInfoAltitude.Text = reader.GetDouble("altitude").ToString();
                 }
             }                
         }
@@ -2429,7 +2430,10 @@ namespace DSA_lims
             }
 
             if (gridTypeRelPrepMeth.SelectedRows.Count < 1)
-                return;
+            {
+                MessageBox.Show("You must select a preparation method first");
+                return;                
+            }
 
             DataGridViewRow row = gridTypeRelPrepMeth.SelectedRows[0];
             Guid pmid = Guid.Parse(row.Cells["id"].Value.ToString());
@@ -2459,6 +2463,9 @@ namespace DSA_lims
                 MessageBox.Show("You don't have access to manage preparation methods");
                 return;
             }
+
+            // FIXME: Not implemented
+            MessageBox.Show("Not implemented");
         }
 
         private void miAnalysisMethodsNew_Click(object sender, EventArgs e)
@@ -2496,7 +2503,10 @@ namespace DSA_lims
             }
 
             if (gridTypeRelAnalMeth.SelectedRows.Count < 1)
+            {
+                MessageBox.Show("You must select a analysis method first");
                 return;
+            }
 
             DataGridViewRow row = gridTypeRelAnalMeth.SelectedRows[0];
             Guid amid = Guid.Parse(row.Cells["id"].Value.ToString());
@@ -2526,6 +2536,9 @@ namespace DSA_lims
                 MessageBox.Show("You don't have access to manage analysis methods");
                 return;
             }
+
+            // FIXME: Not implemented
+            MessageBox.Show("Not implemented");
         }
 
         private void miAddPrepMethToSampType_Click(object sender, EventArgs e)
@@ -2570,7 +2583,7 @@ namespace DSA_lims
             {
                 SqlCommand cmd = new SqlCommand("csp_select_preparation_methods_for_sample_type_short", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@sample_type_id", DB.MakeParam(typeof(Guid), sampleTypeId));
+                cmd.Parameters.AddWithValue("@sample_type_id", sampleTypeId, Guid.Empty);
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())                    
@@ -2585,7 +2598,7 @@ namespace DSA_lims
                         sampleTypeId = Guid.Parse(tnode.Name);
 
                         cmd.Parameters.Clear();
-                        cmd.Parameters.AddWithValue("@sample_type_id", DB.MakeParam(typeof(Guid), sampleTypeId));
+                        cmd.Parameters.AddWithValue("@sample_type_id", sampleTypeId, Guid.Empty);
                         using (SqlDataReader reader = cmd.ExecuteReader())
                         {
                             while (reader.Read())
@@ -2796,6 +2809,35 @@ namespace DSA_lims
             {
                 MessageBox.Show("You don't have access to manage preparation methods");
                 return;
+            }
+
+            if(gridTypeRelPrepMeth.SelectedRows.Count < 1)
+            {
+                MessageBox.Show("You must select a preparation method first");
+                return;
+            }
+
+            if(lbTypRelPrepMethAnalMeth.SelectedItems.Count < 1)
+            {
+                MessageBox.Show("You must select one or more analysis methods first");
+                return;
+            }
+
+            Guid pmid = Guid.Parse(gridTypeRelPrepMeth.SelectedRows[0].Cells["id"].Value.ToString());            
+
+            using(SqlConnection conn = DB.OpenConnection())
+            {
+                SqlCommand cmd = new SqlCommand("delete from preparation_method_x_analysis_method where preparation_method_id = @pmid and analysis_method_id = @amid", conn);
+
+                foreach (Lemma<Guid, string> l in lbTypRelPrepMethAnalMeth.SelectedItems)
+                {
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.AddWithValue("@pmid", pmid);
+                    cmd.Parameters.AddWithValue("@amid", l.Id);
+                    cmd.ExecuteNonQuery();
+                }                                
+
+                UI.PopulatePrepMethAnalMeths(conn, pmid, lbTypRelPrepMethAnalMeth);
             }
         }                        
 
@@ -4534,32 +4576,32 @@ namespace DSA_lims
                 if (Utils.IsValidGuid(cboxSamplesProjects.SelectedValue))
                 {
                     query += " and pm.id = @project_id";
-                    adapter.SelectCommand.Parameters.AddWithValue("@project_id", DB.MakeParam(typeof(Guid), cboxSamplesProjects.SelectedValue));
+                    adapter.SelectCommand.Parameters.AddWithValue("@project_id", cboxSamplesProjects.SelectedValue, Guid.Empty);
                 }
 
                 if (Utils.IsValidGuid(cboxSamplesProjectsSub.SelectedValue))
                 {
                     query += " and ps.id = @project_sub_id";
-                    adapter.SelectCommand.Parameters.AddWithValue("@project_sub_id", DB.MakeParam(typeof(Guid), cboxSamplesProjectsSub.SelectedValue));
+                    adapter.SelectCommand.Parameters.AddWithValue("@project_sub_id", cboxSamplesProjectsSub.SelectedValue, Guid.Empty);
                 }
 
                 if (Utils.IsValidGuid(cboxSamplesOrders.SelectedValue))
                 {
                     query += " and a.id = @assignment_id";
-                    adapter.SelectCommand.Parameters.AddWithValue("@assignment_id", DB.MakeParam(typeof(Guid), cboxSamplesOrders.SelectedValue));
+                    adapter.SelectCommand.Parameters.AddWithValue("@assignment_id", cboxSamplesOrders.SelectedValue, Guid.Empty);
                 }
 
                 if (Utils.IsValidGuid(cboxSamplesLaboratory.SelectedValue))
                 {
                     query += " and l.id = @lab_id";
-                    adapter.SelectCommand.Parameters.AddWithValue("@lab_id", DB.MakeParam(typeof(Guid), cboxSamplesLaboratory.SelectedValue));
+                    adapter.SelectCommand.Parameters.AddWithValue("@lab_id", cboxSamplesLaboratory.SelectedValue, Guid.Empty);
                 }
 
                 query += " order by s.number desc";
                 
                 adapter.SelectCommand.CommandText = query;
                 adapter.SelectCommand.CommandType = CommandType.Text;
-                adapter.SelectCommand.Parameters.AddWithValue("@instance_status_level", DB.MakeParam(typeof(int), cboxSamplesStatus.SelectedValue));
+                adapter.SelectCommand.Parameters.AddWithValue("@instance_status_level", cboxSamplesStatus.SelectedValue);
                 DataTable dt = new DataTable();
                 adapter.Fill(dt);
                 gridSamples.DataSource = dt;
@@ -4713,7 +4755,7 @@ where s.number = @sample_number
                 if (Utils.IsValidGuid(cboxOrdersLaboratory.SelectedValue))
                 {
                     query += " and l.id = @laboratory_id";
-                    adapter.SelectCommand.Parameters.AddWithValue("@laboratory_id", DB.MakeParam(typeof(Guid), cboxOrdersLaboratory.SelectedValue));
+                    adapter.SelectCommand.Parameters.AddWithValue("@laboratory_id", cboxOrdersLaboratory.SelectedValue, Guid.Empty);
                 }
 
                 if (!String.IsNullOrEmpty(cboxOrdersYear.Text))

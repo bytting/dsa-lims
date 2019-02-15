@@ -96,9 +96,9 @@ namespace DSA_lims
                     cmd.Parameters.AddWithValue("@id", newAnalId);
                     cmd.Parameters.AddWithValue("@number", nextAnalNumber++);
                     cmd.Parameters.AddWithValue("@assignment_id", DBNull.Value);
-                    cmd.Parameters.AddWithValue("@laboratory_id", Common.LabId);
+                    cmd.Parameters.AddWithValue("@laboratory_id", Common.LabId, Guid.Empty);
                     cmd.Parameters.AddWithValue("@preparation_id", PrepId);
-                    cmd.Parameters.AddWithValue("@analysis_method_id", DB.MakeParam(typeof(Guid), cboxAnalMethods.SelectedValue));
+                    cmd.Parameters.AddWithValue("@analysis_method_id", cboxAnalMethods.SelectedValue, Guid.Empty);
                     cmd.Parameters.AddWithValue("@workflow_status_id", 1);
                     cmd.Parameters.AddWithValue("@specter_reference", DBNull.Value);
                     cmd.Parameters.AddWithValue("@activity_unit_id", DBNull.Value);
@@ -110,9 +110,9 @@ namespace DSA_lims
                     cmd.Parameters.AddWithValue("@instance_status_id", InstanceStatus.Active);
                     cmd.Parameters.AddWithValue("@comment", DBNull.Value);
                     cmd.Parameters.AddWithValue("@create_date", DateTime.Now);
-                    cmd.Parameters.AddWithValue("@created_by", Common.Username);
+                    cmd.Parameters.AddWithValue("@created_by", Common.Username, String.Empty);
                     cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
-                    cmd.Parameters.AddWithValue("@updated_by", Common.Username);
+                    cmd.Parameters.AddWithValue("@updated_by", Common.Username, String.Empty);
 
                     cmd.ExecuteNonQuery();
                     count--;

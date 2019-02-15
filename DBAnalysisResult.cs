@@ -118,19 +118,19 @@ namespace DSA_lims
                 Id = reader.GetGuid("id");
                 AnalysisId = reader.GetGuid("analysis_id");
                 NuclideId = reader.GetGuid("nuclide_id");
-                Activity = reader.GetDouble("activity");
-                ActivityUncertaintyABS = reader.GetDouble("activity_uncertainty_abs");
+                Activity = reader.GetDoubleNullable("activity");
+                ActivityUncertaintyABS = reader.GetDoubleNullable("activity_uncertainty_abs");
                 ActivityApproved = reader.GetBoolean("activity_approved");
                 //UniformActivity = Convert.ToDouble(reader["uniform_activity"]);
                 //UniformActivityUnitId = Convert.ToInt32(reader["uniform_activity_unit_id"]);
-                DetectionLimit = reader.GetDouble("detection_limit");
+                DetectionLimit = reader.GetDoubleNullable("detection_limit");
                 DetectionLimitApproved = reader.GetBoolean("detection_limit_approved");
                 Accredited = reader.GetBoolean("accredited");
                 Reportable = reader.GetBoolean("reportable");
-                InstanceStatusId = reader.GetInt32("instance_status_id");
-                CreateDate = reader.GetDateTime("create_date");
+                InstanceStatusId = reader.GetInt32Nullable("instance_status_id");
+                CreateDate = reader.GetDateTimeNullable("create_date");
                 CreatedBy = reader.GetString("created_by");
-                UpdateDate = reader.GetDateTime("update_date");
+                UpdateDate = reader.GetDateTimeNullable("update_date");
                 UpdatedBy = reader.GetString("updated_by");
             }
 

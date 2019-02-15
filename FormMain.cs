@@ -230,9 +230,9 @@ namespace DSA_lims
 
                     cboxSampleInstanceStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status");
 
-                    cboxPrepAnalPrepAmountUnit.DataSource = DB.GetIntLemmata(conn, null, "csp_select_preparation_units", true);
+                    cboxPrepAnalPrepAmountUnit.DataSource = DB.GetIntLemmata(conn, null, "csp_select_preparation_units");
 
-                    cboxPrepAnalPrepQuantityUnit.DataSource = DB.GetIntLemmata(conn, null, "csp_select_quantity_units", true);
+                    cboxPrepAnalPrepQuantityUnit.DataSource = DB.GetIntLemmata(conn, null, "csp_select_quantity_units");
 
                     cboxPrepAnalAnalWorkflowStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_workflow_status");
 
@@ -240,7 +240,7 @@ namespace DSA_lims
 
                     cboxOrderStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_workflow_status");
 
-                    cboxSampleInfoLocationTypes.DataSource = DB.GetIntLemmata(conn, null, "csp_select_location_types", true);
+                    cboxSampleInfoLocationTypes.DataSource = DB.GetIntLemmata(conn, null, "csp_select_location_types");
 
                     cboxOrderRequestedSigma.DataSource = DB.GetSigmaValues(conn);
                     cboxOrderRequestedSigmaMDA.DataSource = DB.GetSigmaMDAValues(conn);
@@ -1989,8 +1989,8 @@ namespace DSA_lims
             }   
             else
             {
-                tbSampleSamplingDateFrom.Tag = s.SamplingDateFrom;
-                tbSampleSamplingDateFrom.Text = s.SamplingDateFrom.ToString(Utils.DateTimeFormatNorwegian);                
+                tbSampleSamplingDateFrom.Tag = s.SamplingDateFrom.Value;
+                tbSampleSamplingDateFrom.Text = s.SamplingDateFrom.Value.ToString(Utils.DateTimeFormatNorwegian);                
             }            
 
             if (s.SamplingDateTo == DateTime.MinValue)
@@ -2000,8 +2000,8 @@ namespace DSA_lims
             }
             else
             {
-                tbSampleSamplingDateTo.Tag = s.SamplingDateTo;
-                tbSampleSamplingDateTo.Text = s.SamplingDateTo.ToString(Utils.DateTimeFormatNorwegian);                
+                tbSampleSamplingDateTo.Tag = s.SamplingDateTo.Value;
+                tbSampleSamplingDateTo.Text = s.SamplingDateTo.Value.ToString(Utils.DateTimeFormatNorwegian);                
             }
 
             if (s.ReferenceDate == DateTime.MinValue)
@@ -2011,8 +2011,8 @@ namespace DSA_lims
             }
             else
             {
-                tbSampleReferenceDate.Tag = s.ReferenceDate;
-                tbSampleReferenceDate.Text = s.ReferenceDate.ToString(Utils.DateTimeFormatNorwegian);                
+                tbSampleReferenceDate.Tag = s.ReferenceDate.Value;
+                tbSampleReferenceDate.Text = s.ReferenceDate.Value.ToString(Utils.DateTimeFormatNorwegian);                
             }
 
             tbSampleSamplingDateFrom.TextChanged += tbSampleSamplingDateFrom_TextChanged;
@@ -2861,9 +2861,9 @@ namespace DSA_lims
         {
             tbOrderName.Text = a.Name;
             cboxOrderLaboratory.SelectedValue = a.LaboratoryId;
-            cboxOrderResponsible.SelectedValue = a.AccountId;
+            cboxOrderResponsible.SelectedValue = a.AccountId;            
             tbOrderDeadline.Tag = a.Deadline;
-            tbOrderDeadline.Text = a.Deadline.ToString(Utils.DateFormatNorwegian);            
+            tbOrderDeadline.Text = a.Deadline.ToString();
             cboxOrderRequestedSigma.SelectedValue = a.RequestedSigmaAct;
             cboxOrderRequestedSigmaMDA.SelectedValue = a.RequestedSigmaMDA;
             tbOrderCustomer.Text = a.CustomerContactName;
@@ -3536,6 +3536,12 @@ namespace DSA_lims
 
         private void btnSampleUpdate_Click(object sender, EventArgs e)
         {
+            if (!sample.IsDirty())
+            {
+                SetStatusMessage("Nothing to save for sample " + sample.Number);
+                return;
+            }
+
             if (!Utils.IsValidGuid(cboxSampleLaboratory.SelectedValue))
             {
                 MessageBox.Show("Laboratory is mandatory");
@@ -3674,13 +3680,13 @@ namespace DSA_lims
                 }
 
                 preparation.PreparationGeometryId = pgid;
-                preparation.FillHeightMM = String.IsNullOrEmpty(tbPrepAnalPrepFillHeight.Text) ? 0d : Convert.ToDouble(tbPrepAnalPrepFillHeight.Text);
-                preparation.Amount = String.IsNullOrEmpty(tbPrepAnalPrepAmount.Text) ? 0d : Convert.ToDouble(tbPrepAnalPrepAmount.Text);
-                preparation.PrepUnitId = Convert.ToInt32(cboxPrepAnalPrepAmountUnit.SelectedValue);
-                preparation.Quantity = String.IsNullOrEmpty(tbPrepAnalPrepQuantity.Text) ? 0d : Convert.ToDouble(tbPrepAnalPrepQuantity.Text);
-                preparation.QuantityUnitId = Convert.ToInt32(cboxPrepAnalPrepQuantityUnit.SelectedValue);
+                preparation.FillHeightMM = Utils.ToDouble(tbPrepAnalPrepFillHeight.Text);
+                preparation.Amount = Utils.ToDouble(tbPrepAnalPrepAmount.Text);
+                preparation.PrepUnitId = Utils.ToInt32(cboxPrepAnalPrepAmountUnit.SelectedValue);
+                preparation.Quantity = Utils.ToDouble(tbPrepAnalPrepQuantity.Text);
+                preparation.QuantityUnitId = Utils.ToInt32(cboxPrepAnalPrepQuantityUnit.SelectedValue);
                 preparation.Comment = tbPrepAnalPrepComment.Text.Trim();
-                preparation.WorkflowStatusId = Convert.ToInt32(cboxPrepAnalPrepWorkflowStatus.SelectedValue);
+                preparation.WorkflowStatusId = Utils.ToInt32(cboxPrepAnalPrepWorkflowStatus.SelectedValue);
 
                 preparation.StoreToDB(conn, trans);
 
@@ -3705,11 +3711,15 @@ namespace DSA_lims
         {
             lblPrepAnalPrepRange.Text = "";
             cboxPrepAnalPrepGeom.SelectedValue = p.PreparationGeometryId;
-            tbPrepAnalPrepFillHeight.Text = p.FillHeightMM == 0d ? "" : p.FillHeightMM.ToString();
-            tbPrepAnalPrepAmount.Text = p.Amount == 0d ? "" : p.Amount.ToString();
-            cboxPrepAnalPrepAmountUnit.SelectedValue = p.PrepUnitId;
-            tbPrepAnalPrepQuantity.Text = p.Quantity == 0d ? "" : p.Quantity.ToString();
-            cboxPrepAnalPrepQuantityUnit.SelectedValue = p.QuantityUnitId;
+            tbPrepAnalPrepFillHeight.Text = p.FillHeightMM.ToString();
+            tbPrepAnalPrepAmount.Text = p.Amount.ToString();
+            if (p.PrepUnitId == null)
+                cboxPrepAnalPrepAmountUnit.SelectedIndex = -1;
+            else cboxPrepAnalPrepAmountUnit.SelectedValue = p.PrepUnitId;
+            tbPrepAnalPrepQuantity.Text = p.Quantity.ToString();
+            if(p.QuantityUnitId == null)
+                cboxPrepAnalPrepQuantityUnit.SelectedIndex = -1;
+            else cboxPrepAnalPrepQuantityUnit.SelectedValue = p.QuantityUnitId;
             tbPrepAnalPrepComment.Text = p.Comment;
             cboxPrepAnalPrepWorkflowStatus.SelectedValue = p.WorkflowStatusId;
             tbPrepAnalPrepReqUnit.Text = p.GetRequestedActivityUnitName(conn, trans);
@@ -3768,7 +3778,7 @@ namespace DSA_lims
                 analysis.ActivityUnitTypeId = Guid.Parse(cboxPrepAnalAnalUnitType.SelectedValue.ToString());
                 analysis.SpecterReference = tbPrepAnalAnalSpecRef.Text;
                 analysis.Comment = tbPrepAnalAnalComment.Text;
-                analysis.WorkflowStatusId = Convert.ToInt32(cboxPrepAnalAnalWorkflowStatus.SelectedValue);                
+                analysis.WorkflowStatusId = Utils.ToInt32(cboxPrepAnalAnalWorkflowStatus.SelectedValue);                
 
                 analysis.StoreToDB(conn, trans);
 
@@ -3818,17 +3828,13 @@ namespace DSA_lims
 
         private void btnPrepAnalSampleUpdate_Click(object sender, EventArgs e)
         {
-            double lodStart = -1, lodEnd = -1;
-
-            if (!String.IsNullOrEmpty(tbPrepAnalLODStartWeight.Text) && !String.IsNullOrEmpty(tbPrepAnalLODEndWeight.Text))
+            double? lodStart = Utils.ToDouble(tbPrepAnalLODStartWeight.Text);
+            double? lodEnd = Utils.ToDouble(tbPrepAnalLODEndWeight.Text);
+                            
+            if (lodStart != null && lodEnd != null && lodStart < lodEnd)
             {
-                lodStart = Convert.ToDouble(tbPrepAnalLODStartWeight.Text);
-                lodEnd = Convert.ToDouble(tbPrepAnalLODEndWeight.Text);
-                if (lodStart < lodEnd)
-                {
-                    MessageBox.Show("LOD start weight cannot be smaller than end weight");
-                    return;
-                }
+                MessageBox.Show("LOD start weight cannot be smaller than end weight");
+                return;
             }
 
             SqlConnection conn = null;
@@ -3843,18 +3849,10 @@ namespace DSA_lims
                     return;
                 }
 
-                if (!String.IsNullOrEmpty(tbPrepAnalWetWeight.Text))
-                    sample.WetWeight_g = Convert.ToDouble(tbPrepAnalWetWeight.Text);
-
-                if (!String.IsNullOrEmpty(tbPrepAnalDryWeight.Text))
-                    sample.DryWeight_g = Convert.ToDouble(tbPrepAnalDryWeight.Text);
-
-                if (!String.IsNullOrEmpty(tbPrepAnalVolume.Text))
-                    sample.Volume_l = Convert.ToDouble(tbPrepAnalVolume.Text);
-
-                if (!String.IsNullOrEmpty(tbPrepAnalLODTemp.Text))
-                    sample.LodTemperature = Convert.ToDouble(tbPrepAnalLODTemp.Text);
-
+                sample.WetWeight_g = Utils.ToDouble(tbPrepAnalWetWeight.Text);
+                sample.DryWeight_g = Utils.ToDouble(tbPrepAnalDryWeight.Text);
+                sample.Volume_l = Utils.ToDouble(tbPrepAnalVolume.Text);
+                sample.LodTemperature = Utils.ToDouble(tbPrepAnalLODTemp.Text);
                 sample.LodWeightStart = lodStart;
                 sample.LodWeightEnd = lodEnd;                
 
@@ -3878,7 +3876,7 @@ namespace DSA_lims
             tnode.ToolTipText = "Component: " + sample.GetSampleComponentName(conn, trans) + Environment.NewLine
                 + "External Id: " + sample.ExternalId + Environment.NewLine
                 + "Project: " + sample.GetProjectName(conn, trans) + Environment.NewLine
-                + "Reference date: " + sample.ReferenceDate.ToString(Utils.DateTimeFormatNorwegian);
+                + "Reference date: " + sample.ReferenceDate.Value.ToString(Utils.DateTimeFormatNorwegian);
             
             tbPrepAnalInfoComment.Text = s.Comment;
             tbPrepAnalWetWeight.Text = s.WetWeight_g.ToString();

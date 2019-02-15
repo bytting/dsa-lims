@@ -51,9 +51,12 @@ namespace DSA_lims
         public const int Complete = 2;
         public const int Rejected = 3;
 
-        public static Color GetStatusColor(int status)
+        public static Color GetStatusColor(int? status)
         {
-            switch(status)
+            if(status == null)
+                return SystemColors.ControlText;
+
+            switch (status)
             {
                 case Construction:
                     return Color.Firebrick;

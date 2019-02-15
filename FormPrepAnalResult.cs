@@ -80,12 +80,12 @@ namespace DSA_lims
                 cboxSigmaActivity.DataSource = DB.GetSigmaValues(conn);
                 cboxSigmaMDA.DataSource = DB.GetSigmaMDAValues(conn);                
             }
-
+            
             cboxSigmaActivity.SelectedValue = mAnalysis.SigmaActivity;
             cboxSigmaActivity.Enabled = false;
             cboxSigmaMDA.SelectedValue = mAnalysis.SigmaMDA;
             cboxSigmaMDA.Enabled = false;
-
+            
             tbActivity.Text = mResult.Activity.ToString(Utils.ScientificFormat);
             tbUncertainty.Text = mResult.ActivityUncertaintyABS.ToString(Utils.ScientificFormat);
             cbActivityApproved.Checked = mResult.ActivityApproved;
@@ -134,6 +134,19 @@ namespace DSA_lims
             }
 
             bool approved = cbActivityApproved.Checked || cbDetectionLimitApproved.Checked;
+
+            if(approved)
+            {
+                using (SqlConnection conn = DB.OpenConnection())
+                {
+                    if (!DB.CanUserApproveAnalysis(conn, null, Common.UserId, mAnalysis.AnalysisMethodId))
+                    {
+                        MessageBox.Show("You are not allowed to approve results for this analysis method");
+                        return;
+                    }
+                }
+            }
+
             if (!approved && (cbAccredited.Checked || cbReportable.Checked))
             {                
                 MessageBox.Show("Activity or MDA must be approved before setting accredited and reportable");

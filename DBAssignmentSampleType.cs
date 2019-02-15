@@ -40,14 +40,14 @@ namespace DSA_lims
         public Guid AssignmentId { get; set; }
         public Guid SampleTypeId { get; set; }
         public Guid SampleComponentId { get; set; }
-        public int SampleCount { get; set; }
+        public int? SampleCount { get; set; }
         public Guid RequestedActivityUnitId { get; set; }
         public Guid RequestedActivityUnitTypeId { get; set; }
         public bool ReturnToSender { get; set; }
         public string Comment { get; set; }
-        public DateTime CreateDate { get; set; }
+        public DateTime? CreateDate { get; set; }
         public string CreatedBy { get; set; }
-        public DateTime UpdateDate { get; set; }
+        public DateTime? UpdateDate { get; set; }
         public string UpdatedBy { get; set; }
 
         public List<AssignmentPreparationMethod> PreparationMethods { get; set; }
@@ -75,14 +75,17 @@ namespace DSA_lims
 
         public string SampleTypeName(SqlConnection conn, SqlTransaction trans)
         {
+            if (SampleTypeId == null)
+                return "";
+
             object o = DB.GetScalar(conn, trans, "select name from sample_type where id = @sid", CommandType.Text, new SqlParameter("@sid", SampleTypeId));
-            return o == null || o == DBNull.Value ? "" : o.ToString();
+            return !DB.IsValidField(o) ? "" : o.ToString();
         }
 
         public string SampleComponentName(SqlConnection conn, SqlTransaction trans)
         {
             object o = DB.GetScalar(conn, trans, "select name from sample_component where id = @scid", CommandType.Text, new SqlParameter("@scid", SampleComponentId));
-            return o == null || o == DBNull.Value ? "" : o.ToString();
+            return !DB.IsValidField(o) ? "" : o.ToString();
         }
 
         public static string ToJSON(SqlConnection conn, SqlTransaction trans, Guid astId)
@@ -127,18 +130,18 @@ namespace DSA_lims
                 cmd.CommandText = "csp_insert_assignment_sample_type";
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@id", Id);                
-                cmd.Parameters.AddWithValue("@assignment_id", DB.MakeParam(typeof(Guid), AssignmentId));
-                cmd.Parameters.AddWithValue("@sample_type_id", DB.MakeParam(typeof(Guid), SampleTypeId));
-                cmd.Parameters.AddWithValue("@sample_component_id", DB.MakeParam(typeof(Guid), SampleComponentId));
-                cmd.Parameters.AddWithValue("@sample_count", DB.MakeParam(typeof(int), SampleCount));
-                cmd.Parameters.AddWithValue("@requested_activity_unit_id", DB.MakeParam(typeof(Guid), RequestedActivityUnitId));
-                cmd.Parameters.AddWithValue("@requested_activity_unit_type_id", DB.MakeParam(typeof(Guid), RequestedActivityUnitTypeId));
-                cmd.Parameters.AddWithValue("@return_to_sender", DB.MakeParam(typeof(bool), ReturnToSender));
-                cmd.Parameters.AddWithValue("@comment", DB.MakeParam(typeof(String), Comment));                
+                cmd.Parameters.AddWithValue("@assignment_id", AssignmentId, Guid.Empty);
+                cmd.Parameters.AddWithValue("@sample_type_id", SampleTypeId, Guid.Empty);
+                cmd.Parameters.AddWithValue("@sample_component_id", SampleComponentId, Guid.Empty);
+                cmd.Parameters.AddWithValue("@sample_count", SampleCount, null);
+                cmd.Parameters.AddWithValue("@requested_activity_unit_id", RequestedActivityUnitId, Guid.Empty);
+                cmd.Parameters.AddWithValue("@requested_activity_unit_type_id", RequestedActivityUnitTypeId, Guid.Empty);
+                cmd.Parameters.AddWithValue("@return_to_sender", ReturnToSender, null);
+                cmd.Parameters.AddWithValue("@comment", Comment, String.Empty);                
                 cmd.Parameters.AddWithValue("@create_date", DateTime.Now);
-                cmd.Parameters.AddWithValue("@created_by", Common.Username);
+                cmd.Parameters.AddWithValue("@created_by", Common.Username, String.Empty);
                 cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
-                cmd.Parameters.AddWithValue("@updated_by", Common.Username);
+                cmd.Parameters.AddWithValue("@updated_by", Common.Username, String.Empty);
 
                 cmd.ExecuteNonQuery();
 
@@ -156,16 +159,16 @@ namespace DSA_lims
                     cmd.CommandText = "csp_update_assignment_sample_type";
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@id", Id);
-                    cmd.Parameters.AddWithValue("@assignment_id", DB.MakeParam(typeof(Guid), AssignmentId));
-                    cmd.Parameters.AddWithValue("@sample_type_id", DB.MakeParam(typeof(Guid), SampleTypeId));
-                    cmd.Parameters.AddWithValue("@sample_component_id", DB.MakeParam(typeof(Guid), SampleComponentId));
-                    cmd.Parameters.AddWithValue("@sample_count", DB.MakeParam(typeof(int), SampleCount));
-                    cmd.Parameters.AddWithValue("@requested_activity_unit_id", DB.MakeParam(typeof(Guid), RequestedActivityUnitId));
-                    cmd.Parameters.AddWithValue("@requested_activity_unit_type_id", DB.MakeParam(typeof(Guid), RequestedActivityUnitTypeId));
-                    cmd.Parameters.AddWithValue("@return_to_sender", DB.MakeParam(typeof(bool), ReturnToSender));
-                    cmd.Parameters.AddWithValue("@comment", DB.MakeParam(typeof(String), Comment));
+                    cmd.Parameters.AddWithValue("@assignment_id", AssignmentId, Guid.Empty);
+                    cmd.Parameters.AddWithValue("@sample_type_id", SampleTypeId, Guid.Empty);
+                    cmd.Parameters.AddWithValue("@sample_component_id", SampleComponentId, Guid.Empty);
+                    cmd.Parameters.AddWithValue("@sample_count", SampleCount, null);
+                    cmd.Parameters.AddWithValue("@requested_activity_unit_id", RequestedActivityUnitId, Guid.Empty);
+                    cmd.Parameters.AddWithValue("@requested_activity_unit_type_id", RequestedActivityUnitTypeId, Guid.Empty);
+                    cmd.Parameters.AddWithValue("@return_to_sender", ReturnToSender, null);
+                    cmd.Parameters.AddWithValue("@comment", Comment, String.Empty);
                     cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
-                    cmd.Parameters.AddWithValue("@updated_by", Common.Username);
+                    cmd.Parameters.AddWithValue("@updated_by", Common.Username, String.Empty);
 
                     cmd.ExecuteNonQuery();
 
@@ -221,25 +224,19 @@ namespace DSA_lims
                 
                 reader.Read();
                                      
-                Id = Guid.Parse(reader["id"].ToString());
-                AssignmentId = Guid.Parse(reader["assignment_id"].ToString());
-                SampleTypeId = Guid.Parse(reader["sample_type_id"].ToString());
-                if (DB.IsValidField(reader["sample_component_id"]))
-                    SampleComponentId = Guid.Parse(reader["sample_component_id"].ToString());
-                else SampleComponentId = Guid.Empty;
-                SampleCount = Convert.ToInt32(reader["sample_count"]);
-                if (DB.IsValidField(reader["requested_activity_unit_id"]))
-                    RequestedActivityUnitId = Guid.Parse(reader["requested_activity_unit_id"].ToString());
-                else RequestedActivityUnitId = Guid.Empty;
-                if (DB.IsValidField(reader["requested_activity_unit_type_id"]))
-                    RequestedActivityUnitTypeId = Guid.Parse(reader["requested_activity_unit_type_id"].ToString());
-                else RequestedActivityUnitTypeId = Guid.Empty;
-                ReturnToSender = Convert.ToBoolean(reader["return_to_sender"]);
-                Comment = reader["comment"].ToString();
-                CreateDate = Convert.ToDateTime(reader["create_date"]);
-                CreatedBy = reader["created_by"].ToString();
-                UpdateDate = Convert.ToDateTime(reader["update_date"]);
-                UpdatedBy = reader["updated_by"].ToString();
+                Id = reader.GetGuid("id");
+                AssignmentId = reader.GetGuid("assignment_id");
+                SampleTypeId = reader.GetGuid("sample_type_id");                
+                SampleComponentId = reader.GetGuid("sample_component_id");                
+                SampleCount = reader.GetInt32("sample_count");                
+                RequestedActivityUnitId = reader.GetGuid("requested_activity_unit_id");                                
+                RequestedActivityUnitTypeId = reader.GetGuid("requested_activity_unit_type_id");                
+                ReturnToSender = reader.GetBoolean("return_to_sender");
+                Comment = reader.GetString("comment");
+                CreateDate = reader.GetDateTime("create_date");
+                CreatedBy = reader.GetString("created_by");
+                UpdateDate = reader.GetDateTime("update_date");
+                UpdatedBy = reader.GetString("updated_by");
                 Dirty = false;
             }
 

@@ -39,12 +39,12 @@ namespace DSA_lims
         public Guid Id { get; set; }
         public Guid AssignmentSampleTypeId { get; set; }
         public Guid PreparationMethodId { get; set; }
-        public int PreparationMethodCount { get; set; }
+        public int? PreparationMethodCount { get; set; }
         public Guid PreparationLaboratoryId { get; set; }
         public string Comment { get; set; }
-        public DateTime CreateDate { get; set; }
+        public DateTime? CreateDate { get; set; }
         public string CreatedBy { get; set; }
-        public DateTime UpdateDate { get; set; }
+        public DateTime? UpdateDate { get; set; }
         public string UpdatedBy { get; set; }
 
         public List<AssignmentAnalysisMethod> AnalysisMethods { get; set; }
@@ -73,19 +73,19 @@ namespace DSA_lims
         public string PreparationMethodName(SqlConnection conn, SqlTransaction trans)
         {
             object o = DB.GetScalar(conn, trans, "select name_short from preparation_method where id = @pmid", CommandType.Text, new SqlParameter("@pmid", PreparationMethodId));
-            return o == null || o == DBNull.Value ? "" : o.ToString();
+            return !DB.IsValidField(o) ? "" : o.ToString();
         }
 
         public string PreparationMethodNameFull(SqlConnection conn, SqlTransaction trans)
         {
             object o = DB.GetScalar(conn, trans, "select name from preparation_method where id = @pmid", CommandType.Text, new SqlParameter("@pmid", PreparationMethodId));
-            return o == null || o == DBNull.Value ? "" : o.ToString();
+            return !DB.IsValidField(o) ? "" : o.ToString();
         }
 
         public string PreparationLaboratoryName(SqlConnection conn, SqlTransaction trans)
         {
             object o = DB.GetScalar(conn, trans, "select name from laboratory where id = @lid", CommandType.Text, new SqlParameter("@lid", PreparationLaboratoryId));
-            return o == null || o == DBNull.Value ? "" : o.ToString();
+            return !DB.IsValidField(o) ? "" : o.ToString();
         }
 
         public static string ToJSON(SqlConnection conn, SqlTransaction trans, Guid apmId)
@@ -130,15 +130,15 @@ namespace DSA_lims
                 cmd.CommandText = "csp_insert_assignment_preparation_method";
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@id", Id);
-                cmd.Parameters.AddWithValue("@assignment_sample_type_id", DB.MakeParam(typeof(Guid), AssignmentSampleTypeId));
-                cmd.Parameters.AddWithValue("@preparation_method_id", DB.MakeParam(typeof(Guid), PreparationMethodId));
-                cmd.Parameters.AddWithValue("@preparation_method_count", DB.MakeParam(typeof(int), PreparationMethodCount));
-                cmd.Parameters.AddWithValue("@preparation_laboratory_id", DB.MakeParam(typeof(Guid), PreparationLaboratoryId));                
-                cmd.Parameters.AddWithValue("@comment", DB.MakeParam(typeof(String), Comment));
+                cmd.Parameters.AddWithValue("@assignment_sample_type_id", AssignmentSampleTypeId, Guid.Empty);
+                cmd.Parameters.AddWithValue("@preparation_method_id", PreparationMethodId, Guid.Empty);
+                cmd.Parameters.AddWithValue("@preparation_method_count", PreparationMethodCount, null);
+                cmd.Parameters.AddWithValue("@preparation_laboratory_id", PreparationLaboratoryId, Guid.Empty);                
+                cmd.Parameters.AddWithValue("@comment", Comment, String.Empty);
                 cmd.Parameters.AddWithValue("@create_date", DateTime.Now);
-                cmd.Parameters.AddWithValue("@created_by", Common.Username);
+                cmd.Parameters.AddWithValue("@created_by", Common.Username, String.Empty);
                 cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
-                cmd.Parameters.AddWithValue("@updated_by", Common.Username);
+                cmd.Parameters.AddWithValue("@updated_by", Common.Username, String.Empty);
 
                 cmd.ExecuteNonQuery();
 
@@ -156,13 +156,13 @@ namespace DSA_lims
                     cmd.CommandText = "csp_update_assignment_preparation_method";
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@id", Id);
-                    cmd.Parameters.AddWithValue("@assignment_sample_type_id", DB.MakeParam(typeof(Guid), AssignmentSampleTypeId));
-                    cmd.Parameters.AddWithValue("@preparation_method_id", DB.MakeParam(typeof(Guid), PreparationMethodId));
-                    cmd.Parameters.AddWithValue("@preparation_method_count", DB.MakeParam(typeof(int), PreparationMethodCount));
-                    cmd.Parameters.AddWithValue("@preparation_laboratory_id", DB.MakeParam(typeof(Guid), PreparationLaboratoryId));
-                    cmd.Parameters.AddWithValue("@comment", DB.MakeParam(typeof(String), Comment));                    
+                    cmd.Parameters.AddWithValue("@assignment_sample_type_id", AssignmentSampleTypeId, Guid.Empty);
+                    cmd.Parameters.AddWithValue("@preparation_method_id", PreparationMethodId, Guid.Empty);
+                    cmd.Parameters.AddWithValue("@preparation_method_count", PreparationMethodCount, null);
+                    cmd.Parameters.AddWithValue("@preparation_laboratory_id", PreparationLaboratoryId, Guid.Empty);
+                    cmd.Parameters.AddWithValue("@comment", Comment, String.Empty);                    
                     cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
-                    cmd.Parameters.AddWithValue("@updated_by", Common.Username);
+                    cmd.Parameters.AddWithValue("@updated_by", Common.Username, String.Empty);
 
                     cmd.ExecuteNonQuery();
 
@@ -213,18 +213,16 @@ namespace DSA_lims
 
                 reader.Read();
 
-                Id = Guid.Parse(reader["id"].ToString());
-                AssignmentSampleTypeId = Guid.Parse(reader["assignment_sample_type_id"].ToString());
-                PreparationMethodId = Guid.Parse(reader["preparation_method_id"].ToString());
-                PreparationMethodCount = Convert.ToInt32(reader["preparation_method_count"]);
-                if (DB.IsValidField(reader["preparation_laboratory_id"]))
-                    PreparationLaboratoryId = Guid.Parse(reader["preparation_laboratory_id"].ToString());
-                else PreparationLaboratoryId = Guid.Empty;
-                Comment = reader["comment"].ToString();
-                CreateDate = Convert.ToDateTime(reader["create_date"]);
-                CreatedBy = reader["created_by"].ToString();
-                UpdateDate = Convert.ToDateTime(reader["update_date"]);
-                UpdatedBy = reader["updated_by"].ToString();
+                Id = reader.GetGuid("id");
+                AssignmentSampleTypeId = reader.GetGuid("assignment_sample_type_id");
+                PreparationMethodId = reader.GetGuid("preparation_method_id");
+                PreparationMethodCount = reader.GetInt32("preparation_method_count");                
+                PreparationLaboratoryId = reader.GetGuid("preparation_laboratory_id");
+                Comment = reader.GetString("comment");
+                CreateDate = reader.GetDateTime("create_date");
+                CreatedBy = reader.GetString("created_by");
+                UpdateDate = reader.GetDateTime("update_date");
+                UpdatedBy = reader.GetString("updated_by");
                 Dirty = false;
             }
 

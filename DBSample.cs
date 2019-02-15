@@ -40,7 +40,7 @@ namespace DSA_lims
         }
 
         public Guid Id { get; set; }
-        public int Number { get; set; }
+        public int? Number { get; set; }
         public Guid LaboratoryId { get; set; }
         public Guid SampleTypeId { get; set; }
         public Guid SampleStorageId { get; set; }
@@ -56,27 +56,27 @@ namespace DSA_lims
         public Guid MunicipalityId { get; set; }
         public string LocationType { get; set; }
         public string Location { get; set; }
-        public double Latitude { get; set; }
-        public double Longitude { get; set; }
-        public double Altitude { get; set; }
-        public DateTime SamplingDateFrom { get; set; }
-        public DateTime SamplingDateTo { get; set; }
-        public DateTime ReferenceDate { get; set; }
+        public double? Latitude { get; set; }
+        public double? Longitude { get; set; }
+        public double? Altitude { get; set; }
+        public DateTime? SamplingDateFrom { get; set; }
+        public DateTime? SamplingDateTo { get; set; }
+        public DateTime? ReferenceDate { get; set; }
         public string ExternalId { get; set; }
-        public double WetWeight_g { get; set; }
-        public double DryWeight_g { get; set; }
-        public double Volume_l { get; set; }
-        public double LodWeightStart { get; set; }
-        public double LodWeightEnd { get; set; }
-        public double LodTemperature { get; set; }
+        public double? WetWeight_g { get; set; }
+        public double? DryWeight_g { get; set; }
+        public double? Volume_l { get; set; }
+        public double? LodWeightStart { get; set; }
+        public double? LodWeightEnd { get; set; }
+        public double? LodTemperature { get; set; }
         public bool Confidential { get; set; }
         public string Parameters { get; set; }
-        public int InstanceStatusId { get; set; }
+        public int? InstanceStatusId { get; set; }
         public string LockedBy { get; set; }
         public string Comment { get; set; }
-        public DateTime CreateDate { get; set; }
+        public DateTime? CreateDate { get; set; }
         public string CreatedBy { get; set; }
-        public DateTime UpdateDate { get; set; }
+        public DateTime? UpdateDate { get; set; }
         public string UpdatedBy { get; set; }
 
         public bool Dirty;
@@ -96,6 +96,7 @@ namespace DSA_lims
             object o = DB.GetScalar(conn, trans, "select name from sample_component where id = @id", CommandType.Text, new SqlParameter("@id", SampleComponentId));
             if (!DB.IsValidField(o))
                 return "";
+
             return o.ToString();
         }
 
@@ -110,6 +111,7 @@ where ps.id = @psid
 
             if (!DB.IsValidField(o))
                 return "";
+
             return o.ToString();
         }
 
@@ -134,11 +136,8 @@ where s.id = @sample_id
 
         public bool HasRequiredFields()
         {
-            if (Number <= 0
-                || !Utils.IsValidGuid(SampleTypeId)
-                || !Utils.IsValidGuid(ProjectSubId)
-                || !Utils.IsValidGuid(LaboratoryId)
-                || ReferenceDate == DateTime.MinValue)
+            if (Number <= 0 || !Utils.IsValidGuid(SampleTypeId) || !Utils.IsValidGuid(ProjectSubId) || !Utils.IsValidGuid(LaboratoryId) 
+                || ReferenceDate == null || ReferenceDate.Value == DateTime.MinValue)
                 return false;
 
             return true;
@@ -249,51 +248,45 @@ where s.id = @sid and a.workflow_status_id = 2
 
                 reader.Read();
 
-                Id = Guid.Parse(reader["id"].ToString());
-                Number = Convert.ToInt32(reader["number"]);
-                LaboratoryId = Guid.Parse(reader["laboratory_id"].ToString());
-                SampleTypeId = Guid.Parse(reader["sample_type_id"].ToString());
-                SampleStorageId = Utils.MakeGuid(reader["sample_storage_id"]);
-                SampleComponentId = Utils.MakeGuid(reader["sample_component_id"]);
-                ProjectSubId = Utils.MakeGuid(reader["project_sub_id"]);
-                StationId = Utils.MakeGuid(reader["station_id"]);
-                SamplerId = Utils.MakeGuid(reader["sampler_id"]);
-                SamplingMethodId = Utils.MakeGuid(reader["sampling_method_id"]);
-                TransformFromId = Utils.MakeGuid(reader["transform_from_id"]);
-                TransformToId = Utils.MakeGuid(reader["transform_to_id"]);
-                ImportedFrom = reader["imported_from"].ToString();
-                ImportedFromId = reader["imported_from_id"].ToString();
-                MunicipalityId = Utils.MakeGuid(reader["municipality_id"]);
-                LocationType = reader["location_type"].ToString();
-                Location = reader["location"].ToString();
-                if(DB.IsValidField(reader["latitude"]))
-                    Latitude = Convert.ToDouble(reader["latitude"]);
-                if (DB.IsValidField(reader["longitude"]))
-                    Longitude = Convert.ToDouble(reader["longitude"]);
-                if (DB.IsValidField(reader["altitude"]))
-                    Altitude = Convert.ToDouble(reader["altitude"]);
-                if (DB.IsValidField(reader["sampling_date_from"]))
-                    SamplingDateFrom = Convert.ToDateTime(reader["sampling_date_from"]);
-                if (DB.IsValidField(reader["sampling_date_to"]))
-                    SamplingDateTo = Convert.ToDateTime(reader["sampling_date_to"]);
-                if (DB.IsValidField(reader["reference_date"]))
-                    ReferenceDate = Convert.ToDateTime(reader["reference_date"]);
-                ExternalId = reader["external_id"].ToString();
-                WetWeight_g = Convert.ToDouble(reader["wet_weight_g"]);
-                DryWeight_g = Convert.ToDouble(reader["dry_weight_g"]);
-                Volume_l = Convert.ToDouble(reader["volume_l"]);
-                LodWeightStart = Convert.ToDouble(reader["lod_weight_start"]);
-                LodWeightEnd = Convert.ToDouble(reader["lod_weight_end"]);
-                LodTemperature = Convert.ToDouble(reader["lod_temperature"]);
-                Confidential = Convert.ToBoolean(reader["confidential"]);
-                Parameters = reader["parameters"].ToString();
-                InstanceStatusId = Convert.ToInt32(reader["instance_status_id"]);
-                LockedBy = reader["locked_by"].ToString();
-                Comment = reader["comment"].ToString();
-                CreateDate = Convert.ToDateTime(reader["create_date"]);
-                CreatedBy = reader["created_by"].ToString();
-                UpdateDate = Convert.ToDateTime(reader["update_date"]);
-                UpdatedBy = reader["updated_by"].ToString();
+                Id = reader.GetGuid("id");
+                Number = reader.GetInt32("number");
+                LaboratoryId = reader.GetGuid("laboratory_id");
+                SampleTypeId = reader.GetGuid("sample_type_id");
+                SampleStorageId = reader.GetGuid("sample_storage_id");
+                SampleComponentId = reader.GetGuid("sample_component_id");
+                ProjectSubId = reader.GetGuid("project_sub_id");
+                StationId = reader.GetGuid("station_id");
+                SamplerId = reader.GetGuid("sampler_id");
+                SamplingMethodId = reader.GetGuid("sampling_method_id");
+                TransformFromId = reader.GetGuid("transform_from_id");
+                TransformToId = reader.GetGuid("transform_to_id");
+                ImportedFrom = reader.GetString("imported_from");
+                ImportedFromId = reader.GetString("imported_from_id");
+                MunicipalityId = reader.GetGuid("municipality_id");
+                LocationType = reader.GetString("location_type");
+                Location = reader.GetString("location");                
+                Latitude = reader.GetDouble("latitude");                
+                Longitude = reader.GetDouble("longitude");                
+                Altitude = reader.GetDouble("altitude");                
+                SamplingDateFrom = reader.GetDateTime("sampling_date_from");                
+                SamplingDateTo = reader.GetDateTime("sampling_date_to");                
+                ReferenceDate = reader.GetDateTime("reference_date");
+                ExternalId = reader.GetString("external_id");
+                WetWeight_g = reader.GetDouble("wet_weight_g");
+                DryWeight_g = reader.GetDouble("dry_weight_g");
+                Volume_l = reader.GetDouble("volume_l");
+                LodWeightStart = reader.GetDouble("lod_weight_start");
+                LodWeightEnd = reader.GetDouble("lod_weight_end");
+                LodTemperature = reader.GetDouble("lod_temperature");
+                Confidential = reader.GetBoolean("confidential");
+                Parameters = reader.GetString("parameters");
+                InstanceStatusId = reader.GetInt32("instance_status_id");
+                LockedBy = reader.GetString("locked_by");
+                Comment = reader.GetString("comment");
+                CreateDate = reader.GetDateTime("create_date");
+                CreatedBy = reader.GetString("created_by");
+                UpdateDate = reader.GetDateTime("update_date");
+                UpdatedBy = reader.GetString("updated_by");
             }
 
             Dirty = false;
@@ -313,44 +306,44 @@ where s.id = @sid and a.workflow_status_id = 2
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Clear();
                 cmd.Parameters.AddWithValue("@id", Id);
-                cmd.Parameters.AddWithValue("@number", DB.MakeParam(typeof(int), Number));
-                cmd.Parameters.AddWithValue("@laboratory_id", DB.MakeParam(typeof(Guid), LaboratoryId));
-                cmd.Parameters.AddWithValue("@sample_type_id", DB.MakeParam(typeof(Guid), SampleTypeId));
-                cmd.Parameters.AddWithValue("@sample_storage_id", DB.MakeParam(typeof(Guid), SampleStorageId));
-                cmd.Parameters.AddWithValue("@sample_component_id", DB.MakeParam(typeof(Guid), SampleComponentId));
-                cmd.Parameters.AddWithValue("@project_sub_id", DB.MakeParam(typeof(Guid), ProjectSubId));
-                cmd.Parameters.AddWithValue("@station_id", DB.MakeParam(typeof(Guid), StationId));
-                cmd.Parameters.AddWithValue("@sampler_id", DB.MakeParam(typeof(Guid), SamplerId));
-                cmd.Parameters.AddWithValue("@sampling_method_id", DB.MakeParam(typeof(Guid), SamplingMethodId));
-                cmd.Parameters.AddWithValue("@transform_from_id", DB.MakeParam(typeof(Guid), TransformFromId));
-                cmd.Parameters.AddWithValue("@transform_to_id", DB.MakeParam(typeof(Guid), TransformToId));
-                cmd.Parameters.AddWithValue("@imported_from", DB.MakeParam(typeof(String), ImportedFrom));
-                cmd.Parameters.AddWithValue("@imported_from_id", DB.MakeParam(typeof(String), ImportedFromId));
-                cmd.Parameters.AddWithValue("@municipality_id", DB.MakeParam(typeof(Guid), MunicipalityId));
-                cmd.Parameters.AddWithValue("@location_type", DB.MakeParam(typeof(String), LocationType));
-                cmd.Parameters.AddWithValue("@location", DB.MakeParam(typeof(String), Location));
-                cmd.Parameters.AddWithValue("@latitude", DB.MakeParam(typeof(double), Latitude));
-                cmd.Parameters.AddWithValue("@longitude", DB.MakeParam(typeof(double), Longitude));
-                cmd.Parameters.AddWithValue("@altitude", DB.MakeParam(typeof(double), Altitude));
-                cmd.Parameters.AddWithValue("@sampling_date_from", DB.MakeParam(typeof(DateTime), SamplingDateFrom));
-                cmd.Parameters.AddWithValue("@sampling_date_to", DB.MakeParam(typeof(DateTime), SamplingDateTo));
-                cmd.Parameters.AddWithValue("@reference_date", DB.MakeParam(typeof(DateTime), ReferenceDate));
-                cmd.Parameters.AddWithValue("@external_id", DB.MakeParam(typeof(String), ExternalId));
-                cmd.Parameters.AddWithValue("@wet_weight_g", DB.MakeParam(typeof(double), WetWeight_g));
-                cmd.Parameters.AddWithValue("@dry_weight_g", DB.MakeParam(typeof(double), DryWeight_g));
-                cmd.Parameters.AddWithValue("@volume_l", DB.MakeParam(typeof(double), Volume_l));
-                cmd.Parameters.AddWithValue("@lod_weight_start", DB.MakeParam(typeof(double), LodWeightStart));
-                cmd.Parameters.AddWithValue("@lod_weight_end", DB.MakeParam(typeof(double), LodWeightEnd));
-                cmd.Parameters.AddWithValue("@lod_temperature", DB.MakeParam(typeof(double), LodTemperature));
-                cmd.Parameters.AddWithValue("@confidential", DB.MakeParam(typeof(bool), Confidential));
-                cmd.Parameters.AddWithValue("@parameters", DB.MakeParam(typeof(String), Parameters));
-                cmd.Parameters.AddWithValue("@instance_status_id", DB.MakeParam(typeof(int), InstanceStatusId));
-                cmd.Parameters.AddWithValue("@locked_by", DB.MakeParam(typeof(String), LockedBy));
-                cmd.Parameters.AddWithValue("@comment", DB.MakeParam(typeof(String), Comment));
+                cmd.Parameters.AddWithValue("@number", Number, null);
+                cmd.Parameters.AddWithValue("@laboratory_id", LaboratoryId, Guid.Empty);
+                cmd.Parameters.AddWithValue("@sample_type_id", SampleTypeId, Guid.Empty);
+                cmd.Parameters.AddWithValue("@sample_storage_id", SampleStorageId, Guid.Empty);
+                cmd.Parameters.AddWithValue("@sample_component_id", SampleComponentId, Guid.Empty);
+                cmd.Parameters.AddWithValue("@project_sub_id", ProjectSubId, Guid.Empty);
+                cmd.Parameters.AddWithValue("@station_id", StationId, Guid.Empty);
+                cmd.Parameters.AddWithValue("@sampler_id", SamplerId, Guid.Empty);
+                cmd.Parameters.AddWithValue("@sampling_method_id", SamplingMethodId, Guid.Empty);
+                cmd.Parameters.AddWithValue("@transform_from_id", TransformFromId, Guid.Empty);
+                cmd.Parameters.AddWithValue("@transform_to_id", TransformToId, Guid.Empty);
+                cmd.Parameters.AddWithValue("@imported_from", ImportedFrom, String.Empty);
+                cmd.Parameters.AddWithValue("@imported_from_id", ImportedFromId, String.Empty);
+                cmd.Parameters.AddWithValue("@municipality_id", MunicipalityId, Guid.Empty);
+                cmd.Parameters.AddWithValue("@location_type", LocationType, String.Empty);
+                cmd.Parameters.AddWithValue("@location", Location, String.Empty);
+                cmd.Parameters.AddWithValue("@latitude", Latitude, null);
+                cmd.Parameters.AddWithValue("@longitude", Longitude, null);
+                cmd.Parameters.AddWithValue("@altitude", Altitude, null);
+                cmd.Parameters.AddWithValue("@sampling_date_from", SamplingDateFrom, DateTime.MinValue);
+                cmd.Parameters.AddWithValue("@sampling_date_to", SamplingDateTo, DateTime.MinValue);
+                cmd.Parameters.AddWithValue("@reference_date", ReferenceDate, DateTime.MinValue);
+                cmd.Parameters.AddWithValue("@external_id", ExternalId, String.Empty);
+                cmd.Parameters.AddWithValue("@wet_weight_g", WetWeight_g, null);
+                cmd.Parameters.AddWithValue("@dry_weight_g", DryWeight_g, null);
+                cmd.Parameters.AddWithValue("@volume_l", Volume_l, null);
+                cmd.Parameters.AddWithValue("@lod_weight_start", LodWeightStart, null);
+                cmd.Parameters.AddWithValue("@lod_weight_end", LodWeightEnd, null);
+                cmd.Parameters.AddWithValue("@lod_temperature", LodTemperature, null);
+                cmd.Parameters.AddWithValue("@confidential", Confidential, null);
+                cmd.Parameters.AddWithValue("@parameters", Parameters, String.Empty);
+                cmd.Parameters.AddWithValue("@instance_status_id", InstanceStatusId, null);
+                cmd.Parameters.AddWithValue("@locked_by", LockedBy, String.Empty);
+                cmd.Parameters.AddWithValue("@comment", Comment, String.Empty);
                 cmd.Parameters.AddWithValue("@create_date", DateTime.Now);
-                cmd.Parameters.AddWithValue("@created_by", Common.Username);
+                cmd.Parameters.AddWithValue("@created_by", Common.Username, String.Empty);
                 cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
-                cmd.Parameters.AddWithValue("@updated_by", Common.Username);
+                cmd.Parameters.AddWithValue("@updated_by", Common.Username, String.Empty);
 
                 cmd.ExecuteNonQuery();
 
@@ -369,29 +362,29 @@ where s.id = @sid and a.workflow_status_id = 2
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.Clear();
                     cmd.Parameters.AddWithValue("@id", Id);                    
-                    cmd.Parameters.AddWithValue("@laboratory_id", DB.MakeParam(typeof(Guid), LaboratoryId));
-                    cmd.Parameters.AddWithValue("@sample_type_id", DB.MakeParam(typeof(Guid), SampleTypeId));
-                    cmd.Parameters.AddWithValue("@sample_storage_id", DB.MakeParam(typeof(Guid), SampleStorageId));
-                    cmd.Parameters.AddWithValue("@sample_component_id", DB.MakeParam(typeof(Guid), SampleComponentId));
-                    cmd.Parameters.AddWithValue("@project_sub_id", DB.MakeParam(typeof(Guid), ProjectSubId));
-                    cmd.Parameters.AddWithValue("@station_id", DB.MakeParam(typeof(Guid), StationId));
-                    cmd.Parameters.AddWithValue("@sampler_id", DB.MakeParam(typeof(Guid), SamplerId));
-                    cmd.Parameters.AddWithValue("@sampling_method_id", DB.MakeParam(typeof(Guid), SamplingMethodId));                    
-                    cmd.Parameters.AddWithValue("@municipality_id", DB.MakeParam(typeof(Guid), MunicipalityId));
-                    cmd.Parameters.AddWithValue("@location_type", DB.MakeParam(typeof(String), LocationType));
-                    cmd.Parameters.AddWithValue("@location", DB.MakeParam(typeof(String), Location));
-                    cmd.Parameters.AddWithValue("@latitude", DB.MakeParam(typeof(double), Latitude));
-                    cmd.Parameters.AddWithValue("@longitude", DB.MakeParam(typeof(double), Longitude));
-                    cmd.Parameters.AddWithValue("@altitude", DB.MakeParam(typeof(double), Altitude));
-                    cmd.Parameters.AddWithValue("@sampling_date_from", DB.MakeParam(typeof(DateTime), SamplingDateFrom));
-                    cmd.Parameters.AddWithValue("@sampling_date_to", DB.MakeParam(typeof(DateTime), SamplingDateTo));
-                    cmd.Parameters.AddWithValue("@reference_date", DB.MakeParam(typeof(DateTime), ReferenceDate));
-                    cmd.Parameters.AddWithValue("@external_id", DB.MakeParam(typeof(String), ExternalId));                    
-                    cmd.Parameters.AddWithValue("@confidential", DB.MakeParam(typeof(bool), Confidential));                    
-                    cmd.Parameters.AddWithValue("@instance_status_id", DB.MakeParam(typeof(int), InstanceStatusId));                    
-                    cmd.Parameters.AddWithValue("@comment", DB.MakeParam(typeof(String), Comment));
+                    cmd.Parameters.AddWithValue("@laboratory_id", LaboratoryId, Guid.Empty);
+                    cmd.Parameters.AddWithValue("@sample_type_id", SampleTypeId, Guid.Empty);
+                    cmd.Parameters.AddWithValue("@sample_storage_id", SampleStorageId, Guid.Empty);
+                    cmd.Parameters.AddWithValue("@sample_component_id", SampleComponentId, Guid.Empty);
+                    cmd.Parameters.AddWithValue("@project_sub_id", ProjectSubId, Guid.Empty);
+                    cmd.Parameters.AddWithValue("@station_id", StationId, Guid.Empty);
+                    cmd.Parameters.AddWithValue("@sampler_id", SamplerId, Guid.Empty);
+                    cmd.Parameters.AddWithValue("@sampling_method_id", SamplingMethodId, Guid.Empty);                    
+                    cmd.Parameters.AddWithValue("@municipality_id", MunicipalityId, Guid.Empty);
+                    cmd.Parameters.AddWithValue("@location_type", LocationType, String.Empty);
+                    cmd.Parameters.AddWithValue("@location", Location, String.Empty);
+                    cmd.Parameters.AddWithValue("@latitude", Latitude, null);
+                    cmd.Parameters.AddWithValue("@longitude", Longitude, null);
+                    cmd.Parameters.AddWithValue("@altitude", Altitude, null);
+                    cmd.Parameters.AddWithValue("@sampling_date_from", SamplingDateFrom, DateTime.MinValue);
+                    cmd.Parameters.AddWithValue("@sampling_date_to", SamplingDateTo, DateTime.MinValue);
+                    cmd.Parameters.AddWithValue("@reference_date", ReferenceDate, DateTime.MinValue);
+                    cmd.Parameters.AddWithValue("@external_id", ExternalId, String.Empty);                    
+                    cmd.Parameters.AddWithValue("@confidential", Confidential, null);                    
+                    cmd.Parameters.AddWithValue("@instance_status_id", InstanceStatusId, null);                    
+                    cmd.Parameters.AddWithValue("@comment", Comment, String.Empty);
                     cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
-                    cmd.Parameters.AddWithValue("@updated_by", Common.Username);
+                    cmd.Parameters.AddWithValue("@updated_by", Common.Username, String.Empty);
 
                     cmd.ExecuteNonQuery();
 
@@ -412,14 +405,14 @@ where s.id = @sid and a.workflow_status_id = 2
             SqlCommand cmd = new SqlCommand("csp_update_sample_info", conn);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@id", Id);
-            cmd.Parameters.AddWithValue("@wet_weight_g", DB.MakeParam(typeof(double), WetWeight_g));
-            cmd.Parameters.AddWithValue("@dry_weight_g", DB.MakeParam(typeof(double), DryWeight_g));
-            cmd.Parameters.AddWithValue("@volume_l", DB.MakeParam(typeof(double), Volume_l));
-            cmd.Parameters.AddWithValue("@lod_weight_start", DB.MakeParam(typeof(double), LodWeightStart));
-            cmd.Parameters.AddWithValue("@lod_weight_end", DB.MakeParam(typeof(double), LodWeightEnd));
-            cmd.Parameters.AddWithValue("@lod_temperature", DB.MakeParam(typeof(double), LodTemperature));
+            cmd.Parameters.AddWithValue("@wet_weight_g", WetWeight_g, null);
+            cmd.Parameters.AddWithValue("@dry_weight_g", DryWeight_g, null);
+            cmd.Parameters.AddWithValue("@volume_l", Volume_l, null);
+            cmd.Parameters.AddWithValue("@lod_weight_start", LodWeightStart, null);
+            cmd.Parameters.AddWithValue("@lod_weight_end", LodWeightEnd, null);
+            cmd.Parameters.AddWithValue("@lod_temperature", LodTemperature, null);
             cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
-            cmd.Parameters.AddWithValue("@updated_by", Common.Username);
+            cmd.Parameters.AddWithValue("@updated_by", Common.Username, String.Empty);
 
             cmd.ExecuteNonQuery();
 

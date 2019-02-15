@@ -42,9 +42,9 @@ namespace DSA_lims
         public string Name { get; set; }
         public Guid LaboratoryId { get; set; }
         public Guid AccountId { get; set; }
-        public DateTime Deadline { get; set; }
-        public double RequestedSigmaAct { get; set; }
-        public double RequestedSigmaMDA { get; set; }
+        public DateTime? Deadline { get; set; }
+        public double? RequestedSigmaAct { get; set; }
+        public double? RequestedSigmaMDA { get; set; }
         public string CustomerCompanyName { get; set; }
         public string CustomerCompanyEmail { get; set; }
         public string CustomerCompanyPhone { get; set; }
@@ -60,15 +60,15 @@ namespace DSA_lims
         public string ContentComment { get; set; }
         public string ReportComment { get; set; }
         public string AuditComment { get; set; }
-        public int WorkflowStatusId { get; set; }
-        public DateTime LastWorkflowStatusDate { get; set; }
+        public int? WorkflowStatusId { get; set; }
+        public DateTime? LastWorkflowStatusDate { get; set; }
         public string LastWorkflowStatusBy { get; set; }
-        public int AnalysisReportVersion { get; set; }
-        public int InstanceStatusId { get; set; }
+        public int? AnalysisReportVersion { get; set; }
+        public int? InstanceStatusId { get; set; }
         public string LockedBy { get; set; }
-        public DateTime CreateDate { get; set; }
+        public DateTime? CreateDate { get; set; }
         public string CreatedBy { get; set; }
-        public DateTime UpdateDate { get; set; }
+        public DateTime? UpdateDate { get; set; }
         public string UpdatedBy { get; set; }
 
         public List<AssignmentSampleType> SampleTypes { get; set; }
@@ -136,40 +136,38 @@ namespace DSA_lims
                 
                 reader.Read();
 
-                Id = Guid.Parse(reader["id"].ToString());
-                Name = reader["name"].ToString();
-                LaboratoryId = Guid.Parse(reader["laboratory_id"].ToString());
-                AccountId = Guid.Parse(reader["account_id"].ToString());
-                Deadline = Convert.ToDateTime(reader["deadline"]);
-                RequestedSigmaAct = Convert.ToDouble(reader["requested_sigma_act"]);
-                RequestedSigmaMDA = Convert.ToDouble(reader["requested_sigma_mda"]);
-                CustomerCompanyName = reader["customer_company_name"].ToString();
-                CustomerCompanyEmail = reader["customer_company_email"].ToString();
-                CustomerCompanyPhone = reader["customer_company_phone"].ToString();
-                CustomerCompanyAddress = reader["customer_company_address"].ToString();
-                CustomerContactName = reader["customer_contact_name"].ToString();
-                CustomerContactEmail = reader["customer_contact_email"].ToString();
-                CustomerContactPhone = reader["customer_contact_phone"].ToString();
-                CustomerContactAddress = reader["customer_contact_address"].ToString();
-                ApprovedCustomer = Convert.ToBoolean(reader["approved_customer"]);
-                ApprovedCustomerBy = reader["approved_customer_by"].ToString();
-                ApprovedLaboratory = Convert.ToBoolean(reader["approved_laboratory"]);
-                ApprovedLaboratoryBy = reader["approved_laboratory_by"].ToString();
-                ContentComment = reader["content_comment"].ToString();
-                ReportComment = reader["report_comment"].ToString();
-                AuditComment = reader["audit_comment"].ToString();
-                WorkflowStatusId = Convert.ToInt32(reader["workflow_status_id"]);
-                if (DB.IsValidField(reader["last_workflow_status_date"]))
-                    LastWorkflowStatusDate = Convert.ToDateTime(reader["last_workflow_status_date"]);
-                else LastWorkflowStatusDate = Convert.ToDateTime(reader["create_date"]);
-                LastWorkflowStatusBy = reader["last_workflow_status_by"].ToString();
-                AnalysisReportVersion = Convert.ToInt32(reader["analysis_report_version"]);
-                InstanceStatusId = Convert.ToInt32(reader["instance_status_id"]);
-                LockedBy = reader["locked_by"].ToString();
-                CreateDate = Convert.ToDateTime(reader["create_date"]);
-                CreatedBy = reader["created_by"].ToString();
-                UpdateDate = Convert.ToDateTime(reader["update_date"]);
-                UpdatedBy = reader["updated_by"].ToString();
+                Id = reader.GetGuid("id");
+                Name = reader.GetString("name");
+                LaboratoryId = reader.GetGuid("laboratory_id");
+                AccountId = reader.GetGuid("account_id");
+                Deadline = reader.GetDateTime("deadline");
+                RequestedSigmaAct = reader.GetDouble("requested_sigma_act");
+                RequestedSigmaMDA = reader.GetDouble("requested_sigma_mda");
+                CustomerCompanyName = reader.GetString("customer_company_name");
+                CustomerCompanyEmail = reader.GetString("customer_company_email");
+                CustomerCompanyPhone = reader.GetString("customer_company_phone");
+                CustomerCompanyAddress = reader.GetString("customer_company_address");
+                CustomerContactName = reader.GetString("customer_contact_name");
+                CustomerContactEmail = reader.GetString("customer_contact_email");
+                CustomerContactPhone = reader.GetString("customer_contact_phone");
+                CustomerContactAddress = reader.GetString("customer_contact_address");
+                ApprovedCustomer = reader.GetBoolean("approved_customer");
+                ApprovedCustomerBy = reader.GetString("approved_customer_by");
+                ApprovedLaboratory = reader.GetBoolean("approved_laboratory");
+                ApprovedLaboratoryBy = reader.GetString("approved_laboratory_by");
+                ContentComment = reader.GetString("content_comment");
+                ReportComment = reader.GetString("report_comment");
+                AuditComment = reader.GetString("audit_comment");
+                WorkflowStatusId = reader.GetInt32("workflow_status_id");                
+                LastWorkflowStatusDate = reader.GetDateTime("last_workflow_status_date");                
+                LastWorkflowStatusBy = reader.GetString("last_workflow_status_by");
+                AnalysisReportVersion = reader.GetInt32("analysis_report_version");
+                InstanceStatusId = reader.GetInt32("instance_status_id");
+                LockedBy = reader.GetString("locked_by");
+                CreateDate = reader.GetDateTime("create_date");
+                CreatedBy = reader.GetString("created_by");
+                UpdateDate = reader.GetDateTime("update_date");
+                UpdatedBy = reader.GetString("updated_by");
             }
 
             SampleTypes.Clear();
@@ -203,37 +201,37 @@ namespace DSA_lims
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 cmd.Parameters.AddWithValue("@id", Id);
-                cmd.Parameters.AddWithValue("@name", Name);
-                cmd.Parameters.AddWithValue("@laboratory_id", DB.MakeParam(typeof(Guid), LaboratoryId));
-                cmd.Parameters.AddWithValue("@account_id", DB.MakeParam(typeof(Guid), AccountId));
-                cmd.Parameters.AddWithValue("@deadline", DB.MakeParam(typeof(DateTime), Deadline));
-                cmd.Parameters.AddWithValue("@requested_sigma_act", DB.MakeParam(typeof(double), RequestedSigmaAct));
-                cmd.Parameters.AddWithValue("@requested_sigma_mda", DB.MakeParam(typeof(double), RequestedSigmaMDA));
-                cmd.Parameters.AddWithValue("@customer_company_name", DB.MakeParam(typeof(String), CustomerCompanyName));
-                cmd.Parameters.AddWithValue("@customer_company_email", DB.MakeParam(typeof(String), CustomerCompanyEmail));
-                cmd.Parameters.AddWithValue("@customer_company_phone", DB.MakeParam(typeof(String), CustomerCompanyPhone));
-                cmd.Parameters.AddWithValue("@customer_company_address", DB.MakeParam(typeof(String), CustomerCompanyAddress));
-                cmd.Parameters.AddWithValue("@customer_contact_name", DB.MakeParam(typeof(String), CustomerContactName));
-                cmd.Parameters.AddWithValue("@customer_contact_email", DB.MakeParam(typeof(String), CustomerContactEmail));
-                cmd.Parameters.AddWithValue("@customer_contact_phone", DB.MakeParam(typeof(String), CustomerContactPhone));
-                cmd.Parameters.AddWithValue("@customer_contact_address", DB.MakeParam(typeof(String), CustomerContactAddress));
-                cmd.Parameters.AddWithValue("@approved_customer", DB.MakeParam(typeof(bool), ApprovedCustomer));
-                cmd.Parameters.AddWithValue("@approved_customer_by", DB.MakeParam(typeof(String), ApprovedCustomerBy));
-                cmd.Parameters.AddWithValue("@approved_laboratory", DB.MakeParam(typeof(bool), ApprovedLaboratory));
-                cmd.Parameters.AddWithValue("@approved_laboratory_by", DB.MakeParam(typeof(String), ApprovedLaboratoryBy));
-                cmd.Parameters.AddWithValue("@content_comment", DB.MakeParam(typeof(String), ContentComment));
-                cmd.Parameters.AddWithValue("@report_comment", DB.MakeParam(typeof(String), ReportComment));
-                cmd.Parameters.AddWithValue("@audit_comment", DB.MakeParam(typeof(String), AuditComment));
-                cmd.Parameters.AddWithValue("@workflow_status_id", DB.MakeParam(typeof(int), WorkflowStatusId));
-                cmd.Parameters.AddWithValue("@last_workflow_status_date", DB.MakeParam(typeof(DateTime), LastWorkflowStatusDate));
-                cmd.Parameters.AddWithValue("@last_workflow_status_by", DB.MakeParam(typeof(String), LastWorkflowStatusBy));
-                cmd.Parameters.AddWithValue("@analysis_report_version", DB.MakeParam(typeof(int), AnalysisReportVersion));
-                cmd.Parameters.AddWithValue("@instance_status_id", DB.MakeParam(typeof(int), InstanceStatusId));
-                cmd.Parameters.AddWithValue("@locked_by", DB.MakeParam(typeof(String), LockedBy));
+                cmd.Parameters.AddWithValue("@name", Name, String.Empty);
+                cmd.Parameters.AddWithValue("@laboratory_id", LaboratoryId, Guid.Empty);
+                cmd.Parameters.AddWithValue("@account_id", AccountId, Guid.Empty);
+                cmd.Parameters.AddWithValue("@deadline", Deadline, DateTime.MinValue);
+                cmd.Parameters.AddWithValue("@requested_sigma_act", RequestedSigmaAct, null);
+                cmd.Parameters.AddWithValue("@requested_sigma_mda", RequestedSigmaMDA, null);
+                cmd.Parameters.AddWithValue("@customer_company_name", CustomerCompanyName, String.Empty);
+                cmd.Parameters.AddWithValue("@customer_company_email", CustomerCompanyEmail, String.Empty);
+                cmd.Parameters.AddWithValue("@customer_company_phone", CustomerCompanyPhone, String.Empty);
+                cmd.Parameters.AddWithValue("@customer_company_address", CustomerCompanyAddress, String.Empty);
+                cmd.Parameters.AddWithValue("@customer_contact_name", CustomerContactName, String.Empty);
+                cmd.Parameters.AddWithValue("@customer_contact_email", CustomerContactEmail, String.Empty);
+                cmd.Parameters.AddWithValue("@customer_contact_phone", CustomerContactPhone, String.Empty);
+                cmd.Parameters.AddWithValue("@customer_contact_address", CustomerContactAddress, String.Empty);
+                cmd.Parameters.AddWithValue("@approved_customer", ApprovedCustomer, null);
+                cmd.Parameters.AddWithValue("@approved_customer_by", ApprovedCustomerBy, String.Empty);
+                cmd.Parameters.AddWithValue("@approved_laboratory", ApprovedLaboratory, null);
+                cmd.Parameters.AddWithValue("@approved_laboratory_by", ApprovedLaboratoryBy, String.Empty);
+                cmd.Parameters.AddWithValue("@content_comment", ContentComment, String.Empty);
+                cmd.Parameters.AddWithValue("@report_comment", ReportComment, String.Empty);
+                cmd.Parameters.AddWithValue("@audit_comment", AuditComment, String.Empty);
+                cmd.Parameters.AddWithValue("@workflow_status_id", WorkflowStatusId, null);
+                cmd.Parameters.AddWithValue("@last_workflow_status_date", LastWorkflowStatusDate, DateTime.MinValue);
+                cmd.Parameters.AddWithValue("@last_workflow_status_by", LastWorkflowStatusBy, String.Empty);
+                cmd.Parameters.AddWithValue("@analysis_report_version", AnalysisReportVersion, null);
+                cmd.Parameters.AddWithValue("@instance_status_id", InstanceStatusId, null);
+                cmd.Parameters.AddWithValue("@locked_by", LockedBy, String.Empty);
                 cmd.Parameters.AddWithValue("@create_date", DateTime.Now);
-                cmd.Parameters.AddWithValue("@created_by", Common.Username);
+                cmd.Parameters.AddWithValue("@created_by", Common.Username, String.Empty);
                 cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
-                cmd.Parameters.AddWithValue("@updated_by", Common.Username);
+                cmd.Parameters.AddWithValue("@updated_by", Common.Username, String.Empty);
 
                 cmd.ExecuteNonQuery();
 
@@ -252,34 +250,34 @@ namespace DSA_lims
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@id", Id);
                     cmd.Parameters.AddWithValue("@name", Name);
-                    cmd.Parameters.AddWithValue("@laboratory_id", DB.MakeParam(typeof(Guid), LaboratoryId));
-                    cmd.Parameters.AddWithValue("@account_id", DB.MakeParam(typeof(Guid), AccountId));
-                    cmd.Parameters.AddWithValue("@deadline", DB.MakeParam(typeof(DateTime), Deadline));
-                    cmd.Parameters.AddWithValue("@requested_sigma_act", DB.MakeParam(typeof(double), RequestedSigmaAct));
-                    cmd.Parameters.AddWithValue("@requested_sigma_mda", DB.MakeParam(typeof(double), RequestedSigmaMDA));
-                    cmd.Parameters.AddWithValue("@customer_company_name", DB.MakeParam(typeof(String), CustomerCompanyName));
-                    cmd.Parameters.AddWithValue("@customer_company_email", DB.MakeParam(typeof(String), CustomerCompanyEmail));
-                    cmd.Parameters.AddWithValue("@customer_company_phone", DB.MakeParam(typeof(String), CustomerCompanyPhone));
-                    cmd.Parameters.AddWithValue("@customer_company_address", DB.MakeParam(typeof(String), CustomerCompanyAddress));
-                    cmd.Parameters.AddWithValue("@customer_contact_name", DB.MakeParam(typeof(String), CustomerContactName));
-                    cmd.Parameters.AddWithValue("@customer_contact_email", DB.MakeParam(typeof(String), CustomerContactEmail));
-                    cmd.Parameters.AddWithValue("@customer_contact_phone", DB.MakeParam(typeof(String), CustomerContactPhone));
-                    cmd.Parameters.AddWithValue("@customer_contact_address", DB.MakeParam(typeof(String), CustomerContactAddress));
-                    cmd.Parameters.AddWithValue("@approved_customer", DB.MakeParam(typeof(bool), ApprovedCustomer));
-                    cmd.Parameters.AddWithValue("@approved_customer_by", DB.MakeParam(typeof(String), ApprovedCustomerBy));
-                    cmd.Parameters.AddWithValue("@approved_laboratory", DB.MakeParam(typeof(bool), ApprovedLaboratory));
-                    cmd.Parameters.AddWithValue("@approved_laboratory_by", DB.MakeParam(typeof(String), ApprovedLaboratoryBy));
-                    cmd.Parameters.AddWithValue("@content_comment", DB.MakeParam(typeof(String), ContentComment));
-                    cmd.Parameters.AddWithValue("@report_comment", DB.MakeParam(typeof(String), ReportComment));
-                    cmd.Parameters.AddWithValue("@audit_comment", DB.MakeParam(typeof(String), AuditComment));
-                    cmd.Parameters.AddWithValue("@workflow_status_id", DB.MakeParam(typeof(int), WorkflowStatusId));
-                    cmd.Parameters.AddWithValue("@last_workflow_status_date", DB.MakeParam(typeof(DateTime), LastWorkflowStatusDate));
-                    cmd.Parameters.AddWithValue("@last_workflow_status_by", DB.MakeParam(typeof(String), LastWorkflowStatusBy));
-                    cmd.Parameters.AddWithValue("@analysis_report_version", DB.MakeParam(typeof(int), AnalysisReportVersion));
-                    cmd.Parameters.AddWithValue("@instance_status_id", DB.MakeParam(typeof(int), InstanceStatusId));
-                    cmd.Parameters.AddWithValue("@locked_by", DB.MakeParam(typeof(String), LockedBy));                    
+                    cmd.Parameters.AddWithValue("@laboratory_id", LaboratoryId, Guid.Empty);
+                    cmd.Parameters.AddWithValue("@account_id", AccountId, Guid.Empty);
+                    cmd.Parameters.AddWithValue("@deadline", Deadline, DateTime.MinValue);
+                    cmd.Parameters.AddWithValue("@requested_sigma_act", RequestedSigmaAct, null);
+                    cmd.Parameters.AddWithValue("@requested_sigma_mda", RequestedSigmaMDA, null);
+                    cmd.Parameters.AddWithValue("@customer_company_name", CustomerCompanyName, String.Empty);
+                    cmd.Parameters.AddWithValue("@customer_company_email", CustomerCompanyEmail, String.Empty);
+                    cmd.Parameters.AddWithValue("@customer_company_phone", CustomerCompanyPhone, String.Empty);
+                    cmd.Parameters.AddWithValue("@customer_company_address", CustomerCompanyAddress, String.Empty);
+                    cmd.Parameters.AddWithValue("@customer_contact_name", CustomerContactName, String.Empty);
+                    cmd.Parameters.AddWithValue("@customer_contact_email", CustomerContactEmail, String.Empty);
+                    cmd.Parameters.AddWithValue("@customer_contact_phone", CustomerContactPhone, String.Empty);
+                    cmd.Parameters.AddWithValue("@customer_contact_address", CustomerContactAddress, String.Empty);
+                    cmd.Parameters.AddWithValue("@approved_customer", ApprovedCustomer, null);
+                    cmd.Parameters.AddWithValue("@approved_customer_by", ApprovedCustomerBy, String.Empty);
+                    cmd.Parameters.AddWithValue("@approved_laboratory", ApprovedLaboratory, null);
+                    cmd.Parameters.AddWithValue("@approved_laboratory_by", ApprovedLaboratoryBy, String.Empty);
+                    cmd.Parameters.AddWithValue("@content_comment", ContentComment, String.Empty);
+                    cmd.Parameters.AddWithValue("@report_comment", ReportComment, String.Empty);
+                    cmd.Parameters.AddWithValue("@audit_comment", AuditComment, String.Empty);
+                    cmd.Parameters.AddWithValue("@workflow_status_id", WorkflowStatusId, null);
+                    cmd.Parameters.AddWithValue("@last_workflow_status_date", LastWorkflowStatusDate, DateTime.MinValue);
+                    cmd.Parameters.AddWithValue("@last_workflow_status_by", LastWorkflowStatusBy, String.Empty);
+                    cmd.Parameters.AddWithValue("@analysis_report_version", AnalysisReportVersion, null);
+                    cmd.Parameters.AddWithValue("@instance_status_id", InstanceStatusId, null);
+                    cmd.Parameters.AddWithValue("@locked_by", LockedBy, String.Empty);                    
                     cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
-                    cmd.Parameters.AddWithValue("@updated_by", Common.Username);
+                    cmd.Parameters.AddWithValue("@updated_by", Common.Username, String.Empty);
 
                     cmd.ExecuteNonQuery();
 

@@ -38,11 +38,11 @@ namespace DSA_lims
         public Guid Id { get; set; }
         public Guid AssignmentPreparationMethodId { get; set; }
         public Guid AnalysisMethodId { get; set; }
-        public int AnalysisMethodCount { get; set; }
+        public int? AnalysisMethodCount { get; set; }
         public string Comment { get; set; }
-        public DateTime CreateDate { get; set; }
+        public DateTime? CreateDate { get; set; }
         public string CreatedBy { get; set; }
-        public DateTime UpdateDate { get; set; }
+        public DateTime? UpdateDate { get; set; }
         public string UpdatedBy { get; set; }
 
         public bool Dirty;
@@ -60,13 +60,13 @@ namespace DSA_lims
         public string AnalysisMethodName(SqlConnection conn, SqlTransaction trans)
         {
             object o = DB.GetScalar(conn, trans, "select name_short from analysis_method where id = @aid", CommandType.Text, new SqlParameter("@aid", AnalysisMethodId));
-            return o == null || o == DBNull.Value ? "" : o.ToString();
+            return !DB.IsValidField(o) ? "" : o.ToString();
         }
 
         public string AnalysisMethodNameFull(SqlConnection conn, SqlTransaction trans)
         {
             object o = DB.GetScalar(conn, trans, "select name from analysis_method where id = @aid", CommandType.Text, new SqlParameter("@aid", AnalysisMethodId));
-            return o == null || o == DBNull.Value ? "" : o.ToString();
+            return !DB.IsValidField(o) ? "" : o.ToString();
         }
 
         public static string ToJSON(SqlConnection conn, SqlTransaction trans, Guid aamId)
@@ -111,14 +111,14 @@ namespace DSA_lims
                 cmd.CommandText = "csp_insert_assignment_analysis_method";
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@id", Id);
-                cmd.Parameters.AddWithValue("@assignment_preparation_method_id", DB.MakeParam(typeof(Guid), AssignmentPreparationMethodId));
-                cmd.Parameters.AddWithValue("@analysis_method_id", DB.MakeParam(typeof(Guid), AnalysisMethodId));
-                cmd.Parameters.AddWithValue("@analysis_method_count", DB.MakeParam(typeof(int), AnalysisMethodCount));
-                cmd.Parameters.AddWithValue("@comment", DB.MakeParam(typeof(String), Comment));
+                cmd.Parameters.AddWithValue("@assignment_preparation_method_id", AssignmentPreparationMethodId, Guid.Empty);
+                cmd.Parameters.AddWithValue("@analysis_method_id", AnalysisMethodId, Guid.Empty);
+                cmd.Parameters.AddWithValue("@analysis_method_count", AnalysisMethodCount, null);
+                cmd.Parameters.AddWithValue("@comment", Comment, String.Empty);
                 cmd.Parameters.AddWithValue("@create_date", DateTime.Now);
-                cmd.Parameters.AddWithValue("@created_by", Common.Username);
+                cmd.Parameters.AddWithValue("@created_by", Common.Username, String.Empty);
                 cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
-                cmd.Parameters.AddWithValue("@updated_by", Common.Username);
+                cmd.Parameters.AddWithValue("@updated_by", Common.Username, String.Empty);
 
                 cmd.ExecuteNonQuery();
 
@@ -136,12 +136,12 @@ namespace DSA_lims
                     cmd.CommandText = "csp_update_assignment_analysis_method";
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@id", Id);
-                    cmd.Parameters.AddWithValue("@assignment_preparation_method_id", DB.MakeParam(typeof(Guid), AssignmentPreparationMethodId));
-                    cmd.Parameters.AddWithValue("@analysis_method_id", DB.MakeParam(typeof(Guid), AnalysisMethodId));
-                    cmd.Parameters.AddWithValue("@analysis_method_count", DB.MakeParam(typeof(int), AnalysisMethodCount));
-                    cmd.Parameters.AddWithValue("@comment", DB.MakeParam(typeof(String), Comment));
+                    cmd.Parameters.AddWithValue("@assignment_preparation_method_id", AssignmentPreparationMethodId, Guid.Empty);
+                    cmd.Parameters.AddWithValue("@analysis_method_id", AnalysisMethodId, Guid.Empty);
+                    cmd.Parameters.AddWithValue("@analysis_method_count", AnalysisMethodCount, null);
+                    cmd.Parameters.AddWithValue("@comment", Comment, String.Empty);
                     cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
-                    cmd.Parameters.AddWithValue("@updated_by", Common.Username);
+                    cmd.Parameters.AddWithValue("@updated_by", Common.Username, String.Empty);
 
                     cmd.ExecuteNonQuery();
 
@@ -164,15 +164,15 @@ namespace DSA_lims
 
                 reader.Read();
                                 
-                Id = Guid.Parse(reader["id"].ToString());
-                AssignmentPreparationMethodId = Guid.Parse(reader["assignment_preparation_method_id"].ToString());
-                AnalysisMethodId = Guid.Parse(reader["analysis_method_id"].ToString());
-                AnalysisMethodCount = Convert.ToInt32(reader["analysis_method_count"]);
-                Comment = reader["comment"].ToString();
-                CreateDate = Convert.ToDateTime(reader["create_date"]);
-                CreatedBy = reader["created_by"].ToString();
-                UpdateDate = Convert.ToDateTime(reader["update_date"]);
-                UpdatedBy = reader["updated_by"].ToString();
+                Id = reader.GetGuid("id");
+                AssignmentPreparationMethodId = reader.GetGuid("assignment_preparation_method_id");
+                AnalysisMethodId = reader.GetGuid("analysis_method_id");
+                AnalysisMethodCount = reader.GetInt32("analysis_method_count");
+                Comment = reader.GetString("comment");
+                CreateDate = reader.GetDateTime("create_date");
+                CreatedBy = reader.GetString("created_by");
+                UpdateDate = reader.GetDateTime("update_date");
+                UpdatedBy = reader.GetString("updated_by");
                 Dirty = false;
             }
         }        

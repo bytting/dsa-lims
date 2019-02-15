@@ -76,6 +76,36 @@ namespace DSA_lims
             return Guid.Parse(o.ToString());
         }
 
+        public static int? ToInt32(object o)
+        {
+            if (o == null)
+                return null;
+
+            if (o.GetType() == typeof(String) && o.ToString().Trim() == "")
+                return null;
+
+            return Convert.ToInt32(o);
+        }
+
+        public static double? ToDouble(object o)
+        {
+            if (o == null)
+                return null;
+
+            if (o.GetType() == typeof(String) && o.ToString().Trim() == "")
+                return null;
+
+            return Convert.ToDouble(o);
+        }
+
+        public static string ToString(this double? self, string format)
+        {
+            if (self == null)
+                return "";
+
+            return self.Value.ToString(ScientificFormat);
+        }
+
         public static byte[] MakePasswordHash(string password, string username)
         {
             return MakePasswordHash(Encoding.UTF8.GetBytes(password), Encoding.UTF8.GetBytes(username.ToUpper().Substring(0, 3)));

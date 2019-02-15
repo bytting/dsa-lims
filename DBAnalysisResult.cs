@@ -40,19 +40,19 @@ namespace DSA_lims
         public Guid AnalysisId { get; set; }
         public Guid NuclideId { get; set; }
         public string NuclideName { get; set; }
-        public double Activity { get; set; }
-        public double ActivityUncertaintyABS { get; set; }
+        public double? Activity { get; set; }
+        public double? ActivityUncertaintyABS { get; set; }
         public bool ActivityApproved { get; set; }
-        public double UniformActivity { get; set; }
-        public int UniformActivityUnitId { get; set; }
-        public double DetectionLimit { get; set; }
+        public double? UniformActivity { get; set; }
+        public int? UniformActivityUnitId { get; set; }
+        public double? DetectionLimit { get; set; }
         public bool DetectionLimitApproved { get; set; }
         public bool Accredited { get; set; }
         public bool Reportable { get; set; }
-        public int InstanceStatusId { get; set; }
-        public DateTime CreateDate { get; set; }
+        public int? InstanceStatusId { get; set; }
+        public DateTime? CreateDate { get; set; }
         public string CreatedBy { get; set; }
-        public DateTime UpdateDate { get; set; }
+        public DateTime? UpdateDate { get; set; }
         public string UpdatedBy { get; set; }
 
         public bool Dirty;
@@ -70,7 +70,7 @@ namespace DSA_lims
         public string GetNuclideName(SqlConnection conn, SqlTransaction trans)
         {
             object o = DB.GetScalar(conn, trans, "select name from nuclide where id = @nid", CommandType.Text, new SqlParameter("@nid", NuclideId));
-            return o == null || o == DBNull.Value ? "" : o.ToString();
+            return !DB.IsValidField(o) ? "" : o.ToString();
         }
 
         public static string ToJSON(SqlConnection conn, SqlTransaction trans, Guid analResId)
@@ -115,23 +115,23 @@ namespace DSA_lims
 
                 reader.Read();
                                         
-                Id = Guid.Parse(reader["id"].ToString());
-                AnalysisId = Guid.Parse(reader["analysis_id"].ToString());
-                NuclideId = Guid.Parse(reader["nuclide_id"].ToString());
-                Activity = Convert.ToDouble(reader["activity"]);
-                ActivityUncertaintyABS = Convert.ToDouble(reader["activity_uncertainty_abs"]);
-                ActivityApproved = Convert.ToBoolean(reader["activity_approved"]);
+                Id = reader.GetGuid("id");
+                AnalysisId = reader.GetGuid("analysis_id");
+                NuclideId = reader.GetGuid("nuclide_id");
+                Activity = reader.GetDouble("activity");
+                ActivityUncertaintyABS = reader.GetDouble("activity_uncertainty_abs");
+                ActivityApproved = reader.GetBoolean("activity_approved");
                 //UniformActivity = Convert.ToDouble(reader["uniform_activity"]);
                 //UniformActivityUnitId = Convert.ToInt32(reader["uniform_activity_unit_id"]);
-                DetectionLimit = Convert.ToDouble(reader["detection_limit"]);
-                DetectionLimitApproved = Convert.ToBoolean(reader["detection_limit_approved"]);
-                Accredited = Convert.ToBoolean(reader["accredited"]);
-                Reportable = Convert.ToBoolean(reader["reportable"]);
-                InstanceStatusId = Convert.ToInt32(reader["instance_status_id"]);
-                CreateDate = Convert.ToDateTime(reader["create_date"]);
-                CreatedBy = reader["created_by"].ToString();
-                UpdateDate = Convert.ToDateTime(reader["update_date"]);
-                UpdatedBy = reader["updated_by"].ToString();                
+                DetectionLimit = reader.GetDouble("detection_limit");
+                DetectionLimitApproved = reader.GetBoolean("detection_limit_approved");
+                Accredited = reader.GetBoolean("accredited");
+                Reportable = reader.GetBoolean("reportable");
+                InstanceStatusId = reader.GetInt32("instance_status_id");
+                CreateDate = reader.GetDateTime("create_date");
+                CreatedBy = reader.GetString("created_by");
+                UpdateDate = reader.GetDateTime("update_date");
+                UpdatedBy = reader.GetString("updated_by");
             }
 
             NuclideName = GetNuclideName(conn, trans);
@@ -153,11 +153,11 @@ namespace DSA_lims
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Clear();
                 cmd.Parameters.AddWithValue("@id", Id);
-                cmd.Parameters.AddWithValue("@analysis_id", AnalysisId);
-                cmd.Parameters.AddWithValue("@nuclide_id", DB.MakeParam(typeof(Guid), NuclideId));
-                cmd.Parameters.AddWithValue("@activity", Activity);
-                cmd.Parameters.AddWithValue("@activity_uncertainty_abs", ActivityUncertaintyABS);
-                cmd.Parameters.AddWithValue("@activity_approved", ActivityApproved);
+                cmd.Parameters.AddWithValue("@analysis_id", AnalysisId, Guid.Empty);
+                cmd.Parameters.AddWithValue("@nuclide_id", NuclideId, Guid.Empty);
+                cmd.Parameters.AddWithValue("@activity", Activity, null);
+                cmd.Parameters.AddWithValue("@activity_uncertainty_abs", ActivityUncertaintyABS, null);
+                cmd.Parameters.AddWithValue("@activity_approved", ActivityApproved, null);
                 // FIXME
                 /*double uAct = -1.0;
                 int uActUnitId = -1;
@@ -167,15 +167,15 @@ namespace DSA_lims
                 }*/
                 cmd.Parameters.AddWithValue("@uniform_activity", DBNull.Value);
                 cmd.Parameters.AddWithValue("@uniform_activity_unit_id", DBNull.Value);
-                cmd.Parameters.AddWithValue("@detection_limit", DetectionLimit);
-                cmd.Parameters.AddWithValue("@detection_limit_approved", DetectionLimitApproved);
-                cmd.Parameters.AddWithValue("@accredited", Accredited);
-                cmd.Parameters.AddWithValue("@reportable", Reportable);
-                cmd.Parameters.AddWithValue("@instance_status_id", InstanceStatusId);
+                cmd.Parameters.AddWithValue("@detection_limit", DetectionLimit, null);
+                cmd.Parameters.AddWithValue("@detection_limit_approved", DetectionLimitApproved, null);
+                cmd.Parameters.AddWithValue("@accredited", Accredited, null);
+                cmd.Parameters.AddWithValue("@reportable", Reportable, null);
+                cmd.Parameters.AddWithValue("@instance_status_id", InstanceStatusId, null);
                 cmd.Parameters.AddWithValue("@create_date", DateTime.Now);
-                cmd.Parameters.AddWithValue("@created_by", Common.Username);
+                cmd.Parameters.AddWithValue("@created_by", Common.Username, String.Empty);
                 cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
-                cmd.Parameters.AddWithValue("@updated_by", Common.Username);
+                cmd.Parameters.AddWithValue("@updated_by", Common.Username, String.Empty);
 
                 cmd.ExecuteNonQuery();
 
@@ -194,9 +194,9 @@ namespace DSA_lims
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.Clear();
                     cmd.Parameters.AddWithValue("@id", Id);
-                    cmd.Parameters.AddWithValue("@activity", Activity);
-                    cmd.Parameters.AddWithValue("@activity_uncertainty_abs", ActivityUncertaintyABS);
-                    cmd.Parameters.AddWithValue("@activity_approved", ActivityApproved);
+                    cmd.Parameters.AddWithValue("@activity", Activity, null);
+                    cmd.Parameters.AddWithValue("@activity_uncertainty_abs", ActivityUncertaintyABS, null);
+                    cmd.Parameters.AddWithValue("@activity_approved", ActivityApproved, null);
                     // FIXME
                     /*double uAct = -1.0;
                     int uActUnitId = -1;
@@ -206,13 +206,13 @@ namespace DSA_lims
                     }*/
                     cmd.Parameters.AddWithValue("@uniform_activity", DBNull.Value);
                     cmd.Parameters.AddWithValue("@uniform_activity_unit_id", DBNull.Value);
-                    cmd.Parameters.AddWithValue("@detection_limit", DetectionLimit);
-                    cmd.Parameters.AddWithValue("@detection_limit_approved", DetectionLimitApproved);
-                    cmd.Parameters.AddWithValue("@accredited", Accredited);
-                    cmd.Parameters.AddWithValue("@reportable", Reportable);
-                    cmd.Parameters.AddWithValue("@instance_status_id", InstanceStatusId);
+                    cmd.Parameters.AddWithValue("@detection_limit", DetectionLimit, null);
+                    cmd.Parameters.AddWithValue("@detection_limit_approved", DetectionLimitApproved, null);
+                    cmd.Parameters.AddWithValue("@accredited", Accredited, null);
+                    cmd.Parameters.AddWithValue("@reportable", Reportable, null);
+                    cmd.Parameters.AddWithValue("@instance_status_id", InstanceStatusId, null);
                     cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
-                    cmd.Parameters.AddWithValue("@updated_by", Common.Username);
+                    cmd.Parameters.AddWithValue("@updated_by", Common.Username, String.Empty);
 
                     cmd.ExecuteNonQuery();
 

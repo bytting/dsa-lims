@@ -41,31 +41,29 @@ namespace DSA_lims
                 {
                     reader.Read();
 
-                    Id = Guid.Parse(reader["id"].ToString());
-                    Name = reader["name"].ToString();
-                    if (DB.IsValidField(reader["min_fill_height_mm"]))
-                        MinFillHeightMM = Convert.ToDouble(reader["min_fill_height_mm"]);
-                    if (DB.IsValidField(reader["max_fill_height_mm"]))
-                        MaxFillHeightMM = Convert.ToDouble(reader["max_fill_height_mm"]);
-                    InstanceStatusId = Convert.ToInt32(reader["instance_status_id"]);
-                    Comment = reader["comment"].ToString();
-                    CreateDate = Convert.ToDateTime(reader["create_date"]);
-                    CreatedBy = reader["created_by"].ToString();
-                    UpdateDate = Convert.ToDateTime(reader["update_date"]);
-                    UpdatedBy = reader["updated_by"].ToString();
+                    Id = reader.GetGuid("id");
+                    Name = reader.GetString("name");
+                    MinFillHeightMM = reader.GetDouble("min_fill_height_mm");
+                    MaxFillHeightMM = reader.GetDouble("max_fill_height_mm");
+                    InstanceStatusId = reader.GetInt32("instance_status_id");
+                    Comment = reader.GetString("comment");
+                    CreateDate = reader.GetDateTime("create_date");
+                    CreatedBy = reader.GetString("created_by");
+                    UpdateDate = reader.GetDateTime("update_date");
+                    UpdatedBy = reader.GetString("updated_by");
                 }
             }
         }
 
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public double MinFillHeightMM { get; set; }
-        public double MaxFillHeightMM { get; set; }
-        public int InstanceStatusId { get; set; }
+        public double? MinFillHeightMM { get; set; }
+        public double? MaxFillHeightMM { get; set; }
+        public int? InstanceStatusId { get; set; }
         public string Comment { get; set; }
-        public DateTime CreateDate { get; set; }
+        public DateTime? CreateDate { get; set; }
         public string CreatedBy { get; set; }
-        public DateTime UpdateDate { get; set; }
+        public DateTime? UpdateDate { get; set; }
         public string UpdatedBy { get; set; }
     }
 }

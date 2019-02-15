@@ -163,12 +163,10 @@ namespace DSA_lims
             cmd.ExecuteNonQuery();
         }
 
-        public static List<Lemma<int?, string>> GetIntLemmata(SqlConnection conn, SqlTransaction trans, string proc, bool addEmptyEntry = false)
+        public static List<Lemma<int?, string>> GetIntLemmata(SqlConnection conn, SqlTransaction trans, string proc)
         {
             List<Lemma<int?, string>> list = new List<Lemma<int?, string>>();
-
-            if(addEmptyEntry)
-                list.Add(new Lemma<int?, string>(null, ""));
+            list.Add(new Lemma<int?, string>(null, ""));
 
             try
             {
@@ -712,5 +710,87 @@ select
 
             return (int)cmd.ExecuteScalar() > 0;
         }
-    }                    
+
+        public static bool CanUserApproveAnalysis(SqlConnection conn, SqlTransaction trans, Guid userId, Guid analMethId)
+        {            
+            SqlCommand cmd = new SqlCommand("select count(*) from account_x_analysis_method where account_id = @acc_id and analysis_method_id = @am_id", conn, trans);
+            cmd.Parameters.AddWithValue("@acc_id", userId);
+            cmd.Parameters.AddWithValue("@am_id", analMethId);
+            return (int)cmd.ExecuteScalar() > 0;
+        }
+
+        public static double? GetDouble(this SqlDataReader reader, string key)
+        {
+            if (!IsValidField(reader[key]))
+                return null;
+            return Convert.ToDouble(reader[key]);
+        }
+
+        public static float? GetSingle(this SqlDataReader reader, string key)
+        {
+            if (!IsValidField(reader[key]))
+                return null;
+            return Convert.ToSingle(reader[key]);
+        }
+
+        public static Int16? GetInt16(this SqlDataReader reader, string key)
+        {
+            if (!IsValidField(reader[key]))
+                return null;
+            return Convert.ToInt16(reader[key]);
+        }
+
+        public static Int32? GetInt32(this SqlDataReader reader, string key)
+        {
+            if (!IsValidField(reader[key]))
+                return null;
+            return Convert.ToInt32(reader[key]);
+        }
+
+        public static Int64? GetInt64(this SqlDataReader reader, string key)
+        {
+            if (!IsValidField(reader[key]))
+                return null;
+            return Convert.ToInt64(reader[key]);
+        }
+
+        public static DateTime? GetDateTime(this SqlDataReader reader, string key)
+        {
+            if (!IsValidField(reader[key]))
+                return null;
+            return Convert.ToDateTime(reader[key]);
+        }
+
+        public static bool GetBoolean(this SqlDataReader reader, string key)
+        {
+            if (!IsValidField(reader[key]))
+                return false;
+            return Convert.ToBoolean(reader[key]);
+        }
+
+        public static string GetString(this SqlDataReader reader, string key)
+        {
+            if (!IsValidField(reader[key]))
+                return String.Empty;
+            return reader[key].ToString();
+        }
+
+        public static Guid GetGuid(this SqlDataReader reader, string key)
+        {
+            if (!IsValidField(reader[key]))
+                return Guid.Empty;
+            return Guid.Parse(reader[key].ToString());
+        }        
+    }
+
+    public static class SqlParameterCollectionExtensions
+    {
+        public static SqlParameter AddWithValue(this SqlParameterCollection paramCollection, string paramName, object value, object nullValue)
+        {
+            if (value == null || value == nullValue)            
+                return paramCollection.AddWithValue(paramName, DBNull.Value);                
+            
+            return paramCollection.AddWithValue(paramName, value);
+        }
+    }
 }

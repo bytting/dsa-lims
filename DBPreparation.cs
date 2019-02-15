@@ -37,22 +37,22 @@ namespace DSA_lims
 
         public Guid Id { get; set; }
         public Guid SampleId { get; set; }
-        public int Number { get; set; }
+        public int? Number { get; set; }
         public Guid AssignmentId { get; set; }
         public Guid LaboratoryId { get; set; }
         public Guid PreparationGeometryId { get; set; }
         public Guid PreparationMethodId { get; set; }
-        public int WorkflowStatusId { get; set; }
-        public double Amount { get; set; }
-        public int PrepUnitId { get; set; }
-        public double Quantity { get; set; }
-        public int QuantityUnitId { get; set; }
-        public double FillHeightMM { get; set; }
-        public int InstanceStatusId { get; set; }
+        public int? WorkflowStatusId { get; set; }
+        public double? Amount { get; set; }
+        public int? PrepUnitId { get; set; }
+        public double? Quantity { get; set; }
+        public int? QuantityUnitId { get; set; }
+        public double? FillHeightMM { get; set; }
+        public int? InstanceStatusId { get; set; }
         public string Comment { get; set; }
-        public DateTime CreateDate { get; set; }
+        public DateTime? CreateDate { get; set; }
         public string CreatedBy { get; set; }
-        public DateTime UpdateDate { get; set; }
+        public DateTime? UpdateDate { get; set; }
         public string UpdatedBy { get; set; }
 
         public bool Dirty;
@@ -109,25 +109,25 @@ namespace DSA_lims
                 
                 reader.Read();
 
-                Id = Guid.Parse(reader["id"].ToString());
-                SampleId = DB.IsValidField(reader["sample_id"]) ? Guid.Parse(reader["sample_id"].ToString()) : Guid.Empty;
-                Number = Convert.ToInt32(reader["number"]);
-                AssignmentId = DB.IsValidField(reader["assignment_id"]) ? Guid.Parse(reader["assignment_id"].ToString()) : Guid.Empty;
-                LaboratoryId = DB.IsValidField(reader["laboratory_id"]) ? Guid.Parse(reader["laboratory_id"].ToString()) : Guid.Empty;
-                PreparationGeometryId = DB.IsValidField(reader["preparation_geometry_id"]) ? Guid.Parse(reader["preparation_geometry_id"].ToString()) : Guid.Empty;
-                PreparationMethodId = DB.IsValidField(reader["preparation_method_id"]) ? Guid.Parse(reader["preparation_method_id"].ToString()) : Guid.Empty;
-                WorkflowStatusId = Convert.ToInt32(reader["workflow_status_id"]);
-                Amount = DB.IsValidField(reader["amount"]) ? Convert.ToDouble(reader["amount"]) : 0d;
-                PrepUnitId = DB.IsValidField(reader["prep_unit_id"]) ? Convert.ToInt32(reader["prep_unit_id"]) : 0;
-                Quantity = DB.IsValidField(reader["quantity"]) ? Convert.ToDouble(reader["quantity"]) : 0d;
-                QuantityUnitId = DB.IsValidField(reader["quantity_unit_id"]) ? Convert.ToInt32(reader["quantity_unit_id"]) : 0;
-                FillHeightMM = DB.IsValidField(reader["fill_height_mm"]) ? Convert.ToDouble(reader["fill_height_mm"]) : 0d;
-                InstanceStatusId = Convert.ToInt32(reader["instance_status_id"]);
-                Comment = reader["comment"].ToString();
-                CreateDate = Convert.ToDateTime(reader["create_date"]);
-                CreatedBy = reader["created_by"].ToString();
-                UpdateDate = Convert.ToDateTime(reader["update_date"]);
-                UpdatedBy = reader["updated_by"].ToString();         
+                Id = reader.GetGuid("id");
+                SampleId = reader.GetGuid("sample_id");
+                Number = reader.GetInt32("number");
+                AssignmentId = reader.GetGuid("assignment_id");
+                LaboratoryId = reader.GetGuid("laboratory_id");
+                PreparationGeometryId = reader.GetGuid("preparation_geometry_id");
+                PreparationMethodId = reader.GetGuid("preparation_method_id");
+                WorkflowStatusId = reader.GetInt32("workflow_status_id");
+                Amount = reader.GetDouble("amount");
+                PrepUnitId = reader.GetInt32("prep_unit_id");
+                Quantity = reader.GetDouble("quantity");
+                QuantityUnitId = reader.GetInt32("quantity_unit_id");
+                FillHeightMM = reader.GetDouble("fill_height_mm");
+                InstanceStatusId = reader.GetInt32("instance_status_id");
+                Comment = reader.GetString("comment");
+                CreateDate = reader.GetDateTime("create_date");
+                CreatedBy = reader.GetString("created_by");
+                UpdateDate = reader.GetDateTime("update_date");
+                UpdatedBy = reader.GetString("updated_by");
             }
         }
 
@@ -144,24 +144,24 @@ namespace DSA_lims
                 cmd.CommandText = "csp_insert_preparation";
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@id", Id);
-                cmd.Parameters.AddWithValue("@sample_id", DB.MakeParam(typeof(Guid), SampleId));
-                cmd.Parameters.AddWithValue("@number", Number);
-                cmd.Parameters.AddWithValue("@assignment_id", DB.MakeParam(typeof(Guid), AssignmentId));
-                cmd.Parameters.AddWithValue("@laboratory_id", DB.MakeParam(typeof(Guid), LaboratoryId));
-                cmd.Parameters.AddWithValue("@preparation_geometry_id", DB.MakeParam(typeof(Guid), PreparationGeometryId));
-                cmd.Parameters.AddWithValue("@preparation_method_id", DB.MakeParam(typeof(Guid), PreparationMethodId));
-                cmd.Parameters.AddWithValue("@workflow_status_id", DB.MakeParam(typeof(int), WorkflowStatusId));
-                cmd.Parameters.AddWithValue("@amount", DB.MakeParam(typeof(double), Amount));
-                cmd.Parameters.AddWithValue("@prep_unit_id", DB.MakeParam(typeof(int), PrepUnitId));
-                cmd.Parameters.AddWithValue("@quantity", DB.MakeParam(typeof(double), Quantity));
-                cmd.Parameters.AddWithValue("@quantity_unit_id", DB.MakeParam(typeof(int), QuantityUnitId));
-                cmd.Parameters.AddWithValue("@fill_height_mm", FillHeightMM);
-                cmd.Parameters.AddWithValue("@instance_status_id", InstanceStatusId);
-                cmd.Parameters.AddWithValue("@comment", Comment);
-                cmd.Parameters.AddWithValue("@create_date", DateTime.Now);
-                cmd.Parameters.AddWithValue("@created_by", Common.Username);
-                cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
-                cmd.Parameters.AddWithValue("@updated_by", Common.Username);
+                cmd.Parameters.AddWithValue("@sample_id", SampleId, Guid.Empty);
+                cmd.Parameters.AddWithValue("@number", Number, null);
+                cmd.Parameters.AddWithValue("@assignment_id", AssignmentId, Guid.Empty);
+                cmd.Parameters.AddWithValue("@laboratory_id", LaboratoryId, Guid.Empty);
+                cmd.Parameters.AddWithValue("@preparation_geometry_id", PreparationGeometryId, Guid.Empty);
+                cmd.Parameters.AddWithValue("@preparation_method_id", PreparationMethodId, Guid.Empty);
+                cmd.Parameters.AddWithValue("@workflow_status_id", WorkflowStatusId, null);
+                cmd.Parameters.AddWithValue("@amount", Amount, null);
+                cmd.Parameters.AddWithValue("@prep_unit_id", PrepUnitId, null);
+                cmd.Parameters.AddWithValue("@quantity", Quantity, null);
+                cmd.Parameters.AddWithValue("@quantity_unit_id", QuantityUnitId, null);
+                cmd.Parameters.AddWithValue("@fill_height_mm", FillHeightMM, null);
+                cmd.Parameters.AddWithValue("@instance_status_id", InstanceStatusId, null);
+                cmd.Parameters.AddWithValue("@comment", Comment, String.Empty);
+                cmd.Parameters.AddWithValue("@create_date", DateTime.Now, DateTime.MinValue);
+                cmd.Parameters.AddWithValue("@created_by", Common.Username, String.Empty);
+                cmd.Parameters.AddWithValue("@update_date", DateTime.Now, DateTime.MinValue);
+                cmd.Parameters.AddWithValue("@updated_by", Common.Username, String.Empty);
 
                 cmd.ExecuteNonQuery();
 
@@ -180,16 +180,16 @@ namespace DSA_lims
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     cmd.Parameters.AddWithValue("@id", Id);
-                    cmd.Parameters.AddWithValue("@preparation_geometry_id", DB.MakeParam(typeof(Guid), PreparationGeometryId));
-                    cmd.Parameters.AddWithValue("@workflow_status_id", DB.MakeParam(typeof(int), WorkflowStatusId));
-                    cmd.Parameters.AddWithValue("@amount", DB.MakeParam(typeof(double), Amount));
-                    cmd.Parameters.AddWithValue("@prep_unit_id", DB.MakeParam(typeof(int), PrepUnitId));
-                    cmd.Parameters.AddWithValue("@quantity", DB.MakeParam(typeof(double), Quantity));
-                    cmd.Parameters.AddWithValue("@quantity_unit_id", DB.MakeParam(typeof(int), QuantityUnitId));
-                    cmd.Parameters.AddWithValue("@fill_height_mm", FillHeightMM);
-                    cmd.Parameters.AddWithValue("@comment", Comment);
+                    cmd.Parameters.AddWithValue("@preparation_geometry_id", PreparationGeometryId, Guid.Empty);
+                    cmd.Parameters.AddWithValue("@workflow_status_id", WorkflowStatusId, null);
+                    cmd.Parameters.AddWithValue("@amount", Amount, null);
+                    cmd.Parameters.AddWithValue("@prep_unit_id", PrepUnitId, null);
+                    cmd.Parameters.AddWithValue("@quantity", Quantity, null);
+                    cmd.Parameters.AddWithValue("@quantity_unit_id", QuantityUnitId, null);
+                    cmd.Parameters.AddWithValue("@fill_height_mm", FillHeightMM, null);
+                    cmd.Parameters.AddWithValue("@comment", Comment, String.Empty);
                     cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
-                    cmd.Parameters.AddWithValue("@updated_by", Common.Username);
+                    cmd.Parameters.AddWithValue("@updated_by", Common.Username, String.Empty);
 
                     cmd.ExecuteNonQuery();
 

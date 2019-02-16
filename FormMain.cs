@@ -3044,6 +3044,9 @@ namespace DSA_lims
                     foreach (AssignmentAnalysisMethod aam in apm.AnalysisMethods)
                     {
                         txt = aam.AnalysisMethodCount.ToString() + ", " + aam.AnalysisMethodName(conn, trans);
+                        if (Utils.IsValidGuid(assignment.LaboratoryId))
+                            txt += " (" + assignment.LaboratoryName(conn, trans) + ")";
+
                         TreeNode tn2 = tn.Nodes.Add(aam.Id.ToString(), txt);
                         tn2.Tag = aam;
                         tn2.ToolTipText = aam.AnalysisMethodNameFull(conn, trans) + Environment.NewLine + Environment.NewLine + aam.Comment;
@@ -3929,10 +3932,14 @@ namespace DSA_lims
             tbPrepAnalLODEndWeight.Text = s.LodWeightEnd.ToString();
             tbPrepAnalLODTemp.Text = s.LodTemperature.ToString();
 
+            btnPrepAnalSampleDiscard.Enabled = true;
             btnPrepAnalSampleUpdate.Enabled = true;
             Guid labId = sample.GetAssignmentLaboratory(conn, trans);
             if (Utils.IsValidGuid(labId) && labId != Common.LabId)
+            {
+                btnPrepAnalSampleDiscard.Enabled = false;
                 btnPrepAnalSampleUpdate.Enabled = false;
+            }
 
             if (clearDirty)
                 s.ClearDirty();
@@ -4628,6 +4635,8 @@ namespace DSA_lims
                 gridSamples.Columns["reference_date"].DefaultCellStyle.Format = Utils.DateTimeFormatNorwegian;
             }
 
+            SetStatusMessage("Showing " + gridSamples.RowCount + " samples");
+
             if (Utils.IsValidGuid(sample.Id))
             {
                 gridSamples.ClearSelection();
@@ -4799,6 +4808,8 @@ where s.number = @sample_number
 
                 gridOrders.Columns["deadline"].DefaultCellStyle.Format = Utils.DateFormatNorwegian;
             }
+
+            SetStatusMessage("Showing " + gridOrders.RowCount + " orders");
 
             if (Utils.IsValidGuid(assignment.Id))
             {

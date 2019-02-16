@@ -35,10 +35,12 @@ namespace DSA_lims
         public static int MIN_USERNAME_LENGTH { get { return 3; } }
         public static int MIN_PASSWORD_LENGTH { get { return 8; } }
 
-        public static readonly string DateTimeFormatISO = "yyyy-MM-dd HH:mm:ss";
         public static readonly string DateFormatISO = "yyyy-MM-dd";
-        public static readonly string DateTimeFormatNorwegian = "dd.MM.yyyy HH:mm:ss";
+        public static readonly string TimeFormatISO = "HH:mm:ss";
+        public static readonly string DateTimeFormatISO = DateFormatISO + " " + TimeFormatISO;
         public static readonly string DateFormatNorwegian = "dd.MM.yyyy";
+        public static readonly string TimeFormatNorwegian = "HH:mm:ss";
+        public static readonly string DateTimeFormatNorwegian = DateFormatNorwegian + " " + TimeFormatNorwegian;
 
         public static readonly string ScientificFormat = "0.###E+0";
 

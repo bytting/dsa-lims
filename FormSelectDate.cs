@@ -41,6 +41,9 @@ namespace DSA_lims
 
         private void FormSelectDate_Load(object sender, EventArgs e)
         {
+            dtSelectDate.Format = DateTimePickerFormat.Custom;
+            dtSelectDate.CustomFormat = Utils.DateFormatNorwegian;
+
             DateTime now = DateTime.Now;
             dtSelectDate.Value = new DateTime(now.Year, now.Month, now.Day, 12, 0, 0);
         }

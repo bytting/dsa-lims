@@ -57,6 +57,57 @@ namespace DSA_lims
         private void btnCancel_Click(object sender, EventArgs e)
         {
             miExit_Click(sender, e);
+        }        
+
+        private void btnOk_Click(object sender, EventArgs e)
+        {                        
+            try
+            {
+                if (cboxAction.SelectedIndex == 0)
+                {
+                    string username = tbUsername.Text.ToLower().Trim();
+                    string password = tbPassword.Text.Trim();
+
+                    if (username.Length < Utils.MIN_USERNAME_LENGTH)
+                    {
+                        MessageBox.Show("Username must be at least 3 characters long");
+                        return;
+                    }
+
+                    if (password.Length < Utils.MIN_PASSWORD_LENGTH)
+                    {
+                        MessageBox.Show("Authentication failed");
+                        return;
+                    }
+
+                    if (!ValidateLimsUser(username, password))
+                    {
+                        MessageBox.Show("Authentication failed");
+                        return;
+                    }
+
+                    DialogResult = DialogResult.OK;
+                    Close();
+                }
+                else if (cboxAction.SelectedIndex == 1)
+                {
+                    if (!IsCurrentUserAdmin())
+                    {
+                        MessageBox.Show("Can not create the LIMSAdministrator user, you are not running as administrator");
+                        return;
+                    }
+
+                    if(CreateLIMSAdministrator())
+                    {
+                        cboxAction.SelectedIndex = 0;
+                    }
+                    return;
+                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("Connection failed: " + ex.Message);
+            }
         }
 
         private bool CreateLIMSAdministrator()
@@ -127,57 +178,6 @@ namespace DSA_lims
 
             return true;
         }
-
-        private void btnOk_Click(object sender, EventArgs e)
-        {                        
-            try
-            {
-                if (cboxAction.SelectedIndex == 0)
-                {
-                    string username = tbUsername.Text.ToLower().Trim();
-                    string password = tbPassword.Text.Trim();
-
-                    if (username.Length < Utils.MIN_USERNAME_LENGTH)
-                    {
-                        MessageBox.Show("Username must be at least 3 characters long");
-                        return;
-                    }
-
-                    if (password.Length < Utils.MIN_PASSWORD_LENGTH)
-                    {
-                        MessageBox.Show("Authentication failed");
-                        return;
-                    }
-
-                    if (!ValidateLimsUser(username, password))
-                    {
-                        MessageBox.Show("Authentication failed");
-                        return;
-                    }
-
-                    DialogResult = DialogResult.OK;
-                    Close();
-                }
-                else if (cboxAction.SelectedIndex == 1)
-                {
-                    if (!IsCurrentUserAdmin())
-                    {
-                        MessageBox.Show("Can not create the LIMSAdministrator user, you are not running as administrator");
-                        return;
-                    }
-
-                    if(CreateLIMSAdministrator())
-                    {
-                        cboxAction.SelectedIndex = 0;
-                    }
-                    return;
-                }
-            }
-            catch(Exception ex)
-            {
-                MessageBox.Show("Connection failed: " + ex.Message);
-            }
-        }        
 
         private bool ValidateLimsUser(string username, string password)
         {

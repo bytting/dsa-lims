@@ -3686,6 +3686,7 @@
             this.gridSampleAttachments.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
             this.gridSampleAttachments.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.gridSampleAttachments.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridSampleAttachments.ColumnHeadersVisible = false;
             this.gridSampleAttachments.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gridSampleAttachments.Location = new System.Drawing.Point(0, 25);
             this.gridSampleAttachments.MultiSelect = false;
@@ -3978,6 +3979,7 @@
             this.gridOrderAttachments.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
             this.gridOrderAttachments.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.gridOrderAttachments.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridOrderAttachments.ColumnHeadersVisible = false;
             this.gridOrderAttachments.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gridOrderAttachments.Location = new System.Drawing.Point(0, 25);
             this.gridOrderAttachments.MultiSelect = false;
@@ -9645,10 +9647,10 @@
             this.tabPrepAnalPreps.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.tabPrepAnalPreps.Controls.Add(this.panel10);
             this.tabPrepAnalPreps.Controls.Add(this.splitContainer3);
-            this.tabPrepAnalPreps.Location = new System.Drawing.Point(4, 22);
+            this.tabPrepAnalPreps.Location = new System.Drawing.Point(4, 24);
             this.tabPrepAnalPreps.Name = "tabPrepAnalPreps";
             this.tabPrepAnalPreps.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPrepAnalPreps.Size = new System.Drawing.Size(635, 581);
+            this.tabPrepAnalPreps.Size = new System.Drawing.Size(635, 579);
             this.tabPrepAnalPreps.TabIndex = 3;
             this.tabPrepAnalPreps.Text = "Preparations";
             // 
@@ -9659,7 +9661,7 @@
             this.panel10.Controls.Add(this.btnPrepAnalPrepUpdate);
             this.panel10.Controls.Add(this.label23);
             this.panel10.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel10.Location = new System.Drawing.Point(3, 552);
+            this.panel10.Location = new System.Drawing.Point(3, 550);
             this.panel10.Name = "panel10";
             this.panel10.Size = new System.Drawing.Size(629, 26);
             this.panel10.TabIndex = 1;
@@ -10078,6 +10080,7 @@
             this.gridPrepAnalPrepAttachments.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
             this.gridPrepAnalPrepAttachments.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.gridPrepAnalPrepAttachments.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridPrepAnalPrepAttachments.ColumnHeadersVisible = false;
             this.gridPrepAnalPrepAttachments.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gridPrepAnalPrepAttachments.Location = new System.Drawing.Point(0, 25);
             this.gridPrepAnalPrepAttachments.MultiSelect = false;
@@ -10562,6 +10565,7 @@
             this.gridPrepAnalAnalAttachments.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
             this.gridPrepAnalAnalAttachments.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.gridPrepAnalAnalAttachments.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridPrepAnalAnalAttachments.ColumnHeadersVisible = false;
             this.gridPrepAnalAnalAttachments.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gridPrepAnalAnalAttachments.Location = new System.Drawing.Point(0, 25);
             this.gridPrepAnalAnalAttachments.MultiSelect = false;

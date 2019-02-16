@@ -94,6 +94,12 @@ namespace DSA_lims
                 ast.ClearDirty();
         }
 
+        public string LaboratoryName(SqlConnection conn, SqlTransaction trans)
+        {
+            object o = DB.GetScalar(conn, trans, "select name from laboratory where id = @lid", CommandType.Text, new SqlParameter("@lid", LaboratoryId));
+            return !DB.IsValidField(o) ? "" : o.ToString();
+        }
+
         public static string ToJSON(SqlConnection conn, SqlTransaction trans, Guid assignmentId)
         {
             string json = String.Empty;

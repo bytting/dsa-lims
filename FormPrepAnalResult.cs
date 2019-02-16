@@ -81,11 +81,11 @@ namespace DSA_lims
                 cboxSigmaMDA.DataSource = DB.GetSigmaMDAValues(conn);                
             }
             
-            cboxSigmaActivity.SelectedValue = mAnalysis.SigmaActivity;
+            cboxSigmaActivity.SelectedValue = 2d;
             cboxSigmaActivity.Enabled = false;
-            cboxSigmaMDA.SelectedValue = mAnalysis.SigmaMDA;
+            cboxSigmaMDA.SelectedValue = 1.645d;
             cboxSigmaMDA.Enabled = false;
-            
+
             tbActivity.Text = mResult.Activity.ToString(Utils.ScientificFormat);
             tbUncertainty.Text = mResult.ActivityUncertaintyABS.ToString(Utils.ScientificFormat);
             cbActivityApproved.Checked = mResult.ActivityApproved;
@@ -123,7 +123,7 @@ namespace DSA_lims
 
             if(cboxSigmaActivity.SelectedValue == null)
             {
-                MessageBox.Show("Sigma activity is mandatory");
+                MessageBox.Show("Sigma uncertainty is mandatory");
                 return;
             }
 

@@ -463,7 +463,9 @@ namespace DSA_lims
 
         private void SetStatusMessage(string msg, StatusMessageType msgLevel = StatusMessageType.Success)
         {
-            switch(msgLevel)
+            statusMessageTimer.Stop();
+
+            switch (msgLevel)
             {
                 case StatusMessageType.Success:
                     lblStatus.Text = Utils.makeStatusMessage(msg);
@@ -478,8 +480,7 @@ namespace DSA_lims
                     lblStatus.ForeColor = Color.Red;
                     break;
             }
-
-            statusMessageTimer.Stop();
+            
             statusMessageTimer.Start();
         }
 
@@ -1983,7 +1984,7 @@ namespace DSA_lims
             tbSampleSamplingDateTo.TextChanged -= tbSampleSamplingDateTo_TextChanged;
             tbSampleReferenceDate.TextChanged -= tbSampleReferenceDate_TextChanged;
 
-            if (s.SamplingDateFrom == DateTime.MinValue)
+            if (!s.SamplingDateFrom.HasValue)
             {
                 tbSampleSamplingDateFrom.Tag = null;
                 tbSampleSamplingDateFrom.Text = "";                
@@ -1994,7 +1995,7 @@ namespace DSA_lims
                 tbSampleSamplingDateFrom.Text = s.SamplingDateFrom.Value.ToString(Utils.DateTimeFormatNorwegian);                
             }            
 
-            if (s.SamplingDateTo == DateTime.MinValue)
+            if (!s.SamplingDateTo.HasValue)
             {
                 tbSampleSamplingDateTo.Tag = null;
                 tbSampleSamplingDateTo.Text = "";                
@@ -2005,7 +2006,7 @@ namespace DSA_lims
                 tbSampleSamplingDateTo.Text = s.SamplingDateTo.Value.ToString(Utils.DateTimeFormatNorwegian);                
             }
 
-            if (s.ReferenceDate == DateTime.MinValue)
+            if (!s.ReferenceDate.HasValue)
             {
                 tbSampleReferenceDate.Tag = null;
                 tbSampleReferenceDate.Text = "";                
@@ -3755,11 +3756,11 @@ namespace DSA_lims
             cboxPrepAnalPrepGeom.SelectedValue = p.PreparationGeometryId;
             tbPrepAnalPrepFillHeight.Text = p.FillHeightMM.ToString();
             tbPrepAnalPrepAmount.Text = p.Amount.ToString();
-            if (p.PrepUnitId == null)
+            if (!p.PrepUnitId.HasValue)
                 cboxPrepAnalPrepAmountUnit.SelectedIndex = -1;
             else cboxPrepAnalPrepAmountUnit.SelectedValue = p.PrepUnitId;
             tbPrepAnalPrepQuantity.Text = p.Quantity.ToString();
-            if(p.QuantityUnitId == null)
+            if(!p.QuantityUnitId.HasValue)
                 cboxPrepAnalPrepQuantityUnit.SelectedIndex = -1;
             else cboxPrepAnalPrepQuantityUnit.SelectedValue = p.QuantityUnitId;
             tbPrepAnalPrepComment.Text = p.Comment;
@@ -4006,9 +4007,10 @@ namespace DSA_lims
 
         private void PopulateAnalysisResults(Analysis a, bool clearDirty)
         {
-            a.Results.Sort((r1, r2) => r1.NuclideName.CompareTo(r2.NuclideName));
-
             gridPrepAnalResults.DataSource = null;
+
+            a.Results.Sort((r1, r2) => r1.NuclideName.CompareTo(r2.NuclideName));
+            
             gridPrepAnalResults.DataSource = a.Results;
 
             gridPrepAnalResults.Columns["Id"].Visible = false;
@@ -4435,10 +4437,11 @@ namespace DSA_lims
                 return;
             }
 
-            Guid resultId = Guid.Parse(cell.Value.ToString());
+            Guid resultId = Guid.Parse(cell.Value.ToString());            
+
             FormPrepAnalResult form = new FormPrepAnalResult(analysis, resultId);
-            if (form.ShowDialog() != DialogResult.OK)
-                return;
+            if (form.ShowDialog() != DialogResult.OK)            
+                return;            
 
             PopulateAnalysisResults(analysis, false);
         }
@@ -4464,10 +4467,10 @@ namespace DSA_lims
             }
             
             foreach (AnalysisResult ar in analysis.Results)            
-                nuclides.Remove(ar.NuclideName.ToUpper());                            
-            
+                nuclides.Remove(ar.NuclideName.ToUpper());            
+
             FormPrepAnalResult form = new FormPrepAnalResult(analysis, nuclides);
-            if (form.ShowDialog() != DialogResult.OK)
+            if (form.ShowDialog() != DialogResult.OK)            
                 return;
 
             using (SqlConnection conn = DB.OpenConnection())
@@ -5747,7 +5750,7 @@ where s.number = @sample_number
             {
                 DialogResult r = MessageBox.Show("Are you sure you want to delete " + gridPrepAnalResults.SelectedRows.Count + " results from this analysis?", "Warning", MessageBoxButtons.YesNo);
                 if (r == DialogResult.No)                
-                    return;
+                    return;                
 
                 foreach (DataGridViewRow row in gridPrepAnalResults.SelectedRows)
                 {

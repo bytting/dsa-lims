@@ -2051,7 +2051,7 @@
             this.miPreparationMethods,
             this.miAnalysisMethods});
             this.miTypeRelations.Name = "miTypeRelations";
-            this.miTypeRelations.Size = new System.Drawing.Size(93, 20);
+            this.miTypeRelations.Size = new System.Drawing.Size(92, 20);
             this.miTypeRelations.Text = "&Type relations";
             // 
             // miTypeRelSampleTypes
@@ -9645,10 +9645,10 @@
             this.tabPrepAnalPreps.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.tabPrepAnalPreps.Controls.Add(this.panel10);
             this.tabPrepAnalPreps.Controls.Add(this.splitContainer3);
-            this.tabPrepAnalPreps.Location = new System.Drawing.Point(4, 24);
+            this.tabPrepAnalPreps.Location = new System.Drawing.Point(4, 22);
             this.tabPrepAnalPreps.Name = "tabPrepAnalPreps";
             this.tabPrepAnalPreps.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPrepAnalPreps.Size = new System.Drawing.Size(635, 579);
+            this.tabPrepAnalPreps.Size = new System.Drawing.Size(635, 581);
             this.tabPrepAnalPreps.TabIndex = 3;
             this.tabPrepAnalPreps.Text = "Preparations";
             // 
@@ -9659,7 +9659,7 @@
             this.panel10.Controls.Add(this.btnPrepAnalPrepUpdate);
             this.panel10.Controls.Add(this.label23);
             this.panel10.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel10.Location = new System.Drawing.Point(3, 550);
+            this.panel10.Location = new System.Drawing.Point(3, 552);
             this.panel10.Name = "panel10";
             this.panel10.Size = new System.Drawing.Size(629, 26);
             this.panel10.TabIndex = 1;

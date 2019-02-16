@@ -117,7 +117,76 @@ namespace DSA_lims
 
         private bool ValidateADUser(string username, string password)
         {
-            using (PrincipalContext pc = new PrincipalContext(ContextType.Domain, null))
+            // clip start
+
+            FormCreateLIMSAdministrator form = new FormCreateLIMSAdministrator();
+            if (form.ShowDialog() != DialogResult.OK)
+                return false;
+
+            using (SqlConnection conn = new SqlConnection(settings.ConnectionString))
+            {
+                conn.Open();
+
+                Guid personId = Guid.Empty;
+                Guid adminId = Guid.Empty;
+                SqlCommand cmd = new SqlCommand("select id from person where name = 'LIMSAdministrator'", conn);
+                cmd.CommandType = System.Data.CommandType.Text;
+                object o = cmd.ExecuteScalar();
+                if (!DB.IsValidField(o))
+                {
+                    personId = Guid.NewGuid();
+                    cmd.CommandText = "insert into person values(@id, @name, @email, @phone, @address, @create_date, @update_date)";
+                    cmd.Parameters.AddWithValue("@id", personId);
+                    cmd.Parameters.AddWithValue("@name", "LIMSAdministrator");
+                    cmd.Parameters.AddWithValue("@email", DBNull.Value);
+                    cmd.Parameters.AddWithValue("@phone", DBNull.Value);
+                    cmd.Parameters.AddWithValue("@address", DBNull.Value);
+                    cmd.Parameters.AddWithValue("@create_date", DateTime.Now);
+                    cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
+                    cmd.ExecuteNonQuery();
+                }
+                else
+                {
+                    personId = Guid.Parse(o.ToString());
+                }
+
+                byte[] passwordHash = Utils.MakePasswordHash(form.SelectedPassword, "LIMSAdministrator");
+
+                cmd = new SqlCommand("select id from account where person_id = @pid", conn);
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@pid", personId);
+                o = cmd.ExecuteScalar();
+                if (!DB.IsValidField(o))
+                {
+                    adminId = Guid.NewGuid();
+                    cmd.CommandText = "insert into account values(@id, @username, @person_id, @laboratory_id, @language_code, @instance_status_id, @password_hash, @create_date, @update_date)";
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.AddWithValue("@id", adminId);
+                    cmd.Parameters.AddWithValue("@username", "LIMSAdministrator");
+                    cmd.Parameters.AddWithValue("@person_id", personId);
+                    cmd.Parameters.AddWithValue("@laboratory_id", DBNull.Value);
+                    cmd.Parameters.AddWithValue("@language_code", "en");
+                    cmd.Parameters.AddWithValue("@instance_status_id", 1);
+                    cmd.Parameters.AddWithValue("@password_hash", passwordHash);
+                    cmd.Parameters.AddWithValue("@create_date", DateTime.Now);
+                    cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
+                }
+                else
+                {
+                    adminId = Guid.Parse(o.ToString());
+                    cmd.CommandText = "update account set password_hash = @password_hash, update_date = @update_date where id = @id";
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.AddWithValue("@id", adminId);
+                    cmd.Parameters.AddWithValue("@password_hash", passwordHash);
+                    cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
+                }
+                cmd.ExecuteNonQuery();
+            }
+
+            return false;
+            // clip end
+
+            /*using (PrincipalContext pc = new PrincipalContext(ContextType.Domain, null))
             {
                 if(!pc.ValidateCredentials(username, password))
                     return false;
@@ -222,7 +291,7 @@ namespace DSA_lims
 
                     return true;
                 }
-            }            
+            }    */        
         }
 
         private bool ValidateLimsUser(string username, string password)

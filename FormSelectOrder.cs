@@ -152,7 +152,15 @@ where sxast.sample_id = @sid";
 
                     o = DB.GetScalar(conn, null, "select preparation_laboratory_id from assignment_preparation_method where id = @id", CommandType.Text,
                         new SqlParameter("@id", prepMethLineId));
-                    if (o != null && o != DBNull.Value)
+                    if(!Utils.IsValidGuid(o))
+                    {
+                        Common.Log.Error("Invalid or non existing Guid on assignment preparation method");
+                        MessageBox.Show("Invalid or non existing Guid on assignment preparation method");
+                        return;
+                    }
+
+                    Guid prepLabId = Guid.Parse(o.ToString());
+                    if(prepLabId != SelectedLaboratoryId)
                     {
                         if (tn.Tag == null)
                         {

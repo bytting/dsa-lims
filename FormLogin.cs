@@ -22,8 +22,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data.SqlClient;
 using System.DirectoryServices.AccountManagement;
+using System.DirectoryServices.ActiveDirectory;
 using System.Drawing;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
 using System.Windows.Forms;
 
@@ -48,7 +50,7 @@ namespace DSA_lims
 
         private void FormLogin_Load(object sender, EventArgs e)
         {
-            cbUseAD.Checked = settings.UseActiveDirectoryCredentials;
+            cboxAction.SelectedIndex = 0;            
             ActiveControl = tbUsername;
         }
 
@@ -57,68 +59,8 @@ namespace DSA_lims
             miExit_Click(sender, e);
         }
 
-        private void btnOk_Click(object sender, EventArgs e)
-        {            
-            string username = tbUsername.Text.ToLower().Trim();
-            string password = tbPassword.Text.Trim();
-
-            try
-            {
-                if (cbUseAD.Checked)
-                {
-                    if(!username.StartsWith(Environment.UserDomainName.ToLower()))
-                        username = Environment.UserDomainName.ToLower() + "\\" + username;
-
-                    if (!ValidateADUser(username, password))
-                    {
-                        if(username != Environment.UserDomainName.ToLower() + "\\administrator")
-                        {
-                            MessageBox.Show("Authentication failed");                            
-                        }
-                        else
-                        {
-                            tbUsername.Text = "";
-                            tbPassword.Text = "";
-                        }
-                        return;
-                    }
-                }
-                else
-                {
-                    if (username.Length < Utils.MIN_USERNAME_LENGTH)
-                    {
-                        MessageBox.Show("Username must be at least 3 characters long");
-                        return;
-                    }
-
-                    if (password.Length < Utils.MIN_PASSWORD_LENGTH)
-                    {
-                        MessageBox.Show("Authentication failed");
-                        return;
-                    }
-
-                    if (!ValidateLimsUser(username, password))
-                    {
-                        MessageBox.Show("Authentication failed");
-                        return;
-                    }
-                }                
-
-                settings.UseActiveDirectoryCredentials = cbUseAD.Checked;
-
-                DialogResult = DialogResult.OK;
-                Close();
-            }
-            catch(Exception ex)
-            {
-                MessageBox.Show("Connection failed: " + ex.Message);
-            }
-        }
-
-        private bool ValidateADUser(string username, string password)
+        private bool CreateLIMSAdministrator()
         {
-            // clip start
-
             FormCreateLIMSAdministrator form = new FormCreateLIMSAdministrator();
             if (form.ShowDialog() != DialogResult.OK)
                 return false;
@@ -183,116 +125,59 @@ namespace DSA_lims
                 cmd.ExecuteNonQuery();
             }
 
-            return false;
-            // clip end
-
-            /*using (PrincipalContext pc = new PrincipalContext(ContextType.Domain, null))
-            {
-                if(!pc.ValidateCredentials(username, password))
-                    return false;
-
-                if (username == Environment.UserDomainName.ToLower() + "\\administrator")
-                {
-                    FormCreateLIMSAdministrator form = new FormCreateLIMSAdministrator();
-                    if (form.ShowDialog() != DialogResult.OK)
-                        return false;
-
-                    using (SqlConnection conn = new SqlConnection(settings.ConnectionString))
-                    {
-                        conn.Open();
-
-                        Guid personId = Guid.Empty;
-                        Guid adminId = Guid.Empty;
-                        SqlCommand cmd = new SqlCommand("select id from person where name = 'LIMSAdministrator'", conn);
-                        cmd.CommandType = System.Data.CommandType.Text;
-                        object o = cmd.ExecuteScalar();
-                        if (!DB.IsValidField(o))
-                        {
-                            personId = Guid.NewGuid();
-                            cmd.CommandText = "insert into person values(@id, @name, @email, @phone, @address, @create_date, @update_date)";
-                            cmd.Parameters.AddWithValue("@id", personId);
-                            cmd.Parameters.AddWithValue("@name", "LIMSAdministrator");
-                            cmd.Parameters.AddWithValue("@email", DBNull.Value);
-                            cmd.Parameters.AddWithValue("@phone", DBNull.Value);
-                            cmd.Parameters.AddWithValue("@address", DBNull.Value);
-                            cmd.Parameters.AddWithValue("@create_date", DateTime.Now);
-                            cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
-                            cmd.ExecuteNonQuery();
-                        }
-                        else
-                        {
-                            personId = Guid.Parse(o.ToString());
-                        }
-
-                        byte[] passwordHash = Utils.MakePasswordHash(form.SelectedPassword, "LIMSAdministrator");
-
-                        cmd = new SqlCommand("select id from account where person_id = @pid", conn);
-                        cmd.Parameters.Clear();
-                        cmd.Parameters.AddWithValue("@pid", personId);
-                        o = cmd.ExecuteScalar();
-                        if (!DB.IsValidField(o))
-                        {
-                            adminId = Guid.NewGuid();
-                            cmd.CommandText = "insert into account values(@id, @username, @person_id, @laboratory_id, @language_code, @instance_status_id, @password_hash, @create_date, @update_date)";
-                            cmd.Parameters.Clear();
-                            cmd.Parameters.AddWithValue("@id", adminId);
-                            cmd.Parameters.AddWithValue("@username", "LIMSAdministrator");
-                            cmd.Parameters.AddWithValue("@person_id", personId);
-                            cmd.Parameters.AddWithValue("@laboratory_id", DBNull.Value);
-                            cmd.Parameters.AddWithValue("@language_code", "en");
-                            cmd.Parameters.AddWithValue("@instance_status_id", 1);
-                            cmd.Parameters.AddWithValue("@password_hash", passwordHash);
-                            cmd.Parameters.AddWithValue("@create_date", DateTime.Now);
-                            cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
-                        }
-                        else
-                        {
-                            adminId = Guid.Parse(o.ToString());
-                            cmd.CommandText = "update account set password_hash = @password_hash, update_date = @update_date where id = @id";
-                            cmd.Parameters.Clear();
-                            cmd.Parameters.AddWithValue("@id", adminId);                            
-                            cmd.Parameters.AddWithValue("@password_hash", passwordHash);
-                            cmd.Parameters.AddWithValue("@update_date", DateTime.Now);                            
-                        }
-                        cmd.ExecuteNonQuery();
-                    }
-
-                    return false;
-                }
-                else
-                {
-                    using (SqlConnection conn = new SqlConnection(settings.ConnectionString))
-                    {
-                        string shortUsername = username;
-                        if(shortUsername.StartsWith(Environment.UserDomainName.ToLower()))
-                        {
-                            string[] items = shortUsername.Split(new char[] { '\\' }, StringSplitOptions.RemoveEmptyEntries);
-                            shortUsername = items[1];
-                        }
-
-                        conn.Open();
-
-                        SqlCommand cmd = new SqlCommand("select id, laboratory_id from account where username = @username", conn);
-                        cmd.CommandType = System.Data.CommandType.Text;
-                        cmd.Parameters.AddWithValue("@username", shortUsername);
-
-                        using (SqlDataReader reader = cmd.ExecuteReader())
-                        {
-                            if (!reader.HasRows)
-                                return false;
-
-                            reader.Read();
-
-                            mUserId = Guid.Parse(reader["id"].ToString());
-                            mUserName = shortUsername;
-                            mLabId = Utils.IsValidGuid(reader["laboratory_id"]) ? Guid.Parse(reader["laboratory_id"].ToString()) : Guid.Empty;
-                        }
-                    }
-
-                    return true;
-                }
-            }    */        
+            return true;
         }
+
+        private void btnOk_Click(object sender, EventArgs e)
+        {                        
+            try
+            {
+                if (cboxAction.SelectedIndex == 0)
+                {
+                    string username = tbUsername.Text.ToLower().Trim();
+                    string password = tbPassword.Text.Trim();
+
+                    if (username.Length < Utils.MIN_USERNAME_LENGTH)
+                    {
+                        MessageBox.Show("Username must be at least 3 characters long");
+                        return;
+                    }
+
+                    if (password.Length < Utils.MIN_PASSWORD_LENGTH)
+                    {
+                        MessageBox.Show("Authentication failed");
+                        return;
+                    }
+
+                    if (!ValidateLimsUser(username, password))
+                    {
+                        MessageBox.Show("Authentication failed");
+                        return;
+                    }
+
+                    DialogResult = DialogResult.OK;
+                    Close();
+                }
+                else if (cboxAction.SelectedIndex == 1)
+                {
+                    if (!IsCurrentUserAdmin())
+                    {
+                        MessageBox.Show("Can not create the LIMSAdministrator user, you are not running as administrator");
+                        return;
+                    }
+
+                    if(CreateLIMSAdministrator())
+                    {
+                        cboxAction.SelectedIndex = 0;
+                    }
+                    return;
+                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("Connection failed: " + ex.Message);
+            }
+        }        
 
         private bool ValidateLimsUser(string username, string password)
         {
@@ -367,6 +252,80 @@ namespace DSA_lims
             {
                 e.Handled = true;
                 btnOk_Click(sender, e);
+            }
+        }
+
+        public bool IsCurrentUserAdmin(bool checkCurrentRole = true)
+        {
+            bool isElevated = false;
+
+            using (WindowsIdentity identity = WindowsIdentity.GetCurrent())
+            {
+                if (checkCurrentRole)
+                {
+                    // Even if the user is defined in the Admin group, UAC defines 2 roles: one user and one admin. 
+                    // IsInRole consider the current default role as user, thus will return false!
+                    // Will consider the admin role only if the app is explicitly run as admin!
+                    WindowsPrincipal principal = new WindowsPrincipal(identity);
+                    isElevated = principal.IsInRole(WindowsBuiltInRole.Administrator);
+                }
+                else
+                {
+                    // read all roles for the current identity name, asking ActiveDirectory
+                    isElevated = IsAdministratorNoCache(identity.Name);
+                }
+            }
+
+            return isElevated;
+        }
+
+        private bool IsAdministratorNoCache(string username)
+        {
+            PrincipalContext ctx;
+            try
+            {
+                Domain.GetComputerDomain();
+                try
+                {
+                    ctx = new PrincipalContext(ContextType.Domain);
+                }
+                catch (PrincipalServerDownException)
+                {
+                    // can't access domain, check local machine instead 
+                    ctx = new PrincipalContext(ContextType.Machine);
+                }
+            }
+            catch (ActiveDirectoryObjectNotFoundException)
+            {
+                // not in a domain
+                ctx = new PrincipalContext(ContextType.Machine);
+            }
+            var up = UserPrincipal.FindByIdentity(ctx, username);
+            if (up != null)
+            {
+                PrincipalSearchResult<Principal> authGroups = up.GetAuthorizationGroups();
+                return authGroups.Any(principal =>
+                                      principal.Sid.IsWellKnown(WellKnownSidType.BuiltinAdministratorsSid) ||
+                                      principal.Sid.IsWellKnown(WellKnownSidType.AccountDomainAdminsSid) ||
+                                      principal.Sid.IsWellKnown(WellKnownSidType.AccountAdministratorSid) ||
+                                      principal.Sid.IsWellKnown(WellKnownSidType.AccountEnterpriseAdminsSid));
+            }
+            return false;
+        }
+
+        private void cboxAction_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(cboxAction.SelectedIndex == 1)
+            {
+                tbUsername.Text = "";
+                tbUsername.Enabled = false;
+                tbPassword.Text = "";
+                tbPassword.Enabled = false;
+            }
+            else
+            {                
+                tbUsername.Enabled = true;
+                tbPassword.Enabled = true;
             }
         }
     }

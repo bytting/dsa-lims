@@ -89,15 +89,15 @@ namespace DSA_lims
                     DialogResult = DialogResult.OK;
                     Close();
                 }
-                else if (cboxAction.SelectedIndex == 1)
+                else
                 {
-                    if (!IsCurrentUserAdmin())
+                    if (!IsCurrentUserMachineAdmin() && !IsCurrentUserDomainAdmin()) // FIXME: Machine admin only for development
                     {
-                        MessageBox.Show("Can not create the LIMSAdministrator user, you are not running as administrator");
+                        MessageBox.Show("Can not create the LIMSAdministrator user, you are not administrator");
                         return;
                     }
 
-                    if(CreateLIMSAdministrator())
+                    if (CreateLIMSAdministrator())
                     {
                         cboxAction.SelectedIndex = 0;
                     }
@@ -255,63 +255,73 @@ namespace DSA_lims
             }
         }
 
-        public bool IsCurrentUserAdmin(bool checkCurrentRole = true)
+        public bool IsCurrentUserMachineAdmin()
         {
-            bool isElevated = false;
-
             using (WindowsIdentity identity = WindowsIdentity.GetCurrent())
-            {
-                if (checkCurrentRole)
+            {                
+                // Require user to run app as admin
+                WindowsPrincipal winPrincipal = new WindowsPrincipal(identity);
+                if (winPrincipal.IsInRole(WindowsBuiltInRole.Administrator))
+                    return true;
+
+                PrincipalContext ctx;
+                try
                 {
-                    // Even if the user is defined in the Admin group, UAC defines 2 roles: one user and one admin. 
-                    // IsInRole consider the current default role as user, thus will return false!
-                    // Will consider the admin role only if the app is explicitly run as admin!
-                    WindowsPrincipal principal = new WindowsPrincipal(identity);
-                    isElevated = principal.IsInRole(WindowsBuiltInRole.Administrator);
+                    ctx = new PrincipalContext(ContextType.Machine);
                 }
-                else
+                catch
                 {
-                    // read all roles for the current identity name, asking ActiveDirectory
-                    isElevated = IsAdministratorNoCache(identity.Name);
+                    return false;
+                }
+
+                var up = UserPrincipal.FindByIdentity(ctx, identity.Name);
+                if (up != null)
+                {
+                    PrincipalSearchResult<Principal> authGroups = up.GetAuthorizationGroups();
+                    return authGroups.Any(principal =>
+                        principal.Sid.IsWellKnown(WellKnownSidType.BuiltinAdministratorsSid) ||                        
+                        principal.Sid.IsWellKnown(WellKnownSidType.AccountAdministratorSid));
                 }
             }
 
-            return isElevated;
+            return false;
         }
 
-        private bool IsAdministratorNoCache(string username)
+        public bool IsCurrentUserDomainAdmin()
         {
-            PrincipalContext ctx;
-            try
-            {
-                Domain.GetComputerDomain();
+            using (WindowsIdentity identity = WindowsIdentity.GetCurrent())
+            {                
+                try
+                {
+                    Domain.GetComputerDomain();                    
+                }
+                catch (ActiveDirectoryObjectNotFoundException)
+                {
+                    return false;
+                }
+
+                PrincipalContext ctx;
                 try
                 {
                     ctx = new PrincipalContext(ContextType.Domain);
                 }
-                catch (PrincipalServerDownException)
+                catch
                 {
-                    // can't access domain, check local machine instead 
-                    ctx = new PrincipalContext(ContextType.Machine);
+                    return false;
                 }
-            }
-            catch (ActiveDirectoryObjectNotFoundException)
-            {
-                // not in a domain
-                ctx = new PrincipalContext(ContextType.Machine);
-            }
-            var up = UserPrincipal.FindByIdentity(ctx, username);
-            if (up != null)
-            {
-                PrincipalSearchResult<Principal> authGroups = up.GetAuthorizationGroups();
-                return authGroups.Any(principal =>
-                                      principal.Sid.IsWellKnown(WellKnownSidType.BuiltinAdministratorsSid) ||
-                                      principal.Sid.IsWellKnown(WellKnownSidType.AccountDomainAdminsSid) ||
-                                      principal.Sid.IsWellKnown(WellKnownSidType.AccountAdministratorSid) ||
-                                      principal.Sid.IsWellKnown(WellKnownSidType.AccountEnterpriseAdminsSid));
-            }
-            return false;
-        }
+
+                var up = UserPrincipal.FindByIdentity(ctx, identity.Name);
+                if (up != null)
+                {
+                    PrincipalSearchResult<Principal> authGroups = up.GetAuthorizationGroups();
+                    return authGroups.Any(principal =>                         
+                        principal.Sid.IsWellKnown(WellKnownSidType.AccountDomainAdminsSid) ||
+                        principal.Sid.IsWellKnown(WellKnownSidType.AccountEnterpriseAdminsSid));
+                }
+
+                return false;
+            }            
+        }        
 
         private void cboxAction_SelectedIndexChanged(object sender, EventArgs e)
         {

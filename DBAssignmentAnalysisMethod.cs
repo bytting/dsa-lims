@@ -38,11 +38,11 @@ namespace DSA_lims
         public Guid Id { get; set; }
         public Guid AssignmentPreparationMethodId { get; set; }
         public Guid AnalysisMethodId { get; set; }
-        public int? AnalysisMethodCount { get; set; }
+        public int AnalysisMethodCount { get; set; }
         public string Comment { get; set; }
-        public DateTime? CreateDate { get; set; }
+        public DateTime CreateDate { get; set; }
         public string CreatedBy { get; set; }
-        public DateTime? UpdateDate { get; set; }
+        public DateTime UpdateDate { get; set; }
         public string UpdatedBy { get; set; }
 
         public bool Dirty;
@@ -113,7 +113,7 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@id", Id);
                 cmd.Parameters.AddWithValue("@assignment_preparation_method_id", AssignmentPreparationMethodId, Guid.Empty);
                 cmd.Parameters.AddWithValue("@analysis_method_id", AnalysisMethodId, Guid.Empty);
-                cmd.Parameters.AddWithValue("@analysis_method_count", AnalysisMethodCount, null);
+                cmd.Parameters.AddWithValue("@analysis_method_count", AnalysisMethodCount);
                 cmd.Parameters.AddWithValue("@comment", Comment, String.Empty);
                 cmd.Parameters.AddWithValue("@create_date", DateTime.Now);
                 cmd.Parameters.AddWithValue("@created_by", Common.Username, String.Empty);
@@ -138,7 +138,7 @@ namespace DSA_lims
                     cmd.Parameters.AddWithValue("@id", Id);
                     cmd.Parameters.AddWithValue("@assignment_preparation_method_id", AssignmentPreparationMethodId, Guid.Empty);
                     cmd.Parameters.AddWithValue("@analysis_method_id", AnalysisMethodId, Guid.Empty);
-                    cmd.Parameters.AddWithValue("@analysis_method_count", AnalysisMethodCount, null);
+                    cmd.Parameters.AddWithValue("@analysis_method_count", AnalysisMethodCount);
                     cmd.Parameters.AddWithValue("@comment", Comment, String.Empty);
                     cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
                     cmd.Parameters.AddWithValue("@updated_by", Common.Username, String.Empty);
@@ -167,11 +167,11 @@ namespace DSA_lims
                 Id = reader.GetGuid("id");
                 AssignmentPreparationMethodId = reader.GetGuid("assignment_preparation_method_id");
                 AnalysisMethodId = reader.GetGuid("analysis_method_id");
-                AnalysisMethodCount = reader.GetInt32Nullable("analysis_method_count");
+                AnalysisMethodCount = reader.GetInt32("analysis_method_count");
                 Comment = reader.GetString("comment");
-                CreateDate = reader.GetDateTimeNullable("create_date");
+                CreateDate = reader.GetDateTime("create_date");
                 CreatedBy = reader.GetString("created_by");
-                UpdateDate = reader.GetDateTimeNullable("update_date");
+                UpdateDate = reader.GetDateTime("update_date");
                 UpdatedBy = reader.GetString("updated_by");
                 Dirty = false;
             }

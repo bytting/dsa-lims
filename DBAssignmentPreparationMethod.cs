@@ -39,12 +39,12 @@ namespace DSA_lims
         public Guid Id { get; set; }
         public Guid AssignmentSampleTypeId { get; set; }
         public Guid PreparationMethodId { get; set; }
-        public int? PreparationMethodCount { get; set; }
+        public int PreparationMethodCount { get; set; }
         public Guid PreparationLaboratoryId { get; set; }
         public string Comment { get; set; }
-        public DateTime? CreateDate { get; set; }
+        public DateTime CreateDate { get; set; }
         public string CreatedBy { get; set; }
-        public DateTime? UpdateDate { get; set; }
+        public DateTime UpdateDate { get; set; }
         public string UpdatedBy { get; set; }
 
         public List<AssignmentAnalysisMethod> AnalysisMethods { get; set; }
@@ -132,7 +132,7 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@id", Id);
                 cmd.Parameters.AddWithValue("@assignment_sample_type_id", AssignmentSampleTypeId, Guid.Empty);
                 cmd.Parameters.AddWithValue("@preparation_method_id", PreparationMethodId, Guid.Empty);
-                cmd.Parameters.AddWithValue("@preparation_method_count", PreparationMethodCount, null);
+                cmd.Parameters.AddWithValue("@preparation_method_count", PreparationMethodCount);
                 cmd.Parameters.AddWithValue("@preparation_laboratory_id", PreparationLaboratoryId, Guid.Empty);                
                 cmd.Parameters.AddWithValue("@comment", Comment, String.Empty);
                 cmd.Parameters.AddWithValue("@create_date", DateTime.Now);
@@ -158,7 +158,7 @@ namespace DSA_lims
                     cmd.Parameters.AddWithValue("@id", Id);
                     cmd.Parameters.AddWithValue("@assignment_sample_type_id", AssignmentSampleTypeId, Guid.Empty);
                     cmd.Parameters.AddWithValue("@preparation_method_id", PreparationMethodId, Guid.Empty);
-                    cmd.Parameters.AddWithValue("@preparation_method_count", PreparationMethodCount, null);
+                    cmd.Parameters.AddWithValue("@preparation_method_count", PreparationMethodCount);
                     cmd.Parameters.AddWithValue("@preparation_laboratory_id", PreparationLaboratoryId, Guid.Empty);
                     cmd.Parameters.AddWithValue("@comment", Comment, String.Empty);                    
                     cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
@@ -216,12 +216,12 @@ namespace DSA_lims
                 Id = reader.GetGuid("id");
                 AssignmentSampleTypeId = reader.GetGuid("assignment_sample_type_id");
                 PreparationMethodId = reader.GetGuid("preparation_method_id");
-                PreparationMethodCount = reader.GetInt32Nullable("preparation_method_count");                
+                PreparationMethodCount = reader.GetInt32("preparation_method_count");
                 PreparationLaboratoryId = reader.GetGuid("preparation_laboratory_id");
                 Comment = reader.GetString("comment");
-                CreateDate = reader.GetDateTimeNullable("create_date");
+                CreateDate = reader.GetDateTime("create_date");
                 CreatedBy = reader.GetString("created_by");
-                UpdateDate = reader.GetDateTimeNullable("update_date");
+                UpdateDate = reader.GetDateTime("update_date");
                 UpdatedBy = reader.GetString("updated_by");
                 Dirty = false;
             }

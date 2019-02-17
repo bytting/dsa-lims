@@ -40,7 +40,7 @@ namespace DSA_lims
         }
 
         public Guid Id { get; set; }
-        public int? Number { get; set; }
+        public int Number { get; set; }
         public Guid LaboratoryId { get; set; }
         public Guid SampleTypeId { get; set; }
         public Guid SampleStorageId { get; set; }
@@ -71,12 +71,12 @@ namespace DSA_lims
         public double? LodTemperature { get; set; }
         public bool Confidential { get; set; }
         public string Parameters { get; set; }
-        public int? InstanceStatusId { get; set; }
+        public int InstanceStatusId { get; set; }
         public string LockedBy { get; set; }
         public string Comment { get; set; }
-        public DateTime? CreateDate { get; set; }
+        public DateTime CreateDate { get; set; }
         public string CreatedBy { get; set; }
-        public DateTime? UpdateDate { get; set; }
+        public DateTime UpdateDate { get; set; }
         public string UpdatedBy { get; set; }
 
         public bool Dirty;
@@ -249,7 +249,7 @@ where s.id = @sid and a.workflow_status_id = 2
                 reader.Read();
 
                 Id = reader.GetGuid("id");
-                Number = reader.GetInt32Nullable("number");
+                Number = reader.GetInt32("number");
                 LaboratoryId = reader.GetGuid("laboratory_id");
                 SampleTypeId = reader.GetGuid("sample_type_id");
                 SampleStorageId = reader.GetGuid("sample_storage_id");
@@ -280,12 +280,12 @@ where s.id = @sid and a.workflow_status_id = 2
                 LodTemperature = reader.GetDoubleNullable("lod_temperature");
                 Confidential = reader.GetBoolean("confidential");
                 Parameters = reader.GetString("parameters");
-                InstanceStatusId = reader.GetInt32Nullable("instance_status_id");
+                InstanceStatusId = reader.GetInt32("instance_status_id");
                 LockedBy = reader.GetString("locked_by");
                 Comment = reader.GetString("comment");
-                CreateDate = reader.GetDateTimeNullable("create_date");
+                CreateDate = reader.GetDateTime("create_date");
                 CreatedBy = reader.GetString("created_by");
-                UpdateDate = reader.GetDateTimeNullable("update_date");
+                UpdateDate = reader.GetDateTime("update_date");
                 UpdatedBy = reader.GetString("updated_by");
             }
 

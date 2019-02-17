@@ -44,15 +44,15 @@ namespace DSA_lims
         public double? ActivityUncertaintyABS { get; set; }
         public bool ActivityApproved { get; set; }
         public double? UniformActivity { get; set; }
-        public int? UniformActivityUnitId { get; set; }
+        public int UniformActivityUnitId { get; set; }
         public double? DetectionLimit { get; set; }
         public bool DetectionLimitApproved { get; set; }
         public bool Accredited { get; set; }
         public bool Reportable { get; set; }
-        public int? InstanceStatusId { get; set; }
-        public DateTime? CreateDate { get; set; }
+        public int InstanceStatusId { get; set; }
+        public DateTime CreateDate { get; set; }
         public string CreatedBy { get; set; }
-        public DateTime? UpdateDate { get; set; }
+        public DateTime UpdateDate { get; set; }
         public string UpdatedBy { get; set; }
 
         public bool Dirty;
@@ -121,16 +121,16 @@ namespace DSA_lims
                 Activity = reader.GetDoubleNullable("activity");
                 ActivityUncertaintyABS = reader.GetDoubleNullable("activity_uncertainty_abs");
                 ActivityApproved = reader.GetBoolean("activity_approved");
-                //UniformActivity = Convert.ToDouble(reader["uniform_activity"]);
-                //UniformActivityUnitId = Convert.ToInt32(reader["uniform_activity_unit_id"]);
+                UniformActivity = reader.GetDoubleNullable("uniform_activity");
+                UniformActivityUnitId = reader.GetInt32("uniform_activity_unit_id");
                 DetectionLimit = reader.GetDoubleNullable("detection_limit");
                 DetectionLimitApproved = reader.GetBoolean("detection_limit_approved");
                 Accredited = reader.GetBoolean("accredited");
                 Reportable = reader.GetBoolean("reportable");
-                InstanceStatusId = reader.GetInt32Nullable("instance_status_id");
-                CreateDate = reader.GetDateTimeNullable("create_date");
+                InstanceStatusId = reader.GetInt32("instance_status_id");
+                CreateDate = reader.GetDateTime("create_date");
                 CreatedBy = reader.GetString("created_by");
-                UpdateDate = reader.GetDateTimeNullable("update_date");
+                UpdateDate = reader.GetDateTime("update_date");
                 UpdatedBy = reader.GetString("updated_by");
             }
 
@@ -157,7 +157,7 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@nuclide_id", NuclideId, Guid.Empty);
                 cmd.Parameters.AddWithValue("@activity", Activity, null);
                 cmd.Parameters.AddWithValue("@activity_uncertainty_abs", ActivityUncertaintyABS, null);
-                cmd.Parameters.AddWithValue("@activity_approved", ActivityApproved, null);
+                cmd.Parameters.AddWithValue("@activity_approved", ActivityApproved);
                 // FIXME
                 /*double uAct = -1.0;
                 int uActUnitId = -1;
@@ -166,12 +166,12 @@ namespace DSA_lims
                     DB.GetUniformActivity(conn, trans, r.Activity, ActivityUnitId, out uAct, out uActUnitId);
                 }*/
                 cmd.Parameters.AddWithValue("@uniform_activity", DBNull.Value);
-                cmd.Parameters.AddWithValue("@uniform_activity_unit_id", DBNull.Value);
+                cmd.Parameters.AddWithValue("@uniform_activity_unit_id", 0);
                 cmd.Parameters.AddWithValue("@detection_limit", DetectionLimit, null);
-                cmd.Parameters.AddWithValue("@detection_limit_approved", DetectionLimitApproved, null);
-                cmd.Parameters.AddWithValue("@accredited", Accredited, null);
-                cmd.Parameters.AddWithValue("@reportable", Reportable, null);
-                cmd.Parameters.AddWithValue("@instance_status_id", InstanceStatusId, null);
+                cmd.Parameters.AddWithValue("@detection_limit_approved", DetectionLimitApproved);
+                cmd.Parameters.AddWithValue("@accredited", Accredited);
+                cmd.Parameters.AddWithValue("@reportable", Reportable);
+                cmd.Parameters.AddWithValue("@instance_status_id", InstanceStatusId);
                 cmd.Parameters.AddWithValue("@create_date", DateTime.Now);
                 cmd.Parameters.AddWithValue("@created_by", Common.Username, String.Empty);
                 cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
@@ -205,12 +205,12 @@ namespace DSA_lims
                         DB.GetUniformActivity(conn, trans, r.Activity, ActivityUnitId, out uAct, out uActUnitId);
                     }*/
                     cmd.Parameters.AddWithValue("@uniform_activity", DBNull.Value);
-                    cmd.Parameters.AddWithValue("@uniform_activity_unit_id", DBNull.Value);
+                    cmd.Parameters.AddWithValue("@uniform_activity_unit_id", 0);
                     cmd.Parameters.AddWithValue("@detection_limit", DetectionLimit, null);
-                    cmd.Parameters.AddWithValue("@detection_limit_approved", DetectionLimitApproved, null);
-                    cmd.Parameters.AddWithValue("@accredited", Accredited, null);
-                    cmd.Parameters.AddWithValue("@reportable", Reportable, null);
-                    cmd.Parameters.AddWithValue("@instance_status_id", InstanceStatusId, null);
+                    cmd.Parameters.AddWithValue("@detection_limit_approved", DetectionLimitApproved);
+                    cmd.Parameters.AddWithValue("@accredited", Accredited);
+                    cmd.Parameters.AddWithValue("@reportable", Reportable);
+                    cmd.Parameters.AddWithValue("@instance_status_id", InstanceStatusId);
                     cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
                     cmd.Parameters.AddWithValue("@updated_by", Common.Username, String.Empty);
 

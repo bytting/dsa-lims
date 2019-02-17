@@ -60,15 +60,15 @@ namespace DSA_lims
         public string ContentComment { get; set; }
         public string ReportComment { get; set; }
         public string AuditComment { get; set; }
-        public int? WorkflowStatusId { get; set; }
+        public int WorkflowStatusId { get; set; }
         public DateTime? LastWorkflowStatusDate { get; set; }
         public string LastWorkflowStatusBy { get; set; }
-        public int? AnalysisReportVersion { get; set; }
-        public int? InstanceStatusId { get; set; }
+        public int AnalysisReportVersion { get; set; }
+        public int InstanceStatusId { get; set; }
         public string LockedBy { get; set; }
-        public DateTime? CreateDate { get; set; }
+        public DateTime CreateDate { get; set; }
         public string CreatedBy { get; set; }
-        public DateTime? UpdateDate { get; set; }
+        public DateTime UpdateDate { get; set; }
         public string UpdatedBy { get; set; }
 
         public List<AssignmentSampleType> SampleTypes { get; set; }
@@ -164,15 +164,15 @@ namespace DSA_lims
                 ContentComment = reader.GetString("content_comment");
                 ReportComment = reader.GetString("report_comment");
                 AuditComment = reader.GetString("audit_comment");
-                WorkflowStatusId = reader.GetInt32Nullable("workflow_status_id");                
+                WorkflowStatusId = reader.GetInt32("workflow_status_id");                
                 LastWorkflowStatusDate = reader.GetDateTimeNullable("last_workflow_status_date");                
                 LastWorkflowStatusBy = reader.GetString("last_workflow_status_by");
-                AnalysisReportVersion = reader.GetInt32Nullable("analysis_report_version");
-                InstanceStatusId = reader.GetInt32Nullable("instance_status_id");
+                AnalysisReportVersion = reader.GetInt32("analysis_report_version");
+                InstanceStatusId = reader.GetInt32("instance_status_id");
                 LockedBy = reader.GetString("locked_by");
-                CreateDate = reader.GetDateTimeNullable("create_date");
+                CreateDate = reader.GetDateTime("create_date");
                 CreatedBy = reader.GetString("created_by");
-                UpdateDate = reader.GetDateTimeNullable("update_date");
+                UpdateDate = reader.GetDateTime("update_date");
                 UpdatedBy = reader.GetString("updated_by");
             }
 
@@ -221,18 +221,18 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@customer_contact_email", CustomerContactEmail, String.Empty);
                 cmd.Parameters.AddWithValue("@customer_contact_phone", CustomerContactPhone, String.Empty);
                 cmd.Parameters.AddWithValue("@customer_contact_address", CustomerContactAddress, String.Empty);
-                cmd.Parameters.AddWithValue("@approved_customer", ApprovedCustomer, null);
+                cmd.Parameters.AddWithValue("@approved_customer", ApprovedCustomer);
                 cmd.Parameters.AddWithValue("@approved_customer_by", ApprovedCustomerBy, String.Empty);
-                cmd.Parameters.AddWithValue("@approved_laboratory", ApprovedLaboratory, null);
+                cmd.Parameters.AddWithValue("@approved_laboratory", ApprovedLaboratory);
                 cmd.Parameters.AddWithValue("@approved_laboratory_by", ApprovedLaboratoryBy, String.Empty);
                 cmd.Parameters.AddWithValue("@content_comment", ContentComment, String.Empty);
                 cmd.Parameters.AddWithValue("@report_comment", ReportComment, String.Empty);
                 cmd.Parameters.AddWithValue("@audit_comment", AuditComment, String.Empty);
-                cmd.Parameters.AddWithValue("@workflow_status_id", WorkflowStatusId, null);
+                cmd.Parameters.AddWithValue("@workflow_status_id", WorkflowStatusId);
                 cmd.Parameters.AddWithValue("@last_workflow_status_date", LastWorkflowStatusDate, DateTime.MinValue);
                 cmd.Parameters.AddWithValue("@last_workflow_status_by", LastWorkflowStatusBy, String.Empty);
-                cmd.Parameters.AddWithValue("@analysis_report_version", AnalysisReportVersion, null);
-                cmd.Parameters.AddWithValue("@instance_status_id", InstanceStatusId, null);
+                cmd.Parameters.AddWithValue("@analysis_report_version", AnalysisReportVersion);
+                cmd.Parameters.AddWithValue("@instance_status_id", InstanceStatusId);
                 cmd.Parameters.AddWithValue("@locked_by", LockedBy, String.Empty);
                 cmd.Parameters.AddWithValue("@create_date", DateTime.Now);
                 cmd.Parameters.AddWithValue("@created_by", Common.Username, String.Empty);
@@ -269,18 +269,18 @@ namespace DSA_lims
                     cmd.Parameters.AddWithValue("@customer_contact_email", CustomerContactEmail, String.Empty);
                     cmd.Parameters.AddWithValue("@customer_contact_phone", CustomerContactPhone, String.Empty);
                     cmd.Parameters.AddWithValue("@customer_contact_address", CustomerContactAddress, String.Empty);
-                    cmd.Parameters.AddWithValue("@approved_customer", ApprovedCustomer, null);
+                    cmd.Parameters.AddWithValue("@approved_customer", ApprovedCustomer);
                     cmd.Parameters.AddWithValue("@approved_customer_by", ApprovedCustomerBy, String.Empty);
-                    cmd.Parameters.AddWithValue("@approved_laboratory", ApprovedLaboratory, null);
+                    cmd.Parameters.AddWithValue("@approved_laboratory", ApprovedLaboratory);
                     cmd.Parameters.AddWithValue("@approved_laboratory_by", ApprovedLaboratoryBy, String.Empty);
                     cmd.Parameters.AddWithValue("@content_comment", ContentComment, String.Empty);
                     cmd.Parameters.AddWithValue("@report_comment", ReportComment, String.Empty);
                     cmd.Parameters.AddWithValue("@audit_comment", AuditComment, String.Empty);
-                    cmd.Parameters.AddWithValue("@workflow_status_id", WorkflowStatusId, null);
+                    cmd.Parameters.AddWithValue("@workflow_status_id", WorkflowStatusId);
                     cmd.Parameters.AddWithValue("@last_workflow_status_date", LastWorkflowStatusDate, DateTime.MinValue);
                     cmd.Parameters.AddWithValue("@last_workflow_status_by", LastWorkflowStatusBy, String.Empty);
-                    cmd.Parameters.AddWithValue("@analysis_report_version", AnalysisReportVersion, null);
-                    cmd.Parameters.AddWithValue("@instance_status_id", InstanceStatusId, null);
+                    cmd.Parameters.AddWithValue("@analysis_report_version", AnalysisReportVersion);
+                    cmd.Parameters.AddWithValue("@instance_status_id", InstanceStatusId);
                     cmd.Parameters.AddWithValue("@locked_by", LockedBy, String.Empty);                    
                     cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
                     cmd.Parameters.AddWithValue("@updated_by", Common.Username, String.Empty);

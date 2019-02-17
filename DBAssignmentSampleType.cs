@@ -40,14 +40,14 @@ namespace DSA_lims
         public Guid AssignmentId { get; set; }
         public Guid SampleTypeId { get; set; }
         public Guid SampleComponentId { get; set; }
-        public int? SampleCount { get; set; }
+        public int SampleCount { get; set; }
         public Guid RequestedActivityUnitId { get; set; }
         public Guid RequestedActivityUnitTypeId { get; set; }
         public bool ReturnToSender { get; set; }
         public string Comment { get; set; }
-        public DateTime? CreateDate { get; set; }
+        public DateTime CreateDate { get; set; }
         public string CreatedBy { get; set; }
-        public DateTime? UpdateDate { get; set; }
+        public DateTime UpdateDate { get; set; }
         public string UpdatedBy { get; set; }
 
         public List<AssignmentPreparationMethod> PreparationMethods { get; set; }
@@ -133,10 +133,10 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@assignment_id", AssignmentId, Guid.Empty);
                 cmd.Parameters.AddWithValue("@sample_type_id", SampleTypeId, Guid.Empty);
                 cmd.Parameters.AddWithValue("@sample_component_id", SampleComponentId, Guid.Empty);
-                cmd.Parameters.AddWithValue("@sample_count", SampleCount, null);
+                cmd.Parameters.AddWithValue("@sample_count", SampleCount);
                 cmd.Parameters.AddWithValue("@requested_activity_unit_id", RequestedActivityUnitId, Guid.Empty);
                 cmd.Parameters.AddWithValue("@requested_activity_unit_type_id", RequestedActivityUnitTypeId, Guid.Empty);
-                cmd.Parameters.AddWithValue("@return_to_sender", ReturnToSender, null);
+                cmd.Parameters.AddWithValue("@return_to_sender", ReturnToSender);
                 cmd.Parameters.AddWithValue("@comment", Comment, String.Empty);                
                 cmd.Parameters.AddWithValue("@create_date", DateTime.Now);
                 cmd.Parameters.AddWithValue("@created_by", Common.Username, String.Empty);
@@ -162,10 +162,10 @@ namespace DSA_lims
                     cmd.Parameters.AddWithValue("@assignment_id", AssignmentId, Guid.Empty);
                     cmd.Parameters.AddWithValue("@sample_type_id", SampleTypeId, Guid.Empty);
                     cmd.Parameters.AddWithValue("@sample_component_id", SampleComponentId, Guid.Empty);
-                    cmd.Parameters.AddWithValue("@sample_count", SampleCount, null);
+                    cmd.Parameters.AddWithValue("@sample_count", SampleCount);
                     cmd.Parameters.AddWithValue("@requested_activity_unit_id", RequestedActivityUnitId, Guid.Empty);
                     cmd.Parameters.AddWithValue("@requested_activity_unit_type_id", RequestedActivityUnitTypeId, Guid.Empty);
-                    cmd.Parameters.AddWithValue("@return_to_sender", ReturnToSender, null);
+                    cmd.Parameters.AddWithValue("@return_to_sender", ReturnToSender);
                     cmd.Parameters.AddWithValue("@comment", Comment, String.Empty);
                     cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
                     cmd.Parameters.AddWithValue("@updated_by", Common.Username, String.Empty);
@@ -228,14 +228,14 @@ namespace DSA_lims
                 AssignmentId = reader.GetGuid("assignment_id");
                 SampleTypeId = reader.GetGuid("sample_type_id");                
                 SampleComponentId = reader.GetGuid("sample_component_id");                
-                SampleCount = reader.GetInt32Nullable("sample_count");                
+                SampleCount = reader.GetInt32("sample_count");                
                 RequestedActivityUnitId = reader.GetGuid("requested_activity_unit_id");                                
                 RequestedActivityUnitTypeId = reader.GetGuid("requested_activity_unit_type_id");                
                 ReturnToSender = reader.GetBoolean("return_to_sender");
                 Comment = reader.GetString("comment");
-                CreateDate = reader.GetDateTimeNullable("create_date");
+                CreateDate = reader.GetDateTime("create_date");
                 CreatedBy = reader.GetString("created_by");
-                UpdateDate = reader.GetDateTimeNullable("update_date");
+                UpdateDate = reader.GetDateTime("update_date");
                 UpdatedBy = reader.GetString("updated_by");
                 Dirty = false;
             }

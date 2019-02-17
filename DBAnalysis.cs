@@ -37,12 +37,12 @@ namespace DSA_lims
         }
 
         public Guid Id { get; set; }
-        public int? Number { get; set; }
+        public int Number { get; set; }
         public Guid AssignmentId { get; set; }
         public Guid LaboratoryId { get; set; }
         public Guid PreparationId { get; set; }
         public Guid AnalysisMethodId { get; set; }
-        public int? WorkflowStatusId { get; set; }
+        public int WorkflowStatusId { get; set; }
         public string SpecterReference { get; set; }
         public Guid ActivityUnitId { get; set; }
         public Guid ActivityUnitTypeId { get; set; }
@@ -50,11 +50,11 @@ namespace DSA_lims
         public double? SigmaMDA { get; set; }
         public string NuclideLibrary { get; set; }
         public string MDALibrary { get; set; }
-        public int? InstanceStatusId { get; set; }
+        public int InstanceStatusId { get; set; }
         public string Comment { get; set; }
-        public DateTime? CreateDate { get; set; }
+        public DateTime CreateDate { get; set; }
         public string CreatedBy { get; set; }
-        public DateTime? UpdateDate { get; set; }
+        public DateTime UpdateDate { get; set; }
         public string UpdatedBy { get; set; }
 
         public List<AnalysisResult> Results { get; set; }
@@ -153,12 +153,12 @@ namespace DSA_lims
                 reader.Read();
 
                 Id = reader.GetGuid("id");
-                Number = reader.GetInt32Nullable("number");
+                Number = reader.GetInt32("number");
                 AssignmentId = reader.GetGuid("assignment_id");
                 LaboratoryId = reader.GetGuid("laboratory_id");
                 PreparationId = reader.GetGuid("preparation_id");
                 AnalysisMethodId = reader.GetGuid("analysis_method_id");
-                WorkflowStatusId = reader.GetInt32Nullable("workflow_status_id");
+                WorkflowStatusId = reader.GetInt32("workflow_status_id");
                 SpecterReference = reader.GetString("specter_reference");
                 ActivityUnitId = reader.GetGuid("activity_unit_id");
                 ActivityUnitTypeId = reader.GetGuid("activity_unit_type_id");
@@ -166,11 +166,11 @@ namespace DSA_lims
                 SigmaMDA = reader.GetDoubleNullable("sigma_mda");
                 NuclideLibrary = reader.GetString("nuclide_library");
                 MDALibrary = reader.GetString("mda_library");
-                InstanceStatusId = reader.GetInt32Nullable("instance_status_id");
+                InstanceStatusId = reader.GetInt32("instance_status_id");
                 Comment = reader.GetString("comment");
-                CreateDate = reader.GetDateTimeNullable("create_date");
+                CreateDate = reader.GetDateTime("create_date");
                 CreatedBy = reader.GetString("created_by");
-                UpdateDate = reader.GetDateTimeNullable("update_date");
+                UpdateDate = reader.GetDateTime("update_date");
                 UpdatedBy = reader.GetString("updated_by");
             }
 
@@ -213,7 +213,7 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@laboratory_id", LaboratoryId, Guid.Empty);
                 cmd.Parameters.AddWithValue("@preparation_id", PreparationId, Guid.Empty);
                 cmd.Parameters.AddWithValue("@analysis_method_id", AnalysisMethodId, Guid.Empty);
-                cmd.Parameters.AddWithValue("@workflow_status_id", WorkflowStatusId, null);
+                cmd.Parameters.AddWithValue("@workflow_status_id", WorkflowStatusId);
                 cmd.Parameters.AddWithValue("@specter_reference", SpecterReference, String.Empty);
                 cmd.Parameters.AddWithValue("@activity_unit_id", ActivityUnitId, Guid.Empty);
                 cmd.Parameters.AddWithValue("@activity_unit_type_id", ActivityUnitTypeId, Guid.Empty);
@@ -221,7 +221,7 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@sigma_mda", SigmaMDA, null);
                 cmd.Parameters.AddWithValue("@nuclide_library", NuclideLibrary, String.Empty);
                 cmd.Parameters.AddWithValue("@mda_library", MDALibrary, String.Empty);
-                cmd.Parameters.AddWithValue("@instance_status_id", InstanceStatusId, null);
+                cmd.Parameters.AddWithValue("@instance_status_id", InstanceStatusId);
                 cmd.Parameters.AddWithValue("@comment", Comment, String.Empty);
                 cmd.Parameters.AddWithValue("@create_date", DateTime.Now);
                 cmd.Parameters.AddWithValue("@created_by", Common.Username, String.Empty);
@@ -244,7 +244,7 @@ namespace DSA_lims
                     cmd.CommandText = "csp_update_analysis";
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@id", Id);
-                    cmd.Parameters.AddWithValue("@workflow_status_id", WorkflowStatusId, null);
+                    cmd.Parameters.AddWithValue("@workflow_status_id", WorkflowStatusId);
                     cmd.Parameters.AddWithValue("@specter_reference", SpecterReference, String.Empty);
                     cmd.Parameters.AddWithValue("@activity_unit_id", ActivityUnitId, Guid.Empty);
                     cmd.Parameters.AddWithValue("@activity_unit_type_id", ActivityUnitTypeId, Guid.Empty);

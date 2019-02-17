@@ -3728,11 +3728,11 @@ namespace DSA_lims
                 preparation.PreparationGeometryId = pgid;
                 preparation.FillHeightMM = Utils.ToDouble(tbPrepAnalPrepFillHeight.Text);
                 preparation.Amount = Utils.ToDouble(tbPrepAnalPrepAmount.Text);
-                preparation.PrepUnitId = Utils.ToInt32(cboxPrepAnalPrepAmountUnit.SelectedValue);
+                preparation.PrepUnitId = (int)cboxPrepAnalPrepAmountUnit.SelectedValue;
                 preparation.Quantity = Utils.ToDouble(tbPrepAnalPrepQuantity.Text);
-                preparation.QuantityUnitId = Utils.ToInt32(cboxPrepAnalPrepQuantityUnit.SelectedValue);
+                preparation.QuantityUnitId = (int)cboxPrepAnalPrepQuantityUnit.SelectedValue;
                 preparation.Comment = tbPrepAnalPrepComment.Text.Trim();
-                preparation.WorkflowStatusId = Utils.ToInt32(cboxPrepAnalPrepWorkflowStatus.SelectedValue);
+                preparation.WorkflowStatusId = (int)cboxPrepAnalPrepWorkflowStatus.SelectedValue;
 
                 preparation.StoreToDB(conn, trans);
 
@@ -3758,14 +3758,10 @@ namespace DSA_lims
             lblPrepAnalPrepRange.Text = "";
             cboxPrepAnalPrepGeom.SelectedValue = p.PreparationGeometryId;
             tbPrepAnalPrepFillHeight.Text = p.FillHeightMM.ToString();
-            tbPrepAnalPrepAmount.Text = p.Amount.ToString();
-            if (!p.PrepUnitId.HasValue)
-                cboxPrepAnalPrepAmountUnit.SelectedIndex = -1;
-            else cboxPrepAnalPrepAmountUnit.SelectedValue = p.PrepUnitId;
-            tbPrepAnalPrepQuantity.Text = p.Quantity.ToString();
-            if(!p.QuantityUnitId.HasValue)
-                cboxPrepAnalPrepQuantityUnit.SelectedIndex = -1;
-            else cboxPrepAnalPrepQuantityUnit.SelectedValue = p.QuantityUnitId;
+            tbPrepAnalPrepAmount.Text = p.Amount.ToString();            
+            cboxPrepAnalPrepAmountUnit.SelectedValue = p.PrepUnitId;
+            tbPrepAnalPrepQuantity.Text = p.Quantity.ToString();            
+            cboxPrepAnalPrepQuantityUnit.SelectedValue = p.QuantityUnitId;
             tbPrepAnalPrepComment.Text = p.Comment;
             cboxPrepAnalPrepWorkflowStatus.SelectedValue = p.WorkflowStatusId;
             tbPrepAnalPrepReqUnit.Text = p.GetRequestedActivityUnitName(conn, trans);
@@ -3824,7 +3820,7 @@ namespace DSA_lims
                 analysis.ActivityUnitTypeId = Guid.Parse(cboxPrepAnalAnalUnitType.SelectedValue.ToString());
                 analysis.SpecterReference = tbPrepAnalAnalSpecRef.Text;
                 analysis.Comment = tbPrepAnalAnalComment.Text;
-                analysis.WorkflowStatusId = Utils.ToInt32(cboxPrepAnalAnalWorkflowStatus.SelectedValue);                
+                analysis.WorkflowStatusId = (int)cboxPrepAnalAnalWorkflowStatus.SelectedValue;
 
                 analysis.StoreToDB(conn, trans);
 

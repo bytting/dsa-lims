@@ -37,22 +37,22 @@ namespace DSA_lims
 
         public Guid Id { get; set; }
         public Guid SampleId { get; set; }
-        public int? Number { get; set; }
+        public int Number { get; set; }
         public Guid AssignmentId { get; set; }
         public Guid LaboratoryId { get; set; }
         public Guid PreparationGeometryId { get; set; }
         public Guid PreparationMethodId { get; set; }
-        public int? WorkflowStatusId { get; set; }
+        public int WorkflowStatusId { get; set; }
         public double? Amount { get; set; }
-        public int? PrepUnitId { get; set; }
+        public int PrepUnitId { get; set; }
         public double? Quantity { get; set; }
-        public int? QuantityUnitId { get; set; }
+        public int QuantityUnitId { get; set; }
         public double? FillHeightMM { get; set; }
-        public int? InstanceStatusId { get; set; }
+        public int InstanceStatusId { get; set; }
         public string Comment { get; set; }
-        public DateTime? CreateDate { get; set; }
+        public DateTime CreateDate { get; set; }
         public string CreatedBy { get; set; }
-        public DateTime? UpdateDate { get; set; }
+        public DateTime UpdateDate { get; set; }
         public string UpdatedBy { get; set; }
 
         public bool Dirty;
@@ -111,22 +111,22 @@ namespace DSA_lims
 
                 Id = reader.GetGuid("id");
                 SampleId = reader.GetGuid("sample_id");
-                Number = reader.GetInt32Nullable("number");
+                Number = reader.GetInt32("number");
                 AssignmentId = reader.GetGuid("assignment_id");
                 LaboratoryId = reader.GetGuid("laboratory_id");
                 PreparationGeometryId = reader.GetGuid("preparation_geometry_id");
                 PreparationMethodId = reader.GetGuid("preparation_method_id");
-                WorkflowStatusId = reader.GetInt32Nullable("workflow_status_id");
+                WorkflowStatusId = reader.GetInt32("workflow_status_id");
                 Amount = reader.GetDoubleNullable("amount");
-                PrepUnitId = reader.GetInt32Nullable("prep_unit_id");
+                PrepUnitId = reader.GetInt32("prep_unit_id");
                 Quantity = reader.GetDoubleNullable("quantity");
-                QuantityUnitId = reader.GetInt32Nullable("quantity_unit_id");
+                QuantityUnitId = reader.GetInt32("quantity_unit_id");
                 FillHeightMM = reader.GetDoubleNullable("fill_height_mm");
-                InstanceStatusId = reader.GetInt32Nullable("instance_status_id");
+                InstanceStatusId = reader.GetInt32("instance_status_id");
                 Comment = reader.GetString("comment");
-                CreateDate = reader.GetDateTimeNullable("create_date");
+                CreateDate = reader.GetDateTime("create_date");
                 CreatedBy = reader.GetString("created_by");
-                UpdateDate = reader.GetDateTimeNullable("update_date");
+                UpdateDate = reader.GetDateTime("update_date");
                 UpdatedBy = reader.GetString("updated_by");
             }
         }
@@ -145,22 +145,22 @@ namespace DSA_lims
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@id", Id);
                 cmd.Parameters.AddWithValue("@sample_id", SampleId, Guid.Empty);
-                cmd.Parameters.AddWithValue("@number", Number, null);
+                cmd.Parameters.AddWithValue("@number", Number);
                 cmd.Parameters.AddWithValue("@assignment_id", AssignmentId, Guid.Empty);
                 cmd.Parameters.AddWithValue("@laboratory_id", LaboratoryId, Guid.Empty);
                 cmd.Parameters.AddWithValue("@preparation_geometry_id", PreparationGeometryId, Guid.Empty);
                 cmd.Parameters.AddWithValue("@preparation_method_id", PreparationMethodId, Guid.Empty);
-                cmd.Parameters.AddWithValue("@workflow_status_id", WorkflowStatusId, null);
+                cmd.Parameters.AddWithValue("@workflow_status_id", WorkflowStatusId);
                 cmd.Parameters.AddWithValue("@amount", Amount, null);
-                cmd.Parameters.AddWithValue("@prep_unit_id", PrepUnitId, null);
+                cmd.Parameters.AddWithValue("@prep_unit_id", PrepUnitId);
                 cmd.Parameters.AddWithValue("@quantity", Quantity, null);
-                cmd.Parameters.AddWithValue("@quantity_unit_id", QuantityUnitId, null);
+                cmd.Parameters.AddWithValue("@quantity_unit_id", QuantityUnitId);
                 cmd.Parameters.AddWithValue("@fill_height_mm", FillHeightMM, null);
-                cmd.Parameters.AddWithValue("@instance_status_id", InstanceStatusId, null);
+                cmd.Parameters.AddWithValue("@instance_status_id", InstanceStatusId);
                 cmd.Parameters.AddWithValue("@comment", Comment, String.Empty);
-                cmd.Parameters.AddWithValue("@create_date", DateTime.Now, DateTime.MinValue);
+                cmd.Parameters.AddWithValue("@create_date", DateTime.Now);
                 cmd.Parameters.AddWithValue("@created_by", Common.Username, String.Empty);
-                cmd.Parameters.AddWithValue("@update_date", DateTime.Now, DateTime.MinValue);
+                cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
                 cmd.Parameters.AddWithValue("@updated_by", Common.Username, String.Empty);
 
                 cmd.ExecuteNonQuery();
@@ -181,11 +181,11 @@ namespace DSA_lims
 
                     cmd.Parameters.AddWithValue("@id", Id);
                     cmd.Parameters.AddWithValue("@preparation_geometry_id", PreparationGeometryId, Guid.Empty);
-                    cmd.Parameters.AddWithValue("@workflow_status_id", WorkflowStatusId, null);
+                    cmd.Parameters.AddWithValue("@workflow_status_id", WorkflowStatusId);
                     cmd.Parameters.AddWithValue("@amount", Amount, null);
-                    cmd.Parameters.AddWithValue("@prep_unit_id", PrepUnitId, null);
+                    cmd.Parameters.AddWithValue("@prep_unit_id", PrepUnitId);
                     cmd.Parameters.AddWithValue("@quantity", Quantity, null);
-                    cmd.Parameters.AddWithValue("@quantity_unit_id", QuantityUnitId, null);
+                    cmd.Parameters.AddWithValue("@quantity_unit_id", QuantityUnitId);
                     cmd.Parameters.AddWithValue("@fill_height_mm", FillHeightMM, null);
                     cmd.Parameters.AddWithValue("@comment", Comment, String.Empty);
                     cmd.Parameters.AddWithValue("@update_date", DateTime.Now);

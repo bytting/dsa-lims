@@ -45,11 +45,11 @@ namespace DSA_lims
                     Name = reader.GetString("name");
                     MinFillHeightMM = reader.GetDoubleNullable("min_fill_height_mm");
                     MaxFillHeightMM = reader.GetDoubleNullable("max_fill_height_mm");
-                    InstanceStatusId = reader.GetInt32Nullable("instance_status_id");
+                    InstanceStatusId = reader.GetInt32("instance_status_id");
                     Comment = reader.GetString("comment");
-                    CreateDate = reader.GetDateTimeNullable("create_date");
+                    CreateDate = reader.GetDateTime("create_date");
                     CreatedBy = reader.GetString("created_by");
-                    UpdateDate = reader.GetDateTimeNullable("update_date");
+                    UpdateDate = reader.GetDateTime("update_date");
                     UpdatedBy = reader.GetString("updated_by");
                 }
             }
@@ -59,11 +59,11 @@ namespace DSA_lims
         public string Name { get; set; }
         public double? MinFillHeightMM { get; set; }
         public double? MaxFillHeightMM { get; set; }
-        public int? InstanceStatusId { get; set; }
+        public int InstanceStatusId { get; set; }
         public string Comment { get; set; }
-        public DateTime? CreateDate { get; set; }
+        public DateTime CreateDate { get; set; }
         public string CreatedBy { get; set; }
-        public DateTime? UpdateDate { get; set; }
+        public DateTime UpdateDate { get; set; }
         public string UpdatedBy { get; set; }
     }
 }

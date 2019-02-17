@@ -667,7 +667,6 @@
             this.btnAnalysisMethodsAddNuclide = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton54 = new System.Windows.Forms.ToolStripButton();
             this.tabAuditLog = new System.Windows.Forms.TabPage();
-            this.lbAuditLog = new System.Windows.Forms.ListBox();
             this.toolsAuditLog = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel53 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator43 = new System.Windows.Forms.ToolStripSeparator();
@@ -932,6 +931,7 @@
             this.btnMenu = new System.Windows.Forms.ToolStripButton();
             this.lblCurrentTab = new System.Windows.Forms.ToolStripLabel();
             this.btnBack = new System.Windows.Forms.ToolStripButton();
+            this.gridAuditLog = new System.Windows.Forms.DataGridView();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tabs.SuspendLayout();
@@ -1259,6 +1259,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.gridPrepAnalAnalAttachments)).BeginInit();
             this.toolsSampleResAttachments.SuspendLayout();
             this.tools.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridAuditLog)).BeginInit();
             this.SuspendLayout();
             // 
             // menu
@@ -7779,7 +7780,7 @@
             // tabAuditLog
             // 
             this.tabAuditLog.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.tabAuditLog.Controls.Add(this.lbAuditLog);
+            this.tabAuditLog.Controls.Add(this.gridAuditLog);
             this.tabAuditLog.Controls.Add(this.toolsAuditLog);
             this.tabAuditLog.Location = new System.Drawing.Point(4, 24);
             this.tabAuditLog.Name = "tabAuditLog";
@@ -7787,21 +7788,6 @@
             this.tabAuditLog.Size = new System.Drawing.Size(1031, 613);
             this.tabAuditLog.TabIndex = 14;
             this.tabAuditLog.Text = "Audit log";
-            // 
-            // lbAuditLog
-            // 
-            this.lbAuditLog.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.lbAuditLog.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.lbAuditLog.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lbAuditLog.FormattingEnabled = true;
-            this.lbAuditLog.HorizontalScrollbar = true;
-            this.lbAuditLog.ItemHeight = 15;
-            this.lbAuditLog.Location = new System.Drawing.Point(3, 28);
-            this.lbAuditLog.Name = "lbAuditLog";
-            this.lbAuditLog.ScrollAlwaysVisible = true;
-            this.lbAuditLog.SelectionMode = System.Windows.Forms.SelectionMode.None;
-            this.lbAuditLog.Size = new System.Drawing.Size(1025, 582);
-            this.lbAuditLog.TabIndex = 10;
             // 
             // toolsAuditLog
             // 
@@ -10673,6 +10659,25 @@
             this.btnBack.ToolTipText = "Back";
             this.btnBack.Click += new System.EventHandler(this.miBack_Click);
             // 
+            // gridAuditLog
+            // 
+            this.gridAuditLog.AllowUserToAddRows = false;
+            this.gridAuditLog.AllowUserToDeleteRows = false;
+            this.gridAuditLog.AllowUserToResizeRows = false;
+            this.gridAuditLog.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.gridAuditLog.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
+            this.gridAuditLog.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.gridAuditLog.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridAuditLog.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gridAuditLog.Location = new System.Drawing.Point(3, 28);
+            this.gridAuditLog.MultiSelect = false;
+            this.gridAuditLog.Name = "gridAuditLog";
+            this.gridAuditLog.ReadOnly = true;
+            this.gridAuditLog.RowHeadersVisible = false;
+            this.gridAuditLog.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.gridAuditLog.Size = new System.Drawing.Size(1025, 582);
+            this.gridAuditLog.TabIndex = 9;
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -11176,6 +11181,7 @@
             this.toolsSampleResAttachments.PerformLayout();
             this.tools.ResumeLayout(false);
             this.tools.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridAuditLog)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -12062,7 +12068,6 @@
         private System.Windows.Forms.Button btnSampleSelectCoords;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator71;
         private System.Windows.Forms.ToolStripButton btnPrepAnalShowAudit;
-        private System.Windows.Forms.ListBox lbAuditLog;
         private System.Windows.Forms.ToolStripLabel lblAuditLogTitle;
         private System.Windows.Forms.Panel panel15;
         private System.Windows.Forms.Button btnOrderSave;
@@ -12086,6 +12091,7 @@
         private System.Windows.Forms.DataGridView gridSysLabPrepMeth;
         private System.Windows.Forms.DataGridView gridSysLabAnalMeth;
         private System.Windows.Forms.DataGridView gridSysUsersAnalMeth;
+        private System.Windows.Forms.DataGridView gridAuditLog;
     }
 }
 

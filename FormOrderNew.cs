@@ -103,7 +103,7 @@ namespace DSA_lims
 
             try
             {                
-                Guid labId = Guid.Parse(cboxLaboratory.SelectedValue.ToString());
+                Guid labId = Utils.MakeGuid(cboxLaboratory.SelectedValue);
 
                 conn = DB.OpenConnection();
                 trans = conn.BeginTransaction();
@@ -183,7 +183,7 @@ namespace DSA_lims
                 return;
             }
 
-            Guid labId = Guid.Parse(cboxLaboratory.SelectedValue.ToString());
+            Guid labId = Utils.MakeGuid(cboxLaboratory.SelectedValue);
             using (SqlConnection conn = DB.OpenConnection())
             {
                 UI.PopulateComboBoxes(conn, "csp_select_accounts_for_laboratory_short", new[] {

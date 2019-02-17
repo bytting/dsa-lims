@@ -58,7 +58,7 @@ order by p.number";
 
             foreach (DataGridViewRow row in gridPreparations.SelectedRows)
             {
-                SelectedPreparationIds.Add(Guid.Parse(row.Cells["id"].Value.ToString()));
+                SelectedPreparationIds.Add(Utils.MakeGuid(row.Cells["id"].Value));
             }
 
             DialogResult = DialogResult.OK;

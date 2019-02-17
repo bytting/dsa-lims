@@ -107,7 +107,7 @@ namespace DSA_lims
                 return;
             }
 
-            Guid compId = Guid.Parse(cboxComponents.SelectedValue.ToString());
+            Guid compId = Utils.MakeGuid(cboxComponents.SelectedValue);
             int count = Convert.ToInt32(tbCount.Text.Trim());
 
             SqlConnection conn = null;

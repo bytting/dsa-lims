@@ -40,7 +40,7 @@ namespace DSA_lims
             using (SqlDataReader reader = DB.GetDataReader(conn, null, procedure, CommandType.StoredProcedure, sqlParams))
             {
                 while (reader.Read())
-                    list.Add(new Lemma<Guid, string>(Guid.Parse(reader["id"].ToString()), reader["name"].ToString()));
+                    list.Add(new Lemma<Guid, string>(reader.GetGuid("id"), reader.GetString("name")));
             }
 
             foreach (ComboBox cb in cbn)
@@ -431,7 +431,7 @@ order by name";
             {
                 while (reader.Read())
                 {
-                    Lemma<Guid, string> st = new Lemma<Guid, string>(Guid.Parse(reader["id"].ToString()), reader["name"].ToString());
+                    Lemma<Guid, string> st = new Lemma<Guid, string>(reader.GetGuid("id"), reader.GetString("name"));
                     lb.Items.Add(st);
                 }
             }            
@@ -445,7 +445,7 @@ order by name";
                 {
                     while (reader.Read())
                     {
-                        Lemma<Guid, string> st = new Lemma<Guid, string>(Guid.Parse(reader["id"].ToString()), reader["name"].ToString());
+                        Lemma<Guid, string> st = new Lemma<Guid, string>(reader.GetGuid("id"), reader.GetString("name"));
                         lbInherited.Items.Add(st);
                     }
                 }
@@ -461,10 +461,7 @@ order by name";
             {
                 while (reader.Read())
                 {
-                    Lemma<Guid, string> sampleComponent = new Lemma<Guid, string>(
-                        Guid.Parse(reader["id"].ToString()),
-                        reader["name"].ToString());
-
+                    Lemma<Guid, string> sampleComponent = new Lemma<Guid, string>(reader.GetGuid("id"), reader.GetString("name"));
                     lb.Items.Add(sampleComponent);
                 }
             }
@@ -486,7 +483,7 @@ order by name";
                     new SqlParameter("@sample_type_id", sampleTypeId)))
             {
                 while (reader.Read())
-                    comps.Add(new Lemma<Guid, string>(Guid.Parse(reader["id"].ToString()), reader["name"].ToString()));
+                    comps.Add(new Lemma<Guid, string>(reader.GetGuid("id"), reader.GetString("name")));
             }
 
             if (tnode.Parent != null)
@@ -504,7 +501,7 @@ order by name";
             {
                 while (reader.Read())
                 {
-                    Lemma<Guid, string> n = new Lemma<Guid, string>(Guid.Parse(reader["id"].ToString()), reader["name"].ToString());
+                    Lemma<Guid, string> n = new Lemma<Guid, string>(reader.GetGuid("id"), reader.GetString("name"));
                     lb.Items.Add(n);
                 }
             }
@@ -518,7 +515,7 @@ order by name";
             {
                 while (reader.Read())
                 {
-                    Lemma<Guid, string> n = new Lemma<Guid, string>(Guid.Parse(reader["id"].ToString()), reader["name"].ToString());
+                    Lemma<Guid, string> n = new Lemma<Guid, string>(reader.GetGuid("id"), reader.GetString("name"));
                     lb.Items.Add(n);
                 }
             }
@@ -813,7 +810,7 @@ order by create_date desc";
             {
                 while (reader.Read())
                 {
-                    stats.Add(new Lemma<int, string>(Convert.ToInt32(reader["id"]), reader["name"].ToString()));
+                    stats.Add(new Lemma<int, string>(reader.GetInt32("id"), reader.GetString("name")));
                 }
             }
             cbox.DataSource = stats;
@@ -834,7 +831,7 @@ from role r
             {
                 while (reader.Read())
                 {
-                    roles.Add(new Lemma<Guid, string>(Guid.Parse(reader["id"].ToString()), reader["name"].ToString()));
+                    roles.Add(new Lemma<Guid, string>(reader.GetGuid("id"), reader.GetString("name")));
                 }
             }
 

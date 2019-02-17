@@ -83,9 +83,9 @@ namespace DSA_lims
 
             AssignmentPreparationMethod apm = new AssignmentPreparationMethod();
             apm.AssignmentSampleTypeId = mAst.Id;
-            apm.PreparationMethodId = Guid.Parse(cboxPreparationMethod.SelectedValue.ToString());
+            apm.PreparationMethodId = Utils.MakeGuid(cboxPreparationMethod.SelectedValue);
             apm.PreparationMethodCount = Convert.ToInt32(tbCount.Text);
-            apm.PreparationLaboratoryId = Guid.Parse(cboxPrepMethLaboratory.SelectedValue.ToString());
+            apm.PreparationLaboratoryId = Utils.MakeGuid(cboxPrepMethLaboratory.SelectedValue);
             apm.Comment = tbComment.Text.Trim();
             apm.CreateDate = DateTime.Now;
             apm.CreatedBy = Common.Username;

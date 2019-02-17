@@ -75,7 +75,7 @@ namespace DSA_lims
 
             AssignmentAnalysisMethod aam = new AssignmentAnalysisMethod();
             aam.AssignmentPreparationMethodId = mApm.Id;
-            aam.AnalysisMethodId = Guid.Parse(cboxAnalysisMethods.SelectedValue.ToString());
+            aam.AnalysisMethodId = Utils.MakeGuid(cboxAnalysisMethods.SelectedValue);
             aam.AnalysisMethodCount = Convert.ToInt32(tbCount.Text);
             aam.Comment = tbComment.Text.Trim();
             aam.CreateDate = DateTime.Now;

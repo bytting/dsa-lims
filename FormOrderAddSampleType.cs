@@ -61,11 +61,11 @@ namespace DSA_lims
 
             AssignmentSampleType ast = new AssignmentSampleType();
             ast.AssignmentId = mAssignment.Id;
-            ast.SampleTypeId = Guid.Parse(cboxSampleType.SelectedValue.ToString());
-            ast.SampleComponentId = Guid.Parse(cboxSampleComponent.SelectedValue.ToString());
+            ast.SampleTypeId = Utils.MakeGuid(cboxSampleType.SelectedValue);
+            ast.SampleComponentId = Utils.MakeGuid(cboxSampleComponent.SelectedValue);
             ast.SampleCount = Convert.ToInt32(tbNumSamples.Text);
-            ast.RequestedActivityUnitId = Guid.Parse(cboxRequestedUnit.SelectedValue.ToString());
-            ast.RequestedActivityUnitTypeId = Guid.Parse(cboxRequestedUnitType.SelectedValue.ToString());
+            ast.RequestedActivityUnitId = Utils.MakeGuid(cboxRequestedUnit.SelectedValue);
+            ast.RequestedActivityUnitTypeId = Utils.MakeGuid(cboxRequestedUnitType.SelectedValue);
             ast.ReturnToSender = cbReturnToSender.Checked;
             ast.Comment = tbComment.Text.Trim();
             ast.CreateDate = DateTime.Now;
@@ -100,7 +100,7 @@ namespace DSA_lims
                 return;
             }
 
-            Guid sampleTypeId = Guid.Parse(cboxSampleType.SelectedValue.ToString());
+            Guid sampleTypeId = Utils.MakeGuid(cboxSampleType.SelectedValue);
             TreeNode[] tnodes = TreeSampleTypes.Nodes.Find(sampleTypeId.ToString(), true);
             if (tnodes.Length < 1)
                 return;

@@ -202,8 +202,8 @@ namespace DSA_lims
 
                     reader.Read();
 
-                    userId = Guid.Parse(reader["id"].ToString());
-                    labId = Utils.IsValidGuid(reader["laboratory_id"]) ? Guid.Parse(reader["laboratory_id"].ToString()) : Guid.Empty;
+                    userId = reader.GetGuid("id");
+                    labId = reader.GetGuid("laboratory_id");
                     hash2 = reader.GetSqlBinary(2).Value;
                 }
 

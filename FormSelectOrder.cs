@@ -101,8 +101,8 @@ namespace DSA_lims
                 return;
             }
 
-            SelectedLaboratoryId = Guid.Parse(cboxLaboratory.SelectedValue.ToString());
-            SelectedOrderId = Guid.Parse(gridOrders.SelectedRows[0].Cells["id"].Value.ToString());
+            SelectedLaboratoryId = Utils.MakeGuid(cboxLaboratory.SelectedValue);
+            SelectedOrderId = Utils.MakeGuid(gridOrders.SelectedRows[0].Cells["id"].Value);
             SelectedOrderName = gridOrders.SelectedRows[0].Cells["name"].Value.ToString();
             SelectedOrderLineId = Guid.Parse(tnode.Name);
 
@@ -346,7 +346,7 @@ where sxast.sample_id = @sid";
             if (!Utils.IsValidGuid(cboxLaboratory.SelectedValue))
                 return;
 
-            Guid labId = Guid.Parse(cboxLaboratory.SelectedValue.ToString());
+            Guid labId = Utils.MakeGuid(cboxLaboratory.SelectedValue);
             using (SqlConnection conn = DB.OpenConnection())
             {
                 UI.PopulateOrdersConstruction(conn, labId, gridOrders);

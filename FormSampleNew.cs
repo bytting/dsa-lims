@@ -190,7 +190,7 @@ namespace DSA_lims
                 return;
             }
 
-            Guid projectMainId = Guid.Parse(cboxProjectMain.SelectedValue.ToString());
+            Guid projectMainId = Utils.MakeGuid(cboxProjectMain.SelectedValue);
 
             using (SqlConnection conn = DB.OpenConnection())
             {
@@ -209,7 +209,7 @@ namespace DSA_lims
                 return;
             }
 
-            Guid sampleTypeId = Guid.Parse(cboxSampleType.SelectedValue.ToString());
+            Guid sampleTypeId = Utils.MakeGuid(cboxSampleType.SelectedValue);
             TreeNode[] tnodes = TreeSampleTypes.Nodes.Find(sampleTypeId.ToString(), true);
             if (tnodes.Length < 1)
                 return;

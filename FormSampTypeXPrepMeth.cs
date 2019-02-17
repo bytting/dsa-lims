@@ -62,7 +62,7 @@ namespace DSA_lims
 
                     while (reader.Read())
                     {
-                        var pm = new Lemma<Guid, string>(Guid.Parse(reader["id"].ToString()), reader["name"].ToString());
+                        var pm = new Lemma<Guid, string>(reader.GetGuid("id"), reader.GetString("name"));
                         lbPrepMeth.Items.Add(pm);
                     }
                 }

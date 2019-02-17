@@ -220,7 +220,8 @@ where sxast.sample_id = @sid";
                         using (SqlDataReader reader = DB.GetDataReader(connection, transaction, query, CommandType.Text, new SqlParameter("@id", prepMethLineId)))
                         {
                             reader.Read(); // FIXME
-                            prepMethId = Guid.Parse(reader["preparation_method_id"].ToString());
+
+                            prepMethId = Utils.MakeGuid(reader["preparation_method_id"]);
                             prepCount = Convert.ToInt32(reader["preparation_method_count"]);
                         }
 
@@ -295,7 +296,8 @@ where sxast.sample_id = @sid";
                 using (SqlDataReader reader = DB.GetDataReader(conn, trans, query, CommandType.Text, new SqlParameter("@id", analMethLineId)))
                 {
                     reader.Read(); // FIXME
-                    analMethId = Guid.Parse(reader["analysis_method_id"].ToString());
+
+                    analMethId = Utils.MakeGuid(reader["analysis_method_id"]);
                     analCount = Convert.ToInt32(reader["analysis_method_count"]);
                 }
 
@@ -435,7 +437,8 @@ where sxast.sample_id = @sid";
             List<object> prepNums = new List<object>();
             using (SqlConnection conn = DB.OpenConnection())            
                 using (SqlDataReader reader = DB.GetDataReader(conn, null, query, CommandType.Text))            
-                    while (reader.Read()) prepNums.Add(SampleNumber + "/" + reader["number"]);
+                    while (reader.Read())
+                        prepNums.Add(SampleNumber + "/" + reader.GetString("number"));
 
             tnode.ToolTipText = "Connected preparations: " + String.Join(", ", prepNums);
         }

@@ -220,8 +220,6 @@ namespace DSA_lims
         {
             try
             {
-                cbMachineSettingsUseAD.Checked = Common.Settings.UseActiveDirectoryCredentials;
-
                 using (SqlConnection conn = DB.OpenConnection())
                 {
                     DB.LoadSampleTypes(conn, null);
@@ -805,29 +803,6 @@ namespace DSA_lims
                 AddSampleTypeComponents(conn, parentId, true, tnode.Parent);
             }
         }
-
-        private void miUserSettings_Click(object sender, EventArgs e)
-        {
-            tabs.SelectedTab = tabUserSettings;
-        }
-
-        private void miMachineSettings_Click(object sender, EventArgs e)
-        {
-            tabs.SelectedTab = tabMachineSettings;
-        }
-
-        private void btnMachineSettingsSave_Click(object sender, EventArgs e)
-        {
-            Common.Settings.UseActiveDirectoryCredentials = cbMachineSettingsUseAD.Checked;
-
-            SaveSettings(DSAEnvironment.SettingsFilename);
-            SetStatusMessage("Settings saved");
-        }
-
-        private void btnUserSettingsSave_Click(object sender, EventArgs e)
-        {
-            //
-        }                        
 
         private void miNewLaboratory_Click(object sender, EventArgs e)
         {            
@@ -1895,7 +1870,7 @@ namespace DSA_lims
                 return;
             }
 
-            Guid sid = Guid.Parse(gridSamples.SelectedRows[0].Cells["id"].Value.ToString());
+            Guid sid = Utils.MakeGuid(gridSamples.SelectedRows[0].Cells["id"].Value);
 
             using (SqlConnection conn = DB.OpenConnection())
             {
@@ -4124,20 +4099,12 @@ namespace DSA_lims
 
             tbSampleSamplingDateFrom.Tag = form.SelectedDateTime;
             tbSampleSamplingDateFrom.Text = form.SelectedDateTime.ToString(Utils.DateTimeFormatNorwegian);
-
-            btnSampleSamplingDateTo.Enabled = true;
-            btnSampleSamplingDateToClear.Enabled = true;
-            tbSampleSamplingDateTo.Enabled = true;
         }
 
         private void btnSampleSamplingDateFromClear_Click(object sender, EventArgs e)
         {
             tbSampleSamplingDateTo.Tag = null;
             tbSampleSamplingDateTo.Text = "";
-            tbSampleSamplingDateTo.Enabled = false;
-
-            btnSampleSamplingDateTo.Enabled = false;
-            btnSampleSamplingDateToClear.Enabled = false;
 
             tbSampleSamplingDateFrom.Tag = null;
             tbSampleSamplingDateFrom.Text = "";            

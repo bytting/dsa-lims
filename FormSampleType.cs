@@ -49,9 +49,10 @@ namespace DSA_lims
                             throw new Exception("Sample type with ID " + p["id"] + " was not found");
 
                         reader.Read();
-                        tbName.Text = reader["name"].ToString();
-                        tbNameCommon.Text = reader["name_common"].ToString();
-                        tbNameLatin.Text = reader["name_latin"].ToString();
+
+                        tbName.Text = reader.GetString("name");
+                        tbNameCommon.Text = reader.GetString("name_common");
+                        tbNameLatin.Text = reader.GetString("name_latin");
                         p["parent_id"] = reader["parent_id"];
                         p["create_date"] = reader["create_date"];
                         p["created_by"] = reader["created_by"];

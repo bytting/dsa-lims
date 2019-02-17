@@ -155,12 +155,12 @@ where s.id = @id
 
                         reader.Read();
 
-                        sampleNumber = reader["sample_number"].ToString();
-                        externalSampleId = reader["external_id"].ToString();
-                        sampleType = reader["sample_type_name"].ToString();
-                        projectMain = reader["project_main_name"].ToString();
-                        projectSub = reader["project_sub_name"].ToString();
-                        laboratory = reader["laboratory_name"].ToString();
+                        sampleNumber = reader.GetString("sample_number");
+                        externalSampleId = reader.GetString("external_id");
+                        sampleType = reader.GetString("sample_type_name");
+                        projectMain = reader.GetString("project_main_name");
+                        projectSub = reader.GetString("project_sub_name");
+                        laboratory = reader.GetString("laboratory_name");
 
                         for (int c = 0; c < copies; c++)
                         {

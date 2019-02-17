@@ -80,10 +80,10 @@ namespace DSA_lims
                         {
                             reader.Read();
 
-                            if (reader["laboratory_logo"] != null && reader["laboratory_logo"] != DBNull.Value)
+                            if (DB.IsValidField(reader["laboratory_logo"]))
                                 labLogo = PdfImage.GetInstance((byte[])reader["laboratory_logo"]);
 
-                            if (reader["accredited_logo"] != null && reader["accredited_logo"] != DBNull.Value)
+                            if (DB.IsValidField(reader["accredited_logo"]))
                                 accredLogo = PdfImage.GetInstance((byte[])reader["accredited_logo"]);
                         }
                     }

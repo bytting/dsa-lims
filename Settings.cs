@@ -31,11 +31,9 @@ namespace DSA_lims
     public class DSASettings
     {
         public DSASettings()
-        {
-            UseActiveDirectoryCredentials = true;
+        {            
         }        
-        
-        public bool UseActiveDirectoryCredentials { get; set; }
+                
         public string ConnectionString { get; set; }
         public string LabelPrinterName { get; set; }
         public string LabelPrinterPaperName { get; set; }

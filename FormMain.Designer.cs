@@ -45,9 +45,6 @@
             this.miMetadataView = new System.Windows.Forms.ToolStripMenuItem();
             this.miSystemDataView = new System.Windows.Forms.ToolStripMenuItem();
             this.miAuditLogView = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
-            this.miUserSettings = new System.Windows.Forms.ToolStripMenuItem();
-            this.miMachineSettings = new System.Windows.Forms.ToolStripMenuItem();
             this.miSample = new System.Windows.Forms.ToolStripMenuItem();
             this.miOrder = new System.Windows.Forms.ToolStripMenuItem();
             this.miOrderAddSampleType = new System.Windows.Forms.ToolStripMenuItem();
@@ -667,25 +664,11 @@
             this.btnAnalysisMethodsAddNuclide = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton54 = new System.Windows.Forms.ToolStripButton();
             this.tabAuditLog = new System.Windows.Forms.TabPage();
+            this.gridAuditLog = new System.Windows.Forms.DataGridView();
             this.toolsAuditLog = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel53 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator43 = new System.Windows.Forms.ToolStripSeparator();
             this.lblAuditLogTitle = new System.Windows.Forms.ToolStripLabel();
-            this.tabUserSettings = new System.Windows.Forms.TabPage();
-            this.tblSettingsUser = new System.Windows.Forms.TableLayoutPanel();
-            this.btnUserSettingsSave = new System.Windows.Forms.Button();
-            this.toolsUserSettings = new System.Windows.Forms.ToolStrip();
-            this.toolStripLabel24 = new System.Windows.Forms.ToolStripLabel();
-            this.tabMachineSettings = new System.Windows.Forms.TabPage();
-            this.tblMachineSettings = new System.Windows.Forms.TableLayoutPanel();
-            this.btnMachineSettingsSave = new System.Windows.Forms.Button();
-            this.label47 = new System.Windows.Forms.Label();
-            this.label48 = new System.Windows.Forms.Label();
-            this.comboBox16 = new System.Windows.Forms.ComboBox();
-            this.comboBox19 = new System.Windows.Forms.ComboBox();
-            this.cbMachineSettingsUseAD = new System.Windows.Forms.CheckBox();
-            this.toolsMachSettings = new System.Windows.Forms.ToolStrip();
-            this.toolStripLabel27 = new System.Windows.Forms.ToolStripLabel();
             this.tabSysdata = new System.Windows.Forms.TabPage();
             this.tabsSys = new System.Windows.Forms.TabControl();
             this.tabSysLaboratories = new System.Windows.Forms.TabPage();
@@ -931,7 +914,6 @@
             this.btnMenu = new System.Windows.Forms.ToolStripButton();
             this.lblCurrentTab = new System.Windows.Forms.ToolStripLabel();
             this.btnBack = new System.Windows.Forms.ToolStripButton();
-            this.gridAuditLog = new System.Windows.Forms.DataGridView();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tabs.SuspendLayout();
@@ -1124,13 +1106,8 @@
             this.toolsTypeRelAnalMeth.SuspendLayout();
             this.toolsTypeRelNuclides.SuspendLayout();
             this.tabAuditLog.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridAuditLog)).BeginInit();
             this.toolsAuditLog.SuspendLayout();
-            this.tabUserSettings.SuspendLayout();
-            this.tblSettingsUser.SuspendLayout();
-            this.toolsUserSettings.SuspendLayout();
-            this.tabMachineSettings.SuspendLayout();
-            this.tblMachineSettings.SuspendLayout();
-            this.toolsMachSettings.SuspendLayout();
             this.tabSysdata.SuspendLayout();
             this.tabsSys.SuspendLayout();
             this.tabSysLaboratories.SuspendLayout();
@@ -1259,7 +1236,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.gridPrepAnalAnalAttachments)).BeginInit();
             this.toolsSampleResAttachments.SuspendLayout();
             this.tools.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gridAuditLog)).BeginInit();
             this.SuspendLayout();
             // 
             // menu
@@ -1327,10 +1303,7 @@
             this.miTypeRelationsView,
             this.miMetadataView,
             this.miSystemDataView,
-            this.miAuditLogView,
-            this.toolStripSeparator6,
-            this.miUserSettings,
-            this.miMachineSettings});
+            this.miAuditLogView});
             this.miEdit.Name = "miEdit";
             this.miEdit.Size = new System.Drawing.Size(39, 20);
             this.miEdit.Text = "&Edit";
@@ -1402,25 +1375,6 @@
             this.miAuditLogView.Size = new System.Drawing.Size(164, 22);
             this.miAuditLogView.Text = "&Audit log";
             this.miAuditLogView.Click += new System.EventHandler(this.miAuditLogView_Click);
-            // 
-            // toolStripSeparator6
-            // 
-            this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(161, 6);
-            // 
-            // miUserSettings
-            // 
-            this.miUserSettings.Name = "miUserSettings";
-            this.miUserSettings.Size = new System.Drawing.Size(164, 22);
-            this.miUserSettings.Text = "&User settings";
-            this.miUserSettings.Click += new System.EventHandler(this.miUserSettings_Click);
-            // 
-            // miMachineSettings
-            // 
-            this.miMachineSettings.Name = "miMachineSettings";
-            this.miMachineSettings.Size = new System.Drawing.Size(164, 22);
-            this.miMachineSettings.Text = "&Machine settings";
-            this.miMachineSettings.Click += new System.EventHandler(this.miMachineSettings_Click);
             // 
             // miSample
             // 
@@ -2611,8 +2565,6 @@
             this.tabs.Controls.Add(this.tabProjects);
             this.tabs.Controls.Add(this.tabTypeRel);
             this.tabs.Controls.Add(this.tabAuditLog);
-            this.tabs.Controls.Add(this.tabUserSettings);
-            this.tabs.Controls.Add(this.tabMachineSettings);
             this.tabs.Controls.Add(this.tabSysdata);
             this.tabs.Controls.Add(this.tabPrepAnal);
             this.tabs.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -3503,7 +3455,6 @@
             // tbSampleSamplingDateTo
             // 
             this.tbSampleSamplingDateTo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbSampleSamplingDateTo.Enabled = false;
             this.tbSampleSamplingDateTo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
             this.tbSampleSamplingDateTo.Location = new System.Drawing.Point(0, 0);
             this.tbSampleSamplingDateTo.Name = "tbSampleSamplingDateTo";
@@ -3517,7 +3468,6 @@
             this.btnSampleSamplingDateToClear.BackgroundImage = global::DSA_lims.Properties.Resources.clear_16;
             this.btnSampleSamplingDateToClear.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.btnSampleSamplingDateToClear.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnSampleSamplingDateToClear.Enabled = false;
             this.btnSampleSamplingDateToClear.Location = new System.Drawing.Point(229, 0);
             this.btnSampleSamplingDateToClear.Name = "btnSampleSamplingDateToClear";
             this.btnSampleSamplingDateToClear.Size = new System.Drawing.Size(24, 24);
@@ -3530,7 +3480,6 @@
             this.btnSampleSamplingDateTo.BackgroundImage = global::DSA_lims.Properties.Resources.datetime_16;
             this.btnSampleSamplingDateTo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.btnSampleSamplingDateTo.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnSampleSamplingDateTo.Enabled = false;
             this.btnSampleSamplingDateTo.Location = new System.Drawing.Point(253, 0);
             this.btnSampleSamplingDateTo.Name = "btnSampleSamplingDateTo";
             this.btnSampleSamplingDateTo.Size = new System.Drawing.Size(24, 24);
@@ -7789,6 +7738,25 @@
             this.tabAuditLog.TabIndex = 14;
             this.tabAuditLog.Text = "Audit log";
             // 
+            // gridAuditLog
+            // 
+            this.gridAuditLog.AllowUserToAddRows = false;
+            this.gridAuditLog.AllowUserToDeleteRows = false;
+            this.gridAuditLog.AllowUserToResizeRows = false;
+            this.gridAuditLog.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.gridAuditLog.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
+            this.gridAuditLog.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.gridAuditLog.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridAuditLog.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gridAuditLog.Location = new System.Drawing.Point(3, 28);
+            this.gridAuditLog.MultiSelect = false;
+            this.gridAuditLog.Name = "gridAuditLog";
+            this.gridAuditLog.ReadOnly = true;
+            this.gridAuditLog.RowHeadersVisible = false;
+            this.gridAuditLog.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.gridAuditLog.Size = new System.Drawing.Size(1025, 582);
+            this.gridAuditLog.TabIndex = 9;
+            // 
             // toolsAuditLog
             // 
             this.toolsAuditLog.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
@@ -7819,185 +7787,6 @@
             this.lblAuditLogTitle.Name = "lblAuditLogTitle";
             this.lblAuditLogTitle.Size = new System.Drawing.Size(108, 22);
             this.lblAuditLogTitle.Text = "<lblAuditLogTitle>";
-            // 
-            // tabUserSettings
-            // 
-            this.tabUserSettings.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.tabUserSettings.Controls.Add(this.tblSettingsUser);
-            this.tabUserSettings.Controls.Add(this.toolsUserSettings);
-            this.tabUserSettings.Location = new System.Drawing.Point(4, 24);
-            this.tabUserSettings.Name = "tabUserSettings";
-            this.tabUserSettings.Padding = new System.Windows.Forms.Padding(3);
-            this.tabUserSettings.Size = new System.Drawing.Size(1031, 613);
-            this.tabUserSettings.TabIndex = 16;
-            this.tabUserSettings.Text = "User settings";
-            // 
-            // tblSettingsUser
-            // 
-            this.tblSettingsUser.ColumnCount = 2;
-            this.tblSettingsUser.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tblSettingsUser.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tblSettingsUser.Controls.Add(this.btnUserSettingsSave, 1, 6);
-            this.tblSettingsUser.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tblSettingsUser.Location = new System.Drawing.Point(3, 28);
-            this.tblSettingsUser.Name = "tblSettingsUser";
-            this.tblSettingsUser.RowCount = 8;
-            this.tblSettingsUser.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-            this.tblSettingsUser.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-            this.tblSettingsUser.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-            this.tblSettingsUser.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-            this.tblSettingsUser.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-            this.tblSettingsUser.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-            this.tblSettingsUser.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-            this.tblSettingsUser.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tblSettingsUser.Size = new System.Drawing.Size(1025, 582);
-            this.tblSettingsUser.TabIndex = 12;
-            // 
-            // btnUserSettingsSave
-            // 
-            this.btnUserSettingsSave.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnUserSettingsSave.Location = new System.Drawing.Point(858, 195);
-            this.btnUserSettingsSave.Name = "btnUserSettingsSave";
-            this.btnUserSettingsSave.Size = new System.Drawing.Size(164, 26);
-            this.btnUserSettingsSave.TabIndex = 0;
-            this.btnUserSettingsSave.Text = "Save";
-            this.btnUserSettingsSave.UseVisualStyleBackColor = true;
-            this.btnUserSettingsSave.Click += new System.EventHandler(this.btnUserSettingsSave_Click);
-            // 
-            // toolsUserSettings
-            // 
-            this.toolsUserSettings.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.toolsUserSettings.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripLabel24});
-            this.toolsUserSettings.Location = new System.Drawing.Point(3, 3);
-            this.toolsUserSettings.Name = "toolsUserSettings";
-            this.toolsUserSettings.Size = new System.Drawing.Size(1025, 25);
-            this.toolsUserSettings.TabIndex = 11;
-            this.toolsUserSettings.Text = "toolStrip43";
-            // 
-            // toolStripLabel24
-            // 
-            this.toolStripLabel24.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.toolStripLabel24.Name = "toolStripLabel24";
-            this.toolStripLabel24.Size = new System.Drawing.Size(125, 22);
-            this.toolStripLabel24.Text = "User specific settings";
-            // 
-            // tabMachineSettings
-            // 
-            this.tabMachineSettings.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.tabMachineSettings.Controls.Add(this.tblMachineSettings);
-            this.tabMachineSettings.Controls.Add(this.toolsMachSettings);
-            this.tabMachineSettings.Location = new System.Drawing.Point(4, 24);
-            this.tabMachineSettings.Name = "tabMachineSettings";
-            this.tabMachineSettings.Padding = new System.Windows.Forms.Padding(3);
-            this.tabMachineSettings.Size = new System.Drawing.Size(1031, 613);
-            this.tabMachineSettings.TabIndex = 17;
-            this.tabMachineSettings.Text = "Machine settings";
-            // 
-            // tblMachineSettings
-            // 
-            this.tblMachineSettings.ColumnCount = 4;
-            this.tblMachineSettings.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tblMachineSettings.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
-            this.tblMachineSettings.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tblMachineSettings.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
-            this.tblMachineSettings.Controls.Add(this.btnMachineSettingsSave, 3, 6);
-            this.tblMachineSettings.Controls.Add(this.label47, 0, 1);
-            this.tblMachineSettings.Controls.Add(this.label48, 0, 2);
-            this.tblMachineSettings.Controls.Add(this.comboBox16, 1, 1);
-            this.tblMachineSettings.Controls.Add(this.comboBox19, 1, 2);
-            this.tblMachineSettings.Controls.Add(this.cbMachineSettingsUseAD, 3, 1);
-            this.tblMachineSettings.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tblMachineSettings.Location = new System.Drawing.Point(3, 28);
-            this.tblMachineSettings.Name = "tblMachineSettings";
-            this.tblMachineSettings.RowCount = 8;
-            this.tblMachineSettings.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-            this.tblMachineSettings.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-            this.tblMachineSettings.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-            this.tblMachineSettings.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-            this.tblMachineSettings.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-            this.tblMachineSettings.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-            this.tblMachineSettings.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-            this.tblMachineSettings.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tblMachineSettings.Size = new System.Drawing.Size(1025, 582);
-            this.tblMachineSettings.TabIndex = 12;
-            // 
-            // btnMachineSettingsSave
-            // 
-            this.btnMachineSettingsSave.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnMachineSettingsSave.Location = new System.Drawing.Point(720, 195);
-            this.btnMachineSettingsSave.Name = "btnMachineSettingsSave";
-            this.btnMachineSettingsSave.Size = new System.Drawing.Size(302, 26);
-            this.btnMachineSettingsSave.TabIndex = 3;
-            this.btnMachineSettingsSave.Text = "Save";
-            this.btnMachineSettingsSave.UseVisualStyleBackColor = true;
-            this.btnMachineSettingsSave.Click += new System.EventHandler(this.btnMachineSettingsSave_Click);
-            // 
-            // label47
-            // 
-            this.label47.AutoSize = true;
-            this.label47.Location = new System.Drawing.Point(3, 32);
-            this.label47.Name = "label47";
-            this.label47.Size = new System.Drawing.Size(82, 15);
-            this.label47.TabIndex = 1;
-            this.label47.Text = "Report printer";
-            // 
-            // label48
-            // 
-            this.label48.AutoSize = true;
-            this.label48.Location = new System.Drawing.Point(3, 64);
-            this.label48.Name = "label48";
-            this.label48.Size = new System.Drawing.Size(76, 15);
-            this.label48.TabIndex = 2;
-            this.label48.Text = "Label printer";
-            // 
-            // comboBox16
-            // 
-            this.comboBox16.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.comboBox16.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox16.FormattingEnabled = true;
-            this.comboBox16.Location = new System.Drawing.Point(208, 35);
-            this.comboBox16.Name = "comboBox16";
-            this.comboBox16.Size = new System.Drawing.Size(301, 23);
-            this.comboBox16.TabIndex = 0;
-            // 
-            // comboBox19
-            // 
-            this.comboBox19.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.comboBox19.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox19.FormattingEnabled = true;
-            this.comboBox19.Location = new System.Drawing.Point(208, 67);
-            this.comboBox19.Name = "comboBox19";
-            this.comboBox19.Size = new System.Drawing.Size(301, 23);
-            this.comboBox19.TabIndex = 1;
-            // 
-            // cbMachineSettingsUseAD
-            // 
-            this.cbMachineSettingsUseAD.AutoSize = true;
-            this.cbMachineSettingsUseAD.Location = new System.Drawing.Point(720, 35);
-            this.cbMachineSettingsUseAD.Name = "cbMachineSettingsUseAD";
-            this.cbMachineSettingsUseAD.Size = new System.Drawing.Size(271, 19);
-            this.cbMachineSettingsUseAD.TabIndex = 2;
-            this.cbMachineSettingsUseAD.Text = "Use domain account to autenticate as default";
-            this.cbMachineSettingsUseAD.UseVisualStyleBackColor = true;
-            // 
-            // toolsMachSettings
-            // 
-            this.toolsMachSettings.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.toolsMachSettings.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripLabel27});
-            this.toolsMachSettings.Location = new System.Drawing.Point(3, 3);
-            this.toolsMachSettings.Name = "toolsMachSettings";
-            this.toolsMachSettings.Size = new System.Drawing.Size(1025, 25);
-            this.toolsMachSettings.TabIndex = 11;
-            this.toolsMachSettings.Text = "toolStrip44";
-            // 
-            // toolStripLabel27
-            // 
-            this.toolStripLabel27.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.toolStripLabel27.Name = "toolStripLabel27";
-            this.toolStripLabel27.Size = new System.Drawing.Size(146, 22);
-            this.toolStripLabel27.Text = "Machine specific settings";
             // 
             // tabSysdata
             // 
@@ -10659,25 +10448,6 @@
             this.btnBack.ToolTipText = "Back";
             this.btnBack.Click += new System.EventHandler(this.miBack_Click);
             // 
-            // gridAuditLog
-            // 
-            this.gridAuditLog.AllowUserToAddRows = false;
-            this.gridAuditLog.AllowUserToDeleteRows = false;
-            this.gridAuditLog.AllowUserToResizeRows = false;
-            this.gridAuditLog.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.gridAuditLog.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
-            this.gridAuditLog.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.gridAuditLog.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gridAuditLog.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridAuditLog.Location = new System.Drawing.Point(3, 28);
-            this.gridAuditLog.MultiSelect = false;
-            this.gridAuditLog.Name = "gridAuditLog";
-            this.gridAuditLog.ReadOnly = true;
-            this.gridAuditLog.RowHeadersVisible = false;
-            this.gridAuditLog.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridAuditLog.Size = new System.Drawing.Size(1025, 582);
-            this.gridAuditLog.TabIndex = 9;
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -10985,19 +10755,9 @@
             this.toolsTypeRelNuclides.PerformLayout();
             this.tabAuditLog.ResumeLayout(false);
             this.tabAuditLog.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridAuditLog)).EndInit();
             this.toolsAuditLog.ResumeLayout(false);
             this.toolsAuditLog.PerformLayout();
-            this.tabUserSettings.ResumeLayout(false);
-            this.tabUserSettings.PerformLayout();
-            this.tblSettingsUser.ResumeLayout(false);
-            this.toolsUserSettings.ResumeLayout(false);
-            this.toolsUserSettings.PerformLayout();
-            this.tabMachineSettings.ResumeLayout(false);
-            this.tabMachineSettings.PerformLayout();
-            this.tblMachineSettings.ResumeLayout(false);
-            this.tblMachineSettings.PerformLayout();
-            this.toolsMachSettings.ResumeLayout(false);
-            this.toolsMachSettings.PerformLayout();
             this.tabSysdata.ResumeLayout(false);
             this.tabsSys.ResumeLayout(false);
             this.tabSysLaboratories.ResumeLayout(false);
@@ -11181,7 +10941,6 @@
             this.toolsSampleResAttachments.PerformLayout();
             this.tools.ResumeLayout(false);
             this.tools.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gridAuditLog)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -11367,21 +11126,8 @@
         private System.Windows.Forms.TabPage tabMetaUnits;
         private System.Windows.Forms.ToolStripMenuItem miLogout;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
-        private System.Windows.Forms.TabPage tabUserSettings;
         private System.Windows.Forms.ToolStripMenuItem miEdit;
-        private System.Windows.Forms.ToolStripMenuItem miUserSettings;
-        private System.Windows.Forms.Button btnUserSettingsSave;
         private System.Windows.Forms.ToolStripStatusLabel lblStatus;
-        private System.Windows.Forms.ToolStripMenuItem miMachineSettings;
-        private System.Windows.Forms.TabPage tabMachineSettings;
-        private System.Windows.Forms.Button btnMachineSettingsSave;
-        private System.Windows.Forms.TableLayoutPanel tblMachineSettings;
-        private System.Windows.Forms.CheckBox cbMachineSettingsUseAD;
-        private System.Windows.Forms.ToolStrip toolsMachSettings;
-        private System.Windows.Forms.ToolStripLabel toolStripLabel27;
-        private System.Windows.Forms.TableLayoutPanel tblSettingsUser;
-        private System.Windows.Forms.ToolStrip toolsUserSettings;
-        private System.Windows.Forms.ToolStripLabel toolStripLabel24;
         private System.Windows.Forms.ToolStripMenuItem miSys;
         private System.Windows.Forms.ToolStripMenuItem miUsers;
         private System.Windows.Forms.ToolStripMenuItem miNewUser;
@@ -11484,7 +11230,6 @@
         private System.Windows.Forms.ToolStripMenuItem miSamplers;
         private System.Windows.Forms.ToolStripMenuItem miSamplingMethods;
         private System.Windows.Forms.ToolStripMenuItem miSystemDataView;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.DataGridView gridSysGeom;
         private System.Windows.Forms.ToolStripButton toolStripButton76;
         private System.Windows.Forms.ToolStripLabel toolStripLabel32;
@@ -11552,10 +11297,6 @@
         private System.Windows.Forms.ToolStripMenuItem miTypeRelations;
         private System.Windows.Forms.ToolStripLabel toolStripLabel55;
         private System.Windows.Forms.ToolStripLabel toolStripLabel56;
-        private System.Windows.Forms.Label label47;
-        private System.Windows.Forms.Label label48;
-        private System.Windows.Forms.ComboBox comboBox16;
-        private System.Windows.Forms.ComboBox comboBox19;
         private System.Windows.Forms.ToolStripMenuItem miSample;
         private System.Windows.Forms.ToolStripMenuItem miOrder;
         private System.Windows.Forms.ToolStripMenuItem miSearch;

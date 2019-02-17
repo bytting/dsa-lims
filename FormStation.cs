@@ -75,12 +75,13 @@ namespace DSA_lims
                         throw new Exception("Station with ID " + p["id"] + " was not found");
 
                     reader.Read();
-                    tbName.Text = reader["name"].ToString();
-                    tbLatitude.Text = reader["latitude"].ToString();
-                    tbLongitude.Text = reader["longitude"].ToString();
-                    tbAltitude.Text = reader["altitude"].ToString();
-                    cboxInstanceStatus.SelectedValue = reader["instance_status_id"];
-                    tbComment.Text = reader["comment"].ToString();
+
+                    tbName.Text = reader.GetString("name");
+                    tbLatitude.Text = reader.GetString("latitude");
+                    tbLongitude.Text = reader.GetString("longitude");
+                    tbAltitude.Text = reader.GetString("altitude");
+                    cboxInstanceStatus.SelectedValue = reader.GetInt32("instance_status_id");
+                    tbComment.Text = reader.GetString("comment");
                     p["create_date"] = reader["create_date"];
                     p["created_by"] = reader["created_by"];
                     p["update_date"] = reader["update_date"];

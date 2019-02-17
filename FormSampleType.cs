@@ -112,8 +112,7 @@ namespace DSA_lims
 
         private bool InsertSampleType()
         {
-            SqlConnection connection = null;
-            SqlTransaction transaction = null;
+            SqlConnection connection = null;            
 
             try
             {                                
@@ -122,10 +121,9 @@ namespace DSA_lims
                 p["update_date"] = DateTime.Now;
                 p["updated_by"] = Common.Username;                
 
-                connection = DB.OpenConnection();
-                transaction = connection.BeginTransaction();
+                connection = DB.OpenConnection();            
 
-                SqlCommand cmd = new SqlCommand("csp_insert_sample_type", connection, transaction);
+                SqlCommand cmd = new SqlCommand("csp_insert_sample_type", connection);
                 cmd.CommandType = CommandType.StoredProcedure;
                 p["id"] = Guid.NewGuid();
                 cmd.Parameters.AddWithValue("@id", p["id"]);
@@ -139,14 +137,9 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
                 cmd.Parameters.AddWithValue("@updated_by", p["updated_by"]);
                 cmd.ExecuteNonQuery();
-
-                DB.AddAuditMessage(connection, transaction, "sample_type", (Guid)p["id"], AuditOperationType.Insert, JsonConvert.SerializeObject(p));
-
-                transaction.Commit();
             }
             catch (Exception ex)
             {
-                transaction?.Rollback();
                 Common.Log.Error(ex);
                 return false;
             }
@@ -160,8 +153,7 @@ namespace DSA_lims
 
         private bool UpdateSampleType()
         {
-            SqlConnection connection = null;
-            SqlTransaction transaction = null;
+            SqlConnection connection = null;            
 
             try
             {
@@ -169,9 +161,8 @@ namespace DSA_lims
                 p["updated_by"] = Common.Username;
 
                 connection = DB.OpenConnection();
-                transaction = connection.BeginTransaction();
 
-                SqlCommand cmd = new SqlCommand("csp_update_sample_type", connection, transaction);
+                SqlCommand cmd = new SqlCommand("csp_update_sample_type", connection);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@id", p["id"]);
                 cmd.Parameters.AddWithValue("@path", p["path"]);
@@ -181,14 +172,9 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
                 cmd.Parameters.AddWithValue("@updated_by", p["updated_by"]);
                 cmd.ExecuteNonQuery();
-
-                DB.AddAuditMessage(connection, transaction, "sample_type", (Guid)p["id"], AuditOperationType.Update, JsonConvert.SerializeObject(p));
-
-                transaction.Commit();
             }
             catch (Exception ex)
             {
-                transaction?.Rollback();
                 Common.Log.Error(ex);
                 return false;
             }

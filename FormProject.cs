@@ -74,9 +74,10 @@ namespace DSA_lims
                         throw new Exception("Project with ID " + p["id"] + " was not found");
 
                     reader.Read();
-                    tbName.Text = reader["name"].ToString();
-                    cboxInstanceStatus.SelectedValue = reader["instance_status_id"];
-                    tbComment.Text = reader["comment"].ToString();
+
+                    tbName.Text = reader.GetString("name");
+                    cboxInstanceStatus.SelectedValue = reader.GetInt32("instance_status_id");
+                    tbComment.Text = reader.GetString("comment");
                     p["create_date"] = reader["create_date"];
                     p["created_by"] = reader["created_by"];
                     p["update_date"] = reader["update_date"];

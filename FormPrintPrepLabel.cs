@@ -1,4 +1,23 @@
-﻿using System;
+﻿/*	
+	DSA Lims - Laboratory Information Management System
+    Copyright (C) 2018  Norwegian Radiation Protection Authority
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+// Authors: Dag Robole,
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -9,7 +28,6 @@ using System.Drawing.Text;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DSA_lims
@@ -129,30 +147,30 @@ where p.id = @pid
 
                         reader.Read();
 
-                        sampleNumber = reader["sample_number"].ToString();
+                        sampleNumber = reader.GetString("sample_number");
                         if (DB.IsValidField(reader["sampling_date_from"]))
-                            samplingTimeFrom = Convert.ToDateTime(reader["sampling_date_from"]).ToString(Utils.DateTimeFormatNorwegian);
+                            samplingTimeFrom = reader.GetDateTime("sampling_date_from").ToString(Utils.DateTimeFormatNorwegian);
                         else samplingTimeFrom = "";
                         if (DB.IsValidField(reader["sampling_date_to"]))
-                            samplingTimeTo = Convert.ToDateTime(reader["sampling_date_to"]).ToString(Utils.DateTimeFormatNorwegian);
+                            samplingTimeTo = reader.GetDateTime("sampling_date_to").ToString(Utils.DateTimeFormatNorwegian);
                         else samplingTimeTo = "";
-                        prepNumber = reader["preparation_number"].ToString();                        
-                        sampleType = reader["sample_type_name"].ToString();
-                        projectMain = reader["project_main_name"].ToString();
-                        projectSub = reader["project_sub_name"].ToString();
-                        refDate = Convert.ToDateTime(reader["reference_date"]).ToString(Utils.DateTimeFormatNorwegian);
-                        laboratory = reader["laboratory_name"].ToString();
+                        prepNumber = reader.GetString("preparation_number");                        
+                        sampleType = reader.GetString("sample_type_name");
+                        projectMain = reader.GetString("project_main_name");
+                        projectSub = reader.GetString("project_sub_name");
+                        refDate = reader.GetDateTime("reference_date").ToString(Utils.DateTimeFormatNorwegian);
+                        laboratory = reader.GetString("laboratory_name");
                         if (DB.IsValidField(reader["fill_height"]))
-                            fillHeight = Convert.ToDouble(reader["fill_height"]);
+                            fillHeight = reader.GetDouble("fill_height");
                         if (DB.IsValidField(reader["preparation_amount"]))
-                            prepWeight = Convert.ToDouble(reader["preparation_amount"]);                        
+                            prepWeight = reader.GetDouble("preparation_amount");                        
                         if (DB.IsValidField(reader["preparation_unit_name"]))
-                            prepWeightUnit = reader["preparation_unit_name"].ToString();
+                            prepWeightUnit = reader.GetString("preparation_unit_name");
                         else prepWeightUnit = "";
                         if (DB.IsValidField(reader["preparation_quantity"]))
-                            prepQuant = Convert.ToDouble(reader["preparation_quantity"]);
+                            prepQuant = reader.GetDouble("preparation_quantity");
                         if (DB.IsValidField(reader["preparation_quantity_unit"]))
-                            prepQuantUnit = reader["preparation_quantity_unit"].ToString();
+                            prepQuantUnit = reader.GetString("preparation_quantity_unit");
                         else prepQuantUnit = "";
 
                         printDocument.Print();                            

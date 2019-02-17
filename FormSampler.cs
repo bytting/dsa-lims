@@ -90,10 +90,11 @@ namespace DSA_lims
                     }
 
                     reader.Read();
-                    cboxPersons.SelectedValue = reader["person_id"];
-                    cboxCompanies.SelectedValue = reader["company_id"];
-                    cboxInstanceStatus.SelectedValue = reader["instance_status_id"];
-                    tbComment.Text = reader["comment"].ToString();            
+
+                    cboxPersons.SelectedValue = reader.GetGuid("person_id");
+                    cboxCompanies.SelectedValue = reader.GetGuid("company_id");
+                    cboxInstanceStatus.SelectedValue = reader.GetInt32("instance_status_id");
+                    tbComment.Text = reader.GetString("comment");            
                     p["create_date"] = reader["create_date"];
                     p["created_by"] = reader["created_by"];
                     p["update_date"] = reader["update_date"];
@@ -136,8 +137,7 @@ namespace DSA_lims
 
         private bool InsertSampler()
         {
-            SqlConnection connection = null;
-            SqlTransaction transaction = null;
+            SqlConnection connection = null;            
 
             try
             {
@@ -146,10 +146,9 @@ namespace DSA_lims
                 p["update_date"] = DateTime.Now;
                 p["updated_by"] = Common.Username;
 
-                connection = DB.OpenConnection();
-                transaction = connection.BeginTransaction();
+                connection = DB.OpenConnection();            
 
-                SqlCommand cmd = new SqlCommand("csp_insert_sampler", connection, transaction);
+                SqlCommand cmd = new SqlCommand("csp_insert_sampler", connection);
                 cmd.CommandType = CommandType.StoredProcedure;
                 p["id"] = Guid.NewGuid();
                 cmd.Parameters.AddWithValue("@id", p["id"]);
@@ -162,14 +161,9 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
                 cmd.Parameters.AddWithValue("@updated_by", p["updated_by"]);
                 cmd.ExecuteNonQuery();
-
-                DB.AddAuditMessage(connection, transaction, "sampler", (Guid)p["id"], AuditOperationType.Insert, JsonConvert.SerializeObject(p));
-
-                transaction.Commit();
             }
             catch (Exception ex)
             {
-                transaction?.Rollback();
                 Common.Log.Error(ex);
                 return false;
             }
@@ -183,18 +177,16 @@ namespace DSA_lims
 
         private bool UpdateSampler()
         {
-            SqlConnection connection = null;
-            SqlTransaction transaction = null;
+            SqlConnection connection = null;            
 
             try
             {
                 p["update_date"] = DateTime.Now;
                 p["updated_by"] = Common.Username;
 
-                connection = DB.OpenConnection();
-                transaction = connection.BeginTransaction();
+                connection = DB.OpenConnection();            
 
-                SqlCommand cmd = new SqlCommand("csp_update_sampler", connection, transaction);
+                SqlCommand cmd = new SqlCommand("csp_update_sampler", connection);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@id", p["id"]);                
                 cmd.Parameters.AddWithValue("@company_id", p["company_id"], Guid.Empty);
@@ -203,14 +195,9 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
                 cmd.Parameters.AddWithValue("@updated_by", p["updated_by"]);
                 cmd.ExecuteNonQuery();
-
-                DB.AddAuditMessage(connection, transaction, "sampler", (Guid)p["id"], AuditOperationType.Update, JsonConvert.SerializeObject(p));
-
-                transaction.Commit();
             }
             catch (Exception ex)
             {
-                transaction?.Rollback();
                 Common.Log.Error(ex);
                 return false;
             }

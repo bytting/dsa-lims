@@ -82,9 +82,10 @@ namespace DSA_lims
                         throw new Exception("Municipality with ID " + p["id"] + " was not found");
 
                     reader.Read();
-                    tbName.Text = reader["name"].ToString();
-                    tbNumber.Text = reader["municipality_number"].ToString();
-                    cboxInstanceStatus.SelectedValue = reader["instance_status_id"];
+
+                    tbName.Text = reader.GetString("name");
+                    tbNumber.Text = reader.GetString("municipality_number");
+                    cboxInstanceStatus.SelectedValue = reader.GetInt32("instance_status_id");
                     p["create_date"] = reader["create_date"];
                     p["created_by"] = reader["created_by"];
                     p["update_date"] = reader["update_date"];

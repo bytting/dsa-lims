@@ -98,11 +98,12 @@ namespace DSA_lims
                         throw new Exception("Account with id " + p["id"] + " was not found");
 
                     reader.Read();
-                    tbUsername.Text = reader["username"].ToString();
-                    cboxPersons.SelectedValue = reader["person_id"];
-                    cboxLaboratory.SelectedValue = reader["laboratory_id"];
-                    cboxLanguage.Text = reader["language_code"].ToString();
-                    cboxInstanceStatus.SelectedValue = reader["instance_status_id"];
+
+                    tbUsername.Text = reader.GetString("username");
+                    cboxPersons.SelectedValue = reader.GetGuid("person_id");
+                    cboxLaboratory.SelectedValue = reader.GetGuid("laboratory_id");
+                    cboxLanguage.Text = reader.GetString("language_code");
+                    cboxInstanceStatus.SelectedValue = reader.GetInt32("instance_status_id");
                     p["create_date"] = reader["create_date"];
                     p["update_date"] = reader["update_date"];
                 }

@@ -69,10 +69,11 @@ namespace DSA_lims
                         throw new Exception("Person with ID " + p["id"] + " was not found");
 
                     reader.Read();
-                    tbName.Text = reader["name"].ToString();                    
-                    tbEmail.Text = reader["email"].ToString();
-                    tbPhone.Text = reader["phone"].ToString();
-                    tbAddress.Text = reader["address"].ToString();                    
+
+                    tbName.Text = reader.GetString("name");                    
+                    tbEmail.Text = reader.GetString("email");
+                    tbPhone.Text = reader.GetString("phone");
+                    tbAddress.Text = reader.GetString("address");                    
                     p["create_date"] = reader["create_date"];                    
                     p["update_date"] = reader["update_date"];
                 }

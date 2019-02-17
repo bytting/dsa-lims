@@ -575,103 +575,6 @@ order by create_date desc";
             grid.Columns["customer_company_name"].HeaderText = "Company";
         }
 
-        /*public static void PopulateOrderContent(SqlConnection conn, Guid selectedOrder, TreeView tree, Guid sampleTypeId, TreeView treeSampleTypes, bool useCommentToolTips)
-        {
-            tree.Nodes.Clear();
-
-            SqlDataReader astReader = null;
-
-            try
-            {
-                if (sampleTypeId == Guid.Empty)
-                {
-                    astReader = DB.GetDataReader(conn, null, "csp_select_assignment_sample_types", CommandType.StoredProcedure, 
-                        new SqlParameter("@assignment_id", selectedOrder));
-                }
-                else
-                {
-                    astReader = DB.GetDataReader(conn, null, "csp_select_assignment_sample_types_for_sample_type", CommandType.StoredProcedure, 
-                        new SqlParameter("@assignment_id", selectedOrder),
-                        new SqlParameter("@sample_type_id", sampleTypeId));
-                }
-                
-                while (astReader.Read())
-                {
-                    string txt = astReader["sample_count"].ToString() + ", " + astReader["sample_type_name"].ToString();
-                    if (astReader["sample_component_name"] != DBNull.Value)
-                        txt += ", " + astReader["sample_component_name"].ToString();
-                    TreeNode[] nodes = treeSampleTypes.Nodes.Find(astReader["sample_type_id"].ToString(), true);
-                    if (nodes.Length > 0)
-                        txt += " -> " + nodes[0].FullPath;
-                    bool retToSender = Convert.ToBoolean(astReader["return_to_sender"]);
-                    if (retToSender)
-                        txt += ", Return to customer";
-
-                    TreeNode tnode = tree.Nodes.Add(astReader["id"].ToString(), txt);
-                    tnode.ToolTipText = useCommentToolTips ? astReader["sample_comment"].ToString() : "";
-                    tnode.NodeFont = new Font(tree.Font.FontFamily, tree.Font.Size, FontStyle.Bold);
-                }
-            }
-            catch(Exception ex)
-            {
-                Common.Log.Error(ex);
-            }
-            finally
-            {
-                astReader?.Close();
-            }
-
-            foreach(TreeNode tnode in tree.Nodes)
-            {
-                Guid orderSampleTypeId = Guid.Parse(tnode.Name);
-
-                using (SqlDataReader reader = DB.GetDataReader(conn, null, "csp_select_assignment_preparation_methods", CommandType.StoredProcedure, 
-                    new SqlParameter("@assignment_sample_type_id", orderSampleTypeId)))
-                {
-                    while (reader.Read())
-                    {                        
-                        string txt = reader["count"].ToString() + ", " + reader["preparation_method_name"].ToString();
-                        if (reader["preparation_laboratory_id"] != DBNull.Value)
-                            txt += " (" + reader["preparation_laboratory_name"].ToString() + ")";
-
-                        TreeNode tn = tnode.Nodes.Add(reader["id"].ToString(), txt);
-                        if(useCommentToolTips)
-                        {
-                            tn.ToolTipText = reader["preparation_method_name_full"].ToString() + 
-                                Environment.NewLine + Environment.NewLine + 
-                                reader["comment"].ToString();
-                        }                        
-                    }
-                }
-            }
-            
-            foreach (TreeNode tnode in tree.Nodes)
-            {
-                foreach (TreeNode tn in tnode.Nodes)
-                {
-                    Guid orderPrepMethId = Guid.Parse(tn.Name);
-
-                    using (SqlDataReader reader = DB.GetDataReader(conn, null, "csp_select_assignment_analysis_methods", CommandType.StoredProcedure,
-                        new SqlParameter("@assignment_preparation_method_id", orderPrepMethId)))
-                    {
-                        while (reader.Read())
-                        {
-                            string txt = reader["count"].ToString() + ", " + reader["analysis_method_name"].ToString();
-                            TreeNode tn2 = tn.Nodes.Add(reader["id"].ToString(), txt);
-                            if (useCommentToolTips)
-                            {
-                                tn2.ToolTipText = reader["analysis_method_name_full"].ToString() +
-                                    Environment.NewLine + Environment.NewLine +
-                                    reader["comment"].ToString();
-                            }
-                        }
-                    }
-                }
-            }
-
-            tree.ExpandAll();
-        } */       
-
         public static void PopulateOrderContentForSampleTypeName(SqlConnection conn, Guid selectedOrder, TreeView tree, Guid sampleTypeId, TreeView treeSampleTypes, bool useCommentToolTips)
         {
             tree.Nodes.Clear();
@@ -691,15 +594,15 @@ order by create_date desc";
 
                 while (astReader.Read())
                 {
-                    string txt = astReader["sample_count"].ToString() + ", " + astReader["sample_type_name"].ToString();
-                    if (astReader["sample_component_name"] != DBNull.Value)
-                        txt += ", " + astReader["sample_component_name"].ToString();
-                    TreeNode[] nodes = treeSampleTypes.Nodes.Find(astReader["sample_type_id"].ToString(), true);
+                    string txt = astReader.GetString("sample_count") + ", " + astReader.GetString("sample_type_name");
+                    if (DB.IsValidField(astReader["sample_component_name"]))
+                        txt += ", " + astReader.GetString("sample_component_name");
+                    TreeNode[] nodes = treeSampleTypes.Nodes.Find(astReader.GetString("sample_type_id"), true);
                     if (nodes.Length > 0)
                         txt += " (" + nodes[0].FullPath + ")";
 
-                    TreeNode tnode = tree.Nodes.Add(astReader["id"].ToString(), txt);
-                    tnode.ToolTipText = useCommentToolTips ? astReader["sample_comment"].ToString() : "";
+                    TreeNode tnode = tree.Nodes.Add(astReader.GetString("id"), txt);
+                    tnode.ToolTipText = useCommentToolTips ? astReader.GetString("sample_comment") : "";
                     tnode.NodeFont = new Font(tree.Font.FontFamily, tree.Font.Size, FontStyle.Bold);
                 }
             }
@@ -721,12 +624,12 @@ order by create_date desc";
                 {
                     while (reader.Read())
                     {
-                        string txt = reader["count"].ToString() + ", " + reader["preparation_method_name"].ToString();
-                        if (reader["preparation_laboratory_id"] != DBNull.Value)
-                            txt += " (" + reader["preparation_laboratory_name"].ToString() + ")";
+                        string txt = reader.GetString("count") + ", " + reader.GetString("preparation_method_name");
+                        if (DB.IsValidField(reader["preparation_laboratory_id"]))
+                            txt += " (" + reader.GetString("preparation_laboratory_name") + ")";
 
-                        TreeNode tn = tnode.Nodes.Add(reader["id"].ToString(), txt);
-                        tn.ToolTipText = useCommentToolTips ? reader["comment"].ToString() : "";
+                        TreeNode tn = tnode.Nodes.Add(reader.GetString("id"), txt);
+                        tn.ToolTipText = useCommentToolTips ? reader.GetString("comment") : "";
                     }
                 }
             }
@@ -742,9 +645,9 @@ order by create_date desc";
                     {
                         while (reader.Read())
                         {
-                            string txt = reader["count"].ToString() + ", " + reader["analysis_method_name"].ToString();
-                            TreeNode tn2 = tn.Nodes.Add(reader["id"].ToString(), txt);
-                            tn2.ToolTipText = useCommentToolTips ? reader["comment"].ToString() : "";
+                            string txt = reader.GetString("count") + ", " + reader.GetString("analysis_method_name");
+                            TreeNode tn2 = tn.Nodes.Add(reader.GetString("id"), txt);
+                            tn2.ToolTipText = useCommentToolTips ? reader.GetString("comment") : "";
                         }
                     }
                 }
@@ -795,7 +698,7 @@ order by create_date desc";
             {
                 while(reader.Read())
                 {
-                    years.Add(reader["year"].ToString());
+                    years.Add(reader.GetString("year"));
                 }
             }
             cbox.DataSource = years;
@@ -856,7 +759,7 @@ from role r
             if (gridIndex < 0 || gridIndex >= grid.Rows.Count)
                 return;
 
-            Guid id = Guid.Parse(grid.Rows[gridIndex].Cells["id"].Value.ToString());
+            Guid id = Utils.MakeGuid(grid.Rows[gridIndex].Cells["id"].Value);
             string fname = grid.Rows[gridIndex].Cells["name"].Value.ToString();
             string ext = grid.Rows[gridIndex].Cells["file_extension"].Value.ToString();
 

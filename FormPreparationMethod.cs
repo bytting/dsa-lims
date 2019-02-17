@@ -72,12 +72,13 @@ namespace DSA_lims
                         throw new Exception("Preparation method with ID " + p["id"] + " was not found");
 
                     reader.Read();
-                    tbName.Text = reader["name"].ToString();
-                    tbShortName.Text = reader["name_short"].ToString();
-                    tbDescriptionLink.Text = reader["description_link"].ToString();                    
-                    cbDestructive.Checked = Convert.ToBoolean(reader["destructive"]);
-                    cboxInstanceStatus.SelectedValue = reader["instance_status_id"];
-                    tbComment.Text = reader["comment"].ToString();
+
+                    tbName.Text = reader.GetString("name");
+                    tbShortName.Text = reader.GetString("name_short");
+                    tbDescriptionLink.Text = reader.GetString("description_link");                    
+                    cbDestructive.Checked = reader.GetBoolean("destructive");
+                    cboxInstanceStatus.SelectedValue = reader.GetInt32("instance_status_id");
+                    tbComment.Text = reader.GetString("comment");
                     p["create_date"] = reader["create_date"];
                     p["created_by"] = reader["created_by"];
                     p["update_date"] = reader["update_date"];
@@ -163,10 +164,10 @@ namespace DSA_lims
             cmd.Parameters.AddWithValue("@id", p["id"]);
             cmd.Parameters.AddWithValue("@name", p["name"]);
             cmd.Parameters.AddWithValue("@name_short", p["name_short"]);
-            cmd.Parameters.AddWithValue("@description_link", p["description_link"]);
+            cmd.Parameters.AddWithValue("@description_link", p["description_link"], String.Empty);
             cmd.Parameters.AddWithValue("@destructive", p["destructive"]);
             cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
-            cmd.Parameters.AddWithValue("@comment", p["comment"]);
+            cmd.Parameters.AddWithValue("@comment", p["comment"], String.Empty);
             cmd.Parameters.AddWithValue("@create_date", p["create_date"]);
             cmd.Parameters.AddWithValue("@created_by", p["created_by"]);
             cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
@@ -184,10 +185,10 @@ namespace DSA_lims
             cmd.Parameters.AddWithValue("@id", p["id"]);
             cmd.Parameters.AddWithValue("@name", p["name"]);
             cmd.Parameters.AddWithValue("@name_short", p["name_short"]);
-            cmd.Parameters.AddWithValue("@description_link", p["description_link"]);
+            cmd.Parameters.AddWithValue("@description_link", p["description_link"], String.Empty);
             cmd.Parameters.AddWithValue("@destructive", p["destructive"]);
             cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
-            cmd.Parameters.AddWithValue("@comment", p["comment"]);
+            cmd.Parameters.AddWithValue("@comment", p["comment"], String.Empty);
             cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
             cmd.Parameters.AddWithValue("@updated_by", p["updated_by"]);
             cmd.ExecuteNonQuery();                

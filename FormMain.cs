@@ -2896,9 +2896,17 @@ namespace DSA_lims
         {
             tbOrderName.Text = a.Name;
             cboxOrderLaboratory.SelectedValue = a.LaboratoryId;
-            cboxOrderResponsible.SelectedValue = a.AccountId;            
-            tbOrderDeadline.Tag = a.Deadline;
-            tbOrderDeadline.Text = a.Deadline.ToString();
+            cboxOrderResponsible.SelectedValue = a.AccountId;
+            if (a.Deadline.HasValue)
+            {
+                tbOrderDeadline.Tag = a.Deadline.Value;
+                tbOrderDeadline.Text = a.Deadline.Value.ToString(Utils.DateFormatNorwegian);
+            }
+            else
+            {
+                tbOrderDeadline.Tag = null;
+                tbOrderDeadline.Text = "";
+            }
             cboxOrderRequestedSigma.SelectedValue = a.RequestedSigmaAct;
             cboxOrderRequestedSigmaMDA.SelectedValue = a.RequestedSigmaMDA;
             tbOrderCustomer.Text = a.CustomerContactName;
@@ -5537,10 +5545,10 @@ where s.number = @sample_number
                 {
                     XmlNode newCNode = doc.CreateElement("component");
                     XmlAttribute attrCompId = doc.CreateAttribute("id");
-                    attrCompId.InnerText = reader["id"].ToString();
+                    attrCompId.InnerText = reader.GetString("id");
                     newCNode.Attributes.Append(attrCompId);
                     XmlAttribute attrCompName = doc.CreateAttribute("name");
-                    attrCompName.InnerText = reader["name"].ToString();
+                    attrCompName.InnerText = reader.GetString("name");
                     newCNode.Attributes.Append(attrCompName);
                     newXNode.AppendChild(newCNode);
                 }

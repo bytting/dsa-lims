@@ -77,13 +77,14 @@ namespace DSA_lims
                         throw new Exception("Nuclide with ID " + p["id"] + " was not found");                    
 
                     reader.Read();                    
-                    tbName.Text = reader["name"].ToString();
-                    tbProtons.Text = reader["protons"].ToString();
-                    tbNeutrons.Text = reader["neutrons"].ToString();
-                    cbMetaStable.Checked = Convert.ToBoolean(reader["meta_stable"]);
-                    tbHalflife.Text = reader["half_life_year"].ToString();
-                    cboxInstanceStatus.SelectedValue = reader["instance_status_id"];
-                    tbComment.Text = reader["comment"].ToString();
+
+                    tbName.Text = reader.GetString("name");
+                    tbProtons.Text = reader.GetString("protons");
+                    tbNeutrons.Text = reader.GetString("neutrons");
+                    cbMetaStable.Checked = reader.GetBoolean("meta_stable");
+                    tbHalflife.Text = reader.GetDouble("half_life_year").ToString(Utils.ScientificFormat);
+                    cboxInstanceStatus.SelectedValue = reader.GetInt32("instance_status_id");
+                    tbComment.Text = reader.GetString("comment");
                     p["create_date"] = reader["create_date"];
                     p["created_by"] = reader["created_by"];
                     p["update_date"] = reader["update_date"];

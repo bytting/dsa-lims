@@ -240,8 +240,8 @@ namespace DSA_lims
 
                     cboxSampleInfoLocationTypes.DataSource = DB.GetIntLemmata(conn, null, "csp_select_location_types");
 
-                    cboxOrderRequestedSigma.DataSource = DB.GetSigmaValues(conn);
-                    cboxOrderRequestedSigmaMDA.DataSource = DB.GetSigmaMDAValues(conn);
+                    cboxOrderRequestedSigma.DataSource = DB.GetSigmaValues(conn, null, false);
+                    cboxOrderRequestedSigmaMDA.DataSource = DB.GetSigmaValues(conn, null, true);
 
                     UI.PopulatePersons(conn, gridSysPers);
 

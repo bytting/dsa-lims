@@ -43,8 +43,8 @@ namespace DSA_lims
         public Guid LaboratoryId { get; set; }
         public Guid AccountId { get; set; }
         public DateTime? Deadline { get; set; }
-        public double? RequestedSigmaAct { get; set; }
-        public double? RequestedSigmaMDA { get; set; }
+        public double RequestedSigmaAct { get; set; }
+        public double RequestedSigmaMDA { get; set; }
         public string CustomerCompanyName { get; set; }
         public string CustomerCompanyEmail { get; set; }
         public string CustomerCompanyPhone { get; set; }
@@ -147,8 +147,8 @@ namespace DSA_lims
                 LaboratoryId = reader.GetGuid("laboratory_id");
                 AccountId = reader.GetGuid("account_id");
                 Deadline = reader.GetDateTimeNullable("deadline");
-                RequestedSigmaAct = reader.GetDoubleNullable("requested_sigma_act");
-                RequestedSigmaMDA = reader.GetDoubleNullable("requested_sigma_mda");
+                RequestedSigmaAct = reader.GetDouble("requested_sigma_act");
+                RequestedSigmaMDA = reader.GetDouble("requested_sigma_mda");
                 CustomerCompanyName = reader.GetString("customer_company_name");
                 CustomerCompanyEmail = reader.GetString("customer_company_email");
                 CustomerCompanyPhone = reader.GetString("customer_company_phone");
@@ -211,8 +211,8 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@laboratory_id", LaboratoryId, Guid.Empty);
                 cmd.Parameters.AddWithValue("@account_id", AccountId, Guid.Empty);
                 cmd.Parameters.AddWithValue("@deadline", Deadline, DateTime.MinValue);
-                cmd.Parameters.AddWithValue("@requested_sigma_act", RequestedSigmaAct, null);
-                cmd.Parameters.AddWithValue("@requested_sigma_mda", RequestedSigmaMDA, null);
+                cmd.Parameters.AddWithValue("@requested_sigma_act", RequestedSigmaAct);
+                cmd.Parameters.AddWithValue("@requested_sigma_mda", RequestedSigmaMDA);
                 cmd.Parameters.AddWithValue("@customer_company_name", CustomerCompanyName, String.Empty);
                 cmd.Parameters.AddWithValue("@customer_company_email", CustomerCompanyEmail, String.Empty);
                 cmd.Parameters.AddWithValue("@customer_company_phone", CustomerCompanyPhone, String.Empty);
@@ -259,8 +259,8 @@ namespace DSA_lims
                     cmd.Parameters.AddWithValue("@laboratory_id", LaboratoryId, Guid.Empty);
                     cmd.Parameters.AddWithValue("@account_id", AccountId, Guid.Empty);
                     cmd.Parameters.AddWithValue("@deadline", Deadline, DateTime.MinValue);
-                    cmd.Parameters.AddWithValue("@requested_sigma_act", RequestedSigmaAct, null);
-                    cmd.Parameters.AddWithValue("@requested_sigma_mda", RequestedSigmaMDA, null);
+                    cmd.Parameters.AddWithValue("@requested_sigma_act", RequestedSigmaAct);
+                    cmd.Parameters.AddWithValue("@requested_sigma_mda", RequestedSigmaMDA);
                     cmd.Parameters.AddWithValue("@customer_company_name", CustomerCompanyName, String.Empty);
                     cmd.Parameters.AddWithValue("@customer_company_email", CustomerCompanyEmail, String.Empty);
                     cmd.Parameters.AddWithValue("@customer_company_phone", CustomerCompanyPhone, String.Empty);

@@ -67,29 +67,15 @@ namespace DSA_lims
             return cmd.ExecuteScalar();
         }
 
-        public static List<Lemma<double?, string>> GetSigmaValues(SqlConnection conn, SqlTransaction trans = null)
+        public static List<Lemma<double, string>> GetSigmaValues(SqlConnection conn, SqlTransaction trans, bool MDA)
         {
-            List<Lemma<double?, string>> lst = new List<Lemma<double?, string>>();
-            lst.Add(new Lemma<double?, string>(null, ""));
+            List<Lemma<double, string>> lst = new List<Lemma<double, string>>();
+            lst.Add(new Lemma<double, string>(0d, ""));
 
-            using (SqlDataReader reader = DB.GetDataReader(conn, trans, "csp_select_sigma_values", CommandType.StoredProcedure, new SqlParameter[] { }))
+            using (SqlDataReader reader = DB.GetDataReader(conn, trans, MDA ? "csp_select_sigma_mda_values" : "csp_select_sigma_values", CommandType.StoredProcedure))
             {
                 while(reader.Read())
-                    lst.Add(new Lemma<double?, string>(reader.GetDouble(0), reader.GetString(1)));
-            }
-
-            return lst;
-        }
-
-        public static List<Lemma<double?, string>> GetSigmaMDAValues(SqlConnection conn, SqlTransaction trans = null)
-        {
-            List<Lemma<double?, string>> lst = new List<Lemma<double?, string>>();
-            lst.Add(new Lemma<double?, string>(null, ""));
-
-            using (SqlDataReader reader = DB.GetDataReader(conn, trans, "csp_select_sigma_mda_values", CommandType.StoredProcedure, new SqlParameter[] { }))
-            {
-                while (reader.Read())
-                    lst.Add(new Lemma<double?, string>(reader.GetDouble(0), reader.GetString(1)));
+                    lst.Add(new Lemma<double, string>(reader.GetDouble(0), reader.GetString(1)));
             }
 
             return lst;

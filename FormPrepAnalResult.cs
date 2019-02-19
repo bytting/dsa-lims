@@ -52,8 +52,8 @@ namespace DSA_lims
             mResult = new AnalysisResult();
             using (SqlConnection conn = DB.OpenConnection())
             {
-                cboxSigmaActivity.DataSource = DB.GetSigmaValues(conn);
-                cboxSigmaMDA.DataSource = DB.GetSigmaMDAValues(conn);
+                cboxSigmaActivity.DataSource = DB.GetSigmaValues(conn, null, false);
+                cboxSigmaMDA.DataSource = DB.GetSigmaValues(conn, null, true);
             }
         }
 
@@ -77,8 +77,8 @@ namespace DSA_lims
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                cboxSigmaActivity.DataSource = DB.GetSigmaValues(conn);
-                cboxSigmaMDA.DataSource = DB.GetSigmaMDAValues(conn);                
+                cboxSigmaActivity.DataSource = DB.GetSigmaValues(conn, null, false);
+                cboxSigmaMDA.DataSource = DB.GetSigmaValues(conn, null, true);                
             }
             
             cboxSigmaActivity.SelectedValue = 2d;

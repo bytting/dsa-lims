@@ -101,22 +101,21 @@ namespace DSA_lims
                 return;
             }
 
-            SelectedLaboratoryId = Utils.MakeGuid(cboxLaboratory.SelectedValue);
-            SelectedOrderId = Utils.MakeGuid(gridOrders.SelectedRows[0].Cells["id"].Value);
-            SelectedOrderName = gridOrders.SelectedRows[0].Cells["name"].Value.ToString();
-            SelectedOrderLineId = Guid.Parse(tnode.Name);
+            SqlConnection conn = null;
+            SqlTransaction trans = null;
 
-            string query = @"
-select count(*) 
-from sample_x_assignment_sample_type sxast 
-    inner join assignment_sample_type ast on ast.id = sxast.assignment_sample_type_id
-    inner join assignment a on a.id = ast.assignment_id and a.id = @aid
-where sxast.sample_id = @sid";
-            object o = null;
-            using (SqlConnection conn = DB.OpenConnection())
+            try
             {
+                SelectedLaboratoryId = Utils.MakeGuid(cboxLaboratory.SelectedValue);
+                SelectedOrderId = Utils.MakeGuid(gridOrders.SelectedRows[0].Cells["id"].Value);
+                SelectedOrderName = gridOrders.SelectedRows[0].Cells["name"].Value.ToString();
+                SelectedOrderLineId = Guid.Parse(tnode.Name);                
+
+                conn = DB.OpenConnection();
+                trans = conn.BeginTransaction();
+
                 Assignment ass = new Assignment();
-                ass.LoadFromDB(conn, null, SelectedOrderId);
+                ass.LoadFromDB(conn, trans, SelectedOrderId);
 
                 if (!ass.ApprovedLaboratory || !ass.ApprovedCustomer)
                 {
@@ -124,14 +123,20 @@ where sxast.sample_id = @sid";
                     return;
                 }
 
-                int nAvail = DB.GetAvailableSamplesOnAssignmentSampleType(conn, null, SelectedOrderLineId);
-                if(nAvail == 0)
+                int nAvail = DB.GetAvailableSamplesOnAssignmentSampleType(conn, trans, SelectedOrderLineId);
+                if (nAvail == 0)
                 {
                     MessageBox.Show("This order line if already full");
                     return;
                 }
 
-                o = DB.GetScalar(conn, null, query, CommandType.Text, new[] {
+                string query = @"
+select count(*) 
+from sample_x_assignment_sample_type sxast 
+    inner join assignment_sample_type ast on ast.id = sxast.assignment_sample_type_id
+    inner join assignment a on a.id = ast.assignment_id and a.id = @aid
+where sxast.sample_id = @sid";
+                object o = DB.GetScalar(conn, trans, query, CommandType.Text, new[] {
                     new SqlParameter("@sid", SampleId),
                     new SqlParameter("@aid", SelectedOrderId)
                 });
@@ -150,9 +155,9 @@ where sxast.sample_id = @sid";
                 {
                     Guid prepMethLineId = Guid.Parse(tn.Name);
 
-                    o = DB.GetScalar(conn, null, "select preparation_laboratory_id from assignment_preparation_method where id = @id", CommandType.Text,
+                    o = DB.GetScalar(conn, trans, "select preparation_laboratory_id from assignment_preparation_method where id = @id", CommandType.Text,
                         new SqlParameter("@id", prepMethLineId));
-                    if(!Utils.IsValidGuid(o))
+                    if (!Utils.IsValidGuid(o))
                     {
                         Common.Log.Error("Invalid or non existing Guid on assignment preparation method");
                         MessageBox.Show("Invalid or non existing Guid on assignment preparation method");
@@ -160,7 +165,7 @@ where sxast.sample_id = @sid";
                     }
 
                     Guid prepLabId = Guid.Parse(o.ToString());
-                    if(prepLabId != SelectedLaboratoryId)
+                    if (prepLabId != SelectedLaboratoryId)
                     {
                         if (tn.Tag == null)
                         {
@@ -169,7 +174,7 @@ where sxast.sample_id = @sid";
                         }
                         else
                         {
-                            o = DB.GetScalar(conn, null, "select preparation_method_count from assignment_preparation_method where id = @id", CommandType.Text,
+                            o = DB.GetScalar(conn, trans, "select preparation_method_count from assignment_preparation_method where id = @id", CommandType.Text,
                                 new SqlParameter("@id", prepMethLineId));
                             int cnt = Convert.ToInt32(o);
                             List<Guid> prepList = tn.Tag as List<Guid>;
@@ -181,105 +186,97 @@ where sxast.sample_id = @sid";
                         }
                     }
                 }
-            }
-         
-            GenerateOrderPreparations(SampleId, SelectedLaboratoryId, SelectedOrderId, SelectedOrderLineId, tnode.Nodes);
 
+                GenerateOrderPreparations(conn, trans, SampleId, SelectedLaboratoryId, SelectedOrderId, SelectedOrderLineId, tnode.Nodes);
+
+                trans.Commit();
+            }
+            catch(Exception ex)
+            {
+                trans?.Rollback();
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn?.Close();
+            }
+            
             DialogResult = DialogResult.OK;
             Close();
         }
 
-        private void GenerateOrderPreparations(Guid sampleId, Guid labId, Guid orderId, Guid orderLineId, TreeNodeCollection tnodes)
-        {
-            SqlConnection connection = null;
-            SqlTransaction transaction = null;
+        private void GenerateOrderPreparations(SqlConnection conn, SqlTransaction trans, Guid sampleId, Guid labId, Guid orderId, Guid orderLineId, TreeNodeCollection tnodes)
+        {                                        
+            int nextPrepNumber = DB.GetNextPreparationNumber(conn, trans, sampleId);
 
-            try
+            foreach (TreeNode tnode in tnodes)
             {
-                connection = DB.OpenConnection();
-                transaction = connection.BeginTransaction();
+                Guid prepMethLineId = Guid.Parse(tnode.Name);
 
-                int nextPrepNumber = DB.GetNextPreparationNumber(connection, transaction, sampleId);
-
-                foreach (TreeNode tnode in tnodes)
+                if (tnode.Tag != null)
                 {
-                    Guid prepMethLineId = Guid.Parse(tnode.Name);
-
-                    if (tnode.Tag != null)
-                    {
-                        List<Guid> prepList = tnode.Tag as List<Guid>;
-                        foreach (Guid pid in prepList)                        
-                            GenerateOrderAnalyses(connection, transaction, orderId, labId, pid, tnode.Nodes);
-                    }
-                    else
-                    {
-                        Guid prepMethId = Guid.Empty;
-                        int prepCount = 0;
-
-                        string query = "select preparation_method_id, preparation_method_count from assignment_preparation_method where id = @id";
-                        using (SqlDataReader reader = DB.GetDataReader(connection, transaction, query, CommandType.Text, new SqlParameter("@id", prepMethLineId)))
-                        {
-                            reader.Read(); // FIXME
-
-                            prepMethId = Utils.MakeGuid(reader["preparation_method_id"]);
-                            prepCount = Convert.ToInt32(reader["preparation_method_count"]);
-                        }
-
-                        SqlCommand cmd = new SqlCommand("csp_insert_preparation", connection, transaction);
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        while (prepCount > 0)
-                        {
-                            Guid newPrepId = Guid.NewGuid();
-                            cmd.Parameters.Clear();
-                            cmd.Parameters.AddWithValue("@id", newPrepId);
-                            cmd.Parameters.AddWithValue("@sample_id", sampleId, Guid.Empty);
-                            cmd.Parameters.AddWithValue("@number", nextPrepNumber++);
-                            cmd.Parameters.AddWithValue("@assignment_id", orderId, Guid.Empty);
-                            cmd.Parameters.AddWithValue("@laboratory_id", labId, Guid.Empty);
-                            cmd.Parameters.AddWithValue("@preparation_geometry_id", DBNull.Value);
-                            cmd.Parameters.AddWithValue("@preparation_method_id", prepMethId, Guid.Empty);
-                            cmd.Parameters.AddWithValue("@workflow_status_id", WorkflowStatus.Construction);
-                            cmd.Parameters.AddWithValue("@amount", DBNull.Value);
-                            cmd.Parameters.AddWithValue("@prep_unit_id", 0);
-                            cmd.Parameters.AddWithValue("@quantity", DBNull.Value);
-                            cmd.Parameters.AddWithValue("@quantity_unit_id", 0);
-                            cmd.Parameters.AddWithValue("@fill_height_mm", DBNull.Value);
-                            cmd.Parameters.AddWithValue("@instance_status_id", InstanceStatus.Active);
-                            cmd.Parameters.AddWithValue("@comment", DBNull.Value);
-                            cmd.Parameters.AddWithValue("@create_date", DateTime.Now);
-                            cmd.Parameters.AddWithValue("@created_by", Common.Username);
-                            cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
-                            cmd.Parameters.AddWithValue("@updated_by", Common.Username);
-
-                            cmd.ExecuteNonQuery();
-
-                            string json = Preparation.ToJSON(connection, transaction, newPrepId);
-                            if (!String.IsNullOrEmpty(json))
-                                DB.AddAuditMessage(connection, transaction, "preparation", newPrepId, AuditOperationType.Insert, json, "");
-
-                            GenerateOrderAnalyses(connection, transaction, orderId, labId, newPrepId, tnode.Nodes);
-
-                            prepCount--;
-                        }                        
-                    }
+                    List<Guid> prepList = tnode.Tag as List<Guid>;
+                    foreach (Guid pid in prepList)                        
+                        GenerateOrderAnalyses(conn, trans, orderId, labId, pid, tnode.Nodes);
                 }
+                else
+                {
+                    Guid prepMethId = Guid.Empty;
+                    int prepCount = 0;
 
-                SqlCommand cmd2 = new SqlCommand("insert into sample_x_assignment_sample_type values(@sample_id, @assignment_sample_type_id)", connection, transaction);
-                cmd2.Parameters.AddWithValue("@sample_id", sampleId, Guid.Empty);
-                cmd2.Parameters.AddWithValue("@assignment_sample_type_id", orderLineId, Guid.Empty);
-                cmd2.ExecuteNonQuery();
+                    string query = "select preparation_method_id, preparation_method_count from assignment_preparation_method where id = @id";
+                    using (SqlDataReader reader = DB.GetDataReader(conn, trans, query, CommandType.Text, new SqlParameter("@id", prepMethLineId)))
+                    {
+                        reader.Read(); // FIXME
 
-                transaction.Commit();
+                        prepMethId = Utils.MakeGuid(reader["preparation_method_id"]);
+                        prepCount = Convert.ToInt32(reader["preparation_method_count"]);
+                    }
+
+                    SqlCommand cmd = new SqlCommand("csp_insert_preparation", conn, trans);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    while (prepCount > 0)
+                    {
+                        Guid newPrepId = Guid.NewGuid();
+                        cmd.Parameters.Clear();
+                        cmd.Parameters.AddWithValue("@id", newPrepId);
+                        cmd.Parameters.AddWithValue("@sample_id", sampleId, Guid.Empty);
+                        cmd.Parameters.AddWithValue("@number", nextPrepNumber++);
+                        cmd.Parameters.AddWithValue("@assignment_id", orderId, Guid.Empty);
+                        cmd.Parameters.AddWithValue("@laboratory_id", labId, Guid.Empty);
+                        cmd.Parameters.AddWithValue("@preparation_geometry_id", DBNull.Value);
+                        cmd.Parameters.AddWithValue("@preparation_method_id", prepMethId, Guid.Empty);
+                        cmd.Parameters.AddWithValue("@workflow_status_id", WorkflowStatus.Construction);
+                        cmd.Parameters.AddWithValue("@amount", DBNull.Value);
+                        cmd.Parameters.AddWithValue("@prep_unit_id", 0);
+                        cmd.Parameters.AddWithValue("@quantity", DBNull.Value);
+                        cmd.Parameters.AddWithValue("@quantity_unit_id", 0);
+                        cmd.Parameters.AddWithValue("@fill_height_mm", DBNull.Value);
+                        cmd.Parameters.AddWithValue("@instance_status_id", InstanceStatus.Active);
+                        cmd.Parameters.AddWithValue("@comment", DBNull.Value);
+                        cmd.Parameters.AddWithValue("@create_date", DateTime.Now);
+                        cmd.Parameters.AddWithValue("@created_by", Common.Username);
+                        cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
+                        cmd.Parameters.AddWithValue("@updated_by", Common.Username);
+
+                        cmd.ExecuteNonQuery();
+
+                        string json = Preparation.ToJSON(conn, trans, newPrepId);
+                        if (!String.IsNullOrEmpty(json))
+                            DB.AddAuditMessage(conn, trans, "preparation", newPrepId, AuditOperationType.Insert, json, "");
+
+                        GenerateOrderAnalyses(conn, trans, orderId, labId, newPrepId, tnode.Nodes);
+
+                        prepCount--;
+                    }                        
+                }
             }
-            catch(Exception ex)
-            {
-                transaction?.Rollback();
-                Common.Log.Error(ex);
-            }
-            finally
-            {
-                connection?.Close();
-            }
+
+            SqlCommand cmd2 = new SqlCommand("insert into sample_x_assignment_sample_type values(@sample_id, @assignment_sample_type_id)", conn, trans);
+            cmd2.Parameters.AddWithValue("@sample_id", sampleId, Guid.Empty);
+            cmd2.Parameters.AddWithValue("@assignment_sample_type_id", orderLineId, Guid.Empty);
+            cmd2.ExecuteNonQuery();            
         }
 
         private void GenerateOrderAnalyses(SqlConnection conn, SqlTransaction trans, Guid orderId, Guid labId, Guid prepId, TreeNodeCollection tnodes)
@@ -318,8 +315,8 @@ where sxast.sample_id = @sid";
                     cmd.Parameters.AddWithValue("@specter_reference", DBNull.Value);
                     cmd.Parameters.AddWithValue("@activity_unit_id", DBNull.Value);
                     cmd.Parameters.AddWithValue("@activity_unit_type_id", DBNull.Value);
-                    cmd.Parameters.AddWithValue("@sigma_act", DBNull.Value);
-                    cmd.Parameters.AddWithValue("@sigma_mda", DBNull.Value);
+                    cmd.Parameters.AddWithValue("@sigma_act", 0);
+                    cmd.Parameters.AddWithValue("@sigma_mda", 0);
                     cmd.Parameters.AddWithValue("@nuclide_library", DBNull.Value);
                     cmd.Parameters.AddWithValue("@mda_library", DBNull.Value);
                     cmd.Parameters.AddWithValue("@instance_status_id", InstanceStatus.Active);

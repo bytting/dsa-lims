@@ -46,8 +46,8 @@ namespace DSA_lims
         public string SpecterReference { get; set; }
         public Guid ActivityUnitId { get; set; }
         public Guid ActivityUnitTypeId { get; set; }
-        public double? SigmaActivity { get; set; }
-        public double? SigmaMDA { get; set; }
+        public double SigmaActivity { get; set; }
+        public double SigmaMDA { get; set; }
         public string NuclideLibrary { get; set; }
         public string MDALibrary { get; set; }
         public int InstanceStatusId { get; set; }
@@ -162,8 +162,8 @@ namespace DSA_lims
                 SpecterReference = reader.GetString("specter_reference");
                 ActivityUnitId = reader.GetGuid("activity_unit_id");
                 ActivityUnitTypeId = reader.GetGuid("activity_unit_type_id");
-                SigmaActivity = reader.GetDoubleNullable("sigma_act");
-                SigmaMDA = reader.GetDoubleNullable("sigma_mda");
+                SigmaActivity = reader.GetDouble("sigma_act");
+                SigmaMDA = reader.GetDouble("sigma_mda");
                 NuclideLibrary = reader.GetString("nuclide_library");
                 MDALibrary = reader.GetString("mda_library");
                 InstanceStatusId = reader.GetInt32("instance_status_id");
@@ -217,8 +217,8 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@specter_reference", SpecterReference, String.Empty);
                 cmd.Parameters.AddWithValue("@activity_unit_id", ActivityUnitId, Guid.Empty);
                 cmd.Parameters.AddWithValue("@activity_unit_type_id", ActivityUnitTypeId, Guid.Empty);
-                cmd.Parameters.AddWithValue("@sigma_act", SigmaActivity, null);
-                cmd.Parameters.AddWithValue("@sigma_mda", SigmaMDA, null);
+                cmd.Parameters.AddWithValue("@sigma_act", SigmaActivity);
+                cmd.Parameters.AddWithValue("@sigma_mda", SigmaMDA);
                 cmd.Parameters.AddWithValue("@nuclide_library", NuclideLibrary, String.Empty);
                 cmd.Parameters.AddWithValue("@mda_library", MDALibrary, String.Empty);
                 cmd.Parameters.AddWithValue("@instance_status_id", InstanceStatusId);
@@ -248,8 +248,8 @@ namespace DSA_lims
                     cmd.Parameters.AddWithValue("@specter_reference", SpecterReference, String.Empty);
                     cmd.Parameters.AddWithValue("@activity_unit_id", ActivityUnitId, Guid.Empty);
                     cmd.Parameters.AddWithValue("@activity_unit_type_id", ActivityUnitTypeId, Guid.Empty);
-                    cmd.Parameters.AddWithValue("@sigma_act", SigmaActivity, null);
-                    cmd.Parameters.AddWithValue("@sigma_mda", SigmaMDA, null);
+                    cmd.Parameters.AddWithValue("@sigma_act", SigmaActivity);
+                    cmd.Parameters.AddWithValue("@sigma_mda", SigmaMDA);
                     cmd.Parameters.AddWithValue("@nuclide_library", NuclideLibrary, String.Empty);
                     cmd.Parameters.AddWithValue("@mda_library", MDALibrary, String.Empty);
                     cmd.Parameters.AddWithValue("@comment", Comment, String.Empty);

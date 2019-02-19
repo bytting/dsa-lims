@@ -230,7 +230,7 @@ from activity_unit au
     inner join assignment_sample_type ast on au.id = ast.requested_activity_unit_id
     inner join sample_x_assignment_sample_type sxast on ast.id = sxast.assignment_sample_type_id
     inner join sample s on s.id = sxast.sample_id
-    inner join preparation p on p.id = @pid
+    inner join preparation p on p.sample_id = s.id and p.id = @pid
 where p.assignment_id = ast.assignment_id
 ";
             SqlCommand cmd = new SqlCommand(query, conn);
@@ -245,7 +245,7 @@ from activity_unit_type aut
     inner join assignment_sample_type ast on aut.id = ast.requested_activity_unit_type_id
     inner join sample_x_assignment_sample_type sxast on ast.id = sxast.assignment_sample_type_id
     inner join sample s on s.id = sxast.sample_id
-    inner join preparation p on p.id = @pid
+    inner join preparation p on p.sample_id = s.id and p.id = @pid
 where p.assignment_id = ast.assignment_id
 ";
             o = cmd.ExecuteScalar();

@@ -6496,10 +6496,9 @@ where s.number = @sample_number
                 conn = DB.OpenConnection();
                 trans = conn.BeginTransaction();
 
-                string query = "update analysis_result set instance_status_id = @status where analysis_id = @aid";
+                string query = "delete from analysis_result where analysis_id = @aid";
                 SqlCommand cmd = new SqlCommand(query, conn, trans);
                 cmd.Parameters.AddWithValue("@aid", analysis.Id);
-                cmd.Parameters.AddWithValue("@status", InstanceStatus.Deleted);
                 cmd.ExecuteNonQuery();
 
                 cmd.CommandText = "update analysis set instance_status_id = @status where id = @aid";
@@ -6557,10 +6556,9 @@ where s.number = @sample_number
                 {
                     Guid aid = Guid.Parse(tn.Name);
                     
-                    cmd.CommandText = "update analysis_result set instance_status_id = @status where analysis_id = @aid";
+                    cmd.CommandText = "delete from analysis_result where analysis_id = @aid";
                     cmd.Parameters.Clear();
                     cmd.Parameters.AddWithValue("@aid", aid);
-                    cmd.Parameters.AddWithValue("@status", InstanceStatus.Deleted);
                     cmd.ExecuteNonQuery();
 
                     cmd.CommandText = "update analysis set instance_status_id = @status where id = @aid";
@@ -6579,6 +6577,116 @@ where s.number = @sample_number
                 trans.Commit();
 
                 treePrepAnal.Nodes.Remove(treePrepAnal.SelectedNode);
+            }
+            catch (Exception ex)
+            {
+                trans?.Rollback();
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn?.Close();
+            }
+        }
+
+        private void tvOrderContent_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            if (e.Node.Level == 1)
+                btnOrderRemoveSampleFromOrder.Enabled = true;
+            else btnOrderRemoveSampleFromOrder.Enabled = false;
+        }
+
+        private void btnOrderRemoveSampleFromOrder_Click(object sender, EventArgs e)
+        {
+            if (tvOrderContent.SelectedNode == null)
+            {
+                MessageBox.Show("You must select a sample first");
+                return;
+            }
+
+            if(assignment.WorkflowStatusId == WorkflowStatus.Complete)
+            {
+                MessageBox.Show("You can not remove samples from a completed order");
+                return;
+            }
+
+            DialogResult r = MessageBox.Show("Are you sure you want to remove sample from this order?", "Warning", MessageBoxButtons.YesNo);
+            if (r == DialogResult.No)
+                return;
+
+            Guid sid = Guid.Parse(tvOrderContent.SelectedNode.Name);
+
+            SqlConnection conn = null;
+            SqlTransaction trans = null;
+
+            try
+            {
+                conn = DB.OpenConnection();
+                trans = conn.BeginTransaction();
+
+                SqlCommand cmd = new SqlCommand("", conn, trans);
+
+                TreeNode tnode = tvOrderContent.SelectedNode;
+                foreach(TreeNode pnode in tnode.Nodes)
+                {
+                    Guid pid = Guid.Parse(pnode.Name);
+
+                    foreach (TreeNode anode in pnode.Nodes)
+                    {
+                        Guid aid = Guid.Parse(anode.Name);
+                        cmd.CommandText = @"
+delete from analysis_result where id in (
+    select ar.id from analysis_result ar
+        inner join analysis a on a.id = ar.analysis_id and a.assignment_id = @assid
+    where a.id = @aid
+)";
+                        cmd.Parameters.Clear();
+                        cmd.Parameters.AddWithValue("@assid", assignment.Id);
+                        cmd.Parameters.AddWithValue("@aid", aid);
+                        cmd.ExecuteNonQuery();
+
+                        cmd.CommandText = @"
+update analysis set instance_status_id = @status 
+where id = @aid and assignment_id = @assid and preparation_id = @pid
+";
+                        cmd.Parameters.Clear();
+                        cmd.Parameters.AddWithValue("@aid", aid);
+                        cmd.Parameters.AddWithValue("@pid", pid);
+                        cmd.Parameters.AddWithValue("@assid", assignment.Id);
+                        cmd.Parameters.AddWithValue("@status", InstanceStatus.Deleted);
+                        cmd.ExecuteNonQuery();
+                    }
+                    
+                    cmd.CommandText = "update preparation set instance_status_id = @status where id = @pid and assignment_id = @assid";
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.AddWithValue("@pid", pid);
+                    cmd.Parameters.AddWithValue("@assid", assignment.Id);
+                    cmd.Parameters.AddWithValue("@status", InstanceStatus.Deleted);
+                    cmd.ExecuteNonQuery();
+                }
+
+                cmd.CommandText = @"
+select ast.id from assignment_sample_type ast 
+    inner join assignment a on a.id = ast.assignment_id and a.id = @assid
+    inner join sample_x_assignment_sample_type sxast on sxast.assignment_sample_type_id = ast.id
+    inner join sample s on s.id = sxast.sample_id and s.id = @sid
+";
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@sid", sid);
+                cmd.Parameters.AddWithValue("@assid", assignment.Id);
+                Guid astId = Guid.Parse(cmd.ExecuteScalar().ToString());
+
+                cmd.CommandText = "delete from sample_x_assignment_sample_type where sample_id = @sid and assignment_sample_type_id = @astid";
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@sid", sid);
+                cmd.Parameters.AddWithValue("@astid", astId);
+                cmd.ExecuteNonQuery();
+
+                trans.Commit();
+
+                assignment.LoadFromDB(conn, trans, assignment.Id);
+                PopulateOrder(conn, trans, assignment, true);
             }
             catch (Exception ex)
             {

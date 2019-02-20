@@ -922,6 +922,8 @@
             this.btnMenu = new System.Windows.Forms.ToolStripButton();
             this.btnBack = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator73 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnOrderRemoveSampleFromOrder = new System.Windows.Forms.ToolStripButton();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tabs.SuspendLayout();
@@ -4207,7 +4209,7 @@
             this.tabOrderAssigned.Location = new System.Drawing.Point(4, 24);
             this.tabOrderAssigned.Name = "tabOrderAssigned";
             this.tabOrderAssigned.Padding = new System.Windows.Forms.Padding(3);
-            this.tabOrderAssigned.Size = new System.Drawing.Size(1007, 511);
+            this.tabOrderAssigned.Size = new System.Drawing.Size(1007, 509);
             this.tabOrderAssigned.TabIndex = 3;
             this.tabOrderAssigned.Text = "All units assigned to order";
             // 
@@ -4224,14 +4226,17 @@
             this.tvOrderContent.ShowNodeToolTips = true;
             this.tvOrderContent.ShowPlusMinus = false;
             this.tvOrderContent.ShowRootLines = false;
-            this.tvOrderContent.Size = new System.Drawing.Size(1001, 480);
+            this.tvOrderContent.Size = new System.Drawing.Size(1001, 478);
             this.tvOrderContent.TabIndex = 2;
+            this.tvOrderContent.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvOrderContent_AfterSelect);
             // 
             // toolStrip17
             // 
             this.toolStrip17.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStrip17.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripLabel58});
+            this.toolStripLabel58,
+            this.toolStripSeparator73,
+            this.btnOrderRemoveSampleFromOrder});
             this.toolStrip17.Location = new System.Drawing.Point(3, 3);
             this.toolStrip17.Name = "toolStrip17";
             this.toolStrip17.Size = new System.Drawing.Size(1001, 25);
@@ -10518,6 +10523,21 @@
             this.toolStripSeparator6.Name = "toolStripSeparator6";
             this.toolStripSeparator6.Size = new System.Drawing.Size(6, 25);
             // 
+            // toolStripSeparator73
+            // 
+            this.toolStripSeparator73.Name = "toolStripSeparator73";
+            this.toolStripSeparator73.Size = new System.Drawing.Size(6, 25);
+            // 
+            // btnOrderRemoveSampleFromOrder
+            // 
+            this.btnOrderRemoveSampleFromOrder.Enabled = false;
+            this.btnOrderRemoveSampleFromOrder.Image = global::DSA_lims.Properties.Resources.delete;
+            this.btnOrderRemoveSampleFromOrder.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnOrderRemoveSampleFromOrder.Name = "btnOrderRemoveSampleFromOrder";
+            this.btnOrderRemoveSampleFromOrder.Size = new System.Drawing.Size(171, 22);
+            this.btnOrderRemoveSampleFromOrder.Text = "Remove sample from order";
+            this.btnOrderRemoveSampleFromOrder.Click += new System.EventHandler(this.btnOrderRemoveSampleFromOrder_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -11911,6 +11931,8 @@
         private System.Windows.Forms.ToolStripMenuItem orderSummaryToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem preparationSummaryToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator73;
+        private System.Windows.Forms.ToolStripButton btnOrderRemoveSampleFromOrder;
     }
 }
 

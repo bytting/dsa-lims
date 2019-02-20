@@ -17,11 +17,13 @@
 */
 // Authors: Dag Robole,
 
+using Microsoft.Reporting.WinForms;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -30,13 +32,20 @@ namespace DSA_lims
 {
     public partial class FormReportViewer : Form
     {
-        public FormReportViewer()
+        string mOrderName;
+
+        public FormReportViewer(string orderName)
         {
             InitializeComponent();
+
+            mOrderName = orderName;
         }
 
         private void FormReportViewer_Load(object sender, EventArgs e)
-        {
+        {            
+            this.DataTable1TableAdapter.Connection.ConnectionString = DB.ConnectionString;
+            this.DataTable1TableAdapter.Fill(this.DSOrderReport.DataTable1, mOrderName);
+
             reportViewer.RefreshReport();
         }
 

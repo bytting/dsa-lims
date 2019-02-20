@@ -44,11 +44,13 @@ namespace DSA_lims
             get { return p.ContainsKey("name") ? p["name"].ToString() : String.Empty; }
         }
 
-        public FormMunicipality(Guid cid)
+        public FormMunicipality(Guid cid, string countyName)
         {
-            InitializeComponent();            
+            InitializeComponent();  
+                      
             p["county_id"] = cid;
             Text = "Create municipality";
+            tbCounty.Text = countyName;
             using (SqlConnection conn = DB.OpenConnection())
             {
                 cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status");
@@ -56,12 +58,14 @@ namespace DSA_lims
             cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
         }
 
-        public FormMunicipality(Guid cid, Guid mid)
+        public FormMunicipality(Guid cid, Guid mid, string countyName)
         {
             InitializeComponent();
+
             p["county_id"] = cid;
             p["id"] = mid;
-            Text = "Update municipality";            
+            Text = "Update municipality";
+            tbCounty.Text = countyName;
 
             using (SqlConnection conn = DB.OpenConnection())
             {

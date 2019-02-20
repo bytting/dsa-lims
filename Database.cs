@@ -550,9 +550,12 @@ where a.id = @aid
                 {
                     reader.Read();
 
-                    nSamples = reader.GetInt32("nsamples");
-                    nPreparations = reader.GetInt32("npreparations");
-                    nAnalyses = reader.GetInt32("nanalyses");
+                    if (IsValidField(reader["nsamples"]))
+                        nSamples = reader.GetInt32("nsamples");
+                    if (IsValidField(reader["npreparations"]))
+                        nPreparations = reader.GetInt32("npreparations");
+                    if (IsValidField(reader["nanalyses"]))
+                        nAnalyses = reader.GetInt32("nanalyses");
                 }
             }
         }
@@ -585,16 +588,20 @@ select
                 {
                     reader.Read();
                     
-                    nSamples = reader.GetInt32("nsamples");
-                    nPreparations = reader.GetInt32("npreparations");
-                    nAnalyses = reader.GetInt32("nanalyses");
+                    if(IsValidField(reader["nsamples"]))
+                        nSamples = reader.GetInt32("nsamples");
+                    if (IsValidField(reader["npreparations"]))
+                        nPreparations = reader.GetInt32("npreparations");
+                    if (IsValidField(reader["nanalyses"]))
+                        nAnalyses = reader.GetInt32("nanalyses");
                 }
             }
         }
 
         public static int GetAvailableSamplesOnAssignmentSampleType(SqlConnection conn, SqlTransaction trans, Guid astId)
         {
-            int n = 0;
+            int nAvailSamples = 0, nCurrSamples = 0, n = 0;
+
             string query = @"
 select
 (
@@ -611,8 +618,11 @@ select
                 if(reader.HasRows)
                 {
                     reader.Read();
-                    int nAvailSamples = reader.GetInt32("available_sample_count");
-                    int nCurrSamples = reader.GetInt32("current_sample_count");
+
+                    if (IsValidField(reader["available_sample_count"]))
+                        nAvailSamples = reader.GetInt32("available_sample_count");
+                    if (IsValidField(reader["current_sample_count"]))
+                        nCurrSamples = reader.GetInt32("current_sample_count");
                     n = nAvailSamples - nCurrSamples;
                 }
             }
@@ -765,7 +775,18 @@ select
             if (!IsValidField(reader[key]))
                 return Guid.Empty;
             return Guid.Parse(reader[key].ToString());
-        }        
+        }
+
+        public static string GetNameFromUsername(SqlConnection conn, SqlTransaction trans, string username)
+        {
+            object o = GetScalar(conn, trans, "select name + ' (' + email + ')' from cv_account where username = @username", CommandType.Text, 
+                new SqlParameter("@username", username));
+
+            if (!IsValidField(o))
+                return "Unknown";
+
+            return o.ToString();
+        }
     }
 
     public static class SqlParameterCollectionExtensions

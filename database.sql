@@ -2611,7 +2611,7 @@ as
 	from preparation p 
 		inner join preparation_method pm on pm.id = p.preparation_method_id
 		left outer join assignment a on a.id = p.assignment_id
-	where sample_id = @sample_id
+	where sample_id = @sample_id and p.instance_status_id = 1
 	order by p.number
 go
 
@@ -2628,7 +2628,7 @@ as
 	from preparation p
 		inner join preparation_method pm on p.preparation_method_id = pm.id
 		inner join workflow_status ws on p.workflow_status_id = ws.id
-	where p.sample_id = @sample_id
+	where p.sample_id = @sample_id and p.instance_status_id = 1
 	order by p.number
 go
 
@@ -2981,7 +2981,7 @@ as
 	from analysis a 
 		inner join analysis_method am on am.id = a.analysis_method_id
 		left outer join assignment ass on ass.id = a.assignment_id
-	where preparation_id = @preparation_id
+	where a.preparation_id = @preparation_id and a.instance_status_id = 1
 	order by a.number
 go
 
@@ -2999,7 +2999,7 @@ as
 	from analysis a
 		inner join analysis_method am on a.analysis_method_id = am.id
 		inner join workflow_status ws on a.workflow_status_id = ws.id
-	where a.preparation_id = @preparation_id and a.assignment_id = @assignment_id
+	where a.preparation_id = @preparation_id and a.assignment_id = @assignment_id and a.instance_status_id = 1
 	order by a.number
 go
 

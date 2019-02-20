@@ -103,7 +103,7 @@
             this.tbUsername.Name = "tbUsername";
             this.tbUsername.Size = new System.Drawing.Size(245, 21);
             this.tbUsername.TabIndex = 0;
-            this.tbUsername.Text = "drobole";
+            this.tbUsername.Text = "jdrefvel";
             this.tbUsername.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbUsername_KeyPress);
             // 
             // tbPassword
@@ -114,7 +114,7 @@
             this.tbPassword.PasswordChar = '*';
             this.tbPassword.Size = new System.Drawing.Size(245, 21);
             this.tbPassword.TabIndex = 1;
-            this.tbPassword.Text = "l3ttpass0rd";
+            this.tbPassword.Text = "fjordpils";
             this.tbPassword.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbPassword_KeyPress);
             // 
             // menuStrip1

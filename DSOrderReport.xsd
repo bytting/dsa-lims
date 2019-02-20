@@ -1,0 +1,307 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DSOrderReport" targetNamespace="http://tempuri.org/DSOrderReport.xsd" xmlns:mstns="http://tempuri.org/DSOrderReport.xsd" xmlns="http://tempuri.org/DSOrderReport.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="dsa_limsConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="dsa_limsConnectionString (Settings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.DSA_lims.Properties.Settings.GlobalReference.Default.dsa_limsConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="DataTable1TableAdapter" GeneratorDataComponentClassName="DataTable1TableAdapter" Name="DataTable1" UserDataComponentName="DataTable1TableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="dsa_limsConnectionString (Settings)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                    <CommandText>SELECT        assignment.name, laboratory.name AS Lab, assignment.deadline, assignment.report_comment, assignment.analysis_report_version, sample_type.name AS Stype, sample_type.path, 
+                         analysis_method.name AS Ameth, analysis_result.activity, analysis_result.activity_uncertainty_abs, nuclide.name AS Nucl, sample.number, analysis_result.activity_approved, analysis_result.detection_limit, 
+                         analysis_result.detection_limit_approved, analysis_result.accredited, sample.reference_date, sample.external_id, person.name AS Expr1, activity_unit.name AS Ac_unit, assignment.customer_company_name, 
+                         assignment.customer_company_email, assignment.customer_company_phone, assignment.customer_company_address, assignment.customer_contact_name, assignment.customer_contact_email, 
+                         assignment.customer_contact_phone, assignment.customer_contact_address, person_1.name AS Expr2, assignment.last_workflow_status_date, assignment.audit_comment, person.email, person.phone, 
+                         laboratory.address, laboratory.email AS LabMail, laboratory.phone AS LabPhone, activity_unit_type.name_short, activity_unit_type.name AS Expr3, laboratory.laboratory_logo, laboratory.accredited_logo
+FROM            laboratory RIGHT OUTER JOIN
+                         analysis_method INNER JOIN
+                         assignment INNER JOIN
+                         analysis ON assignment.id = analysis.assignment_id ON analysis_method.id = analysis.analysis_method_id LEFT OUTER JOIN
+                         account AS account_1 ON assignment.last_workflow_status_by = account_1.username LEFT OUTER JOIN
+                         account ON assignment.account_id = account.id LEFT OUTER JOIN
+                         person ON account.person_id = person.id LEFT OUTER JOIN
+                         person AS person_1 ON account_1.person_id = person_1.id LEFT OUTER JOIN
+                         activity_unit_type ON analysis.activity_unit_type_id = activity_unit_type.id LEFT OUTER JOIN
+                         activity_unit ON analysis.activity_unit_id = activity_unit.id ON laboratory.id = assignment.laboratory_id FULL OUTER JOIN
+                         sample_type INNER JOIN
+                         sample ON sample_type.id = sample.sample_type_id INNER JOIN
+                         preparation ON sample.id = preparation.sample_id ON analysis.preparation_id = preparation.id FULL OUTER JOIN
+                         nuclide RIGHT OUTER JOIN
+                         analysis_result ON nuclide.id = analysis_result.nuclide_id ON analysis.id = analysis_result.analysis_id AND analysis_result.reportable = 1
+WHERE        (assignment.name = @AID)</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="false" AutogeneratedName="AID" ColumnName="name" DataSourceName="dsa_lims.dbo.assignment" DataTypeServer="nvarchar(80)" DbType="String" Direction="Input" ParameterName="@AID" Precision="0" ProviderType="NVarChar" Scale="0" Size="80" SourceColumn="name" SourceColumnNullMapping="false" SourceVersion="Current" />
+                    </Parameters>
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="name" DataSetColumn="name" />
+              <Mapping SourceColumn="Lab" DataSetColumn="Lab" />
+              <Mapping SourceColumn="deadline" DataSetColumn="deadline" />
+              <Mapping SourceColumn="report_comment" DataSetColumn="report_comment" />
+              <Mapping SourceColumn="analysis_report_version" DataSetColumn="analysis_report_version" />
+              <Mapping SourceColumn="Stype" DataSetColumn="Stype" />
+              <Mapping SourceColumn="path" DataSetColumn="path" />
+              <Mapping SourceColumn="Ameth" DataSetColumn="Ameth" />
+              <Mapping SourceColumn="activity" DataSetColumn="activity" />
+              <Mapping SourceColumn="activity_uncertainty_abs" DataSetColumn="activity_uncertainty_abs" />
+              <Mapping SourceColumn="Nucl" DataSetColumn="Nucl" />
+              <Mapping SourceColumn="number" DataSetColumn="number" />
+              <Mapping SourceColumn="activity_approved" DataSetColumn="activity_approved" />
+              <Mapping SourceColumn="detection_limit" DataSetColumn="detection_limit" />
+              <Mapping SourceColumn="detection_limit_approved" DataSetColumn="detection_limit_approved" />
+              <Mapping SourceColumn="accredited" DataSetColumn="accredited" />
+              <Mapping SourceColumn="reference_date" DataSetColumn="reference_date" />
+              <Mapping SourceColumn="external_id" DataSetColumn="external_id" />
+              <Mapping SourceColumn="Expr1" DataSetColumn="Expr1" />
+              <Mapping SourceColumn="Ac_unit" DataSetColumn="Ac_unit" />
+              <Mapping SourceColumn="customer_company_name" DataSetColumn="customer_company_name" />
+              <Mapping SourceColumn="customer_company_email" DataSetColumn="customer_company_email" />
+              <Mapping SourceColumn="customer_company_phone" DataSetColumn="customer_company_phone" />
+              <Mapping SourceColumn="customer_company_address" DataSetColumn="customer_company_address" />
+              <Mapping SourceColumn="customer_contact_name" DataSetColumn="customer_contact_name" />
+              <Mapping SourceColumn="customer_contact_email" DataSetColumn="customer_contact_email" />
+              <Mapping SourceColumn="customer_contact_phone" DataSetColumn="customer_contact_phone" />
+              <Mapping SourceColumn="customer_contact_address" DataSetColumn="customer_contact_address" />
+              <Mapping SourceColumn="Expr2" DataSetColumn="Expr2" />
+              <Mapping SourceColumn="last_workflow_status_date" DataSetColumn="last_workflow_status_date" />
+              <Mapping SourceColumn="audit_comment" DataSetColumn="audit_comment" />
+              <Mapping SourceColumn="email" DataSetColumn="email" />
+              <Mapping SourceColumn="phone" DataSetColumn="phone" />
+              <Mapping SourceColumn="address" DataSetColumn="address" />
+              <Mapping SourceColumn="LabMail" DataSetColumn="LabMail" />
+              <Mapping SourceColumn="LabPhone" DataSetColumn="LabPhone" />
+              <Mapping SourceColumn="name_short" DataSetColumn="name_short" />
+              <Mapping SourceColumn="Expr3" DataSetColumn="Expr3" />
+              <Mapping SourceColumn="laboratory_logo" DataSetColumn="laboratory_logo" />
+              <Mapping SourceColumn="accredited_logo" DataSetColumn="accredited_logo" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DSOrderReport" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="DSOrderReport" msprop:Generator_UserDSName="DSOrderReport">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="DataTable1" msprop:Generator_TableClassName="DataTable1DataTable" msprop:Generator_TableVarName="tableDataTable1" msprop:Generator_TablePropName="DataTable1" msprop:Generator_RowDeletingName="DataTable1RowDeleting" msprop:Generator_RowChangingName="DataTable1RowChanging" msprop:Generator_RowEvHandlerName="DataTable1RowChangeEventHandler" msprop:Generator_RowDeletedName="DataTable1RowDeleted" msprop:Generator_UserTableName="DataTable1" msprop:Generator_RowChangedName="DataTable1RowChanged" msprop:Generator_RowEvArgName="DataTable1RowChangeEvent" msprop:Generator_RowClassName="DataTable1Row">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="name" msprop:Generator_ColumnVarNameInTable="columnname" msprop:Generator_ColumnPropNameInRow="name" msprop:Generator_ColumnPropNameInTable="nameColumn" msprop:Generator_UserColumnName="name" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="80" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Lab" msprop:Generator_ColumnVarNameInTable="columnLab" msprop:Generator_ColumnPropNameInRow="Lab" msprop:Generator_ColumnPropNameInTable="LabColumn" msprop:Generator_UserColumnName="Lab" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="256" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="deadline" msprop:Generator_ColumnVarNameInTable="columndeadline" msprop:Generator_ColumnPropNameInRow="deadline" msprop:Generator_ColumnPropNameInTable="deadlineColumn" msprop:Generator_UserColumnName="deadline" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="report_comment" msprop:Generator_ColumnVarNameInTable="columnreport_comment" msprop:Generator_ColumnPropNameInRow="report_comment" msprop:Generator_ColumnPropNameInTable="report_commentColumn" msprop:Generator_UserColumnName="report_comment" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1000" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="analysis_report_version" msprop:Generator_ColumnVarNameInTable="columnanalysis_report_version" msprop:Generator_ColumnPropNameInRow="analysis_report_version" msprop:Generator_ColumnPropNameInTable="analysis_report_versionColumn" msprop:Generator_UserColumnName="analysis_report_version" type="xs:int" minOccurs="0" />
+              <xs:element name="Stype" msprop:Generator_ColumnVarNameInTable="columnStype" msprop:Generator_ColumnPropNameInRow="Stype" msprop:Generator_ColumnPropNameInTable="StypeColumn" msprop:Generator_UserColumnName="Stype" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="80" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="path" msprop:Generator_ColumnVarNameInTable="columnpath" msprop:Generator_ColumnPropNameInRow="path" msprop:Generator_ColumnPropNameInTable="pathColumn" msprop:Generator_UserColumnName="path" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2000" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Ameth" msprop:Generator_ColumnVarNameInTable="columnAmeth" msprop:Generator_ColumnPropNameInRow="Ameth" msprop:Generator_ColumnPropNameInTable="AmethColumn" msprop:Generator_UserColumnName="Ameth" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="200" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="activity" msprop:Generator_ColumnVarNameInTable="columnactivity" msprop:Generator_ColumnPropNameInRow="activity" msprop:Generator_ColumnPropNameInTable="activityColumn" msprop:Generator_UserColumnName="activity" type="xs:double" minOccurs="0" />
+              <xs:element name="activity_uncertainty_abs" msprop:Generator_ColumnVarNameInTable="columnactivity_uncertainty_abs" msprop:Generator_ColumnPropNameInRow="activity_uncertainty_abs" msprop:Generator_ColumnPropNameInTable="activity_uncertainty_absColumn" msprop:Generator_UserColumnName="activity_uncertainty_abs" type="xs:double" minOccurs="0" />
+              <xs:element name="Nucl" msprop:Generator_ColumnVarNameInTable="columnNucl" msprop:Generator_ColumnPropNameInRow="Nucl" msprop:Generator_ColumnPropNameInTable="NuclColumn" msprop:Generator_UserColumnName="Nucl" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="32" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="number" msprop:Generator_ColumnVarNameInTable="columnnumber" msprop:Generator_ColumnPropNameInRow="number" msprop:Generator_ColumnPropNameInTable="numberColumn" msprop:Generator_UserColumnName="number" type="xs:int" minOccurs="0" />
+              <xs:element name="activity_approved" msprop:Generator_ColumnVarNameInTable="columnactivity_approved" msprop:Generator_ColumnPropNameInRow="activity_approved" msprop:Generator_ColumnPropNameInTable="activity_approvedColumn" msprop:Generator_UserColumnName="activity_approved" type="xs:boolean" minOccurs="0" />
+              <xs:element name="detection_limit" msprop:Generator_ColumnVarNameInTable="columndetection_limit" msprop:Generator_ColumnPropNameInRow="detection_limit" msprop:Generator_ColumnPropNameInTable="detection_limitColumn" msprop:Generator_UserColumnName="detection_limit" type="xs:double" minOccurs="0" />
+              <xs:element name="detection_limit_approved" msprop:Generator_ColumnVarNameInTable="columndetection_limit_approved" msprop:Generator_ColumnPropNameInRow="detection_limit_approved" msprop:Generator_ColumnPropNameInTable="detection_limit_approvedColumn" msprop:Generator_UserColumnName="detection_limit_approved" type="xs:boolean" minOccurs="0" />
+              <xs:element name="accredited" msprop:Generator_ColumnVarNameInTable="columnaccredited" msprop:Generator_ColumnPropNameInRow="accredited" msprop:Generator_ColumnPropNameInTable="accreditedColumn" msprop:Generator_UserColumnName="accredited" type="xs:boolean" minOccurs="0" />
+              <xs:element name="reference_date" msprop:Generator_ColumnVarNameInTable="columnreference_date" msprop:Generator_ColumnPropNameInRow="reference_date" msprop:Generator_ColumnPropNameInTable="reference_dateColumn" msprop:Generator_UserColumnName="reference_date" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="external_id" msprop:Generator_ColumnVarNameInTable="columnexternal_id" msprop:Generator_ColumnPropNameInRow="external_id" msprop:Generator_ColumnPropNameInTable="external_idColumn" msprop:Generator_UserColumnName="external_id" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="128" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Expr1" msprop:Generator_ColumnVarNameInTable="columnExpr1" msprop:Generator_ColumnPropNameInRow="Expr1" msprop:Generator_ColumnPropNameInTable="Expr1Column" msprop:Generator_UserColumnName="Expr1" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="128" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Ac_unit" msprop:Generator_ColumnVarNameInTable="columnAc_unit" msprop:Generator_ColumnPropNameInRow="Ac_unit" msprop:Generator_ColumnPropNameInTable="Ac_unitColumn" msprop:Generator_UserColumnName="Ac_unit" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="20" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="customer_company_name" msprop:Generator_ColumnVarNameInTable="columncustomer_company_name" msprop:Generator_ColumnPropNameInRow="customer_company_name" msprop:Generator_ColumnPropNameInTable="customer_company_nameColumn" msprop:Generator_UserColumnName="customer_company_name" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="80" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="customer_company_email" msprop:Generator_ColumnVarNameInTable="columncustomer_company_email" msprop:Generator_ColumnPropNameInRow="customer_company_email" msprop:Generator_ColumnPropNameInTable="customer_company_emailColumn" msprop:Generator_UserColumnName="customer_company_email" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="80" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="customer_company_phone" msprop:Generator_ColumnVarNameInTable="columncustomer_company_phone" msprop:Generator_ColumnPropNameInRow="customer_company_phone" msprop:Generator_ColumnPropNameInTable="customer_company_phoneColumn" msprop:Generator_UserColumnName="customer_company_phone" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="80" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="customer_company_address" msprop:Generator_ColumnVarNameInTable="columncustomer_company_address" msprop:Generator_ColumnPropNameInRow="customer_company_address" msprop:Generator_ColumnPropNameInTable="customer_company_addressColumn" msprop:Generator_UserColumnName="customer_company_address" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="256" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="customer_contact_name" msprop:Generator_ColumnVarNameInTable="columncustomer_contact_name" msprop:Generator_ColumnPropNameInRow="customer_contact_name" msprop:Generator_ColumnPropNameInTable="customer_contact_nameColumn" msprop:Generator_UserColumnName="customer_contact_name" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="80" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="customer_contact_email" msprop:Generator_ColumnVarNameInTable="columncustomer_contact_email" msprop:Generator_ColumnPropNameInRow="customer_contact_email" msprop:Generator_ColumnPropNameInTable="customer_contact_emailColumn" msprop:Generator_UserColumnName="customer_contact_email" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="80" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="customer_contact_phone" msprop:Generator_ColumnVarNameInTable="columncustomer_contact_phone" msprop:Generator_ColumnPropNameInRow="customer_contact_phone" msprop:Generator_ColumnPropNameInTable="customer_contact_phoneColumn" msprop:Generator_UserColumnName="customer_contact_phone" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="80" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="customer_contact_address" msprop:Generator_ColumnVarNameInTable="columncustomer_contact_address" msprop:Generator_ColumnPropNameInRow="customer_contact_address" msprop:Generator_ColumnPropNameInTable="customer_contact_addressColumn" msprop:Generator_UserColumnName="customer_contact_address" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="256" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Expr2" msprop:Generator_ColumnVarNameInTable="columnExpr2" msprop:Generator_ColumnPropNameInRow="Expr2" msprop:Generator_ColumnPropNameInTable="Expr2Column" msprop:Generator_UserColumnName="Expr2" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="128" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="last_workflow_status_date" msprop:Generator_ColumnVarNameInTable="columnlast_workflow_status_date" msprop:Generator_ColumnPropNameInRow="last_workflow_status_date" msprop:Generator_ColumnPropNameInTable="last_workflow_status_dateColumn" msprop:Generator_UserColumnName="last_workflow_status_date" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="audit_comment" msprop:Generator_ColumnVarNameInTable="columnaudit_comment" msprop:Generator_ColumnPropNameInRow="audit_comment" msprop:Generator_ColumnPropNameInTable="audit_commentColumn" msprop:Generator_UserColumnName="audit_comment" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="4000" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="email" msprop:Generator_ColumnVarNameInTable="columnemail" msprop:Generator_ColumnPropNameInRow="email" msprop:Generator_ColumnPropNameInTable="emailColumn" msprop:Generator_UserColumnName="email" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="80" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="phone" msprop:Generator_ColumnVarNameInTable="columnphone" msprop:Generator_ColumnPropNameInRow="phone" msprop:Generator_ColumnPropNameInTable="phoneColumn" msprop:Generator_UserColumnName="phone" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="80" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="address" msprop:Generator_ColumnVarNameInTable="columnaddress" msprop:Generator_ColumnPropNameInRow="address" msprop:Generator_ColumnPropNameInTable="addressColumn" msprop:Generator_UserColumnName="address" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="256" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="LabMail" msprop:Generator_ColumnVarNameInTable="columnLabMail" msprop:Generator_ColumnPropNameInRow="LabMail" msprop:Generator_ColumnPropNameInTable="LabMailColumn" msprop:Generator_UserColumnName="LabMail" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="80" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="LabPhone" msprop:Generator_ColumnVarNameInTable="columnLabPhone" msprop:Generator_ColumnPropNameInRow="LabPhone" msprop:Generator_ColumnPropNameInTable="LabPhoneColumn" msprop:Generator_UserColumnName="LabPhone" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="80" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="name_short" msprop:Generator_ColumnVarNameInTable="columnname_short" msprop:Generator_ColumnPropNameInRow="name_short" msprop:Generator_ColumnPropNameInTable="name_shortColumn" msprop:Generator_UserColumnName="name_short" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="8" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Expr3" msprop:Generator_ColumnVarNameInTable="columnExpr3" msprop:Generator_ColumnPropNameInRow="Expr3" msprop:Generator_ColumnPropNameInTable="Expr3Column" msprop:Generator_UserColumnName="Expr3" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="20" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="laboratory_logo" msprop:Generator_ColumnVarNameInTable="columnlaboratory_logo" msprop:Generator_ColumnPropNameInRow="laboratory_logo" msprop:Generator_ColumnPropNameInTable="laboratory_logoColumn" msprop:Generator_UserColumnName="laboratory_logo" type="xs:base64Binary" minOccurs="0" />
+              <xs:element name="accredited_logo" msprop:Generator_ColumnVarNameInTable="columnaccredited_logo" msprop:Generator_ColumnPropNameInRow="accredited_logo" msprop:Generator_ColumnPropNameInTable="accredited_logoColumn" msprop:Generator_UserColumnName="accredited_logo" type="xs:base64Binary" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

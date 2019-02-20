@@ -32,19 +32,43 @@ namespace DSA_lims
     public partial class FormLabXPrepMeth : Form
     {
         Guid mLabId = Guid.Empty;
+        List<Guid> mExistingPrepMeths;
 
-        public FormLabXPrepMeth(Guid labId)
+        public FormLabXPrepMeth(Guid labId, List<Guid> existingPrepMeths)
         {
             InitializeComponent();
 
             mLabId = labId;
+            mExistingPrepMeths = existingPrepMeths;
         }
 
         private void FormLabXPrepMeth_Load(object sender, EventArgs e)
         {
+            var pmArr = from item in mExistingPrepMeths select "'" + item + "'";
+            string exceptIds = string.Join(",", pmArr);
+
             using (SqlConnection conn = DB.OpenConnection())
             {
-                UI.PopulatePreparationMethods(conn, gridPrepMeth);
+                string query;
+                if (String.IsNullOrEmpty(exceptIds))                
+                    query = "select * from preparation_method where instance_status_id <= 1";                
+                else                
+                    query = "select * from preparation_method where id not in(" + exceptIds + ") and instance_status_id <= 1";
+
+                gridPrepMeth.DataSource = DB.GetDataTable(conn, null, query, CommandType.Text, new SqlParameter("@lid", mLabId));
+
+                gridPrepMeth.Columns["id"].Visible = false;
+                gridPrepMeth.Columns["comment"].Visible = false;
+                gridPrepMeth.Columns["instance_status_id"].Visible = false;
+                gridPrepMeth.Columns["created_by"].Visible = false;
+                gridPrepMeth.Columns["create_date"].Visible = false;
+                gridPrepMeth.Columns["updated_by"].Visible = false;
+                gridPrepMeth.Columns["update_date"].Visible = false;
+
+                gridPrepMeth.Columns["name"].HeaderText = "Name";
+                gridPrepMeth.Columns["name_short"].HeaderText = "Abbr.";
+                gridPrepMeth.Columns["description_link"].HeaderText = "Desc.link";
+                gridPrepMeth.Columns["destructive"].HeaderText = "Destructive";
             }
         }
 
@@ -64,12 +88,7 @@ namespace DSA_lims
                 conn = DB.OpenConnection();
                 trans = conn.BeginTransaction();
                 
-                SqlCommand cmd = new SqlCommand("delete from laboratory_x_preparation_method where laboratory_id = @lab_id", conn, trans);
-                cmd.Parameters.AddWithValue("@lab_id", mLabId);
-                cmd.ExecuteNonQuery();
-
-                cmd.CommandText = "insert into laboratory_x_preparation_method values(@laboratory_id, @preparation_method_id)";
-
+                SqlCommand cmd = new SqlCommand("insert into laboratory_x_preparation_method values(@laboratory_id, @preparation_method_id)", conn, trans);
                 foreach (DataGridViewRow row in gridPrepMeth.SelectedRows)
                 {                    
                     cmd.Parameters.Clear();

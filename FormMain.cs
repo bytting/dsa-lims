@@ -398,8 +398,7 @@ namespace DSA_lims
                     if (r == DialogResult.No)
                         return false;
                 }                
-
-                gridPrepAnalResults.DataSource = null;
+                
                 sample.ClearDirty();
                 preparation.ClearDirty();
                 analysis.ClearDirty();
@@ -1427,8 +1426,9 @@ namespace DSA_lims
 
             DataGridViewRow row = gridSysCounty.SelectedRows[0];
             Guid cid = Utils.MakeGuid(row.Cells["id"].Value);
+            string cName = row.Cells["name"].Value.ToString();
 
-            FormMunicipality form = new FormMunicipality(cid);
+            FormMunicipality form = new FormMunicipality(cid, cName);
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
@@ -1451,9 +1451,10 @@ namespace DSA_lims
                 return;
             
             Guid cid = Utils.MakeGuid(gridSysCounty.SelectedRows[0].Cells["id"].Value);
+            string cName = gridSysCounty.SelectedRows[0].Cells["name"].Value.ToString();
             Guid mid = Utils.MakeGuid(gridSysMunicipality.SelectedRows[0].Cells["id"].Value);            
 
-            FormMunicipality form = new FormMunicipality(cid, mid);
+            FormMunicipality form = new FormMunicipality(cid, mid, cName);
             switch (form.ShowDialog())
             {
                 case DialogResult.OK:
@@ -2851,8 +2852,11 @@ namespace DSA_lims
                 
                 if(assignment.LaboratoryId != Common.LabId)
                 {
-                    MessageBox.Show("You can not edit this order. Order does not belong to your laboratory");
-                    return;
+                    if (assignment.CreatedBy != Common.Username)
+                    {
+                        MessageBox.Show("You can not edit this order. Order was not created by you and does not belong to your laboratory");
+                        return;
+                    }
                 }
 
                 PopulateOrder(conn, null, assignment, true);
@@ -2894,11 +2898,13 @@ namespace DSA_lims
             tbOrderContentComment.Text = a.ContentComment;
             tbOrderReportComment.Text = a.ReportComment;
             cbOrderApprovedCustomer.Checked = a.ApprovedCustomer;
-            tbOrderApprovedCustomerBy.Text = a.ApprovedCustomerBy;
+            tbOrderApprovedCustomerBy.Text = DB.GetNameFromUsername(conn, trans, a.ApprovedCustomerBy);
             cbOrderApprovedLaboratory.Checked = a.ApprovedLaboratory;
-            tbOrderApprovedLaboratoryBy.Text = a.ApprovedLaboratoryBy;
+            tbOrderApprovedLaboratoryBy.Text = DB.GetNameFromUsername(conn, trans, a.ApprovedLaboratoryBy);
             cboxOrderStatus.SelectedValue = a.WorkflowStatusId;
-            tbOrderLastWorkflowStatusBy.Text = a.LastWorkflowStatusBy;
+            tbOrderLastWorkflowStatusBy.Text = DB.GetNameFromUsername(conn, trans, a.LastWorkflowStatusBy);
+            if (a.LastWorkflowStatusDate.HasValue)
+                tbOrderLastWorkflowStatusBy.Text += " at " + a.LastWorkflowStatusDate.Value.ToString(Utils.DateTimeFormatNorwegian);
 
             PopulateOrderContent(conn, trans, a);
 
@@ -3162,6 +3168,20 @@ namespace DSA_lims
                 return;
             }
 
+            int wfStatus = (int)cboxOrderStatus.SelectedValue;
+
+            if (wfStatus == WorkflowStatus.Complete && (!cbOrderApprovedCustomer.Checked || !cbOrderApprovedLaboratory.Checked))
+            {
+                MessageBox.Show("You can not complete an order that is not approved");
+                return;
+            }
+
+            if (wfStatus == WorkflowStatus.Complete && wfStatus == assignment.WorkflowStatusId)
+            {
+                MessageBox.Show("Can not save a completed order");
+                return;
+            }
+
             if (!Utils.IsValidGuid(cboxOrderResponsible.SelectedValue))
             {
                 MessageBox.Show("Responsible is mandatory");
@@ -3215,12 +3235,16 @@ namespace DSA_lims
             try
             {
                 conn = DB.OpenConnection();
-                trans = conn.BeginTransaction();
-
-                int wfStatus = (int)cboxOrderStatus.SelectedValue;
+                trans = conn.BeginTransaction();                
 
                 if (wfStatus == WorkflowStatus.Complete)
                 {
+                    if (!Roles.HasAccess(Role.LaboratoryAdministrator))
+                    {
+                        MessageBox.Show("You are not allowed to complete orders");
+                        return;
+                    }
+
                     int nCurrSamples, nCurrPreparations, nCurrAnalyses;
                     DB.GetOrderCurrentInventory(conn, trans, assignment.Id, out nCurrSamples, out nCurrPreparations, out nCurrAnalyses);
 
@@ -3244,6 +3268,22 @@ namespace DSA_lims
                         MessageBox.Show("Can not set this order to complete. Connected analyses " + nCurrAnalyses + " of " + nReqAnalyses);
                         return;
                     }
+                }
+
+                if (assignment.ApprovedLaboratory != cbOrderApprovedLaboratory.Checked)
+                {
+                    assignment.ApprovedLaboratoryBy = Common.Username;
+                }
+
+                if (assignment.ApprovedCustomer != cbOrderApprovedCustomer.Checked)
+                {
+                    assignment.ApprovedCustomerBy = Common.Username;
+                }
+
+                if (assignment.WorkflowStatusId != wfStatus)
+                {
+                    assignment.LastWorkflowStatusBy = Common.Username;
+                    assignment.LastWorkflowStatusDate = DateTime.Now;
                 }
 
                 assignment.LaboratoryId = Utils.MakeGuid(cboxOrderLaboratory.SelectedValue);
@@ -3428,8 +3468,11 @@ namespace DSA_lims
 
         private void treePrepAnal_AfterSelect(object sender, TreeViewEventArgs e)
         {
+            btnPrepAnalAddPrep.Enabled = false;
+            btnPrepAnalDelPrep.Enabled = false;
             btnPrepAnalAddAnal.Enabled = false;
-            gridPrepAnalResults.DataSource = null;
+            btnPrepAnalDelAnal.Enabled = false;
+
             sample.ClearDirty();
             preparation.ClearDirty();
             analysis.ClearDirty();
@@ -3443,6 +3486,7 @@ namespace DSA_lims
                         sid = Guid.Parse(e.Node.Name);
                         sample.LoadFromDB(conn, null, sid);
                         PopulateSampleInfo(conn, null, sample, e.Node, true);
+                        btnPrepAnalAddPrep.Enabled = true;
                         tabsPrepAnal.SelectedTab = tabPrepAnalSample;
                         break;
                     case 1:
@@ -3451,6 +3495,7 @@ namespace DSA_lims
                         pid = Guid.Parse(e.Node.Name);
                         preparation.LoadFromDB(conn, null, pid);
                         PopulatePreparation(conn, null, preparation, true);
+                        btnPrepAnalDelPrep.Enabled = true;
                         btnPrepAnalAddAnal.Enabled = true;
                         tabsPrepAnal.SelectedTab = tabPrepAnalPreps;
                         break;
@@ -3462,6 +3507,7 @@ namespace DSA_lims
                         Guid aid = Guid.Parse(e.Node.Name);
                         analysis.LoadFromDB(conn, null, aid);
                         PopulateAnalysis(conn, null, analysis, true);
+                        btnPrepAnalDelAnal.Enabled = true;
                         tabsPrepAnal.SelectedTab = tabPrepAnalAnalysis;
                         break;
                 }
@@ -3687,6 +3733,24 @@ namespace DSA_lims
                     return;
                 }
 
+                if(!Utils.IsValidGuid(cboxPrepAnalPrepGeom.SelectedValue))
+                {
+                    MessageBox.Show("Geometry is required");
+                    return;
+                }
+
+                if (String.IsNullOrEmpty(tbPrepAnalPrepAmount.Text))
+                {
+                    MessageBox.Show("Preparation amount is required");
+                    return;
+                }
+                
+                if ((int)cboxPrepAnalPrepAmountUnit.SelectedValue == 0)
+                {
+                    MessageBox.Show("Preparation amount unit is required");
+                    return;
+                }
+
                 Guid pgid = Utils.MakeGuid(cboxPrepAnalPrepGeom.SelectedValue);
                 if (!String.IsNullOrEmpty(tbPrepAnalPrepFillHeight.Text) && Utils.IsValidGuid(pgid))
                 {
@@ -3789,6 +3853,26 @@ namespace DSA_lims
                     MessageBox.Show("This analysis belongs to a closed order and can not be updated");
                     return;
                 }                
+
+                if(!Utils.IsValidGuid(cboxPrepAnalAnalUnit.SelectedValue))
+                {
+                    MessageBox.Show("Analysis unit is required");
+                    return;
+                }
+
+                if(!String.IsNullOrEmpty(tbPrepAnalAnalSpecRef.Text.Trim()))
+                {
+                    SqlCommand cmd = new SqlCommand("select count(*) from analysis where specter_reference = @specref and id not in(@exId)", conn, trans);
+                    cmd.Parameters.AddWithValue("@specref", tbPrepAnalAnalSpecRef.Text.Trim());
+                    cmd.Parameters.AddWithValue("@exId", analysis.Id);
+
+                    int cnt = (int)cmd.ExecuteScalar();
+                    if (cnt > 0)
+                    {
+                        MessageBox.Show("The spectrum reference is already used");
+                        return;
+                    }
+                }
 
                 analysis.ActivityUnitId = Utils.MakeGuid(cboxPrepAnalAnalUnit.SelectedValue);
                 analysis.ActivityUnitTypeId = Utils.MakeGuid(cboxPrepAnalAnalUnitType.SelectedValue);
@@ -3984,32 +4068,33 @@ namespace DSA_lims
 
         private void PopulateAnalysisResults(Analysis a, bool clearDirty)
         {
-            gridPrepAnalResults.DataSource = null;
-
             a.Results.Sort((r1, r2) => r1.NuclideName.CompareTo(r2.NuclideName));
-            
-            gridPrepAnalResults.DataSource = a.Results;
+
+            gridPrepAnalResults.Columns.Clear();
+            gridPrepAnalResults.Rows.Clear();
+
+            gridPrepAnalResults.Columns.Add("Id", "Id");
+            gridPrepAnalResults.Columns.Add("NuclideName", "Nuclide");
+            gridPrepAnalResults.Columns.Add("Activity", "Activity");
+            gridPrepAnalResults.Columns.Add("ActivityUncertaintyABS", "Act.Unc.");
+            gridPrepAnalResults.Columns.Add("ActivityApproved", "Act.Appr.");
+            gridPrepAnalResults.Columns.Add("DetectionLimit", "Det.Lim.");
+            gridPrepAnalResults.Columns.Add("DetectionLimitApproved", "Det.Lim.Appr.");
+
+            foreach (AnalysisResult ar in a.Results)
+            {
+                gridPrepAnalResults.Rows.Add(new object[] {
+                    ar.Id,
+                    ar.NuclideName,
+                    ar.Activity.ToString(Utils.ScientificFormat),
+                    ar.ActivityUncertaintyABS.ToString(Utils.ScientificFormat),
+                    ar.ActivityApproved,
+                    ar.DetectionLimit.ToString(Utils.ScientificFormat),
+                    ar.DetectionLimitApproved                    
+                });
+            }            
 
             gridPrepAnalResults.Columns["Id"].Visible = false;
-            gridPrepAnalResults.Columns["AnalysisId"].Visible = false;
-            gridPrepAnalResults.Columns["NuclideId"].Visible = false;
-            gridPrepAnalResults.Columns["UniformActivity"].Visible = false;
-            gridPrepAnalResults.Columns["UniformActivityUnitId"].Visible = false;
-            gridPrepAnalResults.Columns["InstanceStatusId"].Visible = false;
-            gridPrepAnalResults.Columns["CreateDate"].Visible = false;
-            gridPrepAnalResults.Columns["CreatedBy"].Visible = false;
-            gridPrepAnalResults.Columns["UpdateDate"].Visible = false;
-            gridPrepAnalResults.Columns["UpdatedBy"].Visible = false;            
-
-            gridPrepAnalResults.Columns["NuclideName"].HeaderText = "Nuclide";
-            gridPrepAnalResults.Columns["ActivityUncertaintyABS"].HeaderText = "Act.Unc.";
-            gridPrepAnalResults.Columns["ActivityApproved"].HeaderText = "Act.Appr.";
-            gridPrepAnalResults.Columns["DetectionLimit"].HeaderText = "Det.Lim.";
-            gridPrepAnalResults.Columns["DetectionLimitApproved"].HeaderText = "Det.Lim.Appr";
-
-            gridPrepAnalResults.Columns["Activity"].DefaultCellStyle.Format = Utils.ScientificFormat;
-            gridPrepAnalResults.Columns["ActivityUncertaintyABS"].DefaultCellStyle.Format = Utils.ScientificFormat;
-            gridPrepAnalResults.Columns["DetectionLimit"].DefaultCellStyle.Format = Utils.ScientificFormat;
 
             if(clearDirty)
                 foreach (AnalysisResult ar in a.Results)
@@ -4049,6 +4134,12 @@ namespace DSA_lims
 
         private void btnPrepAnalAddPrep_Click(object sender, EventArgs e)
         {
+            if (treePrepAnal.SelectedNode == null)
+            {
+                MessageBox.Show("You must select the sample first");
+                return;
+            }
+
             FormPrepAnalAddPrep form = new FormPrepAnalAddPrep(sample.Id);
             if (form.ShowDialog() != DialogResult.OK)
                 return;
@@ -4061,12 +4152,13 @@ namespace DSA_lims
 
         private void btnPrepAnalAddAnal_Click(object sender, EventArgs e)
         {
-            if (!Utils.IsValidGuid(treePrepAnal.SelectedNode.Name))
+            if(treePrepAnal.SelectedNode == null)
+            {
+                MessageBox.Show("You must select a preparation first");
                 return;
+            }            
 
-            Guid prepId = Guid.Parse(treePrepAnal.SelectedNode.Name);
-
-            FormPrepAnalAddAnal form = new FormPrepAnalAddAnal(prepId);
+            FormPrepAnalAddAnal form = new FormPrepAnalAddAnal(preparation.Id);
             if (form.ShowDialog() != DialogResult.OK)
                 return;
 
@@ -4798,7 +4890,22 @@ where s.number = @sample_number
 
         private void btnOrderCreateReport_Click(object sender, EventArgs e)
         {
-            FormCreateOrderReport form = new FormCreateOrderReport(assignment.Id);
+            //FormCreateOrderReport form = new FormCreateOrderReport(assignment.Id);
+            //form.ShowDialog();
+
+            if(assignment.IsDirty())
+            {
+                MessageBox.Show("You must save changes first");
+                return;
+            }
+
+            if(assignment.WorkflowStatusId != WorkflowStatus.Complete)
+            {
+                MessageBox.Show("Order must be saved as complete first");
+                return;
+            }
+            
+            FormReportViewer form = new FormReportViewer(assignment.Name);
             form.ShowDialog();
         }
 
@@ -5720,21 +5827,19 @@ where s.number = @sample_number
         private void btnPrepAnalRemoveResult_Click(object sender, EventArgs e)
         {
             if (gridPrepAnalResults.SelectedRows.Count < 1)
+            {
+                MessageBox.Show("You must select one or more results first");
                 return;
+            }
             
             DialogResult r = MessageBox.Show("Are you sure you want to delete " + gridPrepAnalResults.SelectedRows.Count + " results from this analysis?", "Warning", MessageBoxButtons.YesNo);
             if (r == DialogResult.No)                
                 return;
 
-            gridPrepAnalResults.DataSource = null;
-
             foreach (DataGridViewRow row in gridPrepAnalResults.SelectedRows)
-            {
-                if (row.Cells["Id"].Value != null)
-                {
-                    Guid id = Utils.MakeGuid(row.Cells["Id"].Value);
-                    analysis.Results.RemoveAll(x => x.Id == id);
-                }
+            {                
+                Guid id = Utils.MakeGuid(row.Cells["Id"].Value);
+                analysis.Results.RemoveAll(x => x.Id == id);            
             }
 
             using (SqlConnection conn = DB.OpenConnection())
@@ -5756,8 +5861,6 @@ where s.number = @sample_number
             DialogResult res = MessageBox.Show("Are you sure you want to discard current changes?", "Confirmation", MessageBoxButtons.YesNo);
             if (res != DialogResult.Yes)
                 return;
-
-            gridPrepAnalResults.DataSource = null;
 
             using (SqlConnection conn = DB.OpenConnection())
             {
@@ -6144,8 +6247,11 @@ where s.number = @sample_number
             }
 
             Guid lid = Guid.Parse(gridSysLab.SelectedRows[0].Cells["id"].Value.ToString());
+            List<Guid> existingPrepMeths = new List<Guid>();
+            foreach (DataGridViewRow row in gridSysLabPrepMeth.Rows)
+                existingPrepMeths.Add(Utils.MakeGuid(row.Cells["id"].Value));
 
-            FormLabXPrepMeth form = new FormLabXPrepMeth(lid);
+            FormLabXPrepMeth form = new FormLabXPrepMeth(lid, existingPrepMeths);
             if (form.ShowDialog() != DialogResult.OK)
                 return;
 
@@ -6199,11 +6305,15 @@ where s.number = @sample_number
                     Guid pmid = Utils.MakeGuid(row.Cells["id"].Value);
 
                     cmd.CommandText = "delete from laboratory_x_analysis_method where laboratory_id = @lab_id and preparation_method_id = @pm_id";
+                    cmd.Parameters.Clear();
                     cmd.Parameters.AddWithValue("@lab_id", lid);
                     cmd.Parameters.AddWithValue("@pm_id", pmid);
                     cmd.ExecuteNonQuery();
 
                     cmd.CommandText = "delete from laboratory_x_preparation_method where laboratory_id = @lab_id and preparation_method_id = @pm_id";
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.AddWithValue("@lab_id", lid);
+                    cmd.Parameters.AddWithValue("@pm_id", pmid);
                     cmd.ExecuteNonQuery();
                 }
 
@@ -6226,13 +6336,11 @@ where s.number = @sample_number
 
         private void btnSysLabAnalMethAdd_Click(object sender, EventArgs e)
         {
-            if (gridSysLab.SelectedRows.Count < 1)
+            if (gridSysLab.SelectedRows.Count != 1)
             {
                 MessageBox.Show("You must select a single laboratory first");
                 return;
-            }
-
-            Guid lid = Utils.MakeGuid(gridSysLab.SelectedRows[0].Cells["id"].Value);
+            }            
 
             if (gridSysLabPrepMeth.SelectedRows.Count != 1)
             {
@@ -6240,9 +6348,14 @@ where s.number = @sample_number
                 return;
             }
 
+            Guid lid = Utils.MakeGuid(gridSysLab.SelectedRows[0].Cells["id"].Value);
             Guid pmid = Utils.MakeGuid(gridSysLabPrepMeth.SelectedRows[0].Cells["id"].Value);
 
-            FormLabXAnalMeth form = new FormLabXAnalMeth(lid, pmid);
+            List<Guid> existingAnalMeths = new List<Guid>();
+            foreach (DataGridViewRow row in gridSysLabAnalMeth.Rows)
+                existingAnalMeths.Add(Utils.MakeGuid(row.Cells["id"].Value));
+
+            FormLabXAnalMeth form = new FormLabXAnalMeth(lid, pmid, existingAnalMeths);
             if (form.ShowDialog() != DialogResult.OK)
                 return;
 
@@ -6254,13 +6367,11 @@ where s.number = @sample_number
 
         private void btnSysLabAnalMethRemove_Click(object sender, EventArgs e)
         {
-            if (gridSysLab.SelectedRows.Count < 1)
+            if (gridSysLab.SelectedRows.Count != 1)
             {
                 MessageBox.Show("You must select a single laboratory first");
                 return;
-            }
-
-            Guid lid = Utils.MakeGuid(gridSysLab.SelectedRows[0].Cells["id"].Value);
+            }            
 
             if (gridSysLabPrepMeth.SelectedRows.Count != 1)
             {
@@ -6268,6 +6379,7 @@ where s.number = @sample_number
                 return;
             }
 
+            Guid lid = Utils.MakeGuid(gridSysLab.SelectedRows[0].Cells["id"].Value);
             Guid pmid = Utils.MakeGuid(gridSysLabPrepMeth.SelectedRows[0].Cells["id"].Value);
 
             using (SqlConnection conn = DB.OpenConnection())
@@ -6356,6 +6468,128 @@ where s.number = @sample_number
 
             string user = gridSysUsers.SelectedRows[0].Cells["name"].Value.ToString();
             SetStatusMessage("Removed analysis methods for user " + user);
+        }
+
+        private void btnPrepAnalDelAnal_Click(object sender, EventArgs e)
+        {
+            if(treePrepAnal.SelectedNode == null)
+            {
+                MessageBox.Show("You must select an analysis first");
+                return;
+            }            
+
+            if(Utils.IsValidGuid(analysis.AssignmentId))
+            {
+                MessageBox.Show("You can not delete this analysis because it belongs to an order");
+                return;
+            }
+
+            DialogResult r = MessageBox.Show("Are you sure you want to delete analysis " + treePrepAnal.SelectedNode.Text + "?", "Warning", MessageBoxButtons.YesNo);
+            if (r == DialogResult.No)
+                return;
+
+            SqlConnection conn = null;
+            SqlTransaction trans = null;
+
+            try
+            {
+                conn = DB.OpenConnection();
+                trans = conn.BeginTransaction();
+
+                string query = "update analysis_result set instance_status_id = @status where analysis_id = @aid";
+                SqlCommand cmd = new SqlCommand(query, conn, trans);
+                cmd.Parameters.AddWithValue("@aid", analysis.Id);
+                cmd.Parameters.AddWithValue("@status", InstanceStatus.Deleted);
+                cmd.ExecuteNonQuery();
+
+                cmd.CommandText = "update analysis set instance_status_id = @status where id = @aid";
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@aid", analysis.Id);
+                cmd.Parameters.AddWithValue("@status", InstanceStatus.Deleted);
+                cmd.ExecuteNonQuery();
+
+                trans.Commit();
+
+                treePrepAnal.Nodes.Remove(treePrepAnal.SelectedNode);
+            }
+            catch(Exception ex)
+            {
+                trans?.Rollback();
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn?.Close();
+            }
+        }
+
+        private void btnPrepAnalDelPrep_Click(object sender, EventArgs e)
+        {
+            if (treePrepAnal.SelectedNode == null)
+            {
+                MessageBox.Show("You must select a preparation first");
+                return;
+            }
+
+            if (Utils.IsValidGuid(preparation.AssignmentId))
+            {
+                MessageBox.Show("You can not delete this preparation because it belongs to an order");
+                return;
+            }
+
+            DialogResult r = MessageBox.Show("Are you sure you want to delete preparation " + treePrepAnal.SelectedNode.Text + "?", "Warning", MessageBoxButtons.YesNo);
+            if (r == DialogResult.No)
+                return;
+
+            SqlConnection conn = null;
+            SqlTransaction trans = null;
+
+            try
+            {
+                conn = DB.OpenConnection();
+                trans = conn.BeginTransaction();
+
+                TreeNode tnode = treePrepAnal.SelectedNode;
+                SqlCommand cmd = new SqlCommand("", conn, trans);
+
+                foreach (TreeNode tn in tnode.Nodes)
+                {
+                    Guid aid = Guid.Parse(tn.Name);
+                    
+                    cmd.CommandText = "update analysis_result set instance_status_id = @status where analysis_id = @aid";
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.AddWithValue("@aid", aid);
+                    cmd.Parameters.AddWithValue("@status", InstanceStatus.Deleted);
+                    cmd.ExecuteNonQuery();
+
+                    cmd.CommandText = "update analysis set instance_status_id = @status where id = @aid";
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.AddWithValue("@aid", aid);
+                    cmd.Parameters.AddWithValue("@status", InstanceStatus.Deleted);
+                    cmd.ExecuteNonQuery();
+                }
+
+                cmd.CommandText = "update preparation set instance_status_id = @status where id = @pid";
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@pid", preparation.Id);
+                cmd.Parameters.AddWithValue("@status", InstanceStatus.Deleted);
+                cmd.ExecuteNonQuery();
+
+                trans.Commit();
+
+                treePrepAnal.Nodes.Remove(treePrepAnal.SelectedNode);
+            }
+            catch (Exception ex)
+            {
+                trans?.Rollback();
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn?.Close();
+            }
         }
     }    
 }

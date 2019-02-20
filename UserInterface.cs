@@ -331,7 +331,7 @@ namespace DSA_lims
             grid.Columns["description_link"].HeaderText = "Desc.link";
             grid.Columns["destructive"].HeaderText = "Destructive";
             grid.Columns["instance_status_name"].HeaderText = "Status";
-        }        
+        }                
 
         public static void PopulateAnalysisMethods(SqlConnection conn, DataGridView grid)
         {

@@ -33,20 +33,44 @@ namespace DSA_lims
     {
         Guid mLabId = Guid.Empty;
         Guid mPrepMethId = Guid.Empty;
+        List<Guid> mExistingAnalMeths;
 
-        public FormLabXAnalMeth(Guid labId, Guid prepMethId)
+        public FormLabXAnalMeth(Guid labId, Guid prepMethId, List<Guid> existingAnalMeths)
         {
             InitializeComponent();
 
             mLabId = labId;
             mPrepMethId = prepMethId;
+            mExistingAnalMeths = existingAnalMeths;
         }
 
         private void FormLabXAnalMeth_Load(object sender, EventArgs e)
         {
+            var amArr = from item in mExistingAnalMeths select "'" + item + "'";
+            string exceptIds = string.Join(",", amArr);
+
             using (SqlConnection conn = DB.OpenConnection())
             {
-                UI.PopulateAnalysisMethods(conn, gridAnalMeth);
+                string query;
+                if (String.IsNullOrEmpty(exceptIds))                
+                    query = "select * from analysis_method where instance_status_id <= 1";                
+                else                
+                    query = "select * from analysis_method where id not in(" + exceptIds + ") and instance_status_id <= 1";
+
+                gridAnalMeth.DataSource = DB.GetDataTable(conn, null, query, CommandType.Text, new SqlParameter("@lid", mLabId), new SqlParameter("@pmid", mPrepMethId));
+
+                gridAnalMeth.Columns["id"].Visible = false;
+                gridAnalMeth.Columns["comment"].Visible = false;
+                gridAnalMeth.Columns["instance_status_id"].Visible = false;
+                gridAnalMeth.Columns["created_by"].Visible = false;
+                gridAnalMeth.Columns["create_date"].Visible = false;
+                gridAnalMeth.Columns["updated_by"].Visible = false;
+                gridAnalMeth.Columns["update_date"].Visible = false;
+
+                gridAnalMeth.Columns["name"].HeaderText = "Name";
+                gridAnalMeth.Columns["name_short"].HeaderText = "Abbr.";
+                gridAnalMeth.Columns["description_link"].HeaderText = "Desc.link";
+                gridAnalMeth.Columns["specter_reference_regexp"].HeaderText = "Spec.Ref RE";                
             }
         }
 
@@ -66,13 +90,7 @@ namespace DSA_lims
                 conn = DB.OpenConnection();
                 trans = conn.BeginTransaction();
 
-                SqlCommand cmd = new SqlCommand("delete from laboratory_x_analysis_method where laboratory_id = @lab_id and preparation_method_id = @prep_meth_id", conn, trans);
-                cmd.Parameters.AddWithValue("@lab_id", mLabId);
-                cmd.Parameters.AddWithValue("@prep_meth_id", mPrepMethId);
-                cmd.ExecuteNonQuery();
-
-                cmd.CommandText = "insert into laboratory_x_analysis_method values(@laboratory_id, @preparation_method_id, @analysis_method_id)";
-
+                SqlCommand cmd = new SqlCommand("insert into laboratory_x_analysis_method values(@laboratory_id, @preparation_method_id, @analysis_method_id)", conn, trans);
                 foreach (DataGridViewRow row in gridAnalMeth.SelectedRows)
                 {
                     cmd.Parameters.Clear();

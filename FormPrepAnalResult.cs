@@ -55,6 +55,9 @@ namespace DSA_lims
                 cboxSigmaActivity.DataSource = DB.GetSigmaValues(conn, null, false);
                 cboxSigmaMDA.DataSource = DB.GetSigmaValues(conn, null, true);
             }
+
+            cboxSigmaActivity.SelectedValue = 2d;            
+            cboxSigmaMDA.SelectedValue = 1.645d;
         }
 
         public FormPrepAnalResult(Analysis analysis, Guid resultId)
@@ -121,13 +124,13 @@ namespace DSA_lims
                 return;
             }
 
-            if(cboxSigmaActivity.SelectedValue == null)
+            if((double)cboxSigmaActivity.SelectedValue == 0d)
             {
                 MessageBox.Show("Sigma uncertainty is mandatory");
                 return;
             }
 
-            if (cboxSigmaMDA.SelectedValue == null)
+            if ((double)cboxSigmaMDA.SelectedValue == 0d)
             {
                 MessageBox.Show("Sigma MDA is mandatory");
                 return;

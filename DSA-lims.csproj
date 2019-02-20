@@ -171,6 +171,11 @@
     <Compile Include="DBPreparation.cs" />
     <Compile Include="DBPreparationGeometry.cs" />
     <Compile Include="DBSample.cs" />
+    <Compile Include="DSOrderReport.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DSOrderReport.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Environment.cs" />
     <Compile Include="FormAccountXRoles.cs">
       <SubType>Form</SubType>
@@ -533,6 +538,7 @@
     <Compile Include="Logger.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="UserInterface.cs" />
+    <None Include="images\info.png" />
     <Content Include="SqlServerTypes\readme.htm" />
     <Content Include="SqlServerTypes\x64\msvcr120.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -744,6 +750,20 @@
     <Content Include="free3of9.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <EmbeddedResource Include="RPOrderReport.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <None Include="DSOrderReport.xsc">
+      <DependentUpon>DSOrderReport.xsd</DependentUpon>
+    </None>
+    <None Include="DSOrderReport.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DSOrderReport.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="DSOrderReport.xss">
+      <DependentUpon>DSOrderReport.xsd</DependentUpon>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

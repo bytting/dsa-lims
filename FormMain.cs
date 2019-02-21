@@ -6496,15 +6496,16 @@ where s.number = @sample_number
                 conn = DB.OpenConnection();
                 trans = conn.BeginTransaction();
 
-                string query = "delete from analysis_result where analysis_id = @aid";
+                string query = "update analysis_result set instance_status_id = @status where analysis_id = @aid";
                 SqlCommand cmd = new SqlCommand(query, conn, trans);
+                cmd.Parameters.AddWithValue("@status", InstanceStatus.Deleted);
                 cmd.Parameters.AddWithValue("@aid", analysis.Id);
                 cmd.ExecuteNonQuery();
 
                 cmd.CommandText = "update analysis set instance_status_id = @status where id = @aid";
                 cmd.Parameters.Clear();
-                cmd.Parameters.AddWithValue("@aid", analysis.Id);
                 cmd.Parameters.AddWithValue("@status", InstanceStatus.Deleted);
+                cmd.Parameters.AddWithValue("@aid", analysis.Id);                
                 cmd.ExecuteNonQuery();
 
                 trans.Commit();
@@ -6556,9 +6557,10 @@ where s.number = @sample_number
                 {
                     Guid aid = Guid.Parse(tn.Name);
                     
-                    cmd.CommandText = "delete from analysis_result where analysis_id = @aid";
+                    cmd.CommandText = "update analysis_result set instance_status_id = @status where analysis_id = @aid";
                     cmd.Parameters.Clear();
                     cmd.Parameters.AddWithValue("@aid", aid);
+                    cmd.Parameters.AddWithValue("@status", InstanceStatus.Deleted);
                     cmd.ExecuteNonQuery();
 
                     cmd.CommandText = "update analysis set instance_status_id = @status where id = @aid";
@@ -6592,13 +6594,20 @@ where s.number = @sample_number
 
         private void tvOrderContent_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            if (e.Node.Level == 1)
+            btnOrderRemoveSampleFromOrder.Enabled = false;
+
+            if (Roles.HasAccess(Role.LaboratoryAdministrator) && e.Node.Level == 1)            
                 btnOrderRemoveSampleFromOrder.Enabled = true;
-            else btnOrderRemoveSampleFromOrder.Enabled = false;
         }
 
         private void btnOrderRemoveSampleFromOrder_Click(object sender, EventArgs e)
         {
+            if(!Roles.HasAccess(Role.LaboratoryAdministrator))
+            {
+                MessageBox.Show("You don't have permission to remove samples from orders");
+                return;
+            }
+
             if (tvOrderContent.SelectedNode == null)
             {
                 MessageBox.Show("You must select a sample first");
@@ -6636,14 +6645,16 @@ where s.number = @sample_number
                     {
                         Guid aid = Guid.Parse(anode.Name);
                         cmd.CommandText = @"
-delete from analysis_result where id in (
+update analysis_result set instance_status_id = @status where id in (
     select ar.id from analysis_result ar
-        inner join analysis a on a.id = ar.analysis_id and a.assignment_id = @assid
+        inner join analysis a on a.id = ar.analysis_id and a.assignment_id = @assid and a.preparation_id = @pid
     where a.id = @aid
 )";
-                        cmd.Parameters.Clear();
-                        cmd.Parameters.AddWithValue("@assid", assignment.Id);
+                        cmd.Parameters.Clear();                        
                         cmd.Parameters.AddWithValue("@aid", aid);
+                        cmd.Parameters.AddWithValue("@pid", pid);
+                        cmd.Parameters.AddWithValue("@assid", assignment.Id);
+                        cmd.Parameters.AddWithValue("@status", InstanceStatus.Deleted);
                         cmd.ExecuteNonQuery();
 
                         cmd.CommandText = @"
@@ -6675,7 +6686,10 @@ select ast.id from assignment_sample_type ast
                 cmd.Parameters.Clear();
                 cmd.Parameters.AddWithValue("@sid", sid);
                 cmd.Parameters.AddWithValue("@assid", assignment.Id);
-                Guid astId = Guid.Parse(cmd.ExecuteScalar().ToString());
+                object o = cmd.ExecuteScalar();
+                if(!Utils.IsValidGuid(o))                
+                    throw new Exception("btnOrderRemoveSampleFromOrder_Click: No valid Guid found for sample " + sid.ToString() + " in AST");
+                Guid astId = Guid.Parse(o.ToString());
 
                 cmd.CommandText = "delete from sample_x_assignment_sample_type where sample_id = @sid and assignment_sample_type_id = @astid";
                 cmd.Parameters.Clear();
@@ -6693,6 +6707,7 @@ select ast.id from assignment_sample_type ast
                 trans?.Rollback();
                 Common.Log.Error(ex);
                 MessageBox.Show(ex.Message);
+                return;
             }
             finally
             {

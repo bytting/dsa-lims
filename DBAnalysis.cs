@@ -177,8 +177,9 @@ namespace DSA_lims
             Results.Clear();
 
             List<Guid> analResIds = new List<Guid>();
-            using (SqlDataReader reader = DB.GetDataReader(conn, trans, "select id from analysis_result where analysis_id = @id", CommandType.Text,
-                new SqlParameter("@id", analId)))
+            using (SqlDataReader reader = DB.GetDataReader(conn, trans, "select id from analysis_result where analysis_id = @id and instance_status_id <= @instance_status_level", CommandType.Text,
+                new SqlParameter("@id", analId),
+                new SqlParameter("@instance_status_level", InstanceStatus.Active)))
             {
                 while (reader.Read())
                     analResIds.Add(reader.GetGuid("id"));
@@ -278,7 +279,7 @@ namespace DSA_lims
                     storedAnalResIds.Add(reader.GetGuid("id"));
             }
 
-            cmd.CommandText = "delete from analysis_result where id = @id";
+            cmd.CommandText = "update analysis_result set instance_status_id = @status where id = @id";
             cmd.CommandType = CommandType.Text;
             foreach (Guid arId in storedAnalResIds)
             {
@@ -289,7 +290,8 @@ namespace DSA_lims
                         DB.AddAuditMessage(conn, trans, "analysis_result", arId, AuditOperationType.Delete, json, "");
 
                     cmd.Parameters.Clear();
-                    cmd.Parameters.AddWithValue("@id", arId);
+                    cmd.Parameters.AddWithValue("@status", InstanceStatus.Deleted);
+                    cmd.Parameters.AddWithValue("@id", arId);                    
                     cmd.ExecuteNonQuery();
                 }
             }

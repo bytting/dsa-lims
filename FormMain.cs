@@ -3065,7 +3065,106 @@ namespace DSA_lims
 
         private void miOrderRemSampleType_Click(object sender, EventArgs e)
         {
-            // remove sample type from order
+            // remove sample type from order            
+
+            if (!Roles.HasAccess(Role.LaboratoryAdministrator))
+            {
+                MessageBox.Show("You don't have permission to delete sample types from orders");
+                return;
+            }            
+
+            if (treeOrderContent.SelectedNode == null)
+            {
+                MessageBox.Show("You must select a sample type first");
+                return;
+            }
+
+            if (assignment.WorkflowStatusId == WorkflowStatus.Complete)
+            {
+                MessageBox.Show("You can not edit a completed order");
+                return;
+            }
+
+            if (assignment.ApprovedCustomer || assignment.ApprovedLaboratory)
+            {
+                MessageBox.Show("You can not edit an approved order");
+                return;
+            }
+
+            TreeNode tnode = treeOrderContent.SelectedNode;
+            if(tnode.Level != 0)
+            {
+                MessageBox.Show("You must select a top level sample type");
+                return;
+            }
+
+            Guid astId = Guid.Parse(tnode.Name);
+            string query = @"
+select count(*) from sample s
+    inner join sample_x_assignment_sample_type sxast on s.id = sxast.sample_id
+    inner join assignment_sample_type ast on ast.id = sxast.assignment_sample_type_id and ast.id = @astid    
+";
+            SqlConnection conn = null;
+            SqlTransaction trans = null;
+
+            int n;
+            try
+            {
+                conn = DB.OpenConnection();
+                trans = conn.BeginTransaction();
+                                
+                n = (int)DB.GetScalar(conn, trans, query, CommandType.Text, new SqlParameter("@astid", astId));                
+                if (n > 0)
+                {
+                    MessageBox.Show("Can not delete this sample type, it has " + n + " samples connected to it");
+                    return;
+                }
+
+                DialogResult r = MessageBox.Show("Are you sure you want to delete this sample type?", "Warning", MessageBoxButtons.YesNo);
+                if (r == DialogResult.No)
+                    return;
+
+                List<Guid> delApmIds = new List<Guid>();
+                using (SqlDataReader reader = DB.GetDataReader(conn, trans, "select id from assignment_preparation_method where assignment_sample_type_id = @astid", CommandType.Text, new SqlParameter("@astid", astId)))
+                {
+                    while(reader.Read())                    
+                        delApmIds.Add(reader.GetGuid("id"));
+                }
+
+                SqlCommand cmd = new SqlCommand("delete from assignment_analysis_method where assignment_preparation_method_id = @pid", conn, trans);
+                foreach(Guid pid in delApmIds)
+                {
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.AddWithValue("@pid", pid);
+                    cmd.ExecuteNonQuery();
+
+                    cmd.CommandText = "delete from assignment_preparation_method where id = @pid";
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.AddWithValue("@pid", pid);
+                    cmd.ExecuteNonQuery();
+                }
+
+                cmd.CommandText = "delete from assignment_sample_type where id = @astid";
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@astid", astId);
+                cmd.ExecuteNonQuery();
+
+                trans.Commit();
+
+                assignment.LoadFromDB(conn, trans, assignment.Id);
+                PopulateOrder(conn, trans, assignment, true);
+            }
+            catch(Exception ex)
+            {                
+                trans?.Rollback();
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            finally
+            {
+                conn?.Close();
+            }                        
         }
 
         private void miOrderAddPrepMeth_Click(object sender, EventArgs e)
@@ -3108,11 +3207,6 @@ namespace DSA_lims
             }
         }
 
-        private void miOrderRemPrepMeth_Click(object sender, EventArgs e)
-        {
-            // remove preparation method from order
-        }
-
         private void miOrderAddAnalMeth_Click(object sender, EventArgs e)
         {
             // add analysis method to order
@@ -3152,11 +3246,6 @@ namespace DSA_lims
             {
                 PopulateOrderContent(conn, null, assignment);
             }
-        }
-
-        private void miOrderRemAnalMeth_Click(object sender, EventArgs e)
-        {
-            // remove analysis method from order
         }
 
         private void miOrderSave_Click(object sender, EventArgs e)
@@ -4387,25 +4476,11 @@ namespace DSA_lims
             miOrderAddAnalMeth.Enabled = false;
             btnOrderAddAnalMeth.Enabled = false;
 
-            miOrderEditPrepMeth.Enabled = false;
-            btnOrderEditPrepMeth.Enabled = false;
-            miOrderEditAnalMeth.Enabled = false;
-            btnOrderEditAnalMeth.Enabled = false;
-
-            miOrderRemPrepMeth.Enabled = false;
-            btnOrderDelPrepMeth.Enabled = false;
-            miOrderRemAnalMeth.Enabled = false;
-            btnOrderDelAnalMeth.Enabled = false;
-
             switch (e.Node.Level)
             {
                 case 0:
                     miOrderAddPrepMeth.Enabled = true;
                     btnOrderAddPrepMeth.Enabled = true;
-                    miOrderEditPrepMeth.Enabled = true;
-                    btnOrderEditPrepMeth.Enabled = true;
-                    miOrderRemPrepMeth.Enabled = true;
-                    btnOrderDelPrepMeth.Enabled = true;
 
                     orderSampleTypeId = Guid.Parse(e.Node.Name);
                     break;
@@ -4413,10 +4488,6 @@ namespace DSA_lims
                 case 1:                    
                     miOrderAddAnalMeth.Enabled = true;
                     btnOrderAddAnalMeth.Enabled = true;
-                    miOrderEditAnalMeth.Enabled = true;
-                    btnOrderEditAnalMeth.Enabled = true;
-                    miOrderRemAnalMeth.Enabled = true;
-                    btnOrderDelAnalMeth.Enabled = true;
 
                     orderSampleTypeId = Guid.Parse(e.Node.Parent.Name);
                     break;
@@ -6596,7 +6667,7 @@ where s.number = @sample_number
         {
             btnOrderRemoveSampleFromOrder.Enabled = false;
 
-            if (Roles.HasAccess(Role.LaboratoryAdministrator) && e.Node.Level == 1)            
+            if (e.Node.Level == 1 && Roles.HasAccess(Role.LaboratoryAdministrator))
                 btnOrderRemoveSampleFromOrder.Enabled = true;
         }
 
@@ -6712,6 +6783,67 @@ select ast.id from assignment_sample_type ast
             finally
             {
                 conn?.Close();
+            }
+        }
+
+        private void btnOrderEditSampleType_Click(object sender, EventArgs e)
+        {
+            if (!Roles.HasAccess(Role.LaboratoryAdministrator))
+            {
+                MessageBox.Show("You don't have permission to edit sample types from orders");
+                return;
+            }
+
+            if (treeOrderContent.SelectedNode == null)
+            {
+                MessageBox.Show("You must select a sample type first");
+                return;
+            }
+
+            if (assignment.WorkflowStatusId == WorkflowStatus.Complete)
+            {
+                MessageBox.Show("You can not edit a completed order");
+                return;
+            }
+
+            if (assignment.ApprovedCustomer || assignment.ApprovedLaboratory)
+            {
+                MessageBox.Show("You can not edit an approved order");
+                return;
+            }
+
+            TreeNode tnode = treeOrderContent.SelectedNode;
+            if (tnode.Level != 0)
+            {
+                MessageBox.Show("You must select a top level sample type");
+                return;
+            }
+
+            Guid astId = Guid.Parse(tnode.Name);
+            string query = @"
+select count(*) from sample s
+    inner join sample_x_assignment_sample_type sxast on s.id = sxast.sample_id
+    inner join assignment_sample_type ast on ast.id = sxast.assignment_sample_type_id and ast.id = @astid    
+";
+            int n;
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                n = (int)DB.GetScalar(conn, null, query, CommandType.Text, new SqlParameter("@astid", astId));
+            }
+
+            FormSelectAstCount form = new FormSelectAstCount(tnode.Text, n);
+            if (form.ShowDialog() != DialogResult.OK)
+                return;
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                SqlCommand cmd = new SqlCommand("update assignment_sample_type set sample_count = @count where id = @astid", conn);
+                cmd.Parameters.AddWithValue("@count", form.SelectedCount);
+                cmd.Parameters.AddWithValue("@astid", astId);
+                cmd.ExecuteNonQuery();
+
+                assignment.LoadFromDB(conn, null, assignment.Id);
+                PopulateOrder(conn, null, assignment, true);
             }
         }
     }    

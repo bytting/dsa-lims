@@ -459,6 +459,12 @@
     <Compile Include="FormScan.designer.cs">
       <DependentUpon>FormScan.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormSelectAstCount.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSelectAstCount.Designer.cs">
+      <DependentUpon>FormSelectAstCount.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormSelectCustomer.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -698,6 +704,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormScan.resx">
       <DependentUpon>FormScan.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSelectAstCount.resx">
+      <DependentUpon>FormSelectAstCount.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormSelectCustomer.resx">
       <DependentUpon>FormSelectCustomer.cs</DependentUpon>

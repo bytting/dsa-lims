@@ -2911,70 +2911,7 @@ namespace DSA_lims
             // Show attachments
             UI.PopulateAttachments(conn, null, "assignment", a.Id, gridOrderAttachments);
 
-            // Populate assigned tree
-
-            Font fontSample = new Font(tvOrderContent.Font, FontStyle.Bold);
-                
-            tvOrderContent.Nodes.Clear();
-
-            TreeNode root = tvOrderContent.Nodes.Add(a.Name);
-            root.NodeFont = fontSample;
-            
-            using (SqlDataReader reader = DB.GetDataReader(conn, null, "csp_select_sample_headers_for_assignment", CommandType.StoredProcedure, 
-                new SqlParameter("@assignment_id", a.Id)))
-            {
-                while (reader.Read())
-                {
-                    string label = "Sample " + reader.GetString("sample_number") + ", " + reader.GetString("sample_type_name") + " " + reader.GetString("sample_component_name");
-                    TreeNode sNode = root.Nodes.Add(reader.GetString("sample_id"), label);
-                    sNode.NodeFont = fontSample;
-                    if (DB.IsValidField(reader["sample_comment"]))
-                        sNode.ToolTipText = reader.GetString("sample_comment");
-                }
-            }
-
-            foreach(TreeNode tnode in root.Nodes)
-            {
-                Guid sid = Guid.Parse(tnode.Name);
-                using (SqlDataReader reader = DB.GetDataReader(conn, null, "csp_select_preparation_headers_for_sample2", CommandType.StoredProcedure,
-                    new SqlParameter("@sample_id", sid)))
-                {
-                    while (reader.Read())
-                    {
-                        int status = reader.GetInt32("workflow_status_id");
-                        string label = "Preparation " + reader.GetString("preparation_number") + ", " + reader.GetString("preparation_method_name") + ", " + reader.GetString("workflow_status_name");
-                        TreeNode pNode = tnode.Nodes.Add(reader.GetString("preparation_id"), label);
-                        pNode.ForeColor = WorkflowStatus.GetStatusColor(status);
-                        if (DB.IsValidField(reader["preparation_comment"]))
-                            pNode.ToolTipText = reader.GetString("preparation_comment");
-                    }
-                }
-            }
-
-            foreach (TreeNode tnode in root.Nodes)
-            {
-                foreach (TreeNode tn in tnode.Nodes)
-                {
-                    Guid pid = Guid.Parse(tn.Name);
-                    using (SqlDataReader reader = DB.GetDataReader(conn, null, "csp_select_analysis_headers_for_preparation_assignment", CommandType.StoredProcedure, new[] {
-                        new SqlParameter("@preparation_id", pid),
-                        new SqlParameter("@assignment_id", a.Id)
-                    }))
-                    {
-                        while (reader.Read())
-                        {
-                            int status = reader.GetInt32("workflow_status_id");
-                            string label = "Analysis " + reader.GetString("analysis_number") + ", " + reader.GetString("analysis_method_name") + ", " + reader.GetString("workflow_status_name");
-                            TreeNode aNode = tn.Nodes.Add(reader.GetString("analysis_id"), label);
-                            aNode.ForeColor = WorkflowStatus.GetStatusColor(status);
-                            if (DB.IsValidField(reader["analysis_comment"]))
-                                aNode.ToolTipText = reader.GetString("analysis_comment");
-                        }
-                    }
-                }
-            }
-
-            tvOrderContent.ExpandAll();
+            PopulateOrderOverview(conn, trans, a);            
 
             if(clearDirty)
             {
@@ -3036,6 +2973,75 @@ namespace DSA_lims
             }
 
             treeOrderContent.ExpandAll();
+        }
+
+        private void PopulateOrderOverview(SqlConnection conn, SqlTransaction trans, Assignment a)
+        {
+            // Populate order overview
+
+            Font fontSample = new Font(tvOrderContent.Font, FontStyle.Bold);
+
+            tvOrderContent.Nodes.Clear();
+
+            TreeNode root = tvOrderContent.Nodes.Add(a.Name);
+            root.NodeFont = fontSample;
+
+            using (SqlDataReader reader = DB.GetDataReader(conn, null, "csp_select_sample_headers_for_assignment", CommandType.StoredProcedure,
+                new SqlParameter("@assignment_id", a.Id)))
+            {
+                while (reader.Read())
+                {
+                    string label = "Sample " + reader.GetString("sample_number") + ", " + reader.GetString("sample_type_name") + " " + reader.GetString("sample_component_name");
+                    TreeNode sNode = root.Nodes.Add(reader.GetString("sample_id"), label);
+                    sNode.NodeFont = fontSample;
+                    if (DB.IsValidField(reader["sample_comment"]))
+                        sNode.ToolTipText = reader.GetString("sample_comment");
+                }
+            }
+
+            foreach (TreeNode tnode in root.Nodes)
+            {
+                Guid sid = Guid.Parse(tnode.Name);
+                using (SqlDataReader reader = DB.GetDataReader(conn, null, "csp_select_preparation_headers_for_sample_assignment", CommandType.StoredProcedure,
+                    new SqlParameter("@sample_id", sid), 
+                    new SqlParameter("@assignment_id", a.Id)))
+                {
+                    while (reader.Read())
+                    {
+                        int status = reader.GetInt32("workflow_status_id");
+                        string label = "Preparation " + reader.GetString("preparation_number") + ", " + reader.GetString("preparation_method_name") + ", " + reader.GetString("workflow_status_name");
+                        TreeNode pNode = tnode.Nodes.Add(reader.GetString("preparation_id"), label);
+                        pNode.ForeColor = WorkflowStatus.GetStatusColor(status);
+                        if (DB.IsValidField(reader["preparation_comment"]))
+                            pNode.ToolTipText = reader.GetString("preparation_comment");
+                    }
+                }
+            }
+
+            foreach (TreeNode tnode in root.Nodes)
+            {
+                foreach (TreeNode tn in tnode.Nodes)
+                {
+                    Guid pid = Guid.Parse(tn.Name);
+                    using (SqlDataReader reader = DB.GetDataReader(conn, null, "csp_select_analysis_headers_for_preparation_assignment", CommandType.StoredProcedure, new[] {
+                        new SqlParameter("@preparation_id", pid),
+                        new SqlParameter("@assignment_id", a.Id)
+                    }))
+                    {
+                        while (reader.Read())
+                        {
+                            int status = reader.GetInt32("workflow_status_id");
+                            string label = "Analysis " + reader.GetString("analysis_number") + ", " + reader.GetString("analysis_method_name") + ", " + reader.GetString("workflow_status_name");
+                            TreeNode aNode = tn.Nodes.Add(reader.GetString("analysis_id"), label);
+                            aNode.ForeColor = WorkflowStatus.GetStatusColor(status);
+                            if (DB.IsValidField(reader["analysis_comment"]))
+                                aNode.ToolTipText = reader.GetString("analysis_comment");
+                        }
+                    }
+                }
+            }
+
+            tvOrderContent.ExpandAll();
         }
 
         private void miOrderAddSampleType_Click(object sender, EventArgs e)
@@ -3318,6 +3324,36 @@ select count(*) from sample s
                 return;
             }
 
+            if (cbOrderApprovedLaboratory.Checked)
+            {
+                if (assignment.SampleTypes.Count == 0)
+                {
+                    MessageBox.Show("Can not approve an empty order");
+                    return;
+                }
+                else
+                {
+                    bool found = false;
+                    foreach (AssignmentSampleType ast in assignment.SampleTypes)
+                    {
+                        if (ast.PreparationMethods.Count > 0)
+                            found = true;
+
+                        foreach (AssignmentPreparationMethod apm in ast.PreparationMethods)
+                        {
+                            if (apm.AnalysisMethods.Count > 0)
+                                found = true;
+                        }
+                    }
+
+                    if (!found)
+                    {
+                        MessageBox.Show("Can not approve an order without any preparation or analysis methods");
+                        return;
+                    }
+                }
+            }
+
             SqlConnection conn = null;
             SqlTransaction trans = null;
 
@@ -3334,6 +3370,7 @@ select count(*) from sample s
                         return;
                     }
 
+                    // Check that the order is full
                     int nCurrSamples, nCurrPreparations, nCurrAnalyses;
                     DB.GetOrderCurrentInventory(conn, trans, assignment.Id, out nCurrSamples, out nCurrPreparations, out nCurrAnalyses);
 
@@ -3355,6 +3392,23 @@ select count(*) from sample s
                     if (nCurrAnalyses < nReqAnalyses)
                     {
                         MessageBox.Show("Can not set this order to complete. Connected analyses " + nCurrAnalyses + " of " + nReqAnalyses);
+                        return;
+                    }
+                    
+                    // Check that everything is complete
+                    string query = "select count(*) from preparation where assignment_id = @assid and workflow_status_id < 2";
+                    int np = (int)DB.GetScalar(conn, trans, query, CommandType.Text, new SqlParameter("@assid", assignment.Id));
+                    if(np > 0)
+                    {
+                        MessageBox.Show("Can not set this order to complete. One or more preparations are not completed or rejected");
+                        return;
+                    }
+
+                    query = "select count(*) from analysis where assignment_id = @assid and workflow_status_id < 2";
+                    np = (int)DB.GetScalar(conn, trans, query, CommandType.Text, new SqlParameter("@assid", assignment.Id));
+                    if (np > 0)
+                    {
+                        MessageBox.Show("Can not set this order to complete. One or more analyses are not completed or rejected");
                         return;
                     }
                 }
@@ -4976,8 +5030,21 @@ where s.number = @sample_number
                 return;
             }
             
-            FormReportViewer form = new FormReportViewer(assignment.Name);
+            FormReportViewer form = new FormReportViewer(assignment);
             form.ShowDialog();
+
+            if (form.HasNewVersion)
+            {
+                using (SqlConnection conn = DB.OpenConnection())
+                {
+                    string attachmentName = "Report-" + assignment.Name + "-" + assignment.AnalysisReportVersion;
+                    DB.AddAttachment(conn, null, "assignment", assignment.Id, attachmentName, ".pdf", form.ReportData);
+
+                    UI.PopulateAttachments(conn, null, "assignment", assignment.Id, gridOrderAttachments);
+
+                    SetStatusMessage("Added order attachment: " + attachmentName);
+                }
+            }            
         }
 
         private void layoutPrepAnalAnal_Resize(object sender, EventArgs e)
@@ -5239,6 +5306,8 @@ where s.number = @sample_number
                 DB.AddAttachment(conn, null, "sample", sample.Id, form.DocumentName, ".pdf", form.PdfData);
 
                 UI.PopulateAttachments(conn, null, "sample", sample.Id, gridSampleAttachments);
+
+                SetStatusMessage("Added sample attachment: " + form.DocumentName);
             }
         }        
 
@@ -5253,6 +5322,8 @@ where s.number = @sample_number
                 DB.AddAttachment(conn, null, "assignment", assignment.Id, form.DocumentName, ".pdf", form.PdfData);
 
                 UI.PopulateAttachments(conn, null, "assignment", assignment.Id, gridOrderAttachments);
+
+                SetStatusMessage("Added order attachment: " + form.DocumentName);
             }
         }
 
@@ -5269,6 +5340,8 @@ where s.number = @sample_number
                 DB.AddAttachment(conn, null, "preparation", prepId, form.DocumentName, ".pdf", form.PdfData);
 
                 UI.PopulateAttachments(conn, null, "preparation", prepId, gridPrepAnalPrepAttachments);
+
+                SetStatusMessage("Added preparation attachment: " + form.DocumentName);
             }
         }
 
@@ -5285,6 +5358,8 @@ where s.number = @sample_number
                 DB.AddAttachment(conn, null, "analysis", analId, form.DocumentName, ".pdf", form.PdfData);
 
                 UI.PopulateAttachments(conn, null, "analysis", analId, gridPrepAnalAnalAttachments);
+
+                SetStatusMessage("Added analysis attachment: " + form.DocumentName);
             }
         }
 
@@ -5307,6 +5382,8 @@ where s.number = @sample_number
                 DB.AddAttachment(conn, null, "project_sub", psid, form.DocumentName, ".pdf", form.PdfData);
 
                 UI.PopulateAttachments(conn, null, "project_sub", psid, gridProjectAttachments);
+
+                SetStatusMessage("Added project attachment: " + form.DocumentName);
             }
         }
 
@@ -5400,6 +5477,8 @@ where s.number = @sample_number
                 DB.AddAttachment(conn, null, "sample", sample.Id, fileName, fileExt, content);
 
                 UI.PopulateAttachments(conn, null, "sample", sample.Id, gridSampleAttachments);
+
+                SetStatusMessage("Added sample attachment: " + fileName);
             }
         }
 
@@ -5419,6 +5498,8 @@ where s.number = @sample_number
                 DB.AddAttachment(conn, null, "assignment", assignment.Id, fileName, fileExt, content);
 
                 UI.PopulateAttachments(conn, null, "assignment", assignment.Id, gridOrderAttachments);
+
+                SetStatusMessage("Added order attachment: " + fileName);
             }
         }
 
@@ -5446,6 +5527,8 @@ where s.number = @sample_number
                 DB.AddAttachment(conn, null, "project_sub", pid, fileName, fileExt, content);
 
                 UI.PopulateAttachments(conn, null, "project_sub", pid, gridProjectAttachments);
+
+                SetStatusMessage("Added project attachment: " + fileName);
             }
         }
 
@@ -5479,6 +5562,8 @@ where s.number = @sample_number
                 DB.AddAttachment(conn, null, "preparation", pid, fileName, fileExt, content);
 
                 UI.PopulateAttachments(conn, null, "preparation", pid, gridPrepAnalPrepAttachments);
+
+                SetStatusMessage("Added preparation attachment: " + fileName);
             }
         }
 
@@ -5512,6 +5597,8 @@ where s.number = @sample_number
                 DB.AddAttachment(conn, null, "analysis", aid, fileName, fileExt, content);
 
                 UI.PopulateAttachments(conn, null, "analysis", aid, gridPrepAnalAnalAttachments);
+
+                SetStatusMessage("Added analysis attachment: " + fileName);
             }
         }
 
@@ -6845,6 +6932,20 @@ select count(*) from sample s
                 assignment.LoadFromDB(conn, null, assignment.Id);
                 PopulateOrder(conn, null, assignment, true);
             }
+        }
+
+        private void btnProjectSubPrint_Click(object sender, EventArgs e)
+        {
+            if(gridProjectSub.SelectedRows.Count < 1)
+            {
+                MessageBox.Show("You must select a sub project first");
+                return;
+            }
+
+            Guid pid = Utils.MakeGuid(gridProjectSub.SelectedRows[0].Cells["id"].Value);
+
+            FormPrintProjectLabel form = new FormPrintProjectLabel(Common.Settings, pid);
+            form.ShowDialog();
         }
     }    
 }

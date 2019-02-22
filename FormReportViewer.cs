@@ -22,6 +22,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -31,34 +32,64 @@ using System.Windows.Forms;
 namespace DSA_lims
 {
     public partial class FormReportViewer : Form
-    {
-        string mOrderName;
+    {        
+        byte[] mContent = null;
+        bool mHasNewVersion;
+        Assignment mAssignment = null;
 
-        public FormReportViewer(string orderName)
+        public byte[] ReportData { get { return mContent; } }
+
+        public bool HasNewVersion { get { return mHasNewVersion; } }
+
+        public FormReportViewer(Assignment assignment)
         {
             InitializeComponent();
 
-            mOrderName = orderName;
+            mAssignment = assignment;
+            mHasNewVersion = false;
         }
 
         private void FormReportViewer_Load(object sender, EventArgs e)
         {            
-            this.DataTable1TableAdapter.Connection.ConnectionString = DB.ConnectionString;
-            this.DataTable1TableAdapter.Fill(this.DSOrderReport.DataTable1, mOrderName);
+            DataTable1TableAdapter.Connection.ConnectionString = DB.ConnectionString;
+            DataTable1TableAdapter.Fill(DSOrderReport.DataTable1, mAssignment.Name);
 
             reportViewer.RefreshReport();
-        }
+        }        
 
-        private void btnCancel_Click(object sender, EventArgs e)
-        {
-            DialogResult = DialogResult.Cancel;
-            Close();
-        }
-
-        private void btnOk_Click(object sender, EventArgs e)
+        private void btnClose_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.OK;
             Close();
+        }
+
+        private void btnCreateVersion_Click(object sender, EventArgs e)
+        {
+            int newVersion = mAssignment.AnalysisReportVersion + 1;
+
+            if (mAssignment.AnalysisReportVersion > 0)
+            {
+                FormReportAuditComment form = new FormReportAuditComment();
+                if (form.ShowDialog() != DialogResult.OK)
+                    return;
+
+                mAssignment.AuditComment += "v." + newVersion + ": " + form.SelectedComment + Environment.NewLine;
+            }
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                mAssignment.AnalysisReportVersion = newVersion;
+                mAssignment.Dirty = true;
+                mAssignment.StoreToDB(conn, null);
+            }
+
+            DataTable1TableAdapter.Fill(DSOrderReport.DataTable1, mAssignment.Name);
+            reportViewer.RefreshReport();
+
+            mContent = reportViewer.LocalReport.Render("PDF", "");
+
+            mHasNewVersion = true;
+            btnCreateVersion.Enabled = false;
         }
     }
 }

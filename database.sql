@@ -2615,8 +2615,9 @@ as
 	order by p.number
 go
 
-create proc csp_select_preparation_headers_for_sample2
-	@sample_id uniqueidentifier
+create proc csp_select_preparation_headers_for_sample_assignment
+	@sample_id uniqueidentifier,
+	@assignment_id uniqueidentifier
 as
 	select
 		p.id as 'preparation_id',
@@ -2628,7 +2629,7 @@ as
 	from preparation p
 		inner join preparation_method pm on p.preparation_method_id = pm.id
 		inner join workflow_status ws on p.workflow_status_id = ws.id
-	where p.sample_id = @sample_id and p.instance_status_id = 1
+	where p.sample_id = @sample_id and p.assignment_id = @assignment_id and p.instance_status_id = 1
 	order by p.number
 go
 

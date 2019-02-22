@@ -369,6 +369,12 @@
     <Compile Include="FormPrintPrepLabel.Designer.cs">
       <DependentUpon>FormPrintPrepLabel.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormPrintProjectLabel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormPrintProjectLabel.Designer.cs">
+      <DependentUpon>FormPrintProjectLabel.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormPrintSampleLabel.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -386,6 +392,12 @@
     </Compile>
     <Compile Include="FormProjectSub.Designer.cs">
       <DependentUpon>FormProjectSub.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormReportAuditComment.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormReportAuditComment.Designer.cs">
+      <DependentUpon>FormReportAuditComment.cs</DependentUpon>
     </Compile>
     <Compile Include="FormReportViewer.cs">
       <SubType>Form</SubType>
@@ -660,6 +672,9 @@
     <EmbeddedResource Include="FormPrintPrepLabel.resx">
       <DependentUpon>FormPrintPrepLabel.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormPrintProjectLabel.resx">
+      <DependentUpon>FormPrintProjectLabel.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormPrintSampleLabel.resx">
       <DependentUpon>FormPrintSampleLabel.cs</DependentUpon>
     </EmbeddedResource>
@@ -668,6 +683,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormProjectSub.resx">
       <DependentUpon>FormProjectSub.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormReportAuditComment.resx">
+      <DependentUpon>FormReportAuditComment.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormReportViewer.resx">
       <DependentUpon>FormReportViewer.cs</DependentUpon>

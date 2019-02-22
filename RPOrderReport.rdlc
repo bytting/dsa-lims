@@ -207,27 +207,27 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>1.52585cm</Width>
+              <Width>1.47534cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.44635cm</Width>
+              <Width>1.4223cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.21997cm</Width>
+              <Width>1.30175cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.30938cm</Width>
+              <Width>1.39116cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.65044cm</Width>
+              <Width>1.44118cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.83313cm</Width>
+              <Width>0.83554cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
             <TablixRow>
-              <Height>0.6cm</Height>
+              <Height>0.61764cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -430,7 +430,7 @@
               </TablixCells>
             </TablixRow>
             <TablixRow>
-              <Height>0.6cm</Height>
+              <Height>0.61764cm</Height>
               <TablixCells>
                 <TablixCell>
                   <CellContents>
@@ -644,7 +644,7 @@
           <TablixMembers>
             <TablixMember>
               <TablixHeader>
-                <Size>1.42885cm</Size>
+                <Size>1.51063cm</Size>
                 <CellContents>
                   <Textbox Name="Textbox19">
                     <CanGrow>true</CanGrow>
@@ -680,7 +680,7 @@
               <TablixMembers>
                 <TablixMember>
                   <TablixHeader>
-                    <Size>2.60101cm</Size>
+                    <Size>2.35905cm</Size>
                     <CellContents>
                       <Textbox Name="Textbox21">
                         <CanGrow>true</CanGrow>
@@ -716,7 +716,7 @@
                   <TablixMembers>
                     <TablixMember>
                       <TablixHeader>
-                        <Size>2.95034cm</Size>
+                        <Size>2.6899cm</Size>
                         <CellContents>
                           <Textbox Name="Textbox23">
                             <CanGrow>true</CanGrow>
@@ -752,7 +752,7 @@
                       <TablixMembers>
                         <TablixMember>
                           <TablixHeader>
-                            <Size>1.75416cm</Size>
+                            <Size>2.17327cm</Size>
                             <CellContents>
                               <Textbox Name="Textbox25">
                                 <CanGrow>true</CanGrow>
@@ -788,7 +788,7 @@
                           <TablixMembers>
                             <TablixMember>
                               <TablixHeader>
-                                <Size>1.56551cm</Size>
+                                <Size>1.803cm</Size>
                                 <CellContents>
                                   <Textbox Name="Textbox40">
                                     <CanGrow>true</CanGrow>
@@ -845,7 +845,7 @@
                 </SortExpression>
               </SortExpressions>
               <TablixHeader>
-                <Size>1.42885cm</Size>
+                <Size>1.51063cm</Size>
                 <CellContents>
                   <Textbox Name="number11">
                     <CanGrow>true</CanGrow>
@@ -892,7 +892,7 @@
                     </SortExpression>
                   </SortExpressions>
                   <TablixHeader>
-                    <Size>2.60101cm</Size>
+                    <Size>2.35905cm</Size>
                     <CellContents>
                       <Textbox Name="external_id1">
                         <CanGrow>true</CanGrow>
@@ -937,7 +937,7 @@
                         </SortExpression>
                       </SortExpressions>
                       <TablixHeader>
-                        <Size>2.95034cm</Size>
+                        <Size>2.6899cm</Size>
                         <CellContents>
                           <Textbox Name="Stype1">
                             <CanGrow>true</CanGrow>
@@ -982,7 +982,7 @@
                             </SortExpression>
                           </SortExpressions>
                           <TablixHeader>
-                            <Size>1.75416cm</Size>
+                            <Size>2.17327cm</Size>
                             <CellContents>
                               <Textbox Name="Ameth1">
                                 <CanGrow>true</CanGrow>
@@ -1027,7 +1027,7 @@
                                 </SortExpression>
                               </SortExpressions>
                               <TablixHeader>
-                                <Size>1.56551cm</Size>
+                                <Size>1.803cm</Size>
                                 <CellContents>
                                   <Textbox Name="reference_date2">
                                     <CanGrow>true</CanGrow>
@@ -1078,8 +1078,8 @@
         <DataSetName>DataSet1</DataSetName>
         <Top>23.67616cm</Top>
         <Left>0.30996cm</Left>
-        <Height>1.2cm</Height>
-        <Width>18.28499cm</Width>
+        <Height>1.23528cm</Height>
+        <Width>18.40312cm</Width>
         <ZIndex>6</ZIndex>
         <Style>
           <Border>
@@ -1369,7 +1369,7 @@
         <Top>28.43096cm</Top>
         <Left>0.30556cm</Left>
         <Height>1.47312cm</Height>
-        <Width>18.32307cm</Width>
+        <Width>18.40751cm</Width>
         <ZIndex>15</ZIndex>
         <Style>
           <Border>
@@ -1464,10 +1464,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Lab</rd:DefaultName>
-        <Top>16.48204cm</Top>
+        <Top>16.45558cm</Top>
         <Left>4.80693cm</Left>
         <Height>0.6cm</Height>
-        <Width>12.43952cm</Width>
+        <Width>13.90615cm</Width>
         <ZIndex>18</ZIndex>
         <Style>
           <Border>
@@ -1496,10 +1496,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Expr1</rd:DefaultName>
-        <Top>19.85961cm</Top>
+        <Top>19.83315cm</Top>
         <Left>4.80693cm</Left>
         <Height>0.6cm</Height>
-        <Width>12.43952cm</Width>
+        <Width>13.90615cm</Width>
         <ZIndex>19</ZIndex>
         <Style>
           <Border>
@@ -1627,10 +1627,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>customer_company_email</rd:DefaultName>
-        <Top>10.22738cm</Top>
+        <Top>10.20092cm</Top>
         <Left>4.80945cm</Left>
         <Height>0.6cm</Height>
-        <Width>12.43953cm</Width>
+        <Width>13.90363cm</Width>
         <ZIndex>23</ZIndex>
         <Style>
           <Border>
@@ -1662,7 +1662,7 @@
         <Top>8.6746cm</Top>
         <Left>4.80945cm</Left>
         <Height>0.6cm</Height>
-        <Width>12.43953cm</Width>
+        <Width>13.90363cm</Width>
         <ZIndex>24</ZIndex>
         <Style>
           <Border>
@@ -1691,10 +1691,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>customer_company_phone</rd:DefaultName>
-        <Top>11.00377cm</Top>
+        <Top>10.97731cm</Top>
         <Left>4.80945cm</Left>
         <Height>0.6cm</Height>
-        <Width>12.43953cm</Width>
+        <Width>13.90363cm</Width>
         <ZIndex>25</ZIndex>
         <Style>
           <Border>
@@ -1726,7 +1726,7 @@
         <Top>9.45099cm</Top>
         <Left>4.80945cm</Left>
         <Height>0.6cm</Height>
-        <Width>12.43953cm</Width>
+        <Width>13.90363cm</Width>
         <ZIndex>26</ZIndex>
         <Style>
           <Border>
@@ -1755,10 +1755,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>customer_contact_name</rd:DefaultName>
-        <Top>12.05217cm</Top>
+        <Top>12.02571cm</Top>
         <Left>4.80945cm</Left>
         <Height>0.6cm</Height>
-        <Width>12.43952cm</Width>
+        <Width>13.90362cm</Width>
         <ZIndex>27</ZIndex>
         <Style>
           <Border>
@@ -1787,10 +1787,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>customer_contact_email</rd:DefaultName>
-        <Top>12.82856cm</Top>
+        <Top>12.8021cm</Top>
         <Left>4.80945cm</Left>
         <Height>0.6cm</Height>
-        <Width>12.43952cm</Width>
+        <Width>13.90362cm</Width>
         <ZIndex>28</ZIndex>
         <Style>
           <Border>
@@ -1819,10 +1819,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>customer_contact_phone</rd:DefaultName>
-        <Top>13.60495cm</Top>
+        <Top>13.57849cm</Top>
         <Left>4.80945cm</Left>
         <Height>0.6cm</Height>
-        <Width>12.43952cm</Width>
+        <Width>13.90362cm</Width>
         <ZIndex>29</ZIndex>
         <Style>
           <Border>
@@ -1851,10 +1851,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>customer_contact_address</rd:DefaultName>
-        <Top>14.38134cm</Top>
+        <Top>14.35488cm</Top>
         <Left>4.80945cm</Left>
         <Height>0.6cm</Height>
-        <Width>12.43952cm</Width>
+        <Width>13.90362cm</Width>
         <ZIndex>30</ZIndex>
         <Style>
           <Border>
@@ -1907,7 +1907,7 @@
               <TextRun>
                 <Value>Måleusikkerheten er angitt med en dekningsfaktor som tilsvarer et dekningsnivå på ca. 95.5% (tilsvarer k = 2).</Value>
                 <Style>
-                  <FontSize>9pt</FontSize>
+                  <FontSize>8pt</FontSize>
                 </Style>
               </TextRun>
             </TextRuns>
@@ -1918,7 +1918,7 @@
               <TextRun>
                 <Value>Deteksjonsgrenser er angitt med en dekningsfaktor som tilsvarer et dekningsnivå på ca. 95% (tilsvarer k = 1.645).</Value>
                 <Style>
-                  <FontSize>9pt</FontSize>
+                  <FontSize>8pt</FontSize>
                 </Style>
               </TextRun>
             </TextRuns>
@@ -1929,7 +1929,7 @@
               <TextRun>
                 <Value>Resultater med en kombiner usikkerhet høyere enn 30% (K =1) rapporteres ikke.</Value>
                 <Style>
-                  <FontSize>9pt</FontSize>
+                  <FontSize>8pt</FontSize>
                 </Style>
               </TextRun>
             </TextRuns>
@@ -1940,7 +1940,7 @@
               <TextRun>
                 <Value>Deteksjonsgrenser (MDA) er for HPGe analyser beregnet i henhold til ISO 119292:2010 og Curie for NaI analyser. </Value>
                 <Style>
-                  <FontSize>9pt</FontSize>
+                  <FontSize>8pt</FontSize>
                 </Style>
               </TextRun>
             </TextRuns>
@@ -1951,7 +1951,7 @@
               <TextRun>
                 <Value>A betyr at analysen er akkreditert, og G betyr godkjent, men ikke akkreditert. </Value>
                 <Style>
-                  <FontSize>9pt</FontSize>
+                  <FontSize>8pt</FontSize>
                 </Style>
               </TextRun>
             </TextRuns>
@@ -1962,7 +1962,7 @@
         <Top>25.05255cm</Top>
         <Left>0.30556cm</Left>
         <Height>2.24868cm</Height>
-        <Width>18.28497cm</Width>
+        <Width>18.40751cm</Width>
         <ZIndex>32</ZIndex>
         <Style>
           <Border>
@@ -1992,7 +1992,7 @@
         <Top>31.93312cm</Top>
         <Left>9.74178cm</Left>
         <Height>0.6cm</Height>
-        <Width>8.84875cm</Width>
+        <Width>8.97129cm</Width>
         <ZIndex>33</ZIndex>
         <Style>
           <Border>
@@ -2072,7 +2072,7 @@
         <Top>32.70951cm</Top>
         <Left>5.24198cm</Left>
         <Height>0cm</Height>
-        <Width>13.34855cm</Width>
+        <Width>13.47109cm</Width>
         <ZIndex>36</ZIndex>
         <Style>
           <Border>
@@ -2147,7 +2147,7 @@
         <Top>30.85686cm</Top>
         <Left>0.30556cm</Left>
         <Height>0.93515cm</Height>
-        <Width>18.32307cm</Width>
+        <Width>18.40751cm</Width>
         <ZIndex>39</ZIndex>
         <Style>
           <Border>
@@ -2275,10 +2275,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>address</rd:DefaultName>
-        <Top>17.25843cm</Top>
+        <Top>17.23197cm</Top>
         <Left>4.80693cm</Left>
         <Height>0.6cm</Height>
-        <Width>12.43952cm</Width>
+        <Width>13.90615cm</Width>
         <ZIndex>43</ZIndex>
         <Style>
           <Border>
@@ -2307,10 +2307,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>LabMail</rd:DefaultName>
-        <Top>18.03482cm</Top>
+        <Top>18.00836cm</Top>
         <Left>4.80693cm</Left>
         <Height>0.6cm</Height>
-        <Width>12.43952cm</Width>
+        <Width>13.90615cm</Width>
         <ZIndex>44</ZIndex>
         <Style>
           <Border>
@@ -2339,10 +2339,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>LabPhone</rd:DefaultName>
-        <Top>18.81121cm</Top>
+        <Top>18.78475cm</Top>
         <Left>4.80693cm</Left>
         <Height>0.6cm</Height>
-        <Width>12.43952cm</Width>
+        <Width>13.90615cm</Width>
         <ZIndex>45</ZIndex>
         <Style>
           <Border>
@@ -2437,10 +2437,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>email</rd:DefaultName>
-        <Top>20.636cm</Top>
+        <Top>20.60954cm</Top>
         <Left>4.80693cm</Left>
         <Height>0.6cm</Height>
-        <Width>12.43952cm</Width>
+        <Width>13.90615cm</Width>
         <ZIndex>48</ZIndex>
         <Style>
           <Border>
@@ -2469,10 +2469,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>phone</rd:DefaultName>
-        <Top>21.41239cm</Top>
+        <Top>21.38593cm</Top>
         <Left>4.80693cm</Left>
         <Height>0.6cm</Height>
-        <Width>12.43952cm</Width>
+        <Width>13.90615cm</Width>
         <ZIndex>49</ZIndex>
         <Style>
           <Border>
@@ -2488,7 +2488,7 @@
         <Top>8.53321cm</Top>
         <Left>0.30556cm</Left>
         <Height>0cm</Height>
-        <Width>18.28497cm</Width>
+        <Width>18.40751cm</Width>
         <ZIndex>50</ZIndex>
         <Style>
           <Border>
@@ -2566,7 +2566,7 @@
         <Top>16.30565cm</Top>
         <Left>0.30556cm</Left>
         <Height>0cm</Height>
-        <Width>18.28497cm</Width>
+        <Width>18.40752cm</Width>
         <ZIndex>53</ZIndex>
         <Style>
           <Border>
@@ -2596,7 +2596,7 @@
         <MIMEType>image/png</MIMEType>
         <Sizing>FitProportional</Sizing>
         <Top>0.26333cm</Top>
-        <Left>15.676cm</Left>
+        <Left>15.79855cm</Left>
         <Height>3.06104cm</Height>
         <Width>2.91453cm</Width>
         <ZIndex>55</ZIndex>
@@ -2613,7 +2613,7 @@
     <Height>12.97498in</Height>
     <Style />
   </Body>
-  <Width>7.41631in</Width>
+  <Width>7.46494in</Width>
   <Page>
     <PageFooter>
       <Height>1.82562cm</Height>
@@ -2640,7 +2640,7 @@
           <Top>1.00543cm</Top>
           <Left>0.30998cm</Left>
           <Height>0.6cm</Height>
-          <Width>18.28055cm</Width>
+          <Width>18.40309cm</Width>
           <Style>
             <Border>
               <Style>None</Style>
@@ -2661,21 +2661,23 @@
                   <Value>Prøvingsrapporten eller kalibreringsbeviset skal ikke kopieres i ufullstendig form, uten skriftlig godkjennelse fra laboratoriet</Value>
                   <Style>
                     <FontStyle>Italic</FontStyle>
-                    <FontSize>9pt</FontSize>
+                    <FontSize>8pt</FontSize>
                     <FontWeight>Normal</FontWeight>
                     <TextDecoration>None</TextDecoration>
                     <Color>#000000</Color>
                   </Style>
                 </TextRun>
               </TextRuns>
-              <Style />
+              <Style>
+                <TextAlign>Center</TextAlign>
+              </Style>
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox9</rd:DefaultName>
           <Top>0.17639cm</Top>
           <Left>0.30998cm</Left>
           <Height>0.6cm</Height>
-          <Width>18.28055cm</Width>
+          <Width>18.40309cm</Width>
           <ZIndex>1</ZIndex>
           <Style>
             <Border>
@@ -2696,10 +2698,10 @@
     </PageFooter>
     <PageHeight>29.7cm</PageHeight>
     <PageWidth>21cm</PageWidth>
-    <LeftMargin>2cm</LeftMargin>
-    <RightMargin>2cm</RightMargin>
-    <TopMargin>2cm</TopMargin>
-    <BottomMargin>2cm</BottomMargin>
+    <LeftMargin>1cm</LeftMargin>
+    <RightMargin>1cm</RightMargin>
+    <TopMargin>1cm</TopMargin>
+    <BottomMargin>1cm</BottomMargin>
     <ColumnSpacing>0.13cm</ColumnSpacing>
     <Style />
   </Page>

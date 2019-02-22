@@ -4342,7 +4342,7 @@
             // btnOrderEditSampleType
             // 
             this.btnOrderEditSampleType.Name = "btnOrderEditSampleType";
-            this.btnOrderEditSampleType.Size = new System.Drawing.Size(152, 22);
+            this.btnOrderEditSampleType.Size = new System.Drawing.Size(139, 22);
             this.btnOrderEditSampleType.Text = "Sample type";
             this.btnOrderEditSampleType.Click += new System.EventHandler(this.btnOrderEditSampleType_Click);
             // 
@@ -6654,6 +6654,7 @@
             this.btnProjectSubPrint.Name = "btnProjectSubPrint";
             this.btnProjectSubPrint.Size = new System.Drawing.Size(80, 22);
             this.btnProjectSubPrint.Text = "Print label";
+            this.btnProjectSubPrint.Click += new System.EventHandler(this.btnProjectSubPrint_Click);
             // 
             // splitContainer25
             // 
@@ -6716,6 +6717,7 @@
             // 
             // toolStripButton24
             // 
+            this.toolStripButton24.Enabled = false;
             this.toolStripButton24.Image = global::DSA_lims.Properties.Resources.create_user;
             this.toolStripButton24.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton24.Name = "toolStripButton24";
@@ -6724,6 +6726,7 @@
             // 
             // toolStripButton26
             // 
+            this.toolStripButton26.Enabled = false;
             this.toolStripButton26.Image = global::DSA_lims.Properties.Resources.delete_user;
             this.toolStripButton26.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton26.Name = "toolStripButton26";
@@ -7912,7 +7915,7 @@
             this.splitContainer10.Panel2.Controls.Add(this.gridSysLabAnalMeth);
             this.splitContainer10.Panel2.Controls.Add(this.toolsSysLabAnalMeth);
             this.splitContainer10.Size = new System.Drawing.Size(413, 529);
-            this.splitContainer10.SplitterDistance = 241;
+            this.splitContainer10.SplitterDistance = 240;
             this.splitContainer10.SplitterWidth = 3;
             this.splitContainer10.TabIndex = 0;
             // 
@@ -7932,7 +7935,7 @@
             this.gridSysLabPrepMeth.ReadOnly = true;
             this.gridSysLabPrepMeth.RowHeadersVisible = false;
             this.gridSysLabPrepMeth.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridSysLabPrepMeth.Size = new System.Drawing.Size(413, 216);
+            this.gridSysLabPrepMeth.Size = new System.Drawing.Size(413, 215);
             this.gridSysLabPrepMeth.TabIndex = 1;
             this.gridSysLabPrepMeth.SelectionChanged += new System.EventHandler(this.gridSysLabPrepMeth_SelectionChanged);
             // 
@@ -7996,7 +7999,7 @@
             this.gridSysLabAnalMeth.ReadOnly = true;
             this.gridSysLabAnalMeth.RowHeadersVisible = false;
             this.gridSysLabAnalMeth.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridSysLabAnalMeth.Size = new System.Drawing.Size(413, 260);
+            this.gridSysLabAnalMeth.Size = new System.Drawing.Size(413, 261);
             this.gridSysLabAnalMeth.TabIndex = 1;
             // 
             // toolsSysLabAnalMeth
@@ -8181,7 +8184,7 @@
             this.splitContainer18.Panel2.Controls.Add(this.gridSysUsersAnalMeth);
             this.splitContainer18.Panel2.Controls.Add(this.toolsSysUsersAnalMeth);
             this.splitContainer18.Size = new System.Drawing.Size(413, 529);
-            this.splitContainer18.SplitterDistance = 243;
+            this.splitContainer18.SplitterDistance = 242;
             this.splitContainer18.SplitterWidth = 3;
             this.splitContainer18.TabIndex = 3;
             // 
@@ -8193,7 +8196,7 @@
             this.lbSysUsersRoles.Location = new System.Drawing.Point(0, 25);
             this.lbSysUsersRoles.Name = "lbSysUsersRoles";
             this.lbSysUsersRoles.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.lbSysUsersRoles.Size = new System.Drawing.Size(413, 218);
+            this.lbSysUsersRoles.Size = new System.Drawing.Size(413, 217);
             this.lbSysUsersRoles.TabIndex = 1;
             // 
             // toolsSysUsersRoles
@@ -8256,7 +8259,7 @@
             this.gridSysUsersAnalMeth.ReadOnly = true;
             this.gridSysUsersAnalMeth.RowHeadersVisible = false;
             this.gridSysUsersAnalMeth.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridSysUsersAnalMeth.Size = new System.Drawing.Size(413, 258);
+            this.gridSysUsersAnalMeth.Size = new System.Drawing.Size(413, 259);
             this.gridSysUsersAnalMeth.TabIndex = 1;
             // 
             // toolsSysUsersAnalMeth

@@ -415,10 +415,55 @@ namespace DSA_lims
             }
         }
 
+        public static void PopulateSampleTypePrepMeth(SqlConnection conn, Guid sampleTypeId, Guid labId, ComboBox cbox)
+        {
+            List<Lemma<Guid, string>> list = new List<Lemma<Guid, string>>();
+
+            string query = @"
+select pm.id, pm.name_short as 'name' from preparation_method pm	
+    inner join sample_type_x_preparation_method stpm on stpm.preparation_method_id = pm.id
+    inner join laboratory_x_preparation_method lxpm on lxpm.preparation_method_id = pm.id and lxpm.laboratory_id = @laboratory_id
+    inner join sample_type st on stpm.sample_type_id = st.id and st.id = @sample_type_id
+order by name";
+            
+            using (SqlDataReader reader = DB.GetDataReader(conn, null, query, CommandType.Text, 
+                new SqlParameter("@sample_type_id", sampleTypeId),
+                new SqlParameter("@laboratory_id", labId)))
+            {
+                while (reader.Read())
+                {
+                    Lemma<Guid, string> st = new Lemma<Guid, string>(reader.GetGuid("id"), reader.GetString("name"));
+                    list.Add(st);
+                }
+            }
+            
+            while (true)
+            {
+                sampleTypeId = DB.GetSampleTypeParentId(conn, null, sampleTypeId);
+
+                using (SqlDataReader reader = DB.GetDataReader(conn, null, query, CommandType.Text, 
+                    new SqlParameter("@sample_type_id", sampleTypeId), 
+                    new SqlParameter("@laboratory_id", labId)))
+                {
+                    while (reader.Read())
+                    {
+                        Lemma<Guid, string> st = new Lemma<Guid, string>(reader.GetGuid("id"), reader.GetString("name"));
+                        list.Add(st);
+                    }
+                }
+
+                if (sampleTypeId == Guid.Empty)
+                    break;
+            }
+
+            cbox.DisplayMember = "name";
+            cbox.ValueMember = "id";
+            cbox.DataSource = list;
+        }
+
         public static void PopulateSampleTypePrepMeth(SqlConnection conn, TreeNode tnode, ListBox lb, ListBox lbInherited)
         {
-            Guid sampleTypeId = Guid.Parse(tnode.Name);
-            string sampleTypeName = tnode.Text;
+            Guid sampleTypeId = Guid.Parse(tnode.Name);            
 
             string query = @"
 select pm.id, pm.name from preparation_method pm	
@@ -801,8 +846,7 @@ from role r
             string query = @"
 select pm.id, pm.name_short, pm.name
 from preparation_method pm
-    inner join laboratory_x_preparation_method lxpm on lxpm.preparation_method_id = pm.id
-where lxpm.laboratory_id = @lab_id
+    inner join laboratory_x_preparation_method lxpm on lxpm.preparation_method_id = pm.id and lxpm.laboratory_id = @lab_id
 order by pm.name_short
 ";
             grid.DataSource = DB.GetDataTable(conn, null, query, CommandType.Text, new SqlParameter("@lab_id", labId));
@@ -813,18 +857,15 @@ order by pm.name_short
             grid.Columns["name"].HeaderText = "Name";
         }
 
-        public static void PopulateLabAnalMeths(SqlConnection conn, Guid labId, Guid prepMethId, DataGridView grid)
+        public static void PopulateLabAnalMeths(SqlConnection conn, Guid labId, DataGridView grid)
         {
             string query = @"
 select am.id, am.name_short, am.name
 from analysis_method am
-    inner join laboratory_x_analysis_method lxam on lxam.analysis_method_id = am.id and lxam.preparation_method_id = @prep_meth_id and lxam.laboratory_id = @lab_id
+    inner join laboratory_x_analysis_method lxam on lxam.analysis_method_id = am.id and lxam.laboratory_id = @lab_id
 order by am.name_short
 ";
-            grid.DataSource = DB.GetDataTable(conn, null, query, CommandType.Text, new[] {
-                new SqlParameter("@lab_id", labId),
-                new SqlParameter("@prep_meth_id", prepMethId),
-            });
+            grid.DataSource = DB.GetDataTable(conn, null, query, CommandType.Text, new SqlParameter("@lab_id", labId));
 
             grid.Columns["id"].Visible = false;
 

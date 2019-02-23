@@ -46,7 +46,7 @@ namespace DSA_lims
             using (SqlConnection conn = DB.OpenConnection())
             {                
                 UI.PopulateComboBoxes(conn, "csp_select_analysis_methods_for_laboratory_and_preparation_method_short", new[] {
-                    new SqlParameter("@laboratory_id", mApm.PreparationLaboratoryId),
+                    new SqlParameter("@laboratory_id", mAssignment.LaboratoryId),
                     new SqlParameter("@preparation_method_id", mApm.PreparationMethodId),
                     new SqlParameter("@instance_status_level", InstanceStatus.Active)
                 }, cboxAnalysisMethods);

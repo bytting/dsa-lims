@@ -220,7 +220,7 @@
             this.cboxSampleInfoSampler = new System.Windows.Forms.ComboBox();
             this.label9 = new System.Windows.Forms.Label();
             this.cboxSampleInfoStations = new System.Windows.Forms.ComboBox();
-            this.label10 = new System.Windows.Forms.Label();
+            this.lblSampleCoords = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.cboxSampleCounties = new System.Windows.Forms.ComboBox();
             this.label50 = new System.Windows.Forms.Label();
@@ -576,7 +576,7 @@
             this.btnProjectBrowseAttachment = new System.Windows.Forms.ToolStripButton();
             this.btnProjectDeleteAttachment = new System.Windows.Forms.ToolStripButton();
             this.tabTypeRel = new System.Windows.Forms.TabPage();
-            this.tabControl2 = new System.Windows.Forms.TabControl();
+            this.tabsTypeRel = new System.Windows.Forms.TabControl();
             this.tabTypeRelationsSampleTypes = new System.Windows.Forms.TabPage();
             this.splitContainer12 = new System.Windows.Forms.SplitContainer();
             this.treeSampleTypes = new System.Windows.Forms.TreeView();
@@ -1061,7 +1061,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.gridProjectAttachments)).BeginInit();
             this.toolsProjAttachments.SuspendLayout();
             this.tabTypeRel.SuspendLayout();
-            this.tabControl2.SuspendLayout();
+            this.tabsTypeRel.SuspendLayout();
             this.tabTypeRelationsSampleTypes.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer12)).BeginInit();
             this.splitContainer12.Panel1.SuspendLayout();
@@ -1491,21 +1491,21 @@
             // miNewStation
             // 
             this.miNewStation.Name = "miNewStation";
-            this.miNewStation.Size = new System.Drawing.Size(146, 22);
+            this.miNewStation.Size = new System.Drawing.Size(152, 22);
             this.miNewStation.Text = "&New station";
             this.miNewStation.Click += new System.EventHandler(this.miNewStation_Click);
             // 
             // miEditStation
             // 
             this.miEditStation.Name = "miEditStation";
-            this.miEditStation.Size = new System.Drawing.Size(146, 22);
+            this.miEditStation.Size = new System.Drawing.Size(152, 22);
             this.miEditStation.Text = "&Edit station";
             this.miEditStation.Click += new System.EventHandler(this.miEditStation_Click);
             // 
             // miDeleteStation
             // 
             this.miDeleteStation.Name = "miDeleteStation";
-            this.miDeleteStation.Size = new System.Drawing.Size(146, 22);
+            this.miDeleteStation.Size = new System.Drawing.Size(152, 22);
             this.miDeleteStation.Text = "&Delete station";
             this.miDeleteStation.Click += new System.EventHandler(this.miDeleteStation_Click);
             // 
@@ -2444,21 +2444,21 @@
             // miPersonNew
             // 
             this.miPersonNew.Name = "miPersonNew";
-            this.miPersonNew.Size = new System.Drawing.Size(146, 22);
+            this.miPersonNew.Size = new System.Drawing.Size(152, 22);
             this.miPersonNew.Text = "New person";
             this.miPersonNew.Click += new System.EventHandler(this.miPersonNew_Click);
             // 
             // miPersonEdit
             // 
             this.miPersonEdit.Name = "miPersonEdit";
-            this.miPersonEdit.Size = new System.Drawing.Size(146, 22);
+            this.miPersonEdit.Size = new System.Drawing.Size(152, 22);
             this.miPersonEdit.Text = "Edit person";
             this.miPersonEdit.Click += new System.EventHandler(this.miPersonEdit_Click);
             // 
             // miPersonDelete
             // 
             this.miPersonDelete.Name = "miPersonDelete";
-            this.miPersonDelete.Size = new System.Drawing.Size(146, 22);
+            this.miPersonDelete.Size = new System.Drawing.Size(152, 22);
             this.miPersonDelete.Text = "Delete person";
             this.miPersonDelete.Click += new System.EventHandler(this.miPersonDelete_Click);
             // 
@@ -2796,7 +2796,7 @@
             this.layoutSample.Controls.Add(this.cboxSampleInfoSampler, 1, 5);
             this.layoutSample.Controls.Add(this.label9, 0, 6);
             this.layoutSample.Controls.Add(this.cboxSampleInfoStations, 1, 6);
-            this.layoutSample.Controls.Add(this.label10, 0, 7);
+            this.layoutSample.Controls.Add(this.lblSampleCoords, 0, 7);
             this.layoutSample.Controls.Add(this.label3, 0, 8);
             this.layoutSample.Controls.Add(this.cboxSampleCounties, 1, 8);
             this.layoutSample.Controls.Add(this.label50, 0, 9);
@@ -2973,16 +2973,16 @@
             this.cboxSampleInfoStations.ValueMember = "Id";
             this.cboxSampleInfoStations.SelectedIndexChanged += new System.EventHandler(this.cboxSampleInfoStations_SelectedIndexChanged);
             // 
-            // label10
+            // lblSampleCoords
             // 
-            this.label10.AutoSize = true;
-            this.label10.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label10.Location = new System.Drawing.Point(3, 190);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(144, 30);
-            this.label10.TabIndex = 7;
-            this.label10.Text = "Lat / Lon / Alt";
-            this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.lblSampleCoords.AutoSize = true;
+            this.lblSampleCoords.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblSampleCoords.Location = new System.Drawing.Point(3, 190);
+            this.lblSampleCoords.Name = "lblSampleCoords";
+            this.lblSampleCoords.Size = new System.Drawing.Size(144, 30);
+            this.lblSampleCoords.TabIndex = 7;
+            this.lblSampleCoords.Text = "Lat / Lon / Alt";
+            this.lblSampleCoords.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // label3
             // 
@@ -6809,7 +6809,7 @@
             // tabTypeRel
             // 
             this.tabTypeRel.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.tabTypeRel.Controls.Add(this.tabControl2);
+            this.tabTypeRel.Controls.Add(this.tabsTypeRel);
             this.tabTypeRel.Location = new System.Drawing.Point(4, 24);
             this.tabTypeRel.Name = "tabTypeRel";
             this.tabTypeRel.Padding = new System.Windows.Forms.Padding(3);
@@ -6817,17 +6817,18 @@
             this.tabTypeRel.TabIndex = 13;
             this.tabTypeRel.Text = "Type relations";
             // 
-            // tabControl2
+            // tabsTypeRel
             // 
-            this.tabControl2.Controls.Add(this.tabTypeRelationsSampleTypes);
-            this.tabControl2.Controls.Add(this.tabTypeRelationsPrepMeth);
-            this.tabControl2.Controls.Add(this.tabTypeRelationsAnalMeth);
-            this.tabControl2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl2.Location = new System.Drawing.Point(3, 3);
-            this.tabControl2.Name = "tabControl2";
-            this.tabControl2.SelectedIndex = 0;
-            this.tabControl2.Size = new System.Drawing.Size(1015, 563);
-            this.tabControl2.TabIndex = 8;
+            this.tabsTypeRel.Controls.Add(this.tabTypeRelationsSampleTypes);
+            this.tabsTypeRel.Controls.Add(this.tabTypeRelationsPrepMeth);
+            this.tabsTypeRel.Controls.Add(this.tabTypeRelationsAnalMeth);
+            this.tabsTypeRel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabsTypeRel.Location = new System.Drawing.Point(3, 3);
+            this.tabsTypeRel.Name = "tabsTypeRel";
+            this.tabsTypeRel.SelectedIndex = 0;
+            this.tabsTypeRel.Size = new System.Drawing.Size(1015, 563);
+            this.tabsTypeRel.TabIndex = 8;
+            this.tabsTypeRel.SelectedIndexChanged += new System.EventHandler(this.tabsTypeRel_SelectedIndexChanged);
             // 
             // tabTypeRelationsSampleTypes
             // 
@@ -7259,10 +7260,10 @@
             // 
             this.tabTypeRelSampTypePrep.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.tabTypeRelSampTypePrep.Controls.Add(this.splitContainer13);
-            this.tabTypeRelSampTypePrep.Location = new System.Drawing.Point(4, 22);
+            this.tabTypeRelSampTypePrep.Location = new System.Drawing.Point(4, 24);
             this.tabTypeRelSampTypePrep.Name = "tabTypeRelSampTypePrep";
             this.tabTypeRelSampTypePrep.Padding = new System.Windows.Forms.Padding(3);
-            this.tabTypeRelSampTypePrep.Size = new System.Drawing.Size(583, 505);
+            this.tabTypeRelSampTypePrep.Size = new System.Drawing.Size(583, 501);
             this.tabTypeRelSampTypePrep.TabIndex = 2;
             this.tabTypeRelSampTypePrep.Text = "Preparation methods";
             // 
@@ -7282,8 +7283,8 @@
             // 
             this.splitContainer13.Panel2.Controls.Add(this.lbTypeRelSampTypeInheritedPrepMeth);
             this.splitContainer13.Panel2.Controls.Add(this.toolsTypeRelSampAnalMeth);
-            this.splitContainer13.Size = new System.Drawing.Size(577, 499);
-            this.splitContainer13.SplitterDistance = 188;
+            this.splitContainer13.Size = new System.Drawing.Size(577, 495);
+            this.splitContainer13.SplitterDistance = 186;
             this.splitContainer13.SplitterWidth = 3;
             this.splitContainer13.TabIndex = 0;
             // 
@@ -7296,7 +7297,7 @@
             this.lbTypeRelSampTypePrepMeth.ItemHeight = 15;
             this.lbTypeRelSampTypePrepMeth.Location = new System.Drawing.Point(0, 25);
             this.lbTypeRelSampTypePrepMeth.Name = "lbTypeRelSampTypePrepMeth";
-            this.lbTypeRelSampTypePrepMeth.Size = new System.Drawing.Size(577, 163);
+            this.lbTypeRelSampTypePrepMeth.Size = new System.Drawing.Size(577, 161);
             this.lbTypeRelSampTypePrepMeth.TabIndex = 1;
             // 
             // toolsTypeRelSampPrepMeth
@@ -7360,7 +7361,7 @@
             this.lbTypeRelSampTypeInheritedPrepMeth.Location = new System.Drawing.Point(0, 25);
             this.lbTypeRelSampTypeInheritedPrepMeth.Name = "lbTypeRelSampTypeInheritedPrepMeth";
             this.lbTypeRelSampTypeInheritedPrepMeth.SelectionMode = System.Windows.Forms.SelectionMode.None;
-            this.lbTypeRelSampTypeInheritedPrepMeth.Size = new System.Drawing.Size(577, 283);
+            this.lbTypeRelSampTypeInheritedPrepMeth.Size = new System.Drawing.Size(577, 281);
             this.lbTypeRelSampTypeInheritedPrepMeth.TabIndex = 1;
             // 
             // toolsTypeRelSampAnalMeth
@@ -7937,7 +7938,6 @@
             this.gridSysLabPrepMeth.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.gridSysLabPrepMeth.Size = new System.Drawing.Size(413, 215);
             this.gridSysLabPrepMeth.TabIndex = 1;
-            this.gridSysLabPrepMeth.SelectionChanged += new System.EventHandler(this.gridSysLabPrepMeth_SelectionChanged);
             // 
             // toolsSysLabPrepMeth
             // 
@@ -8184,7 +8184,7 @@
             this.splitContainer18.Panel2.Controls.Add(this.gridSysUsersAnalMeth);
             this.splitContainer18.Panel2.Controls.Add(this.toolsSysUsersAnalMeth);
             this.splitContainer18.Size = new System.Drawing.Size(413, 529);
-            this.splitContainer18.SplitterDistance = 242;
+            this.splitContainer18.SplitterDistance = 241;
             this.splitContainer18.SplitterWidth = 3;
             this.splitContainer18.TabIndex = 3;
             // 
@@ -8196,7 +8196,7 @@
             this.lbSysUsersRoles.Location = new System.Drawing.Point(0, 25);
             this.lbSysUsersRoles.Name = "lbSysUsersRoles";
             this.lbSysUsersRoles.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.lbSysUsersRoles.Size = new System.Drawing.Size(413, 217);
+            this.lbSysUsersRoles.Size = new System.Drawing.Size(413, 216);
             this.lbSysUsersRoles.TabIndex = 1;
             // 
             // toolsSysUsersRoles
@@ -8259,7 +8259,7 @@
             this.gridSysUsersAnalMeth.ReadOnly = true;
             this.gridSysUsersAnalMeth.RowHeadersVisible = false;
             this.gridSysUsersAnalMeth.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridSysUsersAnalMeth.Size = new System.Drawing.Size(413, 259);
+            this.gridSysUsersAnalMeth.Size = new System.Drawing.Size(413, 260);
             this.gridSysUsersAnalMeth.TabIndex = 1;
             // 
             // toolsSysUsersAnalMeth
@@ -8930,14 +8930,14 @@
             // btnPrepAnalAddPrep
             // 
             this.btnPrepAnalAddPrep.Name = "btnPrepAnalAddPrep";
-            this.btnPrepAnalAddPrep.Size = new System.Drawing.Size(116, 22);
+            this.btnPrepAnalAddPrep.Size = new System.Drawing.Size(152, 22);
             this.btnPrepAnalAddPrep.Text = "&Add...";
             this.btnPrepAnalAddPrep.Click += new System.EventHandler(this.btnPrepAnalAddPrep_Click);
             // 
             // btnPrepAnalDelPrep
             // 
             this.btnPrepAnalDelPrep.Name = "btnPrepAnalDelPrep";
-            this.btnPrepAnalDelPrep.Size = new System.Drawing.Size(116, 22);
+            this.btnPrepAnalDelPrep.Size = new System.Drawing.Size(152, 22);
             this.btnPrepAnalDelPrep.Text = "&Delete...";
             this.btnPrepAnalDelPrep.Click += new System.EventHandler(this.btnPrepAnalDelPrep_Click);
             // 
@@ -8955,14 +8955,14 @@
             // btnPrepAnalAddAnal
             // 
             this.btnPrepAnalAddAnal.Name = "btnPrepAnalAddAnal";
-            this.btnPrepAnalAddAnal.Size = new System.Drawing.Size(116, 22);
+            this.btnPrepAnalAddAnal.Size = new System.Drawing.Size(152, 22);
             this.btnPrepAnalAddAnal.Text = "&Add...";
             this.btnPrepAnalAddAnal.Click += new System.EventHandler(this.btnPrepAnalAddAnal_Click);
             // 
             // btnPrepAnalDelAnal
             // 
             this.btnPrepAnalDelAnal.Name = "btnPrepAnalDelAnal";
-            this.btnPrepAnalDelAnal.Size = new System.Drawing.Size(116, 22);
+            this.btnPrepAnalDelAnal.Size = new System.Drawing.Size(152, 22);
             this.btnPrepAnalDelAnal.Text = "&Delete...";
             this.btnPrepAnalDelAnal.Click += new System.EventHandler(this.btnPrepAnalDelAnal_Click);
             // 
@@ -10696,7 +10696,7 @@
             this.toolsProjAttachments.ResumeLayout(false);
             this.toolsProjAttachments.PerformLayout();
             this.tabTypeRel.ResumeLayout(false);
-            this.tabControl2.ResumeLayout(false);
+            this.tabsTypeRel.ResumeLayout(false);
             this.tabTypeRelationsSampleTypes.ResumeLayout(false);
             this.splitContainer12.Panel1.ResumeLayout(false);
             this.splitContainer12.Panel1.PerformLayout();
@@ -10991,7 +10991,7 @@
         private System.Windows.Forms.ComboBox cboxSampleInfoSampler;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.ComboBox cboxSampleInfoSamplingMeth;
-        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label lblSampleCoords;
         private System.Windows.Forms.ToolStrip toolStrip6;
         private System.Windows.Forms.ToolStripButton toolStripButton9;
         private System.Windows.Forms.ToolStripButton toolStripButton10;
@@ -11083,7 +11083,7 @@
         private System.Windows.Forms.TreeView treeSampleTypes;
         private System.Windows.Forms.ToolStripButton btnTypeRelSampleTypesNew;
         private System.Windows.Forms.ToolStripButton btnTypeRelSampleTypesEdit;
-        private System.Windows.Forms.TabControl tabControl2;
+        private System.Windows.Forms.TabControl tabsTypeRel;
         private System.Windows.Forms.TabPage tabTypeRelationsSampleTypes;
         private System.Windows.Forms.TabPage tabTypeRelationsPrepMeth;
         private System.Windows.Forms.TabPage tabTypeRelationsAnalMeth;

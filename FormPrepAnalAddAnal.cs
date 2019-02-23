@@ -31,13 +31,13 @@ namespace DSA_lims
 {
     public partial class FormPrepAnalAddAnal : Form
     {
-        private Guid PrepId = Guid.Empty;
+        private Preparation mPrep = null;
 
-        public FormPrepAnalAddAnal(Guid prepId)
+        public FormPrepAnalAddAnal(Preparation prep)
         {
             InitializeComponent();
 
-            PrepId = prepId;
+            mPrep = prep;
 
             tbCount.KeyPress += CustomEvents.Integer_KeyPress;
         }
@@ -46,7 +46,9 @@ namespace DSA_lims
         {
             using (SqlConnection conn = DB.OpenConnection())
             {
-                UI.PopulateComboBoxes(conn, "csp_select_analysis_methods_short", new[] {
+                UI.PopulateComboBoxes(conn, "csp_select_analysis_methods_for_laboratory_short", new[] {
+                    new SqlParameter("laboratory_id", Common.LabId),
+                    new SqlParameter("preparation_method_id", mPrep.PreparationMethodId),
                     new SqlParameter("instance_status_level", InstanceStatus.Active)
                 }, cboxAnalMethods);
             }
@@ -84,7 +86,7 @@ namespace DSA_lims
                 connection = DB.OpenConnection();
                 transaction = connection.BeginTransaction();
 
-                int nextAnalNumber = DB.GetNextAnalysisNumber(connection, transaction, PrepId);
+                int nextAnalNumber = DB.GetNextAnalysisNumber(connection, transaction, mPrep.Id);
 
                 SqlCommand cmd = new SqlCommand("csp_insert_analysis", connection, transaction);
                 cmd.CommandType = CommandType.StoredProcedure;
@@ -97,7 +99,7 @@ namespace DSA_lims
                     cmd.Parameters.AddWithValue("@number", nextAnalNumber++);
                     cmd.Parameters.AddWithValue("@assignment_id", DBNull.Value);
                     cmd.Parameters.AddWithValue("@laboratory_id", Common.LabId, Guid.Empty);
-                    cmd.Parameters.AddWithValue("@preparation_id", PrepId);
+                    cmd.Parameters.AddWithValue("@preparation_id", mPrep.Id);
                     cmd.Parameters.AddWithValue("@analysis_method_id", cboxAnalMethods.SelectedValue, Guid.Empty);
                     cmd.Parameters.AddWithValue("@workflow_status_id", 1);
                     cmd.Parameters.AddWithValue("@specter_reference", DBNull.Value);

@@ -32,6 +32,8 @@ namespace DSA_lims
 {
     public partial class FormStation : Form
     {
+        ToolTip ttCoords = new ToolTip();
+
         private Dictionary<string, object> p = new Dictionary<string, object>();
 
         public Guid StationId
@@ -93,6 +95,15 @@ namespace DSA_lims
         private void FormStation_Load(object sender, EventArgs e)
         {            
             tbAltitude.KeyPress += CustomEvents.Numeric_KeyPress;
+
+            string NL = Environment.NewLine;
+            ttCoords.SetToolTip(lblLatitude, "Latitude, Longitude" + NL + NL
+                + "Formats: " + NL + "61° 34' 12\" N   11° 67' 20\" E" + NL + "61° 34" + Utils.NumberSeparator + "23' N   11° 67" + Utils.NumberSeparator + "33' E"
+                + NL + "61" + Utils.NumberSeparator + "543478 N   11" + Utils.NumberSeparator + "776344 E" + NL + "61" + Utils.NumberSeparator + "543478   -11" + Utils.NumberSeparator + "776344" + NL + NL + "° can be replaced with *");
+
+            ttCoords.SetToolTip(lblLongitude, "Latitude, Longitude" + NL + NL
+                + "Formats: " + NL + "61° 34' 12\" N   11° 67' 20\" E" + NL + "61° 34" + Utils.NumberSeparator + "23' N   11° 67" + Utils.NumberSeparator + "33' E"
+                + NL + "61" + Utils.NumberSeparator + "543478 N   11" + Utils.NumberSeparator + "776344 E" + NL + "61" + Utils.NumberSeparator + "543478   -11" + Utils.NumberSeparator + "776344" + NL + NL + "° can be replaced with *");
         }
 
         private void btnCancel_Click(object sender, EventArgs e)

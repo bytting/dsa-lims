@@ -31,16 +31,14 @@ namespace DSA_lims
 {
     public partial class FormLabXAnalMeth : Form
     {
-        Guid mLabId = Guid.Empty;
-        Guid mPrepMethId = Guid.Empty;
+        Guid mLabId = Guid.Empty;        
         List<Guid> mExistingAnalMeths;
 
-        public FormLabXAnalMeth(Guid labId, Guid prepMethId, List<Guid> existingAnalMeths)
+        public FormLabXAnalMeth(Guid labId, List<Guid> existingAnalMeths)
         {
             InitializeComponent();
 
             mLabId = labId;
-            mPrepMethId = prepMethId;
             mExistingAnalMeths = existingAnalMeths;
         }
 
@@ -53,11 +51,11 @@ namespace DSA_lims
             {
                 string query;
                 if (String.IsNullOrEmpty(exceptIds))                
-                    query = "select * from analysis_method where instance_status_id <= 1";                
+                    query = "select * from analysis_method where instance_status_id < 2";                
                 else                
-                    query = "select * from analysis_method where id not in(" + exceptIds + ") and instance_status_id <= 1";
+                    query = "select * from analysis_method where id not in(" + exceptIds + ") and instance_status_id < 2";
 
-                gridAnalMeth.DataSource = DB.GetDataTable(conn, null, query, CommandType.Text, new SqlParameter("@lid", mLabId), new SqlParameter("@pmid", mPrepMethId));
+                gridAnalMeth.DataSource = DB.GetDataTable(conn, null, query, CommandType.Text, new SqlParameter("@lid", mLabId));
 
                 gridAnalMeth.Columns["id"].Visible = false;
                 gridAnalMeth.Columns["comment"].Visible = false;
@@ -90,12 +88,11 @@ namespace DSA_lims
                 conn = DB.OpenConnection();
                 trans = conn.BeginTransaction();
 
-                SqlCommand cmd = new SqlCommand("insert into laboratory_x_analysis_method values(@laboratory_id, @preparation_method_id, @analysis_method_id)", conn, trans);
+                SqlCommand cmd = new SqlCommand("insert into laboratory_x_analysis_method values(@laboratory_id, @analysis_method_id)", conn, trans);
                 foreach (DataGridViewRow row in gridAnalMeth.SelectedRows)
                 {
                     cmd.Parameters.Clear();
                     cmd.Parameters.AddWithValue("@laboratory_id", mLabId);
-                    cmd.Parameters.AddWithValue("@preparation_method_id", mPrepMethId);
                     cmd.Parameters.AddWithValue("@analysis_method_id", Utils.MakeGuid(row.Cells["id"].Value));
                     cmd.ExecuteNonQuery();
                 }

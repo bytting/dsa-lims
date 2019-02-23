@@ -598,6 +598,20 @@ select
             }
         }
 
+        public static void GetSampleCountForAST(SqlConnection conn, SqlTransaction trans, Guid astId, out int nSamples)
+        {
+            nSamples = 0;
+
+            string query = @"
+select count(*) as 'nsamples'
+from sample s
+	inner join sample_x_assignment_sample_type sxast on sxast.sample_id = s.id
+	inner join assignment_sample_type ast on sxast.assignment_sample_type_id = ast.id and sxast.assignment_sample_type_id = @astid
+where s.instance_status_id < 2";
+
+            nSamples = (int)DB.GetScalar(conn, trans, query, CommandType.Text, new SqlParameter("@astid", astId));
+        }
+
         public static int GetAvailableSamplesOnAssignmentSampleType(SqlConnection conn, SqlTransaction trans, Guid astId)
         {
             int nAvailSamples = 0, nCurrSamples = 0, n = 0;
@@ -786,6 +800,33 @@ select
                 return "Unknown";
 
             return o.ToString();
+        }
+
+        public static Guid GetSampleTypeParentId(SqlConnection conn, SqlTransaction trans, Guid sampleTypeId)
+        {
+            object o = GetScalar(conn, trans, "select parent_id from sample_type where id = @id", CommandType.Text,
+                new SqlParameter("@id", sampleTypeId));
+
+            if (!IsValidField(o))
+                return Guid.Empty;
+
+            return Guid.Parse(o.ToString());
+        }
+
+        public static Guid GetCustomerIdForAccountId(SqlConnection conn, SqlTransaction trans, Guid userId)
+        {
+            object o = GetScalar(conn, trans, @"
+select c.id 
+from customer c
+    inner join person p on c.person_id = p.id
+    inner join account a on a.person_id = p.id and a.id = @aid
+", CommandType.Text,
+                new SqlParameter("@aid", userId));
+
+            if (!IsValidField(o))
+                return Guid.Empty;
+
+            return Guid.Parse(o.ToString());
         }
     }
 

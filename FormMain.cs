@@ -51,6 +51,8 @@ namespace DSA_lims
         private Analysis analysis = new Analysis();
         private Preparation preparation = new Preparation();
 
+        ToolTip ttCoords = new ToolTip();
+
         public FormMain()
         {
             InitializeComponent();
@@ -117,6 +119,11 @@ namespace DSA_lims
                 statusMessageTimer.Elapsed += StatusMessageTimer_Elapsed;
                 statusMessageTimer.AutoReset = false;
                 statusMessageTimer.Enabled = false;
+
+                string NL = Environment.NewLine;
+                ttCoords.SetToolTip(lblSampleCoords, "Latitude, Longitude" + NL + NL
+                + "Formats: " + NL + "61° 34' 12\" N   11° 67' 20\" E" + NL + "61° 34" + Utils.NumberSeparator + "23' N   11° 67" + Utils.NumberSeparator + "33' E"
+                + NL + "61" + Utils.NumberSeparator + "543478 N   11" + Utils.NumberSeparator + "776344 E" + NL + "61" + Utils.NumberSeparator + "543478   -11" + Utils.NumberSeparator + "776344" + NL + NL + "° can be replaced with *");
             }
             catch (Exception ex)
             {
@@ -494,7 +501,9 @@ namespace DSA_lims
             miSampleStorage.Visible = false;
             miUnits.Visible = false;
             miSamplers.Visible = false;
-            miSamplingMethods.Visible = false;            
+            miSamplingMethods.Visible = false;
+            miCompanies.Visible = false;
+            miCustomers.Visible = false;           
         }
 
         private void HideSysMenuItems()
@@ -505,6 +514,7 @@ namespace DSA_lims
             miMunicipalities.Visible = false;
             miAccreditationRules.Visible = false;
             miGeometries.Visible = false;
+            miPersonalia.Visible = false;
         }        
 
         private void miLogout_Click(object sender, EventArgs e)
@@ -643,7 +653,7 @@ namespace DSA_lims
             btnSysLabPrepMethAdd.Enabled = btnSysLabPrepMethRemove.Enabled = btnSysLabAnalMethAdd.Enabled = btnSysLabAnalMethRemove.Enabled = isAdmin;
             btnSysUsersAddRoles.Enabled = btnSysUsersRemRoles.Enabled = btnSysUsersAnalMethAdd.Enabled = btnSysUsersAnalMethRemove.Enabled = isAdmin;
 
-            cboxOrderStatus.Enabled = cbOrderApprovedLaboratory.Enabled = Roles.HasAccess(Role.LaboratoryAdministrator);
+            //cboxOrderStatus.Enabled = cbOrderApprovedLaboratory.Enabled = Roles.HasAccess(Role.LaboratoryAdministrator);
 
             // FIXME: Accreditation rules
 
@@ -834,13 +844,42 @@ namespace DSA_lims
         {
             HideMetaMenuItems();
 
-            if(tabsMeta.SelectedTab == tabSysLaboratories)
+            using (SqlConnection conn = DB.OpenConnection())
             {
-                miLaboratories.Visible = true;
-            }
-            else if (tabsMeta.SelectedTab == tabSysUsers)
-            {
-                miUsers.Visible = true;
+                if (tabsMeta.SelectedTab == tabMetaStations)
+                {
+                    miStations.Visible = true;
+                    UI.PopulateStations(conn, gridMetaStation);
+                }
+                else if (tabsMeta.SelectedTab == tabMetaSampleStorage)
+                {
+                    miSampleStorage.Visible = true;
+                    UI.PopulateSampleStorage(conn, gridMetaSampleStorage);
+                }
+                else if (tabsMeta.SelectedTab == tabMetaUnits)
+                {
+                    // FIXME                
+                }
+                else if (tabsMeta.SelectedTab == tabMetaSamplers)
+                {
+                    miSamplers.Visible = true;
+                    UI.PopulateSamplers(conn, gridMetaSamplers);
+                }
+                else if (tabsMeta.SelectedTab == tabMetaSamplingMeth)
+                {
+                    miSamplingMethods.Visible = true;
+                    UI.PopulateSamplingMethods(conn, gridMetaSamplingMeth);
+                }
+                else if (tabsMeta.SelectedTab == tabMetaCompanies)
+                {
+                    miCompanies.Visible = true;
+                    UI.PopulateCompanies(conn, gridMetaCompanies);
+                }
+                else if (tabsMeta.SelectedTab == tabCustomers)
+                {
+                    miCustomers.Visible = true;
+                    UI.PopulateCustomers(conn, InstanceStatus.Deleted, gridCustomers);
+                }
             }
         }
 
@@ -848,13 +887,38 @@ namespace DSA_lims
         {            
             HideSysMenuItems();
 
-            if (tabsSys.SelectedTab == tabSysLaboratories)
+            using (SqlConnection conn = DB.OpenConnection())
             {
-                miLaboratories.Visible = true;
-            }
-            else if (tabsSys.SelectedTab == tabSysUsers)
-            {
-                miUsers.Visible = true;
+                if (tabsSys.SelectedTab == tabSysLaboratories)
+                {
+                    miLaboratories.Visible = true;
+                    UI.PopulateLaboratories(conn, InstanceStatus.Deleted, gridSysLab);
+                }
+                else if (tabsSys.SelectedTab == tabSysUsers)
+                {
+                    miUsers.Visible = true;
+                    UI.PopulateUsers(conn, InstanceStatus.Deleted, gridSysUsers);
+                }
+                else if (tabsSys.SelectedTab == tabSysMunicipalities)
+                {
+                    miMunicipalities.Visible = true;
+                    UI.PopulateCounties(conn, gridSysCounty);
+                }
+                else if (tabsSys.SelectedTab == tabSysNuclides)
+                {
+                    miNuclides.Visible = true;
+                    UI.PopulateNuclides(conn, gridSysNuclides);
+                }
+                else if (tabsSys.SelectedTab == tabSysGeometries)
+                {
+                    miGeometries.Visible = true;
+                    UI.PopulateGeometries(conn, gridSysGeom);
+                }
+                else if (tabsSys.SelectedTab == tabSysPers)
+                {
+                    miPersonalia.Visible = false;
+                    UI.PopulatePersons(conn, gridSysPers);
+                }
             }
         }
 
@@ -948,6 +1012,7 @@ namespace DSA_lims
                     using (SqlConnection conn = DB.OpenConnection())
                     {                        
                         UI.PopulateLaboratories(conn, InstanceStatus.Deleted, gridSysLab);
+
                         UI.PopulateComboBoxes(conn, "csp_select_laboratories_short", new[] {
                             new SqlParameter("@instance_status_level", InstanceStatus.Active)
                         }, cboxSampleLaboratory, cboxOrderLaboratory);
@@ -1262,6 +1327,11 @@ namespace DSA_lims
 
         private void miProjectsView_Click(object sender, EventArgs e)
         {
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                UI.PopulateProjectsMain(conn, gridProjectMain);
+            }
+
             tabs.SelectedTab = tabProjects;
         }
 
@@ -1313,7 +1383,8 @@ namespace DSA_lims
                     SetStatusMessage("Geometry " + form.GeometryName + " created");
                     using (SqlConnection conn = DB.OpenConnection())
                     {
-                        UI.PopulateGeometries(conn, gridSysGeom);                        
+                        UI.PopulateGeometries(conn, gridSysGeom);  
+                                              
                         UI.PopulateComboBoxes(conn, "csp_select_preparation_geometries_short", new[] {
                             new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
                         }, cboxPrepAnalPrepGeom);
@@ -1488,7 +1559,8 @@ namespace DSA_lims
                     SetStatusMessage("Station " + form.StationName + " created");
                     using (SqlConnection conn = DB.OpenConnection())
                     {
-                        UI.PopulateStations(conn, gridMetaStation);                        
+                        UI.PopulateStations(conn, gridMetaStation);  
+                                              
                         UI.PopulateComboBoxes(conn, "csp_select_stations_short", new[] {
                             new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
                         }, cboxSampleInfoStations);
@@ -2812,7 +2884,21 @@ namespace DSA_lims
 
         private void miOrdersNew_Click(object sender, EventArgs e)
         {
-            // create new order            
+            // create new order
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                if (!Utils.IsValidGuid(Common.LabId))
+                {
+                    Guid cid = DB.GetCustomerIdForAccountId(conn, null, Common.UserId);
+                    if(cid == Guid.Empty)
+                    {
+                        MessageBox.Show("You can not create orders without having either a laboratory or customer");
+                        return;
+                    }
+                }
+            }
+
             FormOrderNew form = new FormOrderNew();
             if (form.ShowDialog() != DialogResult.OK)
                 return;
@@ -3202,7 +3288,18 @@ select count(*) from sample s
                 MessageBox.Show("This order has been approved and can not be updated");
                 return;
             }
-                        
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                int nSamples;
+                DB.GetSampleCountForAST(conn, null, ast.Id, out nSamples);
+                if(nSamples > 0)
+                {
+                    MessageBox.Show("Can not add preparation methods to this sample type because it has " + nSamples + " samples connected to it");
+                    return;
+                }
+            }
+
             FormOrderAddPrepMeth form = new FormOrderAddPrepMeth(assignment, ast);
             if (form.ShowDialog() != DialogResult.OK)
                 return;
@@ -3231,6 +3328,7 @@ select count(*) from sample s
             }
 
             AssignmentPreparationMethod apm = tnode.Tag as AssignmentPreparationMethod;
+            AssignmentSampleType ast = tnode.Parent.Tag as AssignmentSampleType;
 
             if (assignment.WorkflowStatusId == WorkflowStatus.Complete)
             {
@@ -3243,7 +3341,18 @@ select count(*) from sample s
                 MessageBox.Show("This order has been approved and can not be updated");
                 return;
             }
-            
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                int nSamples;
+                DB.GetSampleCountForAST(conn, null, ast.Id, out nSamples);
+                if (nSamples > 0)
+                {
+                    MessageBox.Show("Can not add analysis methods to this sample type because it has " + nSamples + " samples connected to it");
+                    return;
+                }
+            }
+
             FormOrderAddAnalMeth form = new FormOrderAddAnalMeth(assignment, apm);
             if (form.ShowDialog() != DialogResult.OK)
                 return;
@@ -3261,7 +3370,7 @@ select count(*) from sample s
             {
                 SetStatusMessage("Nothing to save for order " + assignment.Name);
                 return;
-            }
+            }            
 
             int wfStatus = (int)cboxOrderStatus.SelectedValue;
 
@@ -3303,14 +3412,21 @@ select count(*) from sample s
                 return;
             }
 
+            // FIXME
+            /*bool canApproveLab = false;
             if (assignment.ApprovedLaboratory != cbOrderApprovedLaboratory.Checked)
             {
-                if (!Roles.HasAccess(Role.LaboratoryAdministrator))
+                if (Roles.HasAccess(Role.LaboratoryAdministrator))
                 {
-                    MessageBox.Show("You are not allowed to approve orders");
-                    return;
+                    canApproveLab = true;
                 }
-            }
+            }            
+
+            if (assignment.ApprovedLaboratory && !canApproveLab)
+            {
+                MessageBox.Show("You can not save an order that is approved");
+                return;
+            }*/
 
             if (cbOrderApprovedCustomer.Checked && !cbOrderApprovedLaboratory.Checked)
             {
@@ -3443,6 +3559,8 @@ select count(*) from sample s
                 assignment.StoreToDB(conn, trans);
 
                 trans.Commit();
+
+                PopulateOrder(conn, trans, assignment, true);
 
                 btnOrdersSearch_Click(sender, e);
 
@@ -4283,7 +4401,7 @@ select count(*) from sample s
                 return;
             }
 
-            FormPrepAnalAddPrep form = new FormPrepAnalAddPrep(sample.Id);
+            FormPrepAnalAddPrep form = new FormPrepAnalAddPrep(sample);
             if (form.ShowDialog() != DialogResult.OK)
                 return;
 
@@ -4301,7 +4419,7 @@ select count(*) from sample s
                 return;
             }            
 
-            FormPrepAnalAddAnal form = new FormPrepAnalAddAnal(preparation.Id);
+            FormPrepAnalAddAnal form = new FormPrepAnalAddAnal(preparation);
             if (form.ShowDialog() != DialogResult.OK)
                 return;
 
@@ -4909,7 +5027,7 @@ where s.number = @sample_number
             cboxSamplesProjectsSub.SelectedValue = Guid.Empty;
             cboxSamplesOrders.SelectedValue = Guid.Empty;
             cboxSamplesStatus.SelectedValue = InstanceStatus.Active;
-            cboxSamplesLaboratory.SelectedValue = Common.LabId;
+            cboxSamplesLaboratory.SelectedValue = Guid.Empty;
             cboxSamplesTop.SelectedValue = 50;
         }
 
@@ -6267,7 +6385,7 @@ where s.number = @sample_number
         }
 
         private void cbOrderApprovedLaboratory_CheckedChanged(object sender, EventArgs e)
-        {
+        {            
             assignment.Dirty = true;
         }
 
@@ -6431,18 +6549,17 @@ where s.number = @sample_number
             Guid lid = Guid.Parse(gridSysLab.SelectedRows[0].Cells["id"].Value.ToString());
             
             using (SqlConnection conn = DB.OpenConnection())
-            {
-                gridSysLabAnalMeth.DataSource = null;
+            {                
                 UI.PopulateLabPrepMeths(conn, lid, gridSysLabPrepMeth);
+                UI.PopulateLabAnalMeths(conn, lid, gridSysLabAnalMeth);
             }
         }
 
         private void btnSysLabPrepMethRemove_Click(object sender, EventArgs e)
         {
-            if (gridSysLab.SelectedRows.Count < 1 || gridSysLabPrepMeth.SelectedRows.Count < 1)
+            if (gridSysLab.SelectedRows.Count < 1)
             {
-                gridSysLabPrepMeth.DataSource = null;
-                gridSysLabAnalMeth.DataSource = null;
+                MessageBox.Show("You must select a laboratory first");
                 return;
             }
 
@@ -6462,12 +6579,6 @@ where s.number = @sample_number
                 {
                     Guid pmid = Utils.MakeGuid(row.Cells["id"].Value);
 
-                    cmd.CommandText = "delete from laboratory_x_analysis_method where laboratory_id = @lab_id and preparation_method_id = @pm_id";
-                    cmd.Parameters.Clear();
-                    cmd.Parameters.AddWithValue("@lab_id", lid);
-                    cmd.Parameters.AddWithValue("@pm_id", pmid);
-                    cmd.ExecuteNonQuery();
-
                     cmd.CommandText = "delete from laboratory_x_preparation_method where laboratory_id = @lab_id and preparation_method_id = @pm_id";
                     cmd.Parameters.Clear();
                     cmd.Parameters.AddWithValue("@lab_id", lid);
@@ -6476,8 +6587,7 @@ where s.number = @sample_number
                 }
 
                 trans.Commit();
-
-                gridSysLabAnalMeth.DataSource = null;
+                
                 UI.PopulateLabPrepMeths(conn, lid, gridSysLabPrepMeth);                
             }
             catch(Exception ex)
@@ -6498,84 +6608,48 @@ where s.number = @sample_number
             {
                 MessageBox.Show("You must select a single laboratory first");
                 return;
-            }            
-
-            if (gridSysLabPrepMeth.SelectedRows.Count != 1)
-            {
-                MessageBox.Show("You must select a single preparation method first");
-                return;
             }
 
             Guid lid = Utils.MakeGuid(gridSysLab.SelectedRows[0].Cells["id"].Value);
-            Guid pmid = Utils.MakeGuid(gridSysLabPrepMeth.SelectedRows[0].Cells["id"].Value);
 
             List<Guid> existingAnalMeths = new List<Guid>();
             foreach (DataGridViewRow row in gridSysLabAnalMeth.Rows)
                 existingAnalMeths.Add(Utils.MakeGuid(row.Cells["id"].Value));
 
-            FormLabXAnalMeth form = new FormLabXAnalMeth(lid, pmid, existingAnalMeths);
+            FormLabXAnalMeth form = new FormLabXAnalMeth(lid, existingAnalMeths);
             if (form.ShowDialog() != DialogResult.OK)
                 return;
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                UI.PopulateLabAnalMeths(conn, lid, pmid, gridSysLabAnalMeth);
+                UI.PopulateLabAnalMeths(conn, lid, gridSysLabAnalMeth);
             }
         }
 
         private void btnSysLabAnalMethRemove_Click(object sender, EventArgs e)
         {
-            if (gridSysLab.SelectedRows.Count != 1)
+            if (gridSysLab.SelectedRows.Count < 1)
             {
-                MessageBox.Show("You must select a single laboratory first");
-                return;
-            }            
-
-            if (gridSysLabPrepMeth.SelectedRows.Count != 1)
-            {
-                MessageBox.Show("You must select a single preparation method first");
+                MessageBox.Show("You must select a laboratory first");
                 return;
             }
 
             Guid lid = Utils.MakeGuid(gridSysLab.SelectedRows[0].Cells["id"].Value);
-            Guid pmid = Utils.MakeGuid(gridSysLabPrepMeth.SelectedRows[0].Cells["id"].Value);
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                SqlCommand cmd = new SqlCommand("delete from laboratory_x_analysis_method where laboratory_id = @lab_id and preparation_method_id = @pm_id and analysis_method_id = @am_id", conn);
+                SqlCommand cmd = new SqlCommand("delete from laboratory_x_analysis_method where laboratory_id = @lab_id and analysis_method_id = @am_id", conn);
                 foreach (DataGridViewRow row in gridSysLabAnalMeth.SelectedRows)
                 {
                     Guid amid = Utils.MakeGuid(row.Cells["id"].Value);
+
                     cmd.Parameters.Clear();
                     cmd.Parameters.AddWithValue("@lab_id", lid);
-                    cmd.Parameters.AddWithValue("@pm_id", pmid);
                     cmd.Parameters.AddWithValue("@am_id", amid);
                     cmd.ExecuteNonQuery();
                 }
 
-                UI.PopulateLabAnalMeths(conn, lid, pmid, gridSysLabAnalMeth);
-            }
-        }
-
-        private void gridSysLabPrepMeth_SelectionChanged(object sender, EventArgs e)
-        {
-            if (gridSysLab.SelectedRows.Count < 1)
-            {
-                gridSysLabPrepMeth.DataSource = null;
-                gridSysLabAnalMeth.DataSource = null;
-                return;
-            }
-
-            Guid lid = Utils.MakeGuid(gridSysLab.SelectedRows[0].Cells["id"].Value);
-
-            if (gridSysLabPrepMeth.SelectedRows.Count != 1)                        
-                return;            
-
-            Guid pmid = Guid.Parse(gridSysLabPrepMeth.SelectedRows[0].Cells["id"].Value.ToString());
-
-            using (SqlConnection conn = DB.OpenConnection())
-            {
-                UI.PopulateLabAnalMeths(conn, lid, pmid, gridSysLabAnalMeth);
+                UI.PopulateLabAnalMeths(conn, lid, gridSysLabAnalMeth);
             }
         }
 
@@ -6946,6 +7020,25 @@ select count(*) from sample s
 
             FormPrintProjectLabel form = new FormPrintProjectLabel(Common.Settings, pid);
             form.ShowDialog();
+        }
+
+        private void tabsTypeRel_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                if (tabsTypeRel.SelectedTab == tabTypeRelationsSampleTypes)
+                {
+                    UI.PopulateSampleTypes(conn, treeSampleTypes);
+                }
+                else if (tabsTypeRel.SelectedTab == tabTypeRelationsPrepMeth)
+                {
+                    UI.PopulatePreparationMethods(conn, gridTypeRelPrepMeth);
+                }
+                else if (tabsTypeRel.SelectedTab == tabTypeRelationsAnalMeth)
+                {
+                    UI.PopulateAnalysisMethods(conn, gridTypeRelAnalMeth);
+                }
+            }
         }
     }    
 }

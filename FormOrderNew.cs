@@ -56,6 +56,32 @@ namespace DSA_lims
 
                 cboxRequestedSigma.DataSource = DB.GetSigmaValues(conn, null, false);
                 cboxRequestedSigmaMDA.DataSource = DB.GetSigmaValues(conn, null, true);
+
+                if (!Utils.IsValidGuid(Common.LabId))
+                {
+                    Guid cid = DB.GetCustomerIdForAccountId(conn, null, Common.UserId);
+
+                    using (SqlDataReader reader = DB.GetDataReader(conn, null, "select * from cv_customer where id = @id", CommandType.Text, new SqlParameter("@id", cid)))
+                    {
+                        reader.Read();
+                        Customer c = new Customer();
+
+                        c.Id = cid;
+                        c.CompanyName = reader["company_name"].ToString();
+                        c.CompanyEmail = reader["company_email"].ToString();
+                        c.CompanyPhone = reader["company_phone"].ToString();
+                        c.CompanyAddress = reader["company_address"].ToString();
+                        c.ContactName = reader["person_name"].ToString();
+                        c.ContactEmail = reader["person_email"].ToString();
+                        c.ContactPhone = reader["person_phone"].ToString();
+                        c.ContactAddress = reader["person_address"].ToString();
+
+                        mCustomer = c;
+                        tbCustomer.Text = mCustomer.ContactName;
+                    }
+
+                    btnSelectCustomer.Enabled = false;
+                }
             }
         }
 
@@ -216,7 +242,7 @@ namespace DSA_lims
             FormSelectCustomer form = new FormSelectCustomer(InstanceStatus.Active);
             if (form.ShowDialog() != DialogResult.OK)
                 return;
-
+            
             mCustomer = form.SelectedCustomer;
             tbCustomer.Text = mCustomer.ContactName;
         }

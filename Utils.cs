@@ -179,6 +179,15 @@ namespace DSA_lims
                 double minutes = Convert.ToDouble(match.Groups[2].Value);
                 double seconds = Convert.ToDouble(match.Groups[3].Value);
 
+                if (Math.Abs(degree) > 90d)
+                    throw new Exception("Latitude degree is out of range");
+
+                if (Math.Abs(minutes) > 60d)
+                    throw new Exception("Latitude minutes is out of range");
+
+                if (Math.Abs(seconds) > 60d)
+                    throw new Exception("Latitude seconds is out of range");
+
                 lat = degree + (minutes / 60.0) + (seconds / 3600.0);
 
                 if (match.Groups[4].Value == "S")
@@ -197,6 +206,12 @@ namespace DSA_lims
 
                 double degree = Convert.ToDouble(match.Groups[1].Value);
                 double minutes = Convert.ToDouble(match.Groups[2].Value);
+
+                if (Math.Abs(degree) > 90d)
+                    throw new Exception("Latitude degree is out of range");
+
+                if (Math.Abs(minutes) > 60d)
+                    throw new Exception("Latitude minutes is out of range");
 
                 //degrees = degrees + minutes / 60
                 lat = degree + minutes / 60.0;
@@ -219,6 +234,9 @@ namespace DSA_lims
                 if (match.Groups[2].Value == "S")
                     lat = -lat;
 
+                if (Math.Abs(lat) > 90d)
+                    throw new Exception("Latitude is out of range");
+
                 return lat;
             }
 
@@ -231,6 +249,9 @@ namespace DSA_lims
                     throw new Exception("Invalid format on latitude");
 
                 lat = Convert.ToDouble(match.Groups[1].Value);
+
+                if (Math.Abs(lat) > 90d)
+                    throw new Exception("Latitude is out of range");
 
                 return lat;
             }
@@ -254,6 +275,15 @@ namespace DSA_lims
                 double minutes = Convert.ToDouble(match.Groups[2].Value);
                 double seconds = Convert.ToDouble(match.Groups[3].Value);
 
+                if(Math.Abs(degree) > 180d)
+                    throw new Exception("Longitude degree is out of range");
+
+                if (Math.Abs(minutes) > 60d)
+                    throw new Exception("Longitude minutes is out of range");
+
+                if (Math.Abs(seconds) > 60d)
+                    throw new Exception("Longitude seconds is out of range");
+
                 lon = degree + (minutes / 60.0) + (seconds / 3600.0);
 
                 if (match.Groups[4].Value == "W")
@@ -272,6 +302,12 @@ namespace DSA_lims
 
                 double degree = Convert.ToDouble(match.Groups[1].Value);
                 double minutes = Convert.ToDouble(match.Groups[2].Value);
+
+                if (Math.Abs(degree) > 180d)
+                    throw new Exception("Longitude degree is out of range");
+
+                if (Math.Abs(minutes) > 60d)
+                    throw new Exception("Longitude minutes is out of range");
 
                 //degrees = degrees + minutes / 60
                 lon = degree + minutes / 60.0;
@@ -294,6 +330,9 @@ namespace DSA_lims
                 if (match.Groups[2].Value == "W")
                     lon = -lon;
 
+                if (Math.Abs(lon) > 180d)
+                    throw new Exception("Longitude is out of range");
+
                 return lon;
             }
 
@@ -306,6 +345,10 @@ namespace DSA_lims
                     throw new Exception("Invalid format on longitude");
 
                 lon = Convert.ToDouble(match.Groups[1].Value);
+
+                if (Math.Abs(lon) > 180d)
+                    throw new Exception("Longitude out of range");
+
                 return lon;
             }
 

@@ -31,13 +31,13 @@ namespace DSA_lims
 {
     public partial class FormPrepAnalAddPrep : Form
     {
-        Guid SampleId = Guid.Empty;
+        Sample mSample = null;
 
-        public FormPrepAnalAddPrep(Guid sampleId)
+        public FormPrepAnalAddPrep(Sample sample)
         {
             InitializeComponent();
 
-            SampleId = sampleId;
+            mSample = sample;
 
             tbCount.KeyPress += CustomEvents.Integer_KeyPress;
         }
@@ -46,9 +46,7 @@ namespace DSA_lims
         {
             using (SqlConnection conn = DB.OpenConnection())
             {
-                UI.PopulateComboBoxes(conn, "csp_select_preparation_methods_short", new[] {
-                    new SqlParameter("instance_status_level", InstanceStatus.Active)
-                }, cboxPrepMethods);
+                UI.PopulateSampleTypePrepMeth(conn, mSample.SampleTypeId, Common.LabId, cboxPrepMethods);
             }
 
             tbCount.Text = "1";
@@ -84,7 +82,7 @@ namespace DSA_lims
                 connection = DB.OpenConnection();
                 transaction = connection.BeginTransaction();
 
-                int nextPrepNumber = DB.GetNextPreparationNumber(connection, transaction, SampleId);
+                int nextPrepNumber = DB.GetNextPreparationNumber(connection, transaction, mSample.Id);
 
                 SqlCommand cmd = new SqlCommand("csp_insert_preparation", connection, transaction);
                 cmd.CommandType = CommandType.StoredProcedure;
@@ -94,7 +92,7 @@ namespace DSA_lims
                     Guid newPrepId = Guid.NewGuid();
                     cmd.Parameters.Clear();
                     cmd.Parameters.AddWithValue("@id", newPrepId);
-                    cmd.Parameters.AddWithValue("@sample_id", SampleId, Guid.Empty);
+                    cmd.Parameters.AddWithValue("@sample_id", mSample.Id, Guid.Empty);
                     cmd.Parameters.AddWithValue("@number", nextPrepNumber++);
                     cmd.Parameters.AddWithValue("@assignment_id", DBNull.Value);
                     cmd.Parameters.AddWithValue("@laboratory_id", Common.LabId, Guid.Empty);

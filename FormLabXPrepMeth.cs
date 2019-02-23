@@ -51,9 +51,9 @@ namespace DSA_lims
             {
                 string query;
                 if (String.IsNullOrEmpty(exceptIds))                
-                    query = "select * from preparation_method where instance_status_id <= 1";                
+                    query = "select * from preparation_method where instance_status_id < 2";                
                 else                
-                    query = "select * from preparation_method where id not in(" + exceptIds + ") and instance_status_id <= 1";
+                    query = "select * from preparation_method where id not in(" + exceptIds + ") and instance_status_id < 2";
 
                 gridPrepMeth.DataSource = DB.GetDataTable(conn, null, query, CommandType.Text, new SqlParameter("@lid", mLabId));
 

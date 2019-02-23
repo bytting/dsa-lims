@@ -32,7 +32,7 @@ namespace DSA_lims
     public partial class FormOrderAddPrepMeth : Form
     {
         private Assignment mAssignment = null;
-        private AssignmentSampleType mAst = null;
+        private AssignmentSampleType mAst = null;        
 
         public FormOrderAddPrepMeth(Assignment ass, AssignmentSampleType ast)
         {
@@ -46,7 +46,7 @@ namespace DSA_lims
             cboxPrepMethLaboratory.Enabled = false;
 
             using (SqlConnection conn = DB.OpenConnection())
-            {                
+            {                   
                 UI.PopulateComboBoxes(conn, "csp_select_laboratories_short", new[] {
                     new SqlParameter("@instance_status_level", InstanceStatus.Active)
                 }, cboxPrepMethLaboratory);
@@ -114,12 +114,10 @@ namespace DSA_lims
             }
 
             Guid labId = Utils.MakeGuid(cboxPrepMethLaboratory.SelectedValue);
+
             using (SqlConnection conn = DB.OpenConnection())
             {
-                UI.PopulateComboBoxes(conn, "csp_select_preparation_methods_for_laboratory_short", new[] {
-                    new SqlParameter("@laboratory_id", labId),
-                    new SqlParameter("@instance_status_level", InstanceStatus.Active)
-                }, cboxPreparationMethod);
+                UI.PopulateSampleTypePrepMeth(conn, mAst.SampleTypeId, labId, cboxPreparationMethod);
             }
         }
     }

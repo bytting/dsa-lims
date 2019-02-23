@@ -97,38 +97,40 @@ namespace DSA_lims
 
         private void btnOk_Click(object sender, EventArgs e)
         {
-            if (String.IsNullOrEmpty(cboxPrinters.Text))
+            try
             {
-                MessageBox.Show("You must select a printer");
-                return;
-            }
+                if (String.IsNullOrEmpty(cboxPrinters.Text))
+                {
+                    MessageBox.Show("You must select a printer");
+                    return;
+                }
 
-            if (cboxPaperSizes.SelectedItem == null)
-            {
-                MessageBox.Show("You must select a printer size");
-                return;
-            }
+                if (cboxPaperSizes.SelectedItem == null)
+                {
+                    MessageBox.Show("You must select a printer size");
+                    return;
+                }
 
-            if (String.IsNullOrEmpty(tbCopies.Text))
-            {
-                MessageBox.Show("Number of copies must be a positive number");
-                return;
-            }
+                if (String.IsNullOrEmpty(tbCopies.Text))
+                {
+                    MessageBox.Show("Number of copies must be a positive number");
+                    return;
+                }
 
-            int copies = Convert.ToInt32(tbCopies.Text);
-            if (copies < 1)
-            {
-                MessageBox.Show("Number of copies must be a positive number");
-                return;
-            }
+                int copies = Convert.ToInt32(tbCopies.Text);
+                if (copies < 1)
+                {
+                    MessageBox.Show("Number of copies must be a positive number");
+                    return;
+                }
 
-            PaperSize paperSize = cboxPaperSizes.SelectedItem as PaperSize;
-            printDocument.DefaultPageSettings.Landscape = cbLandscape.Checked;
-            printDocument.DefaultPageSettings.PaperSize = paperSize;
+                PaperSize paperSize = cboxPaperSizes.SelectedItem as PaperSize;
+                printDocument.DefaultPageSettings.Landscape = cbLandscape.Checked;
+                printDocument.DefaultPageSettings.PaperSize = paperSize;
 
-            printDocument.PrintPage += PrintDocument_PrintPage;
+                printDocument.PrintPage += PrintDocument_PrintPage;
 
-            string query = @"
+                string query = @"
 select 
     ps.name as 'project_sub_name', 
     pm.name as 'project_main_name'    
@@ -136,32 +138,38 @@ from project_sub ps
     inner join project_main pm on pm.id = ps.project_main_id and ps.id = @psid
 ";
 
-            using (SqlConnection conn = DB.OpenConnection())
-            {                
-                using (SqlDataReader reader = DB.GetDataReader(conn, null, query, CommandType.Text, new SqlParameter("@psid", mProjectId)))
+                using (SqlConnection conn = DB.OpenConnection())
                 {
-                    if (!reader.HasRows)
+                    using (SqlDataReader reader = DB.GetDataReader(conn, null, query, CommandType.Text, new SqlParameter("@psid", mProjectId)))
                     {
-                        MessageBox.Show("No id found for sub project");
-                        return;
+                        if (!reader.HasRows)
+                        {
+                            MessageBox.Show("No id found for sub project");
+                            return;
+                        }
+
+                        reader.Read();
+
+                        ProjectMainName = reader["project_main_name"].ToString();
+                        ProjectSubName = reader["project_sub_name"].ToString();
+
+                        for (int c = 0; c < copies; c++)
+                            printDocument.Print();
                     }
+                }
 
-                    reader.Read();
+                mSettings.LabelPrinterName = cboxPrinters.Text;
+                mSettings.LabelPrinterPaperName = paperSize.PaperName;
+                mSettings.LabelPrinterLandscape = cbLandscape.Checked;
 
-                    ProjectMainName = reader["project_main_name"].ToString();
-                    ProjectSubName = reader["project_sub_name"].ToString();
-
-                    for (int c = 0; c < copies; c++)
-                        printDocument.Print();
-                }                
+                DialogResult = DialogResult.OK;
+                Close();
             }
-
-            mSettings.LabelPrinterName = cboxPrinters.Text;
-            mSettings.LabelPrinterPaperName = paperSize.PaperName;
-            mSettings.LabelPrinterLandscape = cbLandscape.Checked;
-
-            DialogResult = DialogResult.OK;
-            Close();
+            catch(Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }

@@ -2440,8 +2440,9 @@ as
 	order by name_short
 go
 
-create proc csp_select_preparation_methods_for_laboratory_short
+create proc csp_select_preparation_methods_for_laboratory_sample_type_short
 	@laboratory_id uniqueidentifier,
+	@sample_type_id uniqueidentifier,
 	@instance_status_level int
 as
 	select 
@@ -2449,6 +2450,7 @@ as
 		pm.name_short as 'name'
 	from preparation_method pm
 		inner join laboratory_x_preparation_method lxpm on lxpm.preparation_method_id = pm.id and lxpm.laboratory_id = @laboratory_id
+		inner join sample_type_x_preparation_method stxpm on pm.id = stxpm.preparation_method_id and stxpm.sample_type_id = @sample_type_id
 	where instance_status_id <= @instance_status_level
 	order by name_short
 go
@@ -2802,6 +2804,21 @@ as
 	order by name_short
 go
 
+create proc csp_select_analysis_methods_for_laboratory_short
+	@laboratory_id uniqueidentifier,
+	@preparation_method_id uniqueidentifier,
+	@instance_status_level int
+as
+	select 
+		am.id as 'id', 
+		am.name_short as 'name'
+	from analysis_method am
+		inner join laboratory_x_analysis_method lxam on lxam.analysis_method_id = am.id and lxam.laboratory_id = @laboratory_id
+		inner join preparation_method_x_analysis_method pmxam on pmxam.analysis_method_id = am.id and pmxam.preparation_method_id = @preparation_method_id
+	where instance_status_id <= @instance_status_level
+	order by am.name_short
+go
+
 create proc csp_select_analysis_methods_for_laboratory_and_preparation_method_short
 	@laboratory_id uniqueidentifier,
 	@preparation_method_id uniqueidentifier,
@@ -2811,7 +2828,8 @@ as
 		am.id as 'id', 
 		am.name_short as 'name'
 	from analysis_method am
-		inner join laboratory_x_analysis_method lxam on lxam.analysis_method_id = am.id and lxam.laboratory_id = @laboratory_id and lxam.preparation_method_id = @preparation_method_id
+		inner join laboratory_x_analysis_method lxam on lxam.analysis_method_id = am.id and lxam.laboratory_id = @laboratory_id 
+		inner join preparation_method_x_analysis_method pmxam on pmxam.preparation_method_id = @preparation_method_id and pmxam.analysis_method_id = am.id
 	where instance_status_id <= @instance_status_level
 	order by am.name_short
 go
@@ -2843,7 +2861,6 @@ if OBJECT_ID('dbo.laboratory_x_analysis_method', 'U') is not null drop table lab
 
 create table laboratory_x_analysis_method (
 	laboratory_id uniqueidentifier not null,
-	preparation_method_id uniqueidentifier not null,
 	analysis_method_id uniqueidentifier not null
 )
 go

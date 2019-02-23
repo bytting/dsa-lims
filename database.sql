@@ -2221,6 +2221,17 @@ as
 go
 
 /*===========================================================================*/
+/* tbl assignment_x_account */
+
+if OBJECT_ID('dbo.assignment_x_account', 'U') is not null drop table assignment_x_account;
+
+create table assignment_x_account (
+	assignment_id uniqueidentifier not null,	
+	account_id uniqueidentifier not null
+)
+go
+
+/*===========================================================================*/
 /* tbl preparation_geometry */
 
 if OBJECT_ID('dbo.preparation_geometry', 'U') is not null drop table preparation_geometry;

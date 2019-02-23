@@ -468,6 +468,8 @@
             this.btnOrdersEdit = new System.Windows.Forms.ToolStripButton();
             this.btnOrdersDelete = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnOrdersAssignUsers = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator67 = new System.Windows.Forms.ToolStripSeparator();
             this.btnOrdersSummary = new System.Windows.Forms.ToolStripDropDownButton();
             this.orderSummaryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.preparationSummaryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -1312,68 +1314,68 @@
             // miMainMenuView
             // 
             this.miMainMenuView.Name = "miMainMenuView";
-            this.miMainMenuView.Size = new System.Drawing.Size(148, 22);
+            this.miMainMenuView.Size = new System.Drawing.Size(147, 22);
             this.miMainMenuView.Text = "Ma&in menu";
             this.miMainMenuView.Click += new System.EventHandler(this.miMainMenuView_Click);
             // 
             // miBack
             // 
             this.miBack.Name = "miBack";
-            this.miBack.Size = new System.Drawing.Size(148, 22);
+            this.miBack.Size = new System.Drawing.Size(147, 22);
             this.miBack.Text = "Back";
             this.miBack.Click += new System.EventHandler(this.miBack_Click);
             // 
             // toolStripSeparator25
             // 
             this.toolStripSeparator25.Name = "toolStripSeparator25";
-            this.toolStripSeparator25.Size = new System.Drawing.Size(145, 6);
+            this.toolStripSeparator25.Size = new System.Drawing.Size(144, 6);
             // 
             // miSearchView
             // 
             this.miSearchView.Name = "miSearchView";
-            this.miSearchView.Size = new System.Drawing.Size(148, 22);
+            this.miSearchView.Size = new System.Drawing.Size(147, 22);
             this.miSearchView.Text = "S&earch";
             this.miSearchView.Click += new System.EventHandler(this.miSearchView_Click);
             // 
             // miProjectsView
             // 
             this.miProjectsView.Name = "miProjectsView";
-            this.miProjectsView.Size = new System.Drawing.Size(148, 22);
+            this.miProjectsView.Size = new System.Drawing.Size(147, 22);
             this.miProjectsView.Text = "&Projects";
             this.miProjectsView.Click += new System.EventHandler(this.miProjectsView_Click);
             // 
             // miCustomersView
             // 
             this.miCustomersView.Name = "miCustomersView";
-            this.miCustomersView.Size = new System.Drawing.Size(148, 22);
+            this.miCustomersView.Size = new System.Drawing.Size(147, 22);
             this.miCustomersView.Text = "&Customers";
             this.miCustomersView.Click += new System.EventHandler(this.miCustomersView_Click);
             // 
             // miTypeRelationsView
             // 
             this.miTypeRelationsView.Name = "miTypeRelationsView";
-            this.miTypeRelationsView.Size = new System.Drawing.Size(148, 22);
+            this.miTypeRelationsView.Size = new System.Drawing.Size(147, 22);
             this.miTypeRelationsView.Text = "Type &relations";
             this.miTypeRelationsView.Click += new System.EventHandler(this.miTypeRelationsView_Click);
             // 
             // miMetadataView
             // 
             this.miMetadataView.Name = "miMetadataView";
-            this.miMetadataView.Size = new System.Drawing.Size(148, 22);
+            this.miMetadataView.Size = new System.Drawing.Size(147, 22);
             this.miMetadataView.Text = "M&etadata";
             this.miMetadataView.Click += new System.EventHandler(this.miMetadataView_Click);
             // 
             // miSystemDataView
             // 
             this.miSystemDataView.Name = "miSystemDataView";
-            this.miSystemDataView.Size = new System.Drawing.Size(148, 22);
+            this.miSystemDataView.Size = new System.Drawing.Size(147, 22);
             this.miSystemDataView.Text = "&System data";
             this.miSystemDataView.Click += new System.EventHandler(this.miSystemDataView_Click);
             // 
             // miAuditLogView
             // 
             this.miAuditLogView.Name = "miAuditLogView";
-            this.miAuditLogView.Size = new System.Drawing.Size(148, 22);
+            this.miAuditLogView.Size = new System.Drawing.Size(147, 22);
             this.miAuditLogView.Text = "&Audit log";
             this.miAuditLogView.Click += new System.EventHandler(this.miAuditLogView_Click);
             // 
@@ -1491,21 +1493,21 @@
             // miNewStation
             // 
             this.miNewStation.Name = "miNewStation";
-            this.miNewStation.Size = new System.Drawing.Size(152, 22);
+            this.miNewStation.Size = new System.Drawing.Size(146, 22);
             this.miNewStation.Text = "&New station";
             this.miNewStation.Click += new System.EventHandler(this.miNewStation_Click);
             // 
             // miEditStation
             // 
             this.miEditStation.Name = "miEditStation";
-            this.miEditStation.Size = new System.Drawing.Size(152, 22);
+            this.miEditStation.Size = new System.Drawing.Size(146, 22);
             this.miEditStation.Text = "&Edit station";
             this.miEditStation.Click += new System.EventHandler(this.miEditStation_Click);
             // 
             // miDeleteStation
             // 
             this.miDeleteStation.Name = "miDeleteStation";
-            this.miDeleteStation.Size = new System.Drawing.Size(152, 22);
+            this.miDeleteStation.Size = new System.Drawing.Size(146, 22);
             this.miDeleteStation.Text = "&Delete station";
             this.miDeleteStation.Click += new System.EventHandler(this.miDeleteStation_Click);
             // 
@@ -1966,7 +1968,7 @@
             this.miPreparationMethods,
             this.miAnalysisMethods});
             this.miTypeRelations.Name = "miTypeRelations";
-            this.miTypeRelations.Size = new System.Drawing.Size(93, 20);
+            this.miTypeRelations.Size = new System.Drawing.Size(92, 20);
             this.miTypeRelations.Text = "&Type relations";
             // 
             // miTypeRelSampleTypes
@@ -2444,21 +2446,21 @@
             // miPersonNew
             // 
             this.miPersonNew.Name = "miPersonNew";
-            this.miPersonNew.Size = new System.Drawing.Size(152, 22);
+            this.miPersonNew.Size = new System.Drawing.Size(146, 22);
             this.miPersonNew.Text = "New person";
             this.miPersonNew.Click += new System.EventHandler(this.miPersonNew_Click);
             // 
             // miPersonEdit
             // 
             this.miPersonEdit.Name = "miPersonEdit";
-            this.miPersonEdit.Size = new System.Drawing.Size(152, 22);
+            this.miPersonEdit.Size = new System.Drawing.Size(146, 22);
             this.miPersonEdit.Text = "Edit person";
             this.miPersonEdit.Click += new System.EventHandler(this.miPersonEdit_Click);
             // 
             // miPersonDelete
             // 
             this.miPersonDelete.Name = "miPersonDelete";
-            this.miPersonDelete.Size = new System.Drawing.Size(152, 22);
+            this.miPersonDelete.Size = new System.Drawing.Size(146, 22);
             this.miPersonDelete.Text = "Delete person";
             this.miPersonDelete.Click += new System.EventHandler(this.miPersonDelete_Click);
             // 
@@ -5638,6 +5640,8 @@
             this.btnOrdersEdit,
             this.btnOrdersDelete,
             this.toolStripSeparator6,
+            this.btnOrdersAssignUsers,
+            this.toolStripSeparator67,
             this.btnOrdersSummary,
             this.btnOrdersUnlock});
             this.toolStrip9.Location = new System.Drawing.Point(0, 0);
@@ -5689,6 +5693,20 @@
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
             this.toolStripSeparator6.Size = new System.Drawing.Size(6, 25);
+            // 
+            // btnOrdersAssignUsers
+            // 
+            this.btnOrdersAssignUsers.Image = global::DSA_lims.Properties.Resources.users;
+            this.btnOrdersAssignUsers.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnOrdersAssignUsers.Name = "btnOrdersAssignUsers";
+            this.btnOrdersAssignUsers.Size = new System.Drawing.Size(92, 22);
+            this.btnOrdersAssignUsers.Text = "Assign users";
+            this.btnOrdersAssignUsers.Click += new System.EventHandler(this.btnOrdersAssignUsers_Click);
+            // 
+            // toolStripSeparator67
+            // 
+            this.toolStripSeparator67.Name = "toolStripSeparator67";
+            this.toolStripSeparator67.Size = new System.Drawing.Size(6, 25);
             // 
             // btnOrdersSummary
             // 
@@ -7260,10 +7278,10 @@
             // 
             this.tabTypeRelSampTypePrep.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.tabTypeRelSampTypePrep.Controls.Add(this.splitContainer13);
-            this.tabTypeRelSampTypePrep.Location = new System.Drawing.Point(4, 24);
+            this.tabTypeRelSampTypePrep.Location = new System.Drawing.Point(4, 22);
             this.tabTypeRelSampTypePrep.Name = "tabTypeRelSampTypePrep";
             this.tabTypeRelSampTypePrep.Padding = new System.Windows.Forms.Padding(3);
-            this.tabTypeRelSampTypePrep.Size = new System.Drawing.Size(583, 501);
+            this.tabTypeRelSampTypePrep.Size = new System.Drawing.Size(583, 505);
             this.tabTypeRelSampTypePrep.TabIndex = 2;
             this.tabTypeRelSampTypePrep.Text = "Preparation methods";
             // 
@@ -7283,8 +7301,8 @@
             // 
             this.splitContainer13.Panel2.Controls.Add(this.lbTypeRelSampTypeInheritedPrepMeth);
             this.splitContainer13.Panel2.Controls.Add(this.toolsTypeRelSampAnalMeth);
-            this.splitContainer13.Size = new System.Drawing.Size(577, 495);
-            this.splitContainer13.SplitterDistance = 186;
+            this.splitContainer13.Size = new System.Drawing.Size(577, 499);
+            this.splitContainer13.SplitterDistance = 187;
             this.splitContainer13.SplitterWidth = 3;
             this.splitContainer13.TabIndex = 0;
             // 
@@ -7297,7 +7315,7 @@
             this.lbTypeRelSampTypePrepMeth.ItemHeight = 15;
             this.lbTypeRelSampTypePrepMeth.Location = new System.Drawing.Point(0, 25);
             this.lbTypeRelSampTypePrepMeth.Name = "lbTypeRelSampTypePrepMeth";
-            this.lbTypeRelSampTypePrepMeth.Size = new System.Drawing.Size(577, 161);
+            this.lbTypeRelSampTypePrepMeth.Size = new System.Drawing.Size(577, 162);
             this.lbTypeRelSampTypePrepMeth.TabIndex = 1;
             // 
             // toolsTypeRelSampPrepMeth
@@ -7361,7 +7379,7 @@
             this.lbTypeRelSampTypeInheritedPrepMeth.Location = new System.Drawing.Point(0, 25);
             this.lbTypeRelSampTypeInheritedPrepMeth.Name = "lbTypeRelSampTypeInheritedPrepMeth";
             this.lbTypeRelSampTypeInheritedPrepMeth.SelectionMode = System.Windows.Forms.SelectionMode.None;
-            this.lbTypeRelSampTypeInheritedPrepMeth.Size = new System.Drawing.Size(577, 281);
+            this.lbTypeRelSampTypeInheritedPrepMeth.Size = new System.Drawing.Size(577, 284);
             this.lbTypeRelSampTypeInheritedPrepMeth.TabIndex = 1;
             // 
             // toolsTypeRelSampAnalMeth
@@ -8184,7 +8202,7 @@
             this.splitContainer18.Panel2.Controls.Add(this.gridSysUsersAnalMeth);
             this.splitContainer18.Panel2.Controls.Add(this.toolsSysUsersAnalMeth);
             this.splitContainer18.Size = new System.Drawing.Size(413, 529);
-            this.splitContainer18.SplitterDistance = 241;
+            this.splitContainer18.SplitterDistance = 240;
             this.splitContainer18.SplitterWidth = 3;
             this.splitContainer18.TabIndex = 3;
             // 
@@ -8196,7 +8214,7 @@
             this.lbSysUsersRoles.Location = new System.Drawing.Point(0, 25);
             this.lbSysUsersRoles.Name = "lbSysUsersRoles";
             this.lbSysUsersRoles.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.lbSysUsersRoles.Size = new System.Drawing.Size(413, 216);
+            this.lbSysUsersRoles.Size = new System.Drawing.Size(413, 215);
             this.lbSysUsersRoles.TabIndex = 1;
             // 
             // toolsSysUsersRoles
@@ -8259,7 +8277,7 @@
             this.gridSysUsersAnalMeth.ReadOnly = true;
             this.gridSysUsersAnalMeth.RowHeadersVisible = false;
             this.gridSysUsersAnalMeth.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridSysUsersAnalMeth.Size = new System.Drawing.Size(413, 260);
+            this.gridSysUsersAnalMeth.Size = new System.Drawing.Size(413, 261);
             this.gridSysUsersAnalMeth.TabIndex = 1;
             // 
             // toolsSysUsersAnalMeth
@@ -8930,14 +8948,14 @@
             // btnPrepAnalAddPrep
             // 
             this.btnPrepAnalAddPrep.Name = "btnPrepAnalAddPrep";
-            this.btnPrepAnalAddPrep.Size = new System.Drawing.Size(152, 22);
+            this.btnPrepAnalAddPrep.Size = new System.Drawing.Size(116, 22);
             this.btnPrepAnalAddPrep.Text = "&Add...";
             this.btnPrepAnalAddPrep.Click += new System.EventHandler(this.btnPrepAnalAddPrep_Click);
             // 
             // btnPrepAnalDelPrep
             // 
             this.btnPrepAnalDelPrep.Name = "btnPrepAnalDelPrep";
-            this.btnPrepAnalDelPrep.Size = new System.Drawing.Size(152, 22);
+            this.btnPrepAnalDelPrep.Size = new System.Drawing.Size(116, 22);
             this.btnPrepAnalDelPrep.Text = "&Delete...";
             this.btnPrepAnalDelPrep.Click += new System.EventHandler(this.btnPrepAnalDelPrep_Click);
             // 
@@ -8955,14 +8973,14 @@
             // btnPrepAnalAddAnal
             // 
             this.btnPrepAnalAddAnal.Name = "btnPrepAnalAddAnal";
-            this.btnPrepAnalAddAnal.Size = new System.Drawing.Size(152, 22);
+            this.btnPrepAnalAddAnal.Size = new System.Drawing.Size(116, 22);
             this.btnPrepAnalAddAnal.Text = "&Add...";
             this.btnPrepAnalAddAnal.Click += new System.EventHandler(this.btnPrepAnalAddAnal_Click);
             // 
             // btnPrepAnalDelAnal
             // 
             this.btnPrepAnalDelAnal.Name = "btnPrepAnalDelAnal";
-            this.btnPrepAnalDelAnal.Size = new System.Drawing.Size(152, 22);
+            this.btnPrepAnalDelAnal.Size = new System.Drawing.Size(116, 22);
             this.btnPrepAnalDelAnal.Text = "&Delete...";
             this.btnPrepAnalDelAnal.Click += new System.EventHandler(this.btnPrepAnalDelAnal_Click);
             // 
@@ -11844,6 +11862,8 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator73;
         private System.Windows.Forms.ToolStripButton btnOrderRemoveSampleFromOrder;
+        private System.Windows.Forms.ToolStripButton btnOrdersAssignUsers;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator67;
     }
 }
 

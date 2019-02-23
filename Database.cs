@@ -813,20 +813,24 @@ select
             return Guid.Parse(o.ToString());
         }
 
-        public static Guid GetCustomerIdForAccountId(SqlConnection conn, SqlTransaction trans, Guid userId)
+        public static bool HasAccessToOrder(SqlConnection conn, SqlTransaction trans, Guid orderId)
         {
-            object o = GetScalar(conn, trans, @"
-select c.id 
-from customer c
-    inner join person p on c.person_id = p.id
-    inner join account a on a.person_id = p.id and a.id = @aid
-", CommandType.Text,
-                new SqlParameter("@aid", userId));
+            Guid aLabId = Assignment.GetLaboratoryId(conn, trans, orderId);
+            if (aLabId == Common.LabId)
+                return true;
 
-            if (!IsValidField(o))
-                return Guid.Empty;
+            string creator = Assignment.GetCreator(conn, trans, orderId);
+            if (creator.ToLower() == Common.Username.ToLower())
+                return true;
 
-            return Guid.Parse(o.ToString());
+            int n = (int)GetScalar(conn, trans, "select count(*) from assignment_x_account where assignment_id = @aid and account_id = @accid", CommandType.Text,
+                new SqlParameter("@aid", orderId), 
+                new SqlParameter("@accid", Common.UserId));
+
+            if (n > 0)
+                return true;
+
+            return false;
         }
     }
 

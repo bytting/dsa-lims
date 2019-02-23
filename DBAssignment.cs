@@ -94,6 +94,18 @@ namespace DSA_lims
                 ast.ClearDirty();
         }
 
+        public static Guid GetLaboratoryId(SqlConnection conn, SqlTransaction trans, Guid assignmentId)
+        {
+            object o = DB.GetScalar(conn, trans, "select laboratory_id from assignment where id = @aid", CommandType.Text, new SqlParameter("@aid", assignmentId));
+            return !DB.IsValidField(o) ? Guid.Empty : Guid.Parse(o.ToString());
+        }
+
+        public static string GetCreator(SqlConnection conn, SqlTransaction trans, Guid assignmentId)
+        {
+            object o = DB.GetScalar(conn, trans, "select created_by from assignment where id = @aid", CommandType.Text, new SqlParameter("@aid", assignmentId));
+            return !DB.IsValidField(o) ? String.Empty : o.ToString();
+        }
+
         public string LaboratoryName(SqlConnection conn, SqlTransaction trans)
         {
             object o = DB.GetScalar(conn, trans, "select name from laboratory where id = @lid", CommandType.Text, new SqlParameter("@lid", LaboratoryId));

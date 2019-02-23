@@ -327,6 +327,12 @@
     <Compile Include="FormOrderNew.Designer.cs">
       <DependentUpon>FormOrderNew.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormOrdersAssignUsers.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormOrdersAssignUsers.Designer.cs">
+      <DependentUpon>FormOrdersAssignUsers.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormPerson.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -557,6 +563,7 @@
     <Compile Include="Utils.cs" />
     <Compile Include="UserInterface.cs" />
     <None Include="images\info.png" />
+    <None Include="images\users.png" />
     <Content Include="SqlServerTypes\readme.htm" />
     <Content Include="SqlServerTypes\x64\msvcr120.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -650,6 +657,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormOrderNew.resx">
       <DependentUpon>FormOrderNew.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormOrdersAssignUsers.resx">
+      <DependentUpon>FormOrdersAssignUsers.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormPerson.resx">
       <DependentUpon>FormPerson.cs</DependentUpon>

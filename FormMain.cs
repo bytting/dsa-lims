@@ -2886,19 +2886,6 @@ namespace DSA_lims
         {
             // create new order
 
-            using (SqlConnection conn = DB.OpenConnection())
-            {
-                if (!Utils.IsValidGuid(Common.LabId))
-                {
-                    Guid cid = DB.GetCustomerIdForAccountId(conn, null, Common.UserId);
-                    if(cid == Guid.Empty)
-                    {
-                        MessageBox.Show("You can not create orders without having either a laboratory or customer");
-                        return;
-                    }
-                }
-            }
-
             FormOrderNew form = new FormOrderNew();
             if (form.ShowDialog() != DialogResult.OK)
                 return;
@@ -2934,16 +2921,13 @@ namespace DSA_lims
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                assignment.LoadFromDB(conn, null, orderId);
-                
-                if(assignment.LaboratoryId != Common.LabId)
+                if(!DB.HasAccessToOrder(conn, null, orderId))
                 {
-                    if (assignment.CreatedBy != Common.Username)
-                    {
-                        MessageBox.Show("You can not edit this order. Order was not created by you and does not belong to your laboratory");
-                        return;
-                    }
+                    MessageBox.Show("You don't have permission to edit this order");
+                    return;
                 }
+
+                assignment.LoadFromDB(conn, null, orderId);
 
                 PopulateOrder(conn, null, assignment, true);
             }            
@@ -7039,6 +7023,38 @@ select count(*) from sample s
                     UI.PopulateAnalysisMethods(conn, gridTypeRelAnalMeth);
                 }
             }
+        }
+
+        private void btnOrdersAssignUsers_Click(object sender, EventArgs e)
+        {
+            if(gridOrders.SelectedRows.Count != 1)
+            {
+                MessageBox.Show("You must select a single order first");
+                return;
+            }
+
+            if(!Roles.HasAccess(Role.LaboratoryAdministrator))
+            {
+                MessageBox.Show("You don't have permission to assign users to orders");
+                return;
+            }
+            
+            Guid aid = Utils.MakeGuid(gridOrders.SelectedRows[0].Cells["id"].Value);
+            string aname = gridOrders.SelectedRows[0].Cells["name"].Value.ToString();
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                Guid aLabId = Assignment.GetLaboratoryId(conn, null, aid);
+                if(aLabId != Common.LabId)
+                {
+                    MessageBox.Show("Can not assign users to this order. You don't belong to the same laboratory");
+                    return;
+                }
+            }
+
+            FormOrdersAssignUsers form = new FormOrdersAssignUsers(aid, aname);
+            if (form.ShowDialog() != DialogResult.OK)
+                return;
         }
     }    
 }

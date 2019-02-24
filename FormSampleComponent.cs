@@ -1,4 +1,22 @@
-﻿using Newtonsoft.Json;
+﻿/*	
+	DSA Lims - Laboratory Information Management System
+    Copyright (C) 2018  Norwegian Radiation Protection Authority
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+// Authors: Dag Robole,
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,6 +27,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Newtonsoft.Json;
 
 namespace DSA_lims
 {
@@ -57,9 +76,9 @@ namespace DSA_lims
                     tbName.Text = reader.GetString("name");
                     p["sample_type_id"] = reader["sample_type_id"];
                     p["create_date"] = reader["create_date"];
-                    p["created_by"] = reader["created_by"];
+                    p["create_id"] = reader["create_id"];
                     p["update_date"] = reader["update_date"];
-                    p["updated_by"] = reader["updated_by"];
+                    p["update_id"] = reader["update_id"];
                 }
             }
 
@@ -133,9 +152,9 @@ namespace DSA_lims
         private void InsertSampleComponent(SqlConnection conn, SqlTransaction trans)
         {            
             p["create_date"] = DateTime.Now;
-            p["created_by"] = Common.Username;
+            p["create_id"] = Common.UserId;
             p["update_date"] = DateTime.Now;
-            p["updated_by"] = Common.Username;        
+            p["update_id"] = Common.UserId;        
 
             SqlCommand cmd = new SqlCommand("csp_insert_sample_component", conn, trans);
             cmd.CommandType = CommandType.StoredProcedure;
@@ -144,23 +163,23 @@ namespace DSA_lims
             cmd.Parameters.AddWithValue("@sample_type_id", p["sample_type_id"], Guid.Empty);
             cmd.Parameters.AddWithValue("@name", p["name"]);
             cmd.Parameters.AddWithValue("@create_date", p["create_date"]);
-            cmd.Parameters.AddWithValue("@created_by", p["created_by"]);
+            cmd.Parameters.AddWithValue("@create_id", p["create_id"]);
             cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
-            cmd.Parameters.AddWithValue("@updated_by", p["updated_by"]);
+            cmd.Parameters.AddWithValue("@update_id", p["update_id"]);
             cmd.ExecuteNonQuery();                        
         }
 
         private void UpdateSampleComponent(SqlConnection conn, SqlTransaction trans)
         {            
             p["update_date"] = DateTime.Now;
-            p["updated_by"] = Common.Username;        
+            p["update_id"] = Common.UserId;
 
             SqlCommand cmd = new SqlCommand("csp_update_sample_component", conn, trans);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@id", p["id"]);
             cmd.Parameters.AddWithValue("@name", p["name"]);
             cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
-            cmd.Parameters.AddWithValue("@updated_by", p["updated_by"]);
+            cmd.Parameters.AddWithValue("@update_id", p["update_id"]);
             cmd.ExecuteNonQuery();                        
         }
     }

@@ -67,9 +67,9 @@ namespace DSA_lims
         public int InstanceStatusId { get; set; }
         public string LockedBy { get; set; }
         public DateTime CreateDate { get; set; }
-        public string CreatedBy { get; set; }
+        public Guid CreateId { get; set; }
         public DateTime UpdateDate { get; set; }
-        public string UpdatedBy { get; set; }
+        public Guid UpdateId { get; set; }
 
         public List<AssignmentSampleType> SampleTypes { get; set; }
 
@@ -100,10 +100,10 @@ namespace DSA_lims
             return !DB.IsValidField(o) ? Guid.Empty : Guid.Parse(o.ToString());
         }
 
-        public static string GetCreator(SqlConnection conn, SqlTransaction trans, Guid assignmentId)
+        public static Guid GetCreatorId(SqlConnection conn, SqlTransaction trans, Guid assignmentId)
         {
-            object o = DB.GetScalar(conn, trans, "select created_by from assignment where id = @aid", CommandType.Text, new SqlParameter("@aid", assignmentId));
-            return !DB.IsValidField(o) ? String.Empty : o.ToString();
+            object o = DB.GetScalar(conn, trans, "select create_id from assignment where id = @aid", CommandType.Text, new SqlParameter("@aid", assignmentId));
+            return !DB.IsValidField(o) ? Guid.Empty : Guid.Parse(o.ToString());
         }
 
         public string LaboratoryName(SqlConnection conn, SqlTransaction trans)
@@ -183,9 +183,9 @@ namespace DSA_lims
                 InstanceStatusId = reader.GetInt32("instance_status_id");
                 LockedBy = reader.GetString("locked_by");
                 CreateDate = reader.GetDateTime("create_date");
-                CreatedBy = reader.GetString("created_by");
+                CreateId = reader.GetGuid("create_id");
                 UpdateDate = reader.GetDateTime("update_date");
-                UpdatedBy = reader.GetString("updated_by");
+                UpdateId = reader.GetGuid("update_id");
             }
 
             SampleTypes.Clear();
@@ -247,9 +247,9 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@instance_status_id", InstanceStatusId);
                 cmd.Parameters.AddWithValue("@locked_by", LockedBy, String.Empty);
                 cmd.Parameters.AddWithValue("@create_date", DateTime.Now);
-                cmd.Parameters.AddWithValue("@created_by", Common.Username, String.Empty);
+                cmd.Parameters.AddWithValue("@create_id", Common.UserId, Guid.Empty);
                 cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
-                cmd.Parameters.AddWithValue("@updated_by", Common.Username, String.Empty);
+                cmd.Parameters.AddWithValue("@update_id", Common.UserId, Guid.Empty);
 
                 cmd.ExecuteNonQuery();
 
@@ -295,7 +295,7 @@ namespace DSA_lims
                     cmd.Parameters.AddWithValue("@instance_status_id", InstanceStatusId);
                     cmd.Parameters.AddWithValue("@locked_by", LockedBy, String.Empty);                    
                     cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
-                    cmd.Parameters.AddWithValue("@updated_by", Common.Username, String.Empty);
+                    cmd.Parameters.AddWithValue("@update_id", Common.UserId, Guid.Empty);
 
                     cmd.ExecuteNonQuery();
 

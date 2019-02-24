@@ -102,9 +102,9 @@ namespace DSA_lims
             grid.Columns["id"].Visible = false;
             grid.Columns["comment"].Visible = false;
             grid.Columns["create_date"].Visible = false;
-            grid.Columns["created_by"].Visible = false;
+            grid.Columns["create_id"].Visible = false;
             grid.Columns["update_date"].Visible = false;
-            grid.Columns["updated_by"].Visible = false;
+            grid.Columns["update_id"].Visible = false;
 
             grid.Columns["name"].HeaderText = "Name";
             grid.Columns["instance_status_name"].HeaderText = "Status";            
@@ -120,9 +120,9 @@ namespace DSA_lims
             grid.Columns["id"].Visible = false;
             grid.Columns["comment"].Visible = false;
             grid.Columns["create_date"].Visible = false;
-            grid.Columns["created_by"].Visible = false;
+            grid.Columns["create_id"].Visible = false;
             grid.Columns["update_date"].Visible = false;
-            grid.Columns["updated_by"].Visible = false;
+            grid.Columns["update_id"].Visible = false;
             grid.Columns["project_main_name"].Visible = false;
 
             grid.Columns["name"].HeaderText = "Name";
@@ -138,9 +138,9 @@ namespace DSA_lims
             grid.Columns["assignment_counter"].Visible = false;
             grid.Columns["comment"].Visible = false;
             grid.Columns["create_date"].Visible = false;
-            grid.Columns["created_by"].Visible = false;
+            grid.Columns["create_id"].Visible = false;
             grid.Columns["update_date"].Visible = false;
-            grid.Columns["updated_by"].Visible = false;
+            grid.Columns["update_id"].Visible = false;
 
             grid.Columns["name"].HeaderText = "Name";
             grid.Columns["name_prefix"].HeaderText = "Prefix";
@@ -175,9 +175,9 @@ namespace DSA_lims
         
             grid.Columns["id"].Visible = false;
             grid.Columns["comment"].Visible = false;
-            grid.Columns["created_by"].Visible = false;
+            grid.Columns["create_id"].Visible = false;
             grid.Columns["create_date"].Visible = false;
-            grid.Columns["updated_by"].Visible = false;
+            grid.Columns["update_id"].Visible = false;
             grid.Columns["update_date"].Visible = false;
 
             grid.Columns["zas"].HeaderText = "Id (ZAS)";
@@ -198,9 +198,9 @@ namespace DSA_lims
         
             grid.Columns["id"].Visible = false;
             grid.Columns["comment"].Visible = false;
-            grid.Columns["created_by"].Visible = false;
+            grid.Columns["create_id"].Visible = false;
             grid.Columns["create_date"].Visible = false;
-            grid.Columns["updated_by"].Visible = false;
+            grid.Columns["update_id"].Visible = false;
             grid.Columns["update_date"].Visible = false;
 
             grid.Columns["name"].HeaderText = "Name";
@@ -216,9 +216,9 @@ namespace DSA_lims
                 new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
         
             grid.Columns["id"].Visible = false;
-            grid.Columns["created_by"].Visible = false;
+            grid.Columns["create_id"].Visible = false;
             grid.Columns["create_date"].Visible = false;
-            grid.Columns["updated_by"].Visible = false;
+            grid.Columns["update_id"].Visible = false;
             grid.Columns["update_date"].Visible = false;
 
             grid.Columns["name"].HeaderText = "Name";
@@ -234,9 +234,9 @@ namespace DSA_lims
         
             grid.Columns["id"].Visible = false;
             grid.Columns["county_name"].Visible = false;
-            grid.Columns["created_by"].Visible = false;
+            grid.Columns["create_id"].Visible = false;
             grid.Columns["create_date"].Visible = false;
-            grid.Columns["updated_by"].Visible = false;
+            grid.Columns["update_id"].Visible = false;
             grid.Columns["update_date"].Visible = false;
 
             grid.Columns["name"].HeaderText = "Name";
@@ -251,9 +251,9 @@ namespace DSA_lims
 
             grid.Columns["id"].Visible = false;
             grid.Columns["comment"].Visible = false;
-            grid.Columns["created_by"].Visible = false;
+            grid.Columns["create_id"].Visible = false;
             grid.Columns["create_date"].Visible = false;
-            grid.Columns["updated_by"].Visible = false;
+            grid.Columns["update_id"].Visible = false;
             grid.Columns["update_date"].Visible = false;
 
             grid.Columns["name"].HeaderText = "Name";
@@ -270,9 +270,9 @@ namespace DSA_lims
         
             grid.Columns["id"].Visible = false;
             grid.Columns["comment"].Visible = false;
-            grid.Columns["created_by"].Visible = false;
+            grid.Columns["create_id"].Visible = false;
             grid.Columns["create_date"].Visible = false;
-            grid.Columns["updated_by"].Visible = false;
+            grid.Columns["update_id"].Visible = false;
             grid.Columns["update_date"].Visible = false;
 
             grid.Columns["name"].HeaderText = "Name";
@@ -305,9 +305,9 @@ namespace DSA_lims
 
             grid.Columns["id"].Visible = false;
             grid.Columns["comment"].Visible = false;
-            grid.Columns["created_by"].Visible = false;
+            grid.Columns["create_id"].Visible = false;
             grid.Columns["create_date"].Visible = false;
-            grid.Columns["updated_by"].Visible = false;
+            grid.Columns["update_id"].Visible = false;
             grid.Columns["update_date"].Visible = false;
 
             grid.Columns["name"].HeaderText = "Name";
@@ -321,9 +321,9 @@ namespace DSA_lims
 
             grid.Columns["id"].Visible = false;
             grid.Columns["comment"].Visible = false;
-            grid.Columns["created_by"].Visible = false;
+            grid.Columns["create_id"].Visible = false;
             grid.Columns["create_date"].Visible = false;
-            grid.Columns["updated_by"].Visible = false;
+            grid.Columns["update_id"].Visible = false;
             grid.Columns["update_date"].Visible = false;
 
             grid.Columns["name"].HeaderText = "Name";
@@ -340,9 +340,9 @@ namespace DSA_lims
 
             grid.Columns["id"].Visible = false;
             grid.Columns["comment"].Visible = false;
-            grid.Columns["created_by"].Visible = false;
+            grid.Columns["create_id"].Visible = false;
             grid.Columns["create_date"].Visible = false;
-            grid.Columns["updated_by"].Visible = false;
+            grid.Columns["update_id"].Visible = false;
             grid.Columns["update_date"].Visible = false;
 
             grid.Columns["name"].HeaderText = "Name";
@@ -723,9 +723,9 @@ order by create_date desc";
             grid.Columns["id"].Visible = false;
             grid.Columns["comment"].Visible = false;
             grid.Columns["create_date"].Visible = false;
-            grid.Columns["created_by"].Visible = false;
+            grid.Columns["create_id"].Visible = false;
             grid.Columns["update_date"].Visible = false;
-            grid.Columns["updated_by"].Visible = false;
+            grid.Columns["update_id"].Visible = false;
 
             grid.Columns["name"].HeaderText = "Name";
             grid.Columns["email"].HeaderText = "Email";

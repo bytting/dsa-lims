@@ -107,9 +107,9 @@ namespace DSA_lims
                     cmd.Parameters.AddWithValue("@instance_status_id", InstanceStatus.Active);
                     cmd.Parameters.AddWithValue("@comment", DBNull.Value);
                     cmd.Parameters.AddWithValue("@create_date", DateTime.Now);
-                    cmd.Parameters.AddWithValue("@created_by", Common.Username, String.Empty);
+                    cmd.Parameters.AddWithValue("@create_id", Common.UserId, Guid.Empty);
                     cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
-                    cmd.Parameters.AddWithValue("@updated_by", Common.Username, String.Empty);
+                    cmd.Parameters.AddWithValue("@update_id", Common.UserId, Guid.Empty);
 
                     cmd.ExecuteNonQuery();
                     count--;

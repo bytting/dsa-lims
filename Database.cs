@@ -494,7 +494,7 @@ from role r
 
         public static void AddAttachment(SqlConnection conn, SqlTransaction trans, string sourceTable, Guid sourceId, string docName, string docExtension, byte[] data)
         {            
-            SqlCommand cmd = new SqlCommand("insert into attachment values(@id, @source_table, @source_id, @label, @file_extension, @content, @create_date, @created_by)", conn, trans);
+            SqlCommand cmd = new SqlCommand("insert into attachment values(@id, @source_table, @source_id, @label, @file_extension, @content, @create_date, @create_id)", conn, trans);
             cmd.Parameters.AddWithValue("@id", Guid.NewGuid());
             cmd.Parameters.AddWithValue("@source_table", sourceTable);
             cmd.Parameters.AddWithValue("@source_id", sourceId);
@@ -502,7 +502,7 @@ from role r
             cmd.Parameters.AddWithValue("@file_extension", docExtension);
             cmd.Parameters.AddWithValue("@content", data);
             cmd.Parameters.AddWithValue("@create_date", DateTime.Now);
-            cmd.Parameters.AddWithValue("@created_by", Common.Username);
+            cmd.Parameters.AddWithValue("@create_id", Common.UserId);
             cmd.ExecuteNonQuery();
         }
 
@@ -797,7 +797,7 @@ select
                 new SqlParameter("@username", username));
 
             if (!IsValidField(o))
-                return "Unknown";
+                return String.Empty;
 
             return o.ToString();
         }
@@ -819,8 +819,8 @@ select
             if (aLabId == Common.LabId)
                 return true;
 
-            string creator = Assignment.GetCreator(conn, trans, orderId);
-            if (creator.ToLower() == Common.Username.ToLower())
+            Guid creatorId = Assignment.GetCreatorId(conn, trans, orderId);
+            if (creatorId == Common.UserId)
                 return true;
 
             int n = (int)GetScalar(conn, trans, "select count(*) from assignment_x_account where assignment_id = @aid and account_id = @accid", CommandType.Text,

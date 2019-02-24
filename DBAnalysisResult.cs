@@ -51,9 +51,9 @@ namespace DSA_lims
         public bool Reportable { get; set; }
         public int InstanceStatusId { get; set; }
         public DateTime CreateDate { get; set; }
-        public string CreatedBy { get; set; }
+        public Guid CreateId { get; set; }
         public DateTime UpdateDate { get; set; }
-        public string UpdatedBy { get; set; }
+        public Guid UpdateId { get; set; }
 
         public bool Dirty;
 
@@ -129,9 +129,9 @@ namespace DSA_lims
                 Reportable = reader.GetBoolean("reportable");
                 InstanceStatusId = reader.GetInt32("instance_status_id");
                 CreateDate = reader.GetDateTime("create_date");
-                CreatedBy = reader.GetString("created_by");
+                CreateId = reader.GetGuid("create_id");
                 UpdateDate = reader.GetDateTime("update_date");
-                UpdatedBy = reader.GetString("updated_by");
+                UpdateId = reader.GetGuid("update_id");
             }
 
             NuclideName = GetNuclideName(conn, trans);
@@ -173,9 +173,9 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@reportable", Reportable);
                 cmd.Parameters.AddWithValue("@instance_status_id", InstanceStatusId);
                 cmd.Parameters.AddWithValue("@create_date", DateTime.Now);
-                cmd.Parameters.AddWithValue("@created_by", Common.Username, String.Empty);
+                cmd.Parameters.AddWithValue("@create_id", Common.UserId, Guid.Empty);
                 cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
-                cmd.Parameters.AddWithValue("@updated_by", Common.Username, String.Empty);
+                cmd.Parameters.AddWithValue("@update_id", Common.UserId, Guid.Empty);
 
                 cmd.ExecuteNonQuery();
 
@@ -212,7 +212,7 @@ namespace DSA_lims
                     cmd.Parameters.AddWithValue("@reportable", Reportable);
                     cmd.Parameters.AddWithValue("@instance_status_id", InstanceStatusId);
                     cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
-                    cmd.Parameters.AddWithValue("@updated_by", Common.Username, String.Empty);
+                    cmd.Parameters.AddWithValue("@update_id", Common.UserId, Guid.Empty);
 
                     cmd.ExecuteNonQuery();
 

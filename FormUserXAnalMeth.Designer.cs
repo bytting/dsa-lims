@@ -74,6 +74,7 @@
             this.gridAnalMeth.AllowUserToAddRows = false;
             this.gridAnalMeth.AllowUserToDeleteRows = false;
             this.gridAnalMeth.AllowUserToResizeRows = false;
+            this.gridAnalMeth.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.gridAnalMeth.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
             this.gridAnalMeth.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.gridAnalMeth.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;

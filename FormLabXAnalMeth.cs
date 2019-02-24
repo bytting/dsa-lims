@@ -60,9 +60,9 @@ namespace DSA_lims
                 gridAnalMeth.Columns["id"].Visible = false;
                 gridAnalMeth.Columns["comment"].Visible = false;
                 gridAnalMeth.Columns["instance_status_id"].Visible = false;
-                gridAnalMeth.Columns["created_by"].Visible = false;
+                gridAnalMeth.Columns["create_id"].Visible = false;
                 gridAnalMeth.Columns["create_date"].Visible = false;
-                gridAnalMeth.Columns["updated_by"].Visible = false;
+                gridAnalMeth.Columns["update_id"].Visible = false;
                 gridAnalMeth.Columns["update_date"].Visible = false;
 
                 gridAnalMeth.Columns["name"].HeaderText = "Name";

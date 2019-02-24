@@ -75,9 +75,9 @@ namespace DSA_lims
         public string LockedBy { get; set; }
         public string Comment { get; set; }
         public DateTime CreateDate { get; set; }
-        public string CreatedBy { get; set; }
+        public Guid CreateId { get; set; }
         public DateTime UpdateDate { get; set; }
-        public string UpdatedBy { get; set; }
+        public Guid UpdateId { get; set; }
 
         public bool Dirty;
 
@@ -284,9 +284,9 @@ where s.id = @sid and a.workflow_status_id = 2
                 LockedBy = reader.GetString("locked_by");
                 Comment = reader.GetString("comment");
                 CreateDate = reader.GetDateTime("create_date");
-                CreatedBy = reader.GetString("created_by");
+                CreateId = reader.GetGuid("create_id");
                 UpdateDate = reader.GetDateTime("update_date");
-                UpdatedBy = reader.GetString("updated_by");
+                UpdateId = reader.GetGuid("update_id");
             }
 
             Dirty = false;
@@ -341,9 +341,9 @@ where s.id = @sid and a.workflow_status_id = 2
                 cmd.Parameters.AddWithValue("@locked_by", LockedBy, String.Empty);
                 cmd.Parameters.AddWithValue("@comment", Comment, String.Empty);
                 cmd.Parameters.AddWithValue("@create_date", DateTime.Now);
-                cmd.Parameters.AddWithValue("@created_by", Common.Username, String.Empty);
+                cmd.Parameters.AddWithValue("@create_id", Common.UserId, Guid.Empty);
                 cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
-                cmd.Parameters.AddWithValue("@updated_by", Common.Username, String.Empty);
+                cmd.Parameters.AddWithValue("@update_id", Common.UserId, Guid.Empty);
 
                 cmd.ExecuteNonQuery();
 
@@ -384,7 +384,7 @@ where s.id = @sid and a.workflow_status_id = 2
                     cmd.Parameters.AddWithValue("@instance_status_id", InstanceStatusId, null);                    
                     cmd.Parameters.AddWithValue("@comment", Comment, String.Empty);
                     cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
-                    cmd.Parameters.AddWithValue("@updated_by", Common.Username, String.Empty);
+                    cmd.Parameters.AddWithValue("@update_id", Common.UserId, Guid.Empty);
 
                     cmd.ExecuteNonQuery();
 
@@ -412,7 +412,7 @@ where s.id = @sid and a.workflow_status_id = 2
             cmd.Parameters.AddWithValue("@lod_weight_end", LodWeightEnd, null);
             cmd.Parameters.AddWithValue("@lod_temperature", LodTemperature, null);
             cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
-            cmd.Parameters.AddWithValue("@updated_by", Common.Username, String.Empty);
+            cmd.Parameters.AddWithValue("@update_id", Common.UserId, Guid.Empty);
 
             cmd.ExecuteNonQuery();
 

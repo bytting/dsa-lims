@@ -69,9 +69,9 @@ namespace DSA_lims
             ast.ReturnToSender = cbReturnToSender.Checked;
             ast.Comment = tbComment.Text.Trim();
             ast.CreateDate = DateTime.Now;
-            ast.CreatedBy = Common.Username;
+            ast.CreateId = Common.UserId;
             ast.UpdateDate = DateTime.Now;
-            ast.UpdatedBy = Common.Username;
+            ast.UpdateId = Common.UserId;
             ast.Dirty = true;
             mAssignment.SampleTypes.Add(ast);            
 

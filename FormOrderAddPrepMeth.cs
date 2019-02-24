@@ -88,9 +88,9 @@ namespace DSA_lims
             apm.PreparationLaboratoryId = Utils.MakeGuid(cboxPrepMethLaboratory.SelectedValue);
             apm.Comment = tbComment.Text.Trim();
             apm.CreateDate = DateTime.Now;
-            apm.CreatedBy = Common.Username;
+            apm.CreateId = Common.UserId;
             apm.UpdateDate = DateTime.Now;
-            apm.UpdatedBy = Common.Username;
+            apm.UpdateId = Common.UserId;
             apm.Dirty = true;
             mAst.PreparationMethods.Add(apm);
 

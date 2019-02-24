@@ -1867,9 +1867,9 @@ namespace DSA_lims
                 {
                     reader.Read();
 
-                    tbSampleInfoLatitude.Text = reader.GetDouble("latitude").ToString();
-                    tbSampleInfoLongitude.Text = reader.GetDouble("longitude").ToString();
-                    tbSampleInfoAltitude.Text = reader.GetDouble("altitude").ToString();
+                    tbSampleInfoLatitude.Text = reader.GetString("latitude");
+                    tbSampleInfoLongitude.Text = reader.GetString("longitude");
+                    tbSampleInfoAltitude.Text = reader.GetString("altitude");
                 }
             }                
         }
@@ -1951,7 +1951,7 @@ namespace DSA_lims
 
                 if (Common.LabId == Guid.Empty)
                 {                    
-                    if(Common.Username.ToUpper() != sample.CreatedBy.ToUpper())
+                    if(Common.UserId != sample.CreateId)
                     {
                         MessageBox.Show("Can not edit this sample. Sample does not belong to your user");
                         return;
@@ -1967,7 +1967,7 @@ namespace DSA_lims
                     }
                     else
                     {                        
-                        if (Common.Username.ToUpper() == sample.CreatedBy.ToUpper())
+                        if (Common.UserId == sample.CreateId)
                             allow = true;
                     }
 

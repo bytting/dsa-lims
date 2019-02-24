@@ -48,9 +48,9 @@ namespace DSA_lims
                     InstanceStatusId = reader.GetInt32("instance_status_id");
                     Comment = reader.GetString("comment");
                     CreateDate = reader.GetDateTime("create_date");
-                    CreatedBy = reader.GetString("created_by");
+                    CreateId = reader.GetGuid("create_id");
                     UpdateDate = reader.GetDateTime("update_date");
-                    UpdatedBy = reader.GetString("updated_by");
+                    UpdateId = reader.GetGuid("update_id");
                 }
             }
         }
@@ -62,8 +62,8 @@ namespace DSA_lims
         public int InstanceStatusId { get; set; }
         public string Comment { get; set; }
         public DateTime CreateDate { get; set; }
-        public string CreatedBy { get; set; }
+        public Guid CreateId { get; set; }
         public DateTime UpdateDate { get; set; }
-        public string UpdatedBy { get; set; }
+        public Guid UpdateId { get; set; }
     }
 }

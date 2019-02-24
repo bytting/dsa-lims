@@ -431,9 +431,9 @@ create table company (
 	instance_status_id int not null default 1,
 	comment nvarchar(1000) default null,
 	create_date datetime not null,
-	created_by nvarchar(50) not null,
+	create_id uniqueidentifier not null,
 	update_date datetime not null,
-	updated_by nvarchar(50) not null
+	update_id uniqueidentifier not null
 )
 go
 
@@ -446,9 +446,9 @@ create proc csp_insert_company
 	@instance_status_id int,
 	@comment nvarchar(1000),
 	@create_date datetime,
-	@created_by nvarchar(50),
+	@create_id uniqueidentifier,
 	@update_date datetime,
-	@updated_by nvarchar(50)
+	@update_id uniqueidentifier
 as 
 	insert into company values (
 		@id,
@@ -459,9 +459,9 @@ as
 		@instance_status_id,
 		@comment,
 		@create_date,
-		@created_by,
+		@create_id,
 		@update_date,
-		@updated_by
+		@update_id
 	);
 go
 
@@ -474,7 +474,7 @@ create proc csp_update_company
 	@instance_status_id int,
 	@comment nvarchar(1000),	
 	@update_date datetime,
-	@updated_by nvarchar(50)
+	@update_id uniqueidentifier
 as 
 	update company set 
 		name = @name,
@@ -484,7 +484,7 @@ as
 		instance_status_id = @instance_status_id,
 		comment = @comment,
 		update_date = @update_date,
-		updated_by = @updated_by
+		update_id = @update_id
 	where id = @id
 go
 
@@ -528,9 +528,9 @@ as
 		st.name as 'instance_status_name',
 		c.comment,	
 		c.create_date,
-		c.created_by,
+		c.create_id,
 		c.update_date,
-		c.updated_by
+		c.update_id
 	from company c
 		inner join instance_status st on c.instance_status_id = st.id 
 			and c.instance_status_id <= @instance_status_level
@@ -549,9 +549,9 @@ create table customer (
 	instance_status_id int not null default 1,
 	comment nvarchar(1000) default null,
 	create_date datetime not null,
-	created_by nvarchar(50) not null,
+	create_id uniqueidentifier not null,
 	update_date datetime not null,
-	updated_by nvarchar(50) not null
+	update_id uniqueidentifier not null
 )
 go
 
@@ -562,9 +562,9 @@ create proc csp_insert_customer
 	@instance_status_id int,
 	@comment nvarchar(1000),
 	@create_date datetime,
-	@created_by nvarchar(50),
+	@create_id uniqueidentifier,
 	@update_date datetime,
-	@updated_by nvarchar(50)
+	@update_id uniqueidentifier
 as 
 	insert into customer values (
 		@id,
@@ -573,9 +573,9 @@ as
 		@instance_status_id,
 		@comment,
 		@create_date,
-		@created_by,
+		@create_id,
 		@update_date,
-		@updated_by
+		@update_id
 	);
 go
 
@@ -585,14 +585,14 @@ create proc csp_update_customer
 	@instance_status_id int,
 	@comment nvarchar(1000),
 	@update_date datetime,
-	@updated_by nvarchar(50)
+	@update_id uniqueidentifier
 as 
 	update customer set 
 		company_id = @company_id,
 		instance_status_id = @instance_status_id,
 		comment = @comment,
 		update_date = @update_date,
-		updated_by = @updated_by
+		update_id = @update_id
 	where id = @id
 go
 
@@ -613,9 +613,9 @@ as
 		c.instance_status_id,
 		c.comment,
 		c.create_date,	
-		c.created_by,
+		c.create_id,
 		c.update_date,
-		c.updated_by
+		c.update_id
 	from customer c 
 		inner join person p on c.person_id = p.id
 		left outer join company co on c.company_id = co.id
@@ -681,9 +681,9 @@ create table sampler (
 	instance_status_id int not null default 1,
 	comment nvarchar(1000) default null,
 	create_date datetime not null,
-	created_by nvarchar(50) not null,
+	create_id uniqueidentifier not null,
 	update_date datetime not null,
-	updated_by nvarchar(50) not null
+	update_id uniqueidentifier not null
 )
 go
 
@@ -694,9 +694,9 @@ create proc csp_insert_sampler
 	@instance_status_id int,
 	@comment nvarchar(1000),
 	@create_date datetime,
-	@created_by nvarchar(50),
+	@create_id uniqueidentifier,
 	@update_date datetime,
-	@updated_by nvarchar(50)
+	@update_id uniqueidentifier
 as 
 	insert into sampler values (
 		@id,
@@ -705,9 +705,9 @@ as
 		@instance_status_id,
 		@comment,
 		@create_date,
-		@created_by,
+		@create_id,
 		@update_date,
-		@updated_by
+		@update_id
 	);
 go
 
@@ -717,14 +717,14 @@ create proc csp_update_sampler
 	@instance_status_id int,
 	@comment nvarchar(1000),
 	@update_date datetime,
-	@updated_by nvarchar(50)
+	@update_id uniqueidentifier
 as 
 	update sampler set 
 		company_id = @company_id,
 		instance_status_id = @instance_status_id,
 		comment = @comment,
 		update_date = @update_date,
-		updated_by = @updated_by
+		update_id = @update_id
 	where id = @id
 go
 
@@ -745,9 +745,9 @@ as
 		s.instance_status_id,
 		s.comment,
 		s.create_date,	
-		s.created_by,
+		s.create_id,
 		s.update_date,
-		s.updated_by
+		s.update_id
 	from sampler s 
 		inner join person p on s.person_id = p.id
 		left outer join company co on s.company_id = co.id
@@ -812,9 +812,9 @@ create table sampling_method (
 	instance_status_id int not null default 1,
 	comment nvarchar(1000) default null,
 	create_date datetime not null,
-	created_by nvarchar(50) not null,
+	create_id uniqueidentifier not null,
 	update_date datetime not null,
-	updated_by nvarchar(50) not null
+	update_id uniqueidentifier not null
 )
 go
 
@@ -824,9 +824,9 @@ create proc csp_insert_sampling_method
 	@instance_status_id int,
 	@comment nvarchar(1000),
 	@create_date datetime,
-	@created_by nvarchar(50),
+	@create_id uniqueidentifier,
 	@update_date datetime,
-	@updated_by nvarchar(50)
+	@update_id uniqueidentifier
 as 
 	insert into sampling_method values (
 		@id,
@@ -834,9 +834,9 @@ as
 		@instance_status_id,
 		@comment,
 		@create_date,
-		@created_by,
+		@create_id,
 		@update_date,
-		@updated_by
+		@update_id
 	);
 go
 
@@ -846,14 +846,14 @@ create proc csp_update_sampling_method
 	@instance_status_id int,
 	@comment nvarchar(1000),
 	@update_date datetime,
-	@updated_by nvarchar(50)
+	@update_id uniqueidentifier
 as 
 	update sampling_method set 
 		name = @name,		
 		instance_status_id = @instance_status_id,
 		comment = @comment,	
 		update_date = @update_date,
-		updated_by = @updated_by
+		update_id = @update_id
 	where id = @id
 go
 
@@ -886,9 +886,9 @@ as
 		st.name as 'instance_status_name',
 		s.comment,
 		s.create_date,
-		s.created_by,
+		s.create_id,
 		s.update_date,
-		s.updated_by
+		s.update_id
 	 from sampling_method s, instance_status st
 	 where s.instance_status_id = st.id and s.instance_status_id <= @instance_status_level
 	 order by s.name
@@ -919,9 +919,9 @@ create table laboratory (
 	laboratory_logo varbinary(max) default null,
 	accredited_logo varbinary(max) default null,
 	create_date datetime not null,
-	created_by nvarchar(50) not null,
+	create_id uniqueidentifier not null,
 	update_date datetime not null,
-	updated_by nvarchar(50) not null
+	update_id uniqueidentifier not null
 )
 go
 
@@ -939,9 +939,9 @@ create proc csp_insert_laboratory
 	@laboratory_logo varbinary(max),
 	@accredited_logo varbinary(max),
 	@create_date datetime,
-	@created_by nvarchar(50),
+	@create_id uniqueidentifier,
 	@update_date datetime,
-	@updated_by nvarchar(50)
+	@update_id uniqueidentifier
 as 
 	insert into laboratory values (
 		@id,
@@ -957,9 +957,9 @@ as
 		@laboratory_logo,
 		@accredited_logo,
 		@create_date,
-		@created_by,
+		@create_id,
 		@update_date,
-		@updated_by
+		@update_id
 	);
 go
 
@@ -975,7 +975,7 @@ create proc csp_update_laboratory
 	@laboratory_logo varbinary(max),
 	@accredited_logo varbinary(max),
 	@update_date datetime,
-	@updated_by nvarchar(50)
+	@update_id uniqueidentifier
 as 
 	update laboratory set
 		id = @id,
@@ -989,7 +989,7 @@ as
 		laboratory_logo = @laboratory_logo,
 		accredited_logo = @accredited_logo,
 		update_date = @update_date,
-		updated_by = @updated_by
+		update_id = @update_id
 	where id = @id
 go
 
@@ -1025,9 +1025,9 @@ as
 		st.name as 'instance_status_name',
 		l.comment,			
 		l.create_date,
-		l.created_by,
+		l.create_id,
 		l.update_date,
-		l.updated_by
+		l.update_id
 	from laboratory l, instance_status st
 	where l.instance_status_id = st.id and l.instance_status_id <= @instance_status_level
 	order by l.name
@@ -1225,9 +1225,9 @@ create table accreditation_term (
 	fill_height_max float default null,
 	instance_status_id int not null default 1,
 	create_date datetime not null,
-	created_by nvarchar(50) not null,
+	create_id uniqueidentifier not null,
 	update_date datetime not null,
-	updated_by nvarchar(50) not null
+	update_id uniqueidentifier not null
 )
 go
 
@@ -1297,9 +1297,9 @@ create table county (
 	county_number int not null,	
 	instance_status_id int not null default 1,
 	create_date datetime not null,
-	created_by nvarchar(50) not null,
+	create_id uniqueidentifier not null,
 	update_date datetime not null,
-	updated_by nvarchar(50) not null
+	update_id uniqueidentifier not null
 )
 go
 
@@ -1309,9 +1309,9 @@ create proc csp_insert_county
 	@county_number int,	
 	@instance_status_id int,
 	@create_date datetime,
-	@created_by nvarchar(50),
+	@create_id uniqueidentifier,
 	@update_date datetime,
-	@updated_by nvarchar(50)	
+	@update_id uniqueidentifier	
 as 
 	insert into county values (
 		@id,		
@@ -1319,9 +1319,9 @@ as
 		@county_number,		
 		@instance_status_id,
 		@create_date,
-		@created_by,
+		@create_id,
 		@update_date,
-		@updated_by
+		@update_id
 	);
 go
 
@@ -1331,14 +1331,14 @@ create proc csp_update_county
 	@county_number int,	
 	@instance_status_id int,
 	@update_date datetime,
-	@updated_by nvarchar(50)	
+	@update_id uniqueidentifier	
 as 
 	update county set 
 		name = @name,
 		county_number = @county_number,		
 		instance_status_id = @instance_status_id,		
 		update_date = @update_date,
-		updated_by = @updated_by
+		update_id = @update_id
 	where id = @id
 go
 
@@ -1377,9 +1377,9 @@ as
 		c.county_number, 	
 		st.name as 'instance_status_name',	
 		c.create_date,
-		c.created_by,
+		c.create_id,
 		c.update_date,
-		c.updated_by
+		c.update_id
 	from county c, instance_status st
 	where c.instance_status_id = st.id
 	order by c.name
@@ -1397,9 +1397,9 @@ create table municipality (
 	municipality_number int not null,		
 	instance_status_id int not null default 1,
 	create_date datetime not null,
-	created_by nvarchar(50) not null,
+	create_id uniqueidentifier not null,
 	update_date datetime not null,
-	updated_by nvarchar(50) not null
+	update_id uniqueidentifier not null
 )
 go
 
@@ -1410,9 +1410,9 @@ create proc csp_insert_municipality
 	@municipality_number int,	
 	@instance_status_id int,
 	@create_date datetime,
-	@created_by nvarchar(50),
+	@create_id uniqueidentifier,
 	@update_date datetime,
-	@updated_by nvarchar(50)	
+	@update_id uniqueidentifier	
 as 
 	insert into municipality values (
 		@id,		
@@ -1421,9 +1421,9 @@ as
 		@municipality_number,		
 		@instance_status_id,
 		@create_date,
-		@created_by,
+		@create_id,
 		@update_date,
-		@updated_by
+		@update_id
 	);
 go
 
@@ -1433,14 +1433,14 @@ create proc csp_update_municipality
 	@municipality_number int,	
 	@instance_status_id int,
 	@update_date datetime,
-	@updated_by nvarchar(50)	
+	@update_id uniqueidentifier	
 as 
 	update municipality set 
 		name = @name,
 		municipality_number = @municipality_number,		
 		instance_status_id = @instance_status_id,		
 		update_date = @update_date,
-		updated_by = @updated_by
+		update_id = @update_id
 	where id = @id
 go
 
@@ -1483,9 +1483,9 @@ as
 		m.municipality_number,
 		st.name as 'instance_status_name',
 		m.create_date,
-		m.created_by,
+		m.create_id,
 		m.update_date,
-		m.updated_by
+		m.update_id
 	from municipality m, county c, instance_status st
 	where m.county_id = @county_id and m.county_id = c.id and m.instance_status_id = st.id and m.instance_status_id <= @instance_status_level
 	order by m.name
@@ -1551,9 +1551,9 @@ create table assignment (
 	instance_status_id int not null default 1,
 	locked_by nvarchar(50) default null,
 	create_date datetime not null,
-	created_by nvarchar(50) not null,
+	create_id uniqueidentifier not null,
 	update_date datetime not null,
-	updated_by nvarchar(50) not null
+	update_id uniqueidentifier not null
 )
 go
 
@@ -1587,9 +1587,9 @@ create proc csp_insert_assignment
 	@instance_status_id int,
 	@locked_by nvarchar(50),
 	@create_date datetime,
-	@created_by nvarchar(50),
+	@create_id uniqueidentifier,
 	@update_date datetime,
-	@updated_by nvarchar(50)
+	@update_id uniqueidentifier
 as 		
 	insert into assignment values (
 		@id,
@@ -1621,9 +1621,9 @@ as
 		@instance_status_id,
 		@locked_by,
 		@create_date,
-		@created_by,
+		@create_id,
 		@update_date,
-		@updated_by		
+		@update_id		
 	);
 go
 
@@ -1657,7 +1657,7 @@ create proc csp_update_assignment
 	@instance_status_id int,	
 	@locked_by nvarchar(50),
 	@update_date datetime,
-	@updated_by nvarchar(50)
+	@update_id uniqueidentifier
 as 		
 	update assignment set		
 		name = @name,
@@ -1688,7 +1688,7 @@ as
 		instance_status_id = @instance_status_id,				
 		locked_by = @locked_by,
 		update_date = @update_date,
-		updated_by = @updated_by		
+		update_id = @update_id		
 	where id = @id
 go
 
@@ -1743,9 +1743,9 @@ as
 		insta.name as 'instance_status_name',
 		a.locked_by,
 		a.create_date,
-		a.created_by,
+		a.create_id,
 		a.update_date,
-		a.updated_by		
+		a.update_id		
 	from assignment a 		
 		left outer join laboratory l on a.laboratory_id = l.id
 		left outer join cv_account va on a.account_id = va.id
@@ -1828,9 +1828,9 @@ as
 		insta.name as 'instance_status_name',
 		a.locked_by,
 		a.create_date,
-		a.created_by,
+		a.create_id,
 		a.update_date,
-		a.updated_by		
+		a.update_id		
 	from assignment a 		
 		left outer join laboratory l on a.laboratory_id = l.id
 		left outer join cv_account va on a.account_id = va.id
@@ -1855,9 +1855,9 @@ create table assignment_sample_type (
 	return_to_sender bit default 0,
 	comment nvarchar(1000) default null,
 	create_date datetime not null,
-	created_by nvarchar(50) not null,
+	create_id uniqueidentifier not null,
 	update_date datetime not null,
-	updated_by nvarchar(50) not null
+	update_id uniqueidentifier not null
 )
 go
 
@@ -1872,9 +1872,9 @@ create proc csp_insert_assignment_sample_type
 	@return_to_sender bit,
 	@comment nvarchar(1000),
 	@create_date datetime,
-	@created_by nvarchar(50),
+	@create_id uniqueidentifier,
 	@update_date datetime,
-	@updated_by nvarchar(50)
+	@update_id uniqueidentifier
 as	
 	insert into assignment_sample_type values (
 		@id,	
@@ -1887,9 +1887,9 @@ as
 		@return_to_sender,
 		@comment,
 		@create_date,
-		@created_by,
+		@create_id,
 		@update_date,
-		@updated_by
+		@update_id
 	);
 go
 
@@ -1904,7 +1904,7 @@ create proc csp_update_assignment_sample_type
 	@return_to_sender bit,
 	@comment nvarchar(1000),	
 	@update_date datetime,
-	@updated_by nvarchar(50)
+	@update_id uniqueidentifier
 as	
 	update assignment_sample_type set 
 		assignment_id = @assignment_id,	
@@ -1916,7 +1916,7 @@ as
 		return_to_sender = @return_to_sender,
 		comment = @comment,		
 		update_date = @update_date,
-		updated_by = @updated_by
+		update_id = @update_id
 	where id = @id
 go
 
@@ -1942,9 +1942,9 @@ as
 		ast.return_to_sender as 'return_to_sender',
 		ast.comment as 'comment',
 		ast.create_date,
-		ast.created_by,
+		ast.create_id,
 		ast.update_date,
-		ast.updated_by
+		ast.update_id
 	from assignment_sample_type ast
 		inner join assignment ass on ass.id = ast.assignment_id
 		inner join sample_type st on ast.sample_type_id = st.id
@@ -2021,9 +2021,9 @@ create table assignment_preparation_method (
 	preparation_laboratory_id uniqueidentifier default null,
 	comment nvarchar(1000) default null,
 	create_date datetime not null,
-	created_by nvarchar(50) not null,
+	create_id uniqueidentifier not null,
 	update_date datetime not null,
-	updated_by nvarchar(50) not null
+	update_id uniqueidentifier not null
 )
 go
 
@@ -2035,9 +2035,9 @@ create proc csp_insert_assignment_preparation_method
 	@preparation_laboratory_id uniqueidentifier,
 	@comment nvarchar(1000),
 	@create_date datetime,
-	@created_by nvarchar(50),
+	@create_id uniqueidentifier,
 	@update_date datetime,
-	@updated_by nvarchar(50)
+	@update_id uniqueidentifier
 as	
 	insert into assignment_preparation_method values (
 		@id,	
@@ -2047,9 +2047,9 @@ as
 		@preparation_laboratory_id,
 		@comment,
 		@create_date,
-		@created_by,
+		@create_id,
 		@update_date,
-		@updated_by
+		@update_id
 	);
 go
 
@@ -2061,7 +2061,7 @@ create proc csp_update_assignment_preparation_method
 	@preparation_laboratory_id uniqueidentifier,
 	@comment nvarchar(1000),	
 	@update_date datetime,
-	@updated_by nvarchar(50)
+	@update_id uniqueidentifier
 as	
 	update assignment_preparation_method set		
 		assignment_sample_type_id = @assignment_sample_type_id,	
@@ -2070,7 +2070,7 @@ as
 		preparation_laboratory_id = @preparation_laboratory_id,
 		comment = @comment,		
 		update_date = @update_date,
-		updated_by = @updated_by
+		update_id = @update_id
 	where id = @id
 go
 
@@ -2093,9 +2093,9 @@ as
 		lab.name as 'preparation_laboratory_name',
 		apm.comment,
 		apm.create_date,
-		apm.created_by,
+		apm.create_id,
 		apm.update_date,
-		apm.updated_by
+		apm.update_id
 	from assignment_preparation_method apm 		
 		inner join preparation_method pm on pm.id = apm.preparation_method_id		
 		left outer join laboratory lab on apm.preparation_laboratory_id = lab.id
@@ -2131,9 +2131,9 @@ create table assignment_analysis_method (
 	analysis_method_count int not null,
 	comment nvarchar(1000) default null,
 	create_date datetime not null,
-	created_by nvarchar(50) not null,
+	create_id uniqueidentifier not null,
 	update_date datetime not null,
-	updated_by nvarchar(50) not null
+	update_id uniqueidentifier not null
 )
 go
 
@@ -2144,9 +2144,9 @@ create proc csp_insert_assignment_analysis_method
 	@analysis_method_count int,
 	@comment nvarchar(1000),
 	@create_date datetime,
-	@created_by nvarchar(50),
+	@create_id uniqueidentifier,
 	@update_date datetime,
-	@updated_by nvarchar(50)
+	@update_id uniqueidentifier
 as	
 	insert into assignment_analysis_method values (
 		@id,	
@@ -2155,9 +2155,9 @@ as
 		@analysis_method_count,
 		@comment,
 		@create_date,
-		@created_by,
+		@create_id,
 		@update_date,
-		@updated_by
+		@update_id
 	);
 go
 
@@ -2168,7 +2168,7 @@ create proc csp_update_assignment_analysis_method
 	@analysis_method_count int,
 	@comment nvarchar(1000),	
 	@update_date datetime,
-	@updated_by nvarchar(50)
+	@update_id uniqueidentifier
 as	
 	update assignment_analysis_method set		
 		assignment_preparation_method_id = @assignment_preparation_method_id,	
@@ -2176,7 +2176,7 @@ as
 		analysis_method_count = @analysis_method_count,
 		comment = @comment,
 		update_date = @update_date,
-		updated_by = @updated_by
+		update_id = @update_id
 	where id = @id
 go
 
@@ -2198,9 +2198,9 @@ as
 		aam.analysis_method_count as 'analysis_method_count',
 		aam.comment,
 		aam.create_date,
-		aam.created_by,
+		aam.create_id,
 		aam.update_date,
-		aam.updated_by
+		aam.update_id
 	from assignment_analysis_method aam			
 		inner join analysis_method am on am.id = aam.analysis_method_id
 	where aam.id = @id
@@ -2244,9 +2244,9 @@ create table preparation_geometry (
 	instance_status_id int not null default 1,
 	comment nvarchar(1000) default null,
 	create_date datetime not null,
-	created_by nvarchar(50) not null,
+	create_id uniqueidentifier not null,
 	update_date datetime not null,
-	updated_by nvarchar(50) not null
+	update_id uniqueidentifier not null
 )
 go
 
@@ -2258,9 +2258,9 @@ create proc csp_insert_preparation_geometry
 	@instance_status_id int,
 	@comment nvarchar(1000),
 	@create_date datetime,
-	@created_by nvarchar(50),
+	@create_id uniqueidentifier,
 	@update_date datetime,
-	@updated_by nvarchar(50)	
+	@update_id uniqueidentifier	
 as 
 	insert into preparation_geometry values (
 		@id,
@@ -2270,9 +2270,9 @@ as
 		@instance_status_id,
 		@comment,		
 		@create_date,
-		@created_by,
+		@create_id,
 		@update_date,
-		@updated_by
+		@update_id
 	);
 go
 
@@ -2284,7 +2284,7 @@ create proc csp_update_preparation_geometry
 	@instance_status_id int,
 	@comment nvarchar(1000),	
 	@update_date datetime,
-	@updated_by nvarchar(50)	
+	@update_id uniqueidentifier	
 as 
 	update preparation_geometry set 
 		name = @name,
@@ -2293,7 +2293,7 @@ as
 		instance_status_id = @instance_status_id,
 		comment = @comment,		
 		update_date = @update_date,
-		updated_by = @updated_by
+		update_id = @update_id
 	where id = @id
 go
 
@@ -2334,9 +2334,9 @@ as
 		st.name as 'instance_status_name',
 		pb.comment,
 		pb.create_date,
-		pb.created_by,
+		pb.create_id,
 		pb.update_date,
-		pb.updated_by
+		pb.update_id
 	from preparation_geometry pb, instance_status st
 	where pb.instance_status_id = st.id and pb.instance_status_id <= @instance_status_level
 	order by pb.name
@@ -2356,9 +2356,9 @@ create table preparation_method (
 	instance_status_id int not null default 1,
 	comment nvarchar(1000) default null,
 	create_date datetime not null,
-	created_by nvarchar(50) not null,
+	create_id uniqueidentifier not null,
 	update_date datetime not null,
-	updated_by nvarchar(50) not null
+	update_id uniqueidentifier not null
 )
 go
 
@@ -2371,9 +2371,9 @@ create proc csp_insert_preparation_method
 	@instance_status_id int,
 	@comment nvarchar(1000),
 	@create_date datetime,
-	@created_by nvarchar(50),
+	@create_id uniqueidentifier,
 	@update_date datetime,
-	@updated_by nvarchar(50)	
+	@update_id uniqueidentifier	
 as 
 	insert into preparation_method values (
 		@id,
@@ -2384,9 +2384,9 @@ as
 		@instance_status_id,
 		@comment,		
 		@create_date,
-		@created_by,
+		@create_id,
 		@update_date,
-		@updated_by
+		@update_id
 	);
 go
 
@@ -2399,7 +2399,7 @@ create proc csp_update_preparation_method
 	@instance_status_id int,
 	@comment nvarchar(1000),	
 	@update_date datetime,
-	@updated_by nvarchar(50)	
+	@update_id uniqueidentifier	
 as 
 	update preparation_method set 
 		name = @name,
@@ -2409,7 +2409,7 @@ as
 		instance_status_id = @instance_status_id,
 		comment = @comment,		
 		update_date = @update_date,
-		updated_by = @updated_by
+		update_id = @update_id
 	where id = @id
 go
 
@@ -2478,9 +2478,9 @@ as
 		st.name as 'instance_status_name',
 		pm.comment,
 		pm.create_date,
-		pm.created_by,
+		pm.create_id,
 		pm.update_date,
-		pm.updated_by
+		pm.update_id
 	from preparation_method pm, instance_status st
 	where pm.instance_status_id = st.id and pm.instance_status_id <= @instance_status_level
 	order by pm.name
@@ -2528,9 +2528,9 @@ create table preparation (
 	instance_status_id int not null default 1,
 	comment nvarchar(1000) default null,	
 	create_date datetime not null,
-	created_by nvarchar(50) not null,
+	create_id uniqueidentifier not null,
 	update_date datetime not null,
-	updated_by nvarchar(50) not null
+	update_id uniqueidentifier not null
 )
 go
 
@@ -2551,9 +2551,9 @@ create proc csp_insert_preparation
 	@instance_status_id int,
 	@comment nvarchar(1000),	
 	@create_date datetime,
-	@created_by nvarchar(50),
+	@create_id uniqueidentifier,
 	@update_date datetime,
-	@updated_by nvarchar(50)
+	@update_id uniqueidentifier
 as 
 	insert into preparation values (
 		@id,
@@ -2572,9 +2572,9 @@ as
 		@instance_status_id,
 		@comment,	
 		@create_date,
-		@created_by,
+		@create_id,
 		@update_date,
-		@updated_by
+		@update_id
 	);
 go
 
@@ -2589,7 +2589,7 @@ create proc csp_update_preparation
 	@fill_height_mm float,	
 	@comment nvarchar(1000),
 	@update_date datetime,
-	@updated_by nvarchar(50)
+	@update_id uniqueidentifier
 as 
 	update preparation set								
 		preparation_geometry_id = @preparation_geometry_id,		
@@ -2601,7 +2601,7 @@ as
 		fill_height_mm = @fill_height_mm,	
 		comment = @comment,			
 		update_date = @update_date,
-		updated_by = @updated_by
+		update_id = @update_id
 	where id = @id
 go
 
@@ -2666,9 +2666,9 @@ as
 		inst.name as 'instance_status_name',
 		p.comment,
 		p.create_date,
-		p.created_by,
+		p.create_id,
 		p.update_date,
-		p.updated_by
+		p.update_id
 	from preparation p
 		left outer join sample s on s.id = p.sample_id
 		left outer join assignment ass on ass.id = p.assignment_id
@@ -2702,9 +2702,9 @@ as
 	inst.name as 'instance_status',
 	p.comment,
 	p.create_date,
-	p.created_by,
+	p.create_id,
 	p.update_date,
-	p.updated_by
+	p.update_id
 from preparation p
 	left outer join sample s on s.id = p.sample_id
 	left outer join assignment ass on ass.id = p.assignment_id
@@ -2732,9 +2732,9 @@ create table analysis_method (
 	instance_status_id int not null default 1,
 	comment nvarchar(1000) default null,
 	create_date datetime not null,
-	created_by nvarchar(50) not null,
+	create_id uniqueidentifier not null,
 	update_date datetime not null,
-	updated_by nvarchar(50) not null
+	update_id uniqueidentifier not null
 )
 go
 
@@ -2747,9 +2747,9 @@ create proc csp_insert_analysis_method
 	@instance_status_id int,
 	@comment nvarchar(1000),
 	@create_date datetime,
-	@created_by nvarchar(50),
+	@create_id uniqueidentifier,
 	@update_date datetime,
-	@updated_by nvarchar(50)	
+	@update_id uniqueidentifier	
 as 
 	insert into analysis_method values (
 		@id,
@@ -2760,9 +2760,9 @@ as
 		@instance_status_id,
 		@comment,		
 		@create_date,
-		@created_by,
+		@create_id,
 		@update_date,
-		@updated_by
+		@update_id
 	);
 go
 
@@ -2775,7 +2775,7 @@ create proc csp_update_analysis_method
 	@instance_status_id int,
 	@comment nvarchar(1000),	
 	@update_date datetime,
-	@updated_by nvarchar(50)	
+	@update_id uniqueidentifier	
 as 
 	update analysis_method set 
 		name = @name,
@@ -2785,7 +2785,7 @@ as
 		instance_status_id = @instance_status_id,
 		comment = @comment,		
 		update_date = @update_date,
-		updated_by = @updated_by
+		update_id = @update_id
 	where id = @id
 go
 
@@ -2857,9 +2857,9 @@ as
 		st.name as 'instance_status_name',
 		am.comment,
 		am.create_date,
-		am.created_by,
+		am.create_id,
 		am.update_date,
-		am.updated_by
+		am.update_id
 	from analysis_method am, instance_status st
 	where am.instance_status_id = st.id and am.instance_status_id <= @instance_status_level
 	order by am.name
@@ -2910,9 +2910,9 @@ create table analysis (
 	instance_status_id int not null default 1,
 	comment nvarchar(1000) default null,	
 	create_date datetime not null,
-	created_by nvarchar(50) not null,
+	create_id uniqueidentifier not null,
 	update_date datetime not null,
-	updated_by nvarchar(50) not null
+	update_id uniqueidentifier not null
 )
 go
 
@@ -2934,9 +2934,9 @@ create proc csp_insert_analysis
 	@instance_status_id int,
 	@comment nvarchar(1000),	
 	@create_date datetime,
-	@created_by nvarchar(50),
+	@create_id uniqueidentifier,
 	@update_date datetime,
-	@updated_by nvarchar(50)
+	@update_id uniqueidentifier
 as 
 	insert into analysis values (
 		@id,
@@ -2956,9 +2956,9 @@ as
 		@instance_status_id,
 		@comment,	
 		@create_date,
-		@created_by,
+		@create_id,
 		@update_date,
-		@updated_by
+		@update_id
 	);
 go
 
@@ -2974,7 +2974,7 @@ create proc csp_update_analysis
 	@mda_library nvarchar(256),		
 	@comment nvarchar(1000),		
 	@update_date datetime,
-	@updated_by nvarchar(50)
+	@update_id uniqueidentifier
 as 
 	update analysis set
 		workflow_status_id = @workflow_status_id,
@@ -2987,7 +2987,7 @@ as
 		mda_library = @mda_library,
 		comment = @comment,
 		update_date = @update_date,
-		updated_by = @updated_by
+		update_id = @update_id
 	where id = @id
 go
 
@@ -3053,9 +3053,9 @@ as
 		inst.name as 'instance_status_name',
 		a.comment,
 		a.create_date,
-		a.created_by,
+		a.create_id,
 		a.update_date,
-		a.updated_by
+		a.update_id
 	from analysis a
 		left outer join assignment ass on ass.id = a.assignment_id
 		left outer join laboratory l on l.id = a.laboratory_id
@@ -3089,9 +3089,9 @@ as
 	inst.name as 'instance_status',
 	a.comment,
 	a.create_date,
-	a.created_by,
+	a.create_id,
 	a.update_date,
-	a.updated_by
+	a.update_id
 from analysis a
 	left outer join assignment ass on ass.id = a.assignment_id
 	left outer join laboratory l on l.id = a.laboratory_id
@@ -3120,9 +3120,9 @@ create table nuclide (
 	instance_status_id int not null default 1,
 	comment nvarchar(1000) default null,
 	create_date datetime not null,
-	created_by nvarchar(50) not null,
+	create_id uniqueidentifier not null,
 	update_date datetime not null,
-	updated_by nvarchar(50) not null
+	update_id uniqueidentifier not null
 )
 go
 
@@ -3137,9 +3137,9 @@ create proc csp_insert_nuclide
 	@instance_status_id int,
 	@comment nvarchar(1000),
 	@create_date datetime,
-	@created_by nvarchar(50),
+	@create_id uniqueidentifier,
 	@update_date datetime,
-	@updated_by nvarchar(50)
+	@update_id uniqueidentifier
 as 
 	insert into nuclide values (
 		@id, 
@@ -3152,9 +3152,9 @@ as
 		@instance_status_id,
 		@comment,
 		@create_date,
-		@created_by,
+		@create_id,
 		@update_date,
-		@updated_by
+		@update_id
 	);
 go
 
@@ -3169,7 +3169,7 @@ create proc csp_update_nuclide
 	@instance_status_id int,
 	@comment nvarchar(1000),	
 	@update_date datetime,
-	@updated_by nvarchar(50)
+	@update_id uniqueidentifier
 as 
 	update nuclide set
 		zas = @zas,
@@ -3181,7 +3181,7 @@ as
 		instance_status_id = @instance_status_id,
 		comment = @comment,		
 		update_date = @update_date,
-		updated_by = @updated_by
+		update_id = @update_id
 	where id = @id
 go
 
@@ -3208,9 +3208,9 @@ as
 		st.name as 'instance_status_name',
 		n.comment,
 		n.create_date,
-		n.created_by,
+		n.create_id,
 		n.update_date,
-		n.updated_by
+		n.update_id
 	from nuclide n, instance_status st
 	where n.instance_status_id = st.id and n.instance_status_id <= @instance_status_level
 	order by n.name
@@ -3242,9 +3242,9 @@ create table project_main (
 	instance_status_id int not null default 1,
 	comment nvarchar(1000) default null,		
 	create_date datetime not null,
-	created_by nvarchar(50) not null,
+	create_id uniqueidentifier not null,
 	update_date datetime not null,
-	updated_by nvarchar(50) not null
+	update_id uniqueidentifier not null
 )
 go
 
@@ -3254,9 +3254,9 @@ create proc csp_insert_project_main
 	@instance_status_id int,
 	@comment nvarchar(1000),
 	@create_date datetime,
-	@created_by nvarchar(50),
+	@create_id uniqueidentifier,
 	@update_date datetime,
-	@updated_by nvarchar(50)
+	@update_id uniqueidentifier
 as 
 	insert into project_main values (
 		@id,
@@ -3264,9 +3264,9 @@ as
 		@instance_status_id,
 		@comment,		
 		@create_date,
-		@created_by,
+		@create_id,
 		@update_date,
-		@updated_by
+		@update_id
 	);
 go
 
@@ -3276,14 +3276,14 @@ create proc csp_update_project_main
 	@instance_status_id int,
 	@comment nvarchar(1000),
 	@update_date datetime,
-	@updated_by nvarchar(50)
+	@update_id uniqueidentifier
 as 
 	update project_main set
 		name = @name, 				
 		instance_status_id = @instance_status_id,
 		comment = @comment,				
 		update_date = @update_date,
-		updated_by = @updated_by
+		update_id = @update_id
 	where id = @id
 go
 
@@ -3311,9 +3311,9 @@ as
 		st.name as 'instance_status_name',
 		pm.comment,
 		pm.create_date,
-		pm.created_by,
+		pm.create_id,
 		pm.update_date,
-		pm.updated_by
+		pm.update_id
 	from project_main pm, instance_status st
 	where pm.instance_status_id = st.id and pm.instance_status_id <= @instance_status_level
 	order by name
@@ -3342,9 +3342,9 @@ create table project_sub (
 	instance_status_id int not null default 1,
 	comment nvarchar(1000) default null,		
 	create_date datetime not null,
-	created_by nvarchar(50) not null,
+	create_id uniqueidentifier not null,
 	update_date datetime not null,
-	updated_by nvarchar(50) not null
+	update_id uniqueidentifier not null
 )
 go
 
@@ -3355,9 +3355,9 @@ create proc csp_insert_project_sub
 	@instance_status_id int,
 	@comment nvarchar(1000),
 	@create_date datetime,
-	@created_by nvarchar(50),
+	@create_id uniqueidentifier,
 	@update_date datetime,
-	@updated_by nvarchar(50)
+	@update_id uniqueidentifier
 as 
 	insert into project_sub values (
 		@id,
@@ -3366,9 +3366,9 @@ as
 		@instance_status_id,
 		@comment,		
 		@create_date,
-		@created_by,
+		@create_id,
 		@update_date,
-		@updated_by
+		@update_id
 	);
 go
 
@@ -3379,7 +3379,7 @@ create proc csp_update_project_sub
 	@instance_status_id int,
 	@comment nvarchar(1000),
 	@update_date datetime,
-	@updated_by nvarchar(50)
+	@update_id uniqueidentifier
 as 
 	update project_sub set
 		name = @name,
@@ -3387,7 +3387,7 @@ as
 		instance_status_id = @instance_status_id,
 		comment = @comment,				
 		update_date = @update_date,
-		updated_by = @updated_by
+		update_id = @update_id
 	where id = @id
 go
 
@@ -3418,9 +3418,9 @@ as
 		st.name as 'instance_status_name',
 		ps.comment,
 		ps.create_date,
-		ps.created_by,
+		ps.create_id,
 		ps.update_date,
-		ps.updated_by
+		ps.update_id
 	from project_sub ps, project_main pm, instance_status st
 	where ps.project_main_id = pm.id and ps.project_main_id = @project_main_id and ps.instance_status_id = st.id and ps.instance_status_id <= @instance_status_level
 	order by name
@@ -3463,9 +3463,9 @@ create table station (
 	instance_status_id int not null default 1,
 	comment nvarchar(1000) default null,
 	create_date datetime not null,
-	created_by nvarchar(50) not null,
+	create_id uniqueidentifier not null,
 	update_date datetime not null,
-	updated_by nvarchar(50) not null
+	update_id uniqueidentifier not null
 )
 go
 
@@ -3478,9 +3478,9 @@ create proc csp_insert_station
 	@instance_status_id int,
 	@comment nvarchar(1000),
 	@create_date datetime,
-	@created_by nvarchar(50),
+	@create_id uniqueidentifier,
 	@update_date datetime,
-	@updated_by nvarchar(50)	
+	@update_id uniqueidentifier	
 as 
 	insert into station values (
 		@id,		
@@ -3491,9 +3491,9 @@ as
 		@instance_status_id,
 		@comment,
 		@create_date,
-		@created_by,
+		@create_id,
 		@update_date,
-		@updated_by
+		@update_id
 	);
 go
 
@@ -3506,7 +3506,7 @@ create proc csp_update_station
 	@instance_status_id int,
 	@comment nvarchar(1000),	
 	@update_date datetime,
-	@updated_by nvarchar(50)	
+	@update_id uniqueidentifier	
 as 
 	update station set 
 		name = @name,
@@ -3516,7 +3516,7 @@ as
 		instance_status_id = @instance_status_id,
 		comment = @comment,	
 		update_date = @update_date,
-		updated_by = @updated_by
+		update_id = @update_id
 	where id = @id
 go
 
@@ -3558,9 +3558,9 @@ as
 		st.name as 'instance_status_name',	
 		s.comment,	
 		s.create_date,
-		s.created_by,
+		s.create_id,
 		s.update_date,
-		s.updated_by
+		s.update_id
 	from station s, instance_status st
 	where s.instance_status_id = st.id and s.instance_status_id <= @instance_status_level
 	order by s.name
@@ -3579,9 +3579,9 @@ create table sample_type (
 	name_common nvarchar(80) default null,
 	name_latin nvarchar(80) default null,
 	create_date datetime not null,
-	created_by nvarchar(50) not null,
+	create_id uniqueidentifier not null,
 	update_date datetime not null,
-	updated_by nvarchar(50) not null
+	update_id uniqueidentifier not null
 )
 go
 
@@ -3593,9 +3593,9 @@ create proc csp_insert_sample_type
 	@name_common nvarchar(80),
 	@name_latin nvarchar(80),
 	@create_date datetime,
-	@created_by nvarchar(50),
+	@create_id uniqueidentifier,
 	@update_date datetime,
-	@updated_by nvarchar(50)	
+	@update_id uniqueidentifier	
 as 
 	insert into sample_type values (
 		@id,
@@ -3605,9 +3605,9 @@ as
 		@name_common,
 		@name_latin,
 		@create_date,
-		@created_by,
+		@create_id,
 		@update_date,
-		@updated_by
+		@update_id
 	);
 go
 
@@ -3618,7 +3618,7 @@ create proc csp_update_sample_type
 	@name_common nvarchar(80),
 	@name_latin nvarchar(80),	
 	@update_date datetime,
-	@updated_by nvarchar(50)	
+	@update_id uniqueidentifier	
 as 
 	update sample_type set 
 		path = @path,
@@ -3626,7 +3626,7 @@ as
 		name_common = @name_common,
 		name_latin = @name_latin,
 		update_date = @update_date,
-		updated_by = @updated_by
+		update_id = @update_id
 	where id = @id
 go
 
@@ -3666,9 +3666,9 @@ create table sample_storage (
 	instance_status_id int not null default 1,
 	comment nvarchar(1000) default null,
 	create_date datetime not null,
-	created_by nvarchar(50) not null,
+	create_id uniqueidentifier not null,
 	update_date datetime not null,
-	updated_by nvarchar(50) not null
+	update_id uniqueidentifier not null
 )
 go
 
@@ -3679,9 +3679,9 @@ create proc csp_insert_sample_storage
 	@instance_status_id int,
 	@comment nvarchar(1000),
 	@create_date datetime,
-	@created_by nvarchar(50),
+	@create_id uniqueidentifier,
 	@update_date datetime,
-	@updated_by nvarchar(50)	
+	@update_id uniqueidentifier	
 as 
 	insert into sample_storage values (
 		@id,		
@@ -3690,9 +3690,9 @@ as
 		@instance_status_id,
 		@comment,
 		@create_date,
-		@created_by,
+		@create_id,
 		@update_date,
-		@updated_by
+		@update_id
 	);
 go
 
@@ -3703,7 +3703,7 @@ create proc csp_update_sample_storage
 	@instance_status_id int,
 	@comment nvarchar(1000),	
 	@update_date datetime,
-	@updated_by nvarchar(50)	
+	@update_id uniqueidentifier	
 as 
 	update sample_storage set 
 		name = @name,
@@ -3711,7 +3711,7 @@ as
 		instance_status_id = @instance_status_id,
 		comment = @comment,	
 		update_date = @update_date,
-		updated_by = @updated_by
+		update_id = @update_id
 	where id = @id
 go
 
@@ -3749,9 +3749,9 @@ as
 		st.name as 'instance_status_name',
 		s.comment,	
 		s.create_date,
-		s.created_by,
+		s.create_id,
 		s.update_date,
-		s.updated_by
+		s.update_id
 	from sample_storage s, instance_status st
 	where s.instance_status_id = st.id and s.instance_status_id <= @instance_status_level
 	order by s.name
@@ -3767,9 +3767,9 @@ create table sample_component (
 	sample_type_id uniqueidentifier not null,
 	name nvarchar(80) not null,
 	create_date datetime not null,
-	created_by nvarchar(50) not null,
+	create_id uniqueidentifier not null,
 	update_date datetime not null,
-	updated_by nvarchar(50) not null
+	update_id uniqueidentifier not null
 )
 go
 
@@ -3778,18 +3778,18 @@ create proc csp_insert_sample_component
 	@sample_type_id uniqueidentifier,
 	@name nvarchar(80),
 	@create_date datetime,
-	@created_by nvarchar(50),
+	@create_id uniqueidentifier,
 	@update_date datetime,
-	@updated_by nvarchar(50)	
+	@update_id uniqueidentifier	
 as 
 	insert into sample_component values (
 		@id,		
 		@sample_type_id,
 		@name,
 		@create_date,
-		@created_by,
+		@create_id,
 		@update_date,
-		@updated_by
+		@update_id
 	);
 go
 
@@ -3797,12 +3797,12 @@ create proc csp_update_sample_component
 	@id uniqueidentifier,
 	@name nvarchar(80),
 	@update_date datetime,
-	@updated_by nvarchar(50)	
+	@update_id uniqueidentifier	
 as 
 	update sample_component set 
 		name = @name,
 		update_date = @update_date,
-		updated_by = @updated_by
+		update_id = @update_id
 	where id = @id
 go
 
@@ -3837,9 +3837,9 @@ create table sample_parameter (
 	name nvarchar(80) not null,
 	type nvarchar(30) not null,			
 	create_date datetime not null,
-	created_by nvarchar(50) not null,
+	create_id uniqueidentifier not null,
 	update_date datetime not null,
-	updated_by nvarchar(50) not null
+	update_id uniqueidentifier not null
 )
 go
 
@@ -3897,9 +3897,9 @@ create table sample (
 	locked_by nvarchar(50) default null,
 	comment nvarchar(1000) default null,	
 	create_date datetime not null,
-	created_by nvarchar(50) not null,
+	create_id uniqueidentifier not null,
 	update_date datetime not null,
-	updated_by nvarchar(50) not null
+	update_id uniqueidentifier not null
 )
 go
 
@@ -3948,9 +3948,9 @@ create proc csp_insert_sample
 	@locked_by nvarchar(50),
 	@comment nvarchar(1000),	
 	@create_date datetime,
-	@created_by nvarchar(50),
+	@create_id uniqueidentifier,
 	@update_date datetime,
-	@updated_by nvarchar(50)	
+	@update_id uniqueidentifier	
 as
 	insert into sample values (
 		@id,
@@ -3989,9 +3989,9 @@ as
 		@locked_by,
 		@comment,	
 		@create_date,
-		@created_by,
+		@create_id,
 		@update_date,
-		@updated_by
+		@update_id
 	);
 go
 
@@ -4019,7 +4019,7 @@ create proc csp_update_sample
 	@instance_status_id int,	
 	@comment nvarchar(1000),
 	@update_date datetime,
-	@updated_by nvarchar(50)	
+	@update_id uniqueidentifier	
 as 		
 	update sample set		
 		laboratory_id = @laboratory_id,	
@@ -4044,7 +4044,7 @@ as
 		instance_status_id = @instance_status_id,	
 		comment = @comment,
 		update_date = @update_date,
-		updated_by = @updated_by		
+		update_id = @update_id		
 	where id = @id
 go
 
@@ -4057,7 +4057,7 @@ create proc csp_update_sample_info
 	@lod_weight_end float,	
 	@lod_temperature float,
 	@update_date datetime,
-	@updated_by nvarchar(50)	
+	@update_id uniqueidentifier	
 as 		
 	update sample set		
 		wet_weight_g = @wet_weight_g,	
@@ -4067,7 +4067,7 @@ as
 		lod_weight_end = @lod_weight_end,	
 		lod_temperature = @lod_temperature,
 		update_date = @update_date,
-		updated_by = @updated_by
+		update_id = @update_id
 	where id = @id
 go
 
@@ -4121,9 +4121,9 @@ as
 		s.locked_by,	
 		s.comment,	
 		s.create_date,
-		s.created_by,
+		s.create_id,
 		s.update_date,
-		s.updated_by
+		s.update_id
 	from sample s 
 		left outer join laboratory l on s.laboratory_id = l.id
 		left outer join sample_type st on s.sample_type_id = st.id
@@ -4248,9 +4248,9 @@ as
 		s.locked_by,	
 		s.comment,	
 		s.create_date,
-		s.created_by,
+		s.create_id,
 		s.update_date,
-		s.updated_by
+		s.update_id
 	from sample s 
 		left outer join laboratory l on s.laboratory_id = l.id
 		left outer join sample_type st on s.sample_type_id = st.id
@@ -4399,9 +4399,9 @@ create table analysis_result (
 	reportable bit default 0,
 	instance_status_id int not null default 1,
 	create_date datetime not null,
-	created_by nvarchar(50) not null,
+	create_id uniqueidentifier not null,
 	update_date datetime not null,
-	updated_by nvarchar(50) not null	
+	update_id uniqueidentifier not null	
 )
 go
 
@@ -4420,9 +4420,9 @@ create proc csp_insert_analysis_result
 	@reportable bit,
 	@instance_status_id int,
 	@create_date datetime,
-	@created_by nvarchar(50),
+	@create_id uniqueidentifier,
 	@update_date datetime,
-	@updated_by nvarchar(50)
+	@update_id uniqueidentifier
 as 
 	insert into analysis_result values (		
 		@id,
@@ -4439,9 +4439,9 @@ as
 		@reportable,
 		@instance_status_id,
 		@create_date,
-		@created_by,
+		@create_id,
 		@update_date,
-		@updated_by
+		@update_id
 	);
 go
 
@@ -4458,7 +4458,7 @@ create proc csp_update_analysis_result
 	@reportable bit,
 	@instance_status_id int,	
 	@update_date datetime,
-	@updated_by nvarchar(50)
+	@update_id uniqueidentifier
 as 
 	update analysis_result set 
 		activity = @activity,	
@@ -4472,7 +4472,7 @@ as
 		reportable = @reportable,
 		instance_status_id = @instance_status_id,
 		update_date = @update_date,
-		updated_by = @updated_by
+		update_id = @update_id
 	where id = @id
 go
 
@@ -4502,9 +4502,9 @@ as
 	ar.reportable,
 	inst.name as 'instance_status_name',
 	ar.create_date,
-	ar.created_by,
+	ar.create_id,
 	ar.update_date,
-	ar.updated_by
+	ar.update_id
 from analysis_result ar
 	left outer join analysis a on a.id = ar.analysis_id
 	left outer join nuclide n on n.id = ar.nuclide_id
@@ -4531,9 +4531,9 @@ as
 	ar.reportable,
 	inst.name as 'instance_status',
 	ar.create_date,
-	ar.created_by,
+	ar.create_id,
 	ar.update_date,
-	ar.updated_by
+	ar.update_id
 from analysis_result ar
 	left outer join analysis a on a.id = ar.analysis_id
 	left outer join nuclide n on n.id = ar.nuclide_id
@@ -4585,6 +4585,6 @@ create table attachment (
 	file_extension nvarchar(16) not null,
 	content varbinary(max) not null,
 	create_date datetime not null,
-	created_by nvarchar(50) not null	
+	create_id uniqueidentifier not null	
 )
 go

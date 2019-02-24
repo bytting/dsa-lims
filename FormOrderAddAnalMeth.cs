@@ -79,9 +79,9 @@ namespace DSA_lims
             aam.AnalysisMethodCount = Convert.ToInt32(tbCount.Text);
             aam.Comment = tbComment.Text.Trim();
             aam.CreateDate = DateTime.Now;
-            aam.CreatedBy = Common.Username;
+            aam.CreateId = Common.UserId;
             aam.UpdateDate = DateTime.Now;
-            aam.UpdatedBy = Common.Username;
+            aam.UpdateId = Common.UserId;
             aam.Dirty = true;
             mApm.AnalysisMethods.Add(aam);
 

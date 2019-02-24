@@ -91,9 +91,9 @@ namespace DSA_lims
                     tbNumber.Text = reader.GetString("municipality_number");
                     cboxInstanceStatus.SelectedValue = reader.GetInt32("instance_status_id");
                     p["create_date"] = reader["create_date"];
-                    p["created_by"] = reader["created_by"];
+                    p["create_id"] = reader["create_id"];
                     p["update_date"] = reader["update_date"];
-                    p["updated_by"] = reader["updated_by"];
+                    p["update_id"] = reader["update_id"];
                 }
             }
         }
@@ -179,9 +179,9 @@ namespace DSA_lims
         private void InsertMunicipality(SqlConnection conn, SqlTransaction trans)
         {            
             p["create_date"] = DateTime.Now;
-            p["created_by"] = Common.Username;
+            p["create_id"] = Common.UserId;
             p["update_date"] = DateTime.Now;
-            p["updated_by"] = Common.Username;        
+            p["update_id"] = Common.UserId;        
 
             SqlCommand cmd = new SqlCommand("csp_insert_municipality", conn, trans);
             cmd.CommandType = CommandType.StoredProcedure;
@@ -192,16 +192,16 @@ namespace DSA_lims
             cmd.Parameters.AddWithValue("@municipality_number", p["number"]);
             cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
             cmd.Parameters.AddWithValue("@create_date", p["create_date"]);
-            cmd.Parameters.AddWithValue("@created_by", p["created_by"]);
+            cmd.Parameters.AddWithValue("@create_id", p["create_id"]);
             cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
-            cmd.Parameters.AddWithValue("@updated_by", p["updated_by"]);
+            cmd.Parameters.AddWithValue("@update_id", p["update_id"]);
             cmd.ExecuteNonQuery();                        
         }
 
         private void UpdateMunicipality(SqlConnection conn, SqlTransaction trans)
         {            
             p["update_date"] = DateTime.Now;
-            p["updated_by"] = Common.Username;                
+            p["update_id"] = Common.Username;                
 
             SqlCommand cmd = new SqlCommand("csp_update_municipality", conn, trans);
             cmd.CommandType = CommandType.StoredProcedure;
@@ -210,7 +210,7 @@ namespace DSA_lims
             cmd.Parameters.AddWithValue("@municipality_number", p["number"]);
             cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
             cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
-            cmd.Parameters.AddWithValue("@updated_by", p["updated_by"]);
+            cmd.Parameters.AddWithValue("@update_id", p["update_id"]);
             cmd.ExecuteNonQuery();                        
         }        
     }

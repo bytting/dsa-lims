@@ -162,9 +162,9 @@ namespace DSA_lims
                     cmd.Parameters.AddWithValue("@locked_by", DBNull.Value);
                     cmd.Parameters.AddWithValue("@comment", DBNull.Value);
                     cmd.Parameters.AddWithValue("@create_date", DateTime.Now);
-                    cmd.Parameters.AddWithValue("@created_by", Common.Username);
+                    cmd.Parameters.AddWithValue("@create_id", Common.UserId);
                     cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
-                    cmd.Parameters.AddWithValue("@updated_by", Common.Username);
+                    cmd.Parameters.AddWithValue("@update_id", Common.UserId);
 
                     cmd.ExecuteNonQuery();                
                 }

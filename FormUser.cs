@@ -108,6 +108,8 @@ namespace DSA_lims
                     p["update_date"] = reader["update_date"];
                 }
             }
+
+            cboxPersons.Enabled = false;
         }        
 
         private void btnCancel_Click(object sender, EventArgs e)

@@ -146,7 +146,7 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@confidential", 0);
                 cmd.Parameters.AddWithValue("@parameters", DBNull.Value);
                 cmd.Parameters.AddWithValue("@instance_status_id", InstanceStatus.Active);
-                cmd.Parameters.AddWithValue("@locked_by", DBNull.Value);
+                cmd.Parameters.AddWithValue("@locked_id", DBNull.Value);
                 cmd.Parameters.AddWithValue("@comment", DBNull.Value);
                 cmd.Parameters.AddWithValue("@create_date", DateTime.Now);
                 cmd.Parameters.AddWithValue("@create_id", Common.UserId);

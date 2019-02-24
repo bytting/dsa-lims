@@ -221,10 +221,10 @@ as
 	where id = @id
 go
 
-create proc csp_select_persons
+create proc csp_select_persons	
 as 
 	select * 
-	from person	
+	from person	where email is not NULL
 	order by name
 go
 
@@ -233,7 +233,7 @@ as
 	select 
 		id, 
 		name + ' (' + email + ')' as 'name'
-	from person	
+	from person	where email is not NULL
 	order by name
 go
 
@@ -358,7 +358,7 @@ create proc csp_select_accounts
 as 
 	select * 
 	from cv_account
-	where instance_status_id <= @instance_status_level
+	where instance_status_id <= @instance_status_level and email is not NULL
 	order by name
 go
 
@@ -369,7 +369,7 @@ as
 		id,
 		name + ' (' + email + ')' as name
 	from cv_account
-	where instance_status_id <= @instance_status_level
+	where instance_status_id <= @instance_status_level and email is not NULL
 	order by name
 go
 
@@ -391,7 +391,7 @@ as
 	from cv_account av
 		left outer join laboratory l on av.laboratory_id = l.id 
 		inner join instance_status st on av.instance_status_id = st.id 
-	where av.instance_status_id <= @instance_status_level
+	where av.instance_status_id <= @instance_status_level and av.email is not NULL
 	order by av.name
 go
 
@@ -401,7 +401,7 @@ create proc csp_select_accounts_for_laboratory
 as 
 	select * 
 	from cv_account 
-	where laboratory_id = @laboratory_id and instance_status_id <= @instance_status_level
+	where laboratory_id = @laboratory_id and instance_status_id <= @instance_status_level and email is not NULL
 	order by name
 go
 
@@ -413,7 +413,7 @@ as
 		id, 
 		name + ' (' + email + ')' as name
 	from cv_account 
-	where laboratory_id = @laboratory_id and instance_status_id <= @instance_status_level
+	where laboratory_id = @laboratory_id and instance_status_id <= @instance_status_level and email is not NULL
 	order by name
 go
 
@@ -1549,7 +1549,7 @@ create table assignment (
 	last_workflow_status_by nvarchar(50) default null,
 	analysis_report_version int not null default 1,
 	instance_status_id int not null default 1,
-	locked_by nvarchar(50) default null,
+	locked_id uniqueidentifier default null,
 	create_date datetime not null,
 	create_id uniqueidentifier not null,
 	update_date datetime not null,
@@ -1585,7 +1585,7 @@ create proc csp_insert_assignment
 	@last_workflow_status_by nvarchar(50),
 	@analysis_report_version int,
 	@instance_status_id int,
-	@locked_by nvarchar(50),
+	@locked_id uniqueidentifier,
 	@create_date datetime,
 	@create_id uniqueidentifier,
 	@update_date datetime,
@@ -1619,7 +1619,7 @@ as
 		@last_workflow_status_by,
 		@analysis_report_version,
 		@instance_status_id,
-		@locked_by,
+		@locked_id,
 		@create_date,
 		@create_id,
 		@update_date,
@@ -1655,7 +1655,7 @@ create proc csp_update_assignment
 	@last_workflow_status_by nvarchar(50),
 	@analysis_report_version int,
 	@instance_status_id int,	
-	@locked_by nvarchar(50),
+	@locked_id uniqueidentifier,
 	@update_date datetime,
 	@update_id uniqueidentifier
 as 		
@@ -1686,7 +1686,7 @@ as
 		last_workflow_status_by = @last_workflow_status_by,
 		analysis_report_version = @analysis_report_version,
 		instance_status_id = @instance_status_id,				
-		locked_by = @locked_by,
+		locked_id = @locked_id,
 		update_date = @update_date,
 		update_id = @update_id		
 	where id = @id
@@ -1741,7 +1741,7 @@ as
 		a.last_workflow_status_by,
 		a.analysis_report_version,
 		insta.name as 'instance_status_name',
-		a.locked_by,
+		(select name from cv_account where id = a.locked_id) as 'locked_name',
 		a.create_date,
 		a.create_id,
 		a.update_date,
@@ -1826,7 +1826,7 @@ as
 		a.last_workflow_status_by,
 		a.analysis_report_version,
 		insta.name as 'instance_status_name',
-		a.locked_by,
+		(select name from cv_account where id = a.locked_id) as 'locked_name',		
 		a.create_date,
 		a.create_id,
 		a.update_date,
@@ -3894,7 +3894,7 @@ create table sample (
 	confidential bit default 0,	
 	parameters nvarchar(4000) default null,
 	instance_status_id int not null default 1,
-	locked_by nvarchar(50) default null,
+	locked_id uniqueidentifier default null,
 	comment nvarchar(1000) default null,	
 	create_date datetime not null,
 	create_id uniqueidentifier not null,
@@ -3945,7 +3945,7 @@ create proc csp_insert_sample
 	@confidential bit,	
 	@parameters nvarchar(4000),
 	@instance_status_id int,
-	@locked_by nvarchar(50),
+	@locked_id uniqueidentifier,
 	@comment nvarchar(1000),	
 	@create_date datetime,
 	@create_id uniqueidentifier,
@@ -3986,7 +3986,7 @@ as
 		@confidential,	
 		@parameters,
 		@instance_status_id,
-		@locked_by,
+		@locked_id,
 		@comment,	
 		@create_date,
 		@create_id,
@@ -4118,7 +4118,7 @@ as
 		s.confidential,	
 		s.parameters,
 		insta.name as 'instance_status_name',
-		s.locked_by,	
+		(select name from cv_account where id = s.locked_id) as 'locked_name',
 		s.comment,	
 		s.create_date,
 		s.create_id,
@@ -4245,7 +4245,7 @@ as
 		s.confidential,	
 		s.parameters,
 		insta.name as 'instance_status_name',
-		s.locked_by,	
+		(select name from cv_account where id = s.locked_id) as 'locked_name',
 		s.comment,	
 		s.create_date,
 		s.create_id,
@@ -4282,7 +4282,7 @@ as
 		ss.name as 'sample_storage_name',
 		s.reference_date,
 		insta.name as 'instance_status_name',
-		s.locked_by,
+		(select name from cv_account where id = s.locked_id) as 'locked_name',
 		(select number from sample where id = s.transform_from_id) as 'split_from',
 		(select number from sample where id = s.transform_to_id) as 'merge_to',
 		(select convert(varchar(80), number) + ', ' as 'data()' from sample where transform_to_id = s.id for XML PATH('')) as 'merge_from'

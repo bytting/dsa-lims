@@ -568,8 +568,8 @@
             this.toolsProjUsers = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator31 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButton24 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton26 = new System.Windows.Forms.ToolStripButton();
+            this.btnProjectsUsersAdd = new System.Windows.Forms.ToolStripButton();
+            this.btnProjectsUsersRemove = new System.Windows.Forms.ToolStripButton();
             this.gridProjectAttachments = new System.Windows.Forms.DataGridView();
             this.toolsProjAttachments = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel3 = new System.Windows.Forms.ToolStripLabel();
@@ -6713,8 +6713,8 @@
             this.toolsProjUsers.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripLabel2,
             this.toolStripSeparator31,
-            this.toolStripButton24,
-            this.toolStripButton26});
+            this.btnProjectsUsersAdd,
+            this.btnProjectsUsersRemove});
             this.toolsProjUsers.Location = new System.Drawing.Point(0, 0);
             this.toolsProjUsers.Name = "toolsProjUsers";
             this.toolsProjUsers.Size = new System.Drawing.Size(327, 25);
@@ -6733,23 +6733,22 @@
             this.toolStripSeparator31.Name = "toolStripSeparator31";
             this.toolStripSeparator31.Size = new System.Drawing.Size(6, 25);
             // 
-            // toolStripButton24
+            // btnProjectsUsersAdd
             // 
-            this.toolStripButton24.Enabled = false;
-            this.toolStripButton24.Image = global::DSA_lims.Properties.Resources.create_user;
-            this.toolStripButton24.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton24.Name = "toolStripButton24";
-            this.toolStripButton24.Size = new System.Drawing.Size(49, 22);
-            this.toolStripButton24.Text = "Add";
+            this.btnProjectsUsersAdd.Image = global::DSA_lims.Properties.Resources.create_user;
+            this.btnProjectsUsersAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnProjectsUsersAdd.Name = "btnProjectsUsersAdd";
+            this.btnProjectsUsersAdd.Size = new System.Drawing.Size(49, 22);
+            this.btnProjectsUsersAdd.Text = "Add";
+            this.btnProjectsUsersAdd.Click += new System.EventHandler(this.btnProjectsUsersAdd_Click);
             // 
-            // toolStripButton26
+            // btnProjectsUsersRemove
             // 
-            this.toolStripButton26.Enabled = false;
-            this.toolStripButton26.Image = global::DSA_lims.Properties.Resources.delete_user;
-            this.toolStripButton26.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton26.Name = "toolStripButton26";
-            this.toolStripButton26.Size = new System.Drawing.Size(70, 22);
-            this.toolStripButton26.Text = "Remove";
+            this.btnProjectsUsersRemove.Image = global::DSA_lims.Properties.Resources.delete_user;
+            this.btnProjectsUsersRemove.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnProjectsUsersRemove.Name = "btnProjectsUsersRemove";
+            this.btnProjectsUsersRemove.Size = new System.Drawing.Size(70, 22);
+            this.btnProjectsUsersRemove.Text = "Remove";
             // 
             // gridProjectAttachments
             // 
@@ -11169,8 +11168,8 @@
         private System.Windows.Forms.ToolStripMenuItem miProjectsSubNew;
         private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.ToolStrip toolsProjUsers;
-        private System.Windows.Forms.ToolStripButton toolStripButton24;
-        private System.Windows.Forms.ToolStripButton toolStripButton26;
+        private System.Windows.Forms.ToolStripButton btnProjectsUsersAdd;
+        private System.Windows.Forms.ToolStripButton btnProjectsUsersRemove;
         private System.Windows.Forms.ToolStripLabel toolStripLabel2;
         private System.Windows.Forms.ToolStripLabel lblSampleToolSubProject;
         private System.Windows.Forms.ToolStripMenuItem miNuclides;

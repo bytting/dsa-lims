@@ -65,7 +65,7 @@ namespace DSA_lims
         public string LastWorkflowStatusBy { get; set; }
         public int AnalysisReportVersion { get; set; }
         public int InstanceStatusId { get; set; }
-        public string LockedBy { get; set; }
+        public Guid LockedId { get; set; }
         public DateTime CreateDate { get; set; }
         public Guid CreateId { get; set; }
         public DateTime UpdateDate { get; set; }
@@ -181,7 +181,7 @@ namespace DSA_lims
                 LastWorkflowStatusBy = reader.GetString("last_workflow_status_by");
                 AnalysisReportVersion = reader.GetInt32("analysis_report_version");
                 InstanceStatusId = reader.GetInt32("instance_status_id");
-                LockedBy = reader.GetString("locked_by");
+                LockedId = reader.GetGuid("locked_id");
                 CreateDate = reader.GetDateTime("create_date");
                 CreateId = reader.GetGuid("create_id");
                 UpdateDate = reader.GetDateTime("update_date");
@@ -245,7 +245,7 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@last_workflow_status_by", LastWorkflowStatusBy, String.Empty);
                 cmd.Parameters.AddWithValue("@analysis_report_version", AnalysisReportVersion);
                 cmd.Parameters.AddWithValue("@instance_status_id", InstanceStatusId);
-                cmd.Parameters.AddWithValue("@locked_by", LockedBy, String.Empty);
+                cmd.Parameters.AddWithValue("@locked_id", LockedId, Guid.Empty);
                 cmd.Parameters.AddWithValue("@create_date", DateTime.Now);
                 cmd.Parameters.AddWithValue("@create_id", Common.UserId, Guid.Empty);
                 cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
@@ -293,7 +293,7 @@ namespace DSA_lims
                     cmd.Parameters.AddWithValue("@last_workflow_status_by", LastWorkflowStatusBy, String.Empty);
                     cmd.Parameters.AddWithValue("@analysis_report_version", AnalysisReportVersion);
                     cmd.Parameters.AddWithValue("@instance_status_id", InstanceStatusId);
-                    cmd.Parameters.AddWithValue("@locked_by", LockedBy, String.Empty);                    
+                    cmd.Parameters.AddWithValue("@locked_id", LockedId, Guid.Empty);                    
                     cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
                     cmd.Parameters.AddWithValue("@update_id", Common.UserId, Guid.Empty);
 

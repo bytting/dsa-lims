@@ -144,15 +144,15 @@ namespace DSA_lims
             try
             {
                 trans = conn.BeginTransaction();
-                SqlCommand cmd = new SqlCommand("select locked_by from sample where id = @id", conn, trans);
+                SqlCommand cmd = new SqlCommand("select locked_id from sample where id = @id", conn, trans);
                 cmd.CommandType = CommandType.Text;
                 cmd.Parameters.AddWithValue("@id", sampleId);
                 object o = cmd.ExecuteScalar();                
-                if (o == DBNull.Value)
+                if (!IsValidField(o))
                 {
-                    cmd.CommandText = "update sample set locked_by = @locked_by where id = @id";
+                    cmd.CommandText = "update sample set locked_id = @locked_id where id = @id";
                     cmd.Parameters.Clear();
-                    cmd.Parameters.AddWithValue("@locked_by", Common.Username);
+                    cmd.Parameters.AddWithValue("@locked_id", Common.UserId);
                     cmd.Parameters.AddWithValue("@id", sampleId);
                     cmd.ExecuteNonQuery();
                     trans.Commit();
@@ -162,9 +162,10 @@ namespace DSA_lims
                 }
                 else
                 {
-                    trans.Commit(); 
+                    trans.Commit();
 
-                    if(o.ToString().ToLower() == Common.Username.ToLower())
+                    Guid locked_id = Guid.Parse(o.ToString());
+                    if(locked_id == Common.UserId)
                     {
                         if (!LockedSamples.Contains(sampleId))
                             LockedSamples.Add(sampleId);
@@ -186,7 +187,7 @@ namespace DSA_lims
         {            
             try
             {
-                SqlCommand cmd = new SqlCommand("update sample set locked_by = NULL where id = @id", conn);
+                SqlCommand cmd = new SqlCommand("update sample set locked_id = NULL where id = @id", conn);
                 cmd.CommandType = CommandType.Text;
 
                 foreach (Guid id in LockedSamples)
@@ -210,15 +211,15 @@ namespace DSA_lims
             try
             {
                 trans = conn.BeginTransaction();
-                SqlCommand cmd = new SqlCommand("select locked_by from assignment where id = @id", conn, trans);
+                SqlCommand cmd = new SqlCommand("select locked_id from assignment where id = @id", conn, trans);
                 cmd.CommandType = CommandType.Text;
                 cmd.Parameters.AddWithValue("@id", orderId);
                 object o = cmd.ExecuteScalar();
-                if (o == DBNull.Value)
+                if (!IsValidField(o))
                 {
-                    cmd.CommandText = "update assignment set locked_by = @locked_by where id = @id";
+                    cmd.CommandText = "update assignment set locked_id = @locked_id where id = @id";
                     cmd.Parameters.Clear();
-                    cmd.Parameters.AddWithValue("@locked_by", Common.Username);
+                    cmd.Parameters.AddWithValue("@locked_id", Common.UserId);
                     cmd.Parameters.AddWithValue("@id", orderId);
                     cmd.ExecuteNonQuery();
                     trans.Commit();
@@ -230,7 +231,8 @@ namespace DSA_lims
                 {
                     trans.Commit();
 
-                    if(o.ToString().ToLower() == Common.Username.ToLower())
+                    Guid locked_id = Guid.Parse(o.ToString());
+                    if(locked_id == Common.UserId)
                     {
                         if (!LockedOrders.Contains(orderId))
                             LockedOrders.Add(orderId);
@@ -252,7 +254,7 @@ namespace DSA_lims
         {
             try
             {
-                SqlCommand cmd = new SqlCommand("update assignment set locked_by = NULL where id = @id", conn);
+                SqlCommand cmd = new SqlCommand("update assignment set locked_id = NULL where id = @id", conn);
                 cmd.CommandType = CommandType.Text;
 
                 foreach (Guid id in LockedOrders)

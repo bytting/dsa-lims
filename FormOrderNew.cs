@@ -149,7 +149,7 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@last_workflow_status_by", Common.Username);
                 cmd.Parameters.AddWithValue("@analysis_report_version", 0);
                 cmd.Parameters.AddWithValue("@instance_status_id", InstanceStatus.Active);
-                cmd.Parameters.AddWithValue("@locked_by", DBNull.Value);
+                cmd.Parameters.AddWithValue("@locked_id", DBNull.Value);
                 cmd.Parameters.AddWithValue("@create_date", DateTime.Now);
                 cmd.Parameters.AddWithValue("@create_id", Common.UserId);
                 cmd.Parameters.AddWithValue("@update_date", DateTime.Now);

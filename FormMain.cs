@@ -4842,7 +4842,7 @@ select count(*) from sample s
 		ss.name as 'sample_storage_name',
 		s.reference_date,
 		insta.name as 'instance_status_name',
-		s.locked_by,
+        (select name from cv_account where id = s.locked_id) as 'locked_name',
 		(select number from sample where id = s.transform_from_id) as 'split_from',
 		(select number from sample where id = s.transform_to_id) as 'merge_to',
 		(select convert(varchar(80), number) + ', ' as 'data()' from sample where transform_to_id = s.id for XML PATH('')) as 'merge_from'
@@ -4909,7 +4909,7 @@ select count(*) from sample s
                 gridSamples.Columns["sample_storage_name"].HeaderText = "Storage";
                 gridSamples.Columns["reference_date"].HeaderText = "Ref.date";
                 gridSamples.Columns["instance_status_name"].HeaderText = "Status";
-                gridSamples.Columns["locked_by"].HeaderText = "Locked by";
+                gridSamples.Columns["locked_name"].HeaderText = "Locked by";
                 gridSamples.Columns["split_from"].HeaderText = "Split from";
                 gridSamples.Columns["merge_from"].HeaderText = "Merge from";
 
@@ -4954,7 +4954,7 @@ select distinct
 		ss.name as 'sample_storage_name',
 		s.reference_date,
 		insta.name as 'instance_status_name',
-		s.locked_by,
+        (select name from cv_account where id = s.locked_id) as 'locked_name',
 		(select number from sample where id = s.transform_from_id) as 'split_from',
 		(select number from sample where id = s.transform_to_id) as 'merge_to',
 		(select convert(varchar(80), number) + ', ' as 'data()' from sample where transform_to_id = s.id for XML PATH('')) as 'merge_from'
@@ -4994,7 +4994,7 @@ where s.number = @sample_number
                 gridSamples.Columns["sample_storage_name"].HeaderText = "Storage";
                 gridSamples.Columns["reference_date"].HeaderText = "Ref.date";
                 gridSamples.Columns["instance_status_name"].HeaderText = "Status";
-                gridSamples.Columns["locked_by"].HeaderText = "Locked by";
+                gridSamples.Columns["locked_name"].HeaderText = "Locked by";
                 gridSamples.Columns["split_from"].HeaderText = "Split from";
                 gridSamples.Columns["merge_from"].HeaderText = "Merge from";
 
@@ -5034,7 +5034,7 @@ where s.number = @sample_number
 		a.approved_customer,
 		a.approved_laboratory,			
         wf.name as 'workflow_status',
-		a.locked_by		
+        (select name from cv_account where id = a.locked_id) as 'locked_name'
 	from assignment a 		
 		left outer join laboratory l on a.laboratory_id = l.id
 		left outer join cv_account va on a.account_id = va.id
@@ -5085,7 +5085,7 @@ where s.number = @sample_number
                 gridOrders.Columns["approved_customer"].HeaderText = "Appr.Cust";
                 gridOrders.Columns["approved_laboratory"].HeaderText = "Appr.Lab";
                 gridOrders.Columns["workflow_status"].HeaderText = "Status";                
-                gridOrders.Columns["locked_by"].HeaderText = "Locked by";
+                gridOrders.Columns["locked_name"].HeaderText = "Locked by";
 
                 gridOrders.Columns["deadline"].DefaultCellStyle.Format = Utils.DateFormatNorwegian;
             }
@@ -6162,13 +6162,13 @@ where s.number = @sample_number
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                SqlCommand cmd = new SqlCommand("update sample set locked_by = @locked_by where id = @id", conn);
+                SqlCommand cmd = new SqlCommand("update sample set locked_id = @locked_id where id = @id", conn);
 
                 foreach (DataGridViewRow row in gridSamples.SelectedRows)
                 {
                     Guid sampleId = Utils.MakeGuid(row.Cells["id"].Value);
                     cmd.Parameters.Clear();
-                    cmd.Parameters.AddWithValue("@locked_by", DBNull.Value);
+                    cmd.Parameters.AddWithValue("@locked_id", DBNull.Value);
                     cmd.Parameters.AddWithValue("@id", sampleId);
                     cmd.ExecuteNonQuery();
                 }
@@ -6187,13 +6187,13 @@ where s.number = @sample_number
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                SqlCommand cmd = new SqlCommand("update assignment set locked_by = @locked_by where id = @id", conn);
+                SqlCommand cmd = new SqlCommand("update assignment set locked_id = @locked_id where id = @id", conn);
 
                 foreach (DataGridViewRow row in gridOrders.SelectedRows)
                 {
                     Guid orderId = Utils.MakeGuid(row.Cells["id"].Value);
                     cmd.Parameters.Clear();
-                    cmd.Parameters.AddWithValue("@locked_by", DBNull.Value);
+                    cmd.Parameters.AddWithValue("@locked_id", DBNull.Value);
                     cmd.Parameters.AddWithValue("@id", orderId);
                     cmd.ExecuteNonQuery();
                 }
@@ -7055,6 +7055,20 @@ select count(*) from sample s
             FormOrdersAssignUsers form = new FormOrdersAssignUsers(aid, aname);
             if (form.ShowDialog() != DialogResult.OK)
                 return;
+        }
+
+        private void btnProjectsUsersAdd_Click(object sender, EventArgs e)
+        {
+            if(gridProjectSub.SelectedRows.Count != 1)
+            {
+                MessageBox.Show("You must select a sub project first");
+                return;
+            }
+
+            Guid pid = Utils.MakeGuid(gridProjectSub.SelectedRows[0].Cells["id"].Value);
+
+            FormProjectSubXUsers form = new FormProjectSubXUsers(pid);
+            form.ShowDialog();
         }
     }    
 }

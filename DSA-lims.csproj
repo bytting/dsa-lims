@@ -399,6 +399,12 @@
     <Compile Include="FormProjectSub.Designer.cs">
       <DependentUpon>FormProjectSub.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormProjectSubXUsers.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormProjectSubXUsers.Designer.cs">
+      <DependentUpon>FormProjectSubXUsers.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormReportAuditComment.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -693,6 +699,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormProjectSub.resx">
       <DependentUpon>FormProjectSub.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormProjectSubXUsers.resx">
+      <DependentUpon>FormProjectSubXUsers.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormReportAuditComment.resx">
       <DependentUpon>FormReportAuditComment.cs</DependentUpon>

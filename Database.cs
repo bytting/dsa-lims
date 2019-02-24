@@ -838,8 +838,18 @@ select
     {
         public static SqlParameter AddWithValue(this SqlParameterCollection paramCollection, string paramName, object value, object nullValue)
         {
-            if (value == null || value == nullValue)            
-                return paramCollection.AddWithValue(paramName, DBNull.Value);                
+            if(nullValue.GetType() == typeof(Guid))
+            {
+                Guid a = Guid.Parse(value.ToString());
+                Guid b = Guid.Parse(nullValue.ToString());
+                if (a == b)
+                    return paramCollection.AddWithValue(paramName, DBNull.Value);
+            }
+            else
+            {
+                if (value == null || value == nullValue)
+                    return paramCollection.AddWithValue(paramName, DBNull.Value);
+            }            
             
             return paramCollection.AddWithValue(paramName, value);
         }

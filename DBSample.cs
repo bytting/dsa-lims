@@ -113,26 +113,7 @@ where ps.id = @psid
                 return "";
 
             return o.ToString();
-        }
-
-        public Guid GetAssignmentLaboratory(SqlConnection conn, SqlTransaction trans)
-        {
-            SqlCommand cmd = new SqlCommand(@"
-select a.laboratory_id 
-from assignment a
-    inner join assignment_sample_type ast on ast.assignment_id = a.id
-    inner join sample_x_assignment_sample_type sxast on sxast.assignment_sample_type_id = ast.id
-    inner join sample s on s.id = sxast.sample_id
-where s.id = @sample_id
-", conn, trans);
-            cmd.CommandType = CommandType.Text;
-            cmd.Parameters.AddWithValue("@sample_id", Id);
-            object o = cmd.ExecuteScalar();
-            if (!DB.IsValidField(o))
-                return Guid.Empty;
-
-            return Guid.Parse(o.ToString());
-        }
+        }        
 
         public bool HasRequiredFields()
         {

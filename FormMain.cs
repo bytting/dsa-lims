@@ -1961,7 +1961,7 @@ namespace DSA_lims
                 {
                     bool allow = false;
                     
-                    if (Common.LabId == sample.GetAssignmentLaboratory(conn, null))
+                    if (Common.LabId == sample.LaboratoryId)
                     {
                         allow = true;
                     }
@@ -1998,6 +1998,12 @@ namespace DSA_lims
                     new SqlParameter("@id", s.ProjectSubId));
                 cboxSampleProject.SelectedValue = mpid;
                 cboxSampleSubProject.SelectedValue = s.ProjectSubId;
+            }
+
+            if(!Utils.IsValidGuid(Common.LabId))
+            {
+                cboxSampleProject.Enabled = false;
+                cboxSampleSubProject.Enabled = false;
             }
 
             if (!Utils.IsValidGuid(s.StationId))
@@ -2237,6 +2243,12 @@ namespace DSA_lims
             if (!Roles.HasAccess(Role.LaboratoryAdministrator, Role.LaboratoryOperator))
             {
                 MessageBox.Show("You don't have access to preparations and analyses");
+                return;
+            }
+
+            if(!Utils.IsValidGuid(Common.LabId))
+            {
+                MessageBox.Show("You must be a member of a laboratory in order to access preparations and analyses");
                 return;
             }
             
@@ -4235,13 +4247,12 @@ select count(*) from sample s
             tbPrepAnalLODEndWeight.Text = s.LodWeightEnd.ToString();
             tbPrepAnalLODTemp.Text = s.LodTemperature.ToString();
 
-            btnPrepAnalSampleDiscard.Enabled = true;
             btnPrepAnalSampleUpdate.Enabled = true;
-            Guid labId = sample.GetAssignmentLaboratory(conn, trans);
-            if (Utils.IsValidGuid(labId) && labId != Common.LabId)
+            btnPrepAnalSampleDiscard.Enabled = true;
+            if (s.LaboratoryId != Common.LabId)
             {
-                btnPrepAnalSampleDiscard.Enabled = false;
                 btnPrepAnalSampleUpdate.Enabled = false;
+                btnPrepAnalSampleDiscard.Enabled = false;
             }
 
             if (clearDirty)

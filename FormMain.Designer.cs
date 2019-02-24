@@ -564,6 +564,7 @@
             this.toolStripSeparator56 = new System.Windows.Forms.ToolStripSeparator();
             this.btnProjectSubPrint = new System.Windows.Forms.ToolStripButton();
             this.splitContainer25 = new System.Windows.Forms.SplitContainer();
+            this.gridProjectsUsers = new System.Windows.Forms.DataGridView();
             this.toolsProjUsers = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator31 = new System.Windows.Forms.ToolStripSeparator();
@@ -916,7 +917,6 @@
             this.btnMenu = new System.Windows.Forms.ToolStripButton();
             this.lblCurrentTab = new System.Windows.Forms.ToolStripLabel();
             this.btnBack = new System.Windows.Forms.ToolStripButton();
-            this.gridProjectsUsers = new System.Windows.Forms.DataGridView();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tabs.SuspendLayout();
@@ -1059,6 +1059,7 @@
             this.splitContainer25.Panel1.SuspendLayout();
             this.splitContainer25.Panel2.SuspendLayout();
             this.splitContainer25.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridProjectsUsers)).BeginInit();
             this.toolsProjUsers.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridProjectAttachments)).BeginInit();
             this.toolsProjAttachments.SuspendLayout();
@@ -1239,7 +1240,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.gridPrepAnalAnalAttachments)).BeginInit();
             this.toolsSampleResAttachments.SuspendLayout();
             this.tools.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gridProjectsUsers)).BeginInit();
             this.SuspendLayout();
             // 
             // menu
@@ -6696,6 +6696,24 @@
             this.splitContainer25.SplitterWidth = 3;
             this.splitContainer25.TabIndex = 0;
             // 
+            // gridProjectsUsers
+            // 
+            this.gridProjectsUsers.AllowUserToAddRows = false;
+            this.gridProjectsUsers.AllowUserToDeleteRows = false;
+            this.gridProjectsUsers.AllowUserToResizeRows = false;
+            this.gridProjectsUsers.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.gridProjectsUsers.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
+            this.gridProjectsUsers.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.gridProjectsUsers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridProjectsUsers.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gridProjectsUsers.Location = new System.Drawing.Point(0, 25);
+            this.gridProjectsUsers.Name = "gridProjectsUsers";
+            this.gridProjectsUsers.ReadOnly = true;
+            this.gridProjectsUsers.RowHeadersVisible = false;
+            this.gridProjectsUsers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.gridProjectsUsers.Size = new System.Drawing.Size(327, 263);
+            this.gridProjectsUsers.TabIndex = 1;
+            // 
             // toolsProjUsers
             // 
             this.toolsProjUsers.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
@@ -10465,24 +10483,6 @@
             this.btnBack.ToolTipText = "Back";
             this.btnBack.Click += new System.EventHandler(this.miBack_Click);
             // 
-            // gridProjectsUsers
-            // 
-            this.gridProjectsUsers.AllowUserToAddRows = false;
-            this.gridProjectsUsers.AllowUserToDeleteRows = false;
-            this.gridProjectsUsers.AllowUserToResizeRows = false;
-            this.gridProjectsUsers.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.gridProjectsUsers.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
-            this.gridProjectsUsers.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.gridProjectsUsers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gridProjectsUsers.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridProjectsUsers.Location = new System.Drawing.Point(0, 25);
-            this.gridProjectsUsers.Name = "gridProjectsUsers";
-            this.gridProjectsUsers.ReadOnly = true;
-            this.gridProjectsUsers.RowHeadersVisible = false;
-            this.gridProjectsUsers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridProjectsUsers.Size = new System.Drawing.Size(327, 263);
-            this.gridProjectsUsers.TabIndex = 1;
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -10715,6 +10715,7 @@
             this.splitContainer25.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer25)).EndInit();
             this.splitContainer25.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.gridProjectsUsers)).EndInit();
             this.toolsProjUsers.ResumeLayout(false);
             this.toolsProjUsers.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridProjectAttachments)).EndInit();
@@ -10976,7 +10977,6 @@
             this.toolsSampleResAttachments.PerformLayout();
             this.tools.ResumeLayout(false);
             this.tools.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gridProjectsUsers)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

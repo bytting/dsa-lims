@@ -3659,7 +3659,11 @@ select count(*) from sample s
         private void gridProjectMain_SelectionChanged(object sender, EventArgs e)
         {
             if (gridProjectMain.SelectedRows.Count < 1)
+            {
+                gridProjectSub.DataSource = null;
+                gridProjectsUsers.DataSource = null;
                 return;
+            }
 
             Guid pmid = Utils.MakeGuid(gridProjectMain.SelectedRows[0].Cells["id"].Value);
             using (SqlConnection conn = DB.OpenConnection())
@@ -5492,12 +5496,17 @@ where s.number = @sample_number
         private void gridProjectSub_SelectionChanged(object sender, EventArgs e)
         {
             if (gridProjectSub.SelectedRows.Count < 1)
+            {
+                gridProjectsUsers.DataSource = null;
                 return;
+            }
 
             Guid psid = Guid.Parse(gridProjectSub.SelectedRows[0].Cells["id"].Value.ToString());
 
             using (SqlConnection conn = DB.OpenConnection())
             {
+                UI.PopulateUsersForProjectSub(conn, null, psid, gridProjectsUsers);
+
                 UI.PopulateAttachments(conn, null, "project_sub", psid, gridProjectAttachments);
             }
         }
@@ -7059,16 +7068,69 @@ select count(*) from sample s
 
         private void btnProjectsUsersAdd_Click(object sender, EventArgs e)
         {
-            if(gridProjectSub.SelectedRows.Count != 1)
+            if (!Roles.HasAccess(Role.LaboratoryAdministrator))
+            {
+                MessageBox.Show("You don't have access to add users to projects");
+                return;
+            }
+
+            if (gridProjectSub.SelectedRows.Count < 1)
             {
                 MessageBox.Show("You must select a sub project first");
                 return;
             }
 
             Guid pid = Utils.MakeGuid(gridProjectSub.SelectedRows[0].Cells["id"].Value);
+            List<Guid> existingUsers = new List<Guid>();
+            foreach (DataGridViewRow row in gridProjectsUsers.Rows)
+                existingUsers.Add(Utils.MakeGuid(row.Cells["id"].Value));
 
-            FormProjectSubXUsers form = new FormProjectSubXUsers(pid);
-            form.ShowDialog();
+            FormProjectSubXUsers form = new FormProjectSubXUsers(pid, existingUsers);
+            if (form.ShowDialog() != DialogResult.OK)
+                return;
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                UI.PopulateUsersForProjectSub(conn, null, pid, gridProjectsUsers);
+            }
+        }
+
+        private void btnProjectsUsersRemove_Click(object sender, EventArgs e)
+        {
+            if (!Roles.HasAccess(Role.LaboratoryAdministrator))
+            {
+                MessageBox.Show("You don't have access to remove users from projects");
+                return;
+            }
+
+            if (gridProjectSub.SelectedRows.Count != 1)
+            {
+                MessageBox.Show("You must select a sub project first");
+                return;
+            }
+
+            if (gridProjectsUsers.SelectedRows.Count < 1)
+            {
+                MessageBox.Show("You must select one or more users first");
+                return;
+            }
+
+            Guid psid = Utils.MakeGuid(gridProjectSub.SelectedRows[0].Cells["id"].Value);
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                SqlCommand cmd = new SqlCommand("delete from project_sub_x_account where project_sub_id = @psid and account_id = @aid", conn);
+                foreach(DataGridViewRow row in gridProjectsUsers.SelectedRows)
+                {
+                    Guid aid = Utils.MakeGuid(row.Cells["id"].Value);
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.AddWithValue("@psid", psid);
+                    cmd.Parameters.AddWithValue("@aid", aid);
+                    cmd.ExecuteNonQuery();
+                }
+            
+                UI.PopulateUsersForProjectSub(conn, null, psid, gridProjectsUsers);
+            }
         }
     }    
 }

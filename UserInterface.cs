@@ -54,6 +54,84 @@ namespace DSA_lims
             }
         }
 
+        public static void PopulateProjectMain(SqlConnection conn, SqlTransaction trans, Guid accountId, params ComboBox[] cbn)
+        {
+            List<Lemma<Guid, string>> list = new List<Lemma<Guid, string>>();
+            list.Add(new Lemma<Guid, string>(Guid.Empty, ""));
+
+            string query;
+            if (!Utils.IsValidGuid(Common.LabId))
+            {
+                query = @"
+select distinct pm.id, pm.name
+from project_main pm
+    inner join project_sub ps on ps.project_main_id = pm.id
+    inner join project_sub_x_account psxa on psxa.project_sub_id = ps.id and psxa.account_id = @aid
+order by pm.name
+";
+            }
+            else
+            {
+                query = "select id, name from project_main order by name";
+            }
+
+            using (SqlDataReader reader = DB.GetDataReader(conn, trans, query, CommandType.Text, new SqlParameter("@aid", accountId)))
+            {
+                while (reader.Read())
+                    list.Add(new Lemma<Guid, string>(reader.GetGuid("id"), reader.GetString("name")));
+            }
+
+            foreach (ComboBox cb in cbn)
+            {
+                object o = cb.SelectedValue;
+                cb.DataSource = new List<Lemma<Guid, string>>(list);
+                cb.DisplayMember = "Name";
+                cb.ValueMember = "Id";
+                if (o != null)
+                    cb.SelectedValue = o;
+            }
+        }
+
+        public static void PopulateProjectSub(SqlConnection conn, SqlTransaction trans, Guid projectMainId, Guid accountId, params ComboBox[] cbn)
+        {
+            List<Lemma<Guid, string>> list = new List<Lemma<Guid, string>>();
+            list.Add(new Lemma<Guid, string>(Guid.Empty, ""));
+
+            string query;
+            if (!Utils.IsValidGuid(Common.LabId))
+            {
+                query = @"
+select ps.id, ps.name
+from project_sub ps
+    inner join project_main pm on ps.project_main_id = pm.id and pm.id = @pmid
+    inner join project_sub_x_account psxa on psxa.project_sub_id = ps.id and psxa.account_id = @aid
+order by ps.name
+";
+            }
+            else
+            {
+                query = "select id, name from project_sub where project_main_id = @pmid order by name";
+            }
+
+            using (SqlDataReader reader = DB.GetDataReader(conn, trans, query, CommandType.Text, 
+                new SqlParameter("@aid", accountId), 
+                new SqlParameter("@pmid", projectMainId)))
+            {
+                while (reader.Read())
+                    list.Add(new Lemma<Guid, string>(reader.GetGuid("id"), reader.GetString("name")));
+            }
+
+            foreach (ComboBox cb in cbn)
+            {
+                object o = cb.SelectedValue;
+                cb.DataSource = new List<Lemma<Guid, string>>(list);
+                cb.DisplayMember = "Name";
+                cb.ValueMember = "Id";
+                if (o != null)
+                    cb.SelectedValue = o;
+            }
+        }
+
         public static void PopulatePreparationUnits(SqlConnection conn, DataGridView grid)
         {
             grid.DataSource = DB.GetDataTable(conn, null, "csp_select_preparation_units", CommandType.StoredProcedure);
@@ -166,6 +244,22 @@ namespace DSA_lims
             grid.Columns["laboratory_name"].HeaderText = "Lab";
             grid.Columns["language_code"].HeaderText = "Lang.";
             grid.Columns["instance_status_name"].HeaderText = "Status";
+        }
+
+        public static void PopulateUsersForProjectSub(SqlConnection conn, SqlTransaction trans, Guid projectSubId, DataGridView grid)
+        {
+            string query = @"
+select a.id, a.name, a.email 
+from cv_account a
+    inner join project_sub_x_account psa on psa.account_id = a.id and psa.project_sub_id = @psid
+where a.email is not NULL
+";
+            grid.DataSource = DB.GetDataTable(conn, trans, query, CommandType.Text, new SqlParameter("@psid", projectSubId));
+
+            grid.Columns["id"].Visible = false;            
+
+            grid.Columns["name"].HeaderText = "Name";
+            grid.Columns["email"].HeaderText = "Email";
         }
 
         public static void PopulateNuclides(SqlConnection conn, DataGridView grid)

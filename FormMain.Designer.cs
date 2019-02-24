@@ -564,7 +564,6 @@
             this.toolStripSeparator56 = new System.Windows.Forms.ToolStripSeparator();
             this.btnProjectSubPrint = new System.Windows.Forms.ToolStripButton();
             this.splitContainer25 = new System.Windows.Forms.SplitContainer();
-            this.listBox1 = new System.Windows.Forms.ListBox();
             this.toolsProjUsers = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator31 = new System.Windows.Forms.ToolStripSeparator();
@@ -917,6 +916,7 @@
             this.btnMenu = new System.Windows.Forms.ToolStripButton();
             this.lblCurrentTab = new System.Windows.Forms.ToolStripLabel();
             this.btnBack = new System.Windows.Forms.ToolStripButton();
+            this.gridProjectsUsers = new System.Windows.Forms.DataGridView();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tabs.SuspendLayout();
@@ -1239,6 +1239,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.gridPrepAnalAnalAttachments)).BeginInit();
             this.toolsSampleResAttachments.SuspendLayout();
             this.tools.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridProjectsUsers)).BeginInit();
             this.SuspendLayout();
             // 
             // menu
@@ -6683,7 +6684,7 @@
             // 
             // splitContainer25.Panel1
             // 
-            this.splitContainer25.Panel1.Controls.Add(this.listBox1);
+            this.splitContainer25.Panel1.Controls.Add(this.gridProjectsUsers);
             this.splitContainer25.Panel1.Controls.Add(this.toolsProjUsers);
             // 
             // splitContainer25.Panel2
@@ -6694,18 +6695,6 @@
             this.splitContainer25.SplitterDistance = 288;
             this.splitContainer25.SplitterWidth = 3;
             this.splitContainer25.TabIndex = 0;
-            // 
-            // listBox1
-            // 
-            this.listBox1.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.listBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.listBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 15;
-            this.listBox1.Location = new System.Drawing.Point(0, 25);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(327, 263);
-            this.listBox1.TabIndex = 1;
             // 
             // toolsProjUsers
             // 
@@ -6749,6 +6738,7 @@
             this.btnProjectsUsersRemove.Name = "btnProjectsUsersRemove";
             this.btnProjectsUsersRemove.Size = new System.Drawing.Size(70, 22);
             this.btnProjectsUsersRemove.Text = "Remove";
+            this.btnProjectsUsersRemove.Click += new System.EventHandler(this.btnProjectsUsersRemove_Click);
             // 
             // gridProjectAttachments
             // 
@@ -10475,6 +10465,24 @@
             this.btnBack.ToolTipText = "Back";
             this.btnBack.Click += new System.EventHandler(this.miBack_Click);
             // 
+            // gridProjectsUsers
+            // 
+            this.gridProjectsUsers.AllowUserToAddRows = false;
+            this.gridProjectsUsers.AllowUserToDeleteRows = false;
+            this.gridProjectsUsers.AllowUserToResizeRows = false;
+            this.gridProjectsUsers.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.gridProjectsUsers.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
+            this.gridProjectsUsers.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.gridProjectsUsers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridProjectsUsers.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gridProjectsUsers.Location = new System.Drawing.Point(0, 25);
+            this.gridProjectsUsers.Name = "gridProjectsUsers";
+            this.gridProjectsUsers.ReadOnly = true;
+            this.gridProjectsUsers.RowHeadersVisible = false;
+            this.gridProjectsUsers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.gridProjectsUsers.Size = new System.Drawing.Size(327, 263);
+            this.gridProjectsUsers.TabIndex = 1;
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -10968,6 +10976,7 @@
             this.toolsSampleResAttachments.PerformLayout();
             this.tools.ResumeLayout(false);
             this.tools.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridProjectsUsers)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -11166,7 +11175,6 @@
         private System.Windows.Forms.ToolStripMenuItem miProjectsEdit;
         private System.Windows.Forms.ToolStripMenuItem miProjectsDelete;
         private System.Windows.Forms.ToolStripMenuItem miProjectsSubNew;
-        private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.ToolStrip toolsProjUsers;
         private System.Windows.Forms.ToolStripButton btnProjectsUsersAdd;
         private System.Windows.Forms.ToolStripButton btnProjectsUsersRemove;
@@ -11863,6 +11871,7 @@
         private System.Windows.Forms.ToolStripButton btnOrderRemoveSampleFromOrder;
         private System.Windows.Forms.ToolStripButton btnOrdersAssignUsers;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator67;
+        private System.Windows.Forms.DataGridView gridProjectsUsers;
     }
 }
 

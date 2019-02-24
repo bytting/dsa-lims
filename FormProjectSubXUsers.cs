@@ -32,22 +32,35 @@ namespace DSA_lims
     public partial class FormProjectSubXUsers : Form
     {
         Guid mProjectSubId = Guid.Empty;
+        List<Guid> mExistingUsers = null;
 
-        public FormProjectSubXUsers(Guid projectSubId)
+        public FormProjectSubXUsers(Guid projectSubId, List<Guid> existingUsers)
         {
             InitializeComponent();
 
             mProjectSubId = projectSubId;
+            mExistingUsers = existingUsers;
         }
 
         private void FormProjectSubXUsers_Load(object sender, EventArgs e)
         {
+            var uArr = from item in mExistingUsers select "'" + item + "'";
+            string exceptIds = string.Join(",", uArr);
+
             using (SqlConnection conn = DB.OpenConnection())
             {
-                gridUsers.DataSource = DB.GetDataTable(conn, null, "csp_select_accounts_short", CommandType.StoredProcedure, 
-                    new SqlParameter("@instance_status_level", InstanceStatus.Active));
+                string query;
+                if (String.IsNullOrEmpty(exceptIds))
+                    query = "select id, name, username from cv_account where instance_status_id < 2 and email is not NULL";
+                else
+                    query = "select id, name, username from cv_account where id not in(" + exceptIds + ") and instance_status_id < 2 and email is not NULL";
+
+                gridUsers.DataSource = DB.GetDataTable(conn, null, query, CommandType.Text);
 
                 gridUsers.Columns["id"].Visible = false;
+
+                gridUsers.Columns["name"].HeaderText = "Name";
+                gridUsers.Columns["username"].HeaderText = "Username";
             }
         }
 
@@ -59,6 +72,37 @@ namespace DSA_lims
 
         private void btnOk_Click(object sender, EventArgs e)
         {
+            SqlConnection conn = null;
+            SqlTransaction trans = null;
+
+            try
+            {
+                conn = DB.OpenConnection();
+                trans = conn.BeginTransaction();
+
+                SqlCommand cmd = new SqlCommand("insert into project_sub_x_account values(@psid, @aid)", conn, trans);                
+                foreach(DataGridViewRow row in gridUsers.SelectedRows)
+                {
+                    Guid aid = Utils.MakeGuid(row.Cells["id"].Value);
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.AddWithValue("@psid", mProjectSubId);
+                    cmd.Parameters.AddWithValue("@aid", aid);
+                    cmd.ExecuteNonQuery();
+                }
+
+                trans.Commit();
+            }
+            catch(Exception ex)
+            {
+                trans?.Rollback();
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn?.Close();
+            }
+
             DialogResult = DialogResult.OK;
             Close();
         }        

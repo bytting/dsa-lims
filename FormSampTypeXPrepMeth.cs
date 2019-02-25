@@ -53,8 +53,8 @@ namespace DSA_lims
 
                 string query;
                 if (String.IsNullOrEmpty(smeth))
-                    query = "select id, name from preparation_method order by name";
-                else query = "select id, name from preparation_method where id not in(" + smeth + ") order by name";
+                    query = "select id, name from preparation_method where instance_status_id < 2 order by name";
+                else query = "select id, name from preparation_method where instance_status_id < 2 and id not in(" + smeth + ") order by name";
 
                 using (SqlDataReader reader = DB.GetDataReader(conn, null, query, CommandType.Text))
                 {

@@ -116,9 +116,9 @@ namespace DSA_lims
             grid.Columns["UniformActivityUnitId"].Visible = false;
             grid.Columns["InstanceStatusId"].Visible = false;
             grid.Columns["CreateDate"].Visible = false;
-            grid.Columns["CreatedBy"].Visible = false;
+            grid.Columns["CreateId"].Visible = false;
             grid.Columns["UpdateDate"].Visible = false;
-            grid.Columns["UpdatedBy"].Visible = false;
+            grid.Columns["UpdateId"].Visible = false;
 
             grid.Columns["NuclideName"].ReadOnly = true;
             //grid.Columns["ConfidenceValue"].ReadOnly = true;

@@ -49,7 +49,7 @@ namespace DSA_lims
             {
                 conn = DB.OpenConnection();                
 
-                DataTable dt = DB.GetDataTable(conn, null, "select id, name from cv_account order by name", CommandType.Text);
+                DataTable dt = DB.GetDataTable(conn, null, "select id, name from cv_account where email is not NULL order by name", CommandType.Text);
 
                 DataColumn assignedColumn = new DataColumn("Assigned", typeof(bool));
                 assignedColumn.DefaultValue = false;

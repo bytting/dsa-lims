@@ -183,9 +183,19 @@ namespace DSA_lims
 
                 connection = DB.OpenConnection();
 
-                SqlCommand cmd = new SqlCommand("csp_insert_account", connection);
+                SqlCommand cmd = new SqlCommand("select count(*) from account where username = @username", connection);
+                cmd.Parameters.AddWithValue("@username", p["username"]);
+                int n = (int)cmd.ExecuteScalar();
+                if(n > 0)
+                {
+                    MessageBox.Show("Username " + p["username"] + " already exists");
+                    return false;
+                }
+
+                cmd.CommandText = "csp_insert_account";
                 cmd.CommandType = CommandType.StoredProcedure;
-                p["id"] = Guid.NewGuid();                
+                p["id"] = Guid.NewGuid();
+                cmd.Parameters.Clear();
                 cmd.Parameters.AddWithValue("@id", p["id"]);
                 cmd.Parameters.AddWithValue("@username", p["username"]);
                 cmd.Parameters.AddWithValue("@person_id", p["person_id"], Guid.Empty);
@@ -200,6 +210,7 @@ namespace DSA_lims
             catch (Exception ex)
             {                
                 Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
                 return false;
             }
             finally
@@ -232,6 +243,7 @@ namespace DSA_lims
             catch (Exception ex)
             {                
                 Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
                 return false;
             }
             finally

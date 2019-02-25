@@ -52,8 +52,8 @@ namespace DSA_lims
 
                 string query;
                 if (String.IsNullOrEmpty(snucl))
-                    query = "select id, name from nuclide order by name";
-                else query = "select id, name from nuclide where id not in(" + snucl + ") order by name";
+                    query = "select id, name from nuclide where instance_status_id < 2 order by name";
+                else query = "select id, name from nuclide where instance_status_id < 2 and id not in(" + snucl + ") order by name";
 
                 using (SqlDataReader reader = DB.GetDataReader(conn, null, query, CommandType.Text))
                 {

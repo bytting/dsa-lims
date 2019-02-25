@@ -306,9 +306,9 @@ where s.id = @sid and a.workflow_status_id = 2
                 cmd.Parameters.AddWithValue("@latitude", Latitude, null);
                 cmd.Parameters.AddWithValue("@longitude", Longitude, null);
                 cmd.Parameters.AddWithValue("@altitude", Altitude, null);
-                cmd.Parameters.AddWithValue("@sampling_date_from", SamplingDateFrom, DateTime.MinValue);
-                cmd.Parameters.AddWithValue("@sampling_date_to", SamplingDateTo, DateTime.MinValue);
-                cmd.Parameters.AddWithValue("@reference_date", ReferenceDate, DateTime.MinValue);
+                cmd.Parameters.AddWithValue("@sampling_date_from", SamplingDateFrom, null);
+                cmd.Parameters.AddWithValue("@sampling_date_to", SamplingDateTo, null);
+                cmd.Parameters.AddWithValue("@reference_date", ReferenceDate, null);
                 cmd.Parameters.AddWithValue("@external_id", ExternalId, String.Empty);
                 cmd.Parameters.AddWithValue("@wet_weight_g", WetWeight_g, null);
                 cmd.Parameters.AddWithValue("@dry_weight_g", DryWeight_g, null);

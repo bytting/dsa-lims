@@ -67,6 +67,7 @@ select distinct pm.id, pm.name
 from project_main pm
     inner join project_sub ps on ps.project_main_id = pm.id
     inner join project_sub_x_account psxa on psxa.project_sub_id = ps.id and psxa.account_id = @aid
+where pm.instance_status_id < 2
 order by pm.name
 ";
             }
@@ -105,6 +106,7 @@ select ps.id, ps.name
 from project_sub ps
     inner join project_main pm on ps.project_main_id = pm.id and pm.id = @pmid
     inner join project_sub_x_account psxa on psxa.project_sub_id = ps.id and psxa.account_id = @aid
+where ps.instance_status_id < 2
 order by ps.name
 ";
             }

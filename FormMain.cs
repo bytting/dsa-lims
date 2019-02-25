@@ -2183,7 +2183,7 @@ namespace DSA_lims
                 return;
             }                
 
-            if (!Roles.HasAccess(Role.LaboratoryAdministrator, Role.LaboratoryOperator))
+            if (!Utils.IsValidGuid(Common.LabId) || !Roles.HasAccess(Role.LaboratoryAdministrator, Role.LaboratoryOperator))
             {
                 MessageBox.Show("You don't have access to add samples to orders");
                 return;
@@ -3128,7 +3128,10 @@ from preparation p
 	inner join preparation_method pm on p.preparation_method_id = pm.id
 	inner join workflow_status ws on p.workflow_status_id = ws.id
     inner join laboratory l on l.id = p.laboratory_id
-where p.instance_status_id = 1 and p.id in (" + strPrepIds + ") order by p.number";
+where p.instance_status_id = 1";
+            if (!String.IsNullOrEmpty(strPrepIds))
+                query += " and p.id in (" + strPrepIds + ")";
+            query += " order by p.number";
             using (SqlDataReader reader = DB.GetDataReader(conn, null, query, CommandType.Text))
             {
                 while (reader.Read())
@@ -3163,7 +3166,10 @@ from sample s
     inner join sample_type st on st.id = s.sample_type_id
     left outer join sample_component sc on sc.id = s.sample_component_id
     inner join laboratory l on l.id = s.laboratory_id
-where s.instance_status_id = 1 and s.id in (" + strSampIds + ") order by s.number";
+where s.instance_status_id = 1";
+            if (!String.IsNullOrEmpty(strPrepIds))
+                query += " and s.id in (" + strSampIds + ")";
+            query += " order by s.number";
             using (SqlDataReader reader = DB.GetDataReader(conn, null, query, CommandType.Text))
             {
                 while (reader.Read())
@@ -3321,10 +3327,7 @@ select count(*) from sample s
                 cmd.Parameters.AddWithValue("@astid", astId);
                 cmd.ExecuteNonQuery();
 
-                trans.Commit();
-
-                assignment.LoadFromDB(conn, trans, assignment.Id);
-                PopulateOrder(conn, trans, assignment, true);
+                trans.Commit();                
             }
             catch(Exception ex)
             {                
@@ -3336,7 +3339,15 @@ select count(*) from sample s
             finally
             {
                 conn?.Close();
-            }                        
+            }
+
+            if (assignment.SampleTypes.Exists(x => x.Id == astId))
+            {
+                var ast = assignment.SampleTypes.Find(x => x.Id == astId);
+                assignment.SampleTypes.Remove(ast);
+            }            
+
+            tnode.Remove();
         }
 
         private void miOrderAddPrepMeth_Click(object sender, EventArgs e)
@@ -4021,7 +4032,7 @@ select count(*) from sample s
                 return;
             }            
 
-            double lat = -1d, lon = -1d, alt = -1d;
+            double? lat = null, lon = null, alt = null;
 
             try
             {
@@ -4067,12 +4078,15 @@ select count(*) from sample s
                 sample.Latitude = lat;
                 sample.Longitude = lon;
                 sample.Altitude = alt;
-                if(tbSampleSamplingDateFrom.Tag != null)
+                if (tbSampleSamplingDateFrom.Tag != null)
                     sample.SamplingDateFrom = (DateTime)tbSampleSamplingDateFrom.Tag;
-                if(tbSampleSamplingDateTo.Tag != null)
+                else sample.SamplingDateFrom = null;
+                if (tbSampleSamplingDateTo.Tag != null)
                     sample.SamplingDateTo = (DateTime)tbSampleSamplingDateTo.Tag;
-                if(tbSampleReferenceDate.Tag != null)
+                else sample.SamplingDateTo = null;
+                if (tbSampleReferenceDate.Tag != null)
                     sample.ReferenceDate = (DateTime)tbSampleReferenceDate.Tag;
+                else sample.ReferenceDate = null;
                 sample.ExternalId = tbSampleExId.Text;
                 sample.Confidential = cbSampleConfidential.Checked;
                 sample.InstanceStatusId = (int)cboxSampleInstanceStatus.SelectedValue;

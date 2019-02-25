@@ -17,7 +17,8 @@
                          analysis_result.detection_limit_approved, analysis_result.accredited, sample.reference_date, sample.external_id, person.name AS Expr1, activity_unit.name AS Ac_unit, assignment.customer_company_name, 
                          assignment.customer_company_email, assignment.customer_company_phone, assignment.customer_company_address, assignment.customer_contact_name, assignment.customer_contact_email, 
                          assignment.customer_contact_phone, assignment.customer_contact_address, person_1.name AS Expr2, assignment.last_workflow_status_date, assignment.audit_comment, person.email, person.phone, 
-                         laboratory.address, laboratory.email AS LabMail, laboratory.phone AS LabPhone, activity_unit_type.name_short, activity_unit_type.name AS Expr3, laboratory.laboratory_logo, laboratory.accredited_logo
+                         laboratory.address, laboratory.email AS LabMail, laboratory.phone AS LabPhone, activity_unit_type.name_short, activity_unit_type.name AS Expr3, laboratory.laboratory_logo, laboratory.accredited_logo, 
+                         analysis.workflow_status_id
 FROM            laboratory RIGHT OUTER JOIN
                          analysis_method INNER JOIN
                          assignment INNER JOIN
@@ -82,6 +83,7 @@ WHERE        (assignment.name = @AID)</CommandText>
               <Mapping SourceColumn="Expr3" DataSetColumn="Expr3" />
               <Mapping SourceColumn="laboratory_logo" DataSetColumn="laboratory_logo" />
               <Mapping SourceColumn="accredited_logo" DataSetColumn="accredited_logo" />
+              <Mapping SourceColumn="workflow_status_id" DataSetColumn="workflow_status_id" />
             </Mappings>
             <Sources />
           </TableAdapter>
@@ -93,7 +95,7 @@ WHERE        (assignment.name = @AID)</CommandText>
   <xs:element name="DSOrderReport" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="DSOrderReport" msprop:Generator_UserDSName="DSOrderReport">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="DataTable1" msprop:Generator_TableClassName="DataTable1DataTable" msprop:Generator_TableVarName="tableDataTable1" msprop:Generator_TablePropName="DataTable1" msprop:Generator_RowDeletingName="DataTable1RowDeleting" msprop:Generator_RowChangingName="DataTable1RowChanging" msprop:Generator_RowEvHandlerName="DataTable1RowChangeEventHandler" msprop:Generator_RowDeletedName="DataTable1RowDeleted" msprop:Generator_UserTableName="DataTable1" msprop:Generator_RowChangedName="DataTable1RowChanged" msprop:Generator_RowEvArgName="DataTable1RowChangeEvent" msprop:Generator_RowClassName="DataTable1Row">
+        <xs:element name="DataTable1" msprop:Generator_TableClassName="DataTable1DataTable" msprop:Generator_TableVarName="tableDataTable1" msprop:Generator_RowChangedName="DataTable1RowChanged" msprop:Generator_TablePropName="DataTable1" msprop:Generator_RowDeletingName="DataTable1RowDeleting" msprop:Generator_RowChangingName="DataTable1RowChanging" msprop:Generator_RowEvHandlerName="DataTable1RowChangeEventHandler" msprop:Generator_RowDeletedName="DataTable1RowDeleted" msprop:Generator_RowClassName="DataTable1Row" msprop:Generator_UserTableName="DataTable1" msprop:Generator_RowEvArgName="DataTable1RowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="name" msprop:Generator_ColumnVarNameInTable="columnname" msprop:Generator_ColumnPropNameInRow="name" msprop:Generator_ColumnPropNameInTable="nameColumn" msprop:Generator_UserColumnName="name" minOccurs="0">
@@ -298,6 +300,7 @@ WHERE        (assignment.name = @AID)</CommandText>
               </xs:element>
               <xs:element name="laboratory_logo" msprop:Generator_ColumnVarNameInTable="columnlaboratory_logo" msprop:Generator_ColumnPropNameInRow="laboratory_logo" msprop:Generator_ColumnPropNameInTable="laboratory_logoColumn" msprop:Generator_UserColumnName="laboratory_logo" type="xs:base64Binary" minOccurs="0" />
               <xs:element name="accredited_logo" msprop:Generator_ColumnVarNameInTable="columnaccredited_logo" msprop:Generator_ColumnPropNameInRow="accredited_logo" msprop:Generator_ColumnPropNameInTable="accredited_logoColumn" msprop:Generator_UserColumnName="accredited_logo" type="xs:base64Binary" minOccurs="0" />
+              <xs:element name="workflow_status_id" msprop:Generator_ColumnVarNameInTable="columnworkflow_status_id" msprop:Generator_ColumnPropNameInRow="workflow_status_id" msprop:Generator_ColumnPropNameInTable="workflow_status_idColumn" msprop:Generator_UserColumnName="workflow_status_id" type="xs:int" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>

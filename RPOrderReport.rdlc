@@ -216,13 +216,13 @@
               <Width>1.30175cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.39116cm</Width>
+              <Width>1.0472cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.44118cm</Width>
+              <Width>1.73885cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.83554cm</Width>
+              <Width>1.17949cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -403,7 +403,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>A/G</Value>
+                              <Value>A/G/F</Value>
                               <Style>
                                 <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
@@ -601,7 +601,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=IIf((Fields!accredited.Value)= false, "G", "A")</Value>
+                              <Value>=IIf((Fields!accredited.Value)=false, IIf((Fields!workflow_status_id.Value)=2, "G", "F"), "A")</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                               </Style>
@@ -680,7 +680,7 @@
               <TablixMembers>
                 <TablixMember>
                   <TablixHeader>
-                    <Size>2.35905cm</Size>
+                    <Size>2.06138cm</Size>
                     <CellContents>
                       <Textbox Name="Textbox21">
                         <CanGrow>true</CanGrow>
@@ -892,7 +892,7 @@
                     </SortExpression>
                   </SortExpressions>
                   <TablixHeader>
-                    <Size>2.35905cm</Size>
+                    <Size>2.06138cm</Size>
                     <CellContents>
                       <Textbox Name="external_id1">
                         <CanGrow>true</CanGrow>
@@ -1079,7 +1079,7 @@
         <Top>23.67616cm</Top>
         <Left>0.30996cm</Left>
         <Height>1.23528cm</Height>
-        <Width>18.40312cm</Width>
+        <Width>18.40311cm</Width>
         <ZIndex>6</ZIndex>
         <Style>
           <Border>
@@ -1949,7 +1949,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>A betyr at analysen er akkreditert, og G betyr godkjent, men ikke akkreditert. </Value>
+                <Value>A betyr at analysen er akkreditert, G betyr godkjent men ikke akkreditert og F betyr at resultatet er forkstet</Value>
                 <Style>
                   <FontSize>8pt</FontSize>
                 </Style>
@@ -2881,6 +2881,10 @@
         <Field Name="accredited_logo">
           <DataField>accredited_logo</DataField>
           <rd:TypeName>System.Byte[]</rd:TypeName>
+        </Field>
+        <Field Name="workflow_status_id">
+          <DataField>workflow_status_id</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
       </Fields>
       <rd:DataSetInfo>

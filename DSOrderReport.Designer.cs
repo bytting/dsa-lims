@@ -359,6 +359,8 @@ namespace DSA_lims {
             
             private global::System.Data.DataColumn columnaccredited_logo;
             
+            private global::System.Data.DataColumn columnworkflow_status_id;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public DataTable1DataTable() {
@@ -714,6 +716,14 @@ namespace DSA_lims {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn workflow_status_idColumn {
+                get {
+                    return this.columnworkflow_status_id;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -789,7 +799,8 @@ namespace DSA_lims {
                         string name_short, 
                         string Expr3, 
                         byte[] laboratory_logo, 
-                        byte[] accredited_logo) {
+                        byte[] accredited_logo, 
+                        int workflow_status_id) {
                 DataTable1Row rowDataTable1Row = ((DataTable1Row)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         name,
@@ -831,7 +842,8 @@ namespace DSA_lims {
                         name_short,
                         Expr3,
                         laboratory_logo,
-                        accredited_logo};
+                        accredited_logo,
+                        workflow_status_id};
                 rowDataTable1Row.ItemArray = columnValuesArray;
                 this.Rows.Add(rowDataTable1Row);
                 return rowDataTable1Row;
@@ -894,6 +906,7 @@ namespace DSA_lims {
                 this.columnExpr3 = base.Columns["Expr3"];
                 this.columnlaboratory_logo = base.Columns["laboratory_logo"];
                 this.columnaccredited_logo = base.Columns["accredited_logo"];
+                this.columnworkflow_status_id = base.Columns["workflow_status_id"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -979,6 +992,8 @@ namespace DSA_lims {
                 base.Columns.Add(this.columnlaboratory_logo);
                 this.columnaccredited_logo = new global::System.Data.DataColumn("accredited_logo", typeof(byte[]), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnaccredited_logo);
+                this.columnworkflow_status_id = new global::System.Data.DataColumn("workflow_status_id", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnworkflow_status_id);
                 this.columnname.MaxLength = 80;
                 this.columnLab.MaxLength = 256;
                 this.columnreport_comment.MaxLength = 1000;
@@ -1789,6 +1804,22 @@ namespace DSA_lims {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int workflow_status_id {
+                get {
+                    try {
+                        return ((int)(this[this.tableDataTable1.workflow_status_idColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'workflow_status_id\' in table \'DataTable1\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableDataTable1.workflow_status_idColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsnameNull() {
                 return this.IsNull(this.tableDataTable1.nameColumn);
             }
@@ -2266,6 +2297,18 @@ namespace DSA_lims {
             public void Setaccredited_logoNull() {
                 this[this.tableDataTable1.accredited_logoColumn] = global::System.Convert.DBNull;
             }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool Isworkflow_status_idNull() {
+                return this.IsNull(this.tableDataTable1.workflow_status_idColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void Setworkflow_status_idNull() {
+                this[this.tableDataTable1.workflow_status_idColumn] = global::System.Convert.DBNull;
+            }
         }
         
         /// <summary>
@@ -2467,6 +2510,7 @@ namespace DSA_lims.DSOrderReportTableAdapters {
             tableMapping.ColumnMappings.Add("Expr3", "Expr3");
             tableMapping.ColumnMappings.Add("laboratory_logo", "laboratory_logo");
             tableMapping.ColumnMappings.Add("accredited_logo", "accredited_logo");
+            tableMapping.ColumnMappings.Add("workflow_status_id", "workflow_status_id");
             this._adapter.TableMappings.Add(tableMapping);
         }
         
@@ -2499,25 +2543,26 @@ namespace DSA_lims.DSOrderReportTableAdapters {
                 "ail, person.phone, \r\n                         laboratory.address, laboratory.ema" +
                 "il AS LabMail, laboratory.phone AS LabPhone, activity_unit_type.name_short, acti" +
                 "vity_unit_type.name AS Expr3, laboratory.laboratory_logo, laboratory.accredited_" +
-                "logo\r\nFROM            laboratory RIGHT OUTER JOIN\r\n                         anal" +
-                "ysis_method INNER JOIN\r\n                         assignment INNER JOIN\r\n        " +
-                "                 analysis ON assignment.id = analysis.assignment_id ON analysis_" +
-                "method.id = analysis.analysis_method_id LEFT OUTER JOIN\r\n                       " +
-                "  account AS account_1 ON assignment.last_workflow_status_by = account_1.usernam" +
-                "e LEFT OUTER JOIN\r\n                         account ON assignment.account_id = a" +
-                "ccount.id LEFT OUTER JOIN\r\n                         person ON account.person_id " +
-                "= person.id LEFT OUTER JOIN\r\n                         person AS person_1 ON acco" +
-                "unt_1.person_id = person_1.id LEFT OUTER JOIN\r\n                         activity" +
-                "_unit_type ON analysis.activity_unit_type_id = activity_unit_type.id LEFT OUTER " +
-                "JOIN\r\n                         activity_unit ON analysis.activity_unit_id = acti" +
-                "vity_unit.id ON laboratory.id = assignment.laboratory_id FULL OUTER JOIN\r\n      " +
-                "                   sample_type INNER JOIN\r\n                         sample ON sa" +
-                "mple_type.id = sample.sample_type_id INNER JOIN\r\n                         prepar" +
-                "ation ON sample.id = preparation.sample_id ON analysis.preparation_id = preparat" +
-                "ion.id FULL OUTER JOIN\r\n                         nuclide RIGHT OUTER JOIN\r\n     " +
-                "                    analysis_result ON nuclide.id = analysis_result.nuclide_id O" +
-                "N analysis.id = analysis_result.analysis_id AND analysis_result.reportable = 1\r\n" +
-                "WHERE        (assignment.name = @AID)";
+                "logo, \r\n                         analysis.workflow_status_id\r\nFROM            la" +
+                "boratory RIGHT OUTER JOIN\r\n                         analysis_method INNER JOIN\r\n" +
+                "                         assignment INNER JOIN\r\n                         analysi" +
+                "s ON assignment.id = analysis.assignment_id ON analysis_method.id = analysis.ana" +
+                "lysis_method_id LEFT OUTER JOIN\r\n                         account AS account_1 O" +
+                "N assignment.last_workflow_status_by = account_1.username LEFT OUTER JOIN\r\n     " +
+                "                    account ON assignment.account_id = account.id LEFT OUTER JOI" +
+                "N\r\n                         person ON account.person_id = person.id LEFT OUTER J" +
+                "OIN\r\n                         person AS person_1 ON account_1.person_id = person" +
+                "_1.id LEFT OUTER JOIN\r\n                         activity_unit_type ON analysis.a" +
+                "ctivity_unit_type_id = activity_unit_type.id LEFT OUTER JOIN\r\n                  " +
+                "       activity_unit ON analysis.activity_unit_id = activity_unit.id ON laborato" +
+                "ry.id = assignment.laboratory_id FULL OUTER JOIN\r\n                         sampl" +
+                "e_type INNER JOIN\r\n                         sample ON sample_type.id = sample.sa" +
+                "mple_type_id INNER JOIN\r\n                         preparation ON sample.id = pre" +
+                "paration.sample_id ON analysis.preparation_id = preparation.id FULL OUTER JOIN\r\n" +
+                "                         nuclide RIGHT OUTER JOIN\r\n                         anal" +
+                "ysis_result ON nuclide.id = analysis_result.nuclide_id ON analysis.id = analysis" +
+                "_result.analysis_id AND analysis_result.reportable = 1\r\nWHERE        (assignment" +
+                ".name = @AID)";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@AID", global::System.Data.SqlDbType.NVarChar, 80, global::System.Data.ParameterDirection.Input, 0, 0, "name", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }

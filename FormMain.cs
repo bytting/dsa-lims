@@ -3108,13 +3108,15 @@ order by a.number
 
             List<Guid> prepIds = new List<Guid>();
             foreach(AnalysisHeader hdr in analHeaders)            
-                prepIds.Add(hdr.PreparationId);
+                if(!prepIds.Contains(hdr.PreparationId))
+                    prepIds.Add(hdr.PreparationId);
 
             var pArr = from item in prepIds select "'" + item + "'";
             string strPrepIds = string.Join(",", pArr);
 
-
-            query = @"
+            if(!String.IsNullOrEmpty(strPrepIds))
+            {
+                query = @"
 select 
 	p.id as 'preparation_id',
 	p.sample_id,
@@ -3128,11 +3130,28 @@ from preparation p
 	inner join preparation_method pm on p.preparation_method_id = pm.id
 	inner join workflow_status ws on p.workflow_status_id = ws.id
     inner join laboratory l on l.id = p.laboratory_id
-where p.instance_status_id = 1";
-            if (!String.IsNullOrEmpty(strPrepIds))
-                query += " and p.id in (" + strPrepIds + ")";
-            query += " order by p.number";
-            using (SqlDataReader reader = DB.GetDataReader(conn, null, query, CommandType.Text))
+where p.instance_status_id = 1 and p.id in (" + strPrepIds + ") order by p.number";
+            }
+            else
+            {
+                query = @"
+select 
+	p.id as 'preparation_id',
+	p.sample_id,
+	p.number as 'preparation_number',
+	pm.name as 'preparation_method_name',
+    l.name as 'laboratory_name',
+	ws.id as 'workflow_status_id',
+	ws.name as 'workflow_status_name',
+	p.comment as 'preparation_comment'
+from preparation p
+	inner join preparation_method pm on p.preparation_method_id = pm.id
+	inner join workflow_status ws on p.workflow_status_id = ws.id
+    inner join laboratory l on l.id = p.laboratory_id
+where p.assignment_id = @ass_id and p.instance_status_id = 1 order by p.number";
+            }
+            
+            using (SqlDataReader reader = DB.GetDataReader(conn, null, query, CommandType.Text, new SqlParameter("@ass_id", a.Id)))
             {
                 while (reader.Read())
                 {
@@ -3150,12 +3169,15 @@ where p.instance_status_id = 1";
 
             List<Guid> sampIds = new List<Guid>();
             foreach (PreparationHeader hdr in prepHeaders)
-                sampIds.Add(hdr.SampleId);
+                if(!sampIds.Contains(hdr.SampleId))
+                    sampIds.Add(hdr.SampleId);
 
             var sArr = from item in sampIds select "'" + item + "'";
             string strSampIds = string.Join(",", sArr);
 
-            query = @"
+            if (!String.IsNullOrEmpty(strSampIds))
+            {
+                query = @"
 select 
 	s.id as 'sample_id',	
 	s.number as 'sample_number',
@@ -3166,52 +3188,47 @@ from sample s
     inner join sample_type st on st.id = s.sample_type_id
     left outer join sample_component sc on sc.id = s.sample_component_id
     inner join laboratory l on l.id = s.laboratory_id
-where s.instance_status_id = 1";
-            if (!String.IsNullOrEmpty(strPrepIds))
-                query += " and s.id in (" + strSampIds + ")";
-            query += " order by s.number";
-            using (SqlDataReader reader = DB.GetDataReader(conn, null, query, CommandType.Text))
-            {
-                while (reader.Read())
+where s.instance_status_id = 1 and s.id in (" + strSampIds + ") order by s.number";
+
+                using (SqlDataReader reader = DB.GetDataReader(conn, null, query, CommandType.Text))
                 {
-                    SampleHeader hdr = new SampleHeader();
-                    hdr.Id = reader.GetGuid("sample_id");
-                    hdr.Number = reader.GetInt32("sample_number");
-                    hdr.SampleTypeName = reader.GetString("sample_type_name");
-                    hdr.SampleComponentName = reader.GetString("sample_component_name");
-                    hdr.LaboratoryName = reader.GetString("laboratory_name");                                        
-                    sampHeaders.Add(hdr);
+                    while (reader.Read())
+                    {
+                        SampleHeader hdr = new SampleHeader();
+                        hdr.Id = reader.GetGuid("sample_id");
+                        hdr.Number = reader.GetInt32("sample_number");
+                        hdr.SampleTypeName = reader.GetString("sample_type_name");
+                        hdr.SampleComponentName = reader.GetString("sample_component_name");
+                        hdr.LaboratoryName = reader.GetString("laboratory_name");
+                        sampHeaders.Add(hdr);
+                    }
                 }
             }
 
             foreach(SampleHeader shdr in sampHeaders)
             {
                 string label = "Sample " + shdr.Number + ", " + shdr.SampleTypeName + " " + shdr.SampleComponentName;
-                TreeNode sNode = root.Nodes.Add(shdr.Number.ToString(), label);
-                sNode.NodeFont = fontSample;
+                TreeNode sNode = root.Nodes.Add(shdr.Id.ToString(), label);
+                sNode.NodeFont = fontSample;                
+            }
 
-                foreach (PreparationHeader phdr in prepHeaders)
-                {
-                    if (phdr.SampleId != shdr.Id)
-                        continue;
+            foreach (PreparationHeader phdr in prepHeaders)
+            {
+                int status = phdr.WorkflowStatusId;
+                string label = "Preparation " + phdr.Number + ", " + phdr.PreparationMethodName + ", " + phdr.LaboratoryName + ", " + phdr.WorkflowStatusName;
+                TreeNode[] sNodes = root.Nodes.Find(phdr.SampleId.ToString(), false);
+                TreeNode pNode = sNodes[0].Nodes.Add(phdr.Id.ToString(), label);
+                pNode.ForeColor = WorkflowStatus.GetStatusColor(status);                
+            }
 
-                    int status = phdr.WorkflowStatusId;
-                    label = "Preparation " + phdr.Number + ", " + phdr.PreparationMethodName + ", " + phdr.LaboratoryName + ", " + phdr.WorkflowStatusName;
-                    TreeNode pNode = sNode.Nodes.Add(phdr.Id.ToString(), label);
-                    pNode.ForeColor = WorkflowStatus.GetStatusColor(status);
-
-                    foreach (AnalysisHeader ahdr in analHeaders)
-                    {
-                        if (ahdr.PreparationId != phdr.Id)
-                            continue;
-
-                        status = ahdr.WorkflowStatusId;
-                        label = "Analysis " + ahdr.Number + ", " + ahdr.AnalysisMethodName + ", " + ahdr.LaboratoryName + ", " + ahdr.WorkflowStatusName;
-                        TreeNode aNode = pNode.Nodes.Add(ahdr.Id.ToString(), label);
-                        aNode.ForeColor = WorkflowStatus.GetStatusColor(status);
-                    }
-                }
-            }            
+            foreach (AnalysisHeader ahdr in analHeaders)
+            {
+                int status = ahdr.WorkflowStatusId;
+                string label = "Analysis " + ahdr.Number + ", " + ahdr.AnalysisMethodName + ", " + ahdr.LaboratoryName + ", " + ahdr.WorkflowStatusName;
+                TreeNode[] pNodes = root.Nodes.Find(ahdr.PreparationId.ToString(), true);
+                TreeNode aNode = pNodes[0].Nodes.Add(ahdr.Id.ToString(), label);
+                aNode.ForeColor = WorkflowStatus.GetStatusColor(status);
+            }
 
             tvOrderContent.ExpandAll();
         }
@@ -3502,21 +3519,6 @@ select count(*) from sample s
                 MessageBox.Show("Customer is mandatory");
                 return;
             }
-            
-            /*bool canApproveLab = false;
-            if (assignment.ApprovedLaboratory != cbOrderApprovedLaboratory.Checked)
-            {
-                if (Roles.HasAccess(Role.LaboratoryAdministrator))
-                {
-                    canApproveLab = true;
-                }
-            }            
-
-            if (assignment.ApprovedLaboratory && !canApproveLab)
-            {
-                MessageBox.Show("You can not save an order that is approved");
-                return;
-            }*/            
 
             if (!Utils.IsValidGuid(cboxOrderLaboratory.SelectedValue))
             {
@@ -3634,11 +3636,11 @@ select count(*) from sample s
                         return;
                     }
 
-                    if (nCurrPreparations < nReqPreparations)
+                    /*if (nCurrPreparations < nReqPreparations)
                     {
                         MessageBox.Show("Can not set this order to complete. Connected preparations " + nCurrPreparations + " of " + nReqPreparations);
                         return;
-                    }
+                    }*/
 
                     if (nCurrAnalyses < nReqAnalyses)
                     {

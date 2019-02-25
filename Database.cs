@@ -840,7 +840,7 @@ select
     {
         public static SqlParameter AddWithValue(this SqlParameterCollection paramCollection, string paramName, object value, object nullValue)
         {
-            if(nullValue.GetType() == typeof(Guid))
+            if(nullValue != null && nullValue.GetType() == typeof(Guid))
             {
                 Guid a = Guid.Parse(value.ToString());
                 Guid b = Guid.Parse(nullValue.ToString());

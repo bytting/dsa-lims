@@ -1315,68 +1315,68 @@
             // miMainMenuView
             // 
             this.miMainMenuView.Name = "miMainMenuView";
-            this.miMainMenuView.Size = new System.Drawing.Size(147, 22);
+            this.miMainMenuView.Size = new System.Drawing.Size(148, 22);
             this.miMainMenuView.Text = "Ma&in menu";
             this.miMainMenuView.Click += new System.EventHandler(this.miMainMenuView_Click);
             // 
             // miBack
             // 
             this.miBack.Name = "miBack";
-            this.miBack.Size = new System.Drawing.Size(147, 22);
+            this.miBack.Size = new System.Drawing.Size(148, 22);
             this.miBack.Text = "Back";
             this.miBack.Click += new System.EventHandler(this.miBack_Click);
             // 
             // toolStripSeparator25
             // 
             this.toolStripSeparator25.Name = "toolStripSeparator25";
-            this.toolStripSeparator25.Size = new System.Drawing.Size(144, 6);
+            this.toolStripSeparator25.Size = new System.Drawing.Size(145, 6);
             // 
             // miSearchView
             // 
             this.miSearchView.Name = "miSearchView";
-            this.miSearchView.Size = new System.Drawing.Size(147, 22);
+            this.miSearchView.Size = new System.Drawing.Size(148, 22);
             this.miSearchView.Text = "S&earch";
             this.miSearchView.Click += new System.EventHandler(this.miSearchView_Click);
             // 
             // miProjectsView
             // 
             this.miProjectsView.Name = "miProjectsView";
-            this.miProjectsView.Size = new System.Drawing.Size(147, 22);
+            this.miProjectsView.Size = new System.Drawing.Size(148, 22);
             this.miProjectsView.Text = "&Projects";
             this.miProjectsView.Click += new System.EventHandler(this.miProjectsView_Click);
             // 
             // miCustomersView
             // 
             this.miCustomersView.Name = "miCustomersView";
-            this.miCustomersView.Size = new System.Drawing.Size(147, 22);
+            this.miCustomersView.Size = new System.Drawing.Size(148, 22);
             this.miCustomersView.Text = "&Customers";
             this.miCustomersView.Click += new System.EventHandler(this.miCustomersView_Click);
             // 
             // miTypeRelationsView
             // 
             this.miTypeRelationsView.Name = "miTypeRelationsView";
-            this.miTypeRelationsView.Size = new System.Drawing.Size(147, 22);
+            this.miTypeRelationsView.Size = new System.Drawing.Size(148, 22);
             this.miTypeRelationsView.Text = "Type &relations";
             this.miTypeRelationsView.Click += new System.EventHandler(this.miTypeRelationsView_Click);
             // 
             // miMetadataView
             // 
             this.miMetadataView.Name = "miMetadataView";
-            this.miMetadataView.Size = new System.Drawing.Size(147, 22);
+            this.miMetadataView.Size = new System.Drawing.Size(148, 22);
             this.miMetadataView.Text = "M&etadata";
             this.miMetadataView.Click += new System.EventHandler(this.miMetadataView_Click);
             // 
             // miSystemDataView
             // 
             this.miSystemDataView.Name = "miSystemDataView";
-            this.miSystemDataView.Size = new System.Drawing.Size(147, 22);
+            this.miSystemDataView.Size = new System.Drawing.Size(148, 22);
             this.miSystemDataView.Text = "&System data";
             this.miSystemDataView.Click += new System.EventHandler(this.miSystemDataView_Click);
             // 
             // miAuditLogView
             // 
             this.miAuditLogView.Name = "miAuditLogView";
-            this.miAuditLogView.Size = new System.Drawing.Size(147, 22);
+            this.miAuditLogView.Size = new System.Drawing.Size(148, 22);
             this.miAuditLogView.Text = "&Audit log";
             this.miAuditLogView.Click += new System.EventHandler(this.miAuditLogView_Click);
             // 
@@ -1969,7 +1969,7 @@
             this.miPreparationMethods,
             this.miAnalysisMethods});
             this.miTypeRelations.Name = "miTypeRelations";
-            this.miTypeRelations.Size = new System.Drawing.Size(92, 20);
+            this.miTypeRelations.Size = new System.Drawing.Size(93, 20);
             this.miTypeRelations.Text = "&Type relations";
             // 
             // miTypeRelSampleTypes
@@ -9457,10 +9457,10 @@
             this.tabPrepAnalPreps.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.tabPrepAnalPreps.Controls.Add(this.panel10);
             this.tabPrepAnalPreps.Controls.Add(this.splitContainer3);
-            this.tabPrepAnalPreps.Location = new System.Drawing.Point(4, 22);
+            this.tabPrepAnalPreps.Location = new System.Drawing.Point(4, 24);
             this.tabPrepAnalPreps.Name = "tabPrepAnalPreps";
             this.tabPrepAnalPreps.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPrepAnalPreps.Size = new System.Drawing.Size(625, 537);
+            this.tabPrepAnalPreps.Size = new System.Drawing.Size(625, 535);
             this.tabPrepAnalPreps.TabIndex = 3;
             this.tabPrepAnalPreps.Text = "Preparations";
             // 
@@ -9471,7 +9471,7 @@
             this.panel10.Controls.Add(this.btnPrepAnalPrepUpdate);
             this.panel10.Controls.Add(this.label23);
             this.panel10.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel10.Location = new System.Drawing.Point(3, 508);
+            this.panel10.Location = new System.Drawing.Point(3, 506);
             this.panel10.Name = "panel10";
             this.panel10.Size = new System.Drawing.Size(619, 26);
             this.panel10.TabIndex = 1;

@@ -181,7 +181,7 @@ namespace DSA_lims
         private void UpdateCustomer(SqlConnection conn, SqlTransaction trans)
         {            
             p["update_date"] = DateTime.Now;
-            p["update_id"] = Common.Username;        
+            p["update_id"] = Common.UserId;
 
             SqlCommand cmd = new SqlCommand("csp_update_customer", conn, trans);
             cmd.CommandType = CommandType.StoredProcedure;

@@ -3059,69 +3059,153 @@ namespace DSA_lims
 
         private void PopulateOrderOverview(SqlConnection conn, SqlTransaction trans, Assignment a)
         {
-            // Populate order overview
+            // Populate order overview            
 
             Font fontSample = new Font(tvOrderContent.Font, FontStyle.Bold);
 
             tvOrderContent.Nodes.Clear();
 
+            List<SampleHeader> sampHeaders = new List<SampleHeader>();
+            List<PreparationHeader> prepHeaders = new List<PreparationHeader>();
+            List<AnalysisHeader> analHeaders = new List<AnalysisHeader>();
+
             TreeNode root = tvOrderContent.Nodes.Add(a.Name);
             root.NodeFont = fontSample;
 
-            using (SqlDataReader reader = DB.GetDataReader(conn, null, "csp_select_sample_headers_for_assignment", CommandType.StoredProcedure,
-                new SqlParameter("@assignment_id", a.Id)))
+            string query = @"
+select 
+	a.id as 'analysis_id',
+	a.preparation_id,
+	a.number as 'analysis_number',
+	am.name as 'analysis_method_name',
+    l.name as 'laboratory_name',
+	ws.id as 'workflow_status_id',
+	ws.name as 'workflow_status_name',
+	a.comment as 'analysis_comment'
+from analysis a
+	inner join analysis_method am on a.analysis_method_id = am.id
+	inner join workflow_status ws on a.workflow_status_id = ws.id
+    inner join laboratory l on l.id = a.laboratory_id
+	inner join assignment ass on ass.id = a.assignment_id and ass.id = @ass_id
+where a.instance_status_id = 1
+order by a.number
+";
+            using (SqlDataReader reader = DB.GetDataReader(conn, null, query, CommandType.Text, new SqlParameter("@ass_id", a.Id)))
             {
                 while (reader.Read())
                 {
-                    string label = "Sample " + reader.GetString("sample_number") + ", " + reader.GetString("sample_type_name") + " " + reader.GetString("sample_component_name");
-                    TreeNode sNode = root.Nodes.Add(reader.GetString("sample_id"), label);
-                    sNode.NodeFont = fontSample;
-                    if (DB.IsValidField(reader["sample_comment"]))
-                        sNode.ToolTipText = reader.GetString("sample_comment");
+                    AnalysisHeader hdr = new AnalysisHeader();
+                    hdr.Id = reader.GetGuid("analysis_id");
+                    hdr.Number = reader.GetInt32("analysis_number");
+                    hdr.AnalysisMethodName = reader.GetString("analysis_method_name");
+                    hdr.PreparationId = reader.GetGuid("preparation_id");
+                    hdr.LaboratoryName = reader.GetString("laboratory_name");
+                    hdr.WorkflowStatusId = reader.GetInt32("workflow_status_id");
+                    hdr.WorkflowStatusName = reader.GetString("workflow_status_name");
+                    analHeaders.Add(hdr);
                 }
             }
 
-            foreach (TreeNode tnode in root.Nodes)
+            List<Guid> prepIds = new List<Guid>();
+            foreach(AnalysisHeader hdr in analHeaders)            
+                prepIds.Add(hdr.PreparationId);
+
+            var pArr = from item in prepIds select "'" + item + "'";
+            string strPrepIds = string.Join(",", pArr);
+
+
+            query = @"
+select 
+	p.id as 'preparation_id',
+	p.sample_id,
+	p.number as 'preparation_number',
+	pm.name as 'preparation_method_name',
+    l.name as 'laboratory_name',
+	ws.id as 'workflow_status_id',
+	ws.name as 'workflow_status_name',
+	p.comment as 'preparation_comment'
+from preparation p
+	inner join preparation_method pm on p.preparation_method_id = pm.id
+	inner join workflow_status ws on p.workflow_status_id = ws.id
+    inner join laboratory l on l.id = p.laboratory_id
+where p.instance_status_id = 1 and p.id in (" + strPrepIds + ") order by p.number";
+            using (SqlDataReader reader = DB.GetDataReader(conn, null, query, CommandType.Text))
             {
-                Guid sid = Guid.Parse(tnode.Name);
-                using (SqlDataReader reader = DB.GetDataReader(conn, null, "csp_select_preparation_headers_for_sample_assignment", CommandType.StoredProcedure,
-                    new SqlParameter("@sample_id", sid), 
-                    new SqlParameter("@assignment_id", a.Id)))
+                while (reader.Read())
                 {
-                    while (reader.Read())
-                    {
-                        int status = reader.GetInt32("workflow_status_id");
-                        string label = "Preparation " + reader.GetString("preparation_number") + ", " + reader.GetString("preparation_method_name") + ", " + reader.GetString("workflow_status_name");
-                        TreeNode pNode = tnode.Nodes.Add(reader.GetString("preparation_id"), label);
-                        pNode.ForeColor = WorkflowStatus.GetStatusColor(status);
-                        if (DB.IsValidField(reader["preparation_comment"]))
-                            pNode.ToolTipText = reader.GetString("preparation_comment");
-                    }
+                    PreparationHeader hdr = new PreparationHeader();
+                    hdr.Id = reader.GetGuid("preparation_id");
+                    hdr.Number = reader.GetInt32("preparation_number");
+                    hdr.PreparationMethodName = reader.GetString("preparation_method_name");
+                    hdr.LaboratoryName = reader.GetString("laboratory_name");
+                    hdr.WorkflowStatusId = reader.GetInt32("workflow_status_id");
+                    hdr.WorkflowStatusName = reader.GetString("workflow_status_name");
+                    hdr.SampleId = reader.GetGuid("sample_id");
+                    prepHeaders.Add(hdr);
                 }
             }
 
-            foreach (TreeNode tnode in root.Nodes)
+            List<Guid> sampIds = new List<Guid>();
+            foreach (PreparationHeader hdr in prepHeaders)
+                sampIds.Add(hdr.SampleId);
+
+            var sArr = from item in sampIds select "'" + item + "'";
+            string strSampIds = string.Join(",", sArr);
+
+            query = @"
+select 
+	s.id as 'sample_id',	
+	s.number as 'sample_number',
+    st.name as 'sample_type_name',
+    sc.name as 'sample_component_name',
+    l.name as 'laboratory_name'	
+from sample s		
+    inner join sample_type st on st.id = s.sample_type_id
+    left outer join sample_component sc on sc.id = s.sample_component_id
+    inner join laboratory l on l.id = s.laboratory_id
+where s.instance_status_id = 1 and s.id in (" + strSampIds + ") order by s.number";
+            using (SqlDataReader reader = DB.GetDataReader(conn, null, query, CommandType.Text))
             {
-                foreach (TreeNode tn in tnode.Nodes)
+                while (reader.Read())
                 {
-                    Guid pid = Guid.Parse(tn.Name);
-                    using (SqlDataReader reader = DB.GetDataReader(conn, null, "csp_select_analysis_headers_for_preparation_assignment", CommandType.StoredProcedure, new[] {
-                        new SqlParameter("@preparation_id", pid),
-                        new SqlParameter("@assignment_id", a.Id)
-                    }))
-                    {
-                        while (reader.Read())
-                        {
-                            int status = reader.GetInt32("workflow_status_id");
-                            string label = "Analysis " + reader.GetString("analysis_number") + ", " + reader.GetString("analysis_method_name") + ", " + reader.GetString("workflow_status_name");
-                            TreeNode aNode = tn.Nodes.Add(reader.GetString("analysis_id"), label);
-                            aNode.ForeColor = WorkflowStatus.GetStatusColor(status);
-                            if (DB.IsValidField(reader["analysis_comment"]))
-                                aNode.ToolTipText = reader.GetString("analysis_comment");
-                        }
-                    }
+                    SampleHeader hdr = new SampleHeader();
+                    hdr.Id = reader.GetGuid("sample_id");
+                    hdr.Number = reader.GetInt32("sample_number");
+                    hdr.SampleTypeName = reader.GetString("sample_type_name");
+                    hdr.SampleComponentName = reader.GetString("sample_component_name");
+                    hdr.LaboratoryName = reader.GetString("laboratory_name");                                        
+                    sampHeaders.Add(hdr);
                 }
             }
+
+            foreach(SampleHeader shdr in sampHeaders)
+            {
+                string label = "Sample " + shdr.Number + ", " + shdr.SampleTypeName + " " + shdr.SampleComponentName;
+                TreeNode sNode = root.Nodes.Add(shdr.Number.ToString(), label);
+                sNode.NodeFont = fontSample;
+
+                foreach (PreparationHeader phdr in prepHeaders)
+                {
+                    if (phdr.SampleId != shdr.Id)
+                        continue;
+
+                    int status = phdr.WorkflowStatusId;
+                    label = "Preparation " + phdr.Number + ", " + phdr.PreparationMethodName + ", " + phdr.LaboratoryName + ", " + phdr.WorkflowStatusName;
+                    TreeNode pNode = sNode.Nodes.Add(phdr.Id.ToString(), label);
+                    pNode.ForeColor = WorkflowStatus.GetStatusColor(status);
+
+                    foreach (AnalysisHeader ahdr in analHeaders)
+                    {
+                        if (ahdr.PreparationId != phdr.Id)
+                            continue;
+
+                        status = ahdr.WorkflowStatusId;
+                        label = "Analysis " + ahdr.Number + ", " + ahdr.AnalysisMethodName + ", " + ahdr.LaboratoryName + ", " + ahdr.WorkflowStatusName;
+                        TreeNode aNode = pNode.Nodes.Add(ahdr.Id.ToString(), label);
+                        aNode.ForeColor = WorkflowStatus.GetStatusColor(status);
+                    }
+                }
+            }            
 
             tvOrderContent.ExpandAll();
         }
@@ -3407,8 +3491,7 @@ select count(*) from sample s
                 MessageBox.Show("Customer is mandatory");
                 return;
             }
-
-            // FIXME
+            
             /*bool canApproveLab = false;
             if (assignment.ApprovedLaboratory != cbOrderApprovedLaboratory.Checked)
             {
@@ -3422,13 +3505,7 @@ select count(*) from sample s
             {
                 MessageBox.Show("You can not save an order that is approved");
                 return;
-            }*/
-
-            if (cbOrderApprovedCustomer.Checked && !cbOrderApprovedLaboratory.Checked)
-            {
-                MessageBox.Show("Laboratory must approve this order before customer");
-                return;
-            }
+            }*/            
 
             if (!Utils.IsValidGuid(cboxOrderLaboratory.SelectedValue))
             {
@@ -3436,8 +3513,53 @@ select count(*) from sample s
                 return;
             }
 
+            if (!cbOrderApprovedLaboratory.Checked)
+            {
+                if (assignment.ApprovedLaboratory)
+                {
+                    if (!Utils.IsValidGuid(Common.LabId))
+                    {
+                        MessageBox.Show("You can not approve orders for laboratory");
+                        return;
+                    }
+
+                    if (!Roles.HasAccess(Role.LaboratoryAdministrator))
+                    {
+                        MessageBox.Show("You don't have permission to approve orders");
+                        return;
+                    }
+
+                    if (Common.LabId != assignment.LaboratoryId)
+                    {
+                        MessageBox.Show("You can not approve orders for this laboratory");
+                        return;
+                    }
+                }
+            }
+
             if (cbOrderApprovedLaboratory.Checked)
             {
+                if(!assignment.ApprovedLaboratory)
+                {
+                    if (!Utils.IsValidGuid(Common.LabId))
+                    {
+                        MessageBox.Show("You can not approve orders for laboratory");
+                        return;
+                    }
+
+                    if (!Roles.HasAccess(Role.LaboratoryAdministrator))
+                    {
+                        MessageBox.Show("You don't have permission to approve orders");
+                        return;
+                    }
+
+                    if (Common.LabId != assignment.LaboratoryId)
+                    {
+                        MessageBox.Show("You can not approve orders for this laboratory");
+                        return;
+                    }
+                }
+
                 if (assignment.SampleTypes.Count == 0)
                 {
                     MessageBox.Show("Can not approve an empty order");
@@ -3464,6 +3586,12 @@ select count(*) from sample s
                         return;
                     }
                 }
+            }
+
+            if (cbOrderApprovedCustomer.Checked && !cbOrderApprovedLaboratory.Checked)
+            {
+                MessageBox.Show("Laboratory must approve this order before customer");
+                return;
             }
 
             SqlConnection conn = null;

@@ -924,6 +924,11 @@
             this.btnSearchSearch = new System.Windows.Forms.Button();
             this.gridSearchResult = new System.Windows.Forms.DataGridView();
             this.toolStrip16 = new System.Windows.Forms.ToolStrip();
+            this.tabsSearch = new System.Windows.Forms.TabControl();
+            this.tabSearchSearch = new System.Windows.Forms.TabPage();
+            this.tabSearchStatistics = new System.Windows.Forms.TabPage();
+            this.flowStatistics = new System.Windows.Forms.FlowLayoutPanel();
+            this.button1 = new System.Windows.Forms.Button();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tabs.SuspendLayout();
@@ -1250,6 +1255,10 @@
             this.flowSearch.SuspendLayout();
             this.panel34.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridSearchResult)).BeginInit();
+            this.tabsSearch.SuspendLayout();
+            this.tabSearchSearch.SuspendLayout();
+            this.tabSearchStatistics.SuspendLayout();
+            this.flowStatistics.SuspendLayout();
             this.SuspendLayout();
             // 
             // menu
@@ -4688,9 +4697,7 @@
             // tabSearch
             // 
             this.tabSearch.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.tabSearch.Controls.Add(this.gridSearchResult);
-            this.tabSearch.Controls.Add(this.toolStrip16);
-            this.tabSearch.Controls.Add(this.flowSearch);
+            this.tabSearch.Controls.Add(this.tabsSearch);
             this.tabSearch.Controls.Add(this.panel17);
             this.tabSearch.Location = new System.Drawing.Point(4, 24);
             this.tabSearch.Name = "tabSearch";
@@ -5739,13 +5746,13 @@
             // orderSummaryToolStripMenuItem
             // 
             this.orderSummaryToolStripMenuItem.Name = "orderSummaryToolStripMenuItem";
-            this.orderSummaryToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
+            this.orderSummaryToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.orderSummaryToolStripMenuItem.Text = "&Order";
             // 
             // preparationSummaryToolStripMenuItem
             // 
             this.preparationSummaryToolStripMenuItem.Name = "preparationSummaryToolStripMenuItem";
-            this.preparationSummaryToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
+            this.preparationSummaryToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.preparationSummaryToolStripMenuItem.Text = "&Preparation";
             // 
             // btnOrdersUnlock
@@ -10508,7 +10515,7 @@
             this.flowSearch.Location = new System.Drawing.Point(3, 3);
             this.flowSearch.Name = "flowSearch";
             this.flowSearch.Padding = new System.Windows.Forms.Padding(6);
-            this.flowSearch.Size = new System.Drawing.Size(1015, 44);
+            this.flowSearch.Size = new System.Drawing.Size(1001, 44);
             this.flowSearch.TabIndex = 1;
             // 
             // panel34
@@ -10565,7 +10572,7 @@
             this.gridSearchResult.ReadOnly = true;
             this.gridSearchResult.RowHeadersVisible = false;
             this.gridSearchResult.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridSearchResult.Size = new System.Drawing.Size(1015, 464);
+            this.gridSearchResult.Size = new System.Drawing.Size(1001, 430);
             this.gridSearchResult.TabIndex = 2;
             // 
             // toolStrip16
@@ -10573,9 +10580,63 @@
             this.toolStrip16.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStrip16.Location = new System.Drawing.Point(3, 47);
             this.toolStrip16.Name = "toolStrip16";
-            this.toolStrip16.Size = new System.Drawing.Size(1015, 25);
+            this.toolStrip16.Size = new System.Drawing.Size(1001, 25);
             this.toolStrip16.TabIndex = 3;
             this.toolStrip16.Text = "toolStrip16";
+            // 
+            // tabsSearch
+            // 
+            this.tabsSearch.Controls.Add(this.tabSearchSearch);
+            this.tabsSearch.Controls.Add(this.tabSearchStatistics);
+            this.tabsSearch.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabsSearch.Location = new System.Drawing.Point(3, 3);
+            this.tabsSearch.Name = "tabsSearch";
+            this.tabsSearch.SelectedIndex = 0;
+            this.tabsSearch.Size = new System.Drawing.Size(1015, 533);
+            this.tabsSearch.TabIndex = 4;
+            // 
+            // tabSearchSearch
+            // 
+            this.tabSearchSearch.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.tabSearchSearch.Controls.Add(this.gridSearchResult);
+            this.tabSearchSearch.Controls.Add(this.toolStrip16);
+            this.tabSearchSearch.Controls.Add(this.flowSearch);
+            this.tabSearchSearch.Location = new System.Drawing.Point(4, 24);
+            this.tabSearchSearch.Name = "tabSearchSearch";
+            this.tabSearchSearch.Padding = new System.Windows.Forms.Padding(3);
+            this.tabSearchSearch.Size = new System.Drawing.Size(1007, 505);
+            this.tabSearchSearch.TabIndex = 0;
+            this.tabSearchSearch.Text = "Search";
+            // 
+            // tabSearchStatistics
+            // 
+            this.tabSearchStatistics.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.tabSearchStatistics.Controls.Add(this.flowStatistics);
+            this.tabSearchStatistics.Location = new System.Drawing.Point(4, 24);
+            this.tabSearchStatistics.Name = "tabSearchStatistics";
+            this.tabSearchStatistics.Padding = new System.Windows.Forms.Padding(3);
+            this.tabSearchStatistics.Size = new System.Drawing.Size(1007, 505);
+            this.tabSearchStatistics.TabIndex = 1;
+            this.tabSearchStatistics.Text = "Statistics";
+            // 
+            // flowStatistics
+            // 
+            this.flowStatistics.Controls.Add(this.button1);
+            this.flowStatistics.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flowStatistics.Location = new System.Drawing.Point(3, 3);
+            this.flowStatistics.Name = "flowStatistics";
+            this.flowStatistics.Padding = new System.Windows.Forms.Padding(12);
+            this.flowStatistics.Size = new System.Drawing.Size(1001, 499);
+            this.flowStatistics.TabIndex = 0;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(15, 15);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(165, 129);
+            this.button1.TabIndex = 0;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
             // 
             // FormMain
             // 
@@ -10692,7 +10753,6 @@
             this.toolStrip17.PerformLayout();
             this.panel15.ResumeLayout(false);
             this.tabSearch.ResumeLayout(false);
-            this.tabSearch.PerformLayout();
             this.panel17.ResumeLayout(false);
             this.tabMetadata.ResumeLayout(false);
             this.tabsMeta.ResumeLayout(false);
@@ -11075,6 +11135,11 @@
             this.flowSearch.ResumeLayout(false);
             this.panel34.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.gridSearchResult)).EndInit();
+            this.tabsSearch.ResumeLayout(false);
+            this.tabSearchSearch.ResumeLayout(false);
+            this.tabSearchSearch.PerformLayout();
+            this.tabSearchStatistics.ResumeLayout(false);
+            this.flowStatistics.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -11977,6 +12042,11 @@
         private System.Windows.Forms.Button btnSearchSearch;
         private System.Windows.Forms.DataGridView gridSearchResult;
         private System.Windows.Forms.ToolStrip toolStrip16;
+        private System.Windows.Forms.TabControl tabsSearch;
+        private System.Windows.Forms.TabPage tabSearchSearch;
+        private System.Windows.Forms.TabPage tabSearchStatistics;
+        private System.Windows.Forms.FlowLayoutPanel flowStatistics;
+        private System.Windows.Forms.Button button1;
     }
 }
 

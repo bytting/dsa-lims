@@ -74,7 +74,7 @@ namespace DSA_lims
                     reader.Read();
 
                     tbName.Text = reader.GetString("name");
-                    p["sample_type_id"] = reader["sample_type_id"];
+                    p["sample_type_id"] = reader.GetGuid("sample_type_id");
                     p["create_date"] = reader["create_date"];
                     p["create_id"] = reader["create_id"];
                     p["update_date"] = reader["update_date"];

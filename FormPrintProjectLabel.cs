@@ -150,8 +150,8 @@ from project_sub ps
 
                         reader.Read();
 
-                        ProjectMainName = reader["project_main_name"].ToString();
-                        ProjectSubName = reader["project_sub_name"].ToString();
+                        ProjectMainName = reader.GetString("project_main_name");
+                        ProjectSubName = reader.GetString("project_sub_name");
 
                         for (int c = 0; c < copies; c++)
                             printDocument.Print();

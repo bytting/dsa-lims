@@ -1306,6 +1306,11 @@ namespace DSA_lims
 
         private void miSearchView_Click(object sender, EventArgs e)
         {
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                UI.PopulateNuclides(conn, cboxSearchNuclides);
+            }   
+                         
             tabs.SelectedTab = tabSearch;
         }
 
@@ -5418,14 +5423,21 @@ where s.number = @sample_number
 
             if (String.IsNullOrEmpty(tbSampleSamplingDateFrom.Text))
             {
-                if (tbSampleSamplingDateTo.Tag != null)
-                {
-                    DateTime sdt = (DateTime)tbSampleSamplingDateTo.Tag;
-                    tbSampleReferenceDate.Tag = sdt;
-                    tbSampleReferenceDate.Text = sdt.ToString(Utils.DateTimeFormatNorwegian);
-                }
+                tbSampleSamplingDateTo.Tag = null;
+                tbSampleSamplingDateTo.Text = "";
+                tbSampleSamplingDateTo.Enabled = false;
+                btnSampleSamplingDateTo.Enabled = false;
+                btnSampleSamplingDateToClear.Enabled = false;
+                
+                DateTime now = DateTime.Now;
+                tbSampleReferenceDate.Tag = now;
+                tbSampleReferenceDate.Text = now.ToString(Utils.DateTimeFormatNorwegian);
                 return;
             }
+
+            tbSampleSamplingDateTo.Enabled = true;
+            btnSampleSamplingDateTo.Enabled = true;
+            btnSampleSamplingDateToClear.Enabled = true;
 
             DateTime sdf = (DateTime)tbSampleSamplingDateFrom.Tag;
             if(sdf > Common.CurrentDate(true))
@@ -5462,13 +5474,20 @@ where s.number = @sample_number
         {
             sample.Dirty = true;
 
+            DateTime sdf;
             if (String.IsNullOrEmpty(tbSampleSamplingDateTo.Text))
             {
                 if (tbSampleSamplingDateFrom.Tag != null)
                 {
-                    DateTime sdf = (DateTime)tbSampleSamplingDateFrom.Tag;
+                    sdf = (DateTime)tbSampleSamplingDateFrom.Tag;
                     tbSampleReferenceDate.Tag = sdf;
                     tbSampleReferenceDate.Text = sdf.ToString(Utils.DateTimeFormatNorwegian);
+                }
+                else
+                {
+                    DateTime now = DateTime.Now;
+                    tbSampleReferenceDate.Tag = now;
+                    tbSampleReferenceDate.Text = now.ToString(Utils.DateTimeFormatNorwegian);
                 }
                 return;
             }
@@ -5481,27 +5500,19 @@ where s.number = @sample_number
                 tbSampleSamplingDateTo.Text = "";
                 return;
             }
-
-            if (tbSampleSamplingDateFrom.Tag == null)
-            {                
-                tbSampleReferenceDate.Tag = sdt;
-                tbSampleReferenceDate.Text = sdt.ToString(Utils.DateTimeFormatNorwegian);
-            }
-            else
+            
+            sdf = (DateTime)tbSampleSamplingDateFrom.Tag;
+            if(sdf > sdt)
             {
-                DateTime sdf = (DateTime)tbSampleSamplingDateFrom.Tag;
-                if(sdf > sdt)
-                {
-                    MessageBox.Show("Sampling time to must be later than sampling date from");
-                    tbSampleSamplingDateTo.Tag = null;
-                    tbSampleSamplingDateTo.Text = "";
-                    return;
-                }
-                long addTicks = (sdt.Ticks - sdf.Ticks) / 2;
-                DateTime rd = new DateTime(sdf.Ticks + addTicks);
-                tbSampleReferenceDate.Tag = rd;
-                tbSampleReferenceDate.Text = rd.ToString(Utils.DateTimeFormatNorwegian);
+                MessageBox.Show("Sampling time to must be later than sampling date from");
+                tbSampleSamplingDateTo.Tag = null;
+                tbSampleSamplingDateTo.Text = "";
+                return;
             }
+            long addTicks = (sdt.Ticks - sdf.Ticks) / 2;
+            DateTime rd = new DateTime(sdf.Ticks + addTicks);
+            tbSampleReferenceDate.Tag = rd;
+            tbSampleReferenceDate.Text = rd.ToString(Utils.DateTimeFormatNorwegian);
         }
 
         private void tbSampleReferenceDate_TextChanged(object sender, EventArgs e)
@@ -7285,6 +7296,42 @@ select count(*) from sample s
                 }
             
                 UI.PopulateUsersForProjectSub(conn, null, psid, gridProjectsUsers);
+            }
+        }
+
+        private void btnSearchSearch_Click(object sender, EventArgs e)
+        {
+            string query = @"
+select s.number as 'Sample', st.name as 'Sample type', p.number as 'Preparation', a.number as 'Analysis', n.name as 'Nuclide', ar.activity as 'Activity', ar.activity_uncertainty_abs as 'Act.Unc.', ar.detection_limit as 'MDA', ar.accredited as 'Acc.'
+from analysis_result ar
+    inner join analysis a on a.id = ar.analysis_id
+    inner join preparation p on p.id = a.preparation_id
+    inner join sample s on s.id = p.sample_id
+    inner join sample_type st on st.id = s.sample_type_id
+    inner join nuclide n on n.id = ar.nuclide_id 
+where ar.instance_status_id < 2
+";
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                SqlDataAdapter adapter = new SqlDataAdapter("", conn);
+
+                if (Utils.IsValidGuid(cboxSearchNuclides.SelectedValue))
+                {
+                    query += " and n.id = @nid";
+                    adapter.SelectCommand.Parameters.AddWithValue("@nid", cboxSearchNuclides.SelectedValue);
+                }
+
+                query += " order by s.number, p.number, a.number, n.name";
+
+                adapter.SelectCommand.CommandText = query;
+                adapter.SelectCommand.CommandType = CommandType.Text;
+                DataTable dt = new DataTable();
+                adapter.Fill(dt);
+
+                gridSearchResult.DataSource = dt;
+
+                SetStatusMessage("Search showing " + dt.Rows.Count + " results");
             }
         }
     }    

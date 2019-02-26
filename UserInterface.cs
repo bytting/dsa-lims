@@ -287,6 +287,24 @@ where a.email is not NULL
             grid.Columns["half_life_year"].DefaultCellStyle.Format = Utils.ScientificFormat;
         }
 
+        public static void PopulateNuclides(SqlConnection conn, ComboBox cb)
+        {
+            List<Lemma<Guid, string>> nucls = new List<Lemma<Guid, string>>();
+            nucls.Add(new Lemma<Guid, string>(Guid.Empty, ""));
+
+            using (SqlDataReader reader = DB.GetDataReader(conn, null, "csp_select_nuclides_short", CommandType.StoredProcedure, 
+                new SqlParameter("@instance_status_level", InstanceStatus.Active)))
+            {
+                while (reader.Read())
+                {
+                    nucls.Add(new Lemma<Guid, string>(reader.GetGuid("id"), reader.GetString("name")));
+                }
+            }
+            cb.DisplayMember = "Name";
+            cb.ValueMember = "Id";
+            cb.DataSource = nucls;
+        }
+
         public static void PopulateGeometries(SqlConnection conn, DataGridView grid)
         {            
             grid.DataSource = DB.GetDataTable(conn, null, "csp_select_preparation_geometries_flat", CommandType.StoredProcedure,

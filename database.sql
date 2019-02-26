@@ -3194,6 +3194,15 @@ as
 	order by name
 go
 
+create proc csp_select_nuclides_short
+	@instance_status_level int
+as 
+	select id, name
+	from nuclide 
+	where instance_status_id <= @instance_status_level
+	order by name
+go
+
 create proc csp_select_nuclides_flat
 	@instance_status_level int
 as

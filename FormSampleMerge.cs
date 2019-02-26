@@ -75,24 +75,24 @@ namespace DSA_lims
                 {
                     reader.Read();
 
-                    map["number"] = reader["number"];
-                    map["laboratory_id"] = reader["laboratory_id"];
-                    map["sample_type_id"] = reader["sample_type_id"];
-                    map["project_sub_id"] = reader["project_sub_id"];
-                    map["station_id"] = reader["station_id"];
-                    map["sampler_id"] = reader["sampler_id"];
-                    map["sampling_method_id"] = reader["sampling_method_id"];
-                    map["municipality_id"] = reader["municipality_id"];
-                    map["location_type"] = reader["location_type"];
-                    map["location"] = reader["location"];
-                    map["latitude"] = reader["latitude"];
-                    map["longitude"] = reader["longitude"];
-                    map["altitude"] = reader["altitude"];
-                    map["sampling_date_from"] = reader["sampling_date_from"];                    
-                    map["sampling_date_to"] = reader["sampling_date_to"];
-                    map["reference_date"] = reader["reference_date"];
-                    map["external_id"] = reader["external_id"];
-                    map["confidential"] = reader["confidential"];
+                    map["number"] = reader.GetInt32("number");
+                    map["laboratory_id"] = reader.GetGuid("laboratory_id");
+                    map["sample_type_id"] = reader.GetGuid("sample_type_id");
+                    map["project_sub_id"] = reader.GetGuid("project_sub_id");
+                    map["station_id"] = reader.GetGuid("station_id");
+                    map["sampler_id"] = reader.GetGuid("sampler_id");
+                    map["sampling_method_id"] = reader.GetGuid("sampling_method_id");
+                    map["municipality_id"] = reader.GetGuid("municipality_id");
+                    map["location_type"] = reader.GetString("location_type");
+                    map["location"] = reader.GetString("location");
+                    map["latitude"] = reader.GetDoubleNullable("latitude");
+                    map["longitude"] = reader.GetDoubleNullable("longitude");
+                    map["altitude"] = reader.GetDoubleNullable("altitude");
+                    map["sampling_date_from"] = reader.GetDateTimeNullable("sampling_date_from");
+                    map["sampling_date_to"] = reader.GetDateTimeNullable("sampling_date_to");
+                    map["reference_date"] = reader.GetDateTimeNullable("reference_date");
+                    map["external_id"] = reader.GetString("external_id");
+                    map["confidential"] = reader.GetBoolean("confidential");
                 }
 
                 SqlCommand cmd = new SqlCommand("csp_insert_sample", conn, trans);
@@ -115,15 +115,15 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@imported_from", DBNull.Value);
                 cmd.Parameters.AddWithValue("@imported_from_id", DBNull.Value);
                 cmd.Parameters.AddWithValue("@municipality_id", map["municipality_id"], Guid.Empty);
-                cmd.Parameters.AddWithValue("@location_type", map["location_type"]);
-                cmd.Parameters.AddWithValue("@location", map["location"]);
-                cmd.Parameters.AddWithValue("@latitude", map["latitude"]);
-                cmd.Parameters.AddWithValue("@longitude", map["longitude"]);
-                cmd.Parameters.AddWithValue("@altitude", map["altitude"]);
-                cmd.Parameters.AddWithValue("@sampling_date_from", map["sampling_date_from"]);                
-                cmd.Parameters.AddWithValue("@sampling_date_to", map["sampling_date_to"]);
-                cmd.Parameters.AddWithValue("@reference_date", map["reference_date"]);
-                cmd.Parameters.AddWithValue("@external_id", map["external_id"]);
+                cmd.Parameters.AddWithValue("@location_type", map["location_type"], String.Empty);
+                cmd.Parameters.AddWithValue("@location", map["location"], String.Empty);
+                cmd.Parameters.AddWithValue("@latitude", map["latitude"], null);
+                cmd.Parameters.AddWithValue("@longitude", map["longitude"], null);
+                cmd.Parameters.AddWithValue("@altitude", map["altitude"], null);
+                cmd.Parameters.AddWithValue("@sampling_date_from", map["sampling_date_from"], null);
+                cmd.Parameters.AddWithValue("@sampling_date_to", map["sampling_date_to"], null);
+                cmd.Parameters.AddWithValue("@reference_date", map["reference_date"], null);
+                cmd.Parameters.AddWithValue("@external_id", map["external_id"], String.Empty);
                 cmd.Parameters.AddWithValue("@wet_weight_g", DBNull.Value);
                 cmd.Parameters.AddWithValue("@dry_weight_g", DBNull.Value);
                 cmd.Parameters.AddWithValue("@volume_l", DBNull.Value);

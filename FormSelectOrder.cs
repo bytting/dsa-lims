@@ -228,8 +228,8 @@ where sxast.sample_id = @sid";
                     {
                         reader.Read(); // FIXME
 
-                        prepMethId = Utils.MakeGuid(reader["preparation_method_id"]);
-                        prepCount = Convert.ToInt32(reader["preparation_method_count"]);
+                        prepMethId = reader.GetGuid("preparation_method_id");
+                        prepCount = reader.GetInt32("preparation_method_count");
                     }
 
                     SqlCommand cmd = new SqlCommand("csp_insert_preparation", conn, trans);
@@ -292,8 +292,8 @@ where sxast.sample_id = @sid";
                 {
                     reader.Read(); // FIXME
 
-                    analMethId = Utils.MakeGuid(reader["analysis_method_id"]);
-                    analCount = Convert.ToInt32(reader["analysis_method_count"]);
+                    analMethId = reader.GetGuid("analysis_method_id");
+                    analCount = reader.GetInt32("analysis_method_count");
                 }
 
                 SqlCommand cmd = new SqlCommand("csp_insert_analysis", conn, trans);

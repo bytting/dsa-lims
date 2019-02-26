@@ -171,6 +171,11 @@
     <Compile Include="DBPreparation.cs" />
     <Compile Include="DBPreparationGeometry.cs" />
     <Compile Include="DBSample.cs" />
+    <Compile Include="DSAssignedWork.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DSAssignedWork.xsd</DependentUpon>
+    </Compile>
     <Compile Include="DSOrderReport.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -405,17 +410,23 @@
     <Compile Include="FormProjectSubXUsers.Designer.cs">
       <DependentUpon>FormProjectSubXUsers.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormReportAssignedWork.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormReportAssignedWork.Designer.cs">
+      <DependentUpon>FormReportAssignedWork.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormReportAuditComment.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FormReportAuditComment.Designer.cs">
       <DependentUpon>FormReportAuditComment.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormReportViewer.cs">
+    <Compile Include="FormReportAnalysisReport.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormReportViewer.Designer.cs">
-      <DependentUpon>FormReportViewer.cs</DependentUpon>
+    <Compile Include="FormReportAnalysisReport.Designer.cs">
+      <DependentUpon>FormReportAnalysisReport.cs</DependentUpon>
     </Compile>
     <Compile Include="FormResetPassword.cs">
       <SubType>Form</SubType>
@@ -568,6 +579,17 @@
     <Compile Include="Logger.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="UserInterface.cs" />
+    <None Include="DSAssignedWork.xsc">
+      <DependentUpon>DSAssignedWork.xsd</DependentUpon>
+    </None>
+    <None Include="DSAssignedWork.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DSAssignedWork.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="DSAssignedWork.xss">
+      <DependentUpon>DSAssignedWork.xsd</DependentUpon>
+    </None>
     <None Include="images\info.png" />
     <None Include="images\users.png" />
     <Content Include="SqlServerTypes\readme.htm" />
@@ -703,11 +725,14 @@
     <EmbeddedResource Include="FormProjectSubXUsers.resx">
       <DependentUpon>FormProjectSubXUsers.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormReportAssignedWork.resx">
+      <DependentUpon>FormReportAssignedWork.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormReportAuditComment.resx">
       <DependentUpon>FormReportAuditComment.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormReportViewer.resx">
-      <DependentUpon>FormReportViewer.cs</DependentUpon>
+    <EmbeddedResource Include="FormReportAnalysisReport.resx">
+      <DependentUpon>FormReportAnalysisReport.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormResetPassword.resx">
       <DependentUpon>FormResetPassword.cs</DependentUpon>
@@ -796,6 +821,7 @@
     <Content Include="free3of9.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <EmbeddedResource Include="ReportAssignedWork.rdlc" />
     <EmbeddedResource Include="RPOrderReport.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>

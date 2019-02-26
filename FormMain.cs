@@ -5296,7 +5296,7 @@ where s.number = @sample_number
                 return;
             }
             
-            FormReportViewer form = new FormReportViewer(assignment);
+            FormReportAnalysisReport form = new FormReportAnalysisReport(assignment);
             form.ShowDialog();
 
             if (form.HasNewVersion)
@@ -7333,6 +7333,12 @@ where ar.instance_status_id < 2
 
                 SetStatusMessage("Search showing " + dt.Rows.Count + " results");
             }
+        }
+
+        private void btnSearchAssignedWork_Click(object sender, EventArgs e)
+        {
+            FormReportAssignedWork form = new FormReportAssignedWork(Common.LabId);
+            form.ShowDialog();
         }
     }    
 }

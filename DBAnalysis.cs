@@ -267,7 +267,7 @@ namespace DSA_lims
                 }
             }
            
-            foreach (AnalysisResult r in Results)            
+            foreach (AnalysisResult r in Results)
                 r.StoreToDB(conn, trans);
 
             // Remove deleted analysis results from DB

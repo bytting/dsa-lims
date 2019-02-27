@@ -167,7 +167,13 @@ namespace DSA_lims
             {
                 MessageBox.Show("Activity can not be negative");
                 return;
-            }            
+            }
+
+            if(act == 0 && cbActivityApproved.Checked)
+            {
+                MessageBox.Show("Can not approve an activity of zero");
+                return;
+            }
 
             double unc;
             if (!Double.TryParse(tbUncertainty.Text.Trim(), out unc))
@@ -201,6 +207,12 @@ namespace DSA_lims
             if (detlim < 0d)
             {
                 MessageBox.Show("Detection limit can not be negative");
+                return;
+            }
+
+            if (detlim == 0 && cbDetectionLimitApproved.Checked)
+            {
+                MessageBox.Show("Can not approve a MDA of zero");
                 return;
             }
 

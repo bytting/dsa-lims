@@ -93,7 +93,9 @@ namespace DSA_lims
             tbPrepAnalLODWater.KeyPress += CustomEvents.Numeric_KeyPress;
             tbPrepAnalPrepFillHeight.KeyPress += CustomEvents.Numeric_KeyPress;
             tbPrepAnalPrepAmount.KeyPress += CustomEvents.Numeric_KeyPress;
-            tbPrepAnalPrepQuantity.KeyPress += CustomEvents.Numeric_KeyPress;            
+            tbPrepAnalPrepQuantity.KeyPress += CustomEvents.Numeric_KeyPress;
+            tbSearchActMin.KeyPress += CustomEvents.Numeric_KeyPress;
+            tbSearchActMax.KeyPress += CustomEvents.Numeric_KeyPress;
         }        
 
         private void FormMain_Load(object sender, EventArgs e)
@@ -1308,6 +1310,7 @@ namespace DSA_lims
         {
             using (SqlConnection conn = DB.OpenConnection())
             {
+                UI.PopulateSampleTypes(treeSampleTypes, cboxSearchSampleType);
                 UI.PopulateNuclides(conn, cboxSearchNuclides);
             }   
                          
@@ -2083,6 +2086,8 @@ namespace DSA_lims
             tbSampleComment.Text = s.Comment;
             lblSampleToolId.Text = "[Sample] " + s.Number.ToString();
             lblSampleToolLaboratory.Text = String.IsNullOrEmpty(cboxSampleLaboratory.Text) ? "" : "[Laboratory] " + cboxSampleLaboratory.Text;
+            
+            PopulateSampleParameters(s, clearDirty);
 
             // Show attachments
             UI.PopulateAttachments(conn, trans, "sample", s.Id, gridSampleAttachments);
@@ -2091,6 +2096,29 @@ namespace DSA_lims
             {
                 sample.ClearDirty();
             }
+        }
+
+        private void PopulateSampleParameters(Sample s, bool clearDirty)
+        {
+            gridSampleParameters.Columns.Clear();
+            gridSampleParameters.Rows.Clear();
+
+            gridSampleParameters.Columns.Add("Id", "Id");
+            gridSampleParameters.Columns.Add("Value", "Value");
+
+            foreach (SampleParameter p in s.Parameters)
+            {
+                gridSampleParameters.Rows.Add(new object[] {
+                    p.Id,
+                    p.Value
+                });
+            }
+
+            gridSampleParameters.Columns["Id"].Visible = false;
+
+            if (clearDirty)
+                foreach (SampleParameter p in s.Parameters)
+                    p.Dirty = false;
         }
 
         private void miSamplesDelete_Click(object sender, EventArgs e)
@@ -4417,8 +4445,14 @@ select count(*) from sample s
                     MessageBox.Show("This analysis belongs to a closed order and can not be updated");
                     return;
                 }
-            }                    
-                
+            }
+
+            if (analysis.WorkflowStatusId == WorkflowStatus.Complete)
+            {
+                MessageBox.Show("You can not edit a completed analysis");
+                return;
+            }
+
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Filter = "LIS files (*.lis)|*.lis";
             if (dialog.ShowDialog() != DialogResult.OK)
@@ -4487,8 +4521,8 @@ select count(*) from sample s
             gridPrepAnalResults.Columns.Add("Activity", "Activity");
             gridPrepAnalResults.Columns.Add("ActivityUncertaintyABS", "Act.Unc.");
             gridPrepAnalResults.Columns.Add("ActivityApproved", "Act.Appr.");
-            gridPrepAnalResults.Columns.Add("DetectionLimit", "Det.Lim.");
-            gridPrepAnalResults.Columns.Add("DetectionLimitApproved", "Det.Lim.Appr.");
+            gridPrepAnalResults.Columns.Add("DetectionLimit", "MDA.");
+            gridPrepAnalResults.Columns.Add("DetectionLimitApproved", "MDA.Appr.");
 
             foreach (AnalysisResult ar in a.Results)
             {
@@ -4847,10 +4881,7 @@ select count(*) from sample s
         }
 
         private void btnPrepAnalEditResult_Click(object sender, EventArgs e)
-        {
-            if (!Utils.IsValidGuid(analysis.Id))            
-                return;
-
+        {            
             using (SqlConnection conn = DB.OpenConnection())
             {
                 if (analysis.IsClosed(conn, null))
@@ -4858,6 +4889,12 @@ select count(*) from sample s
                     MessageBox.Show("This analysis belongs to a closed order and can not be updated");
                     return;
                 }
+            }
+
+            if (analysis.WorkflowStatusId == WorkflowStatus.Complete)
+            {
+                MessageBox.Show("You can not edit a completed analysis");
+                return;
             }
 
             if (!Utils.IsValidGuid(analysis.ActivityUnitId))
@@ -4900,11 +4937,17 @@ select count(*) from sample s
 
         private void btnPrepAnalAddResult_Click(object sender, EventArgs e)
         {
-            if(!Utils.IsValidGuid(analysis.ActivityUnitId))
+            if (analysis.WorkflowStatusId == WorkflowStatus.Complete)
+            {
+                MessageBox.Show("You can not edit a completed analysis");
+                return;
+            }
+
+            if (!Utils.IsValidGuid(analysis.ActivityUnitId))
             {
                 MessageBox.Show("You must save a unit first");
                 return;
-            }
+            }            
             
             Dictionary<string, Guid> nuclides = null;
             using (SqlConnection conn = DB.OpenConnection())
@@ -6266,7 +6309,13 @@ where s.number = @sample_number
                 MessageBox.Show("You must select one or more results first");
                 return;
             }
-            
+
+            if (analysis.WorkflowStatusId == WorkflowStatus.Complete)
+            {
+                MessageBox.Show("You can not edit a completed analysis");
+                return;
+            }
+
             DialogResult r = MessageBox.Show("Are you sure you want to delete " + gridPrepAnalResults.SelectedRows.Count + " results from this analysis?", "Warning", MessageBoxButtons.YesNo);
             if (r == DialogResult.No)                
                 return;
@@ -7302,13 +7351,15 @@ select count(*) from sample s
         private void btnSearchSearch_Click(object sender, EventArgs e)
         {
             string query = @"
-select s.number as 'Sample', st.name as 'Sample type', p.number as 'Preparation', a.number as 'Analysis', n.name as 'Nuclide', ar.activity as 'Activity', ar.activity_uncertainty_abs as 'Act.Unc.', ar.detection_limit as 'MDA', ar.accredited as 'Acc.'
+select s.number as 'Sample', st.name as 'Sample type', p.number as 'Preparation', a.number as 'Analysis', n.name as 'Nuclide', ar.activity as 'Activity', au.name as 'Unit', aut.name as 'Unit type', ar.activity_uncertainty_abs as 'Act.Unc.', ar.detection_limit as 'MDA', ar.accredited as 'Acc.'
 from analysis_result ar
     inner join analysis a on a.id = ar.analysis_id
     inner join preparation p on p.id = a.preparation_id
     inner join sample s on s.id = p.sample_id
     inner join sample_type st on st.id = s.sample_type_id
     inner join nuclide n on n.id = ar.nuclide_id 
+    left outer join activity_unit au on a.activity_unit_id = au.id
+    left outer join activity_unit_type aut on a.activity_unit_type_id = aut.id
 where ar.instance_status_id < 2
 ";
 
@@ -7320,6 +7371,26 @@ where ar.instance_status_id < 2
                 {
                     query += " and n.id = @nid";
                     adapter.SelectCommand.Parameters.AddWithValue("@nid", cboxSearchNuclides.SelectedValue);
+                }
+
+                if (Utils.IsValidGuid(cboxSearchSampleType.SelectedValue))
+                {
+                    string st = cboxSearchSampleType.Text;
+                    string[] items = st.Split(new string[] { " -> " }, StringSplitOptions.RemoveEmptyEntries);
+
+                    query += " and st.path like '" + items[1] + "%'";
+                }
+
+                if(!String.IsNullOrEmpty(tbSearchActMin.Text))
+                {
+                    double actMin = Convert.ToDouble(tbSearchActMin.Text);
+                    query += " and ar.activity >= " + actMin;
+                }
+
+                if (!String.IsNullOrEmpty(tbSearchActMax.Text))
+                {
+                    double actMax = Convert.ToDouble(tbSearchActMax.Text);
+                    query += " and ar.activity <= " + actMax;
                 }
 
                 query += " order by s.number, p.number, a.number, n.name";
@@ -7339,6 +7410,34 @@ where ar.instance_status_id < 2
         {
             FormReportAssignedWork form = new FormReportAssignedWork(Common.LabId);
             form.ShowDialog();
+        }
+
+        private void btnOrdersPrepSummary_Click(object sender, EventArgs e)
+        {
+            if(gridOrders.SelectedRows.Count != 1)
+            {
+                MessageBox.Show("You must select a single order first");
+                return;
+            }
+
+            Guid aid = Utils.MakeGuid(gridOrders.SelectedRows[0].Cells["id"].Value);
+
+            FormReportPrepSummary form = new FormReportPrepSummary(aid);
+            form.ShowDialog();
+        }
+
+        private void btnSampleParamAdd_Click(object sender, EventArgs e)
+        {
+            FormSampleParameter form = new FormSampleParameter(sample);
+            if (form.ShowDialog() != DialogResult.OK)
+                return;
+
+            PopulateSampleParameters(sample, false);
+        }
+
+        private void btnSampleParamRemove_Click(object sender, EventArgs e)
+        {
+            //
         }
     }    
 }

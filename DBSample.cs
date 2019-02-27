@@ -37,6 +37,8 @@ namespace DSA_lims
             SamplingDateTo = DateTime.MinValue;
             ReferenceDate = DateTime.MinValue;
             InstanceStatusId = InstanceStatus.Active;
+
+            Parameters = new List<SampleParameter>();
         }
 
         public Guid Id { get; set; }
@@ -69,8 +71,7 @@ namespace DSA_lims
         public double? LodWeightStart { get; set; }
         public double? LodWeightEnd { get; set; }
         public double? LodTemperature { get; set; }
-        public bool Confidential { get; set; }
-        public string Parameters { get; set; }
+        public bool Confidential { get; set; }        
         public int InstanceStatusId { get; set; }
         public Guid LockedId { get; set; }
         public string Comment { get; set; }
@@ -79,16 +80,27 @@ namespace DSA_lims
         public DateTime UpdateDate { get; set; }
         public Guid UpdateId { get; set; }
 
+        public List<SampleParameter> Parameters { get; set; }
+
         public bool Dirty;
 
         public bool IsDirty()
         {
-            return Dirty;
+            if (Dirty)
+                return true;
+
+            foreach (SampleParameter p in Parameters)
+                if (p.IsDirty())
+                    return true;
+
+            return false;
         }
 
         public void ClearDirty()
         {
             Dirty = false;
+            foreach (SampleParameter p in Parameters)
+                p.ClearDirty();
         }
 
         public string GetSampleComponentName(SqlConnection conn, SqlTransaction trans)
@@ -260,7 +272,6 @@ where s.id = @sid and a.workflow_status_id = 2
                 LodWeightEnd = reader.GetDoubleNullable("lod_weight_end");
                 LodTemperature = reader.GetDoubleNullable("lod_temperature");
                 Confidential = reader.GetBoolean("confidential");
-                Parameters = reader.GetString("parameters");
                 InstanceStatusId = reader.GetInt32("instance_status_id");
                 LockedId = reader.GetGuid("locked_id");
                 Comment = reader.GetString("comment");
@@ -268,6 +279,23 @@ where s.id = @sid and a.workflow_status_id = 2
                 CreateId = reader.GetGuid("create_id");
                 UpdateDate = reader.GetDateTime("update_date");
                 UpdateId = reader.GetGuid("update_id");
+            }
+
+            Parameters.Clear();
+
+            List<Guid> sampParamIds = new List<Guid>();
+            using (SqlDataReader reader = DB.GetDataReader(conn, trans, "select id from sample_parameter where sample_id = @id", CommandType.Text,
+                new SqlParameter("@id", sampleId)))
+            {
+                while (reader.Read())
+                    sampParamIds.Add(reader.GetGuid("id"));
+            }
+
+            foreach (Guid sampParamId in sampParamIds)
+            {
+                SampleParameter p = new SampleParameter();
+                p.LoadFromDB(conn, trans, sampParamId);
+                Parameters.Add(p);
             }
 
             Dirty = false;
@@ -316,8 +344,7 @@ where s.id = @sid and a.workflow_status_id = 2
                 cmd.Parameters.AddWithValue("@lod_weight_start", LodWeightStart, null);
                 cmd.Parameters.AddWithValue("@lod_weight_end", LodWeightEnd, null);
                 cmd.Parameters.AddWithValue("@lod_temperature", LodTemperature, null);
-                cmd.Parameters.AddWithValue("@confidential", Confidential, null);
-                cmd.Parameters.AddWithValue("@parameters", Parameters, String.Empty);
+                cmd.Parameters.AddWithValue("@confidential", Confidential, null);                
                 cmd.Parameters.AddWithValue("@instance_status_id", InstanceStatusId, null);
                 cmd.Parameters.AddWithValue("@locked_id", LockedId, Guid.Empty);
                 cmd.Parameters.AddWithValue("@comment", Comment, String.Empty);
@@ -376,6 +403,35 @@ where s.id = @sid and a.workflow_status_id = 2
                     Dirty = false;
                 }
             }
+
+            foreach (SampleParameter p in Parameters)
+                p.StoreToDB(conn, trans);
+
+            // Remove deleted sample parameters from DB
+            List<Guid> storedSampParamIds = new List<Guid>();
+            using (SqlDataReader reader = DB.GetDataReader(conn, trans, "select id from sample_parameter where sample_id = @id", CommandType.Text,
+                new SqlParameter("@id", Id)))
+            {
+                while (reader.Read())
+                    storedSampParamIds.Add(reader.GetGuid("id"));
+            }
+
+            cmd.CommandText = "delete from sample_parameter where id = @id";
+            cmd.CommandType = CommandType.Text;
+            foreach (Guid spId in storedSampParamIds)
+            {
+                if (Parameters.FindIndex(x => x.Id == spId) == -1)
+                {
+                    string json = SampleParameter.ToJSON(conn, trans, spId);
+                    if (!String.IsNullOrEmpty(json))
+                        DB.AddAuditMessage(conn, trans, "sample_parameter", spId, AuditOperationType.Delete, json, "");
+
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.AddWithValue("@status", InstanceStatus.Deleted);
+                    cmd.Parameters.AddWithValue("@id", spId);
+                    cmd.ExecuteNonQuery();
+                }
+            }
         }
 
         public void StoreLabInfoToDB(SqlConnection conn, SqlTransaction trans)
@@ -399,5 +455,5 @@ where s.id = @sid and a.workflow_status_id = 2
 
             Dirty = false;
         }
-    }
+    }    
 }

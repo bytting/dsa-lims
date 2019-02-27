@@ -164,18 +164,18 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(21, 102);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(73, 13);
+            this.label4.Size = new System.Drawing.Size(31, 13);
             this.label4.TabIndex = 17;
-            this.label4.Text = "Detection limit";
+            this.label4.Text = "MDA";
             // 
             // cbDetectionLimitApproved
             // 
             this.cbDetectionLimitApproved.AutoSize = true;
             this.cbDetectionLimitApproved.Location = new System.Drawing.Point(112, 214);
             this.cbDetectionLimitApproved.Name = "cbDetectionLimitApproved";
-            this.cbDetectionLimitApproved.Size = new System.Drawing.Size(140, 17);
+            this.cbDetectionLimitApproved.Size = new System.Drawing.Size(98, 17);
             this.cbDetectionLimitApproved.TabIndex = 7;
-            this.cbDetectionLimitApproved.Text = "Detection limit approved";
+            this.cbDetectionLimitApproved.Text = "MDA approved";
             this.cbDetectionLimitApproved.UseVisualStyleBackColor = true;
             // 
             // cbAccredited

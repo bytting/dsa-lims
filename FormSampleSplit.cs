@@ -156,8 +156,7 @@ namespace DSA_lims
                     cmd.Parameters.AddWithValue("@lod_weight_start", DBNull.Value);
                     cmd.Parameters.AddWithValue("@lod_weight_end", DBNull.Value);
                     cmd.Parameters.AddWithValue("@lod_temperature", DBNull.Value);
-                    cmd.Parameters.AddWithValue("@confidential", map["confidential"]);
-                    cmd.Parameters.AddWithValue("@parameters", DBNull.Value);
+                    cmd.Parameters.AddWithValue("@confidential", map["confidential"]);                    
                     cmd.Parameters.AddWithValue("@instance_status_id", InstanceStatus.Active);
                     cmd.Parameters.AddWithValue("@locked_id", DBNull.Value);
                     cmd.Parameters.AddWithValue("@comment", DBNull.Value);

@@ -171,6 +171,7 @@
     <Compile Include="DBPreparation.cs" />
     <Compile Include="DBPreparationGeometry.cs" />
     <Compile Include="DBSample.cs" />
+    <Compile Include="DBSampleParameter.cs" />
     <Compile Include="DSAssignedWork.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -180,6 +181,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>DSOrderReport.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DSPrepSummary.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DSPrepSummary.xsd</DependentUpon>
     </Compile>
     <Compile Include="Environment.cs" />
     <Compile Include="FormAccountXRoles.cs">
@@ -428,6 +434,12 @@
     <Compile Include="FormReportAnalysisReport.Designer.cs">
       <DependentUpon>FormReportAnalysisReport.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormReportPrepSummary.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormReportPrepSummary.Designer.cs">
+      <DependentUpon>FormReportPrepSummary.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormResetPassword.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -451,6 +463,12 @@
     </Compile>
     <Compile Include="FormSampleNew.Designer.cs">
       <DependentUpon>FormSampleNew.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormSampleParameter.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSampleParameter.Designer.cs">
+      <DependentUpon>FormSampleParameter.cs</DependentUpon>
     </Compile>
     <Compile Include="FormSampler.cs">
       <SubType>Form</SubType>
@@ -589,6 +607,17 @@
     </None>
     <None Include="DSAssignedWork.xss">
       <DependentUpon>DSAssignedWork.xsd</DependentUpon>
+    </None>
+    <None Include="DSPrepSummary.xsc">
+      <DependentUpon>DSPrepSummary.xsd</DependentUpon>
+    </None>
+    <None Include="DSPrepSummary.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DSPrepSummary.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="DSPrepSummary.xss">
+      <DependentUpon>DSPrepSummary.xsd</DependentUpon>
     </None>
     <None Include="images\info.png" />
     <None Include="images\users.png" />
@@ -734,6 +763,9 @@
     <EmbeddedResource Include="FormReportAnalysisReport.resx">
       <DependentUpon>FormReportAnalysisReport.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormReportPrepSummary.resx">
+      <DependentUpon>FormReportPrepSummary.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormResetPassword.resx">
       <DependentUpon>FormResetPassword.cs</DependentUpon>
     </EmbeddedResource>
@@ -745,6 +777,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormSampleNew.resx">
       <DependentUpon>FormSampleNew.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSampleParameter.resx">
+      <DependentUpon>FormSampleParameter.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormSampler.resx">
       <DependentUpon>FormSampler.cs</DependentUpon>
@@ -822,6 +857,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <EmbeddedResource Include="ReportAssignedWork.rdlc" />
+    <EmbeddedResource Include="ReportPrepSummary.rdlc" />
     <EmbeddedResource Include="RPOrderReport.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>

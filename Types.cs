@@ -125,6 +125,13 @@ namespace DSA_lims
         public string ContactAddress { get; set; }
     }
 
+    public class SampleParameterName
+    {
+        public Guid Id { get; set; }
+        public string Name { get; set; }
+        public string Type { get; set; }
+    }
+
     public class SampleHeader
     {
         public Guid Id { get; set; }

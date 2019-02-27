@@ -3821,7 +3821,6 @@ as
 	select *
 	from sample_component
 	where id = @id
-	order by name
 go
 
 create proc csp_select_sample_components_for_sample_type
@@ -3838,13 +3837,27 @@ go
 /*===========================================================================*/
 /* tbl sample_parameter */
 
+if OBJECT_ID('dbo.sample_parameter_name', 'U') is not null drop table sample_parameter_name;
+
+create table sample_parameter_name (
+	id uniqueidentifier primary key not null,	
+	name nvarchar(80) not null,
+	type nvarchar(80) not null	
+)
+go
+
+insert into sample_parameter_name values(NEWID(), 'Lufthastighet', 'decimal')
+
+/*===========================================================================*/
+/* tbl sample_parameter */
+
 if OBJECT_ID('dbo.sample_parameter', 'U') is not null drop table sample_parameter;
 
 create table sample_parameter (
 	id uniqueidentifier primary key not null,
-	sample_type_id uniqueidentifier not null,	
-	name nvarchar(80) not null,
-	type nvarchar(30) not null,			
+	sample_id uniqueidentifier not null,	
+	sample_parameter_name_id uniqueidentifier not null,
+	value nvarchar(80) default null,
 	create_date datetime not null,
 	create_id uniqueidentifier not null,
 	update_date datetime not null,
@@ -3852,16 +3865,74 @@ create table sample_parameter (
 )
 go
 
-create proc csp_select_sample_parameters_for_sample_type
-	@sample_type_id uniqueidentifier
+create proc csp_insert_sample_parameter
+	@id uniqueidentifier,	
+	@sample_id uniqueidentifier,
+	@sample_parameter_name_id uniqueidentifier,
+	@value nvarchar(80),
+	@create_date datetime,
+	@create_id uniqueidentifier,
+	@update_date datetime,
+	@update_id uniqueidentifier	
+as 
+	insert into sample_parameter values (
+		@id,		
+		@sample_id,
+		@sample_parameter_name_id,
+		@value,
+		@create_date,
+		@create_id,
+		@update_date,
+		@update_id
+	);
+go
+
+create proc csp_update_sample_parameter
+	@id uniqueidentifier,
+	@value nvarchar(80),
+	@update_date datetime,
+	@update_id uniqueidentifier	
+as 
+	update sample_parameter set 
+		value = @value,
+		update_date = @update_date,
+		update_id = @update_id
+	where id = @id
+go
+
+create proc csp_select_sample_parameter
+	@id uniqueidentifier
 as
-	select 
-		id,
-		name,
-		type
+	select *
 	from sample_parameter
-	where sample_type_id = @sample_type_id
-	order by name
+	where id = @id	
+go
+
+create proc csp_select_sample_parameter_flat
+	@id uniqueidentifier
+as
+	select sp.*, spn.name, spn.type
+	from sample_parameter sp
+		inner join sample_parameter_name spn on spn.id = sp.sample_parameter_name_id
+	where sp.id = @id	
+go
+
+create proc csp_select_sample_parameters
+	@sample_id uniqueidentifier
+as
+	select *
+	from sample_parameter
+	where sample_id = @sample_id		
+go
+
+create proc csp_select_sample_parameters_flat
+	@sample_id uniqueidentifier
+as
+	select sp.id, spn.name, spn.type, sp.value
+	from sample_parameter sp
+		inner join sample_parameter_name spn on spn.id = sp.sample_parameter_name_id
+	where sp.sample_id = @sample_id		
+	order by spn.name
 go
 
 /*===========================================================================*/
@@ -3900,8 +3971,7 @@ create table sample (
 	lod_weight_start float default null,	
 	lod_weight_end float default null,	
 	lod_temperature float default null,
-	confidential bit default 0,	
-	parameters nvarchar(4000) default null,
+	confidential bit default 0,
 	instance_status_id int not null default 1,
 	locked_id uniqueidentifier default null,
 	comment nvarchar(1000) default null,	
@@ -3951,8 +4021,7 @@ create proc csp_insert_sample
 	@lod_weight_start float,	
 	@lod_weight_end float,	
 	@lod_temperature float,
-	@confidential bit,	
-	@parameters nvarchar(4000),
+	@confidential bit,		
 	@instance_status_id int,
 	@locked_id uniqueidentifier,
 	@comment nvarchar(1000),	
@@ -3992,8 +4061,7 @@ as
 		@lod_weight_start,	
 		@lod_weight_end,	
 		@lod_temperature,
-		@confidential,	
-		@parameters,
+		@confidential,		
 		@instance_status_id,
 		@locked_id,
 		@comment,	
@@ -4124,8 +4192,7 @@ as
 		s.lod_weight_start,	
 		s.lod_weight_end,	
 		s.lod_temperature,
-		s.confidential,	
-		s.parameters,
+		s.confidential,			
 		insta.name as 'instance_status_name',
 		(select name from cv_account where id = s.locked_id) as 'locked_name',
 		s.comment,	
@@ -4251,8 +4318,7 @@ as
 		s.lod_weight_start,	
 		s.lod_weight_end,	
 		s.lod_temperature,
-		s.confidential,	
-		s.parameters,
+		s.confidential,			
 		insta.name as 'instance_status_name',
 		(select name from cv_account where id = s.locked_id) as 'locked_name',
 		s.comment,	

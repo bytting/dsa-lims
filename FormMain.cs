@@ -657,7 +657,9 @@ namespace DSA_lims
             btnSysLabPrepMethAdd.Enabled = btnSysLabPrepMethRemove.Enabled = btnSysLabAnalMethAdd.Enabled = btnSysLabAnalMethRemove.Enabled = isAdmin;
             btnSysUsersAddRoles.Enabled = btnSysUsersRemRoles.Enabled = btnSysUsersAnalMethAdd.Enabled = btnSysUsersAnalMethRemove.Enabled = isAdmin;
 
-            //cboxOrderStatus.Enabled = cbOrderApprovedLaboratory.Enabled = Roles.HasAccess(Role.LaboratoryAdministrator);
+            cboxOrderStatus.Enabled = cbOrderApprovedLaboratory.Enabled = Roles.HasAccess(Role.LaboratoryAdministrator);
+
+            btnSysSampParamNameNew.Enabled = btnSysSampParamNameEdit.Enabled = btnSysSampParamNameDelete.Enabled = isAdmin;
 
             // FIXME: Accreditation rules
 
@@ -4526,9 +4528,27 @@ select count(*) from sample s
             gridPrepAnalResults.Columns.Add("NuclideName", "Nuclide");
             gridPrepAnalResults.Columns.Add("Activity", "Activity");
             gridPrepAnalResults.Columns.Add("ActivityUncertaintyABS", "Act.Unc.");
-            gridPrepAnalResults.Columns.Add("ActivityApproved", "Act.Appr.");
-            gridPrepAnalResults.Columns.Add("DetectionLimit", "MDA.");
-            gridPrepAnalResults.Columns.Add("DetectionLimitApproved", "MDA.Appr.");
+            DataGridViewCheckBoxColumn actApprCol = new DataGridViewCheckBoxColumn();
+            actApprCol.Name = "ActivityApproved";
+            actApprCol.HeaderText = "Act.Appr.";
+            actApprCol.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            gridPrepAnalResults.Columns.Add(actApprCol);
+            gridPrepAnalResults.Columns.Add("DetectionLimit", "MDA.");            
+            DataGridViewCheckBoxColumn mdaApprCol = new DataGridViewCheckBoxColumn();
+            mdaApprCol.Name = "DetectionLimitApproved";
+            mdaApprCol.HeaderText = "MDA.Appr.";
+            mdaApprCol.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            gridPrepAnalResults.Columns.Add(mdaApprCol);
+            DataGridViewCheckBoxColumn accApprCol = new DataGridViewCheckBoxColumn();
+            accApprCol.Name = "Accredited";
+            accApprCol.HeaderText = "A";
+            accApprCol.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            gridPrepAnalResults.Columns.Add(accApprCol);            
+            DataGridViewCheckBoxColumn repApprCol = new DataGridViewCheckBoxColumn();
+            repApprCol.Name = "Reportable";
+            repApprCol.HeaderText = "R";
+            repApprCol.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            gridPrepAnalResults.Columns.Add(repApprCol);
 
             foreach (AnalysisResult ar in a.Results)
             {
@@ -4539,13 +4559,15 @@ select count(*) from sample s
                     ar.ActivityUncertaintyABS.ToString(Utils.ScientificFormat),
                     ar.ActivityApproved,
                     ar.DetectionLimit.ToString(Utils.ScientificFormat),
-                    ar.DetectionLimitApproved                    
+                    ar.DetectionLimitApproved,
+                    ar.Accredited,
+                    ar.Reportable
                 });
             }            
 
             gridPrepAnalResults.Columns["Id"].Visible = false;
 
-            if(clearDirty)
+            if (clearDirty)
                 foreach (AnalysisResult ar in a.Results)
                     ar.Dirty = false;
         }

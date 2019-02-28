@@ -3860,8 +3860,6 @@ create table sample_parameter_name (
 )
 go
 
-insert into sample_parameter_name values(NEWID(), 'Lufthastighet', 'Decimal')
-
 /*===========================================================================*/
 /* tbl sample_parameter */
 

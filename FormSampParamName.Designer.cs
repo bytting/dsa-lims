@@ -83,6 +83,7 @@
             // tbParamName
             // 
             this.tbParamName.Location = new System.Drawing.Point(113, 32);
+            this.tbParamName.MaxLength = 80;
             this.tbParamName.Name = "tbParamName";
             this.tbParamName.Size = new System.Drawing.Size(276, 20);
             this.tbParamName.TabIndex = 9;

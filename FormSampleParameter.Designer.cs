@@ -103,6 +103,7 @@
             // tbSampleParameterValue
             // 
             this.tbSampleParameterValue.Location = new System.Drawing.Point(93, 52);
+            this.tbSampleParameterValue.MaxLength = 80;
             this.tbSampleParameterValue.Name = "tbSampleParameterValue";
             this.tbSampleParameterValue.Size = new System.Drawing.Size(279, 20);
             this.tbSampleParameterValue.TabIndex = 11;

@@ -5997,8 +5997,9 @@
             // 
             // orderSummaryToolStripMenuItem
             // 
+            this.orderSummaryToolStripMenuItem.Enabled = false;
             this.orderSummaryToolStripMenuItem.Name = "orderSummaryToolStripMenuItem";
-            this.orderSummaryToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
+            this.orderSummaryToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.orderSummaryToolStripMenuItem.Text = "&Order";
             // 
             // btnOrdersPrepSummary

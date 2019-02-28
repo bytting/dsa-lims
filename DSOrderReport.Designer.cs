@@ -2518,7 +2518,7 @@ namespace DSA_lims.DSOrderReportTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitConnection() {
             this._connection = new global::System.Data.SqlClient.SqlConnection();
-            this._connection.ConnectionString = global::DSA_lims.Properties.Settings.Default.dsa_limsConnectionString1;
+            this._connection.ConnectionString = global::DSA_lims.Properties.Settings.Default.dsa_limsConnectionString;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]

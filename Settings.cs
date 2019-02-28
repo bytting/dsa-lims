@@ -34,7 +34,7 @@ namespace DSA_lims
         {            
         }        
                 
-        public string ConnectionString { get; set; }
+        //public string ConnectionString { get; set; }
         public string LabelPrinterName { get; set; }
         public string LabelPrinterPaperName { get; set; }
         public bool LabelPrinterLandscape { get; set; }

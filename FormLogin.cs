@@ -116,7 +116,7 @@ namespace DSA_lims
             if (form.ShowDialog() != DialogResult.OK)
                 return false;
 
-            using (SqlConnection conn = new SqlConnection(settings.ConnectionString))
+            using (SqlConnection conn = new SqlConnection(DB.ConnectionString))
             {
                 conn.Open();
 
@@ -188,7 +188,7 @@ namespace DSA_lims
             SqlConnection conn = null;
             try
             {
-                conn = new SqlConnection(settings.ConnectionString);
+                conn = new SqlConnection(DB.ConnectionString);
                 conn.Open();
 
                 SqlCommand cmd = new SqlCommand("select id, laboratory_id, password_hash from account where upper(username) = @username", conn);
@@ -226,16 +226,7 @@ namespace DSA_lims
         {
             DialogResult = DialogResult.Cancel;
             Close();
-        }
-
-        private void miSetConnString_Click(object sender, EventArgs e)
-        {
-            FormConnectionString form = new FormConnectionString(settings.ConnectionString);
-            if (form.ShowDialog() != DialogResult.OK)
-                return;
-
-            settings.ConnectionString = form.ConnectionString;
-        }
+        }        
 
         private void tbUsername_KeyPress(object sender, KeyPressEventArgs e)
         {

@@ -41,6 +41,7 @@ namespace DSA_lims
 {
     public partial class FormMain : Form
     {
+        private bool initialized = false;
         private ResourceManager r = null;
         
         int statusMessageTimeout = 20000;
@@ -110,8 +111,6 @@ namespace DSA_lims
                 Common.Log.Info("Loading settings file " + DSAEnvironment.SettingsFilename);
                 LoadSettings(DSAEnvironment.SettingsFilename);
 
-                DB.ConnectionString = Common.Settings.ConnectionString;
-
                 r = new ResourceManager("DSA_lims.lang_" + CultureInfo.CurrentUICulture.TwoLetterISOLanguageName, Assembly.GetExecutingAssembly());
                 Common.Log.Info("Setting language " + CultureInfo.CurrentUICulture.TwoLetterISOLanguageName);
                 SetLanguageLabels(r);
@@ -143,13 +142,18 @@ namespace DSA_lims
 
         private void FormMain_Shown(object sender, EventArgs e)
         {
-            bool initialized = false;
-            while (!initialized)
+            try
             {
                 HideMenuItems();
                 ShowLogin();
                 initialized = InitializeUI();
                 Application.Idle += Application_Idle;
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                Close();
             }
         }
 
@@ -441,7 +445,7 @@ namespace DSA_lims
 
                 Common.Log.Info("Application closing down");
 
-                if (!String.IsNullOrEmpty(DB.ConnectionString))
+                if (initialized)
                 {
                     using (SqlConnection conn = DB.OpenConnection())
                     {
@@ -526,12 +530,17 @@ namespace DSA_lims
             if (!DiscardUnsavedChanges())            
                 return;
 
-            bool initialized = false;
-            while (!initialized)
+            try
             {
                 HideMenuItems();
                 ShowLogin();
                 initialized = InitializeUI();
+            }
+            catch(Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                Close();
             }
         }
 
@@ -559,8 +568,6 @@ namespace DSA_lims
             {
                 Application.Exit();
             }
-
-            DB.ConnectionString = Common.Settings.ConnectionString;
 
             Common.UserId = formLogin.UserId;
             Common.Username = formLogin.UserName;

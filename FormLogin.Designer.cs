@@ -38,8 +38,6 @@
             this.tbPassword = new System.Windows.Forms.TextBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.miFile = new System.Windows.Forms.ToolStripMenuItem();
-            this.miSetConnString = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.miExit = new System.Windows.Forms.ToolStripMenuItem();
             this.cboxAction = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
@@ -128,29 +126,15 @@
             // miFile
             // 
             this.miFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.miSetConnString,
-            this.toolStripSeparator1,
             this.miExit});
             this.miFile.Name = "miFile";
             this.miFile.Size = new System.Drawing.Size(37, 20);
             this.miFile.Text = "&File";
             // 
-            // miSetConnString
-            // 
-            this.miSetConnString.Name = "miSetConnString";
-            this.miSetConnString.Size = new System.Drawing.Size(236, 22);
-            this.miSetConnString.Text = "&Set database connection string";
-            this.miSetConnString.Click += new System.EventHandler(this.miSetConnString_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(233, 6);
-            // 
             // miExit
             // 
             this.miExit.Name = "miExit";
-            this.miExit.Size = new System.Drawing.Size(236, 22);
+            this.miExit.Size = new System.Drawing.Size(152, 22);
             this.miExit.Text = "E&xit";
             this.miExit.Click += new System.EventHandler(this.miExit_Click);
             // 
@@ -207,8 +191,6 @@
         private System.Windows.Forms.TextBox tbPassword;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem miFile;
-        private System.Windows.Forms.ToolStripMenuItem miSetConnString;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem miExit;
         private System.Windows.Forms.ComboBox cboxAction;
     }

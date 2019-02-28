@@ -532,7 +532,7 @@ select
 	sum(apm.preparation_method_count * ast.sample_count) as 'npreparations'	
 from assignment a
 	inner join assignment_sample_type ast on ast.assignment_id = a.id
-	inner join assignment_preparation_method apm on apm.assignment_sample_type_id = ast.id	
+	inner join assignment_preparation_method apm on apm.assignment_sample_type_id = ast.id and apm.preparation_laboratory_id = a.laboratory_id
 where a.id = @aid
 ) as 'npreparations',
 (
@@ -577,10 +577,10 @@ select
 		where a.id = @aid
 	) as 'nsamples',
 	(
-		select count(*) from preparation p where p.assignment_id = @aid
+		select count(*) from preparation p where p.assignment_id = @aid and p.instance_status_id < 2
 	) as 'npreparations',
 	(
-		select count(*) from analysis a where a.assignment_id = @aid
+		select count(*) from analysis a where a.assignment_id = @aid and a.instance_status_id < 2
 	) as 'nanalyses'
 ";
 

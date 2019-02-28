@@ -2518,7 +2518,7 @@ namespace DSA_lims.DSOrderReportTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitConnection() {
             this._connection = new global::System.Data.SqlClient.SqlConnection();
-            this._connection.ConnectionString = global::DSA_lims.Properties.Settings.Default.dsa_limsConnectionString;
+            this._connection.ConnectionString = global::DSA_lims.Properties.Settings.Default.dsa_limsConnectionString1;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2562,7 +2562,8 @@ namespace DSA_lims.DSOrderReportTableAdapters {
                 "                         nuclide RIGHT OUTER JOIN\r\n                         anal" +
                 "ysis_result ON nuclide.id = analysis_result.nuclide_id ON analysis.id = analysis" +
                 "_result.analysis_id AND analysis_result.reportable = 1\r\nWHERE        (assignment" +
-                ".name = @AID)";
+                ".name = @AID) AND (preparation.instance_status_id = 1) AND (analysis.instance_st" +
+                "atus_id = 1)";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@AID", global::System.Data.SqlDbType.NVarChar, 80, global::System.Data.ParameterDirection.Input, 0, 0, "name", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }

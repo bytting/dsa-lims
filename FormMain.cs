@@ -3680,30 +3680,30 @@ select count(*) from sample s
                         return;
                     }
 
-                    /*if (nCurrPreparations < nReqPreparations)
+                    if (nCurrPreparations < nReqPreparations)
                     {
                         MessageBox.Show("Can not set this order to complete. Connected preparations " + nCurrPreparations + " of " + nReqPreparations);
                         return;
-                    }*/
+                    }
 
                     if (nCurrAnalyses < nReqAnalyses)
                     {
                         MessageBox.Show("Can not set this order to complete. Connected analyses " + nCurrAnalyses + " of " + nReqAnalyses);
                         return;
                     }
-                    
+
                     // Check that everything is complete
-                    string query = "select count(*) from preparation where assignment_id = @assid and workflow_status_id < 2";
+                    string query = "select count(*) from preparation where assignment_id = @assid and workflow_status_id > 1 and instance_status_id < 2";
                     int np = (int)DB.GetScalar(conn, trans, query, CommandType.Text, new SqlParameter("@assid", assignment.Id));
-                    if(np > 0)
+                    if(np < nReqPreparations)
                     {
                         MessageBox.Show("Can not set this order to complete. One or more preparations are not completed or rejected");
                         return;
                     }
 
-                    query = "select count(*) from analysis where assignment_id = @assid and workflow_status_id < 2";
+                    query = "select count(*) from analysis where assignment_id = @assid and workflow_status_id > 1 and instance_status_id < 2";
                     np = (int)DB.GetScalar(conn, trans, query, CommandType.Text, new SqlParameter("@assid", assignment.Id));
-                    if (np > 0)
+                    if (np < nReqAnalyses)
                     {
                         MessageBox.Show("Can not set this order to complete. One or more analyses are not completed or rejected");
                         return;
@@ -4212,6 +4212,18 @@ select count(*) from sample s
                     }
                 }
 
+                if(preparation.WorkflowStatusId != WorkflowStatus.Rejected && (int)cboxPrepAnalPrepWorkflowStatus.SelectedValue == WorkflowStatus.Rejected)
+                {
+                    SqlCommand cmd = new SqlCommand("select count(*) from analysis where preparation_id = @pid and workflow_status_id <> 3", conn, trans);
+                    cmd.Parameters.AddWithValue("@pid", preparation.Id);
+                    int n = (int)cmd.ExecuteScalar();
+                    if(n > 0)
+                    {
+                        MessageBox.Show("Can not reject this preparation because one or more analyses are active");
+                        return;
+                    }
+                }
+
                 preparation.PreparationGeometryId = pgid;
                 preparation.FillHeightMM = Utils.ToDouble(tbPrepAnalPrepFillHeight.Text);
                 preparation.Amount = Utils.ToDouble(tbPrepAnalPrepAmount.Text);
@@ -4322,6 +4334,24 @@ select count(*) from sample s
                         return;
                     }
                 }
+
+                if (preparation.WorkflowStatusId == WorkflowStatus.Rejected && (int)cboxPrepAnalAnalWorkflowStatus.SelectedValue != WorkflowStatus.Rejected)
+                {
+                    MessageBox.Show("Can not activate this analysis because the preparation is rejected");
+                    return;
+                }
+
+                if (analysis.WorkflowStatusId != WorkflowStatus.Rejected && (int)cboxPrepAnalAnalWorkflowStatus.SelectedValue == WorkflowStatus.Rejected)
+                {
+                    SqlCommand cmd = new SqlCommand("select COUNT(*) from analysis_result where analysis_id = @aid and instance_status_id = 1 and (activity_approved = 1 or accredited = 1 or detection_limit_approved = 1)", conn, trans);
+                    cmd.Parameters.AddWithValue("@aid", analysis.Id);
+                    int n = (int)cmd.ExecuteScalar();
+                    if (n > 0)
+                    {
+                        MessageBox.Show("Can not reject this analysis because one or more results are approved");
+                        return;
+                    }
+                }                
 
                 analysis.ActivityUnitId = Utils.MakeGuid(cboxPrepAnalAnalUnit.SelectedValue);
                 analysis.ActivityUnitTypeId = Utils.MakeGuid(cboxPrepAnalAnalUnitType.SelectedValue);
@@ -5095,8 +5125,7 @@ select count(*) from sample s
         left outer join sample_x_assignment_sample_type sxast on sxast.sample_id = s.id
         left outer join assignment_sample_type ast on ast.id = sxast.assignment_sample_type_id
         left outer join assignment a on a.id = ast.assignment_id
-	where 
-        s.instance_status_id = @instance_status_level
+	where 1=1
 ";
             using (SqlConnection conn = DB.OpenConnection())
             {
@@ -5126,11 +5155,16 @@ select count(*) from sample s
                     adapter.SelectCommand.Parameters.AddWithValue("@lab_id", cboxSamplesLaboratory.SelectedValue, Guid.Empty);
                 }
 
+                if ((int)cboxSamplesStatus.SelectedValue != 0)
+                {
+                    query += " and s.instance_status_id = @instlev";
+                    adapter.SelectCommand.Parameters.AddWithValue("@instlev", (int)cboxSamplesStatus.SelectedValue);
+                }
+
                 query += " order by s.number desc";
                 
                 adapter.SelectCommand.CommandText = query;
                 adapter.SelectCommand.CommandType = CommandType.Text;
-                adapter.SelectCommand.Parameters.AddWithValue("@instance_status_level", cboxSamplesStatus.SelectedValue);
                 DataTable dt = new DataTable();
                 adapter.Fill(dt);
                 gridSamples.DataSource = dt;
@@ -7382,7 +7416,7 @@ select count(*) from sample s
         private void btnSearchSearch_Click(object sender, EventArgs e)
         {
             string query = @"
-select s.number as 'Sample', st.name as 'Sample type', p.number as 'Preparation', a.number as 'Analysis', n.name as 'Nuclide', ar.activity as 'Activity', au.name as 'Unit', aut.name as 'Unit type', ar.activity_uncertainty_abs as 'Act.Unc.', ar.detection_limit as 'MDA', ar.accredited as 'Acc.'
+select s.number as 'Sample', st.name as 'Sample type', p.number as 'Preparation', pws.Name as 'Status', a.number as 'Analysis', aws.Name as 'Status', n.name as 'Nuclide', ar.activity as 'Activity', au.name as 'Unit', aut.name as 'Unit type', ar.activity_uncertainty_abs as 'Act.Unc.', ar.detection_limit as 'MDA', ar.accredited as 'Acc.'
 from analysis_result ar
     inner join analysis a on a.id = ar.analysis_id
     inner join preparation p on p.id = a.preparation_id
@@ -7391,6 +7425,8 @@ from analysis_result ar
     inner join nuclide n on n.id = ar.nuclide_id 
     left outer join activity_unit au on a.activity_unit_id = au.id
     left outer join activity_unit_type aut on a.activity_unit_type_id = aut.id
+    left outer join workflow_status aws on aws.id = a.workflow_status_id
+    left outer join workflow_status pws on pws.id = p.workflow_status_id
 where ar.instance_status_id < 2
 ";
 

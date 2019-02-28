@@ -1693,7 +1693,7 @@ namespace DSA_lims.DSPrepSummaryTableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitConnection() {
             this._connection = new global::System.Data.SqlClient.SqlConnection();
-            this._connection.ConnectionString = global::DSA_lims.Properties.Settings.Default.dsa_limsConnectionString;
+            this._connection.ConnectionString = global::DSA_lims.Properties.Settings.Default.dsa_limsConnectionString1;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1723,7 +1723,8 @@ namespace DSA_lims.DSPrepSummaryTableAdapters {
                 "ethod.id LEFT OUTER JOIN\r\n                         preparation_geometry ON prepa" +
                 "ration.preparation_geometry_id = preparation_geometry.id LEFT OUTER JOIN\r\n      " +
                 "                   laboratory ON preparation.laboratory_id = laboratory.id\r\nWHER" +
-                "E        (assignment.id = @aid)\r\nORDER BY sample.number";
+                "E        (assignment.id = @aid) AND (preparation.instance_status_id = 1)\r\nORDER " +
+                "BY sample.number";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@aid", global::System.Data.SqlDbType.UniqueIdentifier, 16, global::System.Data.ParameterDirection.Input, 0, 0, "id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }

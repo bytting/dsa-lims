@@ -23,15 +23,14 @@ namespace DSA_lims.Properties {
             }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string dsa_limsConnectionString {
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=zyrox3;Initial Catalog=dsa_lims;User ID=dsa-lims;Password=dsa-lims-pw" +
+            "")]
+        public string dsa_limsConnectionString1 {
             get {
-                return ((string)(this["dsa_limsConnectionString"]));
-            }
-            set {
-                this["dsa_limsConnectionString"] = value;
+                return ((string)(this["dsa_limsConnectionString1"]));
             }
         }
     }

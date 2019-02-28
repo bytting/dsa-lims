@@ -3835,7 +3835,21 @@ as
 go
 
 /*===========================================================================*/
-/* tbl sample_parameter */
+/* tbl sample_parameter_type */
+
+if OBJECT_ID('dbo.sample_parameter_type', 'U') is not null drop table sample_parameter_type;
+
+create table sample_parameter_type (
+	name nvarchar(80) primary key not null	
+)
+go
+
+insert into sample_parameter_type values('Integer')
+insert into sample_parameter_type values('Decimal')
+insert into sample_parameter_type values('Text')
+
+/*===========================================================================*/
+/* tbl sample_parameter_name */
 
 if OBJECT_ID('dbo.sample_parameter_name', 'U') is not null drop table sample_parameter_name;
 
@@ -3846,7 +3860,7 @@ create table sample_parameter_name (
 )
 go
 
-insert into sample_parameter_name values(NEWID(), 'Lufthastighet', 'decimal')
+insert into sample_parameter_name values(NEWID(), 'Lufthastighet', 'Decimal')
 
 /*===========================================================================*/
 /* tbl sample_parameter */

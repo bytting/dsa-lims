@@ -788,6 +788,14 @@
             this.btnSysPersNew = new System.Windows.Forms.ToolStripButton();
             this.btnSysPersEdit = new System.Windows.Forms.ToolStripButton();
             this.btnSysPersDelete = new System.Windows.Forms.ToolStripButton();
+            this.tabSysSampParamNames = new System.Windows.Forms.TabPage();
+            this.gridSysSampParamNames = new System.Windows.Forms.DataGridView();
+            this.toolStrip18 = new System.Windows.Forms.ToolStrip();
+            this.toolStripLabel24 = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripSeparator74 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnSysSampParamNameNew = new System.Windows.Forms.ToolStripButton();
+            this.btnSysSampParamNameEdit = new System.Windows.Forms.ToolStripButton();
+            this.btnSysSampParamNameDelete = new System.Windows.Forms.ToolStripButton();
             this.tabPrepAnal = new System.Windows.Forms.TabPage();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.panel31 = new System.Windows.Forms.Panel();
@@ -938,6 +946,7 @@
             this.btnMenu = new System.Windows.Forms.ToolStripButton();
             this.lblCurrentTab = new System.Windows.Forms.ToolStripLabel();
             this.btnBack = new System.Windows.Forms.ToolStripButton();
+            this.btnSampleParamEdit = new System.Windows.Forms.ToolStripButton();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tabs.SuspendLayout();
@@ -1196,6 +1205,9 @@
             this.tabSysPers.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridSysPers)).BeginInit();
             this.toolStrip14.SuspendLayout();
+            this.tabSysSampParamNames.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridSysSampParamNames)).BeginInit();
+            this.toolStrip18.SuspendLayout();
             this.tabPrepAnal.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
@@ -3736,6 +3748,7 @@
             this.toolStripLabel9,
             this.toolStripSeparator24,
             this.btnSampleParamAdd,
+            this.btnSampleParamEdit,
             this.btnSampleParamRemove});
             this.toolStrip6.Location = new System.Drawing.Point(3, 3);
             this.toolStrip6.Name = "toolStrip6";
@@ -4413,7 +4426,7 @@
             this.tabOrderStatus.Location = new System.Drawing.Point(4, 24);
             this.tabOrderStatus.Name = "tabOrderStatus";
             this.tabOrderStatus.Padding = new System.Windows.Forms.Padding(3);
-            this.tabOrderStatus.Size = new System.Drawing.Size(1007, 509);
+            this.tabOrderStatus.Size = new System.Drawing.Size(1050, 539);
             this.tabOrderStatus.TabIndex = 2;
             this.tabOrderStatus.Text = "Order status";
             // 
@@ -4424,7 +4437,7 @@
             this.panel11.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel11.Location = new System.Drawing.Point(3, 3);
             this.panel11.Name = "panel11";
-            this.panel11.Size = new System.Drawing.Size(1001, 503);
+            this.panel11.Size = new System.Drawing.Size(1044, 533);
             this.panel11.TabIndex = 2;
             // 
             // tableLayoutPanel7
@@ -4457,7 +4470,7 @@
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel7.Size = new System.Drawing.Size(1001, 478);
+            this.tableLayoutPanel7.Size = new System.Drawing.Size(1044, 508);
             this.tableLayoutPanel7.TabIndex = 2;
             // 
             // cbOrderApprovedCustomer
@@ -4465,7 +4478,7 @@
             this.cbOrderApprovedCustomer.AutoSize = true;
             this.cbOrderApprovedCustomer.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.cbOrderApprovedCustomer.Dock = System.Windows.Forms.DockStyle.Right;
-            this.cbOrderApprovedCustomer.Location = new System.Drawing.Point(201, 49);
+            this.cbOrderApprovedCustomer.Location = new System.Drawing.Point(216, 49);
             this.cbOrderApprovedCustomer.Name = "cbOrderApprovedCustomer";
             this.cbOrderApprovedCustomer.Size = new System.Drawing.Size(146, 24);
             this.cbOrderApprovedCustomer.TabIndex = 0;
@@ -4476,10 +4489,10 @@
             // tbOrderApprovedCustomerBy
             // 
             this.tbOrderApprovedCustomerBy.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbOrderApprovedCustomerBy.Location = new System.Drawing.Point(353, 49);
+            this.tbOrderApprovedCustomerBy.Location = new System.Drawing.Point(368, 49);
             this.tbOrderApprovedCustomerBy.Name = "tbOrderApprovedCustomerBy";
             this.tbOrderApprovedCustomerBy.ReadOnly = true;
-            this.tbOrderApprovedCustomerBy.Size = new System.Drawing.Size(645, 21);
+            this.tbOrderApprovedCustomerBy.Size = new System.Drawing.Size(673, 21);
             this.tbOrderApprovedCustomerBy.TabIndex = 1;
             // 
             // cboxOrderStatus
@@ -4490,7 +4503,7 @@
             this.cboxOrderStatus.FormattingEnabled = true;
             this.cboxOrderStatus.Location = new System.Drawing.Point(3, 319);
             this.cboxOrderStatus.Name = "cboxOrderStatus";
-            this.cboxOrderStatus.Size = new System.Drawing.Size(344, 23);
+            this.cboxOrderStatus.Size = new System.Drawing.Size(359, 23);
             this.cboxOrderStatus.TabIndex = 8;
             this.cboxOrderStatus.ValueMember = "Id";
             this.cboxOrderStatus.SelectedIndexChanged += new System.EventHandler(this.cboxOrderStatus_SelectedIndexChanged);
@@ -4498,10 +4511,10 @@
             // tbOrderLastWorkflowStatusBy
             // 
             this.tbOrderLastWorkflowStatusBy.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbOrderLastWorkflowStatusBy.Location = new System.Drawing.Point(353, 319);
+            this.tbOrderLastWorkflowStatusBy.Location = new System.Drawing.Point(368, 319);
             this.tbOrderLastWorkflowStatusBy.Name = "tbOrderLastWorkflowStatusBy";
             this.tbOrderLastWorkflowStatusBy.ReadOnly = true;
-            this.tbOrderLastWorkflowStatusBy.Size = new System.Drawing.Size(645, 21);
+            this.tbOrderLastWorkflowStatusBy.Size = new System.Drawing.Size(673, 21);
             this.tbOrderLastWorkflowStatusBy.TabIndex = 9;
             // 
             // label71
@@ -4510,7 +4523,7 @@
             this.label71.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label71.Location = new System.Drawing.Point(3, 286);
             this.label71.Name = "label71";
-            this.label71.Size = new System.Drawing.Size(344, 30);
+            this.label71.Size = new System.Drawing.Size(359, 30);
             this.label71.TabIndex = 23;
             this.label71.Text = "Current status";
             this.label71.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -4521,7 +4534,7 @@
             this.cbOrderApprovedLaboratory.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.cbOrderApprovedLaboratory.Dock = System.Windows.Forms.DockStyle.Right;
             this.cbOrderApprovedLaboratory.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbOrderApprovedLaboratory.Location = new System.Drawing.Point(198, 19);
+            this.cbOrderApprovedLaboratory.Location = new System.Drawing.Point(213, 19);
             this.cbOrderApprovedLaboratory.Name = "cbOrderApprovedLaboratory";
             this.cbOrderApprovedLaboratory.Size = new System.Drawing.Size(149, 24);
             this.cbOrderApprovedLaboratory.TabIndex = 3;
@@ -4532,12 +4545,12 @@
             // tbOrderReportComment
             // 
             this.tbOrderReportComment.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbOrderReportComment.Location = new System.Drawing.Point(353, 139);
+            this.tbOrderReportComment.Location = new System.Drawing.Point(368, 139);
             this.tbOrderReportComment.MaxLength = 1000;
             this.tbOrderReportComment.Multiline = true;
             this.tbOrderReportComment.Name = "tbOrderReportComment";
             this.tbOrderReportComment.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.tbOrderReportComment.Size = new System.Drawing.Size(645, 144);
+            this.tbOrderReportComment.Size = new System.Drawing.Size(673, 144);
             this.tbOrderReportComment.TabIndex = 6;
             this.tbOrderReportComment.TextChanged += new System.EventHandler(this.tbOrderReportComment_TextChanged);
             // 
@@ -4548,16 +4561,16 @@
             this.tbOrderCustomerInfo.Multiline = true;
             this.tbOrderCustomerInfo.Name = "tbOrderCustomerInfo";
             this.tbOrderCustomerInfo.ReadOnly = true;
-            this.tbOrderCustomerInfo.Size = new System.Drawing.Size(344, 144);
+            this.tbOrderCustomerInfo.Size = new System.Drawing.Size(359, 144);
             this.tbOrderCustomerInfo.TabIndex = 18;
             // 
             // label43
             // 
             this.label43.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label43.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
-            this.label43.Location = new System.Drawing.Point(353, 106);
+            this.label43.Location = new System.Drawing.Point(368, 106);
             this.label43.Name = "label43";
-            this.label43.Size = new System.Drawing.Size(645, 30);
+            this.label43.Size = new System.Drawing.Size(673, 30);
             this.label43.TabIndex = 7;
             this.label43.Text = "Report comment";
             this.label43.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -4568,7 +4581,7 @@
             this.label61.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label61.Location = new System.Drawing.Point(3, 106);
             this.label61.Name = "label61";
-            this.label61.Size = new System.Drawing.Size(344, 30);
+            this.label61.Size = new System.Drawing.Size(359, 30);
             this.label61.TabIndex = 21;
             this.label61.Text = "Customer";
             this.label61.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -4576,10 +4589,10 @@
             // tbOrderApprovedLaboratoryBy
             // 
             this.tbOrderApprovedLaboratoryBy.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbOrderApprovedLaboratoryBy.Location = new System.Drawing.Point(353, 19);
+            this.tbOrderApprovedLaboratoryBy.Location = new System.Drawing.Point(368, 19);
             this.tbOrderApprovedLaboratoryBy.Name = "tbOrderApprovedLaboratoryBy";
             this.tbOrderApprovedLaboratoryBy.ReadOnly = true;
-            this.tbOrderApprovedLaboratoryBy.Size = new System.Drawing.Size(645, 21);
+            this.tbOrderApprovedLaboratoryBy.Size = new System.Drawing.Size(673, 21);
             this.tbOrderApprovedLaboratoryBy.TabIndex = 4;
             // 
             // toolsOrderStatus
@@ -4591,7 +4604,7 @@
             this.btnOrderCreateReport});
             this.toolsOrderStatus.Location = new System.Drawing.Point(0, 0);
             this.toolsOrderStatus.Name = "toolsOrderStatus";
-            this.toolsOrderStatus.Size = new System.Drawing.Size(1001, 25);
+            this.toolsOrderStatus.Size = new System.Drawing.Size(1044, 25);
             this.toolsOrderStatus.TabIndex = 0;
             this.toolsOrderStatus.Text = "toolStrip18";
             // 
@@ -4624,7 +4637,7 @@
             this.tabOrderAssigned.Location = new System.Drawing.Point(4, 24);
             this.tabOrderAssigned.Name = "tabOrderAssigned";
             this.tabOrderAssigned.Padding = new System.Windows.Forms.Padding(3);
-            this.tabOrderAssigned.Size = new System.Drawing.Size(1007, 509);
+            this.tabOrderAssigned.Size = new System.Drawing.Size(1050, 539);
             this.tabOrderAssigned.TabIndex = 3;
             this.tabOrderAssigned.Text = "All units assigned to order";
             // 
@@ -4641,7 +4654,7 @@
             this.tvOrderContent.ShowNodeToolTips = true;
             this.tvOrderContent.ShowPlusMinus = false;
             this.tvOrderContent.ShowRootLines = false;
-            this.tvOrderContent.Size = new System.Drawing.Size(1001, 478);
+            this.tvOrderContent.Size = new System.Drawing.Size(1044, 508);
             this.tvOrderContent.TabIndex = 2;
             this.tvOrderContent.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvOrderContent_AfterSelect);
             // 
@@ -4654,7 +4667,7 @@
             this.btnOrderRemoveSampleFromOrder});
             this.toolStrip17.Location = new System.Drawing.Point(3, 3);
             this.toolStrip17.Name = "toolStrip17";
-            this.toolStrip17.Size = new System.Drawing.Size(1001, 25);
+            this.toolStrip17.Size = new System.Drawing.Size(1044, 25);
             this.toolStrip17.TabIndex = 1;
             this.toolStrip17.Text = "toolStrip17";
             // 
@@ -4921,7 +4934,7 @@
             this.tabSearchStatistics.Location = new System.Drawing.Point(4, 24);
             this.tabSearchStatistics.Name = "tabSearchStatistics";
             this.tabSearchStatistics.Padding = new System.Windows.Forms.Padding(3);
-            this.tabSearchStatistics.Size = new System.Drawing.Size(1007, 505);
+            this.tabSearchStatistics.Size = new System.Drawing.Size(1050, 535);
             this.tabSearchStatistics.TabIndex = 1;
             this.tabSearchStatistics.Text = "Statistics";
             // 
@@ -4932,7 +4945,7 @@
             this.flowStatistics.Location = new System.Drawing.Point(3, 3);
             this.flowStatistics.Name = "flowStatistics";
             this.flowStatistics.Padding = new System.Windows.Forms.Padding(12);
-            this.flowStatistics.Size = new System.Drawing.Size(1001, 499);
+            this.flowStatistics.Size = new System.Drawing.Size(1044, 529);
             this.flowStatistics.TabIndex = 0;
             // 
             // btnSearchAssignedWork
@@ -5085,7 +5098,7 @@
             this.tabMetaSampleStorage.Location = new System.Drawing.Point(4, 24);
             this.tabMetaSampleStorage.Name = "tabMetaSampleStorage";
             this.tabMetaSampleStorage.Padding = new System.Windows.Forms.Padding(3);
-            this.tabMetaSampleStorage.Size = new System.Drawing.Size(1007, 535);
+            this.tabMetaSampleStorage.Size = new System.Drawing.Size(1050, 565);
             this.tabMetaSampleStorage.TabIndex = 6;
             this.tabMetaSampleStorage.Text = "Sample storage";
             // 
@@ -5105,7 +5118,7 @@
             this.gridMetaSampleStorage.ReadOnly = true;
             this.gridMetaSampleStorage.RowHeadersVisible = false;
             this.gridMetaSampleStorage.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridMetaSampleStorage.Size = new System.Drawing.Size(1001, 504);
+            this.gridMetaSampleStorage.Size = new System.Drawing.Size(1044, 534);
             this.gridMetaSampleStorage.TabIndex = 0;
             // 
             // toolsMetaSampStorage
@@ -5119,7 +5132,7 @@
             this.toolStripButton69});
             this.toolsMetaSampStorage.Location = new System.Drawing.Point(3, 3);
             this.toolsMetaSampStorage.Name = "toolsMetaSampStorage";
-            this.toolsMetaSampStorage.Size = new System.Drawing.Size(1001, 25);
+            this.toolsMetaSampStorage.Size = new System.Drawing.Size(1044, 25);
             this.toolsMetaSampStorage.TabIndex = 1;
             this.toolsMetaSampStorage.Text = "toolStrip52";
             // 
@@ -5169,7 +5182,7 @@
             this.tabMetaUnits.Location = new System.Drawing.Point(4, 24);
             this.tabMetaUnits.Name = "tabMetaUnits";
             this.tabMetaUnits.Padding = new System.Windows.Forms.Padding(3);
-            this.tabMetaUnits.Size = new System.Drawing.Size(1007, 535);
+            this.tabMetaUnits.Size = new System.Drawing.Size(1050, 565);
             this.tabMetaUnits.TabIndex = 9;
             this.tabMetaUnits.Text = "Units";
             // 
@@ -5186,8 +5199,8 @@
             // splitContainer22.Panel2
             // 
             this.splitContainer22.Panel2.Controls.Add(this.splitContainer5);
-            this.splitContainer22.Size = new System.Drawing.Size(1001, 529);
-            this.splitContainer22.SplitterDistance = 474;
+            this.splitContainer22.Size = new System.Drawing.Size(1044, 559);
+            this.splitContainer22.SplitterDistance = 493;
             this.splitContainer22.SplitterWidth = 3;
             this.splitContainer22.TabIndex = 4;
             // 
@@ -5207,8 +5220,8 @@
             // 
             this.splitContainer6.Panel2.Controls.Add(this.gridMetaUnitQuantUnits);
             this.splitContainer6.Panel2.Controls.Add(this.toolStrip13);
-            this.splitContainer6.Size = new System.Drawing.Size(474, 529);
-            this.splitContainer6.SplitterDistance = 257;
+            this.splitContainer6.Size = new System.Drawing.Size(493, 559);
+            this.splitContainer6.SplitterDistance = 271;
             this.splitContainer6.TabIndex = 4;
             // 
             // gridMetaUnitPrepUnits
@@ -5227,7 +5240,7 @@
             this.gridMetaUnitPrepUnits.ReadOnly = true;
             this.gridMetaUnitPrepUnits.RowHeadersVisible = false;
             this.gridMetaUnitPrepUnits.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridMetaUnitPrepUnits.Size = new System.Drawing.Size(474, 232);
+            this.gridMetaUnitPrepUnits.Size = new System.Drawing.Size(493, 246);
             this.gridMetaUnitPrepUnits.TabIndex = 3;
             // 
             // toolsMetaUnits
@@ -5241,7 +5254,7 @@
             this.btnMetaUnitPrepUnitsDelete});
             this.toolsMetaUnits.Location = new System.Drawing.Point(0, 0);
             this.toolsMetaUnits.Name = "toolsMetaUnits";
-            this.toolsMetaUnits.Size = new System.Drawing.Size(474, 25);
+            this.toolsMetaUnits.Size = new System.Drawing.Size(493, 25);
             this.toolsMetaUnits.TabIndex = 2;
             this.toolsMetaUnits.Text = "toolStrip54";
             // 
@@ -5297,7 +5310,7 @@
             this.gridMetaUnitQuantUnits.ReadOnly = true;
             this.gridMetaUnitQuantUnits.RowHeadersVisible = false;
             this.gridMetaUnitQuantUnits.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridMetaUnitQuantUnits.Size = new System.Drawing.Size(474, 243);
+            this.gridMetaUnitQuantUnits.Size = new System.Drawing.Size(493, 259);
             this.gridMetaUnitQuantUnits.TabIndex = 4;
             // 
             // toolStrip13
@@ -5311,7 +5324,7 @@
             this.btnMetaUnitQuantUnitsDelete});
             this.toolStrip13.Location = new System.Drawing.Point(0, 0);
             this.toolStrip13.Name = "toolStrip13";
-            this.toolStrip13.Size = new System.Drawing.Size(474, 25);
+            this.toolStrip13.Size = new System.Drawing.Size(493, 25);
             this.toolStrip13.TabIndex = 3;
             this.toolStrip13.Text = "toolStrip54";
             // 
@@ -5367,8 +5380,8 @@
             // 
             this.splitContainer5.Panel2.Controls.Add(this.gridMetaUnitActivityUnitTypes);
             this.splitContainer5.Panel2.Controls.Add(this.toolStrip12);
-            this.splitContainer5.Size = new System.Drawing.Size(524, 529);
-            this.splitContainer5.SplitterDistance = 263;
+            this.splitContainer5.Size = new System.Drawing.Size(548, 559);
+            this.splitContainer5.SplitterDistance = 277;
             this.splitContainer5.TabIndex = 2;
             // 
             // gridMetaUnitActivityUnits
@@ -5387,7 +5400,7 @@
             this.gridMetaUnitActivityUnits.ReadOnly = true;
             this.gridMetaUnitActivityUnits.RowHeadersVisible = false;
             this.gridMetaUnitActivityUnits.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridMetaUnitActivityUnits.Size = new System.Drawing.Size(524, 238);
+            this.gridMetaUnitActivityUnits.Size = new System.Drawing.Size(548, 252);
             this.gridMetaUnitActivityUnits.TabIndex = 1;
             // 
             // toolStrip2
@@ -5401,7 +5414,7 @@
             this.btnMetaUnitActivityUnitsDelete});
             this.toolStrip2.Location = new System.Drawing.Point(0, 0);
             this.toolStrip2.Name = "toolStrip2";
-            this.toolStrip2.Size = new System.Drawing.Size(524, 25);
+            this.toolStrip2.Size = new System.Drawing.Size(548, 25);
             this.toolStrip2.TabIndex = 0;
             this.toolStrip2.Text = "toolStrip2";
             // 
@@ -5457,7 +5470,7 @@
             this.gridMetaUnitActivityUnitTypes.ReadOnly = true;
             this.gridMetaUnitActivityUnitTypes.RowHeadersVisible = false;
             this.gridMetaUnitActivityUnitTypes.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridMetaUnitActivityUnitTypes.Size = new System.Drawing.Size(524, 237);
+            this.gridMetaUnitActivityUnitTypes.Size = new System.Drawing.Size(548, 253);
             this.gridMetaUnitActivityUnitTypes.TabIndex = 2;
             // 
             // toolStrip12
@@ -5471,7 +5484,7 @@
             this.btnMetaUnitActivityUnitTypesDelete});
             this.toolStrip12.Location = new System.Drawing.Point(0, 0);
             this.toolStrip12.Name = "toolStrip12";
-            this.toolStrip12.Size = new System.Drawing.Size(524, 25);
+            this.toolStrip12.Size = new System.Drawing.Size(548, 25);
             this.toolStrip12.TabIndex = 1;
             this.toolStrip12.Text = "toolStrip12";
             // 
@@ -5519,7 +5532,7 @@
             this.tabMetaSamplers.Location = new System.Drawing.Point(4, 24);
             this.tabMetaSamplers.Name = "tabMetaSamplers";
             this.tabMetaSamplers.Padding = new System.Windows.Forms.Padding(3);
-            this.tabMetaSamplers.Size = new System.Drawing.Size(1007, 535);
+            this.tabMetaSamplers.Size = new System.Drawing.Size(1050, 565);
             this.tabMetaSamplers.TabIndex = 12;
             this.tabMetaSamplers.Text = "Samplers";
             // 
@@ -5539,7 +5552,7 @@
             this.gridMetaSamplers.ReadOnly = true;
             this.gridMetaSamplers.RowHeadersVisible = false;
             this.gridMetaSamplers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridMetaSamplers.Size = new System.Drawing.Size(1001, 504);
+            this.gridMetaSamplers.Size = new System.Drawing.Size(1044, 534);
             this.gridMetaSamplers.TabIndex = 0;
             // 
             // toolsMetaSamplers
@@ -5553,7 +5566,7 @@
             this.toolStripButton75});
             this.toolsMetaSamplers.Location = new System.Drawing.Point(3, 3);
             this.toolsMetaSamplers.Name = "toolsMetaSamplers";
-            this.toolsMetaSamplers.Size = new System.Drawing.Size(1001, 25);
+            this.toolsMetaSamplers.Size = new System.Drawing.Size(1044, 25);
             this.toolsMetaSamplers.TabIndex = 1;
             this.toolsMetaSamplers.Text = "toolStrip50";
             // 
@@ -5604,7 +5617,7 @@
             this.tabMetaSamplingMeth.Location = new System.Drawing.Point(4, 24);
             this.tabMetaSamplingMeth.Name = "tabMetaSamplingMeth";
             this.tabMetaSamplingMeth.Padding = new System.Windows.Forms.Padding(3);
-            this.tabMetaSamplingMeth.Size = new System.Drawing.Size(1007, 535);
+            this.tabMetaSamplingMeth.Size = new System.Drawing.Size(1050, 565);
             this.tabMetaSamplingMeth.TabIndex = 13;
             this.tabMetaSamplingMeth.Text = "Sampling methods";
             // 
@@ -5624,7 +5637,7 @@
             this.gridMetaSamplingMeth.ReadOnly = true;
             this.gridMetaSamplingMeth.RowHeadersVisible = false;
             this.gridMetaSamplingMeth.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridMetaSamplingMeth.Size = new System.Drawing.Size(1001, 504);
+            this.gridMetaSamplingMeth.Size = new System.Drawing.Size(1044, 534);
             this.gridMetaSamplingMeth.TabIndex = 3;
             // 
             // toolsMetaSampMeth
@@ -5638,7 +5651,7 @@
             this.toolStripButton84});
             this.toolsMetaSampMeth.Location = new System.Drawing.Point(3, 3);
             this.toolsMetaSampMeth.Name = "toolsMetaSampMeth";
-            this.toolsMetaSampMeth.Size = new System.Drawing.Size(1001, 25);
+            this.toolsMetaSampMeth.Size = new System.Drawing.Size(1044, 25);
             this.toolsMetaSampMeth.TabIndex = 2;
             this.toolsMetaSampMeth.Text = "toolStrip55";
             // 
@@ -5689,7 +5702,7 @@
             this.tabMetaCompanies.Location = new System.Drawing.Point(4, 24);
             this.tabMetaCompanies.Name = "tabMetaCompanies";
             this.tabMetaCompanies.Padding = new System.Windows.Forms.Padding(3);
-            this.tabMetaCompanies.Size = new System.Drawing.Size(1007, 535);
+            this.tabMetaCompanies.Size = new System.Drawing.Size(1050, 565);
             this.tabMetaCompanies.TabIndex = 14;
             this.tabMetaCompanies.Text = "Companies";
             // 
@@ -5709,7 +5722,7 @@
             this.gridMetaCompanies.ReadOnly = true;
             this.gridMetaCompanies.RowHeadersVisible = false;
             this.gridMetaCompanies.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridMetaCompanies.Size = new System.Drawing.Size(1001, 504);
+            this.gridMetaCompanies.Size = new System.Drawing.Size(1044, 534);
             this.gridMetaCompanies.TabIndex = 3;
             // 
             // toolStrip15
@@ -5723,7 +5736,7 @@
             this.toolStripButton25});
             this.toolStrip15.Location = new System.Drawing.Point(3, 3);
             this.toolStrip15.Name = "toolStrip15";
-            this.toolStrip15.Size = new System.Drawing.Size(1001, 25);
+            this.toolStrip15.Size = new System.Drawing.Size(1044, 25);
             this.toolStrip15.TabIndex = 2;
             this.toolStrip15.Text = "toolStrip50";
             // 
@@ -5774,7 +5787,7 @@
             this.tabCustomers.Location = new System.Drawing.Point(4, 24);
             this.tabCustomers.Name = "tabCustomers";
             this.tabCustomers.Padding = new System.Windows.Forms.Padding(3);
-            this.tabCustomers.Size = new System.Drawing.Size(1007, 535);
+            this.tabCustomers.Size = new System.Drawing.Size(1050, 565);
             this.tabCustomers.TabIndex = 15;
             this.tabCustomers.Text = "Customers";
             // 
@@ -5794,7 +5807,7 @@
             this.gridCustomers.ReadOnly = true;
             this.gridCustomers.RowHeadersVisible = false;
             this.gridCustomers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridCustomers.Size = new System.Drawing.Size(1001, 504);
+            this.gridCustomers.Size = new System.Drawing.Size(1044, 534);
             this.gridCustomers.TabIndex = 1;
             // 
             // toolsCust
@@ -5808,7 +5821,7 @@
             this.btnCustomersDelete});
             this.toolsCust.Location = new System.Drawing.Point(3, 3);
             this.toolsCust.Name = "toolsCust";
-            this.toolsCust.Size = new System.Drawing.Size(1001, 25);
+            this.toolsCust.Size = new System.Drawing.Size(1044, 25);
             this.toolsCust.TabIndex = 0;
             this.toolsCust.Text = "toolStrip20";
             // 
@@ -7418,7 +7431,7 @@
             this.tabTypeRelSampTypeParam.Location = new System.Drawing.Point(4, 22);
             this.tabTypeRelSampTypeParam.Name = "tabTypeRelSampTypeParam";
             this.tabTypeRelSampTypeParam.Padding = new System.Windows.Forms.Padding(3);
-            this.tabTypeRelSampTypeParam.Size = new System.Drawing.Size(583, 505);
+            this.tabTypeRelSampTypeParam.Size = new System.Drawing.Size(609, 535);
             this.tabTypeRelSampTypeParam.TabIndex = 1;
             this.tabTypeRelSampTypeParam.Text = "Parameters";
             // 
@@ -7438,8 +7451,8 @@
             // 
             this.splitContainer14.Panel2.Controls.Add(this.listBox4);
             this.splitContainer14.Panel2.Controls.Add(this.toolsTypeRelSampParaInherit);
-            this.splitContainer14.Size = new System.Drawing.Size(577, 499);
-            this.splitContainer14.SplitterDistance = 248;
+            this.splitContainer14.Size = new System.Drawing.Size(603, 529);
+            this.splitContainer14.SplitterDistance = 262;
             this.splitContainer14.SplitterWidth = 3;
             this.splitContainer14.TabIndex = 0;
             // 
@@ -7452,7 +7465,7 @@
             this.listBox2.ItemHeight = 15;
             this.listBox2.Location = new System.Drawing.Point(0, 25);
             this.listBox2.Name = "listBox2";
-            this.listBox2.Size = new System.Drawing.Size(577, 223);
+            this.listBox2.Size = new System.Drawing.Size(603, 237);
             this.listBox2.TabIndex = 2;
             // 
             // toolsTypeRelSampPara
@@ -7467,7 +7480,7 @@
             this.lblTypeRelSampParSel});
             this.toolsTypeRelSampPara.Location = new System.Drawing.Point(0, 0);
             this.toolsTypeRelSampPara.Name = "toolsTypeRelSampPara";
-            this.toolsTypeRelSampPara.Size = new System.Drawing.Size(577, 25);
+            this.toolsTypeRelSampPara.Size = new System.Drawing.Size(603, 25);
             this.toolsTypeRelSampPara.TabIndex = 1;
             this.toolsTypeRelSampPara.Text = "toolStrip32";
             // 
@@ -7523,7 +7536,7 @@
             this.listBox4.ItemHeight = 15;
             this.listBox4.Location = new System.Drawing.Point(0, 25);
             this.listBox4.Name = "listBox4";
-            this.listBox4.Size = new System.Drawing.Size(577, 223);
+            this.listBox4.Size = new System.Drawing.Size(603, 239);
             this.listBox4.TabIndex = 3;
             // 
             // toolsTypeRelSampParaInherit
@@ -7533,7 +7546,7 @@
             this.toolStripLabel26});
             this.toolsTypeRelSampParaInherit.Location = new System.Drawing.Point(0, 0);
             this.toolsTypeRelSampParaInherit.Name = "toolsTypeRelSampParaInherit";
-            this.toolsTypeRelSampParaInherit.Size = new System.Drawing.Size(577, 25);
+            this.toolsTypeRelSampParaInherit.Size = new System.Drawing.Size(603, 25);
             this.toolsTypeRelSampParaInherit.TabIndex = 2;
             this.toolsTypeRelSampParaInherit.Text = "toolStrip34";
             // 
@@ -7551,7 +7564,7 @@
             this.tabTypeRelSampTypePrep.Location = new System.Drawing.Point(4, 22);
             this.tabTypeRelSampTypePrep.Name = "tabTypeRelSampTypePrep";
             this.tabTypeRelSampTypePrep.Padding = new System.Windows.Forms.Padding(3);
-            this.tabTypeRelSampTypePrep.Size = new System.Drawing.Size(583, 505);
+            this.tabTypeRelSampTypePrep.Size = new System.Drawing.Size(609, 535);
             this.tabTypeRelSampTypePrep.TabIndex = 2;
             this.tabTypeRelSampTypePrep.Text = "Preparation methods";
             // 
@@ -7571,8 +7584,8 @@
             // 
             this.splitContainer13.Panel2.Controls.Add(this.lbTypeRelSampTypeInheritedPrepMeth);
             this.splitContainer13.Panel2.Controls.Add(this.toolsTypeRelSampAnalMeth);
-            this.splitContainer13.Size = new System.Drawing.Size(577, 499);
-            this.splitContainer13.SplitterDistance = 186;
+            this.splitContainer13.Size = new System.Drawing.Size(603, 529);
+            this.splitContainer13.SplitterDistance = 197;
             this.splitContainer13.SplitterWidth = 3;
             this.splitContainer13.TabIndex = 0;
             // 
@@ -7585,7 +7598,7 @@
             this.lbTypeRelSampTypePrepMeth.ItemHeight = 15;
             this.lbTypeRelSampTypePrepMeth.Location = new System.Drawing.Point(0, 25);
             this.lbTypeRelSampTypePrepMeth.Name = "lbTypeRelSampTypePrepMeth";
-            this.lbTypeRelSampTypePrepMeth.Size = new System.Drawing.Size(577, 161);
+            this.lbTypeRelSampTypePrepMeth.Size = new System.Drawing.Size(603, 172);
             this.lbTypeRelSampTypePrepMeth.TabIndex = 1;
             // 
             // toolsTypeRelSampPrepMeth
@@ -7599,7 +7612,7 @@
             this.lblTypeRelSampPrepSel});
             this.toolsTypeRelSampPrepMeth.Location = new System.Drawing.Point(0, 0);
             this.toolsTypeRelSampPrepMeth.Name = "toolsTypeRelSampPrepMeth";
-            this.toolsTypeRelSampPrepMeth.Size = new System.Drawing.Size(577, 25);
+            this.toolsTypeRelSampPrepMeth.Size = new System.Drawing.Size(603, 25);
             this.toolsTypeRelSampPrepMeth.TabIndex = 0;
             this.toolsTypeRelSampPrepMeth.Text = "toolStrip35";
             // 
@@ -7649,7 +7662,7 @@
             this.lbTypeRelSampTypeInheritedPrepMeth.Location = new System.Drawing.Point(0, 25);
             this.lbTypeRelSampTypeInheritedPrepMeth.Name = "lbTypeRelSampTypeInheritedPrepMeth";
             this.lbTypeRelSampTypeInheritedPrepMeth.SelectionMode = System.Windows.Forms.SelectionMode.None;
-            this.lbTypeRelSampTypeInheritedPrepMeth.Size = new System.Drawing.Size(577, 285);
+            this.lbTypeRelSampTypeInheritedPrepMeth.Size = new System.Drawing.Size(603, 304);
             this.lbTypeRelSampTypeInheritedPrepMeth.TabIndex = 1;
             // 
             // toolsTypeRelSampAnalMeth
@@ -7659,7 +7672,7 @@
             this.toolStripLabel55});
             this.toolsTypeRelSampAnalMeth.Location = new System.Drawing.Point(0, 0);
             this.toolsTypeRelSampAnalMeth.Name = "toolsTypeRelSampAnalMeth";
-            this.toolsTypeRelSampAnalMeth.Size = new System.Drawing.Size(577, 25);
+            this.toolsTypeRelSampAnalMeth.Size = new System.Drawing.Size(603, 25);
             this.toolsTypeRelSampAnalMeth.TabIndex = 0;
             this.toolsTypeRelSampAnalMeth.Text = "toolStrip36";
             // 
@@ -7677,7 +7690,7 @@
             this.tabTypeRelationsPrepMeth.Location = new System.Drawing.Point(4, 24);
             this.tabTypeRelationsPrepMeth.Name = "tabTypeRelationsPrepMeth";
             this.tabTypeRelationsPrepMeth.Padding = new System.Windows.Forms.Padding(3);
-            this.tabTypeRelationsPrepMeth.Size = new System.Drawing.Size(1007, 535);
+            this.tabTypeRelationsPrepMeth.Size = new System.Drawing.Size(1050, 565);
             this.tabTypeRelationsPrepMeth.TabIndex = 1;
             this.tabTypeRelationsPrepMeth.Text = "Preparation methods";
             // 
@@ -7696,8 +7709,8 @@
             // 
             this.splitContainer15.Panel2.Controls.Add(this.lbTypRelPrepMethAnalMeth);
             this.splitContainer15.Panel2.Controls.Add(this.toolsTypeRelPrepAnalMeth);
-            this.splitContainer15.Size = new System.Drawing.Size(1001, 529);
-            this.splitContainer15.SplitterDistance = 508;
+            this.splitContainer15.Size = new System.Drawing.Size(1044, 559);
+            this.splitContainer15.SplitterDistance = 529;
             this.splitContainer15.SplitterWidth = 3;
             this.splitContainer15.TabIndex = 0;
             // 
@@ -7717,7 +7730,7 @@
             this.gridTypeRelPrepMeth.ReadOnly = true;
             this.gridTypeRelPrepMeth.RowHeadersVisible = false;
             this.gridTypeRelPrepMeth.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridTypeRelPrepMeth.Size = new System.Drawing.Size(508, 504);
+            this.gridTypeRelPrepMeth.Size = new System.Drawing.Size(529, 534);
             this.gridTypeRelPrepMeth.TabIndex = 1;
             this.gridTypeRelPrepMeth.SelectionChanged += new System.EventHandler(this.gridTypeRelPrepMeth_SelectionChanged);
             // 
@@ -7732,7 +7745,7 @@
             this.toolStripButton91});
             this.toolsTypeRelPrepMeth.Location = new System.Drawing.Point(0, 0);
             this.toolsTypeRelPrepMeth.Name = "toolsTypeRelPrepMeth";
-            this.toolsTypeRelPrepMeth.Size = new System.Drawing.Size(508, 25);
+            this.toolsTypeRelPrepMeth.Size = new System.Drawing.Size(529, 25);
             this.toolsTypeRelPrepMeth.TabIndex = 0;
             this.toolsTypeRelPrepMeth.Text = "toolStrip37";
             // 
@@ -7785,7 +7798,7 @@
             this.lbTypRelPrepMethAnalMeth.Location = new System.Drawing.Point(0, 25);
             this.lbTypRelPrepMethAnalMeth.Name = "lbTypRelPrepMethAnalMeth";
             this.lbTypRelPrepMethAnalMeth.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.lbTypRelPrepMethAnalMeth.Size = new System.Drawing.Size(490, 504);
+            this.lbTypRelPrepMethAnalMeth.Size = new System.Drawing.Size(512, 534);
             this.lbTypRelPrepMethAnalMeth.TabIndex = 1;
             // 
             // toolsTypeRelPrepAnalMeth
@@ -7798,7 +7811,7 @@
             this.toolStripButton48});
             this.toolsTypeRelPrepAnalMeth.Location = new System.Drawing.Point(0, 0);
             this.toolsTypeRelPrepAnalMeth.Name = "toolsTypeRelPrepAnalMeth";
-            this.toolsTypeRelPrepAnalMeth.Size = new System.Drawing.Size(490, 25);
+            this.toolsTypeRelPrepAnalMeth.Size = new System.Drawing.Size(512, 25);
             this.toolsTypeRelPrepAnalMeth.TabIndex = 0;
             this.toolsTypeRelPrepAnalMeth.Text = "toolStrip38";
             // 
@@ -7839,7 +7852,7 @@
             this.tabTypeRelationsAnalMeth.Location = new System.Drawing.Point(4, 24);
             this.tabTypeRelationsAnalMeth.Name = "tabTypeRelationsAnalMeth";
             this.tabTypeRelationsAnalMeth.Padding = new System.Windows.Forms.Padding(3);
-            this.tabTypeRelationsAnalMeth.Size = new System.Drawing.Size(1007, 535);
+            this.tabTypeRelationsAnalMeth.Size = new System.Drawing.Size(1050, 565);
             this.tabTypeRelationsAnalMeth.TabIndex = 2;
             this.tabTypeRelationsAnalMeth.Text = "Analysis methods";
             // 
@@ -7858,8 +7871,8 @@
             // 
             this.splitContainer17.Panel2.Controls.Add(this.lbTypRelAnalMethNuclides);
             this.splitContainer17.Panel2.Controls.Add(this.toolsTypeRelNuclides);
-            this.splitContainer17.Size = new System.Drawing.Size(1001, 529);
-            this.splitContainer17.SplitterDistance = 518;
+            this.splitContainer17.Size = new System.Drawing.Size(1044, 559);
+            this.splitContainer17.SplitterDistance = 540;
             this.splitContainer17.SplitterWidth = 3;
             this.splitContainer17.TabIndex = 1;
             // 
@@ -7879,7 +7892,7 @@
             this.gridTypeRelAnalMeth.ReadOnly = true;
             this.gridTypeRelAnalMeth.RowHeadersVisible = false;
             this.gridTypeRelAnalMeth.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridTypeRelAnalMeth.Size = new System.Drawing.Size(518, 504);
+            this.gridTypeRelAnalMeth.Size = new System.Drawing.Size(540, 534);
             this.gridTypeRelAnalMeth.TabIndex = 1;
             this.gridTypeRelAnalMeth.SelectionChanged += new System.EventHandler(this.gridTypeRelAnalMeth_SelectionChanged);
             // 
@@ -7894,7 +7907,7 @@
             this.toolStripButton93});
             this.toolsTypeRelAnalMeth.Location = new System.Drawing.Point(0, 0);
             this.toolsTypeRelAnalMeth.Name = "toolsTypeRelAnalMeth";
-            this.toolsTypeRelAnalMeth.Size = new System.Drawing.Size(518, 25);
+            this.toolsTypeRelAnalMeth.Size = new System.Drawing.Size(540, 25);
             this.toolsTypeRelAnalMeth.TabIndex = 0;
             this.toolsTypeRelAnalMeth.Text = "toolStrip39";
             // 
@@ -7946,7 +7959,7 @@
             this.lbTypRelAnalMethNuclides.ItemHeight = 15;
             this.lbTypRelAnalMethNuclides.Location = new System.Drawing.Point(0, 25);
             this.lbTypRelAnalMethNuclides.Name = "lbTypRelAnalMethNuclides";
-            this.lbTypRelAnalMethNuclides.Size = new System.Drawing.Size(480, 504);
+            this.lbTypRelAnalMethNuclides.Size = new System.Drawing.Size(501, 534);
             this.lbTypRelAnalMethNuclides.TabIndex = 1;
             // 
             // toolsTypeRelNuclides
@@ -7959,7 +7972,7 @@
             this.toolStripButton54});
             this.toolsTypeRelNuclides.Location = new System.Drawing.Point(0, 0);
             this.toolsTypeRelNuclides.Name = "toolsTypeRelNuclides";
-            this.toolsTypeRelNuclides.Size = new System.Drawing.Size(480, 25);
+            this.toolsTypeRelNuclides.Size = new System.Drawing.Size(501, 25);
             this.toolsTypeRelNuclides.TabIndex = 0;
             this.toolsTypeRelNuclides.Text = "toolStrip40";
             // 
@@ -8075,6 +8088,7 @@
             this.tabsSys.Controls.Add(this.tabSysNuclides);
             this.tabsSys.Controls.Add(this.tabSysGeometries);
             this.tabsSys.Controls.Add(this.tabSysPers);
+            this.tabsSys.Controls.Add(this.tabSysSampParamNames);
             this.tabsSys.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabsSys.Location = new System.Drawing.Point(3, 3);
             this.tabsSys.Name = "tabsSys";
@@ -8341,7 +8355,7 @@
             this.tabSysUsers.Location = new System.Drawing.Point(4, 24);
             this.tabSysUsers.Name = "tabSysUsers";
             this.tabSysUsers.Padding = new System.Windows.Forms.Padding(3);
-            this.tabSysUsers.Size = new System.Drawing.Size(1007, 535);
+            this.tabSysUsers.Size = new System.Drawing.Size(1050, 565);
             this.tabSysUsers.TabIndex = 3;
             this.tabSysUsers.Text = "Users";
             // 
@@ -8359,8 +8373,8 @@
             // splitContainer11.Panel2
             // 
             this.splitContainer11.Panel2.Controls.Add(this.splitContainer18);
-            this.splitContainer11.Size = new System.Drawing.Size(1001, 529);
-            this.splitContainer11.SplitterDistance = 585;
+            this.splitContainer11.Size = new System.Drawing.Size(1044, 559);
+            this.splitContainer11.SplitterDistance = 610;
             this.splitContainer11.SplitterWidth = 3;
             this.splitContainer11.TabIndex = 5;
             // 
@@ -8380,7 +8394,7 @@
             this.gridSysUsers.ReadOnly = true;
             this.gridSysUsers.RowHeadersVisible = false;
             this.gridSysUsers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridSysUsers.Size = new System.Drawing.Size(585, 504);
+            this.gridSysUsers.Size = new System.Drawing.Size(610, 534);
             this.gridSysUsers.TabIndex = 0;
             this.gridSysUsers.SelectionChanged += new System.EventHandler(this.gridMetaUsers_SelectionChanged);
             // 
@@ -8397,7 +8411,7 @@
             this.btnMetaUsersResetPass});
             this.toolsSysUsers.Location = new System.Drawing.Point(0, 0);
             this.toolsSysUsers.Name = "toolsSysUsers";
-            this.toolsSysUsers.Size = new System.Drawing.Size(585, 25);
+            this.toolsSysUsers.Size = new System.Drawing.Size(610, 25);
             this.toolsSysUsers.TabIndex = 5;
             this.toolsSysUsers.Text = "toolStrip19";
             // 
@@ -8471,8 +8485,8 @@
             // 
             this.splitContainer18.Panel2.Controls.Add(this.gridSysUsersAnalMeth);
             this.splitContainer18.Panel2.Controls.Add(this.toolsSysUsersAnalMeth);
-            this.splitContainer18.Size = new System.Drawing.Size(413, 529);
-            this.splitContainer18.SplitterDistance = 240;
+            this.splitContainer18.Size = new System.Drawing.Size(431, 559);
+            this.splitContainer18.SplitterDistance = 253;
             this.splitContainer18.SplitterWidth = 3;
             this.splitContainer18.TabIndex = 3;
             // 
@@ -8484,7 +8498,7 @@
             this.lbSysUsersRoles.Location = new System.Drawing.Point(0, 25);
             this.lbSysUsersRoles.Name = "lbSysUsersRoles";
             this.lbSysUsersRoles.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.lbSysUsersRoles.Size = new System.Drawing.Size(413, 215);
+            this.lbSysUsersRoles.Size = new System.Drawing.Size(431, 228);
             this.lbSysUsersRoles.TabIndex = 1;
             // 
             // toolsSysUsersRoles
@@ -8497,7 +8511,7 @@
             this.btnSysUsersRemRoles});
             this.toolsSysUsersRoles.Location = new System.Drawing.Point(0, 0);
             this.toolsSysUsersRoles.Name = "toolsSysUsersRoles";
-            this.toolsSysUsersRoles.Size = new System.Drawing.Size(413, 25);
+            this.toolsSysUsersRoles.Size = new System.Drawing.Size(431, 25);
             this.toolsSysUsersRoles.TabIndex = 0;
             this.toolsSysUsersRoles.Text = "toolStrip26";
             // 
@@ -8547,7 +8561,7 @@
             this.gridSysUsersAnalMeth.ReadOnly = true;
             this.gridSysUsersAnalMeth.RowHeadersVisible = false;
             this.gridSysUsersAnalMeth.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridSysUsersAnalMeth.Size = new System.Drawing.Size(413, 261);
+            this.gridSysUsersAnalMeth.Size = new System.Drawing.Size(431, 278);
             this.gridSysUsersAnalMeth.TabIndex = 1;
             // 
             // toolsSysUsersAnalMeth
@@ -8560,7 +8574,7 @@
             this.btnSysUsersAnalMethRemove});
             this.toolsSysUsersAnalMeth.Location = new System.Drawing.Point(0, 0);
             this.toolsSysUsersAnalMeth.Name = "toolsSysUsersAnalMeth";
-            this.toolsSysUsersAnalMeth.Size = new System.Drawing.Size(413, 25);
+            this.toolsSysUsersAnalMeth.Size = new System.Drawing.Size(431, 25);
             this.toolsSysUsersAnalMeth.TabIndex = 0;
             this.toolsSysUsersAnalMeth.Text = "toolStrip29";
             // 
@@ -8601,7 +8615,7 @@
             this.tabSysMunicipalities.Location = new System.Drawing.Point(4, 24);
             this.tabSysMunicipalities.Name = "tabSysMunicipalities";
             this.tabSysMunicipalities.Padding = new System.Windows.Forms.Padding(3);
-            this.tabSysMunicipalities.Size = new System.Drawing.Size(1007, 535);
+            this.tabSysMunicipalities.Size = new System.Drawing.Size(1050, 565);
             this.tabSysMunicipalities.TabIndex = 5;
             this.tabSysMunicipalities.Text = "Municipalities";
             // 
@@ -8620,8 +8634,8 @@
             // 
             this.splitContainer19.Panel2.Controls.Add(this.gridSysMunicipality);
             this.splitContainer19.Panel2.Controls.Add(this.toolsSysMunicipalities);
-            this.splitContainer19.Size = new System.Drawing.Size(1001, 529);
-            this.splitContainer19.SplitterDistance = 459;
+            this.splitContainer19.Size = new System.Drawing.Size(1044, 559);
+            this.splitContainer19.SplitterDistance = 478;
             this.splitContainer19.SplitterWidth = 5;
             this.splitContainer19.TabIndex = 1;
             // 
@@ -8641,7 +8655,7 @@
             this.gridSysCounty.ReadOnly = true;
             this.gridSysCounty.RowHeadersVisible = false;
             this.gridSysCounty.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridSysCounty.Size = new System.Drawing.Size(459, 504);
+            this.gridSysCounty.Size = new System.Drawing.Size(478, 534);
             this.gridSysCounty.TabIndex = 1;
             this.gridSysCounty.SelectionChanged += new System.EventHandler(this.gridSysCounty_SelectionChanged);
             // 
@@ -8656,7 +8670,7 @@
             this.btnDeleteCounty});
             this.toolsSysCounties.Location = new System.Drawing.Point(0, 0);
             this.toolsSysCounties.Name = "toolsSysCounties";
-            this.toolsSysCounties.Size = new System.Drawing.Size(459, 25);
+            this.toolsSysCounties.Size = new System.Drawing.Size(478, 25);
             this.toolsSysCounties.TabIndex = 0;
             this.toolsSysCounties.Text = "toolStrip46";
             // 
@@ -8714,7 +8728,7 @@
             this.gridSysMunicipality.ReadOnly = true;
             this.gridSysMunicipality.RowHeadersVisible = false;
             this.gridSysMunicipality.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridSysMunicipality.Size = new System.Drawing.Size(537, 504);
+            this.gridSysMunicipality.Size = new System.Drawing.Size(561, 534);
             this.gridSysMunicipality.TabIndex = 1;
             // 
             // toolsSysMunicipalities
@@ -8728,7 +8742,7 @@
             this.btnDeleteMunicipality});
             this.toolsSysMunicipalities.Location = new System.Drawing.Point(0, 0);
             this.toolsSysMunicipalities.Name = "toolsSysMunicipalities";
-            this.toolsSysMunicipalities.Size = new System.Drawing.Size(537, 25);
+            this.toolsSysMunicipalities.Size = new System.Drawing.Size(561, 25);
             this.toolsSysMunicipalities.TabIndex = 0;
             this.toolsSysMunicipalities.Text = "toolStrip47";
             // 
@@ -8779,7 +8793,7 @@
             this.tabSysAccredRules.Location = new System.Drawing.Point(4, 24);
             this.tabSysAccredRules.Name = "tabSysAccredRules";
             this.tabSysAccredRules.Padding = new System.Windows.Forms.Padding(3);
-            this.tabSysAccredRules.Size = new System.Drawing.Size(1007, 535);
+            this.tabSysAccredRules.Size = new System.Drawing.Size(1050, 565);
             this.tabSysAccredRules.TabIndex = 8;
             this.tabSysAccredRules.Text = "Accreditation rules";
             // 
@@ -8792,7 +8806,7 @@
             this.dataGridView22.Location = new System.Drawing.Point(3, 28);
             this.dataGridView22.Name = "dataGridView22";
             this.dataGridView22.ReadOnly = true;
-            this.dataGridView22.Size = new System.Drawing.Size(1001, 504);
+            this.dataGridView22.Size = new System.Drawing.Size(1044, 534);
             this.dataGridView22.TabIndex = 1;
             // 
             // toolsSysAccredRules
@@ -8806,7 +8820,7 @@
             this.toolStripButton72});
             this.toolsSysAccredRules.Location = new System.Drawing.Point(3, 3);
             this.toolsSysAccredRules.Name = "toolsSysAccredRules";
-            this.toolsSysAccredRules.Size = new System.Drawing.Size(1001, 25);
+            this.toolsSysAccredRules.Size = new System.Drawing.Size(1044, 25);
             this.toolsSysAccredRules.TabIndex = 0;
             this.toolsSysAccredRules.Text = "toolStrip53";
             // 
@@ -8854,7 +8868,7 @@
             this.tabSysNuclides.Location = new System.Drawing.Point(4, 24);
             this.tabSysNuclides.Name = "tabSysNuclides";
             this.tabSysNuclides.Padding = new System.Windows.Forms.Padding(3);
-            this.tabSysNuclides.Size = new System.Drawing.Size(1007, 535);
+            this.tabSysNuclides.Size = new System.Drawing.Size(1050, 565);
             this.tabSysNuclides.TabIndex = 9;
             this.tabSysNuclides.Text = "Nuclides";
             // 
@@ -8874,7 +8888,7 @@
             this.gridSysNuclides.ReadOnly = true;
             this.gridSysNuclides.RowHeadersVisible = false;
             this.gridSysNuclides.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridSysNuclides.Size = new System.Drawing.Size(1001, 504);
+            this.gridSysNuclides.Size = new System.Drawing.Size(1044, 534);
             this.gridSysNuclides.TabIndex = 1;
             // 
             // toolsSysNuclides
@@ -8889,7 +8903,7 @@
             this.btnSysNuclideExport});
             this.toolsSysNuclides.Location = new System.Drawing.Point(3, 3);
             this.toolsSysNuclides.Name = "toolsSysNuclides";
-            this.toolsSysNuclides.Size = new System.Drawing.Size(1001, 25);
+            this.toolsSysNuclides.Size = new System.Drawing.Size(1044, 25);
             this.toolsSysNuclides.TabIndex = 3;
             this.toolsSysNuclides.Text = "toolStrip48";
             // 
@@ -8956,7 +8970,7 @@
             this.tabSysGeometries.Location = new System.Drawing.Point(4, 24);
             this.tabSysGeometries.Name = "tabSysGeometries";
             this.tabSysGeometries.Padding = new System.Windows.Forms.Padding(3);
-            this.tabSysGeometries.Size = new System.Drawing.Size(1007, 535);
+            this.tabSysGeometries.Size = new System.Drawing.Size(1050, 565);
             this.tabSysGeometries.TabIndex = 11;
             this.tabSysGeometries.Text = "Geometries";
             // 
@@ -8966,7 +8980,7 @@
             this.panel6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel6.Location = new System.Drawing.Point(3, 28);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(1001, 504);
+            this.panel6.Size = new System.Drawing.Size(1044, 534);
             this.panel6.TabIndex = 2;
             // 
             // gridSysGeom
@@ -8985,7 +8999,7 @@
             this.gridSysGeom.ReadOnly = true;
             this.gridSysGeom.RowHeadersVisible = false;
             this.gridSysGeom.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridSysGeom.Size = new System.Drawing.Size(1001, 504);
+            this.gridSysGeom.Size = new System.Drawing.Size(1044, 534);
             this.gridSysGeom.TabIndex = 0;
             // 
             // toolsSysGeom
@@ -8999,7 +9013,7 @@
             this.toolStripButton76});
             this.toolsSysGeom.Location = new System.Drawing.Point(3, 3);
             this.toolsSysGeom.Name = "toolsSysGeom";
-            this.toolsSysGeom.Size = new System.Drawing.Size(1001, 25);
+            this.toolsSysGeom.Size = new System.Drawing.Size(1044, 25);
             this.toolsSysGeom.TabIndex = 0;
             this.toolsSysGeom.Text = "toolStrip28";
             // 
@@ -9050,7 +9064,7 @@
             this.tabSysPers.Location = new System.Drawing.Point(4, 24);
             this.tabSysPers.Name = "tabSysPers";
             this.tabSysPers.Padding = new System.Windows.Forms.Padding(3);
-            this.tabSysPers.Size = new System.Drawing.Size(1007, 535);
+            this.tabSysPers.Size = new System.Drawing.Size(1050, 565);
             this.tabSysPers.TabIndex = 12;
             this.tabSysPers.Text = "Persons";
             // 
@@ -9070,7 +9084,7 @@
             this.gridSysPers.ReadOnly = true;
             this.gridSysPers.RowHeadersVisible = false;
             this.gridSysPers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridSysPers.Size = new System.Drawing.Size(1001, 504);
+            this.gridSysPers.Size = new System.Drawing.Size(1044, 534);
             this.gridSysPers.TabIndex = 1;
             // 
             // toolStrip14
@@ -9084,7 +9098,7 @@
             this.btnSysPersDelete});
             this.toolStrip14.Location = new System.Drawing.Point(3, 3);
             this.toolStrip14.Name = "toolStrip14";
-            this.toolStrip14.Size = new System.Drawing.Size(1001, 25);
+            this.toolStrip14.Size = new System.Drawing.Size(1044, 25);
             this.toolStrip14.TabIndex = 0;
             this.toolStrip14.Text = "toolStrip14";
             // 
@@ -9126,6 +9140,89 @@
             this.btnSysPersDelete.Size = new System.Drawing.Size(60, 22);
             this.btnSysPersDelete.Text = "Delete";
             this.btnSysPersDelete.Click += new System.EventHandler(this.miPersonDelete_Click);
+            // 
+            // tabSysSampParamNames
+            // 
+            this.tabSysSampParamNames.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.tabSysSampParamNames.Controls.Add(this.gridSysSampParamNames);
+            this.tabSysSampParamNames.Controls.Add(this.toolStrip18);
+            this.tabSysSampParamNames.Location = new System.Drawing.Point(4, 24);
+            this.tabSysSampParamNames.Name = "tabSysSampParamNames";
+            this.tabSysSampParamNames.Padding = new System.Windows.Forms.Padding(3);
+            this.tabSysSampParamNames.Size = new System.Drawing.Size(1050, 565);
+            this.tabSysSampParamNames.TabIndex = 13;
+            this.tabSysSampParamNames.Text = "Sample parameter names";
+            // 
+            // gridSysSampParamNames
+            // 
+            this.gridSysSampParamNames.AllowUserToAddRows = false;
+            this.gridSysSampParamNames.AllowUserToDeleteRows = false;
+            this.gridSysSampParamNames.AllowUserToResizeRows = false;
+            this.gridSysSampParamNames.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.gridSysSampParamNames.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
+            this.gridSysSampParamNames.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.gridSysSampParamNames.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridSysSampParamNames.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gridSysSampParamNames.Location = new System.Drawing.Point(3, 28);
+            this.gridSysSampParamNames.Name = "gridSysSampParamNames";
+            this.gridSysSampParamNames.ReadOnly = true;
+            this.gridSysSampParamNames.RowHeadersVisible = false;
+            this.gridSysSampParamNames.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.gridSysSampParamNames.Size = new System.Drawing.Size(1044, 534);
+            this.gridSysSampParamNames.TabIndex = 1;
+            // 
+            // toolStrip18
+            // 
+            this.toolStrip18.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStrip18.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripLabel24,
+            this.toolStripSeparator74,
+            this.btnSysSampParamNameNew,
+            this.btnSysSampParamNameEdit,
+            this.btnSysSampParamNameDelete});
+            this.toolStrip18.Location = new System.Drawing.Point(3, 3);
+            this.toolStrip18.Name = "toolStrip18";
+            this.toolStrip18.Size = new System.Drawing.Size(1044, 25);
+            this.toolStrip18.TabIndex = 0;
+            this.toolStrip18.Text = "toolStrip18";
+            // 
+            // toolStripLabel24
+            // 
+            this.toolStripLabel24.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.toolStripLabel24.Name = "toolStripLabel24";
+            this.toolStripLabel24.Size = new System.Drawing.Size(149, 22);
+            this.toolStripLabel24.Text = "Sample parameter names";
+            // 
+            // toolStripSeparator74
+            // 
+            this.toolStripSeparator74.Name = "toolStripSeparator74";
+            this.toolStripSeparator74.Size = new System.Drawing.Size(6, 25);
+            // 
+            // btnSysSampParamNameNew
+            // 
+            this.btnSysSampParamNameNew.Image = global::DSA_lims.Properties.Resources._new;
+            this.btnSysSampParamNameNew.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSysSampParamNameNew.Name = "btnSysSampParamNameNew";
+            this.btnSysSampParamNameNew.Size = new System.Drawing.Size(51, 22);
+            this.btnSysSampParamNameNew.Text = "New";
+            this.btnSysSampParamNameNew.Click += new System.EventHandler(this.btnSysSampParamNameNew_Click);
+            // 
+            // btnSysSampParamNameEdit
+            // 
+            this.btnSysSampParamNameEdit.Image = global::DSA_lims.Properties.Resources.edit;
+            this.btnSysSampParamNameEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSysSampParamNameEdit.Name = "btnSysSampParamNameEdit";
+            this.btnSysSampParamNameEdit.Size = new System.Drawing.Size(47, 22);
+            this.btnSysSampParamNameEdit.Text = "Edit";
+            this.btnSysSampParamNameEdit.Click += new System.EventHandler(this.btnSysSampParamNameEdit_Click);
+            // 
+            // btnSysSampParamNameDelete
+            // 
+            this.btnSysSampParamNameDelete.Image = global::DSA_lims.Properties.Resources.delete;
+            this.btnSysSampParamNameDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSysSampParamNameDelete.Name = "btnSysSampParamNameDelete";
+            this.btnSysSampParamNameDelete.Size = new System.Drawing.Size(60, 22);
+            this.btnSysSampParamNameDelete.Text = "Delete";
             // 
             // tabPrepAnal
             // 
@@ -9723,7 +9820,7 @@
             this.tabPrepAnalPreps.Location = new System.Drawing.Point(4, 22);
             this.tabPrepAnalPreps.Name = "tabPrepAnalPreps";
             this.tabPrepAnalPreps.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPrepAnalPreps.Size = new System.Drawing.Size(625, 537);
+            this.tabPrepAnalPreps.Size = new System.Drawing.Size(668, 567);
             this.tabPrepAnalPreps.TabIndex = 3;
             this.tabPrepAnalPreps.Text = "Preparations";
             // 
@@ -9734,15 +9831,15 @@
             this.panel10.Controls.Add(this.btnPrepAnalPrepUpdate);
             this.panel10.Controls.Add(this.label23);
             this.panel10.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel10.Location = new System.Drawing.Point(3, 508);
+            this.panel10.Location = new System.Drawing.Point(3, 538);
             this.panel10.Name = "panel10";
-            this.panel10.Size = new System.Drawing.Size(619, 26);
+            this.panel10.Size = new System.Drawing.Size(662, 26);
             this.panel10.TabIndex = 1;
             // 
             // btnPrepAnalPrepDiscard
             // 
             this.btnPrepAnalPrepDiscard.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnPrepAnalPrepDiscard.Location = new System.Drawing.Point(339, 0);
+            this.btnPrepAnalPrepDiscard.Location = new System.Drawing.Point(382, 0);
             this.btnPrepAnalPrepDiscard.Name = "btnPrepAnalPrepDiscard";
             this.btnPrepAnalPrepDiscard.Size = new System.Drawing.Size(140, 26);
             this.btnPrepAnalPrepDiscard.TabIndex = 10;
@@ -9768,7 +9865,7 @@
             // btnPrepAnalPrepUpdate
             // 
             this.btnPrepAnalPrepUpdate.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnPrepAnalPrepUpdate.Location = new System.Drawing.Point(479, 0);
+            this.btnPrepAnalPrepUpdate.Location = new System.Drawing.Point(522, 0);
             this.btnPrepAnalPrepUpdate.Name = "btnPrepAnalPrepUpdate";
             this.btnPrepAnalPrepUpdate.Size = new System.Drawing.Size(140, 26);
             this.btnPrepAnalPrepUpdate.TabIndex = 9;
@@ -9799,8 +9896,8 @@
             // splitContainer3.Panel2
             // 
             this.splitContainer3.Panel2.Controls.Add(this.panel5);
-            this.splitContainer3.Size = new System.Drawing.Size(619, 332);
-            this.splitContainer3.SplitterDistance = 347;
+            this.splitContainer3.Size = new System.Drawing.Size(662, 332);
+            this.splitContainer3.SplitterDistance = 371;
             this.splitContainer3.SplitterWidth = 3;
             this.splitContainer3.TabIndex = 0;
             // 
@@ -9816,7 +9913,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(347, 332);
+            this.panel1.Size = new System.Drawing.Size(371, 332);
             this.panel1.TabIndex = 0;
             // 
             // panel60
@@ -9826,7 +9923,7 @@
             this.panel60.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel60.Location = new System.Drawing.Point(0, 150);
             this.panel60.Name = "panel60";
-            this.panel60.Size = new System.Drawing.Size(347, 182);
+            this.panel60.Size = new System.Drawing.Size(371, 182);
             this.panel60.TabIndex = 11;
             // 
             // tbPrepAnalPrepComment
@@ -9837,7 +9934,7 @@
             this.tbPrepAnalPrepComment.Multiline = true;
             this.tbPrepAnalPrepComment.Name = "tbPrepAnalPrepComment";
             this.tbPrepAnalPrepComment.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.tbPrepAnalPrepComment.Size = new System.Drawing.Size(234, 182);
+            this.tbPrepAnalPrepComment.Size = new System.Drawing.Size(258, 182);
             this.tbPrepAnalPrepComment.TabIndex = 8;
             this.tbPrepAnalPrepComment.TextChanged += new System.EventHandler(this.tbPrepAnalPrepComment_TextChanged);
             // 
@@ -9867,7 +9964,7 @@
             this.panel84.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel84.Location = new System.Drawing.Point(0, 125);
             this.panel84.Name = "panel84";
-            this.panel84.Size = new System.Drawing.Size(347, 25);
+            this.panel84.Size = new System.Drawing.Size(371, 25);
             this.panel84.TabIndex = 9;
             // 
             // tbPrepAnalPrepReqUnit
@@ -9876,7 +9973,7 @@
             this.tbPrepAnalPrepReqUnit.Location = new System.Drawing.Point(113, 0);
             this.tbPrepAnalPrepReqUnit.Name = "tbPrepAnalPrepReqUnit";
             this.tbPrepAnalPrepReqUnit.ReadOnly = true;
-            this.tbPrepAnalPrepReqUnit.Size = new System.Drawing.Size(234, 21);
+            this.tbPrepAnalPrepReqUnit.Size = new System.Drawing.Size(258, 21);
             this.tbPrepAnalPrepReqUnit.TabIndex = 6;
             // 
             // panel85
@@ -9906,7 +10003,7 @@
             this.panel57.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel57.Location = new System.Drawing.Point(0, 100);
             this.panel57.Name = "panel57";
-            this.panel57.Size = new System.Drawing.Size(347, 25);
+            this.panel57.Size = new System.Drawing.Size(371, 25);
             this.panel57.TabIndex = 6;
             // 
             // tbPrepAnalPrepQuantity
@@ -9915,7 +10012,7 @@
             this.tbPrepAnalPrepQuantity.Location = new System.Drawing.Point(113, 0);
             this.tbPrepAnalPrepQuantity.MaxLength = 32;
             this.tbPrepAnalPrepQuantity.Name = "tbPrepAnalPrepQuantity";
-            this.tbPrepAnalPrepQuantity.Size = new System.Drawing.Size(115, 21);
+            this.tbPrepAnalPrepQuantity.Size = new System.Drawing.Size(139, 21);
             this.tbPrepAnalPrepQuantity.TabIndex = 4;
             this.tbPrepAnalPrepQuantity.TextChanged += new System.EventHandler(this.tbPrepAnalPrepQuantity_TextChanged);
             // 
@@ -9925,7 +10022,7 @@
             this.cboxPrepAnalPrepQuantityUnit.Dock = System.Windows.Forms.DockStyle.Right;
             this.cboxPrepAnalPrepQuantityUnit.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxPrepAnalPrepQuantityUnit.FormattingEnabled = true;
-            this.cboxPrepAnalPrepQuantityUnit.Location = new System.Drawing.Point(228, 0);
+            this.cboxPrepAnalPrepQuantityUnit.Location = new System.Drawing.Point(252, 0);
             this.cboxPrepAnalPrepQuantityUnit.Name = "cboxPrepAnalPrepQuantityUnit";
             this.cboxPrepAnalPrepQuantityUnit.Size = new System.Drawing.Size(119, 23);
             this.cboxPrepAnalPrepQuantityUnit.TabIndex = 5;
@@ -9959,7 +10056,7 @@
             this.panel55.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel55.Location = new System.Drawing.Point(0, 75);
             this.panel55.Name = "panel55";
-            this.panel55.Size = new System.Drawing.Size(347, 25);
+            this.panel55.Size = new System.Drawing.Size(371, 25);
             this.panel55.TabIndex = 5;
             // 
             // tbPrepAnalPrepAmount
@@ -9968,7 +10065,7 @@
             this.tbPrepAnalPrepAmount.Location = new System.Drawing.Point(113, 0);
             this.tbPrepAnalPrepAmount.MaxLength = 32;
             this.tbPrepAnalPrepAmount.Name = "tbPrepAnalPrepAmount";
-            this.tbPrepAnalPrepAmount.Size = new System.Drawing.Size(115, 21);
+            this.tbPrepAnalPrepAmount.Size = new System.Drawing.Size(139, 21);
             this.tbPrepAnalPrepAmount.TabIndex = 2;
             this.tbPrepAnalPrepAmount.TextChanged += new System.EventHandler(this.tbPrepAnalPrepAmount_TextChanged);
             // 
@@ -9997,7 +10094,7 @@
             this.cboxPrepAnalPrepAmountUnit.Dock = System.Windows.Forms.DockStyle.Right;
             this.cboxPrepAnalPrepAmountUnit.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxPrepAnalPrepAmountUnit.FormattingEnabled = true;
-            this.cboxPrepAnalPrepAmountUnit.Location = new System.Drawing.Point(228, 0);
+            this.cboxPrepAnalPrepAmountUnit.Location = new System.Drawing.Point(252, 0);
             this.cboxPrepAnalPrepAmountUnit.Name = "cboxPrepAnalPrepAmountUnit";
             this.cboxPrepAnalPrepAmountUnit.Size = new System.Drawing.Size(119, 23);
             this.cboxPrepAnalPrepAmountUnit.TabIndex = 3;
@@ -10012,7 +10109,7 @@
             this.panel52.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel52.Location = new System.Drawing.Point(0, 50);
             this.panel52.Name = "panel52";
-            this.panel52.Size = new System.Drawing.Size(347, 25);
+            this.panel52.Size = new System.Drawing.Size(371, 25);
             this.panel52.TabIndex = 4;
             // 
             // tbPrepAnalPrepFillHeight
@@ -10021,7 +10118,7 @@
             this.tbPrepAnalPrepFillHeight.Location = new System.Drawing.Point(113, 0);
             this.tbPrepAnalPrepFillHeight.MaxLength = 32;
             this.tbPrepAnalPrepFillHeight.Name = "tbPrepAnalPrepFillHeight";
-            this.tbPrepAnalPrepFillHeight.Size = new System.Drawing.Size(114, 21);
+            this.tbPrepAnalPrepFillHeight.Size = new System.Drawing.Size(138, 21);
             this.tbPrepAnalPrepFillHeight.TabIndex = 1;
             this.tbPrepAnalPrepFillHeight.TextChanged += new System.EventHandler(this.tbPrepAnalPrepFillHeight_TextChanged);
             // 
@@ -10029,7 +10126,7 @@
             // 
             this.panel59.Controls.Add(this.lblPrepAnalPrepRange);
             this.panel59.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel59.Location = new System.Drawing.Point(227, 0);
+            this.panel59.Location = new System.Drawing.Point(251, 0);
             this.panel59.Name = "panel59";
             this.panel59.Size = new System.Drawing.Size(120, 25);
             this.panel59.TabIndex = 6;
@@ -10070,7 +10167,7 @@
             this.panel51.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel51.Location = new System.Drawing.Point(0, 25);
             this.panel51.Name = "panel51";
-            this.panel51.Size = new System.Drawing.Size(347, 25);
+            this.panel51.Size = new System.Drawing.Size(371, 25);
             this.panel51.TabIndex = 3;
             // 
             // cboxPrepAnalPrepGeom
@@ -10081,7 +10178,7 @@
             this.cboxPrepAnalPrepGeom.FormattingEnabled = true;
             this.cboxPrepAnalPrepGeom.Location = new System.Drawing.Point(113, 0);
             this.cboxPrepAnalPrepGeom.Name = "cboxPrepAnalPrepGeom";
-            this.cboxPrepAnalPrepGeom.Size = new System.Drawing.Size(234, 23);
+            this.cboxPrepAnalPrepGeom.Size = new System.Drawing.Size(258, 23);
             this.cboxPrepAnalPrepGeom.TabIndex = 0;
             this.cboxPrepAnalPrepGeom.ValueMember = "Id";
             this.cboxPrepAnalPrepGeom.SelectedIndexChanged += new System.EventHandler(this.cboxPrepAnalPrepGeom_SelectedIndexChanged);
@@ -10113,7 +10210,7 @@
             this.btnPrepAnalPrepPrintLabel});
             this.toolsSamplePrepInfo.Location = new System.Drawing.Point(0, 0);
             this.toolsSamplePrepInfo.Name = "toolsSamplePrepInfo";
-            this.toolsSamplePrepInfo.Size = new System.Drawing.Size(347, 25);
+            this.toolsSamplePrepInfo.Size = new System.Drawing.Size(371, 25);
             this.toolsSamplePrepInfo.TabIndex = 1;
             this.toolsSamplePrepInfo.Text = "toolStrip10";
             // 
@@ -10141,7 +10238,7 @@
             this.panel5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel5.Location = new System.Drawing.Point(0, 0);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(269, 332);
+            this.panel5.Size = new System.Drawing.Size(288, 332);
             this.panel5.TabIndex = 1;
             // 
             // gridPrepAnalPrepAttachments
@@ -10161,7 +10258,7 @@
             this.gridPrepAnalPrepAttachments.ReadOnly = true;
             this.gridPrepAnalPrepAttachments.RowHeadersVisible = false;
             this.gridPrepAnalPrepAttachments.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridPrepAnalPrepAttachments.Size = new System.Drawing.Size(269, 307);
+            this.gridPrepAnalPrepAttachments.Size = new System.Drawing.Size(288, 307);
             this.gridPrepAnalPrepAttachments.TabIndex = 1;
             this.gridPrepAnalPrepAttachments.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridAttachments_CellDoubleClick);
             // 
@@ -10176,7 +10273,7 @@
             this.btnPrepAnalPrepDeleteAttachment});
             this.toolsSampleAttachments.Location = new System.Drawing.Point(0, 0);
             this.toolsSampleAttachments.Name = "toolsSampleAttachments";
-            this.toolsSampleAttachments.Size = new System.Drawing.Size(269, 25);
+            this.toolsSampleAttachments.Size = new System.Drawing.Size(288, 25);
             this.toolsSampleAttachments.TabIndex = 0;
             this.toolsSampleAttachments.Text = "toolStrip8";
             // 
@@ -10224,10 +10321,10 @@
             this.tabPrepAnalAnalysis.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.tabPrepAnalAnalysis.Controls.Add(this.panel76);
             this.tabPrepAnalAnalysis.Controls.Add(this.panel63);
-            this.tabPrepAnalAnalysis.Location = new System.Drawing.Point(4, 24);
+            this.tabPrepAnalAnalysis.Location = new System.Drawing.Point(4, 22);
             this.tabPrepAnalAnalysis.Name = "tabPrepAnalAnalysis";
             this.tabPrepAnalAnalysis.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPrepAnalAnalysis.Size = new System.Drawing.Size(668, 565);
+            this.tabPrepAnalAnalysis.Size = new System.Drawing.Size(668, 567);
             this.tabPrepAnalAnalysis.TabIndex = 4;
             this.tabPrepAnalAnalysis.Text = "Analyses";
             // 
@@ -10238,7 +10335,7 @@
             this.panel76.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel76.Location = new System.Drawing.Point(3, 249);
             this.panel76.Name = "panel76";
-            this.panel76.Size = new System.Drawing.Size(662, 313);
+            this.panel76.Size = new System.Drawing.Size(662, 315);
             this.panel76.TabIndex = 3;
             // 
             // panel9
@@ -10248,7 +10345,7 @@
             this.panel9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel9.Location = new System.Drawing.Point(0, 0);
             this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(662, 287);
+            this.panel9.Size = new System.Drawing.Size(662, 289);
             this.panel9.TabIndex = 4;
             // 
             // gridPrepAnalResults
@@ -10266,7 +10363,7 @@
             this.gridPrepAnalResults.ReadOnly = true;
             this.gridPrepAnalResults.RowHeadersVisible = false;
             this.gridPrepAnalResults.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridPrepAnalResults.Size = new System.Drawing.Size(662, 262);
+            this.gridPrepAnalResults.Size = new System.Drawing.Size(662, 264);
             this.gridPrepAnalResults.TabIndex = 0;
             // 
             // toolsSampleResRes
@@ -10338,7 +10435,7 @@
             this.panel14.Controls.Add(this.btnPrepAnalAnalDiscard);
             this.panel14.Controls.Add(this.btnPrepAnalAnalUpdate);
             this.panel14.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel14.Location = new System.Drawing.Point(0, 287);
+            this.panel14.Location = new System.Drawing.Point(0, 289);
             this.panel14.Name = "panel14";
             this.panel14.Size = new System.Drawing.Size(662, 26);
             this.panel14.TabIndex = 5;
@@ -10746,6 +10843,15 @@
             this.btnBack.ToolTipText = "Back";
             this.btnBack.Click += new System.EventHandler(this.miBack_Click);
             // 
+            // btnSampleParamEdit
+            // 
+            this.btnSampleParamEdit.Image = global::DSA_lims.Properties.Resources.edit;
+            this.btnSampleParamEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSampleParamEdit.Name = "btnSampleParamEdit";
+            this.btnSampleParamEdit.Size = new System.Drawing.Size(47, 22);
+            this.btnSampleParamEdit.Text = "Edit";
+            this.btnSampleParamEdit.Click += new System.EventHandler(this.btnSampleParamEdit_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -11147,6 +11253,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.gridSysPers)).EndInit();
             this.toolStrip14.ResumeLayout(false);
             this.toolStrip14.PerformLayout();
+            this.tabSysSampParamNames.ResumeLayout(false);
+            this.tabSysSampParamNames.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridSysSampParamNames)).EndInit();
+            this.toolStrip18.ResumeLayout(false);
+            this.toolStrip18.PerformLayout();
             this.tabPrepAnal.ResumeLayout(false);
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel1.PerformLayout();
@@ -12169,6 +12280,15 @@
         private System.Windows.Forms.Panel panel36;
         private System.Windows.Forms.Button btnSampleDiscard;
         private System.Windows.Forms.Button btnSampleUpdate;
+        private System.Windows.Forms.TabPage tabSysSampParamNames;
+        private System.Windows.Forms.ToolStrip toolStrip18;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel24;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator74;
+        private System.Windows.Forms.ToolStripButton btnSysSampParamNameNew;
+        private System.Windows.Forms.ToolStripButton btnSysSampParamNameEdit;
+        private System.Windows.Forms.ToolStripButton btnSysSampParamNameDelete;
+        private System.Windows.Forms.DataGridView gridSysSampParamNames;
+        private System.Windows.Forms.ToolStripButton btnSampleParamEdit;
     }
 }
 

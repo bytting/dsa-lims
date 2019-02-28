@@ -500,6 +500,12 @@
     <Compile Include="FormSamplingMeth.Designer.cs">
       <DependentUpon>FormSamplingMeth.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormSampParamName.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSampParamName.Designer.cs">
+      <DependentUpon>FormSampParamName.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormSampTypeXPrepMeth.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -795,6 +801,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormSamplingMeth.resx">
       <DependentUpon>FormSamplingMeth.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSampParamName.resx">
+      <DependentUpon>FormSampParamName.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormSampTypeXPrepMeth.resx">
       <DependentUpon>FormSampTypeXPrepMeth.cs</DependentUpon>

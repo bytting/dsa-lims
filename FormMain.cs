@@ -341,6 +341,8 @@ namespace DSA_lims
                     UI.PopulateComboBoxes(conn, "csp_select_laboratories_short", new[] {
                         new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
                     }, cboxSamplesLaboratory, cboxOrdersLaboratory);
+
+                    UI.PopulateSampleParameterNames(conn, gridSysSampParamNames);
                 }
 
                 cboxOrdersTop.DataSource = DB.GetTopValues();
@@ -2104,13 +2106,17 @@ namespace DSA_lims
             gridSampleParameters.Rows.Clear();
 
             gridSampleParameters.Columns.Add("Id", "Id");
+            gridSampleParameters.Columns.Add("Name", "Name");            
             gridSampleParameters.Columns.Add("Value", "Value");
+            gridSampleParameters.Columns.Add("Type", "Type");
 
             foreach (SampleParameter p in s.Parameters)
             {
                 gridSampleParameters.Rows.Add(new object[] {
                     p.Id,
-                    p.Value
+                    p.Name,                    
+                    p.Value,
+                    p.Type
                 });
             }
 
@@ -7433,11 +7439,81 @@ where ar.instance_status_id < 2
                 return;
 
             PopulateSampleParameters(sample, false);
+
+            SetStatusMessage("Added sample parameter to sample " + sample.Number);
+        }
+
+        private void btnSampleParamEdit_Click(object sender, EventArgs e)
+        {
+            if(gridSampleParameters.SelectedRows.Count != 1)
+            {
+                MessageBox.Show("You must select a single parameter first");
+                return;
+            }
+
+            Guid spId = Utils.MakeGuid(gridSampleParameters.SelectedRows[0].Cells["id"].Value);
+
+            FormSampleParameter form = new FormSampleParameter(sample, spId);
+            if (form.ShowDialog() != DialogResult.OK)
+                return;
+
+            PopulateSampleParameters(sample, false);
+
+            SetStatusMessage("Edited sample parameter for sample " + sample.Number);
         }
 
         private void btnSampleParamRemove_Click(object sender, EventArgs e)
         {
-            //
+            if (gridSampleParameters.SelectedRows.Count != 1)
+            {
+                MessageBox.Show("You must select a single parameter first");
+                return;
+            }
+
+            Guid spId = Utils.MakeGuid(gridSampleParameters.SelectedRows[0].Cells["id"].Value);
+
+            sample.Parameters.RemoveAll(x => x.Id == spId);
+            sample.Dirty = true;
+
+            PopulateSampleParameters(sample, false);
+
+            SetStatusMessage("Removed sample parameter for sample " + sample.Number);
         }
+
+        private void btnSysSampParamNameNew_Click(object sender, EventArgs e)
+        {
+            FormSampParamName form = new FormSampParamName();
+            if (form.ShowDialog() != DialogResult.OK)
+                return;
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                UI.PopulateSampleParameterNames(conn, gridSysSampParamNames);
+            }
+
+            SetStatusMessage("Sample parameter created");
+        }
+
+        private void btnSysSampParamNameEdit_Click(object sender, EventArgs e)
+        {
+            if(gridSysSampParamNames.SelectedRows.Count != 1)
+            {
+                MessageBox.Show("You must select a single parameter name first");
+                return;
+            }
+
+            Guid spnId = Utils.MakeGuid(gridSysSampParamNames.SelectedRows[0].Cells["id"].Value);
+
+            FormSampParamName form = new FormSampParamName(spnId);
+            if (form.ShowDialog() != DialogResult.OK)
+                return;
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                UI.PopulateSampleParameterNames(conn, gridSysSampParamNames);
+            }
+
+            SetStatusMessage("Sample parameter updated");
+        }        
     }    
 }

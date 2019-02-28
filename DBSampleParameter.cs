@@ -20,6 +20,8 @@ namespace DSA_lims
         public Guid Id { get; set; }
         public Guid SampleId { get; set; }
         public Guid SampleParameterNameId { get; set; }
+        public string Name { get; set; }
+        public string Type { get; set; }
         public string Value { get; set; }
         public DateTime CreateDate { get; set; }
         public Guid CreateId { get; set; }
@@ -102,6 +104,9 @@ namespace DSA_lims
                 UpdateId = reader.GetGuid("update_id");
             }
 
+            Name = GetParameterName(conn, trans);
+            Type = GetParameterType(conn, trans);
+
             Dirty = false;
         }
 
@@ -144,8 +149,6 @@ namespace DSA_lims
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.Clear();
                     cmd.Parameters.AddWithValue("@id", Id);
-                    cmd.Parameters.AddWithValue("@sample_id", SampleId, Guid.Empty);
-                    cmd.Parameters.AddWithValue("@sample_parameter_name_id", SampleParameterNameId, Guid.Empty);
                     cmd.Parameters.AddWithValue("@value", Value, String.Empty);
                     cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
                     cmd.Parameters.AddWithValue("@update_id", Common.UserId, Guid.Empty);

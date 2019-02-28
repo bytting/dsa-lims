@@ -1002,6 +1002,15 @@ order by am.name_short
 
             grid.Columns["name_short"].HeaderText = "Abbr.";
             grid.Columns["name"].HeaderText = "Name";
-        }        
+        }
+
+        public static void PopulateSampleParameterNames(SqlConnection conn, DataGridView grid)
+        {
+            grid.DataSource = DB.GetDataTable(conn, null, "select * from sample_parameter_name", CommandType.Text);
+
+            grid.Columns["id"].Visible = false;
+            grid.Columns["name"].HeaderText = "Name";
+            grid.Columns["type"].HeaderText = "Type";
+        }
     }
 }

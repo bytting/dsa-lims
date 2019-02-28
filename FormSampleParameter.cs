@@ -32,6 +32,7 @@ namespace DSA_lims
     public partial class FormSampleParameter : Form
     {
         Sample mSample = null;
+        Guid mSPId = Guid.Empty;
 
         public FormSampleParameter(Sample s)
         {
@@ -40,14 +41,23 @@ namespace DSA_lims
             mSample = s;
         }
 
+        public FormSampleParameter(Sample s, Guid spId)
+        {
+            InitializeComponent();
+
+            mSample = s;
+            mSPId = spId;
+        }
+
         private void FormSampleParameter_Load(object sender, EventArgs e)
         {
-            List<SampleParameterName> spnList = new List<SampleParameterName>();
+            lblTypeInfo.Text = "";
+
             SampleParameterName spn = new SampleParameterName();
             spn.Id = Guid.Empty;
             spn.Name = "";
             spn.Type = "";
-            spnList.Add(spn);
+            cboxSampleParameterNames.Items.Add(spn);            
 
             using (SqlConnection conn = DB.OpenConnection())
             {
@@ -58,13 +68,21 @@ namespace DSA_lims
                     spn.Id = reader.GetGuid("id");
                     spn.Name = reader.GetString("name");
                     spn.Type = reader.GetString("type");
-                    spnList.Add(spn);
+                    cboxSampleParameterNames.Items.Add(spn);
                 }
             }
 
             cboxSampleParameterNames.DisplayMember = "Name";
             cboxSampleParameterNames.ValueMember = "Id";
-            cboxSampleParameterNames.DataSource = spnList;
+
+            if(mSPId != Guid.Empty)
+            {
+                SampleParameter p = mSample.Parameters.Find(x => x.Id == mSPId);
+                cboxSampleParameterNames.Text = p.Name;
+                cboxSampleParameterNames.Enabled = false;
+                tbSampleParameterValue.Text = p.Value;
+                lblTypeInfo.Text = "Parameter type: " + p.Type;
+            }
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -75,7 +93,9 @@ namespace DSA_lims
 
         private void btnOk_Click(object sender, EventArgs e)
         {
-            if(!Utils.IsValidGuid(cboxSampleParameterNames.SelectedValue))
+            SampleParameterName spn = cboxSampleParameterNames.SelectedItem as SampleParameterName;
+
+            if (spn.Id == Guid.Empty)
             {
                 MessageBox.Show("You must select a valid parameter type");
                 return;
@@ -87,23 +107,57 @@ namespace DSA_lims
                 return;
             }
 
-            Guid spnId = Utils.MakeGuid(cboxSampleParameterNames.SelectedValue);
-
-            if(mSample.Parameters.Exists(x => x.SampleId == mSample.Id && x.SampleParameterNameId == spnId))
+            if (mSPId == Guid.Empty)
             {
-                MessageBox.Show("This sample already have this parameter");
-                return;
-            }
+                if (mSample.Parameters.Exists(x => x.SampleId == mSample.Id && x.SampleParameterNameId == spn.Id))
+                {
+                    MessageBox.Show("This sample already have this parameter");
+                    return;
+                }
 
-            SampleParameter p = new SampleParameter();
-            p.SampleId = mSample.Id;
-            p.SampleParameterNameId = spnId;
-            p.Value = tbSampleParameterValue.Text.ToString();
-            mSample.Parameters.Add(p);
-            mSample.Dirty = true;            
+                SampleParameter p = new SampleParameter();
+                p.SampleId = mSample.Id;
+                p.SampleParameterNameId = spn.Id;
+                p.Name = spn.Name;
+                p.Type = spn.Type;
+                p.Value = tbSampleParameterValue.Text.ToString();
+                mSample.Parameters.Add(p);
+                p.Dirty = true;
+            }
+            else
+            {
+                SampleParameter p = mSample.Parameters.Find(x => x.Id == mSPId);
+                p.Value = tbSampleParameterValue.Text.ToString();
+                p.Dirty = true;
+            }
 
             DialogResult = DialogResult.OK;
             Close();
-        }        
+        }
+
+        private void cboxSampleParameterNames_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            tbSampleParameterValue.Text = "";
+
+            if (cboxSampleParameterNames.SelectedItem == null)
+                return;            
+
+            tbSampleParameterValue.KeyPress -= CustomEvents.Integer_KeyPress;
+            tbSampleParameterValue.KeyPress -= CustomEvents.Numeric_KeyPress;
+
+            SampleParameterName spn = cboxSampleParameterNames.SelectedItem as SampleParameterName;            
+
+            switch (spn.Type)
+            {
+                case SampleParameterType.Integer:
+                    tbSampleParameterValue.KeyPress += CustomEvents.Integer_KeyPress;
+                    break;
+                case SampleParameterType.Decimal:
+                    tbSampleParameterValue.KeyPress += CustomEvents.Numeric_KeyPress;
+                    break;
+            }
+
+            lblTypeInfo.Text = "Parameter type: " + spn.Type;
+        }
     }
 }

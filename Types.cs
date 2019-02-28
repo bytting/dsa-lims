@@ -68,6 +68,13 @@ namespace DSA_lims
         }
     }
 
+    public static class SampleParameterType
+    {
+        public const string Integer = "Integer";
+        public const string Decimal = "Decimal";
+        public const string Text = "Text";
+    }
+
     public class Lemma<I, N>
     {
         public Lemma() { }

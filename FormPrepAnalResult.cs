@@ -190,6 +190,12 @@ namespace DSA_lims
 
             if(!cbUncertaintyAbs.Checked)
             {
+                if(unc < 0d || unc > 100d)
+                {
+                    MessageBox.Show("Activity uncertianty is out of percent range [0, 100]");
+                    return;
+                }
+
                 unc = act * (unc / 100d);
             }
 
@@ -214,7 +220,7 @@ namespace DSA_lims
             {
                 MessageBox.Show("Can not approve a MDA of zero");
                 return;
-            }
+            }            
 
             double sigmaMDA = Convert.ToDouble(cboxSigmaMDA.SelectedValue);
             detlim /= sigmaMDA;

@@ -1934,6 +1934,7 @@ namespace DSA_lims
             }
 
             tabs.SelectedTab = tabSample;
+            tabsSample.SelectedTab = tabSamplesInfo;
 
             btnSamplesSearch.ForeColor = Color.Red;
 
@@ -1992,9 +1993,9 @@ namespace DSA_lims
                 
                 PopulateSample(conn, null, sample, true);
             }
-
-            tabsSample.SelectedTab = tabSamplesInfo;
+            
             tabs.SelectedTab = tabSample;
+            tabsSample.SelectedTab = tabSamplesInfo;
         }
 
         private void PopulateSample(SqlConnection conn, SqlTransaction trans, Sample s, bool clearDirty)
@@ -2310,6 +2311,7 @@ namespace DSA_lims
             }
 
             tabs.SelectedTab = tabPrepAnal;
+            tabsPrepAnal.SelectedTab = tabPrepAnalSample;
         }
 
         private bool PopulatePrepAnal(SqlConnection conn, Sample s)
@@ -2959,6 +2961,7 @@ namespace DSA_lims
             }
 
             tabs.SelectedTab = tabOrder;
+            tabsOrder.SelectedTab = tabOrderInfo;
         }
 
         private void miOrdersEdit_Click(object sender, EventArgs e)
@@ -2984,9 +2987,9 @@ namespace DSA_lims
 
                 PopulateOrder(conn, null, assignment, true);
             }            
-
-            tabsOrder.SelectedTab = tabOrderInfo;
+            
             tabs.SelectedTab = tabOrder;
+            tabsOrder.SelectedTab = tabOrderInfo;
         }
 
         private void miOrdersDelete_Click(object sender, EventArgs e)
@@ -5006,7 +5009,7 @@ select count(*) from sample s
         {
             sample.Dirty = true;
 
-            if (cboxSampleInfoLocationTypes.SelectedValue == null)
+            if ((int)cboxSampleInfoLocationTypes.SelectedValue == 0)
             {
                 tbSampleLocation.Text = "";
                 tbSampleLocation.Enabled = false;

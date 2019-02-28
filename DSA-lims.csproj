@@ -224,12 +224,6 @@
     <Compile Include="FormCompany.Designer.cs">
       <DependentUpon>FormCompany.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormConnectionString.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormConnectionString.Designer.cs">
-      <DependentUpon>FormConnectionString.cs</DependentUpon>
-    </Compile>
     <Compile Include="FormCounty.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -660,9 +654,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormCompany.resx">
       <DependentUpon>FormCompany.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormConnectionString.resx">
-      <DependentUpon>FormConnectionString.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormCounty.resx">
       <DependentUpon>FormCounty.cs</DependentUpon>

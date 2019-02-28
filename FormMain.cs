@@ -7482,6 +7482,12 @@ where ar.instance_status_id < 2
 
         private void btnSysSampParamNameNew_Click(object sender, EventArgs e)
         {
+            if(!Roles.IsAdmin())
+            {
+                MessageBox.Show("You don't have permission to add sample parameter types");
+                return;
+            }
+
             FormSampParamName form = new FormSampParamName();
             if (form.ShowDialog() != DialogResult.OK)
                 return;
@@ -7496,7 +7502,13 @@ where ar.instance_status_id < 2
 
         private void btnSysSampParamNameEdit_Click(object sender, EventArgs e)
         {
-            if(gridSysSampParamNames.SelectedRows.Count != 1)
+            if (!Roles.IsAdmin())
+            {
+                MessageBox.Show("You don't have permission to edit sample parameter types");
+                return;
+            }
+
+            if (gridSysSampParamNames.SelectedRows.Count != 1)
             {
                 MessageBox.Show("You must select a single parameter name first");
                 return;
@@ -7514,6 +7526,17 @@ where ar.instance_status_id < 2
             }
 
             SetStatusMessage("Sample parameter updated");
-        }        
+        }
+
+        private void btnSysSampParamNameDelete_Click(object sender, EventArgs e)
+        {
+            if (!Roles.IsAdmin())
+            {
+                MessageBox.Show("You don't have permission to delete sample parameter types");
+                return;
+            }
+
+            MessageBox.Show("Not implemented");
+        }
     }    
 }

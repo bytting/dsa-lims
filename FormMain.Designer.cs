@@ -9223,6 +9223,7 @@
             this.btnSysSampParamNameDelete.Name = "btnSysSampParamNameDelete";
             this.btnSysSampParamNameDelete.Size = new System.Drawing.Size(60, 22);
             this.btnSysSampParamNameDelete.Text = "Delete";
+            this.btnSysSampParamNameDelete.Click += new System.EventHandler(this.btnSysSampParamNameDelete_Click);
             // 
             // tabPrepAnal
             // 

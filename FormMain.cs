@@ -57,7 +57,7 @@ namespace DSA_lims
         public FormMain()
         {
             InitializeComponent();
-
+            
             SqlServerTypes.Utilities.LoadNativeAssemblies(AppDomain.CurrentDomain.BaseDirectory);
 
             Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo("en");
@@ -84,7 +84,7 @@ namespace DSA_lims
             tbMenuLookup.Text = "";
 
             tbMenuLookup.KeyPress += CustomEvents.Integer_KeyPress;
-            tbSamplesLookup.KeyPress += CustomEvents.Integer_KeyPress;            
+            tbSamplesLookup.KeyPress += CustomEvents.Integer_KeyPress;
             tbSampleInfoAltitude.KeyPress += CustomEvents.Numeric_KeyPress;
             tbPrepAnalWetWeight.KeyPress += CustomEvents.Numeric_KeyPress;
             tbPrepAnalDryWeight.KeyPress += CustomEvents.Numeric_KeyPress;
@@ -857,8 +857,12 @@ namespace DSA_lims
         {
             HideMetaMenuItems();
 
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+
+            try
             {
+                conn = DB.OpenConnection();
+                
                 if (tabsMeta.SelectedTab == tabMetaStations)
                 {
                     miStations.Visible = true;
@@ -892,7 +896,16 @@ namespace DSA_lims
                 {
                     miCustomers.Visible = true;
                     UI.PopulateCustomers(conn, InstanceStatus.Deleted, gridCustomers);
-                }
+                }                
+            }
+            catch(Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn?.Close();
             }
         }
 
@@ -900,8 +913,12 @@ namespace DSA_lims
         {            
             HideSysMenuItems();
 
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+
+            try
             {
+                conn = DB.OpenConnection();
+                
                 if (tabsSys.SelectedTab == tabSysLaboratories)
                 {
                     miLaboratories.Visible = true;
@@ -931,7 +948,16 @@ namespace DSA_lims
                 {
                     miPersonalia.Visible = false;
                     UI.PopulatePersons(conn, gridSysPers);
-                }
+                }             
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn?.Close();
             }
         }
 
@@ -1931,13 +1957,24 @@ namespace DSA_lims
             // new sample                        
             FormSampleNew form = new FormSampleNew(treeSampleTypes);
             if (form.ShowDialog() != DialogResult.OK)
-                return;            
+                return;
 
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+
+            try
             {
+                conn = DB.OpenConnection();
                 sample.LoadFromDB(conn, null, form.SampleId);
-
                 PopulateSample(conn, null, sample, true);
+            }
+            catch(Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn?.Close();
             }
 
             tabs.SelectedTab = tabSample;
@@ -1963,15 +2000,19 @@ namespace DSA_lims
                 return;
             }
 
-            Guid sid = Utils.MakeGuid(gridSamples.SelectedRows[0].Cells["id"].Value);
+            SqlConnection conn = null;
 
-            using (SqlConnection conn = DB.OpenConnection())
+            try
             {
+                Guid sid = Utils.MakeGuid(gridSamples.SelectedRows[0].Cells["id"].Value);
+
+                conn = DB.OpenConnection();
+
                 sample.LoadFromDB(conn, null, sid);
 
                 if (Common.LabId == Guid.Empty)
-                {                    
-                    if(Common.UserId != sample.CreateId)
+                {
+                    if (Common.UserId != sample.CreateId)
                     {
                         MessageBox.Show("Can not edit this sample. Sample does not belong to your user");
                         return;
@@ -1980,13 +2021,13 @@ namespace DSA_lims
                 else
                 {
                     bool allow = false;
-                    
+
                     if (Common.LabId == sample.LaboratoryId)
                     {
                         allow = true;
                     }
                     else
-                    {                        
+                    {
                         if (Common.UserId == sample.CreateId)
                             allow = true;
                     }
@@ -1997,8 +2038,17 @@ namespace DSA_lims
                         return;
                     }
                 }
-                
+
                 PopulateSample(conn, null, sample, true);
+            }
+            catch(Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn?.Close();
             }
             
             tabs.SelectedTab = tabSample;
@@ -2006,7 +2056,7 @@ namespace DSA_lims
         }
 
         private void PopulateSample(SqlConnection conn, SqlTransaction trans, Sample s, bool clearDirty)
-        {
+        {            
             cboxSampleSampleType.SelectedValue = s.SampleTypeId;
             cboxSampleSampleComponent.SelectedValue = s.SampleComponentId;
             cboxSampleInfoSampler.SelectedValue = s.SamplerId;
@@ -2014,13 +2064,13 @@ namespace DSA_lims
 
             if (Utils.IsValidGuid(s.ProjectSubId))
             {
-                object mpid = DB.GetScalar(conn, null, "select project_main_id from project_sub where id = @id", CommandType.Text, 
+                object mpid = DB.GetScalar(conn, null, "select project_main_id from project_sub where id = @id", CommandType.Text,
                     new SqlParameter("@id", s.ProjectSubId));
                 cboxSampleProject.SelectedValue = mpid;
                 cboxSampleSubProject.SelectedValue = s.ProjectSubId;
             }
 
-            if(!Utils.IsValidGuid(Common.LabId))
+            if (!Utils.IsValidGuid(Common.LabId))
             {
                 cboxSampleProject.Enabled = false;
                 cboxSampleSubProject.Enabled = false;
@@ -2036,7 +2086,7 @@ namespace DSA_lims
 
             if (Utils.IsValidGuid(s.MunicipalityId))
             {
-                object cid = DB.GetScalar(conn, null, "select county_id from municipality where id = @id", CommandType.Text, 
+                object cid = DB.GetScalar(conn, null, "select county_id from municipality where id = @id", CommandType.Text,
                     new SqlParameter("@id", s.MunicipalityId));
                 cboxSampleCounties.SelectedValue = cid;
                 cboxSampleMunicipalities.SelectedValue = s.MunicipalityId;
@@ -2054,34 +2104,34 @@ namespace DSA_lims
             if (!s.SamplingDateFrom.HasValue)
             {
                 tbSampleSamplingDateFrom.Tag = null;
-                tbSampleSamplingDateFrom.Text = "";                
-            }   
+                tbSampleSamplingDateFrom.Text = "";
+            }
             else
             {
                 tbSampleSamplingDateFrom.Tag = s.SamplingDateFrom.Value;
-                tbSampleSamplingDateFrom.Text = s.SamplingDateFrom.Value.ToString(Utils.DateTimeFormatNorwegian);                
-            }            
+                tbSampleSamplingDateFrom.Text = s.SamplingDateFrom.Value.ToString(Utils.DateTimeFormatNorwegian);
+            }
 
             if (!s.SamplingDateTo.HasValue)
             {
                 tbSampleSamplingDateTo.Tag = null;
-                tbSampleSamplingDateTo.Text = "";                
+                tbSampleSamplingDateTo.Text = "";
             }
             else
             {
                 tbSampleSamplingDateTo.Tag = s.SamplingDateTo.Value;
-                tbSampleSamplingDateTo.Text = s.SamplingDateTo.Value.ToString(Utils.DateTimeFormatNorwegian);                
+                tbSampleSamplingDateTo.Text = s.SamplingDateTo.Value.ToString(Utils.DateTimeFormatNorwegian);
             }
 
             if (!s.ReferenceDate.HasValue)
             {
                 tbSampleReferenceDate.Tag = null;
-                tbSampleReferenceDate.Text = "";                
+                tbSampleReferenceDate.Text = "";
             }
             else
             {
                 tbSampleReferenceDate.Tag = s.ReferenceDate.Value;
-                tbSampleReferenceDate.Text = s.ReferenceDate.Value.ToString(Utils.DateTimeFormatNorwegian);                
+                tbSampleReferenceDate.Text = s.ReferenceDate.Value.ToString(Utils.DateTimeFormatNorwegian);
             }
 
             tbSampleSamplingDateFrom.TextChanged += tbSampleSamplingDateFrom_TextChanged;
@@ -2098,16 +2148,16 @@ namespace DSA_lims
             tbSampleComment.Text = s.Comment;
             lblSampleToolId.Text = "[Sample] " + s.Number.ToString();
             lblSampleToolLaboratory.Text = String.IsNullOrEmpty(cboxSampleLaboratory.Text) ? "" : "[Laboratory] " + cboxSampleLaboratory.Text;
-            
+
             PopulateSampleParameters(s, clearDirty);
 
             // Show attachments
             UI.PopulateAttachments(conn, trans, "sample", s.Id, gridSampleAttachments);
 
-            if(clearDirty)
+            if (clearDirty)
             {
                 sample.ClearDirty();
-            }
+            }                        
         }
 
         private void PopulateSampleParameters(Sample s, bool clearDirty)
@@ -6751,10 +6801,22 @@ where s.number = @sample_number
             if (res != DialogResult.Yes)
                 return;
 
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+
+            try
             {
+                conn = DB.OpenConnection();                
                 sample.LoadFromDB(conn, null, sample.Id);
                 PopulateSample(conn, null, sample, true);
+            }
+            catch(Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn?.Close();
             }
 
             SetStatusMessage("Changes discarded for sample " + sample.Number);

@@ -50,8 +50,7 @@ namespace DSA_lims
         }
 
         private void FormReportViewer_Load(object sender, EventArgs e)
-        {            
-            DataTable1TableAdapter.Connection.ConnectionString = DB.ConnectionString;
+        {                        
             DataTable1TableAdapter.Fill(DSOrderReport.DataTable1, mAssignment.Name);
 
             reportViewer.RefreshReport();

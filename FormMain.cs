@@ -1358,6 +1358,15 @@ namespace DSA_lims
             {
                 UI.PopulateSampleTypes(treeSampleTypes, cboxSearchSampleType);
                 UI.PopulateNuclides(conn, cboxSearchNuclides);
+                List<Lemma<int, string>> maxShown = new List<Lemma<int, string>>();
+                maxShown.Add(new Lemma<int, string>(0, ""));
+                maxShown.Add(new Lemma<int, string>(100, "100"));
+                maxShown.Add(new Lemma<int, string>(1000, "1000"));
+                maxShown.Add(new Lemma<int, string>(10000, "10000"));
+                cboxSearchMaxShown.DataSource = maxShown;
+                cboxSearchMaxShown.DisplayMember = "Name";
+                cboxSearchMaxShown.ValueMember = "Id";
+                cboxSearchMaxShown.SelectedValue = 1000;
             }   
                          
             tabs.SelectedTab = tabSearch;
@@ -3327,8 +3336,11 @@ where s.instance_status_id = 1 and s.id in (" + strSampIds + ") order by s.numbe
                 int status = phdr.WorkflowStatusId;
                 string label = "Preparation " + phdr.Number + ", " + phdr.PreparationMethodName + ", " + phdr.LaboratoryName + ", " + phdr.WorkflowStatusName;
                 TreeNode[] sNodes = root.Nodes.Find(phdr.SampleId.ToString(), false);
-                TreeNode pNode = sNodes[0].Nodes.Add(phdr.Id.ToString(), label);
-                pNode.ForeColor = WorkflowStatus.GetStatusColor(status);                
+                if (sNodes.Length > 0)
+                {
+                    TreeNode pNode = sNodes[0].Nodes.Add(phdr.Id.ToString(), label);
+                    pNode.ForeColor = WorkflowStatus.GetStatusColor(status);
+                }
             }
 
             foreach (AnalysisHeader ahdr in analHeaders)
@@ -3336,8 +3348,11 @@ where s.instance_status_id = 1 and s.id in (" + strSampIds + ") order by s.numbe
                 int status = ahdr.WorkflowStatusId;
                 string label = "Analysis " + ahdr.Number + ", " + ahdr.AnalysisMethodName + ", " + ahdr.LaboratoryName + ", " + ahdr.WorkflowStatusName;
                 TreeNode[] pNodes = root.Nodes.Find(ahdr.PreparationId.ToString(), true);
-                TreeNode aNode = pNodes[0].Nodes.Add(ahdr.Id.ToString(), label);
-                aNode.ForeColor = WorkflowStatus.GetStatusColor(status);
+                if (pNodes.Length > 0)
+                {
+                    TreeNode aNode = pNodes[0].Nodes.Add(ahdr.Id.ToString(), label);
+                    aNode.ForeColor = WorkflowStatus.GetStatusColor(status);
+                }
             }
 
             tvOrderContent.ExpandAll();
@@ -4552,13 +4567,19 @@ select count(*) from sample s
                     MessageBox.Show("This analysis belongs to a closed order and can not be updated");
                     return;
                 }
+
+                if (!DB.CanUserApproveAnalysis(conn, null, Common.UserId, analysis.AnalysisMethodId))
+                {
+                    MessageBox.Show("You are not allowed to approve results for this analysis method");
+                    return;
+                }
             }
 
             if (analysis.WorkflowStatusId == WorkflowStatus.Complete)
             {
                 MessageBox.Show("You can not edit a completed analysis");
                 return;
-            }
+            }            
 
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Filter = "LIS files (*.lis)|*.lis";
@@ -7511,8 +7532,12 @@ select count(*) from sample s
 
         private void btnSearchSearch_Click(object sender, EventArgs e)
         {
-            string query = @"
-select s.number as 'Sample', st.name as 'Sample type', p.number as 'Preparation', pws.Name as 'P.status', a.number as 'Analysis', aws.Name as 'A.status', n.name as 'Nuclide', ar.activity as 'Activity', au.name as 'Unit', aut.name as 'Unit type', ar.activity_uncertainty_abs as 'Act.Unc.', ar.detection_limit as 'MDA', ar.accredited as 'Acc.'
+            string query = "select ";
+            if ((int)cboxSearchMaxShown.SelectedValue != 0)
+                query += "top " + cboxSearchMaxShown.SelectedValue + " ";
+
+            query += @"
+s.number as 'Sample', st.name as 'Sample type', p.number as 'Preparation', pws.Name as 'P.status', a.number as 'Analysis', aws.Name as 'A.status', n.name as 'Nuclide', ar.activity as 'Activity', au.name as 'Unit', aut.name as 'Unit type', ar.activity_uncertainty_abs as 'Act.Unc.', ar.detection_limit as 'MDA', ar.accredited as 'Acc.'
 from analysis_result ar
     inner join analysis a on a.id = ar.analysis_id
     inner join preparation p on p.id = a.preparation_id

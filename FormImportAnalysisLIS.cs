@@ -120,8 +120,7 @@ namespace DSA_lims
             grid.Columns["UpdateDate"].Visible = false;
             grid.Columns["UpdateId"].Visible = false;
 
-            grid.Columns["NuclideName"].ReadOnly = true;
-            //grid.Columns["ConfidenceValue"].ReadOnly = true;
+            grid.Columns["NuclideName"].ReadOnly = true;            
             grid.Columns["Activity"].ReadOnly = true;
             grid.Columns["ActivityUncertaintyABS"].ReadOnly = true;
             grid.Columns["DetectionLimit"].ReadOnly = true;
@@ -137,11 +136,11 @@ namespace DSA_lims
 
             foreach (DataGridViewRow row in grid.Rows)
             {
-                Guid nuclId = Guid.Parse(row.Cells["NuclideId"].Value.ToString());
+                Guid nuclId = Utils.MakeGuid(row.Cells["NuclideId"].Value);
                 if (nuclId == Guid.Empty)
                 {
                     row.DefaultCellStyle.BackColor = Color.Tomato;
-                    foreach (DataGridViewCell cell in row.Cells)
+                    foreach (DataGridViewCell cell in row.Cells)                    
                         cell.ReadOnly = true;
                 }
                 else if (!AnalMethNuclides.ContainsKey(row.Cells["NuclideName"].Value.ToString().ToUpper()))
@@ -298,12 +297,12 @@ namespace DSA_lims
                     r.NuclideName = items[1].Trim().ToUpper();
                     if (!AllNuclides.ContainsKey(r.NuclideName))
                         r.NuclideId = Guid.Empty;
-                    else r.NuclideId = AllNuclides[r.NuclideName];
-                    //r.ConfidenceValue = Convert.ToDouble(items[2].Trim(), CultureInfo.InvariantCulture);
+                    else r.NuclideId = AllNuclides[r.NuclideName];                    
                     r.Activity = Convert.ToDouble(items[3].Trim(), CultureInfo.InvariantCulture);
                     r.ActivityUncertaintyABS = Convert.ToDouble(items[4].Trim(), CultureInfo.InvariantCulture) * 2.0;
                     r.ActivityUncertaintyABS /= 100d;
                     r.ActivityUncertaintyABS *= r.Activity;
+                    r.DetectionLimit = 0d;
                     r.Dirty = true;
                     mAnalysis.Results.Add(r);
                 }
@@ -344,8 +343,7 @@ namespace DSA_lims
                     r.DetectionLimitApproved = true;
                     r.NuclideId = AllNuclides[nuclName];
                     r.NuclideName = nuclName;
-                    r.Activity = 0.0;
-                    //r.ConfidenceValue = 0.0;
+                    r.Activity = 0.0;                    
                     r.ActivityUncertaintyABS = 0.0;
                     string s = items[1].Trim();
                     if (s != "Infinity" && s != "Nuclide")
@@ -384,9 +382,21 @@ namespace DSA_lims
             {
                 bool approved = r.ActivityApproved || r.DetectionLimitApproved;
                 bool prop = r.Accredited || r.Reportable;
-                if(prop && !approved)
+                if (prop && !approved)
                 {
-                    MessageBox.Show("Nuclide " + r.NuclideId + ": Can not set accredited or reportable on nuclide that is not approved");
+                    MessageBox.Show("Nuclide " + r.NuclideName + ": Can not set accredited or reportable on nuclide that is not approved");
+                    return;
+                }                
+
+                if(r.Activity == 0d && r.ActivityApproved)
+                {
+                    MessageBox.Show("Can not approve a result with no activity");
+                    return;
+                }
+
+                if (r.DetectionLimit == 0d && r.DetectionLimitApproved)
+                {
+                    MessageBox.Show("Can not approve a MDA with no limit");
                     return;
                 }
             }

@@ -954,6 +954,9 @@
             this.panel41 = new System.Windows.Forms.Panel();
             this.cbSearchAccredited = new System.Windows.Forms.CheckBox();
             this.toolStripLabel27 = new System.Windows.Forms.ToolStripLabel();
+            this.panel42 = new System.Windows.Forms.Panel();
+            this.label48 = new System.Windows.Forms.Label();
+            this.cboxSearchMaxShown = new System.Windows.Forms.ComboBox();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tabs.SuspendLayout();
@@ -1294,6 +1297,7 @@
             this.panel39.SuspendLayout();
             this.panel40.SuspendLayout();
             this.panel41.SuspendLayout();
+            this.panel42.SuspendLayout();
             this.SuspendLayout();
             // 
             // menu
@@ -4820,6 +4824,7 @@
             this.flowSearch.Controls.Add(this.panel39);
             this.flowSearch.Controls.Add(this.panel40);
             this.flowSearch.Controls.Add(this.panel41);
+            this.flowSearch.Controls.Add(this.panel42);
             this.flowSearch.Controls.Add(this.btnSearchSearch);
             this.flowSearch.Dock = System.Windows.Forms.DockStyle.Top;
             this.flowSearch.Location = new System.Drawing.Point(3, 3);
@@ -4866,7 +4871,7 @@
             this.panel34.Controls.Add(this.label10);
             this.panel34.Location = new System.Drawing.Point(356, 9);
             this.panel34.Name = "panel34";
-            this.panel34.Size = new System.Drawing.Size(232, 26);
+            this.panel34.Size = new System.Drawing.Size(206, 26);
             this.panel34.TabIndex = 0;
             // 
             // cboxSearchNuclides
@@ -4876,7 +4881,7 @@
             this.cboxSearchNuclides.FormattingEnabled = true;
             this.cboxSearchNuclides.Location = new System.Drawing.Point(65, 0);
             this.cboxSearchNuclides.Name = "cboxSearchNuclides";
-            this.cboxSearchNuclides.Size = new System.Drawing.Size(167, 23);
+            this.cboxSearchNuclides.Size = new System.Drawing.Size(141, 23);
             this.cboxSearchNuclides.TabIndex = 1;
             this.cboxSearchNuclides.SelectedIndexChanged += new System.EventHandler(this.cboxSearchNuclides_SelectedIndexChanged);
             // 
@@ -4894,7 +4899,7 @@
             // 
             this.panel35.Controls.Add(this.tbSearchActMin);
             this.panel35.Controls.Add(this.label37);
-            this.panel35.Location = new System.Drawing.Point(594, 9);
+            this.panel35.Location = new System.Drawing.Point(568, 9);
             this.panel35.Name = "panel35";
             this.panel35.Size = new System.Drawing.Size(200, 26);
             this.panel35.TabIndex = 6;
@@ -4922,7 +4927,7 @@
             // 
             this.panel38.Controls.Add(this.tbSearchActMax);
             this.panel38.Controls.Add(this.label47);
-            this.panel38.Location = new System.Drawing.Point(800, 9);
+            this.panel38.Location = new System.Drawing.Point(774, 9);
             this.panel38.Name = "panel38";
             this.panel38.Size = new System.Drawing.Size(200, 26);
             this.panel38.TabIndex = 8;
@@ -4948,7 +4953,7 @@
             // 
             // btnSearchSearch
             // 
-            this.btnSearchSearch.Location = new System.Drawing.Point(360, 41);
+            this.btnSearchSearch.Location = new System.Drawing.Point(661, 41);
             this.btnSearchSearch.Name = "btnSearchSearch";
             this.btnSearchSearch.Size = new System.Drawing.Size(139, 25);
             this.btnSearchSearch.TabIndex = 1;
@@ -10743,7 +10748,7 @@
             // miImportLISFile2
             // 
             this.miImportLISFile2.Name = "miImportLISFile2";
-            this.miImportLISFile2.Size = new System.Drawing.Size(147, 22);
+            this.miImportLISFile2.Size = new System.Drawing.Size(152, 22);
             this.miImportLISFile2.Text = "Import LIS file";
             this.miImportLISFile2.Click += new System.EventHandler(this.miImportLISFile_Click);
             // 
@@ -10943,6 +10948,39 @@
             this.toolStripLabel27.Name = "toolStripLabel27";
             this.toolStripLabel27.Size = new System.Drawing.Size(85, 22);
             this.toolStripLabel27.Text = "Search results";
+            // 
+            // panel42
+            // 
+            this.panel42.Controls.Add(this.cboxSearchMaxShown);
+            this.panel42.Controls.Add(this.label48);
+            this.panel42.Location = new System.Drawing.Point(360, 41);
+            this.panel42.Name = "panel42";
+            this.panel42.Size = new System.Drawing.Size(295, 26);
+            this.panel42.TabIndex = 12;
+            // 
+            // label48
+            // 
+            this.label48.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label48.Location = new System.Drawing.Point(0, 0);
+            this.label48.Name = "label48";
+            this.label48.Size = new System.Drawing.Size(117, 26);
+            this.label48.TabIndex = 0;
+            this.label48.Text = "Max results shown";
+            this.label48.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // cboxSearchMaxShown
+            // 
+            this.cboxSearchMaxShown.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cboxSearchMaxShown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxSearchMaxShown.FormattingEnabled = true;
+            this.cboxSearchMaxShown.Items.AddRange(new object[] {
+            "100",
+            "1000",
+            "10000"});
+            this.cboxSearchMaxShown.Location = new System.Drawing.Point(117, 0);
+            this.cboxSearchMaxShown.Name = "cboxSearchMaxShown";
+            this.cboxSearchMaxShown.Size = new System.Drawing.Size(178, 23);
+            this.cboxSearchMaxShown.TabIndex = 1;
             // 
             // FormMain
             // 
@@ -11464,6 +11502,7 @@
             this.panel40.PerformLayout();
             this.panel41.ResumeLayout(false);
             this.panel41.PerformLayout();
+            this.panel42.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -12396,6 +12435,9 @@
         private System.Windows.Forms.Panel panel41;
         private System.Windows.Forms.CheckBox cbSearchAccredited;
         private System.Windows.Forms.ToolStripLabel toolStripLabel27;
+        private System.Windows.Forms.Panel panel42;
+        private System.Windows.Forms.ComboBox cboxSearchMaxShown;
+        private System.Windows.Forms.Label label48;
     }
 }
 

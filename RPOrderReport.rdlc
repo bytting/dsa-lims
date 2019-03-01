@@ -222,7 +222,7 @@
               <Width>1.73885cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.17949cm</Width>
+              <Width>0.86199cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -403,7 +403,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>A/G/F</Value>
+                              <Value>A/G</Value>
                               <Style>
                                 <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
@@ -473,7 +473,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=IIf(Fields!activity.Value = 0, "", Format(Fields!activity.Value, "0.0#e0"))</Value>
+                              <Value>=IIf(Fields!activity.Value = 0 Or Fields!activity_approved.Value = false, "", Format(Fields!activity.Value, "0.0#e0"))</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                               </Style>
@@ -505,7 +505,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=IIf(Fields!activity_uncertainty_abs.Value = 0, "", Format(Fields!activity_uncertainty_abs.Value, "0.0#e0"))</Value>
+                              <Value>=IIf(Fields!activity_uncertainty_abs.Value = 0 Or Fields!activity_approved.Value = false, "", Format(Fields!activity_uncertainty_abs.Value, "0.0#e0"))</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                               </Style>
@@ -537,7 +537,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=IIf(Fields!detection_limit.Value = 0, "", Format(Fields!detection_limit.Value, "0.0#e0"))</Value>
+                              <Value>=IIf(Fields!detection_limit.Value = 0 Or Fields!detection_limit_approved.Value = false, "", Format(Fields!detection_limit.Value, "0.0#e0"))</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                               </Style>
@@ -569,7 +569,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=IIf(Fields!Ac_unit.Value = "", Fields!Ac_unit.Value, Fields!Ac_unit.Value + " " + Fields!name_short.Value)</Value>
+                              <Value>=IIf(Fields!activity_approved.Value = true Or Fields!detection_limit_approved.Value = true, Fields!Ac_unit.Value + " " + Fields!name_short.Value, "")</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                               </Style>
@@ -601,7 +601,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=IIf((Fields!accredited.Value)=false, IIf((Fields!workflow_status_id.Value)=2, "G", "F"), "A")</Value>
+                              <Value>=IIf((Fields!accredited.Value)=false, IIf((Fields!activity_approved.Value)=true Or (Fields!detection_limit_approved.Value)=true, "G", ""), "A")</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                               </Style>
@@ -716,7 +716,7 @@
                   <TablixMembers>
                     <TablixMember>
                       <TablixHeader>
-                        <Size>2.6899cm</Size>
+                        <Size>3.0074cm</Size>
                         <CellContents>
                           <Textbox Name="Textbox23">
                             <CanGrow>true</CanGrow>
@@ -937,7 +937,7 @@
                         </SortExpression>
                       </SortExpressions>
                       <TablixHeader>
-                        <Size>2.6899cm</Size>
+                        <Size>3.0074cm</Size>
                         <CellContents>
                           <Textbox Name="Stype1">
                             <CanGrow>true</CanGrow>
@@ -1949,7 +1949,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>A betyr at analysen er akkreditert, G betyr godkjent men ikke akkreditert og F betyr at resultatet er forkstet</Value>
+                <Value>A betyr at resultatet er akkreditert, G betyr at resultatet er godkjent men ikke akkreditert og ingen resultat betyr at analysen er forkastet.</Value>
                 <Style>
                   <FontSize>8pt</FontSize>
                 </Style>

@@ -3827,6 +3827,9 @@ select count(*) from sample s
                 btnOrdersSearch_Click(sender, e);
 
                 SetStatusMessage("Order " + assignment.Name + " updated");
+
+                tbOrderReportComment.Enabled = cbOrderApprovedLaboratory.Enabled = cbOrderApprovedCustomer.Enabled = 
+                    !(assignment.WorkflowStatusId == WorkflowStatus.Complete);
             }
             catch (Exception ex)
             {
@@ -5487,10 +5490,7 @@ where s.number = @sample_number
         }
 
         private void btnOrderCreateReport_Click(object sender, EventArgs e)
-        {
-            //FormCreateOrderReport form = new FormCreateOrderReport(assignment.Id);
-            //form.ShowDialog();
-
+        {            
             if(assignment.IsDirty())
             {
                 MessageBox.Show("You must save changes first");
@@ -5502,7 +5502,19 @@ where s.number = @sample_number
                 MessageBox.Show("Order must be saved as complete first");
                 return;
             }
-            
+
+            if(!Roles.HasAccess(Role.LaboratoryAdministrator))
+            {
+                MessageBox.Show("You don't have access to generate order reports");
+                return;
+            }
+
+            if (assignment.LaboratoryId != Common.LabId)
+            {
+                MessageBox.Show("You don't have access to generate order reports for this laboratory");
+                return;
+            }
+
             FormReportAnalysisReport form = new FormReportAnalysisReport(assignment);
             form.ShowDialog();
 
@@ -6765,6 +6777,10 @@ where s.number = @sample_number
         private void cbOrderApprovedLaboratory_CheckedChanged(object sender, EventArgs e)
         {            
             assignment.Dirty = true;
+            layoutOrderDetails.Enabled = !cbOrderApprovedLaboratory.Checked;
+            ddbOrderAdd.Enabled = ddbOrderEdit.Enabled = ddbOrderDel.Enabled = !cbOrderApprovedLaboratory.Checked;
+            if (!cbOrderApprovedLaboratory.Checked)
+                cbOrderApprovedCustomer.Checked = false;
         }
 
         private void cbOrderApprovedCustomer_CheckedChanged(object sender, EventArgs e)

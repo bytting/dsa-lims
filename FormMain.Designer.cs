@@ -311,7 +311,7 @@
             this.btnOrderScanAttachment = new System.Windows.Forms.ToolStripButton();
             this.btnOrderBrowseAttachment = new System.Windows.Forms.ToolStripButton();
             this.btnOrderDeleteAttachment = new System.Windows.Forms.ToolStripButton();
-            this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
+            this.layoutOrderDetails = new System.Windows.Forms.TableLayoutPanel();
             this.label38 = new System.Windows.Forms.Label();
             this.label39 = new System.Windows.Forms.Label();
             this.label40 = new System.Windows.Forms.Label();
@@ -1001,7 +1001,7 @@
             this.panel12.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridOrderAttachments)).BeginInit();
             this.toolsOrderAttachments.SuspendLayout();
-            this.tableLayoutPanel6.SuspendLayout();
+            this.layoutOrderDetails.SuspendLayout();
             this.panel30.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.btnOrderClearDeadline)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnOrderSelectDeadline)).BeginInit();
@@ -3938,7 +3938,7 @@
             // splitContainer7.Panel1
             // 
             this.splitContainer7.Panel1.Controls.Add(this.panel12);
-            this.splitContainer7.Panel1.Controls.Add(this.tableLayoutPanel6);
+            this.splitContainer7.Panel1.Controls.Add(this.layoutOrderDetails);
             this.splitContainer7.Panel1.Controls.Add(this.toolsOrderDetails);
             // 
             // splitContainer7.Panel2
@@ -4035,43 +4035,43 @@
             this.btnOrderDeleteAttachment.Text = "Delete";
             this.btnOrderDeleteAttachment.Click += new System.EventHandler(this.btnOrderDeleteAttachment_Click);
             // 
-            // tableLayoutPanel6
+            // layoutOrderDetails
             // 
-            this.tableLayoutPanel6.ColumnCount = 2;
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 66.66666F));
-            this.tableLayoutPanel6.Controls.Add(this.label38, 0, 1);
-            this.tableLayoutPanel6.Controls.Add(this.label39, 0, 4);
-            this.tableLayoutPanel6.Controls.Add(this.label40, 0, 5);
-            this.tableLayoutPanel6.Controls.Add(this.label42, 0, 2);
-            this.tableLayoutPanel6.Controls.Add(this.cboxOrderResponsible, 1, 2);
-            this.tableLayoutPanel6.Controls.Add(this.cboxOrderLaboratory, 1, 1);
-            this.tableLayoutPanel6.Controls.Add(this.cboxOrderRequestedSigma, 1, 5);
-            this.tableLayoutPanel6.Controls.Add(this.label4, 0, 0);
-            this.tableLayoutPanel6.Controls.Add(this.tbOrderName, 1, 0);
-            this.tableLayoutPanel6.Controls.Add(this.panel30, 1, 4);
-            this.tableLayoutPanel6.Controls.Add(this.label41, 0, 7);
-            this.tableLayoutPanel6.Controls.Add(this.tbOrderContentComment, 1, 7);
-            this.tableLayoutPanel6.Controls.Add(this.label34, 0, 3);
-            this.tableLayoutPanel6.Controls.Add(this.panel3, 1, 3);
-            this.tableLayoutPanel6.Controls.Add(this.label35, 0, 6);
-            this.tableLayoutPanel6.Controls.Add(this.cboxOrderRequestedSigmaMDA, 1, 6);
-            this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Top;
-            this.tableLayoutPanel6.Location = new System.Drawing.Point(0, 25);
-            this.tableLayoutPanel6.Name = "tableLayoutPanel6";
-            this.tableLayoutPanel6.RowCount = 9;
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 100F));
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel6.Size = new System.Drawing.Size(357, 323);
-            this.tableLayoutPanel6.TabIndex = 1;
+            this.layoutOrderDetails.ColumnCount = 2;
+            this.layoutOrderDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.layoutOrderDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 66.66666F));
+            this.layoutOrderDetails.Controls.Add(this.label38, 0, 1);
+            this.layoutOrderDetails.Controls.Add(this.label39, 0, 4);
+            this.layoutOrderDetails.Controls.Add(this.label40, 0, 5);
+            this.layoutOrderDetails.Controls.Add(this.label42, 0, 2);
+            this.layoutOrderDetails.Controls.Add(this.cboxOrderResponsible, 1, 2);
+            this.layoutOrderDetails.Controls.Add(this.cboxOrderLaboratory, 1, 1);
+            this.layoutOrderDetails.Controls.Add(this.cboxOrderRequestedSigma, 1, 5);
+            this.layoutOrderDetails.Controls.Add(this.label4, 0, 0);
+            this.layoutOrderDetails.Controls.Add(this.tbOrderName, 1, 0);
+            this.layoutOrderDetails.Controls.Add(this.panel30, 1, 4);
+            this.layoutOrderDetails.Controls.Add(this.label41, 0, 7);
+            this.layoutOrderDetails.Controls.Add(this.tbOrderContentComment, 1, 7);
+            this.layoutOrderDetails.Controls.Add(this.label34, 0, 3);
+            this.layoutOrderDetails.Controls.Add(this.panel3, 1, 3);
+            this.layoutOrderDetails.Controls.Add(this.label35, 0, 6);
+            this.layoutOrderDetails.Controls.Add(this.cboxOrderRequestedSigmaMDA, 1, 6);
+            this.layoutOrderDetails.Dock = System.Windows.Forms.DockStyle.Top;
+            this.layoutOrderDetails.Location = new System.Drawing.Point(0, 25);
+            this.layoutOrderDetails.Name = "layoutOrderDetails";
+            this.layoutOrderDetails.RowCount = 9;
+            this.layoutOrderDetails.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.layoutOrderDetails.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.layoutOrderDetails.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.layoutOrderDetails.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.layoutOrderDetails.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.layoutOrderDetails.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.layoutOrderDetails.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.layoutOrderDetails.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.layoutOrderDetails.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.layoutOrderDetails.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.layoutOrderDetails.Size = new System.Drawing.Size(357, 323);
+            this.layoutOrderDetails.TabIndex = 1;
             // 
             // label38
             // 
@@ -11071,8 +11071,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.gridOrderAttachments)).EndInit();
             this.toolsOrderAttachments.ResumeLayout(false);
             this.toolsOrderAttachments.PerformLayout();
-            this.tableLayoutPanel6.ResumeLayout(false);
-            this.tableLayoutPanel6.PerformLayout();
+            this.layoutOrderDetails.ResumeLayout(false);
+            this.layoutOrderDetails.PerformLayout();
             this.panel30.ResumeLayout(false);
             this.panel30.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.btnOrderClearDeadline)).EndInit();
@@ -11565,7 +11565,7 @@
         private System.Windows.Forms.TabControl tabsOrder;
         private System.Windows.Forms.TabPage tabOrderInfo;
         private System.Windows.Forms.SplitContainer splitContainer7;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel6;
+        private System.Windows.Forms.TableLayoutPanel layoutOrderDetails;
         private System.Windows.Forms.Label label38;
         private System.Windows.Forms.Label label39;
         private System.Windows.Forms.Label label40;

@@ -584,26 +584,44 @@ namespace DSA_lims
 
             lblCurrentUser.Text = Common.Username;
 
-            using (SqlConnection conn = DB.OpenConnection())
-            {
-                DB.LoadUserRoles(conn, null, Common.UserId, ref Roles.UserRoles);
+            SqlConnection conn = null;
+            SqlTransaction trans = null;
 
-                if(Common.LabId != Guid.Empty)
+            try
+            {
+                conn = DB.OpenConnection();
+                trans = conn.BeginTransaction();
+
+                DB.LoadUserRoles(conn, trans, Common.UserId, ref Roles.UserRoles);
+
+                if (Common.LabId != Guid.Empty)
                 {
-                    using (SqlDataReader reader = DB.GetDataReader(conn, null, "select laboratory_logo, accredited_logo from laboratory where id = @id", 
+                    using (SqlDataReader reader = DB.GetDataReader(conn, trans, "select laboratory_logo, accredited_logo from laboratory where id = @id",
                         CommandType.Text, new SqlParameter("@id", Common.LabId)))
                     {
                         if (reader.HasRows)
                         {
                             reader.Read();
 
-                            if(!reader.IsDBNull(0))
+                            if (!reader.IsDBNull(0))
                                 Common.LabLogo = Image.FromStream(new MemoryStream((byte[])reader["laboratory_logo"]));
                             if (!reader.IsDBNull(1))
                                 Common.LabAccredLogo = Image.FromStream(new MemoryStream((byte[])reader["accredited_logo"]));
                         }
                     }
                 }
+
+                trans.Commit();     
+            }
+            catch(Exception ex)
+            {
+                trans?.Rollback();
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn?.Close();
             }
         }
 
@@ -2994,10 +3012,13 @@ namespace DSA_lims
                 return;
             }
 
-            Guid pmid = Utils.MakeGuid(gridTypeRelPrepMeth.SelectedRows[0].Cells["id"].Value);            
+            Guid pmid = Utils.MakeGuid(gridTypeRelPrepMeth.SelectedRows[0].Cells["id"].Value);
 
-            using(SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+
+            try
             {
+                conn = DB.OpenConnection();                
                 SqlCommand cmd = new SqlCommand("delete from preparation_method_x_analysis_method where preparation_method_id = @pmid and analysis_method_id = @amid", conn);
 
                 foreach (Lemma<Guid, string> l in lbTypRelPrepMethAnalMeth.SelectedItems)
@@ -3006,9 +3027,18 @@ namespace DSA_lims
                     cmd.Parameters.AddWithValue("@pmid", pmid);
                     cmd.Parameters.AddWithValue("@amid", l.Id);
                     cmd.ExecuteNonQuery();
-                }                                
+                }
 
                 UI.PopulatePrepMethAnalMeths(conn, pmid, lbTypRelPrepMethAnalMeth);
+            }
+            catch(Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn?.Close();
             }
         }                        
 

@@ -60,9 +60,17 @@ namespace DSA_lims
         }        
 
         private void btnOk_Click(object sender, EventArgs e)
-        {                        
+        {
+            SqlConnection conn = null;
+            SqlTransaction trans = null;
+
             try
             {
+                conn = new SqlConnection(DB.ConnectionString);
+                conn.Open();
+
+                trans = conn.BeginTransaction();
+
                 if (cboxAction.SelectedIndex == 0)
                 {
                     string username = tbUsername.Text.ToLower().Trim();
@@ -80,7 +88,7 @@ namespace DSA_lims
                         return;
                     }
 
-                    if (!ValidateLimsUser(username, password))
+                    if (!ValidateLimsUser(conn, trans, username, password))
                     {
                         MessageBox.Show("Authentication failed");
                         return;
@@ -93,136 +101,132 @@ namespace DSA_lims
                 {
                     if (!IsCurrentUserMachineAdmin() && !IsCurrentUserDomainAdmin()) // FIXME: Machine admin only for development
                     {
-                        MessageBox.Show("Can not create the LIMSAdministrator user, you are not administrator");
+                        MessageBox.Show("Can not create the LIMSAdministrator user because you are not running as system administrator");
                         return;
                     }
 
-                    if (CreateLIMSAdministrator())
+                    if (CreateLIMSAdministrator(conn, trans))
                     {
                         cboxAction.SelectedIndex = 0;
                     }
-                    return;
+                    else
+                    {
+                        MessageBox.Show("Creatint LIMS administrator failed");
+                        return;
+                    }
                 }
+
+                trans.Commit();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                MessageBox.Show("Connection failed: " + ex.Message);
+                trans?.Rollback();
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
             }
-        }
-
-        private bool CreateLIMSAdministrator()
-        {
-            FormCreateLIMSAdministrator form = new FormCreateLIMSAdministrator();
-            if (form.ShowDialog() != DialogResult.OK)
-                return false;
-
-            using (SqlConnection conn = new SqlConnection(DB.ConnectionString))
-            {
-                conn.Open();
-
-                Guid personId = Guid.Empty;
-                Guid adminId = Guid.Empty;
-                SqlCommand cmd = new SqlCommand("select id from person where name = 'LIMSAdministrator'", conn);
-                cmd.CommandType = System.Data.CommandType.Text;
-                object o = cmd.ExecuteScalar();
-                if (!DB.IsValidField(o))
-                {
-                    personId = Guid.NewGuid();
-                    cmd.CommandText = "insert into person values(@id, @name, @email, @phone, @address, @create_date, @update_date)";
-                    cmd.Parameters.AddWithValue("@id", personId);
-                    cmd.Parameters.AddWithValue("@name", "LIMSAdministrator");
-                    cmd.Parameters.AddWithValue("@email", DBNull.Value);
-                    cmd.Parameters.AddWithValue("@phone", DBNull.Value);
-                    cmd.Parameters.AddWithValue("@address", DBNull.Value);
-                    cmd.Parameters.AddWithValue("@create_date", DateTime.Now);
-                    cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
-                    cmd.ExecuteNonQuery();
-                }
-                else
-                {
-                    personId = Guid.Parse(o.ToString());
-                }
-
-                byte[] passwordHash = Utils.MakePasswordHash(form.SelectedPassword, "LIMSAdministrator");
-
-                cmd = new SqlCommand("select id from account where person_id = @pid", conn);
-                cmd.Parameters.Clear();
-                cmd.Parameters.AddWithValue("@pid", personId);
-                o = cmd.ExecuteScalar();
-                if (!DB.IsValidField(o))
-                {
-                    adminId = Guid.NewGuid();
-                    cmd.CommandText = "insert into account values(@id, @username, @person_id, @laboratory_id, @language_code, @instance_status_id, @password_hash, @create_date, @update_date)";
-                    cmd.Parameters.Clear();
-                    cmd.Parameters.AddWithValue("@id", adminId);
-                    cmd.Parameters.AddWithValue("@username", "LIMSAdministrator");
-                    cmd.Parameters.AddWithValue("@person_id", personId);
-                    cmd.Parameters.AddWithValue("@laboratory_id", DBNull.Value);
-                    cmd.Parameters.AddWithValue("@language_code", "en");
-                    cmd.Parameters.AddWithValue("@instance_status_id", 1);
-                    cmd.Parameters.AddWithValue("@password_hash", passwordHash);
-                    cmd.Parameters.AddWithValue("@create_date", DateTime.Now);
-                    cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
-                }
-                else
-                {
-                    adminId = Guid.Parse(o.ToString());
-                    cmd.CommandText = "update account set password_hash = @password_hash, update_date = @update_date where id = @id";
-                    cmd.Parameters.Clear();
-                    cmd.Parameters.AddWithValue("@id", adminId);
-                    cmd.Parameters.AddWithValue("@password_hash", passwordHash);
-                    cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
-                }
-                cmd.ExecuteNonQuery();
-            }
-
-            return true;
-        }
-
-        private bool ValidateLimsUser(string username, string password)
-        {
-            byte[] hash1 = Utils.MakePasswordHash(password, username);
-            byte[] hash2 = null;
-            Guid userId = Guid.Empty, labId = Guid.Empty;
-
-            SqlConnection conn = null;
-            try
-            {
-                conn = new SqlConnection(DB.ConnectionString);
-                conn.Open();
-
-                SqlCommand cmd = new SqlCommand("select id, laboratory_id, password_hash from account where upper(username) = @username", conn);
-                cmd.CommandType = System.Data.CommandType.Text;
-                cmd.Parameters.AddWithValue("@username", username.ToUpper());
-
-                using (SqlDataReader reader = cmd.ExecuteReader())
-                {
-                    if (!reader.HasRows)                    
-                        return false;
-
-                    reader.Read();
-
-                    userId = reader.GetGuid("id");
-                    labId = reader.GetGuid("laboratory_id");
-                    hash2 = reader.GetSqlBinary(2).Value;
-                }
-
-                if (!Utils.PasswordHashEqual(hash1, hash2))                
-                    return false;
-
-                mUserId = userId;
-                mUserName = username;
-                mLabId = labId;
-
-                return true;
-            }            
             finally
             {
                 conn?.Close();
             }
         }
 
-    private void miExit_Click(object sender, EventArgs e)
+        private bool CreateLIMSAdministrator(SqlConnection conn, SqlTransaction trans)
+        {
+            FormCreateLIMSAdministrator form = new FormCreateLIMSAdministrator();
+            if (form.ShowDialog() != DialogResult.OK)
+                return false;            
+                            
+            Guid personId = Guid.Empty;
+            Guid adminId = Guid.Empty;
+            SqlCommand cmd = new SqlCommand("select id from person where name = 'LIMSAdministrator'", conn, trans);
+            cmd.CommandType = System.Data.CommandType.Text;
+            object o = cmd.ExecuteScalar();
+            if (!DB.IsValidField(o))
+            {
+                personId = Guid.NewGuid();
+                cmd.CommandText = "insert into person values(@id, @name, @email, @phone, @address, @create_date, @update_date)";
+                cmd.Parameters.AddWithValue("@id", personId);
+                cmd.Parameters.AddWithValue("@name", "LIMSAdministrator");
+                cmd.Parameters.AddWithValue("@email", DBNull.Value);
+                cmd.Parameters.AddWithValue("@phone", DBNull.Value);
+                cmd.Parameters.AddWithValue("@address", DBNull.Value);
+                cmd.Parameters.AddWithValue("@create_date", DateTime.Now);
+                cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
+                cmd.ExecuteNonQuery();
+            }
+            else
+            {
+                personId = Guid.Parse(o.ToString());
+            }
+
+            byte[] passwordHash = Utils.MakePasswordHash(form.SelectedPassword, "LIMSAdministrator");
+
+            cmd = new SqlCommand("select id from account where person_id = @pid", conn, trans);
+            cmd.Parameters.Clear();
+            cmd.Parameters.AddWithValue("@pid", personId);
+            o = cmd.ExecuteScalar();
+            if (!DB.IsValidField(o))
+            {
+                adminId = Guid.NewGuid();
+                cmd.CommandText = "insert into account values(@id, @username, @person_id, @laboratory_id, @language_code, @instance_status_id, @password_hash, @create_date, @update_date)";
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@id", adminId);
+                cmd.Parameters.AddWithValue("@username", "LIMSAdministrator");
+                cmd.Parameters.AddWithValue("@person_id", personId);
+                cmd.Parameters.AddWithValue("@laboratory_id", DBNull.Value);
+                cmd.Parameters.AddWithValue("@language_code", "en");
+                cmd.Parameters.AddWithValue("@instance_status_id", 1);
+                cmd.Parameters.AddWithValue("@password_hash", passwordHash);
+                cmd.Parameters.AddWithValue("@create_date", DateTime.Now);
+                cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
+            }
+            else
+            {
+                adminId = Guid.Parse(o.ToString());
+                cmd.CommandText = "update account set password_hash = @password_hash, update_date = @update_date where id = @id";
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@id", adminId);
+                cmd.Parameters.AddWithValue("@password_hash", passwordHash);
+                cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
+            }
+            cmd.ExecuteNonQuery();
+
+            return true;
+        }
+
+        private bool ValidateLimsUser(SqlConnection conn, SqlTransaction trans, string username, string password)
+        {
+            byte[] hash1 = Utils.MakePasswordHash(password, username);
+            byte[] hash2 = null;
+            Guid userId = Guid.Empty, labId = Guid.Empty;
+            
+            SqlCommand cmd = new SqlCommand("select id, laboratory_id, password_hash from account where upper(username) = @username", conn, trans);
+            cmd.CommandType = System.Data.CommandType.Text;
+            cmd.Parameters.AddWithValue("@username", username.ToUpper());
+
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                if (!reader.HasRows)                    
+                    return false;
+
+                reader.Read();
+
+                userId = reader.GetGuid("id");
+                labId = reader.GetGuid("laboratory_id");
+                hash2 = reader.GetSqlBinary(2).Value;
+            }
+
+            if (!Utils.PasswordHashEqual(hash1, hash2))                
+                return false;
+
+            mUserId = userId;
+            mUserName = username;
+            mLabId = labId;                
+
+            return true;
+        }
+
+        private void miExit_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;
             Close();

@@ -31,7 +31,7 @@ namespace DSA_lims
         private static List<Guid> LockedSamples = new List<Guid>();
         private static List<Guid> LockedOrders = new List<Guid>();
 
-        public static string ConnectionString { get { return Properties.Settings.Default.dsa_limsConnectionString; } }
+        public static string ConnectionString { get { return Properties.Settings.Default.dsa_limsConnectionString; } }        
 
         public static SqlConnection OpenConnection()
         {

@@ -44,7 +44,7 @@ namespace DSA_lims
         private bool initialized = false;
         private ResourceManager r = null;
         
-        int statusMessageTimeout = 20000;
+        int statusMessageTimeout = 16000;
         System.Timers.Timer statusMessageTimer = null;
 
         private Sample sample = new Sample();
@@ -53,6 +53,8 @@ namespace DSA_lims
         private Preparation preparation = new Preparation();
 
         ToolTip ttCoords = new ToolTip();
+
+        bool searchIsDirty = false;
 
         public FormMain()
         {
@@ -226,6 +228,13 @@ namespace DSA_lims
                     btnSampleUpdate.ForeColor = SystemColors.ControlText;
                     btnSampleDiscard.ForeColor = SystemColors.ControlText;
                 }
+            }
+            else if (tabs.SelectedTab == tabSearch && tabsSearch.SelectedTab == tabSearchSearch)
+            {
+                if (searchIsDirty)                
+                    btnSearchSearch.ForeColor = Color.Green;                
+                else                
+                    btnSearchSearch.ForeColor = SystemColors.ControlText;                
             }
         }
 
@@ -5015,6 +5024,12 @@ select count(*) from sample s
                 return;
             }
 
+            if (analysis.WorkflowStatusId == WorkflowStatus.Rejected)
+            {
+                MessageBox.Show("You can not edit a rejected analysis");
+                return;
+            }
+
             if (!Utils.IsValidGuid(analysis.ActivityUnitId))
             {
                 MessageBox.Show("You must save a unit first");
@@ -5058,6 +5073,12 @@ select count(*) from sample s
             if (analysis.WorkflowStatusId == WorkflowStatus.Complete)
             {
                 MessageBox.Show("You can not edit a completed analysis");
+                return;
+            }
+
+            if (analysis.WorkflowStatusId == WorkflowStatus.Rejected)
+            {
+                MessageBox.Show("You can not edit a rejected analysis");
                 return;
             }
 
@@ -5339,7 +5360,7 @@ where s.number = @sample_number
             cboxSamplesProjects.SelectedValue = Guid.Empty;
             cboxSamplesProjectsSub.SelectedValue = Guid.Empty;
             cboxSamplesOrders.SelectedValue = Guid.Empty;
-            cboxSamplesStatus.SelectedValue = InstanceStatus.Active;
+            cboxSamplesStatus.SelectedValue = 0;
             cboxSamplesLaboratory.SelectedValue = Guid.Empty;
             cboxSamplesTop.SelectedValue = 50;
         }
@@ -6438,6 +6459,12 @@ where s.number = @sample_number
                 return;
             }
 
+            if (analysis.WorkflowStatusId == WorkflowStatus.Rejected)
+            {
+                MessageBox.Show("You can not edit a rejected analysis");
+                return;
+            }
+
             DialogResult r = MessageBox.Show("Are you sure you want to delete " + gridPrepAnalResults.SelectedRows.Count + " results from this analysis?", "Warning", MessageBoxButtons.YesNo);
             if (r == DialogResult.No)                
                 return;
@@ -7485,7 +7512,7 @@ select count(*) from sample s
         private void btnSearchSearch_Click(object sender, EventArgs e)
         {
             string query = @"
-select s.number as 'Sample', st.name as 'Sample type', p.number as 'Preparation', pws.Name as 'Status', a.number as 'Analysis', aws.Name as 'Status', n.name as 'Nuclide', ar.activity as 'Activity', au.name as 'Unit', aut.name as 'Unit type', ar.activity_uncertainty_abs as 'Act.Unc.', ar.detection_limit as 'MDA', ar.accredited as 'Acc.'
+select s.number as 'Sample', st.name as 'Sample type', p.number as 'Preparation', pws.Name as 'P.status', a.number as 'Analysis', aws.Name as 'A.status', n.name as 'Nuclide', ar.activity as 'Activity', au.name as 'Unit', aut.name as 'Unit type', ar.activity_uncertainty_abs as 'Act.Unc.', ar.detection_limit as 'MDA', ar.accredited as 'Acc.'
 from analysis_result ar
     inner join analysis a on a.id = ar.analysis_id
     inner join preparation p on p.id = a.preparation_id
@@ -7529,6 +7556,21 @@ where ar.instance_status_id < 2
                     query += " and ar.activity <= " + actMax;
                 }
 
+                if(cbSearchActAppr.CheckState == CheckState.Checked)                
+                    query += " and ar.activity_approved = 1";
+                else if(cbSearchActAppr.CheckState == CheckState.Indeterminate)
+                    query += " and ar.activity_approved = 0";
+
+                if (cbSearchMDAAppr.CheckState == CheckState.Checked)
+                    query += " and ar.detection_limit_approved = 1";
+                else if (cbSearchMDAAppr.CheckState == CheckState.Indeterminate)
+                    query += " and ar.detection_limit_approved = 0";
+
+                if (cbSearchAccredited.CheckState == CheckState.Checked)
+                    query += " and ar.accredited = 1";
+                else if (cbSearchAccredited.CheckState == CheckState.Indeterminate)
+                    query += " and ar.accredited = 0";
+
                 query += " order by s.number, p.number, a.number, n.name";
 
                 adapter.SelectCommand.CommandText = query;
@@ -7538,8 +7580,9 @@ where ar.instance_status_id < 2
 
                 gridSearchResult.DataSource = dt;
 
+                searchIsDirty = false;
                 SetStatusMessage("Search showing " + dt.Rows.Count + " results");
-            }
+            }            
         }
 
         private void btnSearchAssignedWork_Click(object sender, EventArgs e)
@@ -7667,6 +7710,41 @@ where ar.instance_status_id < 2
             }
 
             MessageBox.Show("Not implemented");
+        }
+
+        private void cboxSearchSampleType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            searchIsDirty = true;
+        }
+
+        private void cboxSearchNuclides_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            searchIsDirty = true;
+        }
+
+        private void tbSearchActMin_TextChanged(object sender, EventArgs e)
+        {
+            searchIsDirty = true;
+        }
+
+        private void tbSearchActMax_TextChanged(object sender, EventArgs e)
+        {
+            searchIsDirty = true;
+        }
+
+        private void cbSearchActAppr_CheckStateChanged(object sender, EventArgs e)
+        {
+            searchIsDirty = true;
+        }
+
+        private void cbSearchMDAAppr_CheckStateChanged(object sender, EventArgs e)
+        {
+            searchIsDirty = true;
+        }
+
+        private void cbSearchAccredited_CheckStateChanged(object sender, EventArgs e)
+        {
+            searchIsDirty = true;
         }
     }    
 }

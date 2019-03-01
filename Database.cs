@@ -836,6 +836,110 @@ select
         }
     }
 
+    public class SampleHeader
+    {
+        public Guid Id { get; set; }
+        public int Number { get; set; }
+        public string SampleTypeName { get; set; }
+        public string SampleComponentName { get; set; }
+        public string LaboratoryName { get; set; }
+        public List<PreparationHeader> Preparations = new List<PreparationHeader>();
+
+        public void Populate(SqlConnection conn, SqlTransaction trans)
+        {
+            if (Id == Guid.Empty)
+                return;
+
+            using (SqlDataReader reader = DB.GetDataReader(conn, trans, @"
+select s.number, st.name as 'sample_type_name', sc.name as 'sample_component_name', l.name as 'laboratory_name'
+from sample s
+    inner join sample_type st on st.id = s.sample_type_id
+    left outer join sample_component sc on sc.id = s.sample_component_id
+    inner join laboratory l on l.id = s.laboratory_id
+where s.id = @sid
+", CommandType.Text, 
+                new SqlParameter("@sid", Id)))
+            {
+                reader.Read();
+
+                Number = reader.GetInt32("number");
+                SampleTypeName = reader.GetString("sample_type_name");
+                SampleComponentName = reader.GetString("sample_component_name");
+                LaboratoryName = reader.GetString("laboratory_name");
+            }
+        }
+    }
+
+    public class PreparationHeader
+    {
+        public Guid Id { get; set; }
+        public int Number { get; set; }
+        public string PreparationMethodName { get; set; }        
+        public string LaboratoryName { get; set; }
+        public int WorkflowStatusId { get; set; }
+        public string WorkflowStatusName { get; set; }
+        public List<AnalysisHeader> Analyses = new List<AnalysisHeader>();
+
+        public void Populate(SqlConnection conn, SqlTransaction trans)
+        {
+            if (Id == Guid.Empty)
+                return;
+
+            using (SqlDataReader reader = DB.GetDataReader(conn, trans, @"
+select p.number, pm.name as 'preparation_method_name', l.name as 'laboratory_name', ws.id as 'workflow_status_id', ws.name as 'workflow_status_name'
+from preparation p
+    inner join preparation_method pm on pm.id = p.preparation_method_id    
+    inner join laboratory l on l.id = p.laboratory_id
+    inner join workflow_status ws on ws.id = p.workflow_status_id
+where p.id = @pid
+", CommandType.Text, new SqlParameter("@pid", Id)))
+            {
+                reader.Read();
+
+                Number = reader.GetInt32("number");
+                PreparationMethodName = reader.GetString("preparation_method_name");
+                LaboratoryName = reader.GetString("laboratory_name");
+                WorkflowStatusId = reader.GetInt32("workflow_status_id");
+                WorkflowStatusName = reader.GetString("workflow_status_name");
+            }
+        }
+    }
+
+    public class AnalysisHeader
+    {
+        public Guid Id { get; set; }
+        public int Number { get; set; }
+        public string AnalysisMethodName { get; set; }
+        public Guid PreparationId { get; set; }
+        public string LaboratoryName { get; set; }
+        public int WorkflowStatusId { get; set; }
+        public string WorkflowStatusName { get; set; }
+
+        public void Populate(SqlConnection conn, SqlTransaction trans)
+        {
+            if (Id == Guid.Empty)
+                return;
+
+            using (SqlDataReader reader = DB.GetDataReader(conn, trans, @"
+select a.number, am.name as 'analysis_method_name', l.name as 'laboratory_name', ws.id as 'workflow_status_id', ws.name as 'workflow_status_name'
+from analysis a
+    inner join analysis_method am on am.id = a.analysis_method_id    
+    inner join laboratory l on l.id = a.laboratory_id
+    inner join workflow_status ws on ws.id = a.workflow_status_id
+where a.id = @aid
+", CommandType.Text, new SqlParameter("@aid", Id)))
+            {
+                reader.Read();
+
+                Number = reader.GetInt32("number");
+                AnalysisMethodName = reader.GetString("analysis_method_name");
+                LaboratoryName = reader.GetString("laboratory_name");
+                WorkflowStatusId = reader.GetInt32("workflow_status_id");
+                WorkflowStatusName = reader.GetString("workflow_status_name");
+            }
+        }
+    }
+
     public static class SqlParameterCollectionExtensions
     {
         public static SqlParameter AddWithValue(this SqlParameterCollection paramCollection, string paramName, object value, object nullValue)

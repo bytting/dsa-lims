@@ -137,38 +137,5 @@ namespace DSA_lims
         public Guid Id { get; set; }
         public string Name { get; set; }
         public string Type { get; set; }
-    }
-
-    public class SampleHeader
-    {
-        public Guid Id { get; set; }
-        public int Number { get; set; }        
-        public string SampleTypeName { get; set; }
-        public string SampleComponentName { get; set; }
-        public string LaboratoryName { get; set; }
-        List<PreparationHeader> Preparations = new List<PreparationHeader>();
-    }
-
-    public class PreparationHeader
-    {
-        public Guid Id { get; set; }
-        public int Number { get; set; }
-        public string PreparationMethodName { get; set; }
-        public Guid SampleId { get; set; }
-        public string LaboratoryName { get; set; }
-        public int WorkflowStatusId { get; set; }
-        public string WorkflowStatusName { get; set; }
-        List<AnalysisHeader> Analyses = new List<AnalysisHeader>();
-    }
-
-    public class AnalysisHeader
-    {
-        public Guid Id { get; set; }
-        public int Number { get; set; }
-        public string AnalysisMethodName { get; set; }
-        public Guid PreparationId { get; set; }
-        public string LaboratoryName { get; set; }
-        public int WorkflowStatusId { get; set; }
-        public string WorkflowStatusName { get; set; }
-    }
+    }    
 }

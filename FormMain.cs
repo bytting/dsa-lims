@@ -3174,7 +3174,7 @@ namespace DSA_lims
             }
 
             treeOrderContent.ExpandAll();
-        }
+        }        
 
         private void PopulateOrderOverview(SqlConnection conn, SqlTransaction trans, Assignment a)
         {
@@ -3185,173 +3185,118 @@ namespace DSA_lims
             tvOrderContent.Nodes.Clear();
 
             List<SampleHeader> sampHeaders = new List<SampleHeader>();
-            List<PreparationHeader> prepHeaders = new List<PreparationHeader>();
-            List<AnalysisHeader> analHeaders = new List<AnalysisHeader>();
 
             TreeNode root = tvOrderContent.Nodes.Add(a.Name);
             root.NodeFont = fontSample;
-
-            string query = @"
-select 
-	a.id as 'analysis_id',
-	a.preparation_id,
-	a.number as 'analysis_number',
-	am.name as 'analysis_method_name',
-    l.name as 'laboratory_name',
-	ws.id as 'workflow_status_id',
-	ws.name as 'workflow_status_name',
-	a.comment as 'analysis_comment'
-from analysis a
-	inner join analysis_method am on a.analysis_method_id = am.id
-	inner join workflow_status ws on a.workflow_status_id = ws.id
-    inner join laboratory l on l.id = a.laboratory_id
-	inner join assignment ass on ass.id = a.assignment_id and ass.id = @ass_id
-where a.instance_status_id = 1
-order by a.number
-";
-            using (SqlDataReader reader = DB.GetDataReader(conn, null, query, CommandType.Text, new SqlParameter("@ass_id", a.Id)))
-            {
-                while (reader.Read())
-                {
-                    AnalysisHeader hdr = new AnalysisHeader();
-                    hdr.Id = reader.GetGuid("analysis_id");
-                    hdr.Number = reader.GetInt32("analysis_number");
-                    hdr.AnalysisMethodName = reader.GetString("analysis_method_name");
-                    hdr.PreparationId = reader.GetGuid("preparation_id");
-                    hdr.LaboratoryName = reader.GetString("laboratory_name");
-                    hdr.WorkflowStatusId = reader.GetInt32("workflow_status_id");
-                    hdr.WorkflowStatusName = reader.GetString("workflow_status_name");
-                    analHeaders.Add(hdr);
-                }
-            }
-
-            List<Guid> prepIds = new List<Guid>();
-            foreach(AnalysisHeader hdr in analHeaders)            
-                if(!prepIds.Contains(hdr.PreparationId))
-                    prepIds.Add(hdr.PreparationId);
-
-            var pArr = from item in prepIds select "'" + item + "'";
-            string strPrepIds = string.Join(",", pArr);
-
-            if(!String.IsNullOrEmpty(strPrepIds))
-            {
-                query = @"
-select 
-	p.id as 'preparation_id',
-	p.sample_id,
-	p.number as 'preparation_number',
-	pm.name as 'preparation_method_name',
-    l.name as 'laboratory_name',
-	ws.id as 'workflow_status_id',
-	ws.name as 'workflow_status_name',
-	p.comment as 'preparation_comment'
-from preparation p
-	inner join preparation_method pm on p.preparation_method_id = pm.id
-	inner join workflow_status ws on p.workflow_status_id = ws.id
-    inner join laboratory l on l.id = p.laboratory_id
-where p.instance_status_id = 1 and p.id in (" + strPrepIds + ") order by p.number";
-            }
-            else
-            {
-                query = @"
-select 
-	p.id as 'preparation_id',
-	p.sample_id,
-	p.number as 'preparation_number',
-	pm.name as 'preparation_method_name',
-    l.name as 'laboratory_name',
-	ws.id as 'workflow_status_id',
-	ws.name as 'workflow_status_name',
-	p.comment as 'preparation_comment'
-from preparation p
-	inner join preparation_method pm on p.preparation_method_id = pm.id
-	inner join workflow_status ws on p.workflow_status_id = ws.id
-    inner join laboratory l on l.id = p.laboratory_id
-where p.assignment_id = @ass_id and p.instance_status_id = 1 order by p.number";
-            }
             
-            using (SqlDataReader reader = DB.GetDataReader(conn, null, query, CommandType.Text, new SqlParameter("@ass_id", a.Id)))
+            string query = @"
+select s.id as 'sample_id', s.number as 'sample_number', p.id as 'preparation_id', p.number as 'preparation_number', a.id as 'analysis_id', a.number as 'analysis_number'
+from analysis a
+            inner join preparation p on a.preparation_id = p.id and p.instance_status_id = 1
+            inner join sample s on s.id = p.sample_id
+where a.instance_status_id = 1 and a.assignment_id = @assid
+order by s.number, p.number, a.number
+";
+            SampleHeader sh = null;
+            PreparationHeader ph = null;
+            AnalysisHeader ah = null;
+            using (SqlDataReader reader = DB.GetDataReader(conn, trans, query, CommandType.Text, new SqlParameter("@assid", a.Id)))
             {
                 while (reader.Read())
                 {
-                    PreparationHeader hdr = new PreparationHeader();
-                    hdr.Id = reader.GetGuid("preparation_id");
-                    hdr.Number = reader.GetInt32("preparation_number");
-                    hdr.PreparationMethodName = reader.GetString("preparation_method_name");
-                    hdr.LaboratoryName = reader.GetString("laboratory_name");
-                    hdr.WorkflowStatusId = reader.GetInt32("workflow_status_id");
-                    hdr.WorkflowStatusName = reader.GetString("workflow_status_name");
-                    hdr.SampleId = reader.GetGuid("sample_id");
-                    prepHeaders.Add(hdr);
-                }
-            }
-
-            List<Guid> sampIds = new List<Guid>();
-            foreach (PreparationHeader hdr in prepHeaders)
-                if(!sampIds.Contains(hdr.SampleId))
-                    sampIds.Add(hdr.SampleId);
-
-            var sArr = from item in sampIds select "'" + item + "'";
-            string strSampIds = string.Join(",", sArr);
-
-            if (!String.IsNullOrEmpty(strSampIds))
-            {
-                query = @"
-select 
-	s.id as 'sample_id',	
-	s.number as 'sample_number',
-    st.name as 'sample_type_name',
-    sc.name as 'sample_component_name',
-    l.name as 'laboratory_name'	
-from sample s		
-    inner join sample_type st on st.id = s.sample_type_id
-    left outer join sample_component sc on sc.id = s.sample_component_id
-    inner join laboratory l on l.id = s.laboratory_id
-where s.instance_status_id = 1 and s.id in (" + strSampIds + ") order by s.number";
-
-                using (SqlDataReader reader = DB.GetDataReader(conn, null, query, CommandType.Text))
-                {
-                    while (reader.Read())
+                    Guid sId = reader.GetGuid("sample_id");
+                    int sNumber = reader.GetInt32("sample_number");
+                    sh = sampHeaders.Find(x => x.Id == sId);
+                    if (sh == null)
                     {
-                        SampleHeader hdr = new SampleHeader();
-                        hdr.Id = reader.GetGuid("sample_id");
-                        hdr.Number = reader.GetInt32("sample_number");
-                        hdr.SampleTypeName = reader.GetString("sample_type_name");
-                        hdr.SampleComponentName = reader.GetString("sample_component_name");
-                        hdr.LaboratoryName = reader.GetString("laboratory_name");
-                        sampHeaders.Add(hdr);
+                        sh = new SampleHeader();
+                        sampHeaders.Add(sh);
                     }
+                    sh.Id = sId;
+                    sh.Number = sNumber;
+
+                    Guid pId = reader.GetGuid("preparation_id");
+                    int pNumber = reader.GetInt32("preparation_number");
+                    ph = sh.Preparations.Find(x => x.Id == pId);
+                    if (ph == null)
+                    {
+                        ph = new PreparationHeader();
+                        sh.Preparations.Add(ph);
+                    }
+                    ph.Id = pId;
+                    ph.Number = pNumber;
+
+                    Guid aId = reader.GetGuid("analysis_id");
+                    int aNumber = reader.GetInt32("analysis_number");
+                    ah = ph.Analyses.Find(x => x.Id == aId);
+                    if (ah == null)
+                    {
+                        ah = new AnalysisHeader();
+                        ph.Analyses.Add(ah);
+                    }
+                    ah.Id = aId;
+                    ah.Number = aNumber;
                 }
             }
 
-            foreach(SampleHeader shdr in sampHeaders)
+            query = @"
+select s.id as 'sample_id', s.number as 'sample_number', p.id as 'preparation_id', p.number as 'preparation_number'
+from preparation p    
+            inner join sample s on s.id = p.sample_id
+where p.instance_status_id = 1 and p.assignment_id = @assid
+order by s.number, p.number
+";            
+            using (SqlDataReader reader = DB.GetDataReader(conn, trans, query, CommandType.Text, new SqlParameter("@assid", a.Id)))
             {
-                string label = "Sample " + shdr.Number + ", " + shdr.SampleTypeName + " " + shdr.SampleComponentName;
-                TreeNode sNode = root.Nodes.Add(shdr.Id.ToString(), label);
-                sNode.NodeFont = fontSample;                
-            }
-
-            foreach (PreparationHeader phdr in prepHeaders)
-            {
-                int status = phdr.WorkflowStatusId;
-                string label = "Preparation " + phdr.Number + ", " + phdr.PreparationMethodName + ", " + phdr.LaboratoryName + ", " + phdr.WorkflowStatusName;
-                TreeNode[] sNodes = root.Nodes.Find(phdr.SampleId.ToString(), false);
-                if (sNodes.Length > 0)
+                while (reader.Read())
                 {
-                    TreeNode pNode = sNodes[0].Nodes.Add(phdr.Id.ToString(), label);
-                    pNode.ForeColor = WorkflowStatus.GetStatusColor(status);
+                    Guid sId = reader.GetGuid("sample_id");
+                    int sNumber = reader.GetInt32("sample_number");
+                    sh = sampHeaders.Find(x => x.Id == sId);
+                    if (sh == null)
+                    {
+                        sh = new SampleHeader();
+                        sampHeaders.Add(sh);
+                    }
+                    sh.Id = sId;
+                    sh.Number = sNumber;
+
+                    Guid pId = reader.GetGuid("preparation_id");
+                    int pNumber = reader.GetInt32("preparation_number");
+                    ph = sh.Preparations.Find(x => x.Id == pId);
+                    if (ph == null)
+                    {
+                        ph = new PreparationHeader();
+                        sh.Preparations.Add(ph);
+                    }
+                    ph.Id = pId;
+                    ph.Number = pNumber;
                 }
             }
 
-            foreach (AnalysisHeader ahdr in analHeaders)
+            sampHeaders.Sort((s1, s2) => s1.Number.CompareTo(s2.Number));
+
+            foreach (SampleHeader sHeader in sampHeaders)
             {
-                int status = ahdr.WorkflowStatusId;
-                string label = "Analysis " + ahdr.Number + ", " + ahdr.AnalysisMethodName + ", " + ahdr.LaboratoryName + ", " + ahdr.WorkflowStatusName;
-                TreeNode[] pNodes = root.Nodes.Find(ahdr.PreparationId.ToString(), true);
-                if (pNodes.Length > 0)
+                sHeader.Populate(conn, trans);
+                string label = "Sample " + sHeader.Number + ", " + sHeader.SampleTypeName + " " + sHeader.SampleComponentName;
+                TreeNode sNode = root.Nodes.Add(sHeader.Id.ToString(), label);
+                sNode.NodeFont = fontSample;
+
+                foreach (PreparationHeader pHeader in sHeader.Preparations)
                 {
-                    TreeNode aNode = pNodes[0].Nodes.Add(ahdr.Id.ToString(), label);
-                    aNode.ForeColor = WorkflowStatus.GetStatusColor(status);
+                    pHeader.Populate(conn, trans);
+                    label = "Preparation " + pHeader.Number + ", " + pHeader.PreparationMethodName + ", " + pHeader.LaboratoryName + ", " + pHeader.WorkflowStatusName;
+                    TreeNode pNode = sNode.Nodes.Add(pHeader.Id.ToString(), label);
+                    pNode.ForeColor = WorkflowStatus.GetStatusColor(pHeader.WorkflowStatusId);
+
+                    foreach (AnalysisHeader aHeader in pHeader.Analyses)
+                    {
+                        aHeader.Populate(conn, trans);
+                        label = "Analysis " + aHeader.Number + ", " + aHeader.AnalysisMethodName + ", " + aHeader.LaboratoryName + ", " + aHeader.WorkflowStatusName;
+                        TreeNode aNode = pNode.Nodes.Add(aHeader.Id.ToString(), label);
+                        aNode.ForeColor = WorkflowStatus.GetStatusColor(aHeader.WorkflowStatusId);
+                    }
                 }
             }
 

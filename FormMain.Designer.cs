@@ -639,19 +639,6 @@
             this.lbSampleTypesInheritedComponents = new System.Windows.Forms.ListBox();
             this.toolsTypeRelSampCompInherit = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel25 = new System.Windows.Forms.ToolStripLabel();
-            this.tabTypeRelSampTypeParam = new System.Windows.Forms.TabPage();
-            this.splitContainer14 = new System.Windows.Forms.SplitContainer();
-            this.listBox2 = new System.Windows.Forms.ListBox();
-            this.toolsTypeRelSampPara = new System.Windows.Forms.ToolStrip();
-            this.toolStripLabel49 = new System.Windows.Forms.ToolStripLabel();
-            this.toolStripSeparator37 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButton45 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton46 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton89 = new System.Windows.Forms.ToolStripButton();
-            this.lblTypeRelSampParSel = new System.Windows.Forms.ToolStripLabel();
-            this.listBox4 = new System.Windows.Forms.ListBox();
-            this.toolsTypeRelSampParaInherit = new System.Windows.Forms.ToolStrip();
-            this.toolStripLabel26 = new System.Windows.Forms.ToolStripLabel();
             this.tabTypeRelSampTypePrep = new System.Windows.Forms.TabPage();
             this.splitContainer13 = new System.Windows.Forms.SplitContainer();
             this.lbTypeRelSampTypePrepMeth = new System.Windows.Forms.ListBox();
@@ -1134,13 +1121,6 @@
             this.splitContainer16.SuspendLayout();
             this.toolsTypeRelSampComp.SuspendLayout();
             this.toolsTypeRelSampCompInherit.SuspendLayout();
-            this.tabTypeRelSampTypeParam.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer14)).BeginInit();
-            this.splitContainer14.Panel1.SuspendLayout();
-            this.splitContainer14.Panel2.SuspendLayout();
-            this.splitContainer14.SuspendLayout();
-            this.toolsTypeRelSampPara.SuspendLayout();
-            this.toolsTypeRelSampParaInherit.SuspendLayout();
             this.tabTypeRelSampTypePrep.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer13)).BeginInit();
             this.splitContainer13.Panel1.SuspendLayout();
@@ -7417,7 +7397,6 @@
             // tabControl3
             // 
             this.tabControl3.Controls.Add(this.tabTypeRelSampTypeComp);
-            this.tabControl3.Controls.Add(this.tabTypeRelSampTypeParam);
             this.tabControl3.Controls.Add(this.tabTypeRelSampTypePrep);
             this.tabControl3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl3.Location = new System.Drawing.Point(0, 0);
@@ -7561,139 +7540,6 @@
             this.toolStripLabel25.Name = "toolStripLabel25";
             this.toolStripLabel25.Size = new System.Drawing.Size(193, 22);
             this.toolStripLabel25.Text = "Inherited connected components";
-            // 
-            // tabTypeRelSampTypeParam
-            // 
-            this.tabTypeRelSampTypeParam.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.tabTypeRelSampTypeParam.Controls.Add(this.splitContainer14);
-            this.tabTypeRelSampTypeParam.Location = new System.Drawing.Point(4, 24);
-            this.tabTypeRelSampTypeParam.Name = "tabTypeRelSampTypeParam";
-            this.tabTypeRelSampTypeParam.Padding = new System.Windows.Forms.Padding(3);
-            this.tabTypeRelSampTypeParam.Size = new System.Drawing.Size(609, 531);
-            this.tabTypeRelSampTypeParam.TabIndex = 1;
-            this.tabTypeRelSampTypeParam.Text = "Parameters";
-            // 
-            // splitContainer14
-            // 
-            this.splitContainer14.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer14.Location = new System.Drawing.Point(3, 3);
-            this.splitContainer14.Name = "splitContainer14";
-            this.splitContainer14.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // splitContainer14.Panel1
-            // 
-            this.splitContainer14.Panel1.Controls.Add(this.listBox2);
-            this.splitContainer14.Panel1.Controls.Add(this.toolsTypeRelSampPara);
-            // 
-            // splitContainer14.Panel2
-            // 
-            this.splitContainer14.Panel2.Controls.Add(this.listBox4);
-            this.splitContainer14.Panel2.Controls.Add(this.toolsTypeRelSampParaInherit);
-            this.splitContainer14.Size = new System.Drawing.Size(603, 525);
-            this.splitContainer14.SplitterDistance = 260;
-            this.splitContainer14.SplitterWidth = 3;
-            this.splitContainer14.TabIndex = 0;
-            // 
-            // listBox2
-            // 
-            this.listBox2.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.listBox2.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.listBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listBox2.FormattingEnabled = true;
-            this.listBox2.ItemHeight = 15;
-            this.listBox2.Location = new System.Drawing.Point(0, 25);
-            this.listBox2.Name = "listBox2";
-            this.listBox2.Size = new System.Drawing.Size(603, 235);
-            this.listBox2.TabIndex = 2;
-            // 
-            // toolsTypeRelSampPara
-            // 
-            this.toolsTypeRelSampPara.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.toolsTypeRelSampPara.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripLabel49,
-            this.toolStripSeparator37,
-            this.toolStripButton45,
-            this.toolStripButton46,
-            this.toolStripButton89,
-            this.lblTypeRelSampParSel});
-            this.toolsTypeRelSampPara.Location = new System.Drawing.Point(0, 0);
-            this.toolsTypeRelSampPara.Name = "toolsTypeRelSampPara";
-            this.toolsTypeRelSampPara.Size = new System.Drawing.Size(603, 25);
-            this.toolsTypeRelSampPara.TabIndex = 1;
-            this.toolsTypeRelSampPara.Text = "toolStrip32";
-            // 
-            // toolStripLabel49
-            // 
-            this.toolStripLabel49.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.toolStripLabel49.Name = "toolStripLabel49";
-            this.toolStripLabel49.Size = new System.Drawing.Size(134, 22);
-            this.toolStripLabel49.Text = "Connected parameters";
-            // 
-            // toolStripSeparator37
-            // 
-            this.toolStripSeparator37.Name = "toolStripSeparator37";
-            this.toolStripSeparator37.Size = new System.Drawing.Size(6, 25);
-            // 
-            // toolStripButton45
-            // 
-            this.toolStripButton45.Image = global::DSA_lims.Properties.Resources._new;
-            this.toolStripButton45.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton45.Name = "toolStripButton45";
-            this.toolStripButton45.Size = new System.Drawing.Size(51, 22);
-            this.toolStripButton45.Text = "New";
-            // 
-            // toolStripButton46
-            // 
-            this.toolStripButton46.Image = global::DSA_lims.Properties.Resources.edit;
-            this.toolStripButton46.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton46.Name = "toolStripButton46";
-            this.toolStripButton46.Size = new System.Drawing.Size(47, 22);
-            this.toolStripButton46.Text = "Edit";
-            // 
-            // toolStripButton89
-            // 
-            this.toolStripButton89.Image = global::DSA_lims.Properties.Resources.delete;
-            this.toolStripButton89.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton89.Name = "toolStripButton89";
-            this.toolStripButton89.Size = new System.Drawing.Size(60, 22);
-            this.toolStripButton89.Text = "Delete";
-            // 
-            // lblTypeRelSampParSel
-            // 
-            this.lblTypeRelSampParSel.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.lblTypeRelSampParSel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.lblTypeRelSampParSel.Name = "lblTypeRelSampParSel";
-            this.lblTypeRelSampParSel.Size = new System.Drawing.Size(0, 22);
-            // 
-            // listBox4
-            // 
-            this.listBox4.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.listBox4.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.listBox4.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listBox4.FormattingEnabled = true;
-            this.listBox4.ItemHeight = 15;
-            this.listBox4.Location = new System.Drawing.Point(0, 25);
-            this.listBox4.Name = "listBox4";
-            this.listBox4.Size = new System.Drawing.Size(603, 237);
-            this.listBox4.TabIndex = 3;
-            // 
-            // toolsTypeRelSampParaInherit
-            // 
-            this.toolsTypeRelSampParaInherit.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.toolsTypeRelSampParaInherit.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripLabel26});
-            this.toolsTypeRelSampParaInherit.Location = new System.Drawing.Point(0, 0);
-            this.toolsTypeRelSampParaInherit.Name = "toolsTypeRelSampParaInherit";
-            this.toolsTypeRelSampParaInherit.Size = new System.Drawing.Size(603, 25);
-            this.toolsTypeRelSampParaInherit.TabIndex = 2;
-            this.toolsTypeRelSampParaInherit.Text = "toolStrip34";
-            // 
-            // toolStripLabel26
-            // 
-            this.toolStripLabel26.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.toolStripLabel26.Name = "toolStripLabel26";
-            this.toolStripLabel26.Size = new System.Drawing.Size(188, 22);
-            this.toolStripLabel26.Text = "Inherited connected parameters";
             // 
             // tabTypeRelSampTypePrep
             // 
@@ -11264,17 +11110,6 @@
             this.toolsTypeRelSampComp.PerformLayout();
             this.toolsTypeRelSampCompInherit.ResumeLayout(false);
             this.toolsTypeRelSampCompInherit.PerformLayout();
-            this.tabTypeRelSampTypeParam.ResumeLayout(false);
-            this.splitContainer14.Panel1.ResumeLayout(false);
-            this.splitContainer14.Panel1.PerformLayout();
-            this.splitContainer14.Panel2.ResumeLayout(false);
-            this.splitContainer14.Panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer14)).EndInit();
-            this.splitContainer14.ResumeLayout(false);
-            this.toolsTypeRelSampPara.ResumeLayout(false);
-            this.toolsTypeRelSampPara.PerformLayout();
-            this.toolsTypeRelSampParaInherit.ResumeLayout(false);
-            this.toolsTypeRelSampParaInherit.PerformLayout();
             this.tabTypeRelSampTypePrep.ResumeLayout(false);
             this.splitContainer13.Panel1.ResumeLayout(false);
             this.splitContainer13.Panel1.PerformLayout();
@@ -11649,15 +11484,6 @@
         private System.Windows.Forms.ListBox lbSampleTypesInheritedComponents;
         private System.Windows.Forms.ToolStrip toolsTypeRelSampCompInherit;
         private System.Windows.Forms.ToolStripLabel toolStripLabel25;
-        private System.Windows.Forms.TabPage tabTypeRelSampTypeParam;
-        private System.Windows.Forms.SplitContainer splitContainer14;
-        private System.Windows.Forms.ListBox listBox2;
-        private System.Windows.Forms.ToolStrip toolsTypeRelSampPara;
-        private System.Windows.Forms.ToolStripButton toolStripButton45;
-        private System.Windows.Forms.ToolStripButton toolStripButton46;
-        private System.Windows.Forms.ListBox listBox4;
-        private System.Windows.Forms.ToolStrip toolsTypeRelSampParaInherit;
-        private System.Windows.Forms.ToolStripLabel toolStripLabel26;
         private System.Windows.Forms.TabPage tabTypeRelSampTypePrep;
         private System.Windows.Forms.SplitContainer splitContainer13;
         private System.Windows.Forms.ToolStrip toolsTypeRelSampPrepMeth;
@@ -11838,9 +11664,6 @@
         private System.Windows.Forms.ToolStripLabel toolStripLabel48;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator36;
         private System.Windows.Forms.ToolStripButton btnTypeRelSampTypeCompDelete;
-        private System.Windows.Forms.ToolStripLabel toolStripLabel49;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator37;
-        private System.Windows.Forms.ToolStripButton toolStripButton89;
         private System.Windows.Forms.ToolStripLabel toolStripLabel50;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator38;
         private System.Windows.Forms.ToolStripButton btnTypeRelSampTypePrepMethAdd;
@@ -11928,7 +11751,6 @@
         private System.Windows.Forms.ToolStripButton btnProjectSubPrint;
         private System.Windows.Forms.DataGridView gridProjectSub;
         private System.Windows.Forms.ToolStripLabel lblTypeRelSampCompSel;
-        private System.Windows.Forms.ToolStripLabel lblTypeRelSampParSel;
         private System.Windows.Forms.ToolStripLabel lblTypeRelSampPrepSel;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator30;
         private System.Windows.Forms.ToolStripButton toolStripButton99;

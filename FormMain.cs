@@ -811,7 +811,7 @@ namespace DSA_lims
         {            
             TreeNode tnode = e.Node;
 
-            lblTypeRelSampCompSel.Text = lblTypeRelSampParSel.Text = lblTypeRelSampPrepSel.Text = tnode.Text;
+            lblTypeRelSampCompSel.Text = lblTypeRelSampPrepSel.Text = tnode.Text;
 
             try
             {
@@ -3142,7 +3142,7 @@ namespace DSA_lims
             // Show attachments
             UI.PopulateAttachments(conn, null, "assignment", a.Id, gridOrderAttachments);
 
-            PopulateOrderOverview(conn, trans, a);            
+            PopulateOrderOverview(conn, trans, a);
 
             if(clearDirty)
             {
@@ -3157,6 +3157,13 @@ namespace DSA_lims
                             aam.Dirty = false;
                     }
                 }
+            }
+
+            if (a.WorkflowStatusId == WorkflowStatus.Complete)
+            {
+                cbOrderApprovedCustomer.Enabled = false;
+                cbOrderApprovedLaboratory.Enabled = false;
+                tbOrderReportComment.Enabled = false;
             }
         }
 

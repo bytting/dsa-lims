@@ -1949,7 +1949,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>A betyr at resultatet er akkreditert, G betyr at resultatet er godkjent men ikke akkreditert og ingen resultat betyr at analysen er forkastet.</Value>
+                <Value>A betyr at resultatet er akkreditert, G betyr at resultatet er godkjent men ikke akkreditert, ingen merking betyr at ingen resultater ble godkjent.</Value>
                 <Style>
                   <FontSize>8pt</FontSize>
                 </Style>

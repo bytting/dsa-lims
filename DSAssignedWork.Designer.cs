@@ -959,7 +959,7 @@ namespace DSA_lims.DSAssignedWorkTableAdapters {
             this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
             this._adapter.UpdateCommand.CommandText = @"UPDATE [assignment] SET [id] = @id, [name] = @name, [deadline] = @deadline WHERE (([id] = @Original_id) AND ([name] = @Original_name) AND ([deadline] = @Original_deadline));
-SELECT id, name, deadline, (SELECT SUM(ast.sample_count * apm.preparation_method_count) AS Expr1 FROM assignment_preparation_method AS apm INNER JOIN assignment_sample_type AS ast ON ast.id = apm.assignment_sample_type_id INNER JOIN assignment AS a1 ON a1.id = ast.assignment_id AND a1.id = a.id AND apm.preparation_laboratory_id = a1.laboratory_id) AS 'AssignedPreparations', (SELECT COUNT(*) AS Expr1 FROM preparation AS p WHERE (assignment_id = a.id) AND (workflow_status_id = 2)) AS 'CompletedPreparations', (SELECT SUM(ast.sample_count * apm.preparation_method_count * aam.analysis_method_count) AS Expr1 FROM assignment_analysis_method AS aam INNER JOIN assignment_preparation_method AS apm ON apm.id = aam.assignment_preparation_method_id INNER JOIN assignment_sample_type AS ast ON ast.id = apm.assignment_sample_type_id INNER JOIN assignment AS a2 ON a2.id = ast.assignment_id AND a2.id = a.id) AS 'AssignedAnalyses', (SELECT COUNT(*) AS Expr1 FROM analysis AS an WHERE (assignment_id = a.id) AND (workflow_status_id = 2)) AS 'CompletedAnalyses' FROM assignment AS a WHERE (id = @id) GROUP BY id, name, deadline";
+SELECT id, name, deadline, (SELECT SUM(ast.sample_count * apm.preparation_method_count) AS Expr1 FROM assignment_preparation_method AS apm INNER JOIN assignment_sample_type AS ast ON ast.id = apm.assignment_sample_type_id INNER JOIN assignment AS a1 ON a1.id = ast.assignment_id AND a1.id = a.id AND apm.preparation_laboratory_id = a1.laboratory_id) AS 'AssignedPreparations', (SELECT COUNT(*) AS Expr1 FROM preparation AS p WHERE (assignment_id = a.id) AND (workflow_status_id = 2) AND (instance_status_id = 1)) AS 'CompletedPreparations', (SELECT SUM(ast.sample_count * apm.preparation_method_count * aam.analysis_method_count) AS Expr1 FROM assignment_analysis_method AS aam INNER JOIN assignment_preparation_method AS apm ON apm.id = aam.assignment_preparation_method_id INNER JOIN assignment_sample_type AS ast ON ast.id = apm.assignment_sample_type_id INNER JOIN assignment AS a2 ON a2.id = ast.assignment_id AND a2.id = a.id) AS 'AssignedAnalyses', (SELECT COUNT(*) AS Expr1 FROM analysis AS an WHERE (assignment_id = a.id) AND (workflow_status_id = 2) AND (instance_status_id = 1)) AS 'CompletedAnalyses' FROM assignment AS a WHERE (id = @id) GROUP BY id, name, deadline";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@id", global::System.Data.SqlDbType.UniqueIdentifier, 0, global::System.Data.ParameterDirection.Input, 0, 0, "id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@name", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "name", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -992,20 +992,21 @@ SELECT id, name, deadline, (SELECT SUM(ast.sample_count * apm.preparation_method
                 "gnedPreparations\',\r\n                             (SELECT        COUNT(*) AS Expr" +
                 "1\r\n                               FROM            preparation AS p\r\n            " +
                 "                   WHERE        (assignment_id = a.id) AND (workflow_status_id =" +
-                " 2)) AS \'CompletedPreparations\',\r\n                             (SELECT        SU" +
-                "M(ast.sample_count * apm.preparation_method_count * aam.analysis_method_count) A" +
-                "S Expr1\r\n                               FROM            assignment_analysis_meth" +
-                "od AS aam INNER JOIN\r\n                                                         a" +
-                "ssignment_preparation_method AS apm ON apm.id = aam.assignment_preparation_metho" +
-                "d_id INNER JOIN\r\n                                                         assign" +
-                "ment_sample_type AS ast ON ast.id = apm.assignment_sample_type_id INNER JOIN\r\n  " +
-                "                                                       assignment AS a2 ON a2.id" +
-                " = ast.assignment_id AND a2.id = a.id) AS \'AssignedAnalyses\',\r\n                 " +
-                "            (SELECT        COUNT(*) AS Expr1\r\n                               FRO" +
-                "M            analysis AS an\r\n                               WHERE        (assign" +
-                "ment_id = a.id) AND (workflow_status_id = 2)) AS \'CompletedAnalyses\'\r\nFROM      " +
-                "      assignment AS a\r\nWHERE        (laboratory_id = @labid) AND (workflow_statu" +
-                "s_id = 1)\r\nGROUP BY id, name, deadline";
+                " 2) AND (instance_status_id = 1)) AS \'CompletedPreparations\',\r\n                 " +
+                "            (SELECT        SUM(ast.sample_count * apm.preparation_method_count *" +
+                " aam.analysis_method_count) AS Expr1\r\n                               FROM       " +
+                "     assignment_analysis_method AS aam INNER JOIN\r\n                             " +
+                "                            assignment_preparation_method AS apm ON apm.id = aam" +
+                ".assignment_preparation_method_id INNER JOIN\r\n                                  " +
+                "                       assignment_sample_type AS ast ON ast.id = apm.assignment_" +
+                "sample_type_id INNER JOIN\r\n                                                     " +
+                "    assignment AS a2 ON a2.id = ast.assignment_id AND a2.id = a.id) AS \'Assigned" +
+                "Analyses\',\r\n                             (SELECT        COUNT(*) AS Expr1\r\n     " +
+                "                          FROM            analysis AS an\r\n                      " +
+                "         WHERE        (assignment_id = a.id) AND (workflow_status_id = 2) AND (i" +
+                "nstance_status_id = 1)) AS \'CompletedAnalyses\'\r\nFROM            assignment AS a\r" +
+                "\nWHERE        (laboratory_id = @labid) AND (workflow_status_id = 1)\r\nGROUP BY id" +
+                ", name, deadline";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@labid", global::System.Data.SqlDbType.UniqueIdentifier, 16, global::System.Data.ParameterDirection.Input, 0, 0, "laboratory_id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }

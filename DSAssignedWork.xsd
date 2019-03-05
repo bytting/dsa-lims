@@ -10,7 +10,7 @@
         <Tables>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="assignmentTableAdapter" GeneratorDataComponentClassName="assignmentTableAdapter" Name="assignment" UserDataComponentName="assignmentTableAdapter">
             <MainSource>
-              <DbSource ConnectionRef="dsa_limsConnectionString (Settings)" DbObjectName="" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+              <DbSource ConnectionRef="dsa_limsConnectionString (Settings)" DbObjectName="dsa_lims.dbo.assignment" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
                 <DeleteCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="false">
                     <CommandText>DELETE FROM [assignment] WHERE (([id] = @Original_id) AND ([name] = @Original_name) AND ([deadline] = @Original_deadline))</CommandText>
@@ -30,7 +30,7 @@
                                                          assignment AS a1 ON a1.id = ast.assignment_id AND a1.id = a.id AND apm.preparation_laboratory_id = a1.laboratory_id) AS 'AssignedPreparations',
                              (SELECT        COUNT(*) AS Expr1
                                FROM            preparation AS p
-                               WHERE        (assignment_id = a.id) AND (workflow_status_id = 2)) AS 'CompletedPreparations',
+                               WHERE        (assignment_id = a.id) AND (workflow_status_id = 2) AND (instance_status_id = 1)) AS 'CompletedPreparations',
                              (SELECT        SUM(ast.sample_count * apm.preparation_method_count * aam.analysis_method_count) AS Expr1
                                FROM            assignment_analysis_method AS aam INNER JOIN
                                                          assignment_preparation_method AS apm ON apm.id = aam.assignment_preparation_method_id INNER JOIN
@@ -38,7 +38,7 @@
                                                          assignment AS a2 ON a2.id = ast.assignment_id AND a2.id = a.id) AS 'AssignedAnalyses',
                              (SELECT        COUNT(*) AS Expr1
                                FROM            analysis AS an
-                               WHERE        (assignment_id = a.id) AND (workflow_status_id = 2)) AS 'CompletedAnalyses'
+                               WHERE        (assignment_id = a.id) AND (workflow_status_id = 2) AND (instance_status_id = 1)) AS 'CompletedAnalyses'
 FROM            assignment AS a
 WHERE        (laboratory_id = @labid) AND (workflow_status_id = 1)
 GROUP BY id, name, deadline</CommandText>
@@ -50,7 +50,7 @@ GROUP BY id, name, deadline</CommandText>
                 <UpdateCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="false">
                     <CommandText>UPDATE [assignment] SET [id] = @id, [name] = @name, [deadline] = @deadline WHERE (([id] = @Original_id) AND ([name] = @Original_name) AND ([deadline] = @Original_deadline));
-SELECT id, name, deadline, (SELECT SUM(ast.sample_count * apm.preparation_method_count) AS Expr1 FROM assignment_preparation_method AS apm INNER JOIN assignment_sample_type AS ast ON ast.id = apm.assignment_sample_type_id INNER JOIN assignment AS a1 ON a1.id = ast.assignment_id AND a1.id = a.id AND apm.preparation_laboratory_id = a1.laboratory_id) AS 'AssignedPreparations', (SELECT COUNT(*) AS Expr1 FROM preparation AS p WHERE (assignment_id = a.id) AND (workflow_status_id = 2)) AS 'CompletedPreparations', (SELECT SUM(ast.sample_count * apm.preparation_method_count * aam.analysis_method_count) AS Expr1 FROM assignment_analysis_method AS aam INNER JOIN assignment_preparation_method AS apm ON apm.id = aam.assignment_preparation_method_id INNER JOIN assignment_sample_type AS ast ON ast.id = apm.assignment_sample_type_id INNER JOIN assignment AS a2 ON a2.id = ast.assignment_id AND a2.id = a.id) AS 'AssignedAnalyses', (SELECT COUNT(*) AS Expr1 FROM analysis AS an WHERE (assignment_id = a.id) AND (workflow_status_id = 2)) AS 'CompletedAnalyses' FROM assignment AS a WHERE (id = @id) GROUP BY id, name, deadline</CommandText>
+SELECT id, name, deadline, (SELECT SUM(ast.sample_count * apm.preparation_method_count) AS Expr1 FROM assignment_preparation_method AS apm INNER JOIN assignment_sample_type AS ast ON ast.id = apm.assignment_sample_type_id INNER JOIN assignment AS a1 ON a1.id = ast.assignment_id AND a1.id = a.id AND apm.preparation_laboratory_id = a1.laboratory_id) AS 'AssignedPreparations', (SELECT COUNT(*) AS Expr1 FROM preparation AS p WHERE (assignment_id = a.id) AND (workflow_status_id = 2) AND (instance_status_id = 1)) AS 'CompletedPreparations', (SELECT SUM(ast.sample_count * apm.preparation_method_count * aam.analysis_method_count) AS Expr1 FROM assignment_analysis_method AS aam INNER JOIN assignment_preparation_method AS apm ON apm.id = aam.assignment_preparation_method_id INNER JOIN assignment_sample_type AS ast ON ast.id = apm.assignment_sample_type_id INNER JOIN assignment AS a2 ON a2.id = ast.assignment_id AND a2.id = a.id) AS 'AssignedAnalyses', (SELECT COUNT(*) AS Expr1 FROM analysis AS an WHERE (assignment_id = a.id) AND (workflow_status_id = 2) AND (instance_status_id = 1)) AS 'CompletedAnalyses' FROM assignment AS a WHERE (id = @id) GROUP BY id, name, deadline</CommandText>
                     <Parameters>
                       <Parameter AllowDbNull="false" AutogeneratedName="" DataSourceName="" DbType="Guid" Direction="Input" ParameterName="@id" Precision="0" ProviderType="UniqueIdentifier" Scale="0" Size="0" SourceColumn="id" SourceColumnNullMapping="false" SourceVersion="Current" />
                       <Parameter AllowDbNull="false" AutogeneratedName="" DataSourceName="" DbType="String" Direction="Input" ParameterName="@name" Precision="0" ProviderType="NVarChar" Scale="0" Size="0" SourceColumn="name" SourceColumnNullMapping="false" SourceVersion="Current" />
@@ -82,7 +82,7 @@ SELECT id, name, deadline, (SELECT SUM(ast.sample_count * apm.preparation_method
   <xs:element name="DSAssignedWork" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="DSAssignedWork" msprop:Generator_UserDSName="DSAssignedWork">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="assignment" msprop:Generator_TableClassName="assignmentDataTable" msprop:Generator_TableVarName="tableassignment" msprop:Generator_TablePropName="assignment" msprop:Generator_RowDeletingName="assignmentRowDeleting" msprop:Generator_RowChangingName="assignmentRowChanging" msprop:Generator_RowEvHandlerName="assignmentRowChangeEventHandler" msprop:Generator_RowDeletedName="assignmentRowDeleted" msprop:Generator_UserTableName="assignment" msprop:Generator_RowChangedName="assignmentRowChanged" msprop:Generator_RowEvArgName="assignmentRowChangeEvent" msprop:Generator_RowClassName="assignmentRow">
+        <xs:element name="assignment" msprop:Generator_TableClassName="assignmentDataTable" msprop:Generator_TableVarName="tableassignment" msprop:Generator_RowChangedName="assignmentRowChanged" msprop:Generator_TablePropName="assignment" msprop:Generator_RowDeletingName="assignmentRowDeleting" msprop:Generator_RowChangingName="assignmentRowChanging" msprop:Generator_RowEvHandlerName="assignmentRowChangeEventHandler" msprop:Generator_RowDeletedName="assignmentRowDeleted" msprop:Generator_RowClassName="assignmentRow" msprop:Generator_UserTableName="assignment" msprop:Generator_RowEvArgName="assignmentRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="id" msdata:DataType="System.Guid, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" msprop:Generator_ColumnVarNameInTable="columnid" msprop:Generator_ColumnPropNameInRow="id" msprop:Generator_ColumnPropNameInTable="idColumn" msprop:Generator_UserColumnName="id" type="xs:string" />

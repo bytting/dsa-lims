@@ -26,7 +26,7 @@ namespace DSA_lims.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Server=.\\sqlexpress;Database=dsa_lims;Trusted_Connection=True;")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Server=localhost;Database=dsa_lims;Trusted_Connection=True;")]
         public string dsa_limsConnectionString {
             get {
                 return ((string)(this["dsa_limsConnectionString"]));

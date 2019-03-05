@@ -31,16 +31,26 @@
             this.components = new System.ComponentModel.Container();
             Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormReportAssignedWork));
+            this.assignmentBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.DSAssignedWork = new DSA_lims.DSAssignedWork();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnClose = new System.Windows.Forms.Button();
             this.reportViewerAssignedWork = new Microsoft.Reporting.WinForms.ReportViewer();
-            this.assignmentBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.DSAssignedWork = new DSA_lims.DSAssignedWork();
             this.assignmentTableAdapter = new DSA_lims.DSAssignedWorkTableAdapters.assignmentTableAdapter();
-            this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.assignmentBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DSAssignedWork)).BeginInit();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // assignmentBindingSource
+            // 
+            this.assignmentBindingSource.DataMember = "assignment";
+            this.assignmentBindingSource.DataSource = this.DSAssignedWork;
+            // 
+            // DSAssignedWork
+            // 
+            this.DSAssignedWork.DataSetName = "DSAssignedWork";
+            this.DSAssignedWork.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
             // panel1
             // 
@@ -75,16 +85,6 @@
             this.reportViewerAssignedWork.Size = new System.Drawing.Size(836, 537);
             this.reportViewerAssignedWork.TabIndex = 10;
             // 
-            // assignmentBindingSource
-            // 
-            this.assignmentBindingSource.DataMember = "assignment";
-            this.assignmentBindingSource.DataSource = this.DSAssignedWork;
-            // 
-            // DSAssignedWork
-            // 
-            this.DSAssignedWork.DataSetName = "DSAssignedWork";
-            this.DSAssignedWork.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
             // assignmentTableAdapter
             // 
             this.assignmentTableAdapter.ClearBeforeFill = true;
@@ -101,9 +101,9 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "DSALims - Assigned work";
             this.Load += new System.EventHandler(this.FormReportAssignedWork_Load);
-            this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.assignmentBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.DSAssignedWork)).EndInit();
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

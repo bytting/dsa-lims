@@ -60,7 +60,9 @@
                     <Y>=Sum(Fields!AssignedPreparations.Value)</Y>
                   </ChartDataPointValues>
                   <ChartDataLabel>
-                    <Style />
+                    <Style>
+                      <Color>Red</Color>
+                    </Style>
                     <UseValueAsLabel>true</UseValueAsLabel>
                     <Visible>true</Visible>
                   </ChartDataLabel>
@@ -97,7 +99,11 @@
                     <Y>=Sum(Fields!CompletedPreparations.Value)</Y>
                   </ChartDataPointValues>
                   <ChartDataLabel>
-                    <Style />
+                    <Style>
+                      <Color>DarkGreen</Color>
+                    </Style>
+                    <UseValueAsLabel>true</UseValueAsLabel>
+                    <Visible>true</Visible>
                   </ChartDataLabel>
                   <Style>
                     <Color>DodgerBlue</Color>
@@ -132,7 +138,9 @@
                     <Y>=Sum(Fields!AssignedAnalyses.Value)</Y>
                   </ChartDataPointValues>
                   <ChartDataLabel>
-                    <Style />
+                    <Style>
+                      <Color>Red</Color>
+                    </Style>
                     <UseValueAsLabel>true</UseValueAsLabel>
                     <Visible>true</Visible>
                   </ChartDataLabel>
@@ -169,7 +177,11 @@
                     <Y>=Sum(Fields!CompletedAnalyses.Value)</Y>
                   </ChartDataPointValues>
                   <ChartDataLabel>
-                    <Style />
+                    <Style>
+                      <Color>DarkGreen</Color>
+                    </Style>
+                    <UseValueAsLabel>true</UseValueAsLabel>
+                    <Visible>true</Visible>
                   </ChartDataLabel>
                   <Style>
                     <Color>Tomato</Color>

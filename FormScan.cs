@@ -121,7 +121,7 @@ namespace DSA_lims
                 document.Open();
                 foreach (Image img in images)
                 {
-                    var pdfImg = tsText.Image.GetInstance(img, ImageFormat.Png);
+                    var pdfImg = tsText.Image.GetInstance(img, ImageFormat.Jpeg);
                     pdfImg.ScaleToFit(document.PageSize.Width, document.PageSize.Height);
                     pdfImg.SpacingBefore = 0f;
                     pdfImg.SpacingAfter = 0f;

@@ -118,7 +118,9 @@ namespace DSA_lims
                 var document = new tsText.Document(tsText.PageSize.A4);
                 var output = new MemoryStream();
                 var writer = tsPdf.PdfWriter.GetInstance(document, output);
+
                 document.Open();
+
                 foreach (Image img in images)
                 {
                     var pdfImg = tsText.Image.GetInstance(img, ImageFormat.Jpeg);

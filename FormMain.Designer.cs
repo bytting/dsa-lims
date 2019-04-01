@@ -775,9 +775,9 @@
             this.toolsSysGeom = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel43 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator23 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButton39 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton40 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton76 = new System.Windows.Forms.ToolStripButton();
+            this.btnNewGeometry = new System.Windows.Forms.ToolStripButton();
+            this.btnEditGeometry = new System.Windows.Forms.ToolStripButton();
+            this.btnDeleteGeometry = new System.Windows.Forms.ToolStripButton();
             this.tabSysPers = new System.Windows.Forms.TabPage();
             this.gridSysPers = new System.Windows.Forms.DataGridView();
             this.toolStrip14 = new System.Windows.Forms.ToolStrip();
@@ -1353,68 +1353,68 @@
             // miMainMenuView
             // 
             this.miMainMenuView.Name = "miMainMenuView";
-            this.miMainMenuView.Size = new System.Drawing.Size(148, 22);
+            this.miMainMenuView.Size = new System.Drawing.Size(157, 22);
             this.miMainMenuView.Text = "Ma&in menu";
             this.miMainMenuView.Click += new System.EventHandler(this.miMainMenuView_Click);
             // 
             // miBack
             // 
             this.miBack.Name = "miBack";
-            this.miBack.Size = new System.Drawing.Size(148, 22);
+            this.miBack.Size = new System.Drawing.Size(157, 22);
             this.miBack.Text = "Back";
             this.miBack.Click += new System.EventHandler(this.miBack_Click);
             // 
             // toolStripSeparator25
             // 
             this.toolStripSeparator25.Name = "toolStripSeparator25";
-            this.toolStripSeparator25.Size = new System.Drawing.Size(145, 6);
+            this.toolStripSeparator25.Size = new System.Drawing.Size(154, 6);
             // 
             // miSearchView
             // 
             this.miSearchView.Name = "miSearchView";
-            this.miSearchView.Size = new System.Drawing.Size(148, 22);
+            this.miSearchView.Size = new System.Drawing.Size(157, 22);
             this.miSearchView.Text = "S&earch";
             this.miSearchView.Click += new System.EventHandler(this.miSearchView_Click);
             // 
             // miProjectsView
             // 
             this.miProjectsView.Name = "miProjectsView";
-            this.miProjectsView.Size = new System.Drawing.Size(148, 22);
+            this.miProjectsView.Size = new System.Drawing.Size(157, 22);
             this.miProjectsView.Text = "&Projects";
             this.miProjectsView.Click += new System.EventHandler(this.miProjectsView_Click);
             // 
             // miCustomersView
             // 
             this.miCustomersView.Name = "miCustomersView";
-            this.miCustomersView.Size = new System.Drawing.Size(148, 22);
+            this.miCustomersView.Size = new System.Drawing.Size(157, 22);
             this.miCustomersView.Text = "&Customers";
             this.miCustomersView.Click += new System.EventHandler(this.miCustomersView_Click);
             // 
             // miTypeRelationsView
             // 
             this.miTypeRelationsView.Name = "miTypeRelationsView";
-            this.miTypeRelationsView.Size = new System.Drawing.Size(148, 22);
-            this.miTypeRelationsView.Text = "Type &relations";
+            this.miTypeRelationsView.Size = new System.Drawing.Size(157, 22);
+            this.miTypeRelationsView.Text = "&Types/Methods";
             this.miTypeRelationsView.Click += new System.EventHandler(this.miTypeRelationsView_Click);
             // 
             // miMetadataView
             // 
             this.miMetadataView.Name = "miMetadataView";
-            this.miMetadataView.Size = new System.Drawing.Size(148, 22);
+            this.miMetadataView.Size = new System.Drawing.Size(157, 22);
             this.miMetadataView.Text = "M&etadata";
             this.miMetadataView.Click += new System.EventHandler(this.miMetadataView_Click);
             // 
             // miSystemDataView
             // 
             this.miSystemDataView.Name = "miSystemDataView";
-            this.miSystemDataView.Size = new System.Drawing.Size(148, 22);
+            this.miSystemDataView.Size = new System.Drawing.Size(157, 22);
             this.miSystemDataView.Text = "&System data";
             this.miSystemDataView.Click += new System.EventHandler(this.miSystemDataView_Click);
             // 
             // miAuditLogView
             // 
             this.miAuditLogView.Name = "miAuditLogView";
-            this.miAuditLogView.Size = new System.Drawing.Size(148, 22);
+            this.miAuditLogView.Size = new System.Drawing.Size(157, 22);
             this.miAuditLogView.Text = "&Audit log";
             this.miAuditLogView.Click += new System.EventHandler(this.miAuditLogView_Click);
             // 
@@ -2007,8 +2007,8 @@
             this.miPreparationMethods,
             this.miAnalysisMethods});
             this.miTypeRelations.Name = "miTypeRelations";
-            this.miTypeRelations.Size = new System.Drawing.Size(93, 20);
-            this.miTypeRelations.Text = "&Type relations";
+            this.miTypeRelations.Size = new System.Drawing.Size(102, 20);
+            this.miTypeRelations.Text = "&Types/Methods";
             // 
             // miTypeRelSampleTypes
             // 
@@ -2732,7 +2732,7 @@
             this.tbMenuLookup.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.tbMenuLookup.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbMenuLookup.Location = new System.Drawing.Point(267, 10);
-            this.tbMenuLookup.MaxLength = 32;
+            this.tbMenuLookup.MaxLength = 10;
             this.tbMenuLookup.Name = "tbMenuLookup";
             this.tbMenuLookup.Size = new System.Drawing.Size(258, 19);
             this.tbMenuLookup.TabIndex = 5;
@@ -3357,9 +3357,9 @@
             this.cbSampleConfidential.AutoSize = true;
             this.cbSampleConfidential.Location = new System.Drawing.Point(452, 73);
             this.cbSampleConfidential.Name = "cbSampleConfidential";
-            this.cbSampleConfidential.Size = new System.Drawing.Size(121, 17);
+            this.cbSampleConfidential.Size = new System.Drawing.Size(115, 17);
             this.cbSampleConfidential.TabIndex = 3;
-            this.cbSampleConfidential.Text = "Excempt from public";
+            this.cbSampleConfidential.Text = "Exempt from public";
             this.cbSampleConfidential.UseVisualStyleBackColor = true;
             this.cbSampleConfidential.CheckedChanged += new System.EventHandler(this.cbSampleConfidential_CheckedChanged);
             // 
@@ -4895,6 +4895,7 @@
             // 
             this.tbSearchActMin.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbSearchActMin.Location = new System.Drawing.Point(63, 0);
+            this.tbSearchActMin.MaxLength = 32;
             this.tbSearchActMin.Name = "tbSearchActMin";
             this.tbSearchActMin.Size = new System.Drawing.Size(137, 21);
             this.tbSearchActMin.TabIndex = 4;
@@ -4923,6 +4924,7 @@
             // 
             this.tbSearchActMax.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbSearchActMax.Location = new System.Drawing.Point(66, 0);
+            this.tbSearchActMax.MaxLength = 32;
             this.tbSearchActMax.Name = "tbSearchActMax";
             this.tbSearchActMax.Size = new System.Drawing.Size(134, 21);
             this.tbSearchActMax.TabIndex = 1;
@@ -6613,7 +6615,7 @@
             this.tbSamplesLookup.BackColor = System.Drawing.SystemColors.Window;
             this.tbSamplesLookup.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbSamplesLookup.Location = new System.Drawing.Point(74, 0);
-            this.tbSamplesLookup.MaxLength = 32;
+            this.tbSamplesLookup.MaxLength = 10;
             this.tbSamplesLookup.Name = "tbSamplesLookup";
             this.tbSamplesLookup.Size = new System.Drawing.Size(122, 21);
             this.tbSamplesLookup.TabIndex = 0;
@@ -7234,7 +7236,7 @@
             this.tabTypeRel.Padding = new System.Windows.Forms.Padding(3);
             this.tabTypeRel.Size = new System.Drawing.Size(1064, 599);
             this.tabTypeRel.TabIndex = 13;
-            this.tabTypeRel.Text = "Type relations";
+            this.tabTypeRel.Text = "Types/Methods";
             // 
             // tabsTypeRel
             // 
@@ -7548,7 +7550,7 @@
             this.tabTypeRelSampTypePrep.Location = new System.Drawing.Point(4, 22);
             this.tabTypeRelSampTypePrep.Name = "tabTypeRelSampTypePrep";
             this.tabTypeRelSampTypePrep.Padding = new System.Windows.Forms.Padding(3);
-            this.tabTypeRelSampTypePrep.Size = new System.Drawing.Size(609, 535);
+            this.tabTypeRelSampTypePrep.Size = new System.Drawing.Size(582, 535);
             this.tabTypeRelSampTypePrep.TabIndex = 2;
             this.tabTypeRelSampTypePrep.Text = "Preparation methods";
             // 
@@ -7568,7 +7570,7 @@
             // 
             this.splitContainer13.Panel2.Controls.Add(this.lbTypeRelSampTypeInheritedPrepMeth);
             this.splitContainer13.Panel2.Controls.Add(this.toolsTypeRelSampAnalMeth);
-            this.splitContainer13.Size = new System.Drawing.Size(603, 529);
+            this.splitContainer13.Size = new System.Drawing.Size(576, 529);
             this.splitContainer13.SplitterDistance = 197;
             this.splitContainer13.SplitterWidth = 3;
             this.splitContainer13.TabIndex = 0;
@@ -7582,7 +7584,7 @@
             this.lbTypeRelSampTypePrepMeth.ItemHeight = 15;
             this.lbTypeRelSampTypePrepMeth.Location = new System.Drawing.Point(0, 25);
             this.lbTypeRelSampTypePrepMeth.Name = "lbTypeRelSampTypePrepMeth";
-            this.lbTypeRelSampTypePrepMeth.Size = new System.Drawing.Size(603, 172);
+            this.lbTypeRelSampTypePrepMeth.Size = new System.Drawing.Size(576, 172);
             this.lbTypeRelSampTypePrepMeth.TabIndex = 1;
             // 
             // toolsTypeRelSampPrepMeth
@@ -7596,7 +7598,7 @@
             this.lblTypeRelSampPrepSel});
             this.toolsTypeRelSampPrepMeth.Location = new System.Drawing.Point(0, 0);
             this.toolsTypeRelSampPrepMeth.Name = "toolsTypeRelSampPrepMeth";
-            this.toolsTypeRelSampPrepMeth.Size = new System.Drawing.Size(603, 25);
+            this.toolsTypeRelSampPrepMeth.Size = new System.Drawing.Size(576, 25);
             this.toolsTypeRelSampPrepMeth.TabIndex = 0;
             this.toolsTypeRelSampPrepMeth.Text = "toolStrip35";
             // 
@@ -7646,7 +7648,7 @@
             this.lbTypeRelSampTypeInheritedPrepMeth.Location = new System.Drawing.Point(0, 25);
             this.lbTypeRelSampTypeInheritedPrepMeth.Name = "lbTypeRelSampTypeInheritedPrepMeth";
             this.lbTypeRelSampTypeInheritedPrepMeth.SelectionMode = System.Windows.Forms.SelectionMode.None;
-            this.lbTypeRelSampTypeInheritedPrepMeth.Size = new System.Drawing.Size(603, 304);
+            this.lbTypeRelSampTypeInheritedPrepMeth.Size = new System.Drawing.Size(576, 304);
             this.lbTypeRelSampTypeInheritedPrepMeth.TabIndex = 1;
             // 
             // toolsTypeRelSampAnalMeth
@@ -7656,7 +7658,7 @@
             this.toolStripLabel55});
             this.toolsTypeRelSampAnalMeth.Location = new System.Drawing.Point(0, 0);
             this.toolsTypeRelSampAnalMeth.Name = "toolsTypeRelSampAnalMeth";
-            this.toolsTypeRelSampAnalMeth.Size = new System.Drawing.Size(603, 25);
+            this.toolsTypeRelSampAnalMeth.Size = new System.Drawing.Size(576, 25);
             this.toolsTypeRelSampAnalMeth.TabIndex = 0;
             this.toolsTypeRelSampAnalMeth.Text = "toolStrip36";
             // 
@@ -8992,9 +8994,9 @@
             this.toolsSysGeom.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripLabel43,
             this.toolStripSeparator23,
-            this.toolStripButton39,
-            this.toolStripButton40,
-            this.toolStripButton76});
+            this.btnNewGeometry,
+            this.btnEditGeometry,
+            this.btnDeleteGeometry});
             this.toolsSysGeom.Location = new System.Drawing.Point(3, 3);
             this.toolsSysGeom.Name = "toolsSysGeom";
             this.toolsSysGeom.Size = new System.Drawing.Size(1044, 25);
@@ -9013,32 +9015,32 @@
             this.toolStripSeparator23.Name = "toolStripSeparator23";
             this.toolStripSeparator23.Size = new System.Drawing.Size(6, 25);
             // 
-            // toolStripButton39
+            // btnNewGeometry
             // 
-            this.toolStripButton39.Image = global::DSA_lims.Properties.Resources._new;
-            this.toolStripButton39.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton39.Name = "toolStripButton39";
-            this.toolStripButton39.Size = new System.Drawing.Size(51, 22);
-            this.toolStripButton39.Text = "New";
-            this.toolStripButton39.Click += new System.EventHandler(this.miNewGeometry_Click);
+            this.btnNewGeometry.Image = global::DSA_lims.Properties.Resources._new;
+            this.btnNewGeometry.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnNewGeometry.Name = "btnNewGeometry";
+            this.btnNewGeometry.Size = new System.Drawing.Size(51, 22);
+            this.btnNewGeometry.Text = "New";
+            this.btnNewGeometry.Click += new System.EventHandler(this.miNewGeometry_Click);
             // 
-            // toolStripButton40
+            // btnEditGeometry
             // 
-            this.toolStripButton40.Image = global::DSA_lims.Properties.Resources.edit;
-            this.toolStripButton40.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton40.Name = "toolStripButton40";
-            this.toolStripButton40.Size = new System.Drawing.Size(47, 22);
-            this.toolStripButton40.Text = "Edit";
-            this.toolStripButton40.Click += new System.EventHandler(this.miEditGeometry_Click);
+            this.btnEditGeometry.Image = global::DSA_lims.Properties.Resources.edit;
+            this.btnEditGeometry.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnEditGeometry.Name = "btnEditGeometry";
+            this.btnEditGeometry.Size = new System.Drawing.Size(47, 22);
+            this.btnEditGeometry.Text = "Edit";
+            this.btnEditGeometry.Click += new System.EventHandler(this.miEditGeometry_Click);
             // 
-            // toolStripButton76
+            // btnDeleteGeometry
             // 
-            this.toolStripButton76.Image = global::DSA_lims.Properties.Resources.delete;
-            this.toolStripButton76.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton76.Name = "toolStripButton76";
-            this.toolStripButton76.Size = new System.Drawing.Size(60, 22);
-            this.toolStripButton76.Text = "Delete";
-            this.toolStripButton76.Click += new System.EventHandler(this.miDeleteGeometry_Click);
+            this.btnDeleteGeometry.Image = global::DSA_lims.Properties.Resources.delete;
+            this.btnDeleteGeometry.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnDeleteGeometry.Name = "btnDeleteGeometry";
+            this.btnDeleteGeometry.Size = new System.Drawing.Size(60, 22);
+            this.btnDeleteGeometry.Text = "Delete";
+            this.btnDeleteGeometry.Click += new System.EventHandler(this.miDeleteGeometry_Click);
             // 
             // tabSysPers
             // 
@@ -9802,10 +9804,10 @@
             this.tabPrepAnalPreps.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.tabPrepAnalPreps.Controls.Add(this.panel10);
             this.tabPrepAnalPreps.Controls.Add(this.splitContainer3);
-            this.tabPrepAnalPreps.Location = new System.Drawing.Point(4, 22);
+            this.tabPrepAnalPreps.Location = new System.Drawing.Point(4, 24);
             this.tabPrepAnalPreps.Name = "tabPrepAnalPreps";
             this.tabPrepAnalPreps.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPrepAnalPreps.Size = new System.Drawing.Size(668, 567);
+            this.tabPrepAnalPreps.Size = new System.Drawing.Size(668, 565);
             this.tabPrepAnalPreps.TabIndex = 3;
             this.tabPrepAnalPreps.Text = "Preparations";
             // 
@@ -9816,7 +9818,7 @@
             this.panel10.Controls.Add(this.btnPrepAnalPrepUpdate);
             this.panel10.Controls.Add(this.label23);
             this.panel10.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel10.Location = new System.Drawing.Point(3, 538);
+            this.panel10.Location = new System.Drawing.Point(3, 536);
             this.panel10.Name = "panel10";
             this.panel10.Size = new System.Drawing.Size(662, 26);
             this.panel10.TabIndex = 1;
@@ -10306,10 +10308,10 @@
             this.tabPrepAnalAnalysis.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.tabPrepAnalAnalysis.Controls.Add(this.panel76);
             this.tabPrepAnalAnalysis.Controls.Add(this.panel63);
-            this.tabPrepAnalAnalysis.Location = new System.Drawing.Point(4, 22);
+            this.tabPrepAnalAnalysis.Location = new System.Drawing.Point(4, 24);
             this.tabPrepAnalAnalysis.Name = "tabPrepAnalAnalysis";
             this.tabPrepAnalAnalysis.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPrepAnalAnalysis.Size = new System.Drawing.Size(668, 567);
+            this.tabPrepAnalAnalysis.Size = new System.Drawing.Size(668, 565);
             this.tabPrepAnalAnalysis.TabIndex = 4;
             this.tabPrepAnalAnalysis.Text = "Analyses";
             // 
@@ -10320,7 +10322,7 @@
             this.panel76.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel76.Location = new System.Drawing.Point(3, 249);
             this.panel76.Name = "panel76";
-            this.panel76.Size = new System.Drawing.Size(662, 315);
+            this.panel76.Size = new System.Drawing.Size(662, 313);
             this.panel76.TabIndex = 3;
             // 
             // panel9
@@ -10330,7 +10332,7 @@
             this.panel9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel9.Location = new System.Drawing.Point(0, 0);
             this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(662, 289);
+            this.panel9.Size = new System.Drawing.Size(662, 287);
             this.panel9.TabIndex = 4;
             // 
             // gridPrepAnalResults
@@ -10348,7 +10350,7 @@
             this.gridPrepAnalResults.ReadOnly = true;
             this.gridPrepAnalResults.RowHeadersVisible = false;
             this.gridPrepAnalResults.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridPrepAnalResults.Size = new System.Drawing.Size(662, 264);
+            this.gridPrepAnalResults.Size = new System.Drawing.Size(662, 262);
             this.gridPrepAnalResults.TabIndex = 0;
             // 
             // toolsSampleResRes
@@ -10420,7 +10422,7 @@
             this.panel14.Controls.Add(this.btnPrepAnalAnalDiscard);
             this.panel14.Controls.Add(this.btnPrepAnalAnalUpdate);
             this.panel14.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel14.Location = new System.Drawing.Point(0, 289);
+            this.panel14.Location = new System.Drawing.Point(0, 287);
             this.panel14.Name = "panel14";
             this.panel14.Size = new System.Drawing.Size(662, 26);
             this.panel14.TabIndex = 5;
@@ -11593,8 +11595,8 @@
         private System.Windows.Forms.TabPage tabSysGeometries;
         private System.Windows.Forms.Panel panel6;
         private System.Windows.Forms.ToolStrip toolsSysGeom;
-        private System.Windows.Forms.ToolStripButton toolStripButton39;
-        private System.Windows.Forms.ToolStripButton toolStripButton40;
+        private System.Windows.Forms.ToolStripButton btnNewGeometry;
+        private System.Windows.Forms.ToolStripButton btnEditGeometry;
         private System.Windows.Forms.ToolStripLabel toolStripLabel31;
         private System.Windows.Forms.ToolStripMenuItem miMeta;
         private System.Windows.Forms.TabPage tabMetaSamplers;
@@ -11618,7 +11620,7 @@
         private System.Windows.Forms.ToolStripMenuItem miSamplingMethods;
         private System.Windows.Forms.ToolStripMenuItem miSystemDataView;
         private System.Windows.Forms.DataGridView gridSysGeom;
-        private System.Windows.Forms.ToolStripButton toolStripButton76;
+        private System.Windows.Forms.ToolStripButton btnDeleteGeometry;
         private System.Windows.Forms.ToolStripLabel toolStripLabel32;
         private System.Windows.Forms.ToolStripButton btnDeleteCounty;
         private System.Windows.Forms.ToolStripLabel toolStripLabel33;

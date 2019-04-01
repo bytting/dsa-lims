@@ -73,10 +73,17 @@ namespace DSA_lims
                 return;
             }
 
+            int cnt = Convert.ToInt32(tbCount.Text);
+            if (cnt == 0)
+            {
+                MessageBox.Show("Analysis method count can not be zero");
+                return;
+            }
+
             AssignmentAnalysisMethod aam = new AssignmentAnalysisMethod();
             aam.AssignmentPreparationMethodId = mApm.Id;
             aam.AnalysisMethodId = Utils.MakeGuid(cboxAnalysisMethods.SelectedValue);
-            aam.AnalysisMethodCount = Convert.ToInt32(tbCount.Text);
+            aam.AnalysisMethodCount = cnt;
             aam.Comment = tbComment.Text.Trim();
             aam.CreateDate = DateTime.Now;
             aam.CreateId = Common.UserId;

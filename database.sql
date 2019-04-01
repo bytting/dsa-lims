@@ -1097,6 +1097,7 @@ insert into activity_unit values(NEWID(), 'Bq/l', 1000.0, 4)
 insert into activity_unit values(NEWID(), 'mBq/g', 1000.0, 2)
 insert into activity_unit values(NEWID(), 'mBq/l', 1.0, 4)
 insert into activity_unit values(NEWID(), 'Bq/filter', 1.0, 1)
+insert into activity_unit values(NEWID(), 'Counts/cm2/s', 1.0, 5)
 go
 
 create proc csp_select_activity_units
@@ -1166,13 +1167,14 @@ insert into uniform_activity_unit values(1, 'Bq')
 insert into uniform_activity_unit values(2, 'Bq/g')
 insert into uniform_activity_unit values(3, 'Bq/m2')
 insert into uniform_activity_unit values(4, 'Bq/m3')
+insert into uniform_activity_unit values(5, 'Counts/cm2/s')
 go
 
 create proc csp_select_uniform_activity_units
 as 
 	select *
 	from uniform_activity_unit
-	order by name
+	order by id
 go
 
 /*===========================================================================*/
@@ -1195,13 +1197,14 @@ insert into quantity_unit values(6, 'kg aw')
 insert into quantity_unit values(7, 'g ww')
 insert into quantity_unit values(8, 'g dw')
 insert into quantity_unit values(9, 'g aw')
+insert into quantity_unit values(10, 'Filter')
 go
 
 create proc csp_select_quantity_units
 as 
 	select *
 	from quantity_unit
-	order by name
+	order by id
 go
 
 /*===========================================================================*/

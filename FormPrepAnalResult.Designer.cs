@@ -57,7 +57,7 @@
             this.panel1.Controls.Add(this.btnCancel);
             this.panel1.Controls.Add(this.btnOk);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 310);
+            this.panel1.Location = new System.Drawing.Point(0, 292);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(386, 28);
             this.panel1.TabIndex = 8;
@@ -115,7 +115,7 @@
             // 
             // tbUncertainty
             // 
-            this.tbUncertainty.Location = new System.Drawing.Point(167, 73);
+            this.tbUncertainty.Location = new System.Drawing.Point(167, 104);
             this.tbUncertainty.MaxLength = 32;
             this.tbUncertainty.Name = "tbUncertainty";
             this.tbUncertainty.Size = new System.Drawing.Size(194, 20);
@@ -134,7 +134,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(21, 76);
+            this.label3.Location = new System.Drawing.Point(21, 107);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(61, 13);
             this.label3.TabIndex = 14;
@@ -143,7 +143,7 @@
             // cbActivityApproved
             // 
             this.cbActivityApproved.AutoSize = true;
-            this.cbActivityApproved.Location = new System.Drawing.Point(112, 191);
+            this.cbActivityApproved.Location = new System.Drawing.Point(112, 183);
             this.cbActivityApproved.Name = "cbActivityApproved";
             this.cbActivityApproved.Size = new System.Drawing.Size(108, 17);
             this.cbActivityApproved.TabIndex = 6;
@@ -152,7 +152,7 @@
             // 
             // tbDetectionLimit
             // 
-            this.tbDetectionLimit.Location = new System.Drawing.Point(112, 99);
+            this.tbDetectionLimit.Location = new System.Drawing.Point(112, 157);
             this.tbDetectionLimit.MaxLength = 32;
             this.tbDetectionLimit.Name = "tbDetectionLimit";
             this.tbDetectionLimit.Size = new System.Drawing.Size(249, 20);
@@ -162,7 +162,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(21, 102);
+            this.label4.Location = new System.Drawing.Point(21, 160);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(31, 13);
             this.label4.TabIndex = 17;
@@ -171,7 +171,7 @@
             // cbDetectionLimitApproved
             // 
             this.cbDetectionLimitApproved.AutoSize = true;
-            this.cbDetectionLimitApproved.Location = new System.Drawing.Point(112, 214);
+            this.cbDetectionLimitApproved.Location = new System.Drawing.Point(112, 206);
             this.cbDetectionLimitApproved.Name = "cbDetectionLimitApproved";
             this.cbDetectionLimitApproved.Size = new System.Drawing.Size(98, 17);
             this.cbDetectionLimitApproved.TabIndex = 7;
@@ -181,7 +181,7 @@
             // cbAccredited
             // 
             this.cbAccredited.AutoSize = true;
-            this.cbAccredited.Location = new System.Drawing.Point(112, 237);
+            this.cbAccredited.Location = new System.Drawing.Point(112, 229);
             this.cbAccredited.Name = "cbAccredited";
             this.cbAccredited.Size = new System.Drawing.Size(77, 17);
             this.cbAccredited.TabIndex = 8;
@@ -191,7 +191,7 @@
             // cbReportable
             // 
             this.cbReportable.AutoSize = true;
-            this.cbReportable.Location = new System.Drawing.Point(112, 260);
+            this.cbReportable.Location = new System.Drawing.Point(112, 252);
             this.cbReportable.Name = "cbReportable";
             this.cbReportable.Size = new System.Drawing.Size(78, 17);
             this.cbReportable.TabIndex = 9;
@@ -203,7 +203,7 @@
             this.cboxSigmaActivity.DisplayMember = "Name";
             this.cboxSigmaActivity.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxSigmaActivity.FormattingEnabled = true;
-            this.cboxSigmaActivity.Location = new System.Drawing.Point(112, 125);
+            this.cboxSigmaActivity.Location = new System.Drawing.Point(112, 73);
             this.cboxSigmaActivity.Name = "cboxSigmaActivity";
             this.cboxSigmaActivity.Size = new System.Drawing.Size(249, 21);
             this.cboxSigmaActivity.TabIndex = 4;
@@ -214,7 +214,7 @@
             this.cboxSigmaMDA.DisplayMember = "Name";
             this.cboxSigmaMDA.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxSigmaMDA.FormattingEnabled = true;
-            this.cboxSigmaMDA.Location = new System.Drawing.Point(112, 152);
+            this.cboxSigmaMDA.Location = new System.Drawing.Point(112, 129);
             this.cboxSigmaMDA.Name = "cboxSigmaMDA";
             this.cboxSigmaMDA.Size = new System.Drawing.Size(249, 21);
             this.cboxSigmaMDA.TabIndex = 5;
@@ -223,7 +223,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(21, 128);
+            this.label5.Location = new System.Drawing.Point(21, 76);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(62, 13);
             this.label5.TabIndex = 23;
@@ -232,7 +232,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(21, 155);
+            this.label6.Location = new System.Drawing.Point(21, 132);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(63, 13);
             this.label6.TabIndex = 24;
@@ -243,7 +243,7 @@
             this.cbUncertaintyAbs.AutoSize = true;
             this.cbUncertaintyAbs.Checked = true;
             this.cbUncertaintyAbs.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbUncertaintyAbs.Location = new System.Drawing.Point(117, 75);
+            this.cbUncertaintyAbs.Location = new System.Drawing.Point(117, 106);
             this.cbUncertaintyAbs.Name = "cbUncertaintyAbs";
             this.cbUncertaintyAbs.Size = new System.Drawing.Size(44, 17);
             this.cbUncertaintyAbs.TabIndex = 25;
@@ -254,7 +254,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(386, 338);
+            this.ClientSize = new System.Drawing.Size(386, 320);
             this.Controls.Add(this.cbUncertaintyAbs);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);

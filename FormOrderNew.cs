@@ -85,8 +85,8 @@ namespace DSA_lims
                 return;
             }            
 
-            DateTime dl = (DateTime)tbDeadline.Tag;
-            if(dl < DateTime.Now)
+            DateTime dl = (DateTime)tbDeadline.Tag;                        
+            if(dl.Date < DateTime.Now.Date)
             {
                 MessageBox.Show("Deadline can not be in the past");
                 return;

@@ -81,10 +81,17 @@ namespace DSA_lims
                 return;
             }
 
+            int cnt = Convert.ToInt32(tbCount.Text);
+            if(cnt == 0)
+            {
+                MessageBox.Show("Preparation method count can not be zero");
+                return;
+            }
+
             AssignmentPreparationMethod apm = new AssignmentPreparationMethod();
             apm.AssignmentSampleTypeId = mAst.Id;
             apm.PreparationMethodId = Utils.MakeGuid(cboxPreparationMethod.SelectedValue);
-            apm.PreparationMethodCount = Convert.ToInt32(tbCount.Text);
+            apm.PreparationMethodCount = cnt;
             apm.PreparationLaboratoryId = Utils.MakeGuid(cboxPrepMethLaboratory.SelectedValue);
             apm.Comment = tbComment.Text.Trim();
             apm.CreateDate = DateTime.Now;

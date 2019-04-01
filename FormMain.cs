@@ -687,8 +687,10 @@ namespace DSA_lims
             miSamplesPrepAnal.Enabled = btnSamplesPrepAnal.Enabled = btnSampleGoToPrepAnal.Enabled = isAdmin;
             miSamplesUnlock.Enabled = btnSamplesUnlock.Visible = isAdmin;
             miOrdersUnlock.Enabled = btnOrdersUnlock.Visible = isAdmin;
+            btnSysLabPrepMethAdd.Enabled = btnSysLabPrepMethRemove.Enabled = btnSysLabAnalMethAdd.Enabled = btnSysLabAnalMethRemove.Enabled = false;
+            miNewGeometry.Enabled = btnNewGeometry.Enabled = miEditGeometry.Enabled = btnEditGeometry.Enabled = miDeleteGeometry.Enabled = btnDeleteGeometry.Enabled = isAdmin;
+            miNuclidesNew.Enabled = btnSysNuclideNew.Enabled = miNuclidesEdit.Enabled = btnSysNuclideEdit.Enabled = miNuclidesDelete.Enabled = btnSysNuclideDelete.Enabled = isAdmin;
 
-            btnSysLabPrepMethAdd.Enabled = btnSysLabPrepMethRemove.Enabled = btnSysLabAnalMethAdd.Enabled = btnSysLabAnalMethRemove.Enabled = isAdmin;
             btnSysUsersAddRoles.Enabled = btnSysUsersRemRoles.Enabled = btnSysUsersAnalMethAdd.Enabled = btnSysUsersAnalMethRemove.Enabled = isAdmin;
 
             cboxOrderStatus.Enabled = cbOrderApprovedLaboratory.Enabled = Roles.HasAccess(Role.LaboratoryAdministrator);
@@ -704,6 +706,7 @@ namespace DSA_lims
                 miPreparationMethodsNew.Enabled = miPreparationMethodEdit.Enabled = miPreparationMethodDelete.Enabled = btnTypeRelSampTypePrepMethAdd.Enabled = btnPreparationMethodDelete.Enabled = true;
                 miSamplesSetOrder.Enabled = btnSamplesSetOrder.Enabled = btnSampleAddSampleToOrder.Enabled = true;
                 miSamplesPrepAnal.Enabled = btnSamplesPrepAnal.Enabled = btnSampleGoToPrepAnal.Enabled = true;
+                btnSysLabPrepMethAdd.Enabled = btnSysLabPrepMethRemove.Enabled = btnSysLabAnalMethAdd.Enabled = btnSysLabAnalMethRemove.Enabled = true;
             }
 
             if (Roles.HasAccess(Role.LaboratoryOperator))
@@ -2111,9 +2114,15 @@ namespace DSA_lims
                 cboxSampleProject.Enabled = false;
                 cboxSampleSubProject.Enabled = false;
             }
+            else
+            {
+                cboxSampleProject.Enabled = true;
+                cboxSampleSubProject.Enabled = true;
+            }
 
             if (!Utils.IsValidGuid(s.StationId))
             {
+                cboxSampleInfoStations.SelectedValue = Guid.Empty;
                 tbSampleInfoLatitude.Text = s.Latitude.ToString();
                 tbSampleInfoLongitude.Text = s.Longitude.ToString();
                 tbSampleInfoAltitude.Text = s.Altitude.ToString();
@@ -2126,6 +2135,10 @@ namespace DSA_lims
                     new SqlParameter("@id", s.MunicipalityId));
                 cboxSampleCounties.SelectedValue = cid;
                 cboxSampleMunicipalities.SelectedValue = s.MunicipalityId;
+            }
+            else
+            {
+                cboxSampleCounties.SelectedValue = Guid.Empty;
             }
 
             cboxSampleInfoLocationTypes.Text = s.LocationType;
@@ -2141,11 +2154,17 @@ namespace DSA_lims
             {
                 tbSampleSamplingDateFrom.Tag = null;
                 tbSampleSamplingDateFrom.Text = "";
+                tbSampleSamplingDateTo.Enabled = false;
+                btnSampleSamplingDateTo.Enabled = false;
+                btnSampleSamplingDateToClear.Enabled = false;
             }
             else
             {
                 tbSampleSamplingDateFrom.Tag = s.SamplingDateFrom.Value;
                 tbSampleSamplingDateFrom.Text = s.SamplingDateFrom.Value.ToString(Utils.DateTimeFormatNorwegian);
+                tbSampleSamplingDateTo.Enabled = true;
+                btnSampleSamplingDateTo.Enabled = true;
+                btnSampleSamplingDateToClear.Enabled = true;
             }
 
             if (!s.SamplingDateTo.HasValue)
@@ -3614,8 +3633,7 @@ select count(*) from sample s
             }
 
             DateTime deadline = (DateTime)tbOrderDeadline.Tag;
-
-            if (deadline < DateTime.Now)
+            if (deadline.Date < DateTime.Now.Date)
             {
                 MessageBox.Show("Deadline can not be in the past");
                 return;
@@ -4142,7 +4160,13 @@ select count(*) from sample s
             {
                 MessageBox.Show("Sub project is mandatory");
                 return;
-            }            
+            }
+
+            if((int)cboxSampleInstanceStatus.SelectedValue == 0)
+            {
+                MessageBox.Show("Status is mandatory");
+                return;
+            }
 
             double? lat = null, lon = null, alt = null;
 
@@ -4266,6 +4290,13 @@ select count(*) from sample s
                     return;
                 }
 
+                if ((int)cboxPrepAnalPrepWorkflowStatus.SelectedValue == 0)
+                {
+                    MessageBox.Show("Preparation status is required");
+                    return;
+                }
+
+
                 Guid pgid = Utils.MakeGuid(cboxPrepAnalPrepGeom.SelectedValue);
                 if (!String.IsNullOrEmpty(tbPrepAnalPrepFillHeight.Text) && Utils.IsValidGuid(pgid))
                 {
@@ -4387,7 +4418,13 @@ select count(*) from sample s
                     return;
                 }
 
-                if(!String.IsNullOrEmpty(tbPrepAnalAnalSpecRef.Text.Trim()))
+                if((int)cboxPrepAnalAnalWorkflowStatus.SelectedValue == 0)
+                {
+                    MessageBox.Show("Analysis status is required");
+                    return;
+                }
+
+                if (!String.IsNullOrEmpty(tbPrepAnalAnalSpecRef.Text.Trim()))
                 {
                     SqlCommand cmd = new SqlCommand("select count(*) from analysis where specter_reference = @specref and id not in(@exId)", conn, trans);
                     cmd.Parameters.AddWithValue("@specref", tbPrepAnalAnalSpecRef.Text.Trim());
@@ -4646,12 +4683,12 @@ select count(*) from sample s
             gridPrepAnalResults.Columns.Add(mdaApprCol);
             DataGridViewCheckBoxColumn accApprCol = new DataGridViewCheckBoxColumn();
             accApprCol.Name = "Accredited";
-            accApprCol.HeaderText = "A";
+            accApprCol.HeaderText = "Accredited";
             accApprCol.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
             gridPrepAnalResults.Columns.Add(accApprCol);            
             DataGridViewCheckBoxColumn repApprCol = new DataGridViewCheckBoxColumn();
             repApprCol.Name = "Reportable";
-            repApprCol.HeaderText = "R";
+            repApprCol.HeaderText = "Reportable";
             repApprCol.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
             gridPrepAnalResults.Columns.Add(repApprCol);
 
@@ -5157,19 +5194,19 @@ select count(*) from sample s
                 return;
 
             if (e.KeyChar == Convert.ToChar(Keys.Enter))
-            {                
+            {
+                int selNum = -1;
                 int snum = Convert.ToInt32(tbSamplesLookup.Text);
 
                 btnSamplesClearFilters_Click(sender, e);
 
-                if (gridSamples.SelectedRows.Count == 1)
-                {
-                    int selNum = Convert.ToInt32(gridSamples.SelectedRows[0].Cells["number"].Value);
-                    if (snum == selNum)
-                        miSamplesPrepAnal_Click(sender, e);
-                    else
-                        PopulateSamplesSingle(snum);
-                }
+                if (gridSamples.SelectedRows.Count == 1)                
+                    selNum = Convert.ToInt32(gridSamples.SelectedRows[0].Cells["number"].Value);
+
+                if (snum == selNum)
+                    miSamplesPrepAnal_Click(sender, e);
+                else
+                    PopulateSamplesSingle(snum);
                 
                 e.Handled = true;
                 btnSamplesSearch.ForeColor = Color.Red;
@@ -6911,6 +6948,12 @@ where s.number = @sample_number
             }
 
             Guid lid = Guid.Parse(gridSysLab.SelectedRows[0].Cells["id"].Value.ToString());
+            if(lid != Common.LabId)
+            {
+                MessageBox.Show("You can not add preparation methods for another laboratory");
+                return;
+            }
+
             List<Guid> existingPrepMeths = new List<Guid>();
             foreach (DataGridViewRow row in gridSysLabPrepMeth.Rows)
                 existingPrepMeths.Add(Utils.MakeGuid(row.Cells["id"].Value));
@@ -6952,6 +6995,11 @@ where s.number = @sample_number
             }
 
             Guid lid = Utils.MakeGuid(gridSysLab.SelectedRows[0].Cells["id"].Value);
+            if (lid != Common.LabId)
+            {
+                MessageBox.Show("You can not remove preparation methods for another laboratory");
+                return;
+            }
 
             SqlConnection conn = null;
             SqlTransaction trans = null;
@@ -6999,6 +7047,11 @@ where s.number = @sample_number
             }
 
             Guid lid = Utils.MakeGuid(gridSysLab.SelectedRows[0].Cells["id"].Value);
+            if (lid != Common.LabId)
+            {
+                MessageBox.Show("You can not add analysis methods for another laboratory");
+                return;
+            }
 
             List<Guid> existingAnalMeths = new List<Guid>();
             foreach (DataGridViewRow row in gridSysLabAnalMeth.Rows)
@@ -7023,6 +7076,11 @@ where s.number = @sample_number
             }
 
             Guid lid = Utils.MakeGuid(gridSysLab.SelectedRows[0].Cells["id"].Value);
+            if (lid != Common.LabId)
+            {
+                MessageBox.Show("You can not remove analysis methods for another laboratory");
+                return;
+            }
 
             using (SqlConnection conn = DB.OpenConnection())
             {

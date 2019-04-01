@@ -133,9 +133,24 @@ namespace DSA_lims
             {
                 connection = DB.OpenConnection();
                 transaction = connection.BeginTransaction();
-            
+
                 if (!p.ContainsKey("id"))
+                {
+                    SqlCommand cmd = new SqlCommand("", connection, transaction);
+                    string query = "select count(*) from customer where person_id = @pid and company_id = @cid";
+                    cmd.Parameters.AddWithValue("@pid", p["person_id"]);
+                    cmd.Parameters.AddWithValue("@cid", p["company_id"]);
+                    cmd.CommandText = query;
+
+                    int cnt = (int)cmd.ExecuteScalar();
+                    if (cnt > 0)
+                    {
+                        MessageBox.Show("The customer " + cboxPerson.Text + ", " + cboxCompany.Text + " already exists");
+                        return;
+                    }
+
                     InsertCustomer(connection, transaction);
+                }
                 else
                     UpdateCustomer(connection, transaction);
 

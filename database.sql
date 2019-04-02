@@ -1137,12 +1137,13 @@ create table activity_unit_type (
 	id uniqueidentifier primary key not null,	
 	name nvarchar(20) not null,
 	name_short nvarchar(8) not null,
+	name_report nvarchar(20) not null
 )
 go
 
-insert into activity_unit_type values(NEWID(), 'Wet weight', 'ww')
-insert into activity_unit_type values(NEWID(), 'Dry weight', 'dw')
-insert into activity_unit_type values(NEWID(), 'Ash weight', 'aw')
+insert into activity_unit_type values(NEWID(), 'Wet weight', 'ww', 'vv')
+insert into activity_unit_type values(NEWID(), 'Dry weight', 'dw', 'tv')
+insert into activity_unit_type values(NEWID(), 'Ash weight', 'aw', 'av')
 go
 
 create proc csp_select_activity_unit_types

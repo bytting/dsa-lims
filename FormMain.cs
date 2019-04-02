@@ -2419,7 +2419,10 @@ namespace DSA_lims
                 sample.LoadFromDB(conn, null, sid);
 
                 if (!PopulatePrepAnal(conn, sample))
+                {
+                    MessageBox.Show("Unable to populate sample");
                     return;
+                }
             }
 
             tabs.SelectedTab = tabPrepAnal;
@@ -3237,7 +3240,7 @@ namespace DSA_lims
             // Populate order overview            
 
             Font fontSample = new Font(tvOrderContent.Font, FontStyle.Bold);
-
+            
             tvOrderContent.Nodes.Clear();
 
             List<SampleHeader> sampHeaders = new List<SampleHeader>();
@@ -3355,6 +3358,8 @@ order by s.number, p.number
                     }
                 }
             }
+
+            btnOrderRemoveSampleFromOrder.Enabled = btnOrderGoToPrepAnal.Enabled = false;
 
             tvOrderContent.ExpandAll();
         }
@@ -7276,6 +7281,12 @@ where s.number = @sample_number
 
             if (e.Node.Level == 1 && Roles.HasAccess(Role.LaboratoryAdministrator))
                 btnOrderRemoveSampleFromOrder.Enabled = true;
+
+            btnOrderGoToPrepAnal.Enabled = false;
+
+            if(e.Node.Level >= 1 && Roles.HasAccess(Role.LaboratoryAdministrator, Role.LaboratoryOperator))
+                btnOrderGoToPrepAnal.Enabled = true;
+
         }
 
         private void btnOrderRemoveSampleFromOrder_Click(object sender, EventArgs e)
@@ -7826,6 +7837,131 @@ where ar.instance_status_id < 2
         private void cbSearchAccredited_CheckStateChanged(object sender, EventArgs e)
         {
             searchIsDirty = true;
+        }
+
+        private void miSamplesCopy_Click(object sender, EventArgs e)
+        {
+            // copy sample
+
+            if (gridSamples.SelectedRows.Count != 1)
+            {
+                MessageBox.Show("You must select a single sample first");
+                return;
+            }                        
+
+            SqlConnection conn = null;
+            SqlTransaction trans = null;
+
+            try
+            {
+                Guid sid = Utils.MakeGuid(gridSamples.SelectedRows[0].Cells["id"].Value);
+
+                conn = DB.OpenConnection();
+                trans = conn.BeginTransaction();
+
+                Guid newSid = Guid.NewGuid();
+                Sample s = new Sample();
+                s.LoadFromDB(conn, trans, sid);
+
+                if (Common.LabId == Guid.Empty)
+                {
+                    if (Common.UserId != s.CreateId)
+                    {
+                        MessageBox.Show("Can not copy this sample. Sample does not belong to your user");
+                        return;
+                    }
+                }
+
+                DialogResult r = MessageBox.Show("Are you sure you want to create a new sample by copying sample " + s.Number + "?", "Warning", MessageBoxButtons.YesNo);
+                if (r == DialogResult.No)
+                    return;
+
+                int oldNumber = s.Number;
+                s.Id = newSid;
+                s.Number = DB.GetNextSampleCount(conn, trans);
+                s.ExternalId = "";
+                s.TransformFromId = Guid.Empty;
+                s.TransformToId = Guid.Empty;
+                s.Comment = "";
+                s.ImportedFrom = "";
+                s.ImportedFromId = "";
+                s.WetWeight_g = null;
+                s.DryWeight_g = null;
+                s.Volume_l = null;
+                s.LodWeightStart = null;
+                s.LodWeightEnd = null;
+                s.LodTemperature = null;                
+                s.InstanceStatusId = 1;
+                s.LockedId = Guid.Empty;
+                s.CreateDate = DateTime.Now;
+                s.CreateId = Common.UserId;
+                s.UpdateDate = DateTime.Now;
+                s.UpdateId = Common.UserId;
+                s.StoreToDB(conn, trans);
+                trans.Commit();
+                                
+                PopulateSamples();
+                SetStatusMessage("Created sample " + s.Number + " from " + oldNumber);
+            }
+            catch (Exception ex)
+            {
+                trans?.Rollback();
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn?.Close();
+            }            
+        }
+
+        private void btnOrderGoToPrepAnal_Click(object sender, EventArgs e)
+        {
+            // go to sample prep/anal
+
+            if (!Roles.HasAccess(Role.LaboratoryAdministrator, Role.LaboratoryOperator))
+            {
+                MessageBox.Show("You don't have access to preparations and analyses");
+                return;
+            }
+
+            if (!Utils.IsValidGuid(Common.LabId))
+            {
+                MessageBox.Show("You must be a member of a laboratory in order to access preparations and analyses");
+                return;
+            }
+
+            if(tvOrderContent.SelectedNode == null)
+            {
+                MessageBox.Show("You must select a sample, preparation or analysis first");
+                return;
+            }
+
+            TreeNode tnode = tvOrderContent.SelectedNode;
+            if(tnode.Level == 0)
+            {
+                MessageBox.Show("You must select a sample, preparation or analysis first");
+                return;
+            }
+
+            while (tnode.Level > 1)
+                tnode = tnode.Parent;
+
+            Guid sid = Guid.Parse(tnode.Name);
+
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                sample.LoadFromDB(conn, null, sid);
+
+                if (!PopulatePrepAnal(conn, sample))
+                {
+                    MessageBox.Show("Unable to populate sample");
+                    return;
+                }
+            }
+
+            tabs.SelectedTab = tabPrepAnal;
+            tabsPrepAnal.SelectedTab = tabPrepAnalSample;
         }
     }    
 }

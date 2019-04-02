@@ -235,16 +235,16 @@ order by ps.name
             grid.DataSource = DB.GetDataTable(conn, null, "csp_select_accounts_flat", CommandType.StoredProcedure,
                 new SqlParameter("@instance_status_level", instanceStatusLevel));
 
-            grid.Columns["id"].Visible = false;            
+            grid.Columns["id"].Visible = false;
+            grid.Columns["address"].Visible = false;
+            grid.Columns["language_code"].Visible = false;
             grid.Columns["create_date"].Visible = false;            
             grid.Columns["update_date"].Visible = false;
 
             grid.Columns["name"].HeaderText = "Name";
             grid.Columns["email"].HeaderText = "Email";
             grid.Columns["phone"].HeaderText = "Phone";
-            grid.Columns["address"].HeaderText = "Address";
-            grid.Columns["laboratory_name"].HeaderText = "Lab";
-            grid.Columns["language_code"].HeaderText = "Lang.";
+            grid.Columns["laboratory_name"].HeaderText = "Lab";            
             grid.Columns["instance_status_name"].HeaderText = "Status";
         }
 

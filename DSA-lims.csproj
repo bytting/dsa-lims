@@ -621,6 +621,7 @@
     </None>
     <None Include="images\info.png" />
     <None Include="images\users.png" />
+    <None Include="images\map.png" />
     <Content Include="SqlServerTypes\readme.htm" />
     <Content Include="SqlServerTypes\x64\msvcr120.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

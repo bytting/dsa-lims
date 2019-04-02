@@ -73,6 +73,11 @@ namespace DSA_lims
             }
 
             int count = Convert.ToInt32(tbCount.Text.Trim());
+            if(count == 0)
+            {
+                MessageBox.Show("Count can not be zero");
+                return;
+            }
 
             SqlConnection connection = null;
             SqlTransaction transaction = null;

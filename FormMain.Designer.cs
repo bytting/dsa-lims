@@ -195,17 +195,9 @@
             this.tabs = new System.Windows.Forms.TabControl();
             this.tabMenu = new System.Windows.Forms.TabPage();
             this.layoutMenu = new System.Windows.Forms.TableLayoutPanel();
-            this.btnMenuSearch = new System.Windows.Forms.Button();
-            this.btnMenuMetadata = new System.Windows.Forms.Button();
-            this.btnMenuCustomer = new System.Windows.Forms.Button();
-            this.btnMenuProjects = new System.Windows.Forms.Button();
-            this.btnMenuNewSample = new System.Windows.Forms.Button();
-            this.btnMenuSamples = new System.Windows.Forms.Button();
             this.lblMenuSamples = new System.Windows.Forms.Label();
             this.tbMenuLookup = new System.Windows.Forms.TextBox();
             this.lblMenuOrders = new System.Windows.Forms.Label();
-            this.btnMenuNewOrder = new System.Windows.Forms.Button();
-            this.btnOrders = new System.Windows.Forms.Button();
             this.tabSample = new System.Windows.Forms.TabPage();
             this.tabsSample = new System.Windows.Forms.TabControl();
             this.tabSamplesInfo = new System.Windows.Forms.TabPage();
@@ -214,7 +206,6 @@
             this.cboxSampleSampleComponent = new System.Windows.Forms.ComboBox();
             this.panel22 = new System.Windows.Forms.Panel();
             this.cboxSampleSampleType = new System.Windows.Forms.ComboBox();
-            this.btnSampleSelectSampleType = new System.Windows.Forms.Button();
             this.cboxSampleProject = new System.Windows.Forms.ComboBox();
             this.label15 = new System.Windows.Forms.Label();
             this.cboxSampleInfoSampler = new System.Windows.Forms.ComboBox();
@@ -256,40 +247,25 @@
             this.label25 = new System.Windows.Forms.Label();
             this.panel87 = new System.Windows.Forms.Panel();
             this.tbSampleSamplingDateFrom = new System.Windows.Forms.TextBox();
-            this.btnSampleSamplingDateFromClear = new System.Windows.Forms.PictureBox();
-            this.btnSampleSamplingDateFrom = new System.Windows.Forms.PictureBox();
             this.panel88 = new System.Windows.Forms.Panel();
             this.tbSampleSamplingDateTo = new System.Windows.Forms.TextBox();
-            this.btnSampleSamplingDateToClear = new System.Windows.Forms.PictureBox();
-            this.btnSampleSamplingDateTo = new System.Windows.Forms.PictureBox();
             this.label26 = new System.Windows.Forms.Label();
             this.panel89 = new System.Windows.Forms.Panel();
             this.tbSampleReferenceDate = new System.Windows.Forms.TextBox();
-            this.btnSampleReferenceDateClear = new System.Windows.Forms.PictureBox();
-            this.btnSampleReferenceDate = new System.Windows.Forms.PictureBox();
             this.tbSampleComment = new System.Windows.Forms.TextBox();
             this.btnSampleSelectCoords = new System.Windows.Forms.Button();
             this.toolStrip11 = new System.Windows.Forms.ToolStrip();
-            this.btnSampleAddSampleToOrder = new System.Windows.Forms.ToolStripButton();
-            this.btnSampleGoToPrepAnal = new System.Windows.Forms.ToolStripButton();
-            this.btnSamplePrintSampleLabel = new System.Windows.Forms.ToolStripButton();
             this.panel21 = new System.Windows.Forms.Panel();
             this.panelSamplesAttachments = new System.Windows.Forms.Panel();
             this.gridSampleAttachments = new System.Windows.Forms.DataGridView();
             this.toolsSampleSampInfoAttachments = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel18 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator46 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnSampleScanAttachment = new System.Windows.Forms.ToolStripButton();
-            this.btnSampleBrowseAttachment = new System.Windows.Forms.ToolStripButton();
-            this.btnSampleDeleteAttachment = new System.Windows.Forms.ToolStripButton();
             this.tabSamplesParams = new System.Windows.Forms.TabPage();
             this.gridSampleParameters = new System.Windows.Forms.DataGridView();
             this.toolStrip6 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel9 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator24 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnSampleParamAdd = new System.Windows.Forms.ToolStripButton();
-            this.btnSampleParamEdit = new System.Windows.Forms.ToolStripButton();
-            this.btnSampleParamRemove = new System.Windows.Forms.ToolStripButton();
             this.panel36 = new System.Windows.Forms.Panel();
             this.btnSampleDiscard = new System.Windows.Forms.Button();
             this.btnSampleUpdate = new System.Windows.Forms.Button();
@@ -308,9 +284,6 @@
             this.toolsOrderAttachments = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel4 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator29 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnOrderScanAttachment = new System.Windows.Forms.ToolStripButton();
-            this.btnOrderBrowseAttachment = new System.Windows.Forms.ToolStripButton();
-            this.btnOrderDeleteAttachment = new System.Windows.Forms.ToolStripButton();
             this.layoutOrderDetails = new System.Windows.Forms.TableLayoutPanel();
             this.label38 = new System.Windows.Forms.Label();
             this.label39 = new System.Windows.Forms.Label();
@@ -323,14 +296,11 @@
             this.tbOrderName = new System.Windows.Forms.TextBox();
             this.panel30 = new System.Windows.Forms.Panel();
             this.tbOrderDeadline = new System.Windows.Forms.TextBox();
-            this.btnOrderClearDeadline = new System.Windows.Forms.PictureBox();
-            this.btnOrderSelectDeadline = new System.Windows.Forms.PictureBox();
             this.label41 = new System.Windows.Forms.Label();
             this.tbOrderContentComment = new System.Windows.Forms.TextBox();
             this.label34 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
             this.tbOrderCustomer = new System.Windows.Forms.TextBox();
-            this.btnOrderSelectCustomer = new System.Windows.Forms.PictureBox();
             this.label35 = new System.Windows.Forms.Label();
             this.cboxOrderRequestedSigmaMDA = new System.Windows.Forms.ComboBox();
             this.toolsOrderDetails = new System.Windows.Forms.ToolStrip();
@@ -339,14 +309,6 @@
             this.toolsOrderContent = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel8 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator60 = new System.Windows.Forms.ToolStripSeparator();
-            this.ddbOrderAdd = new System.Windows.Forms.ToolStripDropDownButton();
-            this.btnOrderAddSampleType = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnOrderAddPrepMeth = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnOrderAddAnalMeth = new System.Windows.Forms.ToolStripMenuItem();
-            this.ddbOrderEdit = new System.Windows.Forms.ToolStripDropDownButton();
-            this.btnOrderEditSampleType = new System.Windows.Forms.ToolStripMenuItem();
-            this.ddbOrderDel = new System.Windows.Forms.ToolStripDropDownButton();
-            this.btnOrderDelSampleType = new System.Windows.Forms.ToolStripMenuItem();
             this.tabOrderStatus = new System.Windows.Forms.TabPage();
             this.panel11 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
@@ -364,13 +326,11 @@
             this.toolsOrderStatus = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel17 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnOrderCreateReport = new System.Windows.Forms.ToolStripButton();
             this.tabOrderAssigned = new System.Windows.Forms.TabPage();
             this.tvOrderContent = new System.Windows.Forms.TreeView();
             this.toolStrip17 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel58 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator73 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnOrderRemoveSampleFromOrder = new System.Windows.Forms.ToolStripButton();
             this.panel15 = new System.Windows.Forms.Panel();
             this.btnOrderDiscard = new System.Windows.Forms.Button();
             this.btnOrderSave = new System.Windows.Forms.Button();
@@ -415,17 +375,11 @@
             this.toolsMetaStations = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel36 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator17 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButton64 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton65 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton66 = new System.Windows.Forms.ToolStripButton();
             this.tabMetaSampleStorage = new System.Windows.Forms.TabPage();
             this.gridMetaSampleStorage = new System.Windows.Forms.DataGridView();
             this.toolsMetaSampStorage = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel37 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator18 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButton67 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton68 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton69 = new System.Windows.Forms.ToolStripButton();
             this.tabMetaUnits = new System.Windows.Forms.TabPage();
             this.splitContainer22 = new System.Windows.Forms.SplitContainer();
             this.splitContainer6 = new System.Windows.Forms.SplitContainer();
@@ -433,79 +387,47 @@
             this.toolsMetaUnits = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel38 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator19 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnMetaUnitPrepUnitsNew = new System.Windows.Forms.ToolStripButton();
-            this.btnMetaUnitPrepUnitsEdit = new System.Windows.Forms.ToolStripButton();
-            this.btnMetaUnitPrepUnitsDelete = new System.Windows.Forms.ToolStripButton();
             this.gridMetaUnitQuantUnits = new System.Windows.Forms.DataGridView();
             this.toolStrip13 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel42 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator22 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnMetaUnitQuantUnitsNew = new System.Windows.Forms.ToolStripButton();
-            this.btnMetaUnitQuantUnitsEdit = new System.Windows.Forms.ToolStripButton();
-            this.btnMetaUnitQuantUnitsDelete = new System.Windows.Forms.ToolStripButton();
             this.splitContainer5 = new System.Windows.Forms.SplitContainer();
             this.gridMetaUnitActivityUnits = new System.Windows.Forms.DataGridView();
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel60 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator51 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnMetaUnitActivityUnitsNew = new System.Windows.Forms.ToolStripButton();
-            this.btnMetaUnitActivityUnitsEdit = new System.Windows.Forms.ToolStripButton();
-            this.btnMetaUnitActivityUnitsDelete = new System.Windows.Forms.ToolStripButton();
             this.gridMetaUnitActivityUnitTypes = new System.Windows.Forms.DataGridView();
             this.toolStrip12 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel12 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnMetaUnitActivityUnitTypesNew = new System.Windows.Forms.ToolStripButton();
-            this.btnMetaUnitActivityUnitTypesEdit = new System.Windows.Forms.ToolStripButton();
-            this.btnMetaUnitActivityUnitTypesDelete = new System.Windows.Forms.ToolStripButton();
             this.tabMetaSamplers = new System.Windows.Forms.TabPage();
             this.gridMetaSamplers = new System.Windows.Forms.DataGridView();
             this.toolsMetaSamplers = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel39 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator20 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButton62 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton63 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton75 = new System.Windows.Forms.ToolStripButton();
             this.tabMetaSamplingMeth = new System.Windows.Forms.TabPage();
             this.gridMetaSamplingMeth = new System.Windows.Forms.DataGridView();
             this.toolsMetaSampMeth = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel40 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator21 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButton82 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton83 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton84 = new System.Windows.Forms.ToolStripButton();
             this.tabMetaCompanies = new System.Windows.Forms.TabPage();
             this.gridMetaCompanies = new System.Windows.Forms.DataGridView();
             this.toolStrip15 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel46 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator59 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButton14 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton15 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton25 = new System.Windows.Forms.ToolStripButton();
             this.tabCustomers = new System.Windows.Forms.TabPage();
             this.gridCustomers = new System.Windows.Forms.DataGridView();
             this.toolsCust = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel45 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator33 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnCustomersNew = new System.Windows.Forms.ToolStripButton();
-            this.btnCustomersEdit = new System.Windows.Forms.ToolStripButton();
-            this.btnCustomersDelete = new System.Windows.Forms.ToolStripButton();
             this.tabOrders = new System.Windows.Forms.TabPage();
             this.panel2 = new System.Windows.Forms.Panel();
             this.gridOrders = new System.Windows.Forms.DataGridView();
             this.toolStrip9 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel44 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator64 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnOrdersNew = new System.Windows.Forms.ToolStripButton();
-            this.btnOrdersEdit = new System.Windows.Forms.ToolStripButton();
-            this.btnOrdersDelete = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnOrdersAssignUsers = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator67 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnOrdersSummary = new System.Windows.Forms.ToolStripDropDownButton();
-            this.orderSummaryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnOrdersPrepSummary = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnOrdersUnlock = new System.Windows.Forms.ToolStripButton();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.panel16 = new System.Windows.Forms.Panel();
             this.cboxOrdersLaboratory = new System.Windows.Forms.ComboBox();
@@ -523,34 +445,14 @@
             this.toolsOrders = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel30 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator63 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnOrdersClearAllFilters = new System.Windows.Forms.ToolStripButton();
             this.tabSamples = new System.Windows.Forms.TabPage();
             this.panel78 = new System.Windows.Forms.Panel();
             this.gridSamples = new System.Windows.Forms.DataGridView();
             this.toolsSamples = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel56 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator30 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButton99 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripDropDownButton3 = new System.Windows.Forms.ToolStripDropDownButton();
-            this.excelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnSamplesEdit = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton104 = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator47 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnSamplesSplit = new System.Windows.Forms.ToolStripButton();
-            this.btnSamplesMerge = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator45 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnSamplesSetOrder = new System.Windows.Forms.ToolStripButton();
-            this.toolStripDropDownButton2 = new System.Windows.Forms.ToolStripDropDownButton();
-            this.projectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.customerToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.samplerToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.samplingmethodToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.excemptFromPublicToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnSamplesPrepAnal = new System.Windows.Forms.ToolStripButton();
-            this.toolStripDropDownButton4 = new System.Windows.Forms.ToolStripDropDownButton();
-            this.sampleLabelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.sampleInfoForSelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnSamplesUnlock = new System.Windows.Forms.ToolStripButton();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.panel24 = new System.Windows.Forms.Panel();
             this.tbSamplesLookup = new System.Windows.Forms.TextBox();
@@ -577,38 +479,27 @@
             this.toolStrip8 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel22 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator57 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnSamplesClearFilters = new System.Windows.Forms.ToolStripButton();
             this.tabProjects = new System.Windows.Forms.TabPage();
             this.splitProjects = new System.Windows.Forms.SplitContainer();
             this.gridProjectMain = new System.Windows.Forms.DataGridView();
             this.toolStrip4 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel15 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator54 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnProjectsMainNew = new System.Windows.Forms.ToolStripButton();
-            this.btnProjectsMainEdit = new System.Windows.Forms.ToolStripButton();
             this.splitContainer24 = new System.Windows.Forms.SplitContainer();
             this.gridProjectSub = new System.Windows.Forms.DataGridView();
             this.toolStrip5 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel21 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator55 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnProjectsSubNew = new System.Windows.Forms.ToolStripButton();
-            this.btnProjectsSubEdit = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator56 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnProjectSubPrint = new System.Windows.Forms.ToolStripButton();
             this.splitContainer25 = new System.Windows.Forms.SplitContainer();
             this.gridProjectsUsers = new System.Windows.Forms.DataGridView();
             this.toolsProjUsers = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator31 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnProjectsUsersAdd = new System.Windows.Forms.ToolStripButton();
-            this.btnProjectsUsersRemove = new System.Windows.Forms.ToolStripButton();
             this.gridProjectAttachments = new System.Windows.Forms.DataGridView();
             this.toolsProjAttachments = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel3 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator32 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnProjectScanAttachment = new System.Windows.Forms.ToolStripButton();
-            this.btnProjectBrowseAttachment = new System.Windows.Forms.ToolStripButton();
-            this.btnProjectDeleteAttachment = new System.Windows.Forms.ToolStripButton();
             this.tabTypeRel = new System.Windows.Forms.TabPage();
             this.tabsTypeRel = new System.Windows.Forms.TabControl();
             this.tabTypeRelationsSampleTypes = new System.Windows.Forms.TabPage();
@@ -617,14 +508,7 @@
             this.toolsTypeRelSamp = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel47 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator35 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnTypeRelSampleTypesNewRoot = new System.Windows.Forms.ToolStripButton();
-            this.btnTypeRelSampleTypesNew = new System.Windows.Forms.ToolStripButton();
-            this.btnTypeRelSampleTypesEdit = new System.Windows.Forms.ToolStripButton();
-            this.btnTypeRelSampleTypesDelete = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator44 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnTypeRelSampTypeExport = new System.Windows.Forms.ToolStripDropDownButton();
-            this.btnTypeRelSampleTypesExportSampTypeList = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnTypeRelSampleTypesExportSampTypeXML = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl3 = new System.Windows.Forms.TabControl();
             this.tabTypeRelSampTypeComp = new System.Windows.Forms.TabPage();
             this.splitContainer16 = new System.Windows.Forms.SplitContainer();
@@ -632,9 +516,6 @@
             this.toolsTypeRelSampComp = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel48 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator36 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnTypeRelSampTypeCompAdd = new System.Windows.Forms.ToolStripButton();
-            this.btnTypeRelSampTypeCompEdit = new System.Windows.Forms.ToolStripButton();
-            this.btnTypeRelSampTypeCompDelete = new System.Windows.Forms.ToolStripButton();
             this.lblTypeRelSampCompSel = new System.Windows.Forms.ToolStripLabel();
             this.lbSampleTypesInheritedComponents = new System.Windows.Forms.ListBox();
             this.toolsTypeRelSampCompInherit = new System.Windows.Forms.ToolStrip();
@@ -645,8 +526,6 @@
             this.toolsTypeRelSampPrepMeth = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel50 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator38 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnTypeRelSampTypePrepMethAdd = new System.Windows.Forms.ToolStripButton();
-            this.btnPreparationMethodDelete = new System.Windows.Forms.ToolStripButton();
             this.lblTypeRelSampPrepSel = new System.Windows.Forms.ToolStripLabel();
             this.lbTypeRelSampTypeInheritedPrepMeth = new System.Windows.Forms.ListBox();
             this.toolsTypeRelSampAnalMeth = new System.Windows.Forms.ToolStrip();
@@ -657,30 +536,20 @@
             this.toolsTypeRelPrepMeth = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel51 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator39 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButton49 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton50 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton91 = new System.Windows.Forms.ToolStripButton();
             this.lbTypRelPrepMethAnalMeth = new System.Windows.Forms.ListBox();
             this.toolsTypeRelPrepAnalMeth = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel20 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator40 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnTypeRelPrepMethAddAnalMeth = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton48 = new System.Windows.Forms.ToolStripButton();
             this.tabTypeRelationsAnalMeth = new System.Windows.Forms.TabPage();
             this.splitContainer17 = new System.Windows.Forms.SplitContainer();
             this.gridTypeRelAnalMeth = new System.Windows.Forms.DataGridView();
             this.toolsTypeRelAnalMeth = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel52 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator41 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButton51 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton52 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton93 = new System.Windows.Forms.ToolStripButton();
             this.lbTypRelAnalMethNuclides = new System.Windows.Forms.ListBox();
             this.toolsTypeRelNuclides = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel23 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator42 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnAnalysisMethodsAddNuclide = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton54 = new System.Windows.Forms.ToolStripButton();
             this.tabAuditLog = new System.Windows.Forms.TabPage();
             this.gridAuditLog = new System.Windows.Forms.DataGridView();
             this.toolsAuditLog = new System.Windows.Forms.ToolStrip();
@@ -695,118 +564,73 @@
             this.toolsSysLab = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel31 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator14 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnSysLabNew = new System.Windows.Forms.ToolStripButton();
-            this.btnSysLabEdit = new System.Windows.Forms.ToolStripButton();
-            this.btnSysLabDelete = new System.Windows.Forms.ToolStripButton();
             this.splitContainer10 = new System.Windows.Forms.SplitContainer();
             this.gridSysLabPrepMeth = new System.Windows.Forms.DataGridView();
             this.toolsSysLabPrepMeth = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel5 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator15 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnSysLabPrepMethAdd = new System.Windows.Forms.ToolStripButton();
-            this.btnSysLabPrepMethRemove = new System.Windows.Forms.ToolStripButton();
             this.gridSysLabAnalMeth = new System.Windows.Forms.DataGridView();
             this.toolsSysLabAnalMeth = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel14 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator16 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnSysLabAnalMethAdd = new System.Windows.Forms.ToolStripButton();
-            this.btnSysLabAnalMethRemove = new System.Windows.Forms.ToolStripButton();
             this.tabSysUsers = new System.Windows.Forms.TabPage();
             this.splitContainer11 = new System.Windows.Forms.SplitContainer();
             this.gridSysUsers = new System.Windows.Forms.DataGridView();
             this.toolsSysUsers = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel35 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnMetaUsersNew = new System.Windows.Forms.ToolStripButton();
-            this.btnMetaUsersEdit = new System.Windows.Forms.ToolStripButton();
-            this.btnMetaUsersDelete = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnMetaUsersResetPass = new System.Windows.Forms.ToolStripButton();
             this.splitContainer18 = new System.Windows.Forms.SplitContainer();
             this.lbSysUsersRoles = new System.Windows.Forms.ListBox();
             this.toolsSysUsersRoles = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel28 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator12 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnSysUsersAddRoles = new System.Windows.Forms.ToolStripButton();
-            this.btnSysUsersRemRoles = new System.Windows.Forms.ToolStripButton();
             this.gridSysUsersAnalMeth = new System.Windows.Forms.DataGridView();
             this.toolsSysUsersAnalMeth = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel29 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator13 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnSysUsersAnalMethAdd = new System.Windows.Forms.ToolStripButton();
-            this.btnSysUsersAnalMethRemove = new System.Windows.Forms.ToolStripButton();
             this.tabSysMunicipalities = new System.Windows.Forms.TabPage();
             this.splitContainer19 = new System.Windows.Forms.SplitContainer();
             this.gridSysCounty = new System.Windows.Forms.DataGridView();
             this.toolsSysCounties = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel32 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnNewCounty = new System.Windows.Forms.ToolStripButton();
-            this.btnEditCounty = new System.Windows.Forms.ToolStripButton();
-            this.btnDeleteCounty = new System.Windows.Forms.ToolStripButton();
             this.gridSysMunicipality = new System.Windows.Forms.DataGridView();
             this.toolsSysMunicipalities = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel33 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnNewMunicipality = new System.Windows.Forms.ToolStripButton();
-            this.btnEditMunicipality = new System.Windows.Forms.ToolStripButton();
-            this.btnDeleteMunicipality = new System.Windows.Forms.ToolStripButton();
             this.tabSysAccredRules = new System.Windows.Forms.TabPage();
             this.dataGridView22 = new System.Windows.Forms.DataGridView();
             this.toolsSysAccredRules = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel34 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButton70 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton71 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton72 = new System.Windows.Forms.ToolStripButton();
             this.tabSysNuclides = new System.Windows.Forms.TabPage();
             this.gridSysNuclides = new System.Windows.Forms.DataGridView();
             this.toolsSysNuclides = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel41 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnSysNuclideNew = new System.Windows.Forms.ToolStripButton();
-            this.btnSysNuclideEdit = new System.Windows.Forms.ToolStripButton();
-            this.btnSysNuclideDelete = new System.Windows.Forms.ToolStripButton();
-            this.btnSysNuclideExport = new System.Windows.Forms.ToolStripDropDownButton();
-            this.btnNuclidesExportNuclidesXML = new System.Windows.Forms.ToolStripMenuItem();
             this.tabSysGeometries = new System.Windows.Forms.TabPage();
             this.panel6 = new System.Windows.Forms.Panel();
             this.gridSysGeom = new System.Windows.Forms.DataGridView();
             this.toolsSysGeom = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel43 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator23 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnNewGeometry = new System.Windows.Forms.ToolStripButton();
-            this.btnEditGeometry = new System.Windows.Forms.ToolStripButton();
-            this.btnDeleteGeometry = new System.Windows.Forms.ToolStripButton();
             this.tabSysPers = new System.Windows.Forms.TabPage();
             this.gridSysPers = new System.Windows.Forms.DataGridView();
             this.toolStrip14 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel16 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator34 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnSysPersNew = new System.Windows.Forms.ToolStripButton();
-            this.btnSysPersEdit = new System.Windows.Forms.ToolStripButton();
-            this.btnSysPersDelete = new System.Windows.Forms.ToolStripButton();
             this.tabSysSampParamNames = new System.Windows.Forms.TabPage();
             this.gridSysSampParamNames = new System.Windows.Forms.DataGridView();
             this.toolStrip18 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel24 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator74 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnSysSampParamNameNew = new System.Windows.Forms.ToolStripButton();
-            this.btnSysSampParamNameEdit = new System.Windows.Forms.ToolStripButton();
-            this.btnSysSampParamNameDelete = new System.Windows.Forms.ToolStripButton();
             this.tabPrepAnal = new System.Windows.Forms.TabPage();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.panel31 = new System.Windows.Forms.Panel();
             this.treePrepAnal = new System.Windows.Forms.TreeView();
             this.toolStrip7 = new System.Windows.Forms.ToolStrip();
-            this.miPrepAnalPrep = new System.Windows.Forms.ToolStripDropDownButton();
-            this.btnPrepAnalAddPrep = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnPrepAnalDelPrep = new System.Windows.Forms.ToolStripMenuItem();
-            this.miPrepAnalAnal = new System.Windows.Forms.ToolStripDropDownButton();
-            this.btnPrepAnalAddAnal = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnPrepAnalDelAnal = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator71 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnPrepAnalShowAudit = new System.Windows.Forms.ToolStripButton();
             this.tabsPrepAnal = new System.Windows.Forms.TabControl();
             this.tabPrepAnalSample = new System.Windows.Forms.TabPage();
             this.panel81 = new System.Windows.Forms.Panel();
@@ -887,15 +711,11 @@
             this.label27 = new System.Windows.Forms.Label();
             this.toolsSamplePrepInfo = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel13 = new System.Windows.Forms.ToolStripLabel();
-            this.btnPrepAnalPrepPrintLabel = new System.Windows.Forms.ToolStripButton();
             this.panel5 = new System.Windows.Forms.Panel();
             this.gridPrepAnalPrepAttachments = new System.Windows.Forms.DataGridView();
             this.toolsSampleAttachments = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel10 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator26 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnPrepAnalPrepScanAttachment = new System.Windows.Forms.ToolStripButton();
-            this.btnPrepAnalPrepBrowseAttachment = new System.Windows.Forms.ToolStripButton();
-            this.btnPrepAnalPrepDeleteAttachment = new System.Windows.Forms.ToolStripButton();
             this.tabPrepAnalAnalysis = new System.Windows.Forms.TabPage();
             this.panel76 = new System.Windows.Forms.Panel();
             this.panel9 = new System.Windows.Forms.Panel();
@@ -903,9 +723,6 @@
             this.toolsSampleResRes = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel7 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator28 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnPrepAnalAddResult = new System.Windows.Forms.ToolStripButton();
-            this.btnPrepAnalEditResult = new System.Windows.Forms.ToolStripButton();
-            this.btnPrepAnalRemoveResult = new System.Windows.Forms.ToolStripButton();
             this.toolStripLabel57 = new System.Windows.Forms.ToolStripLabel();
             this.panel14 = new System.Windows.Forms.Panel();
             this.cboxPrepAnalAnalWorkflowStatus = new System.Windows.Forms.ComboBox();
@@ -930,19 +747,213 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel59 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator53 = new System.Windows.Forms.ToolStripSeparator();
-            this.ddPrepAnalImport2 = new System.Windows.Forms.ToolStripDropDownButton();
-            this.miImportLISFile2 = new System.Windows.Forms.ToolStripMenuItem();
             this.panel8 = new System.Windows.Forms.Panel();
             this.gridPrepAnalAnalAttachments = new System.Windows.Forms.DataGridView();
             this.toolsSampleResAttachments = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator27 = new System.Windows.Forms.ToolStripSeparator();
+            this.tools = new System.Windows.Forms.ToolStrip();
+            this.lblCurrentTab = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripSeparator37 = new System.Windows.Forms.ToolStripSeparator();
+            this.miSamplesCopy = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripLabel26 = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripSeparator75 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnMenuSearch = new System.Windows.Forms.Button();
+            this.btnMenuMetadata = new System.Windows.Forms.Button();
+            this.btnMenuCustomer = new System.Windows.Forms.Button();
+            this.btnMenuProjects = new System.Windows.Forms.Button();
+            this.btnMenuNewSample = new System.Windows.Forms.Button();
+            this.btnMenuSamples = new System.Windows.Forms.Button();
+            this.btnMenuNewOrder = new System.Windows.Forms.Button();
+            this.btnOrders = new System.Windows.Forms.Button();
+            this.btnSampleSelectSampleType = new System.Windows.Forms.Button();
+            this.btnSampleSamplingDateFromClear = new System.Windows.Forms.PictureBox();
+            this.btnSampleSamplingDateFrom = new System.Windows.Forms.PictureBox();
+            this.btnSampleSamplingDateToClear = new System.Windows.Forms.PictureBox();
+            this.btnSampleSamplingDateTo = new System.Windows.Forms.PictureBox();
+            this.btnSampleReferenceDateClear = new System.Windows.Forms.PictureBox();
+            this.btnSampleReferenceDate = new System.Windows.Forms.PictureBox();
+            this.btnSampleAddSampleToOrder = new System.Windows.Forms.ToolStripButton();
+            this.btnSampleGoToPrepAnal = new System.Windows.Forms.ToolStripButton();
+            this.btnSamplePrintSampleLabel = new System.Windows.Forms.ToolStripButton();
+            this.btnSampleScanAttachment = new System.Windows.Forms.ToolStripButton();
+            this.btnSampleBrowseAttachment = new System.Windows.Forms.ToolStripButton();
+            this.btnSampleDeleteAttachment = new System.Windows.Forms.ToolStripButton();
+            this.btnSampleParamAdd = new System.Windows.Forms.ToolStripButton();
+            this.btnSampleParamEdit = new System.Windows.Forms.ToolStripButton();
+            this.btnSampleParamRemove = new System.Windows.Forms.ToolStripButton();
+            this.btnOrderScanAttachment = new System.Windows.Forms.ToolStripButton();
+            this.btnOrderBrowseAttachment = new System.Windows.Forms.ToolStripButton();
+            this.btnOrderDeleteAttachment = new System.Windows.Forms.ToolStripButton();
+            this.btnOrderClearDeadline = new System.Windows.Forms.PictureBox();
+            this.btnOrderSelectDeadline = new System.Windows.Forms.PictureBox();
+            this.btnOrderSelectCustomer = new System.Windows.Forms.PictureBox();
+            this.ddbOrderAdd = new System.Windows.Forms.ToolStripDropDownButton();
+            this.btnOrderAddSampleType = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnOrderAddPrepMeth = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnOrderAddAnalMeth = new System.Windows.Forms.ToolStripMenuItem();
+            this.ddbOrderEdit = new System.Windows.Forms.ToolStripDropDownButton();
+            this.btnOrderEditSampleType = new System.Windows.Forms.ToolStripMenuItem();
+            this.ddbOrderDel = new System.Windows.Forms.ToolStripDropDownButton();
+            this.btnOrderDelSampleType = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnOrderCreateReport = new System.Windows.Forms.ToolStripButton();
+            this.btnOrderRemoveSampleFromOrder = new System.Windows.Forms.ToolStripButton();
+            this.btnOrderGoToPrepAnal = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
+            this.asPDFToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.onMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripButton64 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton65 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton66 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton67 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton68 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton69 = new System.Windows.Forms.ToolStripButton();
+            this.btnMetaUnitPrepUnitsNew = new System.Windows.Forms.ToolStripButton();
+            this.btnMetaUnitPrepUnitsEdit = new System.Windows.Forms.ToolStripButton();
+            this.btnMetaUnitPrepUnitsDelete = new System.Windows.Forms.ToolStripButton();
+            this.btnMetaUnitQuantUnitsNew = new System.Windows.Forms.ToolStripButton();
+            this.btnMetaUnitQuantUnitsEdit = new System.Windows.Forms.ToolStripButton();
+            this.btnMetaUnitQuantUnitsDelete = new System.Windows.Forms.ToolStripButton();
+            this.btnMetaUnitActivityUnitsNew = new System.Windows.Forms.ToolStripButton();
+            this.btnMetaUnitActivityUnitsEdit = new System.Windows.Forms.ToolStripButton();
+            this.btnMetaUnitActivityUnitsDelete = new System.Windows.Forms.ToolStripButton();
+            this.btnMetaUnitActivityUnitTypesNew = new System.Windows.Forms.ToolStripButton();
+            this.btnMetaUnitActivityUnitTypesEdit = new System.Windows.Forms.ToolStripButton();
+            this.btnMetaUnitActivityUnitTypesDelete = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton62 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton63 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton75 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton82 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton83 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton84 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton14 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton15 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton25 = new System.Windows.Forms.ToolStripButton();
+            this.btnCustomersNew = new System.Windows.Forms.ToolStripButton();
+            this.btnCustomersEdit = new System.Windows.Forms.ToolStripButton();
+            this.btnCustomersDelete = new System.Windows.Forms.ToolStripButton();
+            this.btnOrdersNew = new System.Windows.Forms.ToolStripButton();
+            this.btnOrdersEdit = new System.Windows.Forms.ToolStripButton();
+            this.btnOrdersDelete = new System.Windows.Forms.ToolStripButton();
+            this.btnOrdersAssignUsers = new System.Windows.Forms.ToolStripButton();
+            this.btnOrdersSummary = new System.Windows.Forms.ToolStripDropDownButton();
+            this.orderSummaryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnOrdersPrepSummary = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnOrdersUnlock = new System.Windows.Forms.ToolStripButton();
+            this.btnOrdersClearAllFilters = new System.Windows.Forms.ToolStripButton();
+            this.btnSamplesNew = new System.Windows.Forms.ToolStripButton();
+            this.btnSamplesEdit = new System.Windows.Forms.ToolStripButton();
+            this.btnSamplesDelete = new System.Windows.Forms.ToolStripButton();
+            this.btnSamplesCopy = new System.Windows.Forms.ToolStripButton();
+            this.toolStripDropDownButton3 = new System.Windows.Forms.ToolStripDropDownButton();
+            this.excelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnSamplesSplit = new System.Windows.Forms.ToolStripButton();
+            this.btnSamplesMerge = new System.Windows.Forms.ToolStripButton();
+            this.btnSamplesSetOrder = new System.Windows.Forms.ToolStripButton();
+            this.toolStripDropDownButton2 = new System.Windows.Forms.ToolStripDropDownButton();
+            this.projectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.customerToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.samplerToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.samplingmethodToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.excemptFromPublicToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnSamplesPrepAnal = new System.Windows.Forms.ToolStripButton();
+            this.toolStripDropDownButton4 = new System.Windows.Forms.ToolStripDropDownButton();
+            this.sampleLabelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sampleInfoForSelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnSamplesUnlock = new System.Windows.Forms.ToolStripButton();
+            this.btnSamplesClearFilters = new System.Windows.Forms.ToolStripButton();
+            this.btnProjectsMainNew = new System.Windows.Forms.ToolStripButton();
+            this.btnProjectsMainEdit = new System.Windows.Forms.ToolStripButton();
+            this.btnProjectsSubNew = new System.Windows.Forms.ToolStripButton();
+            this.btnProjectsSubEdit = new System.Windows.Forms.ToolStripButton();
+            this.btnProjectSubPrint = new System.Windows.Forms.ToolStripButton();
+            this.btnProjectsUsersAdd = new System.Windows.Forms.ToolStripButton();
+            this.btnProjectsUsersRemove = new System.Windows.Forms.ToolStripButton();
+            this.btnProjectScanAttachment = new System.Windows.Forms.ToolStripButton();
+            this.btnProjectBrowseAttachment = new System.Windows.Forms.ToolStripButton();
+            this.btnProjectDeleteAttachment = new System.Windows.Forms.ToolStripButton();
+            this.btnTypeRelSampleTypesNewRoot = new System.Windows.Forms.ToolStripButton();
+            this.btnTypeRelSampleTypesNew = new System.Windows.Forms.ToolStripButton();
+            this.btnTypeRelSampleTypesEdit = new System.Windows.Forms.ToolStripButton();
+            this.btnTypeRelSampleTypesDelete = new System.Windows.Forms.ToolStripButton();
+            this.btnTypeRelSampTypeExport = new System.Windows.Forms.ToolStripDropDownButton();
+            this.btnTypeRelSampleTypesExportSampTypeList = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnTypeRelSampleTypesExportSampTypeXML = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnTypeRelSampTypeCompAdd = new System.Windows.Forms.ToolStripButton();
+            this.btnTypeRelSampTypeCompEdit = new System.Windows.Forms.ToolStripButton();
+            this.btnTypeRelSampTypeCompDelete = new System.Windows.Forms.ToolStripButton();
+            this.btnTypeRelSampTypePrepMethAdd = new System.Windows.Forms.ToolStripButton();
+            this.btnPreparationMethodDelete = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton49 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton50 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton91 = new System.Windows.Forms.ToolStripButton();
+            this.btnTypeRelPrepMethAddAnalMeth = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton48 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton51 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton52 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton93 = new System.Windows.Forms.ToolStripButton();
+            this.btnAnalysisMethodsAddNuclide = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton54 = new System.Windows.Forms.ToolStripButton();
+            this.btnSysLabNew = new System.Windows.Forms.ToolStripButton();
+            this.btnSysLabEdit = new System.Windows.Forms.ToolStripButton();
+            this.btnSysLabDelete = new System.Windows.Forms.ToolStripButton();
+            this.btnSysLabPrepMethAdd = new System.Windows.Forms.ToolStripButton();
+            this.btnSysLabPrepMethRemove = new System.Windows.Forms.ToolStripButton();
+            this.btnSysLabAnalMethAdd = new System.Windows.Forms.ToolStripButton();
+            this.btnSysLabAnalMethRemove = new System.Windows.Forms.ToolStripButton();
+            this.btnMetaUsersNew = new System.Windows.Forms.ToolStripButton();
+            this.btnMetaUsersEdit = new System.Windows.Forms.ToolStripButton();
+            this.btnMetaUsersDelete = new System.Windows.Forms.ToolStripButton();
+            this.btnMetaUsersResetPass = new System.Windows.Forms.ToolStripButton();
+            this.btnSysUsersAddRoles = new System.Windows.Forms.ToolStripButton();
+            this.btnSysUsersRemRoles = new System.Windows.Forms.ToolStripButton();
+            this.btnSysUsersAnalMethAdd = new System.Windows.Forms.ToolStripButton();
+            this.btnSysUsersAnalMethRemove = new System.Windows.Forms.ToolStripButton();
+            this.btnNewCounty = new System.Windows.Forms.ToolStripButton();
+            this.btnEditCounty = new System.Windows.Forms.ToolStripButton();
+            this.btnDeleteCounty = new System.Windows.Forms.ToolStripButton();
+            this.btnNewMunicipality = new System.Windows.Forms.ToolStripButton();
+            this.btnEditMunicipality = new System.Windows.Forms.ToolStripButton();
+            this.btnDeleteMunicipality = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton70 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton71 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton72 = new System.Windows.Forms.ToolStripButton();
+            this.btnSysNuclideNew = new System.Windows.Forms.ToolStripButton();
+            this.btnSysNuclideEdit = new System.Windows.Forms.ToolStripButton();
+            this.btnSysNuclideDelete = new System.Windows.Forms.ToolStripButton();
+            this.btnSysNuclideExport = new System.Windows.Forms.ToolStripDropDownButton();
+            this.btnNuclidesExportNuclidesXML = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnNewGeometry = new System.Windows.Forms.ToolStripButton();
+            this.btnEditGeometry = new System.Windows.Forms.ToolStripButton();
+            this.btnDeleteGeometry = new System.Windows.Forms.ToolStripButton();
+            this.btnSysPersNew = new System.Windows.Forms.ToolStripButton();
+            this.btnSysPersEdit = new System.Windows.Forms.ToolStripButton();
+            this.btnSysPersDelete = new System.Windows.Forms.ToolStripButton();
+            this.btnSysSampParamNameNew = new System.Windows.Forms.ToolStripButton();
+            this.btnSysSampParamNameEdit = new System.Windows.Forms.ToolStripButton();
+            this.btnSysSampParamNameDelete = new System.Windows.Forms.ToolStripButton();
+            this.miPrepAnalPrep = new System.Windows.Forms.ToolStripDropDownButton();
+            this.btnPrepAnalAddPrep = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnPrepAnalDelPrep = new System.Windows.Forms.ToolStripMenuItem();
+            this.miPrepAnalAnal = new System.Windows.Forms.ToolStripDropDownButton();
+            this.btnPrepAnalAddAnal = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnPrepAnalDelAnal = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnPrepAnalShowAudit = new System.Windows.Forms.ToolStripButton();
+            this.btnPrepAnalPrepPrintLabel = new System.Windows.Forms.ToolStripButton();
+            this.btnPrepAnalPrepScanAttachment = new System.Windows.Forms.ToolStripButton();
+            this.btnPrepAnalPrepBrowseAttachment = new System.Windows.Forms.ToolStripButton();
+            this.btnPrepAnalPrepDeleteAttachment = new System.Windows.Forms.ToolStripButton();
+            this.btnPrepAnalAddResult = new System.Windows.Forms.ToolStripButton();
+            this.btnPrepAnalEditResult = new System.Windows.Forms.ToolStripButton();
+            this.btnPrepAnalRemoveResult = new System.Windows.Forms.ToolStripButton();
+            this.ddPrepAnalImport2 = new System.Windows.Forms.ToolStripDropDownButton();
+            this.miImportLISFile2 = new System.Windows.Forms.ToolStripMenuItem();
             this.btnPrepAnalAnalScanAttachment = new System.Windows.Forms.ToolStripButton();
             this.btnPrepAnalAnalBrowseAttachment = new System.Windows.Forms.ToolStripButton();
             this.btnPrepAnalAnalDeleteAttachment = new System.Windows.Forms.ToolStripButton();
-            this.tools = new System.Windows.Forms.ToolStrip();
             this.btnMenu = new System.Windows.Forms.ToolStripButton();
-            this.lblCurrentTab = new System.Windows.Forms.ToolStripLabel();
             this.btnBack = new System.Windows.Forms.ToolStripButton();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
@@ -960,14 +971,8 @@
             this.panel23.SuspendLayout();
             this.panel86.SuspendLayout();
             this.panel87.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.btnSampleSamplingDateFromClear)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnSampleSamplingDateFrom)).BeginInit();
             this.panel88.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.btnSampleSamplingDateToClear)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnSampleSamplingDateTo)).BeginInit();
             this.panel89.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.btnSampleReferenceDateClear)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnSampleReferenceDate)).BeginInit();
             this.toolStrip11.SuspendLayout();
             this.panel21.SuspendLayout();
             this.panelSamplesAttachments.SuspendLayout();
@@ -990,10 +995,7 @@
             this.toolsOrderAttachments.SuspendLayout();
             this.layoutOrderDetails.SuspendLayout();
             this.panel30.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.btnOrderClearDeadline)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnOrderSelectDeadline)).BeginInit();
             this.panel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.btnOrderSelectCustomer)).BeginInit();
             this.toolsOrderDetails.SuspendLayout();
             this.toolsOrderContent.SuspendLayout();
             this.tabOrderStatus.SuspendLayout();
@@ -1278,6 +1280,15 @@
             ((System.ComponentModel.ISupportInitialize)(this.gridPrepAnalAnalAttachments)).BeginInit();
             this.toolsSampleResAttachments.SuspendLayout();
             this.tools.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.btnSampleSamplingDateFromClear)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnSampleSamplingDateFrom)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnSampleSamplingDateToClear)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnSampleSamplingDateTo)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnSampleReferenceDateClear)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnSampleReferenceDate)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnOrderClearDeadline)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnOrderSelectDeadline)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnOrderSelectCustomer)).BeginInit();
             this.SuspendLayout();
             // 
             // menu
@@ -1339,12 +1350,12 @@
             this.miMainMenuView,
             this.miBack,
             this.toolStripSeparator25,
-            this.miSearchView,
             this.miProjectsView,
             this.miCustomersView,
             this.miTypeRelationsView,
             this.miMetadataView,
             this.miSystemDataView,
+            this.miSearchView,
             this.miAuditLogView});
             this.miEdit.Name = "miEdit";
             this.miEdit.Size = new System.Drawing.Size(39, 20);
@@ -1353,68 +1364,68 @@
             // miMainMenuView
             // 
             this.miMainMenuView.Name = "miMainMenuView";
-            this.miMainMenuView.Size = new System.Drawing.Size(157, 22);
+            this.miMainMenuView.Size = new System.Drawing.Size(162, 22);
             this.miMainMenuView.Text = "Ma&in menu";
             this.miMainMenuView.Click += new System.EventHandler(this.miMainMenuView_Click);
             // 
             // miBack
             // 
             this.miBack.Name = "miBack";
-            this.miBack.Size = new System.Drawing.Size(157, 22);
+            this.miBack.Size = new System.Drawing.Size(162, 22);
             this.miBack.Text = "Back";
             this.miBack.Click += new System.EventHandler(this.miBack_Click);
             // 
             // toolStripSeparator25
             // 
             this.toolStripSeparator25.Name = "toolStripSeparator25";
-            this.toolStripSeparator25.Size = new System.Drawing.Size(154, 6);
+            this.toolStripSeparator25.Size = new System.Drawing.Size(159, 6);
             // 
             // miSearchView
             // 
             this.miSearchView.Name = "miSearchView";
-            this.miSearchView.Size = new System.Drawing.Size(157, 22);
-            this.miSearchView.Text = "S&earch";
+            this.miSearchView.Size = new System.Drawing.Size(162, 22);
+            this.miSearchView.Text = "R&esults/Statistics";
             this.miSearchView.Click += new System.EventHandler(this.miSearchView_Click);
             // 
             // miProjectsView
             // 
             this.miProjectsView.Name = "miProjectsView";
-            this.miProjectsView.Size = new System.Drawing.Size(157, 22);
+            this.miProjectsView.Size = new System.Drawing.Size(162, 22);
             this.miProjectsView.Text = "&Projects";
             this.miProjectsView.Click += new System.EventHandler(this.miProjectsView_Click);
             // 
             // miCustomersView
             // 
             this.miCustomersView.Name = "miCustomersView";
-            this.miCustomersView.Size = new System.Drawing.Size(157, 22);
+            this.miCustomersView.Size = new System.Drawing.Size(162, 22);
             this.miCustomersView.Text = "&Customers";
             this.miCustomersView.Click += new System.EventHandler(this.miCustomersView_Click);
             // 
             // miTypeRelationsView
             // 
             this.miTypeRelationsView.Name = "miTypeRelationsView";
-            this.miTypeRelationsView.Size = new System.Drawing.Size(157, 22);
+            this.miTypeRelationsView.Size = new System.Drawing.Size(162, 22);
             this.miTypeRelationsView.Text = "&Types/Methods";
             this.miTypeRelationsView.Click += new System.EventHandler(this.miTypeRelationsView_Click);
             // 
             // miMetadataView
             // 
             this.miMetadataView.Name = "miMetadataView";
-            this.miMetadataView.Size = new System.Drawing.Size(157, 22);
+            this.miMetadataView.Size = new System.Drawing.Size(162, 22);
             this.miMetadataView.Text = "M&etadata";
             this.miMetadataView.Click += new System.EventHandler(this.miMetadataView_Click);
             // 
             // miSystemDataView
             // 
             this.miSystemDataView.Name = "miSystemDataView";
-            this.miSystemDataView.Size = new System.Drawing.Size(157, 22);
+            this.miSystemDataView.Size = new System.Drawing.Size(162, 22);
             this.miSystemDataView.Text = "&System data";
             this.miSystemDataView.Click += new System.EventHandler(this.miSystemDataView_Click);
             // 
             // miAuditLogView
             // 
             this.miAuditLogView.Name = "miAuditLogView";
-            this.miAuditLogView.Size = new System.Drawing.Size(157, 22);
+            this.miAuditLogView.Size = new System.Drawing.Size(162, 22);
             this.miAuditLogView.Text = "&Audit log";
             this.miAuditLogView.Click += new System.EventHandler(this.miAuditLogView_Click);
             // 
@@ -1503,8 +1514,8 @@
             // miSearch
             // 
             this.miSearch.Name = "miSearch";
-            this.miSearch.Size = new System.Drawing.Size(54, 20);
-            this.miSearch.Text = "Sea&rch";
+            this.miSearch.Size = new System.Drawing.Size(107, 20);
+            this.miSearch.Text = "&Results/Statistics";
             // 
             // miMeta
             // 
@@ -1743,9 +1754,10 @@
             // 
             this.miSamples.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.miSamplesNew,
-            this.miSamplesImport,
             this.miSamplesEdit,
             this.miSamplesDelete,
+            this.miSamplesCopy,
+            this.miSamplesImport,
             this.toolStripSeparator48,
             this.miSamplesSplit,
             this.miSamplesMerge,
@@ -2619,99 +2631,6 @@
             this.layoutMenu.Size = new System.Drawing.Size(1058, 593);
             this.layoutMenu.TabIndex = 5;
             // 
-            // btnMenuSearch
-            // 
-            this.btnMenuSearch.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnMenuSearch.Font = new System.Drawing.Font("Arial", 16F, System.Drawing.FontStyle.Bold);
-            this.btnMenuSearch.Image = global::DSA_lims.Properties.Resources.search_gray;
-            this.btnMenuSearch.Location = new System.Drawing.Point(793, 313);
-            this.btnMenuSearch.Margin = new System.Windows.Forms.Padding(1);
-            this.btnMenuSearch.Name = "btnMenuSearch";
-            this.btnMenuSearch.Size = new System.Drawing.Size(264, 279);
-            this.btnMenuSearch.TabIndex = 7;
-            this.btnMenuSearch.Text = "Search / Statistics";
-            this.btnMenuSearch.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnMenuSearch.UseVisualStyleBackColor = true;
-            this.btnMenuSearch.Click += new System.EventHandler(this.miSearchView_Click);
-            // 
-            // btnMenuMetadata
-            // 
-            this.btnMenuMetadata.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnMenuMetadata.Font = new System.Drawing.Font("Arial", 16F, System.Drawing.FontStyle.Bold);
-            this.btnMenuMetadata.Image = global::DSA_lims.Properties.Resources.new_batch_gray;
-            this.btnMenuMetadata.Location = new System.Drawing.Point(529, 313);
-            this.btnMenuMetadata.Margin = new System.Windows.Forms.Padding(1);
-            this.btnMenuMetadata.Name = "btnMenuMetadata";
-            this.btnMenuMetadata.Size = new System.Drawing.Size(262, 279);
-            this.btnMenuMetadata.TabIndex = 6;
-            this.btnMenuMetadata.Text = "Metadata";
-            this.btnMenuMetadata.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnMenuMetadata.UseVisualStyleBackColor = true;
-            this.btnMenuMetadata.Click += new System.EventHandler(this.miMetadataView_Click);
-            // 
-            // btnMenuCustomer
-            // 
-            this.btnMenuCustomer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnMenuCustomer.Font = new System.Drawing.Font("Arial", 16F, System.Drawing.FontStyle.Bold);
-            this.btnMenuCustomer.Image = global::DSA_lims.Properties.Resources.users_gray;
-            this.btnMenuCustomer.Location = new System.Drawing.Point(265, 313);
-            this.btnMenuCustomer.Margin = new System.Windows.Forms.Padding(1);
-            this.btnMenuCustomer.Name = "btnMenuCustomer";
-            this.btnMenuCustomer.Size = new System.Drawing.Size(262, 279);
-            this.btnMenuCustomer.TabIndex = 5;
-            this.btnMenuCustomer.Text = "Customers";
-            this.btnMenuCustomer.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnMenuCustomer.UseVisualStyleBackColor = true;
-            this.btnMenuCustomer.Click += new System.EventHandler(this.miCustomersView_Click);
-            // 
-            // btnMenuProjects
-            // 
-            this.btnMenuProjects.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnMenuProjects.Font = new System.Drawing.Font("Arial", 16F, System.Drawing.FontStyle.Bold);
-            this.btnMenuProjects.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.btnMenuProjects.Image = global::DSA_lims.Properties.Resources.projects_gray;
-            this.btnMenuProjects.Location = new System.Drawing.Point(1, 313);
-            this.btnMenuProjects.Margin = new System.Windows.Forms.Padding(1);
-            this.btnMenuProjects.Name = "btnMenuProjects";
-            this.btnMenuProjects.Size = new System.Drawing.Size(262, 279);
-            this.btnMenuProjects.TabIndex = 4;
-            this.btnMenuProjects.Text = "Projects";
-            this.btnMenuProjects.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnMenuProjects.UseVisualStyleBackColor = true;
-            this.btnMenuProjects.Click += new System.EventHandler(this.miProjectsView_Click);
-            // 
-            // btnMenuNewSample
-            // 
-            this.btnMenuNewSample.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnMenuNewSample.Font = new System.Drawing.Font("Arial", 16F, System.Drawing.FontStyle.Bold);
-            this.btnMenuNewSample.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.btnMenuNewSample.Image = global::DSA_lims.Properties.Resources.new_gray;
-            this.btnMenuNewSample.Location = new System.Drawing.Point(1, 33);
-            this.btnMenuNewSample.Margin = new System.Windows.Forms.Padding(1);
-            this.btnMenuNewSample.Name = "btnMenuNewSample";
-            this.btnMenuNewSample.Size = new System.Drawing.Size(262, 278);
-            this.btnMenuNewSample.TabIndex = 0;
-            this.btnMenuNewSample.Text = "New sample";
-            this.btnMenuNewSample.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnMenuNewSample.UseVisualStyleBackColor = true;
-            this.btnMenuNewSample.Click += new System.EventHandler(this.miSamplesNew_Click);
-            // 
-            // btnMenuSamples
-            // 
-            this.btnMenuSamples.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnMenuSamples.Font = new System.Drawing.Font("Arial", 16F, System.Drawing.FontStyle.Bold);
-            this.btnMenuSamples.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.btnMenuSamples.Image = global::DSA_lims.Properties.Resources.drawer_gray;
-            this.btnMenuSamples.Location = new System.Drawing.Point(265, 33);
-            this.btnMenuSamples.Margin = new System.Windows.Forms.Padding(1);
-            this.btnMenuSamples.Name = "btnMenuSamples";
-            this.btnMenuSamples.Size = new System.Drawing.Size(262, 278);
-            this.btnMenuSamples.TabIndex = 1;
-            this.btnMenuSamples.Text = "Samples";
-            this.btnMenuSamples.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnMenuSamples.UseVisualStyleBackColor = true;
-            this.btnMenuSamples.Click += new System.EventHandler(this.btnSamples_Click);
-            // 
             // lblMenuSamples
             // 
             this.lblMenuSamples.AutoSize = true;
@@ -2751,38 +2670,6 @@
             this.lblMenuOrders.Text = "Orders";
             this.lblMenuOrders.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // btnMenuNewOrder
-            // 
-            this.btnMenuNewOrder.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnMenuNewOrder.Font = new System.Drawing.Font("Arial", 16F, System.Drawing.FontStyle.Bold);
-            this.btnMenuNewOrder.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.btnMenuNewOrder.Image = global::DSA_lims.Properties.Resources.new_gray;
-            this.btnMenuNewOrder.Location = new System.Drawing.Point(529, 33);
-            this.btnMenuNewOrder.Margin = new System.Windows.Forms.Padding(1);
-            this.btnMenuNewOrder.Name = "btnMenuNewOrder";
-            this.btnMenuNewOrder.Size = new System.Drawing.Size(262, 278);
-            this.btnMenuNewOrder.TabIndex = 2;
-            this.btnMenuNewOrder.Text = "New order";
-            this.btnMenuNewOrder.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnMenuNewOrder.UseVisualStyleBackColor = true;
-            this.btnMenuNewOrder.Click += new System.EventHandler(this.miOrdersNew_Click);
-            // 
-            // btnOrders
-            // 
-            this.btnOrders.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnOrders.Font = new System.Drawing.Font("Arial", 16F, System.Drawing.FontStyle.Bold);
-            this.btnOrders.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.btnOrders.Image = global::DSA_lims.Properties.Resources.drawer_gray;
-            this.btnOrders.Location = new System.Drawing.Point(793, 33);
-            this.btnOrders.Margin = new System.Windows.Forms.Padding(1);
-            this.btnOrders.Name = "btnOrders";
-            this.btnOrders.Size = new System.Drawing.Size(264, 278);
-            this.btnOrders.TabIndex = 3;
-            this.btnOrders.Text = "Orders";
-            this.btnOrders.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnOrders.UseVisualStyleBackColor = true;
-            this.btnOrders.Click += new System.EventHandler(this.btnOrders_Click);
-            // 
             // tabSample
             // 
             this.tabSample.BackColor = System.Drawing.SystemColors.ButtonFace;
@@ -2791,7 +2678,6 @@
             this.tabSample.Controls.Add(this.toolsSample);
             this.tabSample.Location = new System.Drawing.Point(4, 24);
             this.tabSample.Name = "tabSample";
-            this.tabSample.Padding = new System.Windows.Forms.Padding(3);
             this.tabSample.Size = new System.Drawing.Size(1064, 599);
             this.tabSample.TabIndex = 1;
             this.tabSample.Text = "Sample";
@@ -2802,10 +2688,10 @@
             this.tabsSample.Controls.Add(this.tabSamplesParams);
             this.tabsSample.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabsSample.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
-            this.tabsSample.Location = new System.Drawing.Point(3, 28);
+            this.tabsSample.Location = new System.Drawing.Point(0, 25);
             this.tabsSample.Name = "tabsSample";
             this.tabsSample.SelectedIndex = 0;
-            this.tabsSample.Size = new System.Drawing.Size(1058, 542);
+            this.tabsSample.Size = new System.Drawing.Size(1064, 548);
             this.tabsSample.TabIndex = 1;
             this.tabsSample.SelectedIndexChanged += new System.EventHandler(this.tabsSample_SelectedIndexChanged);
             // 
@@ -2818,8 +2704,7 @@
             this.tabSamplesInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.tabSamplesInfo.Location = new System.Drawing.Point(4, 24);
             this.tabSamplesInfo.Name = "tabSamplesInfo";
-            this.tabSamplesInfo.Padding = new System.Windows.Forms.Padding(3);
-            this.tabSamplesInfo.Size = new System.Drawing.Size(1050, 514);
+            this.tabSamplesInfo.Size = new System.Drawing.Size(1056, 520);
             this.tabSamplesInfo.TabIndex = 0;
             this.tabSamplesInfo.Text = "Sample Info";
             // 
@@ -2867,7 +2752,7 @@
             this.layoutSample.Controls.Add(this.tbSampleComment, 2, 10);
             this.layoutSample.Controls.Add(this.btnSampleSelectCoords, 2, 6);
             this.layoutSample.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.layoutSample.Location = new System.Drawing.Point(3, 28);
+            this.layoutSample.Location = new System.Drawing.Point(0, 25);
             this.layoutSample.Name = "layoutSample";
             this.layoutSample.RowCount = 17;
             this.layoutSample.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 10F));
@@ -2888,7 +2773,7 @@
             this.layoutSample.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.layoutSample.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.layoutSample.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.layoutSample.Size = new System.Drawing.Size(749, 483);
+            this.layoutSample.Size = new System.Drawing.Size(761, 495);
             this.layoutSample.TabIndex = 0;
             // 
             // label8
@@ -2911,7 +2796,7 @@
             this.cboxSampleSampleComponent.FormattingEnabled = true;
             this.cboxSampleSampleComponent.Location = new System.Drawing.Point(153, 43);
             this.cboxSampleSampleComponent.Name = "cboxSampleSampleComponent";
-            this.cboxSampleSampleComponent.Size = new System.Drawing.Size(293, 21);
+            this.cboxSampleSampleComponent.Size = new System.Drawing.Size(299, 21);
             this.cboxSampleSampleComponent.TabIndex = 1;
             this.cboxSampleSampleComponent.ValueMember = "Id";
             this.cboxSampleSampleComponent.SelectedIndexChanged += new System.EventHandler(this.cboxSampleSampleComponent_SelectedIndexChanged);
@@ -2924,7 +2809,7 @@
             this.panel22.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel22.Location = new System.Drawing.Point(153, 13);
             this.panel22.Name = "panel22";
-            this.panel22.Size = new System.Drawing.Size(593, 24);
+            this.panel22.Size = new System.Drawing.Size(605, 24);
             this.panel22.TabIndex = 34;
             // 
             // cboxSampleSampleType
@@ -2936,22 +2821,11 @@
             this.cboxSampleSampleType.FormattingEnabled = true;
             this.cboxSampleSampleType.Location = new System.Drawing.Point(0, 0);
             this.cboxSampleSampleType.Name = "cboxSampleSampleType";
-            this.cboxSampleSampleType.Size = new System.Drawing.Size(571, 21);
+            this.cboxSampleSampleType.Size = new System.Drawing.Size(583, 21);
             this.cboxSampleSampleType.TabIndex = 0;
             this.cboxSampleSampleType.ValueMember = "Id";
             this.cboxSampleSampleType.SelectedIndexChanged += new System.EventHandler(this.cboxSampleSampleType_SelectedIndexChanged);
             this.cboxSampleSampleType.Leave += new System.EventHandler(this.cboxSampleSampleType_Leave);
-            // 
-            // btnSampleSelectSampleType
-            // 
-            this.btnSampleSelectSampleType.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnSampleSelectSampleType.Image = global::DSA_lims.Properties.Resources.tree_16;
-            this.btnSampleSelectSampleType.Location = new System.Drawing.Point(571, 0);
-            this.btnSampleSelectSampleType.Name = "btnSampleSelectSampleType";
-            this.btnSampleSelectSampleType.Size = new System.Drawing.Size(22, 24);
-            this.btnSampleSelectSampleType.TabIndex = 1;
-            this.btnSampleSelectSampleType.UseVisualStyleBackColor = true;
-            this.btnSampleSelectSampleType.Click += new System.EventHandler(this.btnSampleSelectSampleType_Click);
             // 
             // cboxSampleProject
             // 
@@ -2961,7 +2835,7 @@
             this.cboxSampleProject.FormattingEnabled = true;
             this.cboxSampleProject.Location = new System.Drawing.Point(153, 103);
             this.cboxSampleProject.Name = "cboxSampleProject";
-            this.cboxSampleProject.Size = new System.Drawing.Size(293, 21);
+            this.cboxSampleProject.Size = new System.Drawing.Size(299, 21);
             this.cboxSampleProject.TabIndex = 4;
             this.cboxSampleProject.ValueMember = "Id";
             this.cboxSampleProject.SelectedIndexChanged += new System.EventHandler(this.cboxSampleProject_SelectedIndexChanged);
@@ -2985,7 +2859,7 @@
             this.cboxSampleInfoSampler.FormattingEnabled = true;
             this.cboxSampleInfoSampler.Location = new System.Drawing.Point(153, 133);
             this.cboxSampleInfoSampler.Name = "cboxSampleInfoSampler";
-            this.cboxSampleInfoSampler.Size = new System.Drawing.Size(293, 21);
+            this.cboxSampleInfoSampler.Size = new System.Drawing.Size(299, 21);
             this.cboxSampleInfoSampler.TabIndex = 6;
             this.cboxSampleInfoSampler.ValueMember = "Id";
             this.cboxSampleInfoSampler.SelectedIndexChanged += new System.EventHandler(this.cboxSampleInfoSampler_SelectedIndexChanged);
@@ -3009,7 +2883,7 @@
             this.cboxSampleInfoStations.FormattingEnabled = true;
             this.cboxSampleInfoStations.Location = new System.Drawing.Point(153, 163);
             this.cboxSampleInfoStations.Name = "cboxSampleInfoStations";
-            this.cboxSampleInfoStations.Size = new System.Drawing.Size(293, 21);
+            this.cboxSampleInfoStations.Size = new System.Drawing.Size(299, 21);
             this.cboxSampleInfoStations.TabIndex = 8;
             this.cboxSampleInfoStations.ValueMember = "Id";
             this.cboxSampleInfoStations.SelectedIndexChanged += new System.EventHandler(this.cboxSampleInfoStations_SelectedIndexChanged);
@@ -3044,7 +2918,7 @@
             this.cboxSampleCounties.FormattingEnabled = true;
             this.cboxSampleCounties.Location = new System.Drawing.Point(153, 223);
             this.cboxSampleCounties.Name = "cboxSampleCounties";
-            this.cboxSampleCounties.Size = new System.Drawing.Size(293, 21);
+            this.cboxSampleCounties.Size = new System.Drawing.Size(299, 21);
             this.cboxSampleCounties.TabIndex = 12;
             this.cboxSampleCounties.ValueMember = "Id";
             this.cboxSampleCounties.SelectedIndexChanged += new System.EventHandler(this.cboxSampleCounties_SelectedIndexChanged);
@@ -3068,7 +2942,7 @@
             this.cboxSampleInfoLocationTypes.FormattingEnabled = true;
             this.cboxSampleInfoLocationTypes.Location = new System.Drawing.Point(153, 253);
             this.cboxSampleInfoLocationTypes.Name = "cboxSampleInfoLocationTypes";
-            this.cboxSampleInfoLocationTypes.Size = new System.Drawing.Size(293, 21);
+            this.cboxSampleInfoLocationTypes.Size = new System.Drawing.Size(299, 21);
             this.cboxSampleInfoLocationTypes.TabIndex = 14;
             this.cboxSampleInfoLocationTypes.ValueMember = "Id";
             this.cboxSampleInfoLocationTypes.SelectedIndexChanged += new System.EventHandler(this.cboxSampleInfoLocationTypes_SelectedIndexChanged);
@@ -3092,7 +2966,7 @@
             this.cboxSampleLaboratory.FormattingEnabled = true;
             this.cboxSampleLaboratory.Location = new System.Drawing.Point(153, 373);
             this.cboxSampleLaboratory.Name = "cboxSampleLaboratory";
-            this.cboxSampleLaboratory.Size = new System.Drawing.Size(293, 21);
+            this.cboxSampleLaboratory.Size = new System.Drawing.Size(299, 21);
             this.cboxSampleLaboratory.TabIndex = 19;
             this.cboxSampleLaboratory.ValueMember = "Id";
             this.cboxSampleLaboratory.SelectedIndexChanged += new System.EventHandler(this.cboxSampleLaboratory_SelectedIndexChanged);
@@ -3103,9 +2977,9 @@
             this.cboxSampleSubProject.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cboxSampleSubProject.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxSampleSubProject.FormattingEnabled = true;
-            this.cboxSampleSubProject.Location = new System.Drawing.Point(452, 103);
+            this.cboxSampleSubProject.Location = new System.Drawing.Point(458, 103);
             this.cboxSampleSubProject.Name = "cboxSampleSubProject";
-            this.cboxSampleSubProject.Size = new System.Drawing.Size(294, 21);
+            this.cboxSampleSubProject.Size = new System.Drawing.Size(300, 21);
             this.cboxSampleSubProject.TabIndex = 5;
             this.cboxSampleSubProject.ValueMember = "Id";
             this.cboxSampleSubProject.SelectedIndexChanged += new System.EventHandler(this.cboxSampleSubProject_SelectedIndexChanged);
@@ -3116,9 +2990,9 @@
             this.cboxSampleInfoSamplingMeth.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cboxSampleInfoSamplingMeth.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxSampleInfoSamplingMeth.FormattingEnabled = true;
-            this.cboxSampleInfoSamplingMeth.Location = new System.Drawing.Point(452, 133);
+            this.cboxSampleInfoSamplingMeth.Location = new System.Drawing.Point(458, 133);
             this.cboxSampleInfoSamplingMeth.Name = "cboxSampleInfoSamplingMeth";
-            this.cboxSampleInfoSamplingMeth.Size = new System.Drawing.Size(294, 21);
+            this.cboxSampleInfoSamplingMeth.Size = new System.Drawing.Size(300, 21);
             this.cboxSampleInfoSamplingMeth.TabIndex = 7;
             this.cboxSampleInfoSamplingMeth.ValueMember = "Id";
             this.cboxSampleInfoSamplingMeth.SelectedIndexChanged += new System.EventHandler(this.cboxSampleInfoSamplingMeth_SelectedIndexChanged);
@@ -3129,9 +3003,9 @@
             this.cboxSampleMunicipalities.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cboxSampleMunicipalities.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxSampleMunicipalities.FormattingEnabled = true;
-            this.cboxSampleMunicipalities.Location = new System.Drawing.Point(452, 223);
+            this.cboxSampleMunicipalities.Location = new System.Drawing.Point(458, 223);
             this.cboxSampleMunicipalities.Name = "cboxSampleMunicipalities";
-            this.cboxSampleMunicipalities.Size = new System.Drawing.Size(294, 21);
+            this.cboxSampleMunicipalities.Size = new System.Drawing.Size(300, 21);
             this.cboxSampleMunicipalities.TabIndex = 13;
             this.cboxSampleMunicipalities.ValueMember = "Id";
             this.cboxSampleMunicipalities.SelectedIndexChanged += new System.EventHandler(this.cboxSampleMunicipalities_SelectedIndexChanged);
@@ -3139,10 +3013,10 @@
             // tbSampleLocation
             // 
             this.tbSampleLocation.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbSampleLocation.Location = new System.Drawing.Point(452, 253);
+            this.tbSampleLocation.Location = new System.Drawing.Point(458, 253);
             this.tbSampleLocation.MaxLength = 128;
             this.tbSampleLocation.Name = "tbSampleLocation";
-            this.tbSampleLocation.Size = new System.Drawing.Size(294, 20);
+            this.tbSampleLocation.Size = new System.Drawing.Size(300, 20);
             this.tbSampleLocation.TabIndex = 15;
             this.tbSampleLocation.TextChanged += new System.EventHandler(this.tbSampleLocation_TextChanged);
             // 
@@ -3155,7 +3029,7 @@
             this.panelSampleLatLonAlt.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelSampleLatLonAlt.Location = new System.Drawing.Point(153, 193);
             this.panelSampleLatLonAlt.Name = "panelSampleLatLonAlt";
-            this.panelSampleLatLonAlt.Size = new System.Drawing.Size(593, 24);
+            this.panelSampleLatLonAlt.Size = new System.Drawing.Size(605, 24);
             this.panelSampleLatLonAlt.TabIndex = 48;
             this.panelSampleLatLonAlt.Resize += new System.EventHandler(this.panelSampleLatLonAlt_Resize);
             // 
@@ -3165,14 +3039,14 @@
             this.tbSampleInfoLongitude.Location = new System.Drawing.Point(187, 0);
             this.tbSampleInfoLongitude.MaxLength = 40;
             this.tbSampleInfoLongitude.Name = "tbSampleInfoLongitude";
-            this.tbSampleInfoLongitude.Size = new System.Drawing.Size(208, 20);
+            this.tbSampleInfoLongitude.Size = new System.Drawing.Size(220, 20);
             this.tbSampleInfoLongitude.TabIndex = 10;
             this.tbSampleInfoLongitude.TextChanged += new System.EventHandler(this.tbSampleInfoLongitude_TextChanged);
             // 
             // tbSampleInfoAltitude
             // 
             this.tbSampleInfoAltitude.Dock = System.Windows.Forms.DockStyle.Right;
-            this.tbSampleInfoAltitude.Location = new System.Drawing.Point(395, 0);
+            this.tbSampleInfoAltitude.Location = new System.Drawing.Point(407, 0);
             this.tbSampleInfoAltitude.MaxLength = 32;
             this.tbSampleInfoAltitude.Name = "tbSampleInfoAltitude";
             this.tbSampleInfoAltitude.Size = new System.Drawing.Size(198, 20);
@@ -3207,7 +3081,7 @@
             this.cboxSampleSampleStorage.FormattingEnabled = true;
             this.cboxSampleSampleStorage.Location = new System.Drawing.Point(153, 403);
             this.cboxSampleSampleStorage.Name = "cboxSampleSampleStorage";
-            this.cboxSampleSampleStorage.Size = new System.Drawing.Size(293, 21);
+            this.cboxSampleSampleStorage.Size = new System.Drawing.Size(299, 21);
             this.cboxSampleSampleStorage.TabIndex = 20;
             this.cboxSampleSampleStorage.ValueMember = "Id";
             this.cboxSampleSampleStorage.SelectedIndexChanged += new System.EventHandler(this.cboxSampleSampleStorage_SelectedIndexChanged);
@@ -3228,7 +3102,7 @@
             this.tbSampleExId.Location = new System.Drawing.Point(153, 73);
             this.tbSampleExId.MaxLength = 128;
             this.tbSampleExId.Name = "tbSampleExId";
-            this.tbSampleExId.Size = new System.Drawing.Size(293, 20);
+            this.tbSampleExId.Size = new System.Drawing.Size(299, 20);
             this.tbSampleExId.TabIndex = 2;
             this.tbSampleExId.TextChanged += new System.EventHandler(this.tbSampleExId_TextChanged);
             // 
@@ -3347,7 +3221,7 @@
             this.cboxSampleInstanceStatus.FormattingEnabled = true;
             this.cboxSampleInstanceStatus.Location = new System.Drawing.Point(153, 433);
             this.cboxSampleInstanceStatus.Name = "cboxSampleInstanceStatus";
-            this.cboxSampleInstanceStatus.Size = new System.Drawing.Size(293, 21);
+            this.cboxSampleInstanceStatus.Size = new System.Drawing.Size(299, 21);
             this.cboxSampleInstanceStatus.TabIndex = 21;
             this.cboxSampleInstanceStatus.ValueMember = "Id";
             this.cboxSampleInstanceStatus.SelectedIndexChanged += new System.EventHandler(this.cboxSampleInstanceStatus_SelectedIndexChanged);
@@ -3355,9 +3229,10 @@
             // cbSampleConfidential
             // 
             this.cbSampleConfidential.AutoSize = true;
-            this.cbSampleConfidential.Location = new System.Drawing.Point(452, 73);
+            this.cbSampleConfidential.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cbSampleConfidential.Location = new System.Drawing.Point(458, 73);
             this.cbSampleConfidential.Name = "cbSampleConfidential";
-            this.cbSampleConfidential.Size = new System.Drawing.Size(115, 17);
+            this.cbSampleConfidential.Size = new System.Drawing.Size(300, 24);
             this.cbSampleConfidential.TabIndex = 3;
             this.cbSampleConfidential.Text = "Exempt from public";
             this.cbSampleConfidential.UseVisualStyleBackColor = true;
@@ -3403,7 +3278,7 @@
             this.panel87.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel87.Location = new System.Drawing.Point(153, 283);
             this.panel87.Name = "panel87";
-            this.panel87.Size = new System.Drawing.Size(293, 24);
+            this.panel87.Size = new System.Drawing.Size(299, 24);
             this.panel87.TabIndex = 57;
             // 
             // tbSampleSamplingDateFrom
@@ -3413,34 +3288,9 @@
             this.tbSampleSamplingDateFrom.Location = new System.Drawing.Point(0, 0);
             this.tbSampleSamplingDateFrom.Name = "tbSampleSamplingDateFrom";
             this.tbSampleSamplingDateFrom.ReadOnly = true;
-            this.tbSampleSamplingDateFrom.Size = new System.Drawing.Size(245, 21);
+            this.tbSampleSamplingDateFrom.Size = new System.Drawing.Size(251, 21);
             this.tbSampleSamplingDateFrom.TabIndex = 16;
             this.tbSampleSamplingDateFrom.TextChanged += new System.EventHandler(this.tbSampleSamplingDateFrom_TextChanged);
-            // 
-            // btnSampleSamplingDateFromClear
-            // 
-            this.btnSampleSamplingDateFromClear.BackgroundImage = global::DSA_lims.Properties.Resources.clear_16;
-            this.btnSampleSamplingDateFromClear.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btnSampleSamplingDateFromClear.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnSampleSamplingDateFromClear.Location = new System.Drawing.Point(245, 0);
-            this.btnSampleSamplingDateFromClear.Name = "btnSampleSamplingDateFromClear";
-            this.btnSampleSamplingDateFromClear.Size = new System.Drawing.Size(24, 24);
-            this.btnSampleSamplingDateFromClear.TabIndex = 1;
-            this.btnSampleSamplingDateFromClear.TabStop = false;
-            this.btnSampleSamplingDateFromClear.Click += new System.EventHandler(this.btnSampleSamplingDateFromClear_Click);
-            // 
-            // btnSampleSamplingDateFrom
-            // 
-            this.btnSampleSamplingDateFrom.BackgroundImage = global::DSA_lims.Properties.Resources.datetime_16;
-            this.btnSampleSamplingDateFrom.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btnSampleSamplingDateFrom.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnSampleSamplingDateFrom.InitialImage = null;
-            this.btnSampleSamplingDateFrom.Location = new System.Drawing.Point(269, 0);
-            this.btnSampleSamplingDateFrom.Name = "btnSampleSamplingDateFrom";
-            this.btnSampleSamplingDateFrom.Size = new System.Drawing.Size(24, 24);
-            this.btnSampleSamplingDateFrom.TabIndex = 0;
-            this.btnSampleSamplingDateFrom.TabStop = false;
-            this.btnSampleSamplingDateFrom.Click += new System.EventHandler(this.btnSampleSamplingDateFrom_Click);
             // 
             // panel88
             // 
@@ -3450,7 +3300,7 @@
             this.panel88.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel88.Location = new System.Drawing.Point(153, 313);
             this.panel88.Name = "panel88";
-            this.panel88.Size = new System.Drawing.Size(293, 24);
+            this.panel88.Size = new System.Drawing.Size(299, 24);
             this.panel88.TabIndex = 58;
             // 
             // tbSampleSamplingDateTo
@@ -3461,35 +3311,9 @@
             this.tbSampleSamplingDateTo.Location = new System.Drawing.Point(0, 0);
             this.tbSampleSamplingDateTo.Name = "tbSampleSamplingDateTo";
             this.tbSampleSamplingDateTo.ReadOnly = true;
-            this.tbSampleSamplingDateTo.Size = new System.Drawing.Size(245, 21);
+            this.tbSampleSamplingDateTo.Size = new System.Drawing.Size(251, 21);
             this.tbSampleSamplingDateTo.TabIndex = 17;
             this.tbSampleSamplingDateTo.TextChanged += new System.EventHandler(this.tbSampleSamplingDateTo_TextChanged);
-            // 
-            // btnSampleSamplingDateToClear
-            // 
-            this.btnSampleSamplingDateToClear.BackgroundImage = global::DSA_lims.Properties.Resources.clear_16;
-            this.btnSampleSamplingDateToClear.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btnSampleSamplingDateToClear.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnSampleSamplingDateToClear.Enabled = false;
-            this.btnSampleSamplingDateToClear.Location = new System.Drawing.Point(245, 0);
-            this.btnSampleSamplingDateToClear.Name = "btnSampleSamplingDateToClear";
-            this.btnSampleSamplingDateToClear.Size = new System.Drawing.Size(24, 24);
-            this.btnSampleSamplingDateToClear.TabIndex = 1;
-            this.btnSampleSamplingDateToClear.TabStop = false;
-            this.btnSampleSamplingDateToClear.Click += new System.EventHandler(this.btnSampleSamplingDateToClear_Click);
-            // 
-            // btnSampleSamplingDateTo
-            // 
-            this.btnSampleSamplingDateTo.BackgroundImage = global::DSA_lims.Properties.Resources.datetime_16;
-            this.btnSampleSamplingDateTo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btnSampleSamplingDateTo.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnSampleSamplingDateTo.Enabled = false;
-            this.btnSampleSamplingDateTo.Location = new System.Drawing.Point(269, 0);
-            this.btnSampleSamplingDateTo.Name = "btnSampleSamplingDateTo";
-            this.btnSampleSamplingDateTo.Size = new System.Drawing.Size(24, 24);
-            this.btnSampleSamplingDateTo.TabIndex = 0;
-            this.btnSampleSamplingDateTo.TabStop = false;
-            this.btnSampleSamplingDateTo.Click += new System.EventHandler(this.btnSampleSamplingDateTo_Click);
             // 
             // label26
             // 
@@ -3509,7 +3333,7 @@
             this.panel89.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel89.Location = new System.Drawing.Point(153, 343);
             this.panel89.Name = "panel89";
-            this.panel89.Size = new System.Drawing.Size(293, 24);
+            this.panel89.Size = new System.Drawing.Size(299, 24);
             this.panel89.TabIndex = 60;
             // 
             // tbSampleReferenceDate
@@ -3519,53 +3343,29 @@
             this.tbSampleReferenceDate.Location = new System.Drawing.Point(0, 0);
             this.tbSampleReferenceDate.Name = "tbSampleReferenceDate";
             this.tbSampleReferenceDate.ReadOnly = true;
-            this.tbSampleReferenceDate.Size = new System.Drawing.Size(245, 21);
+            this.tbSampleReferenceDate.Size = new System.Drawing.Size(251, 21);
             this.tbSampleReferenceDate.TabIndex = 18;
             this.tbSampleReferenceDate.TextChanged += new System.EventHandler(this.tbSampleReferenceDate_TextChanged);
-            // 
-            // btnSampleReferenceDateClear
-            // 
-            this.btnSampleReferenceDateClear.BackgroundImage = global::DSA_lims.Properties.Resources.clear_16;
-            this.btnSampleReferenceDateClear.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btnSampleReferenceDateClear.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnSampleReferenceDateClear.Location = new System.Drawing.Point(245, 0);
-            this.btnSampleReferenceDateClear.Name = "btnSampleReferenceDateClear";
-            this.btnSampleReferenceDateClear.Size = new System.Drawing.Size(24, 24);
-            this.btnSampleReferenceDateClear.TabIndex = 1;
-            this.btnSampleReferenceDateClear.TabStop = false;
-            this.btnSampleReferenceDateClear.Click += new System.EventHandler(this.btnSampleReferenceDateClear_Click);
-            // 
-            // btnSampleReferenceDate
-            // 
-            this.btnSampleReferenceDate.BackgroundImage = global::DSA_lims.Properties.Resources.datetime_16;
-            this.btnSampleReferenceDate.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btnSampleReferenceDate.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnSampleReferenceDate.Location = new System.Drawing.Point(269, 0);
-            this.btnSampleReferenceDate.Name = "btnSampleReferenceDate";
-            this.btnSampleReferenceDate.Size = new System.Drawing.Size(24, 24);
-            this.btnSampleReferenceDate.TabIndex = 0;
-            this.btnSampleReferenceDate.TabStop = false;
-            this.btnSampleReferenceDate.Click += new System.EventHandler(this.btnSampleReferenceDate_Click);
             // 
             // tbSampleComment
             // 
             this.tbSampleComment.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbSampleComment.Location = new System.Drawing.Point(452, 283);
+            this.tbSampleComment.Location = new System.Drawing.Point(458, 283);
             this.tbSampleComment.MaxLength = 1000;
             this.tbSampleComment.Multiline = true;
             this.tbSampleComment.Name = "tbSampleComment";
             this.layoutSample.SetRowSpan(this.tbSampleComment, 6);
             this.tbSampleComment.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.tbSampleComment.Size = new System.Drawing.Size(294, 174);
+            this.tbSampleComment.Size = new System.Drawing.Size(300, 174);
             this.tbSampleComment.TabIndex = 22;
             this.tbSampleComment.TextChanged += new System.EventHandler(this.tbSampleComment_TextChanged);
             // 
             // btnSampleSelectCoords
             // 
             this.btnSampleSelectCoords.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnSampleSelectCoords.Location = new System.Drawing.Point(452, 163);
+            this.btnSampleSelectCoords.Location = new System.Drawing.Point(458, 163);
             this.btnSampleSelectCoords.Name = "btnSampleSelectCoords";
-            this.btnSampleSelectCoords.Size = new System.Drawing.Size(294, 24);
+            this.btnSampleSelectCoords.Size = new System.Drawing.Size(300, 24);
             this.btnSampleSelectCoords.TabIndex = 61;
             this.btnSampleSelectCoords.Text = "Select coordinates from map";
             this.btnSampleSelectCoords.UseVisualStyleBackColor = true;
@@ -3578,47 +3378,19 @@
             this.btnSampleAddSampleToOrder,
             this.btnSampleGoToPrepAnal,
             this.btnSamplePrintSampleLabel});
-            this.toolStrip11.Location = new System.Drawing.Point(3, 3);
+            this.toolStrip11.Location = new System.Drawing.Point(0, 0);
             this.toolStrip11.Name = "toolStrip11";
-            this.toolStrip11.Size = new System.Drawing.Size(749, 25);
+            this.toolStrip11.Size = new System.Drawing.Size(761, 25);
             this.toolStrip11.TabIndex = 2;
             this.toolStrip11.Text = "toolStrip11";
-            // 
-            // btnSampleAddSampleToOrder
-            // 
-            this.btnSampleAddSampleToOrder.Image = global::DSA_lims.Properties.Resources._new;
-            this.btnSampleAddSampleToOrder.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSampleAddSampleToOrder.Name = "btnSampleAddSampleToOrder";
-            this.btnSampleAddSampleToOrder.Size = new System.Drawing.Size(135, 22);
-            this.btnSampleAddSampleToOrder.Text = "Add sample to order";
-            this.btnSampleAddSampleToOrder.Click += new System.EventHandler(this.btnSampleAddSampleToOrder_Click);
-            // 
-            // btnSampleGoToPrepAnal
-            // 
-            this.btnSampleGoToPrepAnal.Image = global::DSA_lims.Properties.Resources.right;
-            this.btnSampleGoToPrepAnal.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSampleGoToPrepAnal.Name = "btnSampleGoToPrepAnal";
-            this.btnSampleGoToPrepAnal.Size = new System.Drawing.Size(195, 22);
-            this.btnSampleGoToPrepAnal.Text = "Go to preparations and analyses";
-            this.btnSampleGoToPrepAnal.Click += new System.EventHandler(this.btnSampleGoToPrepAnal_Click);
-            // 
-            // btnSamplePrintSampleLabel
-            // 
-            this.btnSamplePrintSampleLabel.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.btnSamplePrintSampleLabel.Image = global::DSA_lims.Properties.Resources.printer;
-            this.btnSamplePrintSampleLabel.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSamplePrintSampleLabel.Name = "btnSamplePrintSampleLabel";
-            this.btnSamplePrintSampleLabel.Size = new System.Drawing.Size(121, 22);
-            this.btnSamplePrintSampleLabel.Text = "Print sample label";
-            this.btnSamplePrintSampleLabel.Click += new System.EventHandler(this.btnSamplePrintSampleLabel_Click);
             // 
             // panel21
             // 
             this.panel21.Controls.Add(this.panelSamplesAttachments);
             this.panel21.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel21.Location = new System.Drawing.Point(752, 3);
+            this.panel21.Location = new System.Drawing.Point(761, 0);
             this.panel21.Name = "panel21";
-            this.panel21.Size = new System.Drawing.Size(295, 508);
+            this.panel21.Size = new System.Drawing.Size(295, 520);
             this.panel21.TabIndex = 1;
             // 
             // panelSamplesAttachments
@@ -3628,7 +3400,7 @@
             this.panelSamplesAttachments.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelSamplesAttachments.Location = new System.Drawing.Point(0, 0);
             this.panelSamplesAttachments.Name = "panelSamplesAttachments";
-            this.panelSamplesAttachments.Size = new System.Drawing.Size(295, 508);
+            this.panelSamplesAttachments.Size = new System.Drawing.Size(295, 520);
             this.panelSamplesAttachments.TabIndex = 0;
             // 
             // gridSampleAttachments
@@ -3648,7 +3420,7 @@
             this.gridSampleAttachments.ReadOnly = true;
             this.gridSampleAttachments.RowHeadersVisible = false;
             this.gridSampleAttachments.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridSampleAttachments.Size = new System.Drawing.Size(295, 483);
+            this.gridSampleAttachments.Size = new System.Drawing.Size(295, 495);
             this.gridSampleAttachments.TabIndex = 1;
             this.gridSampleAttachments.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridAttachments_CellDoubleClick);
             // 
@@ -3679,33 +3451,6 @@
             this.toolStripSeparator46.Name = "toolStripSeparator46";
             this.toolStripSeparator46.Size = new System.Drawing.Size(6, 25);
             // 
-            // btnSampleScanAttachment
-            // 
-            this.btnSampleScanAttachment.Image = global::DSA_lims.Properties.Resources.scan;
-            this.btnSampleScanAttachment.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSampleScanAttachment.Name = "btnSampleScanAttachment";
-            this.btnSampleScanAttachment.Size = new System.Drawing.Size(52, 22);
-            this.btnSampleScanAttachment.Text = "Scan";
-            this.btnSampleScanAttachment.Click += new System.EventHandler(this.btnSampleScanAttachment_Click);
-            // 
-            // btnSampleBrowseAttachment
-            // 
-            this.btnSampleBrowseAttachment.Image = global::DSA_lims.Properties.Resources.projects;
-            this.btnSampleBrowseAttachment.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSampleBrowseAttachment.Name = "btnSampleBrowseAttachment";
-            this.btnSampleBrowseAttachment.Size = new System.Drawing.Size(65, 22);
-            this.btnSampleBrowseAttachment.Text = "Browse";
-            this.btnSampleBrowseAttachment.Click += new System.EventHandler(this.btnSampleBrowseAttachment_Click);
-            // 
-            // btnSampleDeleteAttachment
-            // 
-            this.btnSampleDeleteAttachment.Image = global::DSA_lims.Properties.Resources.delete;
-            this.btnSampleDeleteAttachment.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSampleDeleteAttachment.Name = "btnSampleDeleteAttachment";
-            this.btnSampleDeleteAttachment.Size = new System.Drawing.Size(60, 22);
-            this.btnSampleDeleteAttachment.Text = "Delete";
-            this.btnSampleDeleteAttachment.Click += new System.EventHandler(this.btnSampleDeleteAttachment_Click);
-            // 
             // tabSamplesParams
             // 
             this.tabSamplesParams.BackColor = System.Drawing.SystemColors.ButtonFace;
@@ -3713,8 +3458,7 @@
             this.tabSamplesParams.Controls.Add(this.toolStrip6);
             this.tabSamplesParams.Location = new System.Drawing.Point(4, 24);
             this.tabSamplesParams.Name = "tabSamplesParams";
-            this.tabSamplesParams.Padding = new System.Windows.Forms.Padding(3);
-            this.tabSamplesParams.Size = new System.Drawing.Size(1050, 514);
+            this.tabSamplesParams.Size = new System.Drawing.Size(1056, 522);
             this.tabSamplesParams.TabIndex = 1;
             this.tabSamplesParams.Text = "Parameters";
             // 
@@ -3724,16 +3468,16 @@
             this.gridSampleParameters.AllowUserToDeleteRows = false;
             this.gridSampleParameters.AllowUserToResizeRows = false;
             this.gridSampleParameters.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.gridSampleParameters.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
+            this.gridSampleParameters.BackgroundColor = System.Drawing.SystemColors.Window;
             this.gridSampleParameters.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.gridSampleParameters.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridSampleParameters.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridSampleParameters.Location = new System.Drawing.Point(3, 28);
+            this.gridSampleParameters.Location = new System.Drawing.Point(0, 25);
             this.gridSampleParameters.Name = "gridSampleParameters";
             this.gridSampleParameters.ReadOnly = true;
             this.gridSampleParameters.RowHeadersVisible = false;
             this.gridSampleParameters.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridSampleParameters.Size = new System.Drawing.Size(1044, 483);
+            this.gridSampleParameters.Size = new System.Drawing.Size(1056, 497);
             this.gridSampleParameters.TabIndex = 1;
             // 
             // toolStrip6
@@ -3745,9 +3489,9 @@
             this.btnSampleParamAdd,
             this.btnSampleParamEdit,
             this.btnSampleParamRemove});
-            this.toolStrip6.Location = new System.Drawing.Point(3, 3);
+            this.toolStrip6.Location = new System.Drawing.Point(0, 0);
             this.toolStrip6.Name = "toolStrip6";
-            this.toolStrip6.Size = new System.Drawing.Size(1044, 25);
+            this.toolStrip6.Size = new System.Drawing.Size(1056, 25);
             this.toolStrip6.TabIndex = 0;
             this.toolStrip6.Text = "toolStrip6";
             // 
@@ -3763,47 +3507,20 @@
             this.toolStripSeparator24.Name = "toolStripSeparator24";
             this.toolStripSeparator24.Size = new System.Drawing.Size(6, 25);
             // 
-            // btnSampleParamAdd
-            // 
-            this.btnSampleParamAdd.Image = global::DSA_lims.Properties.Resources._new;
-            this.btnSampleParamAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSampleParamAdd.Name = "btnSampleParamAdd";
-            this.btnSampleParamAdd.Size = new System.Drawing.Size(49, 22);
-            this.btnSampleParamAdd.Text = "Add";
-            this.btnSampleParamAdd.Click += new System.EventHandler(this.btnSampleParamAdd_Click);
-            // 
-            // btnSampleParamEdit
-            // 
-            this.btnSampleParamEdit.Image = global::DSA_lims.Properties.Resources.edit;
-            this.btnSampleParamEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSampleParamEdit.Name = "btnSampleParamEdit";
-            this.btnSampleParamEdit.Size = new System.Drawing.Size(47, 22);
-            this.btnSampleParamEdit.Text = "Edit";
-            this.btnSampleParamEdit.Click += new System.EventHandler(this.btnSampleParamEdit_Click);
-            // 
-            // btnSampleParamRemove
-            // 
-            this.btnSampleParamRemove.Image = global::DSA_lims.Properties.Resources.delete;
-            this.btnSampleParamRemove.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSampleParamRemove.Name = "btnSampleParamRemove";
-            this.btnSampleParamRemove.Size = new System.Drawing.Size(70, 22);
-            this.btnSampleParamRemove.Text = "Remove";
-            this.btnSampleParamRemove.Click += new System.EventHandler(this.btnSampleParamRemove_Click);
-            // 
             // panel36
             // 
             this.panel36.Controls.Add(this.btnSampleDiscard);
             this.panel36.Controls.Add(this.btnSampleUpdate);
             this.panel36.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel36.Location = new System.Drawing.Point(3, 570);
+            this.panel36.Location = new System.Drawing.Point(0, 573);
             this.panel36.Name = "panel36";
-            this.panel36.Size = new System.Drawing.Size(1058, 26);
+            this.panel36.Size = new System.Drawing.Size(1064, 26);
             this.panel36.TabIndex = 6;
             // 
             // btnSampleDiscard
             // 
             this.btnSampleDiscard.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnSampleDiscard.Location = new System.Drawing.Point(778, 0);
+            this.btnSampleDiscard.Location = new System.Drawing.Point(784, 0);
             this.btnSampleDiscard.Name = "btnSampleDiscard";
             this.btnSampleDiscard.Size = new System.Drawing.Size(140, 26);
             this.btnSampleDiscard.TabIndex = 24;
@@ -3814,7 +3531,7 @@
             // btnSampleUpdate
             // 
             this.btnSampleUpdate.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnSampleUpdate.Location = new System.Drawing.Point(918, 0);
+            this.btnSampleUpdate.Location = new System.Drawing.Point(924, 0);
             this.btnSampleUpdate.Name = "btnSampleUpdate";
             this.btnSampleUpdate.Size = new System.Drawing.Size(140, 26);
             this.btnSampleUpdate.TabIndex = 23;
@@ -3832,9 +3549,9 @@
             this.lblSampleToolSubProject,
             this.lblSampleToolLaboratory});
             this.toolsSample.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
-            this.toolsSample.Location = new System.Drawing.Point(3, 3);
+            this.toolsSample.Location = new System.Drawing.Point(0, 0);
             this.toolsSample.Name = "toolsSample";
-            this.toolsSample.Size = new System.Drawing.Size(1058, 25);
+            this.toolsSample.Size = new System.Drawing.Size(1064, 25);
             this.toolsSample.TabIndex = 5;
             this.toolsSample.Text = "toolStrip21";
             // 
@@ -3880,7 +3597,6 @@
             this.tabOrder.Controls.Add(this.panel15);
             this.tabOrder.Location = new System.Drawing.Point(4, 24);
             this.tabOrder.Name = "tabOrder";
-            this.tabOrder.Padding = new System.Windows.Forms.Padding(3);
             this.tabOrder.Size = new System.Drawing.Size(1064, 599);
             this.tabOrder.TabIndex = 2;
             this.tabOrder.Text = "Order";
@@ -3891,10 +3607,10 @@
             this.tabsOrder.Controls.Add(this.tabOrderStatus);
             this.tabsOrder.Controls.Add(this.tabOrderAssigned);
             this.tabsOrder.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabsOrder.Location = new System.Drawing.Point(3, 3);
+            this.tabsOrder.Location = new System.Drawing.Point(0, 0);
             this.tabsOrder.Name = "tabsOrder";
             this.tabsOrder.SelectedIndex = 0;
-            this.tabsOrder.Size = new System.Drawing.Size(1058, 567);
+            this.tabsOrder.Size = new System.Drawing.Size(1064, 573);
             this.tabsOrder.TabIndex = 7;
             // 
             // tabOrderInfo
@@ -3903,8 +3619,7 @@
             this.tabOrderInfo.Controls.Add(this.splitContainer7);
             this.tabOrderInfo.Location = new System.Drawing.Point(4, 24);
             this.tabOrderInfo.Name = "tabOrderInfo";
-            this.tabOrderInfo.Padding = new System.Windows.Forms.Padding(3);
-            this.tabOrderInfo.Size = new System.Drawing.Size(1050, 539);
+            this.tabOrderInfo.Size = new System.Drawing.Size(1056, 545);
             this.tabOrderInfo.TabIndex = 0;
             this.tabOrderInfo.Text = "Order Info";
             // 
@@ -3912,7 +3627,7 @@
             // 
             this.splitContainer7.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer7.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
-            this.splitContainer7.Location = new System.Drawing.Point(3, 3);
+            this.splitContainer7.Location = new System.Drawing.Point(0, 0);
             this.splitContainer7.Name = "splitContainer7";
             // 
             // splitContainer7.Panel1
@@ -3925,7 +3640,7 @@
             // 
             this.splitContainer7.Panel2.Controls.Add(this.treeOrderContent);
             this.splitContainer7.Panel2.Controls.Add(this.toolsOrderContent);
-            this.splitContainer7.Size = new System.Drawing.Size(1044, 533);
+            this.splitContainer7.Size = new System.Drawing.Size(1056, 545);
             this.splitContainer7.SplitterDistance = 357;
             this.splitContainer7.SplitterWidth = 5;
             this.splitContainer7.TabIndex = 0;
@@ -3937,7 +3652,7 @@
             this.panel12.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel12.Location = new System.Drawing.Point(0, 348);
             this.panel12.Name = "panel12";
-            this.panel12.Size = new System.Drawing.Size(357, 185);
+            this.panel12.Size = new System.Drawing.Size(357, 197);
             this.panel12.TabIndex = 1;
             // 
             // gridOrderAttachments
@@ -3957,7 +3672,7 @@
             this.gridOrderAttachments.ReadOnly = true;
             this.gridOrderAttachments.RowHeadersVisible = false;
             this.gridOrderAttachments.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridOrderAttachments.Size = new System.Drawing.Size(357, 160);
+            this.gridOrderAttachments.Size = new System.Drawing.Size(357, 172);
             this.gridOrderAttachments.TabIndex = 1;
             this.gridOrderAttachments.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridAttachments_CellDoubleClick);
             // 
@@ -3987,33 +3702,6 @@
             // 
             this.toolStripSeparator29.Name = "toolStripSeparator29";
             this.toolStripSeparator29.Size = new System.Drawing.Size(6, 25);
-            // 
-            // btnOrderScanAttachment
-            // 
-            this.btnOrderScanAttachment.Image = global::DSA_lims.Properties.Resources.scan;
-            this.btnOrderScanAttachment.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnOrderScanAttachment.Name = "btnOrderScanAttachment";
-            this.btnOrderScanAttachment.Size = new System.Drawing.Size(52, 22);
-            this.btnOrderScanAttachment.Text = "Scan";
-            this.btnOrderScanAttachment.Click += new System.EventHandler(this.btnOrderScanAttachment_Click);
-            // 
-            // btnOrderBrowseAttachment
-            // 
-            this.btnOrderBrowseAttachment.Image = global::DSA_lims.Properties.Resources.projects;
-            this.btnOrderBrowseAttachment.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnOrderBrowseAttachment.Name = "btnOrderBrowseAttachment";
-            this.btnOrderBrowseAttachment.Size = new System.Drawing.Size(65, 22);
-            this.btnOrderBrowseAttachment.Text = "Browse";
-            this.btnOrderBrowseAttachment.Click += new System.EventHandler(this.btnOrderBrowseAttachment_Click);
-            // 
-            // btnOrderDeleteAttachment
-            // 
-            this.btnOrderDeleteAttachment.Image = global::DSA_lims.Properties.Resources.delete;
-            this.btnOrderDeleteAttachment.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnOrderDeleteAttachment.Name = "btnOrderDeleteAttachment";
-            this.btnOrderDeleteAttachment.Size = new System.Drawing.Size(60, 22);
-            this.btnOrderDeleteAttachment.Text = "Delete";
-            this.btnOrderDeleteAttachment.Click += new System.EventHandler(this.btnOrderDeleteAttachment_Click);
             // 
             // layoutOrderDetails
             // 
@@ -4178,31 +3866,6 @@
             this.tbOrderDeadline.Size = new System.Drawing.Size(184, 21);
             this.tbOrderDeadline.TabIndex = 1;
             // 
-            // btnOrderClearDeadline
-            // 
-            this.btnOrderClearDeadline.BackgroundImage = global::DSA_lims.Properties.Resources.clear_16;
-            this.btnOrderClearDeadline.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btnOrderClearDeadline.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnOrderClearDeadline.Location = new System.Drawing.Point(184, 0);
-            this.btnOrderClearDeadline.Name = "btnOrderClearDeadline";
-            this.btnOrderClearDeadline.Size = new System.Drawing.Size(24, 24);
-            this.btnOrderClearDeadline.TabIndex = 3;
-            this.btnOrderClearDeadline.TabStop = false;
-            this.btnOrderClearDeadline.Click += new System.EventHandler(this.btnOrderClearDeadline_Click);
-            // 
-            // btnOrderSelectDeadline
-            // 
-            this.btnOrderSelectDeadline.BackgroundImage = global::DSA_lims.Properties.Resources.datetime_16;
-            this.btnOrderSelectDeadline.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btnOrderSelectDeadline.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnOrderSelectDeadline.InitialImage = null;
-            this.btnOrderSelectDeadline.Location = new System.Drawing.Point(208, 0);
-            this.btnOrderSelectDeadline.Name = "btnOrderSelectDeadline";
-            this.btnOrderSelectDeadline.Size = new System.Drawing.Size(24, 24);
-            this.btnOrderSelectDeadline.TabIndex = 2;
-            this.btnOrderSelectDeadline.TabStop = false;
-            this.btnOrderSelectDeadline.Click += new System.EventHandler(this.btnOrderSelectDeadline_Click);
-            // 
             // label41
             // 
             this.label41.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -4254,18 +3917,6 @@
             this.tbOrderCustomer.ReadOnly = true;
             this.tbOrderCustomer.Size = new System.Drawing.Size(208, 21);
             this.tbOrderCustomer.TabIndex = 3;
-            // 
-            // btnOrderSelectCustomer
-            // 
-            this.btnOrderSelectCustomer.BackgroundImage = global::DSA_lims.Properties.Resources.user_16;
-            this.btnOrderSelectCustomer.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btnOrderSelectCustomer.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnOrderSelectCustomer.Location = new System.Drawing.Point(208, 0);
-            this.btnOrderSelectCustomer.Name = "btnOrderSelectCustomer";
-            this.btnOrderSelectCustomer.Size = new System.Drawing.Size(24, 24);
-            this.btnOrderSelectCustomer.TabIndex = 0;
-            this.btnOrderSelectCustomer.TabStop = false;
-            this.btnOrderSelectCustomer.Click += new System.EventHandler(this.btnOrderSelectCustomer_Click);
             // 
             // label35
             // 
@@ -4323,7 +3974,7 @@
             this.treeOrderContent.ShowNodeToolTips = true;
             this.treeOrderContent.ShowPlusMinus = false;
             this.treeOrderContent.ShowRootLines = false;
-            this.treeOrderContent.Size = new System.Drawing.Size(682, 508);
+            this.treeOrderContent.Size = new System.Drawing.Size(694, 520);
             this.treeOrderContent.TabIndex = 2;
             this.treeOrderContent.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeOrderContent_AfterSelect);
             // 
@@ -4338,7 +3989,7 @@
             this.ddbOrderDel});
             this.toolsOrderContent.Location = new System.Drawing.Point(0, 0);
             this.toolsOrderContent.Name = "toolsOrderContent";
-            this.toolsOrderContent.Size = new System.Drawing.Size(682, 25);
+            this.toolsOrderContent.Size = new System.Drawing.Size(694, 25);
             this.toolsOrderContent.TabIndex = 1;
             this.toolsOrderContent.Text = "toolStrip16";
             // 
@@ -4354,83 +4005,13 @@
             this.toolStripSeparator60.Name = "toolStripSeparator60";
             this.toolStripSeparator60.Size = new System.Drawing.Size(6, 25);
             // 
-            // ddbOrderAdd
-            // 
-            this.ddbOrderAdd.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnOrderAddSampleType,
-            this.btnOrderAddPrepMeth,
-            this.btnOrderAddAnalMeth});
-            this.ddbOrderAdd.Image = global::DSA_lims.Properties.Resources._new;
-            this.ddbOrderAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.ddbOrderAdd.Name = "ddbOrderAdd";
-            this.ddbOrderAdd.Size = new System.Drawing.Size(67, 22);
-            this.ddbOrderAdd.Text = "Add...";
-            // 
-            // btnOrderAddSampleType
-            // 
-            this.btnOrderAddSampleType.Name = "btnOrderAddSampleType";
-            this.btnOrderAddSampleType.Size = new System.Drawing.Size(180, 22);
-            this.btnOrderAddSampleType.Text = "Sample type";
-            this.btnOrderAddSampleType.Click += new System.EventHandler(this.miOrderAddSampleType_Click);
-            // 
-            // btnOrderAddPrepMeth
-            // 
-            this.btnOrderAddPrepMeth.Enabled = false;
-            this.btnOrderAddPrepMeth.Name = "btnOrderAddPrepMeth";
-            this.btnOrderAddPrepMeth.Size = new System.Drawing.Size(180, 22);
-            this.btnOrderAddPrepMeth.Text = "Preparation method";
-            this.btnOrderAddPrepMeth.Click += new System.EventHandler(this.miOrderAddPrepMeth_Click);
-            // 
-            // btnOrderAddAnalMeth
-            // 
-            this.btnOrderAddAnalMeth.Enabled = false;
-            this.btnOrderAddAnalMeth.Name = "btnOrderAddAnalMeth";
-            this.btnOrderAddAnalMeth.Size = new System.Drawing.Size(180, 22);
-            this.btnOrderAddAnalMeth.Text = "Analysis method";
-            this.btnOrderAddAnalMeth.Click += new System.EventHandler(this.miOrderAddAnalMeth_Click);
-            // 
-            // ddbOrderEdit
-            // 
-            this.ddbOrderEdit.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnOrderEditSampleType});
-            this.ddbOrderEdit.Image = global::DSA_lims.Properties.Resources.edit;
-            this.ddbOrderEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.ddbOrderEdit.Name = "ddbOrderEdit";
-            this.ddbOrderEdit.Size = new System.Drawing.Size(65, 22);
-            this.ddbOrderEdit.Text = "Edit...";
-            // 
-            // btnOrderEditSampleType
-            // 
-            this.btnOrderEditSampleType.Name = "btnOrderEditSampleType";
-            this.btnOrderEditSampleType.Size = new System.Drawing.Size(139, 22);
-            this.btnOrderEditSampleType.Text = "Sample type";
-            this.btnOrderEditSampleType.Click += new System.EventHandler(this.btnOrderEditSampleType_Click);
-            // 
-            // ddbOrderDel
-            // 
-            this.ddbOrderDel.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnOrderDelSampleType});
-            this.ddbOrderDel.Image = global::DSA_lims.Properties.Resources.delete;
-            this.ddbOrderDel.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.ddbOrderDel.Name = "ddbOrderDel";
-            this.ddbOrderDel.Size = new System.Drawing.Size(78, 22);
-            this.ddbOrderDel.Text = "Delete...";
-            // 
-            // btnOrderDelSampleType
-            // 
-            this.btnOrderDelSampleType.Name = "btnOrderDelSampleType";
-            this.btnOrderDelSampleType.Size = new System.Drawing.Size(139, 22);
-            this.btnOrderDelSampleType.Text = "Sample type";
-            this.btnOrderDelSampleType.Click += new System.EventHandler(this.miOrderRemSampleType_Click);
-            // 
             // tabOrderStatus
             // 
             this.tabOrderStatus.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.tabOrderStatus.Controls.Add(this.panel11);
             this.tabOrderStatus.Location = new System.Drawing.Point(4, 24);
             this.tabOrderStatus.Name = "tabOrderStatus";
-            this.tabOrderStatus.Padding = new System.Windows.Forms.Padding(3);
-            this.tabOrderStatus.Size = new System.Drawing.Size(1050, 539);
+            this.tabOrderStatus.Size = new System.Drawing.Size(1056, 547);
             this.tabOrderStatus.TabIndex = 2;
             this.tabOrderStatus.Text = "Order status";
             // 
@@ -4439,9 +4020,9 @@
             this.panel11.Controls.Add(this.tableLayoutPanel7);
             this.panel11.Controls.Add(this.toolsOrderStatus);
             this.panel11.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel11.Location = new System.Drawing.Point(3, 3);
+            this.panel11.Location = new System.Drawing.Point(0, 0);
             this.panel11.Name = "panel11";
-            this.panel11.Size = new System.Drawing.Size(1044, 533);
+            this.panel11.Size = new System.Drawing.Size(1056, 547);
             this.panel11.TabIndex = 2;
             // 
             // tableLayoutPanel7
@@ -4474,7 +4055,7 @@
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel7.Size = new System.Drawing.Size(1044, 508);
+            this.tableLayoutPanel7.Size = new System.Drawing.Size(1056, 522);
             this.tableLayoutPanel7.TabIndex = 2;
             // 
             // cbOrderApprovedCustomer
@@ -4482,7 +4063,7 @@
             this.cbOrderApprovedCustomer.AutoSize = true;
             this.cbOrderApprovedCustomer.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.cbOrderApprovedCustomer.Dock = System.Windows.Forms.DockStyle.Right;
-            this.cbOrderApprovedCustomer.Location = new System.Drawing.Point(216, 49);
+            this.cbOrderApprovedCustomer.Location = new System.Drawing.Point(220, 49);
             this.cbOrderApprovedCustomer.Name = "cbOrderApprovedCustomer";
             this.cbOrderApprovedCustomer.Size = new System.Drawing.Size(146, 24);
             this.cbOrderApprovedCustomer.TabIndex = 0;
@@ -4493,10 +4074,10 @@
             // tbOrderApprovedCustomerBy
             // 
             this.tbOrderApprovedCustomerBy.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbOrderApprovedCustomerBy.Location = new System.Drawing.Point(368, 49);
+            this.tbOrderApprovedCustomerBy.Location = new System.Drawing.Point(372, 49);
             this.tbOrderApprovedCustomerBy.Name = "tbOrderApprovedCustomerBy";
             this.tbOrderApprovedCustomerBy.ReadOnly = true;
-            this.tbOrderApprovedCustomerBy.Size = new System.Drawing.Size(673, 21);
+            this.tbOrderApprovedCustomerBy.Size = new System.Drawing.Size(681, 21);
             this.tbOrderApprovedCustomerBy.TabIndex = 1;
             // 
             // cboxOrderStatus
@@ -4507,7 +4088,7 @@
             this.cboxOrderStatus.FormattingEnabled = true;
             this.cboxOrderStatus.Location = new System.Drawing.Point(3, 319);
             this.cboxOrderStatus.Name = "cboxOrderStatus";
-            this.cboxOrderStatus.Size = new System.Drawing.Size(359, 23);
+            this.cboxOrderStatus.Size = new System.Drawing.Size(363, 23);
             this.cboxOrderStatus.TabIndex = 8;
             this.cboxOrderStatus.ValueMember = "Id";
             this.cboxOrderStatus.SelectedIndexChanged += new System.EventHandler(this.cboxOrderStatus_SelectedIndexChanged);
@@ -4515,10 +4096,10 @@
             // tbOrderLastWorkflowStatusBy
             // 
             this.tbOrderLastWorkflowStatusBy.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbOrderLastWorkflowStatusBy.Location = new System.Drawing.Point(368, 319);
+            this.tbOrderLastWorkflowStatusBy.Location = new System.Drawing.Point(372, 319);
             this.tbOrderLastWorkflowStatusBy.Name = "tbOrderLastWorkflowStatusBy";
             this.tbOrderLastWorkflowStatusBy.ReadOnly = true;
-            this.tbOrderLastWorkflowStatusBy.Size = new System.Drawing.Size(673, 21);
+            this.tbOrderLastWorkflowStatusBy.Size = new System.Drawing.Size(681, 21);
             this.tbOrderLastWorkflowStatusBy.TabIndex = 9;
             // 
             // label71
@@ -4527,7 +4108,7 @@
             this.label71.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label71.Location = new System.Drawing.Point(3, 286);
             this.label71.Name = "label71";
-            this.label71.Size = new System.Drawing.Size(359, 30);
+            this.label71.Size = new System.Drawing.Size(363, 30);
             this.label71.TabIndex = 23;
             this.label71.Text = "Current status";
             this.label71.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -4538,7 +4119,7 @@
             this.cbOrderApprovedLaboratory.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.cbOrderApprovedLaboratory.Dock = System.Windows.Forms.DockStyle.Right;
             this.cbOrderApprovedLaboratory.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cbOrderApprovedLaboratory.Location = new System.Drawing.Point(213, 19);
+            this.cbOrderApprovedLaboratory.Location = new System.Drawing.Point(217, 19);
             this.cbOrderApprovedLaboratory.Name = "cbOrderApprovedLaboratory";
             this.cbOrderApprovedLaboratory.Size = new System.Drawing.Size(149, 24);
             this.cbOrderApprovedLaboratory.TabIndex = 3;
@@ -4549,12 +4130,12 @@
             // tbOrderReportComment
             // 
             this.tbOrderReportComment.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbOrderReportComment.Location = new System.Drawing.Point(368, 139);
+            this.tbOrderReportComment.Location = new System.Drawing.Point(372, 139);
             this.tbOrderReportComment.MaxLength = 1000;
             this.tbOrderReportComment.Multiline = true;
             this.tbOrderReportComment.Name = "tbOrderReportComment";
             this.tbOrderReportComment.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.tbOrderReportComment.Size = new System.Drawing.Size(673, 144);
+            this.tbOrderReportComment.Size = new System.Drawing.Size(681, 144);
             this.tbOrderReportComment.TabIndex = 6;
             this.tbOrderReportComment.TextChanged += new System.EventHandler(this.tbOrderReportComment_TextChanged);
             // 
@@ -4565,16 +4146,16 @@
             this.tbOrderCustomerInfo.Multiline = true;
             this.tbOrderCustomerInfo.Name = "tbOrderCustomerInfo";
             this.tbOrderCustomerInfo.ReadOnly = true;
-            this.tbOrderCustomerInfo.Size = new System.Drawing.Size(359, 144);
+            this.tbOrderCustomerInfo.Size = new System.Drawing.Size(363, 144);
             this.tbOrderCustomerInfo.TabIndex = 18;
             // 
             // label43
             // 
             this.label43.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label43.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold);
-            this.label43.Location = new System.Drawing.Point(368, 106);
+            this.label43.Location = new System.Drawing.Point(372, 106);
             this.label43.Name = "label43";
-            this.label43.Size = new System.Drawing.Size(673, 30);
+            this.label43.Size = new System.Drawing.Size(681, 30);
             this.label43.TabIndex = 7;
             this.label43.Text = "Report comment";
             this.label43.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -4585,7 +4166,7 @@
             this.label61.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label61.Location = new System.Drawing.Point(3, 106);
             this.label61.Name = "label61";
-            this.label61.Size = new System.Drawing.Size(359, 30);
+            this.label61.Size = new System.Drawing.Size(363, 30);
             this.label61.TabIndex = 21;
             this.label61.Text = "Customer";
             this.label61.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -4593,10 +4174,10 @@
             // tbOrderApprovedLaboratoryBy
             // 
             this.tbOrderApprovedLaboratoryBy.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbOrderApprovedLaboratoryBy.Location = new System.Drawing.Point(368, 19);
+            this.tbOrderApprovedLaboratoryBy.Location = new System.Drawing.Point(372, 19);
             this.tbOrderApprovedLaboratoryBy.Name = "tbOrderApprovedLaboratoryBy";
             this.tbOrderApprovedLaboratoryBy.ReadOnly = true;
-            this.tbOrderApprovedLaboratoryBy.Size = new System.Drawing.Size(673, 21);
+            this.tbOrderApprovedLaboratoryBy.Size = new System.Drawing.Size(681, 21);
             this.tbOrderApprovedLaboratoryBy.TabIndex = 4;
             // 
             // toolsOrderStatus
@@ -4608,7 +4189,7 @@
             this.btnOrderCreateReport});
             this.toolsOrderStatus.Location = new System.Drawing.Point(0, 0);
             this.toolsOrderStatus.Name = "toolsOrderStatus";
-            this.toolsOrderStatus.Size = new System.Drawing.Size(1044, 25);
+            this.toolsOrderStatus.Size = new System.Drawing.Size(1056, 25);
             this.toolsOrderStatus.TabIndex = 0;
             this.toolsOrderStatus.Text = "toolStrip18";
             // 
@@ -4624,15 +4205,6 @@
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
             // 
-            // btnOrderCreateReport
-            // 
-            this.btnOrderCreateReport.Image = global::DSA_lims.Properties.Resources.report;
-            this.btnOrderCreateReport.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnOrderCreateReport.Name = "btnOrderCreateReport";
-            this.btnOrderCreateReport.Size = new System.Drawing.Size(127, 22);
-            this.btnOrderCreateReport.Text = "Create order report";
-            this.btnOrderCreateReport.Click += new System.EventHandler(this.btnOrderCreateReport_Click);
-            // 
             // tabOrderAssigned
             // 
             this.tabOrderAssigned.BackColor = System.Drawing.SystemColors.ButtonFace;
@@ -4640,8 +4212,7 @@
             this.tabOrderAssigned.Controls.Add(this.toolStrip17);
             this.tabOrderAssigned.Location = new System.Drawing.Point(4, 24);
             this.tabOrderAssigned.Name = "tabOrderAssigned";
-            this.tabOrderAssigned.Padding = new System.Windows.Forms.Padding(3);
-            this.tabOrderAssigned.Size = new System.Drawing.Size(1050, 539);
+            this.tabOrderAssigned.Size = new System.Drawing.Size(1056, 545);
             this.tabOrderAssigned.TabIndex = 3;
             this.tabOrderAssigned.Text = "All units assigned to order";
             // 
@@ -4653,12 +4224,12 @@
             this.tvOrderContent.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tvOrderContent.Indent = 60;
             this.tvOrderContent.ItemHeight = 26;
-            this.tvOrderContent.Location = new System.Drawing.Point(3, 28);
+            this.tvOrderContent.Location = new System.Drawing.Point(0, 25);
             this.tvOrderContent.Name = "tvOrderContent";
             this.tvOrderContent.ShowNodeToolTips = true;
             this.tvOrderContent.ShowPlusMinus = false;
             this.tvOrderContent.ShowRootLines = false;
-            this.tvOrderContent.Size = new System.Drawing.Size(1044, 508);
+            this.tvOrderContent.Size = new System.Drawing.Size(1056, 520);
             this.tvOrderContent.TabIndex = 2;
             this.tvOrderContent.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvOrderContent_AfterSelect);
             // 
@@ -4668,10 +4239,12 @@
             this.toolStrip17.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripLabel58,
             this.toolStripSeparator73,
-            this.btnOrderRemoveSampleFromOrder});
-            this.toolStrip17.Location = new System.Drawing.Point(3, 3);
+            this.btnOrderRemoveSampleFromOrder,
+            this.btnOrderGoToPrepAnal,
+            this.toolStripButton2});
+            this.toolStrip17.Location = new System.Drawing.Point(0, 0);
             this.toolStrip17.Name = "toolStrip17";
-            this.toolStrip17.Size = new System.Drawing.Size(1044, 25);
+            this.toolStrip17.Size = new System.Drawing.Size(1056, 25);
             this.toolStrip17.TabIndex = 1;
             this.toolStrip17.Text = "toolStrip17";
             // 
@@ -4687,30 +4260,20 @@
             this.toolStripSeparator73.Name = "toolStripSeparator73";
             this.toolStripSeparator73.Size = new System.Drawing.Size(6, 25);
             // 
-            // btnOrderRemoveSampleFromOrder
-            // 
-            this.btnOrderRemoveSampleFromOrder.Enabled = false;
-            this.btnOrderRemoveSampleFromOrder.Image = global::DSA_lims.Properties.Resources.delete;
-            this.btnOrderRemoveSampleFromOrder.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnOrderRemoveSampleFromOrder.Name = "btnOrderRemoveSampleFromOrder";
-            this.btnOrderRemoveSampleFromOrder.Size = new System.Drawing.Size(171, 22);
-            this.btnOrderRemoveSampleFromOrder.Text = "Remove sample from order";
-            this.btnOrderRemoveSampleFromOrder.Click += new System.EventHandler(this.btnOrderRemoveSampleFromOrder_Click);
-            // 
             // panel15
             // 
             this.panel15.Controls.Add(this.btnOrderDiscard);
             this.panel15.Controls.Add(this.btnOrderSave);
             this.panel15.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel15.Location = new System.Drawing.Point(3, 570);
+            this.panel15.Location = new System.Drawing.Point(0, 573);
             this.panel15.Name = "panel15";
-            this.panel15.Size = new System.Drawing.Size(1058, 26);
+            this.panel15.Size = new System.Drawing.Size(1064, 26);
             this.panel15.TabIndex = 8;
             // 
             // btnOrderDiscard
             // 
             this.btnOrderDiscard.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnOrderDiscard.Location = new System.Drawing.Point(778, 0);
+            this.btnOrderDiscard.Location = new System.Drawing.Point(784, 0);
             this.btnOrderDiscard.Name = "btnOrderDiscard";
             this.btnOrderDiscard.Size = new System.Drawing.Size(140, 26);
             this.btnOrderDiscard.TabIndex = 1;
@@ -4721,7 +4284,7 @@
             // btnOrderSave
             // 
             this.btnOrderSave.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnOrderSave.Location = new System.Drawing.Point(918, 0);
+            this.btnOrderSave.Location = new System.Drawing.Point(924, 0);
             this.btnOrderSave.Name = "btnOrderSave";
             this.btnOrderSave.Size = new System.Drawing.Size(140, 26);
             this.btnOrderSave.TabIndex = 0;
@@ -4736,20 +4299,19 @@
             this.tabSearch.Controls.Add(this.panel17);
             this.tabSearch.Location = new System.Drawing.Point(4, 24);
             this.tabSearch.Name = "tabSearch";
-            this.tabSearch.Padding = new System.Windows.Forms.Padding(3);
             this.tabSearch.Size = new System.Drawing.Size(1064, 599);
             this.tabSearch.TabIndex = 4;
-            this.tabSearch.Text = "Search";
+            this.tabSearch.Text = "Results/Statistics";
             // 
             // tabsSearch
             // 
             this.tabsSearch.Controls.Add(this.tabSearchSearch);
             this.tabsSearch.Controls.Add(this.tabSearchStatistics);
             this.tabsSearch.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabsSearch.Location = new System.Drawing.Point(3, 3);
+            this.tabsSearch.Location = new System.Drawing.Point(0, 0);
             this.tabsSearch.Name = "tabsSearch";
             this.tabsSearch.SelectedIndex = 0;
-            this.tabsSearch.Size = new System.Drawing.Size(1058, 563);
+            this.tabsSearch.Size = new System.Drawing.Size(1064, 573);
             this.tabsSearch.TabIndex = 4;
             // 
             // tabSearchSearch
@@ -4760,10 +4322,9 @@
             this.tabSearchSearch.Controls.Add(this.flowSearch);
             this.tabSearchSearch.Location = new System.Drawing.Point(4, 24);
             this.tabSearchSearch.Name = "tabSearchSearch";
-            this.tabSearchSearch.Padding = new System.Windows.Forms.Padding(3);
-            this.tabSearchSearch.Size = new System.Drawing.Size(1050, 535);
+            this.tabSearchSearch.Size = new System.Drawing.Size(1056, 545);
             this.tabSearchSearch.TabIndex = 0;
-            this.tabSearchSearch.Text = "Search";
+            this.tabSearchSearch.Text = "Results";
             // 
             // gridSearchResult
             // 
@@ -4771,26 +4332,30 @@
             this.gridSearchResult.AllowUserToDeleteRows = false;
             this.gridSearchResult.AllowUserToResizeRows = false;
             this.gridSearchResult.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.gridSearchResult.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
+            this.gridSearchResult.BackgroundColor = System.Drawing.SystemColors.Window;
             this.gridSearchResult.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.gridSearchResult.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridSearchResult.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridSearchResult.Location = new System.Drawing.Point(3, 104);
+            this.gridSearchResult.Location = new System.Drawing.Point(0, 101);
             this.gridSearchResult.Name = "gridSearchResult";
             this.gridSearchResult.ReadOnly = true;
             this.gridSearchResult.RowHeadersVisible = false;
             this.gridSearchResult.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridSearchResult.Size = new System.Drawing.Size(1044, 428);
+            this.gridSearchResult.Size = new System.Drawing.Size(1056, 444);
             this.gridSearchResult.TabIndex = 2;
             // 
             // toolStrip16
             // 
             this.toolStrip16.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStrip16.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripLabel27});
-            this.toolStrip16.Location = new System.Drawing.Point(3, 79);
+            this.toolStripLabel27,
+            this.toolStripLabel26,
+            this.toolStripSeparator75,
+            this.toolStripButton1,
+            this.toolStripDropDownButton1});
+            this.toolStrip16.Location = new System.Drawing.Point(0, 76);
             this.toolStrip16.Name = "toolStrip16";
-            this.toolStrip16.Size = new System.Drawing.Size(1044, 25);
+            this.toolStrip16.Size = new System.Drawing.Size(1056, 25);
             this.toolStrip16.TabIndex = 3;
             this.toolStrip16.Text = "toolStrip16";
             // 
@@ -4814,10 +4379,10 @@
             this.flowSearch.Controls.Add(this.panel42);
             this.flowSearch.Controls.Add(this.btnSearchSearch);
             this.flowSearch.Dock = System.Windows.Forms.DockStyle.Top;
-            this.flowSearch.Location = new System.Drawing.Point(3, 3);
+            this.flowSearch.Location = new System.Drawing.Point(0, 0);
             this.flowSearch.Name = "flowSearch";
             this.flowSearch.Padding = new System.Windows.Forms.Padding(6);
-            this.flowSearch.Size = new System.Drawing.Size(1044, 76);
+            this.flowSearch.Size = new System.Drawing.Size(1056, 76);
             this.flowSearch.TabIndex = 1;
             // 
             // panel37
@@ -5052,8 +4617,7 @@
             this.tabSearchStatistics.Controls.Add(this.flowStatistics);
             this.tabSearchStatistics.Location = new System.Drawing.Point(4, 24);
             this.tabSearchStatistics.Name = "tabSearchStatistics";
-            this.tabSearchStatistics.Padding = new System.Windows.Forms.Padding(3);
-            this.tabSearchStatistics.Size = new System.Drawing.Size(1050, 535);
+            this.tabSearchStatistics.Size = new System.Drawing.Size(1056, 547);
             this.tabSearchStatistics.TabIndex = 1;
             this.tabSearchStatistics.Text = "Statistics";
             // 
@@ -5061,10 +4625,10 @@
             // 
             this.flowStatistics.Controls.Add(this.btnSearchAssignedWork);
             this.flowStatistics.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowStatistics.Location = new System.Drawing.Point(3, 3);
+            this.flowStatistics.Location = new System.Drawing.Point(0, 0);
             this.flowStatistics.Name = "flowStatistics";
             this.flowStatistics.Padding = new System.Windows.Forms.Padding(12);
-            this.flowStatistics.Size = new System.Drawing.Size(1044, 529);
+            this.flowStatistics.Size = new System.Drawing.Size(1056, 547);
             this.flowStatistics.TabIndex = 0;
             // 
             // btnSearchAssignedWork
@@ -5081,17 +4645,17 @@
             // 
             this.panel17.Controls.Add(this.btnSearchClose);
             this.panel17.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel17.Location = new System.Drawing.Point(3, 566);
+            this.panel17.Location = new System.Drawing.Point(0, 573);
             this.panel17.Name = "panel17";
-            this.panel17.Size = new System.Drawing.Size(1058, 30);
+            this.panel17.Size = new System.Drawing.Size(1064, 26);
             this.panel17.TabIndex = 0;
             // 
             // btnSearchClose
             // 
             this.btnSearchClose.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnSearchClose.Location = new System.Drawing.Point(941, 0);
+            this.btnSearchClose.Location = new System.Drawing.Point(947, 0);
             this.btnSearchClose.Name = "btnSearchClose";
-            this.btnSearchClose.Size = new System.Drawing.Size(117, 30);
+            this.btnSearchClose.Size = new System.Drawing.Size(117, 26);
             this.btnSearchClose.TabIndex = 1;
             this.btnSearchClose.Text = "Close";
             this.btnSearchClose.UseVisualStyleBackColor = true;
@@ -5103,7 +4667,6 @@
             this.tabMetadata.Controls.Add(this.tabsMeta);
             this.tabMetadata.Location = new System.Drawing.Point(4, 24);
             this.tabMetadata.Name = "tabMetadata";
-            this.tabMetadata.Padding = new System.Windows.Forms.Padding(3);
             this.tabMetadata.Size = new System.Drawing.Size(1064, 599);
             this.tabMetadata.TabIndex = 5;
             this.tabMetadata.Text = "Metadata";
@@ -5118,10 +4681,10 @@
             this.tabsMeta.Controls.Add(this.tabMetaCompanies);
             this.tabsMeta.Controls.Add(this.tabCustomers);
             this.tabsMeta.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabsMeta.Location = new System.Drawing.Point(3, 3);
+            this.tabsMeta.Location = new System.Drawing.Point(0, 0);
             this.tabsMeta.Name = "tabsMeta";
             this.tabsMeta.SelectedIndex = 0;
-            this.tabsMeta.Size = new System.Drawing.Size(1058, 593);
+            this.tabsMeta.Size = new System.Drawing.Size(1064, 601);
             this.tabsMeta.TabIndex = 2;
             this.tabsMeta.SelectedIndexChanged += new System.EventHandler(this.tabsMeta_SelectedIndexChanged);
             // 
@@ -5132,8 +4695,7 @@
             this.tabMetaStations.Controls.Add(this.toolsMetaStations);
             this.tabMetaStations.Location = new System.Drawing.Point(4, 24);
             this.tabMetaStations.Name = "tabMetaStations";
-            this.tabMetaStations.Padding = new System.Windows.Forms.Padding(3);
-            this.tabMetaStations.Size = new System.Drawing.Size(1050, 565);
+            this.tabMetaStations.Size = new System.Drawing.Size(1056, 573);
             this.tabMetaStations.TabIndex = 5;
             this.tabMetaStations.Text = "Stations";
             // 
@@ -5143,16 +4705,16 @@
             this.gridMetaStation.AllowUserToDeleteRows = false;
             this.gridMetaStation.AllowUserToResizeRows = false;
             this.gridMetaStation.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.gridMetaStation.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
+            this.gridMetaStation.BackgroundColor = System.Drawing.SystemColors.Window;
             this.gridMetaStation.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.gridMetaStation.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridMetaStation.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridMetaStation.Location = new System.Drawing.Point(3, 28);
+            this.gridMetaStation.Location = new System.Drawing.Point(0, 25);
             this.gridMetaStation.Name = "gridMetaStation";
             this.gridMetaStation.ReadOnly = true;
             this.gridMetaStation.RowHeadersVisible = false;
             this.gridMetaStation.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridMetaStation.Size = new System.Drawing.Size(1044, 534);
+            this.gridMetaStation.Size = new System.Drawing.Size(1056, 548);
             this.gridMetaStation.TabIndex = 0;
             // 
             // toolsMetaStations
@@ -5164,9 +4726,9 @@
             this.toolStripButton64,
             this.toolStripButton65,
             this.toolStripButton66});
-            this.toolsMetaStations.Location = new System.Drawing.Point(3, 3);
+            this.toolsMetaStations.Location = new System.Drawing.Point(0, 0);
             this.toolsMetaStations.Name = "toolsMetaStations";
-            this.toolsMetaStations.Size = new System.Drawing.Size(1044, 25);
+            this.toolsMetaStations.Size = new System.Drawing.Size(1056, 25);
             this.toolsMetaStations.TabIndex = 1;
             this.toolsMetaStations.Text = "toolStrip51";
             // 
@@ -5182,33 +4744,6 @@
             this.toolStripSeparator17.Name = "toolStripSeparator17";
             this.toolStripSeparator17.Size = new System.Drawing.Size(6, 25);
             // 
-            // toolStripButton64
-            // 
-            this.toolStripButton64.Image = global::DSA_lims.Properties.Resources._new;
-            this.toolStripButton64.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton64.Name = "toolStripButton64";
-            this.toolStripButton64.Size = new System.Drawing.Size(51, 22);
-            this.toolStripButton64.Text = "New";
-            this.toolStripButton64.Click += new System.EventHandler(this.miNewStation_Click);
-            // 
-            // toolStripButton65
-            // 
-            this.toolStripButton65.Image = global::DSA_lims.Properties.Resources.edit;
-            this.toolStripButton65.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton65.Name = "toolStripButton65";
-            this.toolStripButton65.Size = new System.Drawing.Size(47, 22);
-            this.toolStripButton65.Text = "Edit";
-            this.toolStripButton65.Click += new System.EventHandler(this.miEditStation_Click);
-            // 
-            // toolStripButton66
-            // 
-            this.toolStripButton66.Image = global::DSA_lims.Properties.Resources.delete;
-            this.toolStripButton66.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton66.Name = "toolStripButton66";
-            this.toolStripButton66.Size = new System.Drawing.Size(60, 22);
-            this.toolStripButton66.Text = "Delete";
-            this.toolStripButton66.Click += new System.EventHandler(this.miDeleteStation_Click);
-            // 
             // tabMetaSampleStorage
             // 
             this.tabMetaSampleStorage.BackColor = System.Drawing.SystemColors.ButtonFace;
@@ -5216,8 +4751,7 @@
             this.tabMetaSampleStorage.Controls.Add(this.toolsMetaSampStorage);
             this.tabMetaSampleStorage.Location = new System.Drawing.Point(4, 24);
             this.tabMetaSampleStorage.Name = "tabMetaSampleStorage";
-            this.tabMetaSampleStorage.Padding = new System.Windows.Forms.Padding(3);
-            this.tabMetaSampleStorage.Size = new System.Drawing.Size(1050, 565);
+            this.tabMetaSampleStorage.Size = new System.Drawing.Size(1056, 573);
             this.tabMetaSampleStorage.TabIndex = 6;
             this.tabMetaSampleStorage.Text = "Sample storage";
             // 
@@ -5227,17 +4761,17 @@
             this.gridMetaSampleStorage.AllowUserToDeleteRows = false;
             this.gridMetaSampleStorage.AllowUserToResizeRows = false;
             this.gridMetaSampleStorage.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.gridMetaSampleStorage.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
+            this.gridMetaSampleStorage.BackgroundColor = System.Drawing.SystemColors.Window;
             this.gridMetaSampleStorage.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.gridMetaSampleStorage.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridMetaSampleStorage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridMetaSampleStorage.Location = new System.Drawing.Point(3, 28);
+            this.gridMetaSampleStorage.Location = new System.Drawing.Point(0, 25);
             this.gridMetaSampleStorage.MultiSelect = false;
             this.gridMetaSampleStorage.Name = "gridMetaSampleStorage";
             this.gridMetaSampleStorage.ReadOnly = true;
             this.gridMetaSampleStorage.RowHeadersVisible = false;
             this.gridMetaSampleStorage.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridMetaSampleStorage.Size = new System.Drawing.Size(1044, 534);
+            this.gridMetaSampleStorage.Size = new System.Drawing.Size(1056, 548);
             this.gridMetaSampleStorage.TabIndex = 0;
             // 
             // toolsMetaSampStorage
@@ -5249,9 +4783,9 @@
             this.toolStripButton67,
             this.toolStripButton68,
             this.toolStripButton69});
-            this.toolsMetaSampStorage.Location = new System.Drawing.Point(3, 3);
+            this.toolsMetaSampStorage.Location = new System.Drawing.Point(0, 0);
             this.toolsMetaSampStorage.Name = "toolsMetaSampStorage";
-            this.toolsMetaSampStorage.Size = new System.Drawing.Size(1044, 25);
+            this.toolsMetaSampStorage.Size = new System.Drawing.Size(1056, 25);
             this.toolsMetaSampStorage.TabIndex = 1;
             this.toolsMetaSampStorage.Text = "toolStrip52";
             // 
@@ -5267,48 +4801,20 @@
             this.toolStripSeparator18.Name = "toolStripSeparator18";
             this.toolStripSeparator18.Size = new System.Drawing.Size(6, 25);
             // 
-            // toolStripButton67
-            // 
-            this.toolStripButton67.Image = global::DSA_lims.Properties.Resources._new;
-            this.toolStripButton67.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton67.Name = "toolStripButton67";
-            this.toolStripButton67.Size = new System.Drawing.Size(51, 22);
-            this.toolStripButton67.Text = "New";
-            this.toolStripButton67.Click += new System.EventHandler(this.miNewSampleStorage_Click);
-            // 
-            // toolStripButton68
-            // 
-            this.toolStripButton68.Image = global::DSA_lims.Properties.Resources.edit;
-            this.toolStripButton68.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton68.Name = "toolStripButton68";
-            this.toolStripButton68.Size = new System.Drawing.Size(47, 22);
-            this.toolStripButton68.Text = "Edit";
-            this.toolStripButton68.Click += new System.EventHandler(this.miEditSampleStorage_Click);
-            // 
-            // toolStripButton69
-            // 
-            this.toolStripButton69.Image = global::DSA_lims.Properties.Resources.delete;
-            this.toolStripButton69.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton69.Name = "toolStripButton69";
-            this.toolStripButton69.Size = new System.Drawing.Size(60, 22);
-            this.toolStripButton69.Text = "Delete";
-            this.toolStripButton69.Click += new System.EventHandler(this.miDeleteSampleStorage_Click);
-            // 
             // tabMetaUnits
             // 
             this.tabMetaUnits.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.tabMetaUnits.Controls.Add(this.splitContainer22);
             this.tabMetaUnits.Location = new System.Drawing.Point(4, 24);
             this.tabMetaUnits.Name = "tabMetaUnits";
-            this.tabMetaUnits.Padding = new System.Windows.Forms.Padding(3);
-            this.tabMetaUnits.Size = new System.Drawing.Size(1050, 565);
+            this.tabMetaUnits.Size = new System.Drawing.Size(1056, 573);
             this.tabMetaUnits.TabIndex = 9;
             this.tabMetaUnits.Text = "Units";
             // 
             // splitContainer22
             // 
             this.splitContainer22.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer22.Location = new System.Drawing.Point(3, 3);
+            this.splitContainer22.Location = new System.Drawing.Point(0, 0);
             this.splitContainer22.Name = "splitContainer22";
             // 
             // splitContainer22.Panel1
@@ -5318,8 +4824,8 @@
             // splitContainer22.Panel2
             // 
             this.splitContainer22.Panel2.Controls.Add(this.splitContainer5);
-            this.splitContainer22.Size = new System.Drawing.Size(1044, 559);
-            this.splitContainer22.SplitterDistance = 493;
+            this.splitContainer22.Size = new System.Drawing.Size(1056, 573);
+            this.splitContainer22.SplitterDistance = 498;
             this.splitContainer22.SplitterWidth = 3;
             this.splitContainer22.TabIndex = 4;
             // 
@@ -5339,8 +4845,8 @@
             // 
             this.splitContainer6.Panel2.Controls.Add(this.gridMetaUnitQuantUnits);
             this.splitContainer6.Panel2.Controls.Add(this.toolStrip13);
-            this.splitContainer6.Size = new System.Drawing.Size(493, 559);
-            this.splitContainer6.SplitterDistance = 271;
+            this.splitContainer6.Size = new System.Drawing.Size(498, 573);
+            this.splitContainer6.SplitterDistance = 277;
             this.splitContainer6.TabIndex = 4;
             // 
             // gridMetaUnitPrepUnits
@@ -5349,7 +4855,7 @@
             this.gridMetaUnitPrepUnits.AllowUserToDeleteRows = false;
             this.gridMetaUnitPrepUnits.AllowUserToResizeRows = false;
             this.gridMetaUnitPrepUnits.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.gridMetaUnitPrepUnits.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
+            this.gridMetaUnitPrepUnits.BackgroundColor = System.Drawing.SystemColors.Window;
             this.gridMetaUnitPrepUnits.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.gridMetaUnitPrepUnits.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridMetaUnitPrepUnits.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -5359,7 +4865,7 @@
             this.gridMetaUnitPrepUnits.ReadOnly = true;
             this.gridMetaUnitPrepUnits.RowHeadersVisible = false;
             this.gridMetaUnitPrepUnits.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridMetaUnitPrepUnits.Size = new System.Drawing.Size(493, 246);
+            this.gridMetaUnitPrepUnits.Size = new System.Drawing.Size(498, 252);
             this.gridMetaUnitPrepUnits.TabIndex = 3;
             // 
             // toolsMetaUnits
@@ -5373,7 +4879,7 @@
             this.btnMetaUnitPrepUnitsDelete});
             this.toolsMetaUnits.Location = new System.Drawing.Point(0, 0);
             this.toolsMetaUnits.Name = "toolsMetaUnits";
-            this.toolsMetaUnits.Size = new System.Drawing.Size(493, 25);
+            this.toolsMetaUnits.Size = new System.Drawing.Size(498, 25);
             this.toolsMetaUnits.TabIndex = 2;
             this.toolsMetaUnits.Text = "toolStrip54";
             // 
@@ -5389,37 +4895,13 @@
             this.toolStripSeparator19.Name = "toolStripSeparator19";
             this.toolStripSeparator19.Size = new System.Drawing.Size(6, 25);
             // 
-            // btnMetaUnitPrepUnitsNew
-            // 
-            this.btnMetaUnitPrepUnitsNew.Image = global::DSA_lims.Properties.Resources._new;
-            this.btnMetaUnitPrepUnitsNew.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnMetaUnitPrepUnitsNew.Name = "btnMetaUnitPrepUnitsNew";
-            this.btnMetaUnitPrepUnitsNew.Size = new System.Drawing.Size(51, 22);
-            this.btnMetaUnitPrepUnitsNew.Text = "New";
-            // 
-            // btnMetaUnitPrepUnitsEdit
-            // 
-            this.btnMetaUnitPrepUnitsEdit.Image = global::DSA_lims.Properties.Resources.edit;
-            this.btnMetaUnitPrepUnitsEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnMetaUnitPrepUnitsEdit.Name = "btnMetaUnitPrepUnitsEdit";
-            this.btnMetaUnitPrepUnitsEdit.Size = new System.Drawing.Size(47, 22);
-            this.btnMetaUnitPrepUnitsEdit.Text = "Edit";
-            // 
-            // btnMetaUnitPrepUnitsDelete
-            // 
-            this.btnMetaUnitPrepUnitsDelete.Image = global::DSA_lims.Properties.Resources.delete;
-            this.btnMetaUnitPrepUnitsDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnMetaUnitPrepUnitsDelete.Name = "btnMetaUnitPrepUnitsDelete";
-            this.btnMetaUnitPrepUnitsDelete.Size = new System.Drawing.Size(60, 22);
-            this.btnMetaUnitPrepUnitsDelete.Text = "Delete";
-            // 
             // gridMetaUnitQuantUnits
             // 
             this.gridMetaUnitQuantUnits.AllowUserToAddRows = false;
             this.gridMetaUnitQuantUnits.AllowUserToDeleteRows = false;
             this.gridMetaUnitQuantUnits.AllowUserToResizeRows = false;
             this.gridMetaUnitQuantUnits.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.gridMetaUnitQuantUnits.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
+            this.gridMetaUnitQuantUnits.BackgroundColor = System.Drawing.SystemColors.Window;
             this.gridMetaUnitQuantUnits.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.gridMetaUnitQuantUnits.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridMetaUnitQuantUnits.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -5429,7 +4911,7 @@
             this.gridMetaUnitQuantUnits.ReadOnly = true;
             this.gridMetaUnitQuantUnits.RowHeadersVisible = false;
             this.gridMetaUnitQuantUnits.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridMetaUnitQuantUnits.Size = new System.Drawing.Size(493, 259);
+            this.gridMetaUnitQuantUnits.Size = new System.Drawing.Size(498, 267);
             this.gridMetaUnitQuantUnits.TabIndex = 4;
             // 
             // toolStrip13
@@ -5443,7 +4925,7 @@
             this.btnMetaUnitQuantUnitsDelete});
             this.toolStrip13.Location = new System.Drawing.Point(0, 0);
             this.toolStrip13.Name = "toolStrip13";
-            this.toolStrip13.Size = new System.Drawing.Size(493, 25);
+            this.toolStrip13.Size = new System.Drawing.Size(498, 25);
             this.toolStrip13.TabIndex = 3;
             this.toolStrip13.Text = "toolStrip54";
             // 
@@ -5458,30 +4940,6 @@
             // 
             this.toolStripSeparator22.Name = "toolStripSeparator22";
             this.toolStripSeparator22.Size = new System.Drawing.Size(6, 25);
-            // 
-            // btnMetaUnitQuantUnitsNew
-            // 
-            this.btnMetaUnitQuantUnitsNew.Image = global::DSA_lims.Properties.Resources._new;
-            this.btnMetaUnitQuantUnitsNew.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnMetaUnitQuantUnitsNew.Name = "btnMetaUnitQuantUnitsNew";
-            this.btnMetaUnitQuantUnitsNew.Size = new System.Drawing.Size(51, 22);
-            this.btnMetaUnitQuantUnitsNew.Text = "New";
-            // 
-            // btnMetaUnitQuantUnitsEdit
-            // 
-            this.btnMetaUnitQuantUnitsEdit.Image = global::DSA_lims.Properties.Resources.edit;
-            this.btnMetaUnitQuantUnitsEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnMetaUnitQuantUnitsEdit.Name = "btnMetaUnitQuantUnitsEdit";
-            this.btnMetaUnitQuantUnitsEdit.Size = new System.Drawing.Size(47, 22);
-            this.btnMetaUnitQuantUnitsEdit.Text = "Edit";
-            // 
-            // btnMetaUnitQuantUnitsDelete
-            // 
-            this.btnMetaUnitQuantUnitsDelete.Image = global::DSA_lims.Properties.Resources.delete;
-            this.btnMetaUnitQuantUnitsDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnMetaUnitQuantUnitsDelete.Name = "btnMetaUnitQuantUnitsDelete";
-            this.btnMetaUnitQuantUnitsDelete.Size = new System.Drawing.Size(60, 22);
-            this.btnMetaUnitQuantUnitsDelete.Text = "Delete";
             // 
             // splitContainer5
             // 
@@ -5499,7 +4957,7 @@
             // 
             this.splitContainer5.Panel2.Controls.Add(this.gridMetaUnitActivityUnitTypes);
             this.splitContainer5.Panel2.Controls.Add(this.toolStrip12);
-            this.splitContainer5.Size = new System.Drawing.Size(548, 559);
+            this.splitContainer5.Size = new System.Drawing.Size(555, 573);
             this.splitContainer5.SplitterDistance = 277;
             this.splitContainer5.TabIndex = 2;
             // 
@@ -5509,7 +4967,7 @@
             this.gridMetaUnitActivityUnits.AllowUserToDeleteRows = false;
             this.gridMetaUnitActivityUnits.AllowUserToResizeRows = false;
             this.gridMetaUnitActivityUnits.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.gridMetaUnitActivityUnits.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
+            this.gridMetaUnitActivityUnits.BackgroundColor = System.Drawing.SystemColors.Window;
             this.gridMetaUnitActivityUnits.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.gridMetaUnitActivityUnits.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridMetaUnitActivityUnits.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -5519,7 +4977,7 @@
             this.gridMetaUnitActivityUnits.ReadOnly = true;
             this.gridMetaUnitActivityUnits.RowHeadersVisible = false;
             this.gridMetaUnitActivityUnits.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridMetaUnitActivityUnits.Size = new System.Drawing.Size(548, 252);
+            this.gridMetaUnitActivityUnits.Size = new System.Drawing.Size(555, 252);
             this.gridMetaUnitActivityUnits.TabIndex = 1;
             // 
             // toolStrip2
@@ -5533,7 +4991,7 @@
             this.btnMetaUnitActivityUnitsDelete});
             this.toolStrip2.Location = new System.Drawing.Point(0, 0);
             this.toolStrip2.Name = "toolStrip2";
-            this.toolStrip2.Size = new System.Drawing.Size(548, 25);
+            this.toolStrip2.Size = new System.Drawing.Size(555, 25);
             this.toolStrip2.TabIndex = 0;
             this.toolStrip2.Text = "toolStrip2";
             // 
@@ -5549,37 +5007,13 @@
             this.toolStripSeparator51.Name = "toolStripSeparator51";
             this.toolStripSeparator51.Size = new System.Drawing.Size(6, 25);
             // 
-            // btnMetaUnitActivityUnitsNew
-            // 
-            this.btnMetaUnitActivityUnitsNew.Image = global::DSA_lims.Properties.Resources._new;
-            this.btnMetaUnitActivityUnitsNew.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnMetaUnitActivityUnitsNew.Name = "btnMetaUnitActivityUnitsNew";
-            this.btnMetaUnitActivityUnitsNew.Size = new System.Drawing.Size(51, 22);
-            this.btnMetaUnitActivityUnitsNew.Text = "New";
-            // 
-            // btnMetaUnitActivityUnitsEdit
-            // 
-            this.btnMetaUnitActivityUnitsEdit.Image = global::DSA_lims.Properties.Resources.edit;
-            this.btnMetaUnitActivityUnitsEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnMetaUnitActivityUnitsEdit.Name = "btnMetaUnitActivityUnitsEdit";
-            this.btnMetaUnitActivityUnitsEdit.Size = new System.Drawing.Size(47, 22);
-            this.btnMetaUnitActivityUnitsEdit.Text = "Edit";
-            // 
-            // btnMetaUnitActivityUnitsDelete
-            // 
-            this.btnMetaUnitActivityUnitsDelete.Image = global::DSA_lims.Properties.Resources.delete;
-            this.btnMetaUnitActivityUnitsDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnMetaUnitActivityUnitsDelete.Name = "btnMetaUnitActivityUnitsDelete";
-            this.btnMetaUnitActivityUnitsDelete.Size = new System.Drawing.Size(60, 22);
-            this.btnMetaUnitActivityUnitsDelete.Text = "Delete";
-            // 
             // gridMetaUnitActivityUnitTypes
             // 
             this.gridMetaUnitActivityUnitTypes.AllowUserToAddRows = false;
             this.gridMetaUnitActivityUnitTypes.AllowUserToDeleteRows = false;
             this.gridMetaUnitActivityUnitTypes.AllowUserToResizeRows = false;
             this.gridMetaUnitActivityUnitTypes.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.gridMetaUnitActivityUnitTypes.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
+            this.gridMetaUnitActivityUnitTypes.BackgroundColor = System.Drawing.SystemColors.Window;
             this.gridMetaUnitActivityUnitTypes.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.gridMetaUnitActivityUnitTypes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridMetaUnitActivityUnitTypes.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -5589,7 +5023,7 @@
             this.gridMetaUnitActivityUnitTypes.ReadOnly = true;
             this.gridMetaUnitActivityUnitTypes.RowHeadersVisible = false;
             this.gridMetaUnitActivityUnitTypes.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridMetaUnitActivityUnitTypes.Size = new System.Drawing.Size(548, 253);
+            this.gridMetaUnitActivityUnitTypes.Size = new System.Drawing.Size(555, 267);
             this.gridMetaUnitActivityUnitTypes.TabIndex = 2;
             // 
             // toolStrip12
@@ -5603,7 +5037,7 @@
             this.btnMetaUnitActivityUnitTypesDelete});
             this.toolStrip12.Location = new System.Drawing.Point(0, 0);
             this.toolStrip12.Name = "toolStrip12";
-            this.toolStrip12.Size = new System.Drawing.Size(548, 25);
+            this.toolStrip12.Size = new System.Drawing.Size(555, 25);
             this.toolStrip12.TabIndex = 1;
             this.toolStrip12.Text = "toolStrip12";
             // 
@@ -5619,30 +5053,6 @@
             this.toolStripSeparator5.Name = "toolStripSeparator5";
             this.toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
             // 
-            // btnMetaUnitActivityUnitTypesNew
-            // 
-            this.btnMetaUnitActivityUnitTypesNew.Image = global::DSA_lims.Properties.Resources._new;
-            this.btnMetaUnitActivityUnitTypesNew.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnMetaUnitActivityUnitTypesNew.Name = "btnMetaUnitActivityUnitTypesNew";
-            this.btnMetaUnitActivityUnitTypesNew.Size = new System.Drawing.Size(51, 22);
-            this.btnMetaUnitActivityUnitTypesNew.Text = "New";
-            // 
-            // btnMetaUnitActivityUnitTypesEdit
-            // 
-            this.btnMetaUnitActivityUnitTypesEdit.Image = global::DSA_lims.Properties.Resources.edit;
-            this.btnMetaUnitActivityUnitTypesEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnMetaUnitActivityUnitTypesEdit.Name = "btnMetaUnitActivityUnitTypesEdit";
-            this.btnMetaUnitActivityUnitTypesEdit.Size = new System.Drawing.Size(47, 22);
-            this.btnMetaUnitActivityUnitTypesEdit.Text = "Edit";
-            // 
-            // btnMetaUnitActivityUnitTypesDelete
-            // 
-            this.btnMetaUnitActivityUnitTypesDelete.Image = global::DSA_lims.Properties.Resources.delete;
-            this.btnMetaUnitActivityUnitTypesDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnMetaUnitActivityUnitTypesDelete.Name = "btnMetaUnitActivityUnitTypesDelete";
-            this.btnMetaUnitActivityUnitTypesDelete.Size = new System.Drawing.Size(60, 22);
-            this.btnMetaUnitActivityUnitTypesDelete.Text = "Delete";
-            // 
             // tabMetaSamplers
             // 
             this.tabMetaSamplers.BackColor = System.Drawing.SystemColors.ButtonFace;
@@ -5650,8 +5060,7 @@
             this.tabMetaSamplers.Controls.Add(this.toolsMetaSamplers);
             this.tabMetaSamplers.Location = new System.Drawing.Point(4, 24);
             this.tabMetaSamplers.Name = "tabMetaSamplers";
-            this.tabMetaSamplers.Padding = new System.Windows.Forms.Padding(3);
-            this.tabMetaSamplers.Size = new System.Drawing.Size(1050, 565);
+            this.tabMetaSamplers.Size = new System.Drawing.Size(1056, 573);
             this.tabMetaSamplers.TabIndex = 12;
             this.tabMetaSamplers.Text = "Samplers";
             // 
@@ -5661,17 +5070,17 @@
             this.gridMetaSamplers.AllowUserToDeleteRows = false;
             this.gridMetaSamplers.AllowUserToResizeRows = false;
             this.gridMetaSamplers.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.gridMetaSamplers.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
+            this.gridMetaSamplers.BackgroundColor = System.Drawing.SystemColors.Window;
             this.gridMetaSamplers.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.gridMetaSamplers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridMetaSamplers.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridMetaSamplers.Location = new System.Drawing.Point(3, 28);
+            this.gridMetaSamplers.Location = new System.Drawing.Point(0, 25);
             this.gridMetaSamplers.MultiSelect = false;
             this.gridMetaSamplers.Name = "gridMetaSamplers";
             this.gridMetaSamplers.ReadOnly = true;
             this.gridMetaSamplers.RowHeadersVisible = false;
             this.gridMetaSamplers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridMetaSamplers.Size = new System.Drawing.Size(1044, 534);
+            this.gridMetaSamplers.Size = new System.Drawing.Size(1056, 548);
             this.gridMetaSamplers.TabIndex = 0;
             // 
             // toolsMetaSamplers
@@ -5683,9 +5092,9 @@
             this.toolStripButton62,
             this.toolStripButton63,
             this.toolStripButton75});
-            this.toolsMetaSamplers.Location = new System.Drawing.Point(3, 3);
+            this.toolsMetaSamplers.Location = new System.Drawing.Point(0, 0);
             this.toolsMetaSamplers.Name = "toolsMetaSamplers";
-            this.toolsMetaSamplers.Size = new System.Drawing.Size(1044, 25);
+            this.toolsMetaSamplers.Size = new System.Drawing.Size(1056, 25);
             this.toolsMetaSamplers.TabIndex = 1;
             this.toolsMetaSamplers.Text = "toolStrip50";
             // 
@@ -5701,33 +5110,6 @@
             this.toolStripSeparator20.Name = "toolStripSeparator20";
             this.toolStripSeparator20.Size = new System.Drawing.Size(6, 25);
             // 
-            // toolStripButton62
-            // 
-            this.toolStripButton62.Image = global::DSA_lims.Properties.Resources._new;
-            this.toolStripButton62.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton62.Name = "toolStripButton62";
-            this.toolStripButton62.Size = new System.Drawing.Size(51, 22);
-            this.toolStripButton62.Text = "New";
-            this.toolStripButton62.Click += new System.EventHandler(this.miSamplerNew_Click);
-            // 
-            // toolStripButton63
-            // 
-            this.toolStripButton63.Image = global::DSA_lims.Properties.Resources.edit;
-            this.toolStripButton63.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton63.Name = "toolStripButton63";
-            this.toolStripButton63.Size = new System.Drawing.Size(47, 22);
-            this.toolStripButton63.Text = "Edit";
-            this.toolStripButton63.Click += new System.EventHandler(this.miSamplerEdit_Click);
-            // 
-            // toolStripButton75
-            // 
-            this.toolStripButton75.Image = global::DSA_lims.Properties.Resources.delete;
-            this.toolStripButton75.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton75.Name = "toolStripButton75";
-            this.toolStripButton75.Size = new System.Drawing.Size(60, 22);
-            this.toolStripButton75.Text = "Delete";
-            this.toolStripButton75.Click += new System.EventHandler(this.miSamplerDelete_Click);
-            // 
             // tabMetaSamplingMeth
             // 
             this.tabMetaSamplingMeth.BackColor = System.Drawing.SystemColors.ButtonFace;
@@ -5735,8 +5117,7 @@
             this.tabMetaSamplingMeth.Controls.Add(this.toolsMetaSampMeth);
             this.tabMetaSamplingMeth.Location = new System.Drawing.Point(4, 24);
             this.tabMetaSamplingMeth.Name = "tabMetaSamplingMeth";
-            this.tabMetaSamplingMeth.Padding = new System.Windows.Forms.Padding(3);
-            this.tabMetaSamplingMeth.Size = new System.Drawing.Size(1050, 565);
+            this.tabMetaSamplingMeth.Size = new System.Drawing.Size(1056, 573);
             this.tabMetaSamplingMeth.TabIndex = 13;
             this.tabMetaSamplingMeth.Text = "Sampling methods";
             // 
@@ -5746,17 +5127,17 @@
             this.gridMetaSamplingMeth.AllowUserToDeleteRows = false;
             this.gridMetaSamplingMeth.AllowUserToResizeRows = false;
             this.gridMetaSamplingMeth.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.gridMetaSamplingMeth.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
+            this.gridMetaSamplingMeth.BackgroundColor = System.Drawing.SystemColors.Window;
             this.gridMetaSamplingMeth.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.gridMetaSamplingMeth.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridMetaSamplingMeth.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridMetaSamplingMeth.Location = new System.Drawing.Point(3, 28);
+            this.gridMetaSamplingMeth.Location = new System.Drawing.Point(0, 25);
             this.gridMetaSamplingMeth.MultiSelect = false;
             this.gridMetaSamplingMeth.Name = "gridMetaSamplingMeth";
             this.gridMetaSamplingMeth.ReadOnly = true;
             this.gridMetaSamplingMeth.RowHeadersVisible = false;
             this.gridMetaSamplingMeth.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridMetaSamplingMeth.Size = new System.Drawing.Size(1044, 534);
+            this.gridMetaSamplingMeth.Size = new System.Drawing.Size(1056, 548);
             this.gridMetaSamplingMeth.TabIndex = 3;
             // 
             // toolsMetaSampMeth
@@ -5768,9 +5149,9 @@
             this.toolStripButton82,
             this.toolStripButton83,
             this.toolStripButton84});
-            this.toolsMetaSampMeth.Location = new System.Drawing.Point(3, 3);
+            this.toolsMetaSampMeth.Location = new System.Drawing.Point(0, 0);
             this.toolsMetaSampMeth.Name = "toolsMetaSampMeth";
-            this.toolsMetaSampMeth.Size = new System.Drawing.Size(1044, 25);
+            this.toolsMetaSampMeth.Size = new System.Drawing.Size(1056, 25);
             this.toolsMetaSampMeth.TabIndex = 2;
             this.toolsMetaSampMeth.Text = "toolStrip55";
             // 
@@ -5786,33 +5167,6 @@
             this.toolStripSeparator21.Name = "toolStripSeparator21";
             this.toolStripSeparator21.Size = new System.Drawing.Size(6, 25);
             // 
-            // toolStripButton82
-            // 
-            this.toolStripButton82.Image = global::DSA_lims.Properties.Resources._new;
-            this.toolStripButton82.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton82.Name = "toolStripButton82";
-            this.toolStripButton82.Size = new System.Drawing.Size(51, 22);
-            this.toolStripButton82.Text = "New";
-            this.toolStripButton82.Click += new System.EventHandler(this.miSamplingMethodNew_Click);
-            // 
-            // toolStripButton83
-            // 
-            this.toolStripButton83.Image = global::DSA_lims.Properties.Resources.edit;
-            this.toolStripButton83.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton83.Name = "toolStripButton83";
-            this.toolStripButton83.Size = new System.Drawing.Size(47, 22);
-            this.toolStripButton83.Text = "Edit";
-            this.toolStripButton83.Click += new System.EventHandler(this.miSamplingMethodEdit_Click);
-            // 
-            // toolStripButton84
-            // 
-            this.toolStripButton84.Image = global::DSA_lims.Properties.Resources.delete;
-            this.toolStripButton84.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton84.Name = "toolStripButton84";
-            this.toolStripButton84.Size = new System.Drawing.Size(60, 22);
-            this.toolStripButton84.Text = "Delete";
-            this.toolStripButton84.Click += new System.EventHandler(this.miSamplingMethodDelete_Click);
-            // 
             // tabMetaCompanies
             // 
             this.tabMetaCompanies.BackColor = System.Drawing.SystemColors.ButtonFace;
@@ -5820,8 +5174,7 @@
             this.tabMetaCompanies.Controls.Add(this.toolStrip15);
             this.tabMetaCompanies.Location = new System.Drawing.Point(4, 24);
             this.tabMetaCompanies.Name = "tabMetaCompanies";
-            this.tabMetaCompanies.Padding = new System.Windows.Forms.Padding(3);
-            this.tabMetaCompanies.Size = new System.Drawing.Size(1050, 565);
+            this.tabMetaCompanies.Size = new System.Drawing.Size(1056, 573);
             this.tabMetaCompanies.TabIndex = 14;
             this.tabMetaCompanies.Text = "Companies";
             // 
@@ -5831,17 +5184,17 @@
             this.gridMetaCompanies.AllowUserToDeleteRows = false;
             this.gridMetaCompanies.AllowUserToResizeRows = false;
             this.gridMetaCompanies.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.gridMetaCompanies.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
+            this.gridMetaCompanies.BackgroundColor = System.Drawing.SystemColors.Window;
             this.gridMetaCompanies.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.gridMetaCompanies.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridMetaCompanies.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridMetaCompanies.Location = new System.Drawing.Point(3, 28);
+            this.gridMetaCompanies.Location = new System.Drawing.Point(0, 25);
             this.gridMetaCompanies.MultiSelect = false;
             this.gridMetaCompanies.Name = "gridMetaCompanies";
             this.gridMetaCompanies.ReadOnly = true;
             this.gridMetaCompanies.RowHeadersVisible = false;
             this.gridMetaCompanies.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridMetaCompanies.Size = new System.Drawing.Size(1044, 534);
+            this.gridMetaCompanies.Size = new System.Drawing.Size(1056, 548);
             this.gridMetaCompanies.TabIndex = 3;
             // 
             // toolStrip15
@@ -5853,9 +5206,9 @@
             this.toolStripButton14,
             this.toolStripButton15,
             this.toolStripButton25});
-            this.toolStrip15.Location = new System.Drawing.Point(3, 3);
+            this.toolStrip15.Location = new System.Drawing.Point(0, 0);
             this.toolStrip15.Name = "toolStrip15";
-            this.toolStrip15.Size = new System.Drawing.Size(1044, 25);
+            this.toolStrip15.Size = new System.Drawing.Size(1056, 25);
             this.toolStrip15.TabIndex = 2;
             this.toolStrip15.Text = "toolStrip50";
             // 
@@ -5871,33 +5224,6 @@
             this.toolStripSeparator59.Name = "toolStripSeparator59";
             this.toolStripSeparator59.Size = new System.Drawing.Size(6, 25);
             // 
-            // toolStripButton14
-            // 
-            this.toolStripButton14.Image = global::DSA_lims.Properties.Resources._new;
-            this.toolStripButton14.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton14.Name = "toolStripButton14";
-            this.toolStripButton14.Size = new System.Drawing.Size(51, 22);
-            this.toolStripButton14.Text = "New";
-            this.toolStripButton14.Click += new System.EventHandler(this.miCompanyNew_Click);
-            // 
-            // toolStripButton15
-            // 
-            this.toolStripButton15.Image = global::DSA_lims.Properties.Resources.edit;
-            this.toolStripButton15.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton15.Name = "toolStripButton15";
-            this.toolStripButton15.Size = new System.Drawing.Size(47, 22);
-            this.toolStripButton15.Text = "Edit";
-            this.toolStripButton15.Click += new System.EventHandler(this.miCompanyEdit_Click);
-            // 
-            // toolStripButton25
-            // 
-            this.toolStripButton25.Image = global::DSA_lims.Properties.Resources.delete;
-            this.toolStripButton25.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton25.Name = "toolStripButton25";
-            this.toolStripButton25.Size = new System.Drawing.Size(60, 22);
-            this.toolStripButton25.Text = "Delete";
-            this.toolStripButton25.Click += new System.EventHandler(this.miCompanyDelete_Click);
-            // 
             // tabCustomers
             // 
             this.tabCustomers.BackColor = System.Drawing.SystemColors.ButtonFace;
@@ -5905,8 +5231,7 @@
             this.tabCustomers.Controls.Add(this.toolsCust);
             this.tabCustomers.Location = new System.Drawing.Point(4, 24);
             this.tabCustomers.Name = "tabCustomers";
-            this.tabCustomers.Padding = new System.Windows.Forms.Padding(3);
-            this.tabCustomers.Size = new System.Drawing.Size(1050, 565);
+            this.tabCustomers.Size = new System.Drawing.Size(1056, 573);
             this.tabCustomers.TabIndex = 15;
             this.tabCustomers.Text = "Customers";
             // 
@@ -5916,17 +5241,17 @@
             this.gridCustomers.AllowUserToDeleteRows = false;
             this.gridCustomers.AllowUserToResizeRows = false;
             this.gridCustomers.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.gridCustomers.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
+            this.gridCustomers.BackgroundColor = System.Drawing.SystemColors.Window;
             this.gridCustomers.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.gridCustomers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridCustomers.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridCustomers.Location = new System.Drawing.Point(3, 28);
+            this.gridCustomers.Location = new System.Drawing.Point(0, 25);
             this.gridCustomers.MultiSelect = false;
             this.gridCustomers.Name = "gridCustomers";
             this.gridCustomers.ReadOnly = true;
             this.gridCustomers.RowHeadersVisible = false;
             this.gridCustomers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridCustomers.Size = new System.Drawing.Size(1044, 534);
+            this.gridCustomers.Size = new System.Drawing.Size(1056, 548);
             this.gridCustomers.TabIndex = 1;
             // 
             // toolsCust
@@ -5938,9 +5263,9 @@
             this.btnCustomersNew,
             this.btnCustomersEdit,
             this.btnCustomersDelete});
-            this.toolsCust.Location = new System.Drawing.Point(3, 3);
+            this.toolsCust.Location = new System.Drawing.Point(0, 0);
             this.toolsCust.Name = "toolsCust";
-            this.toolsCust.Size = new System.Drawing.Size(1044, 25);
+            this.toolsCust.Size = new System.Drawing.Size(1056, 25);
             this.toolsCust.TabIndex = 0;
             this.toolsCust.Text = "toolStrip20";
             // 
@@ -5956,33 +5281,6 @@
             this.toolStripSeparator33.Name = "toolStripSeparator33";
             this.toolStripSeparator33.Size = new System.Drawing.Size(6, 25);
             // 
-            // btnCustomersNew
-            // 
-            this.btnCustomersNew.Image = ((System.Drawing.Image)(resources.GetObject("btnCustomersNew.Image")));
-            this.btnCustomersNew.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnCustomersNew.Name = "btnCustomersNew";
-            this.btnCustomersNew.Size = new System.Drawing.Size(49, 22);
-            this.btnCustomersNew.Text = "Add";
-            this.btnCustomersNew.Click += new System.EventHandler(this.miCustomersNew_Click);
-            // 
-            // btnCustomersEdit
-            // 
-            this.btnCustomersEdit.Image = ((System.Drawing.Image)(resources.GetObject("btnCustomersEdit.Image")));
-            this.btnCustomersEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnCustomersEdit.Name = "btnCustomersEdit";
-            this.btnCustomersEdit.Size = new System.Drawing.Size(47, 22);
-            this.btnCustomersEdit.Text = "Edit";
-            this.btnCustomersEdit.Click += new System.EventHandler(this.miCustomersEdit_Click);
-            // 
-            // btnCustomersDelete
-            // 
-            this.btnCustomersDelete.Image = ((System.Drawing.Image)(resources.GetObject("btnCustomersDelete.Image")));
-            this.btnCustomersDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnCustomersDelete.Name = "btnCustomersDelete";
-            this.btnCustomersDelete.Size = new System.Drawing.Size(60, 22);
-            this.btnCustomersDelete.Text = "Delete";
-            this.btnCustomersDelete.Click += new System.EventHandler(this.miCustomersDelete_Click);
-            // 
             // tabOrders
             // 
             this.tabOrders.BackColor = System.Drawing.SystemColors.ButtonFace;
@@ -5991,7 +5289,6 @@
             this.tabOrders.Controls.Add(this.toolsOrders);
             this.tabOrders.Location = new System.Drawing.Point(4, 24);
             this.tabOrders.Name = "tabOrders";
-            this.tabOrders.Padding = new System.Windows.Forms.Padding(3);
             this.tabOrders.Size = new System.Drawing.Size(1064, 599);
             this.tabOrders.TabIndex = 6;
             this.tabOrders.Text = "Orders";
@@ -6001,9 +5298,9 @@
             this.panel2.Controls.Add(this.gridOrders);
             this.panel2.Controls.Add(this.toolStrip9);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(3, 83);
+            this.panel2.Location = new System.Drawing.Point(0, 80);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1058, 513);
+            this.panel2.Size = new System.Drawing.Size(1064, 519);
             this.panel2.TabIndex = 3;
             // 
             // gridOrders
@@ -6012,7 +5309,7 @@
             this.gridOrders.AllowUserToDeleteRows = false;
             this.gridOrders.AllowUserToResizeRows = false;
             this.gridOrders.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.gridOrders.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
+            this.gridOrders.BackgroundColor = System.Drawing.SystemColors.Window;
             this.gridOrders.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.gridOrders.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridOrders.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -6022,7 +5319,7 @@
             this.gridOrders.ReadOnly = true;
             this.gridOrders.RowHeadersVisible = false;
             this.gridOrders.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridOrders.Size = new System.Drawing.Size(1058, 488);
+            this.gridOrders.Size = new System.Drawing.Size(1064, 494);
             this.gridOrders.TabIndex = 2;
             // 
             // toolStrip9
@@ -6041,7 +5338,7 @@
             this.btnOrdersUnlock});
             this.toolStrip9.Location = new System.Drawing.Point(0, 0);
             this.toolStrip9.Name = "toolStrip9";
-            this.toolStrip9.Size = new System.Drawing.Size(1058, 25);
+            this.toolStrip9.Size = new System.Drawing.Size(1064, 25);
             this.toolStrip9.TabIndex = 4;
             this.toolStrip9.Text = "toolStrip9";
             // 
@@ -6057,85 +5354,15 @@
             this.toolStripSeparator64.Name = "toolStripSeparator64";
             this.toolStripSeparator64.Size = new System.Drawing.Size(6, 25);
             // 
-            // btnOrdersNew
-            // 
-            this.btnOrdersNew.Image = global::DSA_lims.Properties.Resources._new;
-            this.btnOrdersNew.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnOrdersNew.Name = "btnOrdersNew";
-            this.btnOrdersNew.Size = new System.Drawing.Size(51, 22);
-            this.btnOrdersNew.Text = "New";
-            this.btnOrdersNew.Click += new System.EventHandler(this.miOrdersNew_Click);
-            // 
-            // btnOrdersEdit
-            // 
-            this.btnOrdersEdit.Image = global::DSA_lims.Properties.Resources.edit;
-            this.btnOrdersEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnOrdersEdit.Name = "btnOrdersEdit";
-            this.btnOrdersEdit.Size = new System.Drawing.Size(47, 22);
-            this.btnOrdersEdit.Text = "Edit";
-            this.btnOrdersEdit.Click += new System.EventHandler(this.miOrdersEdit_Click);
-            // 
-            // btnOrdersDelete
-            // 
-            this.btnOrdersDelete.Image = global::DSA_lims.Properties.Resources.delete;
-            this.btnOrdersDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnOrdersDelete.Name = "btnOrdersDelete";
-            this.btnOrdersDelete.Size = new System.Drawing.Size(60, 22);
-            this.btnOrdersDelete.Text = "Delete";
-            this.btnOrdersDelete.Click += new System.EventHandler(this.miOrdersDelete_Click);
-            // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
             this.toolStripSeparator6.Size = new System.Drawing.Size(6, 25);
             // 
-            // btnOrdersAssignUsers
-            // 
-            this.btnOrdersAssignUsers.Image = global::DSA_lims.Properties.Resources.users;
-            this.btnOrdersAssignUsers.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnOrdersAssignUsers.Name = "btnOrdersAssignUsers";
-            this.btnOrdersAssignUsers.Size = new System.Drawing.Size(92, 22);
-            this.btnOrdersAssignUsers.Text = "Assign users";
-            this.btnOrdersAssignUsers.Click += new System.EventHandler(this.btnOrdersAssignUsers_Click);
-            // 
             // toolStripSeparator67
             // 
             this.toolStripSeparator67.Name = "toolStripSeparator67";
             this.toolStripSeparator67.Size = new System.Drawing.Size(6, 25);
-            // 
-            // btnOrdersSummary
-            // 
-            this.btnOrdersSummary.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.orderSummaryToolStripMenuItem,
-            this.btnOrdersPrepSummary});
-            this.btnOrdersSummary.Image = global::DSA_lims.Properties.Resources.info;
-            this.btnOrdersSummary.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnOrdersSummary.Name = "btnOrdersSummary";
-            this.btnOrdersSummary.Size = new System.Drawing.Size(96, 22);
-            this.btnOrdersSummary.Text = "Summary...";
-            // 
-            // orderSummaryToolStripMenuItem
-            // 
-            this.orderSummaryToolStripMenuItem.Enabled = false;
-            this.orderSummaryToolStripMenuItem.Name = "orderSummaryToolStripMenuItem";
-            this.orderSummaryToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
-            this.orderSummaryToolStripMenuItem.Text = "&Order";
-            // 
-            // btnOrdersPrepSummary
-            // 
-            this.btnOrdersPrepSummary.Name = "btnOrdersPrepSummary";
-            this.btnOrdersPrepSummary.Size = new System.Drawing.Size(135, 22);
-            this.btnOrdersPrepSummary.Text = "&Preparation";
-            this.btnOrdersPrepSummary.Click += new System.EventHandler(this.btnOrdersPrepSummary_Click);
-            // 
-            // btnOrdersUnlock
-            // 
-            this.btnOrdersUnlock.Image = global::DSA_lims.Properties.Resources._switch;
-            this.btnOrdersUnlock.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnOrdersUnlock.Name = "btnOrdersUnlock";
-            this.btnOrdersUnlock.Size = new System.Drawing.Size(64, 22);
-            this.btnOrdersUnlock.Text = "Unlock";
-            this.btnOrdersUnlock.Click += new System.EventHandler(this.miOrdersUnlock_Click);
             // 
             // flowLayoutPanel1
             // 
@@ -6147,10 +5374,10 @@
             this.flowLayoutPanel1.Controls.Add(this.panel20);
             this.flowLayoutPanel1.Controls.Add(this.btnOrdersSearch);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 28);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 25);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Padding = new System.Windows.Forms.Padding(12);
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(1058, 55);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(1064, 55);
             this.flowLayoutPanel1.TabIndex = 10;
             // 
             // panel16
@@ -6304,9 +5531,9 @@
             this.toolStripLabel30,
             this.toolStripSeparator63,
             this.btnOrdersClearAllFilters});
-            this.toolsOrders.Location = new System.Drawing.Point(3, 3);
+            this.toolsOrders.Location = new System.Drawing.Point(0, 0);
             this.toolsOrders.Name = "toolsOrders";
-            this.toolsOrders.Size = new System.Drawing.Size(1058, 25);
+            this.toolsOrders.Size = new System.Drawing.Size(1064, 25);
             this.toolsOrders.TabIndex = 0;
             this.toolsOrders.Text = "toolStrip13";
             // 
@@ -6322,15 +5549,6 @@
             this.toolStripSeparator63.Name = "toolStripSeparator63";
             this.toolStripSeparator63.Size = new System.Drawing.Size(6, 25);
             // 
-            // btnOrdersClearAllFilters
-            // 
-            this.btnOrdersClearAllFilters.Image = global::DSA_lims.Properties.Resources.trash;
-            this.btnOrdersClearAllFilters.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnOrdersClearAllFilters.Name = "btnOrdersClearAllFilters";
-            this.btnOrdersClearAllFilters.Size = new System.Drawing.Size(101, 22);
-            this.btnOrdersClearAllFilters.Text = "Clear all filters";
-            this.btnOrdersClearAllFilters.Click += new System.EventHandler(this.miOrdersClearAllFilters_Click);
-            // 
             // tabSamples
             // 
             this.tabSamples.BackColor = System.Drawing.SystemColors.ButtonFace;
@@ -6339,7 +5557,6 @@
             this.tabSamples.Controls.Add(this.toolStrip8);
             this.tabSamples.Location = new System.Drawing.Point(4, 24);
             this.tabSamples.Name = "tabSamples";
-            this.tabSamples.Padding = new System.Windows.Forms.Padding(3);
             this.tabSamples.Size = new System.Drawing.Size(1064, 599);
             this.tabSamples.TabIndex = 7;
             this.tabSamples.Text = "Samples";
@@ -6349,9 +5566,9 @@
             this.panel78.Controls.Add(this.gridSamples);
             this.panel78.Controls.Add(this.toolsSamples);
             this.panel78.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel78.Location = new System.Drawing.Point(3, 112);
+            this.panel78.Location = new System.Drawing.Point(0, 109);
             this.panel78.Name = "panel78";
-            this.panel78.Size = new System.Drawing.Size(1058, 484);
+            this.panel78.Size = new System.Drawing.Size(1064, 490);
             this.panel78.TabIndex = 8;
             // 
             // gridSamples
@@ -6360,7 +5577,7 @@
             this.gridSamples.AllowUserToDeleteRows = false;
             this.gridSamples.AllowUserToResizeRows = false;
             this.gridSamples.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.gridSamples.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
+            this.gridSamples.BackgroundColor = System.Drawing.SystemColors.Window;
             this.gridSamples.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.gridSamples.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridSamples.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -6369,7 +5586,7 @@
             this.gridSamples.ReadOnly = true;
             this.gridSamples.RowHeadersVisible = false;
             this.gridSamples.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridSamples.Size = new System.Drawing.Size(1058, 459);
+            this.gridSamples.Size = new System.Drawing.Size(1064, 465);
             this.gridSamples.TabIndex = 5;
             this.gridSamples.SelectionChanged += new System.EventHandler(this.gridSamples_SelectionChanged);
             // 
@@ -6379,10 +5596,11 @@
             this.toolsSamples.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripLabel56,
             this.toolStripSeparator30,
-            this.toolStripButton99,
-            this.toolStripDropDownButton3,
+            this.btnSamplesNew,
             this.btnSamplesEdit,
-            this.toolStripButton104,
+            this.btnSamplesDelete,
+            this.btnSamplesCopy,
+            this.toolStripDropDownButton3,
             this.toolStripSeparator47,
             this.btnSamplesSplit,
             this.btnSamplesMerge,
@@ -6394,7 +5612,7 @@
             this.btnSamplesUnlock});
             this.toolsSamples.Location = new System.Drawing.Point(0, 0);
             this.toolsSamples.Name = "toolsSamples";
-            this.toolsSamples.Size = new System.Drawing.Size(1058, 25);
+            this.toolsSamples.Size = new System.Drawing.Size(1064, 25);
             this.toolsSamples.TabIndex = 3;
             this.toolsSamples.Text = "toolStrip22";
             // 
@@ -6410,177 +5628,15 @@
             this.toolStripSeparator30.Name = "toolStripSeparator30";
             this.toolStripSeparator30.Size = new System.Drawing.Size(6, 25);
             // 
-            // toolStripButton99
-            // 
-            this.toolStripButton99.Image = global::DSA_lims.Properties.Resources._new;
-            this.toolStripButton99.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton99.Name = "toolStripButton99";
-            this.toolStripButton99.Size = new System.Drawing.Size(51, 22);
-            this.toolStripButton99.Text = "New";
-            this.toolStripButton99.Click += new System.EventHandler(this.miSamplesNew_Click);
-            // 
-            // toolStripDropDownButton3
-            // 
-            this.toolStripDropDownButton3.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.excelToolStripMenuItem});
-            this.toolStripDropDownButton3.Image = global::DSA_lims.Properties.Resources._new;
-            this.toolStripDropDownButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripDropDownButton3.Name = "toolStripDropDownButton3";
-            this.toolStripDropDownButton3.Size = new System.Drawing.Size(81, 22);
-            this.toolStripDropDownButton3.Text = "Import...";
-            // 
-            // excelToolStripMenuItem
-            // 
-            this.excelToolStripMenuItem.Name = "excelToolStripMenuItem";
-            this.excelToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
-            this.excelToolStripMenuItem.Text = "Excel";
-            this.excelToolStripMenuItem.Click += new System.EventHandler(this.miSamplesImportExcel_Click);
-            // 
-            // btnSamplesEdit
-            // 
-            this.btnSamplesEdit.Image = global::DSA_lims.Properties.Resources.edit;
-            this.btnSamplesEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSamplesEdit.Name = "btnSamplesEdit";
-            this.btnSamplesEdit.Size = new System.Drawing.Size(47, 22);
-            this.btnSamplesEdit.Text = "Edit";
-            this.btnSamplesEdit.Click += new System.EventHandler(this.miSamplesEdit_Click);
-            // 
-            // toolStripButton104
-            // 
-            this.toolStripButton104.Image = global::DSA_lims.Properties.Resources.delete;
-            this.toolStripButton104.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton104.Name = "toolStripButton104";
-            this.toolStripButton104.Size = new System.Drawing.Size(60, 22);
-            this.toolStripButton104.Text = "Delete";
-            this.toolStripButton104.Click += new System.EventHandler(this.miSamplesDelete_Click);
-            // 
             // toolStripSeparator47
             // 
             this.toolStripSeparator47.Name = "toolStripSeparator47";
             this.toolStripSeparator47.Size = new System.Drawing.Size(6, 25);
             // 
-            // btnSamplesSplit
-            // 
-            this.btnSamplesSplit.Image = global::DSA_lims.Properties.Resources.split;
-            this.btnSamplesSplit.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSamplesSplit.Name = "btnSamplesSplit";
-            this.btnSamplesSplit.Size = new System.Drawing.Size(50, 22);
-            this.btnSamplesSplit.Text = "Split";
-            this.btnSamplesSplit.Click += new System.EventHandler(this.miSamplesSplit_Click);
-            // 
-            // btnSamplesMerge
-            // 
-            this.btnSamplesMerge.Image = global::DSA_lims.Properties.Resources.merge;
-            this.btnSamplesMerge.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSamplesMerge.Name = "btnSamplesMerge";
-            this.btnSamplesMerge.Size = new System.Drawing.Size(61, 22);
-            this.btnSamplesMerge.Text = "Merge";
-            this.btnSamplesMerge.Click += new System.EventHandler(this.miSamplesMerge_Click);
-            // 
             // toolStripSeparator45
             // 
             this.toolStripSeparator45.Name = "toolStripSeparator45";
             this.toolStripSeparator45.Size = new System.Drawing.Size(6, 25);
-            // 
-            // btnSamplesSetOrder
-            // 
-            this.btnSamplesSetOrder.Image = global::DSA_lims.Properties.Resources._new;
-            this.btnSamplesSetOrder.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSamplesSetOrder.Name = "btnSamplesSetOrder";
-            this.btnSamplesSetOrder.Size = new System.Drawing.Size(94, 22);
-            this.btnSamplesSetOrder.Text = "Add to order";
-            this.btnSamplesSetOrder.Click += new System.EventHandler(this.miSamplesSetOrder_Click);
-            // 
-            // toolStripDropDownButton2
-            // 
-            this.toolStripDropDownButton2.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.projectToolStripMenuItem,
-            this.customerToolStripMenuItem1,
-            this.samplerToolStripMenuItem1,
-            this.samplingmethodToolStripMenuItem1,
-            this.excemptFromPublicToolStripMenuItem});
-            this.toolStripDropDownButton2.Image = global::DSA_lims.Properties.Resources.set;
-            this.toolStripDropDownButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripDropDownButton2.Name = "toolStripDropDownButton2";
-            this.toolStripDropDownButton2.Size = new System.Drawing.Size(61, 22);
-            this.toolStripDropDownButton2.Text = "Set...";
-            // 
-            // projectToolStripMenuItem
-            // 
-            this.projectToolStripMenuItem.Name = "projectToolStripMenuItem";
-            this.projectToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
-            this.projectToolStripMenuItem.Text = "&Project";
-            this.projectToolStripMenuItem.Click += new System.EventHandler(this.miSamplesSetProject_Click);
-            // 
-            // customerToolStripMenuItem1
-            // 
-            this.customerToolStripMenuItem1.Name = "customerToolStripMenuItem1";
-            this.customerToolStripMenuItem1.Size = new System.Drawing.Size(184, 22);
-            this.customerToolStripMenuItem1.Text = "&Customer";
-            this.customerToolStripMenuItem1.Click += new System.EventHandler(this.miSamplesSetCustomer_Click);
-            // 
-            // samplerToolStripMenuItem1
-            // 
-            this.samplerToolStripMenuItem1.Name = "samplerToolStripMenuItem1";
-            this.samplerToolStripMenuItem1.Size = new System.Drawing.Size(184, 22);
-            this.samplerToolStripMenuItem1.Text = "&Sampler";
-            this.samplerToolStripMenuItem1.Click += new System.EventHandler(this.miSamplesSetSampler_Click);
-            // 
-            // samplingmethodToolStripMenuItem1
-            // 
-            this.samplingmethodToolStripMenuItem1.Name = "samplingmethodToolStripMenuItem1";
-            this.samplingmethodToolStripMenuItem1.Size = new System.Drawing.Size(184, 22);
-            this.samplingmethodToolStripMenuItem1.Text = "Sampling &method";
-            this.samplingmethodToolStripMenuItem1.Click += new System.EventHandler(this.miSamplesSetSamplingMethod_Click);
-            // 
-            // excemptFromPublicToolStripMenuItem
-            // 
-            this.excemptFromPublicToolStripMenuItem.Name = "excemptFromPublicToolStripMenuItem";
-            this.excemptFromPublicToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
-            this.excemptFromPublicToolStripMenuItem.Text = "&Excempt from public";
-            this.excemptFromPublicToolStripMenuItem.Click += new System.EventHandler(this.miSamplesSetExcempt_Click);
-            // 
-            // btnSamplesPrepAnal
-            // 
-            this.btnSamplesPrepAnal.Image = global::DSA_lims.Properties.Resources.prep_anal;
-            this.btnSamplesPrepAnal.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSamplesPrepAnal.Name = "btnSamplesPrepAnal";
-            this.btnSamplesPrepAnal.Size = new System.Drawing.Size(163, 22);
-            this.btnSamplesPrepAnal.Text = "Preparations and analyses";
-            this.btnSamplesPrepAnal.Click += new System.EventHandler(this.miSamplesPrepAnal_Click);
-            // 
-            // toolStripDropDownButton4
-            // 
-            this.toolStripDropDownButton4.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.sampleLabelToolStripMenuItem,
-            this.sampleInfoForSelectedToolStripMenuItem});
-            this.toolStripDropDownButton4.Image = global::DSA_lims.Properties.Resources.printer;
-            this.toolStripDropDownButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripDropDownButton4.Name = "toolStripDropDownButton4";
-            this.toolStripDropDownButton4.Size = new System.Drawing.Size(70, 22);
-            this.toolStripDropDownButton4.Text = "Print...";
-            // 
-            // sampleLabelToolStripMenuItem
-            // 
-            this.sampleLabelToolStripMenuItem.Name = "sampleLabelToolStripMenuItem";
-            this.sampleLabelToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
-            this.sampleLabelToolStripMenuItem.Text = "Sample labels";
-            this.sampleLabelToolStripMenuItem.Click += new System.EventHandler(this.miSamplesPrintSampleLabels_Click);
-            // 
-            // sampleInfoForSelectedToolStripMenuItem
-            // 
-            this.sampleInfoForSelectedToolStripMenuItem.Name = "sampleInfoForSelectedToolStripMenuItem";
-            this.sampleInfoForSelectedToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
-            this.sampleInfoForSelectedToolStripMenuItem.Text = "Sample info";
-            // 
-            // btnSamplesUnlock
-            // 
-            this.btnSamplesUnlock.Image = global::DSA_lims.Properties.Resources._switch;
-            this.btnSamplesUnlock.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSamplesUnlock.Name = "btnSamplesUnlock";
-            this.btnSamplesUnlock.Size = new System.Drawing.Size(64, 22);
-            this.btnSamplesUnlock.Text = "Unlock";
-            this.btnSamplesUnlock.Click += new System.EventHandler(this.miSamplesUnlock_Click);
             // 
             // flowLayoutPanel2
             // 
@@ -6595,10 +5651,10 @@
             this.flowLayoutPanel2.Controls.Add(this.panel33);
             this.flowLayoutPanel2.Controls.Add(this.btnSamplesSearch);
             this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.flowLayoutPanel2.Location = new System.Drawing.Point(3, 28);
+            this.flowLayoutPanel2.Location = new System.Drawing.Point(0, 25);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
             this.flowLayoutPanel2.Padding = new System.Windows.Forms.Padding(12);
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(1058, 84);
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(1064, 84);
             this.flowLayoutPanel2.TabIndex = 9;
             // 
             // panel24
@@ -6851,9 +5907,9 @@
             this.toolStripLabel22,
             this.toolStripSeparator57,
             this.btnSamplesClearFilters});
-            this.toolStrip8.Location = new System.Drawing.Point(3, 3);
+            this.toolStrip8.Location = new System.Drawing.Point(0, 0);
             this.toolStrip8.Name = "toolStrip8";
-            this.toolStrip8.Size = new System.Drawing.Size(1058, 25);
+            this.toolStrip8.Size = new System.Drawing.Size(1064, 25);
             this.toolStrip8.TabIndex = 7;
             this.toolStrip8.Text = "toolStrip8";
             // 
@@ -6869,22 +5925,12 @@
             this.toolStripSeparator57.Name = "toolStripSeparator57";
             this.toolStripSeparator57.Size = new System.Drawing.Size(6, 25);
             // 
-            // btnSamplesClearFilters
-            // 
-            this.btnSamplesClearFilters.Image = global::DSA_lims.Properties.Resources.trash;
-            this.btnSamplesClearFilters.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSamplesClearFilters.Name = "btnSamplesClearFilters";
-            this.btnSamplesClearFilters.Size = new System.Drawing.Size(101, 22);
-            this.btnSamplesClearFilters.Text = "Clear all filters";
-            this.btnSamplesClearFilters.Click += new System.EventHandler(this.btnSamplesClearFilters_Click);
-            // 
             // tabProjects
             // 
             this.tabProjects.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.tabProjects.Controls.Add(this.splitProjects);
             this.tabProjects.Location = new System.Drawing.Point(4, 24);
             this.tabProjects.Name = "tabProjects";
-            this.tabProjects.Padding = new System.Windows.Forms.Padding(3);
             this.tabProjects.Size = new System.Drawing.Size(1064, 599);
             this.tabProjects.TabIndex = 8;
             this.tabProjects.Text = "Projects";
@@ -6892,7 +5938,7 @@
             // splitProjects
             // 
             this.splitProjects.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitProjects.Location = new System.Drawing.Point(3, 3);
+            this.splitProjects.Location = new System.Drawing.Point(0, 0);
             this.splitProjects.Name = "splitProjects";
             // 
             // splitProjects.Panel1
@@ -6903,8 +5949,8 @@
             // splitProjects.Panel2
             // 
             this.splitProjects.Panel2.Controls.Add(this.splitContainer24);
-            this.splitProjects.Size = new System.Drawing.Size(1058, 593);
-            this.splitProjects.SplitterDistance = 350;
+            this.splitProjects.Size = new System.Drawing.Size(1064, 601);
+            this.splitProjects.SplitterDistance = 351;
             this.splitProjects.SplitterWidth = 3;
             this.splitProjects.TabIndex = 6;
             // 
@@ -6914,7 +5960,7 @@
             this.gridProjectMain.AllowUserToDeleteRows = false;
             this.gridProjectMain.AllowUserToResizeRows = false;
             this.gridProjectMain.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.gridProjectMain.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
+            this.gridProjectMain.BackgroundColor = System.Drawing.SystemColors.Window;
             this.gridProjectMain.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.gridProjectMain.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridProjectMain.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -6924,7 +5970,7 @@
             this.gridProjectMain.ReadOnly = true;
             this.gridProjectMain.RowHeadersVisible = false;
             this.gridProjectMain.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridProjectMain.Size = new System.Drawing.Size(350, 568);
+            this.gridProjectMain.Size = new System.Drawing.Size(351, 576);
             this.gridProjectMain.TabIndex = 1;
             this.gridProjectMain.SelectionChanged += new System.EventHandler(this.gridProjectMain_SelectionChanged);
             // 
@@ -6938,7 +5984,7 @@
             this.btnProjectsMainEdit});
             this.toolStrip4.Location = new System.Drawing.Point(0, 0);
             this.toolStrip4.Name = "toolStrip4";
-            this.toolStrip4.Size = new System.Drawing.Size(350, 25);
+            this.toolStrip4.Size = new System.Drawing.Size(351, 25);
             this.toolStrip4.TabIndex = 0;
             this.toolStrip4.Text = "toolStrip4";
             // 
@@ -6954,24 +6000,6 @@
             this.toolStripSeparator54.Name = "toolStripSeparator54";
             this.toolStripSeparator54.Size = new System.Drawing.Size(6, 25);
             // 
-            // btnProjectsMainNew
-            // 
-            this.btnProjectsMainNew.Image = global::DSA_lims.Properties.Resources._new;
-            this.btnProjectsMainNew.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnProjectsMainNew.Name = "btnProjectsMainNew";
-            this.btnProjectsMainNew.Size = new System.Drawing.Size(51, 22);
-            this.btnProjectsMainNew.Text = "New";
-            this.btnProjectsMainNew.Click += new System.EventHandler(this.miProjectsNew_Click);
-            // 
-            // btnProjectsMainEdit
-            // 
-            this.btnProjectsMainEdit.Image = global::DSA_lims.Properties.Resources.edit;
-            this.btnProjectsMainEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnProjectsMainEdit.Name = "btnProjectsMainEdit";
-            this.btnProjectsMainEdit.Size = new System.Drawing.Size(47, 22);
-            this.btnProjectsMainEdit.Text = "Edit";
-            this.btnProjectsMainEdit.Click += new System.EventHandler(this.miProjectsEdit_Click);
-            // 
             // splitContainer24
             // 
             this.splitContainer24.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -6986,8 +6014,8 @@
             // splitContainer24.Panel2
             // 
             this.splitContainer24.Panel2.Controls.Add(this.splitContainer25);
-            this.splitContainer24.Size = new System.Drawing.Size(705, 593);
-            this.splitContainer24.SplitterDistance = 360;
+            this.splitContainer24.Size = new System.Drawing.Size(710, 601);
+            this.splitContainer24.SplitterDistance = 362;
             this.splitContainer24.SplitterWidth = 3;
             this.splitContainer24.TabIndex = 0;
             // 
@@ -6997,7 +6025,7 @@
             this.gridProjectSub.AllowUserToDeleteRows = false;
             this.gridProjectSub.AllowUserToResizeRows = false;
             this.gridProjectSub.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.gridProjectSub.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
+            this.gridProjectSub.BackgroundColor = System.Drawing.SystemColors.Window;
             this.gridProjectSub.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.gridProjectSub.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridProjectSub.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -7007,7 +6035,7 @@
             this.gridProjectSub.ReadOnly = true;
             this.gridProjectSub.RowHeadersVisible = false;
             this.gridProjectSub.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridProjectSub.Size = new System.Drawing.Size(360, 568);
+            this.gridProjectSub.Size = new System.Drawing.Size(362, 576);
             this.gridProjectSub.TabIndex = 1;
             this.gridProjectSub.SelectionChanged += new System.EventHandler(this.gridProjectSub_SelectionChanged);
             // 
@@ -7023,7 +6051,7 @@
             this.btnProjectSubPrint});
             this.toolStrip5.Location = new System.Drawing.Point(0, 0);
             this.toolStrip5.Name = "toolStrip5";
-            this.toolStrip5.Size = new System.Drawing.Size(360, 25);
+            this.toolStrip5.Size = new System.Drawing.Size(362, 25);
             this.toolStrip5.TabIndex = 0;
             this.toolStrip5.Text = "toolStrip5";
             // 
@@ -7039,37 +6067,10 @@
             this.toolStripSeparator55.Name = "toolStripSeparator55";
             this.toolStripSeparator55.Size = new System.Drawing.Size(6, 25);
             // 
-            // btnProjectsSubNew
-            // 
-            this.btnProjectsSubNew.Image = global::DSA_lims.Properties.Resources._new;
-            this.btnProjectsSubNew.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnProjectsSubNew.Name = "btnProjectsSubNew";
-            this.btnProjectsSubNew.Size = new System.Drawing.Size(51, 22);
-            this.btnProjectsSubNew.Text = "New";
-            this.btnProjectsSubNew.Click += new System.EventHandler(this.miProjectsSubNew_Click);
-            // 
-            // btnProjectsSubEdit
-            // 
-            this.btnProjectsSubEdit.Image = global::DSA_lims.Properties.Resources.edit;
-            this.btnProjectsSubEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnProjectsSubEdit.Name = "btnProjectsSubEdit";
-            this.btnProjectsSubEdit.Size = new System.Drawing.Size(47, 22);
-            this.btnProjectsSubEdit.Text = "Edit";
-            this.btnProjectsSubEdit.Click += new System.EventHandler(this.miProjectsSubEdit_Click);
-            // 
             // toolStripSeparator56
             // 
             this.toolStripSeparator56.Name = "toolStripSeparator56";
             this.toolStripSeparator56.Size = new System.Drawing.Size(6, 25);
-            // 
-            // btnProjectSubPrint
-            // 
-            this.btnProjectSubPrint.Image = global::DSA_lims.Properties.Resources.printer;
-            this.btnProjectSubPrint.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnProjectSubPrint.Name = "btnProjectSubPrint";
-            this.btnProjectSubPrint.Size = new System.Drawing.Size(80, 22);
-            this.btnProjectSubPrint.Text = "Print label";
-            this.btnProjectSubPrint.Click += new System.EventHandler(this.btnProjectSubPrint_Click);
             // 
             // splitContainer25
             // 
@@ -7087,8 +6088,8 @@
             // 
             this.splitContainer25.Panel2.Controls.Add(this.gridProjectAttachments);
             this.splitContainer25.Panel2.Controls.Add(this.toolsProjAttachments);
-            this.splitContainer25.Size = new System.Drawing.Size(342, 593);
-            this.splitContainer25.SplitterDistance = 303;
+            this.splitContainer25.Size = new System.Drawing.Size(345, 601);
+            this.splitContainer25.SplitterDistance = 307;
             this.splitContainer25.SplitterWidth = 3;
             this.splitContainer25.TabIndex = 0;
             // 
@@ -7098,7 +6099,7 @@
             this.gridProjectsUsers.AllowUserToDeleteRows = false;
             this.gridProjectsUsers.AllowUserToResizeRows = false;
             this.gridProjectsUsers.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.gridProjectsUsers.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
+            this.gridProjectsUsers.BackgroundColor = System.Drawing.SystemColors.Window;
             this.gridProjectsUsers.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.gridProjectsUsers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridProjectsUsers.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -7107,7 +6108,7 @@
             this.gridProjectsUsers.ReadOnly = true;
             this.gridProjectsUsers.RowHeadersVisible = false;
             this.gridProjectsUsers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridProjectsUsers.Size = new System.Drawing.Size(342, 278);
+            this.gridProjectsUsers.Size = new System.Drawing.Size(345, 282);
             this.gridProjectsUsers.TabIndex = 1;
             // 
             // toolsProjUsers
@@ -7120,7 +6121,7 @@
             this.btnProjectsUsersRemove});
             this.toolsProjUsers.Location = new System.Drawing.Point(0, 0);
             this.toolsProjUsers.Name = "toolsProjUsers";
-            this.toolsProjUsers.Size = new System.Drawing.Size(342, 25);
+            this.toolsProjUsers.Size = new System.Drawing.Size(345, 25);
             this.toolsProjUsers.TabIndex = 0;
             this.toolsProjUsers.Text = "toolStrip2";
             // 
@@ -7136,30 +6137,12 @@
             this.toolStripSeparator31.Name = "toolStripSeparator31";
             this.toolStripSeparator31.Size = new System.Drawing.Size(6, 25);
             // 
-            // btnProjectsUsersAdd
-            // 
-            this.btnProjectsUsersAdd.Image = global::DSA_lims.Properties.Resources.create_user;
-            this.btnProjectsUsersAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnProjectsUsersAdd.Name = "btnProjectsUsersAdd";
-            this.btnProjectsUsersAdd.Size = new System.Drawing.Size(49, 22);
-            this.btnProjectsUsersAdd.Text = "Add";
-            this.btnProjectsUsersAdd.Click += new System.EventHandler(this.btnProjectsUsersAdd_Click);
-            // 
-            // btnProjectsUsersRemove
-            // 
-            this.btnProjectsUsersRemove.Image = global::DSA_lims.Properties.Resources.delete_user;
-            this.btnProjectsUsersRemove.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnProjectsUsersRemove.Name = "btnProjectsUsersRemove";
-            this.btnProjectsUsersRemove.Size = new System.Drawing.Size(70, 22);
-            this.btnProjectsUsersRemove.Text = "Remove";
-            this.btnProjectsUsersRemove.Click += new System.EventHandler(this.btnProjectsUsersRemove_Click);
-            // 
             // gridProjectAttachments
             // 
             this.gridProjectAttachments.AllowUserToAddRows = false;
             this.gridProjectAttachments.AllowUserToDeleteRows = false;
             this.gridProjectAttachments.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.gridProjectAttachments.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
+            this.gridProjectAttachments.BackgroundColor = System.Drawing.SystemColors.Window;
             this.gridProjectAttachments.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.gridProjectAttachments.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridProjectAttachments.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -7169,7 +6152,7 @@
             this.gridProjectAttachments.ReadOnly = true;
             this.gridProjectAttachments.RowHeadersVisible = false;
             this.gridProjectAttachments.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridProjectAttachments.Size = new System.Drawing.Size(342, 262);
+            this.gridProjectAttachments.Size = new System.Drawing.Size(345, 266);
             this.gridProjectAttachments.TabIndex = 1;
             this.gridProjectAttachments.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridAttachments_CellDoubleClick);
             // 
@@ -7184,7 +6167,7 @@
             this.btnProjectDeleteAttachment});
             this.toolsProjAttachments.Location = new System.Drawing.Point(0, 0);
             this.toolsProjAttachments.Name = "toolsProjAttachments";
-            this.toolsProjAttachments.Size = new System.Drawing.Size(342, 25);
+            this.toolsProjAttachments.Size = new System.Drawing.Size(345, 25);
             this.toolsProjAttachments.TabIndex = 0;
             this.toolsProjAttachments.Text = "toolStrip3";
             // 
@@ -7200,40 +6183,12 @@
             this.toolStripSeparator32.Name = "toolStripSeparator32";
             this.toolStripSeparator32.Size = new System.Drawing.Size(6, 25);
             // 
-            // btnProjectScanAttachment
-            // 
-            this.btnProjectScanAttachment.Image = global::DSA_lims.Properties.Resources.scan;
-            this.btnProjectScanAttachment.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnProjectScanAttachment.Name = "btnProjectScanAttachment";
-            this.btnProjectScanAttachment.Size = new System.Drawing.Size(52, 22);
-            this.btnProjectScanAttachment.Text = "Scan";
-            this.btnProjectScanAttachment.Click += new System.EventHandler(this.btnProjectScanAttachment_Click);
-            // 
-            // btnProjectBrowseAttachment
-            // 
-            this.btnProjectBrowseAttachment.Image = global::DSA_lims.Properties.Resources.projects;
-            this.btnProjectBrowseAttachment.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnProjectBrowseAttachment.Name = "btnProjectBrowseAttachment";
-            this.btnProjectBrowseAttachment.Size = new System.Drawing.Size(65, 22);
-            this.btnProjectBrowseAttachment.Text = "Browse";
-            this.btnProjectBrowseAttachment.Click += new System.EventHandler(this.btnProjectBrowseAttachment_Click);
-            // 
-            // btnProjectDeleteAttachment
-            // 
-            this.btnProjectDeleteAttachment.Image = global::DSA_lims.Properties.Resources.delete;
-            this.btnProjectDeleteAttachment.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnProjectDeleteAttachment.Name = "btnProjectDeleteAttachment";
-            this.btnProjectDeleteAttachment.Size = new System.Drawing.Size(60, 22);
-            this.btnProjectDeleteAttachment.Text = "Delete";
-            this.btnProjectDeleteAttachment.Click += new System.EventHandler(this.btnProjectDeleteAttachment_Click);
-            // 
             // tabTypeRel
             // 
             this.tabTypeRel.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.tabTypeRel.Controls.Add(this.tabsTypeRel);
             this.tabTypeRel.Location = new System.Drawing.Point(4, 24);
             this.tabTypeRel.Name = "tabTypeRel";
-            this.tabTypeRel.Padding = new System.Windows.Forms.Padding(3);
             this.tabTypeRel.Size = new System.Drawing.Size(1064, 599);
             this.tabTypeRel.TabIndex = 13;
             this.tabTypeRel.Text = "Types/Methods";
@@ -7244,10 +6199,10 @@
             this.tabsTypeRel.Controls.Add(this.tabTypeRelationsPrepMeth);
             this.tabsTypeRel.Controls.Add(this.tabTypeRelationsAnalMeth);
             this.tabsTypeRel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabsTypeRel.Location = new System.Drawing.Point(3, 3);
+            this.tabsTypeRel.Location = new System.Drawing.Point(0, 0);
             this.tabsTypeRel.Name = "tabsTypeRel";
             this.tabsTypeRel.SelectedIndex = 0;
-            this.tabsTypeRel.Size = new System.Drawing.Size(1058, 593);
+            this.tabsTypeRel.Size = new System.Drawing.Size(1064, 599);
             this.tabsTypeRel.TabIndex = 8;
             this.tabsTypeRel.SelectedIndexChanged += new System.EventHandler(this.tabsTypeRel_SelectedIndexChanged);
             // 
@@ -7257,15 +6212,14 @@
             this.tabTypeRelationsSampleTypes.Controls.Add(this.splitContainer12);
             this.tabTypeRelationsSampleTypes.Location = new System.Drawing.Point(4, 24);
             this.tabTypeRelationsSampleTypes.Name = "tabTypeRelationsSampleTypes";
-            this.tabTypeRelationsSampleTypes.Padding = new System.Windows.Forms.Padding(3);
-            this.tabTypeRelationsSampleTypes.Size = new System.Drawing.Size(1050, 565);
+            this.tabTypeRelationsSampleTypes.Size = new System.Drawing.Size(1056, 571);
             this.tabTypeRelationsSampleTypes.TabIndex = 0;
             this.tabTypeRelationsSampleTypes.Text = "Sample types";
             // 
             // splitContainer12
             // 
             this.splitContainer12.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer12.Location = new System.Drawing.Point(3, 3);
+            this.splitContainer12.Location = new System.Drawing.Point(0, 0);
             this.splitContainer12.Name = "splitContainer12";
             // 
             // splitContainer12.Panel1
@@ -7276,8 +6230,8 @@
             // splitContainer12.Panel2
             // 
             this.splitContainer12.Panel2.Controls.Add(this.tabControl3);
-            this.splitContainer12.Size = new System.Drawing.Size(1044, 559);
-            this.splitContainer12.SplitterDistance = 449;
+            this.splitContainer12.Size = new System.Drawing.Size(1056, 571);
+            this.splitContainer12.SplitterDistance = 454;
             this.splitContainer12.SplitterWidth = 5;
             this.splitContainer12.TabIndex = 7;
             // 
@@ -7295,7 +6249,7 @@
             this.treeSampleTypes.Name = "treeSampleTypes";
             this.treeSampleTypes.PathSeparator = "/";
             this.treeSampleTypes.ShowNodeToolTips = true;
-            this.treeSampleTypes.Size = new System.Drawing.Size(449, 534);
+            this.treeSampleTypes.Size = new System.Drawing.Size(454, 546);
             this.treeSampleTypes.TabIndex = 0;
             this.treeSampleTypes.DrawNode += new System.Windows.Forms.DrawTreeNodeEventHandler(this.treeSampleTypes_DrawNode);
             this.treeSampleTypes.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeSampleTypes_AfterSelect);
@@ -7314,7 +6268,7 @@
             this.btnTypeRelSampTypeExport});
             this.toolsTypeRelSamp.Location = new System.Drawing.Point(0, 0);
             this.toolsTypeRelSamp.Name = "toolsTypeRelSamp";
-            this.toolsTypeRelSamp.Size = new System.Drawing.Size(449, 25);
+            this.toolsTypeRelSamp.Size = new System.Drawing.Size(454, 25);
             this.toolsTypeRelSamp.TabIndex = 0;
             this.toolsTypeRelSamp.Text = "toolStrip30";
             // 
@@ -7330,71 +6284,10 @@
             this.toolStripSeparator35.Name = "toolStripSeparator35";
             this.toolStripSeparator35.Size = new System.Drawing.Size(6, 25);
             // 
-            // btnTypeRelSampleTypesNewRoot
-            // 
-            this.btnTypeRelSampleTypesNewRoot.Image = global::DSA_lims.Properties.Resources._new;
-            this.btnTypeRelSampleTypesNewRoot.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnTypeRelSampleTypesNewRoot.Name = "btnTypeRelSampleTypesNewRoot";
-            this.btnTypeRelSampleTypesNewRoot.Size = new System.Drawing.Size(76, 22);
-            this.btnTypeRelSampleTypesNewRoot.Text = "New root";
-            this.btnTypeRelSampleTypesNewRoot.Click += new System.EventHandler(this.miTypeRelSampleTypesNewRoot_Click);
-            // 
-            // btnTypeRelSampleTypesNew
-            // 
-            this.btnTypeRelSampleTypesNew.Image = global::DSA_lims.Properties.Resources._new;
-            this.btnTypeRelSampleTypesNew.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnTypeRelSampleTypesNew.Name = "btnTypeRelSampleTypesNew";
-            this.btnTypeRelSampleTypesNew.Size = new System.Drawing.Size(51, 22);
-            this.btnTypeRelSampleTypesNew.Text = "New";
-            this.btnTypeRelSampleTypesNew.Click += new System.EventHandler(this.miSampleTypesNew_Click);
-            // 
-            // btnTypeRelSampleTypesEdit
-            // 
-            this.btnTypeRelSampleTypesEdit.Image = global::DSA_lims.Properties.Resources.edit;
-            this.btnTypeRelSampleTypesEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnTypeRelSampleTypesEdit.Name = "btnTypeRelSampleTypesEdit";
-            this.btnTypeRelSampleTypesEdit.Size = new System.Drawing.Size(47, 22);
-            this.btnTypeRelSampleTypesEdit.Text = "Edit";
-            this.btnTypeRelSampleTypesEdit.Click += new System.EventHandler(this.miSampleTypesEdit_Click);
-            // 
-            // btnTypeRelSampleTypesDelete
-            // 
-            this.btnTypeRelSampleTypesDelete.Image = global::DSA_lims.Properties.Resources.delete;
-            this.btnTypeRelSampleTypesDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnTypeRelSampleTypesDelete.Name = "btnTypeRelSampleTypesDelete";
-            this.btnTypeRelSampleTypesDelete.Size = new System.Drawing.Size(60, 22);
-            this.btnTypeRelSampleTypesDelete.Text = "Delete";
-            this.btnTypeRelSampleTypesDelete.Click += new System.EventHandler(this.miSampleTypesDelete_Click);
-            // 
             // toolStripSeparator44
             // 
             this.toolStripSeparator44.Name = "toolStripSeparator44";
             this.toolStripSeparator44.Size = new System.Drawing.Size(6, 25);
-            // 
-            // btnTypeRelSampTypeExport
-            // 
-            this.btnTypeRelSampTypeExport.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnTypeRelSampleTypesExportSampTypeList,
-            this.btnTypeRelSampleTypesExportSampTypeXML});
-            this.btnTypeRelSampTypeExport.Image = global::DSA_lims.Properties.Resources.info;
-            this.btnTypeRelSampTypeExport.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnTypeRelSampTypeExport.Name = "btnTypeRelSampTypeExport";
-            this.btnTypeRelSampTypeExport.Size = new System.Drawing.Size(78, 22);
-            this.btnTypeRelSampTypeExport.Text = "Export...";
-            // 
-            // btnTypeRelSampleTypesExportSampTypeList
-            // 
-            this.btnTypeRelSampleTypesExportSampTypeList.Name = "btnTypeRelSampleTypesExportSampTypeList";
-            this.btnTypeRelSampleTypesExportSampTypeList.Size = new System.Drawing.Size(195, 22);
-            this.btnTypeRelSampleTypesExportSampTypeList.Text = "Simple sample type list";
-            this.btnTypeRelSampleTypesExportSampTypeList.Click += new System.EventHandler(this.miTypeRelSampleTypesExportSampTypeList_Click);
-            // 
-            // btnTypeRelSampleTypesExportSampTypeXML
-            // 
-            this.btnTypeRelSampleTypesExportSampTypeXML.Name = "btnTypeRelSampleTypesExportSampTypeXML";
-            this.btnTypeRelSampleTypesExportSampTypeXML.Size = new System.Drawing.Size(195, 22);
-            this.btnTypeRelSampleTypesExportSampTypeXML.Text = "Sample types (XML)";
-            this.btnTypeRelSampleTypesExportSampTypeXML.Click += new System.EventHandler(this.miTypeRelSampleTypesExportSampTypeXML_Click);
             // 
             // tabControl3
             // 
@@ -7404,7 +6297,7 @@
             this.tabControl3.Location = new System.Drawing.Point(0, 0);
             this.tabControl3.Name = "tabControl3";
             this.tabControl3.SelectedIndex = 0;
-            this.tabControl3.Size = new System.Drawing.Size(590, 559);
+            this.tabControl3.Size = new System.Drawing.Size(597, 571);
             this.tabControl3.TabIndex = 1;
             // 
             // tabTypeRelSampTypeComp
@@ -7414,9 +6307,9 @@
             this.tabTypeRelSampTypeComp.Location = new System.Drawing.Point(4, 24);
             this.tabTypeRelSampTypeComp.Name = "tabTypeRelSampTypeComp";
             this.tabTypeRelSampTypeComp.Padding = new System.Windows.Forms.Padding(3);
-            this.tabTypeRelSampTypeComp.Size = new System.Drawing.Size(582, 531);
+            this.tabTypeRelSampTypeComp.Size = new System.Drawing.Size(589, 543);
             this.tabTypeRelSampTypeComp.TabIndex = 0;
-            this.tabTypeRelSampTypeComp.Text = "Components";
+            this.tabTypeRelSampTypeComp.Text = "Connected components";
             // 
             // splitContainer16
             // 
@@ -7434,21 +6327,21 @@
             // 
             this.splitContainer16.Panel2.Controls.Add(this.lbSampleTypesInheritedComponents);
             this.splitContainer16.Panel2.Controls.Add(this.toolsTypeRelSampCompInherit);
-            this.splitContainer16.Size = new System.Drawing.Size(576, 525);
-            this.splitContainer16.SplitterDistance = 235;
+            this.splitContainer16.Size = new System.Drawing.Size(583, 537);
+            this.splitContainer16.SplitterDistance = 240;
             this.splitContainer16.SplitterWidth = 3;
             this.splitContainer16.TabIndex = 0;
             // 
             // lbSampleTypesComponents
             // 
-            this.lbSampleTypesComponents.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.lbSampleTypesComponents.BackColor = System.Drawing.SystemColors.Window;
             this.lbSampleTypesComponents.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.lbSampleTypesComponents.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lbSampleTypesComponents.FormattingEnabled = true;
             this.lbSampleTypesComponents.ItemHeight = 15;
             this.lbSampleTypesComponents.Location = new System.Drawing.Point(0, 25);
             this.lbSampleTypesComponents.Name = "lbSampleTypesComponents";
-            this.lbSampleTypesComponents.Size = new System.Drawing.Size(576, 210);
+            this.lbSampleTypesComponents.Size = new System.Drawing.Size(583, 215);
             this.lbSampleTypesComponents.TabIndex = 2;
             // 
             // toolsTypeRelSampComp
@@ -7463,7 +6356,7 @@
             this.lblTypeRelSampCompSel});
             this.toolsTypeRelSampComp.Location = new System.Drawing.Point(0, 0);
             this.toolsTypeRelSampComp.Name = "toolsTypeRelSampComp";
-            this.toolsTypeRelSampComp.Size = new System.Drawing.Size(576, 25);
+            this.toolsTypeRelSampComp.Size = new System.Drawing.Size(583, 25);
             this.toolsTypeRelSampComp.TabIndex = 1;
             this.toolsTypeRelSampComp.Text = "toolStrip31";
             // 
@@ -7479,32 +6372,6 @@
             this.toolStripSeparator36.Name = "toolStripSeparator36";
             this.toolStripSeparator36.Size = new System.Drawing.Size(6, 25);
             // 
-            // btnTypeRelSampTypeCompAdd
-            // 
-            this.btnTypeRelSampTypeCompAdd.Image = global::DSA_lims.Properties.Resources._new;
-            this.btnTypeRelSampTypeCompAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnTypeRelSampTypeCompAdd.Name = "btnTypeRelSampTypeCompAdd";
-            this.btnTypeRelSampTypeCompAdd.Size = new System.Drawing.Size(51, 22);
-            this.btnTypeRelSampTypeCompAdd.Text = "New";
-            this.btnTypeRelSampTypeCompAdd.Click += new System.EventHandler(this.miTypeRelSampleTypesCompNew_Click);
-            // 
-            // btnTypeRelSampTypeCompEdit
-            // 
-            this.btnTypeRelSampTypeCompEdit.Image = global::DSA_lims.Properties.Resources.edit;
-            this.btnTypeRelSampTypeCompEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnTypeRelSampTypeCompEdit.Name = "btnTypeRelSampTypeCompEdit";
-            this.btnTypeRelSampTypeCompEdit.Size = new System.Drawing.Size(47, 22);
-            this.btnTypeRelSampTypeCompEdit.Text = "Edit";
-            this.btnTypeRelSampTypeCompEdit.Click += new System.EventHandler(this.miTypeRelSampleTypesCompEdit_Click);
-            // 
-            // btnTypeRelSampTypeCompDelete
-            // 
-            this.btnTypeRelSampTypeCompDelete.Image = global::DSA_lims.Properties.Resources.delete;
-            this.btnTypeRelSampTypeCompDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnTypeRelSampTypeCompDelete.Name = "btnTypeRelSampTypeCompDelete";
-            this.btnTypeRelSampTypeCompDelete.Size = new System.Drawing.Size(60, 22);
-            this.btnTypeRelSampTypeCompDelete.Text = "Delete";
-            // 
             // lblTypeRelSampCompSel
             // 
             this.lblTypeRelSampCompSel.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
@@ -7514,7 +6381,7 @@
             // 
             // lbSampleTypesInheritedComponents
             // 
-            this.lbSampleTypesInheritedComponents.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.lbSampleTypesInheritedComponents.BackColor = System.Drawing.SystemColors.Window;
             this.lbSampleTypesInheritedComponents.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.lbSampleTypesInheritedComponents.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lbSampleTypesInheritedComponents.FormattingEnabled = true;
@@ -7522,7 +6389,7 @@
             this.lbSampleTypesInheritedComponents.Location = new System.Drawing.Point(0, 25);
             this.lbSampleTypesInheritedComponents.Name = "lbSampleTypesInheritedComponents";
             this.lbSampleTypesInheritedComponents.SelectionMode = System.Windows.Forms.SelectionMode.None;
-            this.lbSampleTypesInheritedComponents.Size = new System.Drawing.Size(576, 262);
+            this.lbSampleTypesInheritedComponents.Size = new System.Drawing.Size(583, 269);
             this.lbSampleTypesInheritedComponents.TabIndex = 3;
             // 
             // toolsTypeRelSampCompInherit
@@ -7532,7 +6399,7 @@
             this.toolStripLabel25});
             this.toolsTypeRelSampCompInherit.Location = new System.Drawing.Point(0, 0);
             this.toolsTypeRelSampCompInherit.Name = "toolsTypeRelSampCompInherit";
-            this.toolsTypeRelSampCompInherit.Size = new System.Drawing.Size(576, 25);
+            this.toolsTypeRelSampCompInherit.Size = new System.Drawing.Size(583, 25);
             this.toolsTypeRelSampCompInherit.TabIndex = 2;
             this.toolsTypeRelSampCompInherit.Text = "toolStrip33";
             // 
@@ -7547,12 +6414,12 @@
             // 
             this.tabTypeRelSampTypePrep.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.tabTypeRelSampTypePrep.Controls.Add(this.splitContainer13);
-            this.tabTypeRelSampTypePrep.Location = new System.Drawing.Point(4, 22);
+            this.tabTypeRelSampTypePrep.Location = new System.Drawing.Point(4, 24);
             this.tabTypeRelSampTypePrep.Name = "tabTypeRelSampTypePrep";
             this.tabTypeRelSampTypePrep.Padding = new System.Windows.Forms.Padding(3);
-            this.tabTypeRelSampTypePrep.Size = new System.Drawing.Size(582, 535);
+            this.tabTypeRelSampTypePrep.Size = new System.Drawing.Size(589, 543);
             this.tabTypeRelSampTypePrep.TabIndex = 2;
-            this.tabTypeRelSampTypePrep.Text = "Preparation methods";
+            this.tabTypeRelSampTypePrep.Text = "Connected preparation methods";
             // 
             // splitContainer13
             // 
@@ -7570,21 +6437,21 @@
             // 
             this.splitContainer13.Panel2.Controls.Add(this.lbTypeRelSampTypeInheritedPrepMeth);
             this.splitContainer13.Panel2.Controls.Add(this.toolsTypeRelSampAnalMeth);
-            this.splitContainer13.Size = new System.Drawing.Size(576, 529);
-            this.splitContainer13.SplitterDistance = 197;
+            this.splitContainer13.Size = new System.Drawing.Size(583, 537);
+            this.splitContainer13.SplitterDistance = 199;
             this.splitContainer13.SplitterWidth = 3;
             this.splitContainer13.TabIndex = 0;
             // 
             // lbTypeRelSampTypePrepMeth
             // 
-            this.lbTypeRelSampTypePrepMeth.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.lbTypeRelSampTypePrepMeth.BackColor = System.Drawing.SystemColors.Window;
             this.lbTypeRelSampTypePrepMeth.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.lbTypeRelSampTypePrepMeth.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lbTypeRelSampTypePrepMeth.FormattingEnabled = true;
             this.lbTypeRelSampTypePrepMeth.ItemHeight = 15;
             this.lbTypeRelSampTypePrepMeth.Location = new System.Drawing.Point(0, 25);
             this.lbTypeRelSampTypePrepMeth.Name = "lbTypeRelSampTypePrepMeth";
-            this.lbTypeRelSampTypePrepMeth.Size = new System.Drawing.Size(576, 172);
+            this.lbTypeRelSampTypePrepMeth.Size = new System.Drawing.Size(583, 174);
             this.lbTypeRelSampTypePrepMeth.TabIndex = 1;
             // 
             // toolsTypeRelSampPrepMeth
@@ -7598,7 +6465,7 @@
             this.lblTypeRelSampPrepSel});
             this.toolsTypeRelSampPrepMeth.Location = new System.Drawing.Point(0, 0);
             this.toolsTypeRelSampPrepMeth.Name = "toolsTypeRelSampPrepMeth";
-            this.toolsTypeRelSampPrepMeth.Size = new System.Drawing.Size(576, 25);
+            this.toolsTypeRelSampPrepMeth.Size = new System.Drawing.Size(583, 25);
             this.toolsTypeRelSampPrepMeth.TabIndex = 0;
             this.toolsTypeRelSampPrepMeth.Text = "toolStrip35";
             // 
@@ -7614,23 +6481,6 @@
             this.toolStripSeparator38.Name = "toolStripSeparator38";
             this.toolStripSeparator38.Size = new System.Drawing.Size(6, 25);
             // 
-            // btnTypeRelSampTypePrepMethAdd
-            // 
-            this.btnTypeRelSampTypePrepMethAdd.Image = global::DSA_lims.Properties.Resources._new;
-            this.btnTypeRelSampTypePrepMethAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnTypeRelSampTypePrepMethAdd.Name = "btnTypeRelSampTypePrepMethAdd";
-            this.btnTypeRelSampTypePrepMethAdd.Size = new System.Drawing.Size(49, 22);
-            this.btnTypeRelSampTypePrepMethAdd.Text = "Add";
-            this.btnTypeRelSampTypePrepMethAdd.Click += new System.EventHandler(this.miAddPrepMethToSampType_Click);
-            // 
-            // btnPreparationMethodDelete
-            // 
-            this.btnPreparationMethodDelete.Image = global::DSA_lims.Properties.Resources.delete;
-            this.btnPreparationMethodDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnPreparationMethodDelete.Name = "btnPreparationMethodDelete";
-            this.btnPreparationMethodDelete.Size = new System.Drawing.Size(70, 22);
-            this.btnPreparationMethodDelete.Text = "Remove";
-            // 
             // lblTypeRelSampPrepSel
             // 
             this.lblTypeRelSampPrepSel.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
@@ -7640,7 +6490,7 @@
             // 
             // lbTypeRelSampTypeInheritedPrepMeth
             // 
-            this.lbTypeRelSampTypeInheritedPrepMeth.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.lbTypeRelSampTypeInheritedPrepMeth.BackColor = System.Drawing.SystemColors.Window;
             this.lbTypeRelSampTypeInheritedPrepMeth.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.lbTypeRelSampTypeInheritedPrepMeth.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lbTypeRelSampTypeInheritedPrepMeth.FormattingEnabled = true;
@@ -7648,7 +6498,7 @@
             this.lbTypeRelSampTypeInheritedPrepMeth.Location = new System.Drawing.Point(0, 25);
             this.lbTypeRelSampTypeInheritedPrepMeth.Name = "lbTypeRelSampTypeInheritedPrepMeth";
             this.lbTypeRelSampTypeInheritedPrepMeth.SelectionMode = System.Windows.Forms.SelectionMode.None;
-            this.lbTypeRelSampTypeInheritedPrepMeth.Size = new System.Drawing.Size(576, 304);
+            this.lbTypeRelSampTypeInheritedPrepMeth.Size = new System.Drawing.Size(583, 310);
             this.lbTypeRelSampTypeInheritedPrepMeth.TabIndex = 1;
             // 
             // toolsTypeRelSampAnalMeth
@@ -7658,7 +6508,7 @@
             this.toolStripLabel55});
             this.toolsTypeRelSampAnalMeth.Location = new System.Drawing.Point(0, 0);
             this.toolsTypeRelSampAnalMeth.Name = "toolsTypeRelSampAnalMeth";
-            this.toolsTypeRelSampAnalMeth.Size = new System.Drawing.Size(576, 25);
+            this.toolsTypeRelSampAnalMeth.Size = new System.Drawing.Size(583, 25);
             this.toolsTypeRelSampAnalMeth.TabIndex = 0;
             this.toolsTypeRelSampAnalMeth.Text = "toolStrip36";
             // 
@@ -7675,15 +6525,14 @@
             this.tabTypeRelationsPrepMeth.Controls.Add(this.splitContainer15);
             this.tabTypeRelationsPrepMeth.Location = new System.Drawing.Point(4, 24);
             this.tabTypeRelationsPrepMeth.Name = "tabTypeRelationsPrepMeth";
-            this.tabTypeRelationsPrepMeth.Padding = new System.Windows.Forms.Padding(3);
-            this.tabTypeRelationsPrepMeth.Size = new System.Drawing.Size(1050, 565);
+            this.tabTypeRelationsPrepMeth.Size = new System.Drawing.Size(1056, 573);
             this.tabTypeRelationsPrepMeth.TabIndex = 1;
             this.tabTypeRelationsPrepMeth.Text = "Preparation methods";
             // 
             // splitContainer15
             // 
             this.splitContainer15.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer15.Location = new System.Drawing.Point(3, 3);
+            this.splitContainer15.Location = new System.Drawing.Point(0, 0);
             this.splitContainer15.Name = "splitContainer15";
             // 
             // splitContainer15.Panel1
@@ -7695,8 +6544,8 @@
             // 
             this.splitContainer15.Panel2.Controls.Add(this.lbTypRelPrepMethAnalMeth);
             this.splitContainer15.Panel2.Controls.Add(this.toolsTypeRelPrepAnalMeth);
-            this.splitContainer15.Size = new System.Drawing.Size(1044, 559);
-            this.splitContainer15.SplitterDistance = 529;
+            this.splitContainer15.Size = new System.Drawing.Size(1056, 573);
+            this.splitContainer15.SplitterDistance = 535;
             this.splitContainer15.SplitterWidth = 3;
             this.splitContainer15.TabIndex = 0;
             // 
@@ -7716,7 +6565,7 @@
             this.gridTypeRelPrepMeth.ReadOnly = true;
             this.gridTypeRelPrepMeth.RowHeadersVisible = false;
             this.gridTypeRelPrepMeth.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridTypeRelPrepMeth.Size = new System.Drawing.Size(529, 534);
+            this.gridTypeRelPrepMeth.Size = new System.Drawing.Size(535, 548);
             this.gridTypeRelPrepMeth.TabIndex = 1;
             this.gridTypeRelPrepMeth.SelectionChanged += new System.EventHandler(this.gridTypeRelPrepMeth_SelectionChanged);
             // 
@@ -7731,7 +6580,7 @@
             this.toolStripButton91});
             this.toolsTypeRelPrepMeth.Location = new System.Drawing.Point(0, 0);
             this.toolsTypeRelPrepMeth.Name = "toolsTypeRelPrepMeth";
-            this.toolsTypeRelPrepMeth.Size = new System.Drawing.Size(529, 25);
+            this.toolsTypeRelPrepMeth.Size = new System.Drawing.Size(535, 25);
             this.toolsTypeRelPrepMeth.TabIndex = 0;
             this.toolsTypeRelPrepMeth.Text = "toolStrip37";
             // 
@@ -7747,33 +6596,6 @@
             this.toolStripSeparator39.Name = "toolStripSeparator39";
             this.toolStripSeparator39.Size = new System.Drawing.Size(6, 25);
             // 
-            // toolStripButton49
-            // 
-            this.toolStripButton49.Image = global::DSA_lims.Properties.Resources._new;
-            this.toolStripButton49.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton49.Name = "toolStripButton49";
-            this.toolStripButton49.Size = new System.Drawing.Size(51, 22);
-            this.toolStripButton49.Text = "New";
-            this.toolStripButton49.Click += new System.EventHandler(this.miPreparationMethodsNew_Click);
-            // 
-            // toolStripButton50
-            // 
-            this.toolStripButton50.Image = global::DSA_lims.Properties.Resources.edit;
-            this.toolStripButton50.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton50.Name = "toolStripButton50";
-            this.toolStripButton50.Size = new System.Drawing.Size(47, 22);
-            this.toolStripButton50.Text = "Edit";
-            this.toolStripButton50.Click += new System.EventHandler(this.miPreparationMethodEdit_Click);
-            // 
-            // toolStripButton91
-            // 
-            this.toolStripButton91.Image = global::DSA_lims.Properties.Resources.delete;
-            this.toolStripButton91.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton91.Name = "toolStripButton91";
-            this.toolStripButton91.Size = new System.Drawing.Size(60, 22);
-            this.toolStripButton91.Text = "Delete";
-            this.toolStripButton91.Click += new System.EventHandler(this.miPreparationMethodDelete_Click);
-            // 
             // lbTypRelPrepMethAnalMeth
             // 
             this.lbTypRelPrepMethAnalMeth.BackColor = System.Drawing.SystemColors.ButtonFace;
@@ -7784,7 +6606,7 @@
             this.lbTypRelPrepMethAnalMeth.Location = new System.Drawing.Point(0, 25);
             this.lbTypRelPrepMethAnalMeth.Name = "lbTypRelPrepMethAnalMeth";
             this.lbTypRelPrepMethAnalMeth.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.lbTypRelPrepMethAnalMeth.Size = new System.Drawing.Size(512, 534);
+            this.lbTypRelPrepMethAnalMeth.Size = new System.Drawing.Size(518, 548);
             this.lbTypRelPrepMethAnalMeth.TabIndex = 1;
             // 
             // toolsTypeRelPrepAnalMeth
@@ -7797,7 +6619,7 @@
             this.toolStripButton48});
             this.toolsTypeRelPrepAnalMeth.Location = new System.Drawing.Point(0, 0);
             this.toolsTypeRelPrepAnalMeth.Name = "toolsTypeRelPrepAnalMeth";
-            this.toolsTypeRelPrepAnalMeth.Size = new System.Drawing.Size(512, 25);
+            this.toolsTypeRelPrepAnalMeth.Size = new System.Drawing.Size(518, 25);
             this.toolsTypeRelPrepAnalMeth.TabIndex = 0;
             this.toolsTypeRelPrepAnalMeth.Text = "toolStrip38";
             // 
@@ -7813,39 +6635,20 @@
             this.toolStripSeparator40.Name = "toolStripSeparator40";
             this.toolStripSeparator40.Size = new System.Drawing.Size(6, 25);
             // 
-            // btnTypeRelPrepMethAddAnalMeth
-            // 
-            this.btnTypeRelPrepMethAddAnalMeth.Image = global::DSA_lims.Properties.Resources._new;
-            this.btnTypeRelPrepMethAddAnalMeth.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnTypeRelPrepMethAddAnalMeth.Name = "btnTypeRelPrepMethAddAnalMeth";
-            this.btnTypeRelPrepMethAddAnalMeth.Size = new System.Drawing.Size(49, 22);
-            this.btnTypeRelPrepMethAddAnalMeth.Text = "Add";
-            this.btnTypeRelPrepMethAddAnalMeth.Click += new System.EventHandler(this.miTypeRelPrepMethAddAnalMeth_Click);
-            // 
-            // toolStripButton48
-            // 
-            this.toolStripButton48.Image = global::DSA_lims.Properties.Resources.delete;
-            this.toolStripButton48.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton48.Name = "toolStripButton48";
-            this.toolStripButton48.Size = new System.Drawing.Size(70, 22);
-            this.toolStripButton48.Text = "Remove";
-            this.toolStripButton48.Click += new System.EventHandler(this.miTypeRelPrepMethRemAnalMeth_Click);
-            // 
             // tabTypeRelationsAnalMeth
             // 
             this.tabTypeRelationsAnalMeth.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.tabTypeRelationsAnalMeth.Controls.Add(this.splitContainer17);
             this.tabTypeRelationsAnalMeth.Location = new System.Drawing.Point(4, 24);
             this.tabTypeRelationsAnalMeth.Name = "tabTypeRelationsAnalMeth";
-            this.tabTypeRelationsAnalMeth.Padding = new System.Windows.Forms.Padding(3);
-            this.tabTypeRelationsAnalMeth.Size = new System.Drawing.Size(1050, 565);
+            this.tabTypeRelationsAnalMeth.Size = new System.Drawing.Size(1056, 573);
             this.tabTypeRelationsAnalMeth.TabIndex = 2;
             this.tabTypeRelationsAnalMeth.Text = "Analysis methods";
             // 
             // splitContainer17
             // 
             this.splitContainer17.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer17.Location = new System.Drawing.Point(3, 3);
+            this.splitContainer17.Location = new System.Drawing.Point(0, 0);
             this.splitContainer17.Name = "splitContainer17";
             // 
             // splitContainer17.Panel1
@@ -7857,8 +6660,8 @@
             // 
             this.splitContainer17.Panel2.Controls.Add(this.lbTypRelAnalMethNuclides);
             this.splitContainer17.Panel2.Controls.Add(this.toolsTypeRelNuclides);
-            this.splitContainer17.Size = new System.Drawing.Size(1044, 559);
-            this.splitContainer17.SplitterDistance = 528;
+            this.splitContainer17.Size = new System.Drawing.Size(1056, 573);
+            this.splitContainer17.SplitterDistance = 534;
             this.splitContainer17.SplitterWidth = 3;
             this.splitContainer17.TabIndex = 1;
             // 
@@ -7878,7 +6681,7 @@
             this.gridTypeRelAnalMeth.ReadOnly = true;
             this.gridTypeRelAnalMeth.RowHeadersVisible = false;
             this.gridTypeRelAnalMeth.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridTypeRelAnalMeth.Size = new System.Drawing.Size(528, 534);
+            this.gridTypeRelAnalMeth.Size = new System.Drawing.Size(534, 548);
             this.gridTypeRelAnalMeth.TabIndex = 1;
             this.gridTypeRelAnalMeth.SelectionChanged += new System.EventHandler(this.gridTypeRelAnalMeth_SelectionChanged);
             // 
@@ -7893,7 +6696,7 @@
             this.toolStripButton93});
             this.toolsTypeRelAnalMeth.Location = new System.Drawing.Point(0, 0);
             this.toolsTypeRelAnalMeth.Name = "toolsTypeRelAnalMeth";
-            this.toolsTypeRelAnalMeth.Size = new System.Drawing.Size(528, 25);
+            this.toolsTypeRelAnalMeth.Size = new System.Drawing.Size(534, 25);
             this.toolsTypeRelAnalMeth.TabIndex = 0;
             this.toolsTypeRelAnalMeth.Text = "toolStrip39";
             // 
@@ -7909,33 +6712,6 @@
             this.toolStripSeparator41.Name = "toolStripSeparator41";
             this.toolStripSeparator41.Size = new System.Drawing.Size(6, 25);
             // 
-            // toolStripButton51
-            // 
-            this.toolStripButton51.Image = global::DSA_lims.Properties.Resources._new;
-            this.toolStripButton51.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton51.Name = "toolStripButton51";
-            this.toolStripButton51.Size = new System.Drawing.Size(51, 22);
-            this.toolStripButton51.Text = "New";
-            this.toolStripButton51.Click += new System.EventHandler(this.miAnalysisMethodsNew_Click);
-            // 
-            // toolStripButton52
-            // 
-            this.toolStripButton52.Image = global::DSA_lims.Properties.Resources.edit;
-            this.toolStripButton52.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton52.Name = "toolStripButton52";
-            this.toolStripButton52.Size = new System.Drawing.Size(47, 22);
-            this.toolStripButton52.Text = "Edit";
-            this.toolStripButton52.Click += new System.EventHandler(this.miAnalysisMethodsEdit_Click);
-            // 
-            // toolStripButton93
-            // 
-            this.toolStripButton93.Image = global::DSA_lims.Properties.Resources.delete;
-            this.toolStripButton93.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton93.Name = "toolStripButton93";
-            this.toolStripButton93.Size = new System.Drawing.Size(60, 22);
-            this.toolStripButton93.Text = "Delete";
-            this.toolStripButton93.Click += new System.EventHandler(this.miAnalysisMethodsDelete_Click);
-            // 
             // lbTypRelAnalMethNuclides
             // 
             this.lbTypRelAnalMethNuclides.BackColor = System.Drawing.SystemColors.ButtonFace;
@@ -7945,7 +6721,7 @@
             this.lbTypRelAnalMethNuclides.ItemHeight = 15;
             this.lbTypRelAnalMethNuclides.Location = new System.Drawing.Point(0, 25);
             this.lbTypRelAnalMethNuclides.Name = "lbTypRelAnalMethNuclides";
-            this.lbTypRelAnalMethNuclides.Size = new System.Drawing.Size(513, 534);
+            this.lbTypRelAnalMethNuclides.Size = new System.Drawing.Size(519, 548);
             this.lbTypRelAnalMethNuclides.TabIndex = 1;
             // 
             // toolsTypeRelNuclides
@@ -7958,7 +6734,7 @@
             this.toolStripButton54});
             this.toolsTypeRelNuclides.Location = new System.Drawing.Point(0, 0);
             this.toolsTypeRelNuclides.Name = "toolsTypeRelNuclides";
-            this.toolsTypeRelNuclides.Size = new System.Drawing.Size(513, 25);
+            this.toolsTypeRelNuclides.Size = new System.Drawing.Size(519, 25);
             this.toolsTypeRelNuclides.TabIndex = 0;
             this.toolsTypeRelNuclides.Text = "toolStrip40";
             // 
@@ -7974,24 +6750,6 @@
             this.toolStripSeparator42.Name = "toolStripSeparator42";
             this.toolStripSeparator42.Size = new System.Drawing.Size(6, 25);
             // 
-            // btnAnalysisMethodsAddNuclide
-            // 
-            this.btnAnalysisMethodsAddNuclide.Image = global::DSA_lims.Properties.Resources._new;
-            this.btnAnalysisMethodsAddNuclide.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnAnalysisMethodsAddNuclide.Name = "btnAnalysisMethodsAddNuclide";
-            this.btnAnalysisMethodsAddNuclide.Size = new System.Drawing.Size(49, 22);
-            this.btnAnalysisMethodsAddNuclide.Text = "Add";
-            this.btnAnalysisMethodsAddNuclide.Click += new System.EventHandler(this.miAnalysisMethodsAddNuclide_Click);
-            // 
-            // toolStripButton54
-            // 
-            this.toolStripButton54.Image = global::DSA_lims.Properties.Resources.delete;
-            this.toolStripButton54.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton54.Name = "toolStripButton54";
-            this.toolStripButton54.Size = new System.Drawing.Size(70, 22);
-            this.toolStripButton54.Text = "Remove";
-            this.toolStripButton54.Click += new System.EventHandler(this.miAnalysisMethodsRemNuclide_Click);
-            // 
             // tabAuditLog
             // 
             this.tabAuditLog.BackColor = System.Drawing.SystemColors.ButtonFace;
@@ -7999,7 +6757,6 @@
             this.tabAuditLog.Controls.Add(this.toolsAuditLog);
             this.tabAuditLog.Location = new System.Drawing.Point(4, 24);
             this.tabAuditLog.Name = "tabAuditLog";
-            this.tabAuditLog.Padding = new System.Windows.Forms.Padding(3);
             this.tabAuditLog.Size = new System.Drawing.Size(1064, 599);
             this.tabAuditLog.TabIndex = 14;
             this.tabAuditLog.Text = "Audit log";
@@ -8010,17 +6767,17 @@
             this.gridAuditLog.AllowUserToDeleteRows = false;
             this.gridAuditLog.AllowUserToResizeRows = false;
             this.gridAuditLog.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.gridAuditLog.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
+            this.gridAuditLog.BackgroundColor = System.Drawing.SystemColors.Window;
             this.gridAuditLog.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.gridAuditLog.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridAuditLog.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridAuditLog.Location = new System.Drawing.Point(3, 28);
+            this.gridAuditLog.Location = new System.Drawing.Point(0, 25);
             this.gridAuditLog.MultiSelect = false;
             this.gridAuditLog.Name = "gridAuditLog";
             this.gridAuditLog.ReadOnly = true;
             this.gridAuditLog.RowHeadersVisible = false;
             this.gridAuditLog.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridAuditLog.Size = new System.Drawing.Size(1058, 568);
+            this.gridAuditLog.Size = new System.Drawing.Size(1064, 574);
             this.gridAuditLog.TabIndex = 9;
             // 
             // toolsAuditLog
@@ -8030,9 +6787,9 @@
             this.toolStripLabel53,
             this.toolStripSeparator43,
             this.lblAuditLogTitle});
-            this.toolsAuditLog.Location = new System.Drawing.Point(3, 3);
+            this.toolsAuditLog.Location = new System.Drawing.Point(0, 0);
             this.toolsAuditLog.Name = "toolsAuditLog";
-            this.toolsAuditLog.Size = new System.Drawing.Size(1058, 25);
+            this.toolsAuditLog.Size = new System.Drawing.Size(1064, 25);
             this.toolsAuditLog.TabIndex = 8;
             this.toolsAuditLog.Text = "toolStrip42";
             // 
@@ -8089,7 +6846,6 @@
             this.tabSysLaboratories.Controls.Add(this.splitContainer9);
             this.tabSysLaboratories.Location = new System.Drawing.Point(4, 24);
             this.tabSysLaboratories.Name = "tabSysLaboratories";
-            this.tabSysLaboratories.Padding = new System.Windows.Forms.Padding(3);
             this.tabSysLaboratories.Size = new System.Drawing.Size(1050, 565);
             this.tabSysLaboratories.TabIndex = 2;
             this.tabSysLaboratories.Text = "Laboratories";
@@ -8097,7 +6853,7 @@
             // splitContainer9
             // 
             this.splitContainer9.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer9.Location = new System.Drawing.Point(3, 3);
+            this.splitContainer9.Location = new System.Drawing.Point(0, 0);
             this.splitContainer9.Name = "splitContainer9";
             // 
             // splitContainer9.Panel1
@@ -8108,8 +6864,8 @@
             // splitContainer9.Panel2
             // 
             this.splitContainer9.Panel2.Controls.Add(this.splitContainer10);
-            this.splitContainer9.Size = new System.Drawing.Size(1044, 559);
-            this.splitContainer9.SplitterDistance = 610;
+            this.splitContainer9.Size = new System.Drawing.Size(1050, 565);
+            this.splitContainer9.SplitterDistance = 613;
             this.splitContainer9.SplitterWidth = 3;
             this.splitContainer9.TabIndex = 3;
             // 
@@ -8119,7 +6875,7 @@
             this.gridSysLab.AllowUserToDeleteRows = false;
             this.gridSysLab.AllowUserToResizeRows = false;
             this.gridSysLab.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.gridSysLab.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
+            this.gridSysLab.BackgroundColor = System.Drawing.SystemColors.Window;
             this.gridSysLab.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.gridSysLab.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridSysLab.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -8129,7 +6885,7 @@
             this.gridSysLab.ReadOnly = true;
             this.gridSysLab.RowHeadersVisible = false;
             this.gridSysLab.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridSysLab.Size = new System.Drawing.Size(610, 534);
+            this.gridSysLab.Size = new System.Drawing.Size(613, 540);
             this.gridSysLab.TabIndex = 2;
             this.gridSysLab.SelectionChanged += new System.EventHandler(this.gridSysLab_SelectionChanged);
             // 
@@ -8144,7 +6900,7 @@
             this.btnSysLabDelete});
             this.toolsSysLab.Location = new System.Drawing.Point(0, 0);
             this.toolsSysLab.Name = "toolsSysLab";
-            this.toolsSysLab.Size = new System.Drawing.Size(610, 25);
+            this.toolsSysLab.Size = new System.Drawing.Size(613, 25);
             this.toolsSysLab.TabIndex = 3;
             this.toolsSysLab.Text = "toolStrip45";
             // 
@@ -8159,6 +6915,3488 @@
             // 
             this.toolStripSeparator14.Name = "toolStripSeparator14";
             this.toolStripSeparator14.Size = new System.Drawing.Size(6, 25);
+            // 
+            // splitContainer10
+            // 
+            this.splitContainer10.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer10.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer10.Name = "splitContainer10";
+            this.splitContainer10.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer10.Panel1
+            // 
+            this.splitContainer10.Panel1.Controls.Add(this.gridSysLabPrepMeth);
+            this.splitContainer10.Panel1.Controls.Add(this.toolsSysLabPrepMeth);
+            // 
+            // splitContainer10.Panel2
+            // 
+            this.splitContainer10.Panel2.Controls.Add(this.gridSysLabAnalMeth);
+            this.splitContainer10.Panel2.Controls.Add(this.toolsSysLabAnalMeth);
+            this.splitContainer10.Size = new System.Drawing.Size(434, 565);
+            this.splitContainer10.SplitterDistance = 255;
+            this.splitContainer10.SplitterWidth = 3;
+            this.splitContainer10.TabIndex = 0;
+            // 
+            // gridSysLabPrepMeth
+            // 
+            this.gridSysLabPrepMeth.AllowUserToAddRows = false;
+            this.gridSysLabPrepMeth.AllowUserToDeleteRows = false;
+            this.gridSysLabPrepMeth.AllowUserToResizeRows = false;
+            this.gridSysLabPrepMeth.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.gridSysLabPrepMeth.BackgroundColor = System.Drawing.SystemColors.Window;
+            this.gridSysLabPrepMeth.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.gridSysLabPrepMeth.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridSysLabPrepMeth.ColumnHeadersVisible = false;
+            this.gridSysLabPrepMeth.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gridSysLabPrepMeth.Location = new System.Drawing.Point(0, 25);
+            this.gridSysLabPrepMeth.Name = "gridSysLabPrepMeth";
+            this.gridSysLabPrepMeth.ReadOnly = true;
+            this.gridSysLabPrepMeth.RowHeadersVisible = false;
+            this.gridSysLabPrepMeth.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.gridSysLabPrepMeth.Size = new System.Drawing.Size(434, 230);
+            this.gridSysLabPrepMeth.TabIndex = 1;
+            // 
+            // toolsSysLabPrepMeth
+            // 
+            this.toolsSysLabPrepMeth.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolsSysLabPrepMeth.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripLabel5,
+            this.toolStripSeparator15,
+            this.btnSysLabPrepMethAdd,
+            this.btnSysLabPrepMethRemove});
+            this.toolsSysLabPrepMeth.Location = new System.Drawing.Point(0, 0);
+            this.toolsSysLabPrepMeth.Name = "toolsSysLabPrepMeth";
+            this.toolsSysLabPrepMeth.Size = new System.Drawing.Size(434, 25);
+            this.toolsSysLabPrepMeth.TabIndex = 0;
+            this.toolsSysLabPrepMeth.Text = "toolStrip24";
+            // 
+            // toolStripLabel5
+            // 
+            this.toolStripLabel5.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.toolStripLabel5.Name = "toolStripLabel5";
+            this.toolStripLabel5.Size = new System.Drawing.Size(124, 22);
+            this.toolStripLabel5.Text = "Preparation methods";
+            // 
+            // toolStripSeparator15
+            // 
+            this.toolStripSeparator15.Name = "toolStripSeparator15";
+            this.toolStripSeparator15.Size = new System.Drawing.Size(6, 25);
+            // 
+            // gridSysLabAnalMeth
+            // 
+            this.gridSysLabAnalMeth.AllowUserToAddRows = false;
+            this.gridSysLabAnalMeth.AllowUserToDeleteRows = false;
+            this.gridSysLabAnalMeth.AllowUserToResizeRows = false;
+            this.gridSysLabAnalMeth.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.gridSysLabAnalMeth.BackgroundColor = System.Drawing.SystemColors.Window;
+            this.gridSysLabAnalMeth.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.gridSysLabAnalMeth.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridSysLabAnalMeth.ColumnHeadersVisible = false;
+            this.gridSysLabAnalMeth.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gridSysLabAnalMeth.Location = new System.Drawing.Point(0, 25);
+            this.gridSysLabAnalMeth.Name = "gridSysLabAnalMeth";
+            this.gridSysLabAnalMeth.ReadOnly = true;
+            this.gridSysLabAnalMeth.RowHeadersVisible = false;
+            this.gridSysLabAnalMeth.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.gridSysLabAnalMeth.Size = new System.Drawing.Size(434, 282);
+            this.gridSysLabAnalMeth.TabIndex = 1;
+            // 
+            // toolsSysLabAnalMeth
+            // 
+            this.toolsSysLabAnalMeth.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolsSysLabAnalMeth.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripLabel14,
+            this.toolStripSeparator16,
+            this.btnSysLabAnalMethAdd,
+            this.btnSysLabAnalMethRemove});
+            this.toolsSysLabAnalMeth.Location = new System.Drawing.Point(0, 0);
+            this.toolsSysLabAnalMeth.Name = "toolsSysLabAnalMeth";
+            this.toolsSysLabAnalMeth.Size = new System.Drawing.Size(434, 25);
+            this.toolsSysLabAnalMeth.TabIndex = 0;
+            this.toolsSysLabAnalMeth.Text = "toolStrip25";
+            // 
+            // toolStripLabel14
+            // 
+            this.toolStripLabel14.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.toolStripLabel14.Name = "toolStripLabel14";
+            this.toolStripLabel14.Size = new System.Drawing.Size(102, 22);
+            this.toolStripLabel14.Text = "Analysis methods";
+            // 
+            // toolStripSeparator16
+            // 
+            this.toolStripSeparator16.Name = "toolStripSeparator16";
+            this.toolStripSeparator16.Size = new System.Drawing.Size(6, 25);
+            // 
+            // tabSysUsers
+            // 
+            this.tabSysUsers.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.tabSysUsers.Controls.Add(this.splitContainer11);
+            this.tabSysUsers.Location = new System.Drawing.Point(4, 24);
+            this.tabSysUsers.Name = "tabSysUsers";
+            this.tabSysUsers.Size = new System.Drawing.Size(1050, 567);
+            this.tabSysUsers.TabIndex = 3;
+            this.tabSysUsers.Text = "Users";
+            // 
+            // splitContainer11
+            // 
+            this.splitContainer11.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer11.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer11.Name = "splitContainer11";
+            // 
+            // splitContainer11.Panel1
+            // 
+            this.splitContainer11.Panel1.Controls.Add(this.gridSysUsers);
+            this.splitContainer11.Panel1.Controls.Add(this.toolsSysUsers);
+            // 
+            // splitContainer11.Panel2
+            // 
+            this.splitContainer11.Panel2.Controls.Add(this.splitContainer18);
+            this.splitContainer11.Size = new System.Drawing.Size(1050, 567);
+            this.splitContainer11.SplitterDistance = 613;
+            this.splitContainer11.SplitterWidth = 3;
+            this.splitContainer11.TabIndex = 5;
+            // 
+            // gridSysUsers
+            // 
+            this.gridSysUsers.AllowUserToAddRows = false;
+            this.gridSysUsers.AllowUserToDeleteRows = false;
+            this.gridSysUsers.AllowUserToResizeRows = false;
+            this.gridSysUsers.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.gridSysUsers.BackgroundColor = System.Drawing.SystemColors.Window;
+            this.gridSysUsers.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.gridSysUsers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridSysUsers.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gridSysUsers.Location = new System.Drawing.Point(0, 25);
+            this.gridSysUsers.MultiSelect = false;
+            this.gridSysUsers.Name = "gridSysUsers";
+            this.gridSysUsers.ReadOnly = true;
+            this.gridSysUsers.RowHeadersVisible = false;
+            this.gridSysUsers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.gridSysUsers.Size = new System.Drawing.Size(613, 542);
+            this.gridSysUsers.TabIndex = 0;
+            this.gridSysUsers.SelectionChanged += new System.EventHandler(this.gridMetaUsers_SelectionChanged);
+            // 
+            // toolsSysUsers
+            // 
+            this.toolsSysUsers.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolsSysUsers.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripLabel35,
+            this.toolStripSeparator10,
+            this.btnMetaUsersNew,
+            this.btnMetaUsersEdit,
+            this.btnMetaUsersDelete,
+            this.toolStripSeparator11,
+            this.btnMetaUsersResetPass});
+            this.toolsSysUsers.Location = new System.Drawing.Point(0, 0);
+            this.toolsSysUsers.Name = "toolsSysUsers";
+            this.toolsSysUsers.Size = new System.Drawing.Size(613, 25);
+            this.toolsSysUsers.TabIndex = 5;
+            this.toolsSysUsers.Text = "toolStrip19";
+            // 
+            // toolStripLabel35
+            // 
+            this.toolStripLabel35.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.toolStripLabel35.Name = "toolStripLabel35";
+            this.toolStripLabel35.Size = new System.Drawing.Size(38, 22);
+            this.toolStripLabel35.Text = "Users";
+            // 
+            // toolStripSeparator10
+            // 
+            this.toolStripSeparator10.Name = "toolStripSeparator10";
+            this.toolStripSeparator10.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripSeparator11
+            // 
+            this.toolStripSeparator11.Name = "toolStripSeparator11";
+            this.toolStripSeparator11.Size = new System.Drawing.Size(6, 25);
+            // 
+            // splitContainer18
+            // 
+            this.splitContainer18.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer18.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer18.Name = "splitContainer18";
+            this.splitContainer18.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer18.Panel1
+            // 
+            this.splitContainer18.Panel1.Controls.Add(this.lbSysUsersRoles);
+            this.splitContainer18.Panel1.Controls.Add(this.toolsSysUsersRoles);
+            // 
+            // splitContainer18.Panel2
+            // 
+            this.splitContainer18.Panel2.Controls.Add(this.gridSysUsersAnalMeth);
+            this.splitContainer18.Panel2.Controls.Add(this.toolsSysUsersAnalMeth);
+            this.splitContainer18.Size = new System.Drawing.Size(434, 567);
+            this.splitContainer18.SplitterDistance = 256;
+            this.splitContainer18.SplitterWidth = 3;
+            this.splitContainer18.TabIndex = 3;
+            // 
+            // lbSysUsersRoles
+            // 
+            this.lbSysUsersRoles.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.lbSysUsersRoles.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lbSysUsersRoles.FormattingEnabled = true;
+            this.lbSysUsersRoles.ItemHeight = 15;
+            this.lbSysUsersRoles.Location = new System.Drawing.Point(0, 25);
+            this.lbSysUsersRoles.Name = "lbSysUsersRoles";
+            this.lbSysUsersRoles.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+            this.lbSysUsersRoles.Size = new System.Drawing.Size(434, 231);
+            this.lbSysUsersRoles.TabIndex = 1;
+            // 
+            // toolsSysUsersRoles
+            // 
+            this.toolsSysUsersRoles.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolsSysUsersRoles.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripLabel28,
+            this.toolStripSeparator12,
+            this.btnSysUsersAddRoles,
+            this.btnSysUsersRemRoles});
+            this.toolsSysUsersRoles.Location = new System.Drawing.Point(0, 0);
+            this.toolsSysUsersRoles.Name = "toolsSysUsersRoles";
+            this.toolsSysUsersRoles.Size = new System.Drawing.Size(434, 25);
+            this.toolsSysUsersRoles.TabIndex = 0;
+            this.toolsSysUsersRoles.Text = "toolStrip26";
+            // 
+            // toolStripLabel28
+            // 
+            this.toolStripLabel28.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.toolStripLabel28.Name = "toolStripLabel28";
+            this.toolStripLabel28.Size = new System.Drawing.Size(37, 22);
+            this.toolStripLabel28.Text = "Roles";
+            // 
+            // toolStripSeparator12
+            // 
+            this.toolStripSeparator12.Name = "toolStripSeparator12";
+            this.toolStripSeparator12.Size = new System.Drawing.Size(6, 25);
+            // 
+            // gridSysUsersAnalMeth
+            // 
+            this.gridSysUsersAnalMeth.AllowUserToAddRows = false;
+            this.gridSysUsersAnalMeth.AllowUserToDeleteRows = false;
+            this.gridSysUsersAnalMeth.AllowUserToResizeRows = false;
+            this.gridSysUsersAnalMeth.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.gridSysUsersAnalMeth.BackgroundColor = System.Drawing.SystemColors.Window;
+            this.gridSysUsersAnalMeth.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.gridSysUsersAnalMeth.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridSysUsersAnalMeth.ColumnHeadersVisible = false;
+            this.gridSysUsersAnalMeth.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gridSysUsersAnalMeth.Location = new System.Drawing.Point(0, 25);
+            this.gridSysUsersAnalMeth.Name = "gridSysUsersAnalMeth";
+            this.gridSysUsersAnalMeth.ReadOnly = true;
+            this.gridSysUsersAnalMeth.RowHeadersVisible = false;
+            this.gridSysUsersAnalMeth.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.gridSysUsersAnalMeth.Size = new System.Drawing.Size(434, 283);
+            this.gridSysUsersAnalMeth.TabIndex = 1;
+            // 
+            // toolsSysUsersAnalMeth
+            // 
+            this.toolsSysUsersAnalMeth.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolsSysUsersAnalMeth.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripLabel29,
+            this.toolStripSeparator13,
+            this.btnSysUsersAnalMethAdd,
+            this.btnSysUsersAnalMethRemove});
+            this.toolsSysUsersAnalMeth.Location = new System.Drawing.Point(0, 0);
+            this.toolsSysUsersAnalMeth.Name = "toolsSysUsersAnalMeth";
+            this.toolsSysUsersAnalMeth.Size = new System.Drawing.Size(434, 25);
+            this.toolsSysUsersAnalMeth.TabIndex = 0;
+            this.toolsSysUsersAnalMeth.Text = "toolStrip29";
+            // 
+            // toolStripLabel29
+            // 
+            this.toolStripLabel29.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.toolStripLabel29.Name = "toolStripLabel29";
+            this.toolStripLabel29.Size = new System.Drawing.Size(102, 22);
+            this.toolStripLabel29.Text = "Analysis methods";
+            // 
+            // toolStripSeparator13
+            // 
+            this.toolStripSeparator13.Name = "toolStripSeparator13";
+            this.toolStripSeparator13.Size = new System.Drawing.Size(6, 25);
+            // 
+            // tabSysMunicipalities
+            // 
+            this.tabSysMunicipalities.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.tabSysMunicipalities.Controls.Add(this.splitContainer19);
+            this.tabSysMunicipalities.Location = new System.Drawing.Point(4, 24);
+            this.tabSysMunicipalities.Name = "tabSysMunicipalities";
+            this.tabSysMunicipalities.Size = new System.Drawing.Size(1050, 567);
+            this.tabSysMunicipalities.TabIndex = 5;
+            this.tabSysMunicipalities.Text = "Municipalities";
+            // 
+            // splitContainer19
+            // 
+            this.splitContainer19.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer19.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer19.Name = "splitContainer19";
+            // 
+            // splitContainer19.Panel1
+            // 
+            this.splitContainer19.Panel1.Controls.Add(this.gridSysCounty);
+            this.splitContainer19.Panel1.Controls.Add(this.toolsSysCounties);
+            // 
+            // splitContainer19.Panel2
+            // 
+            this.splitContainer19.Panel2.Controls.Add(this.gridSysMunicipality);
+            this.splitContainer19.Panel2.Controls.Add(this.toolsSysMunicipalities);
+            this.splitContainer19.Size = new System.Drawing.Size(1050, 567);
+            this.splitContainer19.SplitterDistance = 494;
+            this.splitContainer19.SplitterWidth = 5;
+            this.splitContainer19.TabIndex = 1;
+            // 
+            // gridSysCounty
+            // 
+            this.gridSysCounty.AllowUserToAddRows = false;
+            this.gridSysCounty.AllowUserToDeleteRows = false;
+            this.gridSysCounty.AllowUserToResizeRows = false;
+            this.gridSysCounty.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.gridSysCounty.BackgroundColor = System.Drawing.SystemColors.Window;
+            this.gridSysCounty.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.gridSysCounty.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridSysCounty.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gridSysCounty.Location = new System.Drawing.Point(0, 25);
+            this.gridSysCounty.MultiSelect = false;
+            this.gridSysCounty.Name = "gridSysCounty";
+            this.gridSysCounty.ReadOnly = true;
+            this.gridSysCounty.RowHeadersVisible = false;
+            this.gridSysCounty.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.gridSysCounty.Size = new System.Drawing.Size(494, 542);
+            this.gridSysCounty.TabIndex = 1;
+            this.gridSysCounty.SelectionChanged += new System.EventHandler(this.gridSysCounty_SelectionChanged);
+            // 
+            // toolsSysCounties
+            // 
+            this.toolsSysCounties.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolsSysCounties.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripLabel32,
+            this.toolStripSeparator8,
+            this.btnNewCounty,
+            this.btnEditCounty,
+            this.btnDeleteCounty});
+            this.toolsSysCounties.Location = new System.Drawing.Point(0, 0);
+            this.toolsSysCounties.Name = "toolsSysCounties";
+            this.toolsSysCounties.Size = new System.Drawing.Size(494, 25);
+            this.toolsSysCounties.TabIndex = 0;
+            this.toolsSysCounties.Text = "toolStrip46";
+            // 
+            // toolStripLabel32
+            // 
+            this.toolStripLabel32.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.toolStripLabel32.Name = "toolStripLabel32";
+            this.toolStripLabel32.Size = new System.Drawing.Size(55, 22);
+            this.toolStripLabel32.Text = "Counties";
+            // 
+            // toolStripSeparator8
+            // 
+            this.toolStripSeparator8.Name = "toolStripSeparator8";
+            this.toolStripSeparator8.Size = new System.Drawing.Size(6, 25);
+            // 
+            // gridSysMunicipality
+            // 
+            this.gridSysMunicipality.AllowUserToAddRows = false;
+            this.gridSysMunicipality.AllowUserToDeleteRows = false;
+            this.gridSysMunicipality.AllowUserToResizeRows = false;
+            this.gridSysMunicipality.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.gridSysMunicipality.BackgroundColor = System.Drawing.SystemColors.Window;
+            this.gridSysMunicipality.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.gridSysMunicipality.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridSysMunicipality.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gridSysMunicipality.Location = new System.Drawing.Point(0, 25);
+            this.gridSysMunicipality.Name = "gridSysMunicipality";
+            this.gridSysMunicipality.ReadOnly = true;
+            this.gridSysMunicipality.RowHeadersVisible = false;
+            this.gridSysMunicipality.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.gridSysMunicipality.Size = new System.Drawing.Size(551, 542);
+            this.gridSysMunicipality.TabIndex = 1;
+            // 
+            // toolsSysMunicipalities
+            // 
+            this.toolsSysMunicipalities.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolsSysMunicipalities.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripLabel33,
+            this.toolStripSeparator9,
+            this.btnNewMunicipality,
+            this.btnEditMunicipality,
+            this.btnDeleteMunicipality});
+            this.toolsSysMunicipalities.Location = new System.Drawing.Point(0, 0);
+            this.toolsSysMunicipalities.Name = "toolsSysMunicipalities";
+            this.toolsSysMunicipalities.Size = new System.Drawing.Size(551, 25);
+            this.toolsSysMunicipalities.TabIndex = 0;
+            this.toolsSysMunicipalities.Text = "toolStrip47";
+            // 
+            // toolStripLabel33
+            // 
+            this.toolStripLabel33.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.toolStripLabel33.Name = "toolStripLabel33";
+            this.toolStripLabel33.Size = new System.Drawing.Size(83, 22);
+            this.toolStripLabel33.Text = "Municipalities";
+            // 
+            // toolStripSeparator9
+            // 
+            this.toolStripSeparator9.Name = "toolStripSeparator9";
+            this.toolStripSeparator9.Size = new System.Drawing.Size(6, 25);
+            // 
+            // tabSysAccredRules
+            // 
+            this.tabSysAccredRules.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.tabSysAccredRules.Controls.Add(this.dataGridView22);
+            this.tabSysAccredRules.Controls.Add(this.toolsSysAccredRules);
+            this.tabSysAccredRules.Location = new System.Drawing.Point(4, 24);
+            this.tabSysAccredRules.Name = "tabSysAccredRules";
+            this.tabSysAccredRules.Size = new System.Drawing.Size(1050, 567);
+            this.tabSysAccredRules.TabIndex = 8;
+            this.tabSysAccredRules.Text = "Accreditation rules";
+            // 
+            // dataGridView22
+            // 
+            this.dataGridView22.AllowUserToAddRows = false;
+            this.dataGridView22.AllowUserToDeleteRows = false;
+            this.dataGridView22.BackgroundColor = System.Drawing.SystemColors.Window;
+            this.dataGridView22.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dataGridView22.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView22.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridView22.Location = new System.Drawing.Point(0, 25);
+            this.dataGridView22.Name = "dataGridView22";
+            this.dataGridView22.ReadOnly = true;
+            this.dataGridView22.Size = new System.Drawing.Size(1050, 542);
+            this.dataGridView22.TabIndex = 1;
+            // 
+            // toolsSysAccredRules
+            // 
+            this.toolsSysAccredRules.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolsSysAccredRules.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripLabel34,
+            this.toolStripSeparator7,
+            this.toolStripButton70,
+            this.toolStripButton71,
+            this.toolStripButton72});
+            this.toolsSysAccredRules.Location = new System.Drawing.Point(0, 0);
+            this.toolsSysAccredRules.Name = "toolsSysAccredRules";
+            this.toolsSysAccredRules.Size = new System.Drawing.Size(1050, 25);
+            this.toolsSysAccredRules.TabIndex = 0;
+            this.toolsSysAccredRules.Text = "toolStrip53";
+            // 
+            // toolStripLabel34
+            // 
+            this.toolStripLabel34.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.toolStripLabel34.Name = "toolStripLabel34";
+            this.toolStripLabel34.Size = new System.Drawing.Size(112, 22);
+            this.toolStripLabel34.Text = "Accreditation rules";
+            // 
+            // toolStripSeparator7
+            // 
+            this.toolStripSeparator7.Name = "toolStripSeparator7";
+            this.toolStripSeparator7.Size = new System.Drawing.Size(6, 25);
+            // 
+            // tabSysNuclides
+            // 
+            this.tabSysNuclides.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.tabSysNuclides.Controls.Add(this.gridSysNuclides);
+            this.tabSysNuclides.Controls.Add(this.toolsSysNuclides);
+            this.tabSysNuclides.Location = new System.Drawing.Point(4, 24);
+            this.tabSysNuclides.Name = "tabSysNuclides";
+            this.tabSysNuclides.Size = new System.Drawing.Size(1050, 565);
+            this.tabSysNuclides.TabIndex = 9;
+            this.tabSysNuclides.Text = "Nuclides";
+            // 
+            // gridSysNuclides
+            // 
+            this.gridSysNuclides.AllowUserToAddRows = false;
+            this.gridSysNuclides.AllowUserToDeleteRows = false;
+            this.gridSysNuclides.AllowUserToResizeRows = false;
+            this.gridSysNuclides.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.gridSysNuclides.BackgroundColor = System.Drawing.SystemColors.Window;
+            this.gridSysNuclides.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.gridSysNuclides.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridSysNuclides.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gridSysNuclides.Location = new System.Drawing.Point(0, 25);
+            this.gridSysNuclides.MultiSelect = false;
+            this.gridSysNuclides.Name = "gridSysNuclides";
+            this.gridSysNuclides.ReadOnly = true;
+            this.gridSysNuclides.RowHeadersVisible = false;
+            this.gridSysNuclides.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.gridSysNuclides.Size = new System.Drawing.Size(1050, 540);
+            this.gridSysNuclides.TabIndex = 1;
+            // 
+            // toolsSysNuclides
+            // 
+            this.toolsSysNuclides.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolsSysNuclides.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripLabel41,
+            this.toolStripSeparator3,
+            this.btnSysNuclideNew,
+            this.btnSysNuclideEdit,
+            this.btnSysNuclideDelete,
+            this.toolStripSeparator37,
+            this.btnSysNuclideExport});
+            this.toolsSysNuclides.Location = new System.Drawing.Point(0, 0);
+            this.toolsSysNuclides.Name = "toolsSysNuclides";
+            this.toolsSysNuclides.Size = new System.Drawing.Size(1050, 25);
+            this.toolsSysNuclides.TabIndex = 3;
+            this.toolsSysNuclides.Text = "toolStrip48";
+            // 
+            // toolStripLabel41
+            // 
+            this.toolStripLabel41.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.toolStripLabel41.Name = "toolStripLabel41";
+            this.toolStripLabel41.Size = new System.Drawing.Size(54, 22);
+            this.toolStripLabel41.Text = "Nuclides";
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
+            // 
+            // tabSysGeometries
+            // 
+            this.tabSysGeometries.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.tabSysGeometries.Controls.Add(this.panel6);
+            this.tabSysGeometries.Controls.Add(this.toolsSysGeom);
+            this.tabSysGeometries.Location = new System.Drawing.Point(4, 24);
+            this.tabSysGeometries.Name = "tabSysGeometries";
+            this.tabSysGeometries.Size = new System.Drawing.Size(1050, 567);
+            this.tabSysGeometries.TabIndex = 11;
+            this.tabSysGeometries.Text = "Geometries";
+            // 
+            // panel6
+            // 
+            this.panel6.Controls.Add(this.gridSysGeom);
+            this.panel6.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel6.Location = new System.Drawing.Point(0, 25);
+            this.panel6.Name = "panel6";
+            this.panel6.Size = new System.Drawing.Size(1050, 542);
+            this.panel6.TabIndex = 2;
+            // 
+            // gridSysGeom
+            // 
+            this.gridSysGeom.AllowUserToAddRows = false;
+            this.gridSysGeom.AllowUserToDeleteRows = false;
+            this.gridSysGeom.AllowUserToResizeRows = false;
+            this.gridSysGeom.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.gridSysGeom.BackgroundColor = System.Drawing.SystemColors.Window;
+            this.gridSysGeom.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.gridSysGeom.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridSysGeom.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gridSysGeom.Location = new System.Drawing.Point(0, 0);
+            this.gridSysGeom.MultiSelect = false;
+            this.gridSysGeom.Name = "gridSysGeom";
+            this.gridSysGeom.ReadOnly = true;
+            this.gridSysGeom.RowHeadersVisible = false;
+            this.gridSysGeom.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.gridSysGeom.Size = new System.Drawing.Size(1050, 542);
+            this.gridSysGeom.TabIndex = 0;
+            // 
+            // toolsSysGeom
+            // 
+            this.toolsSysGeom.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolsSysGeom.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripLabel43,
+            this.toolStripSeparator23,
+            this.btnNewGeometry,
+            this.btnEditGeometry,
+            this.btnDeleteGeometry});
+            this.toolsSysGeom.Location = new System.Drawing.Point(0, 0);
+            this.toolsSysGeom.Name = "toolsSysGeom";
+            this.toolsSysGeom.Size = new System.Drawing.Size(1050, 25);
+            this.toolsSysGeom.TabIndex = 0;
+            this.toolsSysGeom.Text = "toolStrip28";
+            // 
+            // toolStripLabel43
+            // 
+            this.toolStripLabel43.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.toolStripLabel43.Name = "toolStripLabel43";
+            this.toolStripLabel43.Size = new System.Drawing.Size(73, 22);
+            this.toolStripLabel43.Text = "Geometries";
+            // 
+            // toolStripSeparator23
+            // 
+            this.toolStripSeparator23.Name = "toolStripSeparator23";
+            this.toolStripSeparator23.Size = new System.Drawing.Size(6, 25);
+            // 
+            // tabSysPers
+            // 
+            this.tabSysPers.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.tabSysPers.Controls.Add(this.gridSysPers);
+            this.tabSysPers.Controls.Add(this.toolStrip14);
+            this.tabSysPers.Location = new System.Drawing.Point(4, 24);
+            this.tabSysPers.Name = "tabSysPers";
+            this.tabSysPers.Size = new System.Drawing.Size(1050, 567);
+            this.tabSysPers.TabIndex = 12;
+            this.tabSysPers.Text = "Persons";
+            // 
+            // gridSysPers
+            // 
+            this.gridSysPers.AllowUserToAddRows = false;
+            this.gridSysPers.AllowUserToDeleteRows = false;
+            this.gridSysPers.AllowUserToResizeRows = false;
+            this.gridSysPers.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.gridSysPers.BackgroundColor = System.Drawing.SystemColors.Window;
+            this.gridSysPers.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.gridSysPers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridSysPers.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gridSysPers.Location = new System.Drawing.Point(0, 25);
+            this.gridSysPers.MultiSelect = false;
+            this.gridSysPers.Name = "gridSysPers";
+            this.gridSysPers.ReadOnly = true;
+            this.gridSysPers.RowHeadersVisible = false;
+            this.gridSysPers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.gridSysPers.Size = new System.Drawing.Size(1050, 542);
+            this.gridSysPers.TabIndex = 1;
+            // 
+            // toolStrip14
+            // 
+            this.toolStrip14.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStrip14.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripLabel16,
+            this.toolStripSeparator34,
+            this.btnSysPersNew,
+            this.btnSysPersEdit,
+            this.btnSysPersDelete});
+            this.toolStrip14.Location = new System.Drawing.Point(0, 0);
+            this.toolStrip14.Name = "toolStrip14";
+            this.toolStrip14.Size = new System.Drawing.Size(1050, 25);
+            this.toolStrip14.TabIndex = 0;
+            this.toolStrip14.Text = "toolStrip14";
+            // 
+            // toolStripLabel16
+            // 
+            this.toolStripLabel16.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.toolStripLabel16.Name = "toolStripLabel16";
+            this.toolStripLabel16.Size = new System.Drawing.Size(50, 22);
+            this.toolStripLabel16.Text = "Persons";
+            // 
+            // toolStripSeparator34
+            // 
+            this.toolStripSeparator34.Name = "toolStripSeparator34";
+            this.toolStripSeparator34.Size = new System.Drawing.Size(6, 25);
+            // 
+            // tabSysSampParamNames
+            // 
+            this.tabSysSampParamNames.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.tabSysSampParamNames.Controls.Add(this.gridSysSampParamNames);
+            this.tabSysSampParamNames.Controls.Add(this.toolStrip18);
+            this.tabSysSampParamNames.Location = new System.Drawing.Point(4, 24);
+            this.tabSysSampParamNames.Name = "tabSysSampParamNames";
+            this.tabSysSampParamNames.Size = new System.Drawing.Size(1050, 567);
+            this.tabSysSampParamNames.TabIndex = 13;
+            this.tabSysSampParamNames.Text = "Sample parameter names";
+            // 
+            // gridSysSampParamNames
+            // 
+            this.gridSysSampParamNames.AllowUserToAddRows = false;
+            this.gridSysSampParamNames.AllowUserToDeleteRows = false;
+            this.gridSysSampParamNames.AllowUserToResizeRows = false;
+            this.gridSysSampParamNames.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.gridSysSampParamNames.BackgroundColor = System.Drawing.SystemColors.Window;
+            this.gridSysSampParamNames.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.gridSysSampParamNames.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridSysSampParamNames.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gridSysSampParamNames.Location = new System.Drawing.Point(0, 25);
+            this.gridSysSampParamNames.Name = "gridSysSampParamNames";
+            this.gridSysSampParamNames.ReadOnly = true;
+            this.gridSysSampParamNames.RowHeadersVisible = false;
+            this.gridSysSampParamNames.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.gridSysSampParamNames.Size = new System.Drawing.Size(1050, 542);
+            this.gridSysSampParamNames.TabIndex = 1;
+            // 
+            // toolStrip18
+            // 
+            this.toolStrip18.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStrip18.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripLabel24,
+            this.toolStripSeparator74,
+            this.btnSysSampParamNameNew,
+            this.btnSysSampParamNameEdit,
+            this.btnSysSampParamNameDelete});
+            this.toolStrip18.Location = new System.Drawing.Point(0, 0);
+            this.toolStrip18.Name = "toolStrip18";
+            this.toolStrip18.Size = new System.Drawing.Size(1050, 25);
+            this.toolStrip18.TabIndex = 0;
+            this.toolStrip18.Text = "toolStrip18";
+            // 
+            // toolStripLabel24
+            // 
+            this.toolStripLabel24.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.toolStripLabel24.Name = "toolStripLabel24";
+            this.toolStripLabel24.Size = new System.Drawing.Size(149, 22);
+            this.toolStripLabel24.Text = "Sample parameter names";
+            // 
+            // toolStripSeparator74
+            // 
+            this.toolStripSeparator74.Name = "toolStripSeparator74";
+            this.toolStripSeparator74.Size = new System.Drawing.Size(6, 25);
+            // 
+            // tabPrepAnal
+            // 
+            this.tabPrepAnal.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.tabPrepAnal.Controls.Add(this.splitContainer2);
+            this.tabPrepAnal.Location = new System.Drawing.Point(4, 24);
+            this.tabPrepAnal.Name = "tabPrepAnal";
+            this.tabPrepAnal.Size = new System.Drawing.Size(1064, 599);
+            this.tabPrepAnal.TabIndex = 19;
+            this.tabPrepAnal.Text = "Preparations and analyses";
+            // 
+            // splitContainer2
+            // 
+            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer2.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.splitContainer2.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer2.Name = "splitContainer2";
+            // 
+            // splitContainer2.Panel1
+            // 
+            this.splitContainer2.Panel1.Controls.Add(this.panel31);
+            this.splitContainer2.Panel1.Controls.Add(this.toolStrip7);
+            // 
+            // splitContainer2.Panel2
+            // 
+            this.splitContainer2.Panel2.Controls.Add(this.tabsPrepAnal);
+            this.splitContainer2.Size = new System.Drawing.Size(1064, 601);
+            this.splitContainer2.SplitterDistance = 379;
+            this.splitContainer2.SplitterWidth = 3;
+            this.splitContainer2.TabIndex = 4;
+            // 
+            // panel31
+            // 
+            this.panel31.BackColor = System.Drawing.SystemColors.Window;
+            this.panel31.Controls.Add(this.treePrepAnal);
+            this.panel31.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel31.Location = new System.Drawing.Point(0, 25);
+            this.panel31.Name = "panel31";
+            this.panel31.Padding = new System.Windows.Forms.Padding(12);
+            this.panel31.Size = new System.Drawing.Size(379, 576);
+            this.panel31.TabIndex = 1;
+            // 
+            // treePrepAnal
+            // 
+            this.treePrepAnal.BackColor = System.Drawing.SystemColors.Window;
+            this.treePrepAnal.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.treePrepAnal.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treePrepAnal.DrawMode = System.Windows.Forms.TreeViewDrawMode.OwnerDrawText;
+            this.treePrepAnal.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.treePrepAnal.HideSelection = false;
+            this.treePrepAnal.Indent = 40;
+            this.treePrepAnal.ItemHeight = 22;
+            this.treePrepAnal.Location = new System.Drawing.Point(12, 12);
+            this.treePrepAnal.Name = "treePrepAnal";
+            this.treePrepAnal.PathSeparator = "/";
+            this.treePrepAnal.ShowNodeToolTips = true;
+            this.treePrepAnal.ShowRootLines = false;
+            this.treePrepAnal.Size = new System.Drawing.Size(355, 552);
+            this.treePrepAnal.TabIndex = 0;
+            this.treePrepAnal.DrawNode += new System.Windows.Forms.DrawTreeNodeEventHandler(this.treePrepAnal_DrawNode);
+            this.treePrepAnal.BeforeSelect += new System.Windows.Forms.TreeViewCancelEventHandler(this.treePrepAnal_BeforeSelect);
+            this.treePrepAnal.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treePrepAnal_AfterSelect);
+            // 
+            // toolStrip7
+            // 
+            this.toolStrip7.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStrip7.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.miPrepAnalPrep,
+            this.miPrepAnalAnal,
+            this.toolStripSeparator71,
+            this.btnPrepAnalShowAudit});
+            this.toolStrip7.Location = new System.Drawing.Point(0, 0);
+            this.toolStrip7.Name = "toolStrip7";
+            this.toolStrip7.Size = new System.Drawing.Size(379, 25);
+            this.toolStrip7.TabIndex = 0;
+            this.toolStrip7.Text = "toolStrip7";
+            // 
+            // toolStripSeparator71
+            // 
+            this.toolStripSeparator71.Name = "toolStripSeparator71";
+            this.toolStripSeparator71.Size = new System.Drawing.Size(6, 25);
+            // 
+            // tabsPrepAnal
+            // 
+            this.tabsPrepAnal.Controls.Add(this.tabPrepAnalSample);
+            this.tabsPrepAnal.Controls.Add(this.tabPrepAnalPreps);
+            this.tabsPrepAnal.Controls.Add(this.tabPrepAnalAnalysis);
+            this.tabsPrepAnal.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabsPrepAnal.Location = new System.Drawing.Point(0, 0);
+            this.tabsPrepAnal.Margin = new System.Windows.Forms.Padding(0);
+            this.tabsPrepAnal.Name = "tabsPrepAnal";
+            this.tabsPrepAnal.SelectedIndex = 0;
+            this.tabsPrepAnal.Size = new System.Drawing.Size(682, 601);
+            this.tabsPrepAnal.TabIndex = 3;
+            // 
+            // tabPrepAnalSample
+            // 
+            this.tabPrepAnalSample.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.tabPrepAnalSample.Controls.Add(this.panel81);
+            this.tabPrepAnalSample.Controls.Add(this.splitContainer4);
+            this.tabPrepAnalSample.Controls.Add(this.toolStrip3);
+            this.tabPrepAnalSample.Controls.Add(this.panel80);
+            this.tabPrepAnalSample.Location = new System.Drawing.Point(4, 24);
+            this.tabPrepAnalSample.Name = "tabPrepAnalSample";
+            this.tabPrepAnalSample.Size = new System.Drawing.Size(674, 573);
+            this.tabPrepAnalSample.TabIndex = 5;
+            this.tabPrepAnalSample.Text = "Sample";
+            // 
+            // panel81
+            // 
+            this.panel81.Controls.Add(this.tbPrepAnalInfoComment);
+            this.panel81.Controls.Add(this.toolStrip10);
+            this.panel81.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel81.Location = new System.Drawing.Point(0, 279);
+            this.panel81.Name = "panel81";
+            this.panel81.Size = new System.Drawing.Size(674, 268);
+            this.panel81.TabIndex = 5;
+            // 
+            // tbPrepAnalInfoComment
+            // 
+            this.tbPrepAnalInfoComment.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbPrepAnalInfoComment.Location = new System.Drawing.Point(0, 25);
+            this.tbPrepAnalInfoComment.Multiline = true;
+            this.tbPrepAnalInfoComment.Name = "tbPrepAnalInfoComment";
+            this.tbPrepAnalInfoComment.ReadOnly = true;
+            this.tbPrepAnalInfoComment.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.tbPrepAnalInfoComment.Size = new System.Drawing.Size(674, 243);
+            this.tbPrepAnalInfoComment.TabIndex = 3;
+            // 
+            // toolStrip10
+            // 
+            this.toolStrip10.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStrip10.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripLabel6});
+            this.toolStrip10.Location = new System.Drawing.Point(0, 0);
+            this.toolStrip10.Name = "toolStrip10";
+            this.toolStrip10.Size = new System.Drawing.Size(674, 25);
+            this.toolStrip10.TabIndex = 4;
+            this.toolStrip10.Text = "toolStrip10";
+            // 
+            // toolStripLabel6
+            // 
+            this.toolStripLabel6.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.toolStripLabel6.Name = "toolStripLabel6";
+            this.toolStripLabel6.Size = new System.Drawing.Size(105, 22);
+            this.toolStripLabel6.Text = "Sample comment";
+            // 
+            // splitContainer4
+            // 
+            this.splitContainer4.Dock = System.Windows.Forms.DockStyle.Top;
+            this.splitContainer4.Location = new System.Drawing.Point(0, 25);
+            this.splitContainer4.Name = "splitContainer4";
+            // 
+            // splitContainer4.Panel1
+            // 
+            this.splitContainer4.Panel1.Controls.Add(this.groupBox2);
+            this.splitContainer4.Panel1.Padding = new System.Windows.Forms.Padding(6);
+            // 
+            // splitContainer4.Panel2
+            // 
+            this.splitContainer4.Panel2.Controls.Add(this.groupBox3);
+            this.splitContainer4.Panel2.Padding = new System.Windows.Forms.Padding(6);
+            this.splitContainer4.Size = new System.Drawing.Size(674, 254);
+            this.splitContainer4.SplitterDistance = 322;
+            this.splitContainer4.SplitterWidth = 3;
+            this.splitContainer4.TabIndex = 2;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.panel66);
+            this.groupBox2.Controls.Add(this.panel64);
+            this.groupBox2.Controls.Add(this.panel4);
+            this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox2.Location = new System.Drawing.Point(6, 6);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(6);
+            this.groupBox2.Size = new System.Drawing.Size(310, 242);
+            this.groupBox2.TabIndex = 0;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Weight / Volume";
+            // 
+            // panel66
+            // 
+            this.panel66.Controls.Add(this.tbPrepAnalVolume);
+            this.panel66.Controls.Add(this.panel67);
+            this.panel66.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel66.Location = new System.Drawing.Point(6, 70);
+            this.panel66.Name = "panel66";
+            this.panel66.Size = new System.Drawing.Size(298, 25);
+            this.panel66.TabIndex = 2;
+            // 
+            // tbPrepAnalVolume
+            // 
+            this.tbPrepAnalVolume.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbPrepAnalVolume.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbPrepAnalVolume.Location = new System.Drawing.Point(105, 0);
+            this.tbPrepAnalVolume.Name = "tbPrepAnalVolume";
+            this.tbPrepAnalVolume.Size = new System.Drawing.Size(193, 21);
+            this.tbPrepAnalVolume.TabIndex = 2;
+            this.tbPrepAnalVolume.TextChanged += new System.EventHandler(this.tbPrepAnalVolume_TextChanged);
+            // 
+            // panel67
+            // 
+            this.panel67.Controls.Add(this.label46);
+            this.panel67.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panel67.Location = new System.Drawing.Point(0, 0);
+            this.panel67.Name = "panel67";
+            this.panel67.Size = new System.Drawing.Size(105, 25);
+            this.panel67.TabIndex = 0;
+            // 
+            // label46
+            // 
+            this.label46.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label46.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label46.Location = new System.Drawing.Point(0, 0);
+            this.label46.Name = "label46";
+            this.label46.Size = new System.Drawing.Size(105, 25);
+            this.label46.TabIndex = 0;
+            this.label46.Text = "Volume (L)";
+            this.label46.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // panel64
+            // 
+            this.panel64.Controls.Add(this.tbPrepAnalDryWeight);
+            this.panel64.Controls.Add(this.panel65);
+            this.panel64.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel64.Location = new System.Drawing.Point(6, 45);
+            this.panel64.Name = "panel64";
+            this.panel64.Size = new System.Drawing.Size(298, 25);
+            this.panel64.TabIndex = 1;
+            // 
+            // tbPrepAnalDryWeight
+            // 
+            this.tbPrepAnalDryWeight.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbPrepAnalDryWeight.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbPrepAnalDryWeight.Location = new System.Drawing.Point(105, 0);
+            this.tbPrepAnalDryWeight.Name = "tbPrepAnalDryWeight";
+            this.tbPrepAnalDryWeight.Size = new System.Drawing.Size(193, 21);
+            this.tbPrepAnalDryWeight.TabIndex = 1;
+            this.tbPrepAnalDryWeight.TextChanged += new System.EventHandler(this.tbPrepAnalDryWeight_TextChanged);
+            // 
+            // panel65
+            // 
+            this.panel65.Controls.Add(this.label44);
+            this.panel65.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panel65.Location = new System.Drawing.Point(0, 0);
+            this.panel65.Name = "panel65";
+            this.panel65.Size = new System.Drawing.Size(105, 25);
+            this.panel65.TabIndex = 0;
+            // 
+            // label44
+            // 
+            this.label44.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label44.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label44.Location = new System.Drawing.Point(0, 0);
+            this.label44.Name = "label44";
+            this.label44.Size = new System.Drawing.Size(105, 25);
+            this.label44.TabIndex = 0;
+            this.label44.Text = "Dry weight (g)";
+            this.label44.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // panel4
+            // 
+            this.panel4.Controls.Add(this.tbPrepAnalWetWeight);
+            this.panel4.Controls.Add(this.panel26);
+            this.panel4.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel4.Location = new System.Drawing.Point(6, 20);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(298, 25);
+            this.panel4.TabIndex = 0;
+            // 
+            // tbPrepAnalWetWeight
+            // 
+            this.tbPrepAnalWetWeight.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbPrepAnalWetWeight.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbPrepAnalWetWeight.Location = new System.Drawing.Point(105, 0);
+            this.tbPrepAnalWetWeight.Name = "tbPrepAnalWetWeight";
+            this.tbPrepAnalWetWeight.Size = new System.Drawing.Size(193, 21);
+            this.tbPrepAnalWetWeight.TabIndex = 0;
+            this.tbPrepAnalWetWeight.TextChanged += new System.EventHandler(this.tbPrepAnalWetWeight_TextChanged);
+            // 
+            // panel26
+            // 
+            this.panel26.Controls.Add(this.label6);
+            this.panel26.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panel26.Location = new System.Drawing.Point(0, 0);
+            this.panel26.Name = "panel26";
+            this.panel26.Size = new System.Drawing.Size(105, 25);
+            this.panel26.TabIndex = 0;
+            // 
+            // label6
+            // 
+            this.label6.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(0, 0);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(105, 25);
+            this.label6.TabIndex = 0;
+            this.label6.Text = "Wet weight (g)";
+            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.panel74);
+            this.groupBox3.Controls.Add(this.panel72);
+            this.groupBox3.Controls.Add(this.panel70);
+            this.groupBox3.Controls.Add(this.panel68);
+            this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox3.Location = new System.Drawing.Point(6, 6);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Padding = new System.Windows.Forms.Padding(6);
+            this.groupBox3.Size = new System.Drawing.Size(337, 242);
+            this.groupBox3.TabIndex = 1;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Loss on drying (LOD)";
+            // 
+            // panel74
+            // 
+            this.panel74.Controls.Add(this.tbPrepAnalLODTemp);
+            this.panel74.Controls.Add(this.panel75);
+            this.panel74.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel74.Location = new System.Drawing.Point(6, 95);
+            this.panel74.Name = "panel74";
+            this.panel74.Size = new System.Drawing.Size(325, 25);
+            this.panel74.TabIndex = 4;
+            // 
+            // tbPrepAnalLODTemp
+            // 
+            this.tbPrepAnalLODTemp.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbPrepAnalLODTemp.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbPrepAnalLODTemp.Location = new System.Drawing.Point(105, 0);
+            this.tbPrepAnalLODTemp.Name = "tbPrepAnalLODTemp";
+            this.tbPrepAnalLODTemp.Size = new System.Drawing.Size(220, 21);
+            this.tbPrepAnalLODTemp.TabIndex = 6;
+            this.tbPrepAnalLODTemp.TextChanged += new System.EventHandler(this.tbPrepAnalLODTemp_TextChanged);
+            // 
+            // panel75
+            // 
+            this.panel75.Controls.Add(this.label68);
+            this.panel75.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panel75.Location = new System.Drawing.Point(0, 0);
+            this.panel75.Name = "panel75";
+            this.panel75.Size = new System.Drawing.Size(105, 25);
+            this.panel75.TabIndex = 0;
+            // 
+            // label68
+            // 
+            this.label68.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label68.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label68.Location = new System.Drawing.Point(0, 0);
+            this.label68.Name = "label68";
+            this.label68.Size = new System.Drawing.Size(105, 25);
+            this.label68.TabIndex = 0;
+            this.label68.Text = "Temperature (C)";
+            this.label68.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // panel72
+            // 
+            this.panel72.Controls.Add(this.tbPrepAnalLODWater);
+            this.panel72.Controls.Add(this.panel73);
+            this.panel72.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel72.Location = new System.Drawing.Point(6, 70);
+            this.panel72.Name = "panel72";
+            this.panel72.Size = new System.Drawing.Size(325, 25);
+            this.panel72.TabIndex = 3;
+            // 
+            // tbPrepAnalLODWater
+            // 
+            this.tbPrepAnalLODWater.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbPrepAnalLODWater.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbPrepAnalLODWater.Location = new System.Drawing.Point(105, 0);
+            this.tbPrepAnalLODWater.Name = "tbPrepAnalLODWater";
+            this.tbPrepAnalLODWater.ReadOnly = true;
+            this.tbPrepAnalLODWater.Size = new System.Drawing.Size(220, 21);
+            this.tbPrepAnalLODWater.TabIndex = 5;
+            // 
+            // panel73
+            // 
+            this.panel73.Controls.Add(this.label67);
+            this.panel73.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panel73.Location = new System.Drawing.Point(0, 0);
+            this.panel73.Name = "panel73";
+            this.panel73.Size = new System.Drawing.Size(105, 25);
+            this.panel73.TabIndex = 0;
+            // 
+            // label67
+            // 
+            this.label67.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label67.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label67.Location = new System.Drawing.Point(0, 0);
+            this.label67.Name = "label67";
+            this.label67.Size = new System.Drawing.Size(105, 25);
+            this.label67.TabIndex = 0;
+            this.label67.Text = "Water (%)";
+            this.label67.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // panel70
+            // 
+            this.panel70.Controls.Add(this.tbPrepAnalLODEndWeight);
+            this.panel70.Controls.Add(this.panel71);
+            this.panel70.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel70.Location = new System.Drawing.Point(6, 45);
+            this.panel70.Name = "panel70";
+            this.panel70.Size = new System.Drawing.Size(325, 25);
+            this.panel70.TabIndex = 2;
+            // 
+            // tbPrepAnalLODEndWeight
+            // 
+            this.tbPrepAnalLODEndWeight.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbPrepAnalLODEndWeight.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbPrepAnalLODEndWeight.Location = new System.Drawing.Point(105, 0);
+            this.tbPrepAnalLODEndWeight.Name = "tbPrepAnalLODEndWeight";
+            this.tbPrepAnalLODEndWeight.Size = new System.Drawing.Size(220, 21);
+            this.tbPrepAnalLODEndWeight.TabIndex = 4;
+            this.tbPrepAnalLODEndWeight.TextChanged += new System.EventHandler(this.tbPrepAnalLODStartWeight_TextChanged);
+            // 
+            // panel71
+            // 
+            this.panel71.Controls.Add(this.label66);
+            this.panel71.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panel71.Location = new System.Drawing.Point(0, 0);
+            this.panel71.Name = "panel71";
+            this.panel71.Size = new System.Drawing.Size(105, 25);
+            this.panel71.TabIndex = 0;
+            // 
+            // label66
+            // 
+            this.label66.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label66.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label66.Location = new System.Drawing.Point(0, 0);
+            this.label66.Name = "label66";
+            this.label66.Size = new System.Drawing.Size(105, 25);
+            this.label66.TabIndex = 0;
+            this.label66.Text = "End weight (g)";
+            this.label66.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // panel68
+            // 
+            this.panel68.Controls.Add(this.tbPrepAnalLODStartWeight);
+            this.panel68.Controls.Add(this.panel69);
+            this.panel68.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel68.Location = new System.Drawing.Point(6, 20);
+            this.panel68.Name = "panel68";
+            this.panel68.Size = new System.Drawing.Size(325, 25);
+            this.panel68.TabIndex = 1;
+            // 
+            // tbPrepAnalLODStartWeight
+            // 
+            this.tbPrepAnalLODStartWeight.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbPrepAnalLODStartWeight.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbPrepAnalLODStartWeight.Location = new System.Drawing.Point(105, 0);
+            this.tbPrepAnalLODStartWeight.Name = "tbPrepAnalLODStartWeight";
+            this.tbPrepAnalLODStartWeight.Size = new System.Drawing.Size(220, 21);
+            this.tbPrepAnalLODStartWeight.TabIndex = 3;
+            this.tbPrepAnalLODStartWeight.TextChanged += new System.EventHandler(this.tbPrepAnalLODStartWeight_TextChanged);
+            // 
+            // panel69
+            // 
+            this.panel69.Controls.Add(this.label65);
+            this.panel69.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panel69.Location = new System.Drawing.Point(0, 0);
+            this.panel69.Name = "panel69";
+            this.panel69.Size = new System.Drawing.Size(105, 25);
+            this.panel69.TabIndex = 0;
+            // 
+            // label65
+            // 
+            this.label65.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label65.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label65.Location = new System.Drawing.Point(0, 0);
+            this.label65.Name = "label65";
+            this.label65.Size = new System.Drawing.Size(105, 25);
+            this.label65.TabIndex = 0;
+            this.label65.Text = "Start weight (g)";
+            this.label65.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // toolStrip3
+            // 
+            this.toolStrip3.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStrip3.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripLabel11});
+            this.toolStrip3.Location = new System.Drawing.Point(0, 0);
+            this.toolStrip3.Name = "toolStrip3";
+            this.toolStrip3.Size = new System.Drawing.Size(674, 25);
+            this.toolStrip3.TabIndex = 6;
+            this.toolStrip3.Text = "toolStrip3";
+            // 
+            // toolStripLabel11
+            // 
+            this.toolStripLabel11.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.toolStripLabel11.Name = "toolStripLabel11";
+            this.toolStripLabel11.Size = new System.Drawing.Size(75, 22);
+            this.toolStripLabel11.Text = "Sample data";
+            // 
+            // panel80
+            // 
+            this.panel80.Controls.Add(this.btnPrepAnalSampleDiscard);
+            this.panel80.Controls.Add(this.btnPrepAnalSampleUpdate);
+            this.panel80.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel80.Location = new System.Drawing.Point(0, 547);
+            this.panel80.Name = "panel80";
+            this.panel80.Size = new System.Drawing.Size(674, 26);
+            this.panel80.TabIndex = 7;
+            // 
+            // btnPrepAnalSampleDiscard
+            // 
+            this.btnPrepAnalSampleDiscard.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnPrepAnalSampleDiscard.Location = new System.Drawing.Point(394, 0);
+            this.btnPrepAnalSampleDiscard.Name = "btnPrepAnalSampleDiscard";
+            this.btnPrepAnalSampleDiscard.Size = new System.Drawing.Size(140, 26);
+            this.btnPrepAnalSampleDiscard.TabIndex = 8;
+            this.btnPrepAnalSampleDiscard.Text = "Discard changes";
+            this.btnPrepAnalSampleDiscard.UseVisualStyleBackColor = true;
+            this.btnPrepAnalSampleDiscard.Click += new System.EventHandler(this.btnPrepAnalSampleDiscard_Click);
+            // 
+            // btnPrepAnalSampleUpdate
+            // 
+            this.btnPrepAnalSampleUpdate.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnPrepAnalSampleUpdate.Location = new System.Drawing.Point(534, 0);
+            this.btnPrepAnalSampleUpdate.Name = "btnPrepAnalSampleUpdate";
+            this.btnPrepAnalSampleUpdate.Size = new System.Drawing.Size(140, 26);
+            this.btnPrepAnalSampleUpdate.TabIndex = 7;
+            this.btnPrepAnalSampleUpdate.Text = "Save sample data";
+            this.btnPrepAnalSampleUpdate.UseVisualStyleBackColor = true;
+            this.btnPrepAnalSampleUpdate.Click += new System.EventHandler(this.btnPrepAnalSampleUpdate_Click);
+            // 
+            // tabPrepAnalPreps
+            // 
+            this.tabPrepAnalPreps.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.tabPrepAnalPreps.Controls.Add(this.panel10);
+            this.tabPrepAnalPreps.Controls.Add(this.splitContainer3);
+            this.tabPrepAnalPreps.Location = new System.Drawing.Point(4, 24);
+            this.tabPrepAnalPreps.Name = "tabPrepAnalPreps";
+            this.tabPrepAnalPreps.Size = new System.Drawing.Size(674, 573);
+            this.tabPrepAnalPreps.TabIndex = 3;
+            this.tabPrepAnalPreps.Text = "Preparations";
+            // 
+            // panel10
+            // 
+            this.panel10.Controls.Add(this.btnPrepAnalPrepDiscard);
+            this.panel10.Controls.Add(this.cboxPrepAnalPrepWorkflowStatus);
+            this.panel10.Controls.Add(this.btnPrepAnalPrepUpdate);
+            this.panel10.Controls.Add(this.label23);
+            this.panel10.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel10.Location = new System.Drawing.Point(0, 547);
+            this.panel10.Name = "panel10";
+            this.panel10.Size = new System.Drawing.Size(674, 26);
+            this.panel10.TabIndex = 1;
+            // 
+            // btnPrepAnalPrepDiscard
+            // 
+            this.btnPrepAnalPrepDiscard.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnPrepAnalPrepDiscard.Location = new System.Drawing.Point(394, 0);
+            this.btnPrepAnalPrepDiscard.Name = "btnPrepAnalPrepDiscard";
+            this.btnPrepAnalPrepDiscard.Size = new System.Drawing.Size(140, 26);
+            this.btnPrepAnalPrepDiscard.TabIndex = 10;
+            this.btnPrepAnalPrepDiscard.Text = "Discard changes";
+            this.btnPrepAnalPrepDiscard.UseVisualStyleBackColor = true;
+            this.btnPrepAnalPrepDiscard.Click += new System.EventHandler(this.btnPrepAnalPrepDiscard_Click);
+            // 
+            // cboxPrepAnalPrepWorkflowStatus
+            // 
+            this.cboxPrepAnalPrepWorkflowStatus.DisplayMember = "Name";
+            this.cboxPrepAnalPrepWorkflowStatus.Dock = System.Windows.Forms.DockStyle.Left;
+            this.cboxPrepAnalPrepWorkflowStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxPrepAnalPrepWorkflowStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cboxPrepAnalPrepWorkflowStatus.FormattingEnabled = true;
+            this.cboxPrepAnalPrepWorkflowStatus.ItemHeight = 15;
+            this.cboxPrepAnalPrepWorkflowStatus.Location = new System.Drawing.Point(113, 0);
+            this.cboxPrepAnalPrepWorkflowStatus.Name = "cboxPrepAnalPrepWorkflowStatus";
+            this.cboxPrepAnalPrepWorkflowStatus.Size = new System.Drawing.Size(140, 23);
+            this.cboxPrepAnalPrepWorkflowStatus.TabIndex = 7;
+            this.cboxPrepAnalPrepWorkflowStatus.ValueMember = "Id";
+            this.cboxPrepAnalPrepWorkflowStatus.SelectedIndexChanged += new System.EventHandler(this.cboxPrepAnalPrepWorkflowStatus_SelectedIndexChanged);
+            // 
+            // btnPrepAnalPrepUpdate
+            // 
+            this.btnPrepAnalPrepUpdate.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnPrepAnalPrepUpdate.Location = new System.Drawing.Point(534, 0);
+            this.btnPrepAnalPrepUpdate.Name = "btnPrepAnalPrepUpdate";
+            this.btnPrepAnalPrepUpdate.Size = new System.Drawing.Size(140, 26);
+            this.btnPrepAnalPrepUpdate.TabIndex = 9;
+            this.btnPrepAnalPrepUpdate.Text = "Save preparation";
+            this.btnPrepAnalPrepUpdate.UseVisualStyleBackColor = true;
+            this.btnPrepAnalPrepUpdate.Click += new System.EventHandler(this.btnPrepAnalPrepUpdate_Click);
+            // 
+            // label23
+            // 
+            this.label23.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label23.Location = new System.Drawing.Point(0, 0);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(113, 26);
+            this.label23.TabIndex = 0;
+            this.label23.Text = "Preparation status";
+            this.label23.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // splitContainer3
+            // 
+            this.splitContainer3.Dock = System.Windows.Forms.DockStyle.Top;
+            this.splitContainer3.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer3.Name = "splitContainer3";
+            // 
+            // splitContainer3.Panel1
+            // 
+            this.splitContainer3.Panel1.Controls.Add(this.panel1);
+            // 
+            // splitContainer3.Panel2
+            // 
+            this.splitContainer3.Panel2.Controls.Add(this.panel5);
+            this.splitContainer3.Size = new System.Drawing.Size(674, 332);
+            this.splitContainer3.SplitterDistance = 377;
+            this.splitContainer3.SplitterWidth = 3;
+            this.splitContainer3.TabIndex = 0;
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.panel60);
+            this.panel1.Controls.Add(this.panel84);
+            this.panel1.Controls.Add(this.panel57);
+            this.panel1.Controls.Add(this.panel55);
+            this.panel1.Controls.Add(this.panel52);
+            this.panel1.Controls.Add(this.panel51);
+            this.panel1.Controls.Add(this.toolsSamplePrepInfo);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(377, 332);
+            this.panel1.TabIndex = 0;
+            // 
+            // panel60
+            // 
+            this.panel60.Controls.Add(this.tbPrepAnalPrepComment);
+            this.panel60.Controls.Add(this.panel61);
+            this.panel60.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel60.Location = new System.Drawing.Point(0, 150);
+            this.panel60.Name = "panel60";
+            this.panel60.Size = new System.Drawing.Size(377, 182);
+            this.panel60.TabIndex = 11;
+            // 
+            // tbPrepAnalPrepComment
+            // 
+            this.tbPrepAnalPrepComment.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbPrepAnalPrepComment.Location = new System.Drawing.Point(113, 0);
+            this.tbPrepAnalPrepComment.MaxLength = 1000;
+            this.tbPrepAnalPrepComment.Multiline = true;
+            this.tbPrepAnalPrepComment.Name = "tbPrepAnalPrepComment";
+            this.tbPrepAnalPrepComment.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.tbPrepAnalPrepComment.Size = new System.Drawing.Size(264, 182);
+            this.tbPrepAnalPrepComment.TabIndex = 8;
+            this.tbPrepAnalPrepComment.TextChanged += new System.EventHandler(this.tbPrepAnalPrepComment_TextChanged);
+            // 
+            // panel61
+            // 
+            this.panel61.Controls.Add(this.label31);
+            this.panel61.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panel61.Location = new System.Drawing.Point(0, 0);
+            this.panel61.Name = "panel61";
+            this.panel61.Size = new System.Drawing.Size(113, 182);
+            this.panel61.TabIndex = 5;
+            // 
+            // label31
+            // 
+            this.label31.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label31.Location = new System.Drawing.Point(0, 0);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(113, 182);
+            this.label31.TabIndex = 11;
+            this.label31.Text = "Comment";
+            this.label31.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // panel84
+            // 
+            this.panel84.Controls.Add(this.tbPrepAnalPrepReqUnit);
+            this.panel84.Controls.Add(this.panel85);
+            this.panel84.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel84.Location = new System.Drawing.Point(0, 125);
+            this.panel84.Name = "panel84";
+            this.panel84.Size = new System.Drawing.Size(377, 25);
+            this.panel84.TabIndex = 9;
+            // 
+            // tbPrepAnalPrepReqUnit
+            // 
+            this.tbPrepAnalPrepReqUnit.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbPrepAnalPrepReqUnit.Location = new System.Drawing.Point(113, 0);
+            this.tbPrepAnalPrepReqUnit.Name = "tbPrepAnalPrepReqUnit";
+            this.tbPrepAnalPrepReqUnit.ReadOnly = true;
+            this.tbPrepAnalPrepReqUnit.Size = new System.Drawing.Size(264, 21);
+            this.tbPrepAnalPrepReqUnit.TabIndex = 6;
+            // 
+            // panel85
+            // 
+            this.panel85.Controls.Add(this.label24);
+            this.panel85.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panel85.Location = new System.Drawing.Point(0, 0);
+            this.panel85.Name = "panel85";
+            this.panel85.Size = new System.Drawing.Size(113, 25);
+            this.panel85.TabIndex = 5;
+            // 
+            // label24
+            // 
+            this.label24.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label24.Location = new System.Drawing.Point(0, 0);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(113, 25);
+            this.label24.TabIndex = 0;
+            this.label24.Text = "Requested unit";
+            this.label24.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // panel57
+            // 
+            this.panel57.Controls.Add(this.tbPrepAnalPrepQuantity);
+            this.panel57.Controls.Add(this.cboxPrepAnalPrepQuantityUnit);
+            this.panel57.Controls.Add(this.panel58);
+            this.panel57.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel57.Location = new System.Drawing.Point(0, 100);
+            this.panel57.Name = "panel57";
+            this.panel57.Size = new System.Drawing.Size(377, 25);
+            this.panel57.TabIndex = 6;
+            // 
+            // tbPrepAnalPrepQuantity
+            // 
+            this.tbPrepAnalPrepQuantity.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbPrepAnalPrepQuantity.Location = new System.Drawing.Point(113, 0);
+            this.tbPrepAnalPrepQuantity.MaxLength = 32;
+            this.tbPrepAnalPrepQuantity.Name = "tbPrepAnalPrepQuantity";
+            this.tbPrepAnalPrepQuantity.Size = new System.Drawing.Size(145, 21);
+            this.tbPrepAnalPrepQuantity.TabIndex = 4;
+            this.tbPrepAnalPrepQuantity.TextChanged += new System.EventHandler(this.tbPrepAnalPrepQuantity_TextChanged);
+            // 
+            // cboxPrepAnalPrepQuantityUnit
+            // 
+            this.cboxPrepAnalPrepQuantityUnit.DisplayMember = "Name";
+            this.cboxPrepAnalPrepQuantityUnit.Dock = System.Windows.Forms.DockStyle.Right;
+            this.cboxPrepAnalPrepQuantityUnit.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxPrepAnalPrepQuantityUnit.FormattingEnabled = true;
+            this.cboxPrepAnalPrepQuantityUnit.Location = new System.Drawing.Point(258, 0);
+            this.cboxPrepAnalPrepQuantityUnit.Name = "cboxPrepAnalPrepQuantityUnit";
+            this.cboxPrepAnalPrepQuantityUnit.Size = new System.Drawing.Size(119, 23);
+            this.cboxPrepAnalPrepQuantityUnit.TabIndex = 5;
+            this.cboxPrepAnalPrepQuantityUnit.ValueMember = "Id";
+            this.cboxPrepAnalPrepQuantityUnit.SelectedIndexChanged += new System.EventHandler(this.cboxPrepAnalPrepQuantityUnit_SelectedIndexChanged);
+            // 
+            // panel58
+            // 
+            this.panel58.Controls.Add(this.label64);
+            this.panel58.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panel58.Location = new System.Drawing.Point(0, 0);
+            this.panel58.Name = "panel58";
+            this.panel58.Size = new System.Drawing.Size(113, 25);
+            this.panel58.TabIndex = 5;
+            // 
+            // label64
+            // 
+            this.label64.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label64.Location = new System.Drawing.Point(0, 0);
+            this.label64.Name = "label64";
+            this.label64.Size = new System.Drawing.Size(113, 25);
+            this.label64.TabIndex = 0;
+            this.label64.Text = "Sample quant.";
+            this.label64.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // panel55
+            // 
+            this.panel55.Controls.Add(this.tbPrepAnalPrepAmount);
+            this.panel55.Controls.Add(this.panel56);
+            this.panel55.Controls.Add(this.cboxPrepAnalPrepAmountUnit);
+            this.panel55.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel55.Location = new System.Drawing.Point(0, 75);
+            this.panel55.Name = "panel55";
+            this.panel55.Size = new System.Drawing.Size(377, 25);
+            this.panel55.TabIndex = 5;
+            // 
+            // tbPrepAnalPrepAmount
+            // 
+            this.tbPrepAnalPrepAmount.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbPrepAnalPrepAmount.Location = new System.Drawing.Point(113, 0);
+            this.tbPrepAnalPrepAmount.MaxLength = 32;
+            this.tbPrepAnalPrepAmount.Name = "tbPrepAnalPrepAmount";
+            this.tbPrepAnalPrepAmount.Size = new System.Drawing.Size(145, 21);
+            this.tbPrepAnalPrepAmount.TabIndex = 2;
+            this.tbPrepAnalPrepAmount.TextChanged += new System.EventHandler(this.tbPrepAnalPrepAmount_TextChanged);
+            // 
+            // panel56
+            // 
+            this.panel56.Controls.Add(this.label29);
+            this.panel56.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panel56.Location = new System.Drawing.Point(0, 0);
+            this.panel56.Name = "panel56";
+            this.panel56.Size = new System.Drawing.Size(113, 25);
+            this.panel56.TabIndex = 5;
+            // 
+            // label29
+            // 
+            this.label29.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label29.Location = new System.Drawing.Point(0, 0);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(113, 25);
+            this.label29.TabIndex = 2;
+            this.label29.Text = "Prep. amount";
+            this.label29.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // cboxPrepAnalPrepAmountUnit
+            // 
+            this.cboxPrepAnalPrepAmountUnit.DisplayMember = "Name";
+            this.cboxPrepAnalPrepAmountUnit.Dock = System.Windows.Forms.DockStyle.Right;
+            this.cboxPrepAnalPrepAmountUnit.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxPrepAnalPrepAmountUnit.FormattingEnabled = true;
+            this.cboxPrepAnalPrepAmountUnit.Location = new System.Drawing.Point(258, 0);
+            this.cboxPrepAnalPrepAmountUnit.Name = "cboxPrepAnalPrepAmountUnit";
+            this.cboxPrepAnalPrepAmountUnit.Size = new System.Drawing.Size(119, 23);
+            this.cboxPrepAnalPrepAmountUnit.TabIndex = 3;
+            this.cboxPrepAnalPrepAmountUnit.ValueMember = "Id";
+            this.cboxPrepAnalPrepAmountUnit.SelectedIndexChanged += new System.EventHandler(this.cboxPrepAnalPrepAmountUnit_SelectedIndexChanged);
+            // 
+            // panel52
+            // 
+            this.panel52.Controls.Add(this.tbPrepAnalPrepFillHeight);
+            this.panel52.Controls.Add(this.panel59);
+            this.panel52.Controls.Add(this.panel53);
+            this.panel52.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel52.Location = new System.Drawing.Point(0, 50);
+            this.panel52.Name = "panel52";
+            this.panel52.Size = new System.Drawing.Size(377, 25);
+            this.panel52.TabIndex = 4;
+            // 
+            // tbPrepAnalPrepFillHeight
+            // 
+            this.tbPrepAnalPrepFillHeight.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbPrepAnalPrepFillHeight.Location = new System.Drawing.Point(113, 0);
+            this.tbPrepAnalPrepFillHeight.MaxLength = 32;
+            this.tbPrepAnalPrepFillHeight.Name = "tbPrepAnalPrepFillHeight";
+            this.tbPrepAnalPrepFillHeight.Size = new System.Drawing.Size(144, 21);
+            this.tbPrepAnalPrepFillHeight.TabIndex = 1;
+            this.tbPrepAnalPrepFillHeight.TextChanged += new System.EventHandler(this.tbPrepAnalPrepFillHeight_TextChanged);
+            // 
+            // panel59
+            // 
+            this.panel59.Controls.Add(this.lblPrepAnalPrepRange);
+            this.panel59.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panel59.Location = new System.Drawing.Point(257, 0);
+            this.panel59.Name = "panel59";
+            this.panel59.Size = new System.Drawing.Size(120, 25);
+            this.panel59.TabIndex = 6;
+            // 
+            // lblPrepAnalPrepRange
+            // 
+            this.lblPrepAnalPrepRange.AutoSize = true;
+            this.lblPrepAnalPrepRange.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lblPrepAnalPrepRange.Location = new System.Drawing.Point(0, 0);
+            this.lblPrepAnalPrepRange.Name = "lblPrepAnalPrepRange";
+            this.lblPrepAnalPrepRange.Size = new System.Drawing.Size(16, 15);
+            this.lblPrepAnalPrepRange.TabIndex = 6;
+            this.lblPrepAnalPrepRange.Text = "[,]";
+            // 
+            // panel53
+            // 
+            this.panel53.Controls.Add(this.label28);
+            this.panel53.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panel53.Location = new System.Drawing.Point(0, 0);
+            this.panel53.Name = "panel53";
+            this.panel53.Size = new System.Drawing.Size(113, 25);
+            this.panel53.TabIndex = 5;
+            // 
+            // label28
+            // 
+            this.label28.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label28.Location = new System.Drawing.Point(0, 0);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(113, 25);
+            this.label28.TabIndex = 1;
+            this.label28.Text = "Fill height (mm)";
+            this.label28.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // panel51
+            // 
+            this.panel51.Controls.Add(this.cboxPrepAnalPrepGeom);
+            this.panel51.Controls.Add(this.panel54);
+            this.panel51.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel51.Location = new System.Drawing.Point(0, 25);
+            this.panel51.Name = "panel51";
+            this.panel51.Size = new System.Drawing.Size(377, 25);
+            this.panel51.TabIndex = 3;
+            // 
+            // cboxPrepAnalPrepGeom
+            // 
+            this.cboxPrepAnalPrepGeom.DisplayMember = "Name";
+            this.cboxPrepAnalPrepGeom.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cboxPrepAnalPrepGeom.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxPrepAnalPrepGeom.FormattingEnabled = true;
+            this.cboxPrepAnalPrepGeom.Location = new System.Drawing.Point(113, 0);
+            this.cboxPrepAnalPrepGeom.Name = "cboxPrepAnalPrepGeom";
+            this.cboxPrepAnalPrepGeom.Size = new System.Drawing.Size(264, 23);
+            this.cboxPrepAnalPrepGeom.TabIndex = 0;
+            this.cboxPrepAnalPrepGeom.ValueMember = "Id";
+            this.cboxPrepAnalPrepGeom.SelectedIndexChanged += new System.EventHandler(this.cboxPrepAnalPrepGeom_SelectedIndexChanged);
+            // 
+            // panel54
+            // 
+            this.panel54.Controls.Add(this.label27);
+            this.panel54.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panel54.Location = new System.Drawing.Point(0, 0);
+            this.panel54.Name = "panel54";
+            this.panel54.Size = new System.Drawing.Size(113, 25);
+            this.panel54.TabIndex = 5;
+            // 
+            // label27
+            // 
+            this.label27.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label27.Location = new System.Drawing.Point(0, 0);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(113, 25);
+            this.label27.TabIndex = 0;
+            this.label27.Text = "Geometry";
+            this.label27.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // toolsSamplePrepInfo
+            // 
+            this.toolsSamplePrepInfo.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolsSamplePrepInfo.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripLabel13,
+            this.btnPrepAnalPrepPrintLabel});
+            this.toolsSamplePrepInfo.Location = new System.Drawing.Point(0, 0);
+            this.toolsSamplePrepInfo.Name = "toolsSamplePrepInfo";
+            this.toolsSamplePrepInfo.Size = new System.Drawing.Size(377, 25);
+            this.toolsSamplePrepInfo.TabIndex = 1;
+            this.toolsSamplePrepInfo.Text = "toolStrip10";
+            // 
+            // toolStripLabel13
+            // 
+            this.toolStripLabel13.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.toolStripLabel13.Name = "toolStripLabel13";
+            this.toolStripLabel13.Size = new System.Drawing.Size(97, 22);
+            this.toolStripLabel13.Text = "Preparation info";
+            // 
+            // panel5
+            // 
+            this.panel5.Controls.Add(this.gridPrepAnalPrepAttachments);
+            this.panel5.Controls.Add(this.toolsSampleAttachments);
+            this.panel5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel5.Location = new System.Drawing.Point(0, 0);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(294, 332);
+            this.panel5.TabIndex = 1;
+            // 
+            // gridPrepAnalPrepAttachments
+            // 
+            this.gridPrepAnalPrepAttachments.AllowUserToAddRows = false;
+            this.gridPrepAnalPrepAttachments.AllowUserToDeleteRows = false;
+            this.gridPrepAnalPrepAttachments.AllowUserToResizeRows = false;
+            this.gridPrepAnalPrepAttachments.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.gridPrepAnalPrepAttachments.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
+            this.gridPrepAnalPrepAttachments.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.gridPrepAnalPrepAttachments.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridPrepAnalPrepAttachments.ColumnHeadersVisible = false;
+            this.gridPrepAnalPrepAttachments.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gridPrepAnalPrepAttachments.Location = new System.Drawing.Point(0, 25);
+            this.gridPrepAnalPrepAttachments.MultiSelect = false;
+            this.gridPrepAnalPrepAttachments.Name = "gridPrepAnalPrepAttachments";
+            this.gridPrepAnalPrepAttachments.ReadOnly = true;
+            this.gridPrepAnalPrepAttachments.RowHeadersVisible = false;
+            this.gridPrepAnalPrepAttachments.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.gridPrepAnalPrepAttachments.Size = new System.Drawing.Size(294, 307);
+            this.gridPrepAnalPrepAttachments.TabIndex = 1;
+            this.gridPrepAnalPrepAttachments.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridAttachments_CellDoubleClick);
+            // 
+            // toolsSampleAttachments
+            // 
+            this.toolsSampleAttachments.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolsSampleAttachments.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripLabel10,
+            this.toolStripSeparator26,
+            this.btnPrepAnalPrepScanAttachment,
+            this.btnPrepAnalPrepBrowseAttachment,
+            this.btnPrepAnalPrepDeleteAttachment});
+            this.toolsSampleAttachments.Location = new System.Drawing.Point(0, 0);
+            this.toolsSampleAttachments.Name = "toolsSampleAttachments";
+            this.toolsSampleAttachments.Size = new System.Drawing.Size(294, 25);
+            this.toolsSampleAttachments.TabIndex = 0;
+            this.toolsSampleAttachments.Text = "toolStrip8";
+            // 
+            // toolStripLabel10
+            // 
+            this.toolStripLabel10.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.toolStripLabel10.Name = "toolStripLabel10";
+            this.toolStripLabel10.Size = new System.Drawing.Size(79, 22);
+            this.toolStripLabel10.Text = "Attachments";
+            // 
+            // toolStripSeparator26
+            // 
+            this.toolStripSeparator26.Name = "toolStripSeparator26";
+            this.toolStripSeparator26.Size = new System.Drawing.Size(6, 25);
+            // 
+            // tabPrepAnalAnalysis
+            // 
+            this.tabPrepAnalAnalysis.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.tabPrepAnalAnalysis.Controls.Add(this.panel76);
+            this.tabPrepAnalAnalysis.Controls.Add(this.panel63);
+            this.tabPrepAnalAnalysis.Location = new System.Drawing.Point(4, 24);
+            this.tabPrepAnalAnalysis.Name = "tabPrepAnalAnalysis";
+            this.tabPrepAnalAnalysis.Size = new System.Drawing.Size(674, 573);
+            this.tabPrepAnalAnalysis.TabIndex = 4;
+            this.tabPrepAnalAnalysis.Text = "Analyses";
+            // 
+            // panel76
+            // 
+            this.panel76.Controls.Add(this.panel9);
+            this.panel76.Controls.Add(this.panel14);
+            this.panel76.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel76.Location = new System.Drawing.Point(0, 246);
+            this.panel76.Name = "panel76";
+            this.panel76.Size = new System.Drawing.Size(674, 327);
+            this.panel76.TabIndex = 3;
+            // 
+            // panel9
+            // 
+            this.panel9.Controls.Add(this.gridPrepAnalResults);
+            this.panel9.Controls.Add(this.toolsSampleResRes);
+            this.panel9.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel9.Location = new System.Drawing.Point(0, 0);
+            this.panel9.Name = "panel9";
+            this.panel9.Size = new System.Drawing.Size(674, 301);
+            this.panel9.TabIndex = 4;
+            // 
+            // gridPrepAnalResults
+            // 
+            this.gridPrepAnalResults.AllowUserToAddRows = false;
+            this.gridPrepAnalResults.AllowUserToDeleteRows = false;
+            this.gridPrepAnalResults.AllowUserToResizeRows = false;
+            this.gridPrepAnalResults.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.gridPrepAnalResults.BackgroundColor = System.Drawing.SystemColors.Window;
+            this.gridPrepAnalResults.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.gridPrepAnalResults.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridPrepAnalResults.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gridPrepAnalResults.Location = new System.Drawing.Point(0, 25);
+            this.gridPrepAnalResults.Name = "gridPrepAnalResults";
+            this.gridPrepAnalResults.ReadOnly = true;
+            this.gridPrepAnalResults.RowHeadersVisible = false;
+            this.gridPrepAnalResults.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.gridPrepAnalResults.Size = new System.Drawing.Size(674, 276);
+            this.gridPrepAnalResults.TabIndex = 0;
+            // 
+            // toolsSampleResRes
+            // 
+            this.toolsSampleResRes.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolsSampleResRes.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripLabel7,
+            this.toolStripSeparator28,
+            this.btnPrepAnalAddResult,
+            this.btnPrepAnalEditResult,
+            this.btnPrepAnalRemoveResult,
+            this.toolStripLabel57});
+            this.toolsSampleResRes.Location = new System.Drawing.Point(0, 0);
+            this.toolsSampleResRes.Name = "toolsSampleResRes";
+            this.toolsSampleResRes.Size = new System.Drawing.Size(674, 25);
+            this.toolsSampleResRes.TabIndex = 0;
+            this.toolsSampleResRes.Text = "toolStrip14";
+            // 
+            // toolStripLabel7
+            // 
+            this.toolStripLabel7.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.toolStripLabel7.Name = "toolStripLabel7";
+            this.toolStripLabel7.Size = new System.Drawing.Size(111, 22);
+            this.toolStripLabel7.Text = "Identified isotopes";
+            // 
+            // toolStripSeparator28
+            // 
+            this.toolStripSeparator28.Name = "toolStripSeparator28";
+            this.toolStripSeparator28.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripLabel57
+            // 
+            this.toolStripLabel57.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripLabel57.Name = "toolStripLabel57";
+            this.toolStripLabel57.Size = new System.Drawing.Size(197, 22);
+            this.toolStripLabel57.Text = "Sigma Activity: 2, Sigma MDA: 1.645";
+            // 
+            // panel14
+            // 
+            this.panel14.Controls.Add(this.cboxPrepAnalAnalWorkflowStatus);
+            this.panel14.Controls.Add(this.label55);
+            this.panel14.Controls.Add(this.btnPrepAnalAnalDiscard);
+            this.panel14.Controls.Add(this.btnPrepAnalAnalUpdate);
+            this.panel14.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel14.Location = new System.Drawing.Point(0, 301);
+            this.panel14.Name = "panel14";
+            this.panel14.Size = new System.Drawing.Size(674, 26);
+            this.panel14.TabIndex = 5;
+            // 
+            // cboxPrepAnalAnalWorkflowStatus
+            // 
+            this.cboxPrepAnalAnalWorkflowStatus.DisplayMember = "Name";
+            this.cboxPrepAnalAnalWorkflowStatus.Dock = System.Windows.Forms.DockStyle.Left;
+            this.cboxPrepAnalAnalWorkflowStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxPrepAnalAnalWorkflowStatus.FormattingEnabled = true;
+            this.cboxPrepAnalAnalWorkflowStatus.Location = new System.Drawing.Point(90, 0);
+            this.cboxPrepAnalAnalWorkflowStatus.Name = "cboxPrepAnalAnalWorkflowStatus";
+            this.cboxPrepAnalAnalWorkflowStatus.Size = new System.Drawing.Size(140, 23);
+            this.cboxPrepAnalAnalWorkflowStatus.TabIndex = 6;
+            this.cboxPrepAnalAnalWorkflowStatus.ValueMember = "Id";
+            this.cboxPrepAnalAnalWorkflowStatus.SelectedIndexChanged += new System.EventHandler(this.cboxPrepAnalAnalWorkflowStatus_SelectedIndexChanged);
+            // 
+            // label55
+            // 
+            this.label55.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label55.Location = new System.Drawing.Point(0, 0);
+            this.label55.Name = "label55";
+            this.label55.Size = new System.Drawing.Size(90, 26);
+            this.label55.TabIndex = 0;
+            this.label55.Text = "Analysis status";
+            this.label55.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // btnPrepAnalAnalDiscard
+            // 
+            this.btnPrepAnalAnalDiscard.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnPrepAnalAnalDiscard.Location = new System.Drawing.Point(394, 0);
+            this.btnPrepAnalAnalDiscard.Name = "btnPrepAnalAnalDiscard";
+            this.btnPrepAnalAnalDiscard.Size = new System.Drawing.Size(140, 26);
+            this.btnPrepAnalAnalDiscard.TabIndex = 8;
+            this.btnPrepAnalAnalDiscard.Text = "Discard changes";
+            this.btnPrepAnalAnalDiscard.UseVisualStyleBackColor = true;
+            this.btnPrepAnalAnalDiscard.Click += new System.EventHandler(this.btnPrepAnalAnalDiscard_Click);
+            // 
+            // btnPrepAnalAnalUpdate
+            // 
+            this.btnPrepAnalAnalUpdate.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnPrepAnalAnalUpdate.Location = new System.Drawing.Point(534, 0);
+            this.btnPrepAnalAnalUpdate.Name = "btnPrepAnalAnalUpdate";
+            this.btnPrepAnalAnalUpdate.Size = new System.Drawing.Size(140, 26);
+            this.btnPrepAnalAnalUpdate.TabIndex = 7;
+            this.btnPrepAnalAnalUpdate.Text = "Save analysis";
+            this.btnPrepAnalAnalUpdate.UseVisualStyleBackColor = true;
+            this.btnPrepAnalAnalUpdate.Click += new System.EventHandler(this.btnPrepAnalAnalUpdate_Click);
+            // 
+            // panel63
+            // 
+            this.panel63.Controls.Add(this.splitContainer21);
+            this.panel63.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel63.Location = new System.Drawing.Point(0, 0);
+            this.panel63.Name = "panel63";
+            this.panel63.Size = new System.Drawing.Size(674, 246);
+            this.panel63.TabIndex = 2;
+            // 
+            // splitContainer21
+            // 
+            this.splitContainer21.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer21.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer21.Name = "splitContainer21";
+            // 
+            // splitContainer21.Panel1
+            // 
+            this.splitContainer21.Panel1.Controls.Add(this.layoutPrepAnalAnal);
+            this.splitContainer21.Panel1.Controls.Add(this.toolStrip1);
+            // 
+            // splitContainer21.Panel2
+            // 
+            this.splitContainer21.Panel2.Controls.Add(this.panel8);
+            this.splitContainer21.Size = new System.Drawing.Size(674, 246);
+            this.splitContainer21.SplitterDistance = 377;
+            this.splitContainer21.SplitterWidth = 3;
+            this.splitContainer21.TabIndex = 5;
+            // 
+            // layoutPrepAnalAnal
+            // 
+            this.layoutPrepAnalAnal.ColumnCount = 2;
+            this.layoutPrepAnalAnal.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.layoutPrepAnalAnal.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 75F));
+            this.layoutPrepAnalAnal.Controls.Add(this.label51, 0, 0);
+            this.layoutPrepAnalAnal.Controls.Add(this.label59, 0, 3);
+            this.layoutPrepAnalAnal.Controls.Add(this.tbPrepAnalAnalMDALib, 1, 3);
+            this.layoutPrepAnalAnal.Controls.Add(this.label58, 0, 2);
+            this.layoutPrepAnalAnal.Controls.Add(this.tbPrepAnalAnalNuclLib, 1, 2);
+            this.layoutPrepAnalAnal.Controls.Add(this.label54, 0, 1);
+            this.layoutPrepAnalAnal.Controls.Add(this.tbPrepAnalAnalSpecRef, 1, 1);
+            this.layoutPrepAnalAnal.Controls.Add(this.label60, 0, 4);
+            this.layoutPrepAnalAnal.Controls.Add(this.tbPrepAnalAnalComment, 1, 4);
+            this.layoutPrepAnalAnal.Controls.Add(this.panelPrepAnalAnalUnit, 1, 0);
+            this.layoutPrepAnalAnal.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.layoutPrepAnalAnal.Location = new System.Drawing.Point(0, 25);
+            this.layoutPrepAnalAnal.Name = "layoutPrepAnalAnal";
+            this.layoutPrepAnalAnal.RowCount = 8;
+            this.layoutPrepAnalAnal.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.layoutPrepAnalAnal.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.layoutPrepAnalAnal.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.layoutPrepAnalAnal.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.layoutPrepAnalAnal.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.layoutPrepAnalAnal.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.layoutPrepAnalAnal.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.layoutPrepAnalAnal.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.layoutPrepAnalAnal.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.layoutPrepAnalAnal.Size = new System.Drawing.Size(377, 221);
+            this.layoutPrepAnalAnal.TabIndex = 10;
+            this.layoutPrepAnalAnal.Resize += new System.EventHandler(this.layoutPrepAnalAnal_Resize);
+            // 
+            // label51
+            // 
+            this.label51.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label51.Location = new System.Drawing.Point(3, 0);
+            this.label51.Name = "label51";
+            this.label51.Size = new System.Drawing.Size(88, 30);
+            this.label51.TabIndex = 0;
+            this.label51.Text = "Unit";
+            this.label51.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label59
+            // 
+            this.label59.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label59.Location = new System.Drawing.Point(3, 90);
+            this.label59.Name = "label59";
+            this.label59.Size = new System.Drawing.Size(88, 30);
+            this.label59.TabIndex = 0;
+            this.label59.Text = "MDA lib.";
+            this.label59.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // tbPrepAnalAnalMDALib
+            // 
+            this.tbPrepAnalAnalMDALib.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbPrepAnalAnalMDALib.Location = new System.Drawing.Point(97, 93);
+            this.tbPrepAnalAnalMDALib.Name = "tbPrepAnalAnalMDALib";
+            this.tbPrepAnalAnalMDALib.ReadOnly = true;
+            this.tbPrepAnalAnalMDALib.Size = new System.Drawing.Size(277, 21);
+            this.tbPrepAnalAnalMDALib.TabIndex = 4;
+            this.tbPrepAnalAnalMDALib.TextChanged += new System.EventHandler(this.tbPrepAnalAnalMDALib_TextChanged);
+            // 
+            // label58
+            // 
+            this.label58.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label58.Location = new System.Drawing.Point(3, 60);
+            this.label58.Name = "label58";
+            this.label58.Size = new System.Drawing.Size(88, 30);
+            this.label58.TabIndex = 0;
+            this.label58.Text = "Nucl. lib.";
+            this.label58.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // tbPrepAnalAnalNuclLib
+            // 
+            this.tbPrepAnalAnalNuclLib.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbPrepAnalAnalNuclLib.Location = new System.Drawing.Point(97, 63);
+            this.tbPrepAnalAnalNuclLib.Name = "tbPrepAnalAnalNuclLib";
+            this.tbPrepAnalAnalNuclLib.ReadOnly = true;
+            this.tbPrepAnalAnalNuclLib.Size = new System.Drawing.Size(277, 21);
+            this.tbPrepAnalAnalNuclLib.TabIndex = 3;
+            this.tbPrepAnalAnalNuclLib.TextChanged += new System.EventHandler(this.tbPrepAnalAnalNuclLib_TextChanged);
+            // 
+            // label54
+            // 
+            this.label54.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label54.Location = new System.Drawing.Point(3, 30);
+            this.label54.Name = "label54";
+            this.label54.Size = new System.Drawing.Size(88, 30);
+            this.label54.TabIndex = 0;
+            this.label54.Text = "Spec. ref.";
+            this.label54.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // tbPrepAnalAnalSpecRef
+            // 
+            this.tbPrepAnalAnalSpecRef.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbPrepAnalAnalSpecRef.Location = new System.Drawing.Point(97, 33);
+            this.tbPrepAnalAnalSpecRef.MaxLength = 256;
+            this.tbPrepAnalAnalSpecRef.Name = "tbPrepAnalAnalSpecRef";
+            this.tbPrepAnalAnalSpecRef.Size = new System.Drawing.Size(277, 21);
+            this.tbPrepAnalAnalSpecRef.TabIndex = 2;
+            this.tbPrepAnalAnalSpecRef.TextChanged += new System.EventHandler(this.tbPrepAnalAnalSpecRef_TextChanged);
+            // 
+            // label60
+            // 
+            this.label60.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label60.Location = new System.Drawing.Point(3, 120);
+            this.label60.Name = "label60";
+            this.label60.Size = new System.Drawing.Size(88, 30);
+            this.label60.TabIndex = 0;
+            this.label60.Text = "Comment";
+            this.label60.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // tbPrepAnalAnalComment
+            // 
+            this.tbPrepAnalAnalComment.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbPrepAnalAnalComment.Location = new System.Drawing.Point(97, 123);
+            this.tbPrepAnalAnalComment.MaxLength = 1000;
+            this.tbPrepAnalAnalComment.Multiline = true;
+            this.tbPrepAnalAnalComment.Name = "tbPrepAnalAnalComment";
+            this.layoutPrepAnalAnal.SetRowSpan(this.tbPrepAnalAnalComment, 3);
+            this.tbPrepAnalAnalComment.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.tbPrepAnalAnalComment.Size = new System.Drawing.Size(277, 84);
+            this.tbPrepAnalAnalComment.TabIndex = 5;
+            this.tbPrepAnalAnalComment.TextChanged += new System.EventHandler(this.tbPrepAnalAnalComment_TextChanged);
+            // 
+            // panelPrepAnalAnalUnit
+            // 
+            this.panelPrepAnalAnalUnit.Controls.Add(this.cboxPrepAnalAnalUnit);
+            this.panelPrepAnalAnalUnit.Controls.Add(this.cboxPrepAnalAnalUnitType);
+            this.panelPrepAnalAnalUnit.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelPrepAnalAnalUnit.Location = new System.Drawing.Point(97, 3);
+            this.panelPrepAnalAnalUnit.Name = "panelPrepAnalAnalUnit";
+            this.panelPrepAnalAnalUnit.Size = new System.Drawing.Size(277, 24);
+            this.panelPrepAnalAnalUnit.TabIndex = 2;
+            // 
+            // cboxPrepAnalAnalUnit
+            // 
+            this.cboxPrepAnalAnalUnit.DisplayMember = "name";
+            this.cboxPrepAnalAnalUnit.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cboxPrepAnalAnalUnit.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxPrepAnalAnalUnit.FormattingEnabled = true;
+            this.cboxPrepAnalAnalUnit.Location = new System.Drawing.Point(0, 0);
+            this.cboxPrepAnalAnalUnit.Name = "cboxPrepAnalAnalUnit";
+            this.cboxPrepAnalAnalUnit.Size = new System.Drawing.Size(136, 23);
+            this.cboxPrepAnalAnalUnit.TabIndex = 0;
+            this.cboxPrepAnalAnalUnit.ValueMember = "id";
+            this.cboxPrepAnalAnalUnit.SelectedIndexChanged += new System.EventHandler(this.cboxPrepAnalAnalUnit_SelectedIndexChanged);
+            // 
+            // cboxPrepAnalAnalUnitType
+            // 
+            this.cboxPrepAnalAnalUnitType.DisplayMember = "Name";
+            this.cboxPrepAnalAnalUnitType.Dock = System.Windows.Forms.DockStyle.Right;
+            this.cboxPrepAnalAnalUnitType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxPrepAnalAnalUnitType.FormattingEnabled = true;
+            this.cboxPrepAnalAnalUnitType.Location = new System.Drawing.Point(136, 0);
+            this.cboxPrepAnalAnalUnitType.Name = "cboxPrepAnalAnalUnitType";
+            this.cboxPrepAnalAnalUnitType.Size = new System.Drawing.Size(141, 23);
+            this.cboxPrepAnalAnalUnitType.TabIndex = 1;
+            this.cboxPrepAnalAnalUnitType.ValueMember = "Id";
+            this.cboxPrepAnalAnalUnitType.SelectedIndexChanged += new System.EventHandler(this.cboxPrepAnalAnalUnitType_SelectedIndexChanged);
+            // 
+            // toolStrip1
+            // 
+            this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripLabel59,
+            this.toolStripSeparator53,
+            this.ddPrepAnalImport2});
+            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(377, 25);
+            this.toolStrip1.TabIndex = 0;
+            this.toolStrip1.Text = "toolStrip1";
+            // 
+            // toolStripLabel59
+            // 
+            this.toolStripLabel59.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.toolStripLabel59.Name = "toolStripLabel59";
+            this.toolStripLabel59.Size = new System.Drawing.Size(50, 22);
+            this.toolStripLabel59.Text = "Analysis";
+            // 
+            // toolStripSeparator53
+            // 
+            this.toolStripSeparator53.Name = "toolStripSeparator53";
+            this.toolStripSeparator53.Size = new System.Drawing.Size(6, 25);
+            // 
+            // panel8
+            // 
+            this.panel8.Controls.Add(this.gridPrepAnalAnalAttachments);
+            this.panel8.Controls.Add(this.toolsSampleResAttachments);
+            this.panel8.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel8.Location = new System.Drawing.Point(0, 0);
+            this.panel8.Name = "panel8";
+            this.panel8.Size = new System.Drawing.Size(294, 246);
+            this.panel8.TabIndex = 3;
+            // 
+            // gridPrepAnalAnalAttachments
+            // 
+            this.gridPrepAnalAnalAttachments.AllowUserToAddRows = false;
+            this.gridPrepAnalAnalAttachments.AllowUserToDeleteRows = false;
+            this.gridPrepAnalAnalAttachments.AllowUserToResizeRows = false;
+            this.gridPrepAnalAnalAttachments.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.gridPrepAnalAnalAttachments.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
+            this.gridPrepAnalAnalAttachments.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.gridPrepAnalAnalAttachments.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridPrepAnalAnalAttachments.ColumnHeadersVisible = false;
+            this.gridPrepAnalAnalAttachments.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gridPrepAnalAnalAttachments.Location = new System.Drawing.Point(0, 25);
+            this.gridPrepAnalAnalAttachments.MultiSelect = false;
+            this.gridPrepAnalAnalAttachments.Name = "gridPrepAnalAnalAttachments";
+            this.gridPrepAnalAnalAttachments.ReadOnly = true;
+            this.gridPrepAnalAnalAttachments.RowHeadersVisible = false;
+            this.gridPrepAnalAnalAttachments.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.gridPrepAnalAnalAttachments.Size = new System.Drawing.Size(294, 221);
+            this.gridPrepAnalAnalAttachments.TabIndex = 1;
+            this.gridPrepAnalAnalAttachments.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridAttachments_CellDoubleClick);
+            // 
+            // toolsSampleResAttachments
+            // 
+            this.toolsSampleResAttachments.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolsSampleResAttachments.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripLabel1,
+            this.toolStripSeparator27,
+            this.btnPrepAnalAnalScanAttachment,
+            this.btnPrepAnalAnalBrowseAttachment,
+            this.btnPrepAnalAnalDeleteAttachment});
+            this.toolsSampleResAttachments.Location = new System.Drawing.Point(0, 0);
+            this.toolsSampleResAttachments.Name = "toolsSampleResAttachments";
+            this.toolsSampleResAttachments.Size = new System.Drawing.Size(294, 25);
+            this.toolsSampleResAttachments.TabIndex = 0;
+            this.toolsSampleResAttachments.Text = "toolStrip11";
+            // 
+            // toolStripLabel1
+            // 
+            this.toolStripLabel1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.toolStripLabel1.Name = "toolStripLabel1";
+            this.toolStripLabel1.Size = new System.Drawing.Size(79, 22);
+            this.toolStripLabel1.Text = "Attachments";
+            // 
+            // toolStripSeparator27
+            // 
+            this.toolStripSeparator27.Name = "toolStripSeparator27";
+            this.toolStripSeparator27.Size = new System.Drawing.Size(6, 25);
+            // 
+            // tools
+            // 
+            this.tools.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.tools.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnMenu,
+            this.lblCurrentTab,
+            this.btnBack});
+            this.tools.Location = new System.Drawing.Point(0, 24);
+            this.tools.Name = "tools";
+            this.tools.Size = new System.Drawing.Size(1072, 25);
+            this.tools.TabIndex = 5;
+            this.tools.Text = "toolStrip29";
+            // 
+            // lblCurrentTab
+            // 
+            this.lblCurrentTab.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.lblCurrentTab.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.lblCurrentTab.Name = "lblCurrentTab";
+            this.lblCurrentTab.Size = new System.Drawing.Size(98, 22);
+            this.lblCurrentTab.Text = "<lblCurrentTab>";
+            // 
+            // toolStripSeparator37
+            // 
+            this.toolStripSeparator37.Name = "toolStripSeparator37";
+            this.toolStripSeparator37.Size = new System.Drawing.Size(6, 25);
+            // 
+            // miSamplesCopy
+            // 
+            this.miSamplesCopy.Name = "miSamplesCopy";
+            this.miSamplesCopy.Size = new System.Drawing.Size(212, 22);
+            this.miSamplesCopy.Text = "&Copy";
+            this.miSamplesCopy.Click += new System.EventHandler(this.miSamplesCopy_Click);
+            // 
+            // toolStripLabel26
+            // 
+            this.toolStripLabel26.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripLabel26.Name = "toolStripLabel26";
+            this.toolStripLabel26.Size = new System.Drawing.Size(197, 22);
+            this.toolStripLabel26.Text = "Sigma Activity: 2, Sigma MDA: 1.645";
+            // 
+            // toolStripSeparator75
+            // 
+            this.toolStripSeparator75.Name = "toolStripSeparator75";
+            this.toolStripSeparator75.Size = new System.Drawing.Size(6, 25);
+            // 
+            // btnMenuSearch
+            // 
+            this.btnMenuSearch.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnMenuSearch.FlatAppearance.BorderSize = 0;
+            this.btnMenuSearch.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.btnMenuSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnMenuSearch.Font = new System.Drawing.Font("Arial", 16F, System.Drawing.FontStyle.Bold);
+            this.btnMenuSearch.Image = global::DSA_lims.Properties.Resources.search_gray;
+            this.btnMenuSearch.Location = new System.Drawing.Point(793, 313);
+            this.btnMenuSearch.Margin = new System.Windows.Forms.Padding(1);
+            this.btnMenuSearch.Name = "btnMenuSearch";
+            this.btnMenuSearch.Size = new System.Drawing.Size(264, 279);
+            this.btnMenuSearch.TabIndex = 7;
+            this.btnMenuSearch.Text = "Results / Statistics";
+            this.btnMenuSearch.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnMenuSearch.UseVisualStyleBackColor = true;
+            this.btnMenuSearch.Click += new System.EventHandler(this.miSearchView_Click);
+            // 
+            // btnMenuMetadata
+            // 
+            this.btnMenuMetadata.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnMenuMetadata.FlatAppearance.BorderSize = 0;
+            this.btnMenuMetadata.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.btnMenuMetadata.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnMenuMetadata.Font = new System.Drawing.Font("Arial", 16F, System.Drawing.FontStyle.Bold);
+            this.btnMenuMetadata.Image = global::DSA_lims.Properties.Resources.new_batch_gray;
+            this.btnMenuMetadata.Location = new System.Drawing.Point(529, 313);
+            this.btnMenuMetadata.Margin = new System.Windows.Forms.Padding(1);
+            this.btnMenuMetadata.Name = "btnMenuMetadata";
+            this.btnMenuMetadata.Size = new System.Drawing.Size(262, 279);
+            this.btnMenuMetadata.TabIndex = 6;
+            this.btnMenuMetadata.Text = "Metadata";
+            this.btnMenuMetadata.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnMenuMetadata.UseVisualStyleBackColor = true;
+            this.btnMenuMetadata.Click += new System.EventHandler(this.miMetadataView_Click);
+            // 
+            // btnMenuCustomer
+            // 
+            this.btnMenuCustomer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnMenuCustomer.FlatAppearance.BorderSize = 0;
+            this.btnMenuCustomer.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.btnMenuCustomer.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnMenuCustomer.Font = new System.Drawing.Font("Arial", 16F, System.Drawing.FontStyle.Bold);
+            this.btnMenuCustomer.Image = global::DSA_lims.Properties.Resources.users_gray;
+            this.btnMenuCustomer.Location = new System.Drawing.Point(265, 313);
+            this.btnMenuCustomer.Margin = new System.Windows.Forms.Padding(1);
+            this.btnMenuCustomer.Name = "btnMenuCustomer";
+            this.btnMenuCustomer.Size = new System.Drawing.Size(262, 279);
+            this.btnMenuCustomer.TabIndex = 5;
+            this.btnMenuCustomer.Text = "Customers";
+            this.btnMenuCustomer.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnMenuCustomer.UseVisualStyleBackColor = true;
+            this.btnMenuCustomer.Click += new System.EventHandler(this.miCustomersView_Click);
+            // 
+            // btnMenuProjects
+            // 
+            this.btnMenuProjects.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnMenuProjects.FlatAppearance.BorderSize = 0;
+            this.btnMenuProjects.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.btnMenuProjects.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnMenuProjects.Font = new System.Drawing.Font("Arial", 16F, System.Drawing.FontStyle.Bold);
+            this.btnMenuProjects.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.btnMenuProjects.Image = global::DSA_lims.Properties.Resources.projects_gray;
+            this.btnMenuProjects.Location = new System.Drawing.Point(1, 313);
+            this.btnMenuProjects.Margin = new System.Windows.Forms.Padding(1);
+            this.btnMenuProjects.Name = "btnMenuProjects";
+            this.btnMenuProjects.Size = new System.Drawing.Size(262, 279);
+            this.btnMenuProjects.TabIndex = 4;
+            this.btnMenuProjects.Text = "Projects";
+            this.btnMenuProjects.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnMenuProjects.UseVisualStyleBackColor = true;
+            this.btnMenuProjects.Click += new System.EventHandler(this.miProjectsView_Click);
+            // 
+            // btnMenuNewSample
+            // 
+            this.btnMenuNewSample.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnMenuNewSample.FlatAppearance.BorderSize = 0;
+            this.btnMenuNewSample.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.btnMenuNewSample.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnMenuNewSample.Font = new System.Drawing.Font("Arial", 16F, System.Drawing.FontStyle.Bold);
+            this.btnMenuNewSample.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.btnMenuNewSample.Image = global::DSA_lims.Properties.Resources.new_gray;
+            this.btnMenuNewSample.Location = new System.Drawing.Point(1, 33);
+            this.btnMenuNewSample.Margin = new System.Windows.Forms.Padding(1);
+            this.btnMenuNewSample.Name = "btnMenuNewSample";
+            this.btnMenuNewSample.Size = new System.Drawing.Size(262, 278);
+            this.btnMenuNewSample.TabIndex = 0;
+            this.btnMenuNewSample.Text = "New sample";
+            this.btnMenuNewSample.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnMenuNewSample.UseVisualStyleBackColor = true;
+            this.btnMenuNewSample.Click += new System.EventHandler(this.miSamplesNew_Click);
+            // 
+            // btnMenuSamples
+            // 
+            this.btnMenuSamples.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnMenuSamples.FlatAppearance.BorderSize = 0;
+            this.btnMenuSamples.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.btnMenuSamples.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnMenuSamples.Font = new System.Drawing.Font("Arial", 16F, System.Drawing.FontStyle.Bold);
+            this.btnMenuSamples.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.btnMenuSamples.Image = global::DSA_lims.Properties.Resources.drawer_gray;
+            this.btnMenuSamples.Location = new System.Drawing.Point(265, 33);
+            this.btnMenuSamples.Margin = new System.Windows.Forms.Padding(1);
+            this.btnMenuSamples.Name = "btnMenuSamples";
+            this.btnMenuSamples.Size = new System.Drawing.Size(262, 278);
+            this.btnMenuSamples.TabIndex = 1;
+            this.btnMenuSamples.Text = "Samples";
+            this.btnMenuSamples.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnMenuSamples.UseVisualStyleBackColor = true;
+            this.btnMenuSamples.Click += new System.EventHandler(this.btnSamples_Click);
+            // 
+            // btnMenuNewOrder
+            // 
+            this.btnMenuNewOrder.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnMenuNewOrder.FlatAppearance.BorderSize = 0;
+            this.btnMenuNewOrder.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.btnMenuNewOrder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnMenuNewOrder.Font = new System.Drawing.Font("Arial", 16F, System.Drawing.FontStyle.Bold);
+            this.btnMenuNewOrder.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.btnMenuNewOrder.Image = global::DSA_lims.Properties.Resources.new_gray;
+            this.btnMenuNewOrder.Location = new System.Drawing.Point(529, 33);
+            this.btnMenuNewOrder.Margin = new System.Windows.Forms.Padding(1);
+            this.btnMenuNewOrder.Name = "btnMenuNewOrder";
+            this.btnMenuNewOrder.Size = new System.Drawing.Size(262, 278);
+            this.btnMenuNewOrder.TabIndex = 2;
+            this.btnMenuNewOrder.Text = "New order";
+            this.btnMenuNewOrder.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnMenuNewOrder.UseVisualStyleBackColor = true;
+            this.btnMenuNewOrder.Click += new System.EventHandler(this.miOrdersNew_Click);
+            // 
+            // btnOrders
+            // 
+            this.btnOrders.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnOrders.FlatAppearance.BorderSize = 0;
+            this.btnOrders.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.btnOrders.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnOrders.Font = new System.Drawing.Font("Arial", 16F, System.Drawing.FontStyle.Bold);
+            this.btnOrders.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.btnOrders.Image = global::DSA_lims.Properties.Resources.drawer_gray;
+            this.btnOrders.Location = new System.Drawing.Point(793, 33);
+            this.btnOrders.Margin = new System.Windows.Forms.Padding(1);
+            this.btnOrders.Name = "btnOrders";
+            this.btnOrders.Size = new System.Drawing.Size(264, 278);
+            this.btnOrders.TabIndex = 3;
+            this.btnOrders.Text = "Orders";
+            this.btnOrders.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnOrders.UseVisualStyleBackColor = true;
+            this.btnOrders.Click += new System.EventHandler(this.btnOrders_Click);
+            // 
+            // btnSampleSelectSampleType
+            // 
+            this.btnSampleSelectSampleType.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnSampleSelectSampleType.Image = global::DSA_lims.Properties.Resources.tree_16;
+            this.btnSampleSelectSampleType.Location = new System.Drawing.Point(583, 0);
+            this.btnSampleSelectSampleType.Name = "btnSampleSelectSampleType";
+            this.btnSampleSelectSampleType.Size = new System.Drawing.Size(22, 24);
+            this.btnSampleSelectSampleType.TabIndex = 1;
+            this.btnSampleSelectSampleType.UseVisualStyleBackColor = true;
+            this.btnSampleSelectSampleType.Click += new System.EventHandler(this.btnSampleSelectSampleType_Click);
+            // 
+            // btnSampleSamplingDateFromClear
+            // 
+            this.btnSampleSamplingDateFromClear.BackgroundImage = global::DSA_lims.Properties.Resources.clear_16;
+            this.btnSampleSamplingDateFromClear.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnSampleSamplingDateFromClear.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnSampleSamplingDateFromClear.Location = new System.Drawing.Point(251, 0);
+            this.btnSampleSamplingDateFromClear.Name = "btnSampleSamplingDateFromClear";
+            this.btnSampleSamplingDateFromClear.Size = new System.Drawing.Size(24, 24);
+            this.btnSampleSamplingDateFromClear.TabIndex = 1;
+            this.btnSampleSamplingDateFromClear.TabStop = false;
+            this.btnSampleSamplingDateFromClear.Click += new System.EventHandler(this.btnSampleSamplingDateFromClear_Click);
+            // 
+            // btnSampleSamplingDateFrom
+            // 
+            this.btnSampleSamplingDateFrom.BackgroundImage = global::DSA_lims.Properties.Resources.datetime_16;
+            this.btnSampleSamplingDateFrom.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnSampleSamplingDateFrom.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnSampleSamplingDateFrom.InitialImage = null;
+            this.btnSampleSamplingDateFrom.Location = new System.Drawing.Point(275, 0);
+            this.btnSampleSamplingDateFrom.Name = "btnSampleSamplingDateFrom";
+            this.btnSampleSamplingDateFrom.Size = new System.Drawing.Size(24, 24);
+            this.btnSampleSamplingDateFrom.TabIndex = 0;
+            this.btnSampleSamplingDateFrom.TabStop = false;
+            this.btnSampleSamplingDateFrom.Click += new System.EventHandler(this.btnSampleSamplingDateFrom_Click);
+            // 
+            // btnSampleSamplingDateToClear
+            // 
+            this.btnSampleSamplingDateToClear.BackgroundImage = global::DSA_lims.Properties.Resources.clear_16;
+            this.btnSampleSamplingDateToClear.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnSampleSamplingDateToClear.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnSampleSamplingDateToClear.Enabled = false;
+            this.btnSampleSamplingDateToClear.Location = new System.Drawing.Point(251, 0);
+            this.btnSampleSamplingDateToClear.Name = "btnSampleSamplingDateToClear";
+            this.btnSampleSamplingDateToClear.Size = new System.Drawing.Size(24, 24);
+            this.btnSampleSamplingDateToClear.TabIndex = 1;
+            this.btnSampleSamplingDateToClear.TabStop = false;
+            this.btnSampleSamplingDateToClear.Click += new System.EventHandler(this.btnSampleSamplingDateToClear_Click);
+            // 
+            // btnSampleSamplingDateTo
+            // 
+            this.btnSampleSamplingDateTo.BackgroundImage = global::DSA_lims.Properties.Resources.datetime_16;
+            this.btnSampleSamplingDateTo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnSampleSamplingDateTo.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnSampleSamplingDateTo.Enabled = false;
+            this.btnSampleSamplingDateTo.Location = new System.Drawing.Point(275, 0);
+            this.btnSampleSamplingDateTo.Name = "btnSampleSamplingDateTo";
+            this.btnSampleSamplingDateTo.Size = new System.Drawing.Size(24, 24);
+            this.btnSampleSamplingDateTo.TabIndex = 0;
+            this.btnSampleSamplingDateTo.TabStop = false;
+            this.btnSampleSamplingDateTo.Click += new System.EventHandler(this.btnSampleSamplingDateTo_Click);
+            // 
+            // btnSampleReferenceDateClear
+            // 
+            this.btnSampleReferenceDateClear.BackgroundImage = global::DSA_lims.Properties.Resources.clear_16;
+            this.btnSampleReferenceDateClear.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnSampleReferenceDateClear.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnSampleReferenceDateClear.Location = new System.Drawing.Point(251, 0);
+            this.btnSampleReferenceDateClear.Name = "btnSampleReferenceDateClear";
+            this.btnSampleReferenceDateClear.Size = new System.Drawing.Size(24, 24);
+            this.btnSampleReferenceDateClear.TabIndex = 1;
+            this.btnSampleReferenceDateClear.TabStop = false;
+            this.btnSampleReferenceDateClear.Click += new System.EventHandler(this.btnSampleReferenceDateClear_Click);
+            // 
+            // btnSampleReferenceDate
+            // 
+            this.btnSampleReferenceDate.BackgroundImage = global::DSA_lims.Properties.Resources.datetime_16;
+            this.btnSampleReferenceDate.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnSampleReferenceDate.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnSampleReferenceDate.Location = new System.Drawing.Point(275, 0);
+            this.btnSampleReferenceDate.Name = "btnSampleReferenceDate";
+            this.btnSampleReferenceDate.Size = new System.Drawing.Size(24, 24);
+            this.btnSampleReferenceDate.TabIndex = 0;
+            this.btnSampleReferenceDate.TabStop = false;
+            this.btnSampleReferenceDate.Click += new System.EventHandler(this.btnSampleReferenceDate_Click);
+            // 
+            // btnSampleAddSampleToOrder
+            // 
+            this.btnSampleAddSampleToOrder.Image = global::DSA_lims.Properties.Resources._new;
+            this.btnSampleAddSampleToOrder.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSampleAddSampleToOrder.Name = "btnSampleAddSampleToOrder";
+            this.btnSampleAddSampleToOrder.Size = new System.Drawing.Size(135, 22);
+            this.btnSampleAddSampleToOrder.Text = "Add sample to order";
+            this.btnSampleAddSampleToOrder.Click += new System.EventHandler(this.btnSampleAddSampleToOrder_Click);
+            // 
+            // btnSampleGoToPrepAnal
+            // 
+            this.btnSampleGoToPrepAnal.Image = global::DSA_lims.Properties.Resources.right;
+            this.btnSampleGoToPrepAnal.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSampleGoToPrepAnal.Name = "btnSampleGoToPrepAnal";
+            this.btnSampleGoToPrepAnal.Size = new System.Drawing.Size(195, 22);
+            this.btnSampleGoToPrepAnal.Text = "Go to preparations and analyses";
+            this.btnSampleGoToPrepAnal.Click += new System.EventHandler(this.btnSampleGoToPrepAnal_Click);
+            // 
+            // btnSamplePrintSampleLabel
+            // 
+            this.btnSamplePrintSampleLabel.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.btnSamplePrintSampleLabel.Image = global::DSA_lims.Properties.Resources.printer;
+            this.btnSamplePrintSampleLabel.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSamplePrintSampleLabel.Name = "btnSamplePrintSampleLabel";
+            this.btnSamplePrintSampleLabel.Size = new System.Drawing.Size(121, 22);
+            this.btnSamplePrintSampleLabel.Text = "Print sample label";
+            this.btnSamplePrintSampleLabel.Click += new System.EventHandler(this.btnSamplePrintSampleLabel_Click);
+            // 
+            // btnSampleScanAttachment
+            // 
+            this.btnSampleScanAttachment.Image = global::DSA_lims.Properties.Resources.scan;
+            this.btnSampleScanAttachment.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSampleScanAttachment.Name = "btnSampleScanAttachment";
+            this.btnSampleScanAttachment.Size = new System.Drawing.Size(52, 22);
+            this.btnSampleScanAttachment.Text = "Scan";
+            this.btnSampleScanAttachment.Click += new System.EventHandler(this.btnSampleScanAttachment_Click);
+            // 
+            // btnSampleBrowseAttachment
+            // 
+            this.btnSampleBrowseAttachment.Image = global::DSA_lims.Properties.Resources.projects;
+            this.btnSampleBrowseAttachment.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSampleBrowseAttachment.Name = "btnSampleBrowseAttachment";
+            this.btnSampleBrowseAttachment.Size = new System.Drawing.Size(65, 22);
+            this.btnSampleBrowseAttachment.Text = "Browse";
+            this.btnSampleBrowseAttachment.Click += new System.EventHandler(this.btnSampleBrowseAttachment_Click);
+            // 
+            // btnSampleDeleteAttachment
+            // 
+            this.btnSampleDeleteAttachment.Image = global::DSA_lims.Properties.Resources.delete;
+            this.btnSampleDeleteAttachment.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSampleDeleteAttachment.Name = "btnSampleDeleteAttachment";
+            this.btnSampleDeleteAttachment.Size = new System.Drawing.Size(60, 22);
+            this.btnSampleDeleteAttachment.Text = "Delete";
+            this.btnSampleDeleteAttachment.Click += new System.EventHandler(this.btnSampleDeleteAttachment_Click);
+            // 
+            // btnSampleParamAdd
+            // 
+            this.btnSampleParamAdd.Image = global::DSA_lims.Properties.Resources._new;
+            this.btnSampleParamAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSampleParamAdd.Name = "btnSampleParamAdd";
+            this.btnSampleParamAdd.Size = new System.Drawing.Size(49, 22);
+            this.btnSampleParamAdd.Text = "Add";
+            this.btnSampleParamAdd.Click += new System.EventHandler(this.btnSampleParamAdd_Click);
+            // 
+            // btnSampleParamEdit
+            // 
+            this.btnSampleParamEdit.Image = global::DSA_lims.Properties.Resources.edit;
+            this.btnSampleParamEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSampleParamEdit.Name = "btnSampleParamEdit";
+            this.btnSampleParamEdit.Size = new System.Drawing.Size(47, 22);
+            this.btnSampleParamEdit.Text = "Edit";
+            this.btnSampleParamEdit.Click += new System.EventHandler(this.btnSampleParamEdit_Click);
+            // 
+            // btnSampleParamRemove
+            // 
+            this.btnSampleParamRemove.Image = global::DSA_lims.Properties.Resources.delete;
+            this.btnSampleParamRemove.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSampleParamRemove.Name = "btnSampleParamRemove";
+            this.btnSampleParamRemove.Size = new System.Drawing.Size(70, 22);
+            this.btnSampleParamRemove.Text = "Remove";
+            this.btnSampleParamRemove.Click += new System.EventHandler(this.btnSampleParamRemove_Click);
+            // 
+            // btnOrderScanAttachment
+            // 
+            this.btnOrderScanAttachment.Image = global::DSA_lims.Properties.Resources.scan;
+            this.btnOrderScanAttachment.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnOrderScanAttachment.Name = "btnOrderScanAttachment";
+            this.btnOrderScanAttachment.Size = new System.Drawing.Size(52, 22);
+            this.btnOrderScanAttachment.Text = "Scan";
+            this.btnOrderScanAttachment.Click += new System.EventHandler(this.btnOrderScanAttachment_Click);
+            // 
+            // btnOrderBrowseAttachment
+            // 
+            this.btnOrderBrowseAttachment.Image = global::DSA_lims.Properties.Resources.projects;
+            this.btnOrderBrowseAttachment.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnOrderBrowseAttachment.Name = "btnOrderBrowseAttachment";
+            this.btnOrderBrowseAttachment.Size = new System.Drawing.Size(65, 22);
+            this.btnOrderBrowseAttachment.Text = "Browse";
+            this.btnOrderBrowseAttachment.Click += new System.EventHandler(this.btnOrderBrowseAttachment_Click);
+            // 
+            // btnOrderDeleteAttachment
+            // 
+            this.btnOrderDeleteAttachment.Image = global::DSA_lims.Properties.Resources.delete;
+            this.btnOrderDeleteAttachment.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnOrderDeleteAttachment.Name = "btnOrderDeleteAttachment";
+            this.btnOrderDeleteAttachment.Size = new System.Drawing.Size(60, 22);
+            this.btnOrderDeleteAttachment.Text = "Delete";
+            this.btnOrderDeleteAttachment.Click += new System.EventHandler(this.btnOrderDeleteAttachment_Click);
+            // 
+            // btnOrderClearDeadline
+            // 
+            this.btnOrderClearDeadline.BackgroundImage = global::DSA_lims.Properties.Resources.clear_16;
+            this.btnOrderClearDeadline.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnOrderClearDeadline.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnOrderClearDeadline.Location = new System.Drawing.Point(184, 0);
+            this.btnOrderClearDeadline.Name = "btnOrderClearDeadline";
+            this.btnOrderClearDeadline.Size = new System.Drawing.Size(24, 24);
+            this.btnOrderClearDeadline.TabIndex = 3;
+            this.btnOrderClearDeadline.TabStop = false;
+            this.btnOrderClearDeadline.Click += new System.EventHandler(this.btnOrderClearDeadline_Click);
+            // 
+            // btnOrderSelectDeadline
+            // 
+            this.btnOrderSelectDeadline.BackgroundImage = global::DSA_lims.Properties.Resources.datetime_16;
+            this.btnOrderSelectDeadline.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnOrderSelectDeadline.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnOrderSelectDeadline.InitialImage = null;
+            this.btnOrderSelectDeadline.Location = new System.Drawing.Point(208, 0);
+            this.btnOrderSelectDeadline.Name = "btnOrderSelectDeadline";
+            this.btnOrderSelectDeadline.Size = new System.Drawing.Size(24, 24);
+            this.btnOrderSelectDeadline.TabIndex = 2;
+            this.btnOrderSelectDeadline.TabStop = false;
+            this.btnOrderSelectDeadline.Click += new System.EventHandler(this.btnOrderSelectDeadline_Click);
+            // 
+            // btnOrderSelectCustomer
+            // 
+            this.btnOrderSelectCustomer.BackgroundImage = global::DSA_lims.Properties.Resources.user_16;
+            this.btnOrderSelectCustomer.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnOrderSelectCustomer.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnOrderSelectCustomer.Location = new System.Drawing.Point(208, 0);
+            this.btnOrderSelectCustomer.Name = "btnOrderSelectCustomer";
+            this.btnOrderSelectCustomer.Size = new System.Drawing.Size(24, 24);
+            this.btnOrderSelectCustomer.TabIndex = 0;
+            this.btnOrderSelectCustomer.TabStop = false;
+            this.btnOrderSelectCustomer.Click += new System.EventHandler(this.btnOrderSelectCustomer_Click);
+            // 
+            // ddbOrderAdd
+            // 
+            this.ddbOrderAdd.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnOrderAddSampleType,
+            this.btnOrderAddPrepMeth,
+            this.btnOrderAddAnalMeth});
+            this.ddbOrderAdd.Image = global::DSA_lims.Properties.Resources._new;
+            this.ddbOrderAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.ddbOrderAdd.Name = "ddbOrderAdd";
+            this.ddbOrderAdd.Size = new System.Drawing.Size(67, 22);
+            this.ddbOrderAdd.Text = "Add...";
+            // 
+            // btnOrderAddSampleType
+            // 
+            this.btnOrderAddSampleType.Name = "btnOrderAddSampleType";
+            this.btnOrderAddSampleType.Size = new System.Drawing.Size(180, 22);
+            this.btnOrderAddSampleType.Text = "Sample type";
+            this.btnOrderAddSampleType.Click += new System.EventHandler(this.miOrderAddSampleType_Click);
+            // 
+            // btnOrderAddPrepMeth
+            // 
+            this.btnOrderAddPrepMeth.Enabled = false;
+            this.btnOrderAddPrepMeth.Name = "btnOrderAddPrepMeth";
+            this.btnOrderAddPrepMeth.Size = new System.Drawing.Size(180, 22);
+            this.btnOrderAddPrepMeth.Text = "Preparation method";
+            this.btnOrderAddPrepMeth.Click += new System.EventHandler(this.miOrderAddPrepMeth_Click);
+            // 
+            // btnOrderAddAnalMeth
+            // 
+            this.btnOrderAddAnalMeth.Enabled = false;
+            this.btnOrderAddAnalMeth.Name = "btnOrderAddAnalMeth";
+            this.btnOrderAddAnalMeth.Size = new System.Drawing.Size(180, 22);
+            this.btnOrderAddAnalMeth.Text = "Analysis method";
+            this.btnOrderAddAnalMeth.Click += new System.EventHandler(this.miOrderAddAnalMeth_Click);
+            // 
+            // ddbOrderEdit
+            // 
+            this.ddbOrderEdit.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnOrderEditSampleType});
+            this.ddbOrderEdit.Image = global::DSA_lims.Properties.Resources.edit;
+            this.ddbOrderEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.ddbOrderEdit.Name = "ddbOrderEdit";
+            this.ddbOrderEdit.Size = new System.Drawing.Size(65, 22);
+            this.ddbOrderEdit.Text = "Edit...";
+            // 
+            // btnOrderEditSampleType
+            // 
+            this.btnOrderEditSampleType.Name = "btnOrderEditSampleType";
+            this.btnOrderEditSampleType.Size = new System.Drawing.Size(139, 22);
+            this.btnOrderEditSampleType.Text = "Sample type";
+            this.btnOrderEditSampleType.Click += new System.EventHandler(this.btnOrderEditSampleType_Click);
+            // 
+            // ddbOrderDel
+            // 
+            this.ddbOrderDel.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnOrderDelSampleType});
+            this.ddbOrderDel.Image = global::DSA_lims.Properties.Resources.delete;
+            this.ddbOrderDel.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.ddbOrderDel.Name = "ddbOrderDel";
+            this.ddbOrderDel.Size = new System.Drawing.Size(78, 22);
+            this.ddbOrderDel.Text = "Delete...";
+            // 
+            // btnOrderDelSampleType
+            // 
+            this.btnOrderDelSampleType.Name = "btnOrderDelSampleType";
+            this.btnOrderDelSampleType.Size = new System.Drawing.Size(139, 22);
+            this.btnOrderDelSampleType.Text = "Sample type";
+            this.btnOrderDelSampleType.Click += new System.EventHandler(this.miOrderRemSampleType_Click);
+            // 
+            // btnOrderCreateReport
+            // 
+            this.btnOrderCreateReport.Image = global::DSA_lims.Properties.Resources.report;
+            this.btnOrderCreateReport.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnOrderCreateReport.Name = "btnOrderCreateReport";
+            this.btnOrderCreateReport.Size = new System.Drawing.Size(127, 22);
+            this.btnOrderCreateReport.Text = "Create order report";
+            this.btnOrderCreateReport.Click += new System.EventHandler(this.btnOrderCreateReport_Click);
+            // 
+            // btnOrderRemoveSampleFromOrder
+            // 
+            this.btnOrderRemoveSampleFromOrder.Enabled = false;
+            this.btnOrderRemoveSampleFromOrder.Image = global::DSA_lims.Properties.Resources.delete;
+            this.btnOrderRemoveSampleFromOrder.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnOrderRemoveSampleFromOrder.Name = "btnOrderRemoveSampleFromOrder";
+            this.btnOrderRemoveSampleFromOrder.Size = new System.Drawing.Size(171, 22);
+            this.btnOrderRemoveSampleFromOrder.Text = "Remove sample from order";
+            this.btnOrderRemoveSampleFromOrder.Click += new System.EventHandler(this.btnOrderRemoveSampleFromOrder_Click);
+            // 
+            // btnOrderGoToPrepAnal
+            // 
+            this.btnOrderGoToPrepAnal.Enabled = false;
+            this.btnOrderGoToPrepAnal.Image = global::DSA_lims.Properties.Resources.right;
+            this.btnOrderGoToPrepAnal.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnOrderGoToPrepAnal.Name = "btnOrderGoToPrepAnal";
+            this.btnOrderGoToPrepAnal.Size = new System.Drawing.Size(195, 22);
+            this.btnOrderGoToPrepAnal.Text = "Go to preparations and analyses";
+            this.btnOrderGoToPrepAnal.Click += new System.EventHandler(this.btnOrderGoToPrepAnal_Click);
+            // 
+            // toolStripButton2
+            // 
+            this.toolStripButton2.Image = global::DSA_lims.Properties.Resources.report;
+            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton2.Name = "toolStripButton2";
+            this.toolStripButton2.Size = new System.Drawing.Size(94, 22);
+            this.toolStripButton2.Text = "Show as PDF";
+            // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.Image = global::DSA_lims.Properties.Resources.info;
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(150, 22);
+            this.toolStripButton1.Text = "Show sample summary";
+            // 
+            // toolStripDropDownButton1
+            // 
+            this.toolStripDropDownButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.asPDFToolStripMenuItem,
+            this.onMapToolStripMenuItem});
+            this.toolStripDropDownButton1.Image = global::DSA_lims.Properties.Resources.menu;
+            this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
+            this.toolStripDropDownButton1.Size = new System.Drawing.Size(111, 22);
+            this.toolStripDropDownButton1.Text = "Show results...";
+            // 
+            // asPDFToolStripMenuItem
+            // 
+            this.asPDFToolStripMenuItem.Image = global::DSA_lims.Properties.Resources.report;
+            this.asPDFToolStripMenuItem.Name = "asPDFToolStripMenuItem";
+            this.asPDFToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.asPDFToolStripMenuItem.Text = "As PDF";
+            // 
+            // onMapToolStripMenuItem
+            // 
+            this.onMapToolStripMenuItem.Image = global::DSA_lims.Properties.Resources.map;
+            this.onMapToolStripMenuItem.Name = "onMapToolStripMenuItem";
+            this.onMapToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.onMapToolStripMenuItem.Text = "On map";
+            // 
+            // toolStripButton64
+            // 
+            this.toolStripButton64.Image = global::DSA_lims.Properties.Resources._new;
+            this.toolStripButton64.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton64.Name = "toolStripButton64";
+            this.toolStripButton64.Size = new System.Drawing.Size(51, 22);
+            this.toolStripButton64.Text = "New";
+            this.toolStripButton64.Click += new System.EventHandler(this.miNewStation_Click);
+            // 
+            // toolStripButton65
+            // 
+            this.toolStripButton65.Image = global::DSA_lims.Properties.Resources.edit;
+            this.toolStripButton65.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton65.Name = "toolStripButton65";
+            this.toolStripButton65.Size = new System.Drawing.Size(47, 22);
+            this.toolStripButton65.Text = "Edit";
+            this.toolStripButton65.Click += new System.EventHandler(this.miEditStation_Click);
+            // 
+            // toolStripButton66
+            // 
+            this.toolStripButton66.Image = global::DSA_lims.Properties.Resources.delete;
+            this.toolStripButton66.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton66.Name = "toolStripButton66";
+            this.toolStripButton66.Size = new System.Drawing.Size(60, 22);
+            this.toolStripButton66.Text = "Delete";
+            this.toolStripButton66.Click += new System.EventHandler(this.miDeleteStation_Click);
+            // 
+            // toolStripButton67
+            // 
+            this.toolStripButton67.Image = global::DSA_lims.Properties.Resources._new;
+            this.toolStripButton67.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton67.Name = "toolStripButton67";
+            this.toolStripButton67.Size = new System.Drawing.Size(51, 22);
+            this.toolStripButton67.Text = "New";
+            this.toolStripButton67.Click += new System.EventHandler(this.miNewSampleStorage_Click);
+            // 
+            // toolStripButton68
+            // 
+            this.toolStripButton68.Image = global::DSA_lims.Properties.Resources.edit;
+            this.toolStripButton68.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton68.Name = "toolStripButton68";
+            this.toolStripButton68.Size = new System.Drawing.Size(47, 22);
+            this.toolStripButton68.Text = "Edit";
+            this.toolStripButton68.Click += new System.EventHandler(this.miEditSampleStorage_Click);
+            // 
+            // toolStripButton69
+            // 
+            this.toolStripButton69.Image = global::DSA_lims.Properties.Resources.delete;
+            this.toolStripButton69.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton69.Name = "toolStripButton69";
+            this.toolStripButton69.Size = new System.Drawing.Size(60, 22);
+            this.toolStripButton69.Text = "Delete";
+            this.toolStripButton69.Click += new System.EventHandler(this.miDeleteSampleStorage_Click);
+            // 
+            // btnMetaUnitPrepUnitsNew
+            // 
+            this.btnMetaUnitPrepUnitsNew.Image = global::DSA_lims.Properties.Resources._new;
+            this.btnMetaUnitPrepUnitsNew.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnMetaUnitPrepUnitsNew.Name = "btnMetaUnitPrepUnitsNew";
+            this.btnMetaUnitPrepUnitsNew.Size = new System.Drawing.Size(51, 22);
+            this.btnMetaUnitPrepUnitsNew.Text = "New";
+            // 
+            // btnMetaUnitPrepUnitsEdit
+            // 
+            this.btnMetaUnitPrepUnitsEdit.Image = global::DSA_lims.Properties.Resources.edit;
+            this.btnMetaUnitPrepUnitsEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnMetaUnitPrepUnitsEdit.Name = "btnMetaUnitPrepUnitsEdit";
+            this.btnMetaUnitPrepUnitsEdit.Size = new System.Drawing.Size(47, 22);
+            this.btnMetaUnitPrepUnitsEdit.Text = "Edit";
+            // 
+            // btnMetaUnitPrepUnitsDelete
+            // 
+            this.btnMetaUnitPrepUnitsDelete.Image = global::DSA_lims.Properties.Resources.delete;
+            this.btnMetaUnitPrepUnitsDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnMetaUnitPrepUnitsDelete.Name = "btnMetaUnitPrepUnitsDelete";
+            this.btnMetaUnitPrepUnitsDelete.Size = new System.Drawing.Size(60, 22);
+            this.btnMetaUnitPrepUnitsDelete.Text = "Delete";
+            // 
+            // btnMetaUnitQuantUnitsNew
+            // 
+            this.btnMetaUnitQuantUnitsNew.Image = global::DSA_lims.Properties.Resources._new;
+            this.btnMetaUnitQuantUnitsNew.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnMetaUnitQuantUnitsNew.Name = "btnMetaUnitQuantUnitsNew";
+            this.btnMetaUnitQuantUnitsNew.Size = new System.Drawing.Size(51, 22);
+            this.btnMetaUnitQuantUnitsNew.Text = "New";
+            // 
+            // btnMetaUnitQuantUnitsEdit
+            // 
+            this.btnMetaUnitQuantUnitsEdit.Image = global::DSA_lims.Properties.Resources.edit;
+            this.btnMetaUnitQuantUnitsEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnMetaUnitQuantUnitsEdit.Name = "btnMetaUnitQuantUnitsEdit";
+            this.btnMetaUnitQuantUnitsEdit.Size = new System.Drawing.Size(47, 22);
+            this.btnMetaUnitQuantUnitsEdit.Text = "Edit";
+            // 
+            // btnMetaUnitQuantUnitsDelete
+            // 
+            this.btnMetaUnitQuantUnitsDelete.Image = global::DSA_lims.Properties.Resources.delete;
+            this.btnMetaUnitQuantUnitsDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnMetaUnitQuantUnitsDelete.Name = "btnMetaUnitQuantUnitsDelete";
+            this.btnMetaUnitQuantUnitsDelete.Size = new System.Drawing.Size(60, 22);
+            this.btnMetaUnitQuantUnitsDelete.Text = "Delete";
+            // 
+            // btnMetaUnitActivityUnitsNew
+            // 
+            this.btnMetaUnitActivityUnitsNew.Image = global::DSA_lims.Properties.Resources._new;
+            this.btnMetaUnitActivityUnitsNew.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnMetaUnitActivityUnitsNew.Name = "btnMetaUnitActivityUnitsNew";
+            this.btnMetaUnitActivityUnitsNew.Size = new System.Drawing.Size(51, 22);
+            this.btnMetaUnitActivityUnitsNew.Text = "New";
+            // 
+            // btnMetaUnitActivityUnitsEdit
+            // 
+            this.btnMetaUnitActivityUnitsEdit.Image = global::DSA_lims.Properties.Resources.edit;
+            this.btnMetaUnitActivityUnitsEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnMetaUnitActivityUnitsEdit.Name = "btnMetaUnitActivityUnitsEdit";
+            this.btnMetaUnitActivityUnitsEdit.Size = new System.Drawing.Size(47, 22);
+            this.btnMetaUnitActivityUnitsEdit.Text = "Edit";
+            // 
+            // btnMetaUnitActivityUnitsDelete
+            // 
+            this.btnMetaUnitActivityUnitsDelete.Image = global::DSA_lims.Properties.Resources.delete;
+            this.btnMetaUnitActivityUnitsDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnMetaUnitActivityUnitsDelete.Name = "btnMetaUnitActivityUnitsDelete";
+            this.btnMetaUnitActivityUnitsDelete.Size = new System.Drawing.Size(60, 22);
+            this.btnMetaUnitActivityUnitsDelete.Text = "Delete";
+            // 
+            // btnMetaUnitActivityUnitTypesNew
+            // 
+            this.btnMetaUnitActivityUnitTypesNew.Image = global::DSA_lims.Properties.Resources._new;
+            this.btnMetaUnitActivityUnitTypesNew.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnMetaUnitActivityUnitTypesNew.Name = "btnMetaUnitActivityUnitTypesNew";
+            this.btnMetaUnitActivityUnitTypesNew.Size = new System.Drawing.Size(51, 22);
+            this.btnMetaUnitActivityUnitTypesNew.Text = "New";
+            // 
+            // btnMetaUnitActivityUnitTypesEdit
+            // 
+            this.btnMetaUnitActivityUnitTypesEdit.Image = global::DSA_lims.Properties.Resources.edit;
+            this.btnMetaUnitActivityUnitTypesEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnMetaUnitActivityUnitTypesEdit.Name = "btnMetaUnitActivityUnitTypesEdit";
+            this.btnMetaUnitActivityUnitTypesEdit.Size = new System.Drawing.Size(47, 22);
+            this.btnMetaUnitActivityUnitTypesEdit.Text = "Edit";
+            // 
+            // btnMetaUnitActivityUnitTypesDelete
+            // 
+            this.btnMetaUnitActivityUnitTypesDelete.Image = global::DSA_lims.Properties.Resources.delete;
+            this.btnMetaUnitActivityUnitTypesDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnMetaUnitActivityUnitTypesDelete.Name = "btnMetaUnitActivityUnitTypesDelete";
+            this.btnMetaUnitActivityUnitTypesDelete.Size = new System.Drawing.Size(60, 22);
+            this.btnMetaUnitActivityUnitTypesDelete.Text = "Delete";
+            // 
+            // toolStripButton62
+            // 
+            this.toolStripButton62.Image = global::DSA_lims.Properties.Resources._new;
+            this.toolStripButton62.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton62.Name = "toolStripButton62";
+            this.toolStripButton62.Size = new System.Drawing.Size(51, 22);
+            this.toolStripButton62.Text = "New";
+            this.toolStripButton62.Click += new System.EventHandler(this.miSamplerNew_Click);
+            // 
+            // toolStripButton63
+            // 
+            this.toolStripButton63.Image = global::DSA_lims.Properties.Resources.edit;
+            this.toolStripButton63.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton63.Name = "toolStripButton63";
+            this.toolStripButton63.Size = new System.Drawing.Size(47, 22);
+            this.toolStripButton63.Text = "Edit";
+            this.toolStripButton63.Click += new System.EventHandler(this.miSamplerEdit_Click);
+            // 
+            // toolStripButton75
+            // 
+            this.toolStripButton75.Image = global::DSA_lims.Properties.Resources.delete;
+            this.toolStripButton75.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton75.Name = "toolStripButton75";
+            this.toolStripButton75.Size = new System.Drawing.Size(60, 22);
+            this.toolStripButton75.Text = "Delete";
+            this.toolStripButton75.Click += new System.EventHandler(this.miSamplerDelete_Click);
+            // 
+            // toolStripButton82
+            // 
+            this.toolStripButton82.Image = global::DSA_lims.Properties.Resources._new;
+            this.toolStripButton82.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton82.Name = "toolStripButton82";
+            this.toolStripButton82.Size = new System.Drawing.Size(51, 22);
+            this.toolStripButton82.Text = "New";
+            this.toolStripButton82.Click += new System.EventHandler(this.miSamplingMethodNew_Click);
+            // 
+            // toolStripButton83
+            // 
+            this.toolStripButton83.Image = global::DSA_lims.Properties.Resources.edit;
+            this.toolStripButton83.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton83.Name = "toolStripButton83";
+            this.toolStripButton83.Size = new System.Drawing.Size(47, 22);
+            this.toolStripButton83.Text = "Edit";
+            this.toolStripButton83.Click += new System.EventHandler(this.miSamplingMethodEdit_Click);
+            // 
+            // toolStripButton84
+            // 
+            this.toolStripButton84.Image = global::DSA_lims.Properties.Resources.delete;
+            this.toolStripButton84.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton84.Name = "toolStripButton84";
+            this.toolStripButton84.Size = new System.Drawing.Size(60, 22);
+            this.toolStripButton84.Text = "Delete";
+            this.toolStripButton84.Click += new System.EventHandler(this.miSamplingMethodDelete_Click);
+            // 
+            // toolStripButton14
+            // 
+            this.toolStripButton14.Image = global::DSA_lims.Properties.Resources._new;
+            this.toolStripButton14.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton14.Name = "toolStripButton14";
+            this.toolStripButton14.Size = new System.Drawing.Size(51, 22);
+            this.toolStripButton14.Text = "New";
+            this.toolStripButton14.Click += new System.EventHandler(this.miCompanyNew_Click);
+            // 
+            // toolStripButton15
+            // 
+            this.toolStripButton15.Image = global::DSA_lims.Properties.Resources.edit;
+            this.toolStripButton15.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton15.Name = "toolStripButton15";
+            this.toolStripButton15.Size = new System.Drawing.Size(47, 22);
+            this.toolStripButton15.Text = "Edit";
+            this.toolStripButton15.Click += new System.EventHandler(this.miCompanyEdit_Click);
+            // 
+            // toolStripButton25
+            // 
+            this.toolStripButton25.Image = global::DSA_lims.Properties.Resources.delete;
+            this.toolStripButton25.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton25.Name = "toolStripButton25";
+            this.toolStripButton25.Size = new System.Drawing.Size(60, 22);
+            this.toolStripButton25.Text = "Delete";
+            this.toolStripButton25.Click += new System.EventHandler(this.miCompanyDelete_Click);
+            // 
+            // btnCustomersNew
+            // 
+            this.btnCustomersNew.Image = ((System.Drawing.Image)(resources.GetObject("btnCustomersNew.Image")));
+            this.btnCustomersNew.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnCustomersNew.Name = "btnCustomersNew";
+            this.btnCustomersNew.Size = new System.Drawing.Size(49, 22);
+            this.btnCustomersNew.Text = "Add";
+            this.btnCustomersNew.Click += new System.EventHandler(this.miCustomersNew_Click);
+            // 
+            // btnCustomersEdit
+            // 
+            this.btnCustomersEdit.Image = ((System.Drawing.Image)(resources.GetObject("btnCustomersEdit.Image")));
+            this.btnCustomersEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnCustomersEdit.Name = "btnCustomersEdit";
+            this.btnCustomersEdit.Size = new System.Drawing.Size(47, 22);
+            this.btnCustomersEdit.Text = "Edit";
+            this.btnCustomersEdit.Click += new System.EventHandler(this.miCustomersEdit_Click);
+            // 
+            // btnCustomersDelete
+            // 
+            this.btnCustomersDelete.Image = ((System.Drawing.Image)(resources.GetObject("btnCustomersDelete.Image")));
+            this.btnCustomersDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnCustomersDelete.Name = "btnCustomersDelete";
+            this.btnCustomersDelete.Size = new System.Drawing.Size(60, 22);
+            this.btnCustomersDelete.Text = "Delete";
+            this.btnCustomersDelete.Click += new System.EventHandler(this.miCustomersDelete_Click);
+            // 
+            // btnOrdersNew
+            // 
+            this.btnOrdersNew.Image = global::DSA_lims.Properties.Resources._new;
+            this.btnOrdersNew.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnOrdersNew.Name = "btnOrdersNew";
+            this.btnOrdersNew.Size = new System.Drawing.Size(51, 22);
+            this.btnOrdersNew.Text = "New";
+            this.btnOrdersNew.Click += new System.EventHandler(this.miOrdersNew_Click);
+            // 
+            // btnOrdersEdit
+            // 
+            this.btnOrdersEdit.Image = global::DSA_lims.Properties.Resources.edit;
+            this.btnOrdersEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnOrdersEdit.Name = "btnOrdersEdit";
+            this.btnOrdersEdit.Size = new System.Drawing.Size(47, 22);
+            this.btnOrdersEdit.Text = "Edit";
+            this.btnOrdersEdit.Click += new System.EventHandler(this.miOrdersEdit_Click);
+            // 
+            // btnOrdersDelete
+            // 
+            this.btnOrdersDelete.Image = global::DSA_lims.Properties.Resources.delete;
+            this.btnOrdersDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnOrdersDelete.Name = "btnOrdersDelete";
+            this.btnOrdersDelete.Size = new System.Drawing.Size(60, 22);
+            this.btnOrdersDelete.Text = "Delete";
+            this.btnOrdersDelete.Click += new System.EventHandler(this.miOrdersDelete_Click);
+            // 
+            // btnOrdersAssignUsers
+            // 
+            this.btnOrdersAssignUsers.Image = global::DSA_lims.Properties.Resources.users;
+            this.btnOrdersAssignUsers.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnOrdersAssignUsers.Name = "btnOrdersAssignUsers";
+            this.btnOrdersAssignUsers.Size = new System.Drawing.Size(92, 22);
+            this.btnOrdersAssignUsers.Text = "Assign users";
+            this.btnOrdersAssignUsers.Click += new System.EventHandler(this.btnOrdersAssignUsers_Click);
+            // 
+            // btnOrdersSummary
+            // 
+            this.btnOrdersSummary.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.orderSummaryToolStripMenuItem,
+            this.btnOrdersPrepSummary});
+            this.btnOrdersSummary.Image = global::DSA_lims.Properties.Resources.info;
+            this.btnOrdersSummary.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnOrdersSummary.Name = "btnOrdersSummary";
+            this.btnOrdersSummary.Size = new System.Drawing.Size(96, 22);
+            this.btnOrdersSummary.Text = "Summary...";
+            // 
+            // orderSummaryToolStripMenuItem
+            // 
+            this.orderSummaryToolStripMenuItem.Enabled = false;
+            this.orderSummaryToolStripMenuItem.Name = "orderSummaryToolStripMenuItem";
+            this.orderSummaryToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
+            this.orderSummaryToolStripMenuItem.Text = "&Order";
+            // 
+            // btnOrdersPrepSummary
+            // 
+            this.btnOrdersPrepSummary.Name = "btnOrdersPrepSummary";
+            this.btnOrdersPrepSummary.Size = new System.Drawing.Size(135, 22);
+            this.btnOrdersPrepSummary.Text = "&Preparation";
+            this.btnOrdersPrepSummary.Click += new System.EventHandler(this.btnOrdersPrepSummary_Click);
+            // 
+            // btnOrdersUnlock
+            // 
+            this.btnOrdersUnlock.Image = global::DSA_lims.Properties.Resources._switch;
+            this.btnOrdersUnlock.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnOrdersUnlock.Name = "btnOrdersUnlock";
+            this.btnOrdersUnlock.Size = new System.Drawing.Size(64, 22);
+            this.btnOrdersUnlock.Text = "Unlock";
+            this.btnOrdersUnlock.Click += new System.EventHandler(this.miOrdersUnlock_Click);
+            // 
+            // btnOrdersClearAllFilters
+            // 
+            this.btnOrdersClearAllFilters.Image = global::DSA_lims.Properties.Resources.trash;
+            this.btnOrdersClearAllFilters.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnOrdersClearAllFilters.Name = "btnOrdersClearAllFilters";
+            this.btnOrdersClearAllFilters.Size = new System.Drawing.Size(101, 22);
+            this.btnOrdersClearAllFilters.Text = "Clear all filters";
+            this.btnOrdersClearAllFilters.Click += new System.EventHandler(this.miOrdersClearAllFilters_Click);
+            // 
+            // btnSamplesNew
+            // 
+            this.btnSamplesNew.Image = global::DSA_lims.Properties.Resources._new;
+            this.btnSamplesNew.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSamplesNew.Name = "btnSamplesNew";
+            this.btnSamplesNew.Size = new System.Drawing.Size(51, 22);
+            this.btnSamplesNew.Text = "New";
+            this.btnSamplesNew.Click += new System.EventHandler(this.miSamplesNew_Click);
+            // 
+            // btnSamplesEdit
+            // 
+            this.btnSamplesEdit.Image = global::DSA_lims.Properties.Resources.edit;
+            this.btnSamplesEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSamplesEdit.Name = "btnSamplesEdit";
+            this.btnSamplesEdit.Size = new System.Drawing.Size(47, 22);
+            this.btnSamplesEdit.Text = "Edit";
+            this.btnSamplesEdit.Click += new System.EventHandler(this.miSamplesEdit_Click);
+            // 
+            // btnSamplesDelete
+            // 
+            this.btnSamplesDelete.Image = global::DSA_lims.Properties.Resources.delete;
+            this.btnSamplesDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSamplesDelete.Name = "btnSamplesDelete";
+            this.btnSamplesDelete.Size = new System.Drawing.Size(60, 22);
+            this.btnSamplesDelete.Text = "Delete";
+            this.btnSamplesDelete.Click += new System.EventHandler(this.miSamplesDelete_Click);
+            // 
+            // btnSamplesCopy
+            // 
+            this.btnSamplesCopy.Image = global::DSA_lims.Properties.Resources._new;
+            this.btnSamplesCopy.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSamplesCopy.Name = "btnSamplesCopy";
+            this.btnSamplesCopy.Size = new System.Drawing.Size(55, 22);
+            this.btnSamplesCopy.Text = "Copy";
+            this.btnSamplesCopy.Click += new System.EventHandler(this.miSamplesCopy_Click);
+            // 
+            // toolStripDropDownButton3
+            // 
+            this.toolStripDropDownButton3.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.excelToolStripMenuItem});
+            this.toolStripDropDownButton3.Image = global::DSA_lims.Properties.Resources._new;
+            this.toolStripDropDownButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripDropDownButton3.Name = "toolStripDropDownButton3";
+            this.toolStripDropDownButton3.Size = new System.Drawing.Size(81, 22);
+            this.toolStripDropDownButton3.Text = "Import...";
+            // 
+            // excelToolStripMenuItem
+            // 
+            this.excelToolStripMenuItem.Name = "excelToolStripMenuItem";
+            this.excelToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
+            this.excelToolStripMenuItem.Text = "Excel";
+            this.excelToolStripMenuItem.Click += new System.EventHandler(this.miSamplesImportExcel_Click);
+            // 
+            // btnSamplesSplit
+            // 
+            this.btnSamplesSplit.Image = global::DSA_lims.Properties.Resources.split;
+            this.btnSamplesSplit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSamplesSplit.Name = "btnSamplesSplit";
+            this.btnSamplesSplit.Size = new System.Drawing.Size(50, 22);
+            this.btnSamplesSplit.Text = "Split";
+            this.btnSamplesSplit.Click += new System.EventHandler(this.miSamplesSplit_Click);
+            // 
+            // btnSamplesMerge
+            // 
+            this.btnSamplesMerge.Image = global::DSA_lims.Properties.Resources.merge;
+            this.btnSamplesMerge.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSamplesMerge.Name = "btnSamplesMerge";
+            this.btnSamplesMerge.Size = new System.Drawing.Size(61, 22);
+            this.btnSamplesMerge.Text = "Merge";
+            this.btnSamplesMerge.Click += new System.EventHandler(this.miSamplesMerge_Click);
+            // 
+            // btnSamplesSetOrder
+            // 
+            this.btnSamplesSetOrder.Image = global::DSA_lims.Properties.Resources._new;
+            this.btnSamplesSetOrder.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSamplesSetOrder.Name = "btnSamplesSetOrder";
+            this.btnSamplesSetOrder.Size = new System.Drawing.Size(94, 22);
+            this.btnSamplesSetOrder.Text = "Add to order";
+            this.btnSamplesSetOrder.Click += new System.EventHandler(this.miSamplesSetOrder_Click);
+            // 
+            // toolStripDropDownButton2
+            // 
+            this.toolStripDropDownButton2.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.projectToolStripMenuItem,
+            this.customerToolStripMenuItem1,
+            this.samplerToolStripMenuItem1,
+            this.samplingmethodToolStripMenuItem1,
+            this.excemptFromPublicToolStripMenuItem});
+            this.toolStripDropDownButton2.Image = global::DSA_lims.Properties.Resources.set;
+            this.toolStripDropDownButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripDropDownButton2.Name = "toolStripDropDownButton2";
+            this.toolStripDropDownButton2.Size = new System.Drawing.Size(61, 22);
+            this.toolStripDropDownButton2.Text = "Set...";
+            // 
+            // projectToolStripMenuItem
+            // 
+            this.projectToolStripMenuItem.Name = "projectToolStripMenuItem";
+            this.projectToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.projectToolStripMenuItem.Text = "&Project";
+            this.projectToolStripMenuItem.Click += new System.EventHandler(this.miSamplesSetProject_Click);
+            // 
+            // customerToolStripMenuItem1
+            // 
+            this.customerToolStripMenuItem1.Name = "customerToolStripMenuItem1";
+            this.customerToolStripMenuItem1.Size = new System.Drawing.Size(184, 22);
+            this.customerToolStripMenuItem1.Text = "&Customer";
+            this.customerToolStripMenuItem1.Click += new System.EventHandler(this.miSamplesSetCustomer_Click);
+            // 
+            // samplerToolStripMenuItem1
+            // 
+            this.samplerToolStripMenuItem1.Name = "samplerToolStripMenuItem1";
+            this.samplerToolStripMenuItem1.Size = new System.Drawing.Size(184, 22);
+            this.samplerToolStripMenuItem1.Text = "&Sampler";
+            this.samplerToolStripMenuItem1.Click += new System.EventHandler(this.miSamplesSetSampler_Click);
+            // 
+            // samplingmethodToolStripMenuItem1
+            // 
+            this.samplingmethodToolStripMenuItem1.Name = "samplingmethodToolStripMenuItem1";
+            this.samplingmethodToolStripMenuItem1.Size = new System.Drawing.Size(184, 22);
+            this.samplingmethodToolStripMenuItem1.Text = "Sampling &method";
+            this.samplingmethodToolStripMenuItem1.Click += new System.EventHandler(this.miSamplesSetSamplingMethod_Click);
+            // 
+            // excemptFromPublicToolStripMenuItem
+            // 
+            this.excemptFromPublicToolStripMenuItem.Name = "excemptFromPublicToolStripMenuItem";
+            this.excemptFromPublicToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.excemptFromPublicToolStripMenuItem.Text = "&Excempt from public";
+            this.excemptFromPublicToolStripMenuItem.Click += new System.EventHandler(this.miSamplesSetExcempt_Click);
+            // 
+            // btnSamplesPrepAnal
+            // 
+            this.btnSamplesPrepAnal.Image = global::DSA_lims.Properties.Resources.prep_anal;
+            this.btnSamplesPrepAnal.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSamplesPrepAnal.Name = "btnSamplesPrepAnal";
+            this.btnSamplesPrepAnal.Size = new System.Drawing.Size(163, 22);
+            this.btnSamplesPrepAnal.Text = "Preparations and analyses";
+            this.btnSamplesPrepAnal.Click += new System.EventHandler(this.miSamplesPrepAnal_Click);
+            // 
+            // toolStripDropDownButton4
+            // 
+            this.toolStripDropDownButton4.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.sampleLabelToolStripMenuItem,
+            this.sampleInfoForSelectedToolStripMenuItem});
+            this.toolStripDropDownButton4.Image = global::DSA_lims.Properties.Resources.printer;
+            this.toolStripDropDownButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripDropDownButton4.Name = "toolStripDropDownButton4";
+            this.toolStripDropDownButton4.Size = new System.Drawing.Size(70, 22);
+            this.toolStripDropDownButton4.Text = "Print...";
+            // 
+            // sampleLabelToolStripMenuItem
+            // 
+            this.sampleLabelToolStripMenuItem.Name = "sampleLabelToolStripMenuItem";
+            this.sampleLabelToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.sampleLabelToolStripMenuItem.Text = "Sample labels";
+            this.sampleLabelToolStripMenuItem.Click += new System.EventHandler(this.miSamplesPrintSampleLabels_Click);
+            // 
+            // sampleInfoForSelectedToolStripMenuItem
+            // 
+            this.sampleInfoForSelectedToolStripMenuItem.Name = "sampleInfoForSelectedToolStripMenuItem";
+            this.sampleInfoForSelectedToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.sampleInfoForSelectedToolStripMenuItem.Text = "Sample info";
+            // 
+            // btnSamplesUnlock
+            // 
+            this.btnSamplesUnlock.Image = global::DSA_lims.Properties.Resources._switch;
+            this.btnSamplesUnlock.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSamplesUnlock.Name = "btnSamplesUnlock";
+            this.btnSamplesUnlock.Size = new System.Drawing.Size(64, 22);
+            this.btnSamplesUnlock.Text = "Unlock";
+            this.btnSamplesUnlock.Click += new System.EventHandler(this.miSamplesUnlock_Click);
+            // 
+            // btnSamplesClearFilters
+            // 
+            this.btnSamplesClearFilters.Image = global::DSA_lims.Properties.Resources.trash;
+            this.btnSamplesClearFilters.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSamplesClearFilters.Name = "btnSamplesClearFilters";
+            this.btnSamplesClearFilters.Size = new System.Drawing.Size(101, 22);
+            this.btnSamplesClearFilters.Text = "Clear all filters";
+            this.btnSamplesClearFilters.Click += new System.EventHandler(this.btnSamplesClearFilters_Click);
+            // 
+            // btnProjectsMainNew
+            // 
+            this.btnProjectsMainNew.Image = global::DSA_lims.Properties.Resources._new;
+            this.btnProjectsMainNew.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnProjectsMainNew.Name = "btnProjectsMainNew";
+            this.btnProjectsMainNew.Size = new System.Drawing.Size(51, 22);
+            this.btnProjectsMainNew.Text = "New";
+            this.btnProjectsMainNew.Click += new System.EventHandler(this.miProjectsNew_Click);
+            // 
+            // btnProjectsMainEdit
+            // 
+            this.btnProjectsMainEdit.Image = global::DSA_lims.Properties.Resources.edit;
+            this.btnProjectsMainEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnProjectsMainEdit.Name = "btnProjectsMainEdit";
+            this.btnProjectsMainEdit.Size = new System.Drawing.Size(47, 22);
+            this.btnProjectsMainEdit.Text = "Edit";
+            this.btnProjectsMainEdit.Click += new System.EventHandler(this.miProjectsEdit_Click);
+            // 
+            // btnProjectsSubNew
+            // 
+            this.btnProjectsSubNew.Image = global::DSA_lims.Properties.Resources._new;
+            this.btnProjectsSubNew.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnProjectsSubNew.Name = "btnProjectsSubNew";
+            this.btnProjectsSubNew.Size = new System.Drawing.Size(51, 22);
+            this.btnProjectsSubNew.Text = "New";
+            this.btnProjectsSubNew.Click += new System.EventHandler(this.miProjectsSubNew_Click);
+            // 
+            // btnProjectsSubEdit
+            // 
+            this.btnProjectsSubEdit.Image = global::DSA_lims.Properties.Resources.edit;
+            this.btnProjectsSubEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnProjectsSubEdit.Name = "btnProjectsSubEdit";
+            this.btnProjectsSubEdit.Size = new System.Drawing.Size(47, 22);
+            this.btnProjectsSubEdit.Text = "Edit";
+            this.btnProjectsSubEdit.Click += new System.EventHandler(this.miProjectsSubEdit_Click);
+            // 
+            // btnProjectSubPrint
+            // 
+            this.btnProjectSubPrint.Image = global::DSA_lims.Properties.Resources.printer;
+            this.btnProjectSubPrint.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnProjectSubPrint.Name = "btnProjectSubPrint";
+            this.btnProjectSubPrint.Size = new System.Drawing.Size(80, 22);
+            this.btnProjectSubPrint.Text = "Print label";
+            this.btnProjectSubPrint.Click += new System.EventHandler(this.btnProjectSubPrint_Click);
+            // 
+            // btnProjectsUsersAdd
+            // 
+            this.btnProjectsUsersAdd.Image = global::DSA_lims.Properties.Resources.create_user;
+            this.btnProjectsUsersAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnProjectsUsersAdd.Name = "btnProjectsUsersAdd";
+            this.btnProjectsUsersAdd.Size = new System.Drawing.Size(49, 22);
+            this.btnProjectsUsersAdd.Text = "Add";
+            this.btnProjectsUsersAdd.Click += new System.EventHandler(this.btnProjectsUsersAdd_Click);
+            // 
+            // btnProjectsUsersRemove
+            // 
+            this.btnProjectsUsersRemove.Image = global::DSA_lims.Properties.Resources.delete_user;
+            this.btnProjectsUsersRemove.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnProjectsUsersRemove.Name = "btnProjectsUsersRemove";
+            this.btnProjectsUsersRemove.Size = new System.Drawing.Size(70, 22);
+            this.btnProjectsUsersRemove.Text = "Remove";
+            this.btnProjectsUsersRemove.Click += new System.EventHandler(this.btnProjectsUsersRemove_Click);
+            // 
+            // btnProjectScanAttachment
+            // 
+            this.btnProjectScanAttachment.Image = global::DSA_lims.Properties.Resources.scan;
+            this.btnProjectScanAttachment.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnProjectScanAttachment.Name = "btnProjectScanAttachment";
+            this.btnProjectScanAttachment.Size = new System.Drawing.Size(52, 22);
+            this.btnProjectScanAttachment.Text = "Scan";
+            this.btnProjectScanAttachment.Click += new System.EventHandler(this.btnProjectScanAttachment_Click);
+            // 
+            // btnProjectBrowseAttachment
+            // 
+            this.btnProjectBrowseAttachment.Image = global::DSA_lims.Properties.Resources.projects;
+            this.btnProjectBrowseAttachment.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnProjectBrowseAttachment.Name = "btnProjectBrowseAttachment";
+            this.btnProjectBrowseAttachment.Size = new System.Drawing.Size(65, 22);
+            this.btnProjectBrowseAttachment.Text = "Browse";
+            this.btnProjectBrowseAttachment.Click += new System.EventHandler(this.btnProjectBrowseAttachment_Click);
+            // 
+            // btnProjectDeleteAttachment
+            // 
+            this.btnProjectDeleteAttachment.Image = global::DSA_lims.Properties.Resources.delete;
+            this.btnProjectDeleteAttachment.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnProjectDeleteAttachment.Name = "btnProjectDeleteAttachment";
+            this.btnProjectDeleteAttachment.Size = new System.Drawing.Size(60, 22);
+            this.btnProjectDeleteAttachment.Text = "Delete";
+            this.btnProjectDeleteAttachment.Click += new System.EventHandler(this.btnProjectDeleteAttachment_Click);
+            // 
+            // btnTypeRelSampleTypesNewRoot
+            // 
+            this.btnTypeRelSampleTypesNewRoot.Image = global::DSA_lims.Properties.Resources._new;
+            this.btnTypeRelSampleTypesNewRoot.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnTypeRelSampleTypesNewRoot.Name = "btnTypeRelSampleTypesNewRoot";
+            this.btnTypeRelSampleTypesNewRoot.Size = new System.Drawing.Size(76, 22);
+            this.btnTypeRelSampleTypesNewRoot.Text = "New root";
+            this.btnTypeRelSampleTypesNewRoot.Click += new System.EventHandler(this.miTypeRelSampleTypesNewRoot_Click);
+            // 
+            // btnTypeRelSampleTypesNew
+            // 
+            this.btnTypeRelSampleTypesNew.Image = global::DSA_lims.Properties.Resources._new;
+            this.btnTypeRelSampleTypesNew.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnTypeRelSampleTypesNew.Name = "btnTypeRelSampleTypesNew";
+            this.btnTypeRelSampleTypesNew.Size = new System.Drawing.Size(51, 22);
+            this.btnTypeRelSampleTypesNew.Text = "New";
+            this.btnTypeRelSampleTypesNew.Click += new System.EventHandler(this.miSampleTypesNew_Click);
+            // 
+            // btnTypeRelSampleTypesEdit
+            // 
+            this.btnTypeRelSampleTypesEdit.Image = global::DSA_lims.Properties.Resources.edit;
+            this.btnTypeRelSampleTypesEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnTypeRelSampleTypesEdit.Name = "btnTypeRelSampleTypesEdit";
+            this.btnTypeRelSampleTypesEdit.Size = new System.Drawing.Size(47, 22);
+            this.btnTypeRelSampleTypesEdit.Text = "Edit";
+            this.btnTypeRelSampleTypesEdit.Click += new System.EventHandler(this.miSampleTypesEdit_Click);
+            // 
+            // btnTypeRelSampleTypesDelete
+            // 
+            this.btnTypeRelSampleTypesDelete.Image = global::DSA_lims.Properties.Resources.delete;
+            this.btnTypeRelSampleTypesDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnTypeRelSampleTypesDelete.Name = "btnTypeRelSampleTypesDelete";
+            this.btnTypeRelSampleTypesDelete.Size = new System.Drawing.Size(60, 22);
+            this.btnTypeRelSampleTypesDelete.Text = "Delete";
+            this.btnTypeRelSampleTypesDelete.Click += new System.EventHandler(this.miSampleTypesDelete_Click);
+            // 
+            // btnTypeRelSampTypeExport
+            // 
+            this.btnTypeRelSampTypeExport.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnTypeRelSampleTypesExportSampTypeList,
+            this.btnTypeRelSampleTypesExportSampTypeXML});
+            this.btnTypeRelSampTypeExport.Image = global::DSA_lims.Properties.Resources.info;
+            this.btnTypeRelSampTypeExport.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnTypeRelSampTypeExport.Name = "btnTypeRelSampTypeExport";
+            this.btnTypeRelSampTypeExport.Size = new System.Drawing.Size(78, 22);
+            this.btnTypeRelSampTypeExport.Text = "Export...";
+            // 
+            // btnTypeRelSampleTypesExportSampTypeList
+            // 
+            this.btnTypeRelSampleTypesExportSampTypeList.Name = "btnTypeRelSampleTypesExportSampTypeList";
+            this.btnTypeRelSampleTypesExportSampTypeList.Size = new System.Drawing.Size(195, 22);
+            this.btnTypeRelSampleTypesExportSampTypeList.Text = "Simple sample type list";
+            this.btnTypeRelSampleTypesExportSampTypeList.Click += new System.EventHandler(this.miTypeRelSampleTypesExportSampTypeList_Click);
+            // 
+            // btnTypeRelSampleTypesExportSampTypeXML
+            // 
+            this.btnTypeRelSampleTypesExportSampTypeXML.Name = "btnTypeRelSampleTypesExportSampTypeXML";
+            this.btnTypeRelSampleTypesExportSampTypeXML.Size = new System.Drawing.Size(195, 22);
+            this.btnTypeRelSampleTypesExportSampTypeXML.Text = "Sample types (XML)";
+            this.btnTypeRelSampleTypesExportSampTypeXML.Click += new System.EventHandler(this.miTypeRelSampleTypesExportSampTypeXML_Click);
+            // 
+            // btnTypeRelSampTypeCompAdd
+            // 
+            this.btnTypeRelSampTypeCompAdd.Image = global::DSA_lims.Properties.Resources._new;
+            this.btnTypeRelSampTypeCompAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnTypeRelSampTypeCompAdd.Name = "btnTypeRelSampTypeCompAdd";
+            this.btnTypeRelSampTypeCompAdd.Size = new System.Drawing.Size(51, 22);
+            this.btnTypeRelSampTypeCompAdd.Text = "New";
+            this.btnTypeRelSampTypeCompAdd.Click += new System.EventHandler(this.miTypeRelSampleTypesCompNew_Click);
+            // 
+            // btnTypeRelSampTypeCompEdit
+            // 
+            this.btnTypeRelSampTypeCompEdit.Image = global::DSA_lims.Properties.Resources.edit;
+            this.btnTypeRelSampTypeCompEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnTypeRelSampTypeCompEdit.Name = "btnTypeRelSampTypeCompEdit";
+            this.btnTypeRelSampTypeCompEdit.Size = new System.Drawing.Size(47, 22);
+            this.btnTypeRelSampTypeCompEdit.Text = "Edit";
+            this.btnTypeRelSampTypeCompEdit.Click += new System.EventHandler(this.miTypeRelSampleTypesCompEdit_Click);
+            // 
+            // btnTypeRelSampTypeCompDelete
+            // 
+            this.btnTypeRelSampTypeCompDelete.Image = global::DSA_lims.Properties.Resources.delete;
+            this.btnTypeRelSampTypeCompDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnTypeRelSampTypeCompDelete.Name = "btnTypeRelSampTypeCompDelete";
+            this.btnTypeRelSampTypeCompDelete.Size = new System.Drawing.Size(60, 22);
+            this.btnTypeRelSampTypeCompDelete.Text = "Delete";
+            // 
+            // btnTypeRelSampTypePrepMethAdd
+            // 
+            this.btnTypeRelSampTypePrepMethAdd.Image = global::DSA_lims.Properties.Resources._new;
+            this.btnTypeRelSampTypePrepMethAdd.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnTypeRelSampTypePrepMethAdd.Name = "btnTypeRelSampTypePrepMethAdd";
+            this.btnTypeRelSampTypePrepMethAdd.Size = new System.Drawing.Size(49, 22);
+            this.btnTypeRelSampTypePrepMethAdd.Text = "Add";
+            this.btnTypeRelSampTypePrepMethAdd.Click += new System.EventHandler(this.miAddPrepMethToSampType_Click);
+            // 
+            // btnPreparationMethodDelete
+            // 
+            this.btnPreparationMethodDelete.Image = global::DSA_lims.Properties.Resources.delete;
+            this.btnPreparationMethodDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnPreparationMethodDelete.Name = "btnPreparationMethodDelete";
+            this.btnPreparationMethodDelete.Size = new System.Drawing.Size(70, 22);
+            this.btnPreparationMethodDelete.Text = "Remove";
+            // 
+            // toolStripButton49
+            // 
+            this.toolStripButton49.Image = global::DSA_lims.Properties.Resources._new;
+            this.toolStripButton49.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton49.Name = "toolStripButton49";
+            this.toolStripButton49.Size = new System.Drawing.Size(51, 22);
+            this.toolStripButton49.Text = "New";
+            this.toolStripButton49.Click += new System.EventHandler(this.miPreparationMethodsNew_Click);
+            // 
+            // toolStripButton50
+            // 
+            this.toolStripButton50.Image = global::DSA_lims.Properties.Resources.edit;
+            this.toolStripButton50.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton50.Name = "toolStripButton50";
+            this.toolStripButton50.Size = new System.Drawing.Size(47, 22);
+            this.toolStripButton50.Text = "Edit";
+            this.toolStripButton50.Click += new System.EventHandler(this.miPreparationMethodEdit_Click);
+            // 
+            // toolStripButton91
+            // 
+            this.toolStripButton91.Image = global::DSA_lims.Properties.Resources.delete;
+            this.toolStripButton91.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton91.Name = "toolStripButton91";
+            this.toolStripButton91.Size = new System.Drawing.Size(60, 22);
+            this.toolStripButton91.Text = "Delete";
+            this.toolStripButton91.Click += new System.EventHandler(this.miPreparationMethodDelete_Click);
+            // 
+            // btnTypeRelPrepMethAddAnalMeth
+            // 
+            this.btnTypeRelPrepMethAddAnalMeth.Image = global::DSA_lims.Properties.Resources._new;
+            this.btnTypeRelPrepMethAddAnalMeth.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnTypeRelPrepMethAddAnalMeth.Name = "btnTypeRelPrepMethAddAnalMeth";
+            this.btnTypeRelPrepMethAddAnalMeth.Size = new System.Drawing.Size(49, 22);
+            this.btnTypeRelPrepMethAddAnalMeth.Text = "Add";
+            this.btnTypeRelPrepMethAddAnalMeth.Click += new System.EventHandler(this.miTypeRelPrepMethAddAnalMeth_Click);
+            // 
+            // toolStripButton48
+            // 
+            this.toolStripButton48.Image = global::DSA_lims.Properties.Resources.delete;
+            this.toolStripButton48.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton48.Name = "toolStripButton48";
+            this.toolStripButton48.Size = new System.Drawing.Size(70, 22);
+            this.toolStripButton48.Text = "Remove";
+            this.toolStripButton48.Click += new System.EventHandler(this.miTypeRelPrepMethRemAnalMeth_Click);
+            // 
+            // toolStripButton51
+            // 
+            this.toolStripButton51.Image = global::DSA_lims.Properties.Resources._new;
+            this.toolStripButton51.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton51.Name = "toolStripButton51";
+            this.toolStripButton51.Size = new System.Drawing.Size(51, 22);
+            this.toolStripButton51.Text = "New";
+            this.toolStripButton51.Click += new System.EventHandler(this.miAnalysisMethodsNew_Click);
+            // 
+            // toolStripButton52
+            // 
+            this.toolStripButton52.Image = global::DSA_lims.Properties.Resources.edit;
+            this.toolStripButton52.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton52.Name = "toolStripButton52";
+            this.toolStripButton52.Size = new System.Drawing.Size(47, 22);
+            this.toolStripButton52.Text = "Edit";
+            this.toolStripButton52.Click += new System.EventHandler(this.miAnalysisMethodsEdit_Click);
+            // 
+            // toolStripButton93
+            // 
+            this.toolStripButton93.Image = global::DSA_lims.Properties.Resources.delete;
+            this.toolStripButton93.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton93.Name = "toolStripButton93";
+            this.toolStripButton93.Size = new System.Drawing.Size(60, 22);
+            this.toolStripButton93.Text = "Delete";
+            this.toolStripButton93.Click += new System.EventHandler(this.miAnalysisMethodsDelete_Click);
+            // 
+            // btnAnalysisMethodsAddNuclide
+            // 
+            this.btnAnalysisMethodsAddNuclide.Image = global::DSA_lims.Properties.Resources._new;
+            this.btnAnalysisMethodsAddNuclide.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnAnalysisMethodsAddNuclide.Name = "btnAnalysisMethodsAddNuclide";
+            this.btnAnalysisMethodsAddNuclide.Size = new System.Drawing.Size(49, 22);
+            this.btnAnalysisMethodsAddNuclide.Text = "Add";
+            this.btnAnalysisMethodsAddNuclide.Click += new System.EventHandler(this.miAnalysisMethodsAddNuclide_Click);
+            // 
+            // toolStripButton54
+            // 
+            this.toolStripButton54.Image = global::DSA_lims.Properties.Resources.delete;
+            this.toolStripButton54.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton54.Name = "toolStripButton54";
+            this.toolStripButton54.Size = new System.Drawing.Size(70, 22);
+            this.toolStripButton54.Text = "Remove";
+            this.toolStripButton54.Click += new System.EventHandler(this.miAnalysisMethodsRemNuclide_Click);
             // 
             // btnSysLabNew
             // 
@@ -8187,72 +10425,6 @@
             this.btnSysLabDelete.Text = "Delete";
             this.btnSysLabDelete.Click += new System.EventHandler(this.miDeleteLaboratory_Click);
             // 
-            // splitContainer10
-            // 
-            this.splitContainer10.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer10.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer10.Name = "splitContainer10";
-            this.splitContainer10.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // splitContainer10.Panel1
-            // 
-            this.splitContainer10.Panel1.Controls.Add(this.gridSysLabPrepMeth);
-            this.splitContainer10.Panel1.Controls.Add(this.toolsSysLabPrepMeth);
-            // 
-            // splitContainer10.Panel2
-            // 
-            this.splitContainer10.Panel2.Controls.Add(this.gridSysLabAnalMeth);
-            this.splitContainer10.Panel2.Controls.Add(this.toolsSysLabAnalMeth);
-            this.splitContainer10.Size = new System.Drawing.Size(431, 559);
-            this.splitContainer10.SplitterDistance = 253;
-            this.splitContainer10.SplitterWidth = 3;
-            this.splitContainer10.TabIndex = 0;
-            // 
-            // gridSysLabPrepMeth
-            // 
-            this.gridSysLabPrepMeth.AllowUserToAddRows = false;
-            this.gridSysLabPrepMeth.AllowUserToDeleteRows = false;
-            this.gridSysLabPrepMeth.AllowUserToResizeRows = false;
-            this.gridSysLabPrepMeth.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.gridSysLabPrepMeth.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
-            this.gridSysLabPrepMeth.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.gridSysLabPrepMeth.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gridSysLabPrepMeth.ColumnHeadersVisible = false;
-            this.gridSysLabPrepMeth.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridSysLabPrepMeth.Location = new System.Drawing.Point(0, 25);
-            this.gridSysLabPrepMeth.Name = "gridSysLabPrepMeth";
-            this.gridSysLabPrepMeth.ReadOnly = true;
-            this.gridSysLabPrepMeth.RowHeadersVisible = false;
-            this.gridSysLabPrepMeth.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridSysLabPrepMeth.Size = new System.Drawing.Size(431, 228);
-            this.gridSysLabPrepMeth.TabIndex = 1;
-            // 
-            // toolsSysLabPrepMeth
-            // 
-            this.toolsSysLabPrepMeth.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.toolsSysLabPrepMeth.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripLabel5,
-            this.toolStripSeparator15,
-            this.btnSysLabPrepMethAdd,
-            this.btnSysLabPrepMethRemove});
-            this.toolsSysLabPrepMeth.Location = new System.Drawing.Point(0, 0);
-            this.toolsSysLabPrepMeth.Name = "toolsSysLabPrepMeth";
-            this.toolsSysLabPrepMeth.Size = new System.Drawing.Size(431, 25);
-            this.toolsSysLabPrepMeth.TabIndex = 0;
-            this.toolsSysLabPrepMeth.Text = "toolStrip24";
-            // 
-            // toolStripLabel5
-            // 
-            this.toolStripLabel5.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.toolStripLabel5.Name = "toolStripLabel5";
-            this.toolStripLabel5.Size = new System.Drawing.Size(124, 22);
-            this.toolStripLabel5.Text = "Preparation methods";
-            // 
-            // toolStripSeparator15
-            // 
-            this.toolStripSeparator15.Name = "toolStripSeparator15";
-            this.toolStripSeparator15.Size = new System.Drawing.Size(6, 25);
-            // 
             // btnSysLabPrepMethAdd
             // 
             this.btnSysLabPrepMethAdd.Image = global::DSA_lims.Properties.Resources._new;
@@ -8271,51 +10443,6 @@
             this.btnSysLabPrepMethRemove.Text = "Remove";
             this.btnSysLabPrepMethRemove.Click += new System.EventHandler(this.btnSysLabPrepMethRemove_Click);
             // 
-            // gridSysLabAnalMeth
-            // 
-            this.gridSysLabAnalMeth.AllowUserToAddRows = false;
-            this.gridSysLabAnalMeth.AllowUserToDeleteRows = false;
-            this.gridSysLabAnalMeth.AllowUserToResizeRows = false;
-            this.gridSysLabAnalMeth.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.gridSysLabAnalMeth.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
-            this.gridSysLabAnalMeth.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.gridSysLabAnalMeth.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gridSysLabAnalMeth.ColumnHeadersVisible = false;
-            this.gridSysLabAnalMeth.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridSysLabAnalMeth.Location = new System.Drawing.Point(0, 25);
-            this.gridSysLabAnalMeth.Name = "gridSysLabAnalMeth";
-            this.gridSysLabAnalMeth.ReadOnly = true;
-            this.gridSysLabAnalMeth.RowHeadersVisible = false;
-            this.gridSysLabAnalMeth.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridSysLabAnalMeth.Size = new System.Drawing.Size(431, 278);
-            this.gridSysLabAnalMeth.TabIndex = 1;
-            // 
-            // toolsSysLabAnalMeth
-            // 
-            this.toolsSysLabAnalMeth.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.toolsSysLabAnalMeth.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripLabel14,
-            this.toolStripSeparator16,
-            this.btnSysLabAnalMethAdd,
-            this.btnSysLabAnalMethRemove});
-            this.toolsSysLabAnalMeth.Location = new System.Drawing.Point(0, 0);
-            this.toolsSysLabAnalMeth.Name = "toolsSysLabAnalMeth";
-            this.toolsSysLabAnalMeth.Size = new System.Drawing.Size(431, 25);
-            this.toolsSysLabAnalMeth.TabIndex = 0;
-            this.toolsSysLabAnalMeth.Text = "toolStrip25";
-            // 
-            // toolStripLabel14
-            // 
-            this.toolStripLabel14.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.toolStripLabel14.Name = "toolStripLabel14";
-            this.toolStripLabel14.Size = new System.Drawing.Size(102, 22);
-            this.toolStripLabel14.Text = "Analysis methods";
-            // 
-            // toolStripSeparator16
-            // 
-            this.toolStripSeparator16.Name = "toolStripSeparator16";
-            this.toolStripSeparator16.Size = new System.Drawing.Size(6, 25);
-            // 
             // btnSysLabAnalMethAdd
             // 
             this.btnSysLabAnalMethAdd.Image = global::DSA_lims.Properties.Resources._new;
@@ -8333,85 +10460,6 @@
             this.btnSysLabAnalMethRemove.Size = new System.Drawing.Size(70, 22);
             this.btnSysLabAnalMethRemove.Text = "Remove";
             this.btnSysLabAnalMethRemove.Click += new System.EventHandler(this.btnSysLabAnalMethRemove_Click);
-            // 
-            // tabSysUsers
-            // 
-            this.tabSysUsers.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.tabSysUsers.Controls.Add(this.splitContainer11);
-            this.tabSysUsers.Location = new System.Drawing.Point(4, 24);
-            this.tabSysUsers.Name = "tabSysUsers";
-            this.tabSysUsers.Padding = new System.Windows.Forms.Padding(3);
-            this.tabSysUsers.Size = new System.Drawing.Size(1050, 565);
-            this.tabSysUsers.TabIndex = 3;
-            this.tabSysUsers.Text = "Users";
-            // 
-            // splitContainer11
-            // 
-            this.splitContainer11.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer11.Location = new System.Drawing.Point(3, 3);
-            this.splitContainer11.Name = "splitContainer11";
-            // 
-            // splitContainer11.Panel1
-            // 
-            this.splitContainer11.Panel1.Controls.Add(this.gridSysUsers);
-            this.splitContainer11.Panel1.Controls.Add(this.toolsSysUsers);
-            // 
-            // splitContainer11.Panel2
-            // 
-            this.splitContainer11.Panel2.Controls.Add(this.splitContainer18);
-            this.splitContainer11.Size = new System.Drawing.Size(1044, 559);
-            this.splitContainer11.SplitterDistance = 610;
-            this.splitContainer11.SplitterWidth = 3;
-            this.splitContainer11.TabIndex = 5;
-            // 
-            // gridSysUsers
-            // 
-            this.gridSysUsers.AllowUserToAddRows = false;
-            this.gridSysUsers.AllowUserToDeleteRows = false;
-            this.gridSysUsers.AllowUserToResizeRows = false;
-            this.gridSysUsers.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.gridSysUsers.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
-            this.gridSysUsers.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.gridSysUsers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gridSysUsers.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridSysUsers.Location = new System.Drawing.Point(0, 25);
-            this.gridSysUsers.MultiSelect = false;
-            this.gridSysUsers.Name = "gridSysUsers";
-            this.gridSysUsers.ReadOnly = true;
-            this.gridSysUsers.RowHeadersVisible = false;
-            this.gridSysUsers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridSysUsers.Size = new System.Drawing.Size(610, 534);
-            this.gridSysUsers.TabIndex = 0;
-            this.gridSysUsers.SelectionChanged += new System.EventHandler(this.gridMetaUsers_SelectionChanged);
-            // 
-            // toolsSysUsers
-            // 
-            this.toolsSysUsers.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.toolsSysUsers.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripLabel35,
-            this.toolStripSeparator10,
-            this.btnMetaUsersNew,
-            this.btnMetaUsersEdit,
-            this.btnMetaUsersDelete,
-            this.toolStripSeparator11,
-            this.btnMetaUsersResetPass});
-            this.toolsSysUsers.Location = new System.Drawing.Point(0, 0);
-            this.toolsSysUsers.Name = "toolsSysUsers";
-            this.toolsSysUsers.Size = new System.Drawing.Size(610, 25);
-            this.toolsSysUsers.TabIndex = 5;
-            this.toolsSysUsers.Text = "toolStrip19";
-            // 
-            // toolStripLabel35
-            // 
-            this.toolStripLabel35.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.toolStripLabel35.Name = "toolStripLabel35";
-            this.toolStripLabel35.Size = new System.Drawing.Size(38, 22);
-            this.toolStripLabel35.Text = "Users";
-            // 
-            // toolStripSeparator10
-            // 
-            this.toolStripSeparator10.Name = "toolStripSeparator10";
-            this.toolStripSeparator10.Size = new System.Drawing.Size(6, 25);
             // 
             // btnMetaUsersNew
             // 
@@ -8440,11 +10488,6 @@
             this.btnMetaUsersDelete.Text = "Delete";
             this.btnMetaUsersDelete.Click += new System.EventHandler(this.miDeleteUser_Click);
             // 
-            // toolStripSeparator11
-            // 
-            this.toolStripSeparator11.Name = "toolStripSeparator11";
-            this.toolStripSeparator11.Size = new System.Drawing.Size(6, 25);
-            // 
             // btnMetaUsersResetPass
             // 
             this.btnMetaUsersResetPass.Enabled = false;
@@ -8454,64 +10497,6 @@
             this.btnMetaUsersResetPass.Size = new System.Drawing.Size(108, 22);
             this.btnMetaUsersResetPass.Text = "Reset password";
             this.btnMetaUsersResetPass.Click += new System.EventHandler(this.miResetPass_Click);
-            // 
-            // splitContainer18
-            // 
-            this.splitContainer18.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer18.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer18.Name = "splitContainer18";
-            this.splitContainer18.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // splitContainer18.Panel1
-            // 
-            this.splitContainer18.Panel1.Controls.Add(this.lbSysUsersRoles);
-            this.splitContainer18.Panel1.Controls.Add(this.toolsSysUsersRoles);
-            // 
-            // splitContainer18.Panel2
-            // 
-            this.splitContainer18.Panel2.Controls.Add(this.gridSysUsersAnalMeth);
-            this.splitContainer18.Panel2.Controls.Add(this.toolsSysUsersAnalMeth);
-            this.splitContainer18.Size = new System.Drawing.Size(431, 559);
-            this.splitContainer18.SplitterDistance = 253;
-            this.splitContainer18.SplitterWidth = 3;
-            this.splitContainer18.TabIndex = 3;
-            // 
-            // lbSysUsersRoles
-            // 
-            this.lbSysUsersRoles.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lbSysUsersRoles.FormattingEnabled = true;
-            this.lbSysUsersRoles.ItemHeight = 15;
-            this.lbSysUsersRoles.Location = new System.Drawing.Point(0, 25);
-            this.lbSysUsersRoles.Name = "lbSysUsersRoles";
-            this.lbSysUsersRoles.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.lbSysUsersRoles.Size = new System.Drawing.Size(431, 228);
-            this.lbSysUsersRoles.TabIndex = 1;
-            // 
-            // toolsSysUsersRoles
-            // 
-            this.toolsSysUsersRoles.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.toolsSysUsersRoles.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripLabel28,
-            this.toolStripSeparator12,
-            this.btnSysUsersAddRoles,
-            this.btnSysUsersRemRoles});
-            this.toolsSysUsersRoles.Location = new System.Drawing.Point(0, 0);
-            this.toolsSysUsersRoles.Name = "toolsSysUsersRoles";
-            this.toolsSysUsersRoles.Size = new System.Drawing.Size(431, 25);
-            this.toolsSysUsersRoles.TabIndex = 0;
-            this.toolsSysUsersRoles.Text = "toolStrip26";
-            // 
-            // toolStripLabel28
-            // 
-            this.toolStripLabel28.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.toolStripLabel28.Name = "toolStripLabel28";
-            this.toolStripLabel28.Size = new System.Drawing.Size(37, 22);
-            this.toolStripLabel28.Text = "Roles";
-            // 
-            // toolStripSeparator12
-            // 
-            this.toolStripSeparator12.Name = "toolStripSeparator12";
-            this.toolStripSeparator12.Size = new System.Drawing.Size(6, 25);
             // 
             // btnSysUsersAddRoles
             // 
@@ -8531,51 +10516,6 @@
             this.btnSysUsersRemRoles.Text = "Remove";
             this.btnSysUsersRemRoles.Click += new System.EventHandler(this.btnSysUsersRemRoles_Click);
             // 
-            // gridSysUsersAnalMeth
-            // 
-            this.gridSysUsersAnalMeth.AllowUserToAddRows = false;
-            this.gridSysUsersAnalMeth.AllowUserToDeleteRows = false;
-            this.gridSysUsersAnalMeth.AllowUserToResizeRows = false;
-            this.gridSysUsersAnalMeth.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.gridSysUsersAnalMeth.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
-            this.gridSysUsersAnalMeth.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.gridSysUsersAnalMeth.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gridSysUsersAnalMeth.ColumnHeadersVisible = false;
-            this.gridSysUsersAnalMeth.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridSysUsersAnalMeth.Location = new System.Drawing.Point(0, 25);
-            this.gridSysUsersAnalMeth.Name = "gridSysUsersAnalMeth";
-            this.gridSysUsersAnalMeth.ReadOnly = true;
-            this.gridSysUsersAnalMeth.RowHeadersVisible = false;
-            this.gridSysUsersAnalMeth.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridSysUsersAnalMeth.Size = new System.Drawing.Size(431, 278);
-            this.gridSysUsersAnalMeth.TabIndex = 1;
-            // 
-            // toolsSysUsersAnalMeth
-            // 
-            this.toolsSysUsersAnalMeth.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.toolsSysUsersAnalMeth.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripLabel29,
-            this.toolStripSeparator13,
-            this.btnSysUsersAnalMethAdd,
-            this.btnSysUsersAnalMethRemove});
-            this.toolsSysUsersAnalMeth.Location = new System.Drawing.Point(0, 0);
-            this.toolsSysUsersAnalMeth.Name = "toolsSysUsersAnalMeth";
-            this.toolsSysUsersAnalMeth.Size = new System.Drawing.Size(431, 25);
-            this.toolsSysUsersAnalMeth.TabIndex = 0;
-            this.toolsSysUsersAnalMeth.Text = "toolStrip29";
-            // 
-            // toolStripLabel29
-            // 
-            this.toolStripLabel29.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.toolStripLabel29.Name = "toolStripLabel29";
-            this.toolStripLabel29.Size = new System.Drawing.Size(102, 22);
-            this.toolStripLabel29.Text = "Analysis methods";
-            // 
-            // toolStripSeparator13
-            // 
-            this.toolStripSeparator13.Name = "toolStripSeparator13";
-            this.toolStripSeparator13.Size = new System.Drawing.Size(6, 25);
-            // 
             // btnSysUsersAnalMethAdd
             // 
             this.btnSysUsersAnalMethAdd.Image = global::DSA_lims.Properties.Resources._new;
@@ -8593,84 +10533,6 @@
             this.btnSysUsersAnalMethRemove.Size = new System.Drawing.Size(70, 22);
             this.btnSysUsersAnalMethRemove.Text = "Remove";
             this.btnSysUsersAnalMethRemove.Click += new System.EventHandler(this.btnSysUsersAnalMethRemove_Click);
-            // 
-            // tabSysMunicipalities
-            // 
-            this.tabSysMunicipalities.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.tabSysMunicipalities.Controls.Add(this.splitContainer19);
-            this.tabSysMunicipalities.Location = new System.Drawing.Point(4, 24);
-            this.tabSysMunicipalities.Name = "tabSysMunicipalities";
-            this.tabSysMunicipalities.Padding = new System.Windows.Forms.Padding(3);
-            this.tabSysMunicipalities.Size = new System.Drawing.Size(1050, 565);
-            this.tabSysMunicipalities.TabIndex = 5;
-            this.tabSysMunicipalities.Text = "Municipalities";
-            // 
-            // splitContainer19
-            // 
-            this.splitContainer19.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer19.Location = new System.Drawing.Point(3, 3);
-            this.splitContainer19.Name = "splitContainer19";
-            // 
-            // splitContainer19.Panel1
-            // 
-            this.splitContainer19.Panel1.Controls.Add(this.gridSysCounty);
-            this.splitContainer19.Panel1.Controls.Add(this.toolsSysCounties);
-            // 
-            // splitContainer19.Panel2
-            // 
-            this.splitContainer19.Panel2.Controls.Add(this.gridSysMunicipality);
-            this.splitContainer19.Panel2.Controls.Add(this.toolsSysMunicipalities);
-            this.splitContainer19.Size = new System.Drawing.Size(1044, 559);
-            this.splitContainer19.SplitterDistance = 478;
-            this.splitContainer19.SplitterWidth = 5;
-            this.splitContainer19.TabIndex = 1;
-            // 
-            // gridSysCounty
-            // 
-            this.gridSysCounty.AllowUserToAddRows = false;
-            this.gridSysCounty.AllowUserToDeleteRows = false;
-            this.gridSysCounty.AllowUserToResizeRows = false;
-            this.gridSysCounty.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.gridSysCounty.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
-            this.gridSysCounty.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.gridSysCounty.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gridSysCounty.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridSysCounty.Location = new System.Drawing.Point(0, 25);
-            this.gridSysCounty.MultiSelect = false;
-            this.gridSysCounty.Name = "gridSysCounty";
-            this.gridSysCounty.ReadOnly = true;
-            this.gridSysCounty.RowHeadersVisible = false;
-            this.gridSysCounty.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridSysCounty.Size = new System.Drawing.Size(478, 534);
-            this.gridSysCounty.TabIndex = 1;
-            this.gridSysCounty.SelectionChanged += new System.EventHandler(this.gridSysCounty_SelectionChanged);
-            // 
-            // toolsSysCounties
-            // 
-            this.toolsSysCounties.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.toolsSysCounties.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripLabel32,
-            this.toolStripSeparator8,
-            this.btnNewCounty,
-            this.btnEditCounty,
-            this.btnDeleteCounty});
-            this.toolsSysCounties.Location = new System.Drawing.Point(0, 0);
-            this.toolsSysCounties.Name = "toolsSysCounties";
-            this.toolsSysCounties.Size = new System.Drawing.Size(478, 25);
-            this.toolsSysCounties.TabIndex = 0;
-            this.toolsSysCounties.Text = "toolStrip46";
-            // 
-            // toolStripLabel32
-            // 
-            this.toolStripLabel32.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.toolStripLabel32.Name = "toolStripLabel32";
-            this.toolStripLabel32.Size = new System.Drawing.Size(55, 22);
-            this.toolStripLabel32.Text = "Counties";
-            // 
-            // toolStripSeparator8
-            // 
-            this.toolStripSeparator8.Name = "toolStripSeparator8";
-            this.toolStripSeparator8.Size = new System.Drawing.Size(6, 25);
             // 
             // btnNewCounty
             // 
@@ -8699,51 +10561,6 @@
             this.btnDeleteCounty.Text = "Delete";
             this.btnDeleteCounty.Click += new System.EventHandler(this.miDeleteCounty_Click);
             // 
-            // gridSysMunicipality
-            // 
-            this.gridSysMunicipality.AllowUserToAddRows = false;
-            this.gridSysMunicipality.AllowUserToDeleteRows = false;
-            this.gridSysMunicipality.AllowUserToResizeRows = false;
-            this.gridSysMunicipality.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.gridSysMunicipality.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
-            this.gridSysMunicipality.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.gridSysMunicipality.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gridSysMunicipality.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridSysMunicipality.Location = new System.Drawing.Point(0, 25);
-            this.gridSysMunicipality.Name = "gridSysMunicipality";
-            this.gridSysMunicipality.ReadOnly = true;
-            this.gridSysMunicipality.RowHeadersVisible = false;
-            this.gridSysMunicipality.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridSysMunicipality.Size = new System.Drawing.Size(561, 534);
-            this.gridSysMunicipality.TabIndex = 1;
-            // 
-            // toolsSysMunicipalities
-            // 
-            this.toolsSysMunicipalities.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.toolsSysMunicipalities.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripLabel33,
-            this.toolStripSeparator9,
-            this.btnNewMunicipality,
-            this.btnEditMunicipality,
-            this.btnDeleteMunicipality});
-            this.toolsSysMunicipalities.Location = new System.Drawing.Point(0, 0);
-            this.toolsSysMunicipalities.Name = "toolsSysMunicipalities";
-            this.toolsSysMunicipalities.Size = new System.Drawing.Size(561, 25);
-            this.toolsSysMunicipalities.TabIndex = 0;
-            this.toolsSysMunicipalities.Text = "toolStrip47";
-            // 
-            // toolStripLabel33
-            // 
-            this.toolStripLabel33.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.toolStripLabel33.Name = "toolStripLabel33";
-            this.toolStripLabel33.Size = new System.Drawing.Size(83, 22);
-            this.toolStripLabel33.Text = "Municipalities";
-            // 
-            // toolStripSeparator9
-            // 
-            this.toolStripSeparator9.Name = "toolStripSeparator9";
-            this.toolStripSeparator9.Size = new System.Drawing.Size(6, 25);
-            // 
             // btnNewMunicipality
             // 
             this.btnNewMunicipality.Image = global::DSA_lims.Properties.Resources._new;
@@ -8771,57 +10588,6 @@
             this.btnDeleteMunicipality.Text = "Delete";
             this.btnDeleteMunicipality.Click += new System.EventHandler(this.miDeleteMunicipality_Click);
             // 
-            // tabSysAccredRules
-            // 
-            this.tabSysAccredRules.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.tabSysAccredRules.Controls.Add(this.dataGridView22);
-            this.tabSysAccredRules.Controls.Add(this.toolsSysAccredRules);
-            this.tabSysAccredRules.Location = new System.Drawing.Point(4, 24);
-            this.tabSysAccredRules.Name = "tabSysAccredRules";
-            this.tabSysAccredRules.Padding = new System.Windows.Forms.Padding(3);
-            this.tabSysAccredRules.Size = new System.Drawing.Size(1050, 565);
-            this.tabSysAccredRules.TabIndex = 8;
-            this.tabSysAccredRules.Text = "Accreditation rules";
-            // 
-            // dataGridView22
-            // 
-            this.dataGridView22.AllowUserToAddRows = false;
-            this.dataGridView22.AllowUserToDeleteRows = false;
-            this.dataGridView22.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView22.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView22.Location = new System.Drawing.Point(3, 28);
-            this.dataGridView22.Name = "dataGridView22";
-            this.dataGridView22.ReadOnly = true;
-            this.dataGridView22.Size = new System.Drawing.Size(1044, 534);
-            this.dataGridView22.TabIndex = 1;
-            // 
-            // toolsSysAccredRules
-            // 
-            this.toolsSysAccredRules.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.toolsSysAccredRules.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripLabel34,
-            this.toolStripSeparator7,
-            this.toolStripButton70,
-            this.toolStripButton71,
-            this.toolStripButton72});
-            this.toolsSysAccredRules.Location = new System.Drawing.Point(3, 3);
-            this.toolsSysAccredRules.Name = "toolsSysAccredRules";
-            this.toolsSysAccredRules.Size = new System.Drawing.Size(1044, 25);
-            this.toolsSysAccredRules.TabIndex = 0;
-            this.toolsSysAccredRules.Text = "toolStrip53";
-            // 
-            // toolStripLabel34
-            // 
-            this.toolStripLabel34.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.toolStripLabel34.Name = "toolStripLabel34";
-            this.toolStripLabel34.Size = new System.Drawing.Size(112, 22);
-            this.toolStripLabel34.Text = "Accreditation rules";
-            // 
-            // toolStripSeparator7
-            // 
-            this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(6, 25);
-            // 
             // toolStripButton70
             // 
             this.toolStripButton70.Image = global::DSA_lims.Properties.Resources._new;
@@ -8845,65 +10611,6 @@
             this.toolStripButton72.Name = "toolStripButton72";
             this.toolStripButton72.Size = new System.Drawing.Size(60, 22);
             this.toolStripButton72.Text = "Delete";
-            // 
-            // tabSysNuclides
-            // 
-            this.tabSysNuclides.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.tabSysNuclides.Controls.Add(this.gridSysNuclides);
-            this.tabSysNuclides.Controls.Add(this.toolsSysNuclides);
-            this.tabSysNuclides.Location = new System.Drawing.Point(4, 24);
-            this.tabSysNuclides.Name = "tabSysNuclides";
-            this.tabSysNuclides.Padding = new System.Windows.Forms.Padding(3);
-            this.tabSysNuclides.Size = new System.Drawing.Size(1050, 565);
-            this.tabSysNuclides.TabIndex = 9;
-            this.tabSysNuclides.Text = "Nuclides";
-            // 
-            // gridSysNuclides
-            // 
-            this.gridSysNuclides.AllowUserToAddRows = false;
-            this.gridSysNuclides.AllowUserToDeleteRows = false;
-            this.gridSysNuclides.AllowUserToResizeRows = false;
-            this.gridSysNuclides.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.gridSysNuclides.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
-            this.gridSysNuclides.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.gridSysNuclides.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gridSysNuclides.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridSysNuclides.Location = new System.Drawing.Point(3, 28);
-            this.gridSysNuclides.MultiSelect = false;
-            this.gridSysNuclides.Name = "gridSysNuclides";
-            this.gridSysNuclides.ReadOnly = true;
-            this.gridSysNuclides.RowHeadersVisible = false;
-            this.gridSysNuclides.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridSysNuclides.Size = new System.Drawing.Size(1044, 534);
-            this.gridSysNuclides.TabIndex = 1;
-            // 
-            // toolsSysNuclides
-            // 
-            this.toolsSysNuclides.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.toolsSysNuclides.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripLabel41,
-            this.toolStripSeparator3,
-            this.btnSysNuclideNew,
-            this.btnSysNuclideEdit,
-            this.btnSysNuclideDelete,
-            this.btnSysNuclideExport});
-            this.toolsSysNuclides.Location = new System.Drawing.Point(3, 3);
-            this.toolsSysNuclides.Name = "toolsSysNuclides";
-            this.toolsSysNuclides.Size = new System.Drawing.Size(1044, 25);
-            this.toolsSysNuclides.TabIndex = 3;
-            this.toolsSysNuclides.Text = "toolStrip48";
-            // 
-            // toolStripLabel41
-            // 
-            this.toolStripLabel41.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.toolStripLabel41.Name = "toolStripLabel41";
-            this.toolStripLabel41.Size = new System.Drawing.Size(54, 22);
-            this.toolStripLabel41.Text = "Nuclides";
-            // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
             // 
             // btnSysNuclideNew
             // 
@@ -8935,7 +10642,7 @@
             // 
             this.btnSysNuclideExport.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnNuclidesExportNuclidesXML});
-            this.btnSysNuclideExport.Image = ((System.Drawing.Image)(resources.GetObject("btnSysNuclideExport.Image")));
+            this.btnSysNuclideExport.Image = global::DSA_lims.Properties.Resources.info;
             this.btnSysNuclideExport.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnSysNuclideExport.Name = "btnSysNuclideExport";
             this.btnSysNuclideExport.Size = new System.Drawing.Size(78, 22);
@@ -8947,73 +10654,6 @@
             this.btnNuclidesExportNuclidesXML.Size = new System.Drawing.Size(155, 22);
             this.btnNuclidesExportNuclidesXML.Text = "Nuclides (XML)";
             this.btnNuclidesExportNuclidesXML.Click += new System.EventHandler(this.miNuclidesExportNuclidesXML_Click);
-            // 
-            // tabSysGeometries
-            // 
-            this.tabSysGeometries.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.tabSysGeometries.Controls.Add(this.panel6);
-            this.tabSysGeometries.Controls.Add(this.toolsSysGeom);
-            this.tabSysGeometries.Location = new System.Drawing.Point(4, 24);
-            this.tabSysGeometries.Name = "tabSysGeometries";
-            this.tabSysGeometries.Padding = new System.Windows.Forms.Padding(3);
-            this.tabSysGeometries.Size = new System.Drawing.Size(1050, 565);
-            this.tabSysGeometries.TabIndex = 11;
-            this.tabSysGeometries.Text = "Geometries";
-            // 
-            // panel6
-            // 
-            this.panel6.Controls.Add(this.gridSysGeom);
-            this.panel6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel6.Location = new System.Drawing.Point(3, 28);
-            this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(1044, 534);
-            this.panel6.TabIndex = 2;
-            // 
-            // gridSysGeom
-            // 
-            this.gridSysGeom.AllowUserToAddRows = false;
-            this.gridSysGeom.AllowUserToDeleteRows = false;
-            this.gridSysGeom.AllowUserToResizeRows = false;
-            this.gridSysGeom.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.gridSysGeom.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
-            this.gridSysGeom.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.gridSysGeom.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gridSysGeom.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridSysGeom.Location = new System.Drawing.Point(0, 0);
-            this.gridSysGeom.MultiSelect = false;
-            this.gridSysGeom.Name = "gridSysGeom";
-            this.gridSysGeom.ReadOnly = true;
-            this.gridSysGeom.RowHeadersVisible = false;
-            this.gridSysGeom.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridSysGeom.Size = new System.Drawing.Size(1044, 534);
-            this.gridSysGeom.TabIndex = 0;
-            // 
-            // toolsSysGeom
-            // 
-            this.toolsSysGeom.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.toolsSysGeom.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripLabel43,
-            this.toolStripSeparator23,
-            this.btnNewGeometry,
-            this.btnEditGeometry,
-            this.btnDeleteGeometry});
-            this.toolsSysGeom.Location = new System.Drawing.Point(3, 3);
-            this.toolsSysGeom.Name = "toolsSysGeom";
-            this.toolsSysGeom.Size = new System.Drawing.Size(1044, 25);
-            this.toolsSysGeom.TabIndex = 0;
-            this.toolsSysGeom.Text = "toolStrip28";
-            // 
-            // toolStripLabel43
-            // 
-            this.toolStripLabel43.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.toolStripLabel43.Name = "toolStripLabel43";
-            this.toolStripLabel43.Size = new System.Drawing.Size(73, 22);
-            this.toolStripLabel43.Text = "Geometries";
-            // 
-            // toolStripSeparator23
-            // 
-            this.toolStripSeparator23.Name = "toolStripSeparator23";
-            this.toolStripSeparator23.Size = new System.Drawing.Size(6, 25);
             // 
             // btnNewGeometry
             // 
@@ -9042,64 +10682,6 @@
             this.btnDeleteGeometry.Text = "Delete";
             this.btnDeleteGeometry.Click += new System.EventHandler(this.miDeleteGeometry_Click);
             // 
-            // tabSysPers
-            // 
-            this.tabSysPers.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.tabSysPers.Controls.Add(this.gridSysPers);
-            this.tabSysPers.Controls.Add(this.toolStrip14);
-            this.tabSysPers.Location = new System.Drawing.Point(4, 24);
-            this.tabSysPers.Name = "tabSysPers";
-            this.tabSysPers.Padding = new System.Windows.Forms.Padding(3);
-            this.tabSysPers.Size = new System.Drawing.Size(1050, 565);
-            this.tabSysPers.TabIndex = 12;
-            this.tabSysPers.Text = "Persons";
-            // 
-            // gridSysPers
-            // 
-            this.gridSysPers.AllowUserToAddRows = false;
-            this.gridSysPers.AllowUserToDeleteRows = false;
-            this.gridSysPers.AllowUserToResizeRows = false;
-            this.gridSysPers.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.gridSysPers.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
-            this.gridSysPers.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.gridSysPers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gridSysPers.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridSysPers.Location = new System.Drawing.Point(3, 28);
-            this.gridSysPers.MultiSelect = false;
-            this.gridSysPers.Name = "gridSysPers";
-            this.gridSysPers.ReadOnly = true;
-            this.gridSysPers.RowHeadersVisible = false;
-            this.gridSysPers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridSysPers.Size = new System.Drawing.Size(1044, 534);
-            this.gridSysPers.TabIndex = 1;
-            // 
-            // toolStrip14
-            // 
-            this.toolStrip14.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.toolStrip14.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripLabel16,
-            this.toolStripSeparator34,
-            this.btnSysPersNew,
-            this.btnSysPersEdit,
-            this.btnSysPersDelete});
-            this.toolStrip14.Location = new System.Drawing.Point(3, 3);
-            this.toolStrip14.Name = "toolStrip14";
-            this.toolStrip14.Size = new System.Drawing.Size(1044, 25);
-            this.toolStrip14.TabIndex = 0;
-            this.toolStrip14.Text = "toolStrip14";
-            // 
-            // toolStripLabel16
-            // 
-            this.toolStripLabel16.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.toolStripLabel16.Name = "toolStripLabel16";
-            this.toolStripLabel16.Size = new System.Drawing.Size(50, 22);
-            this.toolStripLabel16.Text = "Persons";
-            // 
-            // toolStripSeparator34
-            // 
-            this.toolStripSeparator34.Name = "toolStripSeparator34";
-            this.toolStripSeparator34.Size = new System.Drawing.Size(6, 25);
-            // 
             // btnSysPersNew
             // 
             this.btnSysPersNew.Image = global::DSA_lims.Properties.Resources._new;
@@ -9127,63 +10709,6 @@
             this.btnSysPersDelete.Text = "Delete";
             this.btnSysPersDelete.Click += new System.EventHandler(this.miPersonDelete_Click);
             // 
-            // tabSysSampParamNames
-            // 
-            this.tabSysSampParamNames.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.tabSysSampParamNames.Controls.Add(this.gridSysSampParamNames);
-            this.tabSysSampParamNames.Controls.Add(this.toolStrip18);
-            this.tabSysSampParamNames.Location = new System.Drawing.Point(4, 24);
-            this.tabSysSampParamNames.Name = "tabSysSampParamNames";
-            this.tabSysSampParamNames.Padding = new System.Windows.Forms.Padding(3);
-            this.tabSysSampParamNames.Size = new System.Drawing.Size(1050, 565);
-            this.tabSysSampParamNames.TabIndex = 13;
-            this.tabSysSampParamNames.Text = "Sample parameter names";
-            // 
-            // gridSysSampParamNames
-            // 
-            this.gridSysSampParamNames.AllowUserToAddRows = false;
-            this.gridSysSampParamNames.AllowUserToDeleteRows = false;
-            this.gridSysSampParamNames.AllowUserToResizeRows = false;
-            this.gridSysSampParamNames.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.gridSysSampParamNames.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
-            this.gridSysSampParamNames.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.gridSysSampParamNames.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gridSysSampParamNames.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridSysSampParamNames.Location = new System.Drawing.Point(3, 28);
-            this.gridSysSampParamNames.Name = "gridSysSampParamNames";
-            this.gridSysSampParamNames.ReadOnly = true;
-            this.gridSysSampParamNames.RowHeadersVisible = false;
-            this.gridSysSampParamNames.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridSysSampParamNames.Size = new System.Drawing.Size(1044, 534);
-            this.gridSysSampParamNames.TabIndex = 1;
-            // 
-            // toolStrip18
-            // 
-            this.toolStrip18.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.toolStrip18.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripLabel24,
-            this.toolStripSeparator74,
-            this.btnSysSampParamNameNew,
-            this.btnSysSampParamNameEdit,
-            this.btnSysSampParamNameDelete});
-            this.toolStrip18.Location = new System.Drawing.Point(3, 3);
-            this.toolStrip18.Name = "toolStrip18";
-            this.toolStrip18.Size = new System.Drawing.Size(1044, 25);
-            this.toolStrip18.TabIndex = 0;
-            this.toolStrip18.Text = "toolStrip18";
-            // 
-            // toolStripLabel24
-            // 
-            this.toolStripLabel24.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.toolStripLabel24.Name = "toolStripLabel24";
-            this.toolStripLabel24.Size = new System.Drawing.Size(149, 22);
-            this.toolStripLabel24.Text = "Sample parameter names";
-            // 
-            // toolStripSeparator74
-            // 
-            this.toolStripSeparator74.Name = "toolStripSeparator74";
-            this.toolStripSeparator74.Size = new System.Drawing.Size(6, 25);
-            // 
             // btnSysSampParamNameNew
             // 
             this.btnSysSampParamNameNew.Image = global::DSA_lims.Properties.Resources._new;
@@ -9210,83 +10735,6 @@
             this.btnSysSampParamNameDelete.Size = new System.Drawing.Size(60, 22);
             this.btnSysSampParamNameDelete.Text = "Delete";
             this.btnSysSampParamNameDelete.Click += new System.EventHandler(this.btnSysSampParamNameDelete_Click);
-            // 
-            // tabPrepAnal
-            // 
-            this.tabPrepAnal.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.tabPrepAnal.Controls.Add(this.splitContainer2);
-            this.tabPrepAnal.Location = new System.Drawing.Point(4, 24);
-            this.tabPrepAnal.Name = "tabPrepAnal";
-            this.tabPrepAnal.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPrepAnal.Size = new System.Drawing.Size(1064, 599);
-            this.tabPrepAnal.TabIndex = 19;
-            this.tabPrepAnal.Text = "Preparations and analyses";
-            // 
-            // splitContainer2
-            // 
-            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer2.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
-            this.splitContainer2.Location = new System.Drawing.Point(3, 3);
-            this.splitContainer2.Name = "splitContainer2";
-            // 
-            // splitContainer2.Panel1
-            // 
-            this.splitContainer2.Panel1.Controls.Add(this.panel31);
-            this.splitContainer2.Panel1.Controls.Add(this.toolStrip7);
-            // 
-            // splitContainer2.Panel2
-            // 
-            this.splitContainer2.Panel2.Controls.Add(this.tabsPrepAnal);
-            this.splitContainer2.Size = new System.Drawing.Size(1058, 593);
-            this.splitContainer2.SplitterDistance = 379;
-            this.splitContainer2.SplitterWidth = 3;
-            this.splitContainer2.TabIndex = 4;
-            // 
-            // panel31
-            // 
-            this.panel31.BackColor = System.Drawing.SystemColors.Window;
-            this.panel31.Controls.Add(this.treePrepAnal);
-            this.panel31.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel31.Location = new System.Drawing.Point(0, 25);
-            this.panel31.Name = "panel31";
-            this.panel31.Padding = new System.Windows.Forms.Padding(12);
-            this.panel31.Size = new System.Drawing.Size(379, 568);
-            this.panel31.TabIndex = 1;
-            // 
-            // treePrepAnal
-            // 
-            this.treePrepAnal.BackColor = System.Drawing.SystemColors.Window;
-            this.treePrepAnal.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.treePrepAnal.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.treePrepAnal.DrawMode = System.Windows.Forms.TreeViewDrawMode.OwnerDrawText;
-            this.treePrepAnal.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.treePrepAnal.HideSelection = false;
-            this.treePrepAnal.Indent = 40;
-            this.treePrepAnal.ItemHeight = 22;
-            this.treePrepAnal.Location = new System.Drawing.Point(12, 12);
-            this.treePrepAnal.Name = "treePrepAnal";
-            this.treePrepAnal.PathSeparator = "/";
-            this.treePrepAnal.ShowNodeToolTips = true;
-            this.treePrepAnal.ShowRootLines = false;
-            this.treePrepAnal.Size = new System.Drawing.Size(355, 544);
-            this.treePrepAnal.TabIndex = 0;
-            this.treePrepAnal.DrawNode += new System.Windows.Forms.DrawTreeNodeEventHandler(this.treePrepAnal_DrawNode);
-            this.treePrepAnal.BeforeSelect += new System.Windows.Forms.TreeViewCancelEventHandler(this.treePrepAnal_BeforeSelect);
-            this.treePrepAnal.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treePrepAnal_AfterSelect);
-            // 
-            // toolStrip7
-            // 
-            this.toolStrip7.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.toolStrip7.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.miPrepAnalPrep,
-            this.miPrepAnalAnal,
-            this.toolStripSeparator71,
-            this.btnPrepAnalShowAudit});
-            this.toolStrip7.Location = new System.Drawing.Point(0, 0);
-            this.toolStrip7.Name = "toolStrip7";
-            this.toolStrip7.Size = new System.Drawing.Size(379, 25);
-            this.toolStrip7.TabIndex = 0;
-            this.toolStrip7.Text = "toolStrip7";
             // 
             // miPrepAnalPrep
             // 
@@ -9338,11 +10786,6 @@
             this.btnPrepAnalDelAnal.Text = "&Delete...";
             this.btnPrepAnalDelAnal.Click += new System.EventHandler(this.btnPrepAnalDelAnal_Click);
             // 
-            // toolStripSeparator71
-            // 
-            this.toolStripSeparator71.Name = "toolStripSeparator71";
-            this.toolStripSeparator71.Size = new System.Drawing.Size(6, 25);
-            // 
             // btnPrepAnalShowAudit
             // 
             this.btnPrepAnalShowAudit.Image = global::DSA_lims.Properties.Resources.report;
@@ -9351,862 +10794,6 @@
             this.btnPrepAnalShowAudit.Size = new System.Drawing.Size(86, 22);
             this.btnPrepAnalShowAudit.Text = "Show audit";
             this.btnPrepAnalShowAudit.Click += new System.EventHandler(this.btnPrepAnalShowAudit_Click);
-            // 
-            // tabsPrepAnal
-            // 
-            this.tabsPrepAnal.Controls.Add(this.tabPrepAnalSample);
-            this.tabsPrepAnal.Controls.Add(this.tabPrepAnalPreps);
-            this.tabsPrepAnal.Controls.Add(this.tabPrepAnalAnalysis);
-            this.tabsPrepAnal.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabsPrepAnal.Location = new System.Drawing.Point(0, 0);
-            this.tabsPrepAnal.Margin = new System.Windows.Forms.Padding(0);
-            this.tabsPrepAnal.Name = "tabsPrepAnal";
-            this.tabsPrepAnal.SelectedIndex = 0;
-            this.tabsPrepAnal.Size = new System.Drawing.Size(676, 593);
-            this.tabsPrepAnal.TabIndex = 3;
-            // 
-            // tabPrepAnalSample
-            // 
-            this.tabPrepAnalSample.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.tabPrepAnalSample.Controls.Add(this.panel81);
-            this.tabPrepAnalSample.Controls.Add(this.splitContainer4);
-            this.tabPrepAnalSample.Controls.Add(this.toolStrip3);
-            this.tabPrepAnalSample.Controls.Add(this.panel80);
-            this.tabPrepAnalSample.Location = new System.Drawing.Point(4, 24);
-            this.tabPrepAnalSample.Name = "tabPrepAnalSample";
-            this.tabPrepAnalSample.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPrepAnalSample.Size = new System.Drawing.Size(668, 565);
-            this.tabPrepAnalSample.TabIndex = 5;
-            this.tabPrepAnalSample.Text = "Sample";
-            // 
-            // panel81
-            // 
-            this.panel81.Controls.Add(this.tbPrepAnalInfoComment);
-            this.panel81.Controls.Add(this.toolStrip10);
-            this.panel81.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel81.Location = new System.Drawing.Point(3, 282);
-            this.panel81.Name = "panel81";
-            this.panel81.Size = new System.Drawing.Size(662, 254);
-            this.panel81.TabIndex = 5;
-            // 
-            // tbPrepAnalInfoComment
-            // 
-            this.tbPrepAnalInfoComment.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbPrepAnalInfoComment.Location = new System.Drawing.Point(0, 25);
-            this.tbPrepAnalInfoComment.Multiline = true;
-            this.tbPrepAnalInfoComment.Name = "tbPrepAnalInfoComment";
-            this.tbPrepAnalInfoComment.ReadOnly = true;
-            this.tbPrepAnalInfoComment.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.tbPrepAnalInfoComment.Size = new System.Drawing.Size(662, 229);
-            this.tbPrepAnalInfoComment.TabIndex = 3;
-            // 
-            // toolStrip10
-            // 
-            this.toolStrip10.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.toolStrip10.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripLabel6});
-            this.toolStrip10.Location = new System.Drawing.Point(0, 0);
-            this.toolStrip10.Name = "toolStrip10";
-            this.toolStrip10.Size = new System.Drawing.Size(662, 25);
-            this.toolStrip10.TabIndex = 4;
-            this.toolStrip10.Text = "toolStrip10";
-            // 
-            // toolStripLabel6
-            // 
-            this.toolStripLabel6.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.toolStripLabel6.Name = "toolStripLabel6";
-            this.toolStripLabel6.Size = new System.Drawing.Size(105, 22);
-            this.toolStripLabel6.Text = "Sample comment";
-            // 
-            // splitContainer4
-            // 
-            this.splitContainer4.Dock = System.Windows.Forms.DockStyle.Top;
-            this.splitContainer4.Location = new System.Drawing.Point(3, 28);
-            this.splitContainer4.Name = "splitContainer4";
-            // 
-            // splitContainer4.Panel1
-            // 
-            this.splitContainer4.Panel1.Controls.Add(this.groupBox2);
-            this.splitContainer4.Panel1.Padding = new System.Windows.Forms.Padding(6);
-            // 
-            // splitContainer4.Panel2
-            // 
-            this.splitContainer4.Panel2.Controls.Add(this.groupBox3);
-            this.splitContainer4.Panel2.Padding = new System.Windows.Forms.Padding(6);
-            this.splitContainer4.Size = new System.Drawing.Size(662, 254);
-            this.splitContainer4.SplitterDistance = 317;
-            this.splitContainer4.SplitterWidth = 3;
-            this.splitContainer4.TabIndex = 2;
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.panel66);
-            this.groupBox2.Controls.Add(this.panel64);
-            this.groupBox2.Controls.Add(this.panel4);
-            this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox2.Location = new System.Drawing.Point(6, 6);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(6);
-            this.groupBox2.Size = new System.Drawing.Size(305, 242);
-            this.groupBox2.TabIndex = 0;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Weight / Volume";
-            // 
-            // panel66
-            // 
-            this.panel66.Controls.Add(this.tbPrepAnalVolume);
-            this.panel66.Controls.Add(this.panel67);
-            this.panel66.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel66.Location = new System.Drawing.Point(6, 70);
-            this.panel66.Name = "panel66";
-            this.panel66.Size = new System.Drawing.Size(293, 25);
-            this.panel66.TabIndex = 2;
-            // 
-            // tbPrepAnalVolume
-            // 
-            this.tbPrepAnalVolume.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbPrepAnalVolume.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbPrepAnalVolume.Location = new System.Drawing.Point(105, 0);
-            this.tbPrepAnalVolume.Name = "tbPrepAnalVolume";
-            this.tbPrepAnalVolume.Size = new System.Drawing.Size(188, 21);
-            this.tbPrepAnalVolume.TabIndex = 2;
-            this.tbPrepAnalVolume.TextChanged += new System.EventHandler(this.tbPrepAnalVolume_TextChanged);
-            // 
-            // panel67
-            // 
-            this.panel67.Controls.Add(this.label46);
-            this.panel67.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel67.Location = new System.Drawing.Point(0, 0);
-            this.panel67.Name = "panel67";
-            this.panel67.Size = new System.Drawing.Size(105, 25);
-            this.panel67.TabIndex = 0;
-            // 
-            // label46
-            // 
-            this.label46.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label46.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label46.Location = new System.Drawing.Point(0, 0);
-            this.label46.Name = "label46";
-            this.label46.Size = new System.Drawing.Size(105, 25);
-            this.label46.TabIndex = 0;
-            this.label46.Text = "Volume (L)";
-            this.label46.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // panel64
-            // 
-            this.panel64.Controls.Add(this.tbPrepAnalDryWeight);
-            this.panel64.Controls.Add(this.panel65);
-            this.panel64.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel64.Location = new System.Drawing.Point(6, 45);
-            this.panel64.Name = "panel64";
-            this.panel64.Size = new System.Drawing.Size(293, 25);
-            this.panel64.TabIndex = 1;
-            // 
-            // tbPrepAnalDryWeight
-            // 
-            this.tbPrepAnalDryWeight.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbPrepAnalDryWeight.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbPrepAnalDryWeight.Location = new System.Drawing.Point(105, 0);
-            this.tbPrepAnalDryWeight.Name = "tbPrepAnalDryWeight";
-            this.tbPrepAnalDryWeight.Size = new System.Drawing.Size(188, 21);
-            this.tbPrepAnalDryWeight.TabIndex = 1;
-            this.tbPrepAnalDryWeight.TextChanged += new System.EventHandler(this.tbPrepAnalDryWeight_TextChanged);
-            // 
-            // panel65
-            // 
-            this.panel65.Controls.Add(this.label44);
-            this.panel65.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel65.Location = new System.Drawing.Point(0, 0);
-            this.panel65.Name = "panel65";
-            this.panel65.Size = new System.Drawing.Size(105, 25);
-            this.panel65.TabIndex = 0;
-            // 
-            // label44
-            // 
-            this.label44.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label44.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label44.Location = new System.Drawing.Point(0, 0);
-            this.label44.Name = "label44";
-            this.label44.Size = new System.Drawing.Size(105, 25);
-            this.label44.TabIndex = 0;
-            this.label44.Text = "Dry weight (g)";
-            this.label44.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // panel4
-            // 
-            this.panel4.Controls.Add(this.tbPrepAnalWetWeight);
-            this.panel4.Controls.Add(this.panel26);
-            this.panel4.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel4.Location = new System.Drawing.Point(6, 20);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(293, 25);
-            this.panel4.TabIndex = 0;
-            // 
-            // tbPrepAnalWetWeight
-            // 
-            this.tbPrepAnalWetWeight.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbPrepAnalWetWeight.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbPrepAnalWetWeight.Location = new System.Drawing.Point(105, 0);
-            this.tbPrepAnalWetWeight.Name = "tbPrepAnalWetWeight";
-            this.tbPrepAnalWetWeight.Size = new System.Drawing.Size(188, 21);
-            this.tbPrepAnalWetWeight.TabIndex = 0;
-            this.tbPrepAnalWetWeight.TextChanged += new System.EventHandler(this.tbPrepAnalWetWeight_TextChanged);
-            // 
-            // panel26
-            // 
-            this.panel26.Controls.Add(this.label6);
-            this.panel26.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel26.Location = new System.Drawing.Point(0, 0);
-            this.panel26.Name = "panel26";
-            this.panel26.Size = new System.Drawing.Size(105, 25);
-            this.panel26.TabIndex = 0;
-            // 
-            // label6
-            // 
-            this.label6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(0, 0);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(105, 25);
-            this.label6.TabIndex = 0;
-            this.label6.Text = "Wet weight (g)";
-            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.panel74);
-            this.groupBox3.Controls.Add(this.panel72);
-            this.groupBox3.Controls.Add(this.panel70);
-            this.groupBox3.Controls.Add(this.panel68);
-            this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox3.Location = new System.Drawing.Point(6, 6);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Padding = new System.Windows.Forms.Padding(6);
-            this.groupBox3.Size = new System.Drawing.Size(330, 242);
-            this.groupBox3.TabIndex = 1;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Loss on drying (LOD)";
-            // 
-            // panel74
-            // 
-            this.panel74.Controls.Add(this.tbPrepAnalLODTemp);
-            this.panel74.Controls.Add(this.panel75);
-            this.panel74.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel74.Location = new System.Drawing.Point(6, 95);
-            this.panel74.Name = "panel74";
-            this.panel74.Size = new System.Drawing.Size(318, 25);
-            this.panel74.TabIndex = 4;
-            // 
-            // tbPrepAnalLODTemp
-            // 
-            this.tbPrepAnalLODTemp.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbPrepAnalLODTemp.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbPrepAnalLODTemp.Location = new System.Drawing.Point(105, 0);
-            this.tbPrepAnalLODTemp.Name = "tbPrepAnalLODTemp";
-            this.tbPrepAnalLODTemp.Size = new System.Drawing.Size(213, 21);
-            this.tbPrepAnalLODTemp.TabIndex = 6;
-            this.tbPrepAnalLODTemp.TextChanged += new System.EventHandler(this.tbPrepAnalLODTemp_TextChanged);
-            // 
-            // panel75
-            // 
-            this.panel75.Controls.Add(this.label68);
-            this.panel75.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel75.Location = new System.Drawing.Point(0, 0);
-            this.panel75.Name = "panel75";
-            this.panel75.Size = new System.Drawing.Size(105, 25);
-            this.panel75.TabIndex = 0;
-            // 
-            // label68
-            // 
-            this.label68.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label68.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label68.Location = new System.Drawing.Point(0, 0);
-            this.label68.Name = "label68";
-            this.label68.Size = new System.Drawing.Size(105, 25);
-            this.label68.TabIndex = 0;
-            this.label68.Text = "Temperature (C)";
-            this.label68.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // panel72
-            // 
-            this.panel72.Controls.Add(this.tbPrepAnalLODWater);
-            this.panel72.Controls.Add(this.panel73);
-            this.panel72.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel72.Location = new System.Drawing.Point(6, 70);
-            this.panel72.Name = "panel72";
-            this.panel72.Size = new System.Drawing.Size(318, 25);
-            this.panel72.TabIndex = 3;
-            // 
-            // tbPrepAnalLODWater
-            // 
-            this.tbPrepAnalLODWater.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbPrepAnalLODWater.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbPrepAnalLODWater.Location = new System.Drawing.Point(105, 0);
-            this.tbPrepAnalLODWater.Name = "tbPrepAnalLODWater";
-            this.tbPrepAnalLODWater.ReadOnly = true;
-            this.tbPrepAnalLODWater.Size = new System.Drawing.Size(213, 21);
-            this.tbPrepAnalLODWater.TabIndex = 5;
-            // 
-            // panel73
-            // 
-            this.panel73.Controls.Add(this.label67);
-            this.panel73.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel73.Location = new System.Drawing.Point(0, 0);
-            this.panel73.Name = "panel73";
-            this.panel73.Size = new System.Drawing.Size(105, 25);
-            this.panel73.TabIndex = 0;
-            // 
-            // label67
-            // 
-            this.label67.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label67.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label67.Location = new System.Drawing.Point(0, 0);
-            this.label67.Name = "label67";
-            this.label67.Size = new System.Drawing.Size(105, 25);
-            this.label67.TabIndex = 0;
-            this.label67.Text = "Water (%)";
-            this.label67.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // panel70
-            // 
-            this.panel70.Controls.Add(this.tbPrepAnalLODEndWeight);
-            this.panel70.Controls.Add(this.panel71);
-            this.panel70.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel70.Location = new System.Drawing.Point(6, 45);
-            this.panel70.Name = "panel70";
-            this.panel70.Size = new System.Drawing.Size(318, 25);
-            this.panel70.TabIndex = 2;
-            // 
-            // tbPrepAnalLODEndWeight
-            // 
-            this.tbPrepAnalLODEndWeight.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbPrepAnalLODEndWeight.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbPrepAnalLODEndWeight.Location = new System.Drawing.Point(105, 0);
-            this.tbPrepAnalLODEndWeight.Name = "tbPrepAnalLODEndWeight";
-            this.tbPrepAnalLODEndWeight.Size = new System.Drawing.Size(213, 21);
-            this.tbPrepAnalLODEndWeight.TabIndex = 4;
-            this.tbPrepAnalLODEndWeight.TextChanged += new System.EventHandler(this.tbPrepAnalLODStartWeight_TextChanged);
-            // 
-            // panel71
-            // 
-            this.panel71.Controls.Add(this.label66);
-            this.panel71.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel71.Location = new System.Drawing.Point(0, 0);
-            this.panel71.Name = "panel71";
-            this.panel71.Size = new System.Drawing.Size(105, 25);
-            this.panel71.TabIndex = 0;
-            // 
-            // label66
-            // 
-            this.label66.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label66.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label66.Location = new System.Drawing.Point(0, 0);
-            this.label66.Name = "label66";
-            this.label66.Size = new System.Drawing.Size(105, 25);
-            this.label66.TabIndex = 0;
-            this.label66.Text = "End weight (g)";
-            this.label66.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // panel68
-            // 
-            this.panel68.Controls.Add(this.tbPrepAnalLODStartWeight);
-            this.panel68.Controls.Add(this.panel69);
-            this.panel68.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel68.Location = new System.Drawing.Point(6, 20);
-            this.panel68.Name = "panel68";
-            this.panel68.Size = new System.Drawing.Size(318, 25);
-            this.panel68.TabIndex = 1;
-            // 
-            // tbPrepAnalLODStartWeight
-            // 
-            this.tbPrepAnalLODStartWeight.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbPrepAnalLODStartWeight.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbPrepAnalLODStartWeight.Location = new System.Drawing.Point(105, 0);
-            this.tbPrepAnalLODStartWeight.Name = "tbPrepAnalLODStartWeight";
-            this.tbPrepAnalLODStartWeight.Size = new System.Drawing.Size(213, 21);
-            this.tbPrepAnalLODStartWeight.TabIndex = 3;
-            this.tbPrepAnalLODStartWeight.TextChanged += new System.EventHandler(this.tbPrepAnalLODStartWeight_TextChanged);
-            // 
-            // panel69
-            // 
-            this.panel69.Controls.Add(this.label65);
-            this.panel69.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel69.Location = new System.Drawing.Point(0, 0);
-            this.panel69.Name = "panel69";
-            this.panel69.Size = new System.Drawing.Size(105, 25);
-            this.panel69.TabIndex = 0;
-            // 
-            // label65
-            // 
-            this.label65.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label65.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label65.Location = new System.Drawing.Point(0, 0);
-            this.label65.Name = "label65";
-            this.label65.Size = new System.Drawing.Size(105, 25);
-            this.label65.TabIndex = 0;
-            this.label65.Text = "Start weight (g)";
-            this.label65.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // toolStrip3
-            // 
-            this.toolStrip3.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.toolStrip3.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripLabel11});
-            this.toolStrip3.Location = new System.Drawing.Point(3, 3);
-            this.toolStrip3.Name = "toolStrip3";
-            this.toolStrip3.Size = new System.Drawing.Size(662, 25);
-            this.toolStrip3.TabIndex = 6;
-            this.toolStrip3.Text = "toolStrip3";
-            // 
-            // toolStripLabel11
-            // 
-            this.toolStripLabel11.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.toolStripLabel11.Name = "toolStripLabel11";
-            this.toolStripLabel11.Size = new System.Drawing.Size(75, 22);
-            this.toolStripLabel11.Text = "Sample data";
-            // 
-            // panel80
-            // 
-            this.panel80.Controls.Add(this.btnPrepAnalSampleDiscard);
-            this.panel80.Controls.Add(this.btnPrepAnalSampleUpdate);
-            this.panel80.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel80.Location = new System.Drawing.Point(3, 536);
-            this.panel80.Name = "panel80";
-            this.panel80.Size = new System.Drawing.Size(662, 26);
-            this.panel80.TabIndex = 7;
-            // 
-            // btnPrepAnalSampleDiscard
-            // 
-            this.btnPrepAnalSampleDiscard.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnPrepAnalSampleDiscard.Location = new System.Drawing.Point(382, 0);
-            this.btnPrepAnalSampleDiscard.Name = "btnPrepAnalSampleDiscard";
-            this.btnPrepAnalSampleDiscard.Size = new System.Drawing.Size(140, 26);
-            this.btnPrepAnalSampleDiscard.TabIndex = 8;
-            this.btnPrepAnalSampleDiscard.Text = "Discard changes";
-            this.btnPrepAnalSampleDiscard.UseVisualStyleBackColor = true;
-            this.btnPrepAnalSampleDiscard.Click += new System.EventHandler(this.btnPrepAnalSampleDiscard_Click);
-            // 
-            // btnPrepAnalSampleUpdate
-            // 
-            this.btnPrepAnalSampleUpdate.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnPrepAnalSampleUpdate.Location = new System.Drawing.Point(522, 0);
-            this.btnPrepAnalSampleUpdate.Name = "btnPrepAnalSampleUpdate";
-            this.btnPrepAnalSampleUpdate.Size = new System.Drawing.Size(140, 26);
-            this.btnPrepAnalSampleUpdate.TabIndex = 7;
-            this.btnPrepAnalSampleUpdate.Text = "Save sample data";
-            this.btnPrepAnalSampleUpdate.UseVisualStyleBackColor = true;
-            this.btnPrepAnalSampleUpdate.Click += new System.EventHandler(this.btnPrepAnalSampleUpdate_Click);
-            // 
-            // tabPrepAnalPreps
-            // 
-            this.tabPrepAnalPreps.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.tabPrepAnalPreps.Controls.Add(this.panel10);
-            this.tabPrepAnalPreps.Controls.Add(this.splitContainer3);
-            this.tabPrepAnalPreps.Location = new System.Drawing.Point(4, 24);
-            this.tabPrepAnalPreps.Name = "tabPrepAnalPreps";
-            this.tabPrepAnalPreps.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPrepAnalPreps.Size = new System.Drawing.Size(668, 565);
-            this.tabPrepAnalPreps.TabIndex = 3;
-            this.tabPrepAnalPreps.Text = "Preparations";
-            // 
-            // panel10
-            // 
-            this.panel10.Controls.Add(this.btnPrepAnalPrepDiscard);
-            this.panel10.Controls.Add(this.cboxPrepAnalPrepWorkflowStatus);
-            this.panel10.Controls.Add(this.btnPrepAnalPrepUpdate);
-            this.panel10.Controls.Add(this.label23);
-            this.panel10.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel10.Location = new System.Drawing.Point(3, 536);
-            this.panel10.Name = "panel10";
-            this.panel10.Size = new System.Drawing.Size(662, 26);
-            this.panel10.TabIndex = 1;
-            // 
-            // btnPrepAnalPrepDiscard
-            // 
-            this.btnPrepAnalPrepDiscard.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnPrepAnalPrepDiscard.Location = new System.Drawing.Point(382, 0);
-            this.btnPrepAnalPrepDiscard.Name = "btnPrepAnalPrepDiscard";
-            this.btnPrepAnalPrepDiscard.Size = new System.Drawing.Size(140, 26);
-            this.btnPrepAnalPrepDiscard.TabIndex = 10;
-            this.btnPrepAnalPrepDiscard.Text = "Discard changes";
-            this.btnPrepAnalPrepDiscard.UseVisualStyleBackColor = true;
-            this.btnPrepAnalPrepDiscard.Click += new System.EventHandler(this.btnPrepAnalPrepDiscard_Click);
-            // 
-            // cboxPrepAnalPrepWorkflowStatus
-            // 
-            this.cboxPrepAnalPrepWorkflowStatus.DisplayMember = "Name";
-            this.cboxPrepAnalPrepWorkflowStatus.Dock = System.Windows.Forms.DockStyle.Left;
-            this.cboxPrepAnalPrepWorkflowStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboxPrepAnalPrepWorkflowStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cboxPrepAnalPrepWorkflowStatus.FormattingEnabled = true;
-            this.cboxPrepAnalPrepWorkflowStatus.ItemHeight = 15;
-            this.cboxPrepAnalPrepWorkflowStatus.Location = new System.Drawing.Point(113, 0);
-            this.cboxPrepAnalPrepWorkflowStatus.Name = "cboxPrepAnalPrepWorkflowStatus";
-            this.cboxPrepAnalPrepWorkflowStatus.Size = new System.Drawing.Size(140, 23);
-            this.cboxPrepAnalPrepWorkflowStatus.TabIndex = 7;
-            this.cboxPrepAnalPrepWorkflowStatus.ValueMember = "Id";
-            this.cboxPrepAnalPrepWorkflowStatus.SelectedIndexChanged += new System.EventHandler(this.cboxPrepAnalPrepWorkflowStatus_SelectedIndexChanged);
-            // 
-            // btnPrepAnalPrepUpdate
-            // 
-            this.btnPrepAnalPrepUpdate.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnPrepAnalPrepUpdate.Location = new System.Drawing.Point(522, 0);
-            this.btnPrepAnalPrepUpdate.Name = "btnPrepAnalPrepUpdate";
-            this.btnPrepAnalPrepUpdate.Size = new System.Drawing.Size(140, 26);
-            this.btnPrepAnalPrepUpdate.TabIndex = 9;
-            this.btnPrepAnalPrepUpdate.Text = "Save preparation";
-            this.btnPrepAnalPrepUpdate.UseVisualStyleBackColor = true;
-            this.btnPrepAnalPrepUpdate.Click += new System.EventHandler(this.btnPrepAnalPrepUpdate_Click);
-            // 
-            // label23
-            // 
-            this.label23.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label23.Location = new System.Drawing.Point(0, 0);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(113, 26);
-            this.label23.TabIndex = 0;
-            this.label23.Text = "Preparation status";
-            this.label23.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // splitContainer3
-            // 
-            this.splitContainer3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.splitContainer3.Location = new System.Drawing.Point(3, 3);
-            this.splitContainer3.Name = "splitContainer3";
-            // 
-            // splitContainer3.Panel1
-            // 
-            this.splitContainer3.Panel1.Controls.Add(this.panel1);
-            // 
-            // splitContainer3.Panel2
-            // 
-            this.splitContainer3.Panel2.Controls.Add(this.panel5);
-            this.splitContainer3.Size = new System.Drawing.Size(662, 332);
-            this.splitContainer3.SplitterDistance = 371;
-            this.splitContainer3.SplitterWidth = 3;
-            this.splitContainer3.TabIndex = 0;
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.panel60);
-            this.panel1.Controls.Add(this.panel84);
-            this.panel1.Controls.Add(this.panel57);
-            this.panel1.Controls.Add(this.panel55);
-            this.panel1.Controls.Add(this.panel52);
-            this.panel1.Controls.Add(this.panel51);
-            this.panel1.Controls.Add(this.toolsSamplePrepInfo);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(371, 332);
-            this.panel1.TabIndex = 0;
-            // 
-            // panel60
-            // 
-            this.panel60.Controls.Add(this.tbPrepAnalPrepComment);
-            this.panel60.Controls.Add(this.panel61);
-            this.panel60.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel60.Location = new System.Drawing.Point(0, 150);
-            this.panel60.Name = "panel60";
-            this.panel60.Size = new System.Drawing.Size(371, 182);
-            this.panel60.TabIndex = 11;
-            // 
-            // tbPrepAnalPrepComment
-            // 
-            this.tbPrepAnalPrepComment.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbPrepAnalPrepComment.Location = new System.Drawing.Point(113, 0);
-            this.tbPrepAnalPrepComment.MaxLength = 1000;
-            this.tbPrepAnalPrepComment.Multiline = true;
-            this.tbPrepAnalPrepComment.Name = "tbPrepAnalPrepComment";
-            this.tbPrepAnalPrepComment.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.tbPrepAnalPrepComment.Size = new System.Drawing.Size(258, 182);
-            this.tbPrepAnalPrepComment.TabIndex = 8;
-            this.tbPrepAnalPrepComment.TextChanged += new System.EventHandler(this.tbPrepAnalPrepComment_TextChanged);
-            // 
-            // panel61
-            // 
-            this.panel61.Controls.Add(this.label31);
-            this.panel61.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel61.Location = new System.Drawing.Point(0, 0);
-            this.panel61.Name = "panel61";
-            this.panel61.Size = new System.Drawing.Size(113, 182);
-            this.panel61.TabIndex = 5;
-            // 
-            // label31
-            // 
-            this.label31.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label31.Location = new System.Drawing.Point(0, 0);
-            this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(113, 182);
-            this.label31.TabIndex = 11;
-            this.label31.Text = "Comment";
-            this.label31.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            // 
-            // panel84
-            // 
-            this.panel84.Controls.Add(this.tbPrepAnalPrepReqUnit);
-            this.panel84.Controls.Add(this.panel85);
-            this.panel84.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel84.Location = new System.Drawing.Point(0, 125);
-            this.panel84.Name = "panel84";
-            this.panel84.Size = new System.Drawing.Size(371, 25);
-            this.panel84.TabIndex = 9;
-            // 
-            // tbPrepAnalPrepReqUnit
-            // 
-            this.tbPrepAnalPrepReqUnit.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbPrepAnalPrepReqUnit.Location = new System.Drawing.Point(113, 0);
-            this.tbPrepAnalPrepReqUnit.Name = "tbPrepAnalPrepReqUnit";
-            this.tbPrepAnalPrepReqUnit.ReadOnly = true;
-            this.tbPrepAnalPrepReqUnit.Size = new System.Drawing.Size(258, 21);
-            this.tbPrepAnalPrepReqUnit.TabIndex = 6;
-            // 
-            // panel85
-            // 
-            this.panel85.Controls.Add(this.label24);
-            this.panel85.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel85.Location = new System.Drawing.Point(0, 0);
-            this.panel85.Name = "panel85";
-            this.panel85.Size = new System.Drawing.Size(113, 25);
-            this.panel85.TabIndex = 5;
-            // 
-            // label24
-            // 
-            this.label24.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label24.Location = new System.Drawing.Point(0, 0);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(113, 25);
-            this.label24.TabIndex = 0;
-            this.label24.Text = "Requested unit";
-            this.label24.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // panel57
-            // 
-            this.panel57.Controls.Add(this.tbPrepAnalPrepQuantity);
-            this.panel57.Controls.Add(this.cboxPrepAnalPrepQuantityUnit);
-            this.panel57.Controls.Add(this.panel58);
-            this.panel57.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel57.Location = new System.Drawing.Point(0, 100);
-            this.panel57.Name = "panel57";
-            this.panel57.Size = new System.Drawing.Size(371, 25);
-            this.panel57.TabIndex = 6;
-            // 
-            // tbPrepAnalPrepQuantity
-            // 
-            this.tbPrepAnalPrepQuantity.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbPrepAnalPrepQuantity.Location = new System.Drawing.Point(113, 0);
-            this.tbPrepAnalPrepQuantity.MaxLength = 32;
-            this.tbPrepAnalPrepQuantity.Name = "tbPrepAnalPrepQuantity";
-            this.tbPrepAnalPrepQuantity.Size = new System.Drawing.Size(139, 21);
-            this.tbPrepAnalPrepQuantity.TabIndex = 4;
-            this.tbPrepAnalPrepQuantity.TextChanged += new System.EventHandler(this.tbPrepAnalPrepQuantity_TextChanged);
-            // 
-            // cboxPrepAnalPrepQuantityUnit
-            // 
-            this.cboxPrepAnalPrepQuantityUnit.DisplayMember = "Name";
-            this.cboxPrepAnalPrepQuantityUnit.Dock = System.Windows.Forms.DockStyle.Right;
-            this.cboxPrepAnalPrepQuantityUnit.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboxPrepAnalPrepQuantityUnit.FormattingEnabled = true;
-            this.cboxPrepAnalPrepQuantityUnit.Location = new System.Drawing.Point(252, 0);
-            this.cboxPrepAnalPrepQuantityUnit.Name = "cboxPrepAnalPrepQuantityUnit";
-            this.cboxPrepAnalPrepQuantityUnit.Size = new System.Drawing.Size(119, 23);
-            this.cboxPrepAnalPrepQuantityUnit.TabIndex = 5;
-            this.cboxPrepAnalPrepQuantityUnit.ValueMember = "Id";
-            this.cboxPrepAnalPrepQuantityUnit.SelectedIndexChanged += new System.EventHandler(this.cboxPrepAnalPrepQuantityUnit_SelectedIndexChanged);
-            // 
-            // panel58
-            // 
-            this.panel58.Controls.Add(this.label64);
-            this.panel58.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel58.Location = new System.Drawing.Point(0, 0);
-            this.panel58.Name = "panel58";
-            this.panel58.Size = new System.Drawing.Size(113, 25);
-            this.panel58.TabIndex = 5;
-            // 
-            // label64
-            // 
-            this.label64.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label64.Location = new System.Drawing.Point(0, 0);
-            this.label64.Name = "label64";
-            this.label64.Size = new System.Drawing.Size(113, 25);
-            this.label64.TabIndex = 0;
-            this.label64.Text = "Sample quant.";
-            this.label64.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // panel55
-            // 
-            this.panel55.Controls.Add(this.tbPrepAnalPrepAmount);
-            this.panel55.Controls.Add(this.panel56);
-            this.panel55.Controls.Add(this.cboxPrepAnalPrepAmountUnit);
-            this.panel55.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel55.Location = new System.Drawing.Point(0, 75);
-            this.panel55.Name = "panel55";
-            this.panel55.Size = new System.Drawing.Size(371, 25);
-            this.panel55.TabIndex = 5;
-            // 
-            // tbPrepAnalPrepAmount
-            // 
-            this.tbPrepAnalPrepAmount.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbPrepAnalPrepAmount.Location = new System.Drawing.Point(113, 0);
-            this.tbPrepAnalPrepAmount.MaxLength = 32;
-            this.tbPrepAnalPrepAmount.Name = "tbPrepAnalPrepAmount";
-            this.tbPrepAnalPrepAmount.Size = new System.Drawing.Size(139, 21);
-            this.tbPrepAnalPrepAmount.TabIndex = 2;
-            this.tbPrepAnalPrepAmount.TextChanged += new System.EventHandler(this.tbPrepAnalPrepAmount_TextChanged);
-            // 
-            // panel56
-            // 
-            this.panel56.Controls.Add(this.label29);
-            this.panel56.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel56.Location = new System.Drawing.Point(0, 0);
-            this.panel56.Name = "panel56";
-            this.panel56.Size = new System.Drawing.Size(113, 25);
-            this.panel56.TabIndex = 5;
-            // 
-            // label29
-            // 
-            this.label29.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label29.Location = new System.Drawing.Point(0, 0);
-            this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(113, 25);
-            this.label29.TabIndex = 2;
-            this.label29.Text = "Prep. amount";
-            this.label29.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // cboxPrepAnalPrepAmountUnit
-            // 
-            this.cboxPrepAnalPrepAmountUnit.DisplayMember = "Name";
-            this.cboxPrepAnalPrepAmountUnit.Dock = System.Windows.Forms.DockStyle.Right;
-            this.cboxPrepAnalPrepAmountUnit.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboxPrepAnalPrepAmountUnit.FormattingEnabled = true;
-            this.cboxPrepAnalPrepAmountUnit.Location = new System.Drawing.Point(252, 0);
-            this.cboxPrepAnalPrepAmountUnit.Name = "cboxPrepAnalPrepAmountUnit";
-            this.cboxPrepAnalPrepAmountUnit.Size = new System.Drawing.Size(119, 23);
-            this.cboxPrepAnalPrepAmountUnit.TabIndex = 3;
-            this.cboxPrepAnalPrepAmountUnit.ValueMember = "Id";
-            this.cboxPrepAnalPrepAmountUnit.SelectedIndexChanged += new System.EventHandler(this.cboxPrepAnalPrepAmountUnit_SelectedIndexChanged);
-            // 
-            // panel52
-            // 
-            this.panel52.Controls.Add(this.tbPrepAnalPrepFillHeight);
-            this.panel52.Controls.Add(this.panel59);
-            this.panel52.Controls.Add(this.panel53);
-            this.panel52.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel52.Location = new System.Drawing.Point(0, 50);
-            this.panel52.Name = "panel52";
-            this.panel52.Size = new System.Drawing.Size(371, 25);
-            this.panel52.TabIndex = 4;
-            // 
-            // tbPrepAnalPrepFillHeight
-            // 
-            this.tbPrepAnalPrepFillHeight.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbPrepAnalPrepFillHeight.Location = new System.Drawing.Point(113, 0);
-            this.tbPrepAnalPrepFillHeight.MaxLength = 32;
-            this.tbPrepAnalPrepFillHeight.Name = "tbPrepAnalPrepFillHeight";
-            this.tbPrepAnalPrepFillHeight.Size = new System.Drawing.Size(138, 21);
-            this.tbPrepAnalPrepFillHeight.TabIndex = 1;
-            this.tbPrepAnalPrepFillHeight.TextChanged += new System.EventHandler(this.tbPrepAnalPrepFillHeight_TextChanged);
-            // 
-            // panel59
-            // 
-            this.panel59.Controls.Add(this.lblPrepAnalPrepRange);
-            this.panel59.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel59.Location = new System.Drawing.Point(251, 0);
-            this.panel59.Name = "panel59";
-            this.panel59.Size = new System.Drawing.Size(120, 25);
-            this.panel59.TabIndex = 6;
-            // 
-            // lblPrepAnalPrepRange
-            // 
-            this.lblPrepAnalPrepRange.AutoSize = true;
-            this.lblPrepAnalPrepRange.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblPrepAnalPrepRange.Location = new System.Drawing.Point(0, 0);
-            this.lblPrepAnalPrepRange.Name = "lblPrepAnalPrepRange";
-            this.lblPrepAnalPrepRange.Size = new System.Drawing.Size(16, 15);
-            this.lblPrepAnalPrepRange.TabIndex = 6;
-            this.lblPrepAnalPrepRange.Text = "[,]";
-            // 
-            // panel53
-            // 
-            this.panel53.Controls.Add(this.label28);
-            this.panel53.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel53.Location = new System.Drawing.Point(0, 0);
-            this.panel53.Name = "panel53";
-            this.panel53.Size = new System.Drawing.Size(113, 25);
-            this.panel53.TabIndex = 5;
-            // 
-            // label28
-            // 
-            this.label28.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label28.Location = new System.Drawing.Point(0, 0);
-            this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(113, 25);
-            this.label28.TabIndex = 1;
-            this.label28.Text = "Fill height (mm)";
-            this.label28.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // panel51
-            // 
-            this.panel51.Controls.Add(this.cboxPrepAnalPrepGeom);
-            this.panel51.Controls.Add(this.panel54);
-            this.panel51.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel51.Location = new System.Drawing.Point(0, 25);
-            this.panel51.Name = "panel51";
-            this.panel51.Size = new System.Drawing.Size(371, 25);
-            this.panel51.TabIndex = 3;
-            // 
-            // cboxPrepAnalPrepGeom
-            // 
-            this.cboxPrepAnalPrepGeom.DisplayMember = "Name";
-            this.cboxPrepAnalPrepGeom.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cboxPrepAnalPrepGeom.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboxPrepAnalPrepGeom.FormattingEnabled = true;
-            this.cboxPrepAnalPrepGeom.Location = new System.Drawing.Point(113, 0);
-            this.cboxPrepAnalPrepGeom.Name = "cboxPrepAnalPrepGeom";
-            this.cboxPrepAnalPrepGeom.Size = new System.Drawing.Size(258, 23);
-            this.cboxPrepAnalPrepGeom.TabIndex = 0;
-            this.cboxPrepAnalPrepGeom.ValueMember = "Id";
-            this.cboxPrepAnalPrepGeom.SelectedIndexChanged += new System.EventHandler(this.cboxPrepAnalPrepGeom_SelectedIndexChanged);
-            // 
-            // panel54
-            // 
-            this.panel54.Controls.Add(this.label27);
-            this.panel54.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel54.Location = new System.Drawing.Point(0, 0);
-            this.panel54.Name = "panel54";
-            this.panel54.Size = new System.Drawing.Size(113, 25);
-            this.panel54.TabIndex = 5;
-            // 
-            // label27
-            // 
-            this.label27.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label27.Location = new System.Drawing.Point(0, 0);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(113, 25);
-            this.label27.TabIndex = 0;
-            this.label27.Text = "Geometry";
-            this.label27.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // toolsSamplePrepInfo
-            // 
-            this.toolsSamplePrepInfo.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.toolsSamplePrepInfo.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripLabel13,
-            this.btnPrepAnalPrepPrintLabel});
-            this.toolsSamplePrepInfo.Location = new System.Drawing.Point(0, 0);
-            this.toolsSamplePrepInfo.Name = "toolsSamplePrepInfo";
-            this.toolsSamplePrepInfo.Size = new System.Drawing.Size(371, 25);
-            this.toolsSamplePrepInfo.TabIndex = 1;
-            this.toolsSamplePrepInfo.Text = "toolStrip10";
-            // 
-            // toolStripLabel13
-            // 
-            this.toolStripLabel13.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.toolStripLabel13.Name = "toolStripLabel13";
-            this.toolStripLabel13.Size = new System.Drawing.Size(97, 22);
-            this.toolStripLabel13.Text = "Preparation info";
             // 
             // btnPrepAnalPrepPrintLabel
             // 
@@ -10217,64 +10804,6 @@
             this.btnPrepAnalPrepPrintLabel.Size = new System.Drawing.Size(80, 22);
             this.btnPrepAnalPrepPrintLabel.Text = "Print label";
             this.btnPrepAnalPrepPrintLabel.Click += new System.EventHandler(this.btnPrepAnalPrepPrintLabel_Click);
-            // 
-            // panel5
-            // 
-            this.panel5.Controls.Add(this.gridPrepAnalPrepAttachments);
-            this.panel5.Controls.Add(this.toolsSampleAttachments);
-            this.panel5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel5.Location = new System.Drawing.Point(0, 0);
-            this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(288, 332);
-            this.panel5.TabIndex = 1;
-            // 
-            // gridPrepAnalPrepAttachments
-            // 
-            this.gridPrepAnalPrepAttachments.AllowUserToAddRows = false;
-            this.gridPrepAnalPrepAttachments.AllowUserToDeleteRows = false;
-            this.gridPrepAnalPrepAttachments.AllowUserToResizeRows = false;
-            this.gridPrepAnalPrepAttachments.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.gridPrepAnalPrepAttachments.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
-            this.gridPrepAnalPrepAttachments.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.gridPrepAnalPrepAttachments.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gridPrepAnalPrepAttachments.ColumnHeadersVisible = false;
-            this.gridPrepAnalPrepAttachments.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridPrepAnalPrepAttachments.Location = new System.Drawing.Point(0, 25);
-            this.gridPrepAnalPrepAttachments.MultiSelect = false;
-            this.gridPrepAnalPrepAttachments.Name = "gridPrepAnalPrepAttachments";
-            this.gridPrepAnalPrepAttachments.ReadOnly = true;
-            this.gridPrepAnalPrepAttachments.RowHeadersVisible = false;
-            this.gridPrepAnalPrepAttachments.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridPrepAnalPrepAttachments.Size = new System.Drawing.Size(288, 307);
-            this.gridPrepAnalPrepAttachments.TabIndex = 1;
-            this.gridPrepAnalPrepAttachments.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridAttachments_CellDoubleClick);
-            // 
-            // toolsSampleAttachments
-            // 
-            this.toolsSampleAttachments.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.toolsSampleAttachments.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripLabel10,
-            this.toolStripSeparator26,
-            this.btnPrepAnalPrepScanAttachment,
-            this.btnPrepAnalPrepBrowseAttachment,
-            this.btnPrepAnalPrepDeleteAttachment});
-            this.toolsSampleAttachments.Location = new System.Drawing.Point(0, 0);
-            this.toolsSampleAttachments.Name = "toolsSampleAttachments";
-            this.toolsSampleAttachments.Size = new System.Drawing.Size(288, 25);
-            this.toolsSampleAttachments.TabIndex = 0;
-            this.toolsSampleAttachments.Text = "toolStrip8";
-            // 
-            // toolStripLabel10
-            // 
-            this.toolStripLabel10.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.toolStripLabel10.Name = "toolStripLabel10";
-            this.toolStripLabel10.Size = new System.Drawing.Size(79, 22);
-            this.toolStripLabel10.Text = "Attachments";
-            // 
-            // toolStripSeparator26
-            // 
-            this.toolStripSeparator26.Name = "toolStripSeparator26";
-            this.toolStripSeparator26.Size = new System.Drawing.Size(6, 25);
             // 
             // btnPrepAnalPrepScanAttachment
             // 
@@ -10303,84 +10832,6 @@
             this.btnPrepAnalPrepDeleteAttachment.Text = "Delete";
             this.btnPrepAnalPrepDeleteAttachment.Click += new System.EventHandler(this.btnPrepAnalPrepDeleteAttachment_Click);
             // 
-            // tabPrepAnalAnalysis
-            // 
-            this.tabPrepAnalAnalysis.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.tabPrepAnalAnalysis.Controls.Add(this.panel76);
-            this.tabPrepAnalAnalysis.Controls.Add(this.panel63);
-            this.tabPrepAnalAnalysis.Location = new System.Drawing.Point(4, 24);
-            this.tabPrepAnalAnalysis.Name = "tabPrepAnalAnalysis";
-            this.tabPrepAnalAnalysis.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPrepAnalAnalysis.Size = new System.Drawing.Size(668, 565);
-            this.tabPrepAnalAnalysis.TabIndex = 4;
-            this.tabPrepAnalAnalysis.Text = "Analyses";
-            // 
-            // panel76
-            // 
-            this.panel76.Controls.Add(this.panel9);
-            this.panel76.Controls.Add(this.panel14);
-            this.panel76.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel76.Location = new System.Drawing.Point(3, 249);
-            this.panel76.Name = "panel76";
-            this.panel76.Size = new System.Drawing.Size(662, 313);
-            this.panel76.TabIndex = 3;
-            // 
-            // panel9
-            // 
-            this.panel9.Controls.Add(this.gridPrepAnalResults);
-            this.panel9.Controls.Add(this.toolsSampleResRes);
-            this.panel9.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel9.Location = new System.Drawing.Point(0, 0);
-            this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(662, 287);
-            this.panel9.TabIndex = 4;
-            // 
-            // gridPrepAnalResults
-            // 
-            this.gridPrepAnalResults.AllowUserToAddRows = false;
-            this.gridPrepAnalResults.AllowUserToDeleteRows = false;
-            this.gridPrepAnalResults.AllowUserToResizeRows = false;
-            this.gridPrepAnalResults.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.gridPrepAnalResults.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
-            this.gridPrepAnalResults.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.gridPrepAnalResults.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gridPrepAnalResults.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridPrepAnalResults.Location = new System.Drawing.Point(0, 25);
-            this.gridPrepAnalResults.Name = "gridPrepAnalResults";
-            this.gridPrepAnalResults.ReadOnly = true;
-            this.gridPrepAnalResults.RowHeadersVisible = false;
-            this.gridPrepAnalResults.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridPrepAnalResults.Size = new System.Drawing.Size(662, 262);
-            this.gridPrepAnalResults.TabIndex = 0;
-            // 
-            // toolsSampleResRes
-            // 
-            this.toolsSampleResRes.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.toolsSampleResRes.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripLabel7,
-            this.toolStripSeparator28,
-            this.btnPrepAnalAddResult,
-            this.btnPrepAnalEditResult,
-            this.btnPrepAnalRemoveResult,
-            this.toolStripLabel57});
-            this.toolsSampleResRes.Location = new System.Drawing.Point(0, 0);
-            this.toolsSampleResRes.Name = "toolsSampleResRes";
-            this.toolsSampleResRes.Size = new System.Drawing.Size(662, 25);
-            this.toolsSampleResRes.TabIndex = 0;
-            this.toolsSampleResRes.Text = "toolStrip14";
-            // 
-            // toolStripLabel7
-            // 
-            this.toolStripLabel7.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.toolStripLabel7.Name = "toolStripLabel7";
-            this.toolStripLabel7.Size = new System.Drawing.Size(111, 22);
-            this.toolStripLabel7.Text = "Identified isotopes";
-            // 
-            // toolStripSeparator28
-            // 
-            this.toolStripSeparator28.Name = "toolStripSeparator28";
-            this.toolStripSeparator28.Size = new System.Drawing.Size(6, 25);
-            // 
             // btnPrepAnalAddResult
             // 
             this.btnPrepAnalAddResult.Image = global::DSA_lims.Properties.Resources._new;
@@ -10408,284 +10859,6 @@
             this.btnPrepAnalRemoveResult.Text = "Remove";
             this.btnPrepAnalRemoveResult.Click += new System.EventHandler(this.btnPrepAnalRemoveResult_Click);
             // 
-            // toolStripLabel57
-            // 
-            this.toolStripLabel57.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.toolStripLabel57.Name = "toolStripLabel57";
-            this.toolStripLabel57.Size = new System.Drawing.Size(197, 22);
-            this.toolStripLabel57.Text = "Sigma Activity: 2, Sigma MDA: 1.645";
-            // 
-            // panel14
-            // 
-            this.panel14.Controls.Add(this.cboxPrepAnalAnalWorkflowStatus);
-            this.panel14.Controls.Add(this.label55);
-            this.panel14.Controls.Add(this.btnPrepAnalAnalDiscard);
-            this.panel14.Controls.Add(this.btnPrepAnalAnalUpdate);
-            this.panel14.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel14.Location = new System.Drawing.Point(0, 287);
-            this.panel14.Name = "panel14";
-            this.panel14.Size = new System.Drawing.Size(662, 26);
-            this.panel14.TabIndex = 5;
-            // 
-            // cboxPrepAnalAnalWorkflowStatus
-            // 
-            this.cboxPrepAnalAnalWorkflowStatus.DisplayMember = "Name";
-            this.cboxPrepAnalAnalWorkflowStatus.Dock = System.Windows.Forms.DockStyle.Left;
-            this.cboxPrepAnalAnalWorkflowStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboxPrepAnalAnalWorkflowStatus.FormattingEnabled = true;
-            this.cboxPrepAnalAnalWorkflowStatus.Location = new System.Drawing.Point(90, 0);
-            this.cboxPrepAnalAnalWorkflowStatus.Name = "cboxPrepAnalAnalWorkflowStatus";
-            this.cboxPrepAnalAnalWorkflowStatus.Size = new System.Drawing.Size(140, 23);
-            this.cboxPrepAnalAnalWorkflowStatus.TabIndex = 6;
-            this.cboxPrepAnalAnalWorkflowStatus.ValueMember = "Id";
-            this.cboxPrepAnalAnalWorkflowStatus.SelectedIndexChanged += new System.EventHandler(this.cboxPrepAnalAnalWorkflowStatus_SelectedIndexChanged);
-            // 
-            // label55
-            // 
-            this.label55.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label55.Location = new System.Drawing.Point(0, 0);
-            this.label55.Name = "label55";
-            this.label55.Size = new System.Drawing.Size(90, 26);
-            this.label55.TabIndex = 0;
-            this.label55.Text = "Analysis status";
-            this.label55.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // btnPrepAnalAnalDiscard
-            // 
-            this.btnPrepAnalAnalDiscard.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnPrepAnalAnalDiscard.Location = new System.Drawing.Point(382, 0);
-            this.btnPrepAnalAnalDiscard.Name = "btnPrepAnalAnalDiscard";
-            this.btnPrepAnalAnalDiscard.Size = new System.Drawing.Size(140, 26);
-            this.btnPrepAnalAnalDiscard.TabIndex = 8;
-            this.btnPrepAnalAnalDiscard.Text = "Discard changes";
-            this.btnPrepAnalAnalDiscard.UseVisualStyleBackColor = true;
-            this.btnPrepAnalAnalDiscard.Click += new System.EventHandler(this.btnPrepAnalAnalDiscard_Click);
-            // 
-            // btnPrepAnalAnalUpdate
-            // 
-            this.btnPrepAnalAnalUpdate.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnPrepAnalAnalUpdate.Location = new System.Drawing.Point(522, 0);
-            this.btnPrepAnalAnalUpdate.Name = "btnPrepAnalAnalUpdate";
-            this.btnPrepAnalAnalUpdate.Size = new System.Drawing.Size(140, 26);
-            this.btnPrepAnalAnalUpdate.TabIndex = 7;
-            this.btnPrepAnalAnalUpdate.Text = "Save analysis";
-            this.btnPrepAnalAnalUpdate.UseVisualStyleBackColor = true;
-            this.btnPrepAnalAnalUpdate.Click += new System.EventHandler(this.btnPrepAnalAnalUpdate_Click);
-            // 
-            // panel63
-            // 
-            this.panel63.Controls.Add(this.splitContainer21);
-            this.panel63.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel63.Location = new System.Drawing.Point(3, 3);
-            this.panel63.Name = "panel63";
-            this.panel63.Size = new System.Drawing.Size(662, 246);
-            this.panel63.TabIndex = 2;
-            // 
-            // splitContainer21
-            // 
-            this.splitContainer21.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer21.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer21.Name = "splitContainer21";
-            // 
-            // splitContainer21.Panel1
-            // 
-            this.splitContainer21.Panel1.Controls.Add(this.layoutPrepAnalAnal);
-            this.splitContainer21.Panel1.Controls.Add(this.toolStrip1);
-            // 
-            // splitContainer21.Panel2
-            // 
-            this.splitContainer21.Panel2.Controls.Add(this.panel8);
-            this.splitContainer21.Size = new System.Drawing.Size(662, 246);
-            this.splitContainer21.SplitterDistance = 371;
-            this.splitContainer21.SplitterWidth = 3;
-            this.splitContainer21.TabIndex = 5;
-            // 
-            // layoutPrepAnalAnal
-            // 
-            this.layoutPrepAnalAnal.ColumnCount = 2;
-            this.layoutPrepAnalAnal.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.layoutPrepAnalAnal.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 75F));
-            this.layoutPrepAnalAnal.Controls.Add(this.label51, 0, 0);
-            this.layoutPrepAnalAnal.Controls.Add(this.label59, 0, 3);
-            this.layoutPrepAnalAnal.Controls.Add(this.tbPrepAnalAnalMDALib, 1, 3);
-            this.layoutPrepAnalAnal.Controls.Add(this.label58, 0, 2);
-            this.layoutPrepAnalAnal.Controls.Add(this.tbPrepAnalAnalNuclLib, 1, 2);
-            this.layoutPrepAnalAnal.Controls.Add(this.label54, 0, 1);
-            this.layoutPrepAnalAnal.Controls.Add(this.tbPrepAnalAnalSpecRef, 1, 1);
-            this.layoutPrepAnalAnal.Controls.Add(this.label60, 0, 4);
-            this.layoutPrepAnalAnal.Controls.Add(this.tbPrepAnalAnalComment, 1, 4);
-            this.layoutPrepAnalAnal.Controls.Add(this.panelPrepAnalAnalUnit, 1, 0);
-            this.layoutPrepAnalAnal.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.layoutPrepAnalAnal.Location = new System.Drawing.Point(0, 25);
-            this.layoutPrepAnalAnal.Name = "layoutPrepAnalAnal";
-            this.layoutPrepAnalAnal.RowCount = 8;
-            this.layoutPrepAnalAnal.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.layoutPrepAnalAnal.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.layoutPrepAnalAnal.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.layoutPrepAnalAnal.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.layoutPrepAnalAnal.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.layoutPrepAnalAnal.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.layoutPrepAnalAnal.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.layoutPrepAnalAnal.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.layoutPrepAnalAnal.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.layoutPrepAnalAnal.Size = new System.Drawing.Size(371, 221);
-            this.layoutPrepAnalAnal.TabIndex = 10;
-            this.layoutPrepAnalAnal.Resize += new System.EventHandler(this.layoutPrepAnalAnal_Resize);
-            // 
-            // label51
-            // 
-            this.label51.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label51.Location = new System.Drawing.Point(3, 0);
-            this.label51.Name = "label51";
-            this.label51.Size = new System.Drawing.Size(86, 30);
-            this.label51.TabIndex = 0;
-            this.label51.Text = "Unit";
-            this.label51.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // label59
-            // 
-            this.label59.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label59.Location = new System.Drawing.Point(3, 90);
-            this.label59.Name = "label59";
-            this.label59.Size = new System.Drawing.Size(86, 30);
-            this.label59.TabIndex = 0;
-            this.label59.Text = "MDA lib.";
-            this.label59.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // tbPrepAnalAnalMDALib
-            // 
-            this.tbPrepAnalAnalMDALib.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbPrepAnalAnalMDALib.Location = new System.Drawing.Point(95, 93);
-            this.tbPrepAnalAnalMDALib.Name = "tbPrepAnalAnalMDALib";
-            this.tbPrepAnalAnalMDALib.ReadOnly = true;
-            this.tbPrepAnalAnalMDALib.Size = new System.Drawing.Size(273, 21);
-            this.tbPrepAnalAnalMDALib.TabIndex = 4;
-            this.tbPrepAnalAnalMDALib.TextChanged += new System.EventHandler(this.tbPrepAnalAnalMDALib_TextChanged);
-            // 
-            // label58
-            // 
-            this.label58.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label58.Location = new System.Drawing.Point(3, 60);
-            this.label58.Name = "label58";
-            this.label58.Size = new System.Drawing.Size(86, 30);
-            this.label58.TabIndex = 0;
-            this.label58.Text = "Nucl. lib.";
-            this.label58.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // tbPrepAnalAnalNuclLib
-            // 
-            this.tbPrepAnalAnalNuclLib.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbPrepAnalAnalNuclLib.Location = new System.Drawing.Point(95, 63);
-            this.tbPrepAnalAnalNuclLib.Name = "tbPrepAnalAnalNuclLib";
-            this.tbPrepAnalAnalNuclLib.ReadOnly = true;
-            this.tbPrepAnalAnalNuclLib.Size = new System.Drawing.Size(273, 21);
-            this.tbPrepAnalAnalNuclLib.TabIndex = 3;
-            this.tbPrepAnalAnalNuclLib.TextChanged += new System.EventHandler(this.tbPrepAnalAnalNuclLib_TextChanged);
-            // 
-            // label54
-            // 
-            this.label54.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label54.Location = new System.Drawing.Point(3, 30);
-            this.label54.Name = "label54";
-            this.label54.Size = new System.Drawing.Size(86, 30);
-            this.label54.TabIndex = 0;
-            this.label54.Text = "Spec. ref.";
-            this.label54.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // tbPrepAnalAnalSpecRef
-            // 
-            this.tbPrepAnalAnalSpecRef.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbPrepAnalAnalSpecRef.Location = new System.Drawing.Point(95, 33);
-            this.tbPrepAnalAnalSpecRef.MaxLength = 256;
-            this.tbPrepAnalAnalSpecRef.Name = "tbPrepAnalAnalSpecRef";
-            this.tbPrepAnalAnalSpecRef.Size = new System.Drawing.Size(273, 21);
-            this.tbPrepAnalAnalSpecRef.TabIndex = 2;
-            this.tbPrepAnalAnalSpecRef.TextChanged += new System.EventHandler(this.tbPrepAnalAnalSpecRef_TextChanged);
-            // 
-            // label60
-            // 
-            this.label60.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label60.Location = new System.Drawing.Point(3, 120);
-            this.label60.Name = "label60";
-            this.label60.Size = new System.Drawing.Size(86, 30);
-            this.label60.TabIndex = 0;
-            this.label60.Text = "Comment";
-            this.label60.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // tbPrepAnalAnalComment
-            // 
-            this.tbPrepAnalAnalComment.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbPrepAnalAnalComment.Location = new System.Drawing.Point(95, 123);
-            this.tbPrepAnalAnalComment.MaxLength = 1000;
-            this.tbPrepAnalAnalComment.Multiline = true;
-            this.tbPrepAnalAnalComment.Name = "tbPrepAnalAnalComment";
-            this.layoutPrepAnalAnal.SetRowSpan(this.tbPrepAnalAnalComment, 3);
-            this.tbPrepAnalAnalComment.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.tbPrepAnalAnalComment.Size = new System.Drawing.Size(273, 84);
-            this.tbPrepAnalAnalComment.TabIndex = 5;
-            this.tbPrepAnalAnalComment.TextChanged += new System.EventHandler(this.tbPrepAnalAnalComment_TextChanged);
-            // 
-            // panelPrepAnalAnalUnit
-            // 
-            this.panelPrepAnalAnalUnit.Controls.Add(this.cboxPrepAnalAnalUnit);
-            this.panelPrepAnalAnalUnit.Controls.Add(this.cboxPrepAnalAnalUnitType);
-            this.panelPrepAnalAnalUnit.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelPrepAnalAnalUnit.Location = new System.Drawing.Point(95, 3);
-            this.panelPrepAnalAnalUnit.Name = "panelPrepAnalAnalUnit";
-            this.panelPrepAnalAnalUnit.Size = new System.Drawing.Size(273, 24);
-            this.panelPrepAnalAnalUnit.TabIndex = 2;
-            // 
-            // cboxPrepAnalAnalUnit
-            // 
-            this.cboxPrepAnalAnalUnit.DisplayMember = "name";
-            this.cboxPrepAnalAnalUnit.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cboxPrepAnalAnalUnit.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboxPrepAnalAnalUnit.FormattingEnabled = true;
-            this.cboxPrepAnalAnalUnit.Location = new System.Drawing.Point(0, 0);
-            this.cboxPrepAnalAnalUnit.Name = "cboxPrepAnalAnalUnit";
-            this.cboxPrepAnalAnalUnit.Size = new System.Drawing.Size(132, 23);
-            this.cboxPrepAnalAnalUnit.TabIndex = 0;
-            this.cboxPrepAnalAnalUnit.ValueMember = "id";
-            this.cboxPrepAnalAnalUnit.SelectedIndexChanged += new System.EventHandler(this.cboxPrepAnalAnalUnit_SelectedIndexChanged);
-            // 
-            // cboxPrepAnalAnalUnitType
-            // 
-            this.cboxPrepAnalAnalUnitType.DisplayMember = "Name";
-            this.cboxPrepAnalAnalUnitType.Dock = System.Windows.Forms.DockStyle.Right;
-            this.cboxPrepAnalAnalUnitType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboxPrepAnalAnalUnitType.FormattingEnabled = true;
-            this.cboxPrepAnalAnalUnitType.Location = new System.Drawing.Point(132, 0);
-            this.cboxPrepAnalAnalUnitType.Name = "cboxPrepAnalAnalUnitType";
-            this.cboxPrepAnalAnalUnitType.Size = new System.Drawing.Size(141, 23);
-            this.cboxPrepAnalAnalUnitType.TabIndex = 1;
-            this.cboxPrepAnalAnalUnitType.ValueMember = "Id";
-            this.cboxPrepAnalAnalUnitType.SelectedIndexChanged += new System.EventHandler(this.cboxPrepAnalAnalUnitType_SelectedIndexChanged);
-            // 
-            // toolStrip1
-            // 
-            this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripLabel59,
-            this.toolStripSeparator53,
-            this.ddPrepAnalImport2});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(371, 25);
-            this.toolStrip1.TabIndex = 0;
-            this.toolStrip1.Text = "toolStrip1";
-            // 
-            // toolStripLabel59
-            // 
-            this.toolStripLabel59.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.toolStripLabel59.Name = "toolStripLabel59";
-            this.toolStripLabel59.Size = new System.Drawing.Size(50, 22);
-            this.toolStripLabel59.Text = "Analysis";
-            // 
-            // toolStripSeparator53
-            // 
-            this.toolStripSeparator53.Name = "toolStripSeparator53";
-            this.toolStripSeparator53.Size = new System.Drawing.Size(6, 25);
-            // 
             // ddPrepAnalImport2
             // 
             this.ddPrepAnalImport2.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -10702,64 +10875,6 @@
             this.miImportLISFile2.Size = new System.Drawing.Size(147, 22);
             this.miImportLISFile2.Text = "Import LIS file";
             this.miImportLISFile2.Click += new System.EventHandler(this.miImportLISFile_Click);
-            // 
-            // panel8
-            // 
-            this.panel8.Controls.Add(this.gridPrepAnalAnalAttachments);
-            this.panel8.Controls.Add(this.toolsSampleResAttachments);
-            this.panel8.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel8.Location = new System.Drawing.Point(0, 0);
-            this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(288, 246);
-            this.panel8.TabIndex = 3;
-            // 
-            // gridPrepAnalAnalAttachments
-            // 
-            this.gridPrepAnalAnalAttachments.AllowUserToAddRows = false;
-            this.gridPrepAnalAnalAttachments.AllowUserToDeleteRows = false;
-            this.gridPrepAnalAnalAttachments.AllowUserToResizeRows = false;
-            this.gridPrepAnalAnalAttachments.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.gridPrepAnalAnalAttachments.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
-            this.gridPrepAnalAnalAttachments.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.gridPrepAnalAnalAttachments.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gridPrepAnalAnalAttachments.ColumnHeadersVisible = false;
-            this.gridPrepAnalAnalAttachments.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridPrepAnalAnalAttachments.Location = new System.Drawing.Point(0, 25);
-            this.gridPrepAnalAnalAttachments.MultiSelect = false;
-            this.gridPrepAnalAnalAttachments.Name = "gridPrepAnalAnalAttachments";
-            this.gridPrepAnalAnalAttachments.ReadOnly = true;
-            this.gridPrepAnalAnalAttachments.RowHeadersVisible = false;
-            this.gridPrepAnalAnalAttachments.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridPrepAnalAnalAttachments.Size = new System.Drawing.Size(288, 221);
-            this.gridPrepAnalAnalAttachments.TabIndex = 1;
-            this.gridPrepAnalAnalAttachments.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridAttachments_CellDoubleClick);
-            // 
-            // toolsSampleResAttachments
-            // 
-            this.toolsSampleResAttachments.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.toolsSampleResAttachments.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripLabel1,
-            this.toolStripSeparator27,
-            this.btnPrepAnalAnalScanAttachment,
-            this.btnPrepAnalAnalBrowseAttachment,
-            this.btnPrepAnalAnalDeleteAttachment});
-            this.toolsSampleResAttachments.Location = new System.Drawing.Point(0, 0);
-            this.toolsSampleResAttachments.Name = "toolsSampleResAttachments";
-            this.toolsSampleResAttachments.Size = new System.Drawing.Size(288, 25);
-            this.toolsSampleResAttachments.TabIndex = 0;
-            this.toolsSampleResAttachments.Text = "toolStrip11";
-            // 
-            // toolStripLabel1
-            // 
-            this.toolStripLabel1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(79, 22);
-            this.toolStripLabel1.Text = "Attachments";
-            // 
-            // toolStripSeparator27
-            // 
-            this.toolStripSeparator27.Name = "toolStripSeparator27";
-            this.toolStripSeparator27.Size = new System.Drawing.Size(6, 25);
             // 
             // btnPrepAnalAnalScanAttachment
             // 
@@ -10788,19 +10903,6 @@
             this.btnPrepAnalAnalDeleteAttachment.Text = "Delete";
             this.btnPrepAnalAnalDeleteAttachment.Click += new System.EventHandler(this.btnPrepAnalAnalDeleteAttachment_Click);
             // 
-            // tools
-            // 
-            this.tools.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.tools.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnMenu,
-            this.lblCurrentTab,
-            this.btnBack});
-            this.tools.Location = new System.Drawing.Point(0, 24);
-            this.tools.Name = "tools";
-            this.tools.Size = new System.Drawing.Size(1072, 25);
-            this.tools.TabIndex = 5;
-            this.tools.Text = "toolStrip29";
-            // 
             // btnMenu
             // 
             this.btnMenu.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -10810,14 +10912,6 @@
             this.btnMenu.Size = new System.Drawing.Size(23, 22);
             this.btnMenu.Text = "Menu";
             this.btnMenu.Click += new System.EventHandler(this.miMainMenuView_Click);
-            // 
-            // lblCurrentTab
-            // 
-            this.lblCurrentTab.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.lblCurrentTab.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.lblCurrentTab.Name = "lblCurrentTab";
-            this.lblCurrentTab.Size = new System.Drawing.Size(98, 22);
-            this.lblCurrentTab.Text = "<lblCurrentTab>";
             // 
             // btnBack
             // 
@@ -10879,16 +10973,10 @@
             this.panel86.PerformLayout();
             this.panel87.ResumeLayout(false);
             this.panel87.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.btnSampleSamplingDateFromClear)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnSampleSamplingDateFrom)).EndInit();
             this.panel88.ResumeLayout(false);
             this.panel88.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.btnSampleSamplingDateToClear)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnSampleSamplingDateTo)).EndInit();
             this.panel89.ResumeLayout(false);
             this.panel89.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.btnSampleReferenceDateClear)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnSampleReferenceDate)).EndInit();
             this.toolStrip11.ResumeLayout(false);
             this.toolStrip11.PerformLayout();
             this.panel21.ResumeLayout(false);
@@ -10923,11 +11011,8 @@
             this.layoutOrderDetails.PerformLayout();
             this.panel30.ResumeLayout(false);
             this.panel30.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.btnOrderClearDeadline)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.btnOrderSelectDeadline)).EndInit();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.btnOrderSelectCustomer)).EndInit();
             this.toolsOrderDetails.ResumeLayout(false);
             this.toolsOrderDetails.PerformLayout();
             this.toolsOrderContent.ResumeLayout(false);
@@ -11340,6 +11425,15 @@
             this.toolsSampleResAttachments.PerformLayout();
             this.tools.ResumeLayout(false);
             this.tools.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.btnSampleSamplingDateFromClear)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnSampleSamplingDateFrom)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnSampleSamplingDateToClear)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnSampleSamplingDateTo)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnSampleReferenceDateClear)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnSampleReferenceDate)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnOrderClearDeadline)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnOrderSelectDeadline)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.btnOrderSelectCustomer)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -11755,9 +11849,9 @@
         private System.Windows.Forms.ToolStripLabel lblTypeRelSampCompSel;
         private System.Windows.Forms.ToolStripLabel lblTypeRelSampPrepSel;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator30;
-        private System.Windows.Forms.ToolStripButton toolStripButton99;
+        private System.Windows.Forms.ToolStripButton btnSamplesNew;
         private System.Windows.Forms.ToolStripButton btnSamplesEdit;
-        private System.Windows.Forms.ToolStripButton toolStripButton104;
+        private System.Windows.Forms.ToolStripButton btnSamplesDelete;
         private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton3;
         private System.Windows.Forms.ToolStripMenuItem excelToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator45;
@@ -12262,6 +12356,17 @@
         private System.Windows.Forms.Panel panel42;
         private System.Windows.Forms.ComboBox cboxSearchMaxShown;
         private System.Windows.Forms.Label label48;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator37;
+        private System.Windows.Forms.ToolStripButton btnSamplesCopy;
+        private System.Windows.Forms.ToolStripMenuItem miSamplesCopy;
+        private System.Windows.Forms.ToolStripButton btnOrderGoToPrepAnal;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel26;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator75;
+        private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton1;
+        private System.Windows.Forms.ToolStripMenuItem asPDFToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem onMapToolStripMenuItem;
+        private System.Windows.Forms.ToolStripButton toolStripButton2;
     }
 }
 

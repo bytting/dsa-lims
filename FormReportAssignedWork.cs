@@ -43,9 +43,7 @@ namespace DSA_lims
         {            
             assignmentTableAdapter.Fill(this.DSAssignedWork.assignment, mLabId);
             
-            reportViewerAssignedWork.ZoomMode = Microsoft.Reporting.WinForms.ZoomMode.FullPage;
-            reportViewerAssignedWork.HorizontalScroll.Enabled = true;
-            reportViewerAssignedWork.HorizontalScroll.Visible = true;
+            //reportViewerAssignedWork.ZoomMode = Microsoft.Reporting.WinForms.ZoomMode.FullPage;
 
             reportViewerAssignedWork.RefreshReport();
         }

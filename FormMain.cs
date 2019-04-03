@@ -508,8 +508,7 @@ namespace DSA_lims
         private void HideMenuItems()
         {
             miSample.Visible = miOrder.Visible = miSearch.Visible = miMeta.Visible = miOrders.Visible 
-                = miSamples.Visible = miProjects.Visible = miCustomers.Visible = miTypeRelations.Visible 
-                = miAuditLog.Visible = miSys.Visible = false;
+                = miSamples.Visible = miProjects.Visible = miCustomers.Visible = miTypeRelations.Visible = miSys.Visible = false;
         }
 
         private void HideMetaMenuItems()
@@ -783,11 +782,7 @@ namespace DSA_lims
             else if (tabs.SelectedTab == tabTypeRel)
             {
                 miTypeRelations.Visible = true;
-            }
-            else if (tabs.SelectedTab == tabAuditLog)
-            {
-                miAuditLog.Visible = true;
-            }            
+            }                        
             else if (tabs.SelectedTab == tabSysdata)
             {
                 miSys.Visible = true;
@@ -3640,8 +3635,40 @@ select count(*) from sample s
             DateTime deadline = (DateTime)tbOrderDeadline.Tag;
             if (deadline.Date < DateTime.Now.Date)
             {
-                MessageBox.Show("Deadline can not be in the past");
-                return;
+                if(assignment.WorkflowStatusId == WorkflowStatus.Complete && wfStatus == WorkflowStatus.Construction)
+                {
+                    // må ha ny deadline
+                    FormSelectDate form = new FormSelectDate();
+                    if (form.ShowDialog() != DialogResult.OK)
+                        return;
+
+                    if(form.SelectedDate.Date < DateTime.Now.Date)
+                    {
+                        MessageBox.Show("Deadline can not be in the past");
+                        return;
+                    }
+
+                    deadline = form.SelectedDate;
+                    assignment.Deadline = deadline;
+                    tbOrderDeadline.Tag = assignment.Deadline.Value;
+                    tbOrderDeadline.Text = assignment.Deadline.Value.ToString(Utils.DateFormatNorwegian);
+
+                    cbOrderApprovedCustomer.Checked = false;
+                    cbOrderApprovedLaboratory.Checked = false;
+                }
+                else if(wfStatus == WorkflowStatus.Rejected)
+                {
+
+                }
+                else
+                {
+                    MessageBox.Show("Deadline can not be in the past");
+                    return;
+                }                
+
+                /*DialogResult dr = MessageBox.Show("Deadline is in the past, do you want to contunue saving?", "Warning", MessageBoxButtons.YesNo);
+                if (dr != DialogResult.Yes)
+                    return;*/
             }
 
             if (String.IsNullOrEmpty(tbOrderCustomer.Text))
@@ -7963,5 +7990,10 @@ where ar.instance_status_id < 2
             tabs.SelectedTab = tabPrepAnal;
             tabsPrepAnal.SelectedTab = tabPrepAnalSample;
         }
-    }    
+
+        private void btnOrderShowSampleSummary_Click(object sender, EventArgs e)
+        {
+            //
+        }
+    }
 }

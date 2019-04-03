@@ -2670,10 +2670,10 @@
     <Height>12.97498in</Height>
     <Style />
   </Body>
-  <Width>8.30159in</Width>
+  <Width>7.44742in</Width>
   <Page>
     <PageFooter>
-      <Height>2.32833cm</Height>
+      <Height>1.82562cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -2694,8 +2694,8 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox7</rd:DefaultName>
-          <Top>1.37585cm</Top>
-          <Left>0.30556cm</Left>
+          <Top>1.173cm</Top>
+          <Left>0.30999cm</Left>
           <Height>0.6cm</Height>
           <Width>18.40309cm</Width>
           <Style>
@@ -2733,7 +2733,7 @@
           <rd:DefaultName>Textbox9</rd:DefaultName>
           <Top>0.17639cm</Top>
           <Left>0.30998cm</Left>
-          <Height>1.02307cm</Height>
+          <Height>0.89078cm</Height>
           <Width>18.40309cm</Width>
           <ZIndex>1</ZIndex>
           <Style>

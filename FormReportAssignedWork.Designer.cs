@@ -56,7 +56,7 @@
             // 
             this.panel1.Controls.Add(this.btnClose);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 537);
+            this.panel1.Location = new System.Drawing.Point(0, 555);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(836, 28);
             this.panel1.TabIndex = 9;
@@ -82,7 +82,7 @@
             this.reportViewerAssignedWork.Location = new System.Drawing.Point(0, 0);
             this.reportViewerAssignedWork.Name = "reportViewerAssignedWork";
             this.reportViewerAssignedWork.ServerReport.BearerToken = null;
-            this.reportViewerAssignedWork.Size = new System.Drawing.Size(836, 537);
+            this.reportViewerAssignedWork.Size = new System.Drawing.Size(836, 555);
             this.reportViewerAssignedWork.TabIndex = 10;
             // 
             // assignmentTableAdapter
@@ -93,7 +93,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(836, 565);
+            this.ClientSize = new System.Drawing.Size(836, 583);
             this.Controls.Add(this.reportViewerAssignedWork);
             this.Controls.Add(this.panel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));

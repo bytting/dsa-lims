@@ -224,6 +224,7 @@
                     <FontSize>11pt</FontSize>
                   </Style>
                 </ChartAxisTitle>
+                <Interval>1</Interval>
                 <ChartMajorGridLines>
                   <Enabled>False</Enabled>
                   <Style>
@@ -398,6 +399,7 @@
           </ChartTitle>
         </ChartTitles>
         <Palette>BrightPastel</Palette>
+        <DynamicWidth>=Count(Fields!name.Value, "DataSet1") * 2 &amp; " in"</DynamicWidth>
         <ChartBorderSkin>
           <Style>
             <BackgroundColor>Gray</BackgroundColor>
@@ -414,7 +416,7 @@
           </Style>
         </ChartNoDataMessage>
         <DataSetName>DataSet1</DataSetName>
-        <Height>16.1925cm</Height>
+        <Height>13.30854cm</Height>
         <Width>23.33625cm</Width>
         <Style>
           <Border>
@@ -426,7 +428,7 @@
         </Style>
       </Chart>
     </ReportItems>
-    <Height>6.39583in</Height>
+    <Height>5.25in</Height>
     <Style />
   </Body>
   <Width>9.19792in</Width>

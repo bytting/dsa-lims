@@ -8002,7 +8002,8 @@ where ar.instance_status_id < 2
 
         private void btnOrderShowSampleSummary_Click(object sender, EventArgs e)
         {
-            //
+            FormReportSampleSummary form = new FormReportSampleSummary(assignment.Id);
+            form.ShowDialog();
         }        
     }
 }

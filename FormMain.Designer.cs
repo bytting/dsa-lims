@@ -392,6 +392,9 @@
             this.panel37 = new System.Windows.Forms.Panel();
             this.cboxSearchSampleType = new System.Windows.Forms.ComboBox();
             this.label30 = new System.Windows.Forms.Label();
+            this.panel43 = new System.Windows.Forms.Panel();
+            this.cboxSearchStations = new System.Windows.Forms.ComboBox();
+            this.label53 = new System.Windows.Forms.Label();
             this.panel34 = new System.Windows.Forms.Panel();
             this.cboxSearchNuclides = new System.Windows.Forms.ComboBox();
             this.label10 = new System.Windows.Forms.Label();
@@ -954,9 +957,6 @@
             this.btnMenu = new System.Windows.Forms.ToolStripButton();
             this.lblCurrentTab = new System.Windows.Forms.ToolStripLabel();
             this.btnBack = new System.Windows.Forms.ToolStripButton();
-            this.panel43 = new System.Windows.Forms.Panel();
-            this.label53 = new System.Windows.Forms.Label();
-            this.cboxSearchStations = new System.Windows.Forms.ComboBox();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tabs.SuspendLayout();
@@ -1023,6 +1023,7 @@
             this.toolStrip16.SuspendLayout();
             this.flowSearch.SuspendLayout();
             this.panel37.SuspendLayout();
+            this.panel43.SuspendLayout();
             this.panel34.SuspendLayout();
             this.panel35.SuspendLayout();
             this.panel38.SuspendLayout();
@@ -1291,7 +1292,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.gridPrepAnalAnalAttachments)).BeginInit();
             this.toolsSampleResAttachments.SuspendLayout();
             this.tools.SuspendLayout();
-            this.panel43.SuspendLayout();
             this.SuspendLayout();
             // 
             // menu
@@ -4953,6 +4953,36 @@
             this.label30.TabIndex = 3;
             this.label30.Text = "Sample type";
             this.label30.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // panel43
+            // 
+            this.panel43.Controls.Add(this.cboxSearchStations);
+            this.panel43.Controls.Add(this.label53);
+            this.panel43.Location = new System.Drawing.Point(356, 9);
+            this.panel43.Name = "panel43";
+            this.panel43.Size = new System.Drawing.Size(226, 26);
+            this.panel43.TabIndex = 13;
+            // 
+            // cboxSearchStations
+            // 
+            this.cboxSearchStations.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cboxSearchStations.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxSearchStations.FormattingEnabled = true;
+            this.cboxSearchStations.Location = new System.Drawing.Point(48, 0);
+            this.cboxSearchStations.Name = "cboxSearchStations";
+            this.cboxSearchStations.Size = new System.Drawing.Size(178, 23);
+            this.cboxSearchStations.TabIndex = 1;
+            this.cboxSearchStations.SelectedIndexChanged += new System.EventHandler(this.cboxSearchStations_SelectedIndexChanged);
+            // 
+            // label53
+            // 
+            this.label53.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label53.Location = new System.Drawing.Point(0, 0);
+            this.label53.Name = "label53";
+            this.label53.Size = new System.Drawing.Size(48, 26);
+            this.label53.TabIndex = 0;
+            this.label53.Text = "Station";
+            this.label53.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // panel34
             // 
@@ -10922,36 +10952,6 @@
             this.btnBack.ToolTipText = "Back";
             this.btnBack.Click += new System.EventHandler(this.miBack_Click);
             // 
-            // panel43
-            // 
-            this.panel43.Controls.Add(this.cboxSearchStations);
-            this.panel43.Controls.Add(this.label53);
-            this.panel43.Location = new System.Drawing.Point(356, 9);
-            this.panel43.Name = "panel43";
-            this.panel43.Size = new System.Drawing.Size(226, 26);
-            this.panel43.TabIndex = 13;
-            // 
-            // label53
-            // 
-            this.label53.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label53.Location = new System.Drawing.Point(0, 0);
-            this.label53.Name = "label53";
-            this.label53.Size = new System.Drawing.Size(48, 26);
-            this.label53.TabIndex = 0;
-            this.label53.Text = "Station";
-            this.label53.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // cboxSearchStations
-            // 
-            this.cboxSearchStations.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cboxSearchStations.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboxSearchStations.FormattingEnabled = true;
-            this.cboxSearchStations.Location = new System.Drawing.Point(48, 0);
-            this.cboxSearchStations.Name = "cboxSearchStations";
-            this.cboxSearchStations.Size = new System.Drawing.Size(178, 23);
-            this.cboxSearchStations.TabIndex = 1;
-            this.cboxSearchStations.SelectedIndexChanged += new System.EventHandler(this.cboxSearchStations_SelectedIndexChanged);
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -11075,6 +11075,7 @@
             this.toolStrip16.PerformLayout();
             this.flowSearch.ResumeLayout(false);
             this.panel37.ResumeLayout(false);
+            this.panel43.ResumeLayout(false);
             this.panel34.ResumeLayout(false);
             this.panel35.ResumeLayout(false);
             this.panel35.PerformLayout();
@@ -11462,7 +11463,6 @@
             this.toolsSampleResAttachments.PerformLayout();
             this.tools.ResumeLayout(false);
             this.tools.PerformLayout();
-            this.panel43.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 

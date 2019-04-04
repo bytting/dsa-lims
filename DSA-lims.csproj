@@ -187,6 +187,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DSPrepSummary.xsd</DependentUpon>
     </Compile>
+    <Compile Include="DSSampleSummary.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DSSampleSummary.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Environment.cs" />
     <Compile Include="FormAccountXRoles.cs">
       <SubType>Form</SubType>
@@ -434,6 +439,12 @@
     <Compile Include="FormReportPrepSummary.Designer.cs">
       <DependentUpon>FormReportPrepSummary.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormReportSampleSummary.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormReportSampleSummary.Designer.cs">
+      <DependentUpon>FormReportSampleSummary.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormResetPassword.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -621,6 +632,17 @@
     <None Include="DSPrepSummary.xss">
       <DependentUpon>DSPrepSummary.xsd</DependentUpon>
     </None>
+    <None Include="DSSampleSummary.xsc">
+      <DependentUpon>DSSampleSummary.xsd</DependentUpon>
+    </None>
+    <None Include="DSSampleSummary.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DSSampleSummary.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="DSSampleSummary.xss">
+      <DependentUpon>DSSampleSummary.xsd</DependentUpon>
+    </None>
     <None Include="images\info.png" />
     <None Include="images\users.png" />
     <None Include="images\map.png" />
@@ -766,6 +788,9 @@
     <EmbeddedResource Include="FormReportPrepSummary.resx">
       <DependentUpon>FormReportPrepSummary.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormReportSampleSummary.resx">
+      <DependentUpon>FormReportSampleSummary.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormResetPassword.resx">
       <DependentUpon>FormResetPassword.cs</DependentUpon>
     </EmbeddedResource>
@@ -861,6 +886,7 @@
     </Content>
     <EmbeddedResource Include="ReportAssignedWork.rdlc" />
     <EmbeddedResource Include="ReportPrepSummary.rdlc" />
+    <EmbeddedResource Include="ReportSampleSummary.rdlc" />
     <EmbeddedResource Include="RPOrderReport.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>

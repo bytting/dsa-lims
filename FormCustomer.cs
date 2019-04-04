@@ -52,7 +52,7 @@ namespace DSA_lims
                     new SqlParameter("instance_status_level", InstanceStatus.Active)
                 }, cboxCompany);
 
-                cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status");
+                cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status", false);
             }            
             cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
         }
@@ -72,7 +72,7 @@ namespace DSA_lims
                     new SqlParameter("instance_status_level", InstanceStatus.Active)
                 }, cboxCompany);
 
-                cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status");
+                cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status", false);
 
                 SqlCommand cmd = new SqlCommand("csp_select_customer", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
@@ -152,7 +152,23 @@ namespace DSA_lims
                     InsertCustomer(connection, transaction);
                 }
                 else
+                {
+                    SqlCommand cmd = new SqlCommand("", connection, transaction);
+                    string query = "select count(*) from customer where person_id = @pid and company_id = @cid and id <> @id";
+                    cmd.Parameters.AddWithValue("@pid", p["person_id"]);
+                    cmd.Parameters.AddWithValue("@cid", p["company_id"]);
+                    cmd.Parameters.AddWithValue("@id", p["id"]);
+                    cmd.CommandText = query;
+
+                    int cnt = (int)cmd.ExecuteScalar();
+                    if (cnt > 0)
+                    {
+                        MessageBox.Show("The customer " + cboxPerson.Text + ", " + cboxCompany.Text + " already exists");
+                        return;
+                    }
+
                     UpdateCustomer(connection, transaction);
+                }
 
                 transaction.Commit();
             }

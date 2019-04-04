@@ -53,7 +53,7 @@ namespace DSA_lims
             tbCounty.Text = countyName;
             using (SqlConnection conn = DB.OpenConnection())
             {
-                cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status");
+                cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status", false);
             }
             cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
         }
@@ -69,7 +69,7 @@ namespace DSA_lims
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status");
+                cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status", false);
 
                 SqlCommand cmd = new SqlCommand("select name from county where id = @id", conn);
                 cmd.CommandType = CommandType.Text;

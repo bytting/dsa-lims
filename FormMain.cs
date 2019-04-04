@@ -246,21 +246,21 @@ namespace DSA_lims
                 {
                     DB.LoadSampleTypes(conn, null);
 
-                    cboxSamplesStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status");
+                    cboxSamplesStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status", false);
 
-                    cboxSampleInstanceStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status");
+                    cboxSampleInstanceStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status", false);
 
-                    cboxPrepAnalPrepAmountUnit.DataSource = DB.GetIntLemmata(conn, null, "csp_select_preparation_units");
+                    cboxPrepAnalPrepAmountUnit.DataSource = DB.GetIntLemmata(conn, null, "csp_select_preparation_units", true);
 
-                    cboxPrepAnalPrepQuantityUnit.DataSource = DB.GetIntLemmata(conn, null, "csp_select_quantity_units");
+                    cboxPrepAnalPrepQuantityUnit.DataSource = DB.GetIntLemmata(conn, null, "csp_select_quantity_units", true);
 
-                    cboxPrepAnalAnalWorkflowStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_workflow_status");
+                    cboxPrepAnalAnalWorkflowStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_workflow_status", false);
 
-                    cboxPrepAnalPrepWorkflowStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_workflow_status");
+                    cboxPrepAnalPrepWorkflowStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_workflow_status", false);
 
-                    cboxOrderStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_workflow_status");
+                    cboxOrderStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_workflow_status", false);
 
-                    cboxSampleInfoLocationTypes.DataSource = DB.GetIntLemmata(conn, null, "csp_select_location_types");
+                    cboxSampleInfoLocationTypes.DataSource = DB.GetIntLemmata(conn, null, "csp_select_location_types", true);
 
                     cboxOrderRequestedSigma.DataSource = DB.GetSigmaValues(conn, null, false);
                     cboxOrderRequestedSigmaMDA.DataSource = DB.GetSigmaValues(conn, null, true);
@@ -1286,7 +1286,7 @@ namespace DSA_lims
                 return;
             }
 
-            FormSampleType form = new FormSampleType(treeSampleTypes.SelectedNode, false);
+            FormSampleType form = new FormSampleType(treeSampleTypes, treeSampleTypes.SelectedNode, false);
 
             switch (form.ShowDialog())
             {
@@ -1321,7 +1321,7 @@ namespace DSA_lims
                 return;
             }
 
-            FormSampleType form = new FormSampleType(treeSampleTypes.SelectedNode, true);
+            FormSampleType form = new FormSampleType(treeSampleTypes, treeSampleTypes.SelectedNode, true);
 
             switch (form.ShowDialog())
             {
@@ -5955,7 +5955,7 @@ where s.number = @sample_number
                 return;
             }
 
-            FormSampleType form = new FormSampleType(null, false);
+            FormSampleType form = new FormSampleType(treeSampleTypes, null, false);
 
             switch (form.ShowDialog())
             {

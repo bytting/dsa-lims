@@ -16,6 +16,8 @@ namespace DSA_lims
     {
         private Dictionary<string, object> p = new Dictionary<string, object>();
         private string SampleTypePath;
+        TreeView mTree = null;
+        TreeNode mTreeNode = null;
 
         public Guid SampleTypeId
         {
@@ -27,9 +29,12 @@ namespace DSA_lims
             get { return p.ContainsKey("name") ? p["name"].ToString() : String.Empty; }
         }
 
-        public FormSampleType(TreeNode tnode, bool edit)
+        public FormSampleType(TreeView tree, TreeNode tnode, bool edit)
         {
             InitializeComponent();
+
+            mTree = tree;
+            mTreeNode = tnode;
 
             if (edit)
             {
@@ -94,7 +99,32 @@ namespace DSA_lims
                 return;
             }
 
-            p["name"] = tbName.Text.Trim();
+            string name = tbName.Text.Trim();
+            p["name"] = name;
+
+            if (mTreeNode != null)
+            {
+                foreach (TreeNode tn in mTreeNode.Nodes)
+                {
+                    if (tn.Text.ToLower() == name.ToLower())
+                    {
+                        MessageBox.Show("Sample type " + name + " already exists");
+                        return;
+                    }
+                }
+            }
+            else
+            {
+                foreach (TreeNode tn in mTree.Nodes)
+                {
+                    if (tn.Text.ToLower() == name.ToLower())
+                    {
+                        MessageBox.Show("Sample type " + name + " already exists");
+                        return;
+                    }
+                }
+            }
+
             if(String.IsNullOrEmpty(SampleTypePath))
                 p["path"] = p["name"];
             else p["path"] = SampleTypePath + "/" + p["name"];

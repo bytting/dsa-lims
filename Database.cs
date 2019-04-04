@@ -105,10 +105,11 @@ namespace DSA_lims
             cmd.ExecuteNonQuery();
         }
 
-        public static List<Lemma<int, string>> GetIntLemmata(SqlConnection conn, SqlTransaction trans, string proc)
+        public static List<Lemma<int, string>> GetIntLemmata(SqlConnection conn, SqlTransaction trans, string proc, bool addEmpty)
         {
             List<Lemma<int, string>> list = new List<Lemma<int, string>>();
-            list.Add(new Lemma<int, string>(0, ""));
+            if(addEmpty)
+                list.Add(new Lemma<int, string>(0, ""));
 
             try
             {

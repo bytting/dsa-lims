@@ -58,7 +58,7 @@ namespace DSA_lims
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status");
+                cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status", false);
             }            
             cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
         }
@@ -73,7 +73,7 @@ namespace DSA_lims
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status");
+                cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status", false);
 
                 SqlCommand cmd = new SqlCommand("csp_select_laboratory", conn);
                 cmd.CommandType = CommandType.StoredProcedure;

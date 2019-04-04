@@ -56,7 +56,7 @@ namespace DSA_lims
                     new SqlParameter("instance_status_level", InstanceStatus.Active)
                 }, cboxCompanies);
 
-                cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status");
+                cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status", false);
             }
             cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
         }
@@ -75,7 +75,7 @@ namespace DSA_lims
                     new SqlParameter("instance_status_level", InstanceStatus.Active)
                 }, cboxCompanies);
 
-                cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status");
+                cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status", false);
 
                 SqlCommand cmd = new SqlCommand("csp_select_sampler", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
@@ -125,88 +125,101 @@ namespace DSA_lims
             p["instance_status_id"] = cboxInstanceStatus.SelectedValue;
             p["comment"] = tbComment.Text.Trim();
 
-            bool success;
-            if (!p.ContainsKey("id"))
-                success = InsertSampler();
-            else
-                success = UpdateSampler();
+            SqlConnection connection = DB.OpenConnection();
+            SqlTransaction transaction = connection.BeginTransaction();
+            bool success = true;            
+
+            try
+            {                
+                if (!p.ContainsKey("id"))
+                {
+                    SqlCommand cmd = new SqlCommand("", connection, transaction);
+                    string query = "select count(*) from sampler where person_id = @pid and company_id = @cid";
+                    cmd.Parameters.AddWithValue("@pid", p["person_id"]);
+                    cmd.Parameters.AddWithValue("@cid", p["company_id"]);
+                    cmd.CommandText = query;
+
+                    int cnt = (int)cmd.ExecuteScalar();
+                    if (cnt > 0)
+                    {
+                        MessageBox.Show("The sampler " + cboxPersons.Text + ", " + cboxCompanies.Text + " already exists");
+                        return;
+                    }
+
+                    InsertSampler(connection, transaction);
+                }
+                else
+                {
+                    SqlCommand cmd = new SqlCommand("", connection, transaction);
+                    string query = "select count(*) from sampler where person_id = @pid and company_id = @cid and id <> @id";
+                    cmd.Parameters.AddWithValue("@pid", p["person_id"]);
+                    cmd.Parameters.AddWithValue("@cid", p["company_id"]);
+                    cmd.Parameters.AddWithValue("@id", p["id"]);
+                    cmd.CommandText = query;
+
+                    int cnt = (int)cmd.ExecuteScalar();
+                    if (cnt > 0)
+                    {
+                        MessageBox.Show("The sampler " + cboxPersons.Text + ", " + cboxCompanies.Text + " already exists");
+                        return;
+                    }
+
+                    UpdateSampler(connection, transaction);
+                }
+
+                transaction.Commit();
+            }
+            catch (Exception ex)
+            {
+                transaction?.Rollback();
+                Common.Log.Error(ex);
+                success = false;
+            }
+            finally
+            {
+                connection?.Close();
+            }
 
             DialogResult = success ? DialogResult.OK : DialogResult.Abort;
             Close();
         }
 
-        private bool InsertSampler()
-        {
-            SqlConnection connection = null;            
+        private void InsertSampler(SqlConnection connection, SqlTransaction transaction)
+        {                        
+            p["create_date"] = DateTime.Now;
+            p["create_id"] = Common.UserId;
+            p["update_date"] = DateTime.Now;
+            p["update_id"] = Common.UserId;
 
-            try
-            {
-                p["create_date"] = DateTime.Now;
-                p["create_id"] = Common.UserId;
-                p["update_date"] = DateTime.Now;
-                p["update_id"] = Common.UserId;
-
-                connection = DB.OpenConnection();            
-
-                SqlCommand cmd = new SqlCommand("csp_insert_sampler", connection);
-                cmd.CommandType = CommandType.StoredProcedure;
-                p["id"] = Guid.NewGuid();
-                cmd.Parameters.AddWithValue("@id", p["id"]);
-                cmd.Parameters.AddWithValue("@person_id", p["person_id"], Guid.Empty);
-                cmd.Parameters.AddWithValue("@company_id", p["company_id"], Guid.Empty);
-                cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
-                cmd.Parameters.AddWithValue("@comment", p["comment"], String.Empty);
-                cmd.Parameters.AddWithValue("@create_date", p["create_date"]);
-                cmd.Parameters.AddWithValue("@create_id", p["create_id"]);
-                cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
-                cmd.Parameters.AddWithValue("@update_id", p["update_id"]);
-                cmd.ExecuteNonQuery();
-            }
-            catch (Exception ex)
-            {
-                Common.Log.Error(ex);
-                return false;
-            }
-            finally
-            {
-                connection?.Close();
-            }
-
-            return true;
+            SqlCommand cmd = new SqlCommand("csp_insert_sampler", connection, transaction);
+            cmd.CommandType = CommandType.StoredProcedure;
+            p["id"] = Guid.NewGuid();
+            cmd.Parameters.AddWithValue("@id", p["id"]);
+            cmd.Parameters.AddWithValue("@person_id", p["person_id"], Guid.Empty);
+            cmd.Parameters.AddWithValue("@company_id", p["company_id"], Guid.Empty);
+            cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
+            cmd.Parameters.AddWithValue("@comment", p["comment"], String.Empty);
+            cmd.Parameters.AddWithValue("@create_date", p["create_date"]);
+            cmd.Parameters.AddWithValue("@create_id", p["create_id"]);
+            cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
+            cmd.Parameters.AddWithValue("@update_id", p["update_id"]);
+            cmd.ExecuteNonQuery();        
         }
 
-        private bool UpdateSampler()
-        {
-            SqlConnection connection = null;            
+        private void UpdateSampler(SqlConnection connection, SqlTransaction transaction)
+        {            
+            p["update_date"] = DateTime.Now;
+            p["update_id"] = Common.UserId;
 
-            try
-            {
-                p["update_date"] = DateTime.Now;
-                p["update_id"] = Common.UserId;
-
-                connection = DB.OpenConnection();            
-
-                SqlCommand cmd = new SqlCommand("csp_update_sampler", connection);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@id", p["id"]);                
-                cmd.Parameters.AddWithValue("@company_id", p["company_id"], Guid.Empty);
-                cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
-                cmd.Parameters.AddWithValue("@comment", p["comment"], String.Empty);
-                cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
-                cmd.Parameters.AddWithValue("@update_id", p["update_id"]);
-                cmd.ExecuteNonQuery();
-            }
-            catch (Exception ex)
-            {
-                Common.Log.Error(ex);
-                return false;
-            }
-            finally
-            {
-                connection?.Close();
-            }
-
-            return true;
+            SqlCommand cmd = new SqlCommand("csp_update_sampler", connection, transaction);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@id", p["id"]);                
+            cmd.Parameters.AddWithValue("@company_id", p["company_id"], Guid.Empty);
+            cmd.Parameters.AddWithValue("@instance_status_id", p["instance_status_id"]);
+            cmd.Parameters.AddWithValue("@comment", p["comment"], String.Empty);
+            cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
+            cmd.Parameters.AddWithValue("@update_id", p["update_id"]);
+            cmd.ExecuteNonQuery();
         }
     }
 }

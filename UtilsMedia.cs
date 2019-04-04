@@ -19,25 +19,40 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
-using log4net;
 using System.Drawing;
 
 namespace DSA_lims
 {
-    public static class Common
+    public static class UtilsMedia
     {
-        public static ILog Log = null;
+        public static Image CropImageToHeight(Image img, int height)
+        {
+            if (img.Height <= height)
+                return img;
 
-        public static DSASettings Settings = new DSASettings();
+            double w = img.Width;
+            double h = img.Height;
+            double scaleFactor = (double)height / h;
+            w = w * scaleFactor;
+            h = h * scaleFactor;
 
-        public static Guid UserId { get; set; }
-        public static string Username { get; set; }        
+            return (Image)(new Bitmap(img, (int)w, (int)h));
+        }
 
-        public static Guid LabId { get; set; }
-        public static Image LabLogo { get; set; }
-        public static Image LabAccredLogo { get; set; }
+        public static Image CropImageToWidth(Image img, int width)
+        {
+            if (img.Width <= width)
+                return img;
 
-        public static List<SampleTypeModel> SampleTypeList = new List<SampleTypeModel>();
+            double w = img.Width;
+            double h = img.Height;
+            double scaleFactor = (double)width / w;
+            w = w * scaleFactor;
+            h = h * scaleFactor;
+
+            return (Image)(new Bitmap(img, (int)w, (int)h));
+        }
     }
 }

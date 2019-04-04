@@ -196,7 +196,7 @@ where s.id = @id
 
             if (Common.LabLogo != null)
             {
-                Image img = Utils.CropImageToHeight(Common.LabLogo, 40);
+                Image img = UtilsMedia.CropImageToHeight(Common.LabLogo, 40);
                 e.Graphics.DrawImage(img, 210f, 80f);
             }
         }

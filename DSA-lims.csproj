@@ -597,6 +597,8 @@
     <Compile Include="Logger.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="UserInterface.cs" />
+    <Compile Include="UtilsGeo.cs" />
+    <Compile Include="UtilsMedia.cs" />
     <None Include="DSAssignedWork.xsc">
       <DependentUpon>DSAssignedWork.xsd</DependentUpon>
     </None>

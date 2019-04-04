@@ -201,7 +201,7 @@ namespace DSA_lims
 
             DateTime selectedDate = form.SelectedDate;
 
-            if(selectedDate < Common.CurrentDate(false))
+            if(selectedDate.Date < DateTime.Now.Date)
             {
                 MessageBox.Show("Deadline can not be in the past");
                 return;

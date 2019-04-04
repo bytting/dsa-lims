@@ -66,7 +66,7 @@ namespace DSA_lims
         {
             if (!Utils.IsValidGuid(cboxAnalMethods.SelectedValue))
             {
-                MessageBox.Show("Preparation method is mandatory");
+                MessageBox.Show("Analysis method is mandatory");
                 return;
             }
 

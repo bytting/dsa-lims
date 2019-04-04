@@ -33,6 +33,7 @@
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnOk = new System.Windows.Forms.Button();
             this.dtSelectDate = new System.Windows.Forms.DateTimePicker();
+            this.lblInfo = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -41,9 +42,9 @@
             this.panel1.Controls.Add(this.btnCancel);
             this.panel1.Controls.Add(this.btnOk);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 71);
+            this.panel1.Location = new System.Drawing.Point(0, 73);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(264, 28);
+            this.panel1.Size = new System.Drawing.Size(264, 26);
             this.panel1.TabIndex = 6;
             // 
             // btnCancel
@@ -51,7 +52,7 @@
             this.btnCancel.Dock = System.Windows.Forms.DockStyle.Right;
             this.btnCancel.Location = new System.Drawing.Point(108, 0);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(78, 28);
+            this.btnCancel.Size = new System.Drawing.Size(78, 26);
             this.btnCancel.TabIndex = 2;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
@@ -62,7 +63,7 @@
             this.btnOk.Dock = System.Windows.Forms.DockStyle.Right;
             this.btnOk.Location = new System.Drawing.Point(186, 0);
             this.btnOk.Name = "btnOk";
-            this.btnOk.Size = new System.Drawing.Size(78, 28);
+            this.btnOk.Size = new System.Drawing.Size(78, 26);
             this.btnOk.TabIndex = 1;
             this.btnOk.Text = "Ok";
             this.btnOk.UseVisualStyleBackColor = true;
@@ -72,18 +73,28 @@
             // 
             this.dtSelectDate.CustomFormat = "dd.MM.yyyy";
             this.dtSelectDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtSelectDate.Location = new System.Drawing.Point(12, 23);
+            this.dtSelectDate.Location = new System.Drawing.Point(16, 36);
             this.dtSelectDate.MaxDate = new System.DateTime(3000, 12, 31, 0, 0, 0, 0);
             this.dtSelectDate.MinDate = new System.DateTime(1900, 1, 1, 0, 0, 0, 0);
             this.dtSelectDate.Name = "dtSelectDate";
             this.dtSelectDate.Size = new System.Drawing.Size(236, 20);
             this.dtSelectDate.TabIndex = 0;
             // 
+            // lblInfo
+            // 
+            this.lblInfo.AutoSize = true;
+            this.lblInfo.Location = new System.Drawing.Point(13, 9);
+            this.lblInfo.Name = "lblInfo";
+            this.lblInfo.Size = new System.Drawing.Size(47, 13);
+            this.lblInfo.TabIndex = 7;
+            this.lblInfo.Text = "<lblInfo>";
+            // 
             // FormSelectDate
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(264, 99);
+            this.Controls.Add(this.lblInfo);
             this.Controls.Add(this.dtSelectDate);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -99,6 +110,7 @@
             this.Load += new System.EventHandler(this.FormSelectDate_Load);
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -108,5 +120,6 @@
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnOk;
         private System.Windows.Forms.DateTimePicker dtSelectDate;
+        private System.Windows.Forms.Label lblInfo;
     }
 }

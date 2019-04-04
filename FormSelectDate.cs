@@ -34,13 +34,15 @@ namespace DSA_lims
             get { return mDate; }
         }
 
-        public FormSelectDate()
+        public FormSelectDate(string label = "")
         {
             InitializeComponent();
+
+            lblInfo.Text = label;
         }
 
         private void FormSelectDate_Load(object sender, EventArgs e)
-        {
+        {            
             dtSelectDate.Format = DateTimePickerFormat.Custom;
             dtSelectDate.CustomFormat = Utils.DateFormatNorwegian;
 

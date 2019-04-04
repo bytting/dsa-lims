@@ -1373,6 +1373,9 @@ namespace DSA_lims
             using (SqlConnection conn = DB.OpenConnection())
             {
                 UI.PopulateSampleTypes(treeSampleTypes, cboxSearchSampleType);
+                UI.PopulateComboBoxes(conn, "csp_select_stations_short", new[] {
+                    new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
+                }, cboxSearchStations);
                 UI.PopulateNuclides(conn, cboxSearchNuclides);
                 List<Lemma<int, string>> maxShown = new List<Lemma<int, string>>();
                 maxShown.Add(new Lemma<int, string>(0, ""));
@@ -3636,9 +3639,8 @@ select count(*) from sample s
             if (deadline.Date < DateTime.Now.Date)
             {
                 if(assignment.WorkflowStatusId == WorkflowStatus.Complete && wfStatus == WorkflowStatus.Construction)
-                {
-                    // må ha ny deadline
-                    FormSelectDate form = new FormSelectDate();
+                {                    
+                    FormSelectDate form = new FormSelectDate("New deadline required");
                     if (form.ShowDialog() != DialogResult.OK)
                         return;
 
@@ -3664,11 +3666,7 @@ select count(*) from sample s
                 {
                     MessageBox.Show("Deadline can not be in the past");
                     return;
-                }                
-
-                /*DialogResult dr = MessageBox.Show("Deadline is in the past, do you want to contunue saving?", "Warning", MessageBoxButtons.YesNo);
-                if (dr != DialogResult.Yes)
-                    return;*/
+                }
             }
 
             if (String.IsNullOrEmpty(tbOrderCustomer.Text))
@@ -4205,10 +4203,10 @@ select count(*) from sample s
             try
             {
                 if (!String.IsNullOrEmpty(tbSampleInfoLatitude.Text.Trim()))
-                    lat = Utils.GetLatitude(tbSampleInfoLatitude.Text.Trim());
+                    lat = UtilsGeo.GetLatitude(tbSampleInfoLatitude.Text.Trim());
 
                 if (!String.IsNullOrEmpty(tbSampleInfoLongitude.Text.Trim()))
-                    lon = Utils.GetLongitude(tbSampleInfoLongitude.Text.Trim());                
+                    lon = UtilsGeo.GetLongitude(tbSampleInfoLongitude.Text.Trim());                
             }
             catch(Exception ex)
             {
@@ -5710,7 +5708,7 @@ where s.number = @sample_number
             btnSampleSamplingDateToClear.Enabled = true;
 
             DateTime sdf = (DateTime)tbSampleSamplingDateFrom.Tag;
-            if(sdf > Common.CurrentDate(true))
+            if(sdf.Date > DateTime.Now.Date)
             {
                 MessageBox.Show("Sampling time from must be earlier than current time");
                 tbSampleSamplingDateFrom.Tag = null;
@@ -5763,7 +5761,7 @@ where s.number = @sample_number
             }
 
             DateTime sdt = (DateTime)tbSampleSamplingDateTo.Tag;
-            if (sdt > Common.CurrentDate(true))
+            if (sdt.Date > DateTime.Now.Date)
             {
                 MessageBox.Show("Sampling time to must be earlier than current time");
                 tbSampleSamplingDateTo.Tag = null;
@@ -7647,13 +7645,7 @@ where ar.instance_status_id < 2
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                SqlDataAdapter adapter = new SqlDataAdapter("", conn);
-
-                if (Utils.IsValidGuid(cboxSearchNuclides.SelectedValue))
-                {
-                    query += " and n.id = @nid";
-                    adapter.SelectCommand.Parameters.AddWithValue("@nid", cboxSearchNuclides.SelectedValue);
-                }
+                SqlDataAdapter adapter = new SqlDataAdapter("", conn);                
 
                 if (Utils.IsValidGuid(cboxSearchSampleType.SelectedValue))
                 {
@@ -7663,7 +7655,19 @@ where ar.instance_status_id < 2
                     query += " and st.path like '" + items[1] + "%'";
                 }
 
-                if(!String.IsNullOrEmpty(tbSearchActMin.Text))
+                if (Utils.IsValidGuid(cboxSearchStations.SelectedValue))
+                {
+                    query += " and s.station_id = @stid";
+                    adapter.SelectCommand.Parameters.AddWithValue("@stid", cboxSearchStations.SelectedValue);
+                }
+
+                if (Utils.IsValidGuid(cboxSearchNuclides.SelectedValue))
+                {
+                    query += " and n.id = @nid";
+                    adapter.SelectCommand.Parameters.AddWithValue("@nid", cboxSearchNuclides.SelectedValue);
+                }
+
+                if (!String.IsNullOrEmpty(tbSearchActMin.Text))
                 {
                     double actMin = Convert.ToDouble(tbSearchActMin.Text);
                     query += " and ar.activity >= " + actMin;
@@ -7866,6 +7870,11 @@ where ar.instance_status_id < 2
             searchIsDirty = true;
         }
 
+        private void cboxSearchStations_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            searchIsDirty = true;
+        }
+
         private void miSamplesCopy_Click(object sender, EventArgs e)
         {
             // copy sample
@@ -7994,6 +8003,6 @@ where ar.instance_status_id < 2
         private void btnOrderShowSampleSummary_Click(object sender, EventArgs e)
         {
             //
-        }
+        }        
     }
 }

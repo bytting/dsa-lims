@@ -954,6 +954,9 @@
             this.btnMenu = new System.Windows.Forms.ToolStripButton();
             this.lblCurrentTab = new System.Windows.Forms.ToolStripLabel();
             this.btnBack = new System.Windows.Forms.ToolStripButton();
+            this.panel43 = new System.Windows.Forms.Panel();
+            this.label53 = new System.Windows.Forms.Label();
+            this.cboxSearchStations = new System.Windows.Forms.ComboBox();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tabs.SuspendLayout();
@@ -1288,6 +1291,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.gridPrepAnalAnalAttachments)).BeginInit();
             this.toolsSampleResAttachments.SuspendLayout();
             this.tools.SuspendLayout();
+            this.panel43.SuspendLayout();
             this.SuspendLayout();
             // 
             // menu
@@ -4902,6 +4906,7 @@
             // 
             this.flowSearch.AutoSize = true;
             this.flowSearch.Controls.Add(this.panel37);
+            this.flowSearch.Controls.Add(this.panel43);
             this.flowSearch.Controls.Add(this.panel34);
             this.flowSearch.Controls.Add(this.panel35);
             this.flowSearch.Controls.Add(this.panel38);
@@ -4953,7 +4958,7 @@
             // 
             this.panel34.Controls.Add(this.cboxSearchNuclides);
             this.panel34.Controls.Add(this.label10);
-            this.panel34.Location = new System.Drawing.Point(356, 9);
+            this.panel34.Location = new System.Drawing.Point(588, 9);
             this.panel34.Name = "panel34";
             this.panel34.Size = new System.Drawing.Size(206, 26);
             this.panel34.TabIndex = 0;
@@ -4983,7 +4988,7 @@
             // 
             this.panel35.Controls.Add(this.tbSearchActMin);
             this.panel35.Controls.Add(this.label37);
-            this.panel35.Location = new System.Drawing.Point(568, 9);
+            this.panel35.Location = new System.Drawing.Point(800, 9);
             this.panel35.Name = "panel35";
             this.panel35.Size = new System.Drawing.Size(200, 26);
             this.panel35.TabIndex = 6;
@@ -5012,7 +5017,7 @@
             // 
             this.panel38.Controls.Add(this.tbSearchActMax);
             this.panel38.Controls.Add(this.label47);
-            this.panel38.Location = new System.Drawing.Point(774, 9);
+            this.panel38.Location = new System.Drawing.Point(9, 41);
             this.panel38.Name = "panel38";
             this.panel38.Size = new System.Drawing.Size(200, 26);
             this.panel38.TabIndex = 8;
@@ -5040,7 +5045,7 @@
             // panel39
             // 
             this.panel39.Controls.Add(this.cbSearchActAppr);
-            this.panel39.Location = new System.Drawing.Point(9, 41);
+            this.panel39.Location = new System.Drawing.Point(215, 41);
             this.panel39.Name = "panel39";
             this.panel39.Size = new System.Drawing.Size(119, 26);
             this.panel39.TabIndex = 9;
@@ -5061,7 +5066,7 @@
             // panel40
             // 
             this.panel40.Controls.Add(this.cbSearchMDAAppr);
-            this.panel40.Location = new System.Drawing.Point(134, 41);
+            this.panel40.Location = new System.Drawing.Point(340, 41);
             this.panel40.Name = "panel40";
             this.panel40.Size = new System.Drawing.Size(118, 26);
             this.panel40.TabIndex = 10;
@@ -5082,7 +5087,7 @@
             // panel41
             // 
             this.panel41.Controls.Add(this.cbSearchAccredited);
-            this.panel41.Location = new System.Drawing.Point(258, 41);
+            this.panel41.Location = new System.Drawing.Point(464, 41);
             this.panel41.Name = "panel41";
             this.panel41.Size = new System.Drawing.Size(96, 26);
             this.panel41.TabIndex = 11;
@@ -5104,7 +5109,7 @@
             // 
             this.panel42.Controls.Add(this.cboxSearchMaxShown);
             this.panel42.Controls.Add(this.label48);
-            this.panel42.Location = new System.Drawing.Point(360, 41);
+            this.panel42.Location = new System.Drawing.Point(566, 41);
             this.panel42.Name = "panel42";
             this.panel42.Size = new System.Drawing.Size(295, 26);
             this.panel42.TabIndex = 12;
@@ -5135,7 +5140,7 @@
             // 
             // btnSearchSearch
             // 
-            this.btnSearchSearch.Location = new System.Drawing.Point(661, 41);
+            this.btnSearchSearch.Location = new System.Drawing.Point(867, 41);
             this.btnSearchSearch.Name = "btnSearchSearch";
             this.btnSearchSearch.Size = new System.Drawing.Size(139, 25);
             this.btnSearchSearch.TabIndex = 1;
@@ -10917,6 +10922,36 @@
             this.btnBack.ToolTipText = "Back";
             this.btnBack.Click += new System.EventHandler(this.miBack_Click);
             // 
+            // panel43
+            // 
+            this.panel43.Controls.Add(this.cboxSearchStations);
+            this.panel43.Controls.Add(this.label53);
+            this.panel43.Location = new System.Drawing.Point(356, 9);
+            this.panel43.Name = "panel43";
+            this.panel43.Size = new System.Drawing.Size(226, 26);
+            this.panel43.TabIndex = 13;
+            // 
+            // label53
+            // 
+            this.label53.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label53.Location = new System.Drawing.Point(0, 0);
+            this.label53.Name = "label53";
+            this.label53.Size = new System.Drawing.Size(48, 26);
+            this.label53.TabIndex = 0;
+            this.label53.Text = "Station";
+            this.label53.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // cboxSearchStations
+            // 
+            this.cboxSearchStations.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cboxSearchStations.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxSearchStations.FormattingEnabled = true;
+            this.cboxSearchStations.Location = new System.Drawing.Point(48, 0);
+            this.cboxSearchStations.Name = "cboxSearchStations";
+            this.cboxSearchStations.Size = new System.Drawing.Size(178, 23);
+            this.cboxSearchStations.TabIndex = 1;
+            this.cboxSearchStations.SelectedIndexChanged += new System.EventHandler(this.cboxSearchStations_SelectedIndexChanged);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -11427,6 +11462,7 @@
             this.toolsSampleResAttachments.PerformLayout();
             this.tools.ResumeLayout(false);
             this.tools.PerformLayout();
+            this.panel43.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -12359,6 +12395,9 @@
         private System.Windows.Forms.ToolStripMenuItem onMapToolStripMenuItem;
         private System.Windows.Forms.ToolStripButton btnOrderShowSampleSummary;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator71;
+        private System.Windows.Forms.Panel panel43;
+        private System.Windows.Forms.ComboBox cboxSearchStations;
+        private System.Windows.Forms.Label label53;
     }
 }
 

@@ -38,9 +38,11 @@ namespace DSA_lims
             get { return new DateTime(mDate.Year, mDate.Month, mDate.Day, mTime.Hour, mTime.Minute, mTime.Second); }
         }
 
-        public FormSelectDateTime()
+        public FormSelectDateTime(string label = "")
         {
             InitializeComponent();
+
+            lblInfo.Text = label;
         }
 
         private void FormSelectDateTime_Load(object sender, EventArgs e)

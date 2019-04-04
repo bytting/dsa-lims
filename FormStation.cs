@@ -134,8 +134,8 @@ namespace DSA_lims
 
             try
             {
-                p["latitude"] = Utils.GetLatitude(tbLatitude.Text);
-                p["longitude"] = Utils.GetLongitude(tbLongitude.Text);
+                p["latitude"] = UtilsGeo.GetLatitude(tbLatitude.Text);
+                p["longitude"] = UtilsGeo.GetLongitude(tbLongitude.Text);
             }
             catch (Exception ex)
             {

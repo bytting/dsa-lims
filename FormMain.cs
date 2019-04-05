@@ -5433,7 +5433,7 @@ where s.number = @sample_number
             cboxSamplesProjects.SelectedValue = Guid.Empty;
             cboxSamplesProjectsSub.SelectedValue = Guid.Empty;
             cboxSamplesOrders.SelectedValue = Guid.Empty;
-            cboxSamplesStatus.SelectedValue = 0;
+            cboxSamplesStatus.SelectedValue = InstanceStatus.Active;
             cboxSamplesLaboratory.SelectedValue = Guid.Empty;
             cboxSamplesTop.SelectedValue = 50;
         }

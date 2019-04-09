@@ -54,7 +54,7 @@ namespace DSA_lims
             }
         }
 
-        public static void PopulateProjectMain(SqlConnection conn, SqlTransaction trans, Guid accountId, params ComboBox[] cbn)
+        public static void PopulateProjectMain(SqlConnection conn, SqlTransaction trans, Guid accountId, int instanceStatusLevel,  params ComboBox[] cbn)
         {
             List<Lemma<Guid, string>> list = new List<Lemma<Guid, string>>();
             list.Add(new Lemma<Guid, string>(Guid.Empty, ""));
@@ -67,16 +67,19 @@ select distinct pm.id, pm.name
 from project_main pm
     inner join project_sub ps on ps.project_main_id = pm.id
     inner join project_sub_x_account psxa on psxa.project_sub_id = ps.id and psxa.account_id = @aid
-where pm.instance_status_id < 2
+where pm.instance_status_id <= @isl
 order by pm.name
 ";
             }
             else
             {
-                query = "select id, name from project_main order by name";
+                query = "select id, name from project_main where instance_status_id <= @isl order by name";
             }
 
-            using (SqlDataReader reader = DB.GetDataReader(conn, trans, query, CommandType.Text, new SqlParameter("@aid", accountId)))
+            using (SqlDataReader reader = DB.GetDataReader(conn, trans, query, CommandType.Text,
+                new SqlParameter("@aid", accountId), 
+                new SqlParameter("@isl", instanceStatusLevel)
+                ))
             {
                 while (reader.Read())
                     list.Add(new Lemma<Guid, string>(reader.GetGuid("id"), reader.GetString("name")));
@@ -93,7 +96,7 @@ order by pm.name
             }
         }
 
-        public static void PopulateProjectSub(SqlConnection conn, SqlTransaction trans, Guid projectMainId, Guid accountId, params ComboBox[] cbn)
+        public static void PopulateProjectSub(SqlConnection conn, SqlTransaction trans, Guid projectMainId, Guid accountId, int instanceStatusLevel, params ComboBox[] cbn)
         {
             List<Lemma<Guid, string>> list = new List<Lemma<Guid, string>>();
             list.Add(new Lemma<Guid, string>(Guid.Empty, ""));
@@ -106,18 +109,19 @@ select ps.id, ps.name
 from project_sub ps
     inner join project_main pm on ps.project_main_id = pm.id and pm.id = @pmid
     inner join project_sub_x_account psxa on psxa.project_sub_id = ps.id and psxa.account_id = @aid
-where ps.instance_status_id < 2
+where ps.instance_status_id <= @isl
 order by ps.name
 ";
             }
             else
             {
-                query = "select id, name from project_sub where project_main_id = @pmid order by name";
+                query = "select id, name from project_sub where project_main_id = @pmid and instance_status_id <= @isl order by name";
             }
 
             using (SqlDataReader reader = DB.GetDataReader(conn, trans, query, CommandType.Text, 
                 new SqlParameter("@aid", accountId), 
-                new SqlParameter("@pmid", projectMainId)))
+                new SqlParameter("@pmid", projectMainId),
+                new SqlParameter("@isl", instanceStatusLevel)))
             {
                 while (reader.Read())
                     list.Add(new Lemma<Guid, string>(reader.GetGuid("id"), reader.GetString("name")));

@@ -1373,6 +1373,9 @@ namespace DSA_lims
             using (SqlConnection conn = DB.OpenConnection())
             {
                 UI.PopulateSampleTypes(treeSampleTypes, cboxSearchSampleType);
+                UI.PopulateComboBoxes(conn, "csp_select_projects_main_short", new[] {
+                        new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
+                }, cboxSearchProject);
                 UI.PopulateComboBoxes(conn, "csp_select_stations_short", new[] {
                     new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
                 }, cboxSearchStations);
@@ -5225,6 +5228,14 @@ select count(*) from sample s
 
             if (e.KeyChar == Convert.ToChar(Keys.Enter))
             {
+                if (!Utils.IsValidInteger(tbSamplesLookup.Text))
+                {
+                    tbSamplesLookup.Text = "";
+                    e.Handled = true;
+                    MessageBox.Show("Sample lookup must be a number");
+                    return;
+                }
+
                 int selNum = -1;
                 int snum = Convert.ToInt32(tbSamplesLookup.Text);
 
@@ -5240,7 +5251,6 @@ select count(*) from sample s
                 
                 e.Handled = true;
                 btnSamplesSearch.ForeColor = Color.Red;
-                return;
             }
         }
 
@@ -5336,7 +5346,7 @@ select count(*) from sample s
                 gridSamples.Columns["split_from"].HeaderText = "Split from";
                 gridSamples.Columns["merge_from"].HeaderText = "Merge from";
 
-                gridSamples.Columns["reference_date"].DefaultCellStyle.Format = Utils.DateTimeFormatNorwegian;
+                gridSamples.Columns["reference_date"].DefaultCellStyle.Format = Utils.DateFormatNorwegian;
             }
 
             SetStatusMessage("Showing " + gridSamples.RowCount + " samples");
@@ -5421,7 +5431,7 @@ where s.number = @sample_number
                 gridSamples.Columns["split_from"].HeaderText = "Split from";
                 gridSamples.Columns["merge_from"].HeaderText = "Merge from";
 
-                gridSamples.Columns["reference_date"].DefaultCellStyle.Format = Utils.DateTimeFormatNorwegian;
+                gridSamples.Columns["reference_date"].DefaultCellStyle.Format = Utils.DateFormatNorwegian;
             }
 
             ActiveControl = tbSamplesLookup;
@@ -5812,6 +5822,14 @@ where s.number = @sample_number
 
             if (e.KeyChar == Convert.ToChar(Keys.Enter))
             {
+                if (!Utils.IsValidInteger(tbMenuLookup.Text))
+                {
+                    tbMenuLookup.Text = "";
+                    e.Handled = true;
+                    MessageBox.Show("Sample lookup must be a number");
+                    return;
+                }
+
                 int snum = Convert.ToInt32(tbMenuLookup.Text);                
                 tabs.SelectedTab = tabSamples;
                 PopulateSamplesSingle(snum);                
@@ -7635,6 +7653,8 @@ from analysis_result ar
     inner join preparation p on p.id = a.preparation_id
     inner join sample s on s.id = p.sample_id
     inner join sample_type st on st.id = s.sample_type_id
+    inner join project_sub ps on s.project_sub_id = ps.id
+	inner join project_main pm on pm.id = ps.project_main_id
     inner join nuclide n on n.id = ar.nuclide_id 
     left outer join activity_unit au on a.activity_unit_id = au.id
     left outer join activity_unit_type aut on a.activity_unit_type_id = aut.id
@@ -7653,6 +7673,18 @@ where ar.instance_status_id < 2
                     string[] items = st.Split(new string[] { " -> " }, StringSplitOptions.RemoveEmptyEntries);
 
                     query += " and st.path like '" + items[1] + "%'";
+                }
+
+                if (Utils.IsValidGuid(cboxSearchProject.SelectedValue))
+                {
+                    query += " and pm.id = @project_id";
+                    adapter.SelectCommand.Parameters.AddWithValue("@project_id", cboxSearchProject.SelectedValue, Guid.Empty);
+                }
+
+                if (Utils.IsValidGuid(cboxSearchProjectSub.SelectedValue))
+                {
+                    query += " and ps.id = @project_sub_id";
+                    adapter.SelectCommand.Parameters.AddWithValue("@project_sub_id", cboxSearchProjectSub.SelectedValue, Guid.Empty);
                 }
 
                 if (Utils.IsValidGuid(cboxSearchStations.SelectedValue))
@@ -8004,6 +8036,59 @@ where ar.instance_status_id < 2
         {
             FormReportSampleSummary form = new FormReportSampleSummary(assignment.Id);
             form.ShowDialog();
-        }        
+        }
+
+        private void miResultsShowMap_Click(object sender, EventArgs e)
+        {
+            List<int> idList = new List<int>();
+
+            foreach (DataGridViewRow row in gridSearchResult.Rows)
+            {
+                int num = Convert.ToInt32(row.Cells["Sample"].Value);
+                if (!idList.Contains(num))
+                    idList.Add(num);
+            }
+
+            FormShowResultMap form = new FormShowResultMap(idList);
+            form.ShowDialog();
+        }
+
+        private void cboxSearchSampleType_Leave(object sender, EventArgs e)
+        {
+            if (String.IsNullOrEmpty(cboxSearchSampleType.Text.Trim()))
+            {
+                cboxSearchSampleType.SelectedItem = Guid.Empty;                
+                return;
+            }
+
+            if (!Utils.IsValidGuid(cboxSearchSampleType.SelectedValue))
+            {
+                cboxSearchSampleType.SelectedValue = Guid.Empty;
+            }
+        }
+
+        private void cboxSearchProject_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!Utils.IsValidGuid(cboxSearchProject.SelectedValue))
+            {
+                cboxSearchProjectSub.DataSource = null;
+                return;
+            }
+
+            Guid projectId = Utils.MakeGuid(cboxSearchProject.SelectedValue);
+            using (SqlConnection conn = DB.OpenConnection())
+            {
+                UI.PopulateComboBoxes(conn, "csp_select_projects_sub_short", new[] {
+                    new SqlParameter("@project_main_id", projectId),
+                    new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
+                }, cboxSearchProjectSub);
+            }
+            searchIsDirty = true;
+        }
+
+        private void cboxSearchProjectSub_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            searchIsDirty = true;
+        }
     }
 }

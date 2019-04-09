@@ -19,7 +19,6 @@
 
 using System;
 using System.Windows.Forms;
-using System.Globalization;
 
 namespace DSA_lims
 {        
@@ -72,6 +71,6 @@ namespace DSA_lims
 
             if (!Char.IsNumber(e.KeyChar) && !Char.IsControl(e.KeyChar) && e.KeyChar != Utils.NumberSeparatorChar && e.KeyChar != '-')
                 e.Handled = true;
-        }
+        }        
     }    
 }

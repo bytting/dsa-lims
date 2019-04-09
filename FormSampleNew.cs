@@ -44,7 +44,7 @@ namespace DSA_lims
             UI.PopulateSampleTypes(TreeSampleTypes, cboxSampleType);
             using (SqlConnection conn = DB.OpenConnection())
             {
-                UI.PopulateProjectMain(conn, null, Common.UserId, cboxProjectMain);
+                UI.PopulateProjectMain(conn, null, Common.UserId, InstanceStatus.Active, cboxProjectMain);
 
                 UI.PopulateComboBoxes(conn, "csp_select_laboratories_short", new[] {
                     new SqlParameter("@instance_status_level", InstanceStatus.Active)
@@ -191,7 +191,7 @@ namespace DSA_lims
 
             using (SqlConnection conn = DB.OpenConnection())
             {
-                UI.PopulateProjectSub(conn, null, projectMainId, Common.UserId, cboxProjectSub);
+                UI.PopulateProjectSub(conn, null, projectMainId, Common.UserId, InstanceStatus.Active, cboxProjectSub);
             }
         }
 

@@ -64,6 +64,18 @@ namespace DSA_lims
             return true;
         }
 
+        public static bool IsValidInteger(string s)
+        {
+            int n;
+            return int.TryParse(s, out n);
+        }
+
+        public static bool IsValidDecimal(string s)
+        {
+            double d;
+            return double.TryParse(s, out d);
+        }
+
         public static Guid MakeGuid(object o)
         {
             if (o == null || o == DBNull.Value)

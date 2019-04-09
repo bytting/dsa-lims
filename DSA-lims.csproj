@@ -565,6 +565,12 @@
     <Compile Include="FormSelectSampleType.Designer.cs">
       <DependentUpon>FormSelectSampleType.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormShowResultMap.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormShowResultMap.Designer.cs">
+      <DependentUpon>FormShowResultMap.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormStation.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -850,6 +856,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormSelectSampleType.resx">
       <DependentUpon>FormSelectSampleType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormShowResultMap.resx">
+      <DependentUpon>FormShowResultMap.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormStation.resx">
       <DependentUpon>FormStation.cs</DependentUpon>

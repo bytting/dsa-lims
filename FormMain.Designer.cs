@@ -387,7 +387,7 @@
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
             this.asPDFToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.onMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.miResultsShowMap = new System.Windows.Forms.ToolStripMenuItem();
             this.flowSearch = new System.Windows.Forms.FlowLayoutPanel();
             this.panel37 = new System.Windows.Forms.Panel();
             this.cboxSearchSampleType = new System.Windows.Forms.ComboBox();
@@ -957,6 +957,12 @@
             this.btnMenu = new System.Windows.Forms.ToolStripButton();
             this.lblCurrentTab = new System.Windows.Forms.ToolStripLabel();
             this.btnBack = new System.Windows.Forms.ToolStripButton();
+            this.panel44 = new System.Windows.Forms.Panel();
+            this.label56 = new System.Windows.Forms.Label();
+            this.cboxSearchProject = new System.Windows.Forms.ComboBox();
+            this.panel45 = new System.Windows.Forms.Panel();
+            this.label57 = new System.Windows.Forms.Label();
+            this.cboxSearchProjectSub = new System.Windows.Forms.ComboBox();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tabs.SuspendLayout();
@@ -1292,6 +1298,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.gridPrepAnalAnalAttachments)).BeginInit();
             this.toolsSampleResAttachments.SuspendLayout();
             this.tools.SuspendLayout();
+            this.panel44.SuspendLayout();
+            this.panel45.SuspendLayout();
             this.SuspendLayout();
             // 
             // menu
@@ -4827,12 +4835,12 @@
             this.gridSearchResult.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.gridSearchResult.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridSearchResult.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridSearchResult.Location = new System.Drawing.Point(0, 101);
+            this.gridSearchResult.Location = new System.Drawing.Point(0, 133);
             this.gridSearchResult.Name = "gridSearchResult";
             this.gridSearchResult.ReadOnly = true;
             this.gridSearchResult.RowHeadersVisible = false;
             this.gridSearchResult.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridSearchResult.Size = new System.Drawing.Size(1056, 444);
+            this.gridSearchResult.Size = new System.Drawing.Size(1056, 412);
             this.gridSearchResult.TabIndex = 2;
             // 
             // toolStrip16
@@ -4844,7 +4852,7 @@
             this.toolStripSeparator75,
             this.toolStripButton1,
             this.toolStripDropDownButton1});
-            this.toolStrip16.Location = new System.Drawing.Point(0, 76);
+            this.toolStrip16.Location = new System.Drawing.Point(0, 108);
             this.toolStrip16.Name = "toolStrip16";
             this.toolStrip16.Size = new System.Drawing.Size(1056, 25);
             this.toolStrip16.TabIndex = 3;
@@ -4881,7 +4889,7 @@
             // 
             this.toolStripDropDownButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.asPDFToolStripMenuItem,
-            this.onMapToolStripMenuItem});
+            this.miResultsShowMap});
             this.toolStripDropDownButton1.Image = global::DSA_lims.Properties.Resources.menu;
             this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
@@ -4892,20 +4900,23 @@
             // 
             this.asPDFToolStripMenuItem.Image = global::DSA_lims.Properties.Resources.report;
             this.asPDFToolStripMenuItem.Name = "asPDFToolStripMenuItem";
-            this.asPDFToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
+            this.asPDFToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.asPDFToolStripMenuItem.Text = "As PDF";
             // 
-            // onMapToolStripMenuItem
+            // miResultsShowMap
             // 
-            this.onMapToolStripMenuItem.Image = global::DSA_lims.Properties.Resources.map;
-            this.onMapToolStripMenuItem.Name = "onMapToolStripMenuItem";
-            this.onMapToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
-            this.onMapToolStripMenuItem.Text = "On map";
+            this.miResultsShowMap.Image = global::DSA_lims.Properties.Resources.map;
+            this.miResultsShowMap.Name = "miResultsShowMap";
+            this.miResultsShowMap.Size = new System.Drawing.Size(152, 22);
+            this.miResultsShowMap.Text = "On map";
+            this.miResultsShowMap.Click += new System.EventHandler(this.miResultsShowMap_Click);
             // 
             // flowSearch
             // 
             this.flowSearch.AutoSize = true;
             this.flowSearch.Controls.Add(this.panel37);
+            this.flowSearch.Controls.Add(this.panel44);
+            this.flowSearch.Controls.Add(this.panel45);
             this.flowSearch.Controls.Add(this.panel43);
             this.flowSearch.Controls.Add(this.panel34);
             this.flowSearch.Controls.Add(this.panel35);
@@ -4919,7 +4930,7 @@
             this.flowSearch.Location = new System.Drawing.Point(0, 0);
             this.flowSearch.Name = "flowSearch";
             this.flowSearch.Padding = new System.Windows.Forms.Padding(6);
-            this.flowSearch.Size = new System.Drawing.Size(1056, 76);
+            this.flowSearch.Size = new System.Drawing.Size(1056, 108);
             this.flowSearch.TabIndex = 1;
             // 
             // panel37
@@ -4933,9 +4944,11 @@
             // 
             // cboxSearchSampleType
             // 
+            this.cboxSearchSampleType.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.cboxSearchSampleType.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.cboxSearchSampleType.DisplayMember = "Name";
             this.cboxSearchSampleType.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cboxSearchSampleType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxSearchSampleType.DropDownWidth = 254;
             this.cboxSearchSampleType.FormattingEnabled = true;
             this.cboxSearchSampleType.Location = new System.Drawing.Point(87, 0);
             this.cboxSearchSampleType.Name = "cboxSearchSampleType";
@@ -4943,6 +4956,7 @@
             this.cboxSearchSampleType.TabIndex = 2;
             this.cboxSearchSampleType.ValueMember = "Id";
             this.cboxSearchSampleType.SelectedIndexChanged += new System.EventHandler(this.cboxSearchSampleType_SelectedIndexChanged);
+            this.cboxSearchSampleType.Leave += new System.EventHandler(this.cboxSearchSampleType_Leave);
             // 
             // label30
             // 
@@ -4958,7 +4972,7 @@
             // 
             this.panel43.Controls.Add(this.cboxSearchStations);
             this.panel43.Controls.Add(this.label53);
-            this.panel43.Location = new System.Drawing.Point(356, 9);
+            this.panel43.Location = new System.Drawing.Point(9, 41);
             this.panel43.Name = "panel43";
             this.panel43.Size = new System.Drawing.Size(226, 26);
             this.panel43.TabIndex = 13;
@@ -4988,7 +5002,7 @@
             // 
             this.panel34.Controls.Add(this.cboxSearchNuclides);
             this.panel34.Controls.Add(this.label10);
-            this.panel34.Location = new System.Drawing.Point(588, 9);
+            this.panel34.Location = new System.Drawing.Point(241, 41);
             this.panel34.Name = "panel34";
             this.panel34.Size = new System.Drawing.Size(206, 26);
             this.panel34.TabIndex = 0;
@@ -5018,7 +5032,7 @@
             // 
             this.panel35.Controls.Add(this.tbSearchActMin);
             this.panel35.Controls.Add(this.label37);
-            this.panel35.Location = new System.Drawing.Point(800, 9);
+            this.panel35.Location = new System.Drawing.Point(453, 41);
             this.panel35.Name = "panel35";
             this.panel35.Size = new System.Drawing.Size(200, 26);
             this.panel35.TabIndex = 6;
@@ -5047,7 +5061,7 @@
             // 
             this.panel38.Controls.Add(this.tbSearchActMax);
             this.panel38.Controls.Add(this.label47);
-            this.panel38.Location = new System.Drawing.Point(9, 41);
+            this.panel38.Location = new System.Drawing.Point(659, 41);
             this.panel38.Name = "panel38";
             this.panel38.Size = new System.Drawing.Size(200, 26);
             this.panel38.TabIndex = 8;
@@ -5075,7 +5089,7 @@
             // panel39
             // 
             this.panel39.Controls.Add(this.cbSearchActAppr);
-            this.panel39.Location = new System.Drawing.Point(215, 41);
+            this.panel39.Location = new System.Drawing.Point(865, 41);
             this.panel39.Name = "panel39";
             this.panel39.Size = new System.Drawing.Size(119, 26);
             this.panel39.TabIndex = 9;
@@ -5096,7 +5110,7 @@
             // panel40
             // 
             this.panel40.Controls.Add(this.cbSearchMDAAppr);
-            this.panel40.Location = new System.Drawing.Point(340, 41);
+            this.panel40.Location = new System.Drawing.Point(9, 73);
             this.panel40.Name = "panel40";
             this.panel40.Size = new System.Drawing.Size(118, 26);
             this.panel40.TabIndex = 10;
@@ -5117,7 +5131,7 @@
             // panel41
             // 
             this.panel41.Controls.Add(this.cbSearchAccredited);
-            this.panel41.Location = new System.Drawing.Point(464, 41);
+            this.panel41.Location = new System.Drawing.Point(133, 73);
             this.panel41.Name = "panel41";
             this.panel41.Size = new System.Drawing.Size(96, 26);
             this.panel41.TabIndex = 11;
@@ -5139,7 +5153,7 @@
             // 
             this.panel42.Controls.Add(this.cboxSearchMaxShown);
             this.panel42.Controls.Add(this.label48);
-            this.panel42.Location = new System.Drawing.Point(566, 41);
+            this.panel42.Location = new System.Drawing.Point(235, 73);
             this.panel42.Name = "panel42";
             this.panel42.Size = new System.Drawing.Size(295, 26);
             this.panel42.TabIndex = 12;
@@ -5170,7 +5184,7 @@
             // 
             // btnSearchSearch
             // 
-            this.btnSearchSearch.Location = new System.Drawing.Point(867, 41);
+            this.btnSearchSearch.Location = new System.Drawing.Point(536, 73);
             this.btnSearchSearch.Name = "btnSearchSearch";
             this.btnSearchSearch.Size = new System.Drawing.Size(139, 25);
             this.btnSearchSearch.TabIndex = 1;
@@ -10950,6 +10964,66 @@
             this.btnBack.ToolTipText = "Back";
             this.btnBack.Click += new System.EventHandler(this.miBack_Click);
             // 
+            // panel44
+            // 
+            this.panel44.Controls.Add(this.cboxSearchProject);
+            this.panel44.Controls.Add(this.label56);
+            this.panel44.Location = new System.Drawing.Point(356, 9);
+            this.panel44.Name = "panel44";
+            this.panel44.Size = new System.Drawing.Size(262, 26);
+            this.panel44.TabIndex = 14;
+            // 
+            // label56
+            // 
+            this.label56.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label56.Location = new System.Drawing.Point(0, 0);
+            this.label56.Name = "label56";
+            this.label56.Size = new System.Drawing.Size(50, 26);
+            this.label56.TabIndex = 0;
+            this.label56.Text = "Project";
+            this.label56.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // cboxSearchProject
+            // 
+            this.cboxSearchProject.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cboxSearchProject.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxSearchProject.FormattingEnabled = true;
+            this.cboxSearchProject.Location = new System.Drawing.Point(50, 0);
+            this.cboxSearchProject.Name = "cboxSearchProject";
+            this.cboxSearchProject.Size = new System.Drawing.Size(212, 23);
+            this.cboxSearchProject.TabIndex = 1;
+            this.cboxSearchProject.SelectedIndexChanged += new System.EventHandler(this.cboxSearchProject_SelectedIndexChanged);
+            // 
+            // panel45
+            // 
+            this.panel45.Controls.Add(this.cboxSearchProjectSub);
+            this.panel45.Controls.Add(this.label57);
+            this.panel45.Location = new System.Drawing.Point(624, 9);
+            this.panel45.Name = "panel45";
+            this.panel45.Size = new System.Drawing.Size(293, 26);
+            this.panel45.TabIndex = 15;
+            // 
+            // label57
+            // 
+            this.label57.Dock = System.Windows.Forms.DockStyle.Left;
+            this.label57.Location = new System.Drawing.Point(0, 0);
+            this.label57.Name = "label57";
+            this.label57.Size = new System.Drawing.Size(76, 26);
+            this.label57.TabIndex = 0;
+            this.label57.Text = "Sub-project";
+            this.label57.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // cboxSearchProjectSub
+            // 
+            this.cboxSearchProjectSub.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cboxSearchProjectSub.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxSearchProjectSub.FormattingEnabled = true;
+            this.cboxSearchProjectSub.Location = new System.Drawing.Point(76, 0);
+            this.cboxSearchProjectSub.Name = "cboxSearchProjectSub";
+            this.cboxSearchProjectSub.Size = new System.Drawing.Size(217, 23);
+            this.cboxSearchProjectSub.TabIndex = 1;
+            this.cboxSearchProjectSub.SelectedIndexChanged += new System.EventHandler(this.cboxSearchProjectSub_SelectedIndexChanged);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -11461,6 +11535,8 @@
             this.toolsSampleResAttachments.PerformLayout();
             this.tools.ResumeLayout(false);
             this.tools.PerformLayout();
+            this.panel44.ResumeLayout(false);
+            this.panel45.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -12390,12 +12466,18 @@
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton1;
         private System.Windows.Forms.ToolStripMenuItem asPDFToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem onMapToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem miResultsShowMap;
         private System.Windows.Forms.ToolStripButton btnOrderShowSampleSummary;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator71;
         private System.Windows.Forms.Panel panel43;
         private System.Windows.Forms.ComboBox cboxSearchStations;
         private System.Windows.Forms.Label label53;
+        private System.Windows.Forms.Panel panel44;
+        private System.Windows.Forms.ComboBox cboxSearchProject;
+        private System.Windows.Forms.Label label56;
+        private System.Windows.Forms.Panel panel45;
+        private System.Windows.Forms.ComboBox cboxSearchProjectSub;
+        private System.Windows.Forms.Label label57;
     }
 }
 

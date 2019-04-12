@@ -39,5 +39,7 @@ namespace DSA_lims
         public static Image LabAccredLogo { get; set; }
 
         public static List<SampleTypeModel> SampleTypeList = new List<SampleTypeModel>();
+
+        public static string InstallationDirectory { get; set; }
     }
 }

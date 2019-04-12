@@ -542,6 +542,7 @@ select pm.id, pm.name_short as 'name' from preparation_method pm
     inner join sample_type_x_preparation_method stpm on stpm.preparation_method_id = pm.id
     inner join laboratory_x_preparation_method lxpm on lxpm.preparation_method_id = pm.id and lxpm.laboratory_id = @laboratory_id
     inner join sample_type st on stpm.sample_type_id = st.id and st.id = @sample_type_id
+where pm.instance_status_id <= 1
 order by name";
             
             using (SqlDataReader reader = DB.GetDataReader(conn, null, query, CommandType.Text, 

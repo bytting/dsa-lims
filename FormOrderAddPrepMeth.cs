@@ -81,10 +81,16 @@ namespace DSA_lims
                 return;
             }
 
-            int cnt = Convert.ToInt32(tbCount.Text);
-            if(cnt == 0)
+            if(!Utils.IsValidInteger(tbCount.Text))
             {
-                MessageBox.Show("Preparation method count can not be zero");
+                MessageBox.Show("Preparation method count must be a number");
+                return;
+            }
+
+            int cnt = Convert.ToInt32(tbCount.Text);
+            if(cnt < 1 || cnt > 10000)
+            {
+                MessageBox.Show("Preparation method count must be between 1 and 10000");
                 return;
             }
 

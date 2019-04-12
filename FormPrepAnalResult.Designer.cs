@@ -86,14 +86,14 @@
             // 
             // cboxNuclides
             // 
-            this.cboxNuclides.DisplayMember = "Name";
+            this.cboxNuclides.DisplayMember = "Key";
             this.cboxNuclides.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxNuclides.FormattingEnabled = true;
             this.cboxNuclides.Location = new System.Drawing.Point(112, 18);
             this.cboxNuclides.Name = "cboxNuclides";
             this.cboxNuclides.Size = new System.Drawing.Size(249, 21);
             this.cboxNuclides.TabIndex = 0;
-            this.cboxNuclides.ValueMember = "Id";
+            this.cboxNuclides.ValueMember = "Value";
             // 
             // label1
             // 

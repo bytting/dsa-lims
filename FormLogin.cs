@@ -199,8 +199,9 @@ namespace DSA_lims
             byte[] hash1 = Utils.MakePasswordHash(password, username);
             byte[] hash2 = null;
             Guid userId = Guid.Empty, labId = Guid.Empty;
+            int accountStatus = 0;
             
-            SqlCommand cmd = new SqlCommand("select id, laboratory_id, password_hash from account where upper(username) = @username", conn, trans);
+            SqlCommand cmd = new SqlCommand("select id, laboratory_id, password_hash, instance_status_id from account where upper(username) = @username", conn, trans);
             cmd.CommandType = System.Data.CommandType.Text;
             cmd.Parameters.AddWithValue("@username", username.ToUpper());
 
@@ -214,7 +215,11 @@ namespace DSA_lims
                 userId = reader.GetGuid("id");
                 labId = reader.GetGuid("laboratory_id");
                 hash2 = reader.GetSqlBinary(2).Value;
+                accountStatus = reader.GetInt32("instance_status_id");
             }
+
+            if (accountStatus != InstanceStatus.Active)
+                return false;
 
             if (!Utils.PasswordHashEqual(hash1, hash2))                
                 return false;

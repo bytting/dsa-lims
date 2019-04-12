@@ -117,9 +117,15 @@ namespace DSA_lims
                 return;
             }
 
-            if (String.IsNullOrEmpty(tbNumber.Text.Trim()))
+            if (String.IsNullOrEmpty(tbNumber.Text))
             {
                 MessageBox.Show("Number is mandatory");
+                return;
+            }
+
+            if (!Utils.IsValidInteger(tbNumber.Text))
+            {
+                MessageBox.Show("Number must be a number");
                 return;
             }
 

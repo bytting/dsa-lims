@@ -59,11 +59,24 @@ namespace DSA_lims
                 return;
             }
 
+            if(!Utils.IsValidInteger(tbNumSamples.Text))
+            {
+                MessageBox.Show("Number of samples must be a number");
+                return;
+            }
+
+            int nsamples = Convert.ToInt32(tbNumSamples.Text);
+            if(nsamples < 1 || nsamples > 10000)
+            {
+                MessageBox.Show("Number of samples must be between 1 and 10000");
+                return;
+            }
+
             AssignmentSampleType ast = new AssignmentSampleType();
             ast.AssignmentId = mAssignment.Id;
             ast.SampleTypeId = Utils.MakeGuid(cboxSampleType.SelectedValue);
             ast.SampleComponentId = Utils.MakeGuid(cboxSampleComponent.SelectedValue);
-            ast.SampleCount = Convert.ToInt32(tbNumSamples.Text);
+            ast.SampleCount = nsamples;
             ast.RequestedActivityUnitId = Utils.MakeGuid(cboxRequestedUnit.SelectedValue);
             ast.RequestedActivityUnitTypeId = Utils.MakeGuid(cboxRequestedUnitType.SelectedValue);
             ast.ReturnToSender = cbReturnToSender.Checked;

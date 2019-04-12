@@ -177,6 +177,27 @@ where ps.id = @psid
             return Convert.ToInt32(o) > 0;
         }
 
+        public bool HasCompletedAnalysisResults(SqlConnection conn, SqlTransaction trans)
+        {
+            string query = @"
+select count(*)
+from analysis a
+	inner join preparation p on p.id = a.preparation_id
+	inner join sample s on s.id = p.sample_id
+where a.workflow_status_id = 2 and s.id = @sid
+";
+            SqlCommand cmd = new SqlCommand(query, conn, trans);
+            cmd.CommandType = CommandType.Text;
+            cmd.Parameters.AddWithValue("@sid", Id);
+
+            object o = cmd.ExecuteScalar();
+            if (o == null || o == DBNull.Value)
+                return false;
+
+            int cnt = Convert.ToInt32(o);
+            return cnt > 0;
+        }
+
         public bool IsClosed(SqlConnection conn, SqlTransaction trans)
         {
             string query = @"

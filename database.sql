@@ -414,7 +414,7 @@ as
 		name + ' (' + email + ')' as name
 	from cv_account 
 	where laboratory_id = @laboratory_id and instance_status_id <= @instance_status_level and email is not NULL
-	order by name
+	order by instance_status_id, name
 go
 
 /*===========================================================================*/
@@ -778,7 +778,7 @@ as
 		person_name + ' (' + person_email + ')' as 'name'
 	from cv_sampler
 	where instance_status_id <= @instance_status_level
-	order by person_name
+	order by instance_status_id, person_name
 go
 
 create proc csp_select_samplers_flat
@@ -874,7 +874,7 @@ as
 		name
 	from sampling_method
 	where instance_status_id <= @instance_status_level
-	order by name
+	order by instance_status_id, name
 go
 
 create proc csp_select_sampling_methods_flat
@@ -1066,6 +1066,7 @@ insert into preparation_unit values(1, 'Wet weight (g)', 'g ww')
 insert into preparation_unit values(2, 'Dry weight (g)', 'g dw')
 insert into preparation_unit values(3, 'Ash weight (g)', 'g aw')
 insert into preparation_unit values(4, 'Volume (L)', 'L vol')
+insert into preparation_unit values(5, 'g', 'g')
 go
 
 create proc csp_select_preparation_units
@@ -3340,7 +3341,7 @@ as
 		name	
 	from project_main 
 	where instance_status_id <= @instance_status_level
-	order by name
+	order by instance_status_id, name
 go
 
 /*===========================================================================*/
@@ -3448,7 +3449,7 @@ as
 		name	
 	from project_sub 
 	where project_main_id = @project_main_id and instance_status_id <= @instance_status_level
-	order by name
+	order by instance_status_id, name
 go
 
 /*===========================================================================*/
@@ -3556,7 +3557,7 @@ as
 		name
 	from station
 	where instance_status_id <= @instance_status_level
-	order by name
+	order by instance_status_id, name
 go
 
 create proc csp_select_stations_flat
@@ -3749,7 +3750,7 @@ as
 	select id, name
 	from sample_storage 
 	where instance_status_id <= @instance_status_level
-	order by name
+	order by instance_status_id, name
 go
 
 create proc csp_select_sample_storages_flat

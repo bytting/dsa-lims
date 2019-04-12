@@ -113,6 +113,8 @@ namespace DSA_lims
                 Common.Log.Info("Loading settings file " + DSAEnvironment.SettingsFilename);
                 LoadSettings(DSAEnvironment.SettingsFilename);
 
+                Common.InstallationDirectory = Path.GetDirectoryName(Application.ExecutablePath);
+
                 r = new ResourceManager("DSA_lims.lang_" + CultureInfo.CurrentUICulture.TwoLetterISOLanguageName, Assembly.GetExecutingAssembly());
                 Common.Log.Info("Setting language " + CultureInfo.CurrentUICulture.TwoLetterISOLanguageName);
                 SetLanguageLabels(r);
@@ -1937,11 +1939,20 @@ namespace DSA_lims
 
             if (!Utils.IsValidGuid(cboxSampleInfoStations.SelectedValue))
             {
+                tbSampleInfoLatitude.Enabled = true;
                 tbSampleInfoLatitude.Text = "";
+                tbSampleInfoLongitude.Enabled = true;
                 tbSampleInfoLongitude.Text = "";
+                tbSampleInfoAltitude.Enabled = true;
                 tbSampleInfoAltitude.Text = "";
+                btnSampleSelectCoords.Enabled = true;
                 return;
             }
+
+            tbSampleInfoLatitude.Enabled = false;
+            tbSampleInfoLongitude.Enabled = false;
+            tbSampleInfoAltitude.Enabled = false;
+            btnSampleSelectCoords.Enabled = false;
 
             Guid stationId = Utils.MakeGuid(cboxSampleInfoStations.SelectedValue);
 
@@ -4201,6 +4212,12 @@ select count(*) from sample s
                 return;
             }
 
+            if(!String.IsNullOrEmpty(tbSampleInfoAltitude.Text) && !Utils.IsValidDecimal(tbSampleInfoAltitude.Text))
+            {
+                MessageBox.Show("Altitude must be a number");
+                return;
+            }
+
             double? lat = null, lon = null, alt = null;
 
             try
@@ -4231,6 +4248,19 @@ select count(*) from sample s
                 {
                     MessageBox.Show("Can not change sample type. This sample belongs to one or more orders");
                     return;
+                }
+
+                if (tbSampleReferenceDate.Tag != null)
+                {
+                    DateTime newRefDate = (DateTime)tbSampleReferenceDate.Tag;
+                    if (sample.ReferenceDate != newRefDate)
+                    {
+                        if (sample.HasCompletedAnalysisResults(conn, null))
+                        {
+                            MessageBox.Show("Can not change reference date. This sample has one or more completed analyses");
+                            return;
+                        }
+                    }
                 }
 
                 sample.LaboratoryId = Utils.MakeGuid(cboxSampleLaboratory.SelectedValue);
@@ -4542,20 +4572,20 @@ select count(*) from sample s
         }
 
         private void btnPrepAnalSampleUpdate_Click(object sender, EventArgs e)
-        {
-            double? lodStart = Utils.ToDouble(tbPrepAnalLODStartWeight.Text);
-            double? lodEnd = Utils.ToDouble(tbPrepAnalLODEndWeight.Text);
-                            
-            if (lodStart != null && lodEnd != null && lodStart < lodEnd)
-            {
-                MessageBox.Show("LOD start weight cannot be smaller than end weight");
-                return;
-            }
-
+        {            
             SqlConnection conn = null;
 
             try
             {
+                double? lodStart = Utils.ToDouble(tbPrepAnalLODStartWeight.Text);
+                double? lodEnd = Utils.ToDouble(tbPrepAnalLODEndWeight.Text);
+
+                if (lodStart != null && lodEnd != null && lodStart < lodEnd)
+                {
+                    MessageBox.Show("LOD start weight cannot be smaller than end weight");
+                    return;
+                }
+
                 conn = DB.OpenConnection();
 
                 if (sample.IsClosed(conn, null))
@@ -7496,16 +7526,16 @@ select count(*) from sample s
             if (form.ShowDialog() != DialogResult.OK)
                 return;
 
-            using (SqlConnection conn = DB.OpenConnection())
+            AssignmentSampleType ast = assignment.SampleTypes.Find(x => x.Id == astId);
+            if(ast != null)
             {
-                SqlCommand cmd = new SqlCommand("update assignment_sample_type set sample_count = @count where id = @astid", conn);
-                cmd.Parameters.AddWithValue("@count", form.SelectedCount);
-                cmd.Parameters.AddWithValue("@astid", astId);
-                cmd.ExecuteNonQuery();
-
-                assignment.LoadFromDB(conn, null, assignment.Id);
-                PopulateOrder(conn, null, assignment, true);
-            }
+                using (SqlConnection conn = DB.OpenConnection())
+                {
+                    ast.SampleCount = form.SelectedCount;
+                    ast.Dirty = true;
+                    PopulateOrderContent(conn, null, assignment);
+                }
+            }            
         }
 
         private void btnProjectSubPrint_Click(object sender, EventArgs e)
@@ -7642,6 +7672,18 @@ select count(*) from sample s
 
         private void btnSearchSearch_Click(object sender, EventArgs e)
         {
+            if(!String.IsNullOrEmpty(tbSearchActMin.Text) && !Utils.IsValidDecimal(tbSearchActMin.Text))
+            {
+                MessageBox.Show("Activity minimum must be a number");
+                return;
+            }
+
+            if (!String.IsNullOrEmpty(tbSearchActMax.Text) && !Utils.IsValidDecimal(tbSearchActMax.Text))
+            {
+                MessageBox.Show("Activity maximum must be a number");
+                return;
+            }
+
             string query = "select ";
             if ((int)cboxSearchMaxShown.SelectedValue != 0)
                 query += "top " + cboxSearchMaxShown.SelectedValue + " ";
@@ -8089,6 +8131,18 @@ where ar.instance_status_id < 2
         private void cboxSearchProjectSub_SelectedIndexChanged(object sender, EventArgs e)
         {
             searchIsDirty = true;
+        }
+
+        private void miManual_Click(object sender, EventArgs e)
+        {
+            string manual = Common.InstallationDirectory + Path.DirectorySeparatorChar + "DSA-Lims_MANUAL.pdf";
+            if(!File.Exists(manual))
+            {
+                MessageBox.Show("Unable to find manual file: " + manual);
+                return;
+            }
+
+            Process.Start(manual);
         }
     }
 }

@@ -106,10 +106,14 @@ namespace DSA_lims
 
         private void btnOk_Click(object sender, EventArgs e)
         {
-            if(!editing && (cboxNuclides.SelectedValue == null))
+            if (!editing)
             {
-                MessageBox.Show("The nuclide field is mandatory");
-                return;
+                Guid nuclideId = mNuclides[cboxNuclides.Text];
+                if (!Utils.IsValidGuid(nuclideId))
+                {
+                    MessageBox.Show("The nuclide field is mandatory");
+                    return;
+                }
             }
 
             if (String.IsNullOrEmpty(tbActivity.Text.Trim()))
@@ -237,7 +241,7 @@ namespace DSA_lims
             if (!editing)
             {
                 mResult.AnalysisId = mAnalysis.Id;
-                mResult.NuclideName = cboxNuclides.SelectedValue.ToString();
+                mResult.NuclideName = cboxNuclides.Text;
                 mResult.NuclideId = mNuclides[mResult.NuclideName];
                 mAnalysis.Results.Add(mResult);
             }

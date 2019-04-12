@@ -114,9 +114,46 @@ namespace DSA_lims
                 return;
             }
 
+            if (String.IsNullOrEmpty(tbProtons.Text))
+            {
+                MessageBox.Show("Protons is mandatory");
+                return;
+            }
+
+            if (!Utils.IsValidInteger(tbProtons.Text))
+            {
+                MessageBox.Show("Protons must be a number");
+                return;
+            }
+
+            if (String.IsNullOrEmpty(tbNeutrons.Text))
+            {
+                MessageBox.Show("Neutrons is mandatory");
+                return;
+            }
+
+            if (!Utils.IsValidInteger(tbNeutrons.Text))
+            {
+                MessageBox.Show("Neutrons must be a number");
+                return;
+            }
+
             if (String.IsNullOrEmpty(tbHalflife.Text))
             {
                 MessageBox.Show("Halflife is mandatory");
+                return;
+            }
+
+            if(!Utils.IsValidDecimal(tbHalflife.Text))
+            {
+                MessageBox.Show("Halflife must be a number");
+                return;
+            }
+
+            double hl = Convert.ToDouble(tbHalflife.Text);
+            if(hl < 0d)
+            {
+                MessageBox.Show("Halflife must be a positive number");
                 return;
             }
 
@@ -130,7 +167,7 @@ namespace DSA_lims
             p["protons"] = protons;
             p["neutrons"] = neutrons;
             p["meta_stable"] = meta;
-            p["halflife"] = Convert.ToDouble(tbHalflife.Text);
+            p["halflife"] = hl;
             p["instance_status_id"] = cboxInstanceStatus.SelectedValue;
             p["comment"] = tbComment.Text.Trim();
 

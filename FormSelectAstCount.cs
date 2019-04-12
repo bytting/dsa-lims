@@ -64,7 +64,19 @@ namespace DSA_lims
                 return;
             }
 
+            if(!Utils.IsValidInteger(tbCount.Text))
+            {
+                MessageBox.Show("Count must be a number");
+                return;
+            }
+
             mSelectedCount = Convert.ToInt32(tbCount.Text);
+            if(mSelectedCount < 1 || mSelectedCount > 10000)
+            {
+                MessageBox.Show("Count must be a number between 1 and 10000");
+                return;
+            }
+
             if(mSelectedCount < mConnectedSamples)
             {
                 MessageBox.Show("Can not assign " + mSelectedCount + " samples. There is currently " + mConnectedSamples + " samples connected to this sample type");

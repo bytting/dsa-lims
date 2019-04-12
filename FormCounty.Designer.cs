@@ -146,6 +146,7 @@
             this.Name = "FormCounty";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "FormCounty";
+            this.Load += new System.EventHandler(this.FormCounty_Load);
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();

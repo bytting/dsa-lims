@@ -46,7 +46,8 @@ namespace DSA_lims
 
         public FormCounty()
         {
-            InitializeComponent();
+            InitializeComponent();            
+
             Text = "Create county";
 
             using (SqlConnection conn = DB.OpenConnection())
@@ -59,6 +60,7 @@ namespace DSA_lims
         public FormCounty(Guid cid)
         {
             InitializeComponent();            
+
             p["id"] = cid;
             Text = "Update county";
 
@@ -86,6 +88,11 @@ namespace DSA_lims
             }
         }
 
+        private void FormCounty_Load(object sender, EventArgs e)
+        {
+            tbNumber.KeyPress += CustomEvents.Integer_KeyPress;
+        }
+
         private void btnCancel_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;
@@ -100,14 +107,20 @@ namespace DSA_lims
                 return;
             }
 
-            if (String.IsNullOrEmpty(tbNumber.Text.Trim()))
+            if (String.IsNullOrEmpty(tbNumber.Text))
             {
                 MessageBox.Show("Number is mandatory");
                 return;
             }
 
+            if (!Utils.IsValidInteger(tbNumber.Text))
+            {
+                MessageBox.Show("Number must be a number");
+                return;
+            }
+
             p["name"] = tbName.Text.Trim();
-            p["number"] = Convert.ToInt32(tbNumber.Text.Trim());
+            p["number"] = Convert.ToInt32(tbNumber.Text);
             p["instance_status_id"] = cboxInstanceStatus.SelectedValue;
 
             SqlConnection connection = null;
@@ -182,6 +195,6 @@ namespace DSA_lims
             cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
             cmd.Parameters.AddWithValue("@update_id", p["update_id"]);
             cmd.ExecuteNonQuery();                        
-        }
+        }        
     }
 }

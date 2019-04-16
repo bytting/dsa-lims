@@ -109,9 +109,9 @@ namespace DSA_lims
             {
                 connection = DB.OpenConnection();
                 transaction = connection.BeginTransaction();
-
-                SqlCommand cmd = new SqlCommand("", connection, transaction);
+                
                 string query = "select count(*) from sample_component where name = @name and sample_type_id = @stid";
+                SqlCommand cmd = new SqlCommand(query, connection, transaction);
                 cmd.Parameters.AddWithValue("@name", p["name"]);
                 cmd.Parameters.AddWithValue("@stid", p["sample_type_id"]);
                 if (p.ContainsKey("id"))

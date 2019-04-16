@@ -4372,14 +4372,20 @@ select count(*) from sample s
                     }
                 }
 
-                if(preparation.WorkflowStatusId != WorkflowStatus.Rejected && (int)cboxPrepAnalPrepWorkflowStatus.SelectedValue == WorkflowStatus.Rejected)
+                if(preparation.WorkflowStatusId == WorkflowStatus.Complete && (int)cboxPrepAnalPrepWorkflowStatus.SelectedValue == WorkflowStatus.Complete)
+                {
+                    MessageBox.Show("Can not save a completed preparation");
+                    return;
+                }
+                
+                if (preparation.WorkflowStatusId != WorkflowStatus.Rejected && (int)cboxPrepAnalPrepWorkflowStatus.SelectedValue == WorkflowStatus.Rejected)
                 {
                     SqlCommand cmd = new SqlCommand("select count(*) from analysis where preparation_id = @pid and workflow_status_id <> 3", conn, trans);
                     cmd.Parameters.AddWithValue("@pid", preparation.Id);
                     int n = (int)cmd.ExecuteScalar();
                     if(n > 0)
                     {
-                        MessageBox.Show("Can not reject this preparation because one or more analyses are active");
+                        MessageBox.Show("Can not reject this preparation because one or more analyses are not rejected");
                         return;
                     }
                 }
@@ -4499,6 +4505,12 @@ select count(*) from sample s
                         MessageBox.Show("The spectrum reference is already used");
                         return;
                     }
+                }
+
+                if (analysis.WorkflowStatusId == WorkflowStatus.Complete && (int)cboxPrepAnalAnalWorkflowStatus.SelectedValue == WorkflowStatus.Complete)
+                {
+                    MessageBox.Show("Can not save a completed analysis");
+                    return;
                 }
 
                 if (preparation.WorkflowStatusId == WorkflowStatus.Rejected && (int)cboxPrepAnalAnalWorkflowStatus.SelectedValue != WorkflowStatus.Rejected)

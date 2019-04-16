@@ -187,6 +187,7 @@
             this.miPersonEdit = new System.Windows.Forms.ToolStripMenuItem();
             this.miPersonDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.miHelp = new System.Windows.Forms.ToolStripMenuItem();
+            this.miManual = new System.Windows.Forms.ToolStripMenuItem();
             this.miLogView = new System.Windows.Forms.ToolStripMenuItem();
             this.miAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.status = new System.Windows.Forms.StatusStrip();
@@ -963,7 +964,6 @@
             this.btnMenu = new System.Windows.Forms.ToolStripButton();
             this.lblCurrentTab = new System.Windows.Forms.ToolStripLabel();
             this.btnBack = new System.Windows.Forms.ToolStripButton();
-            this.miManual = new System.Windows.Forms.ToolStripMenuItem();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tabs.SuspendLayout();
@@ -2537,17 +2537,24 @@
             this.miHelp.Size = new System.Drawing.Size(44, 20);
             this.miHelp.Text = "&Help";
             // 
+            // miManual
+            // 
+            this.miManual.Name = "miManual";
+            this.miManual.Size = new System.Drawing.Size(114, 22);
+            this.miManual.Text = "Manual";
+            this.miManual.Click += new System.EventHandler(this.miManual_Click);
+            // 
             // miLogView
             // 
             this.miLogView.Name = "miLogView";
-            this.miLogView.Size = new System.Drawing.Size(152, 22);
+            this.miLogView.Size = new System.Drawing.Size(114, 22);
             this.miLogView.Text = "&Log";
             this.miLogView.Click += new System.EventHandler(this.miLogView_Click);
             // 
             // miAbout
             // 
             this.miAbout.Name = "miAbout";
-            this.miAbout.Size = new System.Drawing.Size(152, 22);
+            this.miAbout.Size = new System.Drawing.Size(114, 22);
             this.miAbout.Text = "&About";
             this.miAbout.Click += new System.EventHandler(this.miAbout_Click);
             // 
@@ -7750,9 +7757,9 @@
             // 
             this.tabTypeRelSampTypePrep.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.tabTypeRelSampTypePrep.Controls.Add(this.splitContainer13);
-            this.tabTypeRelSampTypePrep.Location = new System.Drawing.Point(4, 24);
+            this.tabTypeRelSampTypePrep.Location = new System.Drawing.Point(4, 22);
             this.tabTypeRelSampTypePrep.Name = "tabTypeRelSampTypePrep";
-            this.tabTypeRelSampTypePrep.Size = new System.Drawing.Size(589, 543);
+            this.tabTypeRelSampTypePrep.Size = new System.Drawing.Size(589, 547);
             this.tabTypeRelSampTypePrep.TabIndex = 2;
             this.tabTypeRelSampTypePrep.Text = "Connected preparation methods";
             // 
@@ -7772,8 +7779,8 @@
             // 
             this.splitContainer13.Panel2.Controls.Add(this.lbTypeRelSampTypeInheritedPrepMeth);
             this.splitContainer13.Panel2.Controls.Add(this.toolsTypeRelSampAnalMeth);
-            this.splitContainer13.Size = new System.Drawing.Size(589, 543);
-            this.splitContainer13.SplitterDistance = 222;
+            this.splitContainer13.Size = new System.Drawing.Size(589, 547);
+            this.splitContainer13.SplitterDistance = 223;
             this.splitContainer13.SplitterWidth = 3;
             this.splitContainer13.TabIndex = 0;
             // 
@@ -7786,7 +7793,7 @@
             this.lbTypeRelSampTypePrepMeth.ItemHeight = 15;
             this.lbTypeRelSampTypePrepMeth.Location = new System.Drawing.Point(0, 25);
             this.lbTypeRelSampTypePrepMeth.Name = "lbTypeRelSampTypePrepMeth";
-            this.lbTypeRelSampTypePrepMeth.Size = new System.Drawing.Size(589, 197);
+            this.lbTypeRelSampTypePrepMeth.Size = new System.Drawing.Size(589, 198);
             this.lbTypeRelSampTypePrepMeth.TabIndex = 1;
             // 
             // toolsTypeRelSampPrepMeth
@@ -7850,7 +7857,7 @@
             this.lbTypeRelSampTypeInheritedPrepMeth.Location = new System.Drawing.Point(0, 25);
             this.lbTypeRelSampTypeInheritedPrepMeth.Name = "lbTypeRelSampTypeInheritedPrepMeth";
             this.lbTypeRelSampTypeInheritedPrepMeth.SelectionMode = System.Windows.Forms.SelectionMode.None;
-            this.lbTypeRelSampTypeInheritedPrepMeth.Size = new System.Drawing.Size(589, 293);
+            this.lbTypeRelSampTypeInheritedPrepMeth.Size = new System.Drawing.Size(589, 296);
             this.lbTypeRelSampTypeInheritedPrepMeth.TabIndex = 1;
             // 
             // toolsTypeRelSampAnalMeth
@@ -10002,9 +10009,9 @@
             this.tabPrepAnalPreps.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.tabPrepAnalPreps.Controls.Add(this.panel10);
             this.tabPrepAnalPreps.Controls.Add(this.splitContainer3);
-            this.tabPrepAnalPreps.Location = new System.Drawing.Point(4, 22);
+            this.tabPrepAnalPreps.Location = new System.Drawing.Point(4, 24);
             this.tabPrepAnalPreps.Name = "tabPrepAnalPreps";
-            this.tabPrepAnalPreps.Size = new System.Drawing.Size(674, 573);
+            this.tabPrepAnalPreps.Size = new System.Drawing.Size(674, 571);
             this.tabPrepAnalPreps.TabIndex = 3;
             this.tabPrepAnalPreps.Text = "Preparations";
             // 
@@ -10015,7 +10022,7 @@
             this.panel10.Controls.Add(this.btnPrepAnalPrepUpdate);
             this.panel10.Controls.Add(this.label23);
             this.panel10.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel10.Location = new System.Drawing.Point(0, 547);
+            this.panel10.Location = new System.Drawing.Point(0, 545);
             this.panel10.Name = "panel10";
             this.panel10.Size = new System.Drawing.Size(674, 26);
             this.panel10.TabIndex = 1;
@@ -11025,13 +11032,6 @@
             this.btnBack.Text = "toolStripButton25";
             this.btnBack.ToolTipText = "Back";
             this.btnBack.Click += new System.EventHandler(this.miBack_Click);
-            // 
-            // miManual
-            // 
-            this.miManual.Name = "miManual";
-            this.miManual.Size = new System.Drawing.Size(152, 22);
-            this.miManual.Text = "Manual";
-            this.miManual.Click += new System.EventHandler(this.miManual_Click);
             // 
             // FormMain
             // 

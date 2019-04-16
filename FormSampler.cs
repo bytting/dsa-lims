@@ -132,12 +132,11 @@ namespace DSA_lims
             try
             {                
                 if (!p.ContainsKey("id"))
-                {
-                    SqlCommand cmd = new SqlCommand("", connection, transaction);
+                {                    
                     string query = "select count(*) from sampler where person_id = @pid and company_id = @cid";
+                    SqlCommand cmd = new SqlCommand(query, connection, transaction);
                     cmd.Parameters.AddWithValue("@pid", p["person_id"]);
-                    cmd.Parameters.AddWithValue("@cid", p["company_id"]);
-                    cmd.CommandText = query;
+                    cmd.Parameters.AddWithValue("@cid", p["company_id"]);                    
 
                     int cnt = (int)cmd.ExecuteScalar();
                     if (cnt > 0)
@@ -149,13 +148,12 @@ namespace DSA_lims
                     InsertSampler(connection, transaction);
                 }
                 else
-                {
-                    SqlCommand cmd = new SqlCommand("", connection, transaction);
+                {                    
                     string query = "select count(*) from sampler where person_id = @pid and company_id = @cid and id <> @id";
+                    SqlCommand cmd = new SqlCommand(query, connection, transaction);
                     cmd.Parameters.AddWithValue("@pid", p["person_id"]);
                     cmd.Parameters.AddWithValue("@cid", p["company_id"]);
-                    cmd.Parameters.AddWithValue("@id", p["id"]);
-                    cmd.CommandText = query;
+                    cmd.Parameters.AddWithValue("@id", p["id"]);                    
 
                     int cnt = (int)cmd.ExecuteScalar();
                     if (cnt > 0)

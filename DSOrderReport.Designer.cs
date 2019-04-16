@@ -2652,7 +2652,8 @@ namespace DSA_lims.DSOrderReportTableAdapters {
                 " nuclide RIGHT OUTER JOIN\r\n                         analysis_result ON nuclide.i" +
                 "d = analysis_result.nuclide_id ON analysis.id = analysis_result.analysis_id AND " +
                 "analysis_result.reportable = 1\r\nWHERE        (assignment.name = @AID) AND (prepa" +
-                "ration.instance_status_id = 1) AND (analysis.instance_status_id = 1)";
+                "ration.instance_status_id = 1) AND (analysis.instance_status_id = 1) AND (analys" +
+                "is_result.instance_status_id = 1)";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@AID", global::System.Data.SqlDbType.NVarChar, 80, global::System.Data.ParameterDirection.Input, 0, 0, "name", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }

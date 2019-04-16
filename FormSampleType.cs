@@ -41,7 +41,7 @@ namespace DSA_lims
                 lblCurrent.Text = "Name";
                 tbCurrent.Text = tnode.Text + " -> " + tnode.FullPath;
                 p["id"] = Guid.Parse(tnode.Name);
-                SampleTypePath = tnode.Parent.FullPath;
+                SampleTypePath = tnode.Parent == null ? tnode.FullPath : tnode.Parent.FullPath;
 
                 using (SqlConnection conn = DB.OpenConnection())
                 {

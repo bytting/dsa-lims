@@ -399,7 +399,7 @@
           </ChartTitle>
         </ChartTitles>
         <Palette>BrightPastel</Palette>
-        <DynamicWidth>=Count(Fields!name.Value, "DataSet1") * 2 &amp; " in"</DynamicWidth>
+        <DynamicWidth>=IIf(Count(Fields!name.Value, "DataSet1") &gt; 5, Count(Fields!name.Value, "DataSet1") * 2 &amp; " in", "10 in")</DynamicWidth>
         <ChartBorderSkin>
           <Style>
             <BackgroundColor>Gray</BackgroundColor>

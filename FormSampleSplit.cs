@@ -108,7 +108,22 @@ namespace DSA_lims
             }
 
             Guid compId = Utils.MakeGuid(cboxComponents.SelectedValue);
-            int count = Convert.ToInt32(tbCount.Text.Trim());
+            int count = 0;
+            try
+            {
+                count = Convert.ToInt32(tbCount.Text.Trim());
+            }
+            catch
+            {
+                MessageBox.Show("Invalid number format");
+                return;
+            }
+
+            if (count < 1 || count > 10000)
+            {
+                MessageBox.Show("Split count must be between 1 and 10000");
+                return;
+            }
 
             SqlConnection conn = null;
             SqlTransaction trans = null;

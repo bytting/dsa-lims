@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("DSA-lims")]
-[assembly: AssemblyDescription("Laboratory management system for radiation laboratory")]
+[assembly: AssemblyDescription("Laboratory information management system for radiation laboratory")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("DSA")]
 [assembly: AssemblyProduct("DSA-lims")]

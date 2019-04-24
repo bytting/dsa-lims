@@ -4685,9 +4685,19 @@ go
 /* foreign key constraints */
 
 alter table analysis_result add foreign key (analysis_id) references analysis(id); 
+alter table analysis_result add foreign key (nuclide_id) references nuclide(id); 
 alter table analysis add foreign key (preparation_id) references preparation(id); 
+alter table analysis add foreign key (analysis_method_id) references analysis_method(id); 
 alter table preparation add foreign key (sample_id) references sample(id); 
+alter table preparation add foreign key (preparation_method_id) references preparation_method(id); 
+alter table sample add foreign key (sample_type_id) references sample_type(id); 
 
 alter table assignment_analysis_method add foreign key (assignment_preparation_method_id) references assignment_preparation_method(id); 
 alter table assignment_preparation_method add foreign key (assignment_sample_type_id) references assignment_sample_type(id); 
 alter table assignment_sample_type add foreign key (assignment_id) references assignment(id); 
+
+alter table sample_x_assignment_sample_type add foreign key (sample_id) references sample(id); 
+alter table sample_x_assignment_sample_type add foreign key (assignment_sample_type_id) references assignment_sample_type(id); 
+
+alter table assignment add foreign key (laboratory_id) references laboratory(id); 
+alter table assignment add foreign key (account_id) references account(id); 

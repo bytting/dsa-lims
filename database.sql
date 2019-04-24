@@ -4680,3 +4680,14 @@ create table attachment (
 	create_id uniqueidentifier not null	
 )
 go
+
+/*===========================================================================*/
+/* foreign key constraints */
+
+alter table analysis_result add foreign key (analysis_id) references analysis(id); 
+alter table analysis add foreign key (preparation_id) references preparation(id); 
+alter table preparation add foreign key (sample_id) references sample(id); 
+
+alter table assignment_analysis_method add foreign key (assignment_preparation_method_id) references assignment_preparation_method(id); 
+alter table assignment_preparation_method add foreign key (assignment_sample_type_id) references assignment_sample_type(id); 
+alter table assignment_sample_type add foreign key (assignment_id) references assignment(id); 

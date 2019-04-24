@@ -3469,16 +3469,15 @@ select count(*) from sample s
                         delApmIds.Add(reader.GetGuid("id"));
                 }
 
-                SqlCommand cmd = new SqlCommand("delete from assignment_analysis_method where assignment_preparation_method_id = @pid", conn, trans);
-                foreach(Guid pid in delApmIds)
+                SqlCommand cmd = new SqlCommand("", conn, trans);
+                foreach (Guid pid in delApmIds)
                 {
+                    cmd.CommandText = "delete from assignment_analysis_method where assignment_preparation_method_id = @pid";
                     cmd.Parameters.Clear();
                     cmd.Parameters.AddWithValue("@pid", pid);
                     cmd.ExecuteNonQuery();
 
                     cmd.CommandText = "delete from assignment_preparation_method where id = @pid";
-                    cmd.Parameters.Clear();
-                    cmd.Parameters.AddWithValue("@pid", pid);
                     cmd.ExecuteNonQuery();
                 }
 

@@ -4691,13 +4691,67 @@ alter table analysis add foreign key (analysis_method_id) references analysis_me
 alter table preparation add foreign key (sample_id) references sample(id); 
 alter table preparation add foreign key (preparation_method_id) references preparation_method(id); 
 alter table sample add foreign key (sample_type_id) references sample_type(id); 
+alter table sample add foreign key (laboratory_id) references laboratory(id); 
+alter table sample add foreign key (project_sub_id) references project_sub(id); 
 
 alter table assignment_analysis_method add foreign key (assignment_preparation_method_id) references assignment_preparation_method(id); 
 alter table assignment_preparation_method add foreign key (assignment_sample_type_id) references assignment_sample_type(id); 
 alter table assignment_sample_type add foreign key (assignment_id) references assignment(id); 
 
+alter table assignment add foreign key (laboratory_id) references laboratory(id); 
+alter table assignment add foreign key (account_id) references account(id); 
+
 alter table sample_x_assignment_sample_type add foreign key (sample_id) references sample(id); 
 alter table sample_x_assignment_sample_type add foreign key (assignment_sample_type_id) references assignment_sample_type(id); 
 
-alter table assignment add foreign key (laboratory_id) references laboratory(id); 
-alter table assignment add foreign key (account_id) references account(id); 
+alter table assignment_x_account add foreign key (assignment_id) references assignment(id);
+alter table assignment_x_account add foreign key (account_id) references account(id);
+
+alter table municipality add foreign key (county_id) references county(id);
+
+alter table sampler add foreign key (person_id) references person(id);
+alter table customer add foreign key (person_id) references person(id);
+alter table account add foreign key (person_id) references person(id);
+alter table account_x_role add foreign key (account_id) references account(id);
+alter table account_x_role add foreign key (role_id) references role(id);
+
+alter table accreditation_term_x_laboratory add foreign key (accreditation_term_id) references accreditation_term(id);
+alter table accreditation_term_x_laboratory add foreign key (laboratory_id) references laboratory(id);
+
+alter table accreditation_term_x_sample_type add foreign key (accreditation_term_id) references accreditation_term(id);
+alter table accreditation_term_x_sample_type add foreign key (sample_type_id) references sample_type(id);
+
+alter table accreditation_term_x_preparation_method add foreign key (accreditation_term_id) references accreditation_term(id);
+alter table accreditation_term_x_preparation_method add foreign key (preparation_method_id) references preparation_method(id);
+
+alter table accreditation_term_x_analysis_method add foreign key (accreditation_term_id) references accreditation_term(id);
+alter table accreditation_term_x_analysis_method add foreign key (analysis_method_id) references analysis_method(id);
+
+alter table accreditation_term_x_nuclide add foreign key (accreditation_term_id) references accreditation_term(id);
+alter table accreditation_term_x_nuclide add foreign key (nuclide_id) references nuclide(id);
+
+alter table laboratory_x_preparation_method add foreign key (laboratory_id) references laboratory(id);
+alter table laboratory_x_preparation_method add foreign key (preparation_method_id) references preparation_method(id);
+alter table laboratory_x_analysis_method add foreign key (laboratory_id) references laboratory(id);
+alter table laboratory_x_analysis_method add foreign key (analysis_method_id) references analysis_method(id);
+
+alter table project_sub add foreign key (project_main_id) references project_main(id);
+
+alter table project_sub_x_account add foreign key (project_sub_id) references project_sub(id);
+alter table project_sub_x_account add foreign key (account_id) references account(id);
+
+alter table sample_component add foreign key (sample_type_id) references sample_type(id);
+
+alter table sample_parameter add foreign key (sample_id) references sample(id);
+alter table sample_parameter add foreign key (sample_parameter_name_id) references sample_parameter_name(id);
+
+alter table sample_type_x_preparation_method add foreign key (sample_type_id) references sample_type(id);
+alter table sample_type_x_preparation_method add foreign key (preparation_method_id) references preparation_method(id);
+
+alter table preparation_method_x_analysis_method add foreign key (preparation_method_id) references preparation_method(id);
+alter table preparation_method_x_analysis_method add foreign key (analysis_method_id) references analysis_method(id);
+
+alter table analysis_method_x_nuclide add foreign key (analysis_method_id) references analysis_method(id);
+alter table analysis_method_x_nuclide add foreign key (nuclide_id) references nuclide(id);
+
+go

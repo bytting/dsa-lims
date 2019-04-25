@@ -157,6 +157,7 @@ create table counters (
 )
 go
 
+insert into counters (name) values('database_version')
 insert into counters (name) values('sample_counter')
 go
 

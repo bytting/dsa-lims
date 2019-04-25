@@ -4471,7 +4471,7 @@
             // btnOrderDelSampleType
             // 
             this.btnOrderDelSampleType.Name = "btnOrderDelSampleType";
-            this.btnOrderDelSampleType.Size = new System.Drawing.Size(152, 22);
+            this.btnOrderDelSampleType.Size = new System.Drawing.Size(139, 22);
             this.btnOrderDelSampleType.Text = "Sample type";
             this.btnOrderDelSampleType.Click += new System.EventHandler(this.miOrderRemSampleType_Click);
             // 

@@ -25,6 +25,7 @@ using System.DirectoryServices.AccountManagement;
 using System.DirectoryServices.ActiveDirectory;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Security.Principal;
 using System.Text;
 using System.Windows.Forms;
@@ -70,6 +71,16 @@ namespace DSA_lims
                 conn.Open();
 
                 trans = conn.BeginTransaction();
+
+                int client_version, database_version;
+
+                GetVersionInfo(conn, trans, out client_version, out database_version);
+
+                if (client_version != database_version)
+                {
+                    MessageBox.Show("Incompatible database. Client expects version " + client_version + " but database has version " + database_version);
+                    return;
+                }
 
                 if (cboxAction.SelectedIndex == 0)
                 {
@@ -128,6 +139,14 @@ namespace DSA_lims
             {
                 conn?.Close();
             }
+        }
+
+        private void GetVersionInfo(SqlConnection conn, SqlTransaction trans, out int client_version, out int database_version)
+        {
+            client_version = Assembly.GetExecutingAssembly().GetName().Version.Major;
+
+            SqlCommand cmd = new SqlCommand("select value from counters where name = 'database_version'", conn, trans);
+            database_version = (int)cmd.ExecuteScalar();
         }
 
         private bool CreateLIMSAdministrator(SqlConnection conn, SqlTransaction trans)

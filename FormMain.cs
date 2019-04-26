@@ -700,7 +700,7 @@ namespace DSA_lims
 
             // FIXME: Accreditation rules
 
-            if (Roles.HasAccess(Role.LaboratoryAdministrator))
+            if (Roles.HasAccess(Role.LaboratoryAdministrator) && Common.LabId != Guid.Empty)
             {                
                 miSearchView.Enabled = miProjectsView.Enabled = miCustomersView.Enabled = miTypeRelationsView.Enabled = miMetadataView.Enabled = miSystemDataView.Enabled = miAuditLogView.Enabled = true;
                 btnMenuNewSample.Enabled = btnMenuSamples.Enabled = btnMenuNewOrder.Enabled = btnOrders.Enabled = btnMenuCustomer.Enabled = btnMenuProjects.Enabled = btnMenuMetadata.Enabled = btnMenuSearch.Enabled = true;
@@ -719,7 +719,7 @@ namespace DSA_lims
                 miSamplesPrepAnal.Enabled = btnSamplesPrepAnal.Enabled = btnSampleGoToPrepAnal.Enabled = true;
             }
 
-            if (Roles.HasAccess(Role.SampleRegistration))
+            if (Roles.HasAccess(Role.SampleRegistrator))
             {
                 btnMenuSamples.Enabled = btnMenuNewSample.Enabled = true;
             }
@@ -732,6 +732,12 @@ namespace DSA_lims
             if (Roles.HasAccess(Role.OrderOperator))
             {
                 btnMenuNewOrder.Enabled = btnOrders.Enabled = true;
+            }
+
+            if (Roles.HasAccess(Role.Spectator))
+            {
+                miSearch.Enabled = true;
+                btnMenuSearch.Enabled = true;
             }
         }
 
@@ -3405,11 +3411,11 @@ order by s.number, p.number
         {
             // remove sample type from order            
 
-            if (!Roles.HasAccess(Role.LaboratoryAdministrator))
+            if (!Roles.HasAccess(Role.OrderOperator, Role.LaboratoryAdministrator))
             {
                 MessageBox.Show("You don't have permission to delete sample types from orders");
                 return;
-            }            
+            }
 
             if (treeOrderContent.SelectedNode == null)
             {

@@ -30,7 +30,7 @@ namespace DSA_lims
         public const string LaboratoryOperator = "Laboratory Operator";
         public const string OrderAdministrator = "Order Administrator";
         public const string OrderOperator = "Order Operator";
-        public const string SampleRegistration = "Sample Registration";
+        public const string SampleRegistrator = "Sample Registrator";
         public const string Spectator = "Spectator";
     }
 

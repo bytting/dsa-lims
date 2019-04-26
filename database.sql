@@ -253,7 +253,7 @@ insert into role values(NEWID(), 'Laboratory Administrator')
 insert into role values(NEWID(), 'Laboratory Operator')
 insert into role values(NEWID(), 'Order Administrator')
 insert into role values(NEWID(), 'Order Operator')
-insert into role values(NEWID(), 'Sample Registration')
+insert into role values(NEWID(), 'Sample Registrator')
 insert into role values(NEWID(), 'Spectator')
 
 go

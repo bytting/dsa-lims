@@ -17,14 +17,11 @@
 */
 // Authors: Dag Robole,
 
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
-using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
@@ -47,42 +44,55 @@ namespace DSA_lims
         public FormPerson()
         {
             InitializeComponent();
-
             Text = "New person";
         }
 
         public FormPerson(Guid pid)
         {
             InitializeComponent();
-
             Text = "Edit person";
-            p["id"] = pid;
-
-            using (SqlConnection conn = DB.OpenConnection())
-            {
-                SqlCommand cmd = new SqlCommand("csp_select_person", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@id", p["id"]);
-                using (SqlDataReader reader = cmd.ExecuteReader())
-                {
-                    if (!reader.HasRows)
-                        throw new Exception("Person with ID " + p["id"] + " was not found");
-
-                    reader.Read();
-
-                    tbName.Text = reader.GetString("name");                    
-                    tbEmail.Text = reader.GetString("email");
-                    tbPhone.Text = reader.GetString("phone");
-                    tbAddress.Text = reader.GetString("address");                    
-                    p["create_date"] = reader["create_date"];                    
-                    p["update_date"] = reader["update_date"];
-                }
-            }
+            p["id"] = pid;            
         }
 
         private void FormPerson_Load(object sender, EventArgs e)
         {
-            //
+            SqlConnection conn = null;
+            try
+            {
+                conn = DB.OpenConnection();
+
+                if (p.ContainsKey("id"))
+                {                    
+                    SqlCommand cmd = new SqlCommand("csp_select_person", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@id", p["id"]);
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (!reader.HasRows)
+                            throw new Exception("Person with ID " + p["id"] + " was not found");
+
+                        reader.Read();
+
+                        tbName.Text = reader.GetString("name");
+                        tbEmail.Text = reader.GetString("email");
+                        tbPhone.Text = reader.GetString("phone");
+                        tbAddress.Text = reader.GetString("address");
+                        p["create_date"] = reader["create_date"];
+                        p["update_date"] = reader["update_date"];
+                    }                
+                }                
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                DialogResult = DialogResult.Abort;
+                Close();
+            }
+            finally
+            {
+                conn?.Close();
+            }
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -147,7 +157,8 @@ namespace DSA_lims
             {
                 success = false;
                 transaction?.Rollback();
-                Common.Log.Error(ex);                
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
             }
             finally
             {

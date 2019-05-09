@@ -148,6 +148,7 @@
             this.Name = "FormProject";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "DSA-Lims - Project";
+            this.Load += new System.EventHandler(this.FormProject_Load);
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -1,4 +1,23 @@
-﻿using System;
+﻿/*	
+	DSA Lims - Laboratory Information Management System
+    Copyright (C) 2018  Norwegian Radiation Protection Authority
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+// Authors: Dag Robole,
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,7 +26,6 @@ using System.Drawing;
 using System.Drawing.Printing;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DSA_lims
@@ -35,30 +53,40 @@ namespace DSA_lims
             cboxPaperSizes.DisplayMember = "PaperName";
         }
 
+        private void FormPrintProjectLabel_Load(object sender, EventArgs e)
+        {
+            try
+            {
+                fontTitle = new Font("Arial", 16);
+                fontHeader = new Font("Arial", 8, FontStyle.Bold);
+                fontLabel = new Font("Arial", 12);
+
+                cboxPrinters.SelectedIndexChanged -= cboxPrinters_SelectedIndexChanged;
+
+                foreach (string p in PrinterSettings.InstalledPrinters)
+                    cboxPrinters.Items.Add(p.ToString());
+
+                cboxPrinters.SelectedIndexChanged += cboxPrinters_SelectedIndexChanged;
+
+                if (cboxPrinters.FindString(mSettings.LabelPrinterName) > -1)
+                    cboxPrinters.Text = mSettings.LabelPrinterName;
+
+                cbLandscape.Checked = mSettings.LabelPrinterLandscape;
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                DialogResult = DialogResult.Abort;
+                Close();
+            }
+        }
+
         private void btnCancel_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;
             Close();
-        }
-
-        private void FormPrintProjectLabel_Load(object sender, EventArgs e)
-        {
-            fontTitle = new Font("Arial", 16);
-            fontHeader = new Font("Arial", 8, FontStyle.Bold);
-            fontLabel = new Font("Arial", 12);            
-
-            cboxPrinters.SelectedIndexChanged -= cboxPrinters_SelectedIndexChanged;
-
-            foreach (string p in PrinterSettings.InstalledPrinters)
-                cboxPrinters.Items.Add(p.ToString());
-
-            cboxPrinters.SelectedIndexChanged += cboxPrinters_SelectedIndexChanged;
-
-            if (cboxPrinters.FindString(mSettings.LabelPrinterName) > -1)
-                cboxPrinters.Text = mSettings.LabelPrinterName;
-
-            cbLandscape.Checked = mSettings.LabelPrinterLandscape;
-        }
+        }        
 
         private void PrintDocument_PrintPage(object sender, PrintPageEventArgs e)
         {
@@ -138,8 +166,10 @@ from project_sub ps
     inner join project_main pm on pm.id = ps.project_main_id and ps.id = @psid
 ";
 
-                using (SqlConnection conn = DB.OpenConnection())
+                SqlConnection conn = null;
+                try
                 {
+                    conn = DB.OpenConnection();
                     using (SqlDataReader reader = DB.GetDataReader(conn, null, query, CommandType.Text, new SqlParameter("@psid", mProjectId)))
                     {
                         if (!reader.HasRows)
@@ -156,6 +186,16 @@ from project_sub ps
                         for (int c = 0; c < copies; c++)
                             printDocument.Print();
                     }
+                }
+                catch (Exception ex)
+                {
+                    Common.Log.Error(ex);
+                    MessageBox.Show(ex.Message);
+                    return;
+                }
+                finally
+                {
+                    conn?.Close();
                 }
 
                 mSettings.LabelPrinterName = cboxPrinters.Text;

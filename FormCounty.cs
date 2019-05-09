@@ -47,50 +47,64 @@ namespace DSA_lims
         public FormCounty()
         {
             InitializeComponent();            
-
             Text = "Create county";
-
-            using (SqlConnection conn = DB.OpenConnection())
-            {
-                cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status", false);
-            }
-            cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
         }
 
         public FormCounty(Guid cid)
         {
-            InitializeComponent();            
-
-            p["id"] = cid;
+            InitializeComponent();
             Text = "Update county";
-
-            using (SqlConnection conn = DB.OpenConnection())
-            {
-                cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status", false);
-
-                SqlCommand cmd = new SqlCommand("csp_select_county", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@id", p["id"]);
-                using (SqlDataReader reader = cmd.ExecuteReader())
-                {
-                    if (!reader.HasRows)
-                        throw new Exception("County with ID " + p["id"] + " was not found");
-
-                    reader.Read();
-                    tbName.Text = reader.GetString("name");
-                    tbNumber.Text = reader.GetString("county_number");
-                    cboxInstanceStatus.SelectedValue = reader.GetInt32("instance_status_id");
-                    p["create_date"] = reader.GetDateTime("create_date");
-                    p["create_id"] = reader.GetGuid("create_id");
-                    p["update_date"] = reader.GetDateTime("update_date");
-                    p["update_id"] = reader.GetGuid("update_id");
-                }
-            }
+            p["id"] = cid;                        
         }
 
         private void FormCounty_Load(object sender, EventArgs e)
         {
             tbNumber.KeyPress += CustomEvents.Integer_KeyPress;
+
+            SqlConnection conn = null;
+            try
+            {
+                conn = DB.OpenConnection();
+
+                if (p.ContainsKey("id"))
+                {                    
+                    cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status", false);
+
+                    SqlCommand cmd = new SqlCommand("csp_select_county", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@id", p["id"]);
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (!reader.HasRows)
+                            throw new Exception("County with ID " + p["id"] + " was not found");
+
+                        reader.Read();
+                        tbName.Text = reader.GetString("name");
+                        tbNumber.Text = reader.GetString("county_number");
+                        cboxInstanceStatus.SelectedValue = reader.GetInt32("instance_status_id");
+                        p["create_date"] = reader.GetDateTime("create_date");
+                        p["create_id"] = reader.GetGuid("create_id");
+                        p["update_date"] = reader.GetDateTime("update_date");
+                        p["update_id"] = reader.GetGuid("update_id");
+                    }                
+                }
+                else
+                {                    
+                    cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status", false);                
+                    cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
+                }
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                DialogResult = DialogResult.Abort;
+                Close();
+            }
+            finally
+            {
+                conn?.Close();
+            }
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -149,7 +163,8 @@ namespace DSA_lims
             {
                 success = false;
                 transaction?.Rollback();
-                Common.Log.Error(ex);                
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
             }
             finally
             {

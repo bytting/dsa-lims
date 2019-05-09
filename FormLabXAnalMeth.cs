@@ -47,8 +47,10 @@ namespace DSA_lims
             var amArr = from item in mExistingAnalMeths select "'" + item + "'";
             string exceptIds = string.Join(",", amArr);
 
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 string query;
                 if (String.IsNullOrEmpty(exceptIds))                
                     query = "select * from analysis_method where instance_status_id < 2";                
@@ -69,6 +71,17 @@ namespace DSA_lims
                 gridAnalMeth.Columns["name_short"].HeaderText = "Abbr.";
                 gridAnalMeth.Columns["description_link"].HeaderText = "Desc.link";
                 gridAnalMeth.Columns["specter_reference_regexp"].HeaderText = "Spec.Ref RE";                
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                DialogResult = DialogResult.Abort;
+                Close();
+            }
+            finally
+            {
+                conn?.Close();
             }
         }
 
@@ -104,6 +117,7 @@ namespace DSA_lims
                 trans?.Rollback();
                 Common.Log.Error(ex);
                 MessageBox.Show(ex.Message);
+                return;
             }
             finally
             {

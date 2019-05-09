@@ -39,10 +39,15 @@ namespace DSA_lims
             InitializeComponent();
 
             mUserId = userId;
-            mExistingRoleIds = existingRoleIds;
+            mExistingRoleIds = existingRoleIds;            
+        }
 
-            using (SqlConnection conn = DB.OpenConnection())
+        private void FormAccountXRoles_Load(object sender, EventArgs e)
+        {
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 var roleArr = from item in mExistingRoleIds select "'" + item + "'";
                 string sroles = string.Join(",", roleArr);
 
@@ -62,6 +67,17 @@ namespace DSA_lims
                     }
                 }
             }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                DialogResult = DialogResult.Abort;
+                Close();
+            }
+            finally
+            {
+                conn?.Close();
+            }
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -74,8 +90,10 @@ namespace DSA_lims
         {
             if (lbRoles.SelectedItems.Count > 0)
             {
-                using (SqlConnection conn = DB.OpenConnection())
+                SqlConnection conn = null;
+                try
                 {
+                    conn = DB.OpenConnection();
                     SqlCommand cmd = new SqlCommand("insert into account_x_role values(@account_id, @role_id)", conn);
 
                     foreach (object item in lbRoles.SelectedItems)
@@ -88,10 +106,20 @@ namespace DSA_lims
                         cmd.ExecuteNonQuery();
                     }
                 }
+                catch (Exception ex)
+                {
+                    Common.Log.Error(ex);
+                    MessageBox.Show(ex.Message);
+                    return;
+                }
+                finally
+                {
+                    conn?.Close();
+                }
             }
 
             DialogResult = DialogResult.OK;
             Close();
-        }
+        }        
     }
 }

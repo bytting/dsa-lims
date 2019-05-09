@@ -100,6 +100,7 @@
             this.Name = "FormSelectExistingPreps";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "DSA-Lims - Select existing preparations";
+            this.Load += new System.EventHandler(this.FormSelectExistingPreps_Load);
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.gridPreparations)).EndInit();
             this.ResumeLayout(false);

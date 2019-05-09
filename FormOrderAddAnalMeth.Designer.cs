@@ -148,6 +148,7 @@
             this.Name = "FormOrderAddAnalMeth";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "DSA-Lims - Order analysis methods";
+            this.Load += new System.EventHandler(this.FormOrderAddAnalMeth_Load);
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -169,6 +169,7 @@
             this.Name = "FormSampleStorage";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "FormSampleStorage";
+            this.Load += new System.EventHandler(this.FormSampleStorage_Load);
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();

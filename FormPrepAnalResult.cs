@@ -17,14 +17,11 @@
 */
 // Authors: Dag Robole,
 
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
-using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -49,15 +46,7 @@ namespace DSA_lims
             cboxNuclides.Text = "";
             mAnalysis = analysis;
             mNuclides = nuclides;
-            mResult = new AnalysisResult();
-            using (SqlConnection conn = DB.OpenConnection())
-            {
-                cboxSigmaActivity.DataSource = DB.GetSigmaValues(conn, null, false);
-                cboxSigmaMDA.DataSource = DB.GetSigmaValues(conn, null, true);
-            }
-
-            cboxSigmaActivity.SelectedValue = 2d;            
-            cboxSigmaMDA.SelectedValue = 1.645d;
+            mResult = new AnalysisResult();            
         }
 
         public FormPrepAnalResult(Analysis analysis, Guid resultId)
@@ -76,27 +65,55 @@ namespace DSA_lims
                         
             cboxNuclides.Items.Add(mResult.NuclideName);
             cboxNuclides.Text = mResult.NuclideName;            
-            cboxNuclides.Enabled = false;            
+            cboxNuclides.Enabled = false;                        
+        }
 
-            using (SqlConnection conn = DB.OpenConnection())
+        private void FormPrepAnalResult_Load(object sender, EventArgs e)
+        {
+            SqlConnection conn = null;
+            try
             {
-                cboxSigmaActivity.DataSource = DB.GetSigmaValues(conn, null, false);
-                cboxSigmaMDA.DataSource = DB.GetSigmaValues(conn, null, true);                
-            }
-            
-            cboxSigmaActivity.SelectedValue = 2d;
-            cboxSigmaActivity.Enabled = false;
-            cboxSigmaMDA.SelectedValue = 1.645d;
-            cboxSigmaMDA.Enabled = false;
+                conn = DB.OpenConnection();
 
-            tbActivity.Text = mResult.Activity.ToString(Utils.ScientificFormat);
-            tbUncertainty.Text = mResult.ActivityUncertaintyABS.ToString(Utils.ScientificFormat);
-            cbActivityApproved.Checked = mResult.ActivityApproved;
-            tbDetectionLimit.Text = mResult.DetectionLimit.ToString(Utils.ScientificFormat);
-            cbDetectionLimitApproved.Checked = mResult.DetectionLimitApproved;
-            cbAccredited.Checked = mResult.Accredited;
-            cbReportable.Checked = mResult.Reportable;
-        }        
+                if (editing)
+                {                    
+                    cboxSigmaActivity.DataSource = DB.GetSigmaValues(conn, null, false);
+                    cboxSigmaMDA.DataSource = DB.GetSigmaValues(conn, null, true);                
+
+                    cboxSigmaActivity.SelectedValue = 2d;
+                    cboxSigmaActivity.Enabled = false;
+                    cboxSigmaMDA.SelectedValue = 1.645d;
+                    cboxSigmaMDA.Enabled = false;
+
+                    tbActivity.Text = mResult.Activity.ToString(Utils.ScientificFormat);
+                    tbUncertainty.Text = mResult.ActivityUncertaintyABS.ToString(Utils.ScientificFormat);
+                    cbActivityApproved.Checked = mResult.ActivityApproved;
+                    tbDetectionLimit.Text = mResult.DetectionLimit.ToString(Utils.ScientificFormat);
+                    cbDetectionLimitApproved.Checked = mResult.DetectionLimitApproved;
+                    cbAccredited.Checked = mResult.Accredited;
+                    cbReportable.Checked = mResult.Reportable;
+                }
+                else
+                {                    
+                    cboxSigmaActivity.DataSource = DB.GetSigmaValues(conn, null, false);
+                    cboxSigmaMDA.DataSource = DB.GetSigmaValues(conn, null, true);                
+
+                    cboxSigmaActivity.SelectedValue = 2d;
+                    cboxSigmaMDA.SelectedValue = 1.645d;
+                }
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                DialogResult = DialogResult.Abort;
+                Close();
+            }
+            finally
+            {
+                conn?.Close();
+            }
+        }
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
@@ -256,6 +273,6 @@ namespace DSA_lims
         {
             if (invalidChars.Contains(e.KeyChar))
                 e.Handled = true;
-        }
+        }        
     }
 }

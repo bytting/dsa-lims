@@ -22,8 +22,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
-using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
@@ -43,15 +41,31 @@ namespace DSA_lims
             mAssignment = ass;
             mAst = ast;
             cbPrepsAlreadyExists.Checked = false;
-            cboxPrepMethLaboratory.Enabled = false;
+            cboxPrepMethLaboratory.Enabled = false;            
+        }
 
-            using (SqlConnection conn = DB.OpenConnection())
-            {                   
+        private void FormOrderAddPrepMeth_Load(object sender, EventArgs e)
+        {
+            SqlConnection conn = null;
+            try
+            {
+                conn = DB.OpenConnection();
                 UI.PopulateComboBoxes(conn, "csp_select_laboratories_short", new[] {
                     new SqlParameter("@instance_status_level", InstanceStatus.Active)
                 }, cboxPrepMethLaboratory);
 
                 cboxPrepMethLaboratory.SelectedValue = mAssignment.LaboratoryId;
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                DialogResult = DialogResult.Abort;
+                Close();
+            }
+            finally
+            {
+                conn?.Close();
             }
         }
 
@@ -128,10 +142,21 @@ namespace DSA_lims
 
             Guid labId = Utils.MakeGuid(cboxPrepMethLaboratory.SelectedValue);
 
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 UI.PopulateSampleTypePrepMeth(conn, mAst.SampleTypeId, labId, cboxPreparationMethod);
             }
-        }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn?.Close();
+            }
+        }        
     }
 }

@@ -47,11 +47,16 @@ namespace DSA_lims
             InitializeComponent();
 
             TreeSampleTypes = treeSampleTypes;
-            SampleId = sampId;
+            SampleId = sampId;            
+        }
 
-            using (SqlConnection conn = DB.OpenConnection())
+        private void FormSelectOrder_Load(object sender, EventArgs e)
+        {
+            SqlConnection conn = null;
+            try
             {
-                SampleNumber = DB.GetSampleNumber(conn, null, SampleId);     
+                conn = DB.OpenConnection();
+                SampleNumber = DB.GetSampleNumber(conn, null, SampleId);
                 UI.PopulateComboBoxes(conn, "csp_select_laboratories_short", new[] {
                     new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
                 }, cboxLaboratory);
@@ -62,6 +67,17 @@ namespace DSA_lims
                 object o = DB.GetScalar(conn, null, "select sample_type_id from sample where id = @id", CommandType.Text, new SqlParameter("@id", SampleId));
                 if (o != null && o != DBNull.Value)
                     SampleTypeId = Guid.Parse(o.ToString());
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                DialogResult = DialogResult.Abort;
+                Close();
+            }
+            finally
+            {
+                conn?.Close();
             }
         }
 
@@ -188,19 +204,20 @@ where sxast.sample_id = @sid";
                 GenerateOrderPreparations(conn, trans, SampleId, SelectedLaboratoryId, SelectedOrderId, SelectedOrderLineId, tnode.Nodes);
 
                 trans.Commit();
+                DialogResult = DialogResult.OK;
             }
             catch(Exception ex)
             {
                 trans?.Rollback();
                 Common.Log.Error(ex);
                 MessageBox.Show(ex.Message);
+                DialogResult = DialogResult.Abort;
             }
             finally
             {
                 conn?.Close();
             }
-            
-            DialogResult = DialogResult.OK;
+                        
             Close();
         }
 
@@ -342,11 +359,24 @@ where sxast.sample_id = @sid";
 
             if (!Utils.IsValidGuid(cboxLaboratory.SelectedValue))
                 return;
-
-            Guid labId = Utils.MakeGuid(cboxLaboratory.SelectedValue);
-            using (SqlConnection conn = DB.OpenConnection())
+            
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
+
+                Guid labId = Utils.MakeGuid(cboxLaboratory.SelectedValue);
                 UI.PopulateOrdersConstruction(conn, labId, gridOrders);
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            finally
+            {
+                conn?.Close();
             }
         }
 
@@ -354,11 +384,24 @@ where sxast.sample_id = @sid";
         {
             if (gridOrders.SelectedRows.Count < 1)
                 return;
-
-            Guid oid = Guid.Parse(gridOrders.SelectedRows[0].Cells["id"].Value.ToString());
-            using (SqlConnection conn = DB.OpenConnection())
+            
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
+
+                Guid oid = Guid.Parse(gridOrders.SelectedRows[0].Cells["id"].Value.ToString());
                 UI.PopulateOrderContentForSampleTypeName(conn, oid, treeOrderLines, SampleTypeId, TreeSampleTypes, true);
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            finally
+            {
+                conn?.Close();
             }
         }        
 
@@ -376,8 +419,10 @@ where sxast.sample_id = @sid";
             Guid prepLabId = Guid.Empty;
             Guid apmId = Guid.Parse(tnode.Name);
 
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 object o = DB.GetScalar(conn, null, "select preparation_laboratory_id from assignment_preparation_method where id = @id", CommandType.Text, 
                     new SqlParameter("@id", apmId));
                 if(!DB.IsValidField(o))
@@ -386,6 +431,16 @@ where sxast.sample_id = @sid";
                     return;
                 }
                 prepLabId = Guid.Parse(o.ToString());
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            finally
+            {
+                conn?.Close();
             }
 
             FormSelectExistingPreps form = new FormSelectExistingPreps(prepLabId, SampleId);
@@ -436,6 +491,6 @@ where sxast.sample_id = @sid";
                         prepNums.Add(SampleNumber + "/" + reader.GetString("number"));
 
             tnode.ToolTipText = "Connected preparations: " + String.Join(", ", prepNums);
-        }
+        }        
     }
 }

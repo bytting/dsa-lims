@@ -215,6 +215,7 @@
             this.Name = "FormSampleNew";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "DSA-Lims - Create sample";
+            this.Load += new System.EventHandler(this.FormSampleNew_Load);
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -22,8 +22,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
-using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
@@ -57,10 +55,12 @@ namespace DSA_lims
             spn.Id = Guid.Empty;
             spn.Name = "";
             spn.Type = "";
-            cboxSampleParameterNames.Items.Add(spn);            
+            cboxSampleParameterNames.Items.Add(spn);
 
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 SqlDataReader reader = DB.GetDataReader(conn, null, "select id, name, type from sample_parameter_name order by name", CommandType.Text);
                 while(reader.Read())
                 {
@@ -70,6 +70,17 @@ namespace DSA_lims
                     spn.Type = reader.GetString("type");
                     cboxSampleParameterNames.Items.Add(spn);
                 }
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                DialogResult = DialogResult.Abort;
+                Close();
+            }
+            finally
+            {
+                conn?.Close();
             }
 
             cboxSampleParameterNames.DisplayMember = "Name";

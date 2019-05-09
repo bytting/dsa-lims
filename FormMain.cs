@@ -242,124 +242,136 @@ namespace DSA_lims
 
         private bool InitializeUI()
         {
+            SqlConnection conn = null;
             try
             {
-                using (SqlConnection conn = DB.OpenConnection())
-                {
-                    DB.LoadSampleTypes(conn, null);
+                conn = DB.OpenConnection();
+                DB.LoadSampleTypes(conn, null);
 
-                    cboxSamplesStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status", false);
+                cboxSamplesStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status", false);
 
-                    cboxSampleInstanceStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status", false);
+                cboxSampleInstanceStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status", false);
 
-                    cboxPrepAnalPrepAmountUnit.DataSource = DB.GetIntLemmata(conn, null, "csp_select_preparation_units", true);
+                cboxPrepAnalPrepAmountUnit.DataSource = DB.GetIntLemmata(conn, null, "csp_select_preparation_units", true);
 
-                    cboxPrepAnalPrepQuantityUnit.DataSource = DB.GetIntLemmata(conn, null, "csp_select_quantity_units", true);
+                cboxPrepAnalPrepQuantityUnit.DataSource = DB.GetIntLemmata(conn, null, "csp_select_quantity_units", true);
 
-                    cboxPrepAnalAnalWorkflowStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_workflow_status", false);
+                cboxPrepAnalAnalWorkflowStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_workflow_status", false);
 
-                    cboxPrepAnalPrepWorkflowStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_workflow_status", false);
+                cboxPrepAnalPrepWorkflowStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_workflow_status", false);
 
-                    cboxOrderStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_workflow_status", false);
+                cboxOrderStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_workflow_status", false);
 
-                    cboxSampleInfoLocationTypes.DataSource = DB.GetIntLemmata(conn, null, "csp_select_location_types", true);
+                cboxSampleInfoLocationTypes.DataSource = DB.GetIntLemmata(conn, null, "csp_select_location_types", true);
 
-                    cboxOrderRequestedSigma.DataSource = DB.GetSigmaValues(conn, null, false);
-                    cboxOrderRequestedSigmaMDA.DataSource = DB.GetSigmaValues(conn, null, true);
+                cboxOrderRequestedSigma.DataSource = DB.GetSigmaValues(conn, null, false);
+                cboxOrderRequestedSigmaMDA.DataSource = DB.GetSigmaValues(conn, null, true);
 
-                    UI.PopulatePersons(conn, gridSysPers);
+                UI.PopulatePersons(conn, gridSysPers);
 
-                    UI.PopulateCompanies(conn, gridMetaCompanies);
+                UI.PopulateCompanies(conn, gridMetaCompanies);
 
-                    UI.PopulatePreparationUnits(conn, gridMetaUnitPrepUnits);
+                UI.PopulatePreparationUnits(conn, gridMetaUnitPrepUnits);
 
-                    UI.PopulateActivityUnits(conn, gridMetaUnitActivityUnits);
+                UI.PopulateActivityUnits(conn, gridMetaUnitActivityUnits);
 
-                    UI.PopulateQuantityUnits(conn, gridMetaUnitQuantUnits);
+                UI.PopulateQuantityUnits(conn, gridMetaUnitQuantUnits);
 
-                    UI.PopulateActivityUnitTypes(conn, gridMetaUnitActivityUnitTypes);
+                UI.PopulateActivityUnitTypes(conn, gridMetaUnitActivityUnitTypes);
 
-                    UI.PopulateComboBoxes(conn, "csp_select_activity_units_short", new SqlParameter[] { }, cboxPrepAnalAnalUnit);
+                UI.PopulateComboBoxes(conn, "csp_select_activity_units_short", new SqlParameter[] { }, cboxPrepAnalAnalUnit);
 
-                    UI.PopulateComboBoxes(conn, "csp_select_activity_unit_types", new SqlParameter[] { }, cboxPrepAnalAnalUnitType);
+                UI.PopulateComboBoxes(conn, "csp_select_activity_unit_types", new SqlParameter[] { }, cboxPrepAnalAnalUnitType);
 
-                    UI.PopulateProjectsMain(conn, gridProjectMain);
+                UI.PopulateProjectsMain(conn, gridProjectMain);
 
-                    UI.PopulateComboBoxes(conn, "csp_select_projects_main_short", new[] {
+                UI.PopulateComboBoxes(conn, "csp_select_projects_main_short", new[] {
                         new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
                     }, cboxSamplesProjects, cboxSampleProject);
 
-                    UI.PopulateLaboratories(conn, InstanceStatus.Deleted, gridSysLab);
+                UI.PopulateLaboratories(conn, InstanceStatus.Deleted, gridSysLab);
 
-                    UI.PopulateComboBoxes(conn, "csp_select_laboratories_short", new[] {
+                UI.PopulateComboBoxes(conn, "csp_select_laboratories_short", new[] {
                         new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
                     }, cboxSampleLaboratory, cboxOrderLaboratory);
 
-                    UI.PopulateUsers(conn, InstanceStatus.Deleted, gridSysUsers);
+                UI.PopulateUsers(conn, InstanceStatus.Deleted, gridSysUsers);
 
-                    UI.PopulateNuclides(conn, gridSysNuclides);
+                UI.PopulateNuclides(conn, gridSysNuclides);
 
-                    UI.PopulateGeometries(conn, gridSysGeom);
+                UI.PopulateGeometries(conn, gridSysGeom);
 
-                    UI.PopulateComboBoxes(conn, "csp_select_preparation_geometries_short", new[] {
+                UI.PopulateComboBoxes(conn, "csp_select_preparation_geometries_short", new[] {
                         new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
                     }, cboxPrepAnalPrepGeom);
 
-                    UI.PopulateCounties(conn, gridSysCounty);
+                UI.PopulateCounties(conn, gridSysCounty);
 
-                    UI.PopulateComboBoxes(conn, "csp_select_counties_short", new[] {
+                UI.PopulateComboBoxes(conn, "csp_select_counties_short", new[] {
                         new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
                     }, cboxSampleCounties);
 
-                    UI.PopulateStations(conn, gridMetaStation);
+                UI.PopulateStations(conn, gridMetaStation);
 
-                    UI.PopulateComboBoxes(conn, "csp_select_stations_short", new[] {
+                UI.PopulateComboBoxes(conn, "csp_select_stations_short", new[] {
                         new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
                     }, cboxSampleInfoStations);
 
-                    UI.PopulateSampleStorage(conn, gridMetaSampleStorage);
+                UI.PopulateSampleStorage(conn, gridMetaSampleStorage);
 
-                    UI.PopulateComboBoxes(conn, "csp_select_sample_storages_short", new[] {
+                UI.PopulateComboBoxes(conn, "csp_select_sample_storages_short", new[] {
                         new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
                     }, cboxSampleSampleStorage);
 
-                    UI.PopulateSamplers(conn, gridMetaSamplers);
+                UI.PopulateSamplers(conn, gridMetaSamplers);
 
-                    UI.PopulateComboBoxes(conn, "csp_select_samplers_short", new[] {
+                UI.PopulateComboBoxes(conn, "csp_select_samplers_short", new[] {
                         new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
                     }, cboxSampleInfoSampler);
 
-                    UI.PopulateSamplingMethods(conn, gridMetaSamplingMeth);
+                UI.PopulateSamplingMethods(conn, gridMetaSamplingMeth);
 
-                    UI.PopulateComboBoxes(conn, "csp_select_sampling_methods_short", new[] {
+                UI.PopulateComboBoxes(conn, "csp_select_sampling_methods_short", new[] {
                         new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
                     }, cboxSampleInfoSamplingMeth);
 
-                    UI.PopulatePreparationMethods(conn, gridTypeRelPrepMeth);
+                UI.PopulatePreparationMethods(conn, gridTypeRelPrepMeth);
 
-                    UI.PopulateAnalysisMethods(conn, gridTypeRelAnalMeth);
+                UI.PopulateAnalysisMethods(conn, gridTypeRelAnalMeth);
 
-                    UI.PopulateSampleTypes(conn, treeSampleTypes);
+                UI.PopulateSampleTypes(conn, treeSampleTypes);
 
-                    UI.PopulateSampleTypes(treeSampleTypes, cboxSampleSampleType);
+                UI.PopulateSampleTypes(treeSampleTypes, cboxSampleSampleType);
 
-                    UI.PopulateCustomers(conn, InstanceStatus.Deleted, gridCustomers);
+                UI.PopulateCustomers(conn, InstanceStatus.Deleted, gridCustomers);
 
-                    UI.PopulateOrderYears(conn, cboxOrdersYear);
+                UI.PopulateOrderYears(conn, cboxOrdersYear);
 
-                    UI.PopulateOrderWorkflowStatus(conn, cboxOrdersWorkflowStatus);
+                UI.PopulateOrderWorkflowStatus(conn, cboxOrdersWorkflowStatus);
 
-                    UI.PopulateComboBoxes(conn, "csp_select_assignments_short", new[] {
+                UI.PopulateComboBoxes(conn, "csp_select_assignments_short", new[] {
                         new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
                     }, cboxSamplesOrders);
 
-                    UI.PopulateComboBoxes(conn, "csp_select_laboratories_short", new[] {
+                UI.PopulateComboBoxes(conn, "csp_select_laboratories_short", new[] {
                         new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
                     }, cboxSamplesLaboratory, cboxOrdersLaboratory);
 
-                    UI.PopulateSampleParameterNames(conn, gridSysSampParamNames);
-                }
+                UI.PopulateSampleParameterNames(conn, gridSysSampParamNames);
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                return false;
+            }
+            finally
+            {
+                conn?.Close();
+            }
 
+            try
+            {
                 cboxOrdersTop.DataSource = DB.GetTopValues();
                 cboxOrdersTop.SelectedValue = 50;
 
@@ -389,15 +401,15 @@ namespace DSA_lims
                 ActiveControl = tbMenuLookup;
                 
                 Common.Log.Info("Application initialized successfully");
-
-                return true;
             }
             catch (Exception ex)
             {
-                Common.Log.Fatal(ex);
+                Common.Log.Error(ex);
                 MessageBox.Show(ex.Message);
                 return false;
             }
+
+            return true;
         }
 
         private bool DiscardUnsavedChanges()
@@ -458,10 +470,21 @@ namespace DSA_lims
 
                 if (initialized)
                 {
-                    using (SqlConnection conn = DB.OpenConnection())
+                    SqlConnection conn = null;
+                    try
                     {
+                        conn = DB.OpenConnection();
                         DB.UnlockSamples(conn);
                         DB.UnlockOrders(conn);
+                    }
+                    catch (Exception ex)
+                    {
+                        Common.Log.Error(ex);
+                        MessageBox.Show(ex.Message);
+                    }
+                    finally
+                    {
+                        conn?.Close();
                     }
                 }
 
@@ -639,7 +662,8 @@ namespace DSA_lims
             }
             catch (Exception ex)
             {
-                Common.Log.Error(ex.Message, ex);
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
             }
         }
 
@@ -659,7 +683,8 @@ namespace DSA_lims
             }
             catch (Exception ex)
             {
-                Common.Log.Error(ex.Message, ex);
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
             }
         }        
 
@@ -818,27 +843,33 @@ namespace DSA_lims
             TreeNode tnode = e.Node;
 
             lblTypeRelSampCompSel.Text = lblTypeRelSampPrepSel.Text = tnode.Text;
+            
+            lbSampleTypesComponents.Items.Clear();
+            lbSampleTypesInheritedComponents.Items.Clear();
 
+            SqlConnection conn = null;
             try
             {
-                lbSampleTypesComponents.Items.Clear();
-                lbSampleTypesInheritedComponents.Items.Clear();
+                conn = DB.OpenConnection();
 
                 Guid sampleTypeId = Guid.Parse(tnode.Name);
 
-                using (SqlConnection conn = DB.OpenConnection())
-                {
-                    // add sample components
-                    AddSampleTypeComponents(conn, sampleTypeId, false, tnode);
+                // add sample components
+                AddSampleTypeComponents(conn, sampleTypeId, false, tnode);
 
-                    // add preparation methods
-                    UI.PopulateSampleTypePrepMeth(conn, tnode, lbTypeRelSampTypePrepMeth, lbTypeRelSampTypeInheritedPrepMeth);
-                }
+                // add preparation methods
+                UI.PopulateSampleTypePrepMeth(conn, tnode, lbTypeRelSampTypePrepMeth, lbTypeRelSampTypeInheritedPrepMeth);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Common.Log.Error(ex);
-            }            
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            finally
+            {
+                conn?.Close();
+            }
         }        
 
         private void AddSampleTypeComponents(SqlConnection conn, Guid sampleTypeId, bool inherited, TreeNode tnode)
@@ -1008,11 +1039,22 @@ namespace DSA_lims
             if (form.ShowDialog() != DialogResult.OK)
                 return;
 
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 UI.PopulateUsers(conn, InstanceStatus.Deleted, gridSysUsers);
             }
-            
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn?.Close();
+            }
+
             SetStatusMessage("Added username " + form.UserName);
         }
 
@@ -1038,9 +1080,20 @@ namespace DSA_lims
             if (form.ShowDialog() != DialogResult.OK)
                 return;
 
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 UI.PopulateUsers(conn, InstanceStatus.Deleted, gridSysUsers);
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn?.Close();
             }
 
             SetStatusMessage("Edited username " + form.UserName);
@@ -1366,9 +1419,17 @@ namespace DSA_lims
 
         private void miLogView_Click(object sender, EventArgs e)
         {
-            string tempFileName = Path.GetTempFileName() + ".txt";
-            File.Copy(DSALogger.LogFile, tempFileName, true);
-            Process.Start(tempFileName);
+            try
+            {
+                string tempFileName = Path.GetTempFileName() + ".txt";
+                File.Copy(DSALogger.LogFile, tempFileName, true);
+                Process.Start(tempFileName);
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);                
+            }
         }
 
         private void miAuditLogView_Click(object sender, EventArgs e)
@@ -1378,8 +1439,10 @@ namespace DSA_lims
 
         private void miSearchView_Click(object sender, EventArgs e)
         {
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 UI.PopulateSampleTypes(treeSampleTypes, cboxSearchSampleType);
                 UI.PopulateComboBoxes(conn, "csp_select_projects_main_short", new[] {
                         new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
@@ -1397,8 +1460,18 @@ namespace DSA_lims
                 cboxSearchMaxShown.DisplayMember = "Name";
                 cboxSearchMaxShown.ValueMember = "Id";
                 cboxSearchMaxShown.SelectedValue = 1000;
-            }   
-                         
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            finally
+            {
+                conn?.Close();
+            }
+
             tabs.SelectedTab = tabSearch;
         }
 
@@ -1420,9 +1493,21 @@ namespace DSA_lims
 
         private void miProjectsView_Click(object sender, EventArgs e)
         {
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 UI.PopulateProjectsMain(conn, gridProjectMain);
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            finally
+            {
+                conn?.Close();
             }
 
             tabs.SelectedTab = tabProjects;
@@ -1869,9 +1954,21 @@ namespace DSA_lims
             if (tnodes.Length < 1)
                 return;
 
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 UI.PopulateSampleComponentsAscending(conn, sampleTypeId, tnodes[0], cboxSampleSampleComponent);
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            finally
+            {
+                conn?.Close();
             }
         }        
 
@@ -1914,12 +2011,24 @@ namespace DSA_lims
             }
 
             Guid projectId = Utils.MakeGuid(cboxSampleProject.SelectedValue);
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 UI.PopulateComboBoxes(conn, "csp_select_projects_sub_short", new[] {
                     new SqlParameter("@project_main_id", projectId),
                     new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
                 }, cboxSampleSubProject);
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            finally
+            {
+                conn?.Close();
             }
 
             lblSampleToolProject.Text = "[Project] " + cboxSampleProject.Text;
@@ -1962,8 +2071,10 @@ namespace DSA_lims
 
             Guid stationId = Utils.MakeGuid(cboxSampleInfoStations.SelectedValue);
 
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 using (SqlDataReader reader = DB.GetDataReader(conn, null, "csp_select_station", CommandType.StoredProcedure, 
                     new SqlParameter("@id", stationId)))
                 {
@@ -1973,7 +2084,16 @@ namespace DSA_lims
                     tbSampleInfoLongitude.Text = reader.GetString("longitude");
                     tbSampleInfoAltitude.Text = reader.GetString("altitude");
                 }
-            }                
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn?.Close();
+            }
         }
 
         private void tbSampleExId_TextChanged(object sender, EventArgs e)
@@ -2000,12 +2120,23 @@ namespace DSA_lims
             }
 
             Guid countyId = Utils.MakeGuid(cboxSampleCounties.SelectedValue);
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 UI.PopulateComboBoxes(conn, "csp_select_municipalities_for_county_short", new[] {
                     new SqlParameter("@county_id", countyId),
                     new SqlParameter("@instance_status_level", InstanceStatus.Active)
                 }, cboxSampleMunicipalities);
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn?.Close();
             }
         }        
 
@@ -2282,16 +2413,28 @@ namespace DSA_lims
                 return;
             }
 
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 int mergeTest = Convert.ToInt32(DB.GetScalar(conn, null, "select count(transform_to_id) from sample where id = '" + sid.ToString() + "'", CommandType.Text));
                 if (mergeTest > 0)
                 {
                     MessageBox.Show("Cannot split, sample has already been merged");
                     return;
                 }
-            }   
-                                     
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            finally
+            {
+                conn?.Close();
+            }
+
             FormSampleSplit form = new FormSampleSplit(sid, treeSampleTypes);
             if (form.ShowDialog() != DialogResult.OK)
                 return;
@@ -2317,8 +2460,10 @@ namespace DSA_lims
             var sampleIdsArr = from item in sampleIds select "'" + item + "'";
             string sampleIdsCsv = string.Join(",", sampleIdsArr);
 
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 int mergeTest = Convert.ToInt32(DB.GetScalar(conn, null, "select count(transform_to_id) from sample where id in (" + sampleIdsCsv + ")", CommandType.Text));
                 if(mergeTest > 0)
                 {
@@ -2334,7 +2479,17 @@ namespace DSA_lims
                     MessageBox.Show("All samples to be merged must have the same laboratory and project");
                     return;
                 }
-            }                
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            finally
+            {
+                conn?.Close();
+            }
 
             FormSampleMerge form = new FormSampleMerge(sampleIdsCsv);
             if (form.ShowDialog() != DialogResult.OK)
@@ -2365,9 +2520,21 @@ namespace DSA_lims
             string sampleName = gridSamples.SelectedRows[0].Cells["number"].Value.ToString();
 
             bool hasLock = false;
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 hasLock = DB.LockSample(conn, sampleId);
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            finally
+            {
+                conn?.Close();
             }
 
             if (!hasLock)
@@ -2382,9 +2549,21 @@ namespace DSA_lims
                 SetStatusMessage("Successfully added sample " + sampleName + " to order " + form.SelectedOrderName);
             }
 
-            using (SqlConnection conn = DB.OpenConnection())
+            conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 DB.UnlockSamples(conn);
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            finally
+            {
+                conn?.Close();
             }
         }
 
@@ -2430,10 +2609,12 @@ namespace DSA_lims
                 return;
             }
 
-            Guid sid = Guid.Parse(gridSamples.SelectedRows[0].Cells["id"].Value.ToString());            
+            Guid sid = Guid.Parse(gridSamples.SelectedRows[0].Cells["id"].Value.ToString());
 
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 sample.LoadFromDB(conn, null, sid);
 
                 if (!PopulatePrepAnal(conn, sample))
@@ -2441,6 +2622,16 @@ namespace DSA_lims
                     MessageBox.Show("Unable to populate sample");
                     return;
                 }
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            finally
+            {
+                conn?.Close();
             }
 
             tabs.SelectedTab = tabPrepAnal;
@@ -2613,12 +2804,24 @@ namespace DSA_lims
             }
 
             Guid projectId = Utils.MakeGuid(cboxSamplesProjects.SelectedValue);
-            using (SqlConnection conn = DB.OpenConnection())
-            {                
+            SqlConnection conn = null;
+            try
+            {
+                conn = DB.OpenConnection();
                 UI.PopulateComboBoxes(conn, "csp_select_projects_sub_short", new[] {
                     new SqlParameter("@project_main_id", projectId),
                     new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
                 }, cboxSamplesProjectsSub);
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            finally
+            {
+                conn?.Close();
             }
 
             btnSamplesSearch.ForeColor = Color.Red;
@@ -2798,9 +3001,20 @@ namespace DSA_lims
             if (form.ShowDialog() == DialogResult.Cancel)
                 return;
 
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 UI.PopulateSampleTypePrepMeth(conn, treeSampleTypes.SelectedNode, lbTypeRelSampTypePrepMeth, lbTypeRelSampTypeInheritedPrepMeth);
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);                
+            }
+            finally
+            {
+                conn?.Close();
             }
         }        
 
@@ -2808,8 +3022,10 @@ namespace DSA_lims
         {
             List<Guid> existingMethods = new List<Guid>();
             Guid sampleTypeId = Guid.Parse(tnode.Name);
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 SqlCommand cmd = new SqlCommand("csp_select_preparation_methods_for_sample_type_short", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@sample_type_id", sampleTypeId, Guid.Empty);
@@ -2835,7 +3051,16 @@ namespace DSA_lims
                         }
                     }
                 }
-            }            
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn?.Close();
+            }
 
             return existingMethods;
         }
@@ -2950,23 +3175,45 @@ namespace DSA_lims
             if (form.ShowDialog() == DialogResult.Cancel)
                 return;
 
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 UI.PopulateAnalMethNuclides(conn, amid, lbTypRelAnalMethNuclides);
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);                
+            }
+            finally
+            {
+                conn?.Close();
             }
         }
 
         public List<Guid> GetNuclidesForAnalysisType(Guid amid)
         {
             List<Guid> existingNuclides = new List<Guid>();
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 using (SqlDataReader reader = DB.GetDataReader(conn, null, "csp_select_nuclides_for_analysis_method", CommandType.StoredProcedure,
                     new SqlParameter("@analysis_method_id", amid)))
                 {
                     while (reader.Read())
                         existingNuclides.Add(reader.GetGuid("id"));
                 }
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn?.Close();
             }
 
             return existingNuclides;
@@ -3008,24 +3255,46 @@ namespace DSA_lims
             if (form.ShowDialog() == DialogResult.Cancel)
                 return;
 
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 UI.PopulatePrepMethAnalMeths(conn, pmid, lbTypRelPrepMethAnalMeth);
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn?.Close();
             }
         }
 
         public List<Guid> GetAnalysisMethodsForPreparationMethod(Guid pmid)
         {
-            List<Guid> existingAnalysisMethods = new List<Guid>();            
+            List<Guid> existingAnalysisMethods = new List<Guid>();
 
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 using (SqlDataReader reader = DB.GetDataReader(conn, null, "csp_select_analysis_methods_for_preparation_method", CommandType.StoredProcedure,
                     new SqlParameter("@preparation_method_id", pmid)))
                 {
                     while (reader.Read())
                         existingAnalysisMethods.Add(reader.GetGuid("id"));
                 }
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn?.Close();
             }
 
             return existingAnalysisMethods;
@@ -3090,10 +3359,12 @@ namespace DSA_lims
             if (form.ShowDialog() != DialogResult.OK)
                 return;
 
-            assignment = new Assignment();            
+            assignment = new Assignment();
 
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 assignment.LoadFromDB(conn, null, form.OrderId);
                 tbOrderName.Text = form.OrderName;
                 PopulateOrder(conn, null, assignment, true);
@@ -3103,6 +3374,16 @@ namespace DSA_lims
                 }, cboxSamplesOrders);
 
                 UI.PopulateOrderYears(conn, cboxOrdersYear);
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            finally
+            {
+                conn?.Close();
             }
 
             tabs.SelectedTab = tabOrder;
@@ -3118,11 +3399,13 @@ namespace DSA_lims
                 return;
             }
 
-            Guid orderId = Utils.MakeGuid(gridOrders.SelectedRows[0].Cells["id"].Value);            
+            Guid orderId = Utils.MakeGuid(gridOrders.SelectedRows[0].Cells["id"].Value);
 
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
-                if(!DB.HasAccessToOrder(conn, null, orderId))
+                conn = DB.OpenConnection();
+                if (!DB.HasAccessToOrder(conn, null, orderId))
                 {
                     MessageBox.Show("You don't have permission to edit this order");
                     return;
@@ -3131,8 +3414,18 @@ namespace DSA_lims
                 assignment.LoadFromDB(conn, null, orderId);
 
                 PopulateOrder(conn, null, assignment, true);
-            }            
-            
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            finally
+            {
+                conn?.Close();
+            }
+
             tabs.SelectedTab = tabOrder;
             tabsOrder.SelectedTab = tabOrderInfo;
         }
@@ -3401,9 +3694,20 @@ order by s.number, p.number
             if (form.ShowDialog() != DialogResult.OK)
                 return;
 
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 PopulateOrderContent(conn, null, assignment);
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);             
+            }
+            finally
+            {
+                conn?.Close();
             }
         }
 
@@ -3545,8 +3849,10 @@ select count(*) from sample s
                 return;
             }
 
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 int nSamples;
                 DB.GetSampleCountForAST(conn, null, ast.Id, out nSamples);
                 if(nSamples > 0)
@@ -3555,14 +3861,36 @@ select count(*) from sample s
                     return;
                 }
             }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            finally
+            {
+                conn?.Close();
+            }
 
             FormOrderAddPrepMeth form = new FormOrderAddPrepMeth(assignment, ast);
             if (form.ShowDialog() != DialogResult.OK)
                 return;
 
-            using (SqlConnection conn = DB.OpenConnection())
+            conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 PopulateOrderContent(conn, null, assignment);
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            finally
+            {
+                conn?.Close();
             }
         }
 
@@ -3598,8 +3926,10 @@ select count(*) from sample s
                 return;
             }
 
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 int nSamples;
                 DB.GetSampleCountForAST(conn, null, ast.Id, out nSamples);
                 if (nSamples > 0)
@@ -3608,14 +3938,35 @@ select count(*) from sample s
                     return;
                 }
             }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            finally
+            {
+                conn?.Close();
+            }
 
             FormOrderAddAnalMeth form = new FormOrderAddAnalMeth(assignment, apm);
             if (form.ShowDialog() != DialogResult.OK)
                 return;
 
-            using (SqlConnection conn = DB.OpenConnection())
+            conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 PopulateOrderContent(conn, null, assignment);
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn?.Close();
             }
         }
 
@@ -4036,12 +4387,24 @@ select count(*) from sample s
                 return;
             }
 
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 UI.PopulateComboBoxes(conn, "csp_select_accounts_for_laboratory_short", new[] {
                     new SqlParameter("@laboratory_id", assignment.LaboratoryId),
                     new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
                 }, cboxOrderResponsible);
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            finally
+            {
+                conn?.Close();
             }
         }
 
@@ -4056,8 +4419,10 @@ select count(*) from sample s
             preparation.ClearDirty();
             analysis.ClearDirty();
 
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 Guid sid, pid;
                 switch (e.Node.Level)
                 {
@@ -4090,6 +4455,16 @@ select count(*) from sample s
                         tabsPrepAnal.SelectedTab = tabPrepAnalAnalysis;
                         break;
                 }
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            finally
+            {
+                conn?.Close();
             }
         }
 
@@ -4661,9 +5036,11 @@ select count(*) from sample s
         }
 
         private void miImportLISFile_Click(object sender, EventArgs e)
-        {    
-            using (SqlConnection conn = DB.OpenConnection())
+        {
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 if (analysis.IsClosed(conn, null))
                 {
                     MessageBox.Show("This analysis belongs to a closed order and can not be updated");
@@ -4675,6 +5052,16 @@ select count(*) from sample s
                     MessageBox.Show("You are not allowed to approve results for this analysis method");
                     return;
                 }
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            finally
+            {
+                conn?.Close();
             }
 
             if (analysis.WorkflowStatusId == WorkflowStatus.Complete)
@@ -4697,9 +5084,21 @@ select count(*) from sample s
 
             analysis = a.Clone();
 
-            using (SqlConnection conn = DB.OpenConnection())
+            conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 PopulateAnalysis(conn, null, analysis, false);
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            finally
+            {
+                conn?.Close();
             }
 
             SetStatusMessage("Imported LIS file " + analysis.ImportFile + " for analysis");
@@ -4837,9 +5236,21 @@ select count(*) from sample s
             if (form.ShowDialog() != DialogResult.OK)
                 return;
 
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 PopulatePrepAnal(conn, sample);
+            }
+            catch(Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            finally
+            {
+                conn?.Close();
             }
         }
 
@@ -5131,14 +5542,26 @@ select count(*) from sample s
         }
 
         private void btnPrepAnalEditResult_Click(object sender, EventArgs e)
-        {            
-            using (SqlConnection conn = DB.OpenConnection())
+        {
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 if (analysis.IsClosed(conn, null))
                 {
                     MessageBox.Show("This analysis belongs to a closed order and can not be updated");
                     return;
                 }
+            }
+            catch(Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            finally
+            {
+                conn?.Close();
             }
 
             if (analysis.WorkflowStatusId == WorkflowStatus.Complete)
@@ -5173,12 +5596,14 @@ select count(*) from sample s
             catch(Exception ex)
             {
                 Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
                 return;
             }
 
             if(cell.Value == null)
             {
                 Common.Log.Error("Analysis result cell is null");
+                MessageBox.Show("Analysis result cell is null");
                 return;
             }
 
@@ -5212,8 +5637,10 @@ select count(*) from sample s
             }            
             
             Dictionary<string, Guid> nuclides = null;
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 if (analysis.IsClosed(conn, null))
                 {
                     MessageBox.Show("This analysis belongs to a closed order and can not be updated");
@@ -5221,6 +5648,16 @@ select count(*) from sample s
                 }
 
                 nuclides = DB.GetNuclideNamesForAnalysisMethod(conn, null, analysis.AnalysisMethodId);
+            }
+            catch(Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            finally
+            {
+                conn?.Close();
             }
             
             foreach (AnalysisResult ar in analysis.Results)            
@@ -5230,9 +5667,20 @@ select count(*) from sample s
             if (form.ShowDialog() != DialogResult.OK)            
                 return;
 
-            using (SqlConnection conn = DB.OpenConnection())
+            conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 PopulateAnalysis(conn, null, analysis, false);
+            }
+            catch(Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn?.Close();
             }
         }
 
@@ -5259,11 +5707,23 @@ select count(*) from sample s
                 return;
             }
 
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 if (!PopulatePrepAnal(conn, sample))
                     return;
-            }            
+            }   
+            catch(Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                return;
+            }   
+            finally
+            {
+                conn?.Close();
+            }      
 
             tabs.SelectedTab = tabPrepAnal;
         }
@@ -5335,8 +5795,12 @@ select count(*) from sample s
         left outer join assignment a on a.id = ast.assignment_id
 	where 1=1
 ";
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+
+            try
             {
+                conn = DB.OpenConnection();
+
                 SqlDataAdapter adapter = new SqlDataAdapter("", conn);
 
                 if (Utils.IsValidGuid(cboxSamplesProjects.SelectedValue))
@@ -5395,6 +5859,16 @@ select count(*) from sample s
 
                 gridSamples.Columns["reference_date"].DefaultCellStyle.Format = Utils.DateFormatNorwegian;
             }
+            catch(Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            finally
+            {
+                conn?.Close();
+            }
 
             SetStatusMessage("Showing " + gridSamples.RowCount + " samples");
 
@@ -5451,8 +5925,12 @@ select distinct
         left outer join assignment a on a.id = ast.assignment_id	
 where s.number = @sample_number
 ";
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+
+            try
             {
+                conn = DB.OpenConnection();
+
                 SqlDataAdapter adapter = new SqlDataAdapter(query, conn);                
 
                 adapter.SelectCommand.CommandText = query;
@@ -5479,6 +5957,16 @@ where s.number = @sample_number
                 gridSamples.Columns["merge_from"].HeaderText = "Merge from";
 
                 gridSamples.Columns["reference_date"].DefaultCellStyle.Format = Utils.DateFormatNorwegian;
+            }
+            catch(Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            finally
+            {
+                conn?.Close();
             }
 
             ActiveControl = tbSamplesLookup;
@@ -5521,8 +6009,10 @@ where s.number = @sample_number
         inner join workflow_status wf on a.workflow_status_id = wf.id
 	where 1 = 1
 ";
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 SqlDataAdapter adapter = new SqlDataAdapter("", conn);
 
                 if (Utils.IsValidGuid(cboxOrdersLaboratory.SelectedValue))
@@ -5568,6 +6058,16 @@ where s.number = @sample_number
                 gridOrders.Columns["locked_name"].HeaderText = "Locked by";
 
                 gridOrders.Columns["deadline"].DefaultCellStyle.Format = Utils.DateFormatNorwegian;
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            finally
+            {
+                conn?.Close();
             }
 
             SetStatusMessage("Showing " + gridOrders.RowCount + " orders");
@@ -5626,14 +6126,25 @@ where s.number = @sample_number
 
             if (form.HasNewVersion)
             {
-                using (SqlConnection conn = DB.OpenConnection())
+                SqlConnection conn = null;
+                try
                 {
+                    conn = DB.OpenConnection();
                     string attachmentName = "Report-" + assignment.Name + "-" + assignment.AnalysisReportVersion;
                     DB.AddAttachment(conn, null, "assignment", assignment.Id, attachmentName, ".pdf", form.ReportData);
 
                     UI.PopulateAttachments(conn, null, "assignment", assignment.Id, gridOrderAttachments);
 
                     SetStatusMessage("Added order attachment: " + attachmentName);
+                }
+                catch (Exception ex)
+                {
+                    Common.Log.Error(ex);
+                    MessageBox.Show(ex.Message);
+                }
+                finally
+                {
+                    conn?.Close();
                 }
             }            
         }
@@ -5724,8 +6235,10 @@ where s.number = @sample_number
 
             string query = "delete from account_x_role where account_id = @account_id and role_id = @role_id";
 
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 SqlCommand cmd = new SqlCommand(query, conn);
                 foreach(Lemma<Guid, string> l in lbSysUsersRoles.SelectedItems)
                 {
@@ -5736,6 +6249,16 @@ where s.number = @sample_number
                 }
 
                 UI.PopulateRoles(conn, userId, lbSysUsersRoles);
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            finally
+            {
+                conn?.Close();
             }
 
             string user = gridSysUsers.SelectedRows[0].Cells["name"].Value.ToString();
@@ -5847,13 +6370,25 @@ where s.number = @sample_number
 
         private void btnSamplePrintSampleLabel_Click(object sender, EventArgs e)
         {
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 if (!sample.HasRequiredFields())
                 {
                     MessageBox.Show("Can not print label. Required fields for this sample must be saved first");
                     return;
                 }
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            finally
+            {
+                conn?.Close();
             }
 
             List<Guid> sampleIds = new List<Guid>();
@@ -5904,15 +6439,26 @@ where s.number = @sample_number
         {
             FormScan form = new FormScan(Common.Settings);
             if (form.ShowDialog() != DialogResult.OK)
-                return;            
+                return;
 
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 DB.AddAttachment(conn, null, "sample", sample.Id, form.DocumentName, ".pdf", form.PdfData);
 
                 UI.PopulateAttachments(conn, null, "sample", sample.Id, gridSampleAttachments);
 
                 SetStatusMessage("Added sample attachment: " + form.DocumentName);
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);             
+            }
+            finally
+            {
+                conn?.Close();
             }
         }        
 
@@ -5922,13 +6468,24 @@ where s.number = @sample_number
             if (form.ShowDialog() != DialogResult.OK)
                 return;
 
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 DB.AddAttachment(conn, null, "assignment", assignment.Id, form.DocumentName, ".pdf", form.PdfData);
 
                 UI.PopulateAttachments(conn, null, "assignment", assignment.Id, gridOrderAttachments);
 
                 SetStatusMessage("Added order attachment: " + form.DocumentName);
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);             
+            }
+            finally
+            {
+                conn?.Close();
             }
         }
 
@@ -5938,15 +6495,26 @@ where s.number = @sample_number
 
             FormScan form = new FormScan(Common.Settings);
             if (form.ShowDialog() != DialogResult.OK)
-                return;            
+                return;
 
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 DB.AddAttachment(conn, null, "preparation", prepId, form.DocumentName, ".pdf", form.PdfData);
 
                 UI.PopulateAttachments(conn, null, "preparation", prepId, gridPrepAnalPrepAttachments);
 
                 SetStatusMessage("Added preparation attachment: " + form.DocumentName);
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);             
+            }
+            finally
+            {
+                conn?.Close();
             }
         }
 
@@ -5956,15 +6524,26 @@ where s.number = @sample_number
 
             FormScan form = new FormScan(Common.Settings);
             if (form.ShowDialog() != DialogResult.OK)
-                return;            
+                return;
 
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 DB.AddAttachment(conn, null, "analysis", analId, form.DocumentName, ".pdf", form.PdfData);
 
                 UI.PopulateAttachments(conn, null, "analysis", analId, gridPrepAnalAnalAttachments);
 
                 SetStatusMessage("Added analysis attachment: " + form.DocumentName);
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);             
+            }
+            finally
+            {
+                conn?.Close();
             }
         }
 
@@ -5982,13 +6561,24 @@ where s.number = @sample_number
             if (form.ShowDialog() != DialogResult.OK)
                 return;
 
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 DB.AddAttachment(conn, null, "project_sub", psid, form.DocumentName, ".pdf", form.PdfData);
 
                 UI.PopulateAttachments(conn, null, "project_sub", psid, gridProjectAttachments);
 
                 SetStatusMessage("Added project attachment: " + form.DocumentName);
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);             
+            }
+            finally
+            {
+                conn?.Close();
             }
         }
 
@@ -6002,11 +6592,22 @@ where s.number = @sample_number
 
             Guid psid = Guid.Parse(gridProjectSub.SelectedRows[0].Cells["id"].Value.ToString());
 
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 UI.PopulateUsersForProjectSub(conn, null, psid, gridProjectsUsers);
 
                 UI.PopulateAttachments(conn, null, "project_sub", psid, gridProjectAttachments);
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn?.Close();
             }
         }
 
@@ -6055,8 +6656,10 @@ where s.number = @sample_number
                 sampleIds.Add(sid);
             }
 
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 foreach (Guid sid in sampleIds)
                 {
                     if (!Sample.HasRequiredFields(conn, null, sid))
@@ -6065,6 +6668,16 @@ where s.number = @sample_number
                         return;
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            finally
+            {
+                conn?.Close();
             }
 
             FormPrintSampleLabel form = new FormPrintSampleLabel(Common.Settings, sampleIds);
@@ -6082,13 +6695,24 @@ where s.number = @sample_number
             string fileExt = Path.GetExtension(dialog.FileName);
             byte[] content = File.ReadAllBytes(dialog.FileName);
 
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 DB.AddAttachment(conn, null, "sample", sample.Id, fileName, fileExt, content);
 
                 UI.PopulateAttachments(conn, null, "sample", sample.Id, gridSampleAttachments);
 
                 SetStatusMessage("Added sample attachment: " + fileName);
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn?.Close();
             }
         }
 
@@ -6103,13 +6727,24 @@ where s.number = @sample_number
             string fileExt = Path.GetExtension(dialog.FileName);
             byte[] content = File.ReadAllBytes(dialog.FileName);
 
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 DB.AddAttachment(conn, null, "assignment", assignment.Id, fileName, fileExt, content);
 
                 UI.PopulateAttachments(conn, null, "assignment", assignment.Id, gridOrderAttachments);
 
                 SetStatusMessage("Added order attachment: " + fileName);
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);             
+            }
+            finally
+            {
+                conn?.Close();
             }
         }
 
@@ -6132,13 +6767,24 @@ where s.number = @sample_number
             string fileExt = Path.GetExtension(dialog.FileName);
             byte[] content = File.ReadAllBytes(dialog.FileName);
 
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 DB.AddAttachment(conn, null, "project_sub", pid, fileName, fileExt, content);
 
                 UI.PopulateAttachments(conn, null, "project_sub", pid, gridProjectAttachments);
 
                 SetStatusMessage("Added project attachment: " + fileName);
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);             
+            }
+            finally
+            {
+                conn?.Close();
             }
         }
 
@@ -6167,13 +6813,24 @@ where s.number = @sample_number
             string fileExt = Path.GetExtension(dialog.FileName);
             byte[] content = File.ReadAllBytes(dialog.FileName);
 
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 DB.AddAttachment(conn, null, "preparation", pid, fileName, fileExt, content);
 
                 UI.PopulateAttachments(conn, null, "preparation", pid, gridPrepAnalPrepAttachments);
 
                 SetStatusMessage("Added preparation attachment: " + fileName);
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn?.Close();
             }
         }
 
@@ -6202,13 +6859,24 @@ where s.number = @sample_number
             string fileExt = Path.GetExtension(dialog.FileName);
             byte[] content = File.ReadAllBytes(dialog.FileName);
 
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 DB.AddAttachment(conn, null, "analysis", aid, fileName, fileExt, content);
 
                 UI.PopulateAttachments(conn, null, "analysis", aid, gridPrepAnalAnalAttachments);
 
                 SetStatusMessage("Added analysis attachment: " + fileName);
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn?.Close();
             }
         }
 
@@ -6233,11 +6901,22 @@ where s.number = @sample_number
 
             Guid analId = Guid.Parse(treePrepAnal.SelectedNode.Name);
             Guid attId = Guid.Parse(gridPrepAnalAnalAttachments.SelectedRows[0].Cells["id"].Value.ToString());
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 DB.DeleteAttachment(conn, null, "analysis", attId);
 
                 UI.PopulateAttachments(conn, null, "analysis", analId, gridPrepAnalAnalAttachments);
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn?.Close();
             }
         }
 
@@ -6262,11 +6941,22 @@ where s.number = @sample_number
 
             Guid prepId = Guid.Parse(treePrepAnal.SelectedNode.Name);
             Guid attId = Guid.Parse(gridPrepAnalPrepAttachments.SelectedRows[0].Cells["id"].Value.ToString());
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 DB.DeleteAttachment(conn, null, "preparation", attId);
 
                 UI.PopulateAttachments(conn, null, "preparation", prepId, gridPrepAnalPrepAttachments);
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn?.Close();
             }
         }
 
@@ -6291,11 +6981,22 @@ where s.number = @sample_number
 
             Guid projId = Guid.Parse(gridProjectSub.SelectedRows[0].Cells["id"].Value.ToString());
             Guid attId = Guid.Parse(gridProjectAttachments.SelectedRows[0].Cells["id"].Value.ToString());
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 DB.DeleteAttachment(conn, null, "project_sub", attId);
 
                 UI.PopulateAttachments(conn, null, "project_sub", projId, gridProjectAttachments);
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn?.Close();
             }
         }
 
@@ -6313,11 +7014,22 @@ where s.number = @sample_number
                 return;
 
             Guid attId = Guid.Parse(gridOrderAttachments.SelectedRows[0].Cells["id"].Value.ToString());
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 DB.DeleteAttachment(conn, null, "assignment", attId);
 
                 UI.PopulateAttachments(conn, null, "assignment", assignment.Id, gridOrderAttachments);
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn?.Close();
             }
         }
 
@@ -6335,11 +7047,22 @@ where s.number = @sample_number
                 return;
 
             Guid attId = Guid.Parse(gridSampleAttachments.SelectedRows[0].Cells["id"].Value.ToString());
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 DB.DeleteAttachment(conn, null, "sample", attId);
 
                 UI.PopulateAttachments(conn, null, "sample", sample.Id, gridSampleAttachments);
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn?.Close();
             }
         }
 
@@ -6622,9 +7345,20 @@ where s.number = @sample_number
                 analysis.Results.RemoveAll(x => x.Id == id);            
             }
 
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 PopulateAnalysis(conn, null, analysis, false);
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn?.Close();
             }
 
             analysis.Dirty = true;
@@ -6642,10 +7376,22 @@ where s.number = @sample_number
             if (res != DialogResult.Yes)
                 return;
 
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 analysis.LoadFromDB(conn, null, analysis.Id);
                 PopulateAnalysis(conn, null, analysis, true);
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            finally
+            {
+                conn?.Close();
             }
 
             SetStatusMessage("Changes discarded for analysis " + preparation.Number + "/" + analysis.Number);
@@ -6663,10 +7409,22 @@ where s.number = @sample_number
             if (res != DialogResult.Yes)
                 return;
 
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 preparation.LoadFromDB(conn, null, preparation.Id);
                 PopulatePreparation(conn, null, preparation, true);
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            finally
+            {
+                conn?.Close();
             }
 
             SetStatusMessage("Changes discarded for preparation " + preparation.Number);
@@ -6680,8 +7438,10 @@ where s.number = @sample_number
                 return;
             }
 
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 SqlCommand cmd = new SqlCommand("update sample set locked_id = @locked_id where id = @id", conn);
 
                 foreach (DataGridViewRow row in gridSamples.SelectedRows)
@@ -6695,6 +7455,15 @@ where s.number = @sample_number
 
                 PopulateSamples();
             }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn?.Close();
+            }
         }
 
         private void miOrdersUnlock_Click(object sender, EventArgs e)
@@ -6705,8 +7474,10 @@ where s.number = @sample_number
                 return;
             }
 
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 SqlCommand cmd = new SqlCommand("update assignment set locked_id = @locked_id where id = @id", conn);
 
                 foreach (DataGridViewRow row in gridOrders.SelectedRows)
@@ -6719,6 +7490,15 @@ where s.number = @sample_number
                 }
 
                 PopulateOrders();
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn?.Close();
             }
         }
 
@@ -6829,14 +7609,26 @@ where s.number = @sample_number
         {            
             lblAuditLogTitle.Text = title;
 
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 string query = "select create_date as 'Date', operation as 'Operation', comment as 'Comment', value as 'Object' from audit_log where source_table = @table and source_id = @id order by create_date desc";
 
                 gridAuditLog.DataSource = DB.GetDataTable(conn, null, query, CommandType.Text, new[] {
                     new SqlParameter("@table", table),
                     new SqlParameter("@id", id),
                 });
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            finally
+            {
+                conn?.Close();
             }
 
             tabs.SelectedTab = tabAuditLog;
@@ -6854,10 +7646,22 @@ where s.number = @sample_number
             if (res != DialogResult.Yes)
                 return;
 
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 assignment.LoadFromDB(conn, null, assignment.Id);
                 PopulateOrder(conn, null, assignment, true);
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            finally
+            {
+                conn?.Close();
             }
 
             SetStatusMessage("Changes discarded for order " + assignment.Name);
@@ -6991,6 +7795,7 @@ where s.number = @sample_number
             {
                 Common.Log.Error(ex);
                 MessageBox.Show(ex.Message);
+                return;
             }
             finally
             {
@@ -7057,9 +7862,20 @@ where s.number = @sample_number
             if (form.ShowDialog() != DialogResult.OK)
                 return;
 
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 UI.PopulateLabPrepMeths(conn, lid, gridSysLabPrepMeth);
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn?.Close();
             }
         }
 
@@ -7073,11 +7889,22 @@ where s.number = @sample_number
             }
 
             Guid lid = Guid.Parse(gridSysLab.SelectedRows[0].Cells["id"].Value.ToString());
-            
-            using (SqlConnection conn = DB.OpenConnection())
-            {                
+
+            SqlConnection conn = null;
+            try
+            {
+                conn = DB.OpenConnection();
                 UI.PopulateLabPrepMeths(conn, lid, gridSysLabPrepMeth);
                 UI.PopulateLabAnalMeths(conn, lid, gridSysLabAnalMeth);
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn?.Close();
             }
         }
 
@@ -7156,9 +7983,20 @@ where s.number = @sample_number
             if (form.ShowDialog() != DialogResult.OK)
                 return;
 
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 UI.PopulateLabAnalMeths(conn, lid, gridSysLabAnalMeth);
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn?.Close();
             }
         }
 
@@ -7177,8 +8015,10 @@ where s.number = @sample_number
                 return;
             }
 
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 SqlCommand cmd = new SqlCommand("delete from laboratory_x_analysis_method where laboratory_id = @lab_id and analysis_method_id = @am_id", conn);
                 foreach (DataGridViewRow row in gridSysLabAnalMeth.SelectedRows)
                 {
@@ -7191,6 +8031,15 @@ where s.number = @sample_number
                 }
 
                 UI.PopulateLabAnalMeths(conn, lid, gridSysLabAnalMeth);
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn?.Close();
             }
         }
 
@@ -7208,9 +8057,20 @@ where s.number = @sample_number
             if (form.ShowDialog() != DialogResult.OK)
                 return;
 
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 UI.PopulateUserAnalMeths(conn, uid, gridSysUsersAnalMeth);
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn?.Close();
             }
 
             string user = gridSysUsers.SelectedRows[0].Cells["name"].Value.ToString();
@@ -7224,8 +8084,10 @@ where s.number = @sample_number
 
             Guid uid = Utils.MakeGuid(gridSysUsers.SelectedRows[0].Cells["id"].Value);
 
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 SqlCommand cmd = new SqlCommand("delete from account_x_analysis_method where account_id = @acc_id and analysis_method_id = @am_id", conn);
                 foreach (DataGridViewRow row in gridSysUsersAnalMeth.SelectedRows)
                 {
@@ -7237,6 +8099,16 @@ where s.number = @sample_number
                 }
 
                 UI.PopulateUserAnalMeths(conn, uid, gridSysUsersAnalMeth);
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            finally
+            {
+                conn?.Close();
             }
 
             string user = gridSysUsers.SelectedRows[0].Cells["name"].Value.ToString();
@@ -7486,7 +8358,6 @@ select ast.id from assignment_sample_type ast
                 trans?.Rollback();
                 Common.Log.Error(ex);
                 MessageBox.Show(ex.Message);
-                return;
             }
             finally
             {
@@ -7534,9 +8405,21 @@ select count(*) from sample s
     inner join assignment_sample_type ast on ast.id = sxast.assignment_sample_type_id and ast.id = @astid    
 ";
             int n;
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 n = (int)DB.GetScalar(conn, null, query, CommandType.Text, new SqlParameter("@astid", astId));
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            finally
+            {
+                conn?.Close();
             }
 
             FormSelectAstCount form = new FormSelectAstCount(tnode.Text, n);
@@ -7546,11 +8429,22 @@ select count(*) from sample s
             AssignmentSampleType ast = assignment.SampleTypes.Find(x => x.Id == astId);
             if(ast != null)
             {
-                using (SqlConnection conn = DB.OpenConnection())
+                conn = null;
+                try
                 {
+                    conn = DB.OpenConnection();
                     ast.SampleCount = form.SelectedCount;
                     ast.Dirty = true;
                     PopulateOrderContent(conn, null, assignment);
+                }
+                catch (Exception ex)
+                {
+                    Common.Log.Error(ex);
+                    MessageBox.Show(ex.Message);
+                }
+                finally
+                {
+                    conn?.Close();
                 }
             }            
         }
@@ -7571,8 +8465,10 @@ select count(*) from sample s
 
         private void tabsTypeRel_SelectedIndexChanged(object sender, EventArgs e)
         {
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 if (tabsTypeRel.SelectedTab == tabTypeRelationsSampleTypes)
                 {
                     UI.PopulateSampleTypes(conn, treeSampleTypes);
@@ -7585,6 +8481,15 @@ select count(*) from sample s
                 {
                     UI.PopulateAnalysisMethods(conn, gridTypeRelAnalMeth);
                 }
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn?.Close();
             }
         }
 
@@ -7605,14 +8510,26 @@ select count(*) from sample s
             Guid aid = Utils.MakeGuid(gridOrders.SelectedRows[0].Cells["id"].Value);
             string aname = gridOrders.SelectedRows[0].Cells["name"].Value.ToString();
 
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 Guid aLabId = Assignment.GetLaboratoryId(conn, null, aid);
                 if(aLabId != Common.LabId)
                 {
                     MessageBox.Show("Can not assign users to this order. You don't belong to the same laboratory");
                     return;
                 }
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            finally
+            {
+                conn?.Close();
             }
 
             FormOrdersAssignUsers form = new FormOrdersAssignUsers(aid, aname);
@@ -7643,9 +8560,20 @@ select count(*) from sample s
             if (form.ShowDialog() != DialogResult.OK)
                 return;
 
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 UI.PopulateUsersForProjectSub(conn, null, pid, gridProjectsUsers);
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn?.Close();
             }
         }
 
@@ -7671,8 +8599,10 @@ select count(*) from sample s
 
             Guid psid = Utils.MakeGuid(gridProjectSub.SelectedRows[0].Cells["id"].Value);
 
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 SqlCommand cmd = new SqlCommand("delete from project_sub_x_account where project_sub_id = @psid and account_id = @aid", conn);
                 foreach(DataGridViewRow row in gridProjectsUsers.SelectedRows)
                 {
@@ -7684,6 +8614,15 @@ select count(*) from sample s
                 }
             
                 UI.PopulateUsersForProjectSub(conn, null, psid, gridProjectsUsers);
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn?.Close();
             }
         }
 
@@ -7722,8 +8661,10 @@ from analysis_result ar
 where ar.instance_status_id < 2
 ";
 
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 SqlDataAdapter adapter = new SqlDataAdapter("", conn);                
 
                 if (Utils.IsValidGuid(cboxSearchSampleType.SelectedValue))
@@ -7796,7 +8737,16 @@ where ar.instance_status_id < 2
 
                 searchIsDirty = false;
                 SetStatusMessage("Search showing " + dt.Rows.Count + " results");
-            }            
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn?.Close();
+            }
         }
 
         private void btnSearchAssignedWork_Click(object sender, EventArgs e)
@@ -7879,9 +8829,20 @@ where ar.instance_status_id < 2
             if (form.ShowDialog() != DialogResult.OK)
                 return;
 
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 UI.PopulateSampleParameterNames(conn, gridSysSampParamNames);
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn?.Close();
             }
 
             SetStatusMessage("Sample parameter created");
@@ -7907,9 +8868,20 @@ where ar.instance_status_id < 2
             if (form.ShowDialog() != DialogResult.OK)
                 return;
 
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 UI.PopulateSampleParameterNames(conn, gridSysSampParamNames);
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn?.Close();
             }
 
             SetStatusMessage("Sample parameter updated");
@@ -8076,8 +9048,10 @@ where ar.instance_status_id < 2
 
             Guid sid = Guid.Parse(tnode.Name);
 
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 sample.LoadFromDB(conn, null, sid);
 
                 if (!PopulatePrepAnal(conn, sample))
@@ -8085,6 +9059,16 @@ where ar.instance_status_id < 2
                     MessageBox.Show("Unable to populate sample");
                     return;
                 }
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            finally
+            {
+                conn?.Close();
             }
 
             tabs.SelectedTab = tabPrepAnal;
@@ -8135,13 +9119,25 @@ where ar.instance_status_id < 2
             }
 
             Guid projectId = Utils.MakeGuid(cboxSearchProject.SelectedValue);
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 UI.PopulateComboBoxes(conn, "csp_select_projects_sub_short", new[] {
                     new SqlParameter("@project_main_id", projectId),
                     new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
                 }, cboxSearchProjectSub);
             }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn?.Close();
+            }
+
             searchIsDirty = true;
         }
 
@@ -8152,14 +9148,22 @@ where ar.instance_status_id < 2
 
         private void miManual_Click(object sender, EventArgs e)
         {
-            string manual = Common.InstallationDirectory + Path.DirectorySeparatorChar + "DSA-Lims_MANUAL.pdf";
-            if(!File.Exists(manual))
+            try
             {
-                MessageBox.Show("Unable to find manual file: " + manual);
-                return;
-            }
+                string manual = Common.InstallationDirectory + Path.DirectorySeparatorChar + "DSA-Lims_MANUAL.pdf";
+                if (!File.Exists(manual))
+                {
+                    MessageBox.Show("Unable to find manual file: " + manual);
+                    return;
+                }
 
-            Process.Start(manual);
+                Process.Start(manual);
+            }
+            catch(Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }

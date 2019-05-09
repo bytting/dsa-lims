@@ -25,7 +25,6 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DSA_lims
@@ -44,10 +43,16 @@ namespace DSA_lims
             PreparationMethodName = preparationMethodName;
             ExistingAnalysisMethods = existingAnalysisMethods;
 
-            tbPreparationMethod.Text = PreparationMethodName;
+            tbPreparationMethod.Text = PreparationMethodName;            
+        }
 
-            using (SqlConnection conn = DB.OpenConnection())
+        private void FormPrepMethXAnalMeth_Load(object sender, EventArgs e)
+        {
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
+
                 var analMethArr = from item in ExistingAnalysisMethods select "'" + item + "'";
                 string sanalmeth = string.Join(",", analMethArr);
 
@@ -67,6 +72,17 @@ namespace DSA_lims
                     }
                 }
             }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                DialogResult = DialogResult.Abort;
+                Close();
+            }
+            finally
+            {
+                conn?.Close();
+            }
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -79,9 +95,14 @@ namespace DSA_lims
         {
             if (lbAnalysisMethods.SelectedItems.Count > 0)
             {
-                using (SqlConnection conn = DB.OpenConnection())
+                SqlConnection conn = null;
+                SqlTransaction trans = null;
+                try
                 {
-                    SqlCommand cmd = new SqlCommand("insert into preparation_method_x_analysis_method values(@preparation_method_id, @analysis_method_id)", conn);
+                    conn = DB.OpenConnection();
+                    trans = conn.BeginTransaction();
+
+                    SqlCommand cmd = new SqlCommand("insert into preparation_method_x_analysis_method values(@preparation_method_id, @analysis_method_id)", conn, trans);
 
                     foreach (object item in lbAnalysisMethods.SelectedItems)
                     {
@@ -92,11 +113,23 @@ namespace DSA_lims
                         cmd.Parameters.AddWithValue("@analysis_method_id", selItem.Id, Guid.Empty);
                         cmd.ExecuteNonQuery();
                     }
+                    trans.Commit();
+                }
+                catch (Exception ex)
+                {
+                    trans?.Rollback();
+                    Common.Log.Error(ex);
+                    MessageBox.Show(ex.Message);
+                    return;
+                }
+                finally
+                {
+                    conn?.Close();
                 }
             }
 
             DialogResult = DialogResult.OK;
             Close();
-        }
+        }        
     }
 }

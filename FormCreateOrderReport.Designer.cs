@@ -80,6 +80,7 @@
             this.Name = "FormCreateOrderReport";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "DSA-Lims - Create order report";
+            this.Load += new System.EventHandler(this.FormCreateOrderReport_Load);
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 

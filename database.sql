@@ -4756,3 +4756,11 @@ alter table analysis_method_x_nuclide add foreign key (analysis_method_id) refer
 alter table analysis_method_x_nuclide add foreign key (nuclide_id) references nuclide(id);
 
 go
+
+/*===========================================================================*/
+/* unique key constraints */
+
+alter table assignment add constraint U_Name unique(name)
+alter table sample add constraint U_Number unique(number)
+
+go

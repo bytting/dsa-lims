@@ -123,6 +123,7 @@
             this.Name = "FormAnalMethXNuclide";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "DSA-Lims - Add nuclides";
+            this.Load += new System.EventHandler(this.FormAnalMethXNuclide_Load);
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -22,12 +22,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Newtonsoft.Json;
 
 namespace DSA_lims
 {
@@ -48,38 +44,55 @@ namespace DSA_lims
         public FormSampleComponent(Guid sampleTypeId, string sampleTypeName)
         {
             InitializeComponent();
-
             tbSampleType.Text = sampleTypeName;
-            p["sample_type_id"] = sampleTypeId;
-            ActiveControl = tbName;
+            p["sample_type_id"] = sampleTypeId;            
         }
 
         public FormSampleComponent(Guid sampleTypeId, string sampleTypeName, Guid sampleComponentId)
         {
             InitializeComponent();
-
             tbSampleType.Text = sampleTypeName;
-            p["id"] = sampleComponentId;
+            p["id"] = sampleComponentId;                        
+        }
 
-            using (SqlConnection conn = DB.OpenConnection())
+        private void FormSampleComponent_Load(object sender, EventArgs e)
+        {
+            SqlConnection conn = null;
+            try
             {
-                SqlCommand cmd = new SqlCommand("csp_select_sample_component", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@id", p["id"]);
-                using (SqlDataReader reader = cmd.ExecuteReader())
-                {
-                    if (!reader.HasRows)
-                        throw new Exception("Sample component with ID " + p["id"] + " was not found");
+                conn = DB.OpenConnection();
 
-                    reader.Read();
+                if (p.ContainsKey("id"))
+                {                    
+                    SqlCommand cmd = new SqlCommand("csp_select_sample_component", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@id", p["id"]);
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (!reader.HasRows)
+                            throw new Exception("Sample component with ID " + p["id"] + " was not found");
 
-                    tbName.Text = reader.GetString("name");
-                    p["sample_type_id"] = reader.GetGuid("sample_type_id");
-                    p["create_date"] = reader["create_date"];
-                    p["create_id"] = reader["create_id"];
-                    p["update_date"] = reader["update_date"];
-                    p["update_id"] = reader["update_id"];
+                        reader.Read();
+
+                        tbName.Text = reader.GetString("name");
+                        p["sample_type_id"] = reader.GetGuid("sample_type_id");
+                        p["create_date"] = reader["create_date"];
+                        p["create_id"] = reader["create_id"];
+                        p["update_date"] = reader["update_date"];
+                        p["update_id"] = reader["update_id"];
+                    }                
                 }
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                DialogResult = DialogResult.Abort;
+                Close();
+            }
+            finally
+            {
+                conn?.Close();
             }
 
             ActiveControl = tbName;
@@ -138,7 +151,8 @@ namespace DSA_lims
             {
                 success = false;
                 transaction?.Rollback();
-                Common.Log.Error(ex);                
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
             }
             finally
             {
@@ -181,6 +195,6 @@ namespace DSA_lims
             cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
             cmd.Parameters.AddWithValue("@update_id", p["update_id"]);
             cmd.ExecuteNonQuery();                        
-        }
+        }        
     }
 }

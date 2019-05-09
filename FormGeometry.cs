@@ -22,11 +22,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
-using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using Newtonsoft.Json;
 
 namespace DSA_lims
 {
@@ -47,52 +44,67 @@ namespace DSA_lims
         public FormGeometry()
         {
             InitializeComponent();
-
-            Text = "New geometry";
-            using (SqlConnection conn = DB.OpenConnection())
-            {
-                cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status", false);
-            }
-            cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
+            Text = "New geometry";            
         }
 
         public FormGeometry(Guid gid)
         {
-            InitializeComponent();
-            
+            InitializeComponent();            
             Text = "Edit geometry";
-            p["id"] = gid;
-
-            using (SqlConnection conn = DB.OpenConnection())
-            {
-                cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status", false);
-
-                SqlCommand cmd = new SqlCommand("csp_select_preparation_geometry", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@id", p["id"]);
-                using (SqlDataReader reader = cmd.ExecuteReader())
-                {
-                    if (!reader.HasRows)
-                        throw new Exception("Geometry with ID " + p["id"] + " was not found");
-
-                    reader.Read();
-                    tbName.Text = reader.GetString("name");
-                    tbMinFillHeight.Text = reader.GetDouble("min_fill_height_mm").ToString();
-                    tbMaxFillHeight.Text = reader.GetDouble("max_fill_height_mm").ToString();
-                    cboxInstanceStatus.SelectedValue = reader.GetInt32("instance_status_id");
-                    tbComment.Text = reader.GetString("comment");
-                    p["create_date"] = reader.GetDateTime("create_date");
-                    p["create_id"] = reader.GetGuid("create_id");
-                    p["update_date"] = reader.GetDateTime("update_date");
-                    p["update_id"] = reader.GetGuid("update_id");
-                }
-            }
+            p["id"] = gid;            
         }
 
         private void FormGeometry_Load(object sender, EventArgs e)
         {
             tbMinFillHeight.KeyPress += CustomEvents.Numeric_KeyPress;
             tbMaxFillHeight.KeyPress += CustomEvents.Numeric_KeyPress;
+
+            SqlConnection conn = null;
+            try
+            {
+                conn = DB.OpenConnection();
+
+                if (p.ContainsKey("id"))
+                {                    
+                    cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status", false);
+
+                    SqlCommand cmd = new SqlCommand("csp_select_preparation_geometry", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@id", p["id"]);
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (!reader.HasRows)
+                            throw new Exception("Geometry with ID " + p["id"] + " was not found");
+
+                        reader.Read();
+                        tbName.Text = reader.GetString("name");
+                        tbMinFillHeight.Text = reader.GetDouble("min_fill_height_mm").ToString();
+                        tbMaxFillHeight.Text = reader.GetDouble("max_fill_height_mm").ToString();
+                        cboxInstanceStatus.SelectedValue = reader.GetInt32("instance_status_id");
+                        tbComment.Text = reader.GetString("comment");
+                        p["create_date"] = reader.GetDateTime("create_date");
+                        p["create_id"] = reader.GetGuid("create_id");
+                        p["update_date"] = reader.GetDateTime("update_date");
+                        p["update_id"] = reader.GetGuid("update_id");
+                    }                
+                }
+                else
+                {                    
+                    cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status", false);                
+                    cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
+                }
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                DialogResult = DialogResult.Abort;
+                Close();
+            }
+            finally
+            {
+                conn?.Close();
+            }
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -168,7 +180,8 @@ namespace DSA_lims
             {
                 success = false;
                 transaction?.Rollback();
-                Common.Log.Error(ex);                
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
             }
             finally
             {

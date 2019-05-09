@@ -22,8 +22,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
-using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
@@ -42,9 +40,22 @@ namespace DSA_lims
 
         private void FormUserXAnalMeth_Load(object sender, EventArgs e)
         {
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 UI.PopulateAnalysisMethods(conn, gridAnalMeth);
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                DialogResult = DialogResult.Abort;
+                Close();
+            }
+            finally
+            {
+                conn?.Close();
             }
         }
 
@@ -85,6 +96,7 @@ namespace DSA_lims
                 trans?.Rollback();
                 Common.Log.Error(ex);
                 MessageBox.Show(ex.Message);
+                return;
             }
             finally
             {

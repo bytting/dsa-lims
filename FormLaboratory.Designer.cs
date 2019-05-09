@@ -330,6 +330,7 @@
             this.Name = "FormLaboratory";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "DSA-Lims - Laboratory";
+            this.Load += new System.EventHandler(this.FormLaboratory_Load);
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.picLaboratoryLogo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picAccreditedLogo)).EndInit();

@@ -262,6 +262,7 @@
             this.Name = "FormSelectOrder";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "DSA-Lims - Select order";
+            this.Load += new System.EventHandler(this.FormSelectOrder_Load);
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.gridOrders)).EndInit();
             this.panel2.ResumeLayout(false);

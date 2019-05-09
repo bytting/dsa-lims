@@ -147,6 +147,7 @@
             this.Name = "FormSamplingMeth";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "FormSamplingMeth";
+            this.Load += new System.EventHandler(this.FormSamplingMeth_Load);
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();

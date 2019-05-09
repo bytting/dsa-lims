@@ -42,14 +42,27 @@ namespace DSA_lims
 
         private void FormSelectCustomer_Load(object sender, EventArgs e)
         {
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 UI.PopulateCustomers(conn, mInstanceStatusLevel, gridCustomers);
 
                 gridCustomers.Columns["company_email"].Visible = false;
                 gridCustomers.Columns["company_phone"].Visible = false;
                 gridCustomers.Columns["company_address"].Visible = false;
                 gridCustomers.Columns["instance_status_name"].Visible = false;
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                DialogResult = DialogResult.Abort;
+                Close();
+            }
+            finally
+            {
+                conn?.Close();
             }
         }
 

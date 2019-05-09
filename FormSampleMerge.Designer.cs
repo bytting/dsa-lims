@@ -132,6 +132,7 @@
             this.Name = "FormSampleMerge";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "DSA-Lims - Merge samples";
+            this.Load += new System.EventHandler(this.FormSampleMerge_Load);
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.gridSamples)).EndInit();
             this.panel2.ResumeLayout(false);

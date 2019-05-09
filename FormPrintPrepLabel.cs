@@ -59,28 +59,38 @@ namespace DSA_lims
 
         private void FormPrintPrepLabel_Load(object sender, EventArgs e)
         {
-            fontLabel = new Font("Arial", 8);
-
-            string InstallationDirectory = Path.GetDirectoryName(Environment.GetCommandLineArgs()[0]);
-            string fontFileName = InstallationDirectory + Path.DirectorySeparatorChar + "free3of9.ttf";
-            if (File.Exists(fontFileName))
+            try
             {
-                privateFonts.AddFontFile(InstallationDirectory + Path.DirectorySeparatorChar + "free3of9.ttf");
-                fontBarcode = new Font(privateFonts.Families[0], 32, FontStyle.Regular);
+                fontLabel = new Font("Arial", 8);
+
+                string InstallationDirectory = Path.GetDirectoryName(Environment.GetCommandLineArgs()[0]);
+                string fontFileName = InstallationDirectory + Path.DirectorySeparatorChar + "free3of9.ttf";
+                if (File.Exists(fontFileName))
+                {
+                    privateFonts.AddFontFile(InstallationDirectory + Path.DirectorySeparatorChar + "free3of9.ttf");
+                    fontBarcode = new Font(privateFonts.Families[0], 32, FontStyle.Regular);
+                }
+                else fontBarcode = fontLabel;
+
+                cboxPrinters.SelectedIndexChanged -= cboxPrinters_SelectedIndexChanged;
+
+                foreach (string p in PrinterSettings.InstalledPrinters)
+                    cboxPrinters.Items.Add(p.ToString());
+
+                cboxPrinters.SelectedIndexChanged += cboxPrinters_SelectedIndexChanged;
+
+                if (cboxPrinters.FindString(mSettings.LabelPrinterName) > -1)
+                    cboxPrinters.Text = mSettings.LabelPrinterName;
+
+                cbLandscape.Checked = mSettings.LabelPrinterLandscape;
             }
-            else fontBarcode = fontLabel;
-
-            cboxPrinters.SelectedIndexChanged -= cboxPrinters_SelectedIndexChanged;
-
-            foreach (string p in PrinterSettings.InstalledPrinters)
-                cboxPrinters.Items.Add(p.ToString());
-
-            cboxPrinters.SelectedIndexChanged += cboxPrinters_SelectedIndexChanged;
-
-            if (cboxPrinters.FindString(mSettings.LabelPrinterName) > -1)
-                cboxPrinters.Text = mSettings.LabelPrinterName;
-
-            cbLandscape.Checked = mSettings.LabelPrinterLandscape;
+            catch(Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                DialogResult = DialogResult.Abort;
+                Close();
+            }
         }
 
         private void btnCancel_Click(object sender, EventArgs e)

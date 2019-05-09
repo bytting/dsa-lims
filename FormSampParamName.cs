@@ -22,8 +22,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
-using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
@@ -46,11 +44,13 @@ namespace DSA_lims
         }
 
         private void FormSampParamName_Load(object sender, EventArgs e)
-        {
-            cboxSampParamType.Items.Clear();
-
-            using (SqlConnection conn = DB.OpenConnection())
+        {            
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
+
+                cboxSampParamType.Items.Clear();
                 using (SqlDataReader reader = DB.GetDataReader(conn, null, "select * from sample_parameter_type order by name", CommandType.Text))
                 {
                     while(reader.Read())                
@@ -72,6 +72,17 @@ namespace DSA_lims
                     }
                     cboxSampParamType.Enabled = false;
                 }
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                DialogResult = DialogResult.Abort;
+                Close();
+            }
+            finally
+            {
+                conn?.Close();
             }
         }
 

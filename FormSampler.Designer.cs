@@ -171,6 +171,7 @@
             this.Name = "FormSampler";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "FormSampler";
+            this.Load += new System.EventHandler(this.FormSampler_Load);
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();

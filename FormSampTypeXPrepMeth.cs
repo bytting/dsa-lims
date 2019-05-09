@@ -22,10 +22,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DSA_lims
@@ -34,6 +32,7 @@ namespace DSA_lims
     {
         private Guid SampleTypeId = Guid.Empty;
         private string SampleTypeName = String.Empty;
+        private List<Guid> MethodsAbove = null;
         private List<Guid> MethodsBelow = null;
 
         public FormSampTypeXPrepMeth(string sampleTypeName, Guid sampleTypeId, List<Guid> methodsAbove, List<Guid> methodsBelow)
@@ -42,13 +41,20 @@ namespace DSA_lims
 
             SampleTypeId = sampleTypeId;
             SampleTypeName = sampleTypeName;
+            MethodsAbove = methodsAbove;
             MethodsBelow = methodsBelow;
 
-            tbSampleType.Text = SampleTypeName;            
+            tbSampleType.Text = SampleTypeName;                                        
+        }
 
-            using (SqlConnection conn = DB.OpenConnection())
+        private void FormSampTypeXPrepMeth_Load(object sender, EventArgs e)
+        {
+            SqlConnection conn = null;
+            try
             {
-                var methArr = from item in methodsAbove select "'" + item + "'";
+                conn = DB.OpenConnection();
+
+                var methArr = from item in MethodsAbove select "'" + item + "'";
                 string smeth = string.Join(",", methArr);
 
                 string query;
@@ -66,7 +72,18 @@ namespace DSA_lims
                         lbPrepMeth.Items.Add(pm);
                     }
                 }
-            }                
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                DialogResult = DialogResult.Abort;
+                Close();
+            }
+            finally
+            {
+                conn?.Close();
+            }
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -89,8 +106,10 @@ namespace DSA_lims
                     }
                 }
 
-                using (SqlConnection conn = DB.OpenConnection())
+                SqlConnection conn = null;
+                try
                 {
+                    conn = DB.OpenConnection();
                     SqlCommand cmd = new SqlCommand("insert into sample_type_x_preparation_method values(@sample_type_id, @preparation_method_id)", conn);
 
                     foreach (object item in lbPrepMeth.SelectedItems)
@@ -103,10 +122,20 @@ namespace DSA_lims
                         cmd.ExecuteNonQuery();
                     }
                 }
+                catch (Exception ex)
+                {
+                    Common.Log.Error(ex);
+                    MessageBox.Show(ex.Message);
+                    return;
+                }
+                finally
+                {
+                    conn?.Close();
+                }
             }
 
             DialogResult = DialogResult.OK;
             Close();
-        }
+        }        
     }
 }

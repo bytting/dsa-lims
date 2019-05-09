@@ -22,10 +22,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DSA_lims
@@ -38,16 +35,30 @@ namespace DSA_lims
         {
             InitializeComponent();
 
-            SampleIdsCsv = sampleIdsCsv;
+            SampleIdsCsv = sampleIdsCsv;            
+        }
 
-            string query = "select id, number from sample where id in(" + SampleIdsCsv + ") order by number desc";
-
-            using (SqlConnection conn = DB.OpenConnection())
+        private void FormSampleMerge_Load(object sender, EventArgs e)
+        {            
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
+                string query = "select id, number from sample where id in(" + SampleIdsCsv + ") order by number desc";
                 gridSamples.DataSource = DB.GetDataTable(conn, null, query, CommandType.Text);
+                gridSamples.Columns["id"].Visible = false;
             }
-
-            gridSamples.Columns["id"].Visible = false;
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                DialogResult = DialogResult.Abort;
+                Close();
+            }
+            finally
+            {
+                conn?.Close();
+            }            
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -154,6 +165,7 @@ namespace DSA_lims
                 trans?.Rollback();
                 Common.Log.Error(ex);
                 MessageBox.Show(ex.Message);
+                return;
             }
             finally
             {
@@ -162,6 +174,6 @@ namespace DSA_lims
 
             DialogResult = DialogResult.OK;
             Close();
-        }
+        }        
     }
 }

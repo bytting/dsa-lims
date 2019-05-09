@@ -46,61 +46,76 @@ namespace DSA_lims
 
         public FormMunicipality(Guid cid, string countyName)
         {
-            InitializeComponent();  
-                      
-            p["county_id"] = cid;
+            InitializeComponent();                                    
             Text = "Create municipality";
             tbCounty.Text = countyName;
-            using (SqlConnection conn = DB.OpenConnection())
-            {
-                cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status", false);
-            }
-            cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
+            p["county_id"] = cid;
         }
 
         public FormMunicipality(Guid cid, Guid mid, string countyName)
         {
-            InitializeComponent();
-
-            p["county_id"] = cid;
-            p["id"] = mid;
+            InitializeComponent();            
             Text = "Update municipality";
             tbCounty.Text = countyName;
-
-            using (SqlConnection conn = DB.OpenConnection())
-            {
-                cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status", false);
-
-                SqlCommand cmd = new SqlCommand("select name from county where id = @id", conn);
-                cmd.CommandType = CommandType.Text;
-                cmd.Parameters.AddWithValue("@id", p["county_id"]);
-                tbCounty.Text = cmd.ExecuteScalar().ToString();
-
-                cmd.CommandText = "csp_select_municipality";
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Clear();
-                cmd.Parameters.AddWithValue("@id", p["id"]);
-                using (SqlDataReader reader = cmd.ExecuteReader())
-                {
-                    if (!reader.HasRows)
-                        throw new Exception("Municipality with ID " + p["id"] + " was not found");
-
-                    reader.Read();
-
-                    tbName.Text = reader.GetString("name");
-                    tbNumber.Text = reader.GetString("municipality_number");
-                    cboxInstanceStatus.SelectedValue = reader.GetInt32("instance_status_id");
-                    p["create_date"] = reader["create_date"];
-                    p["create_id"] = reader["create_id"];
-                    p["update_date"] = reader["update_date"];
-                    p["update_id"] = reader["update_id"];
-                }
-            }
+            p["county_id"] = cid;
+            p["id"] = mid;
         }
 
         private void FormMunicipality_Load(object sender, EventArgs e)
         {
             tbNumber.KeyPress += CustomEvents.Integer_KeyPress;
+
+            SqlConnection conn = null;
+            try
+            {
+                conn = DB.OpenConnection();
+
+                if (p.ContainsKey("id"))
+                {                    
+                    cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status", false);
+
+                    SqlCommand cmd = new SqlCommand("select name from county where id = @id", conn);
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Parameters.AddWithValue("@id", p["county_id"]);
+                    tbCounty.Text = cmd.ExecuteScalar().ToString();
+
+                    cmd.CommandText = "csp_select_municipality";
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.AddWithValue("@id", p["id"]);
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (!reader.HasRows)
+                            throw new Exception("Municipality with ID " + p["id"] + " was not found");
+
+                        reader.Read();
+
+                        tbName.Text = reader.GetString("name");
+                        tbNumber.Text = reader.GetString("municipality_number");
+                        cboxInstanceStatus.SelectedValue = reader.GetInt32("instance_status_id");
+                        p["create_date"] = reader["create_date"];
+                        p["create_id"] = reader["create_id"];
+                        p["update_date"] = reader["update_date"];
+                        p["update_id"] = reader["update_id"];
+                    }                
+                }
+                else
+                {                    
+                    cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status", false);                
+                    cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
+                }
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                DialogResult = DialogResult.Abort;
+                Close();
+            }
+            finally
+            {
+                conn?.Close();
+            }
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -171,7 +186,8 @@ namespace DSA_lims
             {
                 success = false;
                 transaction?.Rollback();
-                Common.Log.Error(ex);                
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);                
             }
             finally
             {

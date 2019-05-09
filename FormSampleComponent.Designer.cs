@@ -122,6 +122,7 @@
             this.Name = "FormSampleComponent";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "DSA-Lims - Sample component";
+            this.Load += new System.EventHandler(this.FormSampleComponent_Load);
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -24,7 +24,6 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Text;
 using System.Windows.Forms;
-using Newtonsoft.Json;
 
 namespace DSA_lims
 {
@@ -45,45 +44,65 @@ namespace DSA_lims
         public FormPreparationMethod()
         {
             InitializeComponent();
-            Text = "Create preparation method";
-            using (SqlConnection conn = DB.OpenConnection())
-            {
-                cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status", false);
-            }            
-            cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
+            Text = "Create preparation method";            
         }
 
         public FormPreparationMethod(Guid pmid)
         {
             InitializeComponent();
             p["id"] = pmid;
-            Text = "Update preparation method";            
+            Text = "Update preparation method";                        
+        }
 
-            using (SqlConnection conn = DB.OpenConnection())
+        private void FormPreparationMethod_Load(object sender, EventArgs e)
+        {
+            SqlConnection conn = null;
+            try
             {
-                cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status", false);
+                conn = DB.OpenConnection();
 
-                SqlCommand cmd = new SqlCommand("csp_select_preparation_method", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@id", p["id"]);
-                using (SqlDataReader reader = cmd.ExecuteReader())
-                {
-                    if (!reader.HasRows)
-                        throw new Exception("Preparation method with ID " + p["id"] + " was not found");
+                if (p.ContainsKey("id"))
+                {                    
+                    cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status", false);
 
-                    reader.Read();
+                    SqlCommand cmd = new SqlCommand("csp_select_preparation_method", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@id", p["id"]);
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (!reader.HasRows)
+                            throw new Exception("Preparation method with ID " + p["id"] + " was not found");
 
-                    tbName.Text = reader.GetString("name");
-                    tbShortName.Text = reader.GetString("name_short");
-                    tbDescriptionLink.Text = reader.GetString("description_link");                    
-                    cbDestructive.Checked = reader.GetBoolean("destructive");
-                    cboxInstanceStatus.SelectedValue = reader.GetInt32("instance_status_id");
-                    tbComment.Text = reader.GetString("comment");
-                    p["create_date"] = reader["create_date"];
-                    p["create_id"] = reader["create_id"];
-                    p["update_date"] = reader["update_date"];
-                    p["update_id"] = reader["update_id"];
+                        reader.Read();
+
+                        tbName.Text = reader.GetString("name");
+                        tbShortName.Text = reader.GetString("name_short");
+                        tbDescriptionLink.Text = reader.GetString("description_link");
+                        cbDestructive.Checked = reader.GetBoolean("destructive");
+                        cboxInstanceStatus.SelectedValue = reader.GetInt32("instance_status_id");
+                        tbComment.Text = reader.GetString("comment");
+                        p["create_date"] = reader["create_date"];
+                        p["create_id"] = reader["create_id"];
+                        p["update_date"] = reader["update_date"];
+                        p["update_id"] = reader["update_id"];
+                    }                
                 }
+                else
+                {                    
+                    cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status", false);                
+                    cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
+                }
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                DialogResult = DialogResult.Abort;
+                Close();
+            }
+            finally
+            {
+                conn?.Close();
             }
         }
 
@@ -192,6 +211,6 @@ namespace DSA_lims
             cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
             cmd.Parameters.AddWithValue("@update_id", p["update_id"]);
             cmd.ExecuteNonQuery();                
-        }
+        }        
     }
 }

@@ -1,13 +1,28 @@
-﻿using Newtonsoft.Json;
+﻿/*	
+	DSA Lims - Laboratory Information Management System
+    Copyright (C) 2018  Norwegian Radiation Protection Authority
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+// Authors: Dag Robole,
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DSA_lims
@@ -29,46 +44,64 @@ namespace DSA_lims
         public FormCompany()
         {
             InitializeComponent();
-
-            Text = "New company";
-            using (SqlConnection conn = DB.OpenConnection())
-            {
-                cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status", false);
-            }
-            cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
+            Text = "New company";            
         }
 
         public FormCompany(Guid cid)
         {
             InitializeComponent();
-
             Text = "Edit company";            
-            p["id"] = cid;
+            p["id"] = cid;            
+        }
 
-            using (SqlConnection conn = DB.OpenConnection())
+        private void FormCompany_Load(object sender, EventArgs e)
+        {
+            SqlConnection conn = null;
+            try
             {
-                cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status", false);
+                conn = DB.OpenConnection();
 
-                SqlCommand cmd = new SqlCommand("csp_select_company", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@id", p["id"]);
-                using (SqlDataReader reader = cmd.ExecuteReader())
-                {
-                    if (!reader.HasRows)
-                        throw new Exception("Company with ID " + p["id"] + " was not found");
+                if(p.ContainsKey("id"))
+                {                    
+                    cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status", false);
 
-                    reader.Read();
-                    tbName.Text = reader.GetString("name");
-                    tbEmail.Text = reader.GetString("email");
-                    tbPhone.Text = reader.GetString("phone");
-                    tbAddress.Text = reader.GetString("address");
-                    cboxInstanceStatus.SelectedValue = reader.GetInt32("instance_status_id");
-                    tbComment.Text = reader.GetString("comment");
-                    p["create_date"] = reader.GetDateTime("create_date");
-                    p["create_id"] = reader.GetGuid("create_id");
-                    p["update_date"] = reader.GetDateTime("update_date");
-                    p["update_id"] = reader.GetGuid("update_id");
+                    SqlCommand cmd = new SqlCommand("csp_select_company", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@id", p["id"]);
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (!reader.HasRows)
+                            throw new Exception("Company with ID " + p["id"] + " was not found");
+
+                        reader.Read();
+                        tbName.Text = reader.GetString("name");
+                        tbEmail.Text = reader.GetString("email");
+                        tbPhone.Text = reader.GetString("phone");
+                        tbAddress.Text = reader.GetString("address");
+                        cboxInstanceStatus.SelectedValue = reader.GetInt32("instance_status_id");
+                        tbComment.Text = reader.GetString("comment");
+                        p["create_date"] = reader.GetDateTime("create_date");
+                        p["create_id"] = reader.GetGuid("create_id");
+                        p["update_date"] = reader.GetDateTime("update_date");
+                        p["update_id"] = reader.GetGuid("update_id");
+                    }                
                 }
+                else
+                {                    
+                    cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status", false);
+                    cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
+                }
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                DialogResult = DialogResult.Abort;
+                Close();
+            }
+            finally
+            {
+                conn?.Close();
             }
         }
 
@@ -119,7 +152,8 @@ namespace DSA_lims
             {
                 success = false;
                 transaction?.Rollback();
-                Common.Log.Error(ex);                
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
             }
             finally
             {
@@ -171,6 +205,6 @@ namespace DSA_lims
             cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
             cmd.Parameters.AddWithValue("@update_id", p["update_id"]);
             cmd.ExecuteNonQuery();                        
-        }
+        }        
     }
 }

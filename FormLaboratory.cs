@@ -27,7 +27,6 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using Newtonsoft.Json;
 
 namespace DSA_lims
 {
@@ -47,80 +46,97 @@ namespace DSA_lims
 
         public FormLaboratory()
         {
-            InitializeComponent(); 
-                       
+            InitializeComponent();                        
             Text = "Create laboratory";
             lblLaboratoryLogoSize.Text = "";
             lblAccreditedLogoSize.Text = "";
-
             p["laboratory_logo"] = null;
-            p["accredited_logo"] = null;
-
-            using (SqlConnection conn = DB.OpenConnection())
-            {
-                cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status", false);
-            }            
-            cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
+            p["accredited_logo"] = null;            
         }
 
         public FormLaboratory(Guid lid)
         {
-            InitializeComponent();            
-            p["id"] = lid;
+            InitializeComponent();                        
             Text = "Update laboratory";
             lblLaboratoryLogoSize.Text = "";
             lblAccreditedLogoSize.Text = "";
+            p["id"] = lid;                        
+        }
 
-            using (SqlConnection conn = DB.OpenConnection())
+        private void FormLaboratory_Load(object sender, EventArgs e)
+        {
+            SqlConnection conn = null;
+            try
             {
-                cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status", false);
+                conn = DB.OpenConnection();
 
-                SqlCommand cmd = new SqlCommand("csp_select_laboratory", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@id", p["id"]);
-                using (SqlDataReader reader = cmd.ExecuteReader())
-                {
-                    if (!reader.HasRows)
-                        throw new Exception("Laboratory with ID " + p["id"] + " was not found");
+                if (p.ContainsKey("id"))
+                {                    
+                    cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status", false);
 
-                    reader.Read();
-
-                    tbName.Text = reader.GetString("name");
-                    tbPrefix.Text = reader.GetString("name_prefix");
-                    tbAddress.Text = reader.GetString("address");
-                    tbEmail.Text = reader.GetString("email");
-                    tbPhone.Text = reader.GetString("phone");
-                    cboxInstanceStatus.SelectedValue = reader.GetInt32("instance_status_id");
-                    tbComment.Text = reader.GetString("comment");
-
-                    if (DB.IsValidField(reader["laboratory_logo"]))
+                    SqlCommand cmd = new SqlCommand("csp_select_laboratory", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@id", p["id"]);
+                    using (SqlDataReader reader = cmd.ExecuteReader())
                     {
-                        p["laboratory_logo"] = (byte[])reader["laboratory_logo"];
-                        picLaboratoryLogo.Image = Image.FromStream(new MemoryStream((byte[])p["laboratory_logo"]));
-                        lblLaboratoryLogoSize.Text = picLaboratoryLogo.Image.Width.ToString() + " x " + picLaboratoryLogo.Image.Height.ToString();
-                    }
-                    else
-                    {
-                        p["laboratory_logo"] = picLaboratoryLogo.Image = null;
-                    }
+                        if (!reader.HasRows)
+                            throw new Exception("Laboratory with ID " + p["id"] + " was not found");
 
-                    if (DB.IsValidField(reader["accredited_logo"]))
-                    {
-                        p["accredited_logo"] = (byte[])reader["accredited_logo"];
-                        picAccreditedLogo.Image = Image.FromStream(new MemoryStream((byte[])p["accredited_logo"]));
-                        lblAccreditedLogoSize.Text = picAccreditedLogo.Image.Width.ToString() + " x " + picAccreditedLogo.Image.Height.ToString();
-                    }
-                    else
-                    {
-                        p["accredited_logo"] = picAccreditedLogo.Image = null;
-                    }
+                        reader.Read();
 
-                    p["assignment_counter"] = reader.GetInt32("assignment_counter");
-                    p["create_date"] = reader.GetDateTime("create_date");
-                    p["create_id"] = reader.GetGuid("create_id");
-                    p["update_date"] = reader.GetDateTime("update_date");
-                    p["update_id"] = reader.GetGuid("update_id");
+                        tbName.Text = reader.GetString("name");
+                        tbPrefix.Text = reader.GetString("name_prefix");
+                        tbAddress.Text = reader.GetString("address");
+                        tbEmail.Text = reader.GetString("email");
+                        tbPhone.Text = reader.GetString("phone");
+                        cboxInstanceStatus.SelectedValue = reader.GetInt32("instance_status_id");
+                        tbComment.Text = reader.GetString("comment");
+
+                        if (DB.IsValidField(reader["laboratory_logo"]))
+                        {
+                            p["laboratory_logo"] = (byte[])reader["laboratory_logo"];
+                            picLaboratoryLogo.Image = Image.FromStream(new MemoryStream((byte[])p["laboratory_logo"]));
+                            lblLaboratoryLogoSize.Text = picLaboratoryLogo.Image.Width.ToString() + " x " + picLaboratoryLogo.Image.Height.ToString();
+                        }
+                        else
+                        {
+                            p["laboratory_logo"] = picLaboratoryLogo.Image = null;
+                        }
+
+                        if (DB.IsValidField(reader["accredited_logo"]))
+                        {
+                            p["accredited_logo"] = (byte[])reader["accredited_logo"];
+                            picAccreditedLogo.Image = Image.FromStream(new MemoryStream((byte[])p["accredited_logo"]));
+                            lblAccreditedLogoSize.Text = picAccreditedLogo.Image.Width.ToString() + " x " + picAccreditedLogo.Image.Height.ToString();
+                        }
+                        else
+                        {
+                            p["accredited_logo"] = picAccreditedLogo.Image = null;
+                        }
+
+                        p["assignment_counter"] = reader.GetInt32("assignment_counter");
+                        p["create_date"] = reader.GetDateTime("create_date");
+                        p["create_id"] = reader.GetGuid("create_id");
+                        p["update_date"] = reader.GetDateTime("update_date");
+                        p["update_id"] = reader.GetGuid("update_id");
+                    }                    
                 }
+                else
+                {                    
+                    cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status", false);                
+                    cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
+                }
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                DialogResult = DialogResult.Abort;
+                Close();
+            }
+            finally
+            {
+                conn?.Close();
             }
         }
 
@@ -178,7 +194,8 @@ namespace DSA_lims
             {
                 success = false;
                 transaction?.Rollback();
-                Common.Log.Error(ex);                
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
             }
             finally
             {
@@ -282,6 +299,6 @@ namespace DSA_lims
             p["accredited_logo"] = File.ReadAllBytes(dialog.FileName);
             picAccreditedLogo.Image = Image.FromStream(new MemoryStream((byte[])p["accredited_logo"]));
             lblAccreditedLogoSize.Text = picAccreditedLogo.Image.Width.ToString() + " x " + picAccreditedLogo.Image.Height.ToString();
-        }
+        }        
     }
 }

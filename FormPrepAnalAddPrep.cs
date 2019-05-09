@@ -44,9 +44,22 @@ namespace DSA_lims
 
         private void FormPrepAnalAddPrep_Load(object sender, EventArgs e)
         {
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 UI.PopulateSampleTypePrepMeth(conn, mSample.SampleTypeId, Common.LabId, cboxPrepMethods);
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                DialogResult = DialogResult.Abort;
+                Close();
+            }
+            finally
+            {
+                conn?.Close();
             }
 
             tbCount.Text = "1";

@@ -175,6 +175,7 @@
             this.Name = "FormOrderAddPrepMeth";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "DSA-Lims - Order prep. methods";
+            this.Load += new System.EventHandler(this.FormOrderAddPrepMeth_Load);
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -211,6 +211,7 @@
             this.Name = "FormAnalysisMethods";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "FormAnalysisMethods";
+            this.Load += new System.EventHandler(this.FormAnalysisMethods_Load);
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();

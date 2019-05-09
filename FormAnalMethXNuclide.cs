@@ -43,10 +43,15 @@ namespace DSA_lims
             AnalysisMethodName = analysisMethodName;
             ExistingNuclides = existingNuclides;
 
-            tbAnalysisMethod.Text = AnalysisMethodName;
+            tbAnalysisMethod.Text = AnalysisMethodName;            
+        }
 
-            using (SqlConnection conn = DB.OpenConnection())
+        private void FormAnalMethXNuclide_Load(object sender, EventArgs e)
+        {
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 var nuclArr = from item in ExistingNuclides select "'" + item + "'";
                 string snucl = string.Join(",", nuclArr);
 
@@ -66,6 +71,17 @@ namespace DSA_lims
                     }
                 }
             }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                DialogResult = DialogResult.Abort;
+                Close();
+            }
+            finally
+            {
+                conn?.Close();
+            }
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -78,8 +94,10 @@ namespace DSA_lims
         {
             if (lbNuclides.SelectedItems.Count > 0)
             {
-                using (SqlConnection conn = DB.OpenConnection())
+                SqlConnection conn = null;
+                try
                 {
+                    conn = DB.OpenConnection();
                     SqlCommand cmd = new SqlCommand("insert into analysis_method_x_nuclide values(@analysis_method_id, @nuclide_id)", conn);
 
                     foreach (object item in lbNuclides.SelectedItems)
@@ -92,10 +110,20 @@ namespace DSA_lims
                         cmd.ExecuteNonQuery();
                     }
                 }
+                catch (Exception ex)
+                {
+                    Common.Log.Error(ex);
+                    MessageBox.Show(ex.Message);
+                    return;
+                }
+                finally
+                {
+                    conn?.Close();
+                }
             }
 
             DialogResult = DialogResult.OK;
             Close();
-        }
+        }        
     }
 }

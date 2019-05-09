@@ -213,6 +213,7 @@
             this.Name = "FormCompany";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "DSA-Lims - Company";
+            this.Load += new System.EventHandler(this.FormCompany_Load);
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();

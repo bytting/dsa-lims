@@ -165,6 +165,7 @@
             this.Name = "FormSampleType";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "DSA-Lims - Sample type";
+            this.Load += new System.EventHandler(this.FormSampleType_Load);
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();

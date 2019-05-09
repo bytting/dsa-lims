@@ -22,10 +22,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using Newtonsoft.Json;
 
 namespace DSA_lims
 {
@@ -65,43 +63,63 @@ namespace DSA_lims
         {
             InitializeComponent();            
             p["id"] = sid;
-            Text = "DSA-Lims - Edit sampler";
+            Text = "DSA-Lims - Edit sampler";            
+        }
 
-            using (SqlConnection conn = DB.OpenConnection())
+        private void FormSampler_Load(object sender, EventArgs e)
+        {
+            SqlConnection conn = null;
+            try
             {
-                UI.PopulateComboBoxes(conn, "csp_select_persons_short", new SqlParameter[] { }, cboxPersons);
+                conn = DB.OpenConnection();
 
-                UI.PopulateComboBoxes(conn, "csp_select_companies_short", new[] {
-                    new SqlParameter("instance_status_level", InstanceStatus.Active)
-                }, cboxCompanies);
+                if (p.ContainsKey("id"))
+                {                    
+                    UI.PopulateComboBoxes(conn, "csp_select_persons_short", new SqlParameter[] { }, cboxPersons);
 
-                cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status", false);
+                    UI.PopulateComboBoxes(conn, "csp_select_companies_short", new[] {
+                        new SqlParameter("instance_status_level", InstanceStatus.Active)
+                    }, cboxCompanies);
 
-                SqlCommand cmd = new SqlCommand("csp_select_sampler", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@id", p["id"]);
-                using (SqlDataReader reader = cmd.ExecuteReader())
-                {
-                    if (!reader.HasRows)
+                    cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status", false);
+
+                    SqlCommand cmd = new SqlCommand("csp_select_sampler", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@id", p["id"]);
+                    using (SqlDataReader reader = cmd.ExecuteReader())
                     {
-                        Common.Log.Error("Sampler with ID " + p["id"] + " was not found");
-                        MessageBox.Show("Sampler with ID " + p["id"] + " was not found");
-                        Close();
+                        if (!reader.HasRows)
+                        {
+                            Common.Log.Error("Sampler with ID " + p["id"] + " was not found");
+                            MessageBox.Show("Sampler with ID " + p["id"] + " was not found");
+                            Close();
+                        }
+
+                        reader.Read();
+
+                        cboxPersons.SelectedValue = reader.GetGuid("person_id");
+                        cboxCompanies.SelectedValue = reader.GetGuid("company_id");
+                        cboxInstanceStatus.SelectedValue = reader.GetInt32("instance_status_id");
+                        tbComment.Text = reader.GetString("comment");
+                        p["create_date"] = reader["create_date"];
+                        p["create_id"] = reader["create_id"];
+                        p["update_date"] = reader["update_date"];
+                        p["update_id"] = reader["update_id"];
+
+                        cboxPersons.Enabled = false;
                     }
-
-                    reader.Read();
-
-                    cboxPersons.SelectedValue = reader.GetGuid("person_id");
-                    cboxCompanies.SelectedValue = reader.GetGuid("company_id");
-                    cboxInstanceStatus.SelectedValue = reader.GetInt32("instance_status_id");
-                    tbComment.Text = reader.GetString("comment");            
-                    p["create_date"] = reader["create_date"];
-                    p["create_id"] = reader["create_id"];
-                    p["update_date"] = reader["update_date"];
-                    p["update_id"] = reader["update_id"];
-
-                    cboxPersons.Enabled = false;
-                }
+                }                
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                DialogResult = DialogResult.Abort;
+                Close();
+            }
+            finally
+            {
+                conn?.Close();
             }
         }
 
@@ -125,12 +143,15 @@ namespace DSA_lims
             p["instance_status_id"] = cboxInstanceStatus.SelectedValue;
             p["comment"] = tbComment.Text.Trim();
 
-            SqlConnection connection = DB.OpenConnection();
-            SqlTransaction transaction = connection.BeginTransaction();
+            SqlConnection connection = null;
+            SqlTransaction transaction = null;
             bool success = true;            
 
             try
-            {                
+            {
+                connection = DB.OpenConnection();
+                transaction = connection.BeginTransaction();
+
                 if (!p.ContainsKey("id"))
                 {                    
                     string query = "select count(*) from sampler where person_id = @pid and company_id = @cid";
@@ -169,9 +190,10 @@ namespace DSA_lims
             }
             catch (Exception ex)
             {
+                success = false;
                 transaction?.Rollback();
                 Common.Log.Error(ex);
-                success = false;
+                MessageBox.Show(ex.Message);
             }
             finally
             {
@@ -218,6 +240,6 @@ namespace DSA_lims
             cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
             cmd.Parameters.AddWithValue("@update_id", p["update_id"]);
             cmd.ExecuteNonQuery();
-        }
+        }        
     }
 }

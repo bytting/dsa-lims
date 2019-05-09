@@ -43,12 +43,14 @@ namespace DSA_lims
         }
 
         private void FormLabXPrepMeth_Load(object sender, EventArgs e)
-        {
-            var pmArr = from item in mExistingPrepMeths select "'" + item + "'";
-            string exceptIds = string.Join(",", pmArr);
-
-            using (SqlConnection conn = DB.OpenConnection())
+        {            
+            SqlConnection conn = null;
+            try
             {
+                var pmArr = from item in mExistingPrepMeths select "'" + item + "'";
+                string exceptIds = string.Join(",", pmArr);
+
+                conn = DB.OpenConnection();
                 string query;
                 if (String.IsNullOrEmpty(exceptIds))                
                     query = "select * from preparation_method where instance_status_id < 2";                
@@ -69,6 +71,17 @@ namespace DSA_lims
                 gridPrepMeth.Columns["name_short"].HeaderText = "Abbr.";
                 gridPrepMeth.Columns["description_link"].HeaderText = "Desc.link";
                 gridPrepMeth.Columns["destructive"].HeaderText = "Destructive";
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                DialogResult = DialogResult.Abort;
+                Close();
+            }
+            finally
+            {
+                conn?.Close();
             }
         }
 
@@ -104,6 +117,7 @@ namespace DSA_lims
                 trans?.Rollback();
                 Common.Log.Error(ex);
                 MessageBox.Show(ex.Message);
+                return;
             }
             finally
             {

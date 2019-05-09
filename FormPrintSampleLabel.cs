@@ -1,4 +1,23 @@
-﻿using System;
+﻿/*	
+	DSA Lims - Laboratory Information Management System
+    Copyright (C) 2018  Norwegian Radiation Protection Authority
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+// Authors: Dag Robole,
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -9,7 +28,6 @@ using System.Drawing.Text;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DSA_lims
@@ -52,28 +70,38 @@ namespace DSA_lims
 
         private void FormPrintSampleLabel_Load(object sender, EventArgs e)
         {
-            fontLabel = new Font("Arial", 10);
-
-            string InstallationDirectory = Path.GetDirectoryName(Environment.GetCommandLineArgs()[0]);
-            string fontFileName = InstallationDirectory + Path.DirectorySeparatorChar + "free3of9.ttf";
-            if (File.Exists(fontFileName))
+            try
             {
-                privateFonts.AddFontFile(InstallationDirectory + Path.DirectorySeparatorChar + "free3of9.ttf");
-                fontBarcode = new Font(privateFonts.Families[0], 38, FontStyle.Regular);
+                fontLabel = new Font("Arial", 10);
+
+                string InstallationDirectory = Path.GetDirectoryName(Environment.GetCommandLineArgs()[0]);
+                string fontFileName = InstallationDirectory + Path.DirectorySeparatorChar + "free3of9.ttf";
+                if (File.Exists(fontFileName))
+                {
+                    privateFonts.AddFontFile(InstallationDirectory + Path.DirectorySeparatorChar + "free3of9.ttf");
+                    fontBarcode = new Font(privateFonts.Families[0], 38, FontStyle.Regular);
+                }
+                else fontBarcode = fontLabel;
+
+                cboxPrinters.SelectedIndexChanged -= cboxPrinters_SelectedIndexChanged;
+
+                foreach (string p in PrinterSettings.InstalledPrinters)
+                    cboxPrinters.Items.Add(p.ToString());
+
+                cboxPrinters.SelectedIndexChanged += cboxPrinters_SelectedIndexChanged;
+
+                if (cboxPrinters.FindString(mSettings.LabelPrinterName) > -1)
+                    cboxPrinters.Text = mSettings.LabelPrinterName;
+
+                cbLandscape.Checked = mSettings.LabelPrinterLandscape;
             }
-            else fontBarcode = fontLabel;
-
-            cboxPrinters.SelectedIndexChanged -= cboxPrinters_SelectedIndexChanged;
-
-            foreach (string p in PrinterSettings.InstalledPrinters)            
-                cboxPrinters.Items.Add(p.ToString());
-
-            cboxPrinters.SelectedIndexChanged += cboxPrinters_SelectedIndexChanged;
-            
-            if (cboxPrinters.FindString(mSettings.LabelPrinterName) > -1)            
-                cboxPrinters.Text = mSettings.LabelPrinterName;
-
-            cbLandscape.Checked = mSettings.LabelPrinterLandscape;
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                DialogResult = DialogResult.Abort;
+                Close();
+            }
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -144,8 +172,10 @@ from sample s
 where s.id = @id
 ";
 
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 foreach (Guid sid in mSampleIds)
                 {
                     using (SqlDataReader reader = DB.GetDataReader(conn, null, query, CommandType.Text, new SqlParameter("@id", sid)))
@@ -172,6 +202,16 @@ where s.id = @id
                         }
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            finally
+            {
+                conn?.Close();
             }
 
             mSettings.LabelPrinterName = cboxPrinters.Text;

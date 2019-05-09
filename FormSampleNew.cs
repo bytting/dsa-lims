@@ -22,8 +22,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
-using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
@@ -41,19 +39,36 @@ namespace DSA_lims
             InitializeComponent();
 
             TreeSampleTypes = treeSampleTypes;
-            UI.PopulateSampleTypes(TreeSampleTypes, cboxSampleType);
-            using (SqlConnection conn = DB.OpenConnection())
+            UI.PopulateSampleTypes(TreeSampleTypes, cboxSampleType);            
+        }
+
+        private void FormSampleNew_Load(object sender, EventArgs e)
+        {
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 UI.PopulateProjectMain(conn, null, Common.UserId, InstanceStatus.Active, cboxProjectMain);
 
                 UI.PopulateComboBoxes(conn, "csp_select_laboratories_short", new[] {
                     new SqlParameter("@instance_status_level", InstanceStatus.Active)
                 }, cboxLaboratory);
 
-                if(Utils.IsValidGuid(Common.LabId))
+                if (Utils.IsValidGuid(Common.LabId))
                 {
-                    cboxLaboratory.SelectedValue = Common.LabId;                    
+                    cboxLaboratory.SelectedValue = Common.LabId;
                 }
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                DialogResult = DialogResult.Abort;
+                Close();
+            }
+            finally
+            {
+                conn?.Close();
             }
         }
 
@@ -189,9 +204,20 @@ namespace DSA_lims
 
             Guid projectMainId = Utils.MakeGuid(cboxProjectMain.SelectedValue);
 
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 UI.PopulateProjectSub(conn, null, projectMainId, Common.UserId, InstanceStatus.Active, cboxProjectSub);
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn?.Close();
             }
         }
 
@@ -208,10 +234,21 @@ namespace DSA_lims
             if (tnodes.Length < 1)
                 return;
 
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 UI.PopulateSampleComponentsAscending(conn, sampleTypeId, tnodes[0], cboxSampleComponent);                
             }
-        }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn?.Close();
+            }
+        }        
     }
 }

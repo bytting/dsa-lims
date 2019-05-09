@@ -282,6 +282,7 @@
             this.Name = "FormUser";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "DSA-Lims - User";
+            this.Load += new System.EventHandler(this.FormUser_Load);
             this.panel1.ResumeLayout(false);
             this.tableLayoutPanel8.ResumeLayout(false);
             this.tableLayoutPanel8.PerformLayout();

@@ -51,20 +51,7 @@ namespace DSA_lims
 
             tbUsername.ReadOnly = false;
             tbPassword1.Enabled = true;
-            tbPassword2.Enabled = true;
-
-            using (SqlConnection conn = DB.OpenConnection())
-            {
-                cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status", false);
-
-                UI.PopulateComboBoxes(conn, "csp_select_persons_short", new SqlParameter[] { },  cboxPersons);
-
-                UI.PopulateComboBoxes(conn, "csp_select_laboratories_short", new[] {
-                    new SqlParameter("@instance_status_level", InstanceStatus.Inactive)
-                }, cboxLaboratory);
-            }
-            
-            cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
+            tbPassword2.Enabled = true;            
         }
 
         public FormUser(Guid uid)
@@ -77,40 +64,71 @@ namespace DSA_lims
 
             tbUsername.ReadOnly = true;
             tbPassword1.Enabled = false;
-            tbPassword2.Enabled = false;
+            tbPassword2.Enabled = false;            
+            cboxPersons.Enabled = false;
+        }
 
-            using (SqlConnection conn = DB.OpenConnection())
+        private void FormUser_Load(object sender, EventArgs e)
+        {
+            SqlConnection conn = null;
+            try
             {
-                cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status", false);
+                conn = DB.OpenConnection();
 
-                UI.PopulateComboBoxes(conn, "csp_select_persons_short", new SqlParameter[] { }, cboxPersons);
+                if (p.ContainsKey("id"))
+                {                    
+                    cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status", false);
 
-                UI.PopulateComboBoxes(conn, "csp_select_laboratories_short", new[] {
-                    new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
-                }, cboxLaboratory);
+                    UI.PopulateComboBoxes(conn, "csp_select_persons_short", new SqlParameter[] { }, cboxPersons);
 
-                SqlCommand cmd = new SqlCommand("csp_select_account", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@id", p["id"]);
-                using (SqlDataReader reader = cmd.ExecuteReader())
-                {
-                    if (!reader.HasRows)
-                        throw new Exception("Account with id " + p["id"] + " was not found");
+                    UI.PopulateComboBoxes(conn, "csp_select_laboratories_short", new[] {
+                        new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
+                    }, cboxLaboratory);
 
-                    reader.Read();
+                    SqlCommand cmd = new SqlCommand("csp_select_account", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@id", p["id"]);
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (!reader.HasRows)
+                            throw new Exception("Account with id " + p["id"] + " was not found");
 
-                    tbUsername.Text = reader.GetString("username");
-                    cboxPersons.SelectedValue = reader.GetGuid("person_id");
-                    cboxLaboratory.SelectedValue = reader.GetGuid("laboratory_id");
-                    cboxLanguage.Text = reader.GetString("language_code");
-                    cboxInstanceStatus.SelectedValue = reader.GetInt32("instance_status_id");
-                    p["create_date"] = reader["create_date"];
-                    p["update_date"] = reader["update_date"];
+                        reader.Read();
+
+                        tbUsername.Text = reader.GetString("username");
+                        cboxPersons.SelectedValue = reader.GetGuid("person_id");
+                        cboxLaboratory.SelectedValue = reader.GetGuid("laboratory_id");
+                        cboxLanguage.Text = reader.GetString("language_code");
+                        cboxInstanceStatus.SelectedValue = reader.GetInt32("instance_status_id");
+                        p["create_date"] = reader["create_date"];
+                        p["update_date"] = reader["update_date"];
+                    }                
+                }
+                else
+                {                    
+                    cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status", false);
+
+                    UI.PopulateComboBoxes(conn, "csp_select_persons_short", new SqlParameter[] { }, cboxPersons);
+
+                    UI.PopulateComboBoxes(conn, "csp_select_laboratories_short", new[] {
+                        new SqlParameter("@instance_status_level", InstanceStatus.Inactive)
+                    }, cboxLaboratory);                
+
+                    cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
                 }
             }
-
-            cboxPersons.Enabled = false;
-        }        
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                DialogResult = DialogResult.Abort;
+                Close();
+            }
+            finally
+            {
+                conn?.Close();
+            }
+        }
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
@@ -252,6 +270,6 @@ namespace DSA_lims
             }
 
             return true;
-        }
+        }        
     }
 }

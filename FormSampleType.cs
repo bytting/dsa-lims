@@ -1,4 +1,22 @@
-﻿using Newtonsoft.Json;
+﻿/*	
+	DSA Lims - Laboratory Information Management System
+    Copyright (C) 2018  Norwegian Radiation Protection Authority
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+// Authors: Dag Robole,
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -7,7 +25,6 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DSA_lims
@@ -18,6 +35,7 @@ namespace DSA_lims
         private string SampleTypePath;
         TreeView mTree = null;
         TreeNode mTreeNode = null;
+        bool mEdit = false;
 
         public Guid SampleTypeId
         {
@@ -35,16 +53,22 @@ namespace DSA_lims
 
             mTree = tree;
             mTreeNode = tnode;
+            mEdit = edit;
+        }
 
-            if (edit)
+        private void FormSampleType_Load(object sender, EventArgs e)
+        {
+            if(mEdit)
             {
                 lblCurrent.Text = "Name";
-                tbCurrent.Text = tnode.Text + " -> " + tnode.FullPath;
-                p["id"] = Guid.Parse(tnode.Name);
-                SampleTypePath = tnode.Parent == null ? tnode.FullPath : tnode.Parent.FullPath;
+                tbCurrent.Text = mTreeNode.Text + " -> " + mTreeNode.FullPath;
+                p["id"] = Guid.Parse(mTreeNode.Name);
+                SampleTypePath = mTreeNode.Parent == null ? mTreeNode.FullPath : mTreeNode.Parent.FullPath;
 
-                using (SqlConnection conn = DB.OpenConnection())
+                SqlConnection conn = null;
+                try
                 {
+                    conn = DB.OpenConnection();
                     SqlCommand cmd = new SqlCommand("csp_select_sample_type", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@id", p["id"]);
@@ -65,25 +89,36 @@ namespace DSA_lims
                         p["update_id"] = reader["update_id"];
                     }
                 }
+                catch (Exception ex)
+                {
+                    Common.Log.Error(ex);
+                    MessageBox.Show(ex.Message);
+                    DialogResult = DialogResult.Abort;
+                    Close();
+                }
+                finally
+                {
+                    conn?.Close();
+                }
             }
             else
             {
                 lblCurrent.Text = "Parent name";
 
-                if (tnode == null)
-                {                    
+                if (mTreeNode == null)
+                {
                     tbCurrent.Text = "";
                     p["parent_id"] = Guid.Empty;
                     SampleTypePath = "";
                 }
                 else
-                {                    
-                    tbCurrent.Text = tnode.Text + " -> " + tnode.FullPath;
-                    p["parent_id"] = Guid.Parse(tnode.Name);
-                    SampleTypePath = tnode.FullPath;
+                {
+                    tbCurrent.Text = mTreeNode.Text + " -> " + mTreeNode.FullPath;
+                    p["parent_id"] = Guid.Parse(mTreeNode.Name);
+                    SampleTypePath = mTreeNode.FullPath;
                 }
             }
-        }                
+        }
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
@@ -222,6 +257,6 @@ namespace DSA_lims
             // Don't allow certain characters in XML
             if ("&<>'\"/".Contains(e.KeyChar))
                 e.Handled = true;                
-        }
+        }        
     }
 }

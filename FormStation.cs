@@ -22,11 +22,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
-using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using Newtonsoft.Json;
 
 namespace DSA_lims
 {
@@ -50,46 +47,14 @@ namespace DSA_lims
         {
             InitializeComponent();
             // create new station            
-            Text = "Create station";            
-            using (SqlConnection conn = DB.OpenConnection())
-            {
-                cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status", false);
-            }
-            cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
+            Text = "Create station";                        
         }
         public FormStation(Guid sid)
         {
             InitializeComponent();
-            // edit existing station            
-            p["id"] = sid;
+            // edit existing station
             Text = "Update station";
-
-            using (SqlConnection conn = DB.OpenConnection())
-            {
-                cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status", false);
-
-                SqlCommand cmd = new SqlCommand("csp_select_station", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@id", p["id"]);
-                using (SqlDataReader reader = cmd.ExecuteReader())
-                {
-                    if (!reader.HasRows)
-                        throw new Exception("Station with ID " + p["id"] + " was not found");
-
-                    reader.Read();
-
-                    tbName.Text = reader.GetString("name");
-                    tbLatitude.Text = reader.GetString("latitude");
-                    tbLongitude.Text = reader.GetString("longitude");
-                    tbAltitude.Text = reader.GetString("altitude");
-                    cboxInstanceStatus.SelectedValue = reader.GetInt32("instance_status_id");
-                    tbComment.Text = reader.GetString("comment");
-                    p["create_date"] = reader["create_date"];
-                    p["create_id"] = reader["create_id"];
-                    p["update_date"] = reader["update_date"];
-                    p["update_id"] = reader["update_id"];
-                }
-            }
+            p["id"] = sid;                        
         }
 
         private void FormStation_Load(object sender, EventArgs e)
@@ -104,6 +69,55 @@ namespace DSA_lims
             ttCoords.SetToolTip(lblLongitude, "Latitude, Longitude" + NL + NL
                 + "Formats: " + NL + "61° 34' 12\" N   11° 67' 20\" E" + NL + "61° 34" + Utils.NumberSeparator + "23' N   11° 67" + Utils.NumberSeparator + "33' E"
                 + NL + "61" + Utils.NumberSeparator + "543478 N   11" + Utils.NumberSeparator + "776344 E" + NL + "61" + Utils.NumberSeparator + "543478   -11" + Utils.NumberSeparator + "776344" + NL + NL + "° can be replaced with *");
+
+            SqlConnection conn = null;
+            try
+            {
+                conn = DB.OpenConnection();
+
+                if (p.ContainsKey("id"))
+                {                    
+                    cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status", false);
+
+                    SqlCommand cmd = new SqlCommand("csp_select_station", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@id", p["id"]);
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (!reader.HasRows)
+                            throw new Exception("Station with ID " + p["id"] + " was not found");
+
+                        reader.Read();
+
+                        tbName.Text = reader.GetString("name");
+                        tbLatitude.Text = reader.GetString("latitude");
+                        tbLongitude.Text = reader.GetString("longitude");
+                        tbAltitude.Text = reader.GetString("altitude");
+                        cboxInstanceStatus.SelectedValue = reader.GetInt32("instance_status_id");
+                        tbComment.Text = reader.GetString("comment");
+                        p["create_date"] = reader["create_date"];
+                        p["create_id"] = reader["create_id"];
+                        p["update_date"] = reader["update_date"];
+                        p["update_id"] = reader["update_id"];
+                    }                
+                }
+                else
+                {                    
+                    cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status", false);                
+                    cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
+                }
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                DialogResult = DialogResult.Abort;
+                Close();
+            }
+            finally
+            {
+                conn?.Close();
+            }
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -177,6 +191,7 @@ namespace DSA_lims
                 success = false;
                 transaction?.Rollback();
                 Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
             }
             finally
             {

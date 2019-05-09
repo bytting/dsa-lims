@@ -46,20 +46,26 @@ namespace DSA_lims
     {
         private Guid mAssignmentId = Guid.Empty;
         private string OrderName = "", LaboratoryName = "", ResponsibleName = "", CustomerName = "", CustomerCompany = "", CustomerAddress = "";
+
         private PdfImage labLogo = null, accredLogo = null;
 
         public FormCreateOrderReport(Guid assignmentId)
         {
             InitializeComponent();
+            mAssignmentId = assignmentId;            
+        }
 
-            mAssignmentId = assignmentId;
-            using (SqlConnection conn = DB.OpenConnection())
+        private void FormCreateOrderReport_Load(object sender, EventArgs e)
+        {
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 using (SqlDataReader reader = DB.GetDataReader(conn, null, "csp_select_assignment_flat", CommandType.StoredProcedure, new SqlParameter("@id", mAssignmentId)))
                 {
                     if (reader.HasRows)
                     {
-                        reader.Read();                        
+                        reader.Read();
 
                         OrderName = reader.GetString("name");
                         LaboratoryName = reader.GetString("laboratory_name");
@@ -89,6 +95,17 @@ namespace DSA_lims
                     }
                 }
             }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                DialogResult = DialogResult.Abort;
+                Close();
+            }
+            finally
+            {
+                conn?.Close();
+            }
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -112,69 +129,71 @@ namespace DSA_lims
 
         private void btnOk_Click(object sender, EventArgs e)
         {
-            MemoryStream ms = new MemoryStream();
-            PdfDocument document = new PdfDocument();
-            PdfWriter writer = PdfWriter.GetInstance(document, ms);
-
-            document.Open();            
-
-            PdfContentByte cb = writer.DirectContent;
-
-            cb.BeginText();
-
-            PdfBaseFont baseFont = PdfBaseFont.CreateFont(PdfBaseFont.TIMES_ROMAN, PdfBaseFont.CP1252, PdfBaseFont.NOT_EMBEDDED);
-            PdfBaseFont baseFontBold = PdfBaseFont.CreateFont(PdfBaseFont.TIMES_BOLD, PdfBaseFont.CP1252, PdfBaseFont.NOT_EMBEDDED);
-            PdfBaseFont baseFontItalic = PdfBaseFont.CreateFont(PdfBaseFont.TIMES_ITALIC, PdfBaseFont.CP1252, PdfBaseFont.NOT_EMBEDDED);
-            float fontSize = 11, fontSizeSmall = 9, fontSizeTiny = 7, fontSizeHeader = 13;
-            float margin = 50;
-            float leftCursor = margin, topCursor = document.Top - margin, lineSpace = 13;
-            bool hasLogos = false;
-
-            if (labLogo != null)
+            try
             {
-                CropImageToHeight(labLogo, 64f);
-                labLogo.SetAbsolutePosition(leftCursor, topCursor);
-                document.Add(labLogo);
-                hasLogos = true;                
-            }
+                MemoryStream ms = new MemoryStream();
+                PdfDocument document = new PdfDocument();
+                PdfWriter writer = PdfWriter.GetInstance(document, ms);
 
-            if (accredLogo != null)
-            {
-                CropImageToHeight(accredLogo, 64f);
-                accredLogo.SetAbsolutePosition(document.PageSize.Width - accredLogo.ScaledWidth - margin, topCursor);
-                document.Add(accredLogo);
-                hasLogos = true;
-            }
+                document.Open();
 
-            if(hasLogos)
-                topCursor -= labLogo.ScaledHeight;
+                PdfContentByte cb = writer.DirectContent;
 
-            cb.SetFontAndSize(baseFont, fontSizeHeader);
-            cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, "FORENKLET MÅLERAPPORT", leftCursor, topCursor, 0);
-            cb.SetFontAndSize(baseFont, fontSize);
-            topCursor -= lineSpace * 2;
-            cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, "Henvisning til eventuell endringsrapport, Rev.nr.:", leftCursor, topCursor, 0);
-            topCursor -= lineSpace * 2;
-            cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, "Oppdrag: " + OrderName, leftCursor, topCursor, 0);
-            topCursor -= lineSpace;
-            string cust = CustomerName;
-            if (!String.IsNullOrEmpty(CustomerCompany)) cust += ", " + CustomerCompany;
-            cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, "Oppdragsgiver: " + cust, leftCursor, topCursor, 0);
-            topCursor -= lineSpace;
-            cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, CustomerAddress, leftCursor, topCursor, 0);
-            topCursor -= lineSpace;
-            cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, "Laboratorie/Kontaktperson: " + LaboratoryName + " / " + ResponsibleName, leftCursor, topCursor, 0);            
-            topCursor -= lineSpace * 6;
-            cb.SetFontAndSize(baseFontBold, fontSizeHeader);
-            cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, "Måleresultater", leftCursor, topCursor, 0);
-            cb.EndText();
+                cb.BeginText();
 
-            topCursor -= lineSpace;
-            
-            PdfPTable table = new PdfPTable(6);
-            table.TotalWidth = document.GetRight(margin) - document.GetLeft(margin);
+                PdfBaseFont baseFont = PdfBaseFont.CreateFont(PdfBaseFont.TIMES_ROMAN, PdfBaseFont.CP1252, PdfBaseFont.NOT_EMBEDDED);
+                PdfBaseFont baseFontBold = PdfBaseFont.CreateFont(PdfBaseFont.TIMES_BOLD, PdfBaseFont.CP1252, PdfBaseFont.NOT_EMBEDDED);
+                PdfBaseFont baseFontItalic = PdfBaseFont.CreateFont(PdfBaseFont.TIMES_ITALIC, PdfBaseFont.CP1252, PdfBaseFont.NOT_EMBEDDED);
+                float fontSize = 11, fontSizeSmall = 9, fontSizeTiny = 7, fontSizeHeader = 13;
+                float margin = 50;
+                float leftCursor = margin, topCursor = document.Top - margin, lineSpace = 13;
+                bool hasLogos = false;
 
-            string query = @"
+                if (labLogo != null)
+                {
+                    CropImageToHeight(labLogo, 64f);
+                    labLogo.SetAbsolutePosition(leftCursor, topCursor);
+                    document.Add(labLogo);
+                    hasLogos = true;
+                }
+
+                if (accredLogo != null)
+                {
+                    CropImageToHeight(accredLogo, 64f);
+                    accredLogo.SetAbsolutePosition(document.PageSize.Width - accredLogo.ScaledWidth - margin, topCursor);
+                    document.Add(accredLogo);
+                    hasLogos = true;
+                }
+
+                if (hasLogos)
+                    topCursor -= labLogo.ScaledHeight;
+
+                cb.SetFontAndSize(baseFont, fontSizeHeader);
+                cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, "FORENKLET MÅLERAPPORT", leftCursor, topCursor, 0);
+                cb.SetFontAndSize(baseFont, fontSize);
+                topCursor -= lineSpace * 2;
+                cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, "Henvisning til eventuell endringsrapport, Rev.nr.:", leftCursor, topCursor, 0);
+                topCursor -= lineSpace * 2;
+                cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, "Oppdrag: " + OrderName, leftCursor, topCursor, 0);
+                topCursor -= lineSpace;
+                string cust = CustomerName;
+                if (!String.IsNullOrEmpty(CustomerCompany)) cust += ", " + CustomerCompany;
+                cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, "Oppdragsgiver: " + cust, leftCursor, topCursor, 0);
+                topCursor -= lineSpace;
+                cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, CustomerAddress, leftCursor, topCursor, 0);
+                topCursor -= lineSpace;
+                cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, "Laboratorie/Kontaktperson: " + LaboratoryName + " / " + ResponsibleName, leftCursor, topCursor, 0);
+                topCursor -= lineSpace * 6;
+                cb.SetFontAndSize(baseFontBold, fontSizeHeader);
+                cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, "Måleresultater", leftCursor, topCursor, 0);
+                cb.EndText();
+
+                topCursor -= lineSpace;
+
+                PdfPTable table = new PdfPTable(6);
+                table.TotalWidth = document.GetRight(margin) - document.GetLeft(margin);
+
+                string query = @"
 select s.number as 'sample', p.number as 'preparation', a.number as 'analysis', am.name as 'analysis_method', n.name as 'nuclide', ar.activity
 from sample s
     inner join preparation p on p.sample_id = s.id
@@ -184,59 +203,78 @@ from sample s
     inner join nuclide n on n.id = ar.nuclide_id
 order by s.number, p.number, a.number
 ";
-            int nRows = 0;
-            using (SqlConnection conn = DB.OpenConnection())
-            {
-                using (SqlDataReader reader = DB.GetDataReader(conn, null, query, CommandType.Text, new[] {
-                    new SqlParameter("@assignment_id", mAssignmentId)
-                }))
-                {                    
-                    while (reader.Read())
-                    {                        
-                        table.AddCell(reader.GetString("sample"));
-                        table.AddCell(reader.GetString("preparation"));
-                        table.AddCell(reader.GetString("analysis"));
-                        table.AddCell(reader.GetString("analysis_method"));
-                        table.AddCell(reader.GetString("nuclide"));
-                        table.AddCell(reader.GetString("activity"));
-                        nRows++;
+                int nRows = 0;
+                SqlConnection conn = null;
+                try
+                {
+                    conn = DB.OpenConnection();
+                    using (SqlDataReader reader = DB.GetDataReader(conn, null, query, CommandType.Text, new[] {
+                        new SqlParameter("@assignment_id", mAssignmentId)
+                    }))
+                    {
+                        while (reader.Read())
+                        {
+                            table.AddCell(reader.GetString("sample"));
+                            table.AddCell(reader.GetString("preparation"));
+                            table.AddCell(reader.GetString("analysis"));
+                            table.AddCell(reader.GetString("analysis_method"));
+                            table.AddCell(reader.GetString("nuclide"));
+                            table.AddCell(reader.GetString("activity"));
+                            nRows++;
+                        }
                     }
                 }
+                catch (Exception ex)
+                {
+                    document.Close();
+                    Common.Log.Error(ex);
+                    MessageBox.Show(ex.Message);
+                    return;
+                }
+                finally
+                {
+                    conn?.Close();
+                }
+
+                //PdfPCell cell = new PdfPCell(new PdfPhrase("Måleresultater"));
+                //cell.Colspan = 3;
+                //cell.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
+                //table.AddCell(cell);                
+                //document.Add(table);            
+                float rowHeight = table.GetRowHeight(0);
+                int currRow = 0;
+                while (true)
+                {
+                    int pageRows = (int)((topCursor - document.Bottom) / rowHeight);
+
+                    pageRows = (nRows > pageRows) ? pageRows : nRows;
+                    table.WriteSelectedRows(currRow, currRow + pageRows, leftCursor, topCursor, cb);
+                    nRows -= pageRows;
+                    currRow += pageRows;
+                    if (nRows <= 0)
+                        break;
+
+                    document.NewPage();
+                    topCursor = document.Top - margin;
+                }
+
+                document.Close();
+
+                SaveFileDialog dialog = new SaveFileDialog();
+                dialog.Filter = "PDF files (*.pdf)|*.pdf";
+                if (dialog.ShowDialog() != DialogResult.OK)
+                    return;
+
+                File.WriteAllBytes(dialog.FileName, ms.GetBuffer());
+
+                DialogResult = DialogResult.OK;
+                Close();
             }
-
-            //PdfPCell cell = new PdfPCell(new PdfPhrase("Måleresultater"));
-            //cell.Colspan = 3;
-            //cell.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
-            //table.AddCell(cell);                
-            //document.Add(table);            
-            float rowHeight = table.GetRowHeight(0);
-            int currRow = 0;
-            while (true)
-            {                
-                int pageRows = (int)((topCursor - document.Bottom) / rowHeight);
-
-                pageRows = (nRows > pageRows) ? pageRows : nRows;             
-                table.WriteSelectedRows(currRow, currRow + pageRows, leftCursor, topCursor, cb);
-                nRows -= pageRows;
-                currRow += pageRows;
-                if (nRows <= 0)
-                    break;
-
-                document.NewPage();
-                topCursor = document.Top - margin;
+            catch(Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
             }
-
-            document.Close();
-
-            SaveFileDialog dialog = new SaveFileDialog();
-            dialog.Filter = "PDF files (*.pdf)|*.pdf";
-            if (dialog.ShowDialog() != DialogResult.OK)
-                return;
-
-            File.WriteAllBytes(dialog.FileName, ms.GetBuffer());
-
-            DialogResult = DialogResult.OK;
-            Close();
         }
     }
 }

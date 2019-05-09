@@ -43,12 +43,14 @@ namespace DSA_lims
         }
 
         private void FormProjectSubXUsers_Load(object sender, EventArgs e)
-        {
-            var uArr = from item in mExistingUsers select "'" + item + "'";
-            string exceptIds = string.Join(",", uArr);
-
-            using (SqlConnection conn = DB.OpenConnection())
+        {            
+            SqlConnection conn = null;
+            try
             {
+                var uArr = from item in mExistingUsers select "'" + item + "'";
+                string exceptIds = string.Join(",", uArr);
+
+                conn = DB.OpenConnection();
                 string query;
                 if (String.IsNullOrEmpty(exceptIds))
                     query = "select id, name, username from cv_account where instance_status_id < 2 and email is not NULL";
@@ -61,6 +63,17 @@ namespace DSA_lims
 
                 gridUsers.Columns["name"].HeaderText = "Name";
                 gridUsers.Columns["username"].HeaderText = "Username";
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                DialogResult = DialogResult.Abort;
+                Close();
+            }
+            finally
+            {
+                conn?.Close();
             }
         }
 
@@ -97,6 +110,7 @@ namespace DSA_lims
                 trans?.Rollback();
                 Common.Log.Error(ex);
                 MessageBox.Show(ex.Message);
+                return;
             }
             finally
             {

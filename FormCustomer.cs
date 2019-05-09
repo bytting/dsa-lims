@@ -22,11 +22,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
-using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using Newtonsoft.Json;
 
 namespace DSA_lims
 {
@@ -42,68 +39,82 @@ namespace DSA_lims
         public FormCustomer()
         {
             InitializeComponent();
-
-            Text = "DSA-Lims - New customer";
-            using (SqlConnection conn = DB.OpenConnection())
-            {
-                UI.PopulateComboBoxes(conn, "csp_select_persons_short", new SqlParameter[] {}, cboxPerson);
-
-                UI.PopulateComboBoxes(conn, "csp_select_companies_short", new[] {
-                    new SqlParameter("instance_status_level", InstanceStatus.Active)
-                }, cboxCompany);
-
-                cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status", false);
-            }            
-            cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
+            Text = "DSA-Lims - New customer";            
         }
 
         public FormCustomer(Guid customerId)
         {
             InitializeComponent();
-
             Text = "DSA-Lims - Edit customer";
             p["id"] = customerId;
-
-            using (SqlConnection conn = DB.OpenConnection())
-            {
-                UI.PopulateComboBoxes(conn, "csp_select_persons_short", new SqlParameter[] { }, cboxPerson);
-
-                UI.PopulateComboBoxes(conn, "csp_select_companies_short", new[] {
-                    new SqlParameter("instance_status_level", InstanceStatus.Active)
-                }, cboxCompany);
-
-                cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status", false);
-
-                SqlCommand cmd = new SqlCommand("csp_select_customer", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@id", p["id"]);
-                using (SqlDataReader reader = cmd.ExecuteReader())
-                {
-                    if (!reader.HasRows)
-                    {
-                        Common.Log.Error("Customer with ID " + p["id"] + " was not found");
-                        MessageBox.Show("Customer with ID " + p["id"] + " was not found");
-                        Close();
-                    }
-
-                    reader.Read();
-
-                    cboxPerson.SelectedValue = reader.GetGuid("person_id");
-                    cboxCompany.SelectedValue = reader.GetGuid("company_id");
-                    cboxInstanceStatus.SelectedValue = reader.GetInt32("instance_status_id");
-                    tbComment.Text = reader.GetString("comment");
-                    p["create_date"] = reader.GetDateTime("create_date");
-                    p["create_id"] = reader.GetGuid("create_id");
-                    p["update_date"] = reader.GetDateTime("update_date");
-                    p["update_id"] = reader.GetGuid("update_id");
-
-                    cboxPerson.Enabled = false;
-                }
-            }
         }
 
         private void FormCustomer_Load(object sender, EventArgs e)
-        {            
+        {
+            SqlConnection conn = null;
+            try
+            {
+                conn = DB.OpenConnection();
+
+                if (p.ContainsKey("id"))
+                {                    
+                    UI.PopulateComboBoxes(conn, "csp_select_persons_short", new SqlParameter[] { }, cboxPerson);
+
+                    UI.PopulateComboBoxes(conn, "csp_select_companies_short", new[] {
+                        new SqlParameter("instance_status_level", InstanceStatus.Active)
+                    }, cboxCompany);
+
+                    cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status", false);
+
+                    SqlCommand cmd = new SqlCommand("csp_select_customer", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@id", p["id"]);
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (!reader.HasRows)
+                        {
+                            Common.Log.Error("Customer with ID " + p["id"] + " was not found");
+                            MessageBox.Show("Customer with ID " + p["id"] + " was not found");
+                            Close();
+                        }
+
+                        reader.Read();
+
+                        cboxPerson.SelectedValue = reader.GetGuid("person_id");
+                        cboxCompany.SelectedValue = reader.GetGuid("company_id");
+                        cboxInstanceStatus.SelectedValue = reader.GetInt32("instance_status_id");
+                        tbComment.Text = reader.GetString("comment");
+                        p["create_date"] = reader.GetDateTime("create_date");
+                        p["create_id"] = reader.GetGuid("create_id");
+                        p["update_date"] = reader.GetDateTime("update_date");
+                        p["update_id"] = reader.GetGuid("update_id");
+
+                        cboxPerson.Enabled = false;
+                    }                
+                }
+                else
+                {
+                    UI.PopulateComboBoxes(conn, "csp_select_persons_short", new SqlParameter[] { }, cboxPerson);
+
+                    UI.PopulateComboBoxes(conn, "csp_select_companies_short", new[] {
+                        new SqlParameter("instance_status_level", InstanceStatus.Active)
+                    }, cboxCompany);
+
+                    cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status", false);
+                    cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
+                }
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                DialogResult = DialogResult.Abort;
+                Close();
+            }
+            finally
+            {
+                conn?.Close();
+            }
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -176,7 +187,8 @@ namespace DSA_lims
             {
                 success = false;
                 transaction?.Rollback();
-                Common.Log.Error(ex);                
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
             }
             finally
             {

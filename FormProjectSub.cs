@@ -46,12 +46,7 @@ namespace DSA_lims
             InitializeComponent();            
             p["project_main_id"] = pid;            
             Text = "Create new sub project";
-            tbMainProjectName.Text = pname;
-            using (SqlConnection conn = DB.OpenConnection())
-            {
-                cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status", false);
-            }            
-            cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
+            tbMainProjectName.Text = pname;            
         }
 
         public FormProjectSub(string pname, Guid pid, Guid spid)
@@ -60,30 +55,55 @@ namespace DSA_lims
             p["id"] = spid;
             p["project_main_id"] = pid;            
             Text = "Update sub project";
-            tbMainProjectName.Text = pname;
+            tbMainProjectName.Text = pname;            
+        }
 
-            using (SqlConnection conn = DB.OpenConnection())
+        private void FormProjectSub_Load(object sender, EventArgs e)
+        {
+            SqlConnection conn = null;
+            try
             {
-                cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status", false);
+                conn = DB.OpenConnection();
 
-                SqlCommand cmd = new SqlCommand("csp_select_project_sub", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@id", p["id"]);
-                using (SqlDataReader reader = cmd.ExecuteReader())
-                {
-                    if (!reader.HasRows)
-                        throw new Exception("Project with ID " + p["id"] + " was not found");
+                if (p.ContainsKey("id"))
+                {                    
+                    cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status", false);
 
-                    reader.Read();
+                    SqlCommand cmd = new SqlCommand("csp_select_project_sub", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@id", p["id"]);
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (!reader.HasRows)
+                            throw new Exception("Project with ID " + p["id"] + " was not found");
 
-                    tbName.Text = reader.GetString("name");
-                    cboxInstanceStatus.SelectedValue = reader.GetInt32("instance_status_id");
-                    tbComment.Text = reader.GetString("comment");
-                    p["create_date"] = reader["create_date"];
-                    p["create_id"] = reader["create_id"];
-                    p["update_date"] = reader["update_date"];
-                    p["update_id"] = reader["update_id"];
+                        reader.Read();
+
+                        tbName.Text = reader.GetString("name");
+                        cboxInstanceStatus.SelectedValue = reader.GetInt32("instance_status_id");
+                        tbComment.Text = reader.GetString("comment");
+                        p["create_date"] = reader["create_date"];
+                        p["create_id"] = reader["create_id"];
+                        p["update_date"] = reader["update_date"];
+                        p["update_id"] = reader["update_id"];
+                    }                
                 }
+                else
+                {                    
+                    cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status", false);                
+                    cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
+                }
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                DialogResult = DialogResult.Abort;
+                Close();
+            }
+            finally
+            {
+                conn?.Close();
             }
         }
 
@@ -143,7 +163,8 @@ namespace DSA_lims
             {
                 success = false;
                 transaction?.Rollback();
-                Common.Log.Error(ex);                
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);          
             }
             finally
             {
@@ -191,6 +212,6 @@ namespace DSA_lims
             cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
             cmd.Parameters.AddWithValue("@update_id", p["update_id"]);
             cmd.ExecuteNonQuery();
-        }
+        }        
     }
 }

@@ -86,6 +86,8 @@ namespace DSA_lims
             {
                 Common.Log.Error(ex);
                 MessageBox.Show(ex.Message);
+                DialogResult = DialogResult.Abort;
+                Close();
             }
             finally
             {

@@ -25,7 +25,6 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using Newtonsoft.Json;
 
 namespace DSA_lims
 {
@@ -46,51 +45,16 @@ namespace DSA_lims
         public FormNuclide()
         {
             InitializeComponent();
-
             // Create new nuclide                                    
-            Text = "New nuclide";            
-            using (SqlConnection conn = DB.OpenConnection())
-            {
-                cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status", false);
-            }
-            cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
+            Text = "New nuclide";                        
         }
 
         public FormNuclide(Guid nid)
         {
             InitializeComponent();
-
-            // Edit existing nuclide
-            p["id"] = nid;
+            // Edit existing nuclide            
             Text = "Edit nuclide";
-
-            using (SqlConnection conn = DB.OpenConnection())
-            {
-                cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status", false);
-
-                SqlCommand cmd = new SqlCommand("csp_select_nuclide", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@ID", nid);
-                using (SqlDataReader reader = cmd.ExecuteReader())
-                {
-                    if(!reader.HasRows)                    
-                        throw new Exception("Nuclide with ID " + p["id"] + " was not found");                    
-
-                    reader.Read();                    
-
-                    tbName.Text = reader.GetString("name");
-                    tbProtons.Text = reader.GetString("protons");
-                    tbNeutrons.Text = reader.GetString("neutrons");
-                    cbMetaStable.Checked = reader.GetBoolean("meta_stable");
-                    tbHalflife.Text = reader.GetDouble("half_life_year").ToString(Utils.ScientificFormat);
-                    cboxInstanceStatus.SelectedValue = reader.GetInt32("instance_status_id");
-                    tbComment.Text = reader.GetString("comment");
-                    p["create_date"] = reader["create_date"];
-                    p["create_id"] = reader["create_id"];
-                    p["update_date"] = reader["update_date"];
-                    p["update_id"] = reader["update_id"];
-                }
-            }            
+            p["id"] = nid;                        
         }
 
         private void FormNuclide_Load(object sender, EventArgs e)
@@ -98,6 +62,56 @@ namespace DSA_lims
             tbProtons.KeyPress += CustomEvents.Integer_KeyPress;
             tbNeutrons.KeyPress += CustomEvents.Integer_KeyPress;
             tbHalflife.KeyPress += CustomEvents.Numeric_KeyPress;
+
+            SqlConnection conn = null;
+            try
+            {
+                conn = DB.OpenConnection();
+
+                if (p.ContainsKey("id"))
+                {                    
+                    cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status", false);
+
+                    SqlCommand cmd = new SqlCommand("csp_select_nuclide", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@ID", p["id"]);
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (!reader.HasRows)
+                            throw new Exception("Nuclide with ID " + p["id"] + " was not found");
+
+                        reader.Read();
+
+                        tbName.Text = reader.GetString("name");
+                        tbProtons.Text = reader.GetString("protons");
+                        tbNeutrons.Text = reader.GetString("neutrons");
+                        cbMetaStable.Checked = reader.GetBoolean("meta_stable");
+                        tbHalflife.Text = reader.GetDouble("half_life_year").ToString(Utils.ScientificFormat);
+                        cboxInstanceStatus.SelectedValue = reader.GetInt32("instance_status_id");
+                        tbComment.Text = reader.GetString("comment");
+                        p["create_date"] = reader["create_date"];
+                        p["create_id"] = reader["create_id"];
+                        p["update_date"] = reader["update_date"];
+                        p["update_id"] = reader["update_id"];
+                    }                
+                }
+                else
+                {                    
+                    cboxInstanceStatus.DataSource = DB.GetIntLemmata(conn, null, "csp_select_instance_status", false);                
+                    cboxInstanceStatus.SelectedValue = InstanceStatus.Active;
+                }
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                DialogResult = DialogResult.Abort;
+                Close();
+            }
+            finally
+            {
+                conn?.Close();
+            }
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -197,7 +211,8 @@ namespace DSA_lims
             {
                 success = false;
                 transaction?.Rollback();
-                Common.Log.Error(ex);                
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);          
             }
             finally
             {

@@ -94,6 +94,7 @@
             this.Name = "FormAccountXRoles";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "DSA-Lims - Add roles";
+            this.Load += new System.EventHandler(this.FormAccountXRoles_Load);
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 

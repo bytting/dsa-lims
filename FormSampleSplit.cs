@@ -32,16 +32,24 @@ namespace DSA_lims
     public partial class FormSampleSplit : Form
     {
         private Dictionary<string, object> map = new Dictionary<string, object>();
+        private TreeView mTreeSampleTypes = null;
 
         public FormSampleSplit(Guid sampleId, TreeView treeSampleTypes)
         {
             InitializeComponent();
+            mTreeSampleTypes = treeSampleTypes;
+            map["id"] = sampleId;            
+        }
 
-            map["id"] = sampleId;
+        private void FormSampleSplit_Load(object sender, EventArgs e)
+        {
+            tbCount.KeyPress += CustomEvents.Integer_KeyPress;
 
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
-                string query = "select * from sample s inner join sample_type st on s.sample_type_id = st.id where s.id = @id";                
+                conn = DB.OpenConnection();
+                string query = "select * from sample s inner join sample_type st on s.sample_type_id = st.id where s.id = @id";
 
                 using (SqlDataReader reader = DB.GetDataReader(conn, null, query, CommandType.Text, new SqlParameter("@id", map["id"])))
                 {
@@ -71,8 +79,8 @@ namespace DSA_lims
 
                 string sampleTypeName = DB.GetScalar(conn, null, "select name from sample_type where id = @id", CommandType.Text, new SqlParameter("@id", map["sample_type_id"])).ToString();
                 tbSampleType.Text = sampleTypeName;
-                
-                TreeNode[] tnodes = treeSampleTypes.Nodes.Find(map["sample_type_id"].ToString(), true);
+
+                TreeNode[] tnodes = mTreeSampleTypes.Nodes.Find(map["sample_type_id"].ToString(), true);
                 if (tnodes.Length < 1)
                 {
                     throw new Exception("Unable to find sample type id " + map["sample_type_id"].ToString());
@@ -80,11 +88,17 @@ namespace DSA_lims
 
                 UI.PopulateSampleComponentsAscending(conn, Guid.Parse(map["sample_type_id"].ToString()), tnodes[0], cboxComponents);
             }
-        }
-
-        private void FormSampleSplit_Load(object sender, EventArgs e)
-        {
-            tbCount.KeyPress += CustomEvents.Integer_KeyPress;
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                DialogResult = DialogResult.Abort;
+                Close();
+            }
+            finally
+            {
+                conn?.Close();
+            }
         }
 
         private void btnCancel_Click(object sender, EventArgs e)

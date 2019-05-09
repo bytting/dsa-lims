@@ -22,7 +22,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using GMap.NET;
@@ -139,8 +138,11 @@ namespace DSA_lims
             RemoveAllMarkers();
             int nSamplesShown = 0;
 
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
+
                 string query = @"
 select s.latitude, s.longitude, st.name as 'sample_type_name'
 from sample s
@@ -178,6 +180,16 @@ where number = @id
                         }
                     }
                 }                                
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            finally
+            {
+                conn?.Close();
             }
 
             lblInfo.Text = mSampleList.Count + " samples, showing " + nSamplesShown + " with coordinates";

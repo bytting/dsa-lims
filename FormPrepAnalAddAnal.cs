@@ -44,13 +44,26 @@ namespace DSA_lims
 
         private void FormPrepAnalAddAnal_Load(object sender, EventArgs e)
         {
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
                 UI.PopulateComboBoxes(conn, "csp_select_analysis_methods_for_laboratory_short", new[] {
                     new SqlParameter("laboratory_id", Common.LabId),
                     new SqlParameter("preparation_method_id", mPrep.PreparationMethodId),
                     new SqlParameter("instance_status_level", InstanceStatus.Active)
                 }, cboxAnalMethods);
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                DialogResult = DialogResult.Abort;
+                Close();
+            }
+            finally
+            {
+                conn?.Close();
             }
 
             tbCount.Text = "1";
@@ -131,6 +144,8 @@ namespace DSA_lims
             {
                 transaction?.Rollback();
                 Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                return;
             }
             finally
             {

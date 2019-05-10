@@ -701,6 +701,7 @@ namespace DSA_lims
             bool isAdmin = Roles.IsAdmin();
             miSearchView.Enabled = miProjectsView.Enabled = miCustomersView.Enabled = miTypeRelationsView.Enabled = miMetadataView.Enabled = miSystemDataView.Enabled = miAuditLogView.Enabled = isAdmin;
             btnMenuNewSample.Enabled = btnMenuSamples.Enabled = btnMenuNewOrder.Enabled = btnOrders.Enabled = btnMenuCustomer.Enabled = btnMenuProjects.Enabled = btnMenuMetadata.Enabled = btnMenuSearch.Enabled = isAdmin;
+            tbMenuLookup.Enabled = isAdmin;
 
             miTypeRelSampleTypesNewRoot.Enabled = btnTypeRelSampleTypesNewRoot.Enabled = miTypeRelSampleTypesNew.Enabled = btnTypeRelSampleTypesNew.Enabled = miTypeRelSampleTypesEdit.Enabled = btnTypeRelSampleTypesEdit.Enabled = miTypeRelSampleTypesDelete.Enabled = btnTypeRelSampleTypesDelete.Enabled = isAdmin;
             miNewLaboratory.Enabled = miEditLaboratory.Enabled = miDeleteLaboratory.Enabled = btnSysLabNew.Enabled = btnSysLabEdit.Enabled = btnSysLabDelete.Enabled = isAdmin;
@@ -708,7 +709,7 @@ namespace DSA_lims
             miNewCounty.Enabled = miEditCounty.Enabled = miDeleteCounty.Enabled = miNewMunicipality.Enabled = miEditMunicipality.Enabled = miDeleteMunicipality.Enabled = isAdmin;
             btnNewCounty.Enabled = btnEditCounty.Enabled = btnDeleteCounty.Enabled = btnNewMunicipality.Enabled = btnEditMunicipality.Enabled = btnDeleteMunicipality.Enabled = isAdmin;
             miTypeRelSampleTypesCompNew.Enabled = miTypeRelSampleTypesCompEdit.Enabled = btnTypeRelSampTypeCompAdd.Enabled = btnTypeRelSampTypeCompEdit.Enabled = btnTypeRelSampTypeCompDelete.Enabled = isAdmin;
-            miPreparationMethodsNew.Enabled = miPreparationMethodEdit.Enabled = miPreparationMethodDelete.Enabled = btnTypeRelSampTypePrepMethAdd.Enabled = btnTypeRelSampTypePrepMethRemove.Enabled = isAdmin;
+            miPreparationMethodsNew.Enabled = miPreparationMethodEdit.Enabled = miPreparationMethodDelete.Enabled = btnTypeRelSampTypePrepMethAdd.Enabled = isAdmin;
             miSamplesSetOrder.Enabled = btnSamplesSetOrder.Enabled = btnSampleAddSampleToOrder.Enabled = isAdmin;
             miSamplesPrepAnal.Enabled = btnSamplesPrepAnal.Enabled = btnSampleGoToPrepAnal.Enabled = isAdmin;
             miSamplesUnlock.Enabled = btnSamplesUnlock.Visible = isAdmin;
@@ -729,16 +730,18 @@ namespace DSA_lims
             {                
                 miSearchView.Enabled = miProjectsView.Enabled = miCustomersView.Enabled = miTypeRelationsView.Enabled = miMetadataView.Enabled = miSystemDataView.Enabled = miAuditLogView.Enabled = true;
                 btnMenuNewSample.Enabled = btnMenuSamples.Enabled = btnMenuNewOrder.Enabled = btnOrders.Enabled = btnMenuCustomer.Enabled = btnMenuProjects.Enabled = btnMenuMetadata.Enabled = btnMenuSearch.Enabled = true;
-                miPreparationMethodsNew.Enabled = miPreparationMethodEdit.Enabled = miPreparationMethodDelete.Enabled = btnTypeRelSampTypePrepMethAdd.Enabled = btnTypeRelSampTypePrepMethRemove.Enabled = true;
+                tbMenuLookup.Enabled = true;
+                miPreparationMethodsNew.Enabled = miPreparationMethodEdit.Enabled = miPreparationMethodDelete.Enabled = btnTypeRelSampTypePrepMethAdd.Enabled = true;
                 miSamplesSetOrder.Enabled = btnSamplesSetOrder.Enabled = btnSampleAddSampleToOrder.Enabled = true;
                 miSamplesPrepAnal.Enabled = btnSamplesPrepAnal.Enabled = btnSampleGoToPrepAnal.Enabled = true;
                 btnSysLabPrepMethAdd.Enabled = btnSysLabPrepMethRemove.Enabled = btnSysLabAnalMethAdd.Enabled = btnSysLabAnalMethRemove.Enabled = true;
             }
 
-            if (Roles.HasAccess(Role.LaboratoryOperator))
+            if (Roles.HasAccess(Role.LaboratoryOperator) && Common.LabId != Guid.Empty)
             {
                 miMetadataView.Visible = true;
                 btnMenuSamples.Enabled = btnMenuNewSample.Enabled = true;
+                tbMenuLookup.Enabled = true;
                 miSearchView.Enabled = btnMenuSearch.Enabled = true;
                 miSamplesSetOrder.Enabled = btnSamplesSetOrder.Enabled = btnSampleAddSampleToOrder.Enabled = true;
                 miSamplesPrepAnal.Enabled = btnSamplesPrepAnal.Enabled = btnSampleGoToPrepAnal.Enabled = true;
@@ -747,6 +750,7 @@ namespace DSA_lims
             if (Roles.HasAccess(Role.SampleRegistrator))
             {
                 btnMenuSamples.Enabled = btnMenuNewSample.Enabled = true;
+                tbMenuLookup.Enabled = true;
             }
 
             if (Roles.HasAccess(Role.OrderAdministrator))
@@ -7764,10 +7768,22 @@ where s.number = @sample_number
             assignment.Dirty = true;
         }
 
+        private void SetOrderDetailsEnabledState(bool state)
+        {
+            cboxOrderLaboratory.Enabled = state;
+            cboxOrderResponsible.Enabled = state;
+            btnOrderSelectCustomer.Enabled = state;
+            btnOrderClearDeadline.Enabled = state;
+            btnOrderSelectDeadline.Enabled = state;
+            cboxOrderRequestedSigma.Enabled = state;
+            cboxOrderRequestedSigmaMDA.Enabled = state;
+            tbOrderContentComment.ReadOnly = !state;
+        }
+
         private void cbOrderApprovedLaboratory_CheckedChanged(object sender, EventArgs e)
         {            
             assignment.Dirty = true;
-            layoutOrderDetails.Enabled = !cbOrderApprovedLaboratory.Checked;
+            SetOrderDetailsEnabledState(!cbOrderApprovedLaboratory.Checked);
             ddbOrderAdd.Enabled = ddbOrderEdit.Enabled = ddbOrderDel.Enabled = !cbOrderApprovedLaboratory.Checked;
             if (!cbOrderApprovedLaboratory.Checked)
                 cbOrderApprovedCustomer.Checked = false;
@@ -9239,60 +9255,29 @@ where ar.instance_status_id < 2
         }
 
         private void miTypeRelSampleTypesPrepMethRemove_Click(object sender, EventArgs e)
-        {
-            // remove preparation methods from sample type
+        {            
+            MessageBox.Show("Not implemented");
+        }
 
-            if (!Roles.HasAccess(Role.LaboratoryAdministrator))
+        private void miTypeRelSampleTypesCompRemove_Click(object sender, EventArgs e)
+        {
+            // remove sample type component
+
+            if (!Roles.IsAdmin())
             {
                 MessageBox.Show("You don't have access to manage sample types");
                 return;
             }
 
-            if(treeSampleTypes.SelectedNode == null)
+            if (treeSampleTypes.SelectedNode == null)
             {
                 MessageBox.Show("You must select a sample type first");
                 return;
             }
             
-            if (lbTypeRelSampTypePrepMeth.SelectedItems.Count < 1)
-            {
-                MessageBox.Show("You must select one or more preparation methods first");
-                return;
-            }
+            Guid sampleTypeId = Guid.Parse(treeSampleTypes.SelectedNode.Name);
 
-            Guid stid = Utils.MakeGuid(treeSampleTypes.SelectedNode.Name);
 
-            SqlConnection conn = null;
-            SqlTransaction trans = null;
-            try
-            {
-                conn = DB.OpenConnection();
-                trans = conn.BeginTransaction();
-
-                SqlCommand cmd = new SqlCommand("delete from sample_type_x_preparation_method where sample_type_id = @stid and preparation_method_id = @pmid", conn, trans);
-
-                foreach (Lemma<Guid, string> l in lbTypeRelSampTypePrepMeth.SelectedItems)
-                {
-                    cmd.Parameters.Clear();
-                    cmd.Parameters.AddWithValue("@stid", stid);
-                    cmd.Parameters.AddWithValue("@pmid", l.Id);
-                    cmd.ExecuteNonQuery();
-                }
-
-                UI.PopulateSampleTypePrepMeth(conn, trans, treeSampleTypes.SelectedNode, lbTypeRelSampTypePrepMeth, lbTypeRelSampTypeInheritedPrepMeth);
-
-                trans.Commit();
-            }
-            catch (Exception ex)
-            {
-                trans?.Rollback();
-                Common.Log.Error(ex);
-                MessageBox.Show(ex.Message);
-            }
-            finally
-            {
-                conn?.Close();
-            }
         }
     }
 }

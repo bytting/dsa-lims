@@ -965,6 +965,7 @@
             this.lblCurrentTab = new System.Windows.Forms.ToolStripLabel();
             this.btnBack = new System.Windows.Forms.ToolStripButton();
             this.miTypeRelSampleTypesPrepMethRemove = new System.Windows.Forms.ToolStripMenuItem();
+            this.miTypeRelSampleTypesCompRemove = new System.Windows.Forms.ToolStripMenuItem();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tabs.SuspendLayout();
@@ -2094,7 +2095,8 @@
             // 
             this.miTypeRelSampleTypesComps.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.miTypeRelSampleTypesCompNew,
-            this.miTypeRelSampleTypesCompEdit});
+            this.miTypeRelSampleTypesCompEdit,
+            this.miTypeRelSampleTypesCompRemove});
             this.miTypeRelSampleTypesComps.Name = "miTypeRelSampleTypesComps";
             this.miTypeRelSampleTypesComps.Size = new System.Drawing.Size(190, 22);
             this.miTypeRelSampleTypesComps.Text = "&Components";
@@ -2102,14 +2104,14 @@
             // miTypeRelSampleTypesCompNew
             // 
             this.miTypeRelSampleTypesCompNew.Name = "miTypeRelSampleTypesCompNew";
-            this.miTypeRelSampleTypesCompNew.Size = new System.Drawing.Size(163, 22);
+            this.miTypeRelSampleTypesCompNew.Size = new System.Drawing.Size(182, 22);
             this.miTypeRelSampleTypesCompNew.Text = "&New component";
             this.miTypeRelSampleTypesCompNew.Click += new System.EventHandler(this.miTypeRelSampleTypesCompNew_Click);
             // 
             // miTypeRelSampleTypesCompEdit
             // 
             this.miTypeRelSampleTypesCompEdit.Name = "miTypeRelSampleTypesCompEdit";
-            this.miTypeRelSampleTypesCompEdit.Size = new System.Drawing.Size(163, 22);
+            this.miTypeRelSampleTypesCompEdit.Size = new System.Drawing.Size(182, 22);
             this.miTypeRelSampleTypesCompEdit.Text = "&Edit component";
             this.miTypeRelSampleTypesCompEdit.Click += new System.EventHandler(this.miTypeRelSampleTypesCompEdit_Click);
             // 
@@ -7716,6 +7718,7 @@
             this.btnTypeRelSampTypeCompDelete.Name = "btnTypeRelSampTypeCompDelete";
             this.btnTypeRelSampTypeCompDelete.Size = new System.Drawing.Size(60, 22);
             this.btnTypeRelSampTypeCompDelete.Text = "Delete";
+            this.btnTypeRelSampTypeCompDelete.Click += new System.EventHandler(this.miTypeRelSampleTypesCompRemove_Click);
             // 
             // lblTypeRelSampCompSel
             // 
@@ -7837,6 +7840,7 @@
             // 
             // btnTypeRelSampTypePrepMethRemove
             // 
+            this.btnTypeRelSampTypePrepMethRemove.Enabled = false;
             this.btnTypeRelSampTypePrepMethRemove.Image = global::DSA_lims.Properties.Resources.delete;
             this.btnTypeRelSampTypePrepMethRemove.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnTypeRelSampTypePrepMethRemove.Name = "btnTypeRelSampTypePrepMethRemove";
@@ -11045,6 +11049,13 @@
             this.miTypeRelSampleTypesPrepMethRemove.Text = "Remove from sample type";
             this.miTypeRelSampleTypesPrepMethRemove.Click += new System.EventHandler(this.miTypeRelSampleTypesPrepMethRemove_Click);
             // 
+            // miTypeRelSampleTypesCompRemove
+            // 
+            this.miTypeRelSampleTypesCompRemove.Name = "miTypeRelSampleTypesCompRemove";
+            this.miTypeRelSampleTypesCompRemove.Size = new System.Drawing.Size(182, 22);
+            this.miTypeRelSampleTypesCompRemove.Text = "Remove component";
+            this.miTypeRelSampleTypesCompRemove.Click += new System.EventHandler(this.miTypeRelSampleTypesCompRemove_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -12501,6 +12512,7 @@
         private System.Windows.Forms.Label label57;
         private System.Windows.Forms.ToolStripMenuItem miManual;
         private System.Windows.Forms.ToolStripMenuItem miTypeRelSampleTypesPrepMethRemove;
+        private System.Windows.Forms.ToolStripMenuItem miTypeRelSampleTypesCompRemove;
     }
 }
 

@@ -50,7 +50,10 @@ namespace DSA_lims
             cboxScanner.Text = mSettings.ScannerName;
             cbDuplex.Checked = mSettings.ScannerDuplex;
             cboxFlipType.Text = mSettings.ScannerFlipType;
-            cboxPixelType.Text = mSettings.ScannerPixelType;        
+            // FIXME: Allow BW pixel type
+            //cboxPixelType.Text = mSettings.ScannerPixelType;        
+            cboxPixelType.Text = "Color";
+            cboxPixelType.Enabled = false;
         }
 
         private void btnScan_Click(object sender, EventArgs e)

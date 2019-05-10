@@ -708,7 +708,7 @@ namespace DSA_lims
             miNewCounty.Enabled = miEditCounty.Enabled = miDeleteCounty.Enabled = miNewMunicipality.Enabled = miEditMunicipality.Enabled = miDeleteMunicipality.Enabled = isAdmin;
             btnNewCounty.Enabled = btnEditCounty.Enabled = btnDeleteCounty.Enabled = btnNewMunicipality.Enabled = btnEditMunicipality.Enabled = btnDeleteMunicipality.Enabled = isAdmin;
             miTypeRelSampleTypesCompNew.Enabled = miTypeRelSampleTypesCompEdit.Enabled = btnTypeRelSampTypeCompAdd.Enabled = btnTypeRelSampTypeCompEdit.Enabled = btnTypeRelSampTypeCompDelete.Enabled = isAdmin;
-            miPreparationMethodsNew.Enabled = miPreparationMethodEdit.Enabled = miPreparationMethodDelete.Enabled = btnTypeRelSampTypePrepMethAdd.Enabled = btnPreparationMethodDelete.Enabled = isAdmin;
+            miPreparationMethodsNew.Enabled = miPreparationMethodEdit.Enabled = miPreparationMethodDelete.Enabled = btnTypeRelSampTypePrepMethAdd.Enabled = btnTypeRelSampTypePrepMethRemove.Enabled = isAdmin;
             miSamplesSetOrder.Enabled = btnSamplesSetOrder.Enabled = btnSampleAddSampleToOrder.Enabled = isAdmin;
             miSamplesPrepAnal.Enabled = btnSamplesPrepAnal.Enabled = btnSampleGoToPrepAnal.Enabled = isAdmin;
             miSamplesUnlock.Enabled = btnSamplesUnlock.Visible = isAdmin;
@@ -729,7 +729,7 @@ namespace DSA_lims
             {                
                 miSearchView.Enabled = miProjectsView.Enabled = miCustomersView.Enabled = miTypeRelationsView.Enabled = miMetadataView.Enabled = miSystemDataView.Enabled = miAuditLogView.Enabled = true;
                 btnMenuNewSample.Enabled = btnMenuSamples.Enabled = btnMenuNewOrder.Enabled = btnOrders.Enabled = btnMenuCustomer.Enabled = btnMenuProjects.Enabled = btnMenuMetadata.Enabled = btnMenuSearch.Enabled = true;
-                miPreparationMethodsNew.Enabled = miPreparationMethodEdit.Enabled = miPreparationMethodDelete.Enabled = btnTypeRelSampTypePrepMethAdd.Enabled = btnPreparationMethodDelete.Enabled = true;
+                miPreparationMethodsNew.Enabled = miPreparationMethodEdit.Enabled = miPreparationMethodDelete.Enabled = btnTypeRelSampTypePrepMethAdd.Enabled = btnTypeRelSampTypePrepMethRemove.Enabled = true;
                 miSamplesSetOrder.Enabled = btnSamplesSetOrder.Enabled = btnSampleAddSampleToOrder.Enabled = true;
                 miSamplesPrepAnal.Enabled = btnSamplesPrepAnal.Enabled = btnSampleGoToPrepAnal.Enabled = true;
                 btnSysLabPrepMethAdd.Enabled = btnSysLabPrepMethRemove.Enabled = btnSysLabAnalMethAdd.Enabled = btnSysLabAnalMethRemove.Enabled = true;
@@ -847,24 +847,23 @@ namespace DSA_lims
             lbSampleTypesComponents.Items.Clear();
             lbSampleTypesInheritedComponents.Items.Clear();
 
-            SqlConnection conn = null;
+            SqlConnection conn = null;            
             try
             {
-                conn = DB.OpenConnection();
+                conn = DB.OpenConnection();            
 
                 Guid sampleTypeId = Guid.Parse(tnode.Name);
 
                 // add sample components
-                AddSampleTypeComponents(conn, sampleTypeId, false, tnode);
+                AddSampleTypeComponents(conn, null, sampleTypeId, false, tnode);
 
                 // add preparation methods
-                UI.PopulateSampleTypePrepMeth(conn, tnode, lbTypeRelSampTypePrepMeth, lbTypeRelSampTypeInheritedPrepMeth);
+                UI.PopulateSampleTypePrepMeth(conn, null, tnode, lbTypeRelSampTypePrepMeth, lbTypeRelSampTypeInheritedPrepMeth);
             }
             catch (Exception ex)
-            {
+            {                
                 Common.Log.Error(ex);
                 MessageBox.Show(ex.Message);
-                return;
             }
             finally
             {
@@ -872,11 +871,11 @@ namespace DSA_lims
             }
         }        
 
-        private void AddSampleTypeComponents(SqlConnection conn, Guid sampleTypeId, bool inherited, TreeNode tnode)
+        private void AddSampleTypeComponents(SqlConnection conn, SqlTransaction trans, Guid sampleTypeId, bool inherited, TreeNode tnode)
         {
             ListBox lb = inherited ? lbSampleTypesInheritedComponents : lbSampleTypesComponents;
 
-            using (SqlDataReader reader = DB.GetDataReader(conn, null, "csp_select_sample_components_for_sample_type", CommandType.StoredProcedure,
+            using (SqlDataReader reader = DB.GetDataReader(conn, trans, "csp_select_sample_components_for_sample_type", CommandType.StoredProcedure,
                     new SqlParameter("@sample_type_id", sampleTypeId)))
             {
                 while (reader.Read())
@@ -886,7 +885,7 @@ namespace DSA_lims
             if (tnode.Parent != null)
             {
                 Guid parentId = Guid.Parse(tnode.Parent.Name);
-                AddSampleTypeComponents(conn, parentId, true, tnode.Parent);
+                AddSampleTypeComponents(conn, trans, parentId, true, tnode.Parent);
             }
         }
 
@@ -3005,7 +3004,7 @@ namespace DSA_lims
             try
             {
                 conn = DB.OpenConnection();
-                UI.PopulateSampleTypePrepMeth(conn, treeSampleTypes.SelectedNode, lbTypeRelSampTypePrepMeth, lbTypeRelSampTypeInheritedPrepMeth);
+                UI.PopulateSampleTypePrepMeth(conn, null, treeSampleTypes.SelectedNode, lbTypeRelSampTypePrepMeth, lbTypeRelSampTypeInheritedPrepMeth);
             }
             catch (Exception ex)
             {
@@ -3179,7 +3178,7 @@ namespace DSA_lims
             try
             {
                 conn = DB.OpenConnection();
-                UI.PopulateAnalMethNuclides(conn, amid, lbTypRelAnalMethNuclides);
+                UI.PopulateAnalMethNuclides(conn, null, amid, lbTypRelAnalMethNuclides);
             }
             catch (Exception ex)
             {
@@ -3228,6 +3227,52 @@ namespace DSA_lims
                 MessageBox.Show("You don't have access to manage analysis methods");
                 return;
             }
+
+            if (gridTypeRelAnalMeth.SelectedRows.Count < 1)
+            {
+                MessageBox.Show("You must select an analysis method first");
+                return;
+            }
+
+            if (lbTypRelAnalMethNuclides.SelectedItems.Count < 1)
+            {
+                MessageBox.Show("You must select one or more nuclides first");
+                return;
+            }
+
+            Guid amid = Utils.MakeGuid(gridTypeRelAnalMeth.SelectedRows[0].Cells["id"].Value);
+
+            SqlConnection conn = null;
+            SqlTransaction trans = null;
+
+            try
+            {
+                conn = DB.OpenConnection();
+                trans = conn.BeginTransaction();
+                SqlCommand cmd = new SqlCommand("delete from analysis_method_x_nuclide where analysis_method_id = @amid and nuclide_id = @nid", conn, trans);
+
+                foreach (Lemma<Guid, string> l in lbTypRelAnalMethNuclides.SelectedItems)
+                {
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.AddWithValue("@amid", amid);
+                    cmd.Parameters.AddWithValue("@nid", l.Id);
+                    cmd.ExecuteNonQuery();
+                }                
+
+                UI.PopulateAnalMethNuclides(conn, trans, amid, lbTypRelAnalMethNuclides);
+
+                trans.Commit();
+            }
+            catch (Exception ex)
+            {
+                trans?.Rollback();
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn?.Close();
+            }
         }        
 
         private void miTypeRelPrepMethAddAnalMeth_Click(object sender, EventArgs e)
@@ -3259,7 +3304,7 @@ namespace DSA_lims
             try
             {
                 conn = DB.OpenConnection();
-                UI.PopulatePrepMethAnalMeths(conn, pmid, lbTypRelPrepMethAnalMeth);
+                UI.PopulatePrepMethAnalMeths(conn, null, pmid, lbTypRelPrepMethAnalMeth);
             }
             catch (Exception ex)
             {
@@ -3302,7 +3347,7 @@ namespace DSA_lims
 
         private void miTypeRelPrepMethRemAnalMeth_Click(object sender, EventArgs e)
         {
-            // remove analysis methods to preparation method
+            // remove analysis methods from preparation method
             if (!Roles.HasAccess(Role.LaboratoryAdministrator))
             {
                 MessageBox.Show("You don't have access to manage preparation methods");
@@ -3324,11 +3369,13 @@ namespace DSA_lims
             Guid pmid = Utils.MakeGuid(gridTypeRelPrepMeth.SelectedRows[0].Cells["id"].Value);
 
             SqlConnection conn = null;
-
+            SqlTransaction trans = null;
             try
             {
-                conn = DB.OpenConnection();                
-                SqlCommand cmd = new SqlCommand("delete from preparation_method_x_analysis_method where preparation_method_id = @pmid and analysis_method_id = @amid", conn);
+                conn = DB.OpenConnection();
+                trans = conn.BeginTransaction();
+
+                SqlCommand cmd = new SqlCommand("delete from preparation_method_x_analysis_method where preparation_method_id = @pmid and analysis_method_id = @amid", conn, trans);
 
                 foreach (Lemma<Guid, string> l in lbTypRelPrepMethAnalMeth.SelectedItems)
                 {
@@ -3338,10 +3385,13 @@ namespace DSA_lims
                     cmd.ExecuteNonQuery();
                 }
 
-                UI.PopulatePrepMethAnalMeths(conn, pmid, lbTypRelPrepMethAnalMeth);
+                UI.PopulatePrepMethAnalMeths(conn, trans, pmid, lbTypRelPrepMethAnalMeth);
+
+                trans.Commit();
             }
             catch(Exception ex)
             {
+                trans?.Rollback();
                 Common.Log.Error(ex);
                 MessageBox.Show(ex.Message);
             }
@@ -4359,9 +4409,20 @@ select count(*) from sample s
                 return;
 
             Guid amid = Utils.MakeGuid(gridTypeRelAnalMeth.SelectedRows[0].Cells["id"].Value);
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
-                UI.PopulateAnalMethNuclides(conn, amid, lbTypRelAnalMethNuclides);
+                conn = DB.OpenConnection();
+                UI.PopulateAnalMethNuclides(conn, null, amid, lbTypRelAnalMethNuclides);
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn?.Close();
             }
         }
 
@@ -4371,9 +4432,20 @@ select count(*) from sample s
                 return;
 
             Guid pmid = Utils.MakeGuid(gridTypeRelPrepMeth.SelectedRows[0].Cells["id"].Value);
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
-                UI.PopulatePrepMethAnalMeths(conn, pmid, lbTypRelPrepMethAnalMeth);
+                conn = DB.OpenConnection();
+                UI.PopulatePrepMethAnalMeths(conn, null, pmid, lbTypRelPrepMethAnalMeth);
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn?.Close();
             }
         }
 
@@ -9163,6 +9235,63 @@ where ar.instance_status_id < 2
             {
                 Common.Log.Error(ex);
                 MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void miTypeRelSampleTypesPrepMethRemove_Click(object sender, EventArgs e)
+        {
+            // remove preparation methods from sample type
+
+            if (!Roles.HasAccess(Role.LaboratoryAdministrator))
+            {
+                MessageBox.Show("You don't have access to manage sample types");
+                return;
+            }
+
+            if(treeSampleTypes.SelectedNode == null)
+            {
+                MessageBox.Show("You must select a sample type first");
+                return;
+            }
+            
+            if (lbTypeRelSampTypePrepMeth.SelectedItems.Count < 1)
+            {
+                MessageBox.Show("You must select one or more preparation methods first");
+                return;
+            }
+
+            Guid stid = Utils.MakeGuid(treeSampleTypes.SelectedNode.Name);
+
+            SqlConnection conn = null;
+            SqlTransaction trans = null;
+            try
+            {
+                conn = DB.OpenConnection();
+                trans = conn.BeginTransaction();
+
+                SqlCommand cmd = new SqlCommand("delete from sample_type_x_preparation_method where sample_type_id = @stid and preparation_method_id = @pmid", conn, trans);
+
+                foreach (Lemma<Guid, string> l in lbTypeRelSampTypePrepMeth.SelectedItems)
+                {
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.AddWithValue("@stid", stid);
+                    cmd.Parameters.AddWithValue("@pmid", l.Id);
+                    cmd.ExecuteNonQuery();
+                }
+
+                UI.PopulateSampleTypePrepMeth(conn, trans, treeSampleTypes.SelectedNode, lbTypeRelSampTypePrepMeth, lbTypeRelSampTypeInheritedPrepMeth);
+
+                trans.Commit();
+            }
+            catch (Exception ex)
+            {
+                trans?.Rollback();
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn?.Close();
             }
         }
     }

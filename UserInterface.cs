@@ -580,7 +580,7 @@ order by name";
             cbox.DataSource = list;
         }
 
-        public static void PopulateSampleTypePrepMeth(SqlConnection conn, TreeNode tnode, ListBox lb, ListBox lbInherited)
+        public static void PopulateSampleTypePrepMeth(SqlConnection conn, SqlTransaction trans, TreeNode tnode, ListBox lb, ListBox lbInherited)
         {
             Guid sampleTypeId = Guid.Parse(tnode.Name);            
 
@@ -591,7 +591,7 @@ select pm.id, pm.name from preparation_method pm
 order by name";
 
             lb.Items.Clear();
-            using (SqlDataReader reader = DB.GetDataReader(conn, null, query, CommandType.Text, new SqlParameter("@sample_type_id", sampleTypeId)))
+            using (SqlDataReader reader = DB.GetDataReader(conn, trans, query, CommandType.Text, new SqlParameter("@sample_type_id", sampleTypeId)))
             {
                 while (reader.Read())
                 {
@@ -605,7 +605,7 @@ order by name";
             {
                 tnode = tnode.Parent;
                 sampleTypeId = Guid.Parse(tnode.Name);
-                using (SqlDataReader reader = DB.GetDataReader(conn, null, query, CommandType.Text, new SqlParameter("@sample_type_id", sampleTypeId)))
+                using (SqlDataReader reader = DB.GetDataReader(conn, trans, query, CommandType.Text, new SqlParameter("@sample_type_id", sampleTypeId)))
                 {
                     while (reader.Read())
                     {
@@ -657,10 +657,10 @@ order by name";
             }
         }
 
-        public static void PopulateAnalMethNuclides(SqlConnection conn, Guid analysisMethodId, ListBox lb)
+        public static void PopulateAnalMethNuclides(SqlConnection conn, SqlTransaction trans, Guid analysisMethodId, ListBox lb)
         {
             lb.Items.Clear();
-            using (SqlDataReader reader = DB.GetDataReader(conn, null, "csp_select_nuclides_for_analysis_method", CommandType.StoredProcedure,
+            using (SqlDataReader reader = DB.GetDataReader(conn, trans, "csp_select_nuclides_for_analysis_method", CommandType.StoredProcedure,
                 new SqlParameter("@analysis_method_id", analysisMethodId)))
             {
                 while (reader.Read())
@@ -671,10 +671,10 @@ order by name";
             }
         }
 
-        public static void PopulatePrepMethAnalMeths(SqlConnection conn, Guid preparationMethodId, ListBox lb)
+        public static void PopulatePrepMethAnalMeths(SqlConnection conn, SqlTransaction trans, Guid preparationMethodId, ListBox lb)
         {
             lb.Items.Clear();
-            using (SqlDataReader reader = DB.GetDataReader(conn, null, "csp_select_analysis_methods_for_preparation_method", CommandType.StoredProcedure,
+            using (SqlDataReader reader = DB.GetDataReader(conn, trans, "csp_select_analysis_methods_for_preparation_method", CommandType.StoredProcedure,
                 new SqlParameter("@preparation_method_id", preparationMethodId)))
             {
                 while (reader.Read())

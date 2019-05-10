@@ -521,7 +521,7 @@
             this.btnOrdersAssignUsers = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator67 = new System.Windows.Forms.ToolStripSeparator();
             this.btnOrdersSummary = new System.Windows.Forms.ToolStripDropDownButton();
-            this.orderSummaryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnOrdersOrderSummary = new System.Windows.Forms.ToolStripMenuItem();
             this.btnOrdersPrepSummary = new System.Windows.Forms.ToolStripMenuItem();
             this.btnOrdersUnlock = new System.Windows.Forms.ToolStripButton();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
@@ -1721,45 +1721,45 @@
             // miOrdersNew
             // 
             this.miOrdersNew.Name = "miOrdersNew";
-            this.miOrdersNew.Size = new System.Drawing.Size(148, 22);
+            this.miOrdersNew.Size = new System.Drawing.Size(152, 22);
             this.miOrdersNew.Text = "&New order";
             this.miOrdersNew.Click += new System.EventHandler(this.miOrdersNew_Click);
             // 
             // miOrdersEdit
             // 
             this.miOrdersEdit.Name = "miOrdersEdit";
-            this.miOrdersEdit.Size = new System.Drawing.Size(148, 22);
+            this.miOrdersEdit.Size = new System.Drawing.Size(152, 22);
             this.miOrdersEdit.Text = "&Edit order";
             this.miOrdersEdit.Click += new System.EventHandler(this.miOrdersEdit_Click);
             // 
             // miOrdersDelete
             // 
             this.miOrdersDelete.Name = "miOrdersDelete";
-            this.miOrdersDelete.Size = new System.Drawing.Size(148, 22);
+            this.miOrdersDelete.Size = new System.Drawing.Size(152, 22);
             this.miOrdersDelete.Text = "&Delete order";
             this.miOrdersDelete.Click += new System.EventHandler(this.miOrdersDelete_Click);
             // 
             // toolStripSeparator65
             // 
             this.toolStripSeparator65.Name = "toolStripSeparator65";
-            this.toolStripSeparator65.Size = new System.Drawing.Size(145, 6);
+            this.toolStripSeparator65.Size = new System.Drawing.Size(149, 6);
             // 
             // miOrdersClearAllFilters
             // 
             this.miOrdersClearAllFilters.Name = "miOrdersClearAllFilters";
-            this.miOrdersClearAllFilters.Size = new System.Drawing.Size(148, 22);
+            this.miOrdersClearAllFilters.Size = new System.Drawing.Size(152, 22);
             this.miOrdersClearAllFilters.Text = "&Clear all filters";
             this.miOrdersClearAllFilters.Click += new System.EventHandler(this.miOrdersClearAllFilters_Click);
             // 
             // toolStripSeparator72
             // 
             this.toolStripSeparator72.Name = "toolStripSeparator72";
-            this.toolStripSeparator72.Size = new System.Drawing.Size(145, 6);
+            this.toolStripSeparator72.Size = new System.Drawing.Size(149, 6);
             // 
             // miOrdersUnlock
             // 
             this.miOrdersUnlock.Name = "miOrdersUnlock";
-            this.miOrdersUnlock.Size = new System.Drawing.Size(148, 22);
+            this.miOrdersUnlock.Size = new System.Drawing.Size(152, 22);
             this.miOrdersUnlock.Text = "&Unlock";
             this.miOrdersUnlock.Click += new System.EventHandler(this.miOrdersUnlock_Click);
             // 
@@ -6315,7 +6315,7 @@
             // btnOrdersSummary
             // 
             this.btnOrdersSummary.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.orderSummaryToolStripMenuItem,
+            this.btnOrdersOrderSummary,
             this.btnOrdersPrepSummary});
             this.btnOrdersSummary.Image = global::DSA_lims.Properties.Resources.info;
             this.btnOrdersSummary.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -6323,17 +6323,17 @@
             this.btnOrdersSummary.Size = new System.Drawing.Size(96, 22);
             this.btnOrdersSummary.Text = "Summary...";
             // 
-            // orderSummaryToolStripMenuItem
+            // btnOrdersOrderSummary
             // 
-            this.orderSummaryToolStripMenuItem.Enabled = false;
-            this.orderSummaryToolStripMenuItem.Name = "orderSummaryToolStripMenuItem";
-            this.orderSummaryToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
-            this.orderSummaryToolStripMenuItem.Text = "&Order";
+            this.btnOrdersOrderSummary.Name = "btnOrdersOrderSummary";
+            this.btnOrdersOrderSummary.Size = new System.Drawing.Size(152, 22);
+            this.btnOrdersOrderSummary.Text = "&Order";
+            this.btnOrdersOrderSummary.Click += new System.EventHandler(this.btnOrdersOrderSummary_Click);
             // 
             // btnOrdersPrepSummary
             // 
             this.btnOrdersPrepSummary.Name = "btnOrdersPrepSummary";
-            this.btnOrdersPrepSummary.Size = new System.Drawing.Size(135, 22);
+            this.btnOrdersPrepSummary.Size = new System.Drawing.Size(152, 22);
             this.btnOrdersPrepSummary.Text = "&Preparation";
             this.btnOrdersPrepSummary.Click += new System.EventHandler(this.btnOrdersPrepSummary_Click);
             // 
@@ -7713,6 +7713,7 @@
             // 
             // btnTypeRelSampTypeCompDelete
             // 
+            this.btnTypeRelSampTypeCompDelete.Enabled = false;
             this.btnTypeRelSampTypeCompDelete.Image = global::DSA_lims.Properties.Resources.delete;
             this.btnTypeRelSampTypeCompDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnTypeRelSampTypeCompDelete.Name = "btnTypeRelSampTypeCompDelete";
@@ -7840,7 +7841,6 @@
             // 
             // btnTypeRelSampTypePrepMethRemove
             // 
-            this.btnTypeRelSampTypePrepMethRemove.Enabled = false;
             this.btnTypeRelSampTypePrepMethRemove.Image = global::DSA_lims.Properties.Resources.delete;
             this.btnTypeRelSampTypePrepMethRemove.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnTypeRelSampTypePrepMethRemove.Name = "btnTypeRelSampTypePrepMethRemove";
@@ -12438,7 +12438,7 @@
         private System.Windows.Forms.ToolStripMenuItem btnPrepAnalAddAnal;
         private System.Windows.Forms.ToolStripMenuItem btnPrepAnalDelAnal;
         private System.Windows.Forms.ToolStripDropDownButton btnOrdersSummary;
-        private System.Windows.Forms.ToolStripMenuItem orderSummaryToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem btnOrdersOrderSummary;
         private System.Windows.Forms.ToolStripMenuItem btnOrdersPrepSummary;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator73;

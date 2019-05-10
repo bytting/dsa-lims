@@ -9255,15 +9255,9 @@ where ar.instance_status_id < 2
         }
 
         private void miTypeRelSampleTypesPrepMethRemove_Click(object sender, EventArgs e)
-        {            
-            MessageBox.Show("Not implemented");
-        }
-
-        private void miTypeRelSampleTypesCompRemove_Click(object sender, EventArgs e)
         {
-            // remove sample type component
-
-            if (!Roles.IsAdmin())
+            // remove preparation methods from sample type
+            if (!Roles.HasAccess(Role.LaboratoryAdministrator))
             {
                 MessageBox.Show("You don't have access to manage sample types");
                 return;
@@ -9274,10 +9268,66 @@ where ar.instance_status_id < 2
                 MessageBox.Show("You must select a sample type first");
                 return;
             }
-            
-            Guid sampleTypeId = Guid.Parse(treeSampleTypes.SelectedNode.Name);
 
+            if (lbTypeRelSampTypePrepMeth.SelectedItems.Count < 1)
+            {
+                MessageBox.Show("You must select one or more preparation methods first");
+                return;
+            }
 
+            Guid stid = Utils.MakeGuid(treeSampleTypes.SelectedNode.Name);
+
+            SqlConnection conn = null;
+            SqlTransaction trans = null;
+            try
+            {
+                conn = DB.OpenConnection();
+                trans = conn.BeginTransaction();
+
+                SqlCommand cmd = new SqlCommand("delete from sample_type_x_preparation_method where sample_type_id = @stid and preparation_method_id = @pmid", conn, trans);
+
+                foreach (Lemma<Guid, string> l in lbTypeRelSampTypePrepMeth.SelectedItems)
+                {
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.AddWithValue("@stid", stid);
+                    cmd.Parameters.AddWithValue("@pmid", l.Id);
+                    cmd.ExecuteNonQuery();
+                }
+
+                UI.PopulateSampleTypePrepMeth(conn, trans, treeSampleTypes.SelectedNode, lbTypeRelSampTypePrepMeth, lbTypeRelSampTypeInheritedPrepMeth);
+
+                trans.Commit();
+            }
+            catch (Exception ex)
+            {
+                trans?.Rollback();
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn?.Close();
+            }
+        }
+
+        private void miTypeRelSampleTypesCompRemove_Click(object sender, EventArgs e)
+        {
+            // remove sample type component            
+            MessageBox.Show("Not implemented");
+        }
+
+        private void btnOrdersOrderSummary_Click(object sender, EventArgs e)
+        {
+            if (gridOrders.SelectedRows.Count != 1)
+            {
+                MessageBox.Show("You must select a single order first");
+                return;
+            }
+
+            Guid aid = Utils.MakeGuid(gridOrders.SelectedRows[0].Cells["id"].Value);
+
+            FormCreateOrderReport form = new FormCreateOrderReport(aid);
+            form.ShowDialog();
         }
     }
 }

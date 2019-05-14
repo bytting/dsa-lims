@@ -18,13 +18,12 @@
 // Authors: Dag Robole,
 
 using System;
-using System.IO;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Data.SqlClient;
+using System.Linq;
 using System.Text;
-using System.Windows.Forms;
+using System.Data.SqlClient;
+using System.Data;
+using System.IO;
 using PdfDocument = iTextSharp.text.Document;
 using PdfWriter = iTextSharp.text.pdf.PdfWriter;
 using PdfContentByte = iTextSharp.text.pdf.PdfContentByte;
@@ -42,26 +41,31 @@ using PdfImage = iTextSharp.text.Image;
 
 namespace DSA_lims
 {
-    public partial class FormCreateOrderReport : Form
+    public static class UtilsPdf
     {
-        private Guid mAssignmentId = Guid.Empty;
-        private string OrderName = "", LaboratoryName = "", ResponsibleName = "", CustomerName = "", CustomerCompany = "", CustomerAddress = "";
-
-        private PdfImage labLogo = null, accredLogo = null;
-
-        public FormCreateOrderReport(Guid assignmentId)
+        public static void CropImageToHeight(PdfImage img, float height)
         {
-            InitializeComponent();
-            mAssignmentId = assignmentId;            
+            if (img.Height <= height)
+                return;
+
+            float w = img.Width;
+            float h = img.Height;
+            float scaleFactor = height / h;
+            w = w * scaleFactor;
+            h = h * scaleFactor;
+            img.ScaleAbsolute(w, h);
         }
 
-        private void FormCreateOrderReport_Load(object sender, EventArgs e)
-        {
+        public static byte[] CreateAssignmentPdfData(Guid assId)
+        {            
+            string OrderName = "", LaboratoryName = "", ResponsibleName = "", CustomerName = "", CustomerCompany = "", CustomerAddress = "";
+            PdfImage labLogo = null, accredLogo = null;
+
             SqlConnection conn = null;
             try
             {
                 conn = DB.OpenConnection();
-                using (SqlDataReader reader = DB.GetDataReader(conn, null, "csp_select_assignment_flat", CommandType.StoredProcedure, new SqlParameter("@id", mAssignmentId)))
+                using (SqlDataReader reader = DB.GetDataReader(conn, null, "csp_select_assignment_flat", CommandType.StoredProcedure, new SqlParameter("@id", assId)))
                 {
                     if (reader.HasRows)
                     {
@@ -76,7 +80,7 @@ namespace DSA_lims
                     }
                 }
 
-                Guid labId = (Guid)DB.GetScalar(conn, null, "select laboratory_id from assignment where id = @id", CommandType.Text, new SqlParameter("@id", mAssignmentId));
+                Guid labId = (Guid)DB.GetScalar(conn, null, "select laboratory_id from assignment where id = @id", CommandType.Text, new SqlParameter("@id", assId));
 
                 if (Utils.IsValidGuid(labId))
                 {
@@ -98,37 +102,16 @@ namespace DSA_lims
             catch (Exception ex)
             {
                 Common.Log.Error(ex);
-                MessageBox.Show(ex.Message);
-                DialogResult = DialogResult.Abort;
-                Close();
+                return null;
             }
             finally
             {
                 conn?.Close();
             }
-        }
 
-        private void btnCancel_Click(object sender, EventArgs e)
-        {
-            DialogResult = DialogResult.Cancel;
-            Close();
-        }
 
-        private void CropImageToHeight(PdfImage img, float height)
-        {
-            if (img.Height <= height)
-                return;
+            byte[] pdfData = null;
 
-            float w = img.Width;
-            float h = img.Height;
-            float scaleFactor = height / h;
-            w = w * scaleFactor;
-            h = h * scaleFactor;
-            img.ScaleAbsolute(w, h);
-        }
-
-        private void btnOk_Click(object sender, EventArgs e)
-        {
             try
             {
                 MemoryStream ms = new MemoryStream();
@@ -190,7 +173,7 @@ namespace DSA_lims
 
                 topCursor -= lineSpace;
 
-                PdfPTable table = new PdfPTable(6);
+                PdfPTable table = new PdfPTable(4);
                 table.TotalWidth = document.GetRight(margin) - document.GetLeft(margin);
 
                 string query = @"
@@ -204,19 +187,17 @@ from sample s
 order by s.number, p.number, a.number
 ";
                 int nRows = 0;
-                SqlConnection conn = null;
+                conn = null;
                 try
                 {
                     conn = DB.OpenConnection();
                     using (SqlDataReader reader = DB.GetDataReader(conn, null, query, CommandType.Text, new[] {
-                        new SqlParameter("@assignment_id", mAssignmentId)
+                        new SqlParameter("@assignment_id", assId)
                     }))
                     {
                         while (reader.Read())
                         {
-                            table.AddCell(reader.GetString("sample"));
-                            table.AddCell(reader.GetString("preparation"));
-                            table.AddCell(reader.GetString("analysis"));
+                            table.AddCell(reader.GetString("sample") + "/" + reader.GetString("preparation") + "/" + reader.GetString("analysis"));
                             table.AddCell(reader.GetString("analysis_method"));
                             table.AddCell(reader.GetString("nuclide"));
                             table.AddCell(reader.GetString("activity"));
@@ -228,8 +209,7 @@ order by s.number, p.number, a.number
                 {
                     document.Close();
                     Common.Log.Error(ex);
-                    MessageBox.Show(ex.Message);
-                    return;
+                    return null;
                 }
                 finally
                 {
@@ -260,21 +240,15 @@ order by s.number, p.number, a.number
 
                 document.Close();
 
-                SaveFileDialog dialog = new SaveFileDialog();
-                dialog.Filter = "PDF files (*.pdf)|*.pdf";
-                if (dialog.ShowDialog() != DialogResult.OK)
-                    return;
-
-                File.WriteAllBytes(dialog.FileName, ms.GetBuffer());
-
-                DialogResult = DialogResult.OK;
-                Close();
+                pdfData = ms.GetBuffer();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Common.Log.Error(ex);
-                MessageBox.Show(ex.Message);
+                return null;
             }
+
+            return pdfData;
         }
     }
 }

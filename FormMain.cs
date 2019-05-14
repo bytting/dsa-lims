@@ -129,6 +129,16 @@ namespace DSA_lims
                 ttCoords.SetToolTip(lblSampleCoords, "Latitude, Longitude" + NL + NL
                 + "Formats: " + NL + "61° 34' 12\" N   11° 67' 20\" E" + NL + "61° 34" + Utils.NumberSeparator + "23' N   11° 67" + Utils.NumberSeparator + "33' E"
                 + NL + "61" + Utils.NumberSeparator + "543478 N   11" + Utils.NumberSeparator + "776344 E" + NL + "61" + Utils.NumberSeparator + "543478   -11" + Utils.NumberSeparator + "776344" + NL + NL + "° can be replaced with *");
+
+                // delete old temp files
+                string[] oldFiles = Directory.GetFiles(Path.GetTempPath(), "*-dsalims.pdf", SearchOption.AllDirectories);
+                foreach (string oldFile in oldFiles)
+                {
+                    if (File.Exists(oldFile))
+                    {
+                        try { File.Delete(oldFile); } catch { }
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -136,7 +146,7 @@ namespace DSA_lims
                     Common.Log.Fatal(ex);
                 MessageBox.Show(ex.Message);
                 Environment.Exit(1);
-            }
+            }                
         }
 
         private void StatusMessageTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
@@ -9324,10 +9334,30 @@ where ar.instance_status_id < 2
                 return;
             }
 
-            Guid aid = Utils.MakeGuid(gridOrders.SelectedRows[0].Cells["id"].Value);
+            try
+            {
+                Guid aid = Utils.MakeGuid(gridOrders.SelectedRows[0].Cells["id"].Value);
 
-            FormCreateOrderReport form = new FormCreateOrderReport(aid);
-            form.ShowDialog();
+                byte[] pdfData = UtilsPdf.CreateAssignmentPdfData(aid);
+                if (pdfData == null)
+                {
+                    MessageBox.Show("Creating order PDF filed");
+                    return;
+                }
+
+                string path = Path.GetTempPath();
+                string fileName = Guid.NewGuid().ToString() + "-dsalims.pdf";
+                string filePath = Path.Combine(path, fileName);
+
+                File.WriteAllBytes(filePath, pdfData);
+
+                Process.Start(filePath);
+            }
+            catch(Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }

@@ -72,7 +72,7 @@ namespace DSA_lims
         {
             try
             {
-                fontLabel = new Font("Arial", 10);
+                fontLabel = new Font("Arial", 8);
 
                 string InstallationDirectory = Path.GetDirectoryName(Environment.GetCommandLineArgs()[0]);
                 string fontFileName = InstallationDirectory + Path.DirectorySeparatorChar + "free3of9.ttf";
@@ -224,20 +224,19 @@ where s.id = @id
 
         private void PrintDocument_PrintPage(object sender, PrintPageEventArgs e)
         {
-
-            e.Graphics.DrawString("ID: " + sampleNumber, fontLabel, Brushes.Black, 2, 1);
-            e.Graphics.DrawString("Ex.ID: " + externalSampleId, fontLabel, Brushes.Black, 120, 1);            
-            e.Graphics.DrawString("Sample type: " + sampleType, fontLabel, Brushes.Black, 2, 15);
-            e.Graphics.DrawString("Main project: " + projectMain, fontLabel, Brushes.Black, 2, 30);
-            e.Graphics.DrawString("Sub project: " + projectSub, fontLabel, Brushes.Black, 2, 45);
-            e.Graphics.DrawString("Laboratory: " + laboratory, fontLabel, Brushes.Black, 2, 60);
-            e.Graphics.DrawString("Batch: " + samplePart, fontLabel, Brushes.Black, 220, 60);
-            e.Graphics.DrawString("*" + sampleNumber + "*", fontBarcode, Brushes.Black, 2, 80);
+            e.Graphics.DrawString("ID: " + sampleNumber, fontLabel, Brushes.Black, 1, 1);
+            e.Graphics.DrawString("Ex.ID: " + externalSampleId, fontLabel, Brushes.Black, 1, 12);
+            e.Graphics.DrawString("Sample type: " + sampleType, fontLabel, Brushes.Black, 1, 24);
+            e.Graphics.DrawString("Main project: " + projectMain, fontLabel, Brushes.Black, 1, 36);
+            e.Graphics.DrawString("Sub project: " + projectSub, fontLabel, Brushes.Black, 1, 48);
+            e.Graphics.DrawString("Laboratory: " + laboratory, fontLabel, Brushes.Black, 1, 60);
+            e.Graphics.DrawString("Batch: " + samplePart, fontLabel, Brushes.Black, 1, 72);
+            e.Graphics.DrawString("*" + sampleNumber + "*", fontBarcode, Brushes.Black, 1, 86);
 
             if (Common.LabLogo != null)
             {
                 Image img = UtilsMedia.CropImageToHeight(Common.LabLogo, 40);
-                e.Graphics.DrawImage(img, 210f, 80f);
+                e.Graphics.DrawImage(img, 210f, 84f);
             }
         }
 

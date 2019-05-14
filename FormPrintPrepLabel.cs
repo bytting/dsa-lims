@@ -42,7 +42,7 @@ namespace DSA_lims
         List<Guid> mPrepIds = new List<Guid>();
 
         string sampleNumber, prepNumber, sampleType, projectMain, projectSub, refDate, laboratory, prepWeightUnit;
-        string prepQuantUnit, samplingTimeFrom, samplingTimeTo;
+        string prepQuantUnit, samplingTimeFrom, samplingTimeTo, station;
         double fillHeight = 0d, prepWeight = 0d, prepQuant = 0d;
 
         PrintDocument printDocument = new PrintDocument();
@@ -134,7 +134,8 @@ select
     p.amount as 'preparation_amount',
     pu.name_short as 'preparation_unit_name',
     p.quantity as 'preparation_quantity',
-    qu.name as 'preparation_quantity_unit'
+    qu.name as 'preparation_quantity_unit',
+    sta.name as 'station_name'
 from preparation p
     left outer join sample s on p.sample_id = s.id
     left outer join sample_type st on s.sample_type_id = st.id    
@@ -143,6 +144,7 @@ from preparation p
     left outer join laboratory l on s.laboratory_id = l.id
     left outer join preparation_unit pu on pu.id = p.prep_unit_id
     left outer join quantity_unit qu on qu.id = p.quantity_unit_id
+    left outer join station sta on sta.id = s.station_id
 where p.id = @pid
 ";
 
@@ -182,6 +184,9 @@ where p.id = @pid
                         if (DB.IsValidField(reader["preparation_quantity_unit"]))
                             prepQuantUnit = reader.GetString("preparation_quantity_unit");
                         else prepQuantUnit = "";
+                        if (DB.IsValidField(reader["station_name"]))
+                            station = reader.GetString("station_name");
+                        else station = "";
 
                         printDocument.Print();                            
                     }
@@ -199,10 +204,11 @@ where p.id = @pid
         private void PrintDocument_PrintPage(object sender, PrintPageEventArgs e)
         {
             e.Graphics.DrawString("ID: " + sampleNumber + "/" + prepNumber, fontLabel, Brushes.Black, 2, 1);
-            e.Graphics.DrawString("Lab: " + laboratory, fontLabel, Brushes.Black, 140, 1);
+            e.Graphics.DrawString("Lab: " + laboratory, fontLabel, Brushes.Black, 120, 1);
             e.Graphics.DrawString("Project: " + projectMain + " - " + projectSub, fontLabel, Brushes.Black, 2, 12);
             e.Graphics.DrawString("Sample type: " + sampleType, fontLabel, Brushes.Black, 2, 23);            
             e.Graphics.DrawString("Ref.date: " + refDate, fontLabel, Brushes.Black, 2, 34);
+            e.Graphics.DrawString("Station: " + station, fontLabel, Brushes.Black, 160, 34);
             string sampTime = samplingTimeFrom;
             sampTime += String.IsNullOrEmpty(samplingTimeTo) ? "" : ", " + samplingTimeTo;
             e.Graphics.DrawString("Sampling time: " + sampTime, fontLabel, Brushes.Black, 2, 45);                        

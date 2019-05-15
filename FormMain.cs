@@ -9334,21 +9334,18 @@ where ar.instance_status_id < 2
                 return;
             }
 
+            SqlConnection conn = null;
+
             try
             {
+                conn = DB.OpenConnection();
                 Guid aid = Utils.MakeGuid(gridOrders.SelectedRows[0].Cells["id"].Value);
 
-                byte[] pdfData = UtilsPdf.CreateAssignmentPdfData(aid);
-                if (pdfData == null)
-                {
-                    MessageBox.Show("Creating order PDF filed");
-                    return;
-                }
+                byte[] pdfData = UtilsPdf.CreateAssignmentPdfData(conn, null, aid);
 
                 string path = Path.GetTempPath();
                 string fileName = Guid.NewGuid().ToString() + "-dsalims.pdf";
                 string filePath = Path.Combine(path, fileName);
-
                 File.WriteAllBytes(filePath, pdfData);
 
                 Process.Start(filePath);
@@ -9356,7 +9353,11 @@ where ar.instance_status_id < 2
             catch(Exception ex)
             {
                 Common.Log.Error(ex);
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(Utils.makeErrorMessage(ex.Message));
+            }
+            finally
+            {
+                conn?.Close();
             }
         }
     }

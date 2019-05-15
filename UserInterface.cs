@@ -858,7 +858,7 @@ order by create_date desc";
             List<string> years = new List<string>();
             years.Add("");
 
-            using (SqlDataReader reader = DB.GetDataReader(conn, null, "select distinct year(create_date) as 'year' from assignment order by year", CommandType.Text))
+            using (SqlDataReader reader = DB.GetDataReader(conn, null, "select distinct year(create_date) as 'year' from assignment order by year desc", CommandType.Text))
             {
                 while(reader.Read())
                 {

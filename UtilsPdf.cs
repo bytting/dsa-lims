@@ -56,66 +56,52 @@ namespace DSA_lims
             img.ScaleAbsolute(w, h);
         }
 
-        public static byte[] CreateAssignmentPdfData(Guid assId)
+        public static byte[] CreateAssignmentPdfData(SqlConnection conn, SqlTransaction trans, Guid assignmentId)
         {            
             string OrderName = "", LaboratoryName = "", ResponsibleName = "", CustomerName = "", CustomerCompany = "", CustomerAddress = "";
             PdfImage labLogo = null, accredLogo = null;
-
-            SqlConnection conn = null;
-            try
+            
+            using (SqlDataReader reader = DB.GetDataReader(conn, trans, "csp_select_assignment_flat", CommandType.StoredProcedure, new SqlParameter("@id", assignmentId)))
             {
-                conn = DB.OpenConnection();
-                using (SqlDataReader reader = DB.GetDataReader(conn, null, "csp_select_assignment_flat", CommandType.StoredProcedure, new SqlParameter("@id", assId)))
+                if (reader.HasRows)
+                {
+                    reader.Read();
+
+                    OrderName = reader.GetString("name");
+                    LaboratoryName = reader.GetString("laboratory_name");
+                    ResponsibleName = reader.GetString("account_name");
+                    CustomerName = reader.GetString("customer_contact_name");
+                    CustomerCompany = reader.GetString("customer_company_name");
+                    CustomerAddress = reader.GetString("customer_contact_address");
+                }
+            }
+
+            Guid labId = (Guid)DB.GetScalar(conn, trans, "select laboratory_id from assignment where id = @id", CommandType.Text, new SqlParameter("@id", assignmentId));
+
+            if (Utils.IsValidGuid(labId))
+            {
+                using (SqlDataReader reader = DB.GetDataReader(conn, trans, "select laboratory_logo, accredited_logo from laboratory where id = @id", CommandType.Text, new SqlParameter("@id", labId)))
                 {
                     if (reader.HasRows)
                     {
                         reader.Read();
 
-                        OrderName = reader.GetString("name");
-                        LaboratoryName = reader.GetString("laboratory_name");
-                        ResponsibleName = reader.GetString("account_name");
-                        CustomerName = reader.GetString("customer_contact_name");
-                        CustomerCompany = reader.GetString("customer_company_name");
-                        CustomerAddress = reader.GetString("customer_contact_address");
-                    }
-                }
+                        if (DB.IsValidField(reader["laboratory_logo"]))
+                            labLogo = PdfImage.GetInstance((byte[])reader["laboratory_logo"]);
 
-                Guid labId = (Guid)DB.GetScalar(conn, null, "select laboratory_id from assignment where id = @id", CommandType.Text, new SqlParameter("@id", assId));
-
-                if (Utils.IsValidGuid(labId))
-                {
-                    using (SqlDataReader reader = DB.GetDataReader(conn, null, "select laboratory_logo, accredited_logo from laboratory where id = @id", CommandType.Text, new SqlParameter("@id", labId)))
-                    {
-                        if (reader.HasRows)
-                        {
-                            reader.Read();
-
-                            if (DB.IsValidField(reader["laboratory_logo"]))
-                                labLogo = PdfImage.GetInstance((byte[])reader["laboratory_logo"]);
-
-                            if (DB.IsValidField(reader["accredited_logo"]))
-                                accredLogo = PdfImage.GetInstance((byte[])reader["accredited_logo"]);
-                        }
+                        if (DB.IsValidField(reader["accredited_logo"]))
+                            accredLogo = PdfImage.GetInstance((byte[])reader["accredited_logo"]);
                     }
                 }
             }
-            catch (Exception ex)
-            {
-                Common.Log.Error(ex);
-                return null;
-            }
-            finally
-            {
-                conn?.Close();
-            }
-
 
             byte[] pdfData = null;
+            PdfDocument document = null;
 
             try
             {
                 MemoryStream ms = new MemoryStream();
-                PdfDocument document = new PdfDocument();
+                document = new PdfDocument();
                 PdfWriter writer = PdfWriter.GetInstance(document, ms);
 
                 document.Open();
@@ -170,14 +156,27 @@ namespace DSA_lims
                 cb.SetFontAndSize(baseFontBold, fontSizeHeader);
                 cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, "Måleresultater", leftCursor, topCursor, 0);
                 cb.EndText();
+                
+                topCursor -= lineSpace;                
 
-                topCursor -= lineSpace;
-
-                PdfPTable table = new PdfPTable(4);
+                PdfPTable table = new PdfPTable(13);
                 table.TotalWidth = document.GetRight(margin) - document.GetLeft(margin);
 
                 string query = @"
-select s.number as 'sample', p.number as 'preparation', a.number as 'analysis', am.name as 'analysis_method', n.name as 'nuclide', ar.activity
+select 
+    s.number as 'sample', 
+	p.number as 'preparation', 
+	a.number as 'analysis', 
+	a.instance_status_id as 'analysis_status', 
+	am.name as 'analysis_method', 
+	n.name as 'nuclide_name', 
+	ar.activity as 'act', 
+	ar.activity_uncertainty_abs as 'act.unc', 
+	ar.activity_approved as 'act.appr', 
+	ar.detection_limit as 'det.lim', 
+	ar.detection_limit_approved as 'det.lim.appr', 
+	ar.reportable, 
+	ar.accredited
 from sample s
     inner join preparation p on p.sample_id = s.id
     inner join analysis a on a.preparation_id = p.id and a.assignment_id = @assignment_id
@@ -186,41 +185,30 @@ from sample s
     inner join nuclide n on n.id = ar.nuclide_id
 order by s.number, p.number, a.number
 ";
-                int nRows = 0;
-                conn = null;
-                try
+                int nRows = 0;                
+                using (SqlDataReader reader = DB.GetDataReader(conn, trans, query, CommandType.Text, new[] {
+                    new SqlParameter("@assignment_id", assignmentId)
+                }))
                 {
-                    conn = DB.OpenConnection();
-                    using (SqlDataReader reader = DB.GetDataReader(conn, null, query, CommandType.Text, new[] {
-                        new SqlParameter("@assignment_id", assId)
-                    }))
+                    while (reader.Read())
                     {
-                        while (reader.Read())
-                        {
-                            table.AddCell(reader.GetString("sample") + "/" + reader.GetString("preparation") + "/" + reader.GetString("analysis"));
-                            table.AddCell(reader.GetString("analysis_method"));
-                            table.AddCell(reader.GetString("nuclide"));
-                            table.AddCell(reader.GetString("activity"));
-                            nRows++;
-                        }
+                        table.AddCell(reader.GetString("sample"));
+                        table.AddCell(reader.GetString("preparation"));
+                        table.AddCell(reader.GetString("analysis"));
+                        table.AddCell(reader.GetString("analysis_status"));
+                        table.AddCell(reader.GetString("analysis_method"));
+                        table.AddCell(reader.GetString("nuclide_name"));
+                        table.AddCell(reader.GetString("act"));
+                        table.AddCell(reader.GetString("act.unc"));
+                        table.AddCell(reader.GetString("act.appr"));
+                        table.AddCell(reader.GetString("det.lim"));
+                        table.AddCell(reader.GetString("det.lim.appr"));
+                        table.AddCell(reader.GetString("reportable"));
+                        table.AddCell(reader.GetString("accredited"));
+                        nRows++;
                     }
-                }
-                catch (Exception ex)
-                {
-                    document.Close();
-                    Common.Log.Error(ex);
-                    return null;
-                }
-                finally
-                {
-                    conn?.Close();
-                }
+                }                
 
-                //PdfPCell cell = new PdfPCell(new PdfPhrase("Måleresultater"));
-                //cell.Colspan = 3;
-                //cell.HorizontalAlignment = 1; //0=Left, 1=Centre, 2=Right
-                //table.AddCell(cell);                
-                //document.Add(table);            
                 float rowHeight = table.GetRowHeight(0);
                 int currRow = 0;
                 while (true)
@@ -238,14 +226,11 @@ order by s.number, p.number, a.number
                     topCursor = document.Top - margin;
                 }
 
-                document.Close();
-
                 pdfData = ms.GetBuffer();
             }
-            catch (Exception ex)
+            finally
             {
-                Common.Log.Error(ex);
-                return null;
+                document?.Close();
             }
 
             return pdfData;

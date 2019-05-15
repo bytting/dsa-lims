@@ -56,6 +56,28 @@ namespace DSA_lims
             img.ScaleAbsolute(w, h);
         }
 
+        public static PdfFont GetHeaderFont()
+        {
+            return new PdfFont(PdfFont.FontFamily.HELVETICA, 6f, PdfFont.BOLD, iTextSharp.text.BaseColor.BLACK);
+        }
+
+        public static PdfFont GetCellFont()
+        {
+            return new PdfFont(PdfFont.FontFamily.HELVETICA, 6f, PdfFont.NORMAL, iTextSharp.text.BaseColor.BLACK);
+        }
+
+        public static PdfPhrase GetHeaderPhrase(string text)
+        {
+            PdfPhrase p = new PdfPhrase(text, GetHeaderFont());
+            return p;
+        }
+
+        public static PdfPhrase GetCellPhrase(string text)
+        {
+            PdfPhrase p = new PdfPhrase(text, GetCellFont());
+            return p;
+        }
+
         public static byte[] CreateAssignmentPdfData(SqlConnection conn, SqlTransaction trans, Guid assignmentId)
         {            
             string OrderName = "", LaboratoryName = "", ResponsibleName = "", CustomerName = "", CustomerCompany = "", CustomerAddress = "";
@@ -138,10 +160,8 @@ namespace DSA_lims
                     topCursor -= labLogo.ScaledHeight;
 
                 cb.SetFontAndSize(baseFont, fontSizeHeader);
-                cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, "FORENKLET MÅLERAPPORT", leftCursor, topCursor, 0);
+                cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, "Oppdragsoversikt", leftCursor, topCursor, 0);
                 cb.SetFontAndSize(baseFont, fontSize);
-                topCursor -= lineSpace * 2;
-                cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, "Henvisning til eventuell endringsrapport, Rev.nr.:", leftCursor, topCursor, 0);
                 topCursor -= lineSpace * 2;
                 cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, "Oppdrag: " + OrderName, leftCursor, topCursor, 0);
                 topCursor -= lineSpace;
@@ -159,8 +179,20 @@ namespace DSA_lims
                 
                 topCursor -= lineSpace;                
 
-                PdfPTable table = new PdfPTable(13);
+                PdfPTable table = new PdfPTable(11);
                 table.TotalWidth = document.GetRight(margin) - document.GetLeft(margin);
+                                
+                table.AddCell(new PdfPCell(GetHeaderPhrase("Analysis")));
+                table.AddCell(new PdfPCell(GetHeaderPhrase("Status")));
+                table.AddCell(new PdfPCell(GetHeaderPhrase("Method")));
+                table.AddCell(new PdfPCell(GetHeaderPhrase("Nuclide")));
+                table.AddCell(new PdfPCell(GetHeaderPhrase("Activity")));
+                table.AddCell(new PdfPCell(GetHeaderPhrase("Act.Unc.")));
+                table.AddCell(new PdfPCell(GetHeaderPhrase("Act.Appr.")));
+                table.AddCell(new PdfPCell(GetHeaderPhrase("Det.Lim.")));
+                table.AddCell(new PdfPCell(GetHeaderPhrase("DL.Appr.")));
+                table.AddCell(new PdfPCell(GetHeaderPhrase("Reportable")));
+                table.AddCell(new PdfPCell(GetHeaderPhrase("Accredited")));
 
                 string query = @"
 select 
@@ -192,19 +224,44 @@ order by s.number, p.number, a.number
                 {
                     while (reader.Read())
                     {
-                        table.AddCell(reader.GetString("sample"));
-                        table.AddCell(reader.GetString("preparation"));
-                        table.AddCell(reader.GetString("analysis"));
-                        table.AddCell(reader.GetString("analysis_status"));
-                        table.AddCell(reader.GetString("analysis_method"));
-                        table.AddCell(reader.GetString("nuclide_name"));
-                        table.AddCell(reader.GetString("act"));
-                        table.AddCell(reader.GetString("act.unc"));
-                        table.AddCell(reader.GetString("act.appr"));
-                        table.AddCell(reader.GetString("det.lim"));
-                        table.AddCell(reader.GetString("det.lim.appr"));
-                        table.AddCell(reader.GetString("reportable"));
-                        table.AddCell(reader.GetString("accredited"));
+                        int istat = reader.GetInt32("analysis_status");
+                        string sstat = "Unknown";
+                        switch(istat)
+                        {
+                            case InstanceStatus.Active:
+                                sstat = "Active";
+                                break;
+                            case InstanceStatus.Inactive:
+                                sstat = "Inactive";
+                                break;
+                            case InstanceStatus.Deleted:
+                                sstat = "Deleted";
+                                break;                            
+                        }
+
+                        string sact = "";
+                        if(DB.IsValidField(reader["act"]))
+                            sact = reader.GetDouble("act").ToString(Utils.ScientificFormat);
+
+                        string sactunc = "";
+                        if (DB.IsValidField(reader["act.unc"]))
+                            sactunc = reader.GetDouble("act.unc").ToString(Utils.ScientificFormat);
+
+                        string sdetlim = "";
+                        if (DB.IsValidField(reader["det.lim"]))
+                            sdetlim = reader.GetDouble("det.lim").ToString(Utils.ScientificFormat);
+
+                        table.AddCell(new PdfPCell(GetCellPhrase(reader.GetString("sample") + "/" + reader.GetString("preparation") + "/" + reader.GetString("analysis"))));                        
+                        table.AddCell(new PdfPCell(GetCellPhrase(sstat)));
+                        table.AddCell(new PdfPCell(GetCellPhrase(reader.GetString("analysis_method"))));
+                        table.AddCell(new PdfPCell(GetCellPhrase(reader.GetString("nuclide_name"))));
+                        table.AddCell(new PdfPCell(GetCellPhrase(sact)));
+                        table.AddCell(new PdfPCell(GetCellPhrase(sactunc)));
+                        table.AddCell(new PdfPCell(GetCellPhrase(reader.GetString("act.appr"))));
+                        table.AddCell(new PdfPCell(GetCellPhrase(sdetlim)));
+                        table.AddCell(new PdfPCell(GetCellPhrase(reader.GetString("det.lim.appr"))));
+                        table.AddCell(new PdfPCell(GetCellPhrase(reader.GetString("reportable"))));
+                        table.AddCell(new PdfPCell(GetCellPhrase(reader.GetString("accredited"))));
                         nRows++;
                     }
                 }                

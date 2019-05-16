@@ -6527,6 +6527,12 @@ where s.number = @sample_number
             if (form.ShowDialog() != DialogResult.OK)
                 return;
 
+            if (form.PdfData.Length > Common.Settings.MaxAttachmentSize)
+            {
+                MessageBox.Show("Attachment size is too big (" + form.PdfData.Length + " bytes). Max size is " + Common.Settings.MaxAttachmentSize + " bytes");
+                return;
+            }
+
             SqlConnection conn = null;
             try
             {
@@ -6553,6 +6559,12 @@ where s.number = @sample_number
             FormScan form = new FormScan(Common.Settings);
             if (form.ShowDialog() != DialogResult.OK)
                 return;
+
+            if (form.PdfData.Length > Common.Settings.MaxAttachmentSize)
+            {
+                MessageBox.Show("Attachment size is too big (" + form.PdfData.Length + " bytes). Max size is " + Common.Settings.MaxAttachmentSize + " bytes");
+                return;
+            }
 
             SqlConnection conn = null;
             try
@@ -6583,6 +6595,12 @@ where s.number = @sample_number
             if (form.ShowDialog() != DialogResult.OK)
                 return;
 
+            if (form.PdfData.Length > Common.Settings.MaxAttachmentSize)
+            {
+                MessageBox.Show("Attachment size is too big (" + form.PdfData.Length + " bytes). Max size is " + Common.Settings.MaxAttachmentSize + " bytes");
+                return;
+            }
+
             SqlConnection conn = null;
             try
             {
@@ -6611,6 +6629,12 @@ where s.number = @sample_number
             FormScan form = new FormScan(Common.Settings);
             if (form.ShowDialog() != DialogResult.OK)
                 return;
+
+            if (form.PdfData.Length > Common.Settings.MaxAttachmentSize)
+            {
+                MessageBox.Show("Attachment size is too big (" + form.PdfData.Length + " bytes). Max size is " + Common.Settings.MaxAttachmentSize + " bytes");
+                return;
+            }
 
             SqlConnection conn = null;
             try
@@ -6646,6 +6670,12 @@ where s.number = @sample_number
             FormScan form = new FormScan(Common.Settings);
             if (form.ShowDialog() != DialogResult.OK)
                 return;
+
+            if (form.PdfData.Length > Common.Settings.MaxAttachmentSize)
+            {
+                MessageBox.Show("Attachment size is too big (" + form.PdfData.Length + " bytes). Max size is " + Common.Settings.MaxAttachmentSize + " bytes");
+                return;
+            }
 
             SqlConnection conn = null;
             try
@@ -6781,6 +6811,12 @@ where s.number = @sample_number
             string fileExt = Path.GetExtension(dialog.FileName);
             byte[] content = File.ReadAllBytes(dialog.FileName);
 
+            if(content.Length > Common.Settings.MaxAttachmentSize)
+            {
+                MessageBox.Show("Attachment size is too big (" + content.Length + " bytes). Max size is " + Common.Settings.MaxAttachmentSize + " bytes");
+                return;
+            }
+
             SqlConnection conn = null;
             try
             {
@@ -6812,6 +6848,12 @@ where s.number = @sample_number
             string fileName = Path.GetFileNameWithoutExtension(dialog.FileName);
             string fileExt = Path.GetExtension(dialog.FileName);
             byte[] content = File.ReadAllBytes(dialog.FileName);
+
+            if (content.Length > Common.Settings.MaxAttachmentSize)
+            {
+                MessageBox.Show("Attachment size is too big (" + content.Length + " bytes). Max size is " + Common.Settings.MaxAttachmentSize + " bytes");
+                return;
+            }
 
             SqlConnection conn = null;
             try
@@ -6852,6 +6894,12 @@ where s.number = @sample_number
             string fileName = Path.GetFileNameWithoutExtension(dialog.FileName);
             string fileExt = Path.GetExtension(dialog.FileName);
             byte[] content = File.ReadAllBytes(dialog.FileName);
+
+            if (content.Length > Common.Settings.MaxAttachmentSize)
+            {
+                MessageBox.Show("Attachment size is too big (" + content.Length + " bytes). Max size is " + Common.Settings.MaxAttachmentSize + " bytes");
+                return;
+            }
 
             SqlConnection conn = null;
             try
@@ -6899,6 +6947,12 @@ where s.number = @sample_number
             string fileExt = Path.GetExtension(dialog.FileName);
             byte[] content = File.ReadAllBytes(dialog.FileName);
 
+            if (content.Length > Common.Settings.MaxAttachmentSize)
+            {
+                MessageBox.Show("Attachment size is too big (" + content.Length + " bytes). Max size is " + Common.Settings.MaxAttachmentSize + " bytes");
+                return;
+            }
+
             SqlConnection conn = null;
             try
             {
@@ -6944,6 +6998,12 @@ where s.number = @sample_number
             string fileName = Path.GetFileNameWithoutExtension(dialog.FileName);
             string fileExt = Path.GetExtension(dialog.FileName);
             byte[] content = File.ReadAllBytes(dialog.FileName);
+
+            if (content.Length > Common.Settings.MaxAttachmentSize)
+            {
+                MessageBox.Show("Attachment size is too big (" + content.Length + " bytes). Max size is " + Common.Settings.MaxAttachmentSize + " bytes");
+                return;
+            }
 
             SqlConnection conn = null;
             try

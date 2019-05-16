@@ -31,7 +31,8 @@ namespace DSA_lims
     public class DSASettings
     {
         public DSASettings()
-        {            
+        {
+            MaxAttachmentSize = 10000000;
         }        
                 
         //public string ConnectionString { get; set; }
@@ -45,5 +46,6 @@ namespace DSA_lims
         public string ScannerPixelType { get; set; }
 
         public string MapProviderName { get; set; }
+        public int MaxAttachmentSize { get; set; }
     }
 }

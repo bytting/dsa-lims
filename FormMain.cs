@@ -36,6 +36,7 @@ using System.Xml;
 using System.Xml.Serialization;
 using System.Diagnostics;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace DSA_lims
 {
@@ -7737,6 +7738,9 @@ where s.number = @sample_number
             switch (treePrepAnal.SelectedNode.Level)
             {
                 case 0:
+                    Guid sid = sample.Id;
+                    title = sample.Number.ToString();
+                    ShowAuditLog("sample", sid, title);
                     break;
                 case 1:
                     Guid pid = Guid.Parse(treePrepAnal.SelectedNode.Name);
@@ -7759,12 +7763,23 @@ where s.number = @sample_number
             try
             {
                 conn = DB.OpenConnection();
-                string query = "select create_date as 'Date', operation as 'Operation', comment as 'Comment', value as 'Object' from audit_log where source_table = @table and source_id = @id order by create_date desc";
+                string query = @"
+select 
+    id,
+    create_date as 'Date', 
+    operation as 'Operation', 
+    comment as 'Comment'    
+from audit_log 
+where source_table = @table and source_id = @id 
+order by create_date desc";
 
                 gridAuditLog.DataSource = DB.GetDataTable(conn, null, query, CommandType.Text, new[] {
                     new SqlParameter("@table", table),
                     new SqlParameter("@id", id),
                 });
+
+                gridAuditLog.Columns["id"].Visible = false;
+                gridAuditLog.Columns["Date"].DefaultCellStyle.Format = Utils.DateTimeFormatNorwegian;
             }
             catch (Exception ex)
             {
@@ -9414,6 +9429,37 @@ where ar.instance_status_id < 2
             {
                 Common.Log.Error(ex);
                 MessageBox.Show(Utils.makeErrorMessage(ex.Message));
+            }
+            finally
+            {
+                conn?.Close();
+            }
+        }
+
+        private void gridAuditLog_SelectionChanged(object sender, EventArgs e)
+        {
+            if (gridAuditLog.SelectedRows.Count < 1)
+            {
+                return;
+            }
+
+            Guid id = Utils.MakeGuid(gridAuditLog.SelectedRows[0].Cells["id"].Value);
+
+            SqlConnection conn = null;
+
+            try
+            {
+                conn = DB.OpenConnection();
+                SqlCommand cmd = new SqlCommand("select value from audit_log where id = @id", conn);
+                cmd.Parameters.AddWithValue("@id", id);
+                string json = (string)cmd.ExecuteScalar();
+
+                propsAuditLog.SelectedObject = new JTypeDescriptor(JObject.Parse(json));
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
             }
             finally
             {

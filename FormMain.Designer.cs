@@ -966,6 +966,8 @@
             this.btnMenu = new System.Windows.Forms.ToolStripButton();
             this.lblCurrentTab = new System.Windows.Forms.ToolStripLabel();
             this.btnBack = new System.Windows.Forms.ToolStripButton();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.propsAuditLog = new System.Windows.Forms.PropertyGrid();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tabs.SuspendLayout();
@@ -1303,6 +1305,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.gridPrepAnalAnalAttachments)).BeginInit();
             this.toolsSampleResAttachments.SuspendLayout();
             this.tools.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menu
@@ -8225,7 +8231,7 @@
             // tabAuditLog
             // 
             this.tabAuditLog.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.tabAuditLog.Controls.Add(this.gridAuditLog);
+            this.tabAuditLog.Controls.Add(this.splitContainer1);
             this.tabAuditLog.Controls.Add(this.toolsAuditLog);
             this.tabAuditLog.Location = new System.Drawing.Point(4, 24);
             this.tabAuditLog.Name = "tabAuditLog";
@@ -8243,14 +8249,15 @@
             this.gridAuditLog.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.gridAuditLog.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridAuditLog.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridAuditLog.Location = new System.Drawing.Point(0, 25);
+            this.gridAuditLog.Location = new System.Drawing.Point(0, 0);
             this.gridAuditLog.MultiSelect = false;
             this.gridAuditLog.Name = "gridAuditLog";
             this.gridAuditLog.ReadOnly = true;
             this.gridAuditLog.RowHeadersVisible = false;
             this.gridAuditLog.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridAuditLog.Size = new System.Drawing.Size(1064, 574);
+            this.gridAuditLog.Size = new System.Drawing.Size(536, 574);
             this.gridAuditLog.TabIndex = 9;
+            this.gridAuditLog.SelectionChanged += new System.EventHandler(this.gridAuditLog_SelectionChanged);
             // 
             // toolsAuditLog
             // 
@@ -8279,8 +8286,9 @@
             // 
             // lblAuditLogTitle
             // 
+            this.lblAuditLogTitle.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.lblAuditLogTitle.Name = "lblAuditLogTitle";
-            this.lblAuditLogTitle.Size = new System.Drawing.Size(108, 22);
+            this.lblAuditLogTitle.Size = new System.Drawing.Size(111, 22);
             this.lblAuditLogTitle.Text = "<lblAuditLogTitle>";
             // 
             // tabSysdata
@@ -11056,6 +11064,34 @@
             this.btnBack.ToolTipText = "Back";
             this.btnBack.Click += new System.EventHandler(this.miBack_Click);
             // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 25);
+            this.splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.gridAuditLog);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.propsAuditLog);
+            this.splitContainer1.Size = new System.Drawing.Size(1064, 574);
+            this.splitContainer1.SplitterDistance = 536;
+            this.splitContainer1.TabIndex = 10;
+            // 
+            // propsAuditLog
+            // 
+            this.propsAuditLog.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.propsAuditLog.HelpVisible = false;
+            this.propsAuditLog.Location = new System.Drawing.Point(0, 0);
+            this.propsAuditLog.Name = "propsAuditLog";
+            this.propsAuditLog.PropertySort = System.Windows.Forms.PropertySort.Alphabetical;
+            this.propsAuditLog.Size = new System.Drawing.Size(524, 574);
+            this.propsAuditLog.TabIndex = 0;
+            this.propsAuditLog.ToolbarVisible = false;
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -11569,6 +11605,10 @@
             this.toolsSampleResAttachments.PerformLayout();
             this.tools.ResumeLayout(false);
             this.tools.PerformLayout();
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -12513,6 +12553,8 @@
         private System.Windows.Forms.ToolStripMenuItem miManual;
         private System.Windows.Forms.ToolStripMenuItem miTypeRelSampleTypesPrepMethRemove;
         private System.Windows.Forms.ToolStripMenuItem miTypeRelSampleTypesCompRemove;
+        private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.PropertyGrid propsAuditLog;
     }
 }
 

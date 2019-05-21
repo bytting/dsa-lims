@@ -970,6 +970,7 @@
             this.btnMenu = new System.Windows.Forms.ToolStripButton();
             this.lblCurrentTab = new System.Windows.Forms.ToolStripLabel();
             this.btnBack = new System.Windows.Forms.ToolStripButton();
+            this.btnOrdersSummaryCurrent = new System.Windows.Forms.ToolStripMenuItem();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tabs.SuspendLayout();
@@ -4944,22 +4945,22 @@
             this.toolStripDropDownButton1.Image = global::DSA_lims.Properties.Resources.menu;
             this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
-            this.toolStripDropDownButton1.Size = new System.Drawing.Size(111, 22);
-            this.toolStripDropDownButton1.Text = "Show results...";
+            this.toolStripDropDownButton1.Size = new System.Drawing.Size(74, 22);
+            this.toolStripDropDownButton1.Text = "Show...";
             // 
             // asPDFToolStripMenuItem
             // 
             this.asPDFToolStripMenuItem.Image = global::DSA_lims.Properties.Resources.report;
             this.asPDFToolStripMenuItem.Name = "asPDFToolStripMenuItem";
-            this.asPDFToolStripMenuItem.Size = new System.Drawing.Size(117, 22);
-            this.asPDFToolStripMenuItem.Text = "As PDF";
+            this.asPDFToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
+            this.asPDFToolStripMenuItem.Text = "Results as PDF";
             // 
             // miResultsShowMap
             // 
             this.miResultsShowMap.Image = global::DSA_lims.Properties.Resources.map;
             this.miResultsShowMap.Name = "miResultsShowMap";
-            this.miResultsShowMap.Size = new System.Drawing.Size(117, 22);
-            this.miResultsShowMap.Text = "On map";
+            this.miResultsShowMap.Size = new System.Drawing.Size(162, 22);
+            this.miResultsShowMap.Text = "Samples on map";
             this.miResultsShowMap.Click += new System.EventHandler(this.miResultsShowMap_Click);
             // 
             // flowSearch
@@ -6355,7 +6356,8 @@
             // 
             this.btnOrdersSummary.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnOrdersOrderSummary,
-            this.btnOrdersPrepSummary});
+            this.btnOrdersPrepSummary,
+            this.btnOrdersSummaryCurrent});
             this.btnOrdersSummary.Image = global::DSA_lims.Properties.Resources.info;
             this.btnOrdersSummary.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnOrdersSummary.Name = "btnOrdersSummary";
@@ -6365,15 +6367,15 @@
             // btnOrdersOrderSummary
             // 
             this.btnOrdersOrderSummary.Name = "btnOrdersOrderSummary";
-            this.btnOrdersOrderSummary.Size = new System.Drawing.Size(135, 22);
-            this.btnOrdersOrderSummary.Text = "&Order";
+            this.btnOrdersOrderSummary.Size = new System.Drawing.Size(235, 22);
+            this.btnOrdersOrderSummary.Text = "&Selected order";
             this.btnOrdersOrderSummary.Click += new System.EventHandler(this.btnOrdersOrderSummary_Click);
             // 
             // btnOrdersPrepSummary
             // 
             this.btnOrdersPrepSummary.Name = "btnOrdersPrepSummary";
-            this.btnOrdersPrepSummary.Size = new System.Drawing.Size(135, 22);
-            this.btnOrdersPrepSummary.Text = "&Preparation";
+            this.btnOrdersPrepSummary.Size = new System.Drawing.Size(235, 22);
+            this.btnOrdersPrepSummary.Text = "&Preparations for selected order";
             this.btnOrdersPrepSummary.Click += new System.EventHandler(this.btnOrdersPrepSummary_Click);
             // 
             // btnOrdersShowAuditLog
@@ -9606,14 +9608,14 @@
             // btnPrepAnalAddPrep
             // 
             this.btnPrepAnalAddPrep.Name = "btnPrepAnalAddPrep";
-            this.btnPrepAnalAddPrep.Size = new System.Drawing.Size(116, 22);
+            this.btnPrepAnalAddPrep.Size = new System.Drawing.Size(152, 22);
             this.btnPrepAnalAddPrep.Text = "&Add...";
             this.btnPrepAnalAddPrep.Click += new System.EventHandler(this.btnPrepAnalAddPrep_Click);
             // 
             // btnPrepAnalDelPrep
             // 
             this.btnPrepAnalDelPrep.Name = "btnPrepAnalDelPrep";
-            this.btnPrepAnalDelPrep.Size = new System.Drawing.Size(116, 22);
+            this.btnPrepAnalDelPrep.Size = new System.Drawing.Size(152, 22);
             this.btnPrepAnalDelPrep.Text = "&Delete...";
             this.btnPrepAnalDelPrep.Click += new System.EventHandler(this.btnPrepAnalDelPrep_Click);
             // 
@@ -9631,14 +9633,14 @@
             // btnPrepAnalAddAnal
             // 
             this.btnPrepAnalAddAnal.Name = "btnPrepAnalAddAnal";
-            this.btnPrepAnalAddAnal.Size = new System.Drawing.Size(116, 22);
+            this.btnPrepAnalAddAnal.Size = new System.Drawing.Size(152, 22);
             this.btnPrepAnalAddAnal.Text = "&Add...";
             this.btnPrepAnalAddAnal.Click += new System.EventHandler(this.btnPrepAnalAddAnal_Click);
             // 
             // btnPrepAnalDelAnal
             // 
             this.btnPrepAnalDelAnal.Name = "btnPrepAnalDelAnal";
-            this.btnPrepAnalDelAnal.Size = new System.Drawing.Size(116, 22);
+            this.btnPrepAnalDelAnal.Size = new System.Drawing.Size(152, 22);
             this.btnPrepAnalDelAnal.Text = "&Delete...";
             this.btnPrepAnalDelAnal.Click += new System.EventHandler(this.btnPrepAnalDelAnal_Click);
             // 
@@ -11117,6 +11119,13 @@
             this.btnBack.ToolTipText = "Back";
             this.btnBack.Click += new System.EventHandler(this.miBack_Click);
             // 
+            // btnOrdersSummaryCurrent
+            // 
+            this.btnOrdersSummaryCurrent.Name = "btnOrdersSummaryCurrent";
+            this.btnOrdersSummaryCurrent.Size = new System.Drawing.Size(235, 22);
+            this.btnOrdersSummaryCurrent.Text = "Current search result";
+            this.btnOrdersSummaryCurrent.Click += new System.EventHandler(this.btnOrdersSummaryCurrent_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -12583,6 +12592,7 @@
         private System.Windows.Forms.TextBox tbAuditLogObject;
         private System.Windows.Forms.ToolStripMenuItem miSamplesShowAuditLog;
         private System.Windows.Forms.ToolStripButton btnSamplesShowAuditLog;
+        private System.Windows.Forms.ToolStripMenuItem btnOrdersSummaryCurrent;
     }
 }
 

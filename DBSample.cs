@@ -187,6 +187,25 @@ where ps.id = @psid
             return true;
         }        
 
+        public bool HasOrder(SqlConnection conn, SqlTransaction trans, Guid orderId)
+        {
+            string query = @"
+select count(*) 
+from sample_x_assignment_sample_type sxast 
+    inner join assignment_sample_type ast on ast.id = sxast.assignment_sample_type_id
+    inner join assignment a on a.id = ast.assignment_id and a.id = @aid
+where sxast.sample_id = @sid";
+            object o = DB.GetScalar(conn, trans, query, CommandType.Text, new[] {
+                    new SqlParameter("@sid", Id),
+                    new SqlParameter("@aid", orderId)
+                });
+
+            if (!DB.IsValidField(o))
+                throw new Exception("DBSample.HasOrder: Invalid DB field found");
+
+            return Convert.ToInt32(o) > 0;
+        }
+
         public bool HasOrders(SqlConnection conn, SqlTransaction trans)
         {
             string query = "select count(*) from sample_x_assignment_sample_type where sample_id = @sid";

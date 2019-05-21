@@ -137,38 +137,23 @@ namespace DSA_lims
                     MessageBox.Show("This order line if already full");
                     return;
                 }
-
-                string query = @"
-select count(*) 
-from sample_x_assignment_sample_type sxast 
-    inner join assignment_sample_type ast on ast.id = sxast.assignment_sample_type_id
-    inner join assignment a on a.id = ast.assignment_id and a.id = @aid
-where sxast.sample_id = @sid";
-                object o = DB.GetScalar(conn, trans, query, CommandType.Text, new[] {
-                    new SqlParameter("@sid", mSample.Id),
-                    new SqlParameter("@aid", SelectedOrderId)
-                });
-
-                if (o != null && o != DBNull.Value)
+                
+                if (mSample.HasOrder(conn, trans, SelectedOrderId))
                 {
-                    int cnt = Convert.ToInt32(o);
-                    if (cnt > 0)
-                    {
-                        MessageBox.Show("This sample is already added to this order");
-                        return;
-                    }
+                    MessageBox.Show("This sample is already added to this order");
+                    return;
                 }
 
                 foreach (TreeNode tn in tnode.Nodes)
                 {
                     Guid prepMethLineId = Guid.Parse(tn.Name);
 
-                    o = DB.GetScalar(conn, trans, "select preparation_laboratory_id from assignment_preparation_method where id = @id", CommandType.Text,
+                    object o = DB.GetScalar(conn, trans, "select preparation_laboratory_id from assignment_preparation_method where id = @id", CommandType.Text,
                         new SqlParameter("@id", prepMethLineId));
                     if (!Utils.IsValidGuid(o))
                     {
-                        Common.Log.Error("Invalid or non existing Guid on assignment preparation method");
-                        MessageBox.Show("Invalid or non existing Guid on assignment preparation method");
+                        Common.Log.Error("FormSelectOrder.btnOk_Click: Invalid or non existing Guid on assignment preparation method");
+                        MessageBox.Show("FormSelectOrder.btnOk_Click: Invalid or non existing Guid on assignment preparation method");
                         return;
                     }
 
@@ -184,6 +169,9 @@ where sxast.sample_id = @sid";
                         {
                             o = DB.GetScalar(conn, trans, "select preparation_method_count from assignment_preparation_method where id = @id", CommandType.Text,
                                 new SqlParameter("@id", prepMethLineId));
+                            if (!DB.IsValidField(o))
+                                throw new Exception("FormSelectOrder.btnOk_Click: Unable to get preparation_method_count for assignment_preparation_method_id " + prepMethLineId);
+
                             int cnt = Convert.ToInt32(o);
                             List<Guid> prepList = tn.Tag as List<Guid>;
                             if (prepList.Count != cnt)
@@ -195,7 +183,12 @@ where sxast.sample_id = @sid";
                     }
                 }
 
-                GenerateOrderPreparations(conn, trans, mSample.Id, SelectedLaboratoryId, SelectedOrderId, SelectedOrderLineId, tnode.Nodes);
+                GenerateOrderPreparations(conn, trans, SelectedLaboratoryId, SelectedOrderId, tnode.Nodes);
+
+                SqlCommand cmd = new SqlCommand("insert into sample_x_assignment_sample_type values(@sample_id, @assignment_sample_type_id)", conn, trans);
+                cmd.Parameters.AddWithValue("@sample_id", mSample.Id, Guid.Empty);
+                cmd.Parameters.AddWithValue("@assignment_sample_type_id", SelectedOrderLineId, Guid.Empty);
+                cmd.ExecuteNonQuery();
 
                 mSample.LoadFromDB(conn, trans, mSample.Id);
 
@@ -220,9 +213,9 @@ where sxast.sample_id = @sid";
             Close();
         }
 
-        private void GenerateOrderPreparations(SqlConnection conn, SqlTransaction trans, Guid sampleId, Guid labId, Guid orderId, Guid orderLineId, TreeNodeCollection tnodes)
+        private void GenerateOrderPreparations(SqlConnection conn, SqlTransaction trans, Guid labId, Guid orderId, TreeNodeCollection tnodes)
         {                                        
-            int nextPrepNumber = DB.GetNextPreparationNumber(conn, trans, sampleId);
+            int nextPrepNumber = DB.GetNextPreparationNumber(conn, trans, mSample.Id);
 
             foreach (TreeNode tnode in tnodes)
             {
@@ -255,7 +248,7 @@ where sxast.sample_id = @sid";
                         Guid newPrepId = Guid.NewGuid();
                         cmd.Parameters.Clear();
                         cmd.Parameters.AddWithValue("@id", newPrepId);
-                        cmd.Parameters.AddWithValue("@sample_id", sampleId, Guid.Empty);
+                        cmd.Parameters.AddWithValue("@sample_id", mSample.Id, Guid.Empty);
                         cmd.Parameters.AddWithValue("@number", nextPrepNumber++);
                         cmd.Parameters.AddWithValue("@assignment_id", orderId, Guid.Empty);
                         cmd.Parameters.AddWithValue("@laboratory_id", labId, Guid.Empty);
@@ -281,12 +274,7 @@ where sxast.sample_id = @sid";
                         prepCount--;
                     }                        
                 }
-            }
-
-            SqlCommand cmd2 = new SqlCommand("insert into sample_x_assignment_sample_type values(@sample_id, @assignment_sample_type_id)", conn, trans);
-            cmd2.Parameters.AddWithValue("@sample_id", sampleId, Guid.Empty);
-            cmd2.Parameters.AddWithValue("@assignment_sample_type_id", orderLineId, Guid.Empty);
-            cmd2.ExecuteNonQuery();            
+            }            
         }
 
         private void GenerateOrderAnalyses(SqlConnection conn, SqlTransaction trans, Guid orderId, Guid labId, Guid prepId, TreeNodeCollection tnodes)

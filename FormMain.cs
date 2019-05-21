@@ -9480,7 +9480,7 @@ where ar.instance_status_id < 2
                 conn = DB.OpenConnection();
                 Guid aid = Utils.MakeGuid(gridOrders.SelectedRows[0].Cells["id"].Value);
 
-                byte[] pdfData = UtilsPdf.CreateAssignmentPdfData(conn, null, aid);
+                byte[] pdfData = UtilsPdf.CreatePdfDataFromAssignment(conn, null, aid);
 
                 string path = Path.GetTempPath();
                 string fileName = Guid.NewGuid().ToString() + "-dsalims.pdf";
@@ -9629,6 +9629,27 @@ where ar.instance_status_id < 2
             string title = "Audit log for sample " + gridSamples.SelectedRows[0].Cells["number"].Value.ToString();
             ShowAuditLog("sample", sid, title);
             auditLogIsSample = true;
+        }
+
+        private void btnOrdersSummaryCurrent_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DataTable dt = (DataTable)gridOrders.DataSource;                
+                
+                string path = Path.GetTempPath();
+                string fileName = Guid.NewGuid().ToString() + "-dsalims.pdf";
+                string filePath = Path.Combine(path, fileName);
+
+                UtilsPdf.CreatePdfDataFromDataTable(filePath, dt);
+
+                Process.Start(filePath);
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(Utils.makeErrorMessage(ex.Message));
+            }
         }
     }
 }

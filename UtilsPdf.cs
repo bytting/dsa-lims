@@ -56,29 +56,29 @@ namespace DSA_lims
             img.ScaleAbsolute(w, h);
         }
 
-        public static PdfFont GetHeaderFont()
+        private static PdfFont GetHeaderFont()
         {
             return new PdfFont(PdfFont.FontFamily.HELVETICA, 5f, PdfFont.BOLD, iTextSharp.text.BaseColor.BLACK);
         }
 
-        public static PdfFont GetCellFont()
+        private static PdfFont GetCellFont()
         {
             return new PdfFont(PdfFont.FontFamily.HELVETICA, 5f, PdfFont.NORMAL, iTextSharp.text.BaseColor.BLACK);
         }
 
-        public static PdfPhrase GetHeaderPhrase(string text)
+        private static PdfPhrase GetHeaderPhrase(string text)
         {
             PdfPhrase p = new PdfPhrase(text, GetHeaderFont());
             return p;
         }
 
-        public static PdfPhrase GetCellPhrase(string text)
+        private static PdfPhrase GetCellPhrase(string text)
         {
             PdfPhrase p = new PdfPhrase(text, GetCellFont());
             return p;
         }
 
-        public static byte[] CreateAssignmentPdfData(SqlConnection conn, SqlTransaction trans, Guid assignmentId)
+        public static byte[] CreatePdfDataFromAssignment(SqlConnection conn, SqlTransaction trans, Guid assignmentId)
         {            
             string OrderName = "", LaboratoryName = "", ResponsibleName = "", CustomerName = "", CustomerCompany = "", CustomerAddress = "";
             PdfImage labLogo = null;
@@ -289,7 +289,7 @@ order by s.number, p.number, a.number
                     document.NewPage();
                     topCursor = document.Top - margin;
                 }
-
+                
                 pdfData = ms.GetBuffer();
             }
             finally
@@ -298,6 +298,42 @@ order by s.number, p.number, a.number
             }
 
             return pdfData;
+        }
+
+        public static void CreatePdfDataFromDataTable(string fileName, DataTable dt)
+        {
+            PdfDocument document = new PdfDocument();
+            PdfWriter writer = PdfWriter.GetInstance(document, new FileStream(fileName, FileMode.Create));
+            document.Open();
+
+            PdfPTable table = new PdfPTable(dt.Columns.Count);
+            table.WidthPercentage = 100;
+            
+            for (int k = 0; k < dt.Columns.Count; k++)
+            {
+                PdfPCell cell = new PdfPCell(GetHeaderPhrase(dt.Columns[k].ColumnName));
+
+                cell.HorizontalAlignment = PdfPCell.ALIGN_LEFT;
+                cell.VerticalAlignment = PdfPCell.ALIGN_LEFT;
+
+                table.AddCell(cell);
+            }
+            
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                for (int j = 0; j < dt.Columns.Count; j++)
+                {
+                    PdfPCell cell = new PdfPCell(GetCellPhrase(dt.Rows[i][j].ToString()));
+                    
+                    cell.HorizontalAlignment = PdfPCell.ALIGN_LEFT;
+                    cell.VerticalAlignment = PdfPCell.ALIGN_LEFT;
+
+                    table.AddCell(cell);
+                }
+            }
+
+            document.Add(table);
+            document.Close();
         }
     }
 }

@@ -17,22 +17,25 @@
 */
 // Authors: Dag Robole,
 
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
+using Newtonsoft.Json;
 
 namespace DSA_lims
 {
+    [JsonObject]
     public class Preparation
     {
         public Preparation()
         {
             Id = Guid.NewGuid();
             Dirty = false;
+
+            Analyses = new List<Analysis>();
         }
 
         public Guid Id { get; set; }
@@ -55,43 +58,29 @@ namespace DSA_lims
         public DateTime UpdateDate { get; set; }
         public Guid UpdateId { get; set; }
 
+        public List<Analysis> Analyses { get; set; }
+
         public bool Dirty;
 
         public bool IsDirty()
         {
-            return Dirty;
+            if (Dirty)
+                return true;
+
+            foreach (Analysis a in Analyses)
+                if (a.IsDirty())
+                    return true;
+
+            return false;
         }
 
         public void ClearDirty()
         {
             Dirty = false;
-        }
 
-        public static string ToJSON(SqlConnection conn, SqlTransaction trans, Guid prepId)
-        {
-            string json = String.Empty;
-            Dictionary<string, object> map = new Dictionary<string, object>();
-
-            using (SqlDataReader reader = DB.GetDataReader(conn, trans, "csp_select_preparation_flat", CommandType.StoredProcedure,
-                new SqlParameter("@id", prepId)))
-            {
-                if (reader.HasRows)
-                {
-                    reader.Read();
-
-                    var cols = new List<string>();
-                    for (int i = 0; i < reader.FieldCount; i++)
-                        cols.Add(reader.GetName(i));
-
-                    foreach (var col in cols)
-                        map.Add(col, reader[col]);
-
-                    json = JsonConvert.SerializeObject(map, Formatting.None);
-                }
-            }
-
-            return json;
-        }
+            foreach (Analysis a in Analyses)
+                a.ClearDirty();
+        }        
 
         public static bool IdExists(SqlConnection conn, SqlTransaction trans, Guid prepId)
         {
@@ -129,6 +118,24 @@ namespace DSA_lims
                 UpdateDate = reader.GetDateTime("update_date");
                 UpdateId = reader.GetGuid("update_id");
             }
+
+            // Load analyses
+            Analyses.Clear();
+
+            List<Guid> analysisIds = new List<Guid>();
+            using (SqlDataReader reader = DB.GetDataReader(conn, trans, "select id from analysis where preparation_id = @id", CommandType.Text,
+                new SqlParameter("@id", Id)))
+            {
+                while (reader.Read())
+                    analysisIds.Add(reader.GetGuid("id"));
+            }
+
+            foreach (Guid aId in analysisIds)
+            {
+                Analysis a = new Analysis();
+                a.LoadFromDB(conn, trans, aId);
+                Analyses.Add(a);
+            }
         }
 
         public void StoreToDB(SqlConnection conn, SqlTransaction trans)
@@ -165,10 +172,6 @@ namespace DSA_lims
 
                 cmd.ExecuteNonQuery();
 
-                string json = Preparation.ToJSON(conn, trans, Id);
-                if (!String.IsNullOrEmpty(json))
-                    DB.AddAuditMessage(conn, trans, "preparation", Id, AuditOperationType.Insert, json, "");
-
                 Dirty = false;
             }
             else
@@ -193,11 +196,32 @@ namespace DSA_lims
 
                     cmd.ExecuteNonQuery();
 
-                    string json = Preparation.ToJSON(conn, trans, Id);
-                    if (!String.IsNullOrEmpty(json))
-                        DB.AddAuditMessage(conn, trans, "preparation", Id, AuditOperationType.Update, json, "");
-
                     Dirty = false;                    
+                }
+            }
+
+            foreach (Analysis a in Analyses)
+                a.StoreToDB(conn, trans);
+
+            // Remove deleted analyses from DB
+            List<Guid> storedAnalIds = new List<Guid>();
+            using (SqlDataReader reader = DB.GetDataReader(conn, trans, "select id from analysis where preparation_id = @id", CommandType.Text,
+                new SqlParameter("@id", Id)))
+            {
+                while (reader.Read())
+                    storedAnalIds.Add(reader.GetGuid("id"));
+            }
+
+            cmd.CommandText = "update analysis set instance_status_id = @status where id = @id";
+            cmd.CommandType = CommandType.Text;
+            foreach (Guid aId in storedAnalIds)
+            {
+                if (Analyses.FindIndex(x => x.Id == aId) == -1)
+                {
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.AddWithValue("@status", InstanceStatus.Deleted);
+                    cmd.Parameters.AddWithValue("@id", aId);
+                    cmd.ExecuteNonQuery();
                 }
             }
         }        

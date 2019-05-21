@@ -17,6 +17,7 @@
 */
 // Authors: Dag Robole,
 
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -212,12 +213,33 @@ where sxast.sample_id = @sid";
                 Common.Log.Error(ex);
                 MessageBox.Show(ex.Message);
                 DialogResult = DialogResult.Abort;
+                Close();
             }
             finally
             {
                 conn?.Close();
             }
-                        
+                    
+            try
+            {
+                conn = DB.OpenConnection();
+
+                Sample s = new Sample();
+                s.LoadFromDB(conn, trans, SampleId);
+                string json = JsonConvert.SerializeObject(s);
+                DB.AddAuditMessage(conn, trans, "sample", s.Id, AuditOperationType.Update, json, "");
+            }
+            catch (Exception ex)
+            {                
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                DialogResult = DialogResult.OK;
+            }
+            finally
+            {
+                conn?.Close();
+            }
+
             Close();
         }
 
@@ -276,10 +298,6 @@ where sxast.sample_id = @sid";
                         cmd.Parameters.AddWithValue("@update_id", Common.UserId, Guid.Empty);
 
                         cmd.ExecuteNonQuery();
-
-                        string json = Preparation.ToJSON(conn, trans, newPrepId);
-                        if (!String.IsNullOrEmpty(json))
-                            DB.AddAuditMessage(conn, trans, "preparation", newPrepId, AuditOperationType.Insert, json, "");
 
                         GenerateOrderAnalyses(conn, trans, orderId, labId, newPrepId, tnode.Nodes);
 
@@ -342,10 +360,6 @@ where sxast.sample_id = @sid";
                     cmd.Parameters.AddWithValue("@update_id", Common.UserId);
                                         
                     cmd.ExecuteNonQuery();
-
-                    string json = Analysis.ToJSON(conn, trans, newAnalId);
-                    if (!String.IsNullOrEmpty(json))
-                        DB.AddAuditMessage(conn, trans, "analysis", newAnalId, AuditOperationType.Insert, json, "");
 
                     analCount--;
                 }

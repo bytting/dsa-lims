@@ -27,6 +27,7 @@ using Newtonsoft.Json;
 
 namespace DSA_lims
 {
+    [JsonObject]
     public class Analysis
     {
         public Analysis()
@@ -108,33 +109,7 @@ namespace DSA_lims
             a.Dirty = Dirty;
             a.Results.AddRange(Results);
             return a;
-        }
-
-        public static string ToJSON(SqlConnection conn, SqlTransaction trans, Guid analId)
-        {
-            string json = String.Empty;
-            Dictionary<string, object> map = new Dictionary<string, object>();
-
-            using (SqlDataReader reader = DB.GetDataReader(conn, trans, "csp_select_analysis_flat", CommandType.StoredProcedure,
-                new SqlParameter("@id", analId)))
-            {
-                if (reader.HasRows)
-                {
-                    reader.Read();
-
-                    var cols = new List<string>();
-                    for (int i = 0; i < reader.FieldCount; i++)
-                        cols.Add(reader.GetName(i));
-
-                    foreach (var col in cols)
-                        map.Add(col, reader[col]);
-
-                    json = JsonConvert.SerializeObject(map, Formatting.None);
-                }
-            }
-
-            return json;
-        }
+        }        
 
         public static bool IdExists(SqlConnection conn, SqlTransaction trans, Guid analId)
         {
@@ -231,10 +206,6 @@ namespace DSA_lims
 
                 cmd.ExecuteNonQuery();
 
-                string json = Analysis.ToJSON(conn, trans, Id);
-                if (!String.IsNullOrEmpty(json))
-                    DB.AddAuditMessage(conn, trans, "analysis", Id, AuditOperationType.Insert, json, "");
-
                 Dirty = false;
             }
             else
@@ -259,10 +230,6 @@ namespace DSA_lims
 
                     cmd.ExecuteNonQuery();
 
-                    string json = Analysis.ToJSON(conn, trans, Id);
-                    if (!String.IsNullOrEmpty(json))
-                        DB.AddAuditMessage(conn, trans, "analysis", Id, AuditOperationType.Update, json, "");
-
                     Dirty = false;
                 }
             }
@@ -285,10 +252,6 @@ namespace DSA_lims
             {
                 if(Results.FindIndex(x => x.Id == arId) == -1)
                 {
-                    string json = AnalysisResult.ToJSON(conn, trans, arId);
-                    if (!String.IsNullOrEmpty(json))
-                        DB.AddAuditMessage(conn, trans, "analysis_result", arId, AuditOperationType.Delete, json, "");
-
                     cmd.Parameters.Clear();
                     cmd.Parameters.AddWithValue("@status", InstanceStatus.Deleted);
                     cmd.Parameters.AddWithValue("@id", arId);                    

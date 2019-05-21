@@ -23,9 +23,11 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
+using Newtonsoft.Json;
 
 namespace DSA_lims
 {
+    [JsonObject]
     public class PreparationGeometry
     {
         public PreparationGeometry()

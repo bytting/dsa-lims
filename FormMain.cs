@@ -56,6 +56,7 @@ namespace DSA_lims
         ToolTip ttCoords = new ToolTip();
 
         bool searchIsDirty = false;
+        bool auditLogIsSample = false;
 
         public FormMain()
         {
@@ -2210,36 +2211,13 @@ namespace DSA_lims
 
                 conn = DB.OpenConnection();
 
+                if (!DB.HasAccessToSample(conn, null, sid))
+                {
+                    MessageBox.Show("Can not edit this sample. Sample does not belong to you or your laboratory");
+                    return;
+                }
+
                 sample.LoadFromDB(conn, null, sid);
-
-                if (Common.LabId == Guid.Empty)
-                {
-                    if (Common.UserId != sample.CreateId)
-                    {
-                        MessageBox.Show("Can not edit this sample. Sample does not belong to your user");
-                        return;
-                    }
-                }
-                else
-                {
-                    bool allow = false;
-
-                    if (Common.LabId == sample.LaboratoryId)
-                    {
-                        allow = true;
-                    }
-                    else
-                    {
-                        if (Common.UserId == sample.CreateId)
-                            allow = true;
-                    }
-
-                    if (!allow)
-                    {
-                        MessageBox.Show("Can not edit this sample. Sample does not belong to you or your laboratory");
-                        return;
-                    }
-                }
 
                 PopulateSample(conn, null, sample, true);
             }
@@ -2247,6 +2225,7 @@ namespace DSA_lims
             {
                 Common.Log.Error(ex);
                 MessageBox.Show(ex.Message);
+                return;
             }
             finally
             {
@@ -3470,6 +3449,7 @@ namespace DSA_lims
             try
             {
                 conn = DB.OpenConnection();
+
                 if (!DB.HasAccessToOrder(conn, null, orderId))
                 {
                     MessageBox.Show("You don't have permission to edit this order");
@@ -4284,6 +4264,9 @@ select count(*) from sample s
                 assignment.WorkflowStatusId = wfStatus;                           
 
                 assignment.StoreToDB(conn, trans);
+                                
+                string json = JsonConvert.SerializeObject(assignment);
+                DB.AddAuditMessage(conn, trans, "assignment", assignment.Id, AuditOperationType.Update, json, "");
 
                 trans.Commit();
 
@@ -4524,7 +4507,14 @@ select count(*) from sample s
                         sid = Guid.Parse(e.Node.Parent.Name);
                         sample.LoadFromDB(conn, null, sid);
                         pid = Guid.Parse(e.Node.Name);
-                        preparation.LoadFromDB(conn, null, pid);
+                        preparation = sample.Preparations.Find(x => x.Id == pid);
+                        if(preparation == null)
+                        {
+                            Common.Log.Error("Unable to find preparation " + pid + " in sample " + sid);
+                            MessageBox.Show("Unable to find preparation " + pid + " in sample " + sid);
+                            return;
+                        }
+                        //preparation.LoadFromDB(conn, null, pid);
                         PopulatePreparation(conn, null, preparation, true);
                         btnPrepAnalDelPrep.Enabled = true;
                         btnPrepAnalAddAnal.Enabled = true;
@@ -4534,9 +4524,23 @@ select count(*) from sample s
                         sid = Guid.Parse(e.Node.Parent.Parent.Name);
                         sample.LoadFromDB(conn, null, sid);
                         pid = Guid.Parse(e.Node.Parent.Name);
-                        preparation.LoadFromDB(conn, null, pid);
+                        preparation = sample.Preparations.Find(x => x.Id == pid);
+                        if (preparation == null)
+                        {
+                            Common.Log.Error("Unable to find preparation " + pid + " in sample " + sid);
+                            MessageBox.Show("Unable to find preparation " + pid + " in sample " + sid);
+                            return;
+                        }
+                        //preparation.LoadFromDB(conn, null, pid);
                         Guid aid = Guid.Parse(e.Node.Name);
-                        analysis.LoadFromDB(conn, null, aid);
+                        //analysis.LoadFromDB(conn, null, aid);
+                        analysis = preparation.Analyses.Find(x => x.Id == aid);
+                        if (analysis == null)
+                        {
+                            Common.Log.Error("Unable to find analysis " + aid + " in preparation " + pid);
+                            MessageBox.Show("Unable to find analysis " + aid + " in preparation " + pid);
+                            return;
+                        }
                         PopulateAnalysis(conn, null, analysis, true);
                         btnPrepAnalDelAnal.Enabled = true;
                         tabsPrepAnal.SelectedTab = tabPrepAnalAnalysis;
@@ -4638,6 +4642,12 @@ select count(*) from sample s
                 tabs.SelectedTab = tabSamples;
             else if (tabs.SelectedTab == tabOrder)
                 tabs.SelectedTab = tabOrders;
+            else if(tabs.SelectedTab == tabAuditLog)
+            {
+                if(auditLogIsSample)
+                    tabs.SelectedTab = tabSamples;
+                else tabs.SelectedTab = tabOrders;
+            }
             else tabs.SelectedTab = tabMenu;
         }
 
@@ -4705,10 +4715,12 @@ select count(*) from sample s
                 alt = Convert.ToDouble(tbSampleInfoAltitude.Text);
 
             SqlConnection conn = null;
+            SqlTransaction trans = null;
 
             try
             {
                 conn = DB.OpenConnection();
+                trans = conn.BeginTransaction();
 
                 Guid newSampleTypeId = Utils.MakeGuid(cboxSampleSampleType.SelectedValue);
                 if (sample.SampleTypeId != newSampleTypeId && sample.HasOrders(conn, null))
@@ -4758,12 +4770,18 @@ select count(*) from sample s
                 sample.InstanceStatusId = (int)cboxSampleInstanceStatus.SelectedValue;
                 sample.Comment = tbSampleComment.Text.Trim();
 
-                sample.StoreToDB(conn, null);
+                sample.StoreToDB(conn, trans);
+
+                string json = JsonConvert.SerializeObject(sample);
+                DB.AddAuditMessage(conn, trans, "sample", sample.Id, AuditOperationType.Update, json, "");
+
+                trans.Commit();
 
                 SetStatusMessage("Sample " + sample.Number + " updated");
             }
             catch (Exception ex)
             {
+                trans?.Rollback();
                 Common.Log.Error(ex);
                 MessageBox.Show(ex.Message);
             }
@@ -4867,6 +4885,9 @@ select count(*) from sample s
                 preparation.WorkflowStatusId = (int)cboxPrepAnalPrepWorkflowStatus.SelectedValue;
 
                 preparation.StoreToDB(conn, trans);
+
+                string json = JsonConvert.SerializeObject(sample);
+                DB.AddAuditMessage(conn, trans, "sample", sample.Id, AuditOperationType.Update, json, "");
 
                 trans.Commit();
 
@@ -5004,7 +5025,10 @@ select count(*) from sample s
                 analysis.Comment = tbPrepAnalAnalComment.Text;
                 analysis.WorkflowStatusId = (int)cboxPrepAnalAnalWorkflowStatus.SelectedValue;
 
-                analysis.StoreToDB(conn, trans);
+                analysis.StoreToDB(conn, trans);                
+
+                string json = JsonConvert.SerializeObject(sample);
+                DB.AddAuditMessage(conn, trans, "sample", sample.Id, AuditOperationType.Update, json, "");
 
                 if (!String.IsNullOrEmpty(analysis.ImportFile) && File.Exists(analysis.ImportFile))
                 {
@@ -5017,7 +5041,7 @@ select count(*) from sample s
                     catch { }
                 }
 
-                trans.Commit();
+                trans.Commit();                                
 
                 treePrepAnal.SelectedNode.ForeColor = WorkflowStatus.GetStatusColor(analysis.WorkflowStatusId);
                 SetStatusMessage("Analysis updated successfully");
@@ -5053,6 +5077,7 @@ select count(*) from sample s
         private void btnPrepAnalSampleUpdate_Click(object sender, EventArgs e)
         {            
             SqlConnection conn = null;
+            SqlTransaction trans = null;
 
             try
             {
@@ -5066,8 +5091,9 @@ select count(*) from sample s
                 }
 
                 conn = DB.OpenConnection();
+                trans = conn.BeginTransaction();
 
-                if (sample.IsClosed(conn, null))
+                if (sample.IsClosed(conn, trans))
                 {
                     MessageBox.Show("This sample belongs to a closed order and can not be updated");
                     return;
@@ -5080,12 +5106,18 @@ select count(*) from sample s
                 sample.LodWeightStart = lodStart;
                 sample.LodWeightEnd = lodEnd;                
 
-                sample.StoreLabInfoToDB(conn, null);
+                sample.StoreLabInfoToDB(conn, trans);
+
+                string json = JsonConvert.SerializeObject(sample);
+                DB.AddAuditMessage(conn, trans, "sample", sample.Id, AuditOperationType.Update, json, "");
+
+                trans.Commit();
 
                 SetStatusMessage("Lab data updated for sample " + sample.Number);
             }
             catch (Exception ex)
             {
+                trans?.Rollback();
                 Common.Log.Error(ex);
                 MessageBox.Show(ex.Message);
             }
@@ -5349,14 +5381,31 @@ select count(*) from sample s
                 return;
             }            
 
-            FormPrepAnalAddAnal form = new FormPrepAnalAddAnal(preparation);
+            FormPrepAnalAddAnal form = new FormPrepAnalAddAnal(sample, preparation);
             if (form.ShowDialog() != DialogResult.OK)
                 return;
 
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();
+
+                Sample s = new Sample();
+                s.LoadFromDB(conn, null, sample.Id);
+                string json = JsonConvert.SerializeObject(s);
+                DB.AddAuditMessage(conn, null, "sample", s.Id, AuditOperationType.Update, json, "");
+
                 PopulatePrepAnal(conn, sample);
             }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn?.Close();
+            }                
         }
 
         private void btnSampleAddSampleToOrder_Click(object sender, EventArgs e)
@@ -7728,33 +7777,6 @@ where s.number = @sample_number
             tbSampleInfoLongitude.Text = form.SelectedLongitude.ToString();
         }
 
-        private void btnPrepAnalShowAudit_Click(object sender, EventArgs e)
-        {
-            if (treePrepAnal.SelectedNode == null)
-                return;
-
-            string title;
-
-            switch (treePrepAnal.SelectedNode.Level)
-            {
-                case 0:
-                    Guid sid = sample.Id;
-                    title = sample.Number.ToString();
-                    ShowAuditLog("sample", sid, title);
-                    break;
-                case 1:
-                    Guid pid = Guid.Parse(treePrepAnal.SelectedNode.Name);
-                    title = treePrepAnal.SelectedNode.Parent.Text + "     " + treePrepAnal.SelectedNode.Text;
-                    ShowAuditLog("preparation", pid, title);
-                    break;
-                case 2:
-                    Guid aid = Guid.Parse(treePrepAnal.SelectedNode.Name);
-                    title = treePrepAnal.SelectedNode.Parent.Parent.Text + "     " + treePrepAnal.SelectedNode.Parent.Text + "     " + treePrepAnal.SelectedNode.Text;
-                    ShowAuditLog("analysis", aid, title);
-                    break;
-            }
-        }
-
         private void ShowAuditLog(string table, Guid id, string title)
         {            
             lblAuditLogTitle.Text = title;
@@ -8326,13 +8348,33 @@ order by create_date desc";
                 cmd.Parameters.AddWithValue("@aid", analysis.Id);                
                 cmd.ExecuteNonQuery();
 
+                sample.LoadFromDB(conn, trans, sample.Id);
+
+                string json = JsonConvert.SerializeObject(sample);
+                DB.AddAuditMessage(conn, null, "sample", sample.Id, AuditOperationType.Update, json, "");
+
                 trans.Commit();
 
-                treePrepAnal.Nodes.Remove(treePrepAnal.SelectedNode);
+                //treePrepAnal.Nodes.Remove(treePrepAnal.SelectedNode);
             }
             catch(Exception ex)
             {
                 trans?.Rollback();
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn?.Close();
+            }
+
+            try
+            {
+                conn = DB.OpenConnection();
+                PopulatePrepAnal(conn, sample);
+            }
+            catch (Exception ex)
+            {
                 Common.Log.Error(ex);
                 MessageBox.Show(ex.Message);
             }
@@ -8394,13 +8436,33 @@ order by create_date desc";
                 cmd.Parameters.AddWithValue("@status", InstanceStatus.Deleted);
                 cmd.ExecuteNonQuery();
 
+                sample.LoadFromDB(conn, trans, sample.Id);
+
+                string json = JsonConvert.SerializeObject(sample);
+                DB.AddAuditMessage(conn, trans, "sample", sample.Id, AuditOperationType.Update, json, "");
+
                 trans.Commit();
 
-                treePrepAnal.Nodes.Remove(treePrepAnal.SelectedNode);
+                //treePrepAnal.Nodes.Remove(treePrepAnal.SelectedNode);
             }
             catch (Exception ex)
             {
                 trans?.Rollback();
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn?.Close();
+            }
+
+            try
+            {
+                conn = DB.OpenConnection();
+                PopulatePrepAnal(conn, sample);
+            }
+            catch (Exception ex)
+            {
                 Common.Log.Error(ex);
                 MessageBox.Show(ex.Message);
             }
@@ -9447,14 +9509,37 @@ where ar.instance_status_id < 2
 
             SqlConnection conn = null;
 
+            string source = String.Empty;
+            string json = String.Empty;
+            object o = null;
+
             try
             {
                 conn = DB.OpenConnection();
-                SqlCommand cmd = new SqlCommand("select value from audit_log where id = @id", conn);
-                cmd.Parameters.AddWithValue("@id", id);
-                string json = (string)cmd.ExecuteScalar();
+                using (SqlDataReader reader = DB.GetDataReader(conn, null, "select source_table, cast(decompress(value) as nvarchar(max)) as value from audit_log where id = @id", CommandType.Text, 
+                    new SqlParameter("@id", id)))
+                {
+                    if (!reader.HasRows)
+                        return;
 
-                propsAuditLog.SelectedObject = new JTypeDescriptor(JObject.Parse(json));
+                    reader.Read();
+                    source = (string)reader["source_table"].ToString();
+                    json = (string)reader["value"].ToString();
+                }
+
+                switch (source)
+                {
+                    case "assignment":
+                        o = JsonConvert.DeserializeObject<Assignment>(json);
+                        break;
+                    case "sample":
+                        o = JsonConvert.DeserializeObject<Sample>(json);
+                        break;
+                    default:
+                        return;
+                }
+
+                tbAuditLogObject.Text = JsonConvert.SerializeObject(o, Newtonsoft.Json.Formatting.Indented);
             }
             catch (Exception ex)
             {
@@ -9465,6 +9550,83 @@ where ar.instance_status_id < 2
             {
                 conn?.Close();
             }
+        }
+
+        private void miOrdersShowAuditLog_Click(object sender, EventArgs e)
+        {
+            if (gridOrders.SelectedRows.Count != 1)
+            {
+                MessageBox.Show("You must select a single order first");
+                return;
+            }
+
+            Guid aid = Guid.Empty;
+            SqlConnection conn = null;
+
+            try
+            {
+                aid = Utils.MakeGuid(gridOrders.SelectedRows[0].Cells["id"].Value);
+
+                conn = DB.OpenConnection();
+
+                if (!DB.HasAccessToOrder(conn, null, aid))
+                {
+                    MessageBox.Show("You don't have permission to view this order");
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            finally
+            {
+                conn?.Close();
+            }
+
+            string title = "Audit log for order " + gridOrders.SelectedRows[0].Cells["name"].Value.ToString();
+            ShowAuditLog("assignment", aid, title);
+            auditLogIsSample = false;
+        }
+
+        private void miSamplesShowAuditLog_Click(object sender, EventArgs e)
+        {
+            if (gridSamples.SelectedRows.Count != 1)
+            {
+                MessageBox.Show("You must select a single sample first");
+                return;
+            }
+
+            Guid sid = Guid.Empty;
+            SqlConnection conn = null;
+
+            try
+            {
+                conn = DB.OpenConnection();
+
+                sid = Guid.Parse(gridSamples.SelectedRows[0].Cells["id"].Value.ToString());
+                if (!DB.HasAccessToSample(conn, null, sid))
+                {
+                    MessageBox.Show("Can not view this sample. Sample does not belong to you or your laboratory");
+                    return;
+                }                
+            }
+            catch(Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            finally
+            {
+                conn?.Close();
+            }
+
+            string title = "Audit log for sample " + gridSamples.SelectedRows[0].Cells["number"].Value.ToString();
+            ShowAuditLog("sample", sid, title);
+            auditLogIsSample = true;
         }
     }
 }

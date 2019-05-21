@@ -17,16 +17,17 @@
 */
 // Authors: Dag Robole,
 
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
+using Newtonsoft.Json;
 
 namespace DSA_lims
 {
+    [JsonObject]
     public class AssignmentSampleType
     {
         public AssignmentSampleType()
@@ -35,21 +36,21 @@ namespace DSA_lims
             Dirty = false;
             PreparationMethods = new List<AssignmentPreparationMethod>();
         }
-
+        
         public Guid Id { get; set; }
-        public Guid AssignmentId { get; set; }
-        public Guid SampleTypeId { get; set; }
-        public Guid SampleComponentId { get; set; }
-        public int SampleCount { get; set; }
-        public Guid RequestedActivityUnitId { get; set; }
-        public Guid RequestedActivityUnitTypeId { get; set; }
-        public bool ReturnToSender { get; set; }
-        public string Comment { get; set; }
-        public DateTime CreateDate { get; set; }
-        public Guid CreateId { get; set; }
-        public DateTime UpdateDate { get; set; }
+        public Guid AssignmentId { get; set; }        
+        public Guid SampleTypeId { get; set; }        
+        public Guid SampleComponentId { get; set; }        
+        public int SampleCount { get; set; }        
+        public Guid RequestedActivityUnitId { get; set; }        
+        public Guid RequestedActivityUnitTypeId { get; set; }        
+        public bool ReturnToSender { get; set; }        
+        public string Comment { get; set; }        
+        public DateTime CreateDate { get; set; }        
+        public Guid CreateId { get; set; }        
+        public DateTime UpdateDate { get; set; }        
         public Guid UpdateId { get; set; }
-
+        
         public List<AssignmentPreparationMethod> PreparationMethods { get; set; }
 
         public bool Dirty;
@@ -86,33 +87,7 @@ namespace DSA_lims
         {
             object o = DB.GetScalar(conn, trans, "select name from sample_component where id = @scid", CommandType.Text, new SqlParameter("@scid", SampleComponentId));
             return !DB.IsValidField(o) ? "" : o.ToString();
-        }
-
-        public static string ToJSON(SqlConnection conn, SqlTransaction trans, Guid astId)
-        {
-            string json = String.Empty;
-            Dictionary<string, object> map = new Dictionary<string, object>();
-
-            using (SqlDataReader reader = DB.GetDataReader(conn, trans, "csp_select_assignment_sample_type_flat", CommandType.StoredProcedure,
-                new SqlParameter("@id", astId)))
-            {
-                if (reader.HasRows)
-                {
-                    reader.Read();
-
-                    var cols = new List<string>();
-                    for (int i = 0; i < reader.FieldCount; i++)
-                        cols.Add(reader.GetName(i));
-
-                    foreach (var col in cols)
-                        map.Add(col, reader[col]);
-
-                    json = JsonConvert.SerializeObject(map, Formatting.None);
-                }
-            }
-
-            return json;
-        }
+        }        
 
         public static bool IdExists(SqlConnection conn, SqlTransaction trans, Guid astId)
         {
@@ -145,10 +120,6 @@ namespace DSA_lims
 
                 cmd.ExecuteNonQuery();
 
-                string json = Assignment.ToJSON(conn, trans, Id);
-                if (!String.IsNullOrEmpty(json))
-                    DB.AddAuditMessage(conn, trans, "assignment_sample_type", Id, AuditOperationType.Insert, json, "");
-
                 Dirty = false;
             }
             else
@@ -172,10 +143,6 @@ namespace DSA_lims
 
                     cmd.ExecuteNonQuery();
 
-                    string json = Assignment.ToJSON(conn, trans, Id);
-                    if (!String.IsNullOrEmpty(json))
-                        DB.AddAuditMessage(conn, trans, "assignment_sample_type", Id, AuditOperationType.Update, json, "");
-
                     Dirty = false;
                 }
             }
@@ -198,10 +165,6 @@ namespace DSA_lims
             {
                 if (PreparationMethods.FindIndex(x => x.Id == apmId) == -1)
                 {
-                    string json = AssignmentPreparationMethod.ToJSON(conn, trans, apmId);
-                    if (!String.IsNullOrEmpty(json))
-                        DB.AddAuditMessage(conn, trans, "assignment_preparation_method", apmId, AuditOperationType.Delete, json, "");
-
                     cmd.Parameters.Clear();
                     cmd.Parameters.AddWithValue("@id", apmId);
                     cmd.ExecuteNonQuery();

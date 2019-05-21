@@ -24,6 +24,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Text;
 using System.Windows.Forms;
+using Newtonsoft.Json;
 
 namespace DSA_lims
 {
@@ -155,19 +156,50 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@content_comment", DBNull.Value);
                 cmd.Parameters.AddWithValue("@report_comment", DBNull.Value);
                 cmd.Parameters.AddWithValue("@audit_comment", DBNull.Value);
-                cmd.Parameters.AddWithValue("@workflow_status_id", 1);
-                cmd.Parameters.AddWithValue("@last_workflow_status_date", DateTime.Now);
+                cmd.Parameters.AddWithValue("@workflow_status_id", WorkflowStatus.Construction);
+                DateTime currDate = DateTime.Now;
+                cmd.Parameters.AddWithValue("@last_workflow_status_date", currDate);
                 cmd.Parameters.AddWithValue("@last_workflow_status_by", Common.Username);
                 cmd.Parameters.AddWithValue("@analysis_report_version", 0);
                 cmd.Parameters.AddWithValue("@instance_status_id", InstanceStatus.Active);
                 cmd.Parameters.AddWithValue("@locked_id", DBNull.Value);
-                cmd.Parameters.AddWithValue("@create_date", DateTime.Now);
+                cmd.Parameters.AddWithValue("@create_date", currDate);
                 cmd.Parameters.AddWithValue("@create_id", Common.UserId);
-                cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
+                cmd.Parameters.AddWithValue("@update_date", currDate);
                 cmd.Parameters.AddWithValue("@update_id", Common.UserId);
 
                 cmd.ExecuteNonQuery();
-                trans.Commit();
+                
+                Assignment assignment = new Assignment();
+                assignment.Id = OrderId;
+                assignment.Name = OrderName;
+                assignment.LaboratoryId = labId;
+                if (Utils.IsValidGuid(cboxResponsible.SelectedValue))
+                    assignment.AccountId = Guid.Parse(cboxResponsible.SelectedValue.ToString());
+                assignment.Deadline = (DateTime)tbDeadline.Tag;
+                assignment.RequestedSigmaAct = Convert.ToDouble(cboxRequestedSigma.SelectedValue);
+                assignment.RequestedSigmaMDA = Convert.ToDouble(cboxRequestedSigmaMDA.SelectedValue);
+                assignment.CustomerCompanyName = mCustomer.CompanyName;
+                assignment.CustomerCompanyEmail = mCustomer.CompanyEmail;
+                assignment.CustomerCompanyPhone = mCustomer.CompanyPhone;
+                assignment.CustomerCompanyAddress = mCustomer.CompanyAddress;
+                assignment.CustomerContactName = mCustomer.ContactName;
+                assignment.CustomerContactEmail = mCustomer.ContactEmail;
+                assignment.CustomerContactPhone = mCustomer.ContactPhone;
+                assignment.CustomerContactAddress = mCustomer.ContactAddress;
+                assignment.WorkflowStatusId = WorkflowStatus.Construction;
+                assignment.LastWorkflowStatusDate = currDate;
+                assignment.LastWorkflowStatusBy = Common.Username;
+                assignment.InstanceStatusId = InstanceStatus.Active;
+                assignment.CreateDate = currDate;
+                assignment.CreateId = Common.UserId;
+                assignment.UpdateDate = currDate;
+                assignment.UpdateId = Common.UserId;
+
+                string json = JsonConvert.SerializeObject(assignment);
+                DB.AddAuditMessage(conn, trans, "assignment", assignment.Id, AuditOperationType.Insert, json, "");
+
+                trans.Commit();                
 
                 DialogResult = DialogResult.OK;
             }

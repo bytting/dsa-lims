@@ -17,16 +17,17 @@
 */
 // Authors: Dag Robole,
 
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
+using Newtonsoft.Json;
 
 namespace DSA_lims
 {
+    [JsonObject]
     public class Assignment
     {
         public Assignment()
@@ -37,40 +38,40 @@ namespace DSA_lims
 
             Dirty = false;
         }
-
+        
         public Guid Id { get; set; }
-        public string Name { get; set; }
-        public Guid LaboratoryId { get; set; }
-        public Guid AccountId { get; set; }
-        public DateTime? Deadline { get; set; }
-        public double RequestedSigmaAct { get; set; }
-        public double RequestedSigmaMDA { get; set; }
-        public string CustomerCompanyName { get; set; }
-        public string CustomerCompanyEmail { get; set; }
-        public string CustomerCompanyPhone { get; set; }
-        public string CustomerCompanyAddress { get; set; }
-        public string CustomerContactName { get; set; }
-        public string CustomerContactEmail { get; set; }
-        public string CustomerContactPhone { get; set; }
-        public string CustomerContactAddress { get; set; }
-        public bool ApprovedCustomer { get; set; }
-        public string ApprovedCustomerBy { get; set; }
-        public bool ApprovedLaboratory { get; set; }
-        public string ApprovedLaboratoryBy { get; set; }
-        public string ContentComment { get; set; }
-        public string ReportComment { get; set; }
-        public string AuditComment { get; set; }
-        public int WorkflowStatusId { get; set; }
-        public DateTime? LastWorkflowStatusDate { get; set; }
-        public string LastWorkflowStatusBy { get; set; }
-        public int AnalysisReportVersion { get; set; }
-        public int InstanceStatusId { get; set; }
-        public Guid LockedId { get; set; }
-        public DateTime CreateDate { get; set; }
-        public Guid CreateId { get; set; }
-        public DateTime UpdateDate { get; set; }
+        public string Name { get; set; }        
+        public Guid LaboratoryId { get; set; }        
+        public Guid AccountId { get; set; }        
+        public DateTime? Deadline { get; set; }        
+        public double RequestedSigmaAct { get; set; }        
+        public double RequestedSigmaMDA { get; set; }        
+        public string CustomerCompanyName { get; set; }        
+        public string CustomerCompanyEmail { get; set; }        
+        public string CustomerCompanyPhone { get; set; }        
+        public string CustomerCompanyAddress { get; set; }        
+        public string CustomerContactName { get; set; }         
+        public string CustomerContactEmail { get; set; }        
+        public string CustomerContactPhone { get; set; }        
+        public string CustomerContactAddress { get; set; }        
+        public bool ApprovedCustomer { get; set; }        
+        public string ApprovedCustomerBy { get; set; }        
+        public bool ApprovedLaboratory { get; set; }        
+        public string ApprovedLaboratoryBy { get; set; }        
+        public string ContentComment { get; set; }        
+        public string ReportComment { get; set; }        
+        public string AuditComment { get; set; }        
+        public int WorkflowStatusId { get; set; }        
+        public DateTime? LastWorkflowStatusDate { get; set; }        
+        public string LastWorkflowStatusBy { get; set; }        
+        public int AnalysisReportVersion { get; set; }        
+        public int InstanceStatusId { get; set; }        
+        public Guid LockedId { get; set; }        
+        public DateTime CreateDate { get; set; }        
+        public Guid CreateId { get; set; }        
+        public DateTime UpdateDate { get; set; }        
         public Guid UpdateId { get; set; }
-
+        
         public List<AssignmentSampleType> SampleTypes { get; set; }
 
         public bool Dirty;
@@ -110,32 +111,6 @@ namespace DSA_lims
         {
             object o = DB.GetScalar(conn, trans, "select name from laboratory where id = @lid", CommandType.Text, new SqlParameter("@lid", LaboratoryId));
             return !DB.IsValidField(o) ? "" : o.ToString();
-        }
-
-        public static string ToJSON(SqlConnection conn, SqlTransaction trans, Guid assignmentId)
-        {
-            string json = String.Empty;
-            Dictionary<string, object> map = new Dictionary<string, object>();
-
-            using (SqlDataReader reader = DB.GetDataReader(conn, trans, "csp_select_assignment_flat", CommandType.StoredProcedure,
-                new SqlParameter("@id", assignmentId)))
-            {
-                if (reader.HasRows)
-                {
-                    reader.Read();
-
-                    var cols = new List<string>();
-                    for (int i = 0; i < reader.FieldCount; i++)
-                        cols.Add(reader.GetName(i));
-
-                    foreach (var col in cols)
-                        map.Add(col, reader[col]);
-
-                    json = JsonConvert.SerializeObject(map, Formatting.None);
-                }
-            }
-
-            return json;
         }
 
         public static bool IdExists(SqlConnection conn, SqlTransaction trans, Guid assId)
@@ -253,10 +228,6 @@ namespace DSA_lims
 
                 cmd.ExecuteNonQuery();
 
-                string json = Assignment.ToJSON(conn, trans, Id);
-                if (!String.IsNullOrEmpty(json))
-                    DB.AddAuditMessage(conn, trans, "assignment", Id, AuditOperationType.Insert, json, "");
-
                 Dirty = false;
             }
             else
@@ -299,10 +270,6 @@ namespace DSA_lims
 
                     cmd.ExecuteNonQuery();
 
-                    string json = Assignment.ToJSON(conn, trans, Id);
-                    if (!String.IsNullOrEmpty(json))
-                        DB.AddAuditMessage(conn, trans, "assignment", Id, AuditOperationType.Update, json, "");
-
                     Dirty = false;
                 }
             }
@@ -325,10 +292,6 @@ namespace DSA_lims
             {
                 if (SampleTypes.FindIndex(x => x.Id == astId) == -1)
                 {
-                    string json = AssignmentSampleType.ToJSON(conn, trans, astId);
-                    if (!String.IsNullOrEmpty(json))
-                        DB.AddAuditMessage(conn, trans, "assignment_sample_type", astId, AuditOperationType.Delete, json, "");
-
                     cmd.Parameters.Clear();
                     cmd.Parameters.AddWithValue("@id", astId);
                     cmd.ExecuteNonQuery();

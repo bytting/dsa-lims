@@ -1,14 +1,33 @@
-﻿using Newtonsoft.Json;
+﻿/*	
+	DSA Lims - Laboratory Information Management System
+    Copyright (C) 2018  Norwegian Radiation Protection Authority
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+// Authors: Dag Robole,
+
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace DSA_lims
 {
+    [JsonObject]
     public class SampleParameter
     {
         public SampleParameter()
@@ -50,32 +69,6 @@ namespace DSA_lims
         {
             object o = DB.GetScalar(conn, trans, "select type from sample_parameter_name where id = @spid", CommandType.Text, new SqlParameter("@spid", SampleParameterNameId));
             return !DB.IsValidField(o) ? "" : o.ToString();
-        }
-
-        public static string ToJSON(SqlConnection conn, SqlTransaction trans, Guid sampParamId)
-        {
-            string json = String.Empty;
-            Dictionary<string, object> map = new Dictionary<string, object>();
-
-            using (SqlDataReader reader = DB.GetDataReader(conn, trans, "csp_select_sample_parameter_flat", CommandType.StoredProcedure,
-                new SqlParameter("@id", sampParamId)))
-            {
-                if (reader.HasRows)
-                {
-                    reader.Read();
-
-                    var cols = new List<string>();
-                    for (int i = 0; i < reader.FieldCount; i++)
-                        cols.Add(reader.GetName(i));
-
-                    foreach (var col in cols)
-                        map.Add(col, reader[col]);
-
-                    json = JsonConvert.SerializeObject(map, Formatting.None);
-                }
-            }
-
-            return json;
         }
 
         public static bool IdExists(SqlConnection conn, SqlTransaction trans, Guid sampParamId)
@@ -134,10 +127,6 @@ namespace DSA_lims
 
                 cmd.ExecuteNonQuery();
 
-                string json = SampleParameter.ToJSON(conn, trans, Id);
-                if (!String.IsNullOrEmpty(json))
-                    DB.AddAuditMessage(conn, trans, "sample_parameter", Id, AuditOperationType.Insert, json, "");
-
                 Dirty = false;
             }
             else
@@ -154,10 +143,6 @@ namespace DSA_lims
                     cmd.Parameters.AddWithValue("@update_id", Common.UserId, Guid.Empty);
 
                     cmd.ExecuteNonQuery();
-
-                    string json = SampleParameter.ToJSON(conn, trans, Id);
-                    if (!String.IsNullOrEmpty(json))
-                        DB.AddAuditMessage(conn, trans, "sample_parameter", Id, AuditOperationType.Update, json, "");
 
                     Dirty = false;
                 }

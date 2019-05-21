@@ -17,16 +17,17 @@
 */
 // Authors: Dag Robole,
 
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
+using Newtonsoft.Json;
 
 namespace DSA_lims
 {
+    [JsonObject]
     public class AssignmentAnalysisMethod
     {
         public AssignmentAnalysisMethod()
@@ -69,32 +70,6 @@ namespace DSA_lims
             return !DB.IsValidField(o) ? "" : o.ToString();
         }
 
-        public static string ToJSON(SqlConnection conn, SqlTransaction trans, Guid aamId)
-        {
-            string json = String.Empty;
-            Dictionary<string, object> map = new Dictionary<string, object>();
-
-            using (SqlDataReader reader = DB.GetDataReader(conn, trans, "csp_select_assignment_analysis_method_flat", CommandType.StoredProcedure,
-                new SqlParameter("@id", aamId)))
-            {
-                if (reader.HasRows)
-                {
-                    reader.Read();
-
-                    var cols = new List<string>();
-                    for (int i = 0; i < reader.FieldCount; i++)
-                        cols.Add(reader.GetName(i));
-
-                    foreach (var col in cols)
-                        map.Add(col, reader[col]);
-
-                    json = JsonConvert.SerializeObject(map, Formatting.None);
-                }
-            }
-
-            return json;
-        }
-
         public static bool IdExists(SqlConnection conn, SqlTransaction trans, Guid aamId)
         {
             int cnt = (int)DB.GetScalar(conn, trans, "select count(*) from assignment_analysis_method where id = @id", CommandType.Text, new SqlParameter("@id", aamId));
@@ -122,10 +97,6 @@ namespace DSA_lims
 
                 cmd.ExecuteNonQuery();
 
-                string json = Assignment.ToJSON(conn, trans, Id);
-                if (!String.IsNullOrEmpty(json))
-                    DB.AddAuditMessage(conn, trans, "assignment_analysis_method", Id, AuditOperationType.Insert, json, "");
-
                 Dirty = false;
             }
             else
@@ -144,10 +115,6 @@ namespace DSA_lims
                     cmd.Parameters.AddWithValue("@update_id", Common.UserId, Guid.Empty);
 
                     cmd.ExecuteNonQuery();
-
-                    string json = Assignment.ToJSON(conn, trans, Id);
-                    if (!String.IsNullOrEmpty(json))
-                        DB.AddAuditMessage(conn, trans, "assignment_analysis_method", Id, AuditOperationType.Update, json, "");
 
                     Dirty = false;
                 }

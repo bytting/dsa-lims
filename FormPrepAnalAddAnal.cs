@@ -26,17 +26,20 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Newtonsoft.Json;
 
 namespace DSA_lims
 {
     public partial class FormPrepAnalAddAnal : Form
     {
-        private Preparation mPrep = null;
+        private Sample mSample = null;
+        private Preparation mPrep = null;        
 
-        public FormPrepAnalAddAnal(Preparation prep)
+        public FormPrepAnalAddAnal(Sample samp, Preparation prep)
         {
             InitializeComponent();
 
+            mSample = samp;
             mPrep = prep;
 
             tbCount.KeyPress += CustomEvents.Integer_KeyPress;
@@ -138,21 +141,25 @@ namespace DSA_lims
                     count--;
                 }
 
+                string json = JsonConvert.SerializeObject(mSample);
+                DB.AddAuditMessage(connection, transaction, "sample", mSample.Id, AuditOperationType.Update, json, "");
+
                 transaction.Commit();
+
+                DialogResult = DialogResult.OK;
             }
             catch (Exception ex)
             {
                 transaction?.Rollback();
                 Common.Log.Error(ex);
+                DialogResult = DialogResult.Abort;
                 MessageBox.Show(ex.Message);
-                return;
             }
             finally
             {
                 connection?.Close();
             }
-
-            DialogResult = DialogResult.OK;
+            
             Close();
         }        
     }

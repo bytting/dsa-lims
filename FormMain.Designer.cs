@@ -86,6 +86,7 @@
             this.toolStripSeparator65 = new System.Windows.Forms.ToolStripSeparator();
             this.miOrdersClearAllFilters = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator72 = new System.Windows.Forms.ToolStripSeparator();
+            this.miOrdersShowAuditLog = new System.Windows.Forms.ToolStripMenuItem();
             this.miOrdersUnlock = new System.Windows.Forms.ToolStripMenuItem();
             this.miSamples = new System.Windows.Forms.ToolStripMenuItem();
             this.miSamplesNew = new System.Windows.Forms.ToolStripMenuItem();
@@ -108,6 +109,7 @@
             this.miSamplesPrepAnal = new System.Windows.Forms.ToolStripMenuItem();
             this.printToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.miSamplesPrintSampleLabels = new System.Windows.Forms.ToolStripMenuItem();
+            this.miSamplesShowAuditLog = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator70 = new System.Windows.Forms.ToolStripSeparator();
             this.miSamplesUnlock = new System.Windows.Forms.ToolStripMenuItem();
             this.miProjects = new System.Windows.Forms.ToolStripMenuItem();
@@ -525,6 +527,7 @@
             this.btnOrdersSummary = new System.Windows.Forms.ToolStripDropDownButton();
             this.btnOrdersOrderSummary = new System.Windows.Forms.ToolStripMenuItem();
             this.btnOrdersPrepSummary = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnOrdersShowAuditLog = new System.Windows.Forms.ToolStripButton();
             this.btnOrdersUnlock = new System.Windows.Forms.ToolStripButton();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.panel16 = new System.Windows.Forms.Panel();
@@ -571,6 +574,7 @@
             this.toolStripDropDownButton4 = new System.Windows.Forms.ToolStripDropDownButton();
             this.sampleLabelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sampleInfoForSelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnSamplesShowAuditLog = new System.Windows.Forms.ToolStripButton();
             this.btnSamplesUnlock = new System.Windows.Forms.ToolStripButton();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.panel24 = new System.Windows.Forms.Panel();
@@ -703,7 +707,9 @@
             this.btnAnalysisMethodsAddNuclide = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton54 = new System.Windows.Forms.ToolStripButton();
             this.tabAuditLog = new System.Windows.Forms.TabPage();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.gridAuditLog = new System.Windows.Forms.DataGridView();
+            this.tbAuditLogObject = new System.Windows.Forms.TextBox();
             this.toolsAuditLog = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel53 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator43 = new System.Windows.Forms.ToolStripSeparator();
@@ -827,8 +833,6 @@
             this.miPrepAnalAnal = new System.Windows.Forms.ToolStripDropDownButton();
             this.btnPrepAnalAddAnal = new System.Windows.Forms.ToolStripMenuItem();
             this.btnPrepAnalDelAnal = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator71 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnPrepAnalShowAudit = new System.Windows.Forms.ToolStripButton();
             this.tabsPrepAnal = new System.Windows.Forms.TabControl();
             this.tabPrepAnalSample = new System.Windows.Forms.TabPage();
             this.panel81 = new System.Windows.Forms.Panel();
@@ -966,8 +970,6 @@
             this.btnMenu = new System.Windows.Forms.ToolStripButton();
             this.lblCurrentTab = new System.Windows.Forms.ToolStripLabel();
             this.btnBack = new System.Windows.Forms.ToolStripButton();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.propsAuditLog = new System.Windows.Forms.PropertyGrid();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tabs.SuspendLayout();
@@ -1172,6 +1174,10 @@
             this.toolsTypeRelAnalMeth.SuspendLayout();
             this.toolsTypeRelNuclides.SuspendLayout();
             this.tabAuditLog.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridAuditLog)).BeginInit();
             this.toolsAuditLog.SuspendLayout();
             this.tabSysdata.SuspendLayout();
@@ -1305,10 +1311,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.gridPrepAnalAnalAttachments)).BeginInit();
             this.toolsSampleResAttachments.SuspendLayout();
             this.tools.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
-            this.splitContainer1.Panel1.SuspendLayout();
-            this.splitContainer1.Panel2.SuspendLayout();
-            this.splitContainer1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menu
@@ -1719,6 +1721,7 @@
             this.toolStripSeparator65,
             this.miOrdersClearAllFilters,
             this.toolStripSeparator72,
+            this.miOrdersShowAuditLog,
             this.miOrdersUnlock});
             this.miOrders.Name = "miOrders";
             this.miOrders.Size = new System.Drawing.Size(54, 20);
@@ -1727,45 +1730,52 @@
             // miOrdersNew
             // 
             this.miOrdersNew.Name = "miOrdersNew";
-            this.miOrdersNew.Size = new System.Drawing.Size(148, 22);
+            this.miOrdersNew.Size = new System.Drawing.Size(153, 22);
             this.miOrdersNew.Text = "&New order";
             this.miOrdersNew.Click += new System.EventHandler(this.miOrdersNew_Click);
             // 
             // miOrdersEdit
             // 
             this.miOrdersEdit.Name = "miOrdersEdit";
-            this.miOrdersEdit.Size = new System.Drawing.Size(148, 22);
+            this.miOrdersEdit.Size = new System.Drawing.Size(153, 22);
             this.miOrdersEdit.Text = "&Edit order";
             this.miOrdersEdit.Click += new System.EventHandler(this.miOrdersEdit_Click);
             // 
             // miOrdersDelete
             // 
             this.miOrdersDelete.Name = "miOrdersDelete";
-            this.miOrdersDelete.Size = new System.Drawing.Size(148, 22);
+            this.miOrdersDelete.Size = new System.Drawing.Size(153, 22);
             this.miOrdersDelete.Text = "&Delete order";
             this.miOrdersDelete.Click += new System.EventHandler(this.miOrdersDelete_Click);
             // 
             // toolStripSeparator65
             // 
             this.toolStripSeparator65.Name = "toolStripSeparator65";
-            this.toolStripSeparator65.Size = new System.Drawing.Size(145, 6);
+            this.toolStripSeparator65.Size = new System.Drawing.Size(150, 6);
             // 
             // miOrdersClearAllFilters
             // 
             this.miOrdersClearAllFilters.Name = "miOrdersClearAllFilters";
-            this.miOrdersClearAllFilters.Size = new System.Drawing.Size(148, 22);
+            this.miOrdersClearAllFilters.Size = new System.Drawing.Size(153, 22);
             this.miOrdersClearAllFilters.Text = "&Clear all filters";
             this.miOrdersClearAllFilters.Click += new System.EventHandler(this.miOrdersClearAllFilters_Click);
             // 
             // toolStripSeparator72
             // 
             this.toolStripSeparator72.Name = "toolStripSeparator72";
-            this.toolStripSeparator72.Size = new System.Drawing.Size(145, 6);
+            this.toolStripSeparator72.Size = new System.Drawing.Size(150, 6);
+            // 
+            // miOrdersShowAuditLog
+            // 
+            this.miOrdersShowAuditLog.Name = "miOrdersShowAuditLog";
+            this.miOrdersShowAuditLog.Size = new System.Drawing.Size(153, 22);
+            this.miOrdersShowAuditLog.Text = "Show audit log";
+            this.miOrdersShowAuditLog.Click += new System.EventHandler(this.miOrdersShowAuditLog_Click);
             // 
             // miOrdersUnlock
             // 
             this.miOrdersUnlock.Name = "miOrdersUnlock";
-            this.miOrdersUnlock.Size = new System.Drawing.Size(148, 22);
+            this.miOrdersUnlock.Size = new System.Drawing.Size(153, 22);
             this.miOrdersUnlock.Text = "&Unlock";
             this.miOrdersUnlock.Click += new System.EventHandler(this.miOrdersUnlock_Click);
             // 
@@ -1785,6 +1795,7 @@
             this.miSamplesSet,
             this.miSamplesPrepAnal,
             this.printToolStripMenuItem,
+            this.miSamplesShowAuditLog,
             this.toolStripSeparator70,
             this.miSamplesUnlock});
             this.miSamples.Name = "miSamples";
@@ -1933,6 +1944,13 @@
             this.miSamplesPrintSampleLabels.Size = new System.Drawing.Size(146, 22);
             this.miSamplesPrintSampleLabels.Text = "Sample labels";
             this.miSamplesPrintSampleLabels.Click += new System.EventHandler(this.miSamplesPrintSampleLabels_Click);
+            // 
+            // miSamplesShowAuditLog
+            // 
+            this.miSamplesShowAuditLog.Name = "miSamplesShowAuditLog";
+            this.miSamplesShowAuditLog.Size = new System.Drawing.Size(212, 22);
+            this.miSamplesShowAuditLog.Text = "Show audit log";
+            this.miSamplesShowAuditLog.Click += new System.EventHandler(this.miSamplesShowAuditLog_Click);
             // 
             // toolStripSeparator70
             // 
@@ -6267,6 +6285,7 @@
             this.btnOrdersAssignUsers,
             this.toolStripSeparator67,
             this.btnOrdersSummary,
+            this.btnOrdersShowAuditLog,
             this.btnOrdersUnlock});
             this.toolStrip9.Location = new System.Drawing.Point(0, 0);
             this.toolStrip9.Name = "toolStrip9";
@@ -6357,6 +6376,15 @@
             this.btnOrdersPrepSummary.Text = "&Preparation";
             this.btnOrdersPrepSummary.Click += new System.EventHandler(this.btnOrdersPrepSummary_Click);
             // 
+            // btnOrdersShowAuditLog
+            // 
+            this.btnOrdersShowAuditLog.Image = global::DSA_lims.Properties.Resources.report;
+            this.btnOrdersShowAuditLog.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnOrdersShowAuditLog.Name = "btnOrdersShowAuditLog";
+            this.btnOrdersShowAuditLog.Size = new System.Drawing.Size(106, 22);
+            this.btnOrdersShowAuditLog.Text = "Show audit log";
+            this.btnOrdersShowAuditLog.Click += new System.EventHandler(this.miOrdersShowAuditLog_Click);
+            // 
             // btnOrdersUnlock
             // 
             this.btnOrdersUnlock.Image = global::DSA_lims.Properties.Resources._switch;
@@ -6388,7 +6416,7 @@
             this.panel16.Controls.Add(this.label36);
             this.panel16.Location = new System.Drawing.Point(15, 15);
             this.panel16.Name = "panel16";
-            this.panel16.Size = new System.Drawing.Size(205, 23);
+            this.panel16.Size = new System.Drawing.Size(250, 23);
             this.panel16.TabIndex = 0;
             // 
             // cboxOrdersLaboratory
@@ -6396,10 +6424,11 @@
             this.cboxOrdersLaboratory.DisplayMember = "Name";
             this.cboxOrdersLaboratory.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cboxOrdersLaboratory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxOrdersLaboratory.DropDownWidth = 200;
             this.cboxOrdersLaboratory.FormattingEnabled = true;
             this.cboxOrdersLaboratory.Location = new System.Drawing.Point(75, 0);
             this.cboxOrdersLaboratory.Name = "cboxOrdersLaboratory";
-            this.cboxOrdersLaboratory.Size = new System.Drawing.Size(130, 23);
+            this.cboxOrdersLaboratory.Size = new System.Drawing.Size(175, 23);
             this.cboxOrdersLaboratory.TabIndex = 0;
             this.cboxOrdersLaboratory.ValueMember = "Id";
             this.cboxOrdersLaboratory.SelectedIndexChanged += new System.EventHandler(this.cboxOrdersLaboratory_SelectedIndexChanged);
@@ -6419,7 +6448,7 @@
             // 
             this.panel18.Controls.Add(this.cboxOrdersYear);
             this.panel18.Controls.Add(this.label52);
-            this.panel18.Location = new System.Drawing.Point(226, 15);
+            this.panel18.Location = new System.Drawing.Point(271, 15);
             this.panel18.Name = "panel18";
             this.panel18.Size = new System.Drawing.Size(163, 23);
             this.panel18.TabIndex = 1;
@@ -6450,7 +6479,7 @@
             // 
             this.panel19.Controls.Add(this.cboxOrdersWorkflowStatus);
             this.panel19.Controls.Add(this.label33);
-            this.panel19.Location = new System.Drawing.Point(395, 15);
+            this.panel19.Location = new System.Drawing.Point(440, 15);
             this.panel19.Name = "panel19";
             this.panel19.Size = new System.Drawing.Size(177, 23);
             this.panel19.TabIndex = 2;
@@ -6483,7 +6512,7 @@
             // 
             this.panel20.Controls.Add(this.cboxOrdersTop);
             this.panel20.Controls.Add(this.label19);
-            this.panel20.Location = new System.Drawing.Point(578, 15);
+            this.panel20.Location = new System.Drawing.Point(623, 15);
             this.panel20.Name = "panel20";
             this.panel20.Size = new System.Drawing.Size(211, 23);
             this.panel20.TabIndex = 3;
@@ -6518,7 +6547,7 @@
             // 
             // btnOrdersSearch
             // 
-            this.btnOrdersSearch.Location = new System.Drawing.Point(795, 15);
+            this.btnOrdersSearch.Location = new System.Drawing.Point(840, 15);
             this.btnOrdersSearch.Name = "btnOrdersSearch";
             this.btnOrdersSearch.Size = new System.Drawing.Size(130, 25);
             this.btnOrdersSearch.TabIndex = 7;
@@ -6620,6 +6649,7 @@
             this.toolStripDropDownButton2,
             this.btnSamplesPrepAnal,
             this.toolStripDropDownButton4,
+            this.btnSamplesShowAuditLog,
             this.btnSamplesUnlock});
             this.toolsSamples.Location = new System.Drawing.Point(0, 0);
             this.toolsSamples.Name = "toolsSamples";
@@ -6810,6 +6840,15 @@
             this.sampleInfoForSelectedToolStripMenuItem.Name = "sampleInfoForSelectedToolStripMenuItem";
             this.sampleInfoForSelectedToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.sampleInfoForSelectedToolStripMenuItem.Text = "Sample info";
+            // 
+            // btnSamplesShowAuditLog
+            // 
+            this.btnSamplesShowAuditLog.Image = global::DSA_lims.Properties.Resources.report;
+            this.btnSamplesShowAuditLog.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSamplesShowAuditLog.Name = "btnSamplesShowAuditLog";
+            this.btnSamplesShowAuditLog.Size = new System.Drawing.Size(106, 22);
+            this.btnSamplesShowAuditLog.Text = "Show audit log";
+            this.btnSamplesShowAuditLog.Click += new System.EventHandler(this.miSamplesShowAuditLog_Click);
             // 
             // btnSamplesUnlock
             // 
@@ -7008,7 +7047,7 @@
             this.panel32.Controls.Add(this.label32);
             this.panel32.Location = new System.Drawing.Point(217, 44);
             this.panel32.Name = "panel32";
-            this.panel32.Size = new System.Drawing.Size(210, 23);
+            this.panel32.Size = new System.Drawing.Size(250, 23);
             this.panel32.TabIndex = 5;
             // 
             // cboxSamplesLaboratory
@@ -7016,10 +7055,11 @@
             this.cboxSamplesLaboratory.DisplayMember = "Name";
             this.cboxSamplesLaboratory.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cboxSamplesLaboratory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboxSamplesLaboratory.DropDownWidth = 200;
             this.cboxSamplesLaboratory.FormattingEnabled = true;
             this.cboxSamplesLaboratory.Location = new System.Drawing.Point(75, 0);
             this.cboxSamplesLaboratory.Name = "cboxSamplesLaboratory";
-            this.cboxSamplesLaboratory.Size = new System.Drawing.Size(135, 23);
+            this.cboxSamplesLaboratory.Size = new System.Drawing.Size(175, 23);
             this.cboxSamplesLaboratory.TabIndex = 5;
             this.cboxSamplesLaboratory.ValueMember = "Id";
             this.cboxSamplesLaboratory.SelectedIndexChanged += new System.EventHandler(this.cboxSamplesLaboratory_SelectedIndexChanged);
@@ -7039,7 +7079,7 @@
             // 
             this.panel33.Controls.Add(this.cboxSamplesTop);
             this.panel33.Controls.Add(this.label1);
-            this.panel33.Location = new System.Drawing.Point(433, 44);
+            this.panel33.Location = new System.Drawing.Point(473, 44);
             this.panel33.Name = "panel33";
             this.panel33.Size = new System.Drawing.Size(200, 23);
             this.panel33.TabIndex = 6;
@@ -7074,7 +7114,7 @@
             // 
             // btnSamplesSearch
             // 
-            this.btnSamplesSearch.Location = new System.Drawing.Point(639, 44);
+            this.btnSamplesSearch.Location = new System.Drawing.Point(679, 44);
             this.btnSamplesSearch.Name = "btnSamplesSearch";
             this.btnSamplesSearch.Size = new System.Drawing.Size(140, 25);
             this.btnSamplesSearch.TabIndex = 19;
@@ -8239,6 +8279,23 @@
             this.tabAuditLog.TabIndex = 14;
             this.tabAuditLog.Text = "Audit log";
             // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 25);
+            this.splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.gridAuditLog);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.tbAuditLogObject);
+            this.splitContainer1.Size = new System.Drawing.Size(1064, 574);
+            this.splitContainer1.SplitterDistance = 500;
+            this.splitContainer1.TabIndex = 10;
+            // 
             // gridAuditLog
             // 
             this.gridAuditLog.AllowUserToAddRows = false;
@@ -8255,9 +8312,21 @@
             this.gridAuditLog.ReadOnly = true;
             this.gridAuditLog.RowHeadersVisible = false;
             this.gridAuditLog.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridAuditLog.Size = new System.Drawing.Size(536, 574);
+            this.gridAuditLog.Size = new System.Drawing.Size(500, 574);
             this.gridAuditLog.TabIndex = 9;
             this.gridAuditLog.SelectionChanged += new System.EventHandler(this.gridAuditLog_SelectionChanged);
+            // 
+            // tbAuditLogObject
+            // 
+            this.tbAuditLogObject.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbAuditLogObject.Font = new System.Drawing.Font("Consolas", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbAuditLogObject.Location = new System.Drawing.Point(0, 0);
+            this.tbAuditLogObject.Multiline = true;
+            this.tbAuditLogObject.Name = "tbAuditLogObject";
+            this.tbAuditLogObject.ReadOnly = true;
+            this.tbAuditLogObject.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.tbAuditLogObject.Size = new System.Drawing.Size(560, 574);
+            this.tbAuditLogObject.TabIndex = 1;
             // 
             // toolsAuditLog
             // 
@@ -9516,9 +9585,7 @@
             this.toolStrip7.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStrip7.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.miPrepAnalPrep,
-            this.miPrepAnalAnal,
-            this.toolStripSeparator71,
-            this.btnPrepAnalShowAudit});
+            this.miPrepAnalAnal});
             this.toolStrip7.Location = new System.Drawing.Point(0, 0);
             this.toolStrip7.Name = "toolStrip7";
             this.toolStrip7.Size = new System.Drawing.Size(379, 25);
@@ -9574,20 +9641,6 @@
             this.btnPrepAnalDelAnal.Size = new System.Drawing.Size(116, 22);
             this.btnPrepAnalDelAnal.Text = "&Delete...";
             this.btnPrepAnalDelAnal.Click += new System.EventHandler(this.btnPrepAnalDelAnal_Click);
-            // 
-            // toolStripSeparator71
-            // 
-            this.toolStripSeparator71.Name = "toolStripSeparator71";
-            this.toolStripSeparator71.Size = new System.Drawing.Size(6, 25);
-            // 
-            // btnPrepAnalShowAudit
-            // 
-            this.btnPrepAnalShowAudit.Image = global::DSA_lims.Properties.Resources.report;
-            this.btnPrepAnalShowAudit.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnPrepAnalShowAudit.Name = "btnPrepAnalShowAudit";
-            this.btnPrepAnalShowAudit.Size = new System.Drawing.Size(86, 22);
-            this.btnPrepAnalShowAudit.Text = "Show audit";
-            this.btnPrepAnalShowAudit.Click += new System.EventHandler(this.btnPrepAnalShowAudit_Click);
             // 
             // tabsPrepAnal
             // 
@@ -11064,34 +11117,6 @@
             this.btnBack.ToolTipText = "Back";
             this.btnBack.Click += new System.EventHandler(this.miBack_Click);
             // 
-            // splitContainer1
-            // 
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 25);
-            this.splitContainer1.Name = "splitContainer1";
-            // 
-            // splitContainer1.Panel1
-            // 
-            this.splitContainer1.Panel1.Controls.Add(this.gridAuditLog);
-            // 
-            // splitContainer1.Panel2
-            // 
-            this.splitContainer1.Panel2.Controls.Add(this.propsAuditLog);
-            this.splitContainer1.Size = new System.Drawing.Size(1064, 574);
-            this.splitContainer1.SplitterDistance = 536;
-            this.splitContainer1.TabIndex = 10;
-            // 
-            // propsAuditLog
-            // 
-            this.propsAuditLog.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.propsAuditLog.HelpVisible = false;
-            this.propsAuditLog.Location = new System.Drawing.Point(0, 0);
-            this.propsAuditLog.Name = "propsAuditLog";
-            this.propsAuditLog.PropertySort = System.Windows.Forms.PropertySort.Alphabetical;
-            this.propsAuditLog.Size = new System.Drawing.Size(524, 574);
-            this.propsAuditLog.TabIndex = 0;
-            this.propsAuditLog.ToolbarVisible = false;
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -11414,6 +11439,11 @@
             this.toolsTypeRelNuclides.PerformLayout();
             this.tabAuditLog.ResumeLayout(false);
             this.tabAuditLog.PerformLayout();
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            this.splitContainer1.Panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.gridAuditLog)).EndInit();
             this.toolsAuditLog.ResumeLayout(false);
             this.toolsAuditLog.PerformLayout();
@@ -11605,10 +11635,6 @@
             this.toolsSampleResAttachments.PerformLayout();
             this.tools.ResumeLayout(false);
             this.tools.PerformLayout();
-            this.splitContainer1.Panel1.ResumeLayout(false);
-            this.splitContainer1.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
-            this.splitContainer1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -12447,7 +12473,6 @@
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.ComboBox cboxOrdersTop;
         private System.Windows.Forms.Button btnSampleSelectCoords;
-        private System.Windows.Forms.ToolStripButton btnPrepAnalShowAudit;
         private System.Windows.Forms.ToolStripLabel lblAuditLogTitle;
         private System.Windows.Forms.Panel panel15;
         private System.Windows.Forms.Button btnOrderSave;
@@ -12540,7 +12565,6 @@
         private System.Windows.Forms.ToolStripMenuItem asPDFToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem miResultsShowMap;
         private System.Windows.Forms.ToolStripButton btnOrderShowSampleSummary;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator71;
         private System.Windows.Forms.Panel panel43;
         private System.Windows.Forms.ComboBox cboxSearchStations;
         private System.Windows.Forms.Label label53;
@@ -12554,7 +12578,11 @@
         private System.Windows.Forms.ToolStripMenuItem miTypeRelSampleTypesPrepMethRemove;
         private System.Windows.Forms.ToolStripMenuItem miTypeRelSampleTypesCompRemove;
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.PropertyGrid propsAuditLog;
+        private System.Windows.Forms.ToolStripMenuItem miOrdersShowAuditLog;
+        private System.Windows.Forms.ToolStripButton btnOrdersShowAuditLog;
+        private System.Windows.Forms.TextBox tbAuditLogObject;
+        private System.Windows.Forms.ToolStripMenuItem miSamplesShowAuditLog;
+        private System.Windows.Forms.ToolStripButton btnSamplesShowAuditLog;
     }
 }
 

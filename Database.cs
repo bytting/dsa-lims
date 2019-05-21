@@ -835,6 +835,28 @@ select
 
             return false;
         }
+
+        public static bool HasAccessToSample(SqlConnection conn, SqlTransaction trans, Guid sampleId)
+        {
+            Guid labId = Sample.GetLaboratoryId(conn, trans, sampleId);            
+
+            Guid creatorId = Sample.GetCreatorId(conn, trans, sampleId);            
+
+            if (Common.LabId == Guid.Empty)
+            {
+                if (Common.UserId == creatorId)
+                    return true;
+            }
+            else
+            {
+                if (Common.LabId == labId)                
+                    return true;                
+                else if (Common.UserId == creatorId)                
+                    return true;
+            }
+
+            return false;
+        }
     }
 
     public class SampleHeader

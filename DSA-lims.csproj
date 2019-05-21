@@ -592,7 +592,6 @@
     <Compile Include="FormUserXAnalMeth.Designer.cs">
       <DependentUpon>FormUserXAnalMeth.cs</DependentUpon>
     </Compile>
-    <Compile Include="JTypeDescriptor.cs" />
     <Compile Include="lang_en.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

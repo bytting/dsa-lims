@@ -27,6 +27,7 @@ using Newtonsoft.Json;
 
 namespace DSA_lims
 {
+    [JsonObject]
     public class Sample
     {
         public Sample()
@@ -39,6 +40,7 @@ namespace DSA_lims
             InstanceStatusId = InstanceStatus.Active;
 
             Parameters = new List<SampleParameter>();
+            Preparations = new List<Preparation>();
         }
 
         public Guid Id { get; set; }
@@ -82,6 +84,8 @@ namespace DSA_lims
 
         public List<SampleParameter> Parameters { get; set; }
 
+        public List<Preparation> Preparations { get; set; }
+
         public bool Dirty;
 
         public bool IsDirty()
@@ -93,14 +97,34 @@ namespace DSA_lims
                 if (p.IsDirty())
                     return true;
 
+            foreach (Preparation p in Preparations)
+                if (p.IsDirty())
+                    return true;
+
             return false;
         }
 
         public void ClearDirty()
         {
             Dirty = false;
+
             foreach (SampleParameter p in Parameters)
                 p.ClearDirty();
+
+            foreach (Preparation p in Preparations)
+                p.ClearDirty();
+        }
+
+        public static Guid GetLaboratoryId(SqlConnection conn, SqlTransaction trans, Guid sampleId)
+        {
+            object o = DB.GetScalar(conn, trans, "select laboratory_id from sample where id = @sid", CommandType.Text, new SqlParameter("@sid", sampleId));
+            return !DB.IsValidField(o) ? Guid.Empty : Guid.Parse(o.ToString());
+        }
+
+        public static Guid GetCreatorId(SqlConnection conn, SqlTransaction trans, Guid sampleId)
+        {
+            object o = DB.GetScalar(conn, trans, "select create_id from sample where id = @sid", CommandType.Text, new SqlParameter("@sid", sampleId));
+            return !DB.IsValidField(o) ? Guid.Empty : Guid.Parse(o.ToString());
         }
 
         public string GetSampleComponentName(SqlConnection conn, SqlTransaction trans)
@@ -217,33 +241,7 @@ where s.id = @sid and a.workflow_status_id = 2
                 return false;
 
             return Convert.ToInt32(o) > 0;
-        }
-
-        public static string ToJSON(SqlConnection conn, SqlTransaction trans, Guid sampleId)
-        {
-            string json = String.Empty;
-            Dictionary<string, object> map = new Dictionary<string, object>();
-
-            using (SqlDataReader reader = DB.GetDataReader(conn, trans, "csp_select_sample_flat", CommandType.StoredProcedure,
-                new SqlParameter("@id", sampleId)))
-            {
-                if (reader.HasRows)
-                {
-                    reader.Read();
-
-                    var cols = new List<string>();
-                    for (int i = 0; i < reader.FieldCount; i++)
-                        cols.Add(reader.GetName(i));
-
-                    foreach (var col in cols)
-                        map.Add(col, reader[col]);
-
-                    json = JsonConvert.SerializeObject(map, Formatting.None);
-                }
-            }
-
-            return json;
-        }
+        }        
 
         public static bool IdExists(SqlConnection conn, SqlTransaction trans, Guid sampleId)
         {
@@ -302,6 +300,7 @@ where s.id = @sid and a.workflow_status_id = 2
                 UpdateId = reader.GetGuid("update_id");
             }
 
+            // Load parameters
             Parameters.Clear();
 
             List<Guid> sampParamIds = new List<Guid>();
@@ -317,6 +316,24 @@ where s.id = @sid and a.workflow_status_id = 2
                 SampleParameter p = new SampleParameter();
                 p.LoadFromDB(conn, trans, sampParamId);
                 Parameters.Add(p);
+            }
+
+            // Load preparations
+            Preparations.Clear();
+
+            List<Guid> preparationIds = new List<Guid>();
+            using (SqlDataReader reader = DB.GetDataReader(conn, trans, "select id from preparation where sample_id = @id", CommandType.Text,
+                new SqlParameter("@id", Id)))
+            {
+                while (reader.Read())
+                    preparationIds.Add(reader.GetGuid("id"));
+            }
+
+            foreach (Guid pId in preparationIds)
+            {
+                Preparation p = new Preparation();
+                p.LoadFromDB(conn, trans, pId);
+                Preparations.Add(p);
             }
 
             Dirty = false;
@@ -376,10 +393,6 @@ where s.id = @sid and a.workflow_status_id = 2
 
                 cmd.ExecuteNonQuery();
 
-                string json = Sample.ToJSON(conn, trans, Id);
-                if (!String.IsNullOrEmpty(json))
-                    DB.AddAuditMessage(conn, trans, "sample", Id, AuditOperationType.Insert, json, "");
-
                 Dirty = false;
             }
             else
@@ -417,10 +430,6 @@ where s.id = @sid and a.workflow_status_id = 2
 
                     cmd.ExecuteNonQuery();
 
-                    string json = Sample.ToJSON(conn, trans, Id);
-                    if (!String.IsNullOrEmpty(json))
-                        DB.AddAuditMessage(conn, trans, "sample", Id, AuditOperationType.Update, json, "");
-
                     Dirty = false;
                 }
             }
@@ -443,13 +452,35 @@ where s.id = @sid and a.workflow_status_id = 2
             {
                 if (Parameters.FindIndex(x => x.Id == spId) == -1)
                 {
-                    string json = SampleParameter.ToJSON(conn, trans, spId);
-                    if (!String.IsNullOrEmpty(json))
-                        DB.AddAuditMessage(conn, trans, "sample_parameter", spId, AuditOperationType.Delete, json, "");
-
                     cmd.Parameters.Clear();
                     cmd.Parameters.AddWithValue("@status", InstanceStatus.Deleted);
                     cmd.Parameters.AddWithValue("@id", spId);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+
+
+            foreach (Preparation p in Preparations)
+                p.StoreToDB(conn, trans);
+
+            // Remove deleted preparations from DB
+            List<Guid> storedPrepIds = new List<Guid>();
+            using (SqlDataReader reader = DB.GetDataReader(conn, trans, "select id from preparation where sample_id = @id", CommandType.Text,
+                new SqlParameter("@id", Id)))
+            {
+                while (reader.Read())
+                    storedPrepIds.Add(reader.GetGuid("id"));
+            }
+
+            cmd.CommandText = "update preparation set instance_status_id = @status where id = @id";
+            cmd.CommandType = CommandType.Text;
+            foreach (Guid pId in storedPrepIds)
+            {
+                if (Preparations.FindIndex(x => x.Id == pId) == -1)
+                {
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.AddWithValue("@status", InstanceStatus.Deleted);
+                    cmd.Parameters.AddWithValue("@id", pId);
                     cmd.ExecuteNonQuery();
                 }
             }
@@ -460,7 +491,7 @@ where s.id = @sid and a.workflow_status_id = 2
             if (Id == Guid.Empty)
                 throw new Exception("Error: Can not store sample lab info with empty id");
 
-            SqlCommand cmd = new SqlCommand("csp_update_sample_info", conn);
+            SqlCommand cmd = new SqlCommand("csp_update_sample_info", conn, trans);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@id", Id);
             cmd.Parameters.AddWithValue("@wet_weight_g", WetWeight_g, null);

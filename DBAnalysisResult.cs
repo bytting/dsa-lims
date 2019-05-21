@@ -27,6 +27,7 @@ using Newtonsoft.Json;
 
 namespace DSA_lims
 {
+    [JsonObject]
     public class AnalysisResult
     {
         public AnalysisResult()
@@ -71,32 +72,6 @@ namespace DSA_lims
         {
             object o = DB.GetScalar(conn, trans, "select name from nuclide where id = @nid", CommandType.Text, new SqlParameter("@nid", NuclideId));
             return !DB.IsValidField(o) ? "" : o.ToString();
-        }
-
-        public static string ToJSON(SqlConnection conn, SqlTransaction trans, Guid analResId)
-        {
-            string json = String.Empty;
-            Dictionary<string, object> map = new Dictionary<string, object>();
-
-            using (SqlDataReader reader = DB.GetDataReader(conn, trans, "csp_select_analysis_result_flat", CommandType.StoredProcedure,
-                new SqlParameter("@id", analResId)))
-            {
-                if (reader.HasRows)
-                {
-                    reader.Read();
-
-                    var cols = new List<string>();
-                    for (int i = 0; i < reader.FieldCount; i++)
-                        cols.Add(reader.GetName(i));
-
-                    foreach (var col in cols)
-                        map.Add(col, reader[col]);
-
-                    json = JsonConvert.SerializeObject(map, Formatting.None);
-                }
-            }
-
-            return json;
         }
 
         public static bool IdExists(SqlConnection conn, SqlTransaction trans, Guid analResId)
@@ -179,10 +154,6 @@ namespace DSA_lims
 
                 cmd.ExecuteNonQuery();
 
-                string json = AnalysisResult.ToJSON(conn, trans, Id);
-                if (!String.IsNullOrEmpty(json))
-                    DB.AddAuditMessage(conn, trans, "analysis_result", Id, AuditOperationType.Insert, json, "");
-
                 Dirty = false;
             }
             else
@@ -215,10 +186,6 @@ namespace DSA_lims
                     cmd.Parameters.AddWithValue("@update_id", Common.UserId, Guid.Empty);
 
                     cmd.ExecuteNonQuery();
-
-                    string json = AnalysisResult.ToJSON(conn, trans, Id);
-                    if (!String.IsNullOrEmpty(json))
-                        DB.AddAuditMessage(conn, trans, "analysis_result", Id, AuditOperationType.Update, json, "");
 
                     Dirty = false;
                 }

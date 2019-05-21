@@ -24,6 +24,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Text;
 using System.Windows.Forms;
+using Newtonsoft.Json;
 
 namespace DSA_lims
 {
@@ -160,14 +161,36 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@instance_status_id", InstanceStatus.Active);
                 cmd.Parameters.AddWithValue("@locked_id", DBNull.Value);
                 cmd.Parameters.AddWithValue("@comment", DBNull.Value);
-                cmd.Parameters.AddWithValue("@create_date", DateTime.Now);
+                DateTime currDate = DateTime.Now;
+                cmd.Parameters.AddWithValue("@create_date", currDate);
                 cmd.Parameters.AddWithValue("@create_id", Common.UserId);
-                cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
+                cmd.Parameters.AddWithValue("@update_date", currDate);
                 cmd.Parameters.AddWithValue("@update_id", Common.UserId);
 
-                cmd.ExecuteNonQuery();
-                trans.Commit();
+                cmd.ExecuteNonQuery();                                
                 
+                Sample sample = new Sample();
+                sample.Id = SampleId;
+                sample.Number = SampleNumber;
+                if (Utils.IsValidGuid(cboxLaboratory.SelectedValue))
+                    sample.LaboratoryId = Guid.Parse(cboxLaboratory.SelectedValue.ToString());                
+                if (Utils.IsValidGuid(cboxSampleType.SelectedValue))
+                    sample.SampleTypeId = Guid.Parse(cboxSampleType.SelectedValue.ToString());
+                if (Utils.IsValidGuid(cboxSampleComponent.SelectedValue))
+                    sample.SampleComponentId = Guid.Parse(cboxSampleComponent.SelectedValue.ToString());
+                if (Utils.IsValidGuid(cboxProjectSub.SelectedValue))
+                    sample.ProjectSubId = Guid.Parse(cboxProjectSub.SelectedValue.ToString());
+                sample.InstanceStatusId = InstanceStatus.Active;
+                sample.CreateDate = currDate;
+                sample.CreateId = Common.UserId;
+                sample.UpdateDate = currDate;
+                sample.UpdateId = Common.UserId;
+
+                string json = JsonConvert.SerializeObject(sample);
+                DB.AddAuditMessage(conn, trans, "sample", sample.Id, AuditOperationType.Insert, json, "");
+
+                trans.Commit();
+
                 DialogResult = DialogResult.OK;
             }
             catch (Exception ex)

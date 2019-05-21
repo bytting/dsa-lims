@@ -26,6 +26,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Newtonsoft.Json;
 
 namespace DSA_lims
 {
@@ -133,19 +134,27 @@ namespace DSA_lims
                     count--;
                 }
 
+                mSample.LoadFromDB(connection, transaction, mSample.Id);
+
+                string json = JsonConvert.SerializeObject(mSample);
+                DB.AddAuditMessage(connection, transaction, "sample", mSample.Id, AuditOperationType.Update, json, "");
+
                 transaction.Commit();
+
+                DialogResult = DialogResult.OK;
             }
             catch (Exception ex)
             {
                 transaction?.Rollback();
                 Common.Log.Error(ex);
+                DialogResult = DialogResult.Abort;
+                MessageBox.Show(ex.Message);
             }
             finally
             {
                 connection?.Close();
             }
-
-            DialogResult = DialogResult.OK;
+            
             Close();
         }        
     }

@@ -17,7 +17,6 @@
 */
 // Authors: Dag Robole,
 
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -27,6 +26,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Newtonsoft.Json;
 
 namespace DSA_lims
 {
@@ -211,7 +211,6 @@ where sxast.sample_id = @sid";
                 Common.Log.Error(ex);
                 MessageBox.Show(ex.Message);
                 DialogResult = DialogResult.Abort;
-                Close();
             }
             finally
             {

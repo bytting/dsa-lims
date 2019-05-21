@@ -57,6 +57,12 @@ namespace DSA_lims
             try
             {
                 conn = DB.OpenConnection();
+
+                object o = DB.GetScalar(conn, null, "select sample_type_id from sample where id = @id", CommandType.Text, new SqlParameter("@id", SampleId));
+                if (!DB.IsValidField(o))
+                    throw new Exception("Invalid sample type id found for sample id: " + SampleId);
+                
+                SampleTypeId = Guid.Parse(o.ToString());
                 SampleNumber = DB.GetSampleNumber(conn, null, SampleId);
                 UI.PopulateComboBoxes(conn, "csp_select_laboratories_short", new[] {
                     new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
@@ -64,10 +70,6 @@ namespace DSA_lims
 
                 cboxLaboratory.SelectedValue = Common.LabId;
                 cboxLaboratory.Enabled = false;
-
-                object o = DB.GetScalar(conn, null, "select sample_type_id from sample where id = @id", CommandType.Text, new SqlParameter("@id", SampleId));
-                if (o != null && o != DBNull.Value)
-                    SampleTypeId = Guid.Parse(o.ToString());
             }
             catch (Exception ex)
             {
@@ -225,9 +227,9 @@ where sxast.sample_id = @sid";
                 conn = DB.OpenConnection();
 
                 Sample s = new Sample();
-                s.LoadFromDB(conn, trans, SampleId);
+                s.LoadFromDB(conn, null, SampleId);
                 string json = JsonConvert.SerializeObject(s);
-                DB.AddAuditMessage(conn, trans, "sample", s.Id, AuditOperationType.Update, json, "");
+                DB.AddAuditMessage(conn, null, "sample", s.Id, AuditOperationType.Update, json, "");
             }
             catch (Exception ex)
             {                

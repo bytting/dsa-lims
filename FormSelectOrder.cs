@@ -32,7 +32,7 @@ namespace DSA_lims
 {
     public partial class FormSelectOrder : Form
     {
-        private TreeView TreeSampleTypes = null;
+        private TreeView mTreeSampleTypes = null;
         private Sample mSample = null;
 
         public Guid SelectedLaboratoryId = Guid.Empty;
@@ -40,12 +40,12 @@ namespace DSA_lims
         public string SelectedOrderName = String.Empty;
         public Guid SelectedOrderLineId = Guid.Empty;
 
-        public FormSelectOrder(TreeView treeSampleTypes, Sample s)
+        public FormSelectOrder(TreeView treeSampleTypes, Sample sample)
         {
             InitializeComponent();
 
-            TreeSampleTypes = treeSampleTypes;
-            mSample = s;
+            mTreeSampleTypes = treeSampleTypes;
+            mSample = sample;
         }
 
         private void FormSelectOrder_Load(object sender, EventArgs e)
@@ -382,7 +382,7 @@ where sxast.sample_id = @sid";
                 conn = DB.OpenConnection();
 
                 Guid oid = Guid.Parse(gridOrders.SelectedRows[0].Cells["id"].Value.ToString());
-                UI.PopulateOrderContentForSampleTypeName(conn, oid, treeOrderLines, mSample.SampleTypeId, TreeSampleTypes, true);
+                UI.PopulateOrderContentForSampleTypeName(conn, oid, treeOrderLines, mSample.SampleTypeId, mTreeSampleTypes, true);
             }
             catch (Exception ex)
             {

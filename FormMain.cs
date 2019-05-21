@@ -2517,7 +2517,15 @@ namespace DSA_lims
             try
             {
                 conn = DB.OpenConnection();
+
                 hasLock = DB.LockSample(conn, sampleId);
+                if (!hasLock)
+                {
+                    MessageBox.Show("Sample " + sampleName + " is already locked by someone else");
+                    return;
+                }
+
+                sample.LoadFromDB(conn, null, sampleId);
             }
             catch (Exception ex)
             {
@@ -2528,15 +2536,9 @@ namespace DSA_lims
             finally
             {
                 conn?.Close();
-            }
+            }                        
 
-            if (!hasLock)
-            {
-                MessageBox.Show("Sample " + sampleName + " is already locked by someone else");
-                return;
-            }
-
-            FormSelectOrder form = new FormSelectOrder(treeSampleTypes, sampleId);
+            FormSelectOrder form = new FormSelectOrder(treeSampleTypes, sample);
             if (form.ShowDialog() == DialogResult.OK)
             {
                 SetStatusMessage("Successfully added sample " + sampleName + " to order " + form.SelectedOrderName);
@@ -5416,11 +5418,11 @@ select count(*) from sample s
                 return;
             }
 
-            FormSelectOrder form = new FormSelectOrder(treeSampleTypes, sample.Id);
+            FormSelectOrder form = new FormSelectOrder(treeSampleTypes, sample);
             if (form.ShowDialog() != DialogResult.OK)
                 return;
 
-            SetStatusMessage("Successfully added sample " + form.SelectedSampleNumber.ToString() + " to order " + form.SelectedOrderName);
+            SetStatusMessage("Successfully added sample " + sample.Number + " to order " + form.SelectedOrderName);
         }
 
         private void btnSampleSamplingDateFrom_Click(object sender, EventArgs e)

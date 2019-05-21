@@ -33,22 +33,19 @@ namespace DSA_lims
     public partial class FormSelectOrder : Form
     {
         private TreeView TreeSampleTypes = null;
-        private Guid SampleId = Guid.Empty;
-        private int SampleNumber = 0;
-        public int SelectedSampleNumber { get { return SampleNumber; } }
-        private Guid SampleTypeId = Guid.Empty;
+        private Sample mSample = null;
 
         public Guid SelectedLaboratoryId = Guid.Empty;
         public Guid SelectedOrderId = Guid.Empty;
         public string SelectedOrderName = String.Empty;
         public Guid SelectedOrderLineId = Guid.Empty;
 
-        public FormSelectOrder(TreeView treeSampleTypes, Guid sampId)
+        public FormSelectOrder(TreeView treeSampleTypes, Sample s)
         {
             InitializeComponent();
 
             TreeSampleTypes = treeSampleTypes;
-            SampleId = sampId;            
+            mSample = s;
         }
 
         private void FormSelectOrder_Load(object sender, EventArgs e)
@@ -57,13 +54,7 @@ namespace DSA_lims
             try
             {
                 conn = DB.OpenConnection();
-
-                object o = DB.GetScalar(conn, null, "select sample_type_id from sample where id = @id", CommandType.Text, new SqlParameter("@id", SampleId));
-                if (!DB.IsValidField(o))
-                    throw new Exception("Invalid sample type id found for sample id: " + SampleId);
-                
-                SampleTypeId = Guid.Parse(o.ToString());
-                SampleNumber = DB.GetSampleNumber(conn, null, SampleId);
+                                                
                 UI.PopulateComboBoxes(conn, "csp_select_laboratories_short", new[] {
                     new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
                 }, cboxLaboratory);
@@ -154,7 +145,7 @@ from sample_x_assignment_sample_type sxast
     inner join assignment a on a.id = ast.assignment_id and a.id = @aid
 where sxast.sample_id = @sid";
                 object o = DB.GetScalar(conn, trans, query, CommandType.Text, new[] {
-                    new SqlParameter("@sid", SampleId),
+                    new SqlParameter("@sid", mSample.Id),
                     new SqlParameter("@aid", SelectedOrderId)
                 });
 
@@ -204,7 +195,12 @@ where sxast.sample_id = @sid";
                     }
                 }
 
-                GenerateOrderPreparations(conn, trans, SampleId, SelectedLaboratoryId, SelectedOrderId, SelectedOrderLineId, tnode.Nodes);
+                GenerateOrderPreparations(conn, trans, mSample.Id, SelectedLaboratoryId, SelectedOrderId, SelectedOrderLineId, tnode.Nodes);
+
+                mSample.LoadFromDB(conn, trans, mSample.Id);
+
+                string json = JsonConvert.SerializeObject(mSample);
+                DB.AddAuditMessage(conn, trans, "sample", mSample.Id, AuditOperationType.Update, json, "");
 
                 trans.Commit();
                 DialogResult = DialogResult.OK;
@@ -216,26 +212,6 @@ where sxast.sample_id = @sid";
                 MessageBox.Show(ex.Message);
                 DialogResult = DialogResult.Abort;
                 Close();
-            }
-            finally
-            {
-                conn?.Close();
-            }
-                    
-            try
-            {
-                conn = DB.OpenConnection();
-
-                Sample s = new Sample();
-                s.LoadFromDB(conn, null, SampleId);
-                string json = JsonConvert.SerializeObject(s);
-                DB.AddAuditMessage(conn, null, "sample", s.Id, AuditOperationType.Update, json, "");
-            }
-            catch (Exception ex)
-            {                
-                Common.Log.Error(ex);
-                MessageBox.Show(ex.Message);
-                DialogResult = DialogResult.OK;
             }
             finally
             {
@@ -407,7 +383,7 @@ where sxast.sample_id = @sid";
                 conn = DB.OpenConnection();
 
                 Guid oid = Guid.Parse(gridOrders.SelectedRows[0].Cells["id"].Value.ToString());
-                UI.PopulateOrderContentForSampleTypeName(conn, oid, treeOrderLines, SampleTypeId, TreeSampleTypes, true);
+                UI.PopulateOrderContentForSampleTypeName(conn, oid, treeOrderLines, mSample.SampleTypeId, TreeSampleTypes, true);
             }
             catch (Exception ex)
             {
@@ -459,7 +435,7 @@ where sxast.sample_id = @sid";
                 conn?.Close();
             }
 
-            FormSelectExistingPreps form = new FormSelectExistingPreps(prepLabId, SampleId);
+            FormSelectExistingPreps form = new FormSelectExistingPreps(prepLabId, mSample.Id);
             if (form.ShowDialog() != DialogResult.OK)
                 return;
 
@@ -504,7 +480,7 @@ where sxast.sample_id = @sid";
             using (SqlConnection conn = DB.OpenConnection())            
                 using (SqlDataReader reader = DB.GetDataReader(conn, null, query, CommandType.Text))            
                     while (reader.Read())
-                        prepNums.Add(SampleNumber + "/" + reader.GetString("number"));
+                        prepNums.Add(mSample.Number + "/" + reader.GetString("number"));
 
             tnode.ToolTipText = "Connected preparations: " + String.Join(", ", prepNums);
         }        

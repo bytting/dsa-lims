@@ -46,6 +46,7 @@
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.btnExistingPreps = new System.Windows.Forms.ToolStripButton();
+            this.lblSampleInfo = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridOrders)).BeginInit();
             this.panel2.SuspendLayout();
@@ -93,18 +94,18 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(31, 30);
+            this.label1.Location = new System.Drawing.Point(16, 45);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(65, 15);
+            this.label1.Size = new System.Drawing.Size(161, 15);
             this.label1.TabIndex = 8;
-            this.label1.Text = "Laboratory";
+            this.label1.Text = "Show orders from laboratory";
             // 
             // cboxLaboratory
             // 
             this.cboxLaboratory.DisplayMember = "Name";
             this.cboxLaboratory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxLaboratory.FormattingEnabled = true;
-            this.cboxLaboratory.Location = new System.Drawing.Point(102, 27);
+            this.cboxLaboratory.Location = new System.Drawing.Point(202, 42);
             this.cboxLaboratory.Name = "cboxLaboratory";
             this.cboxLaboratory.Size = new System.Drawing.Size(304, 23);
             this.cboxLaboratory.TabIndex = 0;
@@ -136,6 +137,7 @@
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.lblSampleInfo);
             this.panel2.Controls.Add(this.label1);
             this.panel2.Controls.Add(this.cboxLaboratory);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
@@ -247,6 +249,16 @@
             this.btnExistingPreps.Text = "Set external preparations";
             this.btnExistingPreps.Click += new System.EventHandler(this.btnExistingPreps_Click);
             // 
+            // lblSampleInfo
+            // 
+            this.lblSampleInfo.AutoSize = true;
+            this.lblSampleInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSampleInfo.Location = new System.Drawing.Point(17, 15);
+            this.lblSampleInfo.Name = "lblSampleInfo";
+            this.lblSampleInfo.Size = new System.Drawing.Size(112, 15);
+            this.lblSampleInfo.TabIndex = 9;
+            this.lblSampleInfo.Text = "<lblSampleInfo>";
+            // 
             // FormSelectOrder
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -259,6 +271,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(600, 400);
             this.Name = "FormSelectOrder";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "DSA-Lims - Select order";
@@ -300,5 +313,6 @@
         private System.Windows.Forms.ToolStrip toolStrip2;
         private System.Windows.Forms.ToolStripLabel toolStripLabel2;
         private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Label lblSampleInfo;
     }
 }

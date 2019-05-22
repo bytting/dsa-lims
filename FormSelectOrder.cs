@@ -49,6 +49,8 @@ namespace DSA_lims
 
         private void FormSelectOrder_Load(object sender, EventArgs e)
         {
+            lblSampleInfo.Text = "Sample: " + mSample.Number + ", External Id: " + mSample.ExternalId;
+
             SqlConnection conn = null;
             try
             {
@@ -354,7 +356,13 @@ namespace DSA_lims
             AssignmentSampleType ast = mAssignment.SampleTypes.Find(x => x.Id == astId);            
             AssignmentPreparationMethod apm = ast.PreparationMethods.Find(x => x.Id == apmId);
 
-            FormSelectExistingPreps form = new FormSelectExistingPreps(apm.PreparationLaboratoryId, mSample.Id);
+            if(apm.PreparationLaboratoryId == mAssignment.LaboratoryId)
+            {
+                MessageBox.Show("These preparation methods are not registered as external");
+                return;
+            }
+
+            FormSelectExistingPreps form = new FormSelectExistingPreps(apm.PreparationLaboratoryId, mSample);
             if (form.ShowDialog() != DialogResult.OK)
                 return;
 

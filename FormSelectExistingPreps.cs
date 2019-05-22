@@ -30,20 +30,22 @@ namespace DSA_lims
     public partial class FormSelectExistingPreps : Form
     {
         private Guid LaboratoryId = Guid.Empty;
-        private Guid SampleId = Guid.Empty;
+        private Sample mSample = null;
 
         public List<Guid> SelectedPreparationIds = new List<Guid>();
 
-        public FormSelectExistingPreps(Guid labId, Guid sampId)
+        public FormSelectExistingPreps(Guid labId, Sample sample)
         {
             InitializeComponent();
 
             LaboratoryId = labId;
-            SampleId = sampId;            
+            mSample = sample;
         }
 
         private void FormSelectExistingPreps_Load(object sender, EventArgs e)
         {
+            lblSampleInfo.Text = "Sample: " + mSample.Number + ", External Id: " + mSample.ExternalId;
+
             SqlConnection conn = null;
             try
             {
@@ -54,15 +56,17 @@ select
     p.id,
     p.number as 'Name',
     pm.name as 'Prep.meth',
-    pg.name as 'Geom.'
+    pg.name as 'Geom.',
+    l.name as 'Laboratory'
 from preparation p
     inner join preparation_method pm on pm.id = p.preparation_method_id
+    inner join laboratory l on l.id = p.laboratory_id
     left outer join preparation_geometry pg on pg.id = p.preparation_geometry_id
 where p.sample_id = @sample_id and p.laboratory_id = @laboratory_id 
 order by p.number";
 
                 gridPreparations.DataSource = DB.GetDataTable(conn, null, query, CommandType.Text,
-                    new SqlParameter("@sample_id", SampleId),
+                    new SqlParameter("@sample_id", mSample.Id),
                     new SqlParameter("@laboratory_id", LaboratoryId));
 
                 gridPreparations.Columns["id"].Visible = false;

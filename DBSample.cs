@@ -127,6 +127,24 @@ namespace DSA_lims
             return !DB.IsValidField(o) ? Guid.Empty : Guid.Parse(o.ToString());
         }
 
+        public string GetSampleTypeName(SqlConnection conn, SqlTransaction trans)
+        {
+            object o = DB.GetScalar(conn, trans, "select name from sample_type where id = @id", CommandType.Text, new SqlParameter("@id", SampleTypeId));
+            if (!DB.IsValidField(o))
+                return "";
+
+            return o.ToString();
+        }
+
+        public string GetSampleTypePath(SqlConnection conn, SqlTransaction trans)
+        {
+            object o = DB.GetScalar(conn, trans, "select path from sample_type where id = @id", CommandType.Text, new SqlParameter("@id", SampleTypeId));
+            if (!DB.IsValidField(o))
+                return "";
+
+            return o.ToString();
+        }
+
         public string GetSampleComponentName(SqlConnection conn, SqlTransaction trans)
         {
             object o = DB.GetScalar(conn, trans, "select name from sample_component where id = @id", CommandType.Text, new SqlParameter("@id", SampleComponentId));
@@ -267,6 +285,14 @@ where s.id = @sid and a.workflow_status_id = 2
             int cnt = (int)DB.GetScalar(conn, trans, "select count(*) from sample where id = @id", CommandType.Text, 
                 new SqlParameter("@id", sampleId));
             return cnt > 0;
+        }
+
+        public void ConnectToOrderLine(SqlConnection conn, SqlTransaction trans, Guid assignmentSampleTypeId)
+        {
+            SqlCommand cmd = new SqlCommand("insert into sample_x_assignment_sample_type values(@sample_id, @assignment_sample_type_id)", conn, trans);
+            cmd.Parameters.AddWithValue("@sample_id", Id, Guid.Empty);
+            cmd.Parameters.AddWithValue("@assignment_sample_type_id", assignmentSampleTypeId, Guid.Empty);
+            cmd.ExecuteNonQuery();
         }
 
         public void LoadFromDB(SqlConnection conn, SqlTransaction trans, Guid sampleId)

@@ -527,6 +527,7 @@
             this.btnOrdersSummary = new System.Windows.Forms.ToolStripDropDownButton();
             this.btnOrdersOrderSummary = new System.Windows.Forms.ToolStripMenuItem();
             this.btnOrdersPrepSummary = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnOrdersSummaryCurrent = new System.Windows.Forms.ToolStripMenuItem();
             this.btnOrdersShowAuditLog = new System.Windows.Forms.ToolStripButton();
             this.btnOrdersUnlock = new System.Windows.Forms.ToolStripButton();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
@@ -970,7 +971,6 @@
             this.btnMenu = new System.Windows.Forms.ToolStripButton();
             this.lblCurrentTab = new System.Windows.Forms.ToolStripLabel();
             this.btnBack = new System.Windows.Forms.ToolStripButton();
-            this.btnOrdersSummaryCurrent = new System.Windows.Forms.ToolStripMenuItem();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tabs.SuspendLayout();
@@ -6378,6 +6378,13 @@
             this.btnOrdersPrepSummary.Text = "&Preparations for selected order";
             this.btnOrdersPrepSummary.Click += new System.EventHandler(this.btnOrdersPrepSummary_Click);
             // 
+            // btnOrdersSummaryCurrent
+            // 
+            this.btnOrdersSummaryCurrent.Name = "btnOrdersSummaryCurrent";
+            this.btnOrdersSummaryCurrent.Size = new System.Drawing.Size(235, 22);
+            this.btnOrdersSummaryCurrent.Text = "Current search result";
+            this.btnOrdersSummaryCurrent.Click += new System.EventHandler(this.btnOrdersSummaryCurrent_Click);
+            // 
             // btnOrdersShowAuditLog
             // 
             this.btnOrdersShowAuditLog.Image = global::DSA_lims.Properties.Resources.report;
@@ -9608,14 +9615,14 @@
             // btnPrepAnalAddPrep
             // 
             this.btnPrepAnalAddPrep.Name = "btnPrepAnalAddPrep";
-            this.btnPrepAnalAddPrep.Size = new System.Drawing.Size(152, 22);
+            this.btnPrepAnalAddPrep.Size = new System.Drawing.Size(116, 22);
             this.btnPrepAnalAddPrep.Text = "&Add...";
             this.btnPrepAnalAddPrep.Click += new System.EventHandler(this.btnPrepAnalAddPrep_Click);
             // 
             // btnPrepAnalDelPrep
             // 
             this.btnPrepAnalDelPrep.Name = "btnPrepAnalDelPrep";
-            this.btnPrepAnalDelPrep.Size = new System.Drawing.Size(152, 22);
+            this.btnPrepAnalDelPrep.Size = new System.Drawing.Size(116, 22);
             this.btnPrepAnalDelPrep.Text = "&Delete...";
             this.btnPrepAnalDelPrep.Click += new System.EventHandler(this.btnPrepAnalDelPrep_Click);
             // 
@@ -9633,14 +9640,14 @@
             // btnPrepAnalAddAnal
             // 
             this.btnPrepAnalAddAnal.Name = "btnPrepAnalAddAnal";
-            this.btnPrepAnalAddAnal.Size = new System.Drawing.Size(152, 22);
+            this.btnPrepAnalAddAnal.Size = new System.Drawing.Size(116, 22);
             this.btnPrepAnalAddAnal.Text = "&Add...";
             this.btnPrepAnalAddAnal.Click += new System.EventHandler(this.btnPrepAnalAddAnal_Click);
             // 
             // btnPrepAnalDelAnal
             // 
             this.btnPrepAnalDelAnal.Name = "btnPrepAnalDelAnal";
-            this.btnPrepAnalDelAnal.Size = new System.Drawing.Size(152, 22);
+            this.btnPrepAnalDelAnal.Size = new System.Drawing.Size(116, 22);
             this.btnPrepAnalDelAnal.Text = "&Delete...";
             this.btnPrepAnalDelAnal.Click += new System.EventHandler(this.btnPrepAnalDelAnal_Click);
             // 
@@ -10095,9 +10102,9 @@
             this.tabPrepAnalPreps.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.tabPrepAnalPreps.Controls.Add(this.panel10);
             this.tabPrepAnalPreps.Controls.Add(this.splitContainer3);
-            this.tabPrepAnalPreps.Location = new System.Drawing.Point(4, 24);
+            this.tabPrepAnalPreps.Location = new System.Drawing.Point(4, 22);
             this.tabPrepAnalPreps.Name = "tabPrepAnalPreps";
-            this.tabPrepAnalPreps.Size = new System.Drawing.Size(674, 571);
+            this.tabPrepAnalPreps.Size = new System.Drawing.Size(674, 573);
             this.tabPrepAnalPreps.TabIndex = 3;
             this.tabPrepAnalPreps.Text = "Preparations";
             // 
@@ -10108,7 +10115,7 @@
             this.panel10.Controls.Add(this.btnPrepAnalPrepUpdate);
             this.panel10.Controls.Add(this.label23);
             this.panel10.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel10.Location = new System.Drawing.Point(0, 545);
+            this.panel10.Location = new System.Drawing.Point(0, 547);
             this.panel10.Name = "panel10";
             this.panel10.Size = new System.Drawing.Size(674, 26);
             this.panel10.TabIndex = 1;
@@ -10598,9 +10605,9 @@
             this.tabPrepAnalAnalysis.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.tabPrepAnalAnalysis.Controls.Add(this.panel76);
             this.tabPrepAnalAnalysis.Controls.Add(this.panel63);
-            this.tabPrepAnalAnalysis.Location = new System.Drawing.Point(4, 24);
+            this.tabPrepAnalAnalysis.Location = new System.Drawing.Point(4, 22);
             this.tabPrepAnalAnalysis.Name = "tabPrepAnalAnalysis";
-            this.tabPrepAnalAnalysis.Size = new System.Drawing.Size(674, 571);
+            this.tabPrepAnalAnalysis.Size = new System.Drawing.Size(674, 573);
             this.tabPrepAnalAnalysis.TabIndex = 4;
             this.tabPrepAnalAnalysis.Text = "Analyses";
             // 
@@ -10611,7 +10618,7 @@
             this.panel76.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel76.Location = new System.Drawing.Point(0, 246);
             this.panel76.Name = "panel76";
-            this.panel76.Size = new System.Drawing.Size(674, 325);
+            this.panel76.Size = new System.Drawing.Size(674, 327);
             this.panel76.TabIndex = 3;
             // 
             // panel9
@@ -10621,7 +10628,7 @@
             this.panel9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel9.Location = new System.Drawing.Point(0, 0);
             this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(674, 299);
+            this.panel9.Size = new System.Drawing.Size(674, 301);
             this.panel9.TabIndex = 4;
             // 
             // gridPrepAnalResults
@@ -10639,7 +10646,7 @@
             this.gridPrepAnalResults.ReadOnly = true;
             this.gridPrepAnalResults.RowHeadersVisible = false;
             this.gridPrepAnalResults.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridPrepAnalResults.Size = new System.Drawing.Size(674, 274);
+            this.gridPrepAnalResults.Size = new System.Drawing.Size(674, 276);
             this.gridPrepAnalResults.TabIndex = 0;
             // 
             // toolsSampleResRes
@@ -10711,7 +10718,7 @@
             this.panel14.Controls.Add(this.btnPrepAnalAnalDiscard);
             this.panel14.Controls.Add(this.btnPrepAnalAnalUpdate);
             this.panel14.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel14.Location = new System.Drawing.Point(0, 299);
+            this.panel14.Location = new System.Drawing.Point(0, 301);
             this.panel14.Name = "panel14";
             this.panel14.Size = new System.Drawing.Size(674, 26);
             this.panel14.TabIndex = 5;
@@ -11118,13 +11125,6 @@
             this.btnBack.Text = "toolStripButton25";
             this.btnBack.ToolTipText = "Back";
             this.btnBack.Click += new System.EventHandler(this.miBack_Click);
-            // 
-            // btnOrdersSummaryCurrent
-            // 
-            this.btnOrdersSummaryCurrent.Name = "btnOrdersSummaryCurrent";
-            this.btnOrdersSummaryCurrent.Size = new System.Drawing.Size(235, 22);
-            this.btnOrdersSummaryCurrent.Text = "Current search result";
-            this.btnOrdersSummaryCurrent.Click += new System.EventHandler(this.btnOrdersSummaryCurrent_Click);
             // 
             // FormMain
             // 

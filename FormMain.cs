@@ -2542,7 +2542,7 @@ namespace DSA_lims
             if (form.ShowDialog() == DialogResult.OK)
             {
                 SetStatusMessage("Successfully added sample " + sampleName + " to order " + form.SelectedOrderName);
-            }
+            }            
 
             conn = null;
             try

@@ -119,6 +119,23 @@ namespace DSA_lims
             return cnt > 0;
         }
 
+        public List<Guid> GetSampleTypeIdsForSampleType(SqlConnection conn, SqlTransaction trans, string sampleTypeRoot)
+        {
+            List<Guid> ids = new List<Guid>();
+            using (SqlDataReader astReader = DB.GetDataReader(conn, null, "csp_select_assignment_sample_types_for_sample_type_name", CommandType.StoredProcedure,
+                    new SqlParameter("@assignment_id", Id),
+                    new SqlParameter("@sample_type_name", sampleTypeRoot)))
+            {
+                while (astReader.Read())
+                {
+                    Guid stId = astReader.GetGuid("sample_type_id");
+                    ids.Add(stId);
+                }
+            }
+
+            return ids;
+        }
+
         public void LoadFromDB(SqlConnection conn, SqlTransaction trans, Guid assId)
         {
             using (SqlDataReader reader = DB.GetDataReader(conn, trans, "csp_select_assignment", CommandType.StoredProcedure,

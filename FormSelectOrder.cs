@@ -137,6 +137,8 @@ namespace DSA_lims
 
                 Guid astId = Guid.Parse(tnode.Name);
                 AssignmentSampleType ast = mAssignment.SampleTypes.Find(x => x.Id == astId);
+                if(ast == null)
+                    throw new Exception("No assignment sample type found with id " + ast.Id.ToString());
                 Guid labId = Utils.MakeGuid(cboxLaboratory.SelectedValue);
 
                 SelectedOrderId = mAssignment.Id;
@@ -249,7 +251,7 @@ namespace DSA_lims
             else
             {
                 if (exIds.Count < 1)
-                    throw new Exception("External preparation id was not found in list");
+                    throw new Exception("Missing external preparation ids in list");
                 Guid pid = exIds[0];
                 exIds.RemoveAt(0);
                 p = mSample.Preparations.Find(x => x.Id == pid);

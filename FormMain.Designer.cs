@@ -971,6 +971,7 @@
             this.btnMenu = new System.Windows.Forms.ToolStripButton();
             this.lblCurrentTab = new System.Windows.Forms.ToolStripLabel();
             this.btnBack = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator71 = new System.Windows.Forms.ToolStripSeparator();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tabs.SuspendLayout();
@@ -6357,6 +6358,7 @@
             this.btnOrdersSummary.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnOrdersOrderSummary,
             this.btnOrdersPrepSummary,
+            this.toolStripSeparator71,
             this.btnOrdersSummaryCurrent});
             this.btnOrdersSummary.Image = global::DSA_lims.Properties.Resources.info;
             this.btnOrdersSummary.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -6374,8 +6376,8 @@
             // btnOrdersPrepSummary
             // 
             this.btnOrdersPrepSummary.Name = "btnOrdersPrepSummary";
-            this.btnOrdersPrepSummary.Size = new System.Drawing.Size(235, 22);
-            this.btnOrdersPrepSummary.Text = "&Preparations for selected order";
+            this.btnOrdersPrepSummary.Size = new System.Drawing.Size(218, 22);
+            this.btnOrdersPrepSummary.Text = "Selected order &preparations";
             this.btnOrdersPrepSummary.Click += new System.EventHandler(this.btnOrdersPrepSummary_Click);
             // 
             // btnOrdersSummaryCurrent
@@ -11126,6 +11128,11 @@
             this.btnBack.ToolTipText = "Back";
             this.btnBack.Click += new System.EventHandler(this.miBack_Click);
             // 
+            // toolStripSeparator71
+            // 
+            this.toolStripSeparator71.Name = "toolStripSeparator71";
+            this.toolStripSeparator71.Size = new System.Drawing.Size(215, 6);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -12593,6 +12600,7 @@
         private System.Windows.Forms.ToolStripMenuItem miSamplesShowAuditLog;
         private System.Windows.Forms.ToolStripButton btnSamplesShowAuditLog;
         private System.Windows.Forms.ToolStripMenuItem btnOrdersSummaryCurrent;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator71;
     }
 }
 

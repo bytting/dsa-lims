@@ -9635,13 +9635,12 @@ where ar.instance_status_id < 2
         {
             try
             {
-                DataTable dt = (DataTable)gridOrders.DataSource;                
-                
+                byte[] pdfData = UtilsPdf.CreatePdfDataFromDataGridView(gridOrders, 1, gridOrders.Columns.Count - 1);
+
                 string path = Path.GetTempPath();
                 string fileName = Guid.NewGuid().ToString() + "-dsalims.pdf";
                 string filePath = Path.Combine(path, fileName);
-
-                UtilsPdf.CreatePdfDataFromDataTable(filePath, dt);
+                File.WriteAllBytes(filePath, pdfData);
 
                 Process.Start(filePath);
             }

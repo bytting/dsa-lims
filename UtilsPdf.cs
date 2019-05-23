@@ -24,6 +24,7 @@ using System.Text;
 using System.Data.SqlClient;
 using System.Data;
 using System.IO;
+using System.Windows.Forms;
 using PdfDocument = iTextSharp.text.Document;
 using PdfWriter = iTextSharp.text.pdf.PdfWriter;
 using PdfContentByte = iTextSharp.text.pdf.PdfContentByte;
@@ -170,19 +171,43 @@ namespace DSA_lims
 
                 PdfPTable table = new PdfPTable(12);
                 table.TotalWidth = document.GetRight(margin) - document.GetLeft(margin);
-                                
-                table.AddCell(new PdfPCell(GetHeaderPhrase("Analysis")));
-                table.AddCell(new PdfPCell(GetHeaderPhrase("P.Status")));                
-                table.AddCell(new PdfPCell(GetHeaderPhrase("A.Status")));
-                table.AddCell(new PdfPCell(GetHeaderPhrase("Method")));
-                table.AddCell(new PdfPCell(GetHeaderPhrase("Nuclide")));
-                table.AddCell(new PdfPCell(GetHeaderPhrase("Activity")));
-                table.AddCell(new PdfPCell(GetHeaderPhrase("Act.Unc.")));
-                table.AddCell(new PdfPCell(GetHeaderPhrase("Act.Appr.")));
-                table.AddCell(new PdfPCell(GetHeaderPhrase("MDA")));
-                table.AddCell(new PdfPCell(GetHeaderPhrase("MDA Appr.")));
-                table.AddCell(new PdfPCell(GetHeaderPhrase("Reportable")));
-                table.AddCell(new PdfPCell(GetHeaderPhrase("Accredited")));
+
+                PdfPCell cell = new PdfPCell(GetHeaderPhrase("Analysis"));
+                cell.FixedHeight = 10f;
+                table.AddCell(cell);
+                cell = new PdfPCell(GetHeaderPhrase("P.Status"));
+                cell.FixedHeight = 10f;
+                table.AddCell(cell);                
+                cell = new PdfPCell(GetHeaderPhrase("A.Status"));
+                cell.FixedHeight = 10f;
+                table.AddCell(cell);
+                cell = new PdfPCell(GetHeaderPhrase("Method"));
+                cell.FixedHeight = 10f;
+                table.AddCell(cell);
+                cell = new PdfPCell(GetHeaderPhrase("Nuclide"));
+                cell.FixedHeight = 10f;
+                table.AddCell(cell);
+                cell = new PdfPCell(GetHeaderPhrase("Activity"));
+                cell.FixedHeight = 10f;
+                table.AddCell(cell);
+                cell = new PdfPCell(GetHeaderPhrase("Act.Unc."));
+                cell.FixedHeight = 10f;
+                table.AddCell(cell);
+                cell = new PdfPCell(GetHeaderPhrase("Act.Appr."));
+                cell.FixedHeight = 10f;
+                table.AddCell(cell);
+                cell = new PdfPCell(GetHeaderPhrase("MDA"));
+                cell.FixedHeight = 10f;
+                table.AddCell(cell);
+                cell = new PdfPCell(GetHeaderPhrase("MDA Appr."));
+                cell.FixedHeight = 10f;
+                table.AddCell(cell);
+                cell = new PdfPCell(GetHeaderPhrase("Reportable"));
+                cell.FixedHeight = 10f;
+                table.AddCell(cell);
+                cell = new PdfPCell(GetHeaderPhrase("Accredited"));
+                cell.FixedHeight = 10f;
+                table.AddCell(cell);
 
                 string query = @"
 select 
@@ -257,18 +282,42 @@ order by s.number, p.number, a.number
                         if (DB.IsValidField(reader["det.lim"]))
                             sdetlim = reader.GetDouble("det.lim").ToString(Utils.ScientificFormat);
 
-                        table.AddCell(new PdfPCell(GetCellPhrase(reader.GetString("sample") + "/" + reader.GetString("preparation") + "/" + reader.GetString("analysis"))));
-                        table.AddCell(new PdfPCell(GetCellPhrase(spwfstat)));
-                        table.AddCell(new PdfPCell(GetCellPhrase(sawfstat)));
-                        table.AddCell(new PdfPCell(GetCellPhrase(reader.GetString("analysis_method"))));
-                        table.AddCell(new PdfPCell(GetCellPhrase(reader.GetString("nuclide_name"))));
-                        table.AddCell(new PdfPCell(GetCellPhrase(sact)));
-                        table.AddCell(new PdfPCell(GetCellPhrase(sactunc)));
-                        table.AddCell(new PdfPCell(GetCellPhrase(reader.GetString("act.appr"))));
-                        table.AddCell(new PdfPCell(GetCellPhrase(sdetlim)));
-                        table.AddCell(new PdfPCell(GetCellPhrase(reader.GetString("det.lim.appr"))));
-                        table.AddCell(new PdfPCell(GetCellPhrase(reader.GetString("reportable"))));
-                        table.AddCell(new PdfPCell(GetCellPhrase(reader.GetString("accredited"))));
+                        cell = new PdfPCell(GetCellPhrase(reader.GetString("sample") + "/" + reader.GetString("preparation") + "/" + reader.GetString("analysis")));
+                        cell.FixedHeight = 10f;
+                        table.AddCell(cell);
+                        cell = new PdfPCell(GetCellPhrase(spwfstat));
+                        cell.FixedHeight = 10f;
+                        table.AddCell(cell);
+                        cell = new PdfPCell(GetCellPhrase(sawfstat));
+                        cell.FixedHeight = 10f;
+                        table.AddCell(cell);
+                        cell = new PdfPCell(GetCellPhrase(reader.GetString("analysis_method")));
+                        cell.FixedHeight = 10f;
+                        table.AddCell(cell);
+                        cell = new PdfPCell(GetCellPhrase(reader.GetString("nuclide_name")));
+                        cell.FixedHeight = 10f;
+                        table.AddCell(cell);
+                        cell = new PdfPCell(GetCellPhrase(sact));
+                        cell.FixedHeight = 10f;
+                        table.AddCell(cell);
+                        cell = new PdfPCell(GetCellPhrase(sactunc));
+                        cell.FixedHeight = 10f;
+                        table.AddCell(cell);
+                        cell = new PdfPCell(GetCellPhrase(reader.GetString("act.appr")));
+                        cell.FixedHeight = 10f;
+                        table.AddCell(cell);
+                        cell = new PdfPCell(GetCellPhrase(sdetlim));
+                        cell.FixedHeight = 10f;
+                        table.AddCell(cell);
+                        cell = new PdfPCell(GetCellPhrase(reader.GetString("det.lim.appr")));
+                        cell.FixedHeight = 10f;
+                        table.AddCell(cell);
+                        cell = new PdfPCell(GetCellPhrase(reader.GetString("reportable")));
+                        cell.FixedHeight = 10f;
+                        table.AddCell(cell);
+                        cell = new PdfPCell(GetCellPhrase(reader.GetString("accredited")));
+                        cell.FixedHeight = 10f;
+                        table.AddCell(cell);
                         nRows++;
                     }
                 }                
@@ -289,7 +338,9 @@ order by s.number, p.number, a.number
                     document.NewPage();
                     topCursor = document.Top - margin;
                 }
-                
+
+                document.NewPage();
+
                 pdfData = ms.GetBuffer();
             }
             finally
@@ -300,40 +351,74 @@ order by s.number, p.number, a.number
             return pdfData;
         }
 
-        public static void CreatePdfDataFromDataTable(string fileName, DataTable dt)
+        public static byte[] CreatePdfDataFromDataGridView(DataGridView grid, int startColumn, int endColumn)
         {
-            PdfDocument document = new PdfDocument();
-            PdfWriter writer = PdfWriter.GetInstance(document, new FileStream(fileName, FileMode.Create));
-            document.Open();
+            byte[] pdfData = null;
+            PdfDocument document = null;
 
-            PdfPTable table = new PdfPTable(dt.Columns.Count);
-            table.WidthPercentage = 100;
-            
-            for (int k = 0; k < dt.Columns.Count; k++)
+            try
             {
-                PdfPCell cell = new PdfPCell(GetHeaderPhrase(dt.Columns[k].ColumnName));
+                MemoryStream ms = new MemoryStream();
+                document = new PdfDocument();
+                PdfWriter writer = PdfWriter.GetInstance(document, ms);                
 
-                cell.HorizontalAlignment = PdfPCell.ALIGN_LEFT;
-                cell.VerticalAlignment = PdfPCell.ALIGN_LEFT;
+                document.Open();
 
-                table.AddCell(cell);
-            }
-            
-            for (int i = 0; i < dt.Rows.Count; i++)
-            {
-                for (int j = 0; j < dt.Columns.Count; j++)
-                {
-                    PdfPCell cell = new PdfPCell(GetCellPhrase(dt.Rows[i][j].ToString()));
-                    
+                PdfContentByte cb = writer.DirectContent;
+
+                int nCols = endColumn - startColumn;
+
+                PdfPTable table = new PdfPTable(nCols);
+                table.TotalWidth = document.GetRight(10) - document.GetLeft(10);
+
+                for (int i = startColumn; i < endColumn; i++)
+                {                    
+                    PdfPCell cell = new PdfPCell(GetHeaderPhrase(grid.Columns[i].HeaderText));
+                    cell.FixedHeight = 10f;
                     cell.HorizontalAlignment = PdfPCell.ALIGN_LEFT;
                     cell.VerticalAlignment = PdfPCell.ALIGN_LEFT;
-
                     table.AddCell(cell);
                 }
+
+                for (int i = 0; i < grid.Rows.Count; i++)
+                {
+                    for (int j = startColumn; j < endColumn; j++)
+                    {
+                        PdfPCell cell = new PdfPCell(GetCellPhrase(grid.Rows[i].Cells[j].FormattedValue.ToString()));
+                        cell.FixedHeight = 10f;
+                        cell.HorizontalAlignment = PdfPCell.ALIGN_LEFT;
+                        cell.VerticalAlignment = PdfPCell.ALIGN_LEFT;
+                        table.AddCell(cell);
+                    }
+                }
+
+                int nRows = grid.Rows.Count;
+                float rowHeight = table.GetRowHeight(0);
+                int currRow = 0;
+                while (true)
+                {
+                    int pageRows = (int)((document.Top - document.Bottom) / rowHeight);
+
+                    pageRows = (nRows > pageRows) ? pageRows : nRows;
+                    table.WriteSelectedRows(currRow, currRow + pageRows, document.GetLeft(10), document.GetTop(10), cb);
+                    nRows -= pageRows;
+                    currRow += pageRows;
+                    if (nRows <= 0)
+                        break;
+
+                    document.NewPage();
+                }
+
+                document.NewPage();
+
+                pdfData = ms.GetBuffer();                
+            }
+            finally
+            {
+                document?.Close();
             }
 
-            document.Add(table);
-            document.Close();
+            return pdfData;
         }
     }
 }

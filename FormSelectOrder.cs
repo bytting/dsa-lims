@@ -146,7 +146,7 @@ namespace DSA_lims
                 {
                     if (apm.PreparationLaboratoryId != mAssignment.LaboratoryId)
                     {
-                        // Check for external preparations
+                        // Check that external preparations exists
                         TreeNode[] tn = treeOrderLines.Nodes.Find(apm.Id.ToString(), true);
                         if (tn.Length < 1)
                             throw new Exception("No assignment preparation methods found with id " + apm.Id.ToString());
@@ -171,70 +171,38 @@ namespace DSA_lims
 
                 foreach (AssignmentPreparationMethod apm in ast.PreparationMethods)
                 {
-                    List<Guid> exIds = null;                    
+                    List<Guid> exIds = null;
                     if (apm.PreparationLaboratoryId != mAssignment.LaboratoryId)
                     {
                         // External preparations
                         TreeNode[] tn = treeOrderLines.Nodes.Find(apm.Id.ToString(), true);
-                        if(tn.Length < 1)                        
-                            throw new Exception("No assignment preparation methods found with id " + apm.Id.ToString());
+                        if (tn.Length < 1)
+                            throw new Exception("No assignment preparation method node found in tree with id " + apm.Id.ToString());
 
                         exIds = tn[0].Tag as List<Guid>;
-                        foreach(Guid exId in exIds)
-                        {
-                            Preparation p = mSample.Preparations.Find(x => x.Id == exId);
+                    }
 
-                            int nextAnalNum = DB.GetNextAnalysisNumber(conn, trans, p.Id);
-                            foreach (AssignmentAnalysisMethod aam in apm.AnalysisMethods)
-                            {                                
-                                for(int i=0; i<aam.AnalysisMethodCount; i++)
-                                {
-                                    Analysis a = new Analysis();
-                                    a.PreparationId = p.Id;
-                                    a.AnalysisMethodId = aam.AnalysisMethodId;
-                                    a.InstanceStatusId = InstanceStatus.Active;
-                                    a.WorkflowStatusId = WorkflowStatus.Construction;
-                                    a.Number = nextAnalNum++;
-                                    a.AssignmentId = SelectedOrderId;
-                                    a.LaboratoryId = labId;
-                                    p.Analyses.Add(a);
-                                }
-                            }
-                        }
-                    }         
-                    else
+                    for (int i = 0; i < apm.PreparationMethodCount; i++)
                     {
-                        // New preparations                                                
-                        for(int i=0; i<apm.PreparationMethodCount; i++)
-                        {
-                            Preparation p = new Preparation();
-                            p.AssignmentId = SelectedOrderId;
-                            p.InstanceStatusId = InstanceStatus.Active;
-                            p.LaboratoryId = labId;
-                            p.Number = nextPrepNum++;
-                            p.PreparationMethodId = apm.PreparationMethodId;
-                            p.SampleId = mSample.Id;
-                            p.WorkflowStatusId = WorkflowStatus.Construction;
-                            mSample.Preparations.Add(p);
+                        Preparation p = GetNextPreparation(apm, labId, ref exIds, ref nextPrepNum);
 
-                            int nextAnalNum = DB.GetNextAnalysisNumber(conn, trans, p.Id);
-                            foreach (AssignmentAnalysisMethod aam in apm.AnalysisMethods)
-                            {                                
-                                for(int j=0; j<aam.AnalysisMethodCount; j++)
-                                {
-                                    Analysis a = new Analysis();
-                                    a.PreparationId = p.Id;
-                                    a.AnalysisMethodId = aam.AnalysisMethodId;
-                                    a.InstanceStatusId = InstanceStatus.Active;
-                                    a.WorkflowStatusId = WorkflowStatus.Construction;
-                                    a.Number = nextAnalNum++;
-                                    a.AssignmentId = SelectedOrderId;
-                                    a.LaboratoryId = labId;
-                                    p.Analyses.Add(a);
-                                }
+                        int nextAnalNum = DB.GetNextAnalysisNumber(conn, trans, p.Id);
+                        foreach (AssignmentAnalysisMethod aam in apm.AnalysisMethods)
+                        {
+                            for (int j = 0; j < aam.AnalysisMethodCount; j++)
+                            {
+                                Analysis a = new Analysis();
+                                a.PreparationId = p.Id;
+                                a.AnalysisMethodId = aam.AnalysisMethodId;
+                                a.InstanceStatusId = InstanceStatus.Active;
+                                a.WorkflowStatusId = WorkflowStatus.Construction;
+                                a.Number = nextAnalNum++;
+                                a.AssignmentId = SelectedOrderId;
+                                a.LaboratoryId = labId;
+                                p.Analyses.Add(a);
                             }
                         }
-                    }                    
+                    }
                 }
 
                 mSample.ConnectToOrderLine(conn, trans, ast.Id);
@@ -261,6 +229,36 @@ namespace DSA_lims
 
             Close();
         }        
+
+        private Preparation GetNextPreparation(AssignmentPreparationMethod apm, Guid labId, ref List<Guid> exIds, ref int nextPrepNum)
+        {
+            Preparation p = null;
+
+            if (exIds == null)
+            {
+                p = new Preparation();
+                p.AssignmentId = SelectedOrderId;
+                p.InstanceStatusId = InstanceStatus.Active;
+                p.LaboratoryId = labId;
+                p.Number = nextPrepNum++;
+                p.PreparationMethodId = apm.PreparationMethodId;
+                p.SampleId = mSample.Id;
+                p.WorkflowStatusId = WorkflowStatus.Construction;
+                mSample.Preparations.Add(p);
+            }
+            else
+            {
+                if (exIds.Count < 1)
+                    throw new Exception("External preparation id was not found in list");
+                Guid pid = exIds[0];
+                exIds.RemoveAt(0);
+                p = mSample.Preparations.Find(x => x.Id == pid);
+                if(p == null)
+                    throw new Exception("External preparation with id " + pid + " was not found on sample " + mSample.Number);
+            }
+
+            return p;
+        }
 
         private void cboxLaboratory_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -403,17 +401,23 @@ namespace DSA_lims
 
             tnode.ToolTipText = "";
 
-            List<Guid> prepList = tnode.Tag as List<Guid>;
-            string query = "select number from preparation where id in (" 
-                + String.Join(",", prepList.Select(x => "'" + x.ToString() + "'").ToArray()) + ")";
+            try
+            {
+                List<Guid> prepList = tnode.Tag as List<Guid>;
+                string query = "select number from preparation where id in ("
+                    + String.Join(",", prepList.Select(x => "'" + x.ToString() + "'").ToArray()) + ")";
 
-            List<object> prepNums = new List<object>();
-            using (SqlConnection conn = DB.OpenConnection())            
-                using (SqlDataReader reader = DB.GetDataReader(conn, null, query, CommandType.Text))            
-                    while (reader.Read())
-                        prepNums.Add(mSample.Number + "/" + reader.GetString("number"));
+                List<object> prepNums = new List<object>();
+                using (SqlConnection conn = DB.OpenConnection())
+                {
+                    using (SqlDataReader reader = DB.GetDataReader(conn, null, query, CommandType.Text))
+                        while (reader.Read())
+                            prepNums.Add(mSample.Number + "/" + reader.GetString("number"));
+                }
 
-            tnode.ToolTipText = "Connected preparations: " + String.Join(", ", prepNums);
+                tnode.ToolTipText = "Connected preparations: " + String.Join(", ", prepNums);
+            }
+            catch {}
         }        
     }
 }

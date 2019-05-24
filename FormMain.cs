@@ -9635,7 +9635,7 @@ where ar.instance_status_id < 2
         {
             try
             {
-                byte[] pdfData = UtilsPdf.CreatePdfDataFromDataGridView(gridOrders, 1, gridOrders.Columns.Count - 1);
+                byte[] pdfData = UtilsPdf.CreatePdfDataFromDataGridView(gridOrders, 1, gridOrders.Columns.Count - 1, "LIMS order search - " + DateTime.Now.ToString(Utils.DateFormatNorwegian));
 
                 string path = Path.GetTempPath();
                 string fileName = Guid.NewGuid().ToString() + "-dsalims.pdf";

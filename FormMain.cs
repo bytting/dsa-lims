@@ -9650,5 +9650,25 @@ where ar.instance_status_id < 2
                 MessageBox.Show(Utils.makeErrorMessage(ex.Message));
             }
         }
+
+        private void miResultsShowPdf_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                byte[] pdfData = UtilsPdf.CreatePdfDataFromDataGridView(gridSearchResult, 0, gridSearchResult.Columns.Count, "LIMS search result - " + DateTime.Now.ToString(Utils.DateFormatNorwegian));
+
+                string path = Path.GetTempPath();
+                string fileName = Guid.NewGuid().ToString() + "-dsalims.pdf";
+                string filePath = Path.Combine(path, fileName);
+                File.WriteAllBytes(filePath, pdfData);
+
+                Process.Start(filePath);
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(Utils.makeErrorMessage(ex.Message));
+            }
+        }
     }
 }

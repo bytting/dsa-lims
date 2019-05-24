@@ -391,7 +391,7 @@
             this.toolStripSeparator75 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
-            this.asPDFToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.miResultsShowPdf = new System.Windows.Forms.ToolStripMenuItem();
             this.miResultsShowMap = new System.Windows.Forms.ToolStripMenuItem();
             this.flowSearch = new System.Windows.Forms.FlowLayoutPanel();
             this.panel37 = new System.Windows.Forms.Panel();
@@ -4941,7 +4941,7 @@
             // toolStripDropDownButton1
             // 
             this.toolStripDropDownButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.asPDFToolStripMenuItem,
+            this.miResultsShowPdf,
             this.miResultsShowMap});
             this.toolStripDropDownButton1.Image = global::DSA_lims.Properties.Resources.menu;
             this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -4949,12 +4949,13 @@
             this.toolStripDropDownButton1.Size = new System.Drawing.Size(74, 22);
             this.toolStripDropDownButton1.Text = "Show...";
             // 
-            // asPDFToolStripMenuItem
+            // miResultsShowPdf
             // 
-            this.asPDFToolStripMenuItem.Image = global::DSA_lims.Properties.Resources.report;
-            this.asPDFToolStripMenuItem.Name = "asPDFToolStripMenuItem";
-            this.asPDFToolStripMenuItem.Size = new System.Drawing.Size(162, 22);
-            this.asPDFToolStripMenuItem.Text = "Results as PDF";
+            this.miResultsShowPdf.Image = global::DSA_lims.Properties.Resources.report;
+            this.miResultsShowPdf.Name = "miResultsShowPdf";
+            this.miResultsShowPdf.Size = new System.Drawing.Size(162, 22);
+            this.miResultsShowPdf.Text = "Results as PDF";
+            this.miResultsShowPdf.Click += new System.EventHandler(this.miResultsShowPdf_Click);
             // 
             // miResultsShowMap
             // 
@@ -12578,7 +12579,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator75;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton1;
-        private System.Windows.Forms.ToolStripMenuItem asPDFToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem miResultsShowPdf;
         private System.Windows.Forms.ToolStripMenuItem miResultsShowMap;
         private System.Windows.Forms.ToolStripButton btnOrderShowSampleSummary;
         private System.Windows.Forms.Panel panel43;

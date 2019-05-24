@@ -576,7 +576,6 @@
             this.toolStripDropDownButton4 = new System.Windows.Forms.ToolStripDropDownButton();
             this.sampleLabelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sampleInfoForSelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnSamplesShowAuditLog = new System.Windows.Forms.ToolStripButton();
             this.btnSamplesUnlock = new System.Windows.Forms.ToolStripButton();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.panel24 = new System.Windows.Forms.Panel();
@@ -972,6 +971,9 @@
             this.btnMenu = new System.Windows.Forms.ToolStripButton();
             this.lblCurrentTab = new System.Windows.Forms.ToolStripLabel();
             this.btnBack = new System.Windows.Forms.ToolStripButton();
+            this.toolStripDropDownButton5 = new System.Windows.Forms.ToolStripDropDownButton();
+            this.auditLogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.currentSearchAsPDFToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tabs.SuspendLayout();
@@ -6665,8 +6667,8 @@
             this.btnSamplesSetOrder,
             this.toolStripDropDownButton2,
             this.btnSamplesPrepAnal,
+            this.toolStripDropDownButton5,
             this.toolStripDropDownButton4,
-            this.btnSamplesShowAuditLog,
             this.btnSamplesUnlock});
             this.toolsSamples.Location = new System.Drawing.Point(0, 0);
             this.toolsSamples.Name = "toolsSamples";
@@ -6857,15 +6859,6 @@
             this.sampleInfoForSelectedToolStripMenuItem.Name = "sampleInfoForSelectedToolStripMenuItem";
             this.sampleInfoForSelectedToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.sampleInfoForSelectedToolStripMenuItem.Text = "Sample info";
-            // 
-            // btnSamplesShowAuditLog
-            // 
-            this.btnSamplesShowAuditLog.Image = global::DSA_lims.Properties.Resources.report;
-            this.btnSamplesShowAuditLog.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSamplesShowAuditLog.Name = "btnSamplesShowAuditLog";
-            this.btnSamplesShowAuditLog.Size = new System.Drawing.Size(106, 22);
-            this.btnSamplesShowAuditLog.Text = "Show audit log";
-            this.btnSamplesShowAuditLog.Click += new System.EventHandler(this.miSamplesShowAuditLog_Click);
             // 
             // btnSamplesUnlock
             // 
@@ -11134,6 +11127,31 @@
             this.btnBack.ToolTipText = "Back";
             this.btnBack.Click += new System.EventHandler(this.miBack_Click);
             // 
+            // toolStripDropDownButton5
+            // 
+            this.toolStripDropDownButton5.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.auditLogToolStripMenuItem,
+            this.currentSearchAsPDFToolStripMenuItem});
+            this.toolStripDropDownButton5.Image = global::DSA_lims.Properties.Resources.report;
+            this.toolStripDropDownButton5.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripDropDownButton5.Name = "toolStripDropDownButton5";
+            this.toolStripDropDownButton5.Size = new System.Drawing.Size(74, 22);
+            this.toolStripDropDownButton5.Text = "Show...";
+            // 
+            // auditLogToolStripMenuItem
+            // 
+            this.auditLogToolStripMenuItem.Name = "auditLogToolStripMenuItem";
+            this.auditLogToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
+            this.auditLogToolStripMenuItem.Text = "&Audit log for selected sample";
+            this.auditLogToolStripMenuItem.Click += new System.EventHandler(this.miSamplesShowAuditLog_Click);
+            // 
+            // currentSearchAsPDFToolStripMenuItem
+            // 
+            this.currentSearchAsPDFToolStripMenuItem.Name = "currentSearchAsPDFToolStripMenuItem";
+            this.currentSearchAsPDFToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
+            this.currentSearchAsPDFToolStripMenuItem.Text = "Current search as &PDF";
+            this.currentSearchAsPDFToolStripMenuItem.Click += new System.EventHandler(this.currentSearchAsPDFToolStripMenuItem_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -12599,9 +12617,11 @@
         private System.Windows.Forms.ToolStripButton btnOrdersShowAuditLog;
         private System.Windows.Forms.TextBox tbAuditLogObject;
         private System.Windows.Forms.ToolStripMenuItem miSamplesShowAuditLog;
-        private System.Windows.Forms.ToolStripButton btnSamplesShowAuditLog;
         private System.Windows.Forms.ToolStripMenuItem btnOrdersSummaryCurrent;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator71;
+        private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton5;
+        private System.Windows.Forms.ToolStripMenuItem auditLogToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem currentSearchAsPDFToolStripMenuItem;
     }
 }
 

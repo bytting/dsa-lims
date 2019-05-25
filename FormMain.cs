@@ -711,7 +711,7 @@ namespace DSA_lims
         private void SetMenuItemVisibilities()
         {
             bool isAdmin = Roles.IsAdmin();
-            miSearchView.Enabled = miProjectsView.Enabled = miCustomersView.Enabled = miTypeRelationsView.Enabled = miMetadataView.Enabled = miSystemDataView.Enabled = miAuditLogView.Enabled = isAdmin;
+            miSearchView.Enabled = miProjectsView.Enabled = miCustomersView.Enabled = miTypeRelationsView.Enabled = miMetadataView.Enabled = miSystemDataView.Enabled = isAdmin;
             btnMenuNewSample.Enabled = btnMenuSamples.Enabled = btnMenuNewOrder.Enabled = btnOrders.Enabled = btnMenuCustomer.Enabled = btnMenuProjects.Enabled = btnMenuMetadata.Enabled = btnMenuSearch.Enabled = isAdmin;
             tbMenuLookup.Enabled = isAdmin;
 
@@ -740,7 +740,7 @@ namespace DSA_lims
 
             if (Roles.HasAccess(Role.LaboratoryAdministrator) && Common.LabId != Guid.Empty)
             {                
-                miSearchView.Enabled = miProjectsView.Enabled = miCustomersView.Enabled = miTypeRelationsView.Enabled = miMetadataView.Enabled = miSystemDataView.Enabled = miAuditLogView.Enabled = true;
+                miSearchView.Enabled = miProjectsView.Enabled = miCustomersView.Enabled = miTypeRelationsView.Enabled = miMetadataView.Enabled = miSystemDataView.Enabled = true;
                 btnMenuNewSample.Enabled = btnMenuSamples.Enabled = btnMenuNewOrder.Enabled = btnOrders.Enabled = btnMenuCustomer.Enabled = btnMenuProjects.Enabled = btnMenuMetadata.Enabled = btnMenuSearch.Enabled = true;
                 tbMenuLookup.Enabled = true;
                 miPreparationMethodsNew.Enabled = miPreparationMethodEdit.Enabled = miPreparationMethodDelete.Enabled = btnTypeRelSampTypePrepMethAdd.Enabled = true;
@@ -1445,12 +1445,7 @@ namespace DSA_lims
                 Common.Log.Error(ex);
                 MessageBox.Show(ex.Message);                
             }
-        }
-
-        private void miAuditLogView_Click(object sender, EventArgs e)
-        {
-            tabs.SelectedTab = tabAuditLog;
-        }
+        }        
 
         private void miSearchView_Click(object sender, EventArgs e)
         {
@@ -9518,7 +9513,7 @@ where ar.instance_status_id < 2
             try
             {
                 conn = DB.OpenConnection();
-                using (SqlDataReader reader = DB.GetDataReader(conn, null, "select source_table, cast(decompress(value) as nvarchar(max)) as value from audit_log where id = @id", CommandType.Text, 
+                using (SqlDataReader reader = DB.GetDataReader(conn, null, "select source_table, value from audit_log where id = @id", CommandType.Text, 
                     new SqlParameter("@id", id)))
                 {
                     if (!reader.HasRows)
@@ -9526,7 +9521,7 @@ where ar.instance_status_id < 2
 
                     reader.Read();
                     source = (string)reader["source_table"].ToString();
-                    json = (string)reader["value"].ToString();
+                    json = Utils.Decompress((byte[])reader["value"]);
                 }
 
                 switch (source)

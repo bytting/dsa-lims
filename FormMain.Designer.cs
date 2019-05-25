@@ -44,7 +44,6 @@
             this.miMetadataView = new System.Windows.Forms.ToolStripMenuItem();
             this.miSystemDataView = new System.Windows.Forms.ToolStripMenuItem();
             this.miSearchView = new System.Windows.Forms.ToolStripMenuItem();
-            this.miAuditLogView = new System.Windows.Forms.ToolStripMenuItem();
             this.miSample = new System.Windows.Forms.ToolStripMenuItem();
             this.miOrder = new System.Windows.Forms.ToolStripMenuItem();
             this.miOrderAddSampleType = new System.Windows.Forms.ToolStripMenuItem();
@@ -573,6 +572,9 @@
             this.samplingmethodToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.excemptFromPublicToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnSamplesPrepAnal = new System.Windows.Forms.ToolStripButton();
+            this.toolStripDropDownButton5 = new System.Windows.Forms.ToolStripDropDownButton();
+            this.auditLogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.currentSearchAsPDFToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripDropDownButton4 = new System.Windows.Forms.ToolStripDropDownButton();
             this.sampleLabelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sampleInfoForSelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -971,9 +973,6 @@
             this.btnMenu = new System.Windows.Forms.ToolStripButton();
             this.lblCurrentTab = new System.Windows.Forms.ToolStripLabel();
             this.btnBack = new System.Windows.Forms.ToolStripButton();
-            this.toolStripDropDownButton5 = new System.Windows.Forms.ToolStripDropDownButton();
-            this.auditLogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.currentSearchAsPDFToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tabs.SuspendLayout();
@@ -1380,8 +1379,7 @@
             this.miTypeRelationsView,
             this.miMetadataView,
             this.miSystemDataView,
-            this.miSearchView,
-            this.miAuditLogView});
+            this.miSearchView});
             this.miEdit.Name = "miEdit";
             this.miEdit.Size = new System.Drawing.Size(39, 20);
             this.miEdit.Text = "&Edit";
@@ -1446,13 +1444,6 @@
             this.miSearchView.Size = new System.Drawing.Size(162, 22);
             this.miSearchView.Text = "R&esults/Statistics";
             this.miSearchView.Click += new System.EventHandler(this.miSearchView_Click);
-            // 
-            // miAuditLogView
-            // 
-            this.miAuditLogView.Name = "miAuditLogView";
-            this.miAuditLogView.Size = new System.Drawing.Size(162, 22);
-            this.miAuditLogView.Text = "&Audit log";
-            this.miAuditLogView.Click += new System.EventHandler(this.miAuditLogView_Click);
             // 
             // miSample
             // 
@@ -2067,7 +2058,7 @@
             this.miPreparationMethods,
             this.miAnalysisMethods});
             this.miTypeRelations.Name = "miTypeRelations";
-            this.miTypeRelations.Size = new System.Drawing.Size(102, 20);
+            this.miTypeRelations.Size = new System.Drawing.Size(101, 20);
             this.miTypeRelations.Text = "&Types/Methods";
             // 
             // miTypeRelSampleTypes
@@ -6836,6 +6827,31 @@
             this.btnSamplesPrepAnal.Text = "Preparations and analyses";
             this.btnSamplesPrepAnal.Click += new System.EventHandler(this.miSamplesPrepAnal_Click);
             // 
+            // toolStripDropDownButton5
+            // 
+            this.toolStripDropDownButton5.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.auditLogToolStripMenuItem,
+            this.currentSearchAsPDFToolStripMenuItem});
+            this.toolStripDropDownButton5.Image = global::DSA_lims.Properties.Resources.report;
+            this.toolStripDropDownButton5.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripDropDownButton5.Name = "toolStripDropDownButton5";
+            this.toolStripDropDownButton5.Size = new System.Drawing.Size(74, 22);
+            this.toolStripDropDownButton5.Text = "Show...";
+            // 
+            // auditLogToolStripMenuItem
+            // 
+            this.auditLogToolStripMenuItem.Name = "auditLogToolStripMenuItem";
+            this.auditLogToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
+            this.auditLogToolStripMenuItem.Text = "&Audit log for selected sample";
+            this.auditLogToolStripMenuItem.Click += new System.EventHandler(this.miSamplesShowAuditLog_Click);
+            // 
+            // currentSearchAsPDFToolStripMenuItem
+            // 
+            this.currentSearchAsPDFToolStripMenuItem.Name = "currentSearchAsPDFToolStripMenuItem";
+            this.currentSearchAsPDFToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
+            this.currentSearchAsPDFToolStripMenuItem.Text = "Current search as &PDF";
+            this.currentSearchAsPDFToolStripMenuItem.Click += new System.EventHandler(this.currentSearchAsPDFToolStripMenuItem_Click);
+            // 
             // toolStripDropDownButton4
             // 
             this.toolStripDropDownButton4.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -11127,31 +11143,6 @@
             this.btnBack.ToolTipText = "Back";
             this.btnBack.Click += new System.EventHandler(this.miBack_Click);
             // 
-            // toolStripDropDownButton5
-            // 
-            this.toolStripDropDownButton5.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.auditLogToolStripMenuItem,
-            this.currentSearchAsPDFToolStripMenuItem});
-            this.toolStripDropDownButton5.Image = global::DSA_lims.Properties.Resources.report;
-            this.toolStripDropDownButton5.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripDropDownButton5.Name = "toolStripDropDownButton5";
-            this.toolStripDropDownButton5.Size = new System.Drawing.Size(74, 22);
-            this.toolStripDropDownButton5.Text = "Show...";
-            // 
-            // auditLogToolStripMenuItem
-            // 
-            this.auditLogToolStripMenuItem.Name = "auditLogToolStripMenuItem";
-            this.auditLogToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
-            this.auditLogToolStripMenuItem.Text = "&Audit log for selected sample";
-            this.auditLogToolStripMenuItem.Click += new System.EventHandler(this.miSamplesShowAuditLog_Click);
-            // 
-            // currentSearchAsPDFToolStripMenuItem
-            // 
-            this.currentSearchAsPDFToolStripMenuItem.Name = "currentSearchAsPDFToolStripMenuItem";
-            this.currentSearchAsPDFToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
-            this.currentSearchAsPDFToolStripMenuItem.Text = "Current search as &PDF";
-            this.currentSearchAsPDFToolStripMenuItem.Click += new System.EventHandler(this.currentSearchAsPDFToolStripMenuItem_Click);
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -12019,7 +12010,6 @@
         private System.Windows.Forms.ToolStripMenuItem miOrders;
         private System.Windows.Forms.ToolStripMenuItem miSamples;
         private System.Windows.Forms.ToolStripMenuItem miCustomers;
-        private System.Windows.Forms.ToolStripMenuItem miAuditLogView;
         private System.Windows.Forms.ToolStripMenuItem miSearchView;
         private System.Windows.Forms.ToolStripMenuItem miTypeRelationsView;
         private System.Windows.Forms.ToolStripMenuItem miMetadataView;

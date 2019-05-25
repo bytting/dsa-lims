@@ -93,14 +93,14 @@ namespace DSA_lims
 
         public static void AddAuditMessage(SqlConnection conn, SqlTransaction trans, string tbl, Guid id, AuditOperationType op, string msg, string comment = "")
         {
-            SqlCommand cmd = new SqlCommand("csp_insert_audit_message", conn, trans);
+            SqlCommand cmd = new SqlCommand("csp_insert_audit_log", conn, trans);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@id", Guid.NewGuid());
             cmd.Parameters.AddWithValue("@source_table", tbl.Trim());
             cmd.Parameters.AddWithValue("@source_id", id);
             cmd.Parameters.AddWithValue("@operation", op.ToString());
             cmd.Parameters.AddWithValue("@comment", comment.Trim());
-            cmd.Parameters.AddWithValue("@value", msg.Trim());
+            cmd.Parameters.AddWithValue("@value", Utils.Compress(msg.Trim()));
             cmd.Parameters.AddWithValue("@create_date", DateTime.Now);
             cmd.ExecuteNonQuery();
         }

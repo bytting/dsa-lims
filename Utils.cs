@@ -19,6 +19,8 @@
 
 using System;
 using System.Globalization;
+using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -132,6 +134,37 @@ namespace DSA_lims
         public static bool PasswordHashEqual(byte[] hash1, byte[] hash2)
         {
             return hash1.SequenceEqual(hash2);
-        }                
+        }
+
+        public static byte[] Compress(string s)
+        {
+            var bytes = Encoding.Unicode.GetBytes(s);
+            using (var msi = new MemoryStream(bytes))
+            {
+                using (var mso = new MemoryStream())
+                {
+                    using (var gs = new GZipStream(mso, CompressionMode.Compress))
+                    {
+                        msi.CopyTo(gs);
+                    }
+                    return mso.ToArray();
+                }
+            }
+        }
+
+        public static string Decompress(byte[] b)
+        {
+            using (var msi = new MemoryStream(b))
+            {
+                using (var mso = new MemoryStream())
+                {
+                    using (var gs = new GZipStream(msi, CompressionMode.Decompress))
+                    {
+                        gs.CopyTo(mso);
+                    }
+                    return Encoding.Unicode.GetString(mso.ToArray());
+                }
+            }
+        }
     }
 }

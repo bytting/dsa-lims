@@ -143,7 +143,7 @@ create proc csp_insert_audit_message
 	@value nvarchar(max),
 	@create_date datetime
 as
-	insert into audit_log values(@id, @source_table, @source_id, @operation, @comment, compress(@value), @create_date);
+	insert into audit_log values(@id, @source_table, @source_id, @operation, @comment, @value, @create_date);
 go
 
 /*===========================================================================*/

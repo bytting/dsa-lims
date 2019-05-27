@@ -912,13 +912,25 @@ namespace DSA_lims
             {                
                 case DialogResult.OK:
                     SetStatusMessage("Laboratory " + form.LaboratoryName + " created");
-                    using (SqlConnection conn = DB.OpenConnection())
+
+                    SqlConnection conn = null;
+                    try
                     {
+                        conn = DB.OpenConnection();                        
                         UI.PopulateLaboratories(conn, InstanceStatus.Deleted, gridSysLab);
 
                         UI.PopulateComboBoxes(conn, "csp_select_laboratories_short", new[] {
                             new SqlParameter("@instance_status_level", InstanceStatus.Active)
-                        }, cboxSampleLaboratory, cboxOrderLaboratory);
+                        }, cboxSampleLaboratory, cboxOrderLaboratory);                        
+                    }
+                    catch (Exception ex)
+                    {
+                        Common.Log.Error(ex);
+                        MessageBox.Show(ex.Message);
+                    }
+                    finally
+                    {
+                        conn?.Close();
                     }
                     break;
                 case DialogResult.Abort:
@@ -1149,13 +1161,25 @@ namespace DSA_lims
             {
                 case DialogResult.OK:
                     SetStatusMessage("Laboratory " + form.LaboratoryName + " updated");
-                    using (SqlConnection conn = DB.OpenConnection())
-                    {                        
+
+                    SqlConnection conn = null;
+                    try
+                    {
+                        conn = DB.OpenConnection();                        
                         UI.PopulateLaboratories(conn, InstanceStatus.Deleted, gridSysLab);
 
                         UI.PopulateComboBoxes(conn, "csp_select_laboratories_short", new[] {
                             new SqlParameter("@instance_status_level", InstanceStatus.Active)
-                        }, cboxSampleLaboratory, cboxOrderLaboratory);
+                        }, cboxSampleLaboratory, cboxOrderLaboratory);                        
+                    }
+                    catch (Exception ex)
+                    {
+                        Common.Log.Error(ex);
+                        MessageBox.Show(ex.Message);
+                    }
+                    finally
+                    {
+                        conn?.Close();
                     }
                     break;
                 case DialogResult.Abort:
@@ -1179,13 +1203,25 @@ namespace DSA_lims
             {
                 case DialogResult.OK:
                     SetStatusMessage("Main project " + form.ProjectName + " created");
-                    using (SqlConnection conn = DB.OpenConnection())
+
+                    SqlConnection conn = null;
+                    try
                     {
+                        conn = DB.OpenConnection();                        
                         UI.PopulateProjectsMain(conn, gridProjectMain);
 
                         UI.PopulateComboBoxes(conn, "csp_select_projects_main_short", new[] {
                             new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
-                        }, cboxSamplesProjects, cboxSampleProject);
+                        }, cboxSamplesProjects, cboxSampleProject);                        
+                    }
+                    catch (Exception ex)
+                    {
+                        Common.Log.Error(ex);
+                        MessageBox.Show(ex.Message);
+                    }
+                    finally
+                    {
+                        conn?.Close();
                     }
                     break;
                 case DialogResult.Abort:
@@ -1212,13 +1248,25 @@ namespace DSA_lims
             {
                 case DialogResult.OK:
                     SetStatusMessage("Project " + form.ProjectName + " updated");
-                    using (SqlConnection conn = DB.OpenConnection())
+
+                    SqlConnection conn = null;
+                    try
                     {
+                        conn = DB.OpenConnection();                        
                         UI.PopulateProjectsMain(conn, gridProjectMain);
 
                         UI.PopulateComboBoxes(conn, "csp_select_projects_main_short", new[] {
                             new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
-                        }, cboxSamplesProjects, cboxSampleProject);
+                        }, cboxSamplesProjects, cboxSampleProject);                        
+                    }
+                    catch (Exception ex)
+                    {
+                        Common.Log.Error(ex);
+                        MessageBox.Show(ex.Message);
+                    }
+                    finally
+                    {
+                        conn?.Close();
                     }
                     break;
                 case DialogResult.Abort:
@@ -1262,14 +1310,26 @@ namespace DSA_lims
             {
                 case DialogResult.OK:
                     SetStatusMessage("Sub project " + form.ProjectSubName + " created");
-                    using (SqlConnection conn = DB.OpenConnection())
+
+                    SqlConnection conn = null;
+                    try
                     {
+                        conn = DB.OpenConnection();
                         UI.PopulateProjectsSub(conn, pmid, gridProjectSub);
 
                         UI.PopulateComboBoxes(conn, "csp_select_projects_sub_short", new[] {
                             new SqlParameter("@project_main_id", pmid),
                             new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
-                        }, cboxSampleSubProject);
+                        }, cboxSampleSubProject);                        
+                    }
+                    catch (Exception ex)
+                    {
+                        Common.Log.Error(ex);
+                        MessageBox.Show(ex.Message);
+                    }
+                    finally
+                    {
+                        conn?.Close();
                     }
                     break;
                 case DialogResult.Abort:
@@ -4377,9 +4437,22 @@ select count(*) from sample s
             if (gridSysCounty.SelectedRows.Count < 1)
                 return;
 
-            Guid cid = Utils.MakeGuid(gridSysCounty.SelectedRows[0].Cells["id"].Value);
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
+            {
+                Guid cid = Utils.MakeGuid(gridSysCounty.SelectedRows[0].Cells["id"].Value);
+                conn = DB.OpenConnection();
                 UI.PopulateMunicipalities(conn, cid, gridSysMunicipality);
+            }
+            catch(Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn?.Close();
+            }
         }
 
         private void gridProjectMain_SelectionChanged(object sender, EventArgs e)
@@ -4391,10 +4464,21 @@ select count(*) from sample s
                 return;
             }
 
-            Guid pmid = Utils.MakeGuid(gridProjectMain.SelectedRows[0].Cells["id"].Value);
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
-                UI.PopulateProjectsSub(conn, pmid, gridProjectSub);
+                Guid pmid = Utils.MakeGuid(gridProjectMain.SelectedRows[0].Cells["id"].Value);
+                conn = DB.OpenConnection();                
+                UI.PopulateProjectsSub(conn, pmid, gridProjectSub);                
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn?.Close();
             }
         }
 
@@ -4585,28 +4669,37 @@ select count(*) from sample s
 
         private void tabs_Selecting(object sender, TabControlCancelEventArgs e)
         {
-            if (e.TabPage == tabSample || e.TabPage == tabPrepAnal)
+            SqlConnection conn = null;
+            try
             {
-                using (SqlConnection conn = DB.OpenConnection())
+                if (e.TabPage == tabSample || e.TabPage == tabPrepAnal)
                 {
+                    conn = DB.OpenConnection();
                     if (!DB.LockSample(conn, sample.Id))
                     {
                         MessageBox.Show("Unable to lock sample");
                         e.Cancel = true;
                     }
                 }
-            }
-            else if (e.TabPage == tabOrder)
-            {
-                using (SqlConnection conn = DB.OpenConnection())
+                else if (e.TabPage == tabOrder)
                 {
+                    conn = DB.OpenConnection();
                     if (!DB.LockOrder(conn, assignment.Id))
                     {
                         MessageBox.Show("Unable to lock order");
                         e.Cancel = true;
                     }
                 }
-            }            
+            }
+            catch(Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }   
+            finally
+            {
+                conn?.Close();
+            }         
         }
 
         private void tabs_Deselecting(object sender, TabControlCancelEventArgs e)
@@ -4616,20 +4709,29 @@ select count(*) from sample s
                 e.Cancel = true;
                 return;
             }
-            
-            if (e.TabPage == tabSample || e.TabPage == tabPrepAnal)
-            {
-                using (SqlConnection conn = DB.OpenConnection())
+
+            SqlConnection conn = null;
+            try
+            {                
+                if (e.TabPage == tabSample || e.TabPage == tabPrepAnal)
                 {
-                    DB.UnlockSamples(conn);
-                }                    
-            }
-            else if (e.TabPage == tabOrder)
-            {
-                using (SqlConnection conn = DB.OpenConnection())
-                {
-                    DB.UnlockOrders(conn);
+                    conn = DB.OpenConnection();
+                    DB.UnlockSamples(conn);                    
                 }
+                else if (e.TabPage == tabOrder)
+                {
+                    conn = DB.OpenConnection();                    
+                    DB.UnlockOrders(conn);                    
+                }
+            }
+            catch(Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn?.Close();
             }
         }
 
@@ -5061,10 +5163,21 @@ select count(*) from sample s
 
             if (Utils.IsValidGuid(cboxPrepAnalPrepGeom.SelectedValue))
             {
-                using (SqlConnection conn = DB.OpenConnection())
+                SqlConnection conn = null;
+                try
                 {
+                    conn = DB.OpenConnection();                    
                     PreparationGeometry pg = new PreparationGeometry(conn, null, Utils.MakeGuid(cboxPrepAnalPrepGeom.SelectedValue));
                     lblPrepAnalPrepRange.Text = "[" + pg.MinFillHeightMM + ", " + pg.MaxFillHeightMM + "]";
+                }
+                catch (Exception ex)
+                {
+                    Common.Log.Error(ex);
+                    MessageBox.Show(ex.Message);
+                }
+                finally
+                {
+                    conn?.Close();
                 }
             }
 

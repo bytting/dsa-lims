@@ -148,8 +148,10 @@ from preparation p
 where p.id = @pid
 ";
 
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();                
                 foreach (Guid pid in mPrepIds)
                 {
                     using (SqlDataReader reader = DB.GetDataReader(conn, null, query, CommandType.Text, new SqlParameter("@pid", pid)))
@@ -166,7 +168,7 @@ where p.id = @pid
                         if (DB.IsValidField(reader["sampling_date_to"]))
                             samplingTimeTo = reader.GetDateTime("sampling_date_to").ToString(Utils.DateTimeFormatNorwegian);
                         else samplingTimeTo = "";
-                        prepNumber = reader.GetString("preparation_number");                        
+                        prepNumber = reader.GetString("preparation_number");
                         sampleType = reader.GetString("sample_type_name");
                         projectMain = reader.GetString("project_main_name");
                         projectSub = reader.GetString("project_sub_name");
@@ -175,7 +177,7 @@ where p.id = @pid
                         if (DB.IsValidField(reader["fill_height"]))
                             fillHeight = reader.GetDouble("fill_height");
                         if (DB.IsValidField(reader["preparation_amount"]))
-                            prepWeight = reader.GetDouble("preparation_amount");                        
+                            prepWeight = reader.GetDouble("preparation_amount");
                         if (DB.IsValidField(reader["preparation_unit_name"]))
                             prepWeightUnit = reader.GetString("preparation_unit_name");
                         else prepWeightUnit = "";
@@ -188,9 +190,18 @@ where p.id = @pid
                             station = reader.GetString("station_name");
                         else station = "";
 
-                        printDocument.Print();                            
+                        printDocument.Print();
                     }
-                }
+                }                
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn?.Close();
             }
 
             mSettings.LabelPrinterName = cboxPrinters.Text;

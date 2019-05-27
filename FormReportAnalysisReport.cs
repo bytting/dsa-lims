@@ -75,11 +75,23 @@ namespace DSA_lims
                 mAssignment.AuditComment += "v." + newVersion + ": " + form.SelectedComment + Environment.NewLine;
             }
 
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();                
                 mAssignment.AnalysisReportVersion = newVersion;
                 mAssignment.Dirty = true;
                 mAssignment.StoreToDB(conn, null);
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            finally
+            {
+                conn?.Close();
             }
 
             DataTable1TableAdapter.Fill(DSOrderReport.DataTable1, mAssignment.Name);

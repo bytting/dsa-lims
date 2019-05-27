@@ -369,14 +369,27 @@ namespace DSA_lims
 
         private void btnOk_Click(object sender, EventArgs e)
         {
-            using (SqlConnection conn = DB.OpenConnection())
+            SqlConnection conn = null;
+            try
             {
+                conn = DB.OpenConnection();                
                 if (!String.IsNullOrEmpty(mAnalysis.SpecterReference) && DB.SpecRefExists(conn, null, mAnalysis.SpecterReference, mAnalysis.Id))
                 {
                     MessageBox.Show("Can not import file. Specter reference has already been used");
                     return;
-                }
+                }                
             }
+            catch(Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+                return;
+            }
+            finally
+            {
+                conn?.Close();
+            }
+
 
             foreach (AnalysisResult r in mAnalysis.Results)
             {

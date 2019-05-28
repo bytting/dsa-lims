@@ -365,6 +365,8 @@ namespace DSA_lims {
             
             private global::System.Data.DataColumn columnname_report;
             
+            private global::System.Data.DataColumn columnprepmethshort;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public DataTable1DataTable() {
@@ -744,6 +746,14 @@ namespace DSA_lims {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn prepmethshortColumn {
+                get {
+                    return this.columnprepmethshort;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -822,7 +832,8 @@ namespace DSA_lims {
                         byte[] accredited_logo, 
                         int workflow_status_id, 
                         System.DateTime create_date, 
-                        string name_report) {
+                        string name_report, 
+                        string prepmethshort) {
                 DataTable1Row rowDataTable1Row = ((DataTable1Row)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         name,
@@ -867,7 +878,8 @@ namespace DSA_lims {
                         accredited_logo,
                         workflow_status_id,
                         create_date,
-                        name_report};
+                        name_report,
+                        prepmethshort};
                 rowDataTable1Row.ItemArray = columnValuesArray;
                 this.Rows.Add(rowDataTable1Row);
                 return rowDataTable1Row;
@@ -933,6 +945,7 @@ namespace DSA_lims {
                 this.columnworkflow_status_id = base.Columns["workflow_status_id"];
                 this.columncreate_date = base.Columns["create_date"];
                 this.columnname_report = base.Columns["name_report"];
+                this.columnprepmethshort = base.Columns["prepmethshort"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1024,6 +1037,8 @@ namespace DSA_lims {
                 base.Columns.Add(this.columncreate_date);
                 this.columnname_report = new global::System.Data.DataColumn("name_report", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnname_report);
+                this.columnprepmethshort = new global::System.Data.DataColumn("prepmethshort", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnprepmethshort);
                 this.columnname.MaxLength = 80;
                 this.columnLab.MaxLength = 256;
                 this.columnreport_comment.MaxLength = 1000;
@@ -1052,6 +1067,7 @@ namespace DSA_lims {
                 this.columnname_short.MaxLength = 8;
                 this.columnExpr3.MaxLength = 20;
                 this.columnname_report.MaxLength = 20;
+                this.columnprepmethshort.MaxLength = 20;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1883,6 +1899,22 @@ namespace DSA_lims {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string prepmethshort {
+                get {
+                    try {
+                        return ((string)(this[this.tableDataTable1.prepmethshortColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'prepmethshort\' in table \'DataTable1\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableDataTable1.prepmethshortColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsnameNull() {
                 return this.IsNull(this.tableDataTable1.nameColumn);
             }
@@ -2396,6 +2428,18 @@ namespace DSA_lims {
             public void Setname_reportNull() {
                 this[this.tableDataTable1.name_reportColumn] = global::System.Convert.DBNull;
             }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsprepmethshortNull() {
+                return this.IsNull(this.tableDataTable1.prepmethshortColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetprepmethshortNull() {
+                this[this.tableDataTable1.prepmethshortColumn] = global::System.Convert.DBNull;
+            }
         }
         
         /// <summary>
@@ -2600,6 +2644,7 @@ namespace DSA_lims.DSOrderReportTableAdapters {
             tableMapping.ColumnMappings.Add("workflow_status_id", "workflow_status_id");
             tableMapping.ColumnMappings.Add("create_date", "create_date");
             tableMapping.ColumnMappings.Add("name_report", "name_report");
+            tableMapping.ColumnMappings.Add("prepmethshort", "prepmethshort");
             this._adapter.TableMappings.Add(tableMapping);
         }
         
@@ -2633,27 +2678,29 @@ namespace DSA_lims.DSOrderReportTableAdapters {
                 "il AS LabMail, laboratory.phone AS LabPhone, activity_unit_type.name_short, acti" +
                 "vity_unit_type.name AS Expr3, laboratory.laboratory_logo, laboratory.accredited_" +
                 "logo, \r\n                         analysis.workflow_status_id, assignment.create_" +
-                "date, activity_unit_type.name_report\r\nFROM            laboratory RIGHT OUTER JOI" +
-                "N\r\n                         analysis_method INNER JOIN\r\n                        " +
-                " assignment INNER JOIN\r\n                         analysis ON assignment.id = ana" +
-                "lysis.assignment_id ON analysis_method.id = analysis.analysis_method_id LEFT OUT" +
-                "ER JOIN\r\n                         account AS account_1 ON assignment.last_workfl" +
-                "ow_status_by = account_1.username LEFT OUTER JOIN\r\n                         acco" +
-                "unt ON assignment.account_id = account.id LEFT OUTER JOIN\r\n                     " +
-                "    person ON account.person_id = person.id LEFT OUTER JOIN\r\n                   " +
-                "      person AS person_1 ON account_1.person_id = person_1.id LEFT OUTER JOIN\r\n " +
-                "                        activity_unit_type ON analysis.activity_unit_type_id = a" +
-                "ctivity_unit_type.id LEFT OUTER JOIN\r\n                         activity_unit ON " +
-                "analysis.activity_unit_id = activity_unit.id ON laboratory.id = assignment.labor" +
-                "atory_id FULL OUTER JOIN\r\n                         sample_type INNER JOIN\r\n     " +
-                "                    sample ON sample_type.id = sample.sample_type_id INNER JOIN\r" +
-                "\n                         preparation ON sample.id = preparation.sample_id ON an" +
-                "alysis.preparation_id = preparation.id FULL OUTER JOIN\r\n                        " +
-                " nuclide RIGHT OUTER JOIN\r\n                         analysis_result ON nuclide.i" +
-                "d = analysis_result.nuclide_id ON analysis.id = analysis_result.analysis_id AND " +
-                "analysis_result.reportable = 1\r\nWHERE        (assignment.name = @AID) AND (prepa" +
-                "ration.instance_status_id = 1) AND (analysis.instance_status_id = 1) AND (analys" +
-                "is_result.instance_status_id = 1)";
+                "date, activity_unit_type.name_report, preparation_method.name_short AS prepmeths" +
+                "hort\r\nFROM            preparation_method INNER JOIN\r\n                         sa" +
+                "mple_type INNER JOIN\r\n                         sample ON sample_type.id = sample" +
+                ".sample_type_id INNER JOIN\r\n                         preparation ON sample.id = " +
+                "preparation.sample_id ON preparation_method.id = preparation.preparation_method_" +
+                "id FULL OUTER JOIN\r\n                         laboratory RIGHT OUTER JOIN\r\n      " +
+                "                   analysis_method INNER JOIN\r\n                         assignme" +
+                "nt INNER JOIN\r\n                         analysis ON assignment.id = analysis.ass" +
+                "ignment_id ON analysis_method.id = analysis.analysis_method_id LEFT OUTER JOIN\r\n" +
+                "                         account AS account_1 ON assignment.last_workflow_status" +
+                "_by = account_1.username LEFT OUTER JOIN\r\n                         account ON as" +
+                "signment.account_id = account.id LEFT OUTER JOIN\r\n                         perso" +
+                "n ON account.person_id = person.id LEFT OUTER JOIN\r\n                         per" +
+                "son AS person_1 ON account_1.person_id = person_1.id LEFT OUTER JOIN\r\n          " +
+                "               activity_unit_type ON analysis.activity_unit_type_id = activity_u" +
+                "nit_type.id LEFT OUTER JOIN\r\n                         activity_unit ON analysis." +
+                "activity_unit_id = activity_unit.id ON laboratory.id = assignment.laboratory_id " +
+                "ON preparation.id = analysis.preparation_id FULL OUTER JOIN\r\n                   " +
+                "      nuclide RIGHT OUTER JOIN\r\n                         analysis_result ON nucl" +
+                "ide.id = analysis_result.nuclide_id ON analysis.id = analysis_result.analysis_id" +
+                " AND analysis_result.reportable = 1\r\nWHERE        (assignment.name = @AID) AND (" +
+                "preparation.instance_status_id = 1) AND (analysis.instance_status_id = 1) AND (a" +
+                "nalysis_result.instance_status_id = 1)";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@AID", global::System.Data.SqlDbType.NVarChar, 80, global::System.Data.ParameterDirection.Input, 0, 0, "name", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }

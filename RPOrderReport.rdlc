@@ -761,7 +761,7 @@
                                   <Paragraph>
                                     <TextRuns>
                                       <TextRun>
-                                        <Value>Analyse</Value>
+                                        <Value>Method</Value>
                                         <Style>
                                           <FontSize>9pt</FontSize>
                                           <FontWeight>Bold</FontWeight>
@@ -991,7 +991,7 @@
                                   <Paragraph>
                                     <TextRuns>
                                       <TextRun>
-                                        <Value>=Fields!Ameth.Value</Value>
+                                        <Value>=Fields!prepmethshort.Value &amp; "/" &amp; Fields!Ameth.Value</Value>
                                         <Style>
                                           <FontSize>8pt</FontSize>
                                         </Style>
@@ -1927,7 +1927,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>Deteksjonsgrenser (MDA) er for HPGe analyser beregnet i henhold til ISO 11929:2010 og Curie for NaI analyser. </Value>
+                <Value>Deteksjonsgrenser (MDA) er for HPGe analyser beregnet i henhold til ISO 11929:2010 og Currie for NaI analyser. </Value>
                 <Style>
                   <FontSize>8pt</FontSize>
                 </Style>
@@ -2949,6 +2949,10 @@
         </Field>
         <Field Name="name_report">
           <DataField>name_report</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="prepmethshort">
+          <DataField>prepmethshort</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
       </Fields>

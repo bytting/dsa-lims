@@ -19,8 +19,12 @@
                          assignment.customer_company_email, assignment.customer_company_phone, assignment.customer_company_address, assignment.customer_contact_name, assignment.customer_contact_email, 
                          assignment.customer_contact_phone, assignment.customer_contact_address, person_1.name AS Expr2, assignment.last_workflow_status_date, assignment.audit_comment, person.email, person.phone, 
                          laboratory.address, laboratory.email AS LabMail, laboratory.phone AS LabPhone, activity_unit_type.name_short, activity_unit_type.name AS Expr3, laboratory.laboratory_logo, laboratory.accredited_logo, 
-                         analysis.workflow_status_id, assignment.create_date, activity_unit_type.name_report
-FROM            laboratory RIGHT OUTER JOIN
+                         analysis.workflow_status_id, assignment.create_date, activity_unit_type.name_report, preparation_method.name_short AS prepmethshort
+FROM            preparation_method INNER JOIN
+                         sample_type INNER JOIN
+                         sample ON sample_type.id = sample.sample_type_id INNER JOIN
+                         preparation ON sample.id = preparation.sample_id ON preparation_method.id = preparation.preparation_method_id FULL OUTER JOIN
+                         laboratory RIGHT OUTER JOIN
                          analysis_method INNER JOIN
                          assignment INNER JOIN
                          analysis ON assignment.id = analysis.assignment_id ON analysis_method.id = analysis.analysis_method_id LEFT OUTER JOIN
@@ -29,10 +33,7 @@ FROM            laboratory RIGHT OUTER JOIN
                          person ON account.person_id = person.id LEFT OUTER JOIN
                          person AS person_1 ON account_1.person_id = person_1.id LEFT OUTER JOIN
                          activity_unit_type ON analysis.activity_unit_type_id = activity_unit_type.id LEFT OUTER JOIN
-                         activity_unit ON analysis.activity_unit_id = activity_unit.id ON laboratory.id = assignment.laboratory_id FULL OUTER JOIN
-                         sample_type INNER JOIN
-                         sample ON sample_type.id = sample.sample_type_id INNER JOIN
-                         preparation ON sample.id = preparation.sample_id ON analysis.preparation_id = preparation.id FULL OUTER JOIN
+                         activity_unit ON analysis.activity_unit_id = activity_unit.id ON laboratory.id = assignment.laboratory_id ON preparation.id = analysis.preparation_id FULL OUTER JOIN
                          nuclide RIGHT OUTER JOIN
                          analysis_result ON nuclide.id = analysis_result.nuclide_id ON analysis.id = analysis_result.analysis_id AND analysis_result.reportable = 1
 WHERE        (assignment.name = @AID) AND (preparation.instance_status_id = 1) AND (analysis.instance_status_id = 1) AND (analysis_result.instance_status_id = 1)</CommandText>
@@ -87,6 +88,7 @@ WHERE        (assignment.name = @AID) AND (preparation.instance_status_id = 1) A
               <Mapping SourceColumn="workflow_status_id" DataSetColumn="workflow_status_id" />
               <Mapping SourceColumn="create_date" DataSetColumn="create_date" />
               <Mapping SourceColumn="name_report" DataSetColumn="name_report" />
+              <Mapping SourceColumn="prepmethshort" DataSetColumn="prepmethshort" />
             </Mappings>
             <Sources />
           </TableAdapter>
@@ -98,7 +100,7 @@ WHERE        (assignment.name = @AID) AND (preparation.instance_status_id = 1) A
   <xs:element name="DSOrderReport" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="DSOrderReport" msprop:Generator_UserDSName="DSOrderReport">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="DataTable1" msprop:Generator_TableClassName="DataTable1DataTable" msprop:Generator_TableVarName="tableDataTable1" msprop:Generator_TablePropName="DataTable1" msprop:Generator_RowDeletingName="DataTable1RowDeleting" msprop:Generator_RowChangingName="DataTable1RowChanging" msprop:Generator_RowEvHandlerName="DataTable1RowChangeEventHandler" msprop:Generator_RowDeletedName="DataTable1RowDeleted" msprop:Generator_UserTableName="DataTable1" msprop:Generator_RowChangedName="DataTable1RowChanged" msprop:Generator_RowEvArgName="DataTable1RowChangeEvent" msprop:Generator_RowClassName="DataTable1Row">
+        <xs:element name="DataTable1" msprop:Generator_TableClassName="DataTable1DataTable" msprop:Generator_TableVarName="tableDataTable1" msprop:Generator_RowChangedName="DataTable1RowChanged" msprop:Generator_TablePropName="DataTable1" msprop:Generator_RowDeletingName="DataTable1RowDeleting" msprop:Generator_RowChangingName="DataTable1RowChanging" msprop:Generator_RowEvHandlerName="DataTable1RowChangeEventHandler" msprop:Generator_RowDeletedName="DataTable1RowDeleted" msprop:Generator_RowClassName="DataTable1Row" msprop:Generator_UserTableName="DataTable1" msprop:Generator_RowEvArgName="DataTable1RowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="name" msprop:Generator_ColumnVarNameInTable="columnname" msprop:Generator_ColumnPropNameInRow="name" msprop:Generator_ColumnPropNameInTable="nameColumn" msprop:Generator_UserColumnName="name" minOccurs="0">
@@ -306,6 +308,13 @@ WHERE        (assignment.name = @AID) AND (preparation.instance_status_id = 1) A
               <xs:element name="workflow_status_id" msprop:Generator_ColumnVarNameInTable="columnworkflow_status_id" msprop:Generator_ColumnPropNameInRow="workflow_status_id" msprop:Generator_ColumnPropNameInTable="workflow_status_idColumn" msprop:Generator_UserColumnName="workflow_status_id" type="xs:int" minOccurs="0" />
               <xs:element name="create_date" msprop:Generator_ColumnVarNameInTable="columncreate_date" msprop:Generator_ColumnPropNameInRow="create_date" msprop:Generator_ColumnPropNameInTable="create_dateColumn" msprop:Generator_UserColumnName="create_date" type="xs:dateTime" minOccurs="0" />
               <xs:element name="name_report" msprop:Generator_ColumnVarNameInTable="columnname_report" msprop:Generator_ColumnPropNameInRow="name_report" msprop:Generator_ColumnPropNameInTable="name_reportColumn" msprop:Generator_UserColumnName="name_report" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="20" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="prepmethshort" msprop:Generator_ColumnVarNameInTable="columnprepmethshort" msprop:Generator_ColumnPropNameInRow="prepmethshort" msprop:Generator_ColumnPropNameInTable="prepmethshortColumn" msprop:Generator_UserColumnName="prepmethshort" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="20" />

@@ -4822,7 +4822,7 @@ select count(*) from sample s
                 trans = conn.BeginTransaction();
 
                 Guid newSampleTypeId = Utils.MakeGuid(cboxSampleSampleType.SelectedValue);
-                if (sample.SampleTypeId != newSampleTypeId && sample.HasOrders(conn, null))
+                if (sample.SampleTypeId != newSampleTypeId && sample.HasOrders(conn, trans))
                 {
                     MessageBox.Show("Can not change sample type. This sample belongs to one or more orders");
                     return;
@@ -4833,7 +4833,7 @@ select count(*) from sample s
                     DateTime newRefDate = (DateTime)tbSampleReferenceDate.Tag;
                     if (sample.ReferenceDate != newRefDate)
                     {
-                        if (sample.HasCompletedAnalysisResults(conn, null))
+                        if (sample.HasCompletedAnalysisResults(conn, trans))
                         {
                             MessageBox.Show("Can not change reference date. This sample has one or more completed analyses");
                             return;

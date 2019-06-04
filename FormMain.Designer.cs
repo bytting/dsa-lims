@@ -94,6 +94,7 @@
             this.miSamplesCopy = new System.Windows.Forms.ToolStripMenuItem();
             this.miSamplesImport = new System.Windows.Forms.ToolStripMenuItem();
             this.miSamplesImportExcel = new System.Windows.Forms.ToolStripMenuItem();
+            this.miSamplesImportSampRegApp = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator48 = new System.Windows.Forms.ToolStripSeparator();
             this.miSamplesSplit = new System.Windows.Forms.ToolStripMenuItem();
             this.miSamplesMerge = new System.Windows.Forms.ToolStripMenuItem();
@@ -559,7 +560,8 @@
             this.btnSamplesDelete = new System.Windows.Forms.ToolStripButton();
             this.btnSamplesCopy = new System.Windows.Forms.ToolStripButton();
             this.toolStripDropDownButton3 = new System.Windows.Forms.ToolStripDropDownButton();
-            this.excelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnSamplesImportExcel = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnSamplesImportSampRegApp = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator47 = new System.Windows.Forms.ToolStripSeparator();
             this.btnSamplesSplit = new System.Windows.Forms.ToolStripButton();
             this.btnSamplesMerge = new System.Windows.Forms.ToolStripButton();
@@ -1828,7 +1830,8 @@
             // miSamplesImport
             // 
             this.miSamplesImport.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.miSamplesImportExcel});
+            this.miSamplesImportExcel,
+            this.miSamplesImportSampRegApp});
             this.miSamplesImport.Name = "miSamplesImport";
             this.miSamplesImport.Size = new System.Drawing.Size(212, 22);
             this.miSamplesImport.Text = "&Import...";
@@ -1836,9 +1839,16 @@
             // miSamplesImportExcel
             // 
             this.miSamplesImportExcel.Name = "miSamplesImportExcel";
-            this.miSamplesImportExcel.Size = new System.Drawing.Size(100, 22);
-            this.miSamplesImportExcel.Text = "Excel";
+            this.miSamplesImportExcel.Size = new System.Drawing.Size(199, 22);
+            this.miSamplesImportExcel.Text = "&Excel";
             this.miSamplesImportExcel.Click += new System.EventHandler(this.miSamplesImportExcel_Click);
+            // 
+            // miSamplesImportSampRegApp
+            // 
+            this.miSamplesImportSampRegApp.Name = "miSamplesImportSampRegApp";
+            this.miSamplesImportSampRegApp.Size = new System.Drawing.Size(199, 22);
+            this.miSamplesImportSampRegApp.Text = "&Sample registration app";
+            this.miSamplesImportSampRegApp.Click += new System.EventHandler(this.miSamplesImportSampRegApp_Click);
             // 
             // toolStripSeparator48
             // 
@@ -2058,7 +2068,7 @@
             this.miPreparationMethods,
             this.miAnalysisMethods});
             this.miTypeRelations.Name = "miTypeRelations";
-            this.miTypeRelations.Size = new System.Drawing.Size(101, 20);
+            this.miTypeRelations.Size = new System.Drawing.Size(102, 20);
             this.miTypeRelations.Text = "&Types/Methods";
             // 
             // miTypeRelSampleTypes
@@ -6718,19 +6728,27 @@
             // toolStripDropDownButton3
             // 
             this.toolStripDropDownButton3.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.excelToolStripMenuItem});
+            this.btnSamplesImportExcel,
+            this.btnSamplesImportSampRegApp});
             this.toolStripDropDownButton3.Image = global::DSA_lims.Properties.Resources._new;
             this.toolStripDropDownButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButton3.Name = "toolStripDropDownButton3";
             this.toolStripDropDownButton3.Size = new System.Drawing.Size(81, 22);
             this.toolStripDropDownButton3.Text = "Import...";
             // 
-            // excelToolStripMenuItem
+            // btnSamplesImportExcel
             // 
-            this.excelToolStripMenuItem.Name = "excelToolStripMenuItem";
-            this.excelToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
-            this.excelToolStripMenuItem.Text = "Excel";
-            this.excelToolStripMenuItem.Click += new System.EventHandler(this.miSamplesImportExcel_Click);
+            this.btnSamplesImportExcel.Name = "btnSamplesImportExcel";
+            this.btnSamplesImportExcel.Size = new System.Drawing.Size(199, 22);
+            this.btnSamplesImportExcel.Text = "&Excel";
+            this.btnSamplesImportExcel.Click += new System.EventHandler(this.miSamplesImportExcel_Click);
+            // 
+            // btnSamplesImportSampRegApp
+            // 
+            this.btnSamplesImportSampRegApp.Name = "btnSamplesImportSampRegApp";
+            this.btnSamplesImportSampRegApp.Size = new System.Drawing.Size(199, 22);
+            this.btnSamplesImportSampRegApp.Text = "&Sample registration app";
+            this.btnSamplesImportSampRegApp.Click += new System.EventHandler(this.miSamplesImportSampRegApp_Click);
             // 
             // toolStripSeparator47
             // 
@@ -12078,7 +12096,7 @@
         private System.Windows.Forms.ToolStripButton btnSamplesEdit;
         private System.Windows.Forms.ToolStripButton btnSamplesDelete;
         private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton3;
-        private System.Windows.Forms.ToolStripMenuItem excelToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem btnSamplesImportExcel;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator45;
         private System.Windows.Forms.ToolStripButton btnSamplesSplit;
         private System.Windows.Forms.ToolStripButton btnSamplesMerge;
@@ -12612,6 +12630,8 @@
         private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton5;
         private System.Windows.Forms.ToolStripMenuItem auditLogToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem currentSearchAsPDFToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem btnSamplesImportSampRegApp;
+        private System.Windows.Forms.ToolStripMenuItem miSamplesImportSampRegApp;
     }
 }
 

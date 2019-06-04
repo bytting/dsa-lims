@@ -276,6 +276,12 @@
     <Compile Include="FormImportAnalysisLIS.Designer.cs">
       <DependentUpon>FormImportAnalysisLIS.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormImportSamplesSampReg.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormImportSamplesSampReg.Designer.cs">
+      <DependentUpon>FormImportSamplesSampReg.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormLabXAnalMeth.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -714,6 +720,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormImportAnalysisLIS.resx">
       <DependentUpon>FormImportAnalysisLIS.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormImportSamplesSampReg.resx">
+      <DependentUpon>FormImportSamplesSampReg.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormLabXAnalMeth.resx">
       <DependentUpon>FormLabXAnalMeth.cs</DependentUpon>

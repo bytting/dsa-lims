@@ -9798,5 +9798,84 @@ where ar.instance_status_id < 2
                 MessageBox.Show(Utils.makeErrorMessage(ex.Message));
             }
         }
+
+        private void miSamplesImportSampRegApp_Click(object sender, EventArgs e)
+        {            
+            FormImportSamplesSampReg form = new FormImportSamplesSampReg(treeSampleTypes);
+            if (form.ShowDialog() != DialogResult.OK)
+                return;
+
+            SqlConnection conn = null;
+            SqlTransaction trans = null;
+
+            try
+            {
+                conn = DB.OpenConnection();
+                trans = conn.BeginTransaction();
+
+                DateTime currDate = DateTime.Now;
+                string ImportedFrom = "SampleRegistrationApp";
+                SqlCommand cmd = new SqlCommand("select count(*) from sample where external_id = @external_id and imported_from = @imported_from", conn, trans);
+                int skippedSamples = 0, importedSamples = 0;
+
+                foreach (SampleImportEntry se in form.ImportedSamples)
+                {
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.AddWithValue("@external_id", se.ExternalId);
+                    cmd.Parameters.AddWithValue("@imported_from", ImportedFrom);
+                    int cnt = (int)cmd.ExecuteScalar();
+                    if(cnt > 0)
+                    {
+                        skippedSamples++;
+                        continue;
+                    }
+
+                    Sample sample = new Sample();
+                    sample.Number = DB.GetNextSampleCount(conn, trans);
+                    sample.ExternalId = se.ExternalId;
+                    sample.Latitude = se.Latitude;
+                    sample.Longitude = se.Longitude;
+                    sample.Altitude = se.Altitude;
+                    sample.SamplingDateFrom = sample.SamplingDateTo = sample.ReferenceDate = se.SamplingDate;
+                    if (!String.IsNullOrEmpty(se.Location))
+                    {
+                        sample.LocationType = "Other";
+                        sample.Location = se.Location;
+                    }
+                    sample.LaboratoryId = form.SelectedLaboratoryId;
+                    sample.SampleTypeId = se.LIMSSampleTypeId;
+                    sample.SampleComponentId = Guid.Empty; // FIXME
+                    sample.ProjectSubId = form.SelectedSubProjectId;
+                    sample.ImportedFrom = ImportedFrom;
+                    sample.ImportedFromId = se.Number.ToString();
+                    sample.InstanceStatusId = InstanceStatus.Active;
+                    sample.Comment = se.Comment;
+                    sample.CreateDate = currDate;
+                    sample.CreateId = Common.UserId;
+                    sample.UpdateDate = currDate;
+                    sample.UpdateId = Common.UserId;
+                    sample.StoreToDB(conn, trans);                    
+
+                    string json = JsonConvert.SerializeObject(sample);
+                    DB.AddAuditMessage(conn, trans, "sample", sample.Id, AuditOperationType.Insert, json, "");
+
+                    importedSamples++;
+                }
+
+                trans.Commit();
+
+                SetStatusMessage("Imported " + importedSamples + " new samples. " + skippedSamples + " samples already imported");
+            }
+            catch(Exception ex)
+            {
+                trans?.Rollback();
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn?.Close();
+            }
+        }
     }
 }

@@ -79,83 +79,34 @@ namespace DSA_lims
                 conn = DB.OpenConnection();
                 trans = conn.BeginTransaction();
 
+                DateTime currDate = DateTime.Now;
+
                 // FIXME: Using first sample in list as a template
-                Guid sid = Guid.Parse(gridSamples.Rows[0].Cells["id"].Value.ToString());
+                Guid oldSampleId = Utils.MakeGuid(gridSamples.Rows[0].Cells["id"].Value);
+                Sample newSample = new Sample();
+                newSample.LoadFromDB(conn, trans, oldSampleId);
 
-                using (SqlDataReader reader = DB.GetDataReader(conn, trans, "select * from sample where id = @id", CommandType.Text, new SqlParameter("@id", sid)))
-                {
-                    reader.Read();
+                newSample.Id = Guid.NewGuid();
+                newSample.Number = DB.GetNextSampleCount(conn, trans);
+                newSample.ExternalId = String.Empty;
+                newSample.InstanceStatusId = InstanceStatus.Active;
+                newSample.WetWeight_g = null;
+                newSample.DryWeight_g = null;
+                newSample.LodWeightStart = null;
+                newSample.LodWeightEnd = null;
+                newSample.LodTemperature = null;
+                newSample.Comment = String.Empty;
+                newSample.CreateDate = currDate;
+                newSample.CreateId = Common.UserId;
+                newSample.UpdateDate = currDate;
+                newSample.UpdateId = Common.UserId;
 
-                    map["number"] = reader.GetInt32("number");
-                    map["laboratory_id"] = reader.GetGuid("laboratory_id");
-                    map["sample_type_id"] = reader.GetGuid("sample_type_id");
-                    map["project_sub_id"] = reader.GetGuid("project_sub_id");
-                    map["station_id"] = reader.GetGuid("station_id");
-                    map["sampler_id"] = reader.GetGuid("sampler_id");
-                    map["sampling_method_id"] = reader.GetGuid("sampling_method_id");
-                    map["municipality_id"] = reader.GetGuid("municipality_id");
-                    map["location_type"] = reader.GetString("location_type");
-                    map["location"] = reader.GetString("location");
-                    map["latitude"] = reader.GetDoubleNullable("latitude");
-                    map["longitude"] = reader.GetDoubleNullable("longitude");
-                    map["altitude"] = reader.GetDoubleNullable("altitude");
-                    map["sampling_date_from"] = reader.GetDateTimeNullable("sampling_date_from");
-                    map["sampling_date_to"] = reader.GetDateTimeNullable("sampling_date_to");
-                    map["reference_date"] = reader.GetDateTimeNullable("reference_date");
-                    map["external_id"] = reader.GetString("external_id");
-                    map["confidential"] = reader.GetBoolean("confidential");
-                }
+                newSample.StoreToDB(conn, trans);                
 
-                SqlCommand cmd = new SqlCommand("csp_insert_sample", conn, trans);
-                cmd.CommandType = CommandType.StoredProcedure;                
-
-                int nextSampleCount = DB.GetNextSampleCount(conn, trans);
-                Guid newSampleId = Guid.NewGuid();
-                cmd.Parameters.AddWithValue("@id", newSampleId);
-                cmd.Parameters.AddWithValue("@number", nextSampleCount);
-                cmd.Parameters.AddWithValue("@laboratory_id", map["laboratory_id"], Guid.Empty);
-                cmd.Parameters.AddWithValue("@sample_type_id", map["sample_type_id"], Guid.Empty);
-                cmd.Parameters.AddWithValue("@sample_storage_id", DBNull.Value);
-                cmd.Parameters.AddWithValue("@sample_component_id", DBNull.Value);
-                cmd.Parameters.AddWithValue("@project_sub_id", map["project_sub_id"], Guid.Empty);
-                cmd.Parameters.AddWithValue("@station_id", map["station_id"], Guid.Empty);
-                cmd.Parameters.AddWithValue("@sampler_id", map["sampler_id"], Guid.Empty);
-                cmd.Parameters.AddWithValue("@sampling_method_id", map["sampling_method_id"], Guid.Empty);
-                cmd.Parameters.AddWithValue("@transform_from_id", DBNull.Value);
-                cmd.Parameters.AddWithValue("@transform_to_id", DBNull.Value);
-                cmd.Parameters.AddWithValue("@imported_from", DBNull.Value);
-                cmd.Parameters.AddWithValue("@imported_from_id", DBNull.Value);
-                cmd.Parameters.AddWithValue("@municipality_id", map["municipality_id"], Guid.Empty);
-                cmd.Parameters.AddWithValue("@location_type", map["location_type"], String.Empty);
-                cmd.Parameters.AddWithValue("@location", map["location"], String.Empty);
-                cmd.Parameters.AddWithValue("@latitude", map["latitude"], null);
-                cmd.Parameters.AddWithValue("@longitude", map["longitude"], null);
-                cmd.Parameters.AddWithValue("@altitude", map["altitude"], null);
-                cmd.Parameters.AddWithValue("@sampling_date_from", map["sampling_date_from"], null);
-                cmd.Parameters.AddWithValue("@sampling_date_to", map["sampling_date_to"], null);
-                cmd.Parameters.AddWithValue("@reference_date", map["reference_date"], null);
-                cmd.Parameters.AddWithValue("@external_id", map["external_id"], String.Empty);
-                cmd.Parameters.AddWithValue("@wet_weight_g", DBNull.Value);
-                cmd.Parameters.AddWithValue("@dry_weight_g", DBNull.Value);
-                cmd.Parameters.AddWithValue("@volume_l", DBNull.Value);
-                cmd.Parameters.AddWithValue("@lod_weight_start", DBNull.Value);
-                cmd.Parameters.AddWithValue("@lod_weight_end", DBNull.Value);
-                cmd.Parameters.AddWithValue("@lod_temperature", DBNull.Value);
-                cmd.Parameters.AddWithValue("@confidential", map["confidential"]);                
-                cmd.Parameters.AddWithValue("@instance_status_id", InstanceStatus.Active);
-                cmd.Parameters.AddWithValue("@locked_id", DBNull.Value);
-                cmd.Parameters.AddWithValue("@comment", DBNull.Value);
-                cmd.Parameters.AddWithValue("@create_date", DateTime.Now);
-                cmd.Parameters.AddWithValue("@create_id", Common.UserId);
-                cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
-                cmd.Parameters.AddWithValue("@update_id", Common.UserId);
-
-                cmd.ExecuteNonQuery();
-
-                cmd.CommandText = "update sample set transform_to_id = @transform_to_id where id in("+ SampleIdsCsv + ")";
+                SqlCommand cmd = new SqlCommand("update sample set transform_to_id = @transform_to_id where id in("+ SampleIdsCsv + ")", conn, trans);
                 cmd.CommandType = CommandType.Text;
                 cmd.Parameters.Clear();
-                cmd.Parameters.AddWithValue("@transform_to_id", newSampleId);
+                cmd.Parameters.AddWithValue("@transform_to_id", newSample.Id);
                 cmd.ExecuteNonQuery();
 
                 trans.Commit();

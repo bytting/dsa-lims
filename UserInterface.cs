@@ -531,7 +531,7 @@ where a.email is not NULL
                 cb.DisplayMember = "Name";
                 cb.ValueMember = "Id";
             }
-        }
+        }                
 
         public static void PopulateSampleTypePrepMeth(SqlConnection conn, Guid sampleTypeId, Guid labId, ComboBox cbox)
         {

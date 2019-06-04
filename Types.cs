@@ -137,5 +137,20 @@ namespace DSA_lims
         public Guid Id { get; set; }
         public string Name { get; set; }
         public string Type { get; set; }
-    }    
+    }
+
+    public class SampleImportEntry
+    {
+        public int Number { get; set; }
+        public string ExternalId { get; set; }
+        public DateTime SamplingDate { get; set; }
+        public double Latitude { get; set; }
+        public double Longitude { get; set; }
+        public double Altitude { get; set; }
+        public string Location { get; set; }
+        public string SampleType { get; set; }
+        public string LIMSSampleType { get; set; }
+        public Guid LIMSSampleTypeId { get; set; }
+        public string Comment { get; set; }
+    }
 }

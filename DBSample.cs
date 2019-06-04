@@ -34,9 +34,9 @@ namespace DSA_lims
         {
             Id = Guid.NewGuid();
             Dirty = false;
-            SamplingDateFrom = DateTime.MinValue;
-            SamplingDateTo = DateTime.MinValue;
-            ReferenceDate = DateTime.MinValue;
+            SamplingDateFrom = null;
+            SamplingDateTo = null;
+            ReferenceDate = null;
             InstanceStatusId = InstanceStatus.Active;
 
             Parameters = new List<SampleParameter>();

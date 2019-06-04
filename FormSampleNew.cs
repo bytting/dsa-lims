@@ -112,74 +112,16 @@ namespace DSA_lims
             {
                 conn = DB.OpenConnection();
                 trans = conn.BeginTransaction();
-                
-                SampleNumber = DB.GetNextSampleCount(conn, trans);
 
-                SqlCommand cmdCheck = new SqlCommand("select count(*) from sample where number = @number", conn, trans);
-                cmdCheck.Parameters.AddWithValue("@number", SampleNumber);
-                int cnt = (int)cmdCheck.ExecuteScalar();
-                if (cnt > 0)
-                {
-                    MessageBox.Show("Sample number '" + SampleNumber + "' already exists");
-                    return;
-                }
-
-                SqlCommand cmd = new SqlCommand("csp_insert_sample", conn, trans);
-                cmd.CommandType = CommandType.StoredProcedure;
-                SampleId = Guid.NewGuid();
-                cmd.Parameters.AddWithValue("@id", SampleId);
-                cmd.Parameters.AddWithValue("@number", SampleNumber);
-                cmd.Parameters.AddWithValue("@laboratory_id", cboxLaboratory.SelectedValue, Guid.Empty);
-                cmd.Parameters.AddWithValue("@sample_type_id", cboxSampleType.SelectedValue, Guid.Empty);
-                cmd.Parameters.AddWithValue("@sample_storage_id", DBNull.Value);
-                cmd.Parameters.AddWithValue("@sample_component_id", cboxSampleComponent.SelectedValue, Guid.Empty);
-                cmd.Parameters.AddWithValue("@project_sub_id", cboxProjectSub.SelectedValue, Guid.Empty);
-                cmd.Parameters.AddWithValue("@station_id", DBNull.Value);
-                cmd.Parameters.AddWithValue("@sampler_id", DBNull.Value);
-                cmd.Parameters.AddWithValue("@sampling_method_id", DBNull.Value);
-                cmd.Parameters.AddWithValue("@transform_from_id", DBNull.Value);
-                cmd.Parameters.AddWithValue("@transform_to_id", DBNull.Value);
-                cmd.Parameters.AddWithValue("@imported_from", DBNull.Value);
-                cmd.Parameters.AddWithValue("@imported_from_id", DBNull.Value);
-                cmd.Parameters.AddWithValue("@municipality_id", DBNull.Value);
-                cmd.Parameters.AddWithValue("@location_type", DBNull.Value);
-                cmd.Parameters.AddWithValue("@location", DBNull.Value);
-                cmd.Parameters.AddWithValue("@latitude", DBNull.Value);
-                cmd.Parameters.AddWithValue("@longitude", DBNull.Value);
-                cmd.Parameters.AddWithValue("@altitude", DBNull.Value);
-                cmd.Parameters.AddWithValue("@sampling_date_from", DBNull.Value);                
-                cmd.Parameters.AddWithValue("@sampling_date_to", DBNull.Value);
-                cmd.Parameters.AddWithValue("@reference_date", DateTime.Now);
-                cmd.Parameters.AddWithValue("@external_id", DBNull.Value);
-                cmd.Parameters.AddWithValue("@wet_weight_g", DBNull.Value);
-                cmd.Parameters.AddWithValue("@dry_weight_g", DBNull.Value);
-                cmd.Parameters.AddWithValue("@volume_l", DBNull.Value);
-                cmd.Parameters.AddWithValue("@lod_weight_start", DBNull.Value);
-                cmd.Parameters.AddWithValue("@lod_weight_end", DBNull.Value);
-                cmd.Parameters.AddWithValue("@lod_temperature", DBNull.Value);
-                cmd.Parameters.AddWithValue("@confidential", 0);                
-                cmd.Parameters.AddWithValue("@instance_status_id", InstanceStatus.Active);
-                cmd.Parameters.AddWithValue("@locked_id", DBNull.Value);
-                cmd.Parameters.AddWithValue("@comment", DBNull.Value);
                 DateTime currDate = DateTime.Now;
-                cmd.Parameters.AddWithValue("@create_date", currDate);
-                cmd.Parameters.AddWithValue("@create_id", Common.UserId);
-                cmd.Parameters.AddWithValue("@update_date", currDate);
-                cmd.Parameters.AddWithValue("@update_id", Common.UserId);
 
-                cmd.ExecuteNonQuery();                                
-                
                 Sample sample = new Sample();
-                sample.Id = SampleId;
-                sample.Number = SampleNumber;
-                if (Utils.IsValidGuid(cboxLaboratory.SelectedValue))
-                    sample.LaboratoryId = Guid.Parse(cboxLaboratory.SelectedValue.ToString());                
-                if (Utils.IsValidGuid(cboxSampleType.SelectedValue))
-                    sample.SampleTypeId = Guid.Parse(cboxSampleType.SelectedValue.ToString());
+                sample.Number = DB.GetNextSampleCount(conn, trans);
+                sample.LaboratoryId = Utils.MakeGuid(cboxLaboratory.SelectedValue);                
+                sample.SampleTypeId = Utils.MakeGuid(cboxSampleType.SelectedValue);
                 if (Utils.IsValidGuid(cboxSampleComponent.SelectedValue))
-                    sample.SampleComponentId = Guid.Parse(cboxSampleComponent.SelectedValue.ToString());
-                if (Utils.IsValidGuid(cboxProjectSub.SelectedValue))
-                    sample.ProjectSubId = Guid.Parse(cboxProjectSub.SelectedValue.ToString());
+                    sample.SampleComponentId = Utils.MakeGuid(cboxSampleComponent.SelectedValue);                
+                sample.ProjectSubId = Utils.MakeGuid(cboxProjectSub.SelectedValue);
                 sample.InstanceStatusId = InstanceStatus.Active;
                 sample.CreateDate = currDate;
                 sample.CreateId = Common.UserId;
@@ -189,8 +131,11 @@ namespace DSA_lims
                 string json = JsonConvert.SerializeObject(sample);
                 DB.AddAuditMessage(conn, trans, "sample", sample.Id, AuditOperationType.Insert, json, "");
 
+                sample.StoreToDB(conn, trans);
+
                 trans.Commit();
 
+                SampleId = sample.Id;
                 DialogResult = DialogResult.OK;
             }
             catch (Exception ex)

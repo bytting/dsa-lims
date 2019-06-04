@@ -33,7 +33,7 @@ namespace DSA_lims
         public Guid OrderId = Guid.Empty;
         public string OrderName = String.Empty;
 
-        public Customer mCustomer = null;
+        private Customer mCustomer = null;
 
         public FormOrderNew()
         {
@@ -130,52 +130,13 @@ namespace DSA_lims
                     MessageBox.Show("Order with name " + OrderName + " already exist");
                     return;
                 }
-
-                SqlCommand cmd = new SqlCommand("csp_insert_assignment", conn, trans);
-                cmd.CommandType = CommandType.StoredProcedure;
-                OrderId = Guid.NewGuid();
-                cmd.Parameters.AddWithValue("@id", OrderId);
-                cmd.Parameters.AddWithValue("@name", OrderName);
-                cmd.Parameters.AddWithValue("@laboratory_id", labId, Guid.Empty);
-                cmd.Parameters.AddWithValue("@account_id", cboxResponsible.SelectedValue, Guid.Empty);
-                cmd.Parameters.AddWithValue("@deadline", (DateTime)tbDeadline.Tag);
-                cmd.Parameters.AddWithValue("@requested_sigma_act", cboxRequestedSigma.SelectedValue);
-                cmd.Parameters.AddWithValue("@requested_sigma_mda", cboxRequestedSigmaMDA.SelectedValue);
-                cmd.Parameters.AddWithValue("@customer_company_name", mCustomer.CompanyName, String.Empty);
-                cmd.Parameters.AddWithValue("@customer_company_email", mCustomer.CompanyEmail, String.Empty);
-                cmd.Parameters.AddWithValue("@customer_company_phone", mCustomer.CompanyPhone, String.Empty);
-                cmd.Parameters.AddWithValue("@customer_company_address", mCustomer.CompanyAddress, String.Empty);
-                cmd.Parameters.AddWithValue("@customer_contact_name", mCustomer.ContactName, String.Empty);
-                cmd.Parameters.AddWithValue("@customer_contact_email", mCustomer.ContactEmail, String.Empty);
-                cmd.Parameters.AddWithValue("@customer_contact_phone", mCustomer.ContactPhone, String.Empty);
-                cmd.Parameters.AddWithValue("@customer_contact_address", mCustomer.ContactAddress, String.Empty);
-                cmd.Parameters.AddWithValue("@approved_customer", 0);
-                cmd.Parameters.AddWithValue("@approved_customer_by", DBNull.Value);
-                cmd.Parameters.AddWithValue("@approved_laboratory", 0);
-                cmd.Parameters.AddWithValue("@approved_laboratory_by", DBNull.Value);
-                cmd.Parameters.AddWithValue("@content_comment", DBNull.Value);
-                cmd.Parameters.AddWithValue("@report_comment", DBNull.Value);
-                cmd.Parameters.AddWithValue("@audit_comment", DBNull.Value);
-                cmd.Parameters.AddWithValue("@workflow_status_id", WorkflowStatus.Construction);
-                DateTime currDate = DateTime.Now;
-                cmd.Parameters.AddWithValue("@last_workflow_status_date", currDate);
-                cmd.Parameters.AddWithValue("@last_workflow_status_by", Common.Username);
-                cmd.Parameters.AddWithValue("@analysis_report_version", 0);
-                cmd.Parameters.AddWithValue("@instance_status_id", InstanceStatus.Active);
-                cmd.Parameters.AddWithValue("@locked_id", DBNull.Value);
-                cmd.Parameters.AddWithValue("@create_date", currDate);
-                cmd.Parameters.AddWithValue("@create_id", Common.UserId);
-                cmd.Parameters.AddWithValue("@update_date", currDate);
-                cmd.Parameters.AddWithValue("@update_id", Common.UserId);
-
-                cmd.ExecuteNonQuery();
                 
-                Assignment assignment = new Assignment();
-                assignment.Id = OrderId;
+                DateTime currDate = DateTime.Now;                
+                
+                Assignment assignment = new Assignment();                
                 assignment.Name = OrderName;
-                assignment.LaboratoryId = labId;
-                if (Utils.IsValidGuid(cboxResponsible.SelectedValue))
-                    assignment.AccountId = Guid.Parse(cboxResponsible.SelectedValue.ToString());
+                assignment.LaboratoryId = labId;                
+                assignment.AccountId = Utils.MakeGuid(cboxResponsible.SelectedValue);
                 assignment.Deadline = (DateTime)tbDeadline.Tag;
                 assignment.RequestedSigmaAct = Convert.ToDouble(cboxRequestedSigma.SelectedValue);
                 assignment.RequestedSigmaMDA = Convert.ToDouble(cboxRequestedSigmaMDA.SelectedValue);
@@ -196,11 +157,14 @@ namespace DSA_lims
                 assignment.UpdateDate = currDate;
                 assignment.UpdateId = Common.UserId;
 
+                assignment.StoreToDB(conn, trans);
+
                 string json = JsonConvert.SerializeObject(assignment);
                 DB.AddAuditMessage(conn, trans, "assignment", assignment.Id, AuditOperationType.Insert, json, "");
 
-                trans.Commit();                
+                trans.Commit();
 
+                OrderId = assignment.Id;
                 DialogResult = DialogResult.OK;
             }
             catch (Exception ex)

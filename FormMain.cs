@@ -2437,12 +2437,7 @@ namespace DSA_lims
             if (clearDirty)
                 foreach (SampleParameter p in s.Parameters)
                     p.Dirty = false;
-        }
-
-        private void miSamplesDelete_Click(object sender, EventArgs e)
-        {
-            // delete sample
-        }
+        }        
 
         private void miSamplesSplit_Click(object sender, EventArgs e)
         {
@@ -3554,6 +3549,7 @@ namespace DSA_lims
             }
             cboxOrderRequestedSigma.SelectedValue = a.RequestedSigmaAct;
             cboxOrderRequestedSigmaMDA.SelectedValue = a.RequestedSigmaMDA;
+            tbOrderDescription.Text = a.Description;
             tbOrderCustomer.Text = a.CustomerContactName;
             tbOrderCustomerInfo.Text =
                 a.CustomerContactName + Environment.NewLine +
@@ -4314,6 +4310,7 @@ select count(*) from sample s
                 assignment.Deadline = deadline;
                 assignment.RequestedSigmaAct = (double)cboxOrderRequestedSigma.SelectedValue;
                 assignment.RequestedSigmaMDA = (double)cboxOrderRequestedSigmaMDA.SelectedValue;
+                assignment.Description = tbOrderDescription.Text.Trim();
                 assignment.ContentComment = tbOrderContentComment.Text.Trim();
                 assignment.ApprovedLaboratory = cbOrderApprovedLaboratory.Checked;
                 assignment.ApprovedCustomer = cbOrderApprovedCustomer.Checked;
@@ -6237,12 +6234,11 @@ where s.number = @sample_number
 
             query += @"
 		a.id,
-		a.name,		
+		a.name,
+        a.description,
 		l.name as 'laboratory_name',
 		va.name as 'account_name',
-		a.deadline,
-		a.requested_sigma_act,
-		a.requested_sigma_mda,        
+		a.deadline,		
 		a.customer_contact_name,
         a.customer_company_name,
 		a.approved_customer,
@@ -6291,10 +6287,9 @@ where s.number = @sample_number
                 gridOrders.Columns["id"].Visible = false;
 
                 gridOrders.Columns["name"].HeaderText = "Name";
+                gridOrders.Columns["description"].HeaderText = "Description";
                 gridOrders.Columns["laboratory_name"].HeaderText = "Laboratory";
                 gridOrders.Columns["account_name"].HeaderText = "Responsible";
-                gridOrders.Columns["requested_sigma_act"].HeaderText = "Req.Sig.Act.";
-                gridOrders.Columns["requested_sigma_mda"].HeaderText = "Req.Sig.MDA";
                 gridOrders.Columns["deadline"].HeaderText = "Deadline";                
                 gridOrders.Columns["customer_contact_name"].HeaderText = "Contact";
                 gridOrders.Columns["customer_company_name"].HeaderText = "Company";
@@ -9876,6 +9871,11 @@ where ar.instance_status_id < 2
             {
                 conn?.Close();
             }
+        }
+
+        private void tbOrderDescription_TextChanged(object sender, EventArgs e)
+        {
+            assignment.Dirty = true;
         }
     }
 }

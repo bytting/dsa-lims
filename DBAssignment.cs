@@ -71,7 +71,8 @@ namespace DSA_lims
         public Guid CreateId { get; set; }        
         public DateTime UpdateDate { get; set; }        
         public Guid UpdateId { get; set; }
-        
+        public string Description { get; set; }
+
         public List<AssignmentSampleType> SampleTypes { get; set; }
 
         public bool Dirty;
@@ -178,6 +179,7 @@ namespace DSA_lims
                 CreateId = reader.GetGuid("create_id");
                 UpdateDate = reader.GetDateTime("update_date");
                 UpdateId = reader.GetGuid("update_id");
+                Description = reader.GetString("description");
             }
 
             SampleTypes.Clear();
@@ -242,6 +244,7 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@create_id", Common.UserId, Guid.Empty);
                 cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
                 cmd.Parameters.AddWithValue("@update_id", Common.UserId, Guid.Empty);
+                cmd.Parameters.AddWithValue("@description", Description, String.Empty);
 
                 cmd.ExecuteNonQuery();
 
@@ -284,6 +287,7 @@ namespace DSA_lims
                     cmd.Parameters.AddWithValue("@locked_id", LockedId, Guid.Empty);                    
                     cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
                     cmd.Parameters.AddWithValue("@update_id", Common.UserId, Guid.Empty);
+                    cmd.Parameters.AddWithValue("@description", Description, String.Empty);
 
                     cmd.ExecuteNonQuery();
 

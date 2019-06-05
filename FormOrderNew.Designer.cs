@@ -49,6 +49,8 @@
             this.btnSelectCustomer = new System.Windows.Forms.PictureBox();
             this.label7 = new System.Windows.Forms.Label();
             this.cboxRequestedSigmaMDA = new System.Windows.Forms.ComboBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.tbDescription = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             this.panelDeadline.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.btnSelectDeadline)).BeginInit();
@@ -61,7 +63,7 @@
             this.panel1.Controls.Add(this.btnCancel);
             this.panel1.Controls.Add(this.btnCreate);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 260);
+            this.panel1.Location = new System.Drawing.Point(0, 282);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(436, 28);
             this.panel1.TabIndex = 8;
@@ -91,7 +93,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(27, 62);
+            this.label1.Location = new System.Drawing.Point(27, 87);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(65, 15);
             this.label1.TabIndex = 9;
@@ -102,7 +104,7 @@
             this.cboxLaboratory.DisplayMember = "Name";
             this.cboxLaboratory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxLaboratory.FormattingEnabled = true;
-            this.cboxLaboratory.Location = new System.Drawing.Point(138, 59);
+            this.cboxLaboratory.Location = new System.Drawing.Point(138, 84);
             this.cboxLaboratory.Name = "cboxLaboratory";
             this.cboxLaboratory.Size = new System.Drawing.Size(270, 23);
             this.cboxLaboratory.TabIndex = 0;
@@ -112,7 +114,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(27, 91);
+            this.label2.Location = new System.Drawing.Point(27, 116);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(76, 15);
             this.label2.TabIndex = 11;
@@ -123,7 +125,7 @@
             this.cboxResponsible.DisplayMember = "Name";
             this.cboxResponsible.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxResponsible.FormattingEnabled = true;
-            this.cboxResponsible.Location = new System.Drawing.Point(138, 88);
+            this.cboxResponsible.Location = new System.Drawing.Point(138, 113);
             this.cboxResponsible.Name = "cboxResponsible";
             this.cboxResponsible.Size = new System.Drawing.Size(270, 23);
             this.cboxResponsible.TabIndex = 1;
@@ -132,7 +134,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(27, 120);
+            this.label3.Location = new System.Drawing.Point(27, 145);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(57, 15);
             this.label3.TabIndex = 13;
@@ -142,7 +144,7 @@
             // 
             this.panelDeadline.Controls.Add(this.tbDeadline);
             this.panelDeadline.Controls.Add(this.btnSelectDeadline);
-            this.panelDeadline.Location = new System.Drawing.Point(138, 117);
+            this.panelDeadline.Location = new System.Drawing.Point(138, 142);
             this.panelDeadline.Name = "panelDeadline";
             this.panelDeadline.Size = new System.Drawing.Size(270, 24);
             this.panelDeadline.TabIndex = 15;
@@ -173,7 +175,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(27, 149);
+            this.label4.Location = new System.Drawing.Point(27, 174);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(91, 15);
             this.label4.TabIndex = 16;
@@ -184,7 +186,7 @@
             this.cboxRequestedSigma.DisplayMember = "Name";
             this.cboxRequestedSigma.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxRequestedSigma.FormattingEnabled = true;
-            this.cboxRequestedSigma.Location = new System.Drawing.Point(138, 146);
+            this.cboxRequestedSigma.Location = new System.Drawing.Point(138, 171);
             this.cboxRequestedSigma.Name = "cboxRequestedSigma";
             this.cboxRequestedSigma.Size = new System.Drawing.Size(270, 23);
             this.cboxRequestedSigma.TabIndex = 3;
@@ -193,7 +195,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(27, 206);
+            this.label5.Location = new System.Drawing.Point(27, 231);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(60, 15);
             this.label5.TabIndex = 18;
@@ -213,7 +215,7 @@
             // 
             this.panelCustomer.Controls.Add(this.tbCustomer);
             this.panelCustomer.Controls.Add(this.btnSelectCustomer);
-            this.panelCustomer.Location = new System.Drawing.Point(138, 203);
+            this.panelCustomer.Location = new System.Drawing.Point(138, 228);
             this.panelCustomer.Name = "panelCustomer";
             this.panelCustomer.Size = new System.Drawing.Size(270, 24);
             this.panelCustomer.TabIndex = 21;
@@ -242,7 +244,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(27, 178);
+            this.label7.Location = new System.Drawing.Point(27, 203);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(99, 15);
             this.label7.TabIndex = 22;
@@ -253,17 +255,36 @@
             this.cboxRequestedSigmaMDA.DisplayMember = "Name";
             this.cboxRequestedSigmaMDA.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxRequestedSigmaMDA.FormattingEnabled = true;
-            this.cboxRequestedSigmaMDA.Location = new System.Drawing.Point(138, 175);
+            this.cboxRequestedSigmaMDA.Location = new System.Drawing.Point(138, 200);
             this.cboxRequestedSigmaMDA.Name = "cboxRequestedSigmaMDA";
             this.cboxRequestedSigmaMDA.Size = new System.Drawing.Size(270, 23);
             this.cboxRequestedSigmaMDA.TabIndex = 4;
             this.cboxRequestedSigmaMDA.ValueMember = "Id";
             // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(27, 60);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(69, 15);
+            this.label8.TabIndex = 23;
+            this.label8.Text = "Description";
+            // 
+            // tbDescription
+            // 
+            this.tbDescription.Location = new System.Drawing.Point(138, 57);
+            this.tbDescription.MaxLength = 80;
+            this.tbDescription.Name = "tbDescription";
+            this.tbDescription.Size = new System.Drawing.Size(270, 21);
+            this.tbDescription.TabIndex = 24;
+            // 
             // FormOrderNew
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(436, 288);
+            this.ClientSize = new System.Drawing.Size(436, 310);
+            this.Controls.Add(this.tbDescription);
+            this.Controls.Add(this.label8);
             this.Controls.Add(this.cboxRequestedSigmaMDA);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.panelCustomer);
@@ -321,5 +342,7 @@
         private System.Windows.Forms.TextBox tbCustomer;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.ComboBox cboxRequestedSigmaMDA;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.TextBox tbDescription;
     }
 }

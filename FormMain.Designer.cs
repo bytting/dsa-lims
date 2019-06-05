@@ -90,7 +90,6 @@
             this.miSamples = new System.Windows.Forms.ToolStripMenuItem();
             this.miSamplesNew = new System.Windows.Forms.ToolStripMenuItem();
             this.miSamplesEdit = new System.Windows.Forms.ToolStripMenuItem();
-            this.miSamplesDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.miSamplesCopy = new System.Windows.Forms.ToolStripMenuItem();
             this.miSamplesImport = new System.Windows.Forms.ToolStripMenuItem();
             this.miSamplesImportExcel = new System.Windows.Forms.ToolStripMenuItem();
@@ -527,9 +526,7 @@
             this.btnOrdersSummary = new System.Windows.Forms.ToolStripDropDownButton();
             this.btnOrdersOrderSummary = new System.Windows.Forms.ToolStripMenuItem();
             this.btnOrdersPrepSummary = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator71 = new System.Windows.Forms.ToolStripSeparator();
             this.btnOrdersSummaryCurrent = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnOrdersShowAuditLog = new System.Windows.Forms.ToolStripButton();
             this.btnOrdersUnlock = new System.Windows.Forms.ToolStripButton();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.panel16 = new System.Windows.Forms.Panel();
@@ -557,7 +554,6 @@
             this.toolStripSeparator30 = new System.Windows.Forms.ToolStripSeparator();
             this.btnSamplesNew = new System.Windows.Forms.ToolStripButton();
             this.btnSamplesEdit = new System.Windows.Forms.ToolStripButton();
-            this.btnSamplesDelete = new System.Windows.Forms.ToolStripButton();
             this.btnSamplesCopy = new System.Windows.Forms.ToolStripButton();
             this.toolStripDropDownButton3 = new System.Windows.Forms.ToolStripDropDownButton();
             this.btnSamplesImportExcel = new System.Windows.Forms.ToolStripMenuItem();
@@ -975,6 +971,9 @@
             this.btnMenu = new System.Windows.Forms.ToolStripButton();
             this.lblCurrentTab = new System.Windows.Forms.ToolStripLabel();
             this.btnBack = new System.Windows.Forms.ToolStripButton();
+            this.label62 = new System.Windows.Forms.Label();
+            this.tbOrderDescription = new System.Windows.Forms.TextBox();
+            this.btnOrdersAuditLog = new System.Windows.Forms.ToolStripMenuItem();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tabs.SuspendLayout();
@@ -1781,7 +1780,6 @@
             this.miSamples.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.miSamplesNew,
             this.miSamplesEdit,
-            this.miSamplesDelete,
             this.miSamplesCopy,
             this.miSamplesImport,
             this.toolStripSeparator48,
@@ -1812,13 +1810,6 @@
             this.miSamplesEdit.Size = new System.Drawing.Size(212, 22);
             this.miSamplesEdit.Text = "&Edit";
             this.miSamplesEdit.Click += new System.EventHandler(this.miSamplesEdit_Click);
-            // 
-            // miSamplesDelete
-            // 
-            this.miSamplesDelete.Name = "miSamplesDelete";
-            this.miSamplesDelete.Size = new System.Drawing.Size(212, 22);
-            this.miSamplesDelete.Text = "&Delete";
-            this.miSamplesDelete.Click += new System.EventHandler(this.miSamplesDelete_Click);
             // 
             // miSamplesCopy
             // 
@@ -4034,9 +4025,9 @@
             this.panel12.Controls.Add(this.gridOrderAttachments);
             this.panel12.Controls.Add(this.toolsOrderAttachments);
             this.panel12.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel12.Location = new System.Drawing.Point(0, 348);
+            this.panel12.Location = new System.Drawing.Point(0, 373);
             this.panel12.Name = "panel12";
-            this.panel12.Size = new System.Drawing.Size(357, 197);
+            this.panel12.Size = new System.Drawing.Size(357, 172);
             this.panel12.TabIndex = 1;
             // 
             // gridOrderAttachments
@@ -4056,7 +4047,7 @@
             this.gridOrderAttachments.ReadOnly = true;
             this.gridOrderAttachments.RowHeadersVisible = false;
             this.gridOrderAttachments.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridOrderAttachments.Size = new System.Drawing.Size(357, 172);
+            this.gridOrderAttachments.Size = new System.Drawing.Size(357, 147);
             this.gridOrderAttachments.TabIndex = 1;
             this.gridOrderAttachments.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridAttachments_CellDoubleClick);
             // 
@@ -4119,26 +4110,29 @@
             this.layoutOrderDetails.ColumnCount = 2;
             this.layoutOrderDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
             this.layoutOrderDetails.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 66.66666F));
-            this.layoutOrderDetails.Controls.Add(this.label38, 0, 1);
-            this.layoutOrderDetails.Controls.Add(this.label39, 0, 4);
-            this.layoutOrderDetails.Controls.Add(this.label40, 0, 5);
-            this.layoutOrderDetails.Controls.Add(this.label42, 0, 2);
-            this.layoutOrderDetails.Controls.Add(this.cboxOrderResponsible, 1, 2);
-            this.layoutOrderDetails.Controls.Add(this.cboxOrderLaboratory, 1, 1);
-            this.layoutOrderDetails.Controls.Add(this.cboxOrderRequestedSigma, 1, 5);
+            this.layoutOrderDetails.Controls.Add(this.label38, 0, 2);
+            this.layoutOrderDetails.Controls.Add(this.label39, 0, 5);
+            this.layoutOrderDetails.Controls.Add(this.label40, 0, 6);
+            this.layoutOrderDetails.Controls.Add(this.label42, 0, 3);
+            this.layoutOrderDetails.Controls.Add(this.cboxOrderResponsible, 1, 3);
+            this.layoutOrderDetails.Controls.Add(this.cboxOrderLaboratory, 1, 2);
+            this.layoutOrderDetails.Controls.Add(this.cboxOrderRequestedSigma, 1, 6);
             this.layoutOrderDetails.Controls.Add(this.label4, 0, 0);
             this.layoutOrderDetails.Controls.Add(this.tbOrderName, 1, 0);
-            this.layoutOrderDetails.Controls.Add(this.panel30, 1, 4);
-            this.layoutOrderDetails.Controls.Add(this.label41, 0, 7);
-            this.layoutOrderDetails.Controls.Add(this.tbOrderContentComment, 1, 7);
-            this.layoutOrderDetails.Controls.Add(this.label34, 0, 3);
-            this.layoutOrderDetails.Controls.Add(this.panel3, 1, 3);
-            this.layoutOrderDetails.Controls.Add(this.label35, 0, 6);
-            this.layoutOrderDetails.Controls.Add(this.cboxOrderRequestedSigmaMDA, 1, 6);
+            this.layoutOrderDetails.Controls.Add(this.panel30, 1, 5);
+            this.layoutOrderDetails.Controls.Add(this.label41, 0, 8);
+            this.layoutOrderDetails.Controls.Add(this.tbOrderContentComment, 1, 8);
+            this.layoutOrderDetails.Controls.Add(this.label34, 0, 4);
+            this.layoutOrderDetails.Controls.Add(this.panel3, 1, 4);
+            this.layoutOrderDetails.Controls.Add(this.label35, 0, 7);
+            this.layoutOrderDetails.Controls.Add(this.cboxOrderRequestedSigmaMDA, 1, 7);
+            this.layoutOrderDetails.Controls.Add(this.label62, 0, 1);
+            this.layoutOrderDetails.Controls.Add(this.tbOrderDescription, 1, 1);
             this.layoutOrderDetails.Dock = System.Windows.Forms.DockStyle.Top;
             this.layoutOrderDetails.Location = new System.Drawing.Point(0, 25);
             this.layoutOrderDetails.Name = "layoutOrderDetails";
-            this.layoutOrderDetails.RowCount = 9;
+            this.layoutOrderDetails.RowCount = 10;
+            this.layoutOrderDetails.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.layoutOrderDetails.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.layoutOrderDetails.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.layoutOrderDetails.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
@@ -4148,16 +4142,15 @@
             this.layoutOrderDetails.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
             this.layoutOrderDetails.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 100F));
             this.layoutOrderDetails.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.layoutOrderDetails.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.layoutOrderDetails.Size = new System.Drawing.Size(357, 323);
+            this.layoutOrderDetails.Size = new System.Drawing.Size(357, 348);
             this.layoutOrderDetails.TabIndex = 1;
             // 
             // label38
             // 
             this.label38.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label38.Location = new System.Drawing.Point(3, 30);
+            this.label38.Location = new System.Drawing.Point(3, 60);
             this.label38.Name = "label38";
-            this.label38.Size = new System.Drawing.Size(113, 30);
+            this.label38.Size = new System.Drawing.Size(112, 30);
             this.label38.TabIndex = 0;
             this.label38.Text = "Laboratory";
             this.label38.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -4165,9 +4158,9 @@
             // label39
             // 
             this.label39.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label39.Location = new System.Drawing.Point(3, 120);
+            this.label39.Location = new System.Drawing.Point(3, 150);
             this.label39.Name = "label39";
-            this.label39.Size = new System.Drawing.Size(113, 30);
+            this.label39.Size = new System.Drawing.Size(112, 30);
             this.label39.TabIndex = 1;
             this.label39.Text = "Deadline";
             this.label39.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -4175,9 +4168,9 @@
             // label40
             // 
             this.label40.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label40.Location = new System.Drawing.Point(3, 150);
+            this.label40.Location = new System.Drawing.Point(3, 180);
             this.label40.Name = "label40";
-            this.label40.Size = new System.Drawing.Size(113, 30);
+            this.label40.Size = new System.Drawing.Size(112, 30);
             this.label40.TabIndex = 2;
             this.label40.Text = "Req. sigma";
             this.label40.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -4185,9 +4178,9 @@
             // label42
             // 
             this.label42.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label42.Location = new System.Drawing.Point(3, 60);
+            this.label42.Location = new System.Drawing.Point(3, 90);
             this.label42.Name = "label42";
-            this.label42.Size = new System.Drawing.Size(113, 30);
+            this.label42.Size = new System.Drawing.Size(112, 30);
             this.label42.TabIndex = 5;
             this.label42.Text = "Responsible";
             this.label42.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -4198,9 +4191,9 @@
             this.cboxOrderResponsible.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cboxOrderResponsible.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxOrderResponsible.FormattingEnabled = true;
-            this.cboxOrderResponsible.Location = new System.Drawing.Point(122, 63);
+            this.cboxOrderResponsible.Location = new System.Drawing.Point(121, 93);
             this.cboxOrderResponsible.Name = "cboxOrderResponsible";
-            this.cboxOrderResponsible.Size = new System.Drawing.Size(232, 23);
+            this.cboxOrderResponsible.Size = new System.Drawing.Size(233, 23);
             this.cboxOrderResponsible.TabIndex = 2;
             this.cboxOrderResponsible.ValueMember = "Id";
             this.cboxOrderResponsible.SelectedIndexChanged += new System.EventHandler(this.cboxOrderResponsible_SelectedIndexChanged);
@@ -4212,9 +4205,9 @@
             this.cboxOrderLaboratory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxOrderLaboratory.Enabled = false;
             this.cboxOrderLaboratory.FormattingEnabled = true;
-            this.cboxOrderLaboratory.Location = new System.Drawing.Point(122, 33);
+            this.cboxOrderLaboratory.Location = new System.Drawing.Point(121, 63);
             this.cboxOrderLaboratory.Name = "cboxOrderLaboratory";
-            this.cboxOrderLaboratory.Size = new System.Drawing.Size(232, 23);
+            this.cboxOrderLaboratory.Size = new System.Drawing.Size(233, 23);
             this.cboxOrderLaboratory.TabIndex = 1;
             this.cboxOrderLaboratory.ValueMember = "Id";
             this.cboxOrderLaboratory.SelectedIndexChanged += new System.EventHandler(this.cboxOrderLaboratory_SelectedIndexChanged);
@@ -4230,9 +4223,9 @@
             "1",
             "2",
             "3"});
-            this.cboxOrderRequestedSigma.Location = new System.Drawing.Point(122, 153);
+            this.cboxOrderRequestedSigma.Location = new System.Drawing.Point(121, 183);
             this.cboxOrderRequestedSigma.Name = "cboxOrderRequestedSigma";
-            this.cboxOrderRequestedSigma.Size = new System.Drawing.Size(232, 23);
+            this.cboxOrderRequestedSigma.Size = new System.Drawing.Size(233, 23);
             this.cboxOrderRequestedSigma.TabIndex = 4;
             this.cboxOrderRequestedSigma.ValueMember = "Id";
             this.cboxOrderRequestedSigma.SelectedIndexChanged += new System.EventHandler(this.cboxOrderRequestedSigma_SelectedIndexChanged);
@@ -4242,7 +4235,7 @@
             this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label4.Location = new System.Drawing.Point(3, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(113, 30);
+            this.label4.Size = new System.Drawing.Size(112, 30);
             this.label4.TabIndex = 10;
             this.label4.Text = "Name";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -4250,10 +4243,10 @@
             // tbOrderName
             // 
             this.tbOrderName.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbOrderName.Location = new System.Drawing.Point(122, 3);
+            this.tbOrderName.Location = new System.Drawing.Point(121, 3);
             this.tbOrderName.Name = "tbOrderName";
             this.tbOrderName.ReadOnly = true;
-            this.tbOrderName.Size = new System.Drawing.Size(232, 21);
+            this.tbOrderName.Size = new System.Drawing.Size(233, 21);
             this.tbOrderName.TabIndex = 0;
             // 
             // panel30
@@ -4262,9 +4255,9 @@
             this.panel30.Controls.Add(this.btnOrderClearDeadline);
             this.panel30.Controls.Add(this.btnOrderSelectDeadline);
             this.panel30.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel30.Location = new System.Drawing.Point(122, 123);
+            this.panel30.Location = new System.Drawing.Point(121, 153);
             this.panel30.Name = "panel30";
-            this.panel30.Size = new System.Drawing.Size(232, 24);
+            this.panel30.Size = new System.Drawing.Size(233, 24);
             this.panel30.TabIndex = 14;
             // 
             // tbOrderDeadline
@@ -4274,7 +4267,7 @@
             this.tbOrderDeadline.Location = new System.Drawing.Point(0, 0);
             this.tbOrderDeadline.Name = "tbOrderDeadline";
             this.tbOrderDeadline.ReadOnly = true;
-            this.tbOrderDeadline.Size = new System.Drawing.Size(184, 21);
+            this.tbOrderDeadline.Size = new System.Drawing.Size(185, 21);
             this.tbOrderDeadline.TabIndex = 1;
             // 
             // btnOrderClearDeadline
@@ -4282,7 +4275,7 @@
             this.btnOrderClearDeadline.BackgroundImage = global::DSA_lims.Properties.Resources.clear_16;
             this.btnOrderClearDeadline.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.btnOrderClearDeadline.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnOrderClearDeadline.Location = new System.Drawing.Point(184, 0);
+            this.btnOrderClearDeadline.Location = new System.Drawing.Point(185, 0);
             this.btnOrderClearDeadline.Name = "btnOrderClearDeadline";
             this.btnOrderClearDeadline.Size = new System.Drawing.Size(24, 24);
             this.btnOrderClearDeadline.TabIndex = 3;
@@ -4295,7 +4288,7 @@
             this.btnOrderSelectDeadline.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.btnOrderSelectDeadline.Dock = System.Windows.Forms.DockStyle.Right;
             this.btnOrderSelectDeadline.InitialImage = null;
-            this.btnOrderSelectDeadline.Location = new System.Drawing.Point(208, 0);
+            this.btnOrderSelectDeadline.Location = new System.Drawing.Point(209, 0);
             this.btnOrderSelectDeadline.Name = "btnOrderSelectDeadline";
             this.btnOrderSelectDeadline.Size = new System.Drawing.Size(24, 24);
             this.btnOrderSelectDeadline.TabIndex = 2;
@@ -4306,9 +4299,9 @@
             // 
             this.label41.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label41.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.label41.Location = new System.Drawing.Point(3, 210);
+            this.label41.Location = new System.Drawing.Point(3, 240);
             this.label41.Name = "label41";
-            this.label41.Size = new System.Drawing.Size(113, 100);
+            this.label41.Size = new System.Drawing.Size(112, 100);
             this.label41.TabIndex = 3;
             this.label41.Text = "Content comment";
             this.label41.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -4316,21 +4309,21 @@
             // tbOrderContentComment
             // 
             this.tbOrderContentComment.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbOrderContentComment.Location = new System.Drawing.Point(122, 213);
+            this.tbOrderContentComment.Location = new System.Drawing.Point(121, 243);
             this.tbOrderContentComment.MaxLength = 1000;
             this.tbOrderContentComment.Multiline = true;
             this.tbOrderContentComment.Name = "tbOrderContentComment";
             this.tbOrderContentComment.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.tbOrderContentComment.Size = new System.Drawing.Size(232, 94);
+            this.tbOrderContentComment.Size = new System.Drawing.Size(233, 94);
             this.tbOrderContentComment.TabIndex = 6;
             this.tbOrderContentComment.TextChanged += new System.EventHandler(this.tbOrderContentComment_TextChanged);
             // 
             // label34
             // 
             this.label34.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label34.Location = new System.Drawing.Point(3, 90);
+            this.label34.Location = new System.Drawing.Point(3, 120);
             this.label34.Name = "label34";
-            this.label34.Size = new System.Drawing.Size(113, 30);
+            this.label34.Size = new System.Drawing.Size(112, 30);
             this.label34.TabIndex = 16;
             this.label34.Text = "Customer";
             this.label34.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -4340,9 +4333,9 @@
             this.panel3.Controls.Add(this.tbOrderCustomer);
             this.panel3.Controls.Add(this.btnOrderSelectCustomer);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(122, 93);
+            this.panel3.Location = new System.Drawing.Point(121, 123);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(232, 24);
+            this.panel3.Size = new System.Drawing.Size(233, 24);
             this.panel3.TabIndex = 17;
             // 
             // tbOrderCustomer
@@ -4351,7 +4344,7 @@
             this.tbOrderCustomer.Location = new System.Drawing.Point(0, 0);
             this.tbOrderCustomer.Name = "tbOrderCustomer";
             this.tbOrderCustomer.ReadOnly = true;
-            this.tbOrderCustomer.Size = new System.Drawing.Size(208, 21);
+            this.tbOrderCustomer.Size = new System.Drawing.Size(209, 21);
             this.tbOrderCustomer.TabIndex = 3;
             // 
             // btnOrderSelectCustomer
@@ -4359,7 +4352,7 @@
             this.btnOrderSelectCustomer.BackgroundImage = global::DSA_lims.Properties.Resources.user_16;
             this.btnOrderSelectCustomer.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.btnOrderSelectCustomer.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnOrderSelectCustomer.Location = new System.Drawing.Point(208, 0);
+            this.btnOrderSelectCustomer.Location = new System.Drawing.Point(209, 0);
             this.btnOrderSelectCustomer.Name = "btnOrderSelectCustomer";
             this.btnOrderSelectCustomer.Size = new System.Drawing.Size(24, 24);
             this.btnOrderSelectCustomer.TabIndex = 0;
@@ -4369,9 +4362,9 @@
             // label35
             // 
             this.label35.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label35.Location = new System.Drawing.Point(3, 180);
+            this.label35.Location = new System.Drawing.Point(3, 210);
             this.label35.Name = "label35";
-            this.label35.Size = new System.Drawing.Size(113, 30);
+            this.label35.Size = new System.Drawing.Size(112, 30);
             this.label35.TabIndex = 18;
             this.label35.Text = "Req. sigma MDA";
             this.label35.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -4382,9 +4375,9 @@
             this.cboxOrderRequestedSigmaMDA.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cboxOrderRequestedSigmaMDA.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboxOrderRequestedSigmaMDA.FormattingEnabled = true;
-            this.cboxOrderRequestedSigmaMDA.Location = new System.Drawing.Point(122, 183);
+            this.cboxOrderRequestedSigmaMDA.Location = new System.Drawing.Point(121, 213);
             this.cboxOrderRequestedSigmaMDA.Name = "cboxOrderRequestedSigmaMDA";
-            this.cboxOrderRequestedSigmaMDA.Size = new System.Drawing.Size(232, 23);
+            this.cboxOrderRequestedSigmaMDA.Size = new System.Drawing.Size(233, 23);
             this.cboxOrderRequestedSigmaMDA.TabIndex = 5;
             this.cboxOrderRequestedSigmaMDA.ValueMember = "Id";
             this.cboxOrderRequestedSigmaMDA.SelectedIndexChanged += new System.EventHandler(this.cboxOrderRequestedSigmaMDA_SelectedIndexChanged);
@@ -6291,7 +6284,6 @@
             this.btnOrdersAssignUsers,
             this.toolStripSeparator67,
             this.btnOrdersSummary,
-            this.btnOrdersShowAuditLog,
             this.btnOrdersUnlock});
             this.toolStrip9.Location = new System.Drawing.Point(0, 0);
             this.toolStrip9.Name = "toolStrip9";
@@ -6362,7 +6354,7 @@
             this.btnOrdersSummary.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnOrdersOrderSummary,
             this.btnOrdersPrepSummary,
-            this.toolStripSeparator71,
+            this.btnOrdersAuditLog,
             this.btnOrdersSummaryCurrent});
             this.btnOrdersSummary.Image = global::DSA_lims.Properties.Resources.info;
             this.btnOrdersSummary.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -6384,26 +6376,12 @@
             this.btnOrdersPrepSummary.Text = "Selected order &preparations";
             this.btnOrdersPrepSummary.Click += new System.EventHandler(this.btnOrdersPrepSummary_Click);
             // 
-            // toolStripSeparator71
-            // 
-            this.toolStripSeparator71.Name = "toolStripSeparator71";
-            this.toolStripSeparator71.Size = new System.Drawing.Size(215, 6);
-            // 
             // btnOrdersSummaryCurrent
             // 
             this.btnOrdersSummaryCurrent.Name = "btnOrdersSummaryCurrent";
             this.btnOrdersSummaryCurrent.Size = new System.Drawing.Size(218, 22);
             this.btnOrdersSummaryCurrent.Text = "Current search result";
             this.btnOrdersSummaryCurrent.Click += new System.EventHandler(this.btnOrdersSummaryCurrent_Click);
-            // 
-            // btnOrdersShowAuditLog
-            // 
-            this.btnOrdersShowAuditLog.Image = global::DSA_lims.Properties.Resources.report;
-            this.btnOrdersShowAuditLog.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnOrdersShowAuditLog.Name = "btnOrdersShowAuditLog";
-            this.btnOrdersShowAuditLog.Size = new System.Drawing.Size(106, 22);
-            this.btnOrdersShowAuditLog.Text = "Show audit log";
-            this.btnOrdersShowAuditLog.Click += new System.EventHandler(this.miOrdersShowAuditLog_Click);
             // 
             // btnOrdersUnlock
             // 
@@ -6658,7 +6636,6 @@
             this.toolStripSeparator30,
             this.btnSamplesNew,
             this.btnSamplesEdit,
-            this.btnSamplesDelete,
             this.btnSamplesCopy,
             this.toolStripDropDownButton3,
             this.toolStripSeparator47,
@@ -6706,15 +6683,6 @@
             this.btnSamplesEdit.Size = new System.Drawing.Size(47, 22);
             this.btnSamplesEdit.Text = "Edit";
             this.btnSamplesEdit.Click += new System.EventHandler(this.miSamplesEdit_Click);
-            // 
-            // btnSamplesDelete
-            // 
-            this.btnSamplesDelete.Image = global::DSA_lims.Properties.Resources.delete;
-            this.btnSamplesDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnSamplesDelete.Name = "btnSamplesDelete";
-            this.btnSamplesDelete.Size = new System.Drawing.Size(60, 22);
-            this.btnSamplesDelete.Text = "Delete";
-            this.btnSamplesDelete.Click += new System.EventHandler(this.miSamplesDelete_Click);
             // 
             // btnSamplesCopy
             // 
@@ -6853,21 +6821,21 @@
             this.toolStripDropDownButton5.Image = global::DSA_lims.Properties.Resources.report;
             this.toolStripDropDownButton5.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButton5.Name = "toolStripDropDownButton5";
-            this.toolStripDropDownButton5.Size = new System.Drawing.Size(74, 22);
-            this.toolStripDropDownButton5.Text = "Show...";
+            this.toolStripDropDownButton5.Size = new System.Drawing.Size(96, 22);
+            this.toolStripDropDownButton5.Text = "Summary...";
             // 
             // auditLogToolStripMenuItem
             // 
             this.auditLogToolStripMenuItem.Name = "auditLogToolStripMenuItem";
-            this.auditLogToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
-            this.auditLogToolStripMenuItem.Text = "&Audit log for selected sample";
+            this.auditLogToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
+            this.auditLogToolStripMenuItem.Text = "Selected sample &audit log";
             this.auditLogToolStripMenuItem.Click += new System.EventHandler(this.miSamplesShowAuditLog_Click);
             // 
             // currentSearchAsPDFToolStripMenuItem
             // 
             this.currentSearchAsPDFToolStripMenuItem.Name = "currentSearchAsPDFToolStripMenuItem";
-            this.currentSearchAsPDFToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
-            this.currentSearchAsPDFToolStripMenuItem.Text = "Current search as &PDF";
+            this.currentSearchAsPDFToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
+            this.currentSearchAsPDFToolStripMenuItem.Text = "Current &search result";
             this.currentSearchAsPDFToolStripMenuItem.Click += new System.EventHandler(this.currentSearchAsPDFToolStripMenuItem_Click);
             // 
             // toolStripDropDownButton4
@@ -11161,6 +11129,33 @@
             this.btnBack.ToolTipText = "Back";
             this.btnBack.Click += new System.EventHandler(this.miBack_Click);
             // 
+            // label62
+            // 
+            this.label62.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label62.Location = new System.Drawing.Point(3, 30);
+            this.label62.Name = "label62";
+            this.label62.Size = new System.Drawing.Size(112, 30);
+            this.label62.TabIndex = 19;
+            this.label62.Text = "Description";
+            this.label62.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // tbOrderDescription
+            // 
+            this.tbOrderDescription.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbOrderDescription.Location = new System.Drawing.Point(121, 33);
+            this.tbOrderDescription.MaxLength = 80;
+            this.tbOrderDescription.Name = "tbOrderDescription";
+            this.tbOrderDescription.Size = new System.Drawing.Size(233, 21);
+            this.tbOrderDescription.TabIndex = 20;
+            this.tbOrderDescription.TextChanged += new System.EventHandler(this.tbOrderDescription_TextChanged);
+            // 
+            // btnOrdersAuditLog
+            // 
+            this.btnOrdersAuditLog.Name = "btnOrdersAuditLog";
+            this.btnOrdersAuditLog.Size = new System.Drawing.Size(218, 22);
+            this.btnOrdersAuditLog.Text = "Selected order audit log";
+            this.btnOrdersAuditLog.Click += new System.EventHandler(this.miOrdersShowAuditLog_Click);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -12094,7 +12089,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator30;
         private System.Windows.Forms.ToolStripButton btnSamplesNew;
         private System.Windows.Forms.ToolStripButton btnSamplesEdit;
-        private System.Windows.Forms.ToolStripButton btnSamplesDelete;
         private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton3;
         private System.Windows.Forms.ToolStripMenuItem btnSamplesImportExcel;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator45;
@@ -12145,7 +12139,6 @@
         private System.Windows.Forms.ToolStripMenuItem miSamplesImport;
         private System.Windows.Forms.ToolStripMenuItem miSamplesImportExcel;
         private System.Windows.Forms.ToolStripMenuItem miSamplesEdit;
-        private System.Windows.Forms.ToolStripMenuItem miSamplesDelete;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator48;
         private System.Windows.Forms.ToolStripMenuItem miSamplesSplit;
         private System.Windows.Forms.ToolStripMenuItem miSamplesMerge;
@@ -12622,16 +12615,17 @@
         private System.Windows.Forms.ToolStripMenuItem miTypeRelSampleTypesCompRemove;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.ToolStripMenuItem miOrdersShowAuditLog;
-        private System.Windows.Forms.ToolStripButton btnOrdersShowAuditLog;
         private System.Windows.Forms.TextBox tbAuditLogObject;
         private System.Windows.Forms.ToolStripMenuItem miSamplesShowAuditLog;
         private System.Windows.Forms.ToolStripMenuItem btnOrdersSummaryCurrent;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator71;
         private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton5;
         private System.Windows.Forms.ToolStripMenuItem auditLogToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem currentSearchAsPDFToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem btnSamplesImportSampRegApp;
         private System.Windows.Forms.ToolStripMenuItem miSamplesImportSampRegApp;
+        private System.Windows.Forms.Label label62;
+        private System.Windows.Forms.TextBox tbOrderDescription;
+        private System.Windows.Forms.ToolStripMenuItem btnOrdersAuditLog;
     }
 }
 

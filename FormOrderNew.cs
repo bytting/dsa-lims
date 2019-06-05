@@ -156,6 +156,7 @@ namespace DSA_lims
                 assignment.CreateId = Common.UserId;
                 assignment.UpdateDate = currDate;
                 assignment.UpdateId = Common.UserId;
+                assignment.Description = tbDescription.Text.Trim();
 
                 assignment.StoreToDB(conn, trans);
 

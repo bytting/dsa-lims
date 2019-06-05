@@ -838,8 +838,6 @@
             this.tabPrepAnalSample = new System.Windows.Forms.TabPage();
             this.panel81 = new System.Windows.Forms.Panel();
             this.tbPrepAnalInfoComment = new System.Windows.Forms.TextBox();
-            this.toolStrip10 = new System.Windows.Forms.ToolStrip();
-            this.toolStripLabel6 = new System.Windows.Forms.ToolStripLabel();
             this.splitContainer4 = new System.Windows.Forms.SplitContainer();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.panel66 = new System.Windows.Forms.Panel();
@@ -854,23 +852,6 @@
             this.tbPrepAnalWetWeight = new System.Windows.Forms.TextBox();
             this.panel26 = new System.Windows.Forms.Panel();
             this.label6 = new System.Windows.Forms.Label();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.panel74 = new System.Windows.Forms.Panel();
-            this.tbPrepAnalLODTemp = new System.Windows.Forms.TextBox();
-            this.panel75 = new System.Windows.Forms.Panel();
-            this.label68 = new System.Windows.Forms.Label();
-            this.panel72 = new System.Windows.Forms.Panel();
-            this.tbPrepAnalLODWater = new System.Windows.Forms.TextBox();
-            this.panel73 = new System.Windows.Forms.Panel();
-            this.label67 = new System.Windows.Forms.Label();
-            this.panel70 = new System.Windows.Forms.Panel();
-            this.tbPrepAnalLODEndWeight = new System.Windows.Forms.TextBox();
-            this.panel71 = new System.Windows.Forms.Panel();
-            this.label66 = new System.Windows.Forms.Label();
-            this.panel68 = new System.Windows.Forms.Panel();
-            this.tbPrepAnalLODStartWeight = new System.Windows.Forms.TextBox();
-            this.panel69 = new System.Windows.Forms.Panel();
-            this.label65 = new System.Windows.Forms.Label();
             this.toolStrip3 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel11 = new System.Windows.Forms.ToolStripLabel();
             this.panel80 = new System.Windows.Forms.Panel();
@@ -974,6 +955,32 @@
             this.label62 = new System.Windows.Forms.Label();
             this.tbOrderDescription = new System.Windows.Forms.TextBox();
             this.btnOrdersAuditLog = new System.Windows.Forms.ToolStripMenuItem();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.label69 = new System.Windows.Forms.Label();
+            this.label70 = new System.Windows.Forms.Label();
+            this.label72 = new System.Windows.Forms.Label();
+            this.label73 = new System.Windows.Forms.Label();
+            this.label74 = new System.Windows.Forms.Label();
+            this.label75 = new System.Windows.Forms.Label();
+            this.label76 = new System.Windows.Forms.Label();
+            this.tbPrepAnalLODStartWeight = new System.Windows.Forms.TextBox();
+            this.tbPrepAnalLODStartWeightAsh2 = new System.Windows.Forms.TextBox();
+            this.tbPrepAnalLODStartWeightAsh = new System.Windows.Forms.TextBox();
+            this.tbPrepAnalLODTemperatureAsh = new System.Windows.Forms.TextBox();
+            this.tbPrepAnalLODWaterPercentAsh = new System.Windows.Forms.TextBox();
+            this.tbPrepAnalLODFactorAsh = new System.Windows.Forms.TextBox();
+            this.tbPrepAnalLODTemperatureAsh2 = new System.Windows.Forms.TextBox();
+            this.tbPrepAnalLODWaterPercentAsh2 = new System.Windows.Forms.TextBox();
+            this.tbPrepAnalLODFactorAsh2 = new System.Windows.Forms.TextBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.label65 = new System.Windows.Forms.Label();
+            this.tbPrepAnalLODEndWeight = new System.Windows.Forms.TextBox();
+            this.tbPrepAnalLODEndWeightAsh = new System.Windows.Forms.TextBox();
+            this.tbPrepAnalLODEndWeightAsh2 = new System.Windows.Forms.TextBox();
+            this.tbPrepAnalLODTemperature = new System.Windows.Forms.TextBox();
+            this.tbPrepAnalLODWaterPercent = new System.Windows.Forms.TextBox();
+            this.tbPrepAnalLODFactor = new System.Windows.Forms.TextBox();
             this.menu.SuspendLayout();
             this.status.SuspendLayout();
             this.tabs.SuspendLayout();
@@ -1250,7 +1257,6 @@
             this.tabsPrepAnal.SuspendLayout();
             this.tabPrepAnalSample.SuspendLayout();
             this.panel81.SuspendLayout();
-            this.toolStrip10.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).BeginInit();
             this.splitContainer4.Panel1.SuspendLayout();
             this.splitContainer4.Panel2.SuspendLayout();
@@ -1262,15 +1268,6 @@
             this.panel65.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel26.SuspendLayout();
-            this.groupBox3.SuspendLayout();
-            this.panel74.SuspendLayout();
-            this.panel75.SuspendLayout();
-            this.panel72.SuspendLayout();
-            this.panel73.SuspendLayout();
-            this.panel70.SuspendLayout();
-            this.panel71.SuspendLayout();
-            this.panel68.SuspendLayout();
-            this.panel69.SuspendLayout();
             this.toolStrip3.SuspendLayout();
             this.panel80.SuspendLayout();
             this.tabPrepAnalPreps.SuspendLayout();
@@ -1315,6 +1312,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.gridPrepAnalAnalAttachments)).BeginInit();
             this.toolsSampleResAttachments.SuspendLayout();
             this.tools.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // menu
@@ -1786,8 +1786,8 @@
             this.miSamplesSplit,
             this.miSamplesMerge,
             this.toolStripSeparator49,
-            this.miSamplesSetOrder,
             this.miSamplesSet,
+            this.miSamplesSetOrder,
             this.miSamplesPrepAnal,
             this.printToolStripMenuItem,
             this.miSamplesShowAuditLog,
@@ -6642,8 +6642,8 @@
             this.btnSamplesSplit,
             this.btnSamplesMerge,
             this.toolStripSeparator45,
-            this.btnSamplesSetOrder,
             this.toolStripDropDownButton2,
+            this.btnSamplesSetOrder,
             this.btnSamplesPrepAnal,
             this.toolStripDropDownButton5,
             this.toolStripDropDownButton4,
@@ -9682,42 +9682,23 @@
             // 
             // panel81
             // 
-            this.panel81.Controls.Add(this.tbPrepAnalInfoComment);
-            this.panel81.Controls.Add(this.toolStrip10);
+            this.panel81.Controls.Add(this.groupBox1);
             this.panel81.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel81.Location = new System.Drawing.Point(0, 279);
+            this.panel81.Location = new System.Drawing.Point(0, 221);
             this.panel81.Name = "panel81";
-            this.panel81.Size = new System.Drawing.Size(674, 266);
+            this.panel81.Size = new System.Drawing.Size(674, 324);
             this.panel81.TabIndex = 5;
             // 
             // tbPrepAnalInfoComment
             // 
             this.tbPrepAnalInfoComment.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbPrepAnalInfoComment.Location = new System.Drawing.Point(0, 25);
+            this.tbPrepAnalInfoComment.Location = new System.Drawing.Point(6, 20);
             this.tbPrepAnalInfoComment.Multiline = true;
             this.tbPrepAnalInfoComment.Name = "tbPrepAnalInfoComment";
             this.tbPrepAnalInfoComment.ReadOnly = true;
             this.tbPrepAnalInfoComment.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.tbPrepAnalInfoComment.Size = new System.Drawing.Size(674, 241);
+            this.tbPrepAnalInfoComment.Size = new System.Drawing.Size(385, 158);
             this.tbPrepAnalInfoComment.TabIndex = 3;
-            // 
-            // toolStrip10
-            // 
-            this.toolStrip10.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.toolStrip10.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripLabel6});
-            this.toolStrip10.Location = new System.Drawing.Point(0, 0);
-            this.toolStrip10.Name = "toolStrip10";
-            this.toolStrip10.Size = new System.Drawing.Size(674, 25);
-            this.toolStrip10.TabIndex = 4;
-            this.toolStrip10.Text = "toolStrip10";
-            // 
-            // toolStripLabel6
-            // 
-            this.toolStripLabel6.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.toolStripLabel6.Name = "toolStripLabel6";
-            this.toolStripLabel6.Size = new System.Drawing.Size(105, 22);
-            this.toolStripLabel6.Text = "Sample comment";
             // 
             // splitContainer4
             // 
@@ -9734,8 +9715,8 @@
             // 
             this.splitContainer4.Panel2.Controls.Add(this.groupBox3);
             this.splitContainer4.Panel2.Padding = new System.Windows.Forms.Padding(6);
-            this.splitContainer4.Size = new System.Drawing.Size(674, 254);
-            this.splitContainer4.SplitterDistance = 322;
+            this.splitContainer4.Size = new System.Drawing.Size(674, 196);
+            this.splitContainer4.SplitterDistance = 262;
             this.splitContainer4.SplitterWidth = 3;
             this.splitContainer4.TabIndex = 2;
             // 
@@ -9749,10 +9730,10 @@
             this.groupBox2.Location = new System.Drawing.Point(6, 6);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(6);
-            this.groupBox2.Size = new System.Drawing.Size(310, 242);
+            this.groupBox2.Size = new System.Drawing.Size(250, 184);
             this.groupBox2.TabIndex = 0;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Weight / Volume";
+            this.groupBox2.Text = "Sample weight / volume";
             // 
             // panel66
             // 
@@ -9761,16 +9742,16 @@
             this.panel66.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel66.Location = new System.Drawing.Point(6, 70);
             this.panel66.Name = "panel66";
-            this.panel66.Size = new System.Drawing.Size(298, 25);
+            this.panel66.Size = new System.Drawing.Size(238, 25);
             this.panel66.TabIndex = 2;
             // 
             // tbPrepAnalVolume
             // 
             this.tbPrepAnalVolume.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbPrepAnalVolume.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbPrepAnalVolume.Location = new System.Drawing.Point(105, 0);
+            this.tbPrepAnalVolume.Location = new System.Drawing.Point(93, 0);
             this.tbPrepAnalVolume.Name = "tbPrepAnalVolume";
-            this.tbPrepAnalVolume.Size = new System.Drawing.Size(193, 21);
+            this.tbPrepAnalVolume.Size = new System.Drawing.Size(145, 21);
             this.tbPrepAnalVolume.TabIndex = 2;
             this.tbPrepAnalVolume.TextChanged += new System.EventHandler(this.tbPrepAnalVolume_TextChanged);
             // 
@@ -9780,7 +9761,7 @@
             this.panel67.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel67.Location = new System.Drawing.Point(0, 0);
             this.panel67.Name = "panel67";
-            this.panel67.Size = new System.Drawing.Size(105, 25);
+            this.panel67.Size = new System.Drawing.Size(93, 25);
             this.panel67.TabIndex = 0;
             // 
             // label46
@@ -9789,10 +9770,10 @@
             this.label46.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label46.Location = new System.Drawing.Point(0, 0);
             this.label46.Name = "label46";
-            this.label46.Size = new System.Drawing.Size(105, 25);
+            this.label46.Size = new System.Drawing.Size(93, 25);
             this.label46.TabIndex = 0;
             this.label46.Text = "Volume (L)";
-            this.label46.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label46.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // panel64
             // 
@@ -9801,16 +9782,16 @@
             this.panel64.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel64.Location = new System.Drawing.Point(6, 45);
             this.panel64.Name = "panel64";
-            this.panel64.Size = new System.Drawing.Size(298, 25);
+            this.panel64.Size = new System.Drawing.Size(238, 25);
             this.panel64.TabIndex = 1;
             // 
             // tbPrepAnalDryWeight
             // 
             this.tbPrepAnalDryWeight.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbPrepAnalDryWeight.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbPrepAnalDryWeight.Location = new System.Drawing.Point(105, 0);
+            this.tbPrepAnalDryWeight.Location = new System.Drawing.Point(93, 0);
             this.tbPrepAnalDryWeight.Name = "tbPrepAnalDryWeight";
-            this.tbPrepAnalDryWeight.Size = new System.Drawing.Size(193, 21);
+            this.tbPrepAnalDryWeight.Size = new System.Drawing.Size(145, 21);
             this.tbPrepAnalDryWeight.TabIndex = 1;
             this.tbPrepAnalDryWeight.TextChanged += new System.EventHandler(this.tbPrepAnalDryWeight_TextChanged);
             // 
@@ -9820,7 +9801,7 @@
             this.panel65.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel65.Location = new System.Drawing.Point(0, 0);
             this.panel65.Name = "panel65";
-            this.panel65.Size = new System.Drawing.Size(105, 25);
+            this.panel65.Size = new System.Drawing.Size(93, 25);
             this.panel65.TabIndex = 0;
             // 
             // label44
@@ -9829,10 +9810,10 @@
             this.label44.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label44.Location = new System.Drawing.Point(0, 0);
             this.label44.Name = "label44";
-            this.label44.Size = new System.Drawing.Size(105, 25);
+            this.label44.Size = new System.Drawing.Size(93, 25);
             this.label44.TabIndex = 0;
             this.label44.Text = "Dry weight (g)";
-            this.label44.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label44.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // panel4
             // 
@@ -9841,16 +9822,16 @@
             this.panel4.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel4.Location = new System.Drawing.Point(6, 20);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(298, 25);
+            this.panel4.Size = new System.Drawing.Size(238, 25);
             this.panel4.TabIndex = 0;
             // 
             // tbPrepAnalWetWeight
             // 
             this.tbPrepAnalWetWeight.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbPrepAnalWetWeight.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbPrepAnalWetWeight.Location = new System.Drawing.Point(105, 0);
+            this.tbPrepAnalWetWeight.Location = new System.Drawing.Point(93, 0);
             this.tbPrepAnalWetWeight.Name = "tbPrepAnalWetWeight";
-            this.tbPrepAnalWetWeight.Size = new System.Drawing.Size(193, 21);
+            this.tbPrepAnalWetWeight.Size = new System.Drawing.Size(145, 21);
             this.tbPrepAnalWetWeight.TabIndex = 0;
             this.tbPrepAnalWetWeight.TextChanged += new System.EventHandler(this.tbPrepAnalWetWeight_TextChanged);
             // 
@@ -9860,7 +9841,7 @@
             this.panel26.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel26.Location = new System.Drawing.Point(0, 0);
             this.panel26.Name = "panel26";
-            this.panel26.Size = new System.Drawing.Size(105, 25);
+            this.panel26.Size = new System.Drawing.Size(93, 25);
             this.panel26.TabIndex = 0;
             // 
             // label6
@@ -9869,186 +9850,10 @@
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.Location = new System.Drawing.Point(0, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(105, 25);
+            this.label6.Size = new System.Drawing.Size(93, 25);
             this.label6.TabIndex = 0;
             this.label6.Text = "Wet weight (g)";
-            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.panel74);
-            this.groupBox3.Controls.Add(this.panel72);
-            this.groupBox3.Controls.Add(this.panel70);
-            this.groupBox3.Controls.Add(this.panel68);
-            this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox3.Location = new System.Drawing.Point(6, 6);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Padding = new System.Windows.Forms.Padding(6);
-            this.groupBox3.Size = new System.Drawing.Size(337, 242);
-            this.groupBox3.TabIndex = 1;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Loss on drying (LOD)";
-            // 
-            // panel74
-            // 
-            this.panel74.Controls.Add(this.tbPrepAnalLODTemp);
-            this.panel74.Controls.Add(this.panel75);
-            this.panel74.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel74.Location = new System.Drawing.Point(6, 95);
-            this.panel74.Name = "panel74";
-            this.panel74.Size = new System.Drawing.Size(325, 25);
-            this.panel74.TabIndex = 4;
-            // 
-            // tbPrepAnalLODTemp
-            // 
-            this.tbPrepAnalLODTemp.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbPrepAnalLODTemp.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbPrepAnalLODTemp.Location = new System.Drawing.Point(105, 0);
-            this.tbPrepAnalLODTemp.Name = "tbPrepAnalLODTemp";
-            this.tbPrepAnalLODTemp.Size = new System.Drawing.Size(220, 21);
-            this.tbPrepAnalLODTemp.TabIndex = 6;
-            this.tbPrepAnalLODTemp.TextChanged += new System.EventHandler(this.tbPrepAnalLODTemp_TextChanged);
-            // 
-            // panel75
-            // 
-            this.panel75.Controls.Add(this.label68);
-            this.panel75.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel75.Location = new System.Drawing.Point(0, 0);
-            this.panel75.Name = "panel75";
-            this.panel75.Size = new System.Drawing.Size(105, 25);
-            this.panel75.TabIndex = 0;
-            // 
-            // label68
-            // 
-            this.label68.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label68.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label68.Location = new System.Drawing.Point(0, 0);
-            this.label68.Name = "label68";
-            this.label68.Size = new System.Drawing.Size(105, 25);
-            this.label68.TabIndex = 0;
-            this.label68.Text = "Temperature (C)";
-            this.label68.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // panel72
-            // 
-            this.panel72.Controls.Add(this.tbPrepAnalLODWater);
-            this.panel72.Controls.Add(this.panel73);
-            this.panel72.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel72.Location = new System.Drawing.Point(6, 70);
-            this.panel72.Name = "panel72";
-            this.panel72.Size = new System.Drawing.Size(325, 25);
-            this.panel72.TabIndex = 3;
-            // 
-            // tbPrepAnalLODWater
-            // 
-            this.tbPrepAnalLODWater.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbPrepAnalLODWater.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbPrepAnalLODWater.Location = new System.Drawing.Point(105, 0);
-            this.tbPrepAnalLODWater.Name = "tbPrepAnalLODWater";
-            this.tbPrepAnalLODWater.ReadOnly = true;
-            this.tbPrepAnalLODWater.Size = new System.Drawing.Size(220, 21);
-            this.tbPrepAnalLODWater.TabIndex = 5;
-            // 
-            // panel73
-            // 
-            this.panel73.Controls.Add(this.label67);
-            this.panel73.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel73.Location = new System.Drawing.Point(0, 0);
-            this.panel73.Name = "panel73";
-            this.panel73.Size = new System.Drawing.Size(105, 25);
-            this.panel73.TabIndex = 0;
-            // 
-            // label67
-            // 
-            this.label67.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label67.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label67.Location = new System.Drawing.Point(0, 0);
-            this.label67.Name = "label67";
-            this.label67.Size = new System.Drawing.Size(105, 25);
-            this.label67.TabIndex = 0;
-            this.label67.Text = "Water (%)";
-            this.label67.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // panel70
-            // 
-            this.panel70.Controls.Add(this.tbPrepAnalLODEndWeight);
-            this.panel70.Controls.Add(this.panel71);
-            this.panel70.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel70.Location = new System.Drawing.Point(6, 45);
-            this.panel70.Name = "panel70";
-            this.panel70.Size = new System.Drawing.Size(325, 25);
-            this.panel70.TabIndex = 2;
-            // 
-            // tbPrepAnalLODEndWeight
-            // 
-            this.tbPrepAnalLODEndWeight.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbPrepAnalLODEndWeight.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbPrepAnalLODEndWeight.Location = new System.Drawing.Point(105, 0);
-            this.tbPrepAnalLODEndWeight.Name = "tbPrepAnalLODEndWeight";
-            this.tbPrepAnalLODEndWeight.Size = new System.Drawing.Size(220, 21);
-            this.tbPrepAnalLODEndWeight.TabIndex = 4;
-            this.tbPrepAnalLODEndWeight.TextChanged += new System.EventHandler(this.tbPrepAnalLODStartWeight_TextChanged);
-            // 
-            // panel71
-            // 
-            this.panel71.Controls.Add(this.label66);
-            this.panel71.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel71.Location = new System.Drawing.Point(0, 0);
-            this.panel71.Name = "panel71";
-            this.panel71.Size = new System.Drawing.Size(105, 25);
-            this.panel71.TabIndex = 0;
-            // 
-            // label66
-            // 
-            this.label66.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label66.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label66.Location = new System.Drawing.Point(0, 0);
-            this.label66.Name = "label66";
-            this.label66.Size = new System.Drawing.Size(105, 25);
-            this.label66.TabIndex = 0;
-            this.label66.Text = "End weight (g)";
-            this.label66.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // panel68
-            // 
-            this.panel68.Controls.Add(this.tbPrepAnalLODStartWeight);
-            this.panel68.Controls.Add(this.panel69);
-            this.panel68.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel68.Location = new System.Drawing.Point(6, 20);
-            this.panel68.Name = "panel68";
-            this.panel68.Size = new System.Drawing.Size(325, 25);
-            this.panel68.TabIndex = 1;
-            // 
-            // tbPrepAnalLODStartWeight
-            // 
-            this.tbPrepAnalLODStartWeight.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbPrepAnalLODStartWeight.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbPrepAnalLODStartWeight.Location = new System.Drawing.Point(105, 0);
-            this.tbPrepAnalLODStartWeight.Name = "tbPrepAnalLODStartWeight";
-            this.tbPrepAnalLODStartWeight.Size = new System.Drawing.Size(220, 21);
-            this.tbPrepAnalLODStartWeight.TabIndex = 3;
-            this.tbPrepAnalLODStartWeight.TextChanged += new System.EventHandler(this.tbPrepAnalLODStartWeight_TextChanged);
-            // 
-            // panel69
-            // 
-            this.panel69.Controls.Add(this.label65);
-            this.panel69.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel69.Location = new System.Drawing.Point(0, 0);
-            this.panel69.Name = "panel69";
-            this.panel69.Size = new System.Drawing.Size(105, 25);
-            this.panel69.TabIndex = 0;
-            // 
-            // label65
-            // 
-            this.label65.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label65.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label65.Location = new System.Drawing.Point(0, 0);
-            this.label65.Name = "label65";
-            this.label65.Size = new System.Drawing.Size(105, 25);
-            this.label65.TabIndex = 0;
-            this.label65.Text = "Start weight (g)";
-            this.label65.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // toolStrip3
             // 
@@ -11156,6 +10961,329 @@
             this.btnOrdersAuditLog.Text = "Selected order audit log";
             this.btnOrdersAuditLog.Click += new System.EventHandler(this.miOrdersShowAuditLog_Click);
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.tableLayoutPanel1);
+            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox1.Location = new System.Drawing.Point(0, 0);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(6);
+            this.groupBox1.Size = new System.Drawing.Size(674, 324);
+            this.groupBox1.TabIndex = 3;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Loss on drying (LOD)";
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 6;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel1.Controls.Add(this.label69, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.label70, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(this.label72, 0, 3);
+            this.tableLayoutPanel1.Controls.Add(this.label73, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.label74, 3, 0);
+            this.tableLayoutPanel1.Controls.Add(this.label75, 4, 0);
+            this.tableLayoutPanel1.Controls.Add(this.label76, 5, 0);
+            this.tableLayoutPanel1.Controls.Add(this.tbPrepAnalLODStartWeight, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.tbPrepAnalLODStartWeightAsh, 1, 2);
+            this.tableLayoutPanel1.Controls.Add(this.tbPrepAnalLODStartWeightAsh2, 1, 3);
+            this.tableLayoutPanel1.Controls.Add(this.tbPrepAnalLODTemperatureAsh, 3, 2);
+            this.tableLayoutPanel1.Controls.Add(this.tbPrepAnalLODWaterPercentAsh, 4, 2);
+            this.tableLayoutPanel1.Controls.Add(this.tbPrepAnalLODFactorAsh, 5, 2);
+            this.tableLayoutPanel1.Controls.Add(this.tbPrepAnalLODTemperatureAsh2, 3, 3);
+            this.tableLayoutPanel1.Controls.Add(this.tbPrepAnalLODWaterPercentAsh2, 4, 3);
+            this.tableLayoutPanel1.Controls.Add(this.tbPrepAnalLODFactorAsh2, 5, 3);
+            this.tableLayoutPanel1.Controls.Add(this.label65, 2, 0);
+            this.tableLayoutPanel1.Controls.Add(this.tbPrepAnalLODEndWeight, 2, 1);
+            this.tableLayoutPanel1.Controls.Add(this.tbPrepAnalLODEndWeightAsh, 2, 2);
+            this.tableLayoutPanel1.Controls.Add(this.tbPrepAnalLODEndWeightAsh2, 2, 3);
+            this.tableLayoutPanel1.Controls.Add(this.tbPrepAnalLODTemperature, 3, 1);
+            this.tableLayoutPanel1.Controls.Add(this.tbPrepAnalLODWaterPercent, 4, 1);
+            this.tableLayoutPanel1.Controls.Add(this.tbPrepAnalLODFactor, 5, 1);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(6, 20);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 5;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(662, 298);
+            this.tableLayoutPanel1.TabIndex = 0;
+            // 
+            // label69
+            // 
+            this.label69.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label69.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label69.Location = new System.Drawing.Point(3, 25);
+            this.label69.Name = "label69";
+            this.label69.Size = new System.Drawing.Size(104, 25);
+            this.label69.TabIndex = 0;
+            this.label69.Text = "Wet -> Dry";
+            this.label69.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label70
+            // 
+            this.label70.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label70.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label70.Location = new System.Drawing.Point(3, 50);
+            this.label70.Name = "label70";
+            this.label70.Size = new System.Drawing.Size(104, 25);
+            this.label70.TabIndex = 1;
+            this.label70.Text = "Wet -> Ash";
+            this.label70.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label72
+            // 
+            this.label72.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label72.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label72.Location = new System.Drawing.Point(3, 75);
+            this.label72.Name = "label72";
+            this.label72.Size = new System.Drawing.Size(104, 25);
+            this.label72.TabIndex = 2;
+            this.label72.Text = "Dry -> Ash";
+            this.label72.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label73
+            // 
+            this.label73.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label73.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label73.Location = new System.Drawing.Point(113, 0);
+            this.label73.Name = "label73";
+            this.label73.Size = new System.Drawing.Size(104, 25);
+            this.label73.TabIndex = 3;
+            this.label73.Text = "Start weight (g)";
+            this.label73.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label74
+            // 
+            this.label74.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label74.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label74.Location = new System.Drawing.Point(333, 0);
+            this.label74.Name = "label74";
+            this.label74.Size = new System.Drawing.Size(104, 25);
+            this.label74.TabIndex = 4;
+            this.label74.Text = "Temp (C)";
+            this.label74.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label75
+            // 
+            this.label75.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label75.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label75.Location = new System.Drawing.Point(443, 0);
+            this.label75.Name = "label75";
+            this.label75.Size = new System.Drawing.Size(104, 25);
+            this.label75.TabIndex = 5;
+            this.label75.Text = "Water (%)";
+            this.label75.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label76
+            // 
+            this.label76.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label76.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label76.Location = new System.Drawing.Point(553, 0);
+            this.label76.Name = "label76";
+            this.label76.Size = new System.Drawing.Size(106, 25);
+            this.label76.TabIndex = 6;
+            this.label76.Text = "Factor";
+            this.label76.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // tbPrepAnalLODStartWeight
+            // 
+            this.tbPrepAnalLODStartWeight.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbPrepAnalLODStartWeight.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbPrepAnalLODStartWeight.Location = new System.Drawing.Point(111, 26);
+            this.tbPrepAnalLODStartWeight.Margin = new System.Windows.Forms.Padding(1);
+            this.tbPrepAnalLODStartWeight.Name = "tbPrepAnalLODStartWeight";
+            this.tbPrepAnalLODStartWeight.Size = new System.Drawing.Size(108, 21);
+            this.tbPrepAnalLODStartWeight.TabIndex = 7;
+            this.tbPrepAnalLODStartWeight.TextChanged += new System.EventHandler(this.tbPrepAnalLODStartWeight_TextChanged);
+            // 
+            // tbPrepAnalLODStartWeightAsh2
+            // 
+            this.tbPrepAnalLODStartWeightAsh2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbPrepAnalLODStartWeightAsh2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbPrepAnalLODStartWeightAsh2.Location = new System.Drawing.Point(111, 76);
+            this.tbPrepAnalLODStartWeightAsh2.Margin = new System.Windows.Forms.Padding(1);
+            this.tbPrepAnalLODStartWeightAsh2.Name = "tbPrepAnalLODStartWeightAsh2";
+            this.tbPrepAnalLODStartWeightAsh2.Size = new System.Drawing.Size(108, 21);
+            this.tbPrepAnalLODStartWeightAsh2.TabIndex = 8;
+            this.tbPrepAnalLODStartWeightAsh2.TextChanged += new System.EventHandler(this.tbPrepAnalLODStartWeightAsh2_TextChanged);
+            // 
+            // tbPrepAnalLODStartWeightAsh
+            // 
+            this.tbPrepAnalLODStartWeightAsh.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbPrepAnalLODStartWeightAsh.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbPrepAnalLODStartWeightAsh.Location = new System.Drawing.Point(111, 51);
+            this.tbPrepAnalLODStartWeightAsh.Margin = new System.Windows.Forms.Padding(1);
+            this.tbPrepAnalLODStartWeightAsh.Name = "tbPrepAnalLODStartWeightAsh";
+            this.tbPrepAnalLODStartWeightAsh.Size = new System.Drawing.Size(108, 21);
+            this.tbPrepAnalLODStartWeightAsh.TabIndex = 9;
+            this.tbPrepAnalLODStartWeightAsh.TextChanged += new System.EventHandler(this.tbPrepAnalLODStartWeightAsh_TextChanged);
+            // 
+            // tbPrepAnalLODTemperatureAsh
+            // 
+            this.tbPrepAnalLODTemperatureAsh.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbPrepAnalLODTemperatureAsh.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbPrepAnalLODTemperatureAsh.Location = new System.Drawing.Point(331, 51);
+            this.tbPrepAnalLODTemperatureAsh.Margin = new System.Windows.Forms.Padding(1);
+            this.tbPrepAnalLODTemperatureAsh.Name = "tbPrepAnalLODTemperatureAsh";
+            this.tbPrepAnalLODTemperatureAsh.Size = new System.Drawing.Size(108, 21);
+            this.tbPrepAnalLODTemperatureAsh.TabIndex = 10;
+            this.tbPrepAnalLODTemperatureAsh.TextChanged += new System.EventHandler(this.tbPrepAnalLODTemperatureAsh_TextChanged);
+            // 
+            // tbPrepAnalLODWaterPercentAsh
+            // 
+            this.tbPrepAnalLODWaterPercentAsh.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbPrepAnalLODWaterPercentAsh.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbPrepAnalLODWaterPercentAsh.Location = new System.Drawing.Point(441, 51);
+            this.tbPrepAnalLODWaterPercentAsh.Margin = new System.Windows.Forms.Padding(1);
+            this.tbPrepAnalLODWaterPercentAsh.Name = "tbPrepAnalLODWaterPercentAsh";
+            this.tbPrepAnalLODWaterPercentAsh.ReadOnly = true;
+            this.tbPrepAnalLODWaterPercentAsh.Size = new System.Drawing.Size(108, 21);
+            this.tbPrepAnalLODWaterPercentAsh.TabIndex = 11;
+            // 
+            // tbPrepAnalLODFactorAsh
+            // 
+            this.tbPrepAnalLODFactorAsh.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbPrepAnalLODFactorAsh.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbPrepAnalLODFactorAsh.Location = new System.Drawing.Point(551, 51);
+            this.tbPrepAnalLODFactorAsh.Margin = new System.Windows.Forms.Padding(1);
+            this.tbPrepAnalLODFactorAsh.Name = "tbPrepAnalLODFactorAsh";
+            this.tbPrepAnalLODFactorAsh.ReadOnly = true;
+            this.tbPrepAnalLODFactorAsh.Size = new System.Drawing.Size(110, 21);
+            this.tbPrepAnalLODFactorAsh.TabIndex = 12;
+            // 
+            // tbPrepAnalLODTemperatureAsh2
+            // 
+            this.tbPrepAnalLODTemperatureAsh2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbPrepAnalLODTemperatureAsh2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbPrepAnalLODTemperatureAsh2.Location = new System.Drawing.Point(331, 76);
+            this.tbPrepAnalLODTemperatureAsh2.Margin = new System.Windows.Forms.Padding(1);
+            this.tbPrepAnalLODTemperatureAsh2.Name = "tbPrepAnalLODTemperatureAsh2";
+            this.tbPrepAnalLODTemperatureAsh2.Size = new System.Drawing.Size(108, 21);
+            this.tbPrepAnalLODTemperatureAsh2.TabIndex = 13;
+            this.tbPrepAnalLODTemperatureAsh2.TextChanged += new System.EventHandler(this.tbPrepAnalLODTemperatureAsh2_TextChanged);
+            // 
+            // tbPrepAnalLODWaterPercentAsh2
+            // 
+            this.tbPrepAnalLODWaterPercentAsh2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbPrepAnalLODWaterPercentAsh2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbPrepAnalLODWaterPercentAsh2.Location = new System.Drawing.Point(441, 76);
+            this.tbPrepAnalLODWaterPercentAsh2.Margin = new System.Windows.Forms.Padding(1);
+            this.tbPrepAnalLODWaterPercentAsh2.Name = "tbPrepAnalLODWaterPercentAsh2";
+            this.tbPrepAnalLODWaterPercentAsh2.ReadOnly = true;
+            this.tbPrepAnalLODWaterPercentAsh2.Size = new System.Drawing.Size(108, 21);
+            this.tbPrepAnalLODWaterPercentAsh2.TabIndex = 14;
+            // 
+            // tbPrepAnalLODFactorAsh2
+            // 
+            this.tbPrepAnalLODFactorAsh2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbPrepAnalLODFactorAsh2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbPrepAnalLODFactorAsh2.Location = new System.Drawing.Point(551, 76);
+            this.tbPrepAnalLODFactorAsh2.Margin = new System.Windows.Forms.Padding(1);
+            this.tbPrepAnalLODFactorAsh2.Name = "tbPrepAnalLODFactorAsh2";
+            this.tbPrepAnalLODFactorAsh2.ReadOnly = true;
+            this.tbPrepAnalLODFactorAsh2.Size = new System.Drawing.Size(110, 21);
+            this.tbPrepAnalLODFactorAsh2.TabIndex = 15;
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.tbPrepAnalInfoComment);
+            this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox3.Location = new System.Drawing.Point(6, 6);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Padding = new System.Windows.Forms.Padding(6);
+            this.groupBox3.Size = new System.Drawing.Size(397, 184);
+            this.groupBox3.TabIndex = 0;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Sample comment";
+            // 
+            // label65
+            // 
+            this.label65.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label65.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label65.Location = new System.Drawing.Point(223, 0);
+            this.label65.Name = "label65";
+            this.label65.Size = new System.Drawing.Size(104, 25);
+            this.label65.TabIndex = 16;
+            this.label65.Text = "End weight (g)";
+            this.label65.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // tbPrepAnalLODEndWeight
+            // 
+            this.tbPrepAnalLODEndWeight.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbPrepAnalLODEndWeight.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbPrepAnalLODEndWeight.Location = new System.Drawing.Point(221, 26);
+            this.tbPrepAnalLODEndWeight.Margin = new System.Windows.Forms.Padding(1);
+            this.tbPrepAnalLODEndWeight.Name = "tbPrepAnalLODEndWeight";
+            this.tbPrepAnalLODEndWeight.Size = new System.Drawing.Size(108, 21);
+            this.tbPrepAnalLODEndWeight.TabIndex = 17;
+            this.tbPrepAnalLODEndWeight.TextChanged += new System.EventHandler(this.tbPrepAnalLODStartWeight_TextChanged);
+            // 
+            // tbPrepAnalLODEndWeightAsh
+            // 
+            this.tbPrepAnalLODEndWeightAsh.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbPrepAnalLODEndWeightAsh.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbPrepAnalLODEndWeightAsh.Location = new System.Drawing.Point(221, 51);
+            this.tbPrepAnalLODEndWeightAsh.Margin = new System.Windows.Forms.Padding(1);
+            this.tbPrepAnalLODEndWeightAsh.Name = "tbPrepAnalLODEndWeightAsh";
+            this.tbPrepAnalLODEndWeightAsh.Size = new System.Drawing.Size(108, 21);
+            this.tbPrepAnalLODEndWeightAsh.TabIndex = 18;
+            this.tbPrepAnalLODEndWeightAsh.TextChanged += new System.EventHandler(this.tbPrepAnalLODStartWeightAsh_TextChanged);
+            // 
+            // tbPrepAnalLODEndWeightAsh2
+            // 
+            this.tbPrepAnalLODEndWeightAsh2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbPrepAnalLODEndWeightAsh2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbPrepAnalLODEndWeightAsh2.Location = new System.Drawing.Point(221, 76);
+            this.tbPrepAnalLODEndWeightAsh2.Margin = new System.Windows.Forms.Padding(1);
+            this.tbPrepAnalLODEndWeightAsh2.Name = "tbPrepAnalLODEndWeightAsh2";
+            this.tbPrepAnalLODEndWeightAsh2.Size = new System.Drawing.Size(108, 21);
+            this.tbPrepAnalLODEndWeightAsh2.TabIndex = 19;
+            this.tbPrepAnalLODEndWeightAsh2.TextChanged += new System.EventHandler(this.tbPrepAnalLODStartWeightAsh2_TextChanged);
+            // 
+            // tbPrepAnalLODTemperature
+            // 
+            this.tbPrepAnalLODTemperature.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbPrepAnalLODTemperature.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbPrepAnalLODTemperature.Location = new System.Drawing.Point(331, 26);
+            this.tbPrepAnalLODTemperature.Margin = new System.Windows.Forms.Padding(1);
+            this.tbPrepAnalLODTemperature.Name = "tbPrepAnalLODTemperature";
+            this.tbPrepAnalLODTemperature.Size = new System.Drawing.Size(108, 21);
+            this.tbPrepAnalLODTemperature.TabIndex = 20;
+            this.tbPrepAnalLODTemperature.TextChanged += new System.EventHandler(this.tbPrepAnalLODTemperature_TextChanged);
+            // 
+            // tbPrepAnalLODWaterPercent
+            // 
+            this.tbPrepAnalLODWaterPercent.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbPrepAnalLODWaterPercent.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbPrepAnalLODWaterPercent.Location = new System.Drawing.Point(441, 26);
+            this.tbPrepAnalLODWaterPercent.Margin = new System.Windows.Forms.Padding(1);
+            this.tbPrepAnalLODWaterPercent.Name = "tbPrepAnalLODWaterPercent";
+            this.tbPrepAnalLODWaterPercent.ReadOnly = true;
+            this.tbPrepAnalLODWaterPercent.Size = new System.Drawing.Size(108, 21);
+            this.tbPrepAnalLODWaterPercent.TabIndex = 21;
+            // 
+            // tbPrepAnalLODFactor
+            // 
+            this.tbPrepAnalLODFactor.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbPrepAnalLODFactor.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbPrepAnalLODFactor.Location = new System.Drawing.Point(551, 26);
+            this.tbPrepAnalLODFactor.Margin = new System.Windows.Forms.Padding(1);
+            this.tbPrepAnalLODFactor.Name = "tbPrepAnalLODFactor";
+            this.tbPrepAnalLODFactor.ReadOnly = true;
+            this.tbPrepAnalLODFactor.Size = new System.Drawing.Size(110, 21);
+            this.tbPrepAnalLODFactor.TabIndex = 22;
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -11581,9 +11709,6 @@
             this.tabPrepAnalSample.ResumeLayout(false);
             this.tabPrepAnalSample.PerformLayout();
             this.panel81.ResumeLayout(false);
-            this.panel81.PerformLayout();
-            this.toolStrip10.ResumeLayout(false);
-            this.toolStrip10.PerformLayout();
             this.splitContainer4.Panel1.ResumeLayout(false);
             this.splitContainer4.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).EndInit();
@@ -11598,19 +11723,6 @@
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
             this.panel26.ResumeLayout(false);
-            this.groupBox3.ResumeLayout(false);
-            this.panel74.ResumeLayout(false);
-            this.panel74.PerformLayout();
-            this.panel75.ResumeLayout(false);
-            this.panel72.ResumeLayout(false);
-            this.panel72.PerformLayout();
-            this.panel73.ResumeLayout(false);
-            this.panel70.ResumeLayout(false);
-            this.panel70.PerformLayout();
-            this.panel71.ResumeLayout(false);
-            this.panel68.ResumeLayout(false);
-            this.panel68.PerformLayout();
-            this.panel69.ResumeLayout(false);
             this.toolStrip3.ResumeLayout(false);
             this.toolStrip3.PerformLayout();
             this.panel80.ResumeLayout(false);
@@ -11674,6 +11786,11 @@
             this.toolsSampleResAttachments.PerformLayout();
             this.tools.ResumeLayout(false);
             this.tools.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -12160,7 +12277,6 @@
         private System.Windows.Forms.ToolStripMenuItem excemptFromPublicToolStripMenuItem;
         private System.Windows.Forms.TabPage tabPrepAnalSample;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Panel panel66;
         private System.Windows.Forms.TextBox tbPrepAnalVolume;
         private System.Windows.Forms.Panel panel67;
@@ -12173,22 +12289,6 @@
         private System.Windows.Forms.TextBox tbPrepAnalWetWeight;
         private System.Windows.Forms.Panel panel26;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Panel panel74;
-        private System.Windows.Forms.TextBox tbPrepAnalLODTemp;
-        private System.Windows.Forms.Panel panel75;
-        private System.Windows.Forms.Label label68;
-        private System.Windows.Forms.Panel panel72;
-        private System.Windows.Forms.TextBox tbPrepAnalLODWater;
-        private System.Windows.Forms.Panel panel73;
-        private System.Windows.Forms.Label label67;
-        private System.Windows.Forms.Panel panel70;
-        private System.Windows.Forms.TextBox tbPrepAnalLODEndWeight;
-        private System.Windows.Forms.Panel panel71;
-        private System.Windows.Forms.Label label66;
-        private System.Windows.Forms.Panel panel68;
-        private System.Windows.Forms.TextBox tbPrepAnalLODStartWeight;
-        private System.Windows.Forms.Panel panel69;
-        private System.Windows.Forms.Label label65;
         private System.Windows.Forms.DataGridView gridSampleParameters;
         private System.Windows.Forms.ToolStripMenuItem miSamplingMethodNew;
         private System.Windows.Forms.ToolStripMenuItem miSamplingMethodEdit;
@@ -12490,8 +12590,6 @@
         private System.Windows.Forms.TreeView tvOrderContent;
         private System.Windows.Forms.Panel panel80;
         private System.Windows.Forms.Button btnPrepAnalSampleUpdate;
-        private System.Windows.Forms.ToolStrip toolStrip10;
-        private System.Windows.Forms.ToolStripLabel toolStripLabel6;
         private System.Windows.Forms.Panel panel10;
         private System.Windows.Forms.Panel panel14;
         private System.Windows.Forms.Button btnPrepAnalAnalDiscard;
@@ -12626,6 +12724,32 @@
         private System.Windows.Forms.Label label62;
         private System.Windows.Forms.TextBox tbOrderDescription;
         private System.Windows.Forms.ToolStripMenuItem btnOrdersAuditLog;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.Label label69;
+        private System.Windows.Forms.Label label70;
+        private System.Windows.Forms.Label label72;
+        private System.Windows.Forms.Label label73;
+        private System.Windows.Forms.Label label74;
+        private System.Windows.Forms.Label label75;
+        private System.Windows.Forms.Label label76;
+        private System.Windows.Forms.TextBox tbPrepAnalLODStartWeight;
+        private System.Windows.Forms.TextBox tbPrepAnalLODStartWeightAsh;
+        private System.Windows.Forms.TextBox tbPrepAnalLODStartWeightAsh2;
+        private System.Windows.Forms.TextBox tbPrepAnalLODTemperatureAsh;
+        private System.Windows.Forms.TextBox tbPrepAnalLODWaterPercentAsh;
+        private System.Windows.Forms.TextBox tbPrepAnalLODFactorAsh;
+        private System.Windows.Forms.TextBox tbPrepAnalLODTemperatureAsh2;
+        private System.Windows.Forms.TextBox tbPrepAnalLODWaterPercentAsh2;
+        private System.Windows.Forms.TextBox tbPrepAnalLODFactorAsh2;
+        private System.Windows.Forms.Label label65;
+        private System.Windows.Forms.TextBox tbPrepAnalLODEndWeight;
+        private System.Windows.Forms.TextBox tbPrepAnalLODEndWeightAsh;
+        private System.Windows.Forms.TextBox tbPrepAnalLODEndWeightAsh2;
+        private System.Windows.Forms.TextBox tbPrepAnalLODTemperature;
+        private System.Windows.Forms.TextBox tbPrepAnalLODWaterPercent;
+        private System.Windows.Forms.TextBox tbPrepAnalLODFactor;
+        private System.Windows.Forms.GroupBox groupBox3;
     }
 }
 

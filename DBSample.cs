@@ -73,6 +73,18 @@ namespace DSA_lims
         public double? LodWeightStart { get; set; }
         public double? LodWeightEnd { get; set; }
         public double? LodTemperature { get; set; }
+        public double? LodWaterPercent { get; set; }
+        public double? LodFactor { get; set; }
+        public double? LodWeightStartAsh { get; set; }
+        public double? LodWeightEndAsh { get; set; }
+        public double? LodTemperatureAsh { get; set; }        
+        public double? LodWaterPercentAsh { get; set; }        
+        public double? LodFactorAsh { get; set; }
+        public double? LodWeightStartAsh2 { get; set; }
+        public double? LodWeightEndAsh2 { get; set; }
+        public double? LodTemperatureAsh2 { get; set; }
+        public double? LodWaterPercentAsh2 { get; set; }
+        public double? LodFactorAsh2 { get; set; }
         public bool Confidential { get; set; }        
         public int InstanceStatusId { get; set; }
         public Guid LockedId { get; set; }
@@ -335,6 +347,18 @@ where s.id = @sid and a.workflow_status_id = 2
                 LodWeightStart = reader.GetDoubleNullable("lod_weight_start");
                 LodWeightEnd = reader.GetDoubleNullable("lod_weight_end");
                 LodTemperature = reader.GetDoubleNullable("lod_temperature");
+                LodWaterPercent = reader.GetDoubleNullable("lod_water_percent");
+                LodFactor = reader.GetDoubleNullable("lod_factor");
+                LodWeightStartAsh = reader.GetDoubleNullable("lod_weight_ash");
+                LodWeightEndAsh = reader.GetDoubleNullable("lod_weight_end_ash");
+                LodTemperatureAsh = reader.GetDoubleNullable("lod_temperature_ash");                
+                LodWaterPercentAsh = reader.GetDoubleNullable("lod_water_percent_ash");                
+                LodFactorAsh = reader.GetDoubleNullable("lod_factor_ash");
+                LodWeightStartAsh2 = reader.GetDoubleNullable("lod_weight_ash2");
+                LodWeightEndAsh2 = reader.GetDoubleNullable("lod_weight_end_ash2");
+                LodTemperatureAsh2 = reader.GetDoubleNullable("lod_temperature_ash2");
+                LodWaterPercentAsh2 = reader.GetDoubleNullable("lod_water_percent_ash2");
+                LodFactorAsh2 = reader.GetDoubleNullable("lod_factor_ash2");
                 Confidential = reader.GetBoolean("confidential");
                 InstanceStatusId = reader.GetInt32("instance_status_id");
                 LockedId = reader.GetGuid("locked_id");
@@ -435,6 +459,18 @@ where s.id = @sid and a.workflow_status_id = 2
                 cmd.Parameters.AddWithValue("@create_id", Common.UserId, Guid.Empty);
                 cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
                 cmd.Parameters.AddWithValue("@update_id", Common.UserId, Guid.Empty);
+                cmd.Parameters.AddWithValue("@lod_weight_ash", LodWeightStartAsh, null);
+                cmd.Parameters.AddWithValue("@lod_temperature_ash", LodTemperatureAsh, null);
+                cmd.Parameters.AddWithValue("@lod_water_percent", LodWaterPercent, null);
+                cmd.Parameters.AddWithValue("@lod_water_percent_ash", LodWaterPercentAsh, null);
+                cmd.Parameters.AddWithValue("@lod_factor", LodFactor, null);
+                cmd.Parameters.AddWithValue("@lod_factor_ash", LodFactorAsh, null);
+                cmd.Parameters.AddWithValue("@lod_weight_end_ash", LodWeightEndAsh, null);
+                cmd.Parameters.AddWithValue("@lod_weight_ash2", LodWeightStartAsh2, null);
+                cmd.Parameters.AddWithValue("@lod_weight_end_ash2", LodWeightEndAsh2, null);
+                cmd.Parameters.AddWithValue("@lod_temperature_ash2", LodTemperatureAsh2, null);
+                cmd.Parameters.AddWithValue("@lod_water_percent_ash2", LodWaterPercentAsh2, null);
+                cmd.Parameters.AddWithValue("@lod_factor_ash2", LodFactorAsh2, null);
 
                 cmd.ExecuteNonQuery();
 
@@ -545,6 +581,18 @@ where s.id = @sid and a.workflow_status_id = 2
             cmd.Parameters.AddWithValue("@lod_weight_start", LodWeightStart, null);
             cmd.Parameters.AddWithValue("@lod_weight_end", LodWeightEnd, null);
             cmd.Parameters.AddWithValue("@lod_temperature", LodTemperature, null);
+            cmd.Parameters.AddWithValue("@lod_water_percent", LodWaterPercent, null);
+            cmd.Parameters.AddWithValue("@lod_factor", LodFactor, null);
+            cmd.Parameters.AddWithValue("@lod_weight_ash", LodWeightStartAsh, null);
+            cmd.Parameters.AddWithValue("@lod_weight_end_ash", LodWeightEndAsh, null);
+            cmd.Parameters.AddWithValue("@lod_temperature_ash", LodTemperatureAsh, null);            
+            cmd.Parameters.AddWithValue("@lod_water_percent_ash", LodWaterPercentAsh, null);            
+            cmd.Parameters.AddWithValue("@lod_factor_ash", LodFactorAsh, null);
+            cmd.Parameters.AddWithValue("@lod_weight_ash2", LodWeightStartAsh2, null);
+            cmd.Parameters.AddWithValue("@lod_weight_end_ash2", LodWeightEndAsh2, null);
+            cmd.Parameters.AddWithValue("@lod_temperature_ash2", LodTemperatureAsh2, null);
+            cmd.Parameters.AddWithValue("@lod_water_percent_ash2", LodWaterPercentAsh2, null);
+            cmd.Parameters.AddWithValue("@lod_factor_ash2", LodFactorAsh2, null);
             cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
             cmd.Parameters.AddWithValue("@update_id", Common.UserId, Guid.Empty);
 

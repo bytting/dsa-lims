@@ -36,7 +36,6 @@ using System.Xml;
 using System.Xml.Serialization;
 using System.Diagnostics;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace DSA_lims
 {
@@ -95,7 +94,13 @@ namespace DSA_lims
             tbPrepAnalVolume.KeyPress += CustomEvents.Numeric_KeyPress;
             tbPrepAnalLODStartWeight.KeyPress += CustomEvents.Numeric_KeyPress;
             tbPrepAnalLODEndWeight.KeyPress += CustomEvents.Numeric_KeyPress;
-            tbPrepAnalLODWater.KeyPress += CustomEvents.Numeric_KeyPress;
+            tbPrepAnalLODTemperature.KeyPress += CustomEvents.Numeric_KeyPress;
+            tbPrepAnalLODStartWeightAsh.KeyPress += CustomEvents.Numeric_KeyPress;
+            tbPrepAnalLODEndWeightAsh.KeyPress += CustomEvents.Numeric_KeyPress;            
+            tbPrepAnalLODTemperatureAsh.KeyPress += CustomEvents.Numeric_KeyPress;
+            tbPrepAnalLODStartWeightAsh2.KeyPress += CustomEvents.Numeric_KeyPress;
+            tbPrepAnalLODEndWeightAsh2.KeyPress += CustomEvents.Numeric_KeyPress;
+            tbPrepAnalLODTemperatureAsh2.KeyPress += CustomEvents.Numeric_KeyPress;
             tbPrepAnalPrepFillHeight.KeyPress += CustomEvents.Numeric_KeyPress;
             tbPrepAnalPrepAmount.KeyPress += CustomEvents.Numeric_KeyPress;
             tbPrepAnalPrepQuantity.KeyPress += CustomEvents.Numeric_KeyPress;
@@ -2747,8 +2752,8 @@ namespace DSA_lims
             tbPrepAnalDryWeight.Text = s.DryWeight_g.ToString();
             tbPrepAnalVolume.Text = s.Volume_l.ToString();
             tbPrepAnalLODStartWeight.Text = s.LodWeightStart.ToString();
-            tbPrepAnalLODEndWeight.Text = s.LodWeightEnd.ToString();
-            tbPrepAnalLODTemp.Text = s.LodTemperature.ToString();
+            tbPrepAnalLODStartWeightAsh.Text = s.LodWeightEnd.ToString();
+            tbPrepAnalLODTemperatureAsh.Text = s.LodTemperature.ToString();
 
             sample.ClearDirty();
             preparation.ClearDirty();
@@ -5193,7 +5198,25 @@ select count(*) from sample s
 
                 if (lodStart != null && lodEnd != null && lodStart < lodEnd)
                 {
-                    MessageBox.Show("LOD start weight cannot be smaller than end weight");
+                    MessageBox.Show("Wet -> Dry: LOD start weight cannot be smaller than end weight");
+                    return;
+                }
+
+                double? lodStartAsh = Utils.ToDouble(tbPrepAnalLODStartWeightAsh.Text);
+                double? lodEndAsh = Utils.ToDouble(tbPrepAnalLODEndWeightAsh.Text);
+
+                if (lodStartAsh != null && lodEndAsh != null && lodStartAsh < lodEndAsh)
+                {
+                    MessageBox.Show("Wet -> Ash: LOD start weight cannot be smaller than end weight");
+                    return;
+                }
+
+                double? lodStartAsh2 = Utils.ToDouble(tbPrepAnalLODStartWeightAsh2.Text);
+                double? lodEndAsh2 = Utils.ToDouble(tbPrepAnalLODEndWeightAsh2.Text);
+
+                if (lodStartAsh2 != null && lodEndAsh2 != null && lodStartAsh2 < lodEndAsh2)
+                {
+                    MessageBox.Show("Dry -> Ash: LOD start weight cannot be smaller than end weight");
                     return;
                 }
 
@@ -5208,10 +5231,22 @@ select count(*) from sample s
 
                 sample.WetWeight_g = Utils.ToDouble(tbPrepAnalWetWeight.Text);
                 sample.DryWeight_g = Utils.ToDouble(tbPrepAnalDryWeight.Text);
-                sample.Volume_l = Utils.ToDouble(tbPrepAnalVolume.Text);
-                sample.LodTemperature = Utils.ToDouble(tbPrepAnalLODTemp.Text);
+                sample.Volume_l = Utils.ToDouble(tbPrepAnalVolume.Text);                
                 sample.LodWeightStart = lodStart;
-                sample.LodWeightEnd = lodEnd;                
+                sample.LodWeightEnd = lodEnd;
+                sample.LodTemperature = Utils.ToDouble(tbPrepAnalLODTemperature.Text);
+                sample.LodWaterPercent = Utils.ToDouble(tbPrepAnalLODWaterPercent.Text);
+                sample.LodFactor = Utils.ToDouble(tbPrepAnalLODFactor.Text);
+                sample.LodWeightStartAsh = lodStartAsh;
+                sample.LodWeightEndAsh = lodEndAsh;
+                sample.LodTemperatureAsh = Utils.ToDouble(tbPrepAnalLODTemperatureAsh.Text);                
+                sample.LodWaterPercentAsh = Utils.ToDouble(tbPrepAnalLODWaterPercentAsh.Text);                
+                sample.LodFactorAsh = Utils.ToDouble(tbPrepAnalLODFactorAsh.Text);
+                sample.LodWeightStartAsh2 = lodStartAsh2;
+                sample.LodWeightEndAsh2 = lodEndAsh2;
+                sample.LodTemperatureAsh2 = Utils.ToDouble(tbPrepAnalLODTemperatureAsh2.Text);
+                sample.LodWaterPercentAsh2 = Utils.ToDouble(tbPrepAnalLODWaterPercentAsh2.Text);
+                sample.LodFactorAsh2 = Utils.ToDouble(tbPrepAnalLODFactorAsh2.Text);
 
                 sample.StoreLabInfoToDB(conn, trans);
 
@@ -5247,7 +5282,21 @@ select count(*) from sample s
             tbPrepAnalVolume.Text = s.Volume_l.ToString();
             tbPrepAnalLODStartWeight.Text = s.LodWeightStart.ToString();
             tbPrepAnalLODEndWeight.Text = s.LodWeightEnd.ToString();
-            tbPrepAnalLODTemp.Text = s.LodTemperature.ToString();
+            tbPrepAnalLODTemperature.Text = s.LodTemperature.ToString();
+            tbPrepAnalLODWaterPercent.Text = s.LodWaterPercent.ToString();
+            tbPrepAnalLODFactor.Text = s.LodFactor.ToString();
+
+            tbPrepAnalLODStartWeightAsh.Text = s.LodWeightStartAsh.ToString();
+            tbPrepAnalLODEndWeightAsh.Text = s.LodWeightEndAsh.ToString();
+            tbPrepAnalLODTemperatureAsh.Text = s.LodTemperatureAsh.ToString();            
+            tbPrepAnalLODWaterPercentAsh.Text = s.LodWaterPercentAsh.ToString();            
+            tbPrepAnalLODFactorAsh.Text = s.LodFactorAsh.ToString();
+
+            tbPrepAnalLODStartWeightAsh2.Text = s.LodWeightStartAsh2.ToString();
+            tbPrepAnalLODEndWeightAsh2.Text = s.LodWeightEndAsh2.ToString();
+            tbPrepAnalLODTemperatureAsh2.Text = s.LodTemperatureAsh2.ToString();
+            tbPrepAnalLODWaterPercentAsh2.Text = s.LodWaterPercentAsh2.ToString();
+            tbPrepAnalLODFactorAsh2.Text = s.LodFactorAsh2.ToString();
 
             btnPrepAnalSampleUpdate.Enabled = true;
             btnPrepAnalSampleDiscard.Enabled = true;
@@ -5419,36 +5468,41 @@ select count(*) from sample s
                     ar.Dirty = false;
         }
 
-        public void CalculateLODPercent()
+        public void CalculateLOD(TextBox tbStartWeight, TextBox tbEndWeight, TextBox tbWaterPercent, TextBox tbFactor)
         {
-            double lws, lwe;
+            double? sw, ew;
             try
             {
-                lws = Convert.ToDouble(tbPrepAnalLODStartWeight.Text);
-                lwe = Convert.ToDouble(tbPrepAnalLODEndWeight.Text);
+                sw = Convert.ToDouble(tbStartWeight.Text);
             }
             catch
             {
-                tbPrepAnalLODWater.Text = "";
-                return;
+                sw = null;
             }
 
-            if (lws < lwe)
+            try
             {
-                tbPrepAnalLODWater.Text = "";
-                return;
+                ew = Convert.ToDouble(tbEndWeight.Text);
+            }
+            catch
+            {
+                ew = null;
             }
 
-            double delta = lws - lwe;
-            double percent = (delta / lws) * 100.0;
-            tbPrepAnalLODWater.Text = percent.ToString("0.0#");
-        }
-
-        private void tbPrepAnalLODStartWeight_TextChanged(object sender, EventArgs e)
-        {
-            sample.Dirty = true;
-            CalculateLODPercent();
-        }
+            if(sw != null && ew != null)
+            {
+                double? delta = sw - ew;
+                double? percent = (delta / sw) * 100.0;
+                tbWaterPercent.Text = percent.Value.ToString("0.0#");
+                double? factor = ew / sw;
+                tbFactor.Text = factor.Value.ToString("0.0#");
+            }
+            else
+            {
+                tbWaterPercent.Text = "";
+                tbFactor.Text = "";
+            }
+        }        
 
         private void btnPrepAnalAddPrep_Click(object sender, EventArgs e)
         {
@@ -8126,11 +8180,6 @@ order by create_date desc";
             sample.Dirty = true;
         }
 
-        private void tbPrepAnalLODTemp_TextChanged(object sender, EventArgs e)
-        {
-            sample.Dirty = true;
-        }
-
         private void btnPrepAnalSampleDiscard_Click(object sender, EventArgs e)
         {
             using (SqlConnection conn = DB.OpenConnection())
@@ -9876,6 +9925,39 @@ where ar.instance_status_id < 2
         private void tbOrderDescription_TextChanged(object sender, EventArgs e)
         {
             assignment.Dirty = true;
+        }
+
+        private void tbPrepAnalLODStartWeight_TextChanged(object sender, EventArgs e)
+        {
+            sample.Dirty = true;
+            CalculateLOD(tbPrepAnalLODStartWeight, tbPrepAnalLODEndWeight, tbPrepAnalLODWaterPercent, tbPrepAnalLODFactor);
+        }
+
+        private void tbPrepAnalLODTemperature_TextChanged(object sender, EventArgs e)
+        {
+            sample.Dirty = true;
+        }
+
+        private void tbPrepAnalLODStartWeightAsh_TextChanged(object sender, EventArgs e)
+        {
+            sample.Dirty = true;
+            CalculateLOD(tbPrepAnalLODStartWeightAsh, tbPrepAnalLODEndWeightAsh, tbPrepAnalLODWaterPercentAsh, tbPrepAnalLODFactorAsh);
+        }
+
+        private void tbPrepAnalLODTemperatureAsh_TextChanged(object sender, EventArgs e)
+        {
+            sample.Dirty = true;
+        }
+
+        private void tbPrepAnalLODStartWeightAsh2_TextChanged(object sender, EventArgs e)
+        {
+            sample.Dirty = true;
+            CalculateLOD(tbPrepAnalLODStartWeightAsh2, tbPrepAnalLODEndWeightAsh2, tbPrepAnalLODWaterPercentAsh2, tbPrepAnalLODFactorAsh2);
+        }
+
+        private void tbPrepAnalLODTemperatureAsh2_TextChanged(object sender, EventArgs e)
+        {
+            sample.Dirty = true;
         }
     }
 }

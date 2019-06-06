@@ -145,7 +145,7 @@ namespace DSA_lims
                     return;
                 }
 
-                if (astInfo.SampleComponentId != mSample.SampleComponentId)
+                if (astInfo.SampleComponentId != Guid.Empty && astInfo.SampleComponentId != mSample.SampleComponentId)
                 {
                     MessageBox.Show("Wrong sample component for sample " + mSample.Number);
                     return;
@@ -324,7 +324,11 @@ namespace DSA_lims
                     if (!stIds.Exists(x => x == ast.SampleTypeId))
                         continue;
 
-                    TreeNode astNode = treeOrderLines.Nodes.Add(ast.Id.ToString(), ast.SampleCount + ", " + ast.SampleTypeName(conn, null) + " - " + ast.SampleComponentName(conn, null));
+                    string txt = ast.SampleCount + ", " + ast.SampleTypeName(conn, null);
+                    if (ast.SampleComponentId != Guid.Empty)
+                        txt += ", " + ast.SampleComponentName(conn, null);
+                    txt += " -> " + ast.SampleTypePath(conn, null);
+                    TreeNode astNode = treeOrderLines.Nodes.Add(ast.Id.ToString(), txt);
                     astNode.ToolTipText = ast.Comment;
                     astNode.Tag = new AstInfo(ast.SampleTypeId, ast.SampleComponentId);
                     foreach (AssignmentPreparationMethod apm in ast.PreparationMethods)

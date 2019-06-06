@@ -52,7 +52,28 @@ namespace DSA_lims
                 conn = DB.OpenConnection();
 
                 mNewSample = new Sample();
-                mNewSample.LoadFromDB(conn, null, mOldSampleId);
+                mNewSample.LoadFromDB(conn, null, mOldSampleId);                
+                foreach (Preparation p in mNewSample.Preparations)                
+                    p.Analyses.Clear();
+                mNewSample.Preparations.Clear();
+                mNewSample.Parameters.Clear();
+                mNewSample.LodWeightStart = null;
+                mNewSample.LodWeightEnd = null;
+                mNewSample.LodTemperature = null;
+                mNewSample.LodWaterPercent = null;
+                mNewSample.LodFactor = null;
+                mNewSample.LodWeightStartAsh = null;
+                mNewSample.LodWeightEndAsh = null;
+                mNewSample.LodTemperatureAsh = null;
+                mNewSample.LodWaterPercentAsh = null;
+                mNewSample.LodFactorAsh = null;
+                mNewSample.LodWeightStartAsh2 = null;
+                mNewSample.LodWeightEndAsh2 = null;
+                mNewSample.LodTemperatureAsh2 = null;
+                mNewSample.LodWaterPercentAsh2 = null;
+                mNewSample.LodFactorAsh2 = null;
+                mNewSample.TransformToId = Guid.Empty;
+                mNewSample.InstanceStatusId = InstanceStatus.Active;
 
                 tbSampleNumber.Text = mNewSample.Number.ToString();                
                 tbSampleType.Text = mNewSample.GetSampleTypeName(conn, null);
@@ -129,17 +150,16 @@ namespace DSA_lims
                     mNewSample.Id = Guid.NewGuid();
                     mNewSample.Number = DB.GetNextSampleCount(conn, trans);
                     mNewSample.SampleComponentId = compId;
-                    mNewSample.TransformFromId = mOldSampleId;
-                    mNewSample.InstanceStatusId = InstanceStatus.Active;
+                    mNewSample.TransformFromId = mOldSampleId;                    
                     mNewSample.CreateDate = currDate;
                     mNewSample.CreateId = Common.UserId;
                     mNewSample.UpdateDate = currDate;
-                    mNewSample.UpdateId = Common.UserId;
+                    mNewSample.UpdateId = Common.UserId;                    
+
+                    mNewSample.StoreToDB(conn, trans);
 
                     string json = JsonConvert.SerializeObject(mNewSample);
                     DB.AddAuditMessage(conn, trans, "sample", mNewSample.Id, AuditOperationType.Insert, json, "");
-
-                    mNewSample.StoreToDB(conn, trans);
                 }                
 
                 trans.Commit();

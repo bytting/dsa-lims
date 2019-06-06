@@ -7011,24 +7011,24 @@ where s.number = @sample_number
 
         private void btnSampleBrowseAttachment_Click(object sender, EventArgs e)
         {
-            OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Filter = "All files(*)|*";
-            if (dialog.ShowDialog() == DialogResult.Cancel)
-                return;
-
-            string fileName = Path.GetFileNameWithoutExtension(dialog.FileName);
-            string fileExt = Path.GetExtension(dialog.FileName);
-            byte[] content = File.ReadAllBytes(dialog.FileName);
-
-            if(content.Length > Common.Settings.MaxAttachmentSize)
-            {
-                MessageBox.Show("Attachment size is too big (" + content.Length + " bytes). Max size is " + Common.Settings.MaxAttachmentSize + " bytes");
-                return;
-            }
-
             SqlConnection conn = null;
             try
             {
+                OpenFileDialog dialog = new OpenFileDialog();
+                dialog.Filter = "All files(*)|*";
+                if (dialog.ShowDialog() == DialogResult.Cancel)
+                    return;
+
+                string fileName = Path.GetFileNameWithoutExtension(dialog.FileName);
+                string fileExt = Path.GetExtension(dialog.FileName);
+                byte[] content = File.ReadAllBytes(dialog.FileName);
+
+                if(content.Length > Common.Settings.MaxAttachmentSize)
+                {
+                    MessageBox.Show("Attachment size is too big (" + content.Length + " bytes). Max size is " + Common.Settings.MaxAttachmentSize + " bytes");
+                    return;
+                }
+            
                 conn = DB.OpenConnection();
                 DB.AddAttachment(conn, null, "sample", sample.Id, fileName, fileExt, content);
 
@@ -7049,24 +7049,24 @@ where s.number = @sample_number
 
         private void btnOrderBrowseAttachment_Click(object sender, EventArgs e)
         {
-            OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Filter = "All files(*)|*";
-            if (dialog.ShowDialog() == DialogResult.Cancel)
-                return;
-
-            string fileName = Path.GetFileNameWithoutExtension(dialog.FileName);
-            string fileExt = Path.GetExtension(dialog.FileName);
-            byte[] content = File.ReadAllBytes(dialog.FileName);
-
-            if (content.Length > Common.Settings.MaxAttachmentSize)
-            {
-                MessageBox.Show("Attachment size is too big (" + content.Length + " bytes). Max size is " + Common.Settings.MaxAttachmentSize + " bytes");
-                return;
-            }
-
             SqlConnection conn = null;
             try
             {
+                OpenFileDialog dialog = new OpenFileDialog();
+                dialog.Filter = "All files(*)|*";
+                if (dialog.ShowDialog() == DialogResult.Cancel)
+                    return;
+
+                string fileName = Path.GetFileNameWithoutExtension(dialog.FileName);
+                string fileExt = Path.GetExtension(dialog.FileName);
+                byte[] content = File.ReadAllBytes(dialog.FileName);
+
+                if (content.Length > Common.Settings.MaxAttachmentSize)
+                {
+                    MessageBox.Show("Attachment size is too big (" + content.Length + " bytes). Max size is " + Common.Settings.MaxAttachmentSize + " bytes");
+                    return;
+                }
+                
                 conn = DB.OpenConnection();
                 DB.AddAttachment(conn, null, "assignment", assignment.Id, fileName, fileExt, content);
 
@@ -7093,26 +7093,26 @@ where s.number = @sample_number
                 return;
             }
 
-            Guid pid = Guid.Parse(gridProjectSub.SelectedRows[0].Cells["id"].Value.ToString());
-
-            OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Filter = "All files(*)|*";
-            if (dialog.ShowDialog() == DialogResult.Cancel)
-                return;
-
-            string fileName = Path.GetFileNameWithoutExtension(dialog.FileName);
-            string fileExt = Path.GetExtension(dialog.FileName);
-            byte[] content = File.ReadAllBytes(dialog.FileName);
-
-            if (content.Length > Common.Settings.MaxAttachmentSize)
-            {
-                MessageBox.Show("Attachment size is too big (" + content.Length + " bytes). Max size is " + Common.Settings.MaxAttachmentSize + " bytes");
-                return;
-            }
-
             SqlConnection conn = null;
             try
             {
+                Guid pid = Guid.Parse(gridProjectSub.SelectedRows[0].Cells["id"].Value.ToString());
+
+                OpenFileDialog dialog = new OpenFileDialog();
+                dialog.Filter = "All files(*)|*";
+                if (dialog.ShowDialog() == DialogResult.Cancel)
+                    return;
+
+                string fileName = Path.GetFileNameWithoutExtension(dialog.FileName);
+                string fileExt = Path.GetExtension(dialog.FileName);
+                byte[] content = File.ReadAllBytes(dialog.FileName);
+
+                if (content.Length > Common.Settings.MaxAttachmentSize)
+                {
+                    MessageBox.Show("Attachment size is too big (" + content.Length + " bytes). Max size is " + Common.Settings.MaxAttachmentSize + " bytes");
+                    return;
+                }
+            
                 conn = DB.OpenConnection();
                 DB.AddAttachment(conn, null, "project_sub", pid, fileName, fileExt, content);
 
@@ -7145,26 +7145,26 @@ where s.number = @sample_number
                 return;
             }
 
-            Guid pid = Guid.Parse(treePrepAnal.SelectedNode.Name);
-
-            OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Filter = "All files(*)|*";
-            if (dialog.ShowDialog() == DialogResult.Cancel)
-                return;
-
-            string fileName = Path.GetFileNameWithoutExtension(dialog.FileName);
-            string fileExt = Path.GetExtension(dialog.FileName);
-            byte[] content = File.ReadAllBytes(dialog.FileName);
-
-            if (content.Length > Common.Settings.MaxAttachmentSize)
-            {
-                MessageBox.Show("Attachment size is too big (" + content.Length + " bytes). Max size is " + Common.Settings.MaxAttachmentSize + " bytes");
-                return;
-            }
-
             SqlConnection conn = null;
             try
             {
+                Guid pid = Guid.Parse(treePrepAnal.SelectedNode.Name);
+
+                OpenFileDialog dialog = new OpenFileDialog();
+                dialog.Filter = "All files(*)|*";
+                if (dialog.ShowDialog() == DialogResult.Cancel)
+                    return;
+
+                string fileName = Path.GetFileNameWithoutExtension(dialog.FileName);
+                string fileExt = Path.GetExtension(dialog.FileName);
+                byte[] content = File.ReadAllBytes(dialog.FileName);
+
+                if (content.Length > Common.Settings.MaxAttachmentSize)
+                {
+                    MessageBox.Show("Attachment size is too big (" + content.Length + " bytes). Max size is " + Common.Settings.MaxAttachmentSize + " bytes");
+                    return;
+                }
+            
                 conn = DB.OpenConnection();
                 DB.AddAttachment(conn, null, "preparation", pid, fileName, fileExt, content);
 
@@ -7197,26 +7197,26 @@ where s.number = @sample_number
                 return;
             }
 
-            Guid aid = Guid.Parse(treePrepAnal.SelectedNode.Name);
-
-            OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Filter = "All files(*)|*";
-            if (dialog.ShowDialog() == DialogResult.Cancel)
-                return;
-
-            string fileName = Path.GetFileNameWithoutExtension(dialog.FileName);
-            string fileExt = Path.GetExtension(dialog.FileName);
-            byte[] content = File.ReadAllBytes(dialog.FileName);
-
-            if (content.Length > Common.Settings.MaxAttachmentSize)
-            {
-                MessageBox.Show("Attachment size is too big (" + content.Length + " bytes). Max size is " + Common.Settings.MaxAttachmentSize + " bytes");
-                return;
-            }
-
             SqlConnection conn = null;
             try
             {
+                Guid aid = Guid.Parse(treePrepAnal.SelectedNode.Name);
+
+                OpenFileDialog dialog = new OpenFileDialog();
+                dialog.Filter = "All files(*)|*";
+                if (dialog.ShowDialog() == DialogResult.Cancel)
+                    return;
+
+                string fileName = Path.GetFileNameWithoutExtension(dialog.FileName);
+                string fileExt = Path.GetExtension(dialog.FileName);
+                byte[] content = File.ReadAllBytes(dialog.FileName);
+
+                if (content.Length > Common.Settings.MaxAttachmentSize)
+                {
+                    MessageBox.Show("Attachment size is too big (" + content.Length + " bytes). Max size is " + Common.Settings.MaxAttachmentSize + " bytes");
+                    return;
+                }
+            
                 conn = DB.OpenConnection();
                 DB.AddAttachment(conn, null, "analysis", aid, fileName, fileExt, content);
 
@@ -9385,7 +9385,12 @@ where ar.instance_status_id < 2
                 s.CreateId = Common.UserId;
                 s.UpdateDate = DateTime.Now;
                 s.UpdateId = Common.UserId;
+
                 s.StoreToDB(conn, trans);
+
+                string json = JsonConvert.SerializeObject(s);
+                DB.AddAuditMessage(conn, trans, "sample", sample.Id, AuditOperationType.Insert, json, "");
+
                 trans.Commit();
                                 
                 PopulateSamples();

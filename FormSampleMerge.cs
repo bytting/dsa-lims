@@ -24,6 +24,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Text;
 using System.Windows.Forms;
+using Newtonsoft.Json;
 
 namespace DSA_lims
 {
@@ -83,25 +84,45 @@ namespace DSA_lims
 
                 // FIXME: Using first sample in list as a template
                 Guid oldSampleId = Utils.MakeGuid(gridSamples.Rows[0].Cells["id"].Value);
-                Sample newSample = new Sample();
+                Sample newSample = new Sample();                
                 newSample.LoadFromDB(conn, trans, oldSampleId);
-
                 newSample.Id = Guid.NewGuid();
+                foreach (Preparation p in newSample.Preparations)
+                    p.Analyses.Clear();
+                newSample.Preparations.Clear();
+                newSample.Parameters.Clear();
                 newSample.Number = DB.GetNextSampleCount(conn, trans);
                 newSample.ExternalId = String.Empty;
+                newSample.SampleComponentId = Guid.Empty;
+                newSample.TransformFromId = Guid.Empty;
                 newSample.InstanceStatusId = InstanceStatus.Active;
                 newSample.WetWeight_g = null;
                 newSample.DryWeight_g = null;
                 newSample.LodWeightStart = null;
                 newSample.LodWeightEnd = null;
                 newSample.LodTemperature = null;
+                newSample.LodWaterPercent = null;
+                newSample.LodFactor = null;
+                newSample.LodWeightStartAsh = null;
+                newSample.LodWeightEndAsh = null;
+                newSample.LodTemperatureAsh = null;
+                newSample.LodWaterPercentAsh = null;
+                newSample.LodFactorAsh = null;
+                newSample.LodWeightStartAsh2 = null;
+                newSample.LodWeightEndAsh2 = null;
+                newSample.LodTemperatureAsh2 = null;
+                newSample.LodWaterPercentAsh2 = null;
+                newSample.LodFactorAsh2 = null;
                 newSample.Comment = String.Empty;
                 newSample.CreateDate = currDate;
                 newSample.CreateId = Common.UserId;
                 newSample.UpdateDate = currDate;
                 newSample.UpdateId = Common.UserId;
 
-                newSample.StoreToDB(conn, trans);                
+                newSample.StoreToDB(conn, trans);
+
+                string json = JsonConvert.SerializeObject(newSample);
+                DB.AddAuditMessage(conn, trans, "sample", newSample.Id, AuditOperationType.Insert, json, "");
 
                 SqlCommand cmd = new SqlCommand("update sample set transform_to_id = @transform_to_id where id in("+ SampleIdsCsv + ")", conn, trans);
                 cmd.CommandType = CommandType.Text;

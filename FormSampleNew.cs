@@ -126,12 +126,12 @@ namespace DSA_lims
                 sample.CreateDate = currDate;
                 sample.CreateId = Common.UserId;
                 sample.UpdateDate = currDate;
-                sample.UpdateId = Common.UserId;
+                sample.UpdateId = Common.UserId;                
+
+                sample.StoreToDB(conn, trans);
 
                 string json = JsonConvert.SerializeObject(sample);
                 DB.AddAuditMessage(conn, trans, "sample", sample.Id, AuditOperationType.Insert, json, "");
-
-                sample.StoreToDB(conn, trans);
 
                 trans.Commit();
 

@@ -83,6 +83,15 @@ namespace DSA_lims
             return !DB.IsValidField(o) ? "" : o.ToString();
         }
 
+        public string SampleTypePath(SqlConnection conn, SqlTransaction trans)
+        {
+            if (SampleTypeId == null)
+                return "";
+
+            object o = DB.GetScalar(conn, trans, "select path from sample_type where id = @sid", CommandType.Text, new SqlParameter("@sid", SampleTypeId));
+            return !DB.IsValidField(o) ? "" : o.ToString();
+        }
+
         public string SampleComponentName(SqlConnection conn, SqlTransaction trans)
         {
             object o = DB.GetScalar(conn, trans, "select name from sample_component where id = @scid", CommandType.Text, new SqlParameter("@scid", SampleComponentId));

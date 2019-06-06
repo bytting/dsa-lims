@@ -170,10 +170,12 @@ namespace DSA_lims
                 
                 topCursor -= lineSpace;                
 
-                PdfPTable table = new PdfPTable(12);
+                PdfPTable table = new PdfPTable(13);
                 table.TotalWidth = document.GetRight(margin) - document.GetLeft(margin);
 
                 PdfPCell cell = new PdfPCell(GetHeaderPhrase("Analysis"));                
+                table.AddCell(cell);
+                cell = new PdfPCell(GetHeaderPhrase("Sample Type"));
                 table.AddCell(cell);
                 cell = new PdfPCell(GetHeaderPhrase("P.Status"));                
                 table.AddCell(cell);                
@@ -201,7 +203,10 @@ namespace DSA_lims
                 string query = @"
 select 
     s.number as 'sample', 
+    st.name as 'sample_type_name',
+    sc.name as 'sample_component_name',
 	p.number as 'preparation', 
+    pm.name_short as 'preparation_method', 
     p.workflow_status_id as 'preparation_wfstatus', 
 	a.number as 'analysis', 	
     a.workflow_status_id as 'analysis_wfstatus', 
@@ -215,7 +220,10 @@ select
 	ar.reportable, 
 	ar.accredited
 from sample s
+    inner join sample_type st on st.id = s.sample_type_id
+    left outer join sample_component sc on sc.id = s.sample_component_id
     inner join preparation p on p.sample_id = s.id and p.instance_status_id <= 1
+    inner join preparation_method pm on pm.id = p.preparation_method_id
     inner join analysis a on a.preparation_id = p.id and a.instance_status_id <= 1 and a.assignment_id = @assignment_id
     inner join analysis_result ar on ar.analysis_id = a.id
     inner join analysis_method am on am.id = a.analysis_method_id
@@ -273,11 +281,16 @@ order by s.number, p.number, a.number
 
                         cell = new PdfPCell(GetCellPhrase(reader.GetString("sample") + "/" + reader.GetString("preparation") + "/" + reader.GetString("analysis")));                        
                         table.AddCell(cell);
+                        string sampleType = reader.GetString("sample_type_name");
+                        if(DB.IsValidField(reader["sample_component_name"]))
+                            sampleType += " / " + reader.GetString("sample_component_name");
+                        cell = new PdfPCell(GetCellPhrase(sampleType));
+                        table.AddCell(cell);
                         cell = new PdfPCell(GetCellPhrase(spwfstat));                        
                         table.AddCell(cell);
                         cell = new PdfPCell(GetCellPhrase(sawfstat));                        
                         table.AddCell(cell);
-                        cell = new PdfPCell(GetCellPhrase(reader.GetString("analysis_method")));                        
+                        cell = new PdfPCell(GetCellPhrase(reader.GetString("preparation_method") + " / " + reader.GetString("analysis_method")));                        
                         table.AddCell(cell);
                         cell = new PdfPCell(GetCellPhrase(reader.GetString("nuclide_name")));                        
                         table.AddCell(cell);

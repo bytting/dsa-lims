@@ -133,12 +133,24 @@ namespace DSA_lims
 
             try
             {
-                conn = DB.OpenConnection();                
-
                 Guid astId = Guid.Parse(tnode.Name);
                 AssignmentSampleType ast = mAssignment.SampleTypes.Find(x => x.Id == astId);
                 if(ast == null)
                     throw new Exception("No assignment sample type found with id " + ast.Id.ToString());
+
+                AstInfo astInfo = tnode.Tag as AstInfo;
+                if(astInfo.SampleTypeId != mSample.SampleTypeId)
+                {
+                    MessageBox.Show("Wrong sample type for sample " + mSample.Number);
+                    return;
+                }
+
+                if (astInfo.SampleComponentId != mSample.SampleComponentId)
+                {
+                    MessageBox.Show("Wrong sample component for sample " + mSample.Number);
+                    return;
+                }
+
                 Guid labId = Utils.MakeGuid(cboxLaboratory.SelectedValue);
 
                 SelectedOrderId = mAssignment.Id;
@@ -161,6 +173,7 @@ namespace DSA_lims
                     }
                 }
 
+                conn = DB.OpenConnection();
                 trans = conn.BeginTransaction();
 
                 if (mSample.HasOrder(conn, trans, SelectedOrderId))
@@ -311,8 +324,9 @@ namespace DSA_lims
                     if (!stIds.Exists(x => x == ast.SampleTypeId))
                         continue;
 
-                    TreeNode astNode = treeOrderLines.Nodes.Add(ast.Id.ToString(), ast.SampleCount + ", " + ast.SampleTypeName(conn, null));
+                    TreeNode astNode = treeOrderLines.Nodes.Add(ast.Id.ToString(), ast.SampleCount + ", " + ast.SampleTypeName(conn, null) + " - " + ast.SampleComponentName(conn, null));
                     astNode.ToolTipText = ast.Comment;
+                    astNode.Tag = new AstInfo(ast.SampleTypeId, ast.SampleComponentId);
                     foreach (AssignmentPreparationMethod apm in ast.PreparationMethods)
                     {
                         TreeNode apmNode = astNode.Nodes.Add(apm.Id.ToString(), apm.PreparationMethodCount + ", " + apm.PreparationMethodName(conn, null));
@@ -421,5 +435,19 @@ namespace DSA_lims
             }
             catch {}
         }        
+    }
+
+    public class AstInfo
+    {
+        public AstInfo() {}
+
+        public AstInfo(Guid sampleTypeId, Guid sampleComponentId)
+        {
+            SampleTypeId = sampleTypeId;
+            SampleComponentId = sampleComponentId;
+        }
+
+        public Guid SampleTypeId;
+        public Guid SampleComponentId;
     }
 }

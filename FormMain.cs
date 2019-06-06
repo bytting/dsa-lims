@@ -5489,8 +5489,8 @@ select count(*) from sample s
                 ew = null;
             }
 
-            if(sw != null && ew != null)
-            {
+            if(sw != null && ew != null && sw.Value != 0d)
+            {                
                 double? delta = sw - ew;
                 double? percent = (delta / sw) * 100.0;
                 tbWaterPercent.Text = percent.Value.ToString("0.0#");

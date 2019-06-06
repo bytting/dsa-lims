@@ -2502,8 +2502,18 @@ namespace DSA_lims
             }
 
             List<Guid> sampleIds = new List<Guid>();
-            foreach(DataGridViewRow row in gridSamples.SelectedRows)            
+            HashSet<string> uniqueTypes = new HashSet<string>();
+            foreach(DataGridViewRow row in gridSamples.SelectedRows)
+            {
                 sampleIds.Add(Utils.MakeGuid(row.Cells["id"].Value));
+                uniqueTypes.Add(row.Cells["sample_type_name"].Value.ToString());
+            }   
+            
+            if(uniqueTypes.Count > 1)
+            {
+                MessageBox.Show("You can not merge different sample types");
+                return;
+            }
 
             var sampleIdsArr = from item in sampleIds select "'" + item + "'";
             string sampleIdsCsv = string.Join(",", sampleIdsArr);
@@ -2667,11 +2677,8 @@ namespace DSA_lims
                 conn = DB.OpenConnection();
                 sample.LoadFromDB(conn, null, sid);
 
-                if (!PopulatePrepAnal(conn, sample))
-                {
-                    MessageBox.Show("Unable to populate sample");
+                if (!PopulatePrepAnal(conn, sample))                
                     return;
-                }
             }
             catch (Exception ex)
             {
@@ -6345,7 +6352,7 @@ where s.number = @sample_number
                 gridOrders.Columns["laboratory_name"].HeaderText = "Laboratory";
                 gridOrders.Columns["account_name"].HeaderText = "Responsible";
                 gridOrders.Columns["deadline"].HeaderText = "Deadline";                
-                gridOrders.Columns["customer_contact_name"].HeaderText = "Contact";
+                gridOrders.Columns["customer_contact_name"].HeaderText = "Customer";
                 gridOrders.Columns["customer_company_name"].HeaderText = "Company";
                 gridOrders.Columns["approved_customer"].HeaderText = "Appr.Cust";
                 gridOrders.Columns["approved_laboratory"].HeaderText = "Appr.Lab";

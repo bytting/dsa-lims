@@ -45,9 +45,25 @@ namespace DSA_lims
             try
             {
                 conn = DB.OpenConnection();
-                string query = "select id, number from sample where id in(" + SampleIdsCsv + ") order by number desc";
-                gridSamples.DataSource = DB.GetDataTable(conn, null, query, CommandType.Text);
+                string query = String.Format(@"
+select 
+    s.id,     
+    s.number as 'sample_number', 
+    s.external_id,
+    st.name as 'sample_type_name',
+    sc.name as 'sample_component_name'
+from sample s
+    inner join sample_type st on st.id = s.sample_type_id
+    left outer join sample_component sc on sc.id = s.sample_component_id
+where s.id in({0}) 
+order by s.number desc", 
+SampleIdsCsv);
+                gridSamples.DataSource = DB.GetDataTable(conn, null, query, CommandType.Text);                
                 gridSamples.Columns["id"].Visible = false;
+                gridSamples.Columns["sample_number"].HeaderText = "Sample number";
+                gridSamples.Columns["external_id"].HeaderText = "External Id";
+                gridSamples.Columns["sample_type_name"].HeaderText = "Sample type";
+                gridSamples.Columns["sample_component_name"].HeaderText = "Sample component";
             }
             catch (Exception ex)
             {

@@ -2027,7 +2027,11 @@ namespace DSA_lims
             Guid sampleTypeId = Utils.MakeGuid(cboxSampleSampleType.SelectedValue);
             TreeNode[] tnodes = treeSampleTypes.Nodes.Find(sampleTypeId.ToString(), true);
             if (tnodes.Length < 1)
+            {
+                Common.Log.Error("Unable to find sample type with id: " + sampleTypeId);
+                MessageBox.Show("Error: Unable to find sample type with id: " + sampleTypeId);
                 return;
+            }
 
             SqlConnection conn = null;
             try
@@ -2501,19 +2505,9 @@ namespace DSA_lims
                 return;
             }
 
-            List<Guid> sampleIds = new List<Guid>();
-            HashSet<string> uniqueTypes = new HashSet<string>();
+            List<Guid> sampleIds = new List<Guid>();            
             foreach(DataGridViewRow row in gridSamples.SelectedRows)
-            {
                 sampleIds.Add(Utils.MakeGuid(row.Cells["id"].Value));
-                uniqueTypes.Add(row.Cells["sample_type_name"].Value.ToString());
-            }   
-            
-            if(uniqueTypes.Count > 1)
-            {
-                MessageBox.Show("You can not merge different sample types");
-                return;
-            }
 
             var sampleIdsArr = from item in sampleIds select "'" + item + "'";
             string sampleIdsCsv = string.Join(",", sampleIdsArr);
@@ -2521,7 +2515,8 @@ namespace DSA_lims
             SqlConnection conn = null;
             try
             {
-                conn = DB.OpenConnection();
+                conn = DB.OpenConnection();                
+
                 int mergeTest = Convert.ToInt32(DB.GetScalar(conn, null, "select count(transform_to_id) from sample where id in (" + sampleIdsCsv + ")", CommandType.Text));
                 if(mergeTest > 0)
                 {
@@ -2530,8 +2525,6 @@ namespace DSA_lims
                 }
 
                 Func<string, int> nCheck = field => Convert.ToInt32(DB.GetScalar(conn, null, "select count(distinct(" + field + ")) from sample where id in(" + sampleIdsCsv + ")", CommandType.Text));
-
-                // FIXME: Must select new sample type
                 if ((nCheck("laboratory_id") & nCheck("project_sub_id")) != 1)
                 {
                     MessageBox.Show("All samples to be merged must have the same laboratory and project");
@@ -2549,7 +2542,7 @@ namespace DSA_lims
                 conn?.Close();
             }
 
-            FormSampleMerge form = new FormSampleMerge(sampleIdsCsv);
+            FormSampleMerge form = new FormSampleMerge(sampleIds, treeSampleTypes);
             if (form.ShowDialog() != DialogResult.OK)
                 return;
             

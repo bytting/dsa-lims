@@ -117,6 +117,31 @@ namespace DSA_lims
             return cnt > 0;
         }
 
+        public static bool IsSpectrumReferenceAvailable(SqlConnection conn, SqlTransaction trans, Guid analId, string specRef, out int sampleNum)
+        {
+            sampleNum = -1;
+            string query = @"
+select s.number 
+from analysis a
+    inner join preparation p on a.preparation_id = p.id
+    inner join sample s on p.sample_id = s.id
+where a.instance_status_id = 1 and a.specter_reference = @specref and a.id not in(@exId)
+";
+            SqlCommand cmd = new SqlCommand(query, conn, trans);
+            cmd.Parameters.AddWithValue("@specref", specRef);
+            cmd.Parameters.AddWithValue("@exId", analId);
+
+            object o = cmd.ExecuteScalar();
+            if (o != null && o != DBNull.Value)
+            {
+                sampleNum = Convert.ToInt32(o);
+                //MessageBox.Show("The spectrum reference " + tbPrepAnalAnalSpecRef.Text.Trim() + " is already used by sample " + snum);
+                return false;
+            }
+
+            return true;
+        }
+
         public void LoadFromDB(SqlConnection conn, SqlTransaction trans, Guid analId)
         {
             using (SqlDataReader reader = DB.GetDataReader(conn, trans, "csp_select_analysis", CommandType.StoredProcedure,

@@ -43,15 +43,15 @@
             this.panel1.Controls.Add(this.btnCancel);
             this.panel1.Controls.Add(this.btnOk);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 412);
+            this.panel1.Location = new System.Drawing.Point(0, 413);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(608, 28);
+            this.panel1.Size = new System.Drawing.Size(704, 28);
             this.panel1.TabIndex = 9;
             // 
             // btnCancel
             // 
             this.btnCancel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnCancel.Location = new System.Drawing.Point(374, 0);
+            this.btnCancel.Location = new System.Drawing.Point(470, 0);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(117, 28);
             this.btnCancel.TabIndex = 1;
@@ -62,7 +62,7 @@
             // btnOk
             // 
             this.btnOk.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnOk.Location = new System.Drawing.Point(491, 0);
+            this.btnOk.Location = new System.Drawing.Point(587, 0);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(117, 28);
             this.btnOk.TabIndex = 0;
@@ -75,7 +75,7 @@
             this.panelFilters.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelFilters.Location = new System.Drawing.Point(0, 0);
             this.panelFilters.Name = "panelFilters";
-            this.panelFilters.Size = new System.Drawing.Size(608, 45);
+            this.panelFilters.Size = new System.Drawing.Size(704, 45);
             this.panelFilters.TabIndex = 10;
             // 
             // gridCustomers
@@ -94,14 +94,14 @@
             this.gridCustomers.ReadOnly = true;
             this.gridCustomers.RowHeadersVisible = false;
             this.gridCustomers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridCustomers.Size = new System.Drawing.Size(608, 367);
+            this.gridCustomers.Size = new System.Drawing.Size(704, 368);
             this.gridCustomers.TabIndex = 11;
             // 
             // FormSelectCustomer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(608, 440);
+            this.ClientSize = new System.Drawing.Size(704, 441);
             this.Controls.Add(this.gridCustomers);
             this.Controls.Add(this.panelFilters);
             this.Controls.Add(this.panel1);

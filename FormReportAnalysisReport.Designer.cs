@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            Microsoft.Reporting.WinForms.ReportDataSource reportDataSource1 = new Microsoft.Reporting.WinForms.ReportDataSource();
+            Microsoft.Reporting.WinForms.ReportDataSource reportDataSource2 = new Microsoft.Reporting.WinForms.ReportDataSource();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormReportAnalysisReport));
             this.DataTable1BindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.DSOrderReport = new DSA_lims.DSOrderReport();
@@ -38,9 +38,12 @@
             this.btnCreateVersion = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
             this.DataTable1TableAdapter = new DSA_lims.DSOrderReportTableAdapters.DataTable1TableAdapter();
+            this.DataTable2BindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.DataTable2TableAdapter = new DSA_lims.DSOrderReportTableAdapters.DataTable2TableAdapter();
             ((System.ComponentModel.ISupportInitialize)(this.DataTable1BindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DSOrderReport)).BeginInit();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.DataTable2BindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // DataTable1BindingSource
@@ -56,9 +59,9 @@
             // reportViewer
             // 
             this.reportViewer.Dock = System.Windows.Forms.DockStyle.Fill;
-            reportDataSource1.Name = "DataSet1";
-            reportDataSource1.Value = this.DataTable1BindingSource;
-            this.reportViewer.LocalReport.DataSources.Add(reportDataSource1);
+            reportDataSource2.Name = "DataSet1";
+            reportDataSource2.Value = this.DataTable1BindingSource;
+            this.reportViewer.LocalReport.DataSources.Add(reportDataSource2);
             this.reportViewer.LocalReport.ReportEmbeddedResource = "DSA_lims.RPOrderReport.rdlc";
             this.reportViewer.Location = new System.Drawing.Point(0, 0);
             this.reportViewer.Name = "reportViewer";
@@ -102,6 +105,15 @@
             // 
             this.DataTable1TableAdapter.ClearBeforeFill = true;
             // 
+            // DataTable2BindingSource
+            // 
+            this.DataTable2BindingSource.DataMember = "DataTable2";
+            this.DataTable2BindingSource.DataSource = this.DSOrderReport;
+            // 
+            // DataTable2TableAdapter
+            // 
+            this.DataTable2TableAdapter.ClearBeforeFill = true;
+            // 
             // FormReportAnalysisReport
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -117,6 +129,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.DataTable1BindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.DSOrderReport)).EndInit();
             this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.DataTable2BindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -130,5 +143,7 @@
         private System.Windows.Forms.BindingSource DataTable1BindingSource;
         private DSOrderReport DSOrderReport;
         private DSOrderReportTableAdapters.DataTable1TableAdapter DataTable1TableAdapter;
+        private System.Windows.Forms.BindingSource DataTable2BindingSource;
+        private DSOrderReportTableAdapters.DataTable2TableAdapter DataTable2TableAdapter;
     }
 }

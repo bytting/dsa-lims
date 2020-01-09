@@ -151,6 +151,8 @@
             // 
             // cboxSampleType
             // 
+            this.cboxSampleType.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.cboxSampleType.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.cboxSampleType.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cboxSampleType.FormattingEnabled = true;
             this.cboxSampleType.Location = new System.Drawing.Point(170, 31);

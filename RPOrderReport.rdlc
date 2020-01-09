@@ -41,7 +41,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=First(Fields!name.Value, "DataSet1")</Value>
+                <Value>=First(Fields!assname.Value, "DataSet2")</Value>
                 <Style>
                   <FontSize>12pt</FontSize>
                   <FontWeight>Bold</FontWeight>
@@ -107,7 +107,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=First(Fields!analysis_report_version.Value, "DataSet1")</Value>
+                <Value>=First(Fields!assversion.Value, "DataSet2")</Value>
                 <Style>
                   <FontSize>12pt</FontSize>
                   <FontWeight>Bold</FontWeight>
@@ -238,7 +238,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Nucl</Value>
+                              <Value>Nukl.</Value>
                               <Style>
                                 <FontSize>9pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
@@ -441,7 +441,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Fields!Nucl.Value</Value>
+                              <Value>=Fields!nuclide.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                               </Style>
@@ -569,7 +569,7 @@
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=IIf(Fields!activity_approved.Value = true Or Fields!detection_limit_approved.Value = true, Fields!Ac_unit.Value + " " + Fields!name_report.Value, "")</Value>
+                              <Value>=IIf(Fields!activity_approved.Value = true Or Fields!detection_limit_approved.Value = true, Fields!auname.Value + " " + Fields!autnamereport.Value, "")</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                               </Style>
@@ -761,7 +761,7 @@
                                   <Paragraph>
                                     <TextRuns>
                                       <TextRun>
-                                        <Value>Method</Value>
+                                        <Value>Metode</Value>
                                         <Style>
                                           <FontSize>9pt</FontSize>
                                           <FontWeight>Bold</FontWeight>
@@ -926,14 +926,14 @@
                   </TablixHeader>
                   <TablixMembers>
                     <TablixMember>
-                      <Group Name="Stype">
+                      <Group Name="stname">
                         <GroupExpressions>
-                          <GroupExpression>=Fields!Stype.Value</GroupExpression>
+                          <GroupExpression>=Fields!stname.Value</GroupExpression>
                         </GroupExpressions>
                       </Group>
                       <SortExpressions>
                         <SortExpression>
-                          <Value>=Fields!Stype.Value</Value>
+                          <Value>=Fields!stname.Value</Value>
                         </SortExpression>
                       </SortExpressions>
                       <TablixHeader>
@@ -946,7 +946,7 @@
                               <Paragraph>
                                 <TextRuns>
                                   <TextRun>
-                                    <Value>=Fields!Stype.Value</Value>
+                                    <Value>=Fields!stname.Value</Value>
                                     <Style>
                                       <FontSize>8pt</FontSize>
                                     </Style>
@@ -971,14 +971,14 @@
                       </TablixHeader>
                       <TablixMembers>
                         <TablixMember>
-                          <Group Name="Ameth">
+                          <Group Name="amname">
                             <GroupExpressions>
-                              <GroupExpression>=Fields!Ameth.Value</GroupExpression>
+                              <GroupExpression>=Fields!amname.Value</GroupExpression>
                             </GroupExpressions>
                           </Group>
                           <SortExpressions>
                             <SortExpression>
-                              <Value>=Fields!Ameth.Value</Value>
+                              <Value>=Fields!amname.Value</Value>
                             </SortExpression>
                           </SortExpressions>
                           <TablixHeader>
@@ -991,7 +991,7 @@
                                   <Paragraph>
                                     <TextRuns>
                                       <TextRun>
-                                        <Value>=Fields!prepmethshort.Value &amp; "/" &amp; Fields!Ameth.Value</Value>
+                                        <Value>=Fields!prepmethshort.Value &amp; "/" &amp; Fields!amname.Value</Value>
                                         <Style>
                                           <FontSize>8pt</FontSize>
                                         </Style>
@@ -1259,7 +1259,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=IIf(Len(First(Fields!report_comment.Value, "DataSet1")) &gt; 0, "Rapportkommentar:", "")</Value>
+                <Value>=IIf(Len(First(Fields!assreportcomment.Value, "DataSet2")) &gt; 0, "Rapportkommentar:", "")</Value>
                 <Style>
                   <FontSize>12pt</FontSize>
                   <FontWeight>Bold</FontWeight>
@@ -1358,7 +1358,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=First(Fields!report_comment.Value, "DataSet1")</Value>
+                <Value>=First(Fields!assreportcomment.Value, "DataSet2")</Value>
                 <Style />
               </TextRun>
             </TextRuns>
@@ -1454,7 +1454,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=First(Fields!Lab.Value, "DataSet1")</Value>
+                <Value>=First(Fields!labname.Value, "DataSet2")</Value>
                 <Style>
                   <FontSize>11pt</FontSize>
                 </Style>
@@ -1486,7 +1486,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=First(Fields!Expr1.Value, "DataSet1")</Value>
+                <Value>=First(Fields!respname.Value, "DataSet2")</Value>
                 <Style>
                   <FontSize>11pt</FontSize>
                 </Style>
@@ -1617,7 +1617,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=First(Fields!customer_company_email.Value, "DataSet1")</Value>
+                <Value>=First(Fields!compemail.Value, "DataSet2")</Value>
                 <Style>
                   <FontSize>11pt</FontSize>
                 </Style>
@@ -1649,7 +1649,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=First(Fields!customer_company_name.Value, "DataSet1")</Value>
+                <Value>=First(Fields!compname.Value, "DataSet2")</Value>
                 <Style>
                   <FontSize>11pt</FontSize>
                 </Style>
@@ -1681,7 +1681,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=First(Fields!customer_company_phone.Value, "DataSet1")</Value>
+                <Value>=First(Fields!compphone.Value, "DataSet2")</Value>
                 <Style>
                   <FontSize>11pt</FontSize>
                 </Style>
@@ -1713,7 +1713,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=First(Fields!customer_company_address.Value, "DataSet1")</Value>
+                <Value>=First(Fields!compaddress.Value, "DataSet2")</Value>
                 <Style>
                   <FontSize>11pt</FontSize>
                 </Style>
@@ -1745,7 +1745,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=First(Fields!customer_contact_name.Value, "DataSet1")</Value>
+                <Value>=First(Fields!contname.Value, "DataSet2")</Value>
                 <Style>
                   <FontSize>11pt</FontSize>
                 </Style>
@@ -1777,7 +1777,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=First(Fields!customer_contact_email.Value, "DataSet1")</Value>
+                <Value>=First(Fields!contemail.Value, "DataSet2")</Value>
                 <Style>
                   <FontSize>11pt</FontSize>
                 </Style>
@@ -1809,7 +1809,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=First(Fields!customer_contact_phone.Value, "DataSet1")</Value>
+                <Value>=First(Fields!contphone.Value, "DataSet2")</Value>
                 <Style>
                   <FontSize>11pt</FontSize>
                 </Style>
@@ -1841,7 +1841,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=First(Fields!customer_contact_address.Value, "DataSet1")</Value>
+                <Value>=First(Fields!contaddress.Value, "DataSet2")</Value>
                 <Style>
                   <FontSize>11pt</FontSize>
                 </Style>
@@ -1970,7 +1970,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=First(Fields!Expr2.Value, "DataSet1")</Value>
+                <Value>=First(Fields!asswsuser.Value, "DataSet2")</Value>
                 <Style />
               </TextRun>
             </TextRuns>
@@ -1978,10 +1978,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Expr2</rd:DefaultName>
-        <Top>31.93312cm</Top>
-        <Left>9.74178cm</Left>
+        <Top>31.9684cm</Top>
+        <Left>8.33826cm</Left>
         <Height>0.6cm</Height>
-        <Width>8.97129cm</Width>
+        <Width>10.37481cm</Width>
         <ZIndex>33</ZIndex>
         <Style>
           <Border>
@@ -2000,7 +2000,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=First(Fields!last_workflow_status_date.Value, "DataSet1")</Value>
+                <Value>=First(FormatDateTime(Fields!asswsdate.Value, 2), "DataSet2")</Value>
                 <Style />
               </TextRun>
             </TextRuns>
@@ -2010,10 +2010,10 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>last_workflow_status_date</rd:DefaultName>
-        <Top>31.93312cm</Top>
-        <Left>5.24198cm</Left>
+        <Top>31.9684cm</Top>
+        <Left>5.08099cm</Left>
         <Height>0.6cm</Height>
-        <Width>3.75646cm</Width>
+        <Width>2.47866cm</Width>
         <ZIndex>34</ZIndex>
         <Style>
           <Border>
@@ -2042,8 +2042,8 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox14</rd:DefaultName>
-        <Top>31.93312cm</Top>
-        <Left>9.10428cm</Left>
+        <Top>31.9684cm</Top>
+        <Left>7.70076cm</Left>
         <Height>0.6cm</Height>
         <Width>0.53167cm</Width>
         <ZIndex>35</ZIndex>
@@ -2092,7 +2092,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=IIf(Len(First(Fields!audit_comment.Value, "DataSet1")) &gt; 0, "Versjonskommentar:", "")</Value>
+                <Value>=IIf(Len(First(Fields!assauditcomment.Value, "DataSet2")) &gt; 0, "Versjonskommentar:", "")</Value>
                 <Style>
                   <FontSize>12pt</FontSize>
                   <FontWeight>Bold</FontWeight>
@@ -2125,7 +2125,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=First(Fields!audit_comment.Value, "DataSet1")</Value>
+                <Value>=First(Fields!assauditcomment.Value, "DataSet2")</Value>
                 <Style />
               </TextRun>
             </TextRuns>
@@ -2254,7 +2254,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=First(Fields!address.Value, "DataSet1")</Value>
+                <Value>=First(Fields!labaddress.Value, "DataSet2")</Value>
                 <Style>
                   <FontSize>11pt</FontSize>
                 </Style>
@@ -2286,7 +2286,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=First(Fields!LabMail.Value, "DataSet1")</Value>
+                <Value>=First(Fields!labemail.Value, "DataSet2")</Value>
                 <Style>
                   <FontSize>11pt</FontSize>
                 </Style>
@@ -2318,7 +2318,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=First(Fields!LabPhone.Value, "DataSet1")</Value>
+                <Value>=First(Fields!labphone.Value, "DataSet2")</Value>
                 <Style>
                   <FontSize>11pt</FontSize>
                 </Style>
@@ -2416,7 +2416,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=First(Fields!email.Value, "DataSet1")</Value>
+                <Value>=First(Fields!respemail.Value, "DataSet2")</Value>
                 <Style>
                   <FontSize>11pt</FontSize>
                 </Style>
@@ -2448,7 +2448,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=First(Fields!phone.Value, "DataSet1")</Value>
+                <Value>=First(Fields!respphone.Value, "DataSet2")</Value>
                 <Style>
                   <FontSize>11pt</FontSize>
                 </Style>
@@ -2565,7 +2565,7 @@
       </Line>
       <Image Name="DSAlogo">
         <Source>Database</Source>
-        <Value>=First(Fields!laboratory_logo.Value, "DataSet1")</Value>
+        <Value>=First(Fields!laboratory_logo.Value, "DataSet2")</Value>
         <MIMEType>image/png</MIMEType>
         <Sizing>FitProportional</Sizing>
         <Top>0.26333cm</Top>
@@ -2581,7 +2581,7 @@
       </Image>
       <Image Name="Image2">
         <Source>Database</Source>
-        <Value>=First(Fields!accredited_logo.Value, "DataSet1")</Value>
+        <Value>=First(Fields!accredited_logo.Value, "DataSet2")</Value>
         <MIMEType>image/png</MIMEType>
         <Sizing>FitProportional</Sizing>
         <Top>0.26333cm</Top>
@@ -2638,7 +2638,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=FormatDateTime(First(Fields!create_date.Value, "DataSet1"), DateFormat.shortDate)</Value>
+                <Value>=FormatDateTime(First(Fields!asscreatedate.Value, "DataSet2"), DateFormat.shortDate)</Value>
                 <Style>
                   <FontSize>12pt</FontSize>
                   <FontWeight>Bold</FontWeight>
@@ -2783,34 +2783,6 @@
           <DataField>name</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="Lab">
-          <DataField>Lab</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="deadline">
-          <DataField>deadline</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="report_comment">
-          <DataField>report_comment</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="analysis_report_version">
-          <DataField>analysis_report_version</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="Stype">
-          <DataField>Stype</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="path">
-          <DataField>path</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Ameth">
-          <DataField>Ameth</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
         <Field Name="activity">
           <DataField>activity</DataField>
           <rd:TypeName>System.Double</rd:TypeName>
@@ -2818,14 +2790,6 @@
         <Field Name="activity_uncertainty_abs">
           <DataField>activity_uncertainty_abs</DataField>
           <rd:TypeName>System.Double</rd:TypeName>
-        </Field>
-        <Field Name="Nucl">
-          <DataField>Nucl</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="number">
-          <DataField>number</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
         <Field Name="activity_approved">
           <DataField>activity_approved</DataField>
@@ -2851,108 +2815,48 @@
           <DataField>external_id</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="Expr1">
-          <DataField>Expr1</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Ac_unit">
-          <DataField>Ac_unit</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="customer_company_name">
-          <DataField>customer_company_name</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="customer_company_email">
-          <DataField>customer_company_email</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="customer_company_phone">
-          <DataField>customer_company_phone</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="customer_company_address">
-          <DataField>customer_company_address</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="customer_contact_name">
-          <DataField>customer_contact_name</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="customer_contact_email">
-          <DataField>customer_contact_email</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="customer_contact_phone">
-          <DataField>customer_contact_phone</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="customer_contact_address">
-          <DataField>customer_contact_address</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Expr2">
-          <DataField>Expr2</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="last_workflow_status_date">
-          <DataField>last_workflow_status_date</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="audit_comment">
-          <DataField>audit_comment</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="email">
-          <DataField>email</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="phone">
-          <DataField>phone</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="address">
-          <DataField>address</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="LabMail">
-          <DataField>LabMail</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="LabPhone">
-          <DataField>LabPhone</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="name_short">
-          <DataField>name_short</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="Expr3">
-          <DataField>Expr3</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="laboratory_logo">
-          <DataField>laboratory_logo</DataField>
-          <rd:TypeName>System.Byte[]</rd:TypeName>
-        </Field>
-        <Field Name="accredited_logo">
-          <DataField>accredited_logo</DataField>
-          <rd:TypeName>System.Byte[]</rd:TypeName>
-        </Field>
         <Field Name="workflow_status_id">
           <DataField>workflow_status_id</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
-        <Field Name="create_date">
-          <DataField>create_date</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="name_report">
-          <DataField>name_report</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
         <Field Name="prepmethshort">
           <DataField>prepmethshort</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="number">
+          <DataField>number</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="stname">
+          <DataField>stname</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="stpath">
+          <DataField>stpath</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="amname">
+          <DataField>amname</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="nuclide">
+          <DataField>nuclide</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="auname">
+          <DataField>auname</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="autnameshort">
+          <DataField>autnameshort</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="autname">
+          <DataField>autname</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="autnamereport">
+          <DataField>autnamereport</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
       </Fields>
@@ -2963,6 +2867,126 @@
         <rd:TableAdapterFillMethod>Fill</rd:TableAdapterFillMethod>
         <rd:TableAdapterGetDataMethod>GetData</rd:TableAdapterGetDataMethod>
         <rd:TableAdapterName>DataTable1TableAdapter</rd:TableAdapterName>
+      </rd:DataSetInfo>
+    </DataSet>
+    <DataSet Name="DataSet2">
+      <Query>
+        <DataSourceName>DSOrderReport</DataSourceName>
+        <CommandText>/* Local Query */</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="assname">
+          <DataField>assname</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="labname">
+          <DataField>labname</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="assversion">
+          <DataField>assversion</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="respname">
+          <DataField>respname</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="compname">
+          <DataField>compname</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="compemail">
+          <DataField>compemail</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="compphone">
+          <DataField>compphone</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="compaddress">
+          <DataField>compaddress</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="contname">
+          <DataField>contname</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="contemail">
+          <DataField>contemail</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="contphone">
+          <DataField>contphone</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="contaddress">
+          <DataField>contaddress</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="asscreatedate">
+          <DataField>asscreatedate</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="labaddress">
+          <DataField>labaddress</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="labemail">
+          <DataField>labemail</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="labphone">
+          <DataField>labphone</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="respemail">
+          <DataField>respemail</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="respphone">
+          <DataField>respphone</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="respaddress">
+          <DataField>respaddress</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="asswsdate">
+          <DataField>asswsdate</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="assreportcomment">
+          <DataField>assreportcomment</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="assauditcomment">
+          <DataField>assauditcomment</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="laboratory_logo">
+          <DataField>laboratory_logo</DataField>
+          <rd:TypeName>System.Byte[]</rd:TypeName>
+        </Field>
+        <Field Name="accredited_logo">
+          <DataField>accredited_logo</DataField>
+          <rd:TypeName>System.Byte[]</rd:TypeName>
+        </Field>
+        <Field Name="deadline">
+          <DataField>deadline</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="asswsuser">
+          <DataField>asswsuser</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+      <rd:DataSetInfo>
+        <rd:DataSetName>DSOrderReport</rd:DataSetName>
+        <rd:SchemaPath>C:\dev\dsa-lims\DSOrderReport.xsd</rd:SchemaPath>
+        <rd:TableName>DataTable2</rd:TableName>
+        <rd:TableAdapterFillMethod>Fill</rd:TableAdapterFillMethod>
+        <rd:TableAdapterGetDataMethod>GetData</rd:TableAdapterGetDataMethod>
+        <rd:TableAdapterName>DataTable2TableAdapter</rd:TableAdapterName>
       </rd:DataSetInfo>
     </DataSet>
   </DataSets>

@@ -1059,7 +1059,7 @@ if OBJECT_ID('dbo.preparation_unit', 'U') is not null drop table preparation_uni
 create table preparation_unit (
 	id int primary key not null,
 	name nvarchar(20) not null,
-	name_short nvarchar(8) not null,
+	name_short nvarchar(8) not null
 )
 go
 
@@ -2342,7 +2342,9 @@ as
 		pb.create_date,
 		pb.create_id,
 		pb.update_date,
-		pb.update_id
+		pb.update_id,
+		pb.volume_l,
+		pb.radius_mm
 	from preparation_geometry pb, instance_status st
 	where pb.instance_status_id = st.id and pb.instance_status_id <= @instance_status_level
 	order by pb.name

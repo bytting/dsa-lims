@@ -138,12 +138,28 @@ namespace DSA_lims
                 if(ast == null)
                     throw new Exception("No assignment sample type found with id " + ast.Id.ToString());
 
+                conn = DB.OpenConnection();
+                trans = conn.BeginTransaction();
+
                 AstInfo astInfo = tnode.Tag as AstInfo;
-                if(astInfo.SampleTypeId != mSample.SampleTypeId)
+                int nSamplesFree = DB.GetAvailableSamplesOnAssignmentSampleType(conn, trans, astId);
+                if(nSamplesFree <= 0)
+                {
+                    MessageBox.Show("This order line is full");
+                    return;
+                }
+
+                string[] items = tnode.Text.Split(new[] { " -> " }, StringSplitOptions.RemoveEmptyEntries);
+                if(items.Length < 2)                
+                    throw new Exception("Invalid sample type found in assignment: " + tnode.Text);
+                
+                string st1 = items[1];
+                string st2 = mSample.GetSampleTypePath(conn, trans);
+                if(!st2.StartsWith(st1))
                 {
                     MessageBox.Show("Wrong sample type for sample " + mSample.Number);
                     return;
-                }
+                }                
 
                 if (astInfo.SampleComponentId != Guid.Empty && astInfo.SampleComponentId != mSample.SampleComponentId)
                 {
@@ -171,10 +187,7 @@ namespace DSA_lims
                             return;
                         }
                     }
-                }
-
-                conn = DB.OpenConnection();
-                trans = conn.BeginTransaction();
+                }                
 
                 if (mSample.HasOrder(conn, trans, SelectedOrderId))
                 {

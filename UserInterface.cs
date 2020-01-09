@@ -268,10 +268,10 @@ where a.email is not NULL
             grid.Columns["email"].HeaderText = "Email";
         }
 
-        public static void PopulateNuclides(SqlConnection conn, DataGridView grid)
+        public static void PopulateNuclides(SqlConnection conn, int instanceStatusLevel, DataGridView grid)
         {                        
             grid.DataSource = DB.GetDataTable(conn, null, "csp_select_nuclides_flat", CommandType.StoredProcedure,
-                new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
+                new SqlParameter("@instance_status_level", instanceStatusLevel));
         
             grid.Columns["id"].Visible = false;
             grid.Columns["comment"].Visible = false;
@@ -324,8 +324,10 @@ where a.email is not NULL
             grid.Columns["name"].HeaderText = "Name";
             grid.Columns["min_fill_height_mm"].HeaderText = "Min Fillh. (mm)";
             grid.Columns["max_fill_height_mm"].HeaderText = "Max Fillh. (mm)";
+            grid.Columns["volume_l"].HeaderText = "Volume (L)";
+            grid.Columns["radius_mm"].HeaderText = "Radius (mm)";
             grid.Columns["instance_status_name"].HeaderText = "Status";
-            // FIXME 
+            
         }        
 
         public static void PopulateCounties(SqlConnection conn, DataGridView grid)
@@ -398,10 +400,10 @@ where a.email is not NULL
             grid.Columns["instance_status_name"].HeaderText = "Status";
         }        
 
-        public static void PopulateSamplers(SqlConnection conn, DataGridView grid)
+        public static void PopulateSamplers(SqlConnection conn, int instanceStatusLevel, DataGridView grid)
         {
             grid.DataSource = DB.GetDataTable(conn, null, "csp_select_samplers_flat", CommandType.StoredProcedure,
-                new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
+                new SqlParameter("@instance_status_level", instanceStatusLevel));
 
             grid.Columns["id"].Visible = false;
 
@@ -416,10 +418,10 @@ where a.email is not NULL
             grid.Columns["instance_status_name"].HeaderText = "Status";
         }        
 
-        public static void PopulateSamplingMethods(SqlConnection conn, DataGridView grid)
+        public static void PopulateSamplingMethods(SqlConnection conn, int instanceStatusLevel, DataGridView grid)
         {
             grid.DataSource = DB.GetDataTable(conn, null, "csp_select_sampling_methods_flat", CommandType.StoredProcedure,
-                new SqlParameter("@instance_status_level", InstanceStatus.Deleted));
+                new SqlParameter("@instance_status_level", instanceStatusLevel));
 
             grid.Columns["id"].Visible = false;
             grid.Columns["comment"].Visible = false;
@@ -725,7 +727,7 @@ order by create_date desc";
         public static void PopulateOrdersConstruction(SqlConnection conn, Guid laboratoryId, DataGridView grid)
         {
             string query = @"
-select id, name, customer_contact_name, customer_company_name
+select id, name, description, customer_contact_name
 from assignment a 
 where laboratory_id = @laboratory_id and instance_status_id = 1 and workflow_status_id = 1
 order by create_date desc";
@@ -735,8 +737,8 @@ order by create_date desc";
             grid.Columns["id"].Visible = false;
 
             grid.Columns["name"].HeaderText = "Name";
-            grid.Columns["customer_contact_name"].HeaderText = "Customer";
-            grid.Columns["customer_company_name"].HeaderText = "Company";
+            grid.Columns["description"].HeaderText = "Description";
+            grid.Columns["customer_contact_name"].HeaderText = "Customer";            
         }        
 
         public static void PopulatePersons(SqlConnection conn, DataGridView grid)
@@ -930,11 +932,130 @@ order by am.name_short
 
         public static void PopulateSampleParameterNames(SqlConnection conn, DataGridView grid)
         {
-            grid.DataSource = DB.GetDataTable(conn, null, "select * from sample_parameter_name", CommandType.Text);
+            grid.DataSource = DB.GetDataTable(conn, null, "select * from sample_parameter_name order by name asc", CommandType.Text);
 
             grid.Columns["id"].Visible = false;
             grid.Columns["name"].HeaderText = "Name";
             grid.Columns["type"].HeaderText = "Type";
+        }
+
+        public static void PopulateAccreditationTerms(SqlConnection conn, SqlTransaction trans, int instance_status_level, DataGridView grid)
+        {
+            grid.DataSource = DB.GetDataTable(conn, trans, "csp_select_accreditation_terms_flat", CommandType.StoredProcedure, 
+                new SqlParameter("@instance_status_level", instance_status_level));
+
+            grid.Columns["id"].Visible = false;
+            grid.Columns["create_date"].Visible = false;
+            grid.Columns["create_id"].Visible = false;
+            grid.Columns["update_date"].Visible = false;
+            grid.Columns["update_id"].Visible = false;
+
+            grid.Columns["name"].HeaderText = "Name";
+            grid.Columns["fill_height_min"].HeaderText = "F.H. min";
+            grid.Columns["fill_height_max"].HeaderText = "F.H. max";
+            grid.Columns["weight_min"].HeaderText = "Weight min";
+            grid.Columns["weight_max"].HeaderText = "Weight max";            
+            grid.Columns["volume_min"].HeaderText = "Volume min";
+            grid.Columns["volume_max"].HeaderText = "Volume max";
+            grid.Columns["density_min"].HeaderText = "Density min";
+            grid.Columns["density_max"].HeaderText = "Density max";
+            grid.Columns["instance_status_name"].HeaderText = "Status";
+        }
+
+        public static void PopulateAccreditationTermNuclides(SqlConnection conn, SqlTransaction trans, Guid accredId, ListBox lb)
+        {
+            lb.Items.Clear();
+            string query = @"
+select n.id, n.name from nuclide n
+	inner join accreditation_term_x_nuclide atxn on n.id = atxn.nuclide_id and atxn.accreditation_term_id = @accreditation_term_id
+order by n.name";
+            using (SqlDataReader reader = DB.GetDataReader(conn, trans, query, CommandType.Text, new SqlParameter("@accreditation_term_id", accredId)))
+            {
+                while(reader.Read())
+                {
+                    lb.Items.Add(new Lemma<Guid, string>(reader.GetGuid("id"), reader.GetString("name")));
+                }
+            }
+        }
+
+        public static void PopulateAccreditationTermSampleTypes(SqlConnection conn, SqlTransaction trans, Guid accredId, DataGridView grid)
+        {
+            string query = @"
+select st.id, st.name, st.path from sample_type st
+	inner join accreditation_term_x_sample_type atxst on st.id = atxst.sample_type_id and atxst.accreditation_term_id = @accreditation_term_id
+order by st.name";
+            grid.DataSource = DB.GetDataTable(conn, null, query, CommandType.Text, new SqlParameter("@accreditation_term_id", accredId));
+
+            grid.Columns["id"].Visible = false;
+            grid.Columns["name"].HeaderText = "Name";
+            grid.Columns["path"].HeaderText = "Path";
+        }
+
+        public static void PopulateAccreditationTermLaboratories(SqlConnection conn, SqlTransaction trans, Guid accredId, ListBox lb)
+        {
+            lb.Items.Clear();
+            string query = @"
+select l.id, l.name from laboratory l
+	inner join accreditation_term_x_laboratory atxl on l.id = atxl.laboratory_id and atxl.accreditation_term_id = @accreditation_term_id
+order by l.name";
+            using (SqlDataReader reader = DB.GetDataReader(conn, trans, query, CommandType.Text, new SqlParameter("@accreditation_term_id", accredId)))
+            {
+                while (reader.Read())
+                {
+                    lb.Items.Add(new Lemma<Guid, string>(reader.GetGuid("id"), reader.GetString("name")));
+                }
+            }
+        }
+
+        public static void PopulateAccreditationTermPreparationMethods(SqlConnection conn, SqlTransaction trans, Guid accredId, ListBox lb)
+        {
+            lb.Items.Clear();
+            string query = @"
+select pm.id, pm.name from preparation_method pm
+	inner join accreditation_term_x_preparation_method atxpm on pm.id = atxpm.preparation_method_id and atxpm.accreditation_term_id = @accreditation_term_id
+order by pm.name";
+            using (SqlDataReader reader = DB.GetDataReader(conn, trans, query, CommandType.Text, new SqlParameter("@accreditation_term_id", accredId)))
+            {
+                while (reader.Read())
+                {
+                    lb.Items.Add(new Lemma<Guid, string>(reader.GetGuid("id"), reader.GetString("name")));
+                }
+            }
+        }
+
+        public static void PopulateAccreditationTermAnalysisMethods(SqlConnection conn, SqlTransaction trans, Guid accredId, ListBox lb)
+        {
+            lb.Items.Clear();
+            string query = @"
+select am.id, am.name from analysis_method am
+	inner join accreditation_term_x_analysis_method atxam on am.id = atxam.analysis_method_id and atxam.accreditation_term_id = @accreditation_term_id
+order by am.name";
+            using (SqlDataReader reader = DB.GetDataReader(conn, trans, query, CommandType.Text, new SqlParameter("@accreditation_term_id", accredId)))
+            {
+                while (reader.Read())
+                {
+                    lb.Items.Add(new Lemma<Guid, string>(reader.GetGuid("id"), reader.GetString("name")));
+                }
+            }
+        }
+
+        public static void PopulateAccreditationTermSampleComponents(SqlConnection conn, SqlTransaction trans, Guid accredId, Guid sampTypeId, ListBox lb)
+        {
+            lb.Items.Clear();
+            string query = @"
+select sc.id, sc.name from sample_component sc
+	inner join accreditation_term_x_sample_type_x_sample_component ass on sc.id = ass.sample_component_id and ass.sample_type_id = @sample_type_id and ass.accreditation_term_id = @accreditation_term_id
+order by sc.name";
+            using (SqlDataReader reader = DB.GetDataReader(conn, trans, query, CommandType.Text, new[] {
+                new SqlParameter("@sample_type_id", sampTypeId),
+                new SqlParameter("@accreditation_term_id", accredId)
+            }))
+            {
+                while (reader.Read())
+                {
+                    lb.Items.Add(new Lemma<Guid, string>(reader.GetGuid("id"), reader.GetString("name")));
+                }
+            }
         }
     }
 }

@@ -41,7 +41,7 @@ namespace DSA_lims
         {
             InitializeComponent();
 
-            Text = "DSA-Lims - Add nuclide";
+            Text = "DSA-Lims - Add analysis result";
             cboxNuclides.DataSource = nuclides.Keys.ToArray();
             cboxNuclides.Text = "";
             mAnalysis = analysis;
@@ -53,7 +53,7 @@ namespace DSA_lims
         {
             InitializeComponent();
 
-            Text = "DSA-Lims - Edit nuclide";
+            Text = "DSA-Lims - Edit analysis result";
             editing = true;
             mAnalysis = analysis;
             mResult = mAnalysis.Results.Find(x => x.Id == resultId);
@@ -133,16 +133,13 @@ namespace DSA_lims
                 }
             }
 
-            if (String.IsNullOrEmpty(tbActivity.Text.Trim()))
+            if(String.IsNullOrEmpty(tbActivity.Text.Trim()))
             {
-                MessageBox.Show("The activity field is mandatory");
-                return;
-            }
-
-            if (String.IsNullOrEmpty(tbUncertainty.Text.Trim()))
-            {
-                MessageBox.Show("The uncertainty field is mandatory");
-                return;
+                if(!String.IsNullOrEmpty(tbUncertainty.Text.Trim()))
+                {
+                    MessageBox.Show("Activity uncertainty must be empty when activity is empty");
+                    return;
+                }
             }
 
             if((double)cboxSigmaActivity.SelectedValue == 0d)
@@ -177,31 +174,25 @@ namespace DSA_lims
                 return;
             }
 
-            double act;
-            if(!Double.TryParse(tbActivity.Text.Trim(), out act))
-            {
-                MessageBox.Show("Invalid number format on activity");
-                return;
-            }
+            double? act = null;
+            if (Double.TryParse(tbActivity.Text.Trim(), out double a))            
+                act = a;
 
-            if(act < 0d)
+            if (act < 0d)
             {
                 MessageBox.Show("Activity can not be negative");
                 return;
             }
 
-            if(act == 0 && cbActivityApproved.Checked)
+            if((act == null || act == 0) && cbActivityApproved.Checked)
             {
                 MessageBox.Show("Can not approve an activity of zero");
                 return;
             }
 
-            double unc;
-            if (!Double.TryParse(tbUncertainty.Text.Trim(), out unc))
-            {
-                MessageBox.Show("Invalid number format on uncertainty");
-                return;
-            }
+            double? unc = null;
+            if (Double.TryParse(tbUncertainty.Text.Trim(), out double u))
+                unc = u;
 
             if (unc < 0d)
             {
@@ -209,43 +200,52 @@ namespace DSA_lims
                 return;
             }
 
-            if(!cbUncertaintyAbs.Checked)
+            if(act != null && unc != null && !cbUncertaintyAbs.Checked)
             {
                 if(unc < 0d || unc > 100d)
                 {
-                    MessageBox.Show("Activity uncertianty is out of percent range [0, 100]");
+                    MessageBox.Show("Activity uncertainty is out of percent range [0, 100]");
                     return;
                 }
 
                 unc = act * (unc / 100d);
             }
 
-            double sigmaAct = Convert.ToDouble(cboxSigmaActivity.SelectedValue);
-            unc /= sigmaAct;
-            unc *= 2d;
-
-            double detlim;
-            if (!Double.TryParse(tbDetectionLimit.Text.Trim(), out detlim))
+            if (unc != null)
             {
-                MessageBox.Show("Invalid number format on detection limit");
+                double sigmaAct = Convert.ToDouble(cboxSigmaActivity.SelectedValue);
+                unc /= sigmaAct;
+                unc *= 2d;
+            }
+
+            if(act != null && unc == null)
+            {
+                MessageBox.Show("Activity uncertainty is required");
                 return;
             }
+
+            double? detlim = null;
+            if (Double.TryParse(tbDetectionLimit.Text.Trim(), out double dl))            
+                detlim = dl;
 
             if (detlim < 0d)
             {
-                MessageBox.Show("Detection limit can not be negative");
+                MessageBox.Show("MDA can not be negative");
                 return;
             }
 
-            if (detlim == 0 && cbDetectionLimitApproved.Checked)
+            if ((detlim == null || detlim == 0) && cbDetectionLimitApproved.Checked)
             {
                 MessageBox.Show("Can not approve a MDA of zero");
                 return;
-            }            
+            }
 
-            double sigmaMDA = Convert.ToDouble(cboxSigmaMDA.SelectedValue);
-            detlim /= sigmaMDA;
-            detlim *= 1.645d;
+            if (detlim != null)
+            {
+                double sigmaMDA = Convert.ToDouble(cboxSigmaMDA.SelectedValue);
+                detlim /= sigmaMDA;
+                detlim *= 1.645d;
+            }
 
             mResult.Activity = act;
             mResult.ActivityUncertaintyABS = unc;

@@ -37,13 +37,18 @@ using PdfColumnText = iTextSharp.text.pdf.ColumnText;
 using PdfPCell = iTextSharp.text.pdf.PdfPCell;
 using PdfParagraph = iTextSharp.text.Paragraph;
 using PdfChunk = iTextSharp.text.Chunk;
-using PdfFontFactory = iTextSharp.text.FontFactory;
 using PdfImage = iTextSharp.text.Image;
 
 namespace DSA_lims
 {
     public static class UtilsPdf
     {
+        private static PdfBaseFont baseFontTimes = PdfBaseFont.CreateFont(PdfBaseFont.TIMES_ROMAN, PdfBaseFont.CP1252, PdfBaseFont.NOT_EMBEDDED);
+        private static PdfBaseFont baseFontTimesBold = PdfBaseFont.CreateFont(PdfBaseFont.TIMES_BOLD, PdfBaseFont.CP1252, PdfBaseFont.NOT_EMBEDDED);
+        private static PdfBaseFont baseFontTimesItalic = PdfBaseFont.CreateFont(PdfBaseFont.TIMES_ITALIC, PdfBaseFont.CP1252, PdfBaseFont.NOT_EMBEDDED);
+        private static PdfBaseFont baseFontCourier = PdfBaseFont.CreateFont(PdfBaseFont.COURIER, PdfBaseFont.CP1252, PdfBaseFont.NOT_EMBEDDED);
+        private static PdfBaseFont baseFontCourierBold = PdfBaseFont.CreateFont(PdfBaseFont.COURIER_BOLD, PdfBaseFont.CP1252, PdfBaseFont.NOT_EMBEDDED);
+
         public static void CropImageToHeight(PdfImage img, float height)
         {
             if (img.Height <= height)
@@ -79,31 +84,13 @@ namespace DSA_lims
             return p;
         }
 
-        public static byte[] CreatePdfDataFromAssignment(SqlConnection conn, SqlTransaction trans, Guid assignmentId)
-        {            
-            string OrderName = "", LaboratoryName = "", ResponsibleName = "", CustomerName = "", CustomerCompany = "", CustomerAddress = "";
+        private static PdfImage GetLaboratoryLogo(SqlConnection conn, SqlTransaction trans, Guid laboratoryId)
+        {
             PdfImage labLogo = null;
-            
-            using (SqlDataReader reader = DB.GetDataReader(conn, trans, "csp_select_assignment_flat", CommandType.StoredProcedure, new SqlParameter("@id", assignmentId)))
+
+            if (Utils.IsValidGuid(laboratoryId))
             {
-                if (reader.HasRows)
-                {
-                    reader.Read();
-
-                    OrderName = reader.GetString("name");
-                    LaboratoryName = reader.GetString("laboratory_name");
-                    ResponsibleName = reader.GetString("account_name");
-                    CustomerName = reader.GetString("customer_contact_name");
-                    CustomerCompany = reader.GetString("customer_company_name");
-                    CustomerAddress = reader.GetString("customer_contact_address");
-                }
-            }
-
-            Guid labId = (Guid)DB.GetScalar(conn, trans, "select laboratory_id from assignment where id = @id", CommandType.Text, new SqlParameter("@id", assignmentId));
-
-            if (Utils.IsValidGuid(labId))
-            {
-                using (SqlDataReader reader = DB.GetDataReader(conn, trans, "select laboratory_logo from laboratory where id = @id", CommandType.Text, new SqlParameter("@id", labId)))
+                using (SqlDataReader reader = DB.GetDataReader(conn, trans, "select laboratory_logo from laboratory where id = @id", CommandType.Text, new SqlParameter("@id", laboratoryId)))
                 {
                     if (reader.HasRows)
                     {
@@ -115,56 +102,82 @@ namespace DSA_lims
                 }
             }
 
+            return labLogo;
+        }
+
+        public static byte[] CreatePdfDataFromAssignment(SqlConnection conn, SqlTransaction trans, Assignment assignment)
+        {            
             byte[] pdfData = null;
             PdfDocument document = null;
-            MemoryStream ms = null;
+            MemoryStream ms = null;            
 
             try
             {
                 ms = new MemoryStream();
                 document = new PdfDocument();
-                PdfWriter writer = PdfWriter.GetInstance(document, ms);
+                PdfWriter writer = PdfWriter.GetInstance(document, ms);                
 
                 document.Open();
 
                 PdfContentByte cb = writer.DirectContent;
 
                 cb.BeginText();
-
-                PdfBaseFont baseFont = PdfBaseFont.CreateFont(PdfBaseFont.TIMES_ROMAN, PdfBaseFont.CP1252, PdfBaseFont.NOT_EMBEDDED);
-                PdfBaseFont baseFontBold = PdfBaseFont.CreateFont(PdfBaseFont.TIMES_BOLD, PdfBaseFont.CP1252, PdfBaseFont.NOT_EMBEDDED);
-                PdfBaseFont baseFontItalic = PdfBaseFont.CreateFont(PdfBaseFont.TIMES_ITALIC, PdfBaseFont.CP1252, PdfBaseFont.NOT_EMBEDDED);
-                float fontSize = 10, fontSizeHeader = 14;
+                
+                float fontSize = 10, fontSizeHeader = 16;
                 float margin = 50;
-                float leftCursor = margin, topCursor = document.Top - margin, lineSpace = 13;
-                bool hasLogos = false;
+                float leftCursor = margin, topCursor = document.Top - 10f, lineSpace = 13;
 
+                PdfImage labLogo = GetLaboratoryLogo(conn, trans, assignment.LaboratoryId);
                 if (labLogo != null)
                 {
-                    CropImageToHeight(labLogo, 64f);
-                    labLogo.SetAbsolutePosition(leftCursor, topCursor);
-                    document.Add(labLogo);
-                    hasLogos = true;
+                    CropImageToHeight(labLogo, 64f);                
+                    labLogo.SetAbsolutePosition(document.GetRight(10f) - labLogo.PlainWidth, document.GetTop(10f) - 40f);
+                    document.Add(labLogo);                    
                 }
 
-                if (hasLogos)
-                    topCursor -= labLogo.ScaledHeight;
-
-                cb.SetFontAndSize(baseFontBold, fontSizeHeader);
-                cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, "OPPDRAGSOVERSIKT", leftCursor, topCursor, 0);
-                cb.SetFontAndSize(baseFont, fontSize);
+                cb.SetFontAndSize(baseFontTimesBold, fontSizeHeader);
+                cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, "OPPDRAGSOVERSIKT", leftCursor, topCursor, 0);                
+                cb.SetFontAndSize(baseFontTimes, fontSize);
                 topCursor -= lineSpace * 2;
-                cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, "Oppdrag: " + OrderName, leftCursor, topCursor, 0);
+                cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, "Oppdragsnummer: " + assignment.Name, leftCursor, topCursor, 0);
                 topCursor -= lineSpace;
-                string cust = CustomerName;
-                if (!String.IsNullOrEmpty(CustomerCompany)) cust += ", " + CustomerCompany;
-                cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, "Oppdragsgiver: " + cust, leftCursor, topCursor, 0);
+                cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, "Oppdrag opprettet: " + assignment.CreateDate.ToString(Utils.DateFormatNorwegian), leftCursor, topCursor, 0);
                 topCursor -= lineSpace;
-                cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, CustomerAddress, leftCursor, topCursor, 0);
+                cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, "Utskriftsdato: " + DateTime.Now.ToString(Utils.DateFormatNorwegian), leftCursor, topCursor, 0);
+                topCursor -= lineSpace * 2;
+                cb.SetFontAndSize(baseFontTimesBold, fontSize);
+                cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, "Oppdragsgiver, Firma/Avd.", leftCursor, topCursor, 0);
+                cb.SetFontAndSize(baseFontTimes, fontSize);
                 topCursor -= lineSpace;
-                cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, "Laboratorium/Kontaktperson: " + LaboratoryName + " / " + ResponsibleName, leftCursor, topCursor, 0);
-                topCursor -= lineSpace * 4;
-                cb.SetFontAndSize(baseFontBold, fontSizeHeader);
+                cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, "Navn: " + assignment.CustomerCompanyName, leftCursor, topCursor, 0);
+                topCursor -= lineSpace;
+                cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, "Addresse: " + assignment.CustomerCompanyAddress, leftCursor, topCursor, 0);
+                topCursor -= lineSpace;
+                cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, "Epost: " + assignment.CustomerCompanyEmail, leftCursor, topCursor, 0);
+                topCursor -= lineSpace;
+                cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, "Telefon: " + assignment.CustomerCompanyPhone, leftCursor, topCursor, 0);
+                topCursor -= lineSpace * 2;
+                cb.SetFontAndSize(baseFontTimesBold, fontSize);
+                cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, "Oppdragsgiver, Kontakt", leftCursor, topCursor, 0);
+                cb.SetFontAndSize(baseFontTimes, fontSize);
+                topCursor -= lineSpace;
+                cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, "Navn: " + assignment.CustomerContactName, leftCursor, topCursor, 0);
+                topCursor -= lineSpace;
+                cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, "Addresse: " + assignment.CustomerContactAddress, leftCursor, topCursor, 0);
+                topCursor -= lineSpace;
+                cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, "Epost: " + assignment.CustomerContactEmail, leftCursor, topCursor, 0);
+                topCursor -= lineSpace;
+                cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, "Telefon: " + assignment.CustomerContactPhone, leftCursor, topCursor, 0);
+                topCursor -= lineSpace * 2;
+                cb.SetFontAndSize(baseFontTimesBold, fontSize);
+                cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, "Laboratorium", leftCursor, topCursor, 0);
+                cb.SetFontAndSize(baseFontTimes, fontSize);
+                topCursor -= lineSpace;
+                cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, "Navn: " + assignment.LaboratoryName(conn, trans), leftCursor, topCursor, 0);
+                topCursor -= lineSpace;
+                cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, "Kontakt: " + assignment.ResponsibleName(conn, trans), leftCursor, topCursor, 0);
+                topCursor -= lineSpace * 2;
+                cb.SetFontAndSize(baseFontTimesBold, fontSize);
                 cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, "Måleresultater", leftCursor, topCursor, 0);
                 cb.EndText();
                 
@@ -222,17 +235,17 @@ select
 from sample s
     inner join sample_type st on st.id = s.sample_type_id
     left outer join sample_component sc on sc.id = s.sample_component_id
-    inner join preparation p on p.sample_id = s.id and p.instance_status_id <= 1
+    inner join preparation p on p.sample_id = s.id and p.instance_status_id = 1
     inner join preparation_method pm on pm.id = p.preparation_method_id
-    inner join analysis a on a.preparation_id = p.id and a.instance_status_id <= 1 and a.assignment_id = @assignment_id
-    inner join analysis_result ar on ar.analysis_id = a.id
+    inner join analysis a on a.preparation_id = p.id and a.instance_status_id = 1 and a.assignment_id = @assignment_id
+    inner join analysis_result ar on ar.analysis_id = a.id and ar.instance_status_id = 1 and ar.reportable = 1
     inner join analysis_method am on am.id = a.analysis_method_id
     inner join nuclide n on n.id = ar.nuclide_id
 order by s.number, p.number, a.number
 ";
                 int nRows = 1;                
                 using (SqlDataReader reader = DB.GetDataReader(conn, trans, query, CommandType.Text, new[] {
-                    new SqlParameter("@assignment_id", assignmentId)
+                    new SqlParameter("@assignment_id", assignment.Id)
                 }))
                 {
                     while (reader.Read())
@@ -279,7 +292,7 @@ order by s.number, p.number, a.number
                         if (DB.IsValidField(reader["det.lim"]))
                             sdetlim = reader.GetDouble("det.lim").ToString(Utils.ScientificFormat);
 
-                        cell = new PdfPCell(GetCellPhrase(reader.GetString("sample") + "/" + reader.GetString("preparation") + "/" + reader.GetString("analysis")));                        
+                        cell = new PdfPCell(GetCellPhrase(reader.GetString("sample") + " / " + reader.GetString("preparation") + " / " + reader.GetString("analysis")));                        
                         table.AddCell(cell);
                         string sampleType = reader.GetString("sample_type_name");
                         if(DB.IsValidField(reader["sample_component_name"]))
@@ -365,11 +378,10 @@ order by s.number, p.number, a.number
 
                 cb.BeginText();
                 
-                PdfBaseFont baseFontBold = PdfBaseFont.CreateFont(PdfBaseFont.TIMES_BOLD, PdfBaseFont.CP1252, PdfBaseFont.NOT_EMBEDDED);
                 float fontSizeHeader = 14f;
                 float topCursor = document.GetTop(10f);
 
-                cb.SetFontAndSize(baseFontBold, fontSizeHeader);
+                cb.SetFontAndSize(baseFontTimesBold, fontSizeHeader);
                 cb.ShowTextAligned(PdfContentByte.ALIGN_LEFT, title, document.GetLeft(10f), topCursor, 0);
                 topCursor -= 20f;
                 cb.EndText();
@@ -422,6 +434,115 @@ order by s.number, p.number, a.number
                     table.WriteSelectedRows(currRow, currRow + pageRows, document.GetLeft(10), topCursor, cb);
                     document.NewPage();
                 }
+            }
+            finally
+            {
+                document?.Close();
+                if (ms != null)
+                    pdfData = ms.GetBuffer();
+            }
+
+            return pdfData;
+        }        
+
+        private static void AddTextToParagraph(PdfParagraph p, string t, PdfFont f)
+        {
+            p.Add(new PdfChunk(t.Trim(new char[] { '\r', '\n' }), f));
+            p.Add(PdfChunk.NEWLINE);
+        }
+
+        public static byte[] CreatePdfDefinitionFromAssignment(SqlConnection conn, SqlTransaction trans, Assignment a, TreeView t, string title)
+        {
+            byte[] pdfData = null;
+            PdfDocument document = null;
+            MemoryStream ms = null;
+
+            try
+            {
+                ms = new MemoryStream();
+                document = new PdfDocument();
+                PdfWriter writer = PdfWriter.GetInstance(document, ms);                
+
+                document.Open();
+
+                PdfImage labLogo = GetLaboratoryLogo(conn, trans, a.LaboratoryId);
+                if (labLogo != null)
+                {                                        
+                    CropImageToHeight(labLogo, 64f);
+                    labLogo.SetAbsolutePosition(document.GetRight(10f) - labLogo.PlainWidth, document.GetTop(10f) - 40f);
+                    document.Add(labLogo);
+                }
+                
+                PdfFont fontTimes10 = new PdfFont(baseFontTimes, 10f);
+                PdfFont fontTimes12 = new PdfFont(baseFontTimes, 12f);
+                PdfFont fontTimesBold12 = new PdfFont(baseFontTimesBold, 12f);
+                PdfFont fontTimesBold20 = new PdfFont(baseFontTimesBold, 20f);
+                PdfFont fontTimesItalic8 = new PdfFont(baseFontTimesItalic, 8f);
+                PdfFont fontTimesItalic10 = new PdfFont(baseFontTimesItalic, 10f);
+                PdfFont fontCourier10 = new PdfFont(baseFontCourier, 10f);
+                PdfFont fontCourierBold10 = new PdfFont(baseFontCourierBold, 10f);
+
+                PdfParagraph p = new PdfParagraph();
+                p.SetLeading(16f, 0f);                
+                AddTextToParagraph(p, title, fontTimesBold20);
+                AddTextToParagraph(p, "Oversikt generert: " + DateTime.Now.ToString(Utils.DateTimeFormatNorwegian), fontTimes10);
+                AddTextToParagraph(p, "", fontTimes10);
+                AddTextToParagraph(p, "Ordre: " + a.Name, fontTimes12);
+                AddTextToParagraph(p, "Beskrivelse: " + a.Description, fontTimes12);
+                AddTextToParagraph(p, "Laboratorium: " + a.LaboratoryName(conn, trans), fontTimes12);
+                AddTextToParagraph(p, "Ansvarlig: " + a.ResponsibleName(conn, trans), fontTimes12);
+                AddTextToParagraph(p, "Oppdragsgiver: " + a.CustomerContactName, fontTimes12);
+                AddTextToParagraph(p, "Tidsfrist: " + a.Deadline.Value.ToString(Utils.DateFormatNorwegian), fontTimes12);
+                if(a.RequestedSigmaAct == 0)
+                    AddTextToParagraph(p, "Ønsket sigma aktivitet: ", fontTimes12);
+                else
+                    AddTextToParagraph(p, "Ønsket sigma aktivitet: " + a.RequestedSigmaAct, fontTimes12);
+                if(a.RequestedSigmaMDA == 0)
+                    AddTextToParagraph(p, "Ønsket sigma usikkerhet: ", fontTimes12);
+                else
+                    AddTextToParagraph(p, "Ønsket sigma usikkerhet: " + a.RequestedSigmaMDA, fontTimes12);
+                AddTextToParagraph(p, "", fontTimes10);
+                document.Add(p);
+
+                if (!String.IsNullOrEmpty(a.ContentComment))
+                {
+                    p = new PdfParagraph();
+                    p.SetLeading(10f, 0f);
+
+                    AddTextToParagraph(p, "Kommentar:", fontTimesBold12);
+                    AddTextToParagraph(p, "", fontTimes10);
+                    
+                    string[] lines = a.ContentComment.Split(new char[] { '\n' });
+                    foreach (string line in lines)
+                        AddTextToParagraph(p, line, fontTimesItalic10);
+                    AddTextToParagraph(p, "", fontTimesItalic10);
+                    document.Add(p);
+                }
+
+                p = new PdfParagraph();
+                p.SetLeading(14f, 0f);
+
+                AddTextToParagraph(p, "Ordre enheter:", fontTimesBold12);
+                AddTextToParagraph(p, "", fontTimes10);
+
+                foreach (TreeNode n in t.Nodes)
+                {
+                    AddTextToParagraph(p, n.Text, fontCourierBold10);
+                    foreach (TreeNode n2 in n.Nodes)
+                    {
+                        AddTextToParagraph(p, "      " + n2.Text, fontCourier10);
+                        foreach (TreeNode n3 in n2.Nodes)
+                        {
+                            AddTextToParagraph(p, "            " + n3.Text, fontCourier10);
+                        }
+                    }
+                }
+                document.Add(p);
+
+                p = new PdfParagraph();
+                AddTextToParagraph(p, "", fontTimes10);
+                AddTextToParagraph(p, "Merknad: Analysemetoder merket med A har en prøvetype, prepararingsmetode og analysemetode som kan resultere i akkrediterte resultater", fontTimesItalic8);
+                document.Add(p);
             }
             finally
             {

@@ -19,10 +19,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Drawing;
 using System.Text;
-using System.Xml;
-using System.Xml.Serialization;
 
 namespace DSA_lims
 {
@@ -35,7 +33,6 @@ namespace DSA_lims
             MaxAttachmentSize = 10000000;
         }        
                 
-        //public string ConnectionString { get; set; }
         public string LabelPrinterName { get; set; }
         public string LabelPrinterPaperName { get; set; }
         public bool LabelPrinterLandscape { get; set; }
@@ -47,5 +44,10 @@ namespace DSA_lims
 
         public string MapProviderName { get; set; }
         public int MaxAttachmentSize { get; set; }
+
+        public int WindowLeft { get; set; }
+        public int WindowTop { get; set; }
+        public int WindowWidth { get; set; }
+        public int WindowHeight { get; set; }
     }
 }

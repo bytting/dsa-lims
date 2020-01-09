@@ -129,6 +129,8 @@ namespace DSA_lims
                     cmd.Parameters.AddWithValue("@create_id", Common.UserId, Guid.Empty);
                     cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
                     cmd.Parameters.AddWithValue("@update_id", Common.UserId, Guid.Empty);
+                    cmd.Parameters.AddWithValue("@volume_l", DBNull.Value);
+                    cmd.Parameters.AddWithValue("@preprocessing_volume_l", DBNull.Value);
 
                     cmd.ExecuteNonQuery();
                     count--;

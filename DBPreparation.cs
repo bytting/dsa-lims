@@ -57,6 +57,9 @@ namespace DSA_lims
         public Guid CreateId { get; set; }
         public DateTime UpdateDate { get; set; }
         public Guid UpdateId { get; set; }
+        public double? Volume_l { get; set; }
+        public double? PreprocessingVolume_l { get; set; }
+
 
         public List<Analysis> Analyses { get; set; }
 
@@ -111,6 +114,8 @@ namespace DSA_lims
                 Quantity = reader.GetDoubleNullable("quantity");
                 QuantityUnitId = reader.GetInt32("quantity_unit_id");
                 FillHeightMM = reader.GetDoubleNullable("fill_height_mm");
+                Volume_l = reader.GetDoubleNullable("volume_l");
+                PreprocessingVolume_l = reader.GetDoubleNullable("preprocessing_volume_l");
                 InstanceStatusId = reader.GetInt32("instance_status_id");
                 Comment = reader.GetString("comment");
                 CreateDate = reader.GetDateTime("create_date");
@@ -169,6 +174,8 @@ namespace DSA_lims
                 cmd.Parameters.AddWithValue("@create_id", Common.UserId, Guid.Empty);
                 cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
                 cmd.Parameters.AddWithValue("@update_id", Common.UserId, Guid.Empty);
+                cmd.Parameters.AddWithValue("@volume_l", Volume_l, null);
+                cmd.Parameters.AddWithValue("@preprocessing_volume_l", PreprocessingVolume_l, null);
 
                 cmd.ExecuteNonQuery();
 
@@ -193,6 +200,8 @@ namespace DSA_lims
                     cmd.Parameters.AddWithValue("@comment", Comment, String.Empty);
                     cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
                     cmd.Parameters.AddWithValue("@update_id", Common.UserId, Guid.Empty);
+                    cmd.Parameters.AddWithValue("@volume_l", Volume_l, null);
+                    cmd.Parameters.AddWithValue("@preprocessing_volume_l", PreprocessingVolume_l, null);
 
                     cmd.ExecuteNonQuery();
 

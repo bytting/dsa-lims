@@ -141,16 +141,53 @@ namespace DSA_lims
 
     public class SampleImportEntry
     {
-        public int Number { get; set; }
-        public string ExternalId { get; set; }
-        public DateTime SamplingDate { get; set; }
-        public double Latitude { get; set; }
-        public double Longitude { get; set; }
-        public double Altitude { get; set; }
-        public string Location { get; set; }
+        public bool Importable { get; set; }
+        public int? Number { get; set; }
         public string SampleType { get; set; }
         public string LIMSSampleType { get; set; }
         public Guid LIMSSampleTypeId { get; set; }
+        public string SampleComponent { get; set; }
+        public string LIMSSampleComponent { get; set; }
+        public Guid LIMSSampleComponentId { get; set; }
+        public string ExternalId { get; set; }
+        public DateTime? SamplingDateFrom { get; set; }
+        public DateTime? SamplingDateTo { get; set; }
+        public DateTime? ReferenceDate { get; set; }
+        public string Location { get; set; }
+        public int LIMSLocationTypeId { get; set; }
+        public string LIMSLocationType { get; set; }
+        //public string LIMSLocation { get; set; }
+        public double? Latitude { get; set; }
+        public double? Longitude { get; set; }
+        public double? Altitude { get; set; }
+        public string Sampler { get; set; }
+        public string LIMSSampler { get; set; }
+        public Guid LIMSSamplerId { get; set; }
+        public string SamplingMethod { get; set; }        
+        public string LIMSSamplingMethod { get; set; }
+        public Guid LIMSSamplingMethodId { get; set; }        
         public string Comment { get; set; }
+        public int? WeekNumber { get; set; }
+        public double? FlowVolume_m3 { get; set; }
+        public double? Volume_l { get; set; }
+        public double? Depth_m { get; set; }
+        public double? DryWeight_g { get; set; }
+        public double? WetWeight_g { get; set; }
+        public double? AirSpeed_m3_t { get; set; }
+        public double? Salinity { get; set; }
+        public double? LayerFrom_cm { get; set; }
+        public double? LayerTo_cm { get; set; }
+        public double? Area_cm2 { get; set; }
+        public double? Temperature_C { get; set; }
+        public string TracerNuclide { get; set; }
+        public string LIMSTracerNuclide { get; set; }
+        public Guid LIMSTracerNuclideId { get; set; }
+        public double? TracerWeight_g { get; set; }
+        public double? TracerVolume_ml { get; set; }
+        public string IntendedAnalysis { get; set; }
+        public double? pH { get; set; }
+        public string RequireFiltering { get; set; }
+        public string ImportedFrom { get; set; }
+        public string ImportedFromId { get; set; }
     }
 }

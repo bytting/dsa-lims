@@ -50,7 +50,7 @@ namespace DSA_lims
         {            
             DataTable1TableAdapter.Fill(this.DSPrepSummary.DataTable1, mAssignmentId);
 
-            reportViewerPrepSummary.ZoomMode = Microsoft.Reporting.WinForms.ZoomMode.FullPage;
+            reportViewerPrepSummary.ZoomMode = Microsoft.Reporting.WinForms.ZoomMode.PageWidth;
             reportViewerPrepSummary.RefreshReport();
         }
     }

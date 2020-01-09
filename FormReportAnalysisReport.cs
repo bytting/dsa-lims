@@ -50,9 +50,16 @@ namespace DSA_lims
         }
 
         private void FormReportViewer_Load(object sender, EventArgs e)
-        {                        
+        {
             DataTable1TableAdapter.Fill(DSOrderReport.DataTable1, mAssignment.Name);
+            DataTable2TableAdapter.Fill(DSOrderReport.DataTable2, mAssignment.Name);
 
+            reportViewer.LocalReport.DataSources.Clear();
+            ReportDataSource rd1 = new ReportDataSource("DataSet1", DSOrderReport.Tables[0]);
+            ReportDataSource rd2 = new ReportDataSource("DataSet2", DSOrderReport.Tables[1]);
+            reportViewer.LocalReport.DataSources.Add(rd1);
+            reportViewer.LocalReport.DataSources.Add(rd2);
+            reportViewer.LocalReport.Refresh();
             reportViewer.RefreshReport();
         }        
 
@@ -64,6 +71,12 @@ namespace DSA_lims
 
         private void btnCreateVersion_Click(object sender, EventArgs e)
         {
+            if (mAssignment.WorkflowStatusId != WorkflowStatus.Complete)
+            {
+                MessageBox.Show("Order must be saved as complete first");
+                return;
+            }
+            
             int newVersion = mAssignment.AnalysisReportVersion + 1;
 
             if (mAssignment.AnalysisReportVersion > 0)
@@ -82,25 +95,32 @@ namespace DSA_lims
                 mAssignment.AnalysisReportVersion = newVersion;
                 mAssignment.Dirty = true;
                 mAssignment.StoreToDB(conn, null);
+
+                DataTable1TableAdapter.Fill(DSOrderReport.DataTable1, mAssignment.Name);
+                DataTable2TableAdapter.Fill(DSOrderReport.DataTable2, mAssignment.Name);
+
+                reportViewer.LocalReport.DataSources.Clear();
+                ReportDataSource rd1 = new ReportDataSource("DataSet1", DSOrderReport.Tables[0]);
+                ReportDataSource rd2 = new ReportDataSource("DataSet2", DSOrderReport.Tables[1]);
+                reportViewer.LocalReport.DataSources.Add(rd1);
+                reportViewer.LocalReport.DataSources.Add(rd2);
+                reportViewer.LocalReport.Refresh();
+                reportViewer.RefreshReport();
+
+                mContent = reportViewer.LocalReport.Render("PDF", "");
+
+                mHasNewVersion = true;
+                btnCreateVersion.Enabled = false;
             }
             catch (Exception ex)
             {
                 Common.Log.Error(ex);
                 MessageBox.Show(ex.Message);
-                return;
             }
             finally
             {
                 conn?.Close();
-            }
-
-            DataTable1TableAdapter.Fill(DSOrderReport.DataTable1, mAssignment.Name);
-            reportViewer.RefreshReport();
-
-            mContent = reportViewer.LocalReport.Render("PDF", "");
-
-            mHasNewVersion = true;
-            btnCreateVersion.Enabled = false;
+            }            
         }
     }
 }

@@ -66,6 +66,9 @@ namespace DSA_lims
                     foreach (Preparation p in s.Preparations)
                         p.Analyses.Clear();
                     s.Preparations.Clear();
+                    s.SamplingDateFrom = null;
+                    s.SamplingDateTo = null;
+                    s.ReferenceDate = null;
 
                     mSamples.Add(s);
 
@@ -174,8 +177,6 @@ order by s.number desc", mSampleIdsCsv);
                 gridSamples.Columns["external_id"].HeaderText = "External Id";
                 gridSamples.Columns["sample_type_name"].HeaderText = "Sample type";
                 gridSamples.Columns["sample_component_name"].HeaderText = "Sample component";
-
-
             }
             catch (Exception ex)
             {
@@ -240,7 +241,8 @@ order by s.number desc", mSampleIdsCsv);
                 newSample.SamplingMethodId = Guid.Empty;
                 newSample.Latitude = newSample.Longitude = newSample.Altitude = null;
                 newSample.InstanceStatusId = InstanceStatus.Active;
-                newSample.SamplingDateFrom = newSample.SamplingDateTo = new DateTime(dtSamplingDate.Value.Year, dtSamplingDate.Value.Month, dtSamplingDate.Value.Day, dtSamplingTime.Value.Hour, dtSamplingTime.Value.Minute, dtSamplingTime.Value.Second);
+                newSample.SamplingDateFrom = new DateTime(dtSamplingDate.Value.Year, dtSamplingDate.Value.Month, dtSamplingDate.Value.Day, dtSamplingTime.Value.Hour, dtSamplingTime.Value.Minute, dtSamplingTime.Value.Second);
+                newSample.SamplingDateTo = null;
                 newSample.ReferenceDate = new DateTime(dtReferenceDate.Value.Year, dtReferenceDate.Value.Month, dtReferenceDate.Value.Day, dtReferenceTime.Value.Hour, dtReferenceTime.Value.Minute, dtReferenceTime.Value.Second);
                 newSample.WetWeight_g = null;
                 newSample.DryWeight_g = null;

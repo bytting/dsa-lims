@@ -58,6 +58,8 @@ namespace DSA_lims
         {
             tbMinFillHeight.KeyPress += CustomEvents.Numeric_KeyPress;
             tbMaxFillHeight.KeyPress += CustomEvents.Numeric_KeyPress;
+            tbVolume.KeyPress += CustomEvents.Numeric_KeyPress;
+            tbRadius.KeyPress += CustomEvents.Numeric_KeyPress;
 
             SqlConnection conn = null;
             try
@@ -82,6 +84,8 @@ namespace DSA_lims
                         tbMaxFillHeight.Text = reader.GetDouble("max_fill_height_mm").ToString();
                         cboxInstanceStatus.SelectedValue = reader.GetInt32("instance_status_id");
                         tbComment.Text = reader.GetString("comment");
+                        tbVolume.Text = reader.GetString("volume_l");
+                        tbRadius.Text = reader.GetString("radius_mm");
                         p["create_date"] = reader.GetDateTime("create_date");
                         p["create_id"] = reader.GetGuid("create_id");
                         p["update_date"] = reader.GetDateTime("update_date");
@@ -148,6 +152,22 @@ namespace DSA_lims
                 return;
             }
 
+            if (!String.IsNullOrEmpty(tbVolume.Text) && !String.IsNullOrEmpty(tbRadius.Text))
+            {
+                MessageBox.Show("You must choose between volume and radius");
+                return;
+            }
+
+            if (String.IsNullOrEmpty(tbVolume.Text))
+                p["volume_l"] = null;            
+            else
+                p["volume_l"] = Convert.ToDouble(tbVolume.Text);
+
+            if (String.IsNullOrEmpty(tbRadius.Text))
+                p["radius_mm"] = null;
+            else
+                p["radius_mm"] = Convert.ToDouble(tbRadius.Text);
+
             p["name"] = tbName.Text.Trim();
             p["min_fill_height"] = minFillHeight;
             p["max_fill_height"] = maxFillHeight;
@@ -212,6 +232,8 @@ namespace DSA_lims
             cmd.Parameters.AddWithValue("@create_id", p["create_id"]);
             cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
             cmd.Parameters.AddWithValue("@update_id", p["update_id"]);
+            cmd.Parameters.AddWithValue("@volume_l", p["volume_l"], null);
+            cmd.Parameters.AddWithValue("@radius_mm", p["radius_mm"], null);
             cmd.ExecuteNonQuery();                        
         }
 
@@ -230,6 +252,8 @@ namespace DSA_lims
             cmd.Parameters.AddWithValue("@comment", p["comment"], String.Empty);
             cmd.Parameters.AddWithValue("@update_date", p["update_date"]);
             cmd.Parameters.AddWithValue("@update_id", p["update_id"]);
+            cmd.Parameters.AddWithValue("@volume_l", p["volume_l"], null);
+            cmd.Parameters.AddWithValue("@radius_mm", p["radius_mm"], null);
             cmd.ExecuteNonQuery();                
         }        
     }

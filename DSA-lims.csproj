@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="packages\EntityFramework.6.3.0\build\EntityFramework.props" Condition="Exists('packages\EntityFramework.6.3.0\build\EntityFramework.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -39,73 +40,50 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>packages\EntityFramework.6.3.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>packages\EntityFramework.6.3.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="GMap.NET.Core, Version=1.9.2.0, Culture=neutral, PublicKeyToken=b85b9027b614afef, processorArchitecture=MSIL">
-      <HintPath>packages\GMap.NET.Windows.1.9.2\lib\net40\GMap.NET.Core.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="EPPlus, Version=4.5.3.2, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>packages\EPPlus.4.5.3.2\lib\net40\EPPlus.dll</HintPath>
     </Reference>
-    <Reference Include="GMap.NET.WindowsForms, Version=1.9.2.0, Culture=neutral, PublicKeyToken=b85b9027b614afef, processorArchitecture=MSIL">
-      <HintPath>packages\GMap.NET.Windows.1.9.2\lib\net40\GMap.NET.WindowsForms.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="GMap.NET.Core, Version=1.9.3.0, Culture=neutral, PublicKeyToken=b85b9027b614afef, processorArchitecture=MSIL">
+      <HintPath>packages\GMap.NET.Windows.1.9.3\lib\net40\GMap.NET.Core.dll</HintPath>
     </Reference>
-    <Reference Include="GMap.NET.WindowsPresentation, Version=1.9.2.0, Culture=neutral, PublicKeyToken=b85b9027b614afef, processorArchitecture=MSIL">
-      <HintPath>packages\GMap.NET.Windows.1.9.2\lib\net40\GMap.NET.WindowsPresentation.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="GMap.NET.WindowsForms, Version=1.9.3.0, Culture=neutral, PublicKeyToken=b85b9027b614afef, processorArchitecture=MSIL">
+      <HintPath>packages\GMap.NET.Windows.1.9.3\lib\net40\GMap.NET.WindowsForms.dll</HintPath>
     </Reference>
-    <Reference Include="itextsharp, Version=5.5.13.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
-      <HintPath>packages\iTextSharp.5.5.13\lib\itextsharp.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="GMap.NET.WindowsPresentation, Version=1.9.3.0, Culture=neutral, PublicKeyToken=b85b9027b614afef, processorArchitecture=MSIL">
+      <HintPath>packages\GMap.NET.Windows.1.9.3\lib\net40\GMap.NET.WindowsPresentation.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp, Version=5.5.13.1, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>packages\iTextSharp.5.5.13.1\lib\itextsharp.dll</HintPath>
     </Reference>
     <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.ReportViewer.Common, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
-      <HintPath>packages\Microsoft.ReportingServices.ReportViewerControl.WebForms.150.900.148\lib\net40\Microsoft.ReportViewer.Common.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1358.0\lib\net40\Microsoft.ReportViewer.Common.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.ReportViewer.DataVisualization, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
-      <HintPath>packages\Microsoft.ReportingServices.ReportViewerControl.WebForms.150.900.148\lib\net40\Microsoft.ReportViewer.DataVisualization.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Microsoft.ReportViewer.Design, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
-      <HintPath>packages\Microsoft.ReportingServices.ReportViewerControl.WebForms.150.900.148\lib\net40\Microsoft.ReportViewer.Design.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Microsoft.ReportViewer.ProcessingObjectModel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
-      <HintPath>packages\Microsoft.ReportingServices.ReportViewerControl.WebForms.150.900.148\lib\net40\Microsoft.ReportViewer.ProcessingObjectModel.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Microsoft.ReportViewer.WebDesign, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
-      <HintPath>packages\Microsoft.ReportingServices.ReportViewerControl.WebForms.150.900.148\lib\net40\Microsoft.ReportViewer.WebDesign.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Microsoft.ReportViewer.WebForms, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
-      <HintPath>packages\Microsoft.ReportingServices.ReportViewerControl.WebForms.150.900.148\lib\net40\Microsoft.ReportViewer.WebForms.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Microsoft.ReportViewer.Design, Version=15.3.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1358.0\lib\net40\Microsoft.ReportViewer.Design.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.ReportViewer.WinForms, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
-      <HintPath>packages\Microsoft.ReportingServices.ReportViewerControl.WebForms.150.900.148\lib\net40\Microsoft.ReportViewer.WinForms.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1358.0\lib\net40\Microsoft.ReportViewer.WinForms.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.SqlServer.Types, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
-      <HintPath>packages\Microsoft.SqlServer.Types.14.0.314.76\lib\net40\Microsoft.SqlServer.Types.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>packages\Microsoft.SqlServer.Types.14.0.1016.290\lib\net40\Microsoft.SqlServer.Types.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="NTwain, Version=3.0.0.0, Culture=neutral, PublicKeyToken=f9f7e0c5169536c8, processorArchitecture=MSIL">
       <HintPath>packages\NTwain.3.6.0\lib\net40-client\NTwain.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="System">
       <Private>True</Private>
     </Reference>
@@ -116,22 +94,20 @@
     <Reference Include="System.Core">
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Data.SQLite, Version=1.0.109.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
-      <HintPath>packages\System.Data.SQLite.Core.1.0.109.2\lib\net46\System.Data.SQLite.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="System.Data.SQLite, Version=1.0.111.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>packages\System.Data.SQLite.Core.1.0.111.0\lib\net46\System.Data.SQLite.dll</HintPath>
     </Reference>
-    <Reference Include="System.Data.SQLite.EF6, Version=1.0.109.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
-      <HintPath>packages\System.Data.SQLite.EF6.1.0.109.0\lib\net46\System.Data.SQLite.EF6.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="System.Data.SQLite.EF6, Version=1.0.111.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>packages\System.Data.SQLite.EF6.1.0.111.0\lib\net46\System.Data.SQLite.EF6.dll</HintPath>
     </Reference>
-    <Reference Include="System.Data.SQLite.Linq, Version=1.0.109.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
-      <HintPath>packages\System.Data.SQLite.Linq.1.0.109.0\lib\net46\System.Data.SQLite.Linq.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="System.Data.SQLite.Linq, Version=1.0.111.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=MSIL">
+      <HintPath>packages\System.Data.SQLite.Linq.1.0.111.0\lib\net46\System.Data.SQLite.Linq.dll</HintPath>
     </Reference>
     <Reference Include="System.DirectoryServices" />
     <Reference Include="System.DirectoryServices.AccountManagement">
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.Services">
       <Private>True</Private>
     </Reference>
@@ -216,6 +192,12 @@
     <Compile Include="FormAccreditationRule.Designer.cs">
       <DependentUpon>FormAccreditationRule.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormAccreditationTerm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormAccreditationTerm.Designer.cs">
+      <DependentUpon>FormAccreditationTerm.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormActivityUnit.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -270,17 +252,23 @@
     <Compile Include="FormGetCoords.Designer.cs">
       <DependentUpon>FormGetCoords.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormGetTypedValue.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormGetTypedValue.Designer.cs">
+      <DependentUpon>FormGetTypedValue.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormImportAnalysisLIS.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FormImportAnalysisLIS.Designer.cs">
       <DependentUpon>FormImportAnalysisLIS.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormImportSamplesSampReg.cs">
+    <Compile Include="FormImportSamples.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormImportSamplesSampReg.Designer.cs">
-      <DependentUpon>FormImportSamplesSampReg.cs</DependentUpon>
+    <Compile Include="FormImportSamples.Designer.cs">
+      <DependentUpon>FormImportSamples.cs</DependentUpon>
     </Compile>
     <Compile Include="FormLabXAnalMeth.cs">
       <SubType>Form</SubType>
@@ -540,6 +528,12 @@
     <Compile Include="FormSelectAstCount.Designer.cs">
       <DependentUpon>FormSelectAstCount.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormSelectBoolean.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSelectBoolean.Designer.cs">
+      <DependentUpon>FormSelectBoolean.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormSelectCustomer.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -564,17 +558,77 @@
     <Compile Include="FormSelectExistingPreps.Designer.cs">
       <DependentUpon>FormSelectExistingPreps.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormSelectInstanceStatus.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSelectInstanceStatus.Designer.cs">
+      <DependentUpon>FormSelectInstanceStatus.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormSelectAny.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSelectAny.Designer.cs">
+      <DependentUpon>FormSelectAny.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormSelectLocationType.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSelectLocationType.Designer.cs">
+      <DependentUpon>FormSelectLocationType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormSelectNuclide.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSelectNuclide.Designer.cs">
+      <DependentUpon>FormSelectNuclide.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormSelectOrder.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FormSelectOrder.Designer.cs">
       <DependentUpon>FormSelectOrder.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormSelectProject.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSelectProject.Designer.cs">
+      <DependentUpon>FormSelectProject.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormSelectSampleComponent.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSelectSampleComponent.Designer.cs">
+      <DependentUpon>FormSelectSampleComponent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormSelectSampler.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSelectSampler.Designer.cs">
+      <DependentUpon>FormSelectSampler.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormSelectSampleType.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FormSelectSampleType.Designer.cs">
       <DependentUpon>FormSelectSampleType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormSelectSampleTypeComponents.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSelectSampleTypeComponents.Designer.cs">
+      <DependentUpon>FormSelectSampleTypeComponents.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormSelectSamplingMethod.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormSelectSamplingMethod.Designer.cs">
+      <DependentUpon>FormSelectSamplingMethod.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormShowGUID.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormShowGUID.Designer.cs">
+      <DependentUpon>FormShowGUID.cs</DependentUpon>
     </Compile>
     <Compile Include="FormShowResultMap.cs">
       <SubType>Form</SubType>
@@ -633,6 +687,12 @@
     <Content Include="DSA-LIMS_MANUAL.pdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="images\check1.png" />
+    <None Include="images\uncheck1.png" />
+    <None Include="images\check2.png" />
+    <None Include="images\uncheck2.png" />
+    <None Include="images\file_16.png" />
+    <Content Include="SqlServerTypes\readme.htm" />
     <Content Include="SqlServerTypes\x64\msvcr120.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -681,7 +741,6 @@
     <None Include="images\info.png" />
     <None Include="images\users.png" />
     <None Include="images\map.png" />
-    <Content Include="SqlServerTypes\readme.htm" />
     <EmbeddedResource Include="AboutBox.resx">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </EmbeddedResource>
@@ -690,6 +749,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormAccreditationRule.resx">
       <DependentUpon>FormAccreditationRule.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormAccreditationTerm.resx">
+      <DependentUpon>FormAccreditationTerm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormActivityUnit.resx">
       <DependentUpon>FormActivityUnit.cs</DependentUpon>
@@ -718,11 +780,14 @@
     <EmbeddedResource Include="FormGetCoords.resx">
       <DependentUpon>FormGetCoords.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormGetTypedValue.resx">
+      <DependentUpon>FormGetTypedValue.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormImportAnalysisLIS.resx">
       <DependentUpon>FormImportAnalysisLIS.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormImportSamplesSampReg.resx">
-      <DependentUpon>FormImportSamplesSampReg.cs</DependentUpon>
+    <EmbeddedResource Include="FormImportSamples.resx">
+      <DependentUpon>FormImportSamples.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormLabXAnalMeth.resx">
       <DependentUpon>FormLabXAnalMeth.cs</DependentUpon>
@@ -856,6 +921,9 @@
     <EmbeddedResource Include="FormSelectAstCount.resx">
       <DependentUpon>FormSelectAstCount.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormSelectBoolean.resx">
+      <DependentUpon>FormSelectBoolean.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormSelectCustomer.resx">
       <DependentUpon>FormSelectCustomer.cs</DependentUpon>
     </EmbeddedResource>
@@ -868,11 +936,41 @@
     <EmbeddedResource Include="FormSelectExistingPreps.resx">
       <DependentUpon>FormSelectExistingPreps.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormSelectInstanceStatus.resx">
+      <DependentUpon>FormSelectInstanceStatus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSelectAny.resx">
+      <DependentUpon>FormSelectAny.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSelectLocationType.resx">
+      <DependentUpon>FormSelectLocationType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSelectNuclide.resx">
+      <DependentUpon>FormSelectNuclide.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormSelectOrder.resx">
       <DependentUpon>FormSelectOrder.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormSelectProject.resx">
+      <DependentUpon>FormSelectProject.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSelectSampleComponent.resx">
+      <DependentUpon>FormSelectSampleComponent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSelectSampler.resx">
+      <DependentUpon>FormSelectSampler.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormSelectSampleType.resx">
       <DependentUpon>FormSelectSampleType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSelectSampleTypeComponents.resx">
+      <DependentUpon>FormSelectSampleTypeComponents.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSelectSamplingMethod.resx">
+      <DependentUpon>FormSelectSamplingMethod.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormShowGUID.resx">
+      <DependentUpon>FormShowGUID.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormShowResultMap.resx">
       <DependentUpon>FormShowResultMap.cs</DependentUpon>
@@ -937,18 +1035,15 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Content Include="SampleImportDsaLims.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <None Include="images\menu.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="images\menu2.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="images\menu16.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="images\search.png" />
@@ -1044,13 +1139,16 @@
     <None Include="images\tree_16.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="packages\System.Data.SQLite.Core.1.0.109.2\build\net46\System.Data.SQLite.Core.targets" Condition="Exists('packages\System.Data.SQLite.Core.1.0.109.2\build\net46\System.Data.SQLite.Core.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('packages\System.Data.SQLite.Core.1.0.109.2\build\net46\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\System.Data.SQLite.Core.1.0.109.2\build\net46\System.Data.SQLite.Core.targets'))" />
+    <Error Condition="!Exists('packages\EntityFramework.6.3.0\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\EntityFramework.6.3.0\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('packages\EntityFramework.6.3.0\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\EntityFramework.6.3.0\build\EntityFramework.targets'))" />
+    <Error Condition="!Exists('packages\System.Data.SQLite.Core.1.0.111.0\build\net46\System.Data.SQLite.Core.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\System.Data.SQLite.Core.1.0.111.0\build\net46\System.Data.SQLite.Core.targets'))" />
   </Target>
+  <Import Project="packages\EntityFramework.6.3.0\build\EntityFramework.targets" Condition="Exists('packages\EntityFramework.6.3.0\build\EntityFramework.targets')" />
+  <Import Project="packages\System.Data.SQLite.Core.1.0.111.0\build\net46\System.Data.SQLite.Core.targets" Condition="Exists('packages\System.Data.SQLite.Core.1.0.111.0\build\net46\System.Data.SQLite.Core.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

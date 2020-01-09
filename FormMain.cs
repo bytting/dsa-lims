@@ -55,13 +55,13 @@ namespace DSA_lims
         ToolTip ttCoords = new ToolTip();
 
         bool searchIsDirty = false;
-        bool auditLogIsSample = false;
+        bool auditLogIsSample = false;        
 
         public FormMain()
         {
             InitializeComponent();
             
-            SqlServerTypes.Utilities.LoadNativeAssemblies(AppDomain.CurrentDomain.BaseDirectory);
+            SqlServerTypes.Utilities.LoadNativeAssemblies(AppDomain.CurrentDomain.BaseDirectory);            
 
             Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo("en");
             Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo("en");
@@ -126,6 +126,22 @@ namespace DSA_lims
                 Common.Log.Info("Setting language " + CultureInfo.CurrentUICulture.TwoLetterISOLanguageName);
                 SetLanguageLabels(r);
 
+                if (Common.Settings.WindowWidth > 0 && Common.Settings.WindowHeight > 0)
+                {
+                    if (Common.Settings.WindowLeft > Screen.PrimaryScreen.WorkingArea.Width - Common.Settings.WindowWidth || Common.Settings.WindowLeft < 0)
+                        Common.Settings.WindowLeft = 0;
+                    if (Common.Settings.WindowTop > Screen.PrimaryScreen.WorkingArea.Height - Common.Settings.WindowHeight || Common.Settings.WindowTop < 0)
+                        Common.Settings.WindowTop = 0;
+                    if (Common.Settings.WindowWidth > Screen.PrimaryScreen.WorkingArea.Width)
+                        Common.Settings.WindowWidth = Screen.PrimaryScreen.WorkingArea.Width;
+                    if (Common.Settings.WindowHeight > Screen.PrimaryScreen.WorkingArea.Height)
+                        Common.Settings.WindowHeight = Screen.PrimaryScreen.WorkingArea.Height;
+
+                    SetDesktopLocation(Common.Settings.WindowLeft, Common.Settings.WindowTop);
+                    Width = Common.Settings.WindowWidth;
+                    Height = Common.Settings.WindowHeight;
+                }
+
                 statusMessageTimer = new System.Timers.Timer(statusMessageTimeout);
                 statusMessageTimer.SynchronizingObject = this;
                 statusMessageTimer.Elapsed += StatusMessageTimer_Elapsed;
@@ -154,7 +170,7 @@ namespace DSA_lims
                 MessageBox.Show(ex.Message);
                 Environment.Exit(1);
             }                
-        }
+        }        
 
         private void StatusMessageTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
@@ -309,48 +325,48 @@ namespace DSA_lims
                 UI.PopulateLaboratories(conn, InstanceStatus.Deleted, gridSysLab);
 
                 UI.PopulateComboBoxes(conn, "csp_select_laboratories_short", new[] {
-                        new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
-                    }, cboxSampleLaboratory, cboxOrderLaboratory);
+                    new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
+                }, cboxSampleLaboratory, cboxOrderLaboratory);
 
                 UI.PopulateUsers(conn, InstanceStatus.Deleted, gridSysUsers);
 
-                UI.PopulateNuclides(conn, gridSysNuclides);
+                UI.PopulateNuclides(conn, InstanceStatus.Deleted, gridSysNuclides);
 
                 UI.PopulateGeometries(conn, gridSysGeom);
 
                 UI.PopulateComboBoxes(conn, "csp_select_preparation_geometries_short", new[] {
-                        new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
-                    }, cboxPrepAnalPrepGeom);
+                    new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
+                }, cboxPrepAnalPrepGeom);
 
                 UI.PopulateCounties(conn, gridSysCounty);
 
                 UI.PopulateComboBoxes(conn, "csp_select_counties_short", new[] {
-                        new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
-                    }, cboxSampleCounties);
+                    new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
+                }, cboxSampleCounties);
 
                 UI.PopulateStations(conn, gridMetaStation);
 
                 UI.PopulateComboBoxes(conn, "csp_select_stations_short", new[] {
-                        new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
-                    }, cboxSampleInfoStations);
+                    new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
+                }, cboxSampleInfoStations);
 
                 UI.PopulateSampleStorage(conn, gridMetaSampleStorage);
 
                 UI.PopulateComboBoxes(conn, "csp_select_sample_storages_short", new[] {
-                        new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
-                    }, cboxSampleSampleStorage);
+                    new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
+                }, cboxSampleSampleStorage);
 
-                UI.PopulateSamplers(conn, gridMetaSamplers);
+                UI.PopulateSamplers(conn, InstanceStatus.Deleted, gridMetaSamplers);
 
                 UI.PopulateComboBoxes(conn, "csp_select_samplers_short", new[] {
-                        new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
-                    }, cboxSampleInfoSampler);
+                    new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
+                }, cboxSampleInfoSampler);
 
-                UI.PopulateSamplingMethods(conn, gridMetaSamplingMeth);
+                UI.PopulateSamplingMethods(conn, InstanceStatus.Deleted, gridMetaSamplingMeth);
 
                 UI.PopulateComboBoxes(conn, "csp_select_sampling_methods_short", new[] {
-                        new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
-                    }, cboxSampleInfoSamplingMeth);
+                    new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
+                }, cboxSampleInfoSamplingMeth);
 
                 UI.PopulatePreparationMethods(conn, gridTypeRelPrepMeth);
 
@@ -368,13 +384,15 @@ namespace DSA_lims
 
                 UI.PopulateComboBoxes(conn, "csp_select_assignments_short", new[] {
                         new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
-                    }, cboxSamplesOrders);
+                    }, cboxSamplesOrders, cboxSearchOrders);
 
                 UI.PopulateComboBoxes(conn, "csp_select_laboratories_short", new[] {
                         new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
                     }, cboxSamplesLaboratory, cboxOrdersLaboratory);
 
                 UI.PopulateSampleParameterNames(conn, gridSysSampParamNames);
+
+                UI.PopulateAccreditationTerms(conn, null, InstanceStatus.Deleted, gridSysAccTerms);
             }
             catch (Exception ex)
             {
@@ -439,15 +457,13 @@ namespace DSA_lims
                     if (r == DialogResult.No)
                         return false;
                 }
-
-                if (preparation.IsDirty())
+                else if (preparation.IsDirty())
                 {
                     DialogResult r = MessageBox.Show("Changes to the current preparation will be discarded. Do you want to continue?", "Warning", MessageBoxButtons.YesNo);
                     if (r == DialogResult.No)
                         return false;
                 }
-
-                if (analysis.IsDirty())
+                else if (analysis.IsDirty())
                 {
                     DialogResult r = MessageBox.Show("Changes to the current analysis will be discarded. Do you want to continue?", "Warning", MessageBoxButtons.YesNo);
                     if (r == DialogResult.No)
@@ -457,6 +473,17 @@ namespace DSA_lims
                 sample.ClearDirty();
                 preparation.ClearDirty();
                 analysis.ClearDirty();
+            }
+            else if (tabs.SelectedTab == tabSample)
+            {
+                if (sample.IsDirty())
+                {
+                    DialogResult r = MessageBox.Show("Changes to the current sample will be discarded. Do you want to continue?", "Warning", MessageBoxButtons.YesNo);
+                    if (r == DialogResult.No)
+                        return false;
+                }
+
+                sample.ClearDirty();
             }
             else if (tabs.SelectedTab == tabOrder)
             {
@@ -504,6 +531,11 @@ namespace DSA_lims
                         conn?.Close();
                     }
                 }
+
+                Common.Settings.WindowLeft = Location.X;
+                Common.Settings.WindowTop = Location.Y;
+                Common.Settings.WindowWidth = Width;
+                Common.Settings.WindowHeight = Height;
 
                 SaveSettings(DSAEnvironment.SettingsFilename);
             }
@@ -570,7 +602,7 @@ namespace DSA_lims
             miUsers.Visible = false;
             miNuclides.Visible = false;
             miMunicipalities.Visible = false;
-            miAccreditationRules.Visible = false;
+            miAccreditationTerms.Visible = false;
             miGeometries.Visible = false;
             miPersonalia.Visible = false;
         }        
@@ -976,12 +1008,12 @@ namespace DSA_lims
                 else if (tabsMeta.SelectedTab == tabMetaSamplers)
                 {
                     miSamplers.Visible = true;
-                    UI.PopulateSamplers(conn, gridMetaSamplers);
+                    UI.PopulateSamplers(conn, InstanceStatus.Deleted, gridMetaSamplers);
                 }
                 else if (tabsMeta.SelectedTab == tabMetaSamplingMeth)
                 {
                     miSamplingMethods.Visible = true;
-                    UI.PopulateSamplingMethods(conn, gridMetaSamplingMeth);
+                    UI.PopulateSamplingMethods(conn, InstanceStatus.Deleted, gridMetaSamplingMeth);
                 }
                 else if (tabsMeta.SelectedTab == tabMetaCompanies)
                 {
@@ -1033,7 +1065,7 @@ namespace DSA_lims
                 else if (tabsSys.SelectedTab == tabSysNuclides)
                 {
                     miNuclides.Visible = true;
-                    UI.PopulateNuclides(conn, gridSysNuclides);
+                    UI.PopulateNuclides(conn, InstanceStatus.Deleted, gridSysNuclides);
                 }
                 else if (tabsSys.SelectedTab == tabSysGeometries)
                 {
@@ -1042,9 +1074,14 @@ namespace DSA_lims
                 }
                 else if (tabsSys.SelectedTab == tabSysPers)
                 {
-                    miPersonalia.Visible = false;
+                    miPersonalia.Visible = true;
                     UI.PopulatePersons(conn, gridSysPers);
-                }             
+                }
+                else if (tabsSys.SelectedTab == tabSysAccredRules)
+                {
+                    miAccreditationTerms.Visible = true;                    
+                    UI.PopulateAccreditationTerms(conn, null, InstanceStatus.Deleted, gridSysAccTerms);
+                }
             }
             catch (Exception ex)
             {
@@ -1325,7 +1362,7 @@ namespace DSA_lims
                         UI.PopulateComboBoxes(conn, "csp_select_projects_sub_short", new[] {
                             new SqlParameter("@project_main_id", pmid),
                             new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
-                        }, cboxSampleSubProject);                        
+                        }, cboxSampleSubProject);
                     }
                     catch (Exception ex)
                     {
@@ -1409,7 +1446,7 @@ namespace DSA_lims
                 case DialogResult.OK:
                     SetStatusMessage("Nuclide " + form.NuclideName + " created");
                     using (SqlConnection conn = DB.OpenConnection())
-                        UI.PopulateNuclides(conn, gridSysNuclides);
+                        UI.PopulateNuclides(conn, InstanceStatus.Deleted, gridSysNuclides);
                     break;
                 case DialogResult.Abort:
                     SetStatusMessage("Create nuclide failed", StatusMessageType.Error);
@@ -1613,7 +1650,7 @@ namespace DSA_lims
                 case DialogResult.OK:
                     SetStatusMessage("Nuclide " + form.NuclideName + " updated");
                     using (SqlConnection conn = DB.OpenConnection())
-                        UI.PopulateNuclides(conn, gridSysNuclides);
+                        UI.PopulateNuclides(conn, InstanceStatus.Deleted, gridSysNuclides);
                     break;
                 case DialogResult.Abort:
                     SetStatusMessage("Update nuclide failed", StatusMessageType.Error);
@@ -1886,7 +1923,7 @@ namespace DSA_lims
                         UI.PopulateSampleStorage(conn, gridMetaSampleStorage);
 
                         UI.PopulateComboBoxes(conn, "csp_select_sample_storages_short", new[] {
-                            new SqlParameter("@instance_status_level", InstanceStatus.Active)
+                            new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
                         }, cboxSampleSampleStorage);
                     }
                     break;
@@ -1919,7 +1956,7 @@ namespace DSA_lims
                         UI.PopulateSampleStorage(conn, gridMetaSampleStorage);
 
                         UI.PopulateComboBoxes(conn, "csp_select_sample_storages_short", new[] {
-                            new SqlParameter("@instance_status_level", InstanceStatus.Active)
+                            new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
                         }, cboxSampleSampleStorage);
                     }
                     break;
@@ -1955,7 +1992,7 @@ namespace DSA_lims
                     SetStatusMessage("Sampler " + form.SamplerName + " created");
                     using (SqlConnection conn = DB.OpenConnection())
                     {
-                        UI.PopulateSamplers(conn, gridMetaSamplers);
+                        UI.PopulateSamplers(conn, InstanceStatus.Deleted, gridMetaSamplers);
 
                         UI.PopulateComboBoxes(conn, "csp_select_samplers_short", new[] {
                             new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
@@ -1991,7 +2028,7 @@ namespace DSA_lims
                     SetStatusMessage("Sampler " + form.SamplerName + " updated");
                     using (SqlConnection conn = DB.OpenConnection())
                     {
-                        UI.PopulateSamplers(conn, gridMetaSamplers);                        
+                        UI.PopulateSamplers(conn, InstanceStatus.Deleted, gridMetaSamplers);                        
 
                         UI.PopulateComboBoxes(conn, "csp_select_samplers_short", new[] {
                             new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
@@ -2233,6 +2270,7 @@ namespace DSA_lims
                 conn = DB.OpenConnection();
                 sample.LoadFromDB(conn, null, form.SampleId);
                 PopulateSample(conn, null, sample, true);
+                PopulateSamples();
             }
             catch(Exception ex)
             {
@@ -2247,15 +2285,8 @@ namespace DSA_lims
             tabs.SelectedTab = tabSample;
             tabsSample.SelectedTab = tabSamplesInfo;
 
-            btnSamplesSearch.ForeColor = Color.Red;
-
             SetStatusMessage("Sample " + form.SampleNumber + " created successfully");
-        }
-
-        private void miSamplesImportExcel_Click(object sender, EventArgs e)
-        {
-            // Import sample from excel
-        }
+        }        
 
         private void miSamplesEdit_Click(object sender, EventArgs e)
         {
@@ -2620,24 +2651,211 @@ namespace DSA_lims
             }
         }
 
-        private void miSamplesSetProject_Click(object sender, EventArgs e)
+        private bool SelectedSamplesLocked()
         {
-            // sample, set project
+            foreach (DataGridViewRow row in gridSamples.SelectedRows)
+            {
+                string locked_name = row.Cells["locked_name"].Value.ToString();
+                if (!String.IsNullOrEmpty(locked_name))            
+                    return true;
+            }
+            return false;
         }
 
-        private void miSamplesSetCustomer_Click(object sender, EventArgs e)
+        private void miSamplesSetProject_Click(object sender, EventArgs e)
         {
-            // sample, set customer
-        }
+            if(gridSamples.SelectedRows.Count < 1)
+            {
+                MessageBox.Show("You must select one or more samples first");
+                return;
+            }
+
+            if (SelectedSamplesLocked())
+            {
+                MessageBox.Show("Can not update now, one or more samples are locked");
+                return;
+            }
+
+            FormSelectProject form = new FormSelectProject();
+            if (form.ShowDialog() != DialogResult.OK)
+                return;            
+
+            SqlConnection conn = null;
+            SqlTransaction trans = null;
+
+            try
+            {
+                conn = DB.OpenConnection();
+                trans = conn.BeginTransaction();
+
+                tabs.Enabled = false;
+                progressSamples.Visible = true;
+                progressSamples.Maximum = gridSamples.SelectedRows.Count;
+                progressSamples.Value = 0;
+
+                Sample s = new Sample();                
+
+                foreach (DataGridViewRow row in gridSamples.SelectedRows)
+                {
+                    Guid sid = Utils.MakeGuid(row.Cells["id"].Value);
+                    s.LoadFromDB(conn, trans, sid);
+                    s.ProjectSubId = form.SelectedSubProjectId;
+                    s.Dirty = true;
+                    s.StoreToDB(conn, trans);
+                    string json = JsonConvert.SerializeObject(s);
+                    DB.AddAuditMessage(conn, trans, "sample", s.Id, AuditOperationType.Update, json, "");
+
+                    progressSamples.Value++;
+                }
+
+                trans.Commit();                
+
+                PopulateSamples();
+
+                SetStatusMessage("Updating projects successful");
+            }
+            catch (Exception ex)
+            {
+                trans?.Rollback();
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn?.Close();
+                tabs.Enabled = true;
+                progressSamples.Visible = false;
+            }            
+        }        
 
         private void miSamplesSetSampler_Click(object sender, EventArgs e)
         {
-            // sample, set sampler
+            if (gridSamples.SelectedRows.Count < 1)
+            {
+                MessageBox.Show("You must select one or more samples first");
+                return;
+            }
+
+            if (SelectedSamplesLocked())
+            {
+                MessageBox.Show("Can not update now, one or more samples are locked");
+                return;
+            }
+
+            FormSelectSampler form = new FormSelectSampler();
+            if (form.ShowDialog() != DialogResult.OK)
+                return;            
+
+            SqlConnection conn = null;
+            SqlTransaction trans = null;
+
+            try
+            {
+                conn = DB.OpenConnection();
+                trans = conn.BeginTransaction();
+
+                tabs.Enabled = false;
+                progressSamples.Visible = true;
+                progressSamples.Maximum = gridSamples.SelectedRows.Count;
+                progressSamples.Value = 0;
+
+                Sample s = new Sample();
+
+                foreach (DataGridViewRow row in gridSamples.SelectedRows)
+                {
+                    Guid sid = Utils.MakeGuid(row.Cells["id"].Value);
+                    s.LoadFromDB(conn, trans, sid);
+                    s.SamplerId = form.SelectedSamplerId;
+                    s.Dirty = true;
+                    s.StoreToDB(conn, trans);
+                    string json = JsonConvert.SerializeObject(s);
+                    DB.AddAuditMessage(conn, trans, "sample", s.Id, AuditOperationType.Update, json, "");
+
+                    progressSamples.Value++;
+                }
+
+                trans.Commit();
+
+                SetStatusMessage("Updating sampler successful");
+            }
+            catch(Exception ex)
+            {
+                trans?.Rollback();
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn?.Close();
+                tabs.Enabled = true;
+                progressSamples.Visible = false;
+            }                        
         }
 
         private void miSamplesSetSamplingMethod_Click(object sender, EventArgs e)
         {
-            // sample, set sampling method
+            if (gridSamples.SelectedRows.Count < 1)
+            {
+                MessageBox.Show("You must select one or more samples first");
+                return;
+            }
+
+            if (SelectedSamplesLocked())
+            {
+                MessageBox.Show("Can not update now, one or more samples are locked");
+                return;
+            }
+
+            FormSelectSamplingMethod form = new FormSelectSamplingMethod();
+            if (form.ShowDialog() != DialogResult.OK)
+                return;            
+
+            SqlConnection conn = null;
+            SqlTransaction trans = null;
+
+            try
+            {
+                conn = DB.OpenConnection();
+                trans = conn.BeginTransaction();
+
+                tabs.Enabled = false;
+                progressSamples.Visible = true;
+                progressSamples.Maximum = gridSamples.SelectedRows.Count;
+                progressSamples.Value = 0;
+
+                Sample s = new Sample();
+
+                foreach (DataGridViewRow row in gridSamples.SelectedRows)
+                {
+                    Guid sid = Utils.MakeGuid(row.Cells["id"].Value);
+                    s.LoadFromDB(conn, trans, sid);
+                    s.SamplingMethodId = form.SelectedSamplingMethodId;
+                    s.Dirty = true;
+                    s.StoreToDB(conn, trans);
+                    string json = JsonConvert.SerializeObject(s);
+                    DB.AddAuditMessage(conn, trans, "sample", s.Id, AuditOperationType.Update, json, "");
+
+                    progressSamples.Value++;
+                }
+
+                trans.Commit();
+
+                PopulateSamples();
+
+                SetStatusMessage("Updating sampling method successful");
+            }
+            catch (Exception ex)
+            {
+                trans?.Rollback();
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn?.Close();
+                tabs.Enabled = true;
+                progressSamples.Visible = false;
+            }                        
         }
 
         private void miSamplesPrepAnal_Click(object sender, EventArgs e)
@@ -2765,7 +2983,132 @@ namespace DSA_lims
 
         private void miSamplesSetExcempt_Click(object sender, EventArgs e)
         {
-            // set sample excempt from public
+            if (gridSamples.SelectedRows.Count < 1)
+            {
+                MessageBox.Show("You must select one or more samples first");
+                return;
+            }
+
+            if (SelectedSamplesLocked())
+            {
+                MessageBox.Show("Can not update now, one or more samples are locked");
+                return;
+            }
+
+            FormSelectBoolean form = new FormSelectBoolean("Samples excempt from public? ");
+            if (form.ShowDialog() != DialogResult.OK)
+                return;            
+
+            SqlConnection conn = null;
+            SqlTransaction trans = null;
+
+            try
+            {
+                conn = DB.OpenConnection();
+                trans = conn.BeginTransaction();
+
+                tabs.Enabled = false;
+                progressSamples.Visible = true;
+                progressSamples.Maximum = gridSamples.SelectedRows.Count;
+                progressSamples.Value = 0;
+
+                Sample s = new Sample();
+
+                foreach (DataGridViewRow row in gridSamples.SelectedRows)
+                {
+                    Guid sid = Utils.MakeGuid(row.Cells["id"].Value);
+                    s.LoadFromDB(conn, trans, sid);
+                    s.Confidential = form.SelectedState;
+                    s.Dirty = true;
+                    s.StoreToDB(conn, trans);
+                    string json = JsonConvert.SerializeObject(s);
+                    DB.AddAuditMessage(conn, trans, "sample", s.Id, AuditOperationType.Update, json, "");
+
+                    progressSamples.Value++;
+                }
+
+                trans.Commit();
+
+                SetStatusMessage("Updating excemption from public successful");
+            }
+            catch (Exception ex)
+            {
+                trans?.Rollback();
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn?.Close();
+                tabs.Enabled = true;
+                progressSamples.Visible = false;
+            }            
+        }
+
+        private void miSamplesSetInstanceStatus_Click(object sender, EventArgs e)
+        {
+            if (gridSamples.SelectedRows.Count < 1)
+            {
+                MessageBox.Show("You must select one or more samples first");
+                return;
+            }
+
+            if (SelectedSamplesLocked())
+            {
+                MessageBox.Show("Can not update now, one or more samples are locked");
+                return;
+            }
+
+            FormSelectInstanceStatus form = new FormSelectInstanceStatus();
+            if (form.ShowDialog() != DialogResult.OK)
+                return;            
+
+            SqlConnection conn = null;
+            SqlTransaction trans = null;
+
+            try
+            {                
+                conn = DB.OpenConnection();
+                trans = conn.BeginTransaction();
+
+                tabs.Enabled = false;
+                progressSamples.Visible = true;
+                progressSamples.Maximum = gridSamples.SelectedRows.Count;
+                progressSamples.Value = 0;
+
+                Sample s = new Sample();
+
+                foreach (DataGridViewRow row in gridSamples.SelectedRows)
+                {
+                    Guid sid = Utils.MakeGuid(row.Cells["id"].Value);
+                    s.LoadFromDB(conn, trans, sid);
+                    s.InstanceStatusId = form.SelectedInstanceStatus;
+                    s.Dirty = true;
+                    s.StoreToDB(conn, trans);
+                    string json = JsonConvert.SerializeObject(s);
+                    DB.AddAuditMessage(conn, trans, "sample", s.Id, AuditOperationType.Update, json, "");
+
+                    progressSamples.Value++;
+                }
+
+                trans.Commit();
+
+                PopulateSamples();
+
+                SetStatusMessage("Updating instance status successful");
+            }
+            catch (Exception ex)
+            {
+                trans?.Rollback();
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conn?.Close();
+                tabs.Enabled = true;
+                progressSamples.Visible = false;
+            }                        
         }
 
         private void miSamplingMethodNew_Click(object sender, EventArgs e)
@@ -2785,7 +3128,7 @@ namespace DSA_lims
                     SetStatusMessage("Sampling method " + form.SamplingMethodName + " created");
                     using (SqlConnection conn = DB.OpenConnection())
                     {
-                        UI.PopulateSamplingMethods(conn, gridMetaSamplingMeth);                        
+                        UI.PopulateSamplingMethods(conn, InstanceStatus.Deleted, gridMetaSamplingMeth);                        
 
                         UI.PopulateComboBoxes(conn, "csp_select_sampling_methods_short", new[] {
                             new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
@@ -2821,7 +3164,7 @@ namespace DSA_lims
                     SetStatusMessage("Sampling method " + form.SamplingMethodName + " updated");
                     using (SqlConnection conn = DB.OpenConnection())
                     {
-                        UI.PopulateSamplingMethods(conn, gridMetaSamplingMeth);
+                        UI.PopulateSamplingMethods(conn, InstanceStatus.Deleted, gridMetaSamplingMeth);
                                               
                         UI.PopulateComboBoxes(conn, "csp_select_sampling_methods_short", new[] {
                             new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
@@ -3211,7 +3554,7 @@ namespace DSA_lims
 
             if (gridTypeRelAnalMeth.SelectedRows.Count < 1)
             {
-                MessageBox.Show("You must select an analysis type first");
+                MessageBox.Show("You must select an analysis method first");
                 return;
             }
 
@@ -3472,7 +3815,7 @@ namespace DSA_lims
 
                 UI.PopulateComboBoxes(conn, "csp_select_assignments_short", new[] {
                     new SqlParameter("@instance_status_level", InstanceStatus.Deleted)
-                }, cboxSamplesOrders);
+                }, cboxSamplesOrders, cboxSearchOrders);
 
                 UI.PopulateOrderYears(conn, cboxOrdersYear);
             }
@@ -3636,12 +3979,22 @@ namespace DSA_lims
                     foreach (AssignmentAnalysisMethod aam in apm.AnalysisMethods)
                     {
                         txt = aam.AnalysisMethodCount.ToString() + ", " + aam.AnalysisMethodName(conn, trans);
+
                         if (Utils.IsValidGuid(assignment.LaboratoryId))
                             txt += " (" + assignment.LaboratoryName(conn, trans) + ")";
+
+                        bool hasAccred = DB.HasAccreditationForOrderLine(conn, trans, a.LaboratoryId, ast.SampleTypeId, ast.SampleComponentId, apm.PreparationMethodId, aam.AnalysisMethodId);
+                        if (hasAccred)                        
+                            txt += " A";
 
                         TreeNode tn2 = tn.Nodes.Add(aam.Id.ToString(), txt);
                         tn2.Tag = aam;
                         tn2.ToolTipText = aam.AnalysisMethodNameFull(conn, trans) + Environment.NewLine + Environment.NewLine + aam.Comment;
+                        if (hasAccred)
+                        {
+                            tn2.NodeFont = new Font(treeOrderContent.Font.FontFamily, treeOrderContent.Font.Size, FontStyle.Bold);
+                            tn2.ForeColor = Color.ForestGreen;
+                        }
                     }
                 }
             }
@@ -4878,6 +5231,7 @@ select count(*) from sample s
 
                 trans.Commit();
 
+                btnSamplesSearch.ForeColor = Color.Red;
                 SetStatusMessage("Sample " + sample.Number + " updated");
             }
             catch (Exception ex)
@@ -4993,7 +5347,7 @@ select count(*) from sample s
                 trans.Commit();
 
                 treePrepAnal.SelectedNode.ForeColor = WorkflowStatus.GetStatusColor(preparation.WorkflowStatusId);
-                SetStatusMessage("Preparation updated successfully");
+                SetStatusMessage("Preparation " + sample.Number + "/" + preparation.Number + " updated successfully");
             }
             catch(Exception ex)
             {
@@ -5084,16 +5438,11 @@ select count(*) from sample s
 
                 if (!String.IsNullOrEmpty(tbPrepAnalAnalSpecRef.Text.Trim()))
                 {
-                    SqlCommand cmd = new SqlCommand("select count(*) from analysis where specter_reference = @specref and id not in(@exId)", conn, trans);
-                    cmd.Parameters.AddWithValue("@specref", tbPrepAnalAnalSpecRef.Text.Trim());
-                    cmd.Parameters.AddWithValue("@exId", analysis.Id);
-
-                    int cnt = (int)cmd.ExecuteScalar();
-                    if (cnt > 0)
+                    if (!Analysis.IsSpectrumReferenceAvailable(conn, trans, analysis.Id, tbPrepAnalAnalSpecRef.Text.Trim(), out int sampleNum))
                     {
-                        MessageBox.Show("The spectrum reference is already used");
+                        MessageBox.Show("The spectrum reference " + tbPrepAnalAnalSpecRef.Text.Trim() + " is already used by sample " + sampleNum);
                         return;
-                    }
+                    }                    
                 }
 
                 if (analysis.WorkflowStatusId == WorkflowStatus.Complete && (int)cboxPrepAnalAnalWorkflowStatus.SelectedValue == WorkflowStatus.Complete)
@@ -5145,7 +5494,7 @@ select count(*) from sample s
                 trans.Commit();                                
 
                 treePrepAnal.SelectedNode.ForeColor = WorkflowStatus.GetStatusColor(analysis.WorkflowStatusId);
-                SetStatusMessage("Analysis updated successfully");
+                SetStatusMessage("Analysis " + sample.Number + "/" + preparation.Number + "/" + analysis.Number + " updated successfully");
             }
             catch (Exception ex)
             {
@@ -5255,7 +5604,7 @@ select count(*) from sample s
 
                 trans.Commit();
 
-                SetStatusMessage("Lab data updated for sample " + sample.Number);
+                SetStatusMessage("Sample data updated for sample " + sample.Number);
             }
             catch (Exception ex)
             {
@@ -6398,12 +6747,6 @@ where s.number = @sample_number
                 return;
             }
 
-            if(assignment.WorkflowStatusId != WorkflowStatus.Complete)
-            {
-                MessageBox.Show("Order must be saved as complete first");
-                return;
-            }
-
             if(!Roles.HasAccess(Role.LaboratoryAdministrator))
             {
                 MessageBox.Show("You don't have access to generate order reports");
@@ -6717,8 +7060,8 @@ where s.number = @sample_number
         }
 
         private void gridSamples_SelectionChanged(object sender, EventArgs e)
-        {
-            ActiveControl = tbSamplesLookup;
+        {            
+            //ActiveControl = tbSamplesLookup;
         }
 
         private void gridAttachments_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -7487,7 +7830,7 @@ where s.number = @sample_number
         private void miTypeRelSampleTypesExportSampTypeXML_Click(object sender, EventArgs e)
         {
             SaveFileDialog dialog = new SaveFileDialog();
-            dialog.Filter = "STX files (*.stx)|*.stx";
+            dialog.Filter = "XML files (*.xml)|*.xml";
             if (dialog.ShowDialog() != DialogResult.OK)
                 return;
 
@@ -8037,6 +8380,7 @@ order by create_date desc";
         private void SetOrderDetailsEnabledState(bool state)
         {
             cboxOrderLaboratory.Enabled = state;
+            tbOrderDescription.ReadOnly = !state;
             cboxOrderResponsible.Enabled = state;
             btnOrderSelectCustomer.Enabled = state;
             btnOrderClearDeadline.Enabled = state;
@@ -8505,11 +8849,9 @@ order by create_date desc";
                 sample.LoadFromDB(conn, trans, sample.Id);
 
                 string json = JsonConvert.SerializeObject(sample);
-                DB.AddAuditMessage(conn, null, "sample", sample.Id, AuditOperationType.Update, json, "");
+                DB.AddAuditMessage(conn, trans, "sample", sample.Id, AuditOperationType.Update, json, "");
 
-                trans.Commit();
-
-                //treePrepAnal.Nodes.Remove(treePrepAnal.SelectedNode);
+                trans.Commit();                
             }
             catch(Exception ex)
             {
@@ -8552,7 +8894,7 @@ order by create_date desc";
                 return;
             }
 
-            DialogResult r = MessageBox.Show("Are you sure you want to delete preparation " + treePrepAnal.SelectedNode.Text + "?", "Warning", MessageBoxButtons.YesNo);
+            DialogResult r = MessageBox.Show("Are you sure you want to delete preparation " + treePrepAnal.SelectedNode.Text + " and all analyses connected to it?", "Warning", MessageBoxButtons.YesNo);
             if (r == DialogResult.No)
                 return;
 
@@ -9042,6 +9384,7 @@ from analysis_result ar
     inner join sample_type st on st.id = s.sample_type_id
     inner join project_sub ps on s.project_sub_id = ps.id
 	inner join project_main pm on pm.id = ps.project_main_id
+    inner join assignment ass on ass.id = a.assignment_id
     inner join nuclide n on n.id = ar.nuclide_id 
     left outer join activity_unit au on a.activity_unit_id = au.id
     left outer join activity_unit_type aut on a.activity_unit_type_id = aut.id
@@ -9074,6 +9417,12 @@ where ar.instance_status_id < 2
                 {
                     query += " and ps.id = @project_sub_id";
                     adapter.SelectCommand.Parameters.AddWithValue("@project_sub_id", cboxSearchProjectSub.SelectedValue, Guid.Empty);
+                }
+
+                if (Utils.IsValidGuid(cboxSearchOrders.SelectedValue))
+                {
+                    query += " and ass.id = @assignment_id";
+                    adapter.SelectCommand.Parameters.AddWithValue("@assignment_id", cboxSearchOrders.SelectedValue, Guid.Empty);
                 }
 
                 if (Utils.IsValidGuid(cboxSearchStations.SelectedValue))
@@ -9115,6 +9464,11 @@ where ar.instance_status_id < 2
                 else if (cbSearchAccredited.CheckState == CheckState.Indeterminate)
                     query += " and ar.accredited = 0";
 
+                if (cbSearchReportable.CheckState == CheckState.Checked)
+                    query += " and ar.reportable = 1";
+                else if (cbSearchReportable.CheckState == CheckState.Indeterminate)
+                    query += " and ar.reportable = 0";
+
                 query += " order by s.number, p.number, a.number, n.name";
 
                 adapter.SelectCommand.CommandText = query;
@@ -9123,6 +9477,10 @@ where ar.instance_status_id < 2
                 adapter.Fill(dt);
 
                 gridSearchResult.DataSource = dt;
+
+                gridSearchResult.Columns["Activity"].DefaultCellStyle.Format = Utils.ScientificFormat;
+                gridSearchResult.Columns["Act.Unc."].DefaultCellStyle.Format = Utils.ScientificFormat;
+                gridSearchResult.Columns["MDA"].DefaultCellStyle.Format = Utils.ScientificFormat;
 
                 searchIsDirty = false;
                 SetStatusMessage("Search showing " + dt.Rows.Count + " results");
@@ -9620,42 +9978,7 @@ where ar.instance_status_id < 2
         {
             // remove sample type component            
             MessageBox.Show("Not implemented");
-        }
-
-        private void btnOrdersOrderSummary_Click(object sender, EventArgs e)
-        {
-            if (gridOrders.SelectedRows.Count != 1)
-            {
-                MessageBox.Show("You must select a single order first");
-                return;
-            }
-
-            SqlConnection conn = null;
-
-            try
-            {
-                conn = DB.OpenConnection();
-                Guid aid = Utils.MakeGuid(gridOrders.SelectedRows[0].Cells["id"].Value);
-
-                byte[] pdfData = UtilsPdf.CreatePdfDataFromAssignment(conn, null, aid);
-
-                string path = Path.GetTempPath();
-                string fileName = Guid.NewGuid().ToString() + "-dsalims.pdf";
-                string filePath = Path.Combine(path, fileName);
-                File.WriteAllBytes(filePath, pdfData);
-
-                Process.Start(filePath);
-            }
-            catch(Exception ex)
-            {
-                Common.Log.Error(ex);
-                MessageBox.Show(Utils.makeErrorMessage(ex.Message));
-            }
-            finally
-            {
-                conn?.Close();
-            }
-        }
+        }        
 
         private void gridAuditLog_SelectionChanged(object sender, EventArgs e)
         {
@@ -9846,86 +10169,7 @@ where ar.instance_status_id < 2
                 Common.Log.Error(ex);
                 MessageBox.Show(Utils.makeErrorMessage(ex.Message));
             }
-        }
-
-        private void miSamplesImportSampRegApp_Click(object sender, EventArgs e)
-        {            
-            FormImportSamplesSampReg form = new FormImportSamplesSampReg(treeSampleTypes);
-            if (form.ShowDialog() != DialogResult.OK)
-                return;
-
-            SqlConnection conn = null;
-            SqlTransaction trans = null;
-
-            try
-            {
-                conn = DB.OpenConnection();
-                trans = conn.BeginTransaction();
-
-                DateTime currDate = DateTime.Now;
-                string ImportedFrom = "SampleRegistrationApp";
-                SqlCommand cmd = new SqlCommand("select count(*) from sample where external_id = @external_id and imported_from = @imported_from", conn, trans);
-                int skippedSamples = 0, importedSamples = 0;
-
-                foreach (SampleImportEntry se in form.ImportedSamples)
-                {
-                    cmd.Parameters.Clear();
-                    cmd.Parameters.AddWithValue("@external_id", se.ExternalId);
-                    cmd.Parameters.AddWithValue("@imported_from", ImportedFrom);
-                    int cnt = (int)cmd.ExecuteScalar();
-                    if(cnt > 0)
-                    {
-                        skippedSamples++;
-                        continue;
-                    }
-
-                    Sample sample = new Sample();
-                    sample.Number = DB.GetNextSampleCount(conn, trans);
-                    sample.ExternalId = se.ExternalId;
-                    sample.Latitude = se.Latitude;
-                    sample.Longitude = se.Longitude;
-                    sample.Altitude = se.Altitude;
-                    sample.SamplingDateFrom = sample.SamplingDateTo = sample.ReferenceDate = se.SamplingDate;
-                    if (!String.IsNullOrEmpty(se.Location))
-                    {
-                        sample.LocationType = "Other";
-                        sample.Location = se.Location;
-                    }
-                    sample.LaboratoryId = form.SelectedLaboratoryId;
-                    sample.SampleTypeId = se.LIMSSampleTypeId;
-                    sample.SampleComponentId = Guid.Empty; // FIXME
-                    sample.ProjectSubId = form.SelectedSubProjectId;
-                    sample.ImportedFrom = ImportedFrom;
-                    sample.ImportedFromId = se.Number.ToString();
-                    sample.InstanceStatusId = InstanceStatus.Active;
-                    sample.Comment = se.Comment;
-                    sample.CreateDate = currDate;
-                    sample.CreateId = Common.UserId;
-                    sample.UpdateDate = currDate;
-                    sample.UpdateId = Common.UserId;
-                    sample.StoreToDB(conn, trans);                    
-
-                    string json = JsonConvert.SerializeObject(sample);
-                    DB.AddAuditMessage(conn, trans, "sample", sample.Id, AuditOperationType.Insert, json, "");
-
-                    importedSamples++;
-                }
-
-                trans.Commit();
-
-                SetStatusMessage("Imported " + importedSamples + " new samples. " + skippedSamples + " samples already imported");
-            }
-            catch(Exception ex)
-            {
-                trans?.Rollback();
-                Common.Log.Error(ex);
-                MessageBox.Show(ex.Message);
-            }
-            finally
-            {
-                conn?.Close();
-            }
-        }
+        }        
 
         private void tbOrderDescription_TextChanged(object sender, EventArgs e)
         {
@@ -9963,6 +10207,982 @@ where ar.instance_status_id < 2
         private void tbPrepAnalLODTemperatureAsh2_TextChanged(object sender, EventArgs e)
         {
             sample.Dirty = true;
+        }
+
+        private void miSamplesImportTemplate_Click(object sender, EventArgs e)
+        {
+            FormImportSamples form = new FormImportSamples(treeSampleTypes);
+            if (form.ShowDialog() != DialogResult.OK)
+                return;
+
+            btnSamplesSearch.ForeColor = Color.Red;
+
+            SetStatusMessage("Imported samples " + form.FirstInsertedSampleNumber + " to " + form.LastInsertedSampleNumber);            
+        }
+
+        private void miSamplesImportGetExcelTemplate_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                SaveFileDialog dialog = new SaveFileDialog();
+                dialog.Filter = "XLSX files (*.xlsx)|*.xlsx";
+                if (dialog.ShowDialog() != DialogResult.OK)
+                    return;
+
+                string template = Common.InstallationDirectory + Path.DirectorySeparatorChar + "SampleImportDsaLims.xlsx";
+                if (!File.Exists(template))
+                    throw new Exception("Unable to find template " + template);
+
+                File.Copy(template, dialog.FileName, true);
+
+                SetStatusMessage("Sample import template saved as " + dialog.FileName);
+            }   
+            catch(Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void cboxSearchOrders_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            searchIsDirty = true;
+        }
+
+        private void cboxSearchOrders_Leave(object sender, EventArgs e)
+        {
+            if (String.IsNullOrEmpty(cboxSearchOrders.Text.Trim()))
+            {
+                cboxSearchOrders.SelectedItem = Guid.Empty;
+                return;
+            }
+
+            if (!Utils.IsValidGuid(cboxSearchOrders.SelectedValue))
+            {
+                cboxSearchOrders.SelectedValue = Guid.Empty;
+            }
+        }
+
+        private void cbSearchReportable_CheckStateChanged(object sender, EventArgs e)
+        {
+            searchIsDirty = true;
+        }
+
+        private void miOrderShowDefAsPDF_Click(object sender, EventArgs e)
+        {
+            if (assignment == null)
+            {
+                MessageBox.Show("No order selected");
+                return;
+            }
+
+            SqlConnection conn = null;
+
+            try
+            {
+                conn = DB.OpenConnection();
+                byte[] pdfData = UtilsPdf.CreatePdfDefinitionFromAssignment(conn, null, assignment, treeOrderContent, "LIMS Ordreoversikt");
+
+                string path = Path.GetTempPath();
+                string fileName = Guid.NewGuid().ToString() + "-dsalims.pdf";
+                string filePath = Path.Combine(path, fileName);
+                File.WriteAllBytes(filePath, pdfData);
+
+                Process.Start(filePath);
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(Utils.makeErrorMessage(ex.Message));
+            }
+            finally
+            {
+                conn?.Close();
+            }
+        }
+
+        private void btnOrderShowUnitsAsPDF_Click(object sender, EventArgs e)
+        {
+            if(assignment == null)
+            {
+                Common.Log.Error("btnOrderShowUnitsAsPDF_Click: No assignment selected");
+                MessageBox.Show(Utils.makeErrorMessage("No assignment selected"));
+                return;
+            }
+
+            SqlConnection conn = null;
+
+            try
+            {
+                conn = DB.OpenConnection();                
+
+                byte[] pdfData = UtilsPdf.CreatePdfDataFromAssignment(conn, null, assignment);
+
+                string path = Path.GetTempPath();
+                string fileName = Guid.NewGuid().ToString() + "-dsalims.pdf";
+                string filePath = Path.Combine(path, fileName);
+                File.WriteAllBytes(filePath, pdfData);
+
+                Process.Start(filePath);
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(Utils.makeErrorMessage(ex.Message));
+            }
+            finally
+            {
+                conn?.Close();
+            }
+        }
+
+        private void miTypeRelSampleTypesExportSampID_Click(object sender, EventArgs e)
+        {
+            if(treeSampleTypes.SelectedNode == null)
+            {
+                MessageBox.Show("You must select a sample type first");
+                return;
+            }
+
+            string itemName = treeSampleTypes.SelectedNode.Text;
+            Guid stid = Guid.Parse(treeSampleTypes.SelectedNode.Name);
+            FormShowGUID form = new FormShowGUID(itemName, stid);
+            form.ShowDialog();
+        }
+
+        private void miSysAccTermNew_Click(object sender, EventArgs e)
+        {
+            if (!Roles.HasAccess(Role.LaboratoryAdministrator))
+            {
+                MessageBox.Show("You don't have access to manage accreditation terms");
+                return;
+            }
+
+            FormAccreditationTerm form = new FormAccreditationTerm();
+            switch (form.ShowDialog())
+            {
+                case DialogResult.OK:
+                    SetStatusMessage("Accreditation term " + form.ModifiedAccreditationTerm + " created");
+
+                    SqlConnection conn = null;
+                    try
+                    {
+                        conn = DB.OpenConnection();
+                        UI.PopulateAccreditationTerms(conn, null, InstanceStatus.Deleted, gridSysAccTerms);
+                    }
+                    catch (Exception ex)
+                    {
+                        Common.Log.Error(ex);
+                        MessageBox.Show(ex.Message);
+                    }
+                    finally
+                    {
+                        conn?.Close();
+                    }
+                    break;
+                case DialogResult.Abort:
+                    SetStatusMessage("Create accreditation term failed", StatusMessageType.Error);
+                    break;
+            }
+        }
+
+        private void miSysAccTermEdit_Click(object sender, EventArgs e)
+        {
+            if (!Roles.HasAccess(Role.LaboratoryAdministrator))
+            {
+                MessageBox.Show("You don't have access to manage accreditation terms");
+                return;
+            }
+
+            if (gridSysAccTerms.SelectedRows.Count != 1)
+            {
+                MessageBox.Show("You must select a single accreditation term first");
+                return;
+            }
+
+            Guid atId = Utils.MakeGuid(gridSysAccTerms.SelectedRows[0].Cells["id"].Value);
+
+            FormAccreditationTerm form = new FormAccreditationTerm(atId);
+            switch (form.ShowDialog())
+            {
+                case DialogResult.OK:
+                    SetStatusMessage("Accreditation term " + form.ModifiedAccreditationTerm + " edited");
+
+                    SqlConnection conn = null;
+                    try
+                    {
+                        conn = DB.OpenConnection();
+                        UI.PopulateAccreditationTerms(conn, null, InstanceStatus.Deleted, gridSysAccTerms);
+                    }
+                    catch (Exception ex)
+                    {
+                        Common.Log.Error(ex);
+                        MessageBox.Show(ex.Message);
+                    }
+                    finally
+                    {
+                        conn?.Close();
+                    }
+                    break;
+                case DialogResult.Abort:
+                    SetStatusMessage("Edit accreditation term failed", StatusMessageType.Error);
+                    break;
+            }
+        }
+
+        private void btnAccredNuclidesAdd_Click(object sender, EventArgs e)
+        {
+            if (!Roles.HasAccess(Role.LaboratoryAdministrator))
+            {
+                MessageBox.Show("You don't have access to manage accreditation terms");
+                return;
+            }
+
+            if (gridSysAccTerms.SelectedRows.Count != 1)
+            {
+                MessageBox.Show("You must select an accreditation term first");
+                return;
+            }
+
+            FormSelectNuclide form = new FormSelectNuclide(true);
+            if (form.ShowDialog() != DialogResult.OK)
+                return;
+
+            SqlConnection conn = null;
+            SqlTransaction trans = null;
+
+            try
+            {
+                conn = DB.OpenConnection();
+                trans = conn.BeginTransaction();
+
+                Guid accredId = Utils.MakeGuid(gridSysAccTerms.SelectedRows[0].Cells["id"].Value);
+
+                string query = @"
+if not exists (select * from accreditation_term_x_nuclide where accreditation_term_id = @accreditation_term_id and nuclide_id = @nuclide_id)
+insert into accreditation_term_x_nuclide values(@accreditation_term_id, @nuclide_id)
+";
+                SqlCommand cmd = new SqlCommand(query, conn, trans);
+
+                foreach(Lemma<Guid, string> l in form.SelectedNuclides)
+                {
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.AddWithValue("@accreditation_term_id", accredId);
+                    cmd.Parameters.AddWithValue("@nuclide_id", l.Id);
+                    cmd.ExecuteNonQuery();
+                }
+
+                trans.Commit();
+
+                UI.PopulateAccreditationTermNuclides(conn, null, accredId, lbAccredNuclides);
+            }
+            catch (Exception ex)
+            {
+                trans?.Rollback();
+                Common.Log.Error(ex);
+                MessageBox.Show(Utils.makeErrorMessage(ex.Message));
+            }
+            finally
+            {
+                conn?.Close();
+            }
+        }
+
+        private void gridSysAccTerms_SelectionChanged(object sender, EventArgs e)
+        {
+            if (gridSysAccTerms.SelectedRows.Count < 1)                            
+                return;
+
+            SqlConnection conn = null;            
+
+            try
+            {
+                conn = DB.OpenConnection();            
+
+                Guid accredId = Utils.MakeGuid(gridSysAccTerms.SelectedRows[0].Cells["id"].Value);
+                UI.PopulateAccreditationTermNuclides(conn, null, accredId, lbAccredNuclides);
+                UI.PopulateAccreditationTermSampleTypes(conn, null, accredId, gridAccredSampTypes);
+                UI.PopulateAccreditationTermLaboratories(conn, null, accredId, lbAccredLabs);
+                UI.PopulateAccreditationTermPreparationMethods(conn, null, accredId, lbAccredPrepMeth);
+                UI.PopulateAccreditationTermAnalysisMethods(conn, null, accredId, lbAccredAnalMeth);
+            }
+            catch (Exception ex)
+            {                
+                Common.Log.Error(ex);
+                MessageBox.Show(Utils.makeErrorMessage(ex.Message));
+            }
+            finally
+            {
+                conn?.Close();
+            }
+        }
+
+        private void btnAccredNuclidesRemove_Click(object sender, EventArgs e)
+        {
+            if (!Roles.HasAccess(Role.LaboratoryAdministrator))
+            {
+                MessageBox.Show("You don't have access to manage accreditation terms");
+                return;
+            }
+
+            if (gridSysAccTerms.SelectedRows.Count != 1)
+            {
+                MessageBox.Show("You must select an accreditation term first");
+                return;
+            }
+
+            if (lbAccredNuclides.SelectedItems.Count < 1)
+            {
+                MessageBox.Show("You must select one or more nuclides first");
+                return;
+            }
+
+            SqlConnection conn = null;
+            SqlTransaction trans = null;
+
+            try
+            {
+                conn = DB.OpenConnection();
+                trans = conn.BeginTransaction();
+
+                Guid accredId = Utils.MakeGuid(gridSysAccTerms.SelectedRows[0].Cells["id"].Value);
+
+                string query = "delete from accreditation_term_x_nuclide where accreditation_term_id = @accreditation_term_id and nuclide_id = @nuclide_id";
+                SqlCommand cmd = new SqlCommand(query, conn, trans);
+
+                foreach (Lemma<Guid, string> l in lbAccredNuclides.SelectedItems)
+                {
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.AddWithValue("@accreditation_term_id", accredId);
+                    cmd.Parameters.AddWithValue("@nuclide_id", l.Id);
+                    cmd.ExecuteNonQuery();
+                }
+
+                trans.Commit();
+
+                UI.PopulateAccreditationTermNuclides(conn, null, accredId, lbAccredNuclides);
+            }
+            catch (Exception ex)
+            {
+                trans?.Rollback();
+                Common.Log.Error(ex);
+                MessageBox.Show(Utils.makeErrorMessage(ex.Message));
+            }
+            finally
+            {
+                conn?.Close();
+            }
+        }
+
+        private void btnAccredSampTypesAdd_Click(object sender, EventArgs e)
+        {
+            if (!Roles.HasAccess(Role.LaboratoryAdministrator))
+            {
+                MessageBox.Show("You don't have access to manage accreditation terms");
+                return;
+            }
+
+            if (gridSysAccTerms.SelectedRows.Count != 1)
+            {
+                MessageBox.Show("You must select an accreditation term first");
+                return;
+            }
+
+            FormSelectSampleType form = new FormSelectSampleType();
+            if (form.ShowDialog() != DialogResult.OK)
+                return;
+
+            SqlConnection conn = null;
+            SqlTransaction trans = null;
+
+            try
+            {
+                conn = DB.OpenConnection();
+                trans = conn.BeginTransaction();
+
+                Guid accredId = Utils.MakeGuid(gridSysAccTerms.SelectedRows[0].Cells["id"].Value);
+
+                string query = @"
+if not exists (select * from accreditation_term_x_sample_type where accreditation_term_id = @accreditation_term_id and sample_type_id = @sample_type_id)
+insert into accreditation_term_x_sample_type values(@accreditation_term_id, @sample_type_id)
+";
+                SqlCommand cmd = new SqlCommand(query, conn, trans);
+                                
+                cmd.Parameters.AddWithValue("@accreditation_term_id", accredId);
+                cmd.Parameters.AddWithValue("@sample_type_id", form.SelectedSampleTypeId);
+                cmd.ExecuteNonQuery();
+
+                trans.Commit();
+
+                UI.PopulateAccreditationTermSampleTypes(conn, null, accredId, gridAccredSampTypes);
+            }
+            catch (Exception ex)
+            {
+                trans?.Rollback();
+                Common.Log.Error(ex);
+                MessageBox.Show(Utils.makeErrorMessage(ex.Message));
+            }
+            finally
+            {
+                conn?.Close();
+            }
+        }
+
+        private void btnAccredSampTypesRemove_Click(object sender, EventArgs e)
+        {
+            if (!Roles.HasAccess(Role.LaboratoryAdministrator))
+            {
+                MessageBox.Show("You don't have access to manage accreditation terms");
+                return;
+            }
+
+            if (gridSysAccTerms.SelectedRows.Count != 1)
+            {
+                MessageBox.Show("You must select an accreditation term first");
+                return;
+            }
+
+            if (gridAccredSampTypes.SelectedRows.Count < 1)
+            {
+                MessageBox.Show("You must select one or more sample types first");
+                return;
+            }
+
+            SqlConnection conn = null;
+            SqlTransaction trans = null;
+
+            try
+            {
+                conn = DB.OpenConnection();
+                trans = conn.BeginTransaction();
+
+                Guid accredId = Utils.MakeGuid(gridSysAccTerms.SelectedRows[0].Cells["id"].Value);
+
+                string query = "delete from accreditation_term_x_sample_type where accreditation_term_id = @accreditation_term_id and sample_type_id = @sample_type_id";
+                SqlCommand cmd = new SqlCommand(query, conn, trans);
+
+                foreach (DataGridViewRow row in gridAccredSampTypes.SelectedRows)
+                {
+                    Guid stId = Utils.MakeGuid(row.Cells["id"].Value);
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.AddWithValue("@accreditation_term_id", accredId);
+                    cmd.Parameters.AddWithValue("@sample_type_id", stId);
+                    cmd.ExecuteNonQuery();
+
+                    SqlCommand cmd2 = new SqlCommand("delete from accreditation_term_x_sample_type_x_sample_component where accreditation_term_id = @accreditation_term_id and sample_type_id = @sample_type_id", conn, trans);
+                    cmd2.Parameters.AddWithValue("@accreditation_term_id", accredId);
+                    cmd2.Parameters.AddWithValue("@sample_type_id", stId);
+                    cmd2.ExecuteNonQuery();
+                }
+
+                trans.Commit();
+
+                UI.PopulateAccreditationTermSampleTypes(conn, null, accredId, gridAccredSampTypes);
+            }
+            catch (Exception ex)
+            {
+                trans?.Rollback();
+                Common.Log.Error(ex);
+                MessageBox.Show(Utils.makeErrorMessage(ex.Message));
+            }
+            finally
+            {
+                conn?.Close();
+            }
+        }
+
+        private void btnAccredLabsAdd_Click(object sender, EventArgs e)
+        {
+            if (!Roles.HasAccess(Role.LaboratoryAdministrator))
+            {
+                MessageBox.Show("You don't have access to manage accreditation terms");
+                return;
+            }
+
+            if (gridSysAccTerms.SelectedRows.Count != 1)
+            {
+                MessageBox.Show("You must select an accreditation term first");
+                return;
+            }
+
+            FormSelectAny form = new FormSelectAny("Select a laboratory", "laboratory");
+            if (form.ShowDialog() != DialogResult.OK)
+                return;
+
+            SqlConnection conn = null;
+            SqlTransaction trans = null;
+
+            try
+            {
+                conn = DB.OpenConnection();
+                trans = conn.BeginTransaction();
+
+                Guid accredId = Utils.MakeGuid(gridSysAccTerms.SelectedRows[0].Cells["id"].Value);
+
+                string query = @"
+if not exists (select * from accreditation_term_x_laboratory where accreditation_term_id = @accreditation_term_id and laboratory_id = @laboratory_id)
+insert into accreditation_term_x_laboratory values(@accreditation_term_id, @laboratory_id)";
+
+                SqlCommand cmd = new SqlCommand(query, conn, trans);
+                cmd.Parameters.AddWithValue("@accreditation_term_id", accredId);
+                cmd.Parameters.AddWithValue("@laboratory_id", form.SelectedItem.Id);
+                cmd.ExecuteNonQuery();
+
+                trans.Commit();
+
+                UI.PopulateAccreditationTermLaboratories(conn, null, accredId, lbAccredLabs);
+            }
+            catch (Exception ex)
+            {
+                trans?.Rollback();
+                Common.Log.Error(ex);
+                MessageBox.Show(Utils.makeErrorMessage(ex.Message));
+            }
+            finally
+            {
+                conn?.Close();
+            }
+        }
+
+        private void btnAccredLabsRemove_Click(object sender, EventArgs e)
+        {
+            if (!Roles.HasAccess(Role.LaboratoryAdministrator))
+            {
+                MessageBox.Show("You don't have access to manage accreditation terms");
+                return;
+            }
+
+            if (gridSysAccTerms.SelectedRows.Count != 1)
+            {
+                MessageBox.Show("You must select an accreditation term first");
+                return;
+            }
+
+            if (lbAccredLabs.SelectedItems.Count < 1)
+            {
+                MessageBox.Show("You must select one or more laboratories first");
+                return;
+            }
+
+            SqlConnection conn = null;
+            SqlTransaction trans = null;
+
+            try
+            {
+                conn = DB.OpenConnection();
+                trans = conn.BeginTransaction();
+
+                Guid accredId = Utils.MakeGuid(gridSysAccTerms.SelectedRows[0].Cells["id"].Value);
+
+                string query = "delete from accreditation_term_x_laboratory where accreditation_term_id = @accreditation_term_id and laboratory_id = @laboratory_id";
+                SqlCommand cmd = new SqlCommand(query, conn, trans);
+
+                foreach (Lemma<Guid, string> l in lbAccredLabs.SelectedItems)
+                {                    
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.AddWithValue("@accreditation_term_id", accredId);
+                    cmd.Parameters.AddWithValue("@laboratory_id", l.Id);
+                    cmd.ExecuteNonQuery();
+                }
+
+                trans.Commit();
+
+                UI.PopulateAccreditationTermLaboratories(conn, null, accredId, lbAccredLabs);
+            }
+            catch (Exception ex)
+            {
+                trans?.Rollback();
+                Common.Log.Error(ex);
+                MessageBox.Show(Utils.makeErrorMessage(ex.Message));
+            }
+            finally
+            {
+                conn?.Close();
+            }
+        }
+
+        private void btnAccredPrepMethAdd_Click(object sender, EventArgs e)
+        {
+            if (!Roles.HasAccess(Role.LaboratoryAdministrator))
+            {
+                MessageBox.Show("You don't have access to manage accreditation terms");
+                return;
+            }
+
+            if (gridSysAccTerms.SelectedRows.Count != 1)
+            {
+                MessageBox.Show("You must select an accreditation term first");
+                return;
+            }
+
+            FormSelectAny form = new FormSelectAny("Select a preparation method", "preparation_method");
+            if (form.ShowDialog() != DialogResult.OK)
+                return;
+
+            SqlConnection conn = null;
+            SqlTransaction trans = null;
+
+            try
+            {
+                conn = DB.OpenConnection();
+                trans = conn.BeginTransaction();
+
+                Guid accredId = Utils.MakeGuid(gridSysAccTerms.SelectedRows[0].Cells["id"].Value);
+
+                string query = @"
+if not exists (select * from accreditation_term_x_preparation_method where accreditation_term_id = @accreditation_term_id and preparation_method_id = @preparation_method_id)
+insert into accreditation_term_x_preparation_method values(@accreditation_term_id, @preparation_method_id)";
+
+                SqlCommand cmd = new SqlCommand(query, conn, trans);
+                cmd.Parameters.AddWithValue("@accreditation_term_id", accredId);
+                cmd.Parameters.AddWithValue("@preparation_method_id", form.SelectedItem.Id);
+                cmd.ExecuteNonQuery();
+
+                trans.Commit();
+
+                UI.PopulateAccreditationTermPreparationMethods(conn, null, accredId, lbAccredPrepMeth);
+            }
+            catch (Exception ex)
+            {
+                trans?.Rollback();
+                Common.Log.Error(ex);
+                MessageBox.Show(Utils.makeErrorMessage(ex.Message));
+            }
+            finally
+            {
+                conn?.Close();
+            }
+        }
+
+        private void btnAccredPrepMethRemove_Click(object sender, EventArgs e)
+        {
+            if (!Roles.HasAccess(Role.LaboratoryAdministrator))
+            {
+                MessageBox.Show("You don't have access to manage accreditation terms");
+                return;
+            }
+
+            if (gridSysAccTerms.SelectedRows.Count != 1)
+            {
+                MessageBox.Show("You must select an accreditation term first");
+                return;
+            }
+
+            if (lbAccredPrepMeth.SelectedItems.Count < 1)
+            {
+                MessageBox.Show("You must select one or more preparation methods first");
+                return;
+            }
+
+            SqlConnection conn = null;
+            SqlTransaction trans = null;
+
+            try
+            {
+                conn = DB.OpenConnection();
+                trans = conn.BeginTransaction();
+
+                Guid accredId = Utils.MakeGuid(gridSysAccTerms.SelectedRows[0].Cells["id"].Value);
+
+                string query = "delete from accreditation_term_x_preparation_method where accreditation_term_id = @accreditation_term_id and preparation_method_id = @preparation_method_id";
+                SqlCommand cmd = new SqlCommand(query, conn, trans);
+
+                foreach (Lemma<Guid, string> l in lbAccredPrepMeth.SelectedItems)
+                {
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.AddWithValue("@accreditation_term_id", accredId);
+                    cmd.Parameters.AddWithValue("@preparation_method_id", l.Id);
+                    cmd.ExecuteNonQuery();
+                }
+
+                trans.Commit();
+
+                UI.PopulateAccreditationTermPreparationMethods(conn, null, accredId, lbAccredPrepMeth);
+            }
+            catch (Exception ex)
+            {
+                trans?.Rollback();
+                Common.Log.Error(ex);
+                MessageBox.Show(Utils.makeErrorMessage(ex.Message));
+            }
+            finally
+            {
+                conn?.Close();
+            }
+        }
+
+        private void btnAccredAnalMethAdd_Click(object sender, EventArgs e)
+        {
+            if (!Roles.HasAccess(Role.LaboratoryAdministrator))
+            {
+                MessageBox.Show("You don't have access to manage accreditation terms");
+                return;
+            }
+
+            if (gridSysAccTerms.SelectedRows.Count != 1)
+            {
+                MessageBox.Show("You must select an accreditation term first");
+                return;
+            }
+
+            FormSelectAny form = new FormSelectAny("Select an analysis method", "analysis_method");
+            if (form.ShowDialog() != DialogResult.OK)
+                return;
+
+            SqlConnection conn = null;
+            SqlTransaction trans = null;
+
+            try
+            {
+                conn = DB.OpenConnection();
+                trans = conn.BeginTransaction();
+
+                Guid accredId = Utils.MakeGuid(gridSysAccTerms.SelectedRows[0].Cells["id"].Value);
+
+                string query = @"
+if not exists (select * from accreditation_term_x_analysis_method where accreditation_term_id = @accreditation_term_id and analysis_method_id = @analysis_method_id)
+insert into accreditation_term_x_analysis_method values(@accreditation_term_id, @analysis_method_id)";
+
+                SqlCommand cmd = new SqlCommand(query, conn, trans);
+                cmd.Parameters.AddWithValue("@accreditation_term_id", accredId);
+                cmd.Parameters.AddWithValue("@analysis_method_id", form.SelectedItem.Id);
+                cmd.ExecuteNonQuery();
+
+                trans.Commit();
+
+                UI.PopulateAccreditationTermAnalysisMethods(conn, null, accredId, lbAccredAnalMeth);
+            }
+            catch (Exception ex)
+            {
+                trans?.Rollback();
+                Common.Log.Error(ex);
+                MessageBox.Show(Utils.makeErrorMessage(ex.Message));
+            }
+            finally
+            {
+                conn?.Close();
+            }
+        }
+
+        private void btnAccredAnalMethRemove_Click(object sender, EventArgs e)
+        {
+            if (!Roles.HasAccess(Role.LaboratoryAdministrator))
+            {
+                MessageBox.Show("You don't have access to manage accreditation terms");
+                return;
+            }
+
+            if (gridSysAccTerms.SelectedRows.Count != 1)
+            {
+                MessageBox.Show("You must select an accreditation term first");
+                return;
+            }
+
+            if (lbAccredAnalMeth.SelectedItems.Count < 1)
+            {
+                MessageBox.Show("You must select one or more analysis methods first");
+                return;
+            }
+
+            SqlConnection conn = null;
+            SqlTransaction trans = null;
+
+            try
+            {
+                conn = DB.OpenConnection();
+                trans = conn.BeginTransaction();
+
+                Guid accredId = Utils.MakeGuid(gridSysAccTerms.SelectedRows[0].Cells["id"].Value);
+
+                string query = "delete from accreditation_term_x_analysis_method where accreditation_term_id = @accreditation_term_id and analysis_method_id = @analysis_method_id";
+                SqlCommand cmd = new SqlCommand(query, conn, trans);
+
+                foreach (Lemma<Guid, string> l in lbAccredAnalMeth.SelectedItems)
+                {
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.AddWithValue("@accreditation_term_id", accredId);
+                    cmd.Parameters.AddWithValue("@analysis_method_id", l.Id);
+                    cmd.ExecuteNonQuery();
+                }
+
+                trans.Commit();
+
+                UI.PopulateAccreditationTermAnalysisMethods(conn, null, accredId, lbAccredAnalMeth);
+            }
+            catch (Exception ex)
+            {
+                trans?.Rollback();
+                Common.Log.Error(ex);
+                MessageBox.Show(Utils.makeErrorMessage(ex.Message));
+            }
+            finally
+            {
+                conn?.Close();
+            }
+        }
+
+        private void gridAccredSampTypes_SelectionChanged(object sender, EventArgs e)
+        {
+            lbAccredSampComp.Items.Clear();
+
+            if (gridSysAccTerms.SelectedRows.Count < 1)
+                return;
+
+            if (gridAccredSampTypes.SelectedRows.Count < 1)
+                return;
+
+            SqlConnection conn = null;
+
+            try
+            {
+                conn = DB.OpenConnection();
+
+                Guid accredId = Utils.MakeGuid(gridSysAccTerms.SelectedRows[0].Cells["id"].Value);
+                Guid sampTypeId = Utils.MakeGuid(gridAccredSampTypes.SelectedRows[0].Cells["id"].Value);
+
+                UI.PopulateAccreditationTermSampleComponents(conn, null, accredId, sampTypeId, lbAccredSampComp);
+            }
+            catch (Exception ex)
+            {
+                Common.Log.Error(ex);
+                MessageBox.Show(Utils.makeErrorMessage(ex.Message));
+            }
+            finally
+            {
+                conn?.Close();
+            }
+        }
+
+        private void btnAccredSampCompAdd_Click(object sender, EventArgs e)
+        {
+            if (!Roles.HasAccess(Role.LaboratoryAdministrator))
+            {
+                MessageBox.Show("You don't have access to manage accreditation terms");
+                return;
+            }
+
+            if (gridSysAccTerms.SelectedRows.Count != 1)
+            {
+                MessageBox.Show("You must select an accreditation term first");
+                return;
+            }
+
+            if (gridAccredSampTypes.SelectedRows.Count != 1)
+            {
+                MessageBox.Show("You must select a sample_type first");
+                return;
+            }
+
+            Guid sampTypeId = Utils.MakeGuid(gridAccredSampTypes.SelectedRows[0].Cells["id"].Value);
+
+            FormSelectSampleTypeComponents form = new FormSelectSampleTypeComponents(sampTypeId);
+            if (form.ShowDialog() != DialogResult.OK)
+                return;
+
+            SqlConnection conn = null;
+            SqlTransaction trans = null;
+
+            try
+            {
+                conn = DB.OpenConnection();
+                trans = conn.BeginTransaction();
+
+                Guid accredId = Utils.MakeGuid(gridSysAccTerms.SelectedRows[0].Cells["id"].Value);
+
+                string query = @"
+if not exists (select * from accreditation_term_x_sample_type_x_sample_component where accreditation_term_id = @accreditation_term_id and sample_type_id = @sample_type_id and sample_component_id = @sample_component_id)
+insert into accreditation_term_x_sample_type_x_sample_component values(@accreditation_term_id, @sample_type_id, @sample_component_id)
+";
+                SqlCommand cmd = new SqlCommand(query, conn, trans);
+
+                foreach (Lemma<Guid, string> l in form.SelectedComponents)
+                {
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.AddWithValue("@accreditation_term_id", accredId);
+                    cmd.Parameters.AddWithValue("@sample_type_id", sampTypeId);
+                    cmd.Parameters.AddWithValue("@sample_component_id", l.Id);
+                    cmd.ExecuteNonQuery();
+                }
+
+                trans.Commit();
+
+                UI.PopulateAccreditationTermSampleComponents(conn, null, accredId, sampTypeId, lbAccredSampComp);
+            }
+            catch (Exception ex)
+            {
+                trans?.Rollback();
+                Common.Log.Error(ex);
+                MessageBox.Show(Utils.makeErrorMessage(ex.Message));
+            }
+            finally
+            {
+                conn?.Close();
+            }
+        }
+
+        private void btnAccredSampCompRemove_Click(object sender, EventArgs e)
+        {
+            if (!Roles.HasAccess(Role.LaboratoryAdministrator))
+            {
+                MessageBox.Show("You don't have access to manage accreditation terms");
+                return;
+            }
+
+            if (gridSysAccTerms.SelectedRows.Count != 1)
+            {
+                MessageBox.Show("You must select an accreditation term first");
+                return;
+            }
+
+            if (gridAccredSampTypes.SelectedRows.Count != 1)
+            {
+                MessageBox.Show("You must select a sample type first");
+                return;
+            }
+
+            if (lbAccredSampComp.SelectedItems.Count < 1)
+            {
+                MessageBox.Show("You must select one or more sample components first");
+                return;
+            }
+
+            SqlConnection conn = null;
+            SqlTransaction trans = null;
+
+            try
+            {
+                conn = DB.OpenConnection();
+                trans = conn.BeginTransaction();
+
+                Guid accredId = Utils.MakeGuid(gridSysAccTerms.SelectedRows[0].Cells["id"].Value);
+                Guid sampTypeId = Utils.MakeGuid(gridAccredSampTypes.SelectedRows[0].Cells["id"].Value);
+
+                string query = "delete from accreditation_term_x_sample_type_x_sample_component where accreditation_term_id = @accreditation_term_id and sample_type_id = @sample_type_id and sample_component_id = @sample_component_id";
+                SqlCommand cmd = new SqlCommand(query, conn, trans);
+
+                foreach (Lemma<Guid, string> l in lbAccredSampComp.SelectedItems)
+                {                    
+                    cmd.Parameters.Clear();
+                    cmd.Parameters.AddWithValue("@accreditation_term_id", accredId);
+                    cmd.Parameters.AddWithValue("@sample_type_id", sampTypeId);
+                    cmd.Parameters.AddWithValue("@sample_component_id", l.Id);
+                    cmd.ExecuteNonQuery();
+                }
+
+                trans.Commit();
+
+                UI.PopulateAccreditationTermSampleComponents(conn, null, accredId, sampTypeId, lbAccredSampComp);
+            }
+            catch (Exception ex)
+            {
+                trans?.Rollback();
+                Common.Log.Error(ex);
+                MessageBox.Show(Utils.makeErrorMessage(ex.Message));
+            }
+            finally
+            {
+                conn?.Close();
+            }
         }
     }
 }

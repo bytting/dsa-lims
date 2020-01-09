@@ -114,6 +114,12 @@ namespace DSA_lims
             return !DB.IsValidField(o) ? "" : o.ToString();
         }
 
+        public string ResponsibleName(SqlConnection conn, SqlTransaction trans)
+        {
+            object o = DB.GetScalar(conn, trans, "select name from cv_account where id = @aid", CommandType.Text, new SqlParameter("@aid", AccountId));
+            return !DB.IsValidField(o) ? "" : o.ToString();
+        }
+
         public static bool IdExists(SqlConnection conn, SqlTransaction trans, Guid assId)
         {
             int cnt = (int)DB.GetScalar(conn, trans, "select count(*) from assignment where id = @id", CommandType.Text, new SqlParameter("@id", assId));

@@ -479,7 +479,7 @@ from role r
         public static bool SpecRefExists(SqlConnection conn, SqlTransaction trans, string specref, Guid exceptId)
         {
             SqlCommand cmd = new SqlCommand("", conn, trans);
-            string query = "select count(*) from analysis where specter_reference = @specref";
+            string query = "select count(*) from analysis where specter_reference = @specref and instance_status_id = 1";
             cmd.Parameters.AddWithValue("@specref", specref);
             if (exceptId != Guid.Empty)
             {
@@ -856,6 +856,108 @@ select
             }
 
             return false;
+        }
+
+        public static void InsertImportFileIdentifier(SqlConnection conn, SqlTransaction trans, Guid id)
+        {
+            string query = @"
+begin
+   if not exists (select * from imported_file_identifiers where id = @id)
+   begin
+       insert into imported_file_identifiers values(@id)
+   end
+end
+";
+            SqlCommand cmd = new SqlCommand(query, conn, trans);
+            cmd.Parameters.AddWithValue("@id", id);
+            cmd.ExecuteNonQuery();
+        }
+
+        public static void CreateSampleParameterName(SqlConnection conn, SqlTransaction trans, string name, string type)
+        {
+            string query = @"
+begin
+   if not exists (select * from sample_parameter_name where name = @name)
+   begin
+       insert into sample_parameter_name (id, name, type) values (@id, @name, @type)
+   end
+end
+";
+            SqlCommand cmd = new SqlCommand(query, conn, trans);
+            cmd.Parameters.AddWithValue("@id", Guid.NewGuid());
+            cmd.Parameters.AddWithValue("@name", name);
+            cmd.Parameters.AddWithValue("@type", type);
+            cmd.ExecuteNonQuery();
+        }
+
+        public static void InsertSampleParameter(SqlConnection conn, SqlTransaction trans, Guid sampleId, string parameterName, object parameterValue)
+        {
+            Guid pnId = (Guid)GetScalar(conn, trans, "select id from sample_parameter_name where name = @pname", CommandType.Text, 
+                new SqlParameter("@pname", parameterName));
+
+            SqlCommand cmd = new SqlCommand("csp_insert_sample_parameter", conn, trans);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@id", Guid.NewGuid());
+            cmd.Parameters.AddWithValue("@sample_id", sampleId);
+            cmd.Parameters.AddWithValue("@sample_parameter_name_id", pnId);
+            cmd.Parameters.AddWithValue("@value", parameterValue.ToString());
+            cmd.Parameters.AddWithValue("@create_date", DateTime.Now);
+            cmd.Parameters.AddWithValue("@create_id", Common.UserId);
+            cmd.Parameters.AddWithValue("@update_date", DateTime.Now);
+            cmd.Parameters.AddWithValue("@update_id", Common.UserId);
+            cmd.ExecuteNonQuery();
+        }
+
+        public static bool HasAccreditationForOrderLine(SqlConnection conn, SqlTransaction trans, Guid labId, Guid sampleTypeId, Guid sampleComponentId, Guid prepMethId, Guid analMethId)
+        {
+            object o = GetScalar(conn, trans, "select path from sample_type where id = @id", CommandType.Text, new SqlParameter("@id", sampleTypeId));
+            if (o == null || o == DBNull.Value)
+                return false;
+
+            string findSampleTypePath = o.ToString().ToLower();
+            bool accredFound = false;
+
+            string query = @"
+select a.*, st.id as 'sample_type_id', st.path as 'sample_type_path', sc.id as 'sample_component_id' from accreditation_term a
+	inner join accreditation_term_x_laboratory al on a.id = al.accreditation_term_id and al.laboratory_id = @laboratory_id
+	inner join accreditation_term_x_sample_type ast on a.id = ast.accreditation_term_id
+	left outer join sample_type st on st.id = ast.sample_type_id
+	inner join accreditation_term_x_preparation_method apm on a.id = apm.accreditation_term_id and apm.preparation_method_id = @preparation_method_id
+	inner join accreditation_term_x_analysis_method aam on a.id = aam.accreditation_term_id and aam.analysis_method_id = @analysis_method_id
+	left outer join accreditation_term_x_sample_type_x_sample_component ass on a.id = ass.accreditation_term_id and st.id = ass.sample_type_id
+	left outer join sample_component sc on sc.id = ass.sample_component_id
+where a.instance_status_id = 1";
+            SqlCommand cmd = new SqlCommand(query, conn, trans);
+
+            using (SqlDataReader reader = DB.GetDataReader(conn, trans, query, CommandType.Text, new[] {
+                new SqlParameter("@laboratory_id", labId),
+                new SqlParameter("@preparation_method_id", prepMethId),
+                new SqlParameter("@analysis_method_id", analMethId)
+            }))
+            {
+                while(reader.Read())
+                {
+                    Guid accredId = reader.GetGuid("id");
+                    Guid sampTypeId = reader.GetGuid("sample_type_id");
+                    Guid sampCompId = reader.GetGuid("sample_component_id");
+                    string sampleTypePath = reader.GetString("sample_type_path").ToLower();
+
+                    if (findSampleTypePath.StartsWith(sampleTypePath))
+                    {
+                        if(sampCompId != Guid.Empty)
+                        {
+                            if(sampCompId == sampleComponentId)
+                                accredFound = true;
+                        }
+                        else
+                        {
+                            accredFound = true;
+                        }                        
+                    }                        
+                }
+            }
+
+            return accredFound;
         }
     }
 

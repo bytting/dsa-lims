@@ -107,9 +107,9 @@
             // 
             this.btnSelectSampleType.Dock = System.Windows.Forms.DockStyle.Right;
             this.btnSelectSampleType.Image = global::DSA_lims.Properties.Resources.tree_16;
-            this.btnSelectSampleType.Location = new System.Drawing.Point(423, 0);
+            this.btnSelectSampleType.Location = new System.Drawing.Point(425, 0);
             this.btnSelectSampleType.Name = "btnSelectSampleType";
-            this.btnSelectSampleType.Size = new System.Drawing.Size(26, 23);
+            this.btnSelectSampleType.Size = new System.Drawing.Size(24, 24);
             this.btnSelectSampleType.TabIndex = 10;
             this.btnSelectSampleType.Text = "...";
             this.btnSelectSampleType.UseVisualStyleBackColor = true;
@@ -121,7 +121,7 @@
             this.panelSampleType.Controls.Add(this.btnSelectSampleType);
             this.panelSampleType.Location = new System.Drawing.Point(140, 21);
             this.panelSampleType.Name = "panelSampleType";
-            this.panelSampleType.Size = new System.Drawing.Size(449, 23);
+            this.panelSampleType.Size = new System.Drawing.Size(449, 24);
             this.panelSampleType.TabIndex = 11;
             // 
             // cboxSampleType
@@ -133,7 +133,7 @@
             this.cboxSampleType.FormattingEnabled = true;
             this.cboxSampleType.Location = new System.Drawing.Point(0, 0);
             this.cboxSampleType.Name = "cboxSampleType";
-            this.cboxSampleType.Size = new System.Drawing.Size(423, 21);
+            this.cboxSampleType.Size = new System.Drawing.Size(425, 21);
             this.cboxSampleType.TabIndex = 0;
             this.cboxSampleType.ValueMember = "Id";
             this.cboxSampleType.SelectedIndexChanged += new System.EventHandler(this.cboxSampleType_SelectedIndexChanged);
